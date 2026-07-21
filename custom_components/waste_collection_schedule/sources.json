@@ -3282,6 +3282,12 @@
       "id": "obdach_at"
     },
     {
+      "title": "Marktgemeinde Pernitz",
+      "module": "pernitz_gv_at",
+      "default_params": {},
+      "id": "pernitz_gv_at"
+    },
+    {
       "title": "Marktgemeinde Schlierbach",
       "module": "schlierbach_at",
       "default_params": {},
@@ -6881,6 +6887,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Nantes M\u00e9tropole",
+      "module": "data_nantesmetropole_fr",
+      "default_params": {},
+      "id": "data_nantesmetropole_fr"
+    },
+    {
       "title": "Neauphle-le-Ch\u00e2teau",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -8223,6 +8235,14 @@
         "key": "1e9592418582666e2a5d1c62b2683435"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Amt f\u00fcr Abfallwirtschaft Schwarzwald-Baar-Kreis",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "30628292bdd8b43db86a48f7e0d85f85"
+      },
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
@@ -18141,6 +18161,12 @@
       "id": "geovest_it"
     },
     {
+      "title": "San Giovanni Teatino",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "San Marcello Piteglio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -24925,6 +24951,12 @@
       "module": "sandiego_gov",
       "default_params": {},
       "id": "sandiego_gov"
+    },
+    {
+      "title": "City of Stamford, CT",
+      "module": "stamford_ct_us",
+      "default_params": {},
+      "id": "stamford_ct_us"
     },
     {
       "title": "City of Tallahassee",

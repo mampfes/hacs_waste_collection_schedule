@@ -45,4 +45,9 @@ SERVICE_MAP = [
         "url": "https://www.asg-nordsachsen.de/",
         "service_id": "2085afd95285e645e15ee9623d0c5172",
     },
+    {
+        "title": "Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis",
+        "url": "https://www.lrasbk.de/",
+        "service_id": "30628292bdd8b43db86a48f7e0d85f85",
+    },
 ]

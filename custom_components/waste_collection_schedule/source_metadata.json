@@ -1121,6 +1121,13 @@
     "howto": {},
     "urls": {}
   },
+  "pernitz_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pernitz_gv_at.md",
+    "howto": {},
+    "urls": {
+      "url_www_pernitz_gv_at_muellabfuhr": "https://www.pernitz.gv.at/muellabfuhr/."
+    }
+  },
   "schlierbach_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schlierbach_at.md",
     "howto": {
@@ -1745,6 +1752,14 @@
     "howto": {
       "en": "Enter your street address including the city name (e.g. '1 place Roger Salengro, Oullins').",
       "fr": "Entrez votre adresse complète avec le nom de la commune (ex : '1 place Roger Salengro, Oullins')."
+    },
+    "urls": {}
+  },
+  "data_nantesmetropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_nantesmetropole_fr.md",
+    "howto": {
+      "en": "Enter your full street address including the house number and the city name (e.g. '16 Rue Abbé de l'Epée, Nantes').",
+      "fr": "Entrez votre adresse complète avec le numéro de rue et le nom de la commune (ex : '16 Rue Abbé de l'Epée, Nantes')."
     },
     "urls": {}
   },
@@ -7038,6 +7053,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md",
     "howto": {
       "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url."
+    },
+    "urls": {}
+  },
+  "stamford_ct_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stamford_ct_us.md",
+    "howto": {
+      "en": "Use the City of Stamford Garbage and Recycling Lookup (https://stamfordapps.org/garbagerecycling/default.asp) to find your street. Enter just the street name (e.g. 'Parker' for 'Parker Ave'), leaving out the street suffix (Ave, St, Rd, etc.) and the house number. If your street has multiple pickup-day ranges, also provide your house number; the source will tell you the available ranges if it is required but missing."
     },
     "urls": {}
   },

@@ -576,6 +576,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marktgemeinde Kaltenleutgeben](/doc/source/kaltenleutgeben_gv_at.md) / kaltenleutgeben.gv.at
 - [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
+- [Marktgemeinde Pernitz](/doc/source/pernitz_gv_at.md) / pernitz.gv.at
 - [Marktgemeinde Schlierbach](/doc/source/schlierbach_at.md) / schlierbach.at
 - [Marktgemeinde Sollenau](/doc/ics/sollenau_at.md) / sollenau.noe.gv.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
@@ -1135,6 +1136,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
 - [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Nantes Métropole](/doc/source/data_nantesmetropole_fr.md) / data.nantesmetropole.fr
 - [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1324,6 +1326,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Amelith](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amelsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amt Bad Wilsnack/Weisen (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis](/doc/source/abfall_io_graphql.md) / lrasbk.de
 - [Amt Lenzen-Elbtalaue (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Meyenburg (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Putlitz/Berge (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
@@ -2718,6 +2721,7 @@ If you already have enough information for your municipality/region, you are ver
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
 - [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [San Giovanni Teatino](/doc/source/junker_app.md) / junker.app
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Zenone Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
@@ -3807,6 +3811,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
+- [City of Stamford, CT](/doc/source/stamford_ct_us.md) / stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule
 - [City of Tallahassee](/doc/source/talgov_com.md) / talgov.com/you/swslookup
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com

@@ -4787,6 +4787,29 @@
         },
         "data_description": {}
       },
+      "args_pernitz_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
+      "reconfigure_pernitz_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
       "args_schlierbach_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7620,6 +7643,29 @@
         },
         "data_description": {
           "address": "Your street address with city"
+        }
+      },
+      "args_data_nantesmetropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address with house number and city"
+        }
+      },
+      "reconfigure_data_nantesmetropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Your street address with house number and city"
         }
       },
       "args_rueil_malmaison_fr": {
@@ -30493,6 +30539,33 @@
         },
         "data_description": {
           "id": "The unique identifier for your properties collection schedule"
+        }
+      },
+      "args_stamford_ct_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
+        }
+      },
+      "reconfigure_stamford_ct_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
         }
       },
       "args_talgov_com": {
