@@ -30630,6 +30630,29 @@
           "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
         }
       },
+      "args_millvalleyrefuse_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pickup_day": "Pickup Day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
+        }
+      },
+      "reconfigure_millvalleyrefuse_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pickup_day": "Pickup Day"
+        },
+        "data_description": {
+          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
+        }
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

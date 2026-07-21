@@ -7073,6 +7073,13 @@
     "howto": {},
     "urls": {}
   },
+  "millvalleyrefuse_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/millvalleyrefuse_com.md",
+    "howto": {
+      "en": "No address lookup is required. Mill Valley Refuse Service publishes a single alternating-week recycling schedule for its whole service area (Mill Valley, Corte Madera, Tiburon, Belvedere, Strawberry and unincorporated Marin). Optionally set 'pickup_day' to the weekday your street is serviced so each collection lands on your actual pickup day instead of the start of the week."
+    },
+    "urls": {}
+  },
   "apps_ci_minneapolis_mn_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
     "howto": {},
