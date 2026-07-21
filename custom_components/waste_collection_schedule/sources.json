@@ -8225,6 +8225,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Amt f\u00fcr Abfallwirtschaft Schwarzwald-Baar-Kreis",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "30628292bdd8b43db86a48f7e0d85f85"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
       "module": "abfall_io",
       "default_params": {

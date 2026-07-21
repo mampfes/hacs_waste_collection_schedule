@@ -1324,6 +1324,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Amelith](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amelsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amt Bad Wilsnack/Weisen (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis](/doc/source/abfall_io_graphql.md) / lrasbk.de
 - [Amt Lenzen-Elbtalaue (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Meyenburg (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Putlitz/Berge (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
