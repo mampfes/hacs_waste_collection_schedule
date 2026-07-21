@@ -279,7 +279,19 @@ class SourceShell:
             return None
 
         # create source
-        source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        try:
+            source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        except Exception as e:
+            _LOGGER.error(
+                f"error creating source {source_name} with arguments "
+                f"{source_args}: {e}\n"
+                "This is usually caused by a stale/invalid configuration, e.g. "
+                "after the source's arguments changed in an update, or a "
+                "'customize' entry that was nested under 'args' instead of "
+                "being a sibling of it. Please check the source's "
+                f"documentation and reconfigure it.\n{traceback.format_exc()}"
+            )
+            return None
 
         # create source shell
         g = SourceShell(

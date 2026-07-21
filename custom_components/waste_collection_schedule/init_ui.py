@@ -10,6 +10,7 @@ import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryError
 
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
@@ -62,6 +63,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
         options.get(const.CONF_IGNORE_DUPLICATES, const.CONF_IGNORE_DUPLICATES_DEFAULT),
     )
+
+    if shell is None:
+        raise ConfigEntryError(
+            f"Failed to set up source '{entry.data[const.CONF_SOURCE_NAME]}'. "
+            "This is usually caused by a stale/invalid configuration, e.g. "
+            "after the source's arguments changed in an update. Please "
+            "reconfigure this integration entry. See the Home Assistant logs "
+            "for details."
+        )
 
     coordinator = WCSCoordinator(
         hass,
