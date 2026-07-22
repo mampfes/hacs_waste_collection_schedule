@@ -25005,6 +25005,12 @@
       "id": "jacksonville_fl_us"
     },
     {
+      "title": "Kansas City, MO",
+      "module": "kansas_city_mo_us",
+      "default_params": {},
+      "id": "kansas_city_mo_us"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {

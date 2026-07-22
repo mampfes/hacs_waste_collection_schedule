@@ -30680,6 +30680,29 @@
           "address": "Full street address including city and state (e.g. '11743 Heather Grove Ln, Jacksonville, FL')"
         }
       },
+      "args_kansas_city_mo_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110')"
+        }
+      },
+      "reconfigure_kansas_city_mo_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110')"
+        }
+      },
       "args_marysville_wa_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
