@@ -32,14 +32,14 @@ PARAM_DESCRIPTIONS = {
         "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones.",
     },
     "it": {
-        "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",
-        "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone.",
+        "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",  # codespell:ignore
+        "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone.",  # codespell:ignore
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Check the 'Supported municipalities' list in this source's documentation page for the exact spelling of your municipality. If it has zones, look up the zone name from your local waste-management provider's calendar (e.g. Esacom for the Verona area) or the yard schedule from your last paper calendar.",
-    "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto.",
+    "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto.",  # codespell:ignore
 }
 
 ICON_MAP = {
