@@ -18367,6 +18367,12 @@
       "id": "junker_app"
     },
     {
+      "title": "SiUnet",
+      "module": "siunet_it",
+      "default_params": {},
+      "id": "siunet_it"
+    },
+    {
       "title": "Soleto",
       "module": "junker_app",
       "default_params": {},

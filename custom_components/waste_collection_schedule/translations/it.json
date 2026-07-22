@@ -16690,6 +16690,33 @@
         },
         "data_description": {}
       },
+      "args_siunet_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",
+          "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone."
+        }
+      },
+      "reconfigure_siunet_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {
+          "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",
+          "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone."
+        }
+      },
       "args_araccolta_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

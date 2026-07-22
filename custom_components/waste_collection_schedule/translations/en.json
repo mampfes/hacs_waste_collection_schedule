@@ -17415,6 +17415,33 @@
         },
         "data_description": {}
       },
+      "args_siunet_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "comune": "Name of the municipality, exactly as listed in the 'Supported municipalities' section of this source's documentation. Two of the entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix — try the other one if your municipality doesn't return results.",
+          "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones."
+        }
+      },
+      "reconfigure_siunet_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "Zone"
+        },
+        "data_description": {
+          "comune": "Name of the municipality, exactly as listed in the 'Supported municipalities' section of this source's documentation. Two of the entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix — try the other one if your municipality doesn't return results.",
+          "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones."
+        }
+      },
       "args_araccolta_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -2753,6 +2753,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Silea](/doc/source/silea_it.md) / sileaspa.it
 - [Silvi - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [SiUnet](/doc/source/siunet_it.md) / siunet.it
 - [Soleto](/doc/source/junker_app.md) / junker.app
 - [Solza](/doc/source/junker_app.md) / junker.app
 - [Sordio](/doc/source/cem_ambiente_it.md) / cemambiente.it
