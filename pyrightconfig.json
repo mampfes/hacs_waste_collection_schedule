@@ -106,7 +106,6 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/data_umweltprofis_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/derbyshiredales_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/dienten_gv_at.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/dillingen_saar_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/durban_gov_za.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/eastcambs_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ecoharmonogram_pl.py",
