@@ -4490,6 +4490,26 @@
         },
         "data_description": {}
       },
+      "args_pernitz_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "rayon": "Rayon"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_pernitz_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "rayon": "Rayon"
+        },
+        "data_description": {}
+      },
       "args_schlierbach_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -7152,6 +7172,26 @@
         }
       },
       "reconfigure_data_grandlyon_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {}
+      },
+      "args_data_nantesmetropole_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_data_nantesmetropole_fr": {
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
@@ -16650,6 +16690,33 @@
         },
         "data_description": {}
       },
+      "args_siunet_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",
+          "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone."
+        }
+      },
+      "reconfigure_siunet_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {
+          "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",
+          "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone."
+        }
+      },
       "args_araccolta_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -20588,6 +20655,37 @@
         },
         "data_description": {
           "zone": "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+        }
+      },
+      "args_kvatg_ch": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "community": "Comune",
+          "kehricht_zone": "Zona Kehricht (solo Kreuzlingen, facoltativo)",
+          "zone": "Zona / area di raccolta (facoltativo)"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
+          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)} mostra quali strade appartengono a quale zona.",
+          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — un valore non valido mostra l'elenco dei nomi validi."
+        }
+      },
+      "reconfigure_kvatg_ch": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "community": "Comune",
+          "kehricht_zone": "Zona Kehricht (solo Kreuzlingen, facoltativo)",
+          "zone": "Zona / area di raccolta (facoltativo)"
+        },
+        "data_description": {
+          "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
+          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)} mostra quali strade appartengono a quale zona.",
+          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — un valore non valido mostra l'elenco dei nomi validi."
         }
       },
       "args_alchenstorf_ch": {
@@ -29077,6 +29175,28 @@
         },
         "data_description": {}
       },
+      "args_stamford_ct_us": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_stamford_ct_us": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_talgov_com": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -29177,6 +29297,26 @@
         },
         "data_description": {}
       },
+      "args_kansas_city_mo_us": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_kansas_city_mo_us": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {}
+      },
       "args_marysville_wa_us": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -29194,6 +29334,26 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "street_address": "Indirizzo Strada"
+        },
+        "data_description": {}
+      },
+      "args_millvalleyrefuse_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "pickup_day": "Pickup Day"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_millvalleyrefuse_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "pickup_day": "Pickup Day"
         },
         "data_description": {}
       },

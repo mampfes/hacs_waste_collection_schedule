@@ -1121,6 +1121,13 @@
     "howto": {},
     "urls": {}
   },
+  "pernitz_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pernitz_gv_at.md",
+    "howto": {},
+    "urls": {
+      "url_www_pernitz_gv_at_muellabfuhr": "https://www.pernitz.gv.at/muellabfuhr/."
+    }
+  },
   "schlierbach_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schlierbach_at.md",
     "howto": {
@@ -1745,6 +1752,14 @@
     "howto": {
       "en": "Enter your street address including the city name (e.g. '1 place Roger Salengro, Oullins').",
       "fr": "Entrez votre adresse complète avec le nom de la commune (ex : '1 place Roger Salengro, Oullins')."
+    },
+    "urls": {}
+  },
+  "data_nantesmetropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_nantesmetropole_fr.md",
+    "howto": {
+      "en": "Enter your full street address including the house number and the city name (e.g. '16 Rue Abbé de l'Epée, Nantes').",
+      "fr": "Entrez votre adresse complète avec le numéro de rue et le nom de la commune (ex : '16 Rue Abbé de l'Epée, Nantes')."
     },
     "urls": {}
   },
@@ -3654,6 +3669,14 @@
     "howto": {},
     "urls": {}
   },
+  "siunet_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siunet_it.md",
+    "howto": {
+      "en": "Check the 'Supported municipalities' list in this source's documentation page for the exact spelling of your municipality. If it has zones, look up the zone name from your local waste-management provider's calendar (e.g. Esacom for the Verona area) or the yard schedule from your last paper calendar.",
+      "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto."
+    },
+    "urls": {}
+  },
   "araccolta_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/araccolta_it.md",
     "howto": {
@@ -4622,6 +4645,19 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aarberg_ch.md",
     "howto": {},
     "urls": {}
+  },
+  "kvatg_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kvatg_ch.md",
+    "howto": {
+      "de": "Suchen Sie Ihre Gemeinde auf https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ und geben Sie deren Namen ein. Falls der Entsorgungsplan Ihrer Gemeinde eine Sammlung nach Zonen unterteilt (z. B. die Grüngut-Gebiete in Kreuzlingen oder die Abfuhrgebiete in Frauenfeld), können Sie optional den Zonennamen wie im Plan gedruckt angeben.",
+      "en": "Find your community on https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ and enter its name. If your community's disposal plan splits a collection by zone (e.g. the green waste districts in Kreuzlingen or the collection areas in Frauenfeld), you can optionally enter the zone name as printed in the plan.",
+      "fr": "Recherchez votre commune sur https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ et saisissez son nom. Si le plan d'élimination de votre commune répartit une collecte par zones (p. ex. les secteurs de déchets verts à Kreuzlingen ou les zones de collecte à Frauenfeld), vous pouvez éventuellement indiquer le nom de la zone tel qu'imprimé dans le plan.",
+      "it": "Cerca il tuo comune su https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ e inserisci il suo nome. Se il piano di smaltimento del tuo comune suddivide una raccolta per zone (ad es. le aree del verde a Kreuzlingen o le zone di raccolta a Frauenfeld), puoi facoltativamente indicare il nome della zona come stampato nel piano."
+    },
+    "urls": {
+      "url_www_kvatg_ch_fuer_private_entsorgungsplaene_1": "https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/",
+      "url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung": "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung"
+    }
   },
   "alchenstorf_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alchenstorf_ch.md",
@@ -7041,6 +7077,13 @@
     },
     "urls": {}
   },
+  "stamford_ct_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stamford_ct_us.md",
+    "howto": {
+      "en": "Use the City of Stamford Garbage and Recycling Lookup (https://stamfordapps.org/garbagerecycling/default.asp) to find your street. Enter just the street name (e.g. 'Parker' for 'Parker Ave'), leaving out the street suffix (Ave, St, Rd, etc.) and the house number. If your street has multiple pickup-day ranges, also provide your house number; the source will tell you the available ranges if it is required but missing."
+    },
+    "urls": {}
+  },
   "talgov_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/talgov_com.md",
     "howto": {},
@@ -7068,9 +7111,21 @@
     },
     "urls": {}
   },
+  "kansas_city_mo_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kansas_city_mo_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "marysville_wa_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marysville_wa_us.md",
     "howto": {},
+    "urls": {}
+  },
+  "millvalleyrefuse_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/millvalleyrefuse_com.md",
+    "howto": {
+      "en": "No address lookup is required. Mill Valley Refuse Service publishes a single alternating-week recycling schedule for its whole service area (Mill Valley, Corte Madera, Tiburon, Belvedere, Strawberry and unincorporated Marin). Optionally set 'pickup_day' to the weekday your street is serviced so each collection lands on your actual pickup day instead of the start of the week."
+    },
     "urls": {}
   },
   "apps_ci_minneapolis_mn_us": {

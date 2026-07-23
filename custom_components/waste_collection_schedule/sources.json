@@ -3282,6 +3282,12 @@
       "id": "obdach_at"
     },
     {
+      "title": "Marktgemeinde Pernitz",
+      "module": "pernitz_gv_at",
+      "default_params": {},
+      "id": "pernitz_gv_at"
+    },
+    {
       "title": "Marktgemeinde Schlierbach",
       "module": "schlierbach_at",
       "default_params": {},
@@ -6881,6 +6887,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Nantes M\u00e9tropole",
+      "module": "data_nantesmetropole_fr",
+      "default_params": {},
+      "id": "data_nantesmetropole_fr"
+    },
+    {
       "title": "Neauphle-le-Ch\u00e2teau",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -8223,6 +8235,14 @@
         "key": "1e9592418582666e2a5d1c62b2683435"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Amt f\u00fcr Abfallwirtschaft Schwarzwald-Baar-Kreis",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "30628292bdd8b43db86a48f7e0d85f85"
+      },
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
@@ -18141,6 +18161,12 @@
       "id": "geovest_it"
     },
     {
+      "title": "San Giovanni Teatino",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "San Marcello Piteglio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -18339,6 +18365,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "SiUnet",
+      "module": "siunet_it",
+      "default_params": {},
+      "id": "siunet_it"
     },
     {
       "title": "Soleto",
@@ -21618,10 +21650,42 @@
       "id": "aarberg_ch"
     },
     {
+      "title": "Affeltrangen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Affeltrangen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Alchenstorf",
       "module": "alchenstorf_ch",
       "default_params": {},
       "id": "alchenstorf_ch"
+    },
+    {
+      "title": "Altnau",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Altnau"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Amlikon-Bissegg",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Amlikon-Bissegg"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Amriswil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Amriswil"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Andwil",
@@ -21638,6 +21702,22 @@
         "municipality": "Appenzell"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Arbon",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Arbon"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Basadingen-Schlattingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Basadingen-Schlattingen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Basel-Stadt",
@@ -21663,6 +21743,22 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Berg",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Berg"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Berlingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Berlingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Bettwiesen",
       "module": "zab_ch",
       "default_params": {
@@ -21679,6 +21775,30 @@
       "id": "zab_ch"
     },
     {
+      "title": "Birwinken",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Birwinken"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Bischofszell",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Bischofszell"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Bottighofen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Bottighofen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Braunau",
       "module": "zab_ch",
       "default_params": {
@@ -21687,10 +21807,26 @@
       "id": "zab_ch"
     },
     {
+      "title": "Buch",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Buch"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Buchegg",
       "module": "buchegg_so_ch",
       "default_params": {},
       "id": "buchegg_so_ch"
+    },
+    {
+      "title": "Bussnang",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Bussnang"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "B\u00fchler",
@@ -21708,6 +21844,14 @@
         "municipality_id": "849"
       },
       "id": "localcities_ch"
+    },
+    {
+      "title": "B\u00fcrglen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "B\u00fcrglen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "B\u00fctschwil-Ganterschwil",
@@ -21739,6 +21883,22 @@
       "id": "zab_ch"
     },
     {
+      "title": "Diessenhofen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Diessenhofen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Dozwil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Dozwil"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Ebnat-Kappel",
       "module": "zab_ch",
       "default_params": {
@@ -21755,12 +21915,52 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Egnach",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Egnach"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Erlen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Erlen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Ermatingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Ermatingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Eschenz",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Eschenz"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Eschlikon",
       "module": "zab_ch",
       "default_params": {
         "municipality": "Eschlikon"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Felben-Wellhausen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Felben-Wellhausen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Fischingen",
@@ -21777,6 +21977,22 @@
         "municipality": "Flawil"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Frauenfeld",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Frauenfeld"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Gachnang",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Gachnang"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Gais",
@@ -21849,6 +22065,14 @@
       "id": "ics_gossau_zh_ch"
     },
     {
+      "title": "Gottlieben",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Gottlieben"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Grenchen",
       "module": "localcities_ch",
       "default_params": {
@@ -21878,6 +22102,30 @@
       "id": "a_region_ch"
     },
     {
+      "title": "G\u00fcttingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "G\u00fcttingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Hauptwil-Gottshaus",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Hauptwil-Gottshaus"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Hefenhofen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Hefenhofen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Heiden",
       "module": "a_region_ch",
       "default_params": {
@@ -21886,12 +22134,44 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Hemishofen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Hemishofen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Herdern",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Herdern"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Herisau",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Herisau"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Hohentannen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Hohentannen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Homburg",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Homburg"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Horn",
@@ -21918,6 +22198,22 @@
       "id": "a_region_ch"
     },
     {
+      "title": "H\u00fcttlingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "H\u00fcttlingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "H\u00fcttwilen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "H\u00fcttwilen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Jonschwil",
       "module": "zab_ch",
       "default_params": {
@@ -21926,12 +22222,50 @@
       "id": "zab_ch"
     },
     {
+      "title": "Kemmental",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Kemmental"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Kesswil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Kesswil"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Kirchberg",
       "module": "zab_ch",
       "default_params": {
         "municipality": "Kirchberg"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Kradolf-Sch\u00f6nenberg",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Kradolf-Sch\u00f6nenberg"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Kreuzlingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Kreuzlingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "KVA Thurgau",
+      "module": "kvatg_ch",
+      "default_params": {},
+      "id": "kvatg_ch"
     },
     {
       "title": "K\u00f6niz",
@@ -21946,6 +22280,22 @@
         "municipality": "K\u00f6niz"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Langrickenbach",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Langrickenbach"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Lengwil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Lengwil"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Lichtensteig",
@@ -21985,6 +22335,14 @@
       "id": "localcities_ch"
     },
     {
+      "title": "Lommis",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Lommis"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Lutzenberg",
       "module": "a_region_ch",
       "default_params": {
@@ -21999,6 +22357,22 @@
         "municipality": "L\u00fctisburg"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Mammern",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Mammern"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Matzingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Matzingen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Mittelh\u00e4usern",
@@ -22031,12 +22405,28 @@
       "id": "a_region_ch"
     },
     {
+      "title": "M\u00e4rstetten",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "M\u00e4rstetten"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "M\u00f6rschwil",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "M\u00f6rschwil"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "M\u00fcllheim",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "M\u00fcllheim"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "M\u00fcnchenstein",
@@ -22059,6 +22449,14 @@
       "id": "ics_muensingen_ch"
     },
     {
+      "title": "M\u00fcnsterlingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "M\u00fcnsterlingen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Neckertal",
       "module": "zab_ch",
       "default_params": {
@@ -22073,6 +22471,14 @@
         "municipality": "Nesslau"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Neunforn",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Neunforn"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Nieder-/Oberscherli",
@@ -22131,6 +22537,30 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Pfyn-Dettighofen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Pfyn-Dettighofen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Ramsen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Ramsen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Raperswilen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Raperswilen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Rapperswil",
       "module": "rapperswil_be_ch",
       "default_params": {},
@@ -22173,6 +22603,22 @@
       "id": "zab_ch"
     },
     {
+      "title": "Roggwil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Roggwil"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Romanshorn",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Romanshorn"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Rorschach",
       "module": "a_region_ch",
       "default_params": {
@@ -22189,10 +22635,34 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Salenstein",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Salenstein"
+      },
+      "id": "kvatg_ch"
+    },
+    {
+      "title": "Salmsach",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Salmsach"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Sammelkalender.ch",
       "module": "sammelkalender_ch",
       "default_params": {},
       "id": "sammelkalender_ch"
+    },
+    {
+      "title": "Schlatt",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Schlatt"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Schliern",
@@ -22219,6 +22689,14 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Sch\u00f6nholzerswilen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Sch\u00f6nholzerswilen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Seon",
       "module": "ics",
       "default_params": {},
@@ -22231,6 +22709,14 @@
         "municipality": "Sirnach"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Sommeri",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Sommeri"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Speicher",
@@ -22255,12 +22741,28 @@
       "id": "ics_buelach_ch"
     },
     {
+      "title": "Steckborn",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Steckborn"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Stein",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Stein"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Stein am Rhein",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Stein am Rhein"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Steinach",
@@ -22271,10 +22773,26 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Stettfurt",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Stettfurt"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "SUIBR",
       "module": "suibr_ch",
       "default_params": {},
       "id": "suibr_ch"
+    },
+    {
+      "title": "Sulgen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Sulgen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Teufen",
@@ -22302,6 +22820,14 @@
       "id": "localcities_ch"
     },
     {
+      "title": "Thundorf",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Thundorf"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Th\u00f6rishaus",
       "module": "koeniz_ch",
       "default_params": {
@@ -22326,12 +22852,28 @@
       "id": "a_region_ch"
     },
     {
+      "title": "T\u00e4gerwilen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "T\u00e4gerwilen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "T\u00fcbach",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "T\u00fcbach"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Uesslingen-Buch",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Uesslingen-Buch"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Untereggen",
@@ -22348,6 +22890,14 @@
         "municipality": "Urn\u00e4sch"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Uttwil",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Uttwil"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Uzwil",
@@ -22373,6 +22923,14 @@
         "municipality": "Wabern"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Wagenhausen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Wagenhausen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Wald",
@@ -22408,6 +22966,14 @@
       "id": "localcities_ch"
     },
     {
+      "title": "Warth-Weiningen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Warth-Weiningen"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Wattwil",
       "module": "zab_ch",
       "default_params": {
@@ -22416,10 +22982,26 @@
       "id": "zab_ch"
     },
     {
+      "title": "Weinfelden",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Weinfelden"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "Wiedlisbach",
       "module": "ics",
       "default_params": {},
       "id": "ics_mopage_ch"
+    },
+    {
+      "title": "Wigoltingen",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Wigoltingen"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "Wil",
@@ -22468,6 +23050,14 @@
       "id": "zab_ch"
     },
     {
+      "title": "W\u00e4ldi",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "W\u00e4ldi"
+      },
+      "id": "kvatg_ch"
+    },
+    {
       "title": "W\u00e4ngi",
       "module": "zab_ch",
       "default_params": {
@@ -22496,6 +23086,14 @@
         "service_provider": "zeba"
       },
       "id": "sammelkalender_ch"
+    },
+    {
+      "title": "Zihlschlacht-Sitterdorf",
+      "module": "kvatg_ch",
+      "default_params": {
+        "community": "Zihlschlacht-Sitterdorf"
+      },
+      "id": "kvatg_ch"
     },
     {
       "title": "ZKRI",
@@ -24927,6 +25525,12 @@
       "id": "sandiego_gov"
     },
     {
+      "title": "City of Stamford, CT",
+      "module": "stamford_ct_us",
+      "default_params": {},
+      "id": "stamford_ct_us"
+    },
+    {
       "title": "City of Tallahassee",
       "module": "talgov_com",
       "default_params": {},
@@ -24973,6 +25577,12 @@
       "id": "jacksonville_fl_us"
     },
     {
+      "title": "Kansas City, MO",
+      "module": "kansas_city_mo_us",
+      "default_params": {},
+      "id": "kansas_city_mo_us"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {
@@ -24986,6 +25596,12 @@
       "module": "marysville_wa_us",
       "default_params": {},
       "id": "marysville_wa_us"
+    },
+    {
+      "title": "Mill Valley Refuse Service",
+      "module": "millvalleyrefuse_com",
+      "default_params": {},
+      "id": "millvalleyrefuse_com"
     },
     {
       "title": "Minneapolis MN USA",

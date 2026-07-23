@@ -4787,6 +4787,29 @@
         },
         "data_description": {}
       },
+      "args_pernitz_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
+      "reconfigure_pernitz_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
       "args_schlierbach_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7620,6 +7643,29 @@
         },
         "data_description": {
           "address": "Your street address with city"
+        }
+      },
+      "args_data_nantesmetropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address with house number and city"
+        }
+      },
+      "reconfigure_data_nantesmetropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Your street address with house number and city"
         }
       },
       "args_rueil_malmaison_fr": {
@@ -17369,6 +17415,33 @@
         },
         "data_description": {}
       },
+      "args_siunet_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "comune": "Name of the municipality, exactly as listed in the 'Supported municipalities' section of this source's documentation. Two of the entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix — try the other one if your municipality doesn't return results.",
+          "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones."
+        }
+      },
+      "reconfigure_siunet_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "Zone"
+        },
+        "data_description": {
+          "comune": "Name of the municipality, exactly as listed in the 'Supported municipalities' section of this source's documentation. Two of the entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix — try the other one if your municipality doesn't return results.",
+          "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones."
+        }
+      },
       "args_araccolta_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -21570,6 +21643,37 @@
         },
         "data_description": {
           "zone": "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+        }
+      },
+      "args_kvatg_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "community": "Community",
+          "kehricht_zone": "Kehricht zone (Kreuzlingen only, optional)",
+          "zone": "Zone / district (optional)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
+          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the map {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)}.",
+          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — an invalid value shows a list of the valid names."
+        }
+      },
+      "reconfigure_kvatg_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "community": "Community",
+          "kehricht_zone": "Kehricht zone (Kreuzlingen only, optional)",
+          "zone": "Zone / district (optional)"
+        },
+        "data_description": {
+          "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
+          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the map {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)}.",
+          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — an invalid value shows a list of the valid names."
         }
       },
       "args_alchenstorf_ch": {
@@ -30495,6 +30599,33 @@
           "id": "The unique identifier for your properties collection schedule"
         }
       },
+      "args_stamford_ct_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
+        }
+      },
+      "reconfigure_stamford_ct_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
+        }
+      },
       "args_talgov_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -30607,6 +30738,29 @@
           "address": "Full street address including city and state (e.g. '11743 Heather Grove Ln, Jacksonville, FL')"
         }
       },
+      "args_kansas_city_mo_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110')"
+        }
+      },
+      "reconfigure_kansas_city_mo_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110')"
+        }
+      },
       "args_marysville_wa_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -30628,6 +30782,29 @@
         },
         "data_description": {
           "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
+        }
+      },
+      "args_millvalleyrefuse_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pickup_day": "Pickup Day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
+        }
+      },
+      "reconfigure_millvalleyrefuse_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pickup_day": "Pickup Day"
+        },
+        "data_description": {
+          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
         }
       },
       "args_apps_ci_minneapolis_mn_us": {
