@@ -165,13 +165,14 @@ PARAM_DESCRIPTIONS = {
         "Kreuzlingen green waste district). Leave empty to get all zones; "
         "zoned collections are then suffixed with their zone name. The zone "
         "names are printed left of the date grid in your community's plan on "
-        "[kvatg.ch](https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — an invalid "
+        "kvatg.ch (https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — an invalid "
         "value shows a list of the valid names.",
         "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) "
         "zone from the city's own zone plan — 'Süd & Tägerwilen', "
         "'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. "
-        "Which streets belong to which zone is shown on the map [Kehricht, "
-        "Abfuhrplan Kreuzlingen](https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung).",
+        "Which streets belong to which zone is shown on the Kehricht, "
+        "Abfuhrplan Kreuzlingen map at "
+        "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung.",
     },
     "de": {
         "community": "Gemeindename genau wie auf der Entsorgungsplan-Seite "
@@ -181,14 +182,15 @@ PARAM_DESCRIPTIONS = {
         "das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; "
         "zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die "
         "Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan "
-        "Ihrer Gemeinde auf [kvatg.ch](https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) "
+        "Ihrer Gemeinde auf kvatg.ch (https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) "
         "— bei einem ungültigen Wert wird eine Liste der gültigen Namen "
         "angezeigt.",
         "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss "
         "dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' "
         "oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen "
-        "zu welcher Zone gehören, zeigt die Karte [Kehricht, Abfuhrplan "
-        "Kreuzlingen](https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung).",
+        "zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan "
+        "Kreuzlingen unter "
+        "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung.",
     },
     "it": {
         "community": "Nome del comune esattamente come indicato sulla pagina "
@@ -198,13 +200,13 @@ PARAM_DESCRIPTIONS = {
         "l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; "
         "le raccolte zonali riportano poi il nome della zona. I nomi delle "
         "zone si trovano a sinistra della griglia delle date nel piano del "
-        "comune su [kvatg.ch](https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — "
+        "comune su kvatg.ch (https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — "
         "un valore non valido mostra l'elenco dei nomi validi.",
         "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti "
         "domestici (Kehricht) secondo il piano zonale comunale — "
         "'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per "
-        "tutte e tre le zone. La mappa [Kehricht, Abfuhrplan Kreuzlingen]"
-        "(https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung) mostra quali "
+        "tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su "
+        "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung mostra quali "
         "strade appartengono a quale zona.",
     },
     "fr": {
@@ -216,13 +218,13 @@ PARAM_DESCRIPTIONS = {
         "toutes les zones ; les collectes zonées portent alors le nom de la "
         "zone. Les noms de zones figurent à gauche de la grille des dates "
         "dans le plan de votre commune sur "
-        "[kvatg.ch](https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — une valeur "
+        "kvatg.ch (https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) — une valeur "
         "invalide affiche la liste des noms valides.",
         "kehricht_zone": "Uniquement pour Kreuzlingen : zone de collecte des "
         "ordures ménagères (Kehricht) selon le plan de zones de la ville — "
         "'Süd & Tägerwilen', 'Nord und Ost' ou 'Zentrum'. Laisser vide pour "
-        "les trois zones. La carte [Kehricht, Abfuhrplan Kreuzlingen]"
-        "(https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung) montre quelles "
+        "les trois zones. La carte Kehricht, Abfuhrplan Kreuzlingen sur "
+        "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung montre quelles "
         "rues appartiennent à quelle zone.",
     },
 }
