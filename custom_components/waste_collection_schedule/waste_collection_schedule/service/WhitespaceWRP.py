@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, Union
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,11 +19,11 @@ class WhitespaceClient:
 
     def fetch_schedule(
         self,
-        address_name_number: Union[str, int, None],
+        address_name_number: str | int | None,
         address_postcode: str,
         *,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
     ) -> list:
         """Perform the full 4-step WRP scrape.
 
@@ -51,7 +50,9 @@ class WhitespaceClient:
             alink = soup.find("a", href=lambda h: h and "seq=1" in h)
 
         if alink is None:
-            raise ValueError("Initial WRP page did not load correctly – could not find collections link")
+            raise ValueError(
+                "Initial WRP page did not load correctly – could not find collections link"
+            )
 
         # Step 2: skip the landing splash (seq=1 → seq=2) then POST address form.
         next_url = alink["href"].replace("seq=1", "seq=2")
@@ -100,8 +101,13 @@ class WhitespaceClient:
             raise ValueError("Could not find scheduled-collections section on WRP page")
 
         results = []
-        for u1 in scheduled.find_all("u1"):
-            lis = u1.find_all("li", recursive=False)
+        # Some WRP portals emit well-formed "<ul>" list markup, while others
+        # (e.g. Lancaster) emit a malformed "<u1>" tag (digit one instead of
+        # letter "l") for the same list structure. Match both so the shared
+        # client keeps working regardless of which variant a given council's
+        # portal serves.
+        for ul in scheduled.find_all(["ul", "u1"]):
+            lis = ul.find_all("li", recursive=False)
             if len(lis) < 3:
                 continue
 
@@ -111,10 +117,18 @@ class WhitespaceClient:
             type_li = lis[2]
 
             date_p = date_li.find("p")
-            date_text = date_p.text.strip() if date_p else date_li.text.replace("\n", "").strip()
+            date_text = (
+                date_p.text.strip()
+                if date_p
+                else date_li.text.replace("\n", "").strip()
+            )
 
             type_p = type_li.find("p")
-            type_text = type_p.text.strip() if type_p else type_li.text.replace("\n", "").strip()
+            type_text = (
+                type_p.text.strip()
+                if type_p
+                else type_li.text.replace("\n", "").strip()
+            )
 
             if date_text:
                 results.append((date_text, type_text))

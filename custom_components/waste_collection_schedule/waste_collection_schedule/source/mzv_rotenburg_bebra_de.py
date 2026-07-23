@@ -91,10 +91,12 @@ class Source:
 
         soup = BeautifulSoup(r.content, "html.parser")
         links = soup.find_all(
-            lambda tag: tag
-            and tag.name == "a"
-            and tag.get("href")
-            and "entsorgung.php?ort=" in tag["href"]
+            lambda tag: (
+                tag
+                and tag.name == "a"
+                and tag.get("href")
+                and "entsorgung.php?ort=" in tag["href"]
+            )
         )
         return [link["href"].split("?ort=")[1] for link in links]
 
@@ -115,12 +117,12 @@ class Source:
                     "city",
                     self._city,
                     "make sure the city is spelled exactly like in the link of the website https://www.mzv-rotenburg-bebra.de//webapp.html",
-                )
+                ) from None
             raise SourceArgumentNotFoundWithSuggestions(
                 "city",
                 self._city,
                 cities,
-            )
+            ) from None
 
         entries = []
 

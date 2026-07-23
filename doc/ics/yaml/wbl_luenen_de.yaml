@@ -14,4 +14,4 @@ howto:
 
 test_cases:
   Niederadener Straße:
-    url: "https://wbl.de/pdf/ical{%Y}.php?strasse=Niederadener+Stra%C3%9Fe"
+    url: https://wbl.de/pdf/ical{%Y}.php?strasse=Niederadener+Stra%C3%9Fe

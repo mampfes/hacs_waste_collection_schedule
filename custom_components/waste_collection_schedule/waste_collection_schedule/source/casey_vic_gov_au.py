@@ -143,7 +143,7 @@ class Source:
             # properties come through like "NextGarbageDate", "NextRecycleDate" or "PrevGardenDate" etc
             # extracting waste type name from the middle of "Next{x}Date" to support future waste types without direct mapping
             if key.endswith(_DATE_STRING) and (
-                key.startswith(_NEXT_STRING) or key.startswith(_PREV_STRING)
+                key.startswith((_NEXT_STRING, _PREV_STRING))
             ):
                 name = (
                     key.replace(_DATE_STRING, "")

@@ -1,22 +1,28 @@
 from __future__ import annotations
 
-import re
-import urllib.parse
 from datetime import date, timedelta
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Sutherland Shire Council"
 DESCRIPTION = "Source for Sutherland Shire Council, NSW, Australia."
 URL = "https://www.sutherlandshire.nsw.gov.au"
+COUNTRY = "au"
 TEST_CASES = {
     "5 Cleveland Place, BONNET BAY": {
         "suburb": "BONNET BAY",
         "street": "Cleveland Place",
         "house_number": "5",
+    },
+    "20 Waratah Street, CRONULLA": {
+        "suburb": "CRONULLA",
+        "street": "Waratah Street",
+        "house_number": "20",
     },
 }
 
@@ -36,22 +42,29 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "suburb": "Suburb in UPPER CASE, exactly as shown in the dropdown (e.g. BONNET BAY).",
-        "street": "Street name, exactly as shown in the dropdown (e.g. Cleveland Place).",
-        "house_number": "House number, exactly as shown in the dropdown (e.g. 5).",
+        "suburb": "Suburb, e.g. BONNET BAY.",
+        "street": "Street name spelled out in full, e.g. Cleveland Place.",
+        "house_number": "House number, e.g. 5.",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
-        "Visit https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/waste-information-booklet "
-        "and note the exact suburb, street and house number values shown in each dropdown."
+        "Use the address exactly as it appears on council correspondence — "
+        "street type spelled out in full (Street, Place, Avenue). You can "
+        "check your address on the map at "
+        "https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection"
     ),
 }
 
-_PAGE_URL = (
-    "https://www.sutherlandshire.nsw.gov.au"
-    "/living-here/waste-and-recycling/waste-information-booklet"
+# The council's "When is my bin collected?" page is backed by this public
+# ArcGIS layer (one feature per property, carrying the collection weekday,
+# zone and recycling frequency). The previous ASP.NET dropdown form the old
+# scraper drove was removed from the website in 2026, and the site now also
+# TLS-fingerprints plain library HTTP clients; the GIS endpoint has neither
+# problem.
+_ARCGIS_QUERY_URL = (
+    "https://geoserver.ssc.nsw.gov.au/arcgis/rest/services/WebOnline/MapServer/4/query"
 )
 
 _WEEKDAY_MAP = {
@@ -87,9 +100,14 @@ def _next_weekday(from_date: date, weekday: int) -> date:
 
 
 def _generate_collections(
-    weekday: int, zone: str, start: date, end: date
+    weekday: int, zone: str, start: date, end: date, weekly_recycling: bool
 ) -> list[Collection]:
-    """Generate all collection dates between start and end."""
+    """Generate all collection dates between start and end.
+
+    Garbage is weekly. Recycling and garden waste alternate fortnights by
+    zone; properties flagged for weekly recycling (some unit blocks) get
+    recycling every week on top of the fortnightly garden collection.
+    """
     zone_offset = _ZONE_OFFSETS.get(zone, 0)
     cur = _next_weekday(start, weekday)
     entries: list[Collection] = []
@@ -103,6 +121,10 @@ def _generate_collections(
             waste_type = "Recycling"
         else:
             waste_type = "Garden Waste"
+            if weekly_recycling:
+                entries.append(
+                    Collection(date=cur, t="Recycling", icon=ICON_MAP["Recycling"])
+                )
         entries.append(Collection(date=cur, t=waste_type, icon=ICON_MAP[waste_type]))
 
         cur += timedelta(weeks=1)
@@ -110,32 +132,8 @@ def _generate_collections(
     return entries
 
 
-def _get_hidden_fields(soup: BeautifulSoup) -> dict[str, str]:
-    """Extract all hidden input fields from a parsed page."""
-    return {
-        inp["name"]: inp.get("value", "")
-        for inp in soup.find_all("input", type="hidden")
-        if inp.get("name")
-    }
-
-
-def _parse_update_panel(text: str) -> BeautifulSoup:
-    """
-    Parse an ASP.NET UpdatePanel async response and return BeautifulSoup.
-
-    The response format is:  LENGTH|updatePanel|PANELID|HTML_CONTENT
-    prefixed with a short header block.
-    """
-    parts = text.split("|")
-    if len(parts) >= 8 and parts[4].isdigit():
-        try:
-            length = int(parts[4])
-            prefix = "|".join(parts[:7]) + "|"
-            content = text[len(prefix) : len(prefix) + length]
-            return BeautifulSoup(content, "html.parser")
-        except (ValueError, IndexError):
-            pass
-    return BeautifulSoup(text, "html.parser")
+def _sql_quote(value: str) -> str:
+    return value.replace("'", "''")
 
 
 class Source:
@@ -144,135 +142,65 @@ class Source:
         self._street = street.strip()
         self._house_number = str(house_number).strip()
 
+    def _query(self, where: str, record_count: int = 50) -> list[dict]:
+        r = requests.get(
+            _ARCGIS_QUERY_URL,
+            params={
+                "where": where,
+                "outFields": "situ1,situ2,DAY_OF_WEEK,ZONE_NO,RECYCLE_PICKUP",
+                "returnGeometry": "false",
+                "resultRecordCount": str(record_count),
+                "f": "json",
+            },
+            timeout=30,
+        )
+        r.raise_for_status()
+        data = r.json()
+        if "error" in data:
+            raise ValueError(
+                f"Sutherland Shire GIS query failed: {data['error'].get('message')}"
+            )
+        return [f["attributes"] for f in data.get("features", [])]
+
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/124.0.0.0 Safari/537.36"
-                ),
-                "Accept-Language": "en-AU,en;q=0.9",
-            }
+        address = _sql_quote(f"{self._house_number} {self._street}".upper())
+        suburb = _sql_quote(self._suburb)
+
+        features = self._query(
+            f"UPPER(situ1) = '{address}' AND UPPER(situ2) LIKE '{suburb}%'"
         )
-
-        # Step 1: GET initial page to obtain ASP.NET hidden fields and control names
-        session.get(URL, timeout=30)
-        resp = session.get(_PAGE_URL, timeout=30)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
-        hidden = _get_hidden_fields(soup)
-
-        suburb_sel = soup.find("select", id=lambda x: x and x.endswith("_ddlSuburb"))
-        if not suburb_sel:
-            raise ValueError(
-                "Could not find suburb dropdown on the Sutherland Shire page. "
-                "The page layout may have changed."
+        if not features:
+            # Unit prefixes ("5/20 Waratah Street") and minor spacing quirks.
+            features = self._query(
+                f"UPPER(situ1) LIKE '{address}%' AND UPPER(situ2) LIKE '{suburb}%'"
             )
-        # e.g. id="ctl03_ddlSuburb" -> ctrl_name = "ctl03"
-        ctrl_name = suburb_sel["name"].rsplit("$", 1)[0]
-
-        def _post_update(event_target: str, extra: dict[str, str]) -> BeautifulSoup:
-            payload: dict[str, str] = {
-                **hidden,
-                "__EVENTTARGET": event_target,
-                "__EVENTARGUMENT": "",
-                "__ASYNCPOST": "true",
-                **extra,
-            }
-            r = session.post(
-                _PAGE_URL,
-                data=payload,
-                headers={
-                    "X-MicrosoftAjax": "Delta=true",
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    "Referer": _PAGE_URL,
-                },
-                timeout=30,
+        if not features:
+            # Nothing for that house number — suggest addresses on the street.
+            street_matches = self._query(
+                f"UPPER(situ1) LIKE '%{_sql_quote(self._street.upper())}%'"
+                f" AND UPPER(situ2) LIKE '{suburb}%'"
             )
-            r.raise_for_status()
-            panel_soup = _parse_update_panel(r.text)
-            for inp in panel_soup.find_all("input", type="hidden"):
-                if inp.get("name"):
-                    hidden[inp["name"]] = inp.get("value", "")
-            return panel_soup
+            if street_matches:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "house_number",
+                    self._house_number,
+                    sorted({f["situ1"] for f in street_matches}),
+                )
+            raise SourceArgumentNotFound("street", f"{self._street}, {self._suburb}")
 
-        base_fields: dict[str, str] = {
-            f"{ctrl_name}$ddlSuburb": self._suburb,
-            f"{ctrl_name}$ddlStreet": self._street,
-            f"{ctrl_name}$ddlHouseNumber": self._house_number,
-        }
-
-        # Step 2: Select suburb (triggers street list refresh)
-        _post_update(f"{ctrl_name}$ddlSuburb", {f"{ctrl_name}$ddlSuburb": self._suburb})
-
-        # Step 3: Select street (triggers house number list refresh)
-        _post_update(
-            f"{ctrl_name}$ddlStreet",
-            {
-                f"{ctrl_name}$ddlSuburb": self._suburb,
-                f"{ctrl_name}$ddlStreet": self._street,
-            },
-        )
-
-        # Step 4: Submit form with house number to get result
-        result_soup = _post_update(
-            "",
-            {
-                **base_fields,
-                f"{ctrl_name}$btnSubmit": "Submit",
-            },
-        )
-
-        # Fallback: if the UpdatePanel response didn't contain the result,
-        # do a direct full-page POST
-        result_div = result_soup.find(class_="query-result")
-        if not result_div:
-            resp2 = session.post(
-                _PAGE_URL,
-                data={
-                    **hidden,
-                    "__EVENTTARGET": "",
-                    "__EVENTARGUMENT": "",
-                    **base_fields,
-                    f"{ctrl_name}$btnSubmit": "Submit",
-                },
-                timeout=30,
-            )
-            resp2.raise_for_status()
-            result_soup = BeautifulSoup(resp2.text, "html.parser")
-            result_div = result_soup.find(class_="query-result")
-
-        if not result_div:
-            raise SourceArgumentNotFound(
-                "suburb/street/house_number",
-                f"{self._house_number} {self._street}, {self._suburb}",
-            )
-
-        result_text = result_div.get_text(" ", strip=True)
-
-        # Parse collection day from text like "Bin collection day for ... is Monday, recycling..."
-        day_match = re.search(r"\bis\s+(\w+),\s+recycling", result_text, re.IGNORECASE)
-        if not day_match:
-            raise ValueError(
-                f"Could not parse collection day from result: '{result_text}'"
-            )
-        day_name = day_match.group(1).lower()
+        attrs = features[0]
+        day_name = str(attrs.get("DAY_OF_WEEK", "")).strip().lower()
         weekday = _WEEKDAY_MAP.get(day_name)
         if weekday is None:
-            raise ValueError(f"Unknown day name: '{day_name}'")
-
-        # Determine zone from PDF link (e.g. "Zone 2.pdf")
-        zone = "1"
-        pdf_link = result_soup.find("a", href=re.compile(r"Zone", re.IGNORECASE))
-        if pdf_link and pdf_link.get("href"):
-            href = urllib.parse.unquote(pdf_link["href"])
-            zone_match = re.search(r"Zone\s*(\d+)", href, re.IGNORECASE)
-            if zone_match:
-                zone = zone_match.group(1)
+            raise ValueError(
+                f"Unknown collection day {attrs.get('DAY_OF_WEEK')!r} for "
+                f"{attrs.get('situ1')}, {attrs.get('situ2')}"
+            )
+        zone = str(attrs.get("ZONE_NO", "1"))
+        weekly_recycling = (
+            str(attrs.get("RECYCLE_PICKUP", "")).strip().lower() == "weekly"
+        )
 
         today = date.today()
         end_date = today + timedelta(weeks=_SCHEDULE_WEEKS)
-        return _generate_collections(weekday, zone, today, end_date)
+        return _generate_collections(weekday, zone, today, end_date, weekly_recycling)

@@ -24,9 +24,15 @@ API_URL = "https://data.rd4.nl/api/v1/waste-calendar"
 
 
 class Source:
-    def __init__(self, postal_code: str, house_number: str | int):
+    def __init__(
+        self,
+        postal_code: str,
+        house_number: str | int,
+        house_number_extension: str | None = None,
+    ):
         self._postal_code: str = postal_code
         self._house_number: str | int = house_number
+        self._house_number_extension: str | None = house_number_extension
 
     def fetch(self) -> list[Collection]:
         now = datetime.now()
@@ -50,7 +56,7 @@ class Source:
             return entries + self._get_collections(year)
         except Exception:
             if exception:
-                raise exception
+                raise exception from None
             return entries
 
     def _get_collections(self, year) -> list[Collection]:
@@ -59,6 +65,9 @@ class Source:
             "house_number": self._house_number,
             "year": year,
         }
+
+        if self._house_number_extension:
+            args["house_number_extension"] = self._house_number_extension
 
         # get json file
         r = requests.get(API_URL, params=args)

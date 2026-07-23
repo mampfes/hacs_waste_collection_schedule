@@ -9,4 +9,4 @@ howto:
     - Use the URL `https://afvalkalender.venray.nl/ical/{BAG_ID}` as the `url` parameter.
 test_cases:
   Scheiweg 12 Leunen:
-    url: "https://afvalkalender.venray.nl/ical/0984200000024569"
+    url: https://afvalkalender.venray.nl/ical/0984200000024569

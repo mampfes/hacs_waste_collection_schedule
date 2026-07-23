@@ -14,6 +14,27 @@ DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
     "houseNumber": {"post_code": "hr49js", "number": "52"},
+    "uprn": {"post_code": "hr49js", "number": "200002607460"},
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "post_code": "Postcode of the property, e.g. HR4 9JS",
+        "number": (
+            "House number, house name, or UPRN (Unique Property Reference "
+            "Number) of the property. If your property only has a name and "
+            "no number, enter the name; if it is still not found, the error "
+            "message will list the full addresses found for your postcode "
+            "so you can copy the UPRN or exact wording from there."
+        ),
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "post_code": "Postcode",
+        "number": "House Number / Name / UPRN",
+    },
 }
 
 API_URLS = {
@@ -32,8 +53,10 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(self, post_code: str, number: str):
         self._post_code = post_code
-        # keep original behaviour, but normalise for comparisons later
-        self._number = str(number).capitalize()
+        # keep the value exactly as entered (only trim whitespace) so error
+        # messages show the user's own input; all matching below is done
+        # case-insensitively.
+        self._number = str(number).strip()
 
     def fetch(self):
         # fetch location id
@@ -45,34 +68,55 @@ class Source:
         r.raise_for_status()
         addresses = r.json()
         if (
-            ("error" in addresses and addresses["error"])
+            (addresses.get("error"))
             or "results" not in addresses
             or len(addresses["results"]) == 0
         ):
             raise SourceArgumentNotFound("post_code", self._post_code)
 
-        # cast PAO fields to str to avoid .lower() on non-strings (some APIs return ints)
+        results = addresses["results"]
+
+        # `number` may be a classic house number (PAO_START_NUMBER), a house
+        # name (PAO_TEXT for named properties, or SAO_TEXT for named
+        # sub-units such as flats), or the property's UPRN directly -
+        # accepting the UPRN lets users bypass name/number matching entirely
+        # when they already know it (e.g. from findmyaddress.co.uk).
         target = self._number.lower()
-        address_ids = [
-            x
-            for x in addresses["results"]
-            if (
-                x["LPI"].get("PAO_TEXT") is not None
-                and str(x["LPI"]["PAO_TEXT"]).lower() == target
-            )
-            or (
-                x["LPI"].get("PAO_START_NUMBER") is not None
-                and str(x["LPI"]["PAO_START_NUMBER"]).lower() == target
-            )
-        ]
+
+        def matches_exact(lpi: dict) -> bool:
+            for field in ("UPRN", "PAO_TEXT", "PAO_START_NUMBER", "SAO_TEXT"):
+                value = lpi.get(field)
+                if value is not None and str(value).strip().lower() == target:
+                    return True
+            return False
+
+        address_ids = [x for x in results if matches_exact(x["LPI"])]
+
+        # Fall back to a substring match against the full address string.
+        # This helps house-name-only properties whose name is not cleanly
+        # isolated into PAO_TEXT/SAO_TEXT (e.g. extra punctuation/spacing).
+        if not address_ids and len(target) >= 3:
+            address_ids = [
+                x
+                for x in results
+                if x["LPI"].get("ADDRESS")
+                and target in str(x["LPI"]["ADDRESS"]).lower()
+            ]
 
         if len(address_ids) == 0:
-            numbers = {x["LPI"].get("PAO_TEXT") for x in addresses["results"]}
-            numbers.update(
-                {x["LPI"].get("PAO_START_NUMBER") for x in addresses["results"]}
+            # Show the full address strings (rather than bare fragments) so
+            # users without a house number can identify their property and
+            # either enter its house name verbatim or its UPRN instead.
+            suggestions = sorted(
+                {
+                    x["LPI"]["ADDRESS"]
+                    for x in results
+                    if x["LPI"].get("ADDRESS") is not None
+                }
             )
-            numbers -= {None}
-            raise SourceArgumentNotFoundWithSuggestions("number", self._number, numbers)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "number", self._number, suggestions
+            )
 
         q = str(API_URLS["collection"])
         r = requests.get(

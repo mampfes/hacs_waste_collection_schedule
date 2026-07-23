@@ -48,6 +48,7 @@ Use one of the following codes as service code:
 - prezero
 - purmerend
 - schouwen-duiveland
+- sliedrecht
 - spaarnelanden
 - sudwestfryslan
 - venray

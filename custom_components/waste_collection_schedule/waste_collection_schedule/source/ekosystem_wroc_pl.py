@@ -85,4 +85,4 @@ class Source:
         calendar_url = html.unescape(match.group(1))
         parsed_url = urlparse(calendar_url)
         params_list = parse_qsl(parsed_url.query)
-        return {k: v for (k, v) in params_list}
+        return dict(params_list)

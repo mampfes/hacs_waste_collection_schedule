@@ -67,7 +67,7 @@ class Source:
 
         target_weekday = WEEKDAYS.index(self._day_of_week)
 
-        for i in range(0, 400):
+        for i in range(400):
             d = start_date + datetime.timedelta(days=i)
 
             if d.weekday() == target_weekday:

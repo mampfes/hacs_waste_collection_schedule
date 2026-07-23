@@ -91,16 +91,14 @@ class Source:
     def get_type(self, title):
         if title.startswith("Mešana embalaža"):
             return "E"
-        elif title.startswith("Mešani komunalni odpadki"):
+        if title.startswith("Mešani komunalni odpadki"):
             return "M"
-        else:
-            return "B"
+        return "B"
 
     def get_date(self, date_info):
         parsed_date = date_info.split(" ")
 
         if isinstance(parsed_date, list) and len(parsed_date) == 1:
             return None
-        else:
-            date_obj = datetime.strptime(parsed_date[0].strip(), "%d.%m.%Y")
-            return date_obj.date()
+        date_obj = datetime.strptime(parsed_date[0].strip(), "%d.%m.%Y")
+        return date_obj.date()

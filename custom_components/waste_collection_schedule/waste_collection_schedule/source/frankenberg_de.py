@@ -49,19 +49,9 @@ class Source:
             "-", ""
         ).replace("str.", "straße").replace("straße", "strasse").replace(
             ".", ""
-        ) == self._street.lower().replace(
-            " ", ""
-        ).replace(
-            '"', ""
-        ).replace(
+        ) == self._street.lower().replace(" ", "").replace('"', "").replace(
             "-", ""
-        ).replace(
-            "str.", "straße"
-        ).replace(
-            "straße", "strasse"
-        ).replace(
-            ".", ""
-        )
+        ).replace("str.", "straße").replace("straße", "strasse").replace(".", "")
 
     def fetch(self) -> list[Collection]:
         fresh_ids = False
@@ -187,7 +177,6 @@ class Source:
                     reason="street is required for this district",
                     suggestions=names,
                 )
-            else:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    argument="street", value=self._street, suggestions=names
-                )
+            raise SourceArgumentNotFoundWithSuggestions(
+                argument="street", value=self._street, suggestions=names
+            )

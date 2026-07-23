@@ -43,8 +43,6 @@ ICON_MAP = {
     "Green Bin Collection": Icons.BIO_KITCHEN,
     "E-waste Event": Icons.ELECTRONICS,
     "Additional EnviroDepot Hours": Icons.EVENT,
-    "Garbage Collection": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
     "Recycling Collection": Icons.RECYCLING,
     "Waste": Icons.GENERAL_WASTE,
     "FOGO": Icons.BIO_KITCHEN,
@@ -227,6 +225,15 @@ EXTRA_INFO = [
         },
     },
     {
+        "title": "West Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "WestKelowna",
+        },
+    },
+    {
         "title": "Plainville (CT)",
         "url": "https://www.plainvillect.com/",
         "country": "us",
@@ -315,6 +322,18 @@ EXTRA_INFO = [
         "url": "https://guelph.ca/",
         "country": "ca",
         "default_params": {"project_id": "3194", "district_id": "GUEL"},
+    },
+    {
+        "title": "New Rochelle (NY)",
+        "url": "https://www.newrochelleny.gov/791/Collection-Dates",
+        "country": "us",
+        "default_params": {"project_id": "3015", "district_id": "NEWRO"},
+    },
+    {
+        "title": "Peoria (IL)",
+        "url": "https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
+        "country": "us",
+        "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
     },
 ]
 
@@ -421,6 +440,23 @@ TEST_CASES = {
         "project_id": 583,
         "zone_id": "zone-z9942",
     },
+    "New Rochelle, NY, USA (with district_id, project_id & zone_id)": {
+        "district_id": "NEWRO",
+        "project_id": 3015,
+        "zone_id": "zone-z19582-z19705",
+    },
+    "West Kelowna, BC, Canada (with district_id & project_id)": {
+        "street": "2760 Cameron Rd",
+        "city": "West Kelowna",
+        "state": "British Columbia",
+        "district_id": "WestKelowna",
+        "project_id": "502",
+    },
+    "Peoria, IL, USA": {
+        "street": "10303 N Churchill Dr",
+        "city": "Peoria",
+        "state": "Illinois",
+    },
 }
 
 
@@ -463,7 +499,7 @@ class Source:
                 )
             return
 
-        elif len(city_data) > 1:
+        if len(city_data) > 1:
             for city in city_data:
                 if city["city_nm"].upper() == self.city.upper():
                     self.project_id = city["project_id"]

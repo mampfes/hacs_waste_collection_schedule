@@ -2,7 +2,6 @@ import logging
 import random
 import re
 from datetime import date, datetime
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -118,6 +117,12 @@ AFFALDONLINE_MUNICIPALITIES = {
         "parser": "default",
         "values": "Nørregade|69||||7100|Vejle|16285351|16285351|0",
     },
+    "viborg": {
+        "title": "Revas (Viborg Kommune)",
+        "url": "https://www.revas.dk/",
+        "parser": "default",
+        "values": "Hjultorvet|1||||8800|Viborg|8228245|8739|0",
+    },
 }
 
 EXTRA_INFO = [
@@ -143,14 +148,14 @@ def select_test_cases(municipalities, mode="random_one_from_each_parser"):
             parser_test_cases[parser].append((name, info))
 
     if mode == "random_one_from_each_parser":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             selected_case = random.choice(cases)
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
                 "values": selected_case[1]["values"],
             }
     elif mode == "first_from_each_parser":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             selected_case = cases[0]
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
@@ -164,14 +169,14 @@ def select_test_cases(municipalities, mode="random_one_from_each_parser"):
             "values": selected_case[1]["values"],
         }
     elif mode == "first_one":
-        first_parser = list(parser_test_cases.keys())[0]
+        first_parser = next(iter(parser_test_cases.keys()))
         selected_case = parser_test_cases[first_parser][0]
         test_cases[selected_case[0]] = {
             "municipality": selected_case[0],
             "values": selected_case[1]["values"],
         }
     elif mode == "all":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             for case in cases:
                 test_cases[case[0]] = {
                     "municipality": case[0],
@@ -225,10 +230,10 @@ class Source:
 
         self._parser_method = parser
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         _LOGGER.debug("Fetching data from %s", self._api_url)
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
 
         post_data = {"values": self._values}
 
@@ -242,8 +247,8 @@ class Source:
 
         return entries
 
-    def _parse_default(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_default(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         next_pickup_info = soup.find_all(string=re.compile("Næste tømningsdag:"))
         if not next_pickup_info:
@@ -287,8 +292,8 @@ class Source:
 
         return entries
 
-    def _parse_silkeborg(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_silkeborg(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         table = soup.find("table")
         if not table:
@@ -330,8 +335,8 @@ class Source:
 
         return entries
 
-    def _parse_favrskov(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_favrskov(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         strong_tags = soup.find_all("strong")
         if not strong_tags:

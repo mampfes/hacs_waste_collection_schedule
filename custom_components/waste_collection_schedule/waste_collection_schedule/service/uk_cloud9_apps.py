@@ -1,8 +1,11 @@
 import re
+from collections.abc import Sequence
 from datetime import date, datetime
-from typing import Any, Optional, Sequence, cast
+from typing import Any, cast
 
 from curl_cffi import requests
+from curl_cffi.const import CurlHttpVersion
+
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -48,7 +51,7 @@ Address = dict[str, Any]
 JSONDict = dict[str, Any]
 
 
-def normalise_postcode(text: Optional[str]) -> Optional[str]:
+def normalise_postcode(text: str | None) -> str | None:
     if not text:
         return None
     match = POSTCODE_PATTERN.search(text)
@@ -77,7 +80,7 @@ def _clean_type_name(name: str) -> str:
     return cleaned or name
 
 
-def _parse_date_string(value: Any) -> Optional[date]:
+def _parse_date_string(value: Any) -> date | None:
     if value is None:
         return None
     if isinstance(value, datetime):
@@ -142,7 +145,7 @@ def _collection_items(
     collection_data: JSONDict,
 ) -> list[tuple[str, dict[str, Any]]]:
     collections_section = cast(
-        Optional[dict[str, dict[str, Any]]], collection_data.get("collections")
+        dict[str, dict[str, Any]] | None, collection_data.get("collections")
     )
     if collections_section:
         return list(collections_section.items())
@@ -163,8 +166,8 @@ class Cloud9Client:
     def __init__(
         self,
         authority: str,
-        icon_keywords: Optional[dict[str, str]] = None,
-        api_domains: Optional[Sequence[str]] = None,
+        icon_keywords: dict[str, str] | None = None,
+        api_domains: Sequence[str] | None = None,
     ):
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
@@ -176,13 +179,21 @@ class Cloud9Client:
         ]
         if not self._base_urls:
             raise ValueError("At least one API domain must be configured.")
-        self._session = requests.Session(impersonate="chrome")
+        # The Cloud9 API is fronted by an AWS ELB that sometimes echoes
+        # HTTP/1.1-only response headers (e.g. "keep-alive: timeout=5") on
+        # an HTTP/2 connection. This violates RFC 7540 8.1.2.2 and causes
+        # curl_cffi/nghttp2 to abort with CurlError 92 ("Invalid HTTP
+        # header field was received"). Forcing HTTP/1.1 avoids the strict
+        # HTTP/2 header validation and lets the request succeed.
+        self._session = requests.Session(
+            impersonate="chrome", http_version=CurlHttpVersion.V1_1
+        )
         self._session.headers.update(BASE_HEADERS)
 
     def _request_json(
-        self, path: str, params: Optional[dict[str, str]] = None
+        self, path: str, params: dict[str, str] | None = None
     ) -> JSONDict:
-        last_error: Optional[Exception] = None
+        last_error: Exception | None = None
         for base_url in self._base_urls:
             try:
                 response = self._session.get(
@@ -203,7 +214,7 @@ class Cloud9Client:
         assert last_error is not None
         raise last_error
 
-    def _resolve_icon(self, label: str) -> Optional[str]:
+    def _resolve_icon(self, label: str) -> str | None:
         lowered = label.lower()
         for keyword, icon in self._icon_keywords.items():
             if keyword in lowered:
@@ -254,11 +265,11 @@ class Cloud9Client:
 
     def fetch_by_address(
         self,
-        postcode: Optional[str],
+        postcode: str | None,
         address_string: str,
-        address_name_number: Optional[str] = None,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
+        address_name_number: str | None = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
         argument_name: str = "address_postcode",
     ) -> list[Collection]:
         normalised = normalise_postcode(postcode)
@@ -290,10 +301,10 @@ class Cloud9Client:
 
     def _lookup_addresses(
         self,
-        postcode: Optional[str],
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
+        postcode: str | None,
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
         address_string: str,
     ) -> list[Address]:
         address_line = " ".join(
@@ -303,7 +314,7 @@ class Cloud9Client:
         )
 
         seen: set[tuple[str, str]] = set()
-        attempts: list[tuple[str, Optional[str]]] = [
+        attempts: list[tuple[str, str | None]] = [
             ("postcode", normalised_postcode),
             ("postcode", postcode),
             ("address", address_string),
@@ -324,9 +335,7 @@ class Cloud9Client:
                 ADDRESSES_PATH,
                 params={param: cleaned},
             )
-            addresses_data = cast(
-                Optional[list[Address]], payload_json.get("addresses")
-            )
+            addresses_data = cast(list[Address] | None, payload_json.get("addresses"))
             if addresses_data:
                 return [cast(Address, a) for a in addresses_data]
 
@@ -336,10 +345,10 @@ class Cloud9Client:
         self,
         addresses: Sequence[Address],
         address_string: str,
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
-        street_town: Optional[str],
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
+        street_town: str | None,
         argument_name: str,
     ) -> Address:
         if not addresses:

@@ -55,8 +55,9 @@ class Source:
             # Check if address was found - if table is missing, likely invalid UPRN
             address_check = soup.find(
                 "p",
-                string=lambda text: text
-                and "Currently showing collection days for:" in text,
+                string=lambda text: (
+                    text and "Currently showing collection days for:" in text
+                ),
             )
             if not address_check:
                 raise SourceArgumentNotFound(
@@ -64,8 +65,7 @@ class Source:
                     self._uprn,
                     "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
                 )
-            else:
-                raise Exception("Could not find collection schedule table in response")
+            raise Exception("Could not find collection schedule table in response")
 
         entries = []
 

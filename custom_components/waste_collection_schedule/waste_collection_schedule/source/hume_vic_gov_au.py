@@ -1,11 +1,12 @@
-import json
 import re
 from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup
-from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Hume City Council"
 DESCRIPTION = "Source for hume.vic.gov.au Waste Collection Services"
@@ -18,11 +19,6 @@ TEST_CASES = {
     "1/90 Vineyard": {"address": "1/90 Vineyard Road Sunbury, VIC 3429"},  # Wednesday
     "9-19 McEwen": {"address": "9-19 MCEWEN DRIVE SUNBURY VICTORIA 3429"},  # Wednesday
     "33 Toyon": {"address": "33 TOYON ROAD KALKALLO  3064"},  # Friday
-}
-
-API_URLS = {
-    "address_search": "https://www.hume.vic.gov.au/api/v1/myarea/search",
-    "collection": "https://www.hume.vic.gov.au/ocapi/Public/myarea/wasteservices",
 }
 
 HEADERS = {
@@ -39,6 +35,15 @@ ICON_MAP = {
     "Food and garden": Icons.BIO_KITCHEN,
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.hume.vic.gov.au",
+    argument_name="address",
+    headers=HEADERS,
+    use_curl_cffi=True,
+    impersonate="chrome124",
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
     def __init__(self, address="", predict=False):
@@ -52,88 +57,63 @@ class Source:
         if not isinstance(predict, bool):
             raise Exception("'predict' must be a boolean value")
         self.predict = predict
+        self._client = OpenCitiesClient(_CONFIG)
 
     def collect_dates(self, start_date, weeks):
         dates = []
         dates.append(start_date)
-        for i in range(1, int(4 / weeks)):
+        for _i in range(1, int(4 / weeks)):
             start_date = start_date + timedelta(days=(weeks * 7))
             dates.append(start_date)
         return dates
 
-    def fetch(self):
-        session = requests.Session(impersonate="chrome124")
-        locationId = 0
-        # Retrieve suburbs
-        r = session.get(
-            API_URLS["address_search"],
-            params={"keywords": self.address},
-            headers=HEADERS,
-        )
+    def fetch(self) -> list[Collection]:
+        if not self.predict:
+            return self._client.fetch(address=self.address)
 
-        data = json.loads(r.text)
-
-        # Find the ID for our suburb
-        for item in data["Items"]:
-            locationId = item["Id"]
-            break
-
-        if locationId == 0:
-            raise SourceArgumentNotFound("address", self.address)
-
-        # Retrieve the upcoming collections for our property
-        r = session.get(
-            API_URLS["collection"],
-            params={"geolocationid": locationId, "ocsvclang": "en-AU"},
-            headers=HEADERS,
-        )
-
-        data = json.loads(r.text)
-
-        responseContent = data["responseContent"]
-
-        soup = BeautifulSoup(responseContent, "html.parser")
+        # `predict` needs each block's "note" text (a fortnightly/weekly
+        # hint) that the shared client's parser doesn't return, so fetch
+        # and parse the raw HTML locally for this path.
+        geolocation_id = self._client.resolve_geolocation_id(self.address)
+        html = self._client.get_waste_services_html(geolocation_id)
+        soup = BeautifulSoup(html, "html.parser")
         services = soup.find_all("div", attrs={"class": "waste-services-result"})
 
         entries = []
-
         for item in services:
-            # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
-
-            # The date format currently used on https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day
+            title = item.find("h3")
+            if date_text is None or title is None:
+                continue
             date_format = "%a %d/%m/%Y"
-
             try:
-                # Strip carriage returns and newlines out of the HTML content
                 cleaned_date_text = (
                     date_text.text.replace("\r", "").replace("\n", "").strip()
                 )
-
-                # Parse the date
                 date = datetime.strptime(cleaned_date_text, date_format).date()
-
             except ValueError:
                 continue
 
-            waste_type = item.find("h3").text.strip()
+            waste_type = title.text.strip()
 
             dates = [date]
-
-            if self.predict:
-                interval_text = item.find("div", attrs={"class": "note"})
+            interval_text = item.find("div", attrs={"class": "note"})
+            if interval_text is not None:
                 if "fortnight" in interval_text.get_text():
                     weeks = 2
                 elif "same day each week" in interval_text.get_text():
                     weeks = 1
-                dates = self.collect_dates(date, weeks)
+                else:
+                    weeks = None
+                if weeks is not None:
+                    dates = self.collect_dates(date, weeks)
 
             for d in dates:
                 entries.append(
                     Collection(
                         date=d,
                         t=waste_type,
-                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                        icon=ICON_MAP.get(waste_type, Icons.GENERAL_WASTE),
                     )
                 )
 

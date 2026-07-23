@@ -127,7 +127,7 @@ class Source:
                 bin_type, rule = self._parse_flowtext(p)
 
             if bin_type and rule:
-                rules[bin_type] = rules.get(bin_type, []) + [rule]
+                rules[bin_type] = [*rules.get(bin_type, []), rule]
             continue
 
         entries = []

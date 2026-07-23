@@ -182,7 +182,7 @@ class Source:
         entries = []
 
         dates = self._ics.convert(r.text)
-        mapping = ICON_MAP.get(self._municipality, None)
+        mapping = ICON_MAP.get(self._municipality)
 
         for d in dates:
             if mapping is not None and d[1] in mapping:

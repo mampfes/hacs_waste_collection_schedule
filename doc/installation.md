@@ -101,12 +101,26 @@ waste_collection_schedule:
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
 | sources | list | required | Contains information for the service provider being used. For details see [Attributes for sources](#attributes-for-sources) |
-| fetch_time | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
+| fetch_time | time | optional | representation of the time of day in `"HH:MM"` (**must be quoted**, see note below) that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
 | fetch_interval_days | int | optional | fetch interval in days. If set to `1` (default), behavior stays unchanged and fetching happens daily at `fetch_time` (plus optional random offset). If set to `>1`, data is fetched every _n_ days. |
 | random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
-| day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
+| day_switch_time | time | optional | time of the day in `"HH:MM"` (**must be quoted**, see note below) that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
 | separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
 | day_offset | int | optional | Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used |
+
+> **Note: always quote `fetch_time` and `day_switch_time`**
+>
+> Home Assistant's YAML loader follows the legacy YAML 1.1 spec, which parses an unquoted `H:MM` value as a **sexagesimal (base-60) number** rather than a string whenever the hour starts with a non-zero digit. For example, an unquoted `fetch_time: 10:00` is silently read as the integer `600` (10 × 60 + 0), which then fails validation with an error like `Invalid time specified: 600`. Times with a leading zero on the hour (e.g. `09:59`) happen to be unaffected, which is why this only seems to break for times from `10:00` onward.
+>
+> To avoid this, always wrap these values in quotes so they are parsed as strings:
+>
+> ```yaml
+> waste_collection_schedule:
+>   fetch_time: "10:00"
+>   day_switch_time: "18:30"
+> ```
+>
+> This is a characteristic of the YAML 1.1 parser used by Home Assistant/PyYAML, not something this integration can change on its own.
 
 ## Attributes for _sources_
 
@@ -121,13 +135,29 @@ waste_collection_schedule:
 
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
-| type | string | required | The identity of the waste type as returned from the source  |
+| type | string | required | The identity of the waste type as returned from the source. May contain an [fnmatch](https://docs.python.org/3/library/fnmatch.html) wildcard (`*`, `?`, `[...]`) to match a family of waste types with a single entry, e.g. `Sonderabfall *`. See the note below. |
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
+
+### Wildcard type matching
+
+The `type` key may be an [fnmatch](https://docs.python.org/3/library/fnmatch.html) glob pattern, so a single `customize` entry can cover a family of waste types. For example, to hide every waste type starting with `Sonderabfall`:
+
+```yaml
+customize:
+  - type: Sonderabfall *
+    show: false
+```
+
+Matching rules:
+
+- An exact `type` match always takes precedence over a wildcard pattern, so you can override a single type while a pattern covers the rest.
+- Patterns are matched case-sensitively against the type returned by the source (after whitespace is stripped). A key counts as a pattern only if it contains `*`, `?`, or `[...]`.
+- Wildcards apply to `alias`, `show`, `icon`, and `picture`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
 
 ## Configuring Sensor(s)
 

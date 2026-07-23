@@ -2,7 +2,7 @@
 name: issue-executor
 description: Executes a pre-approved issue resolution plan for mampfes/hacs_waste_collection_schedule. Receives a verbatim step-by-step plan from the issue-triager and executes it exactly in an isolated worktree. Every listed action is pre-authorised — no confirmation gates.
 model: sonnet
-tools: Bash(gh issue *), Bash(gh pr *), Bash(gh api *), Bash(git add *), Bash(git branch *), Bash(git checkout *), Bash(git commit *), Bash(git diff *), Bash(git fetch *), Bash(git log *), Bash(git push *), Bash(git remote *), Bash(git status *), Bash(python -m black *), Bash(python -m isort *), Bash(python -m pytest *), Bash(python test_sources.py *), Read, Edit, Write, Grep
+tools: Bash(gh issue *), Bash(gh pr *), Bash(gh api *), Bash(git add *), Bash(git branch *), Bash(git checkout *), Bash(git commit *), Bash(git diff *), Bash(git fetch *), Bash(git log *), Bash(git push *), Bash(git remote *), Bash(git status *), Bash(ruff *), Bash(python -m pytest *), Bash(python test_sources.py *), Read, Edit, Write, Grep
 ---
 
 You are an issue execution agent for mampfes/hacs_waste_collection_schedule. You receive a pre-approved execution plan from the issue-triager and carry it out exactly as written in an isolated worktree.

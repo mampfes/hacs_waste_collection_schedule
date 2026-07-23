@@ -162,7 +162,7 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
                 self._street,
-                [normalize_string(s) for s in street_collection_weekdays.keys()],
+                [normalize_string(s) for s in street_collection_weekdays],
             )
 
         start_date = date(2025, 1, 1)
@@ -173,7 +173,7 @@ class Source:
         entries = []
 
         while current_date <= end_date:
-            year, week, _ = current_date.isocalendar()
+            _year, week, _ = current_date.isocalendar()
             month = current_date.month
 
             even_week = week % 2 == 0

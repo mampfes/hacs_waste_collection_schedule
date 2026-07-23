@@ -51,8 +51,9 @@ class Source:
                 if not key.startswith("next_"):
                     continue
                 bin_name = key.split("_")[1]
-                bin_type, icon = BIN_TYPES.get(bin_name, bin_name), ICON_MAP.get(
-                    bin_name
+                bin_type, icon = (
+                    BIN_TYPES.get(bin_name, bin_name),
+                    ICON_MAP.get(bin_name),
                 )
 
                 mes_date = self.get_date(value)
@@ -67,6 +68,5 @@ class Source:
 
         if isinstance(parsed_date, list) and len(parsed_date) == 1:
             return None
-        else:
-            date_obj = datetime.strptime(parsed_date[1].strip(), "%d. %m. %Y")
-            return date_obj.date()
+        date_obj = datetime.strptime(parsed_date[1].strip(), "%d. %m. %Y")
+        return date_obj.date()

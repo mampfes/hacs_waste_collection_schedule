@@ -1,7 +1,7 @@
 import itertools
 import logging
+from collections.abc import Iterable, Sequence
 from datetime import datetime, timedelta
-from typing import Iterable, Sequence
 
 from . import CollectionGroup
 from .collection import Collection
@@ -77,7 +77,7 @@ class CollectionAggregator:
             lambda e: e.date,
         )
 
-        for key, group in iterator:
+        for _key, group in iterator:
             entries.append(CollectionGroup.create(list(group)))
         if start_index is not None:
             entries = entries[start_index:]

@@ -1,10 +1,8 @@
-import datetime
-import json
-
-import requests
-from bs4 import BeautifulSoup
-from requests.utils import requote_uri
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Unley City Council (SA)"
 DESCRIPTION = "Source for Unley City Council rubbish collection."
@@ -28,11 +26,6 @@ TEST_CASES = {
         "street_name": "Castle Street",
         "street_number": 63,
     },
-}
-
-API_URLS = {
-    "address_search": "https://www.unley.sa.gov.au/api/v1/myarea/search?keywords={}",
-    "collection": "https://www.unley.sa.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
 
 HEADERS = {
@@ -60,6 +53,15 @@ ICON_MAP = {
     "Green Waste": Icons.GARDEN,
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.unley.sa.gov.au",
+    argument_name="street_name",
+    search_response_format="xml",
+    headers=HEADERS,
+    use_curl_cffi=True,
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
     def __init__(
@@ -69,77 +71,10 @@ class Source:
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        locationId = ""
-
-        address = "{} {} {} SA {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+    def fetch(self) -> list[Collection]:
+        address = (
+            f"{self.street_number} {self.street_name} {self.suburb} SA {self.post_code}"
         )
-
-        q = requote_uri(str(API_URLS["address_search"]).format(address))
-
-        # Retrieve address search results
-        r = requests.get(q, headers=HEADERS)
-        r.raise_for_status()
-
-        # Parse XML response (API returns XML, not JSON)
-        soup = BeautifulSoup(r.text, "xml")
-
-        # Look for PhysicalAddressSearchResult items in the XML response
-        address_results = soup.find_all("PhysicalAddressSearchResult")
-
-        # Find the ID for our address
-        for result in address_results:
-            id_element = result.find("Id")
-            if id_element:
-                locationId = id_element.text.strip()
-                break
-
-        if not locationId:
-            return []
-
-        # Retrieve the upcoming collections for our property
-        q = requote_uri(str(API_URLS["collection"]).format(locationId))
-
-        r = requests.get(q, headers=HEADERS)
-        r.raise_for_status()
-
-        # Parse JSON response and extract HTML content
-        data = json.loads(r.text)
-        responseContent = data["responseContent"]
-
-        soup = BeautifulSoup(responseContent, "html.parser")
-        services = soup.find_all("div", attrs={"class": "waste-services-result"})
-
-        entries = []
-
-        for item in services:
-            date_text = item.find("div", attrs={"class": "next-service"})
-            waste_type = item.find("h3")
-
-            if not date_text or not waste_type:
-                continue
-
-            try:
-                # Parse the date (format: "Thu 7/8/2025")
-                cleaned_date_text = (
-                    date_text.text.replace("\r", "").replace("\n", "").strip()
-                )
-                date = datetime.datetime.strptime(
-                    cleaned_date_text, "%a %d/%m/%Y"
-                ).date()
-
-                waste_type_text = waste_type.text.strip()
-
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=waste_type_text,
-                        icon=ICON_MAP.get(waste_type_text, "mdi:trash-can"),
-                    )
-                )
-            except (ValueError, AttributeError):
-                continue
-
-        return entries
+        return self._client.fetch(address=address)

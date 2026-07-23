@@ -11,4 +11,4 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Borsele 4451CM-12:
-    url: "https://afvalkalender.borsele.nl/afval/afvalkalender/{%Y}/4451CM-12.ics"
+    url: https://afvalkalender.borsele.nl/afval/afvalkalender/{%Y}/4451CM-12.ics

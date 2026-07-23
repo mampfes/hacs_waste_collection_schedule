@@ -47,6 +47,11 @@ TEST_CASES = {
         "ort": "Norderstedt",
         "strasse": "Distelweg",
     },
+    "nds Norderstedt Friedrichsgaber Weg (house number range as street)": {
+        "service": "nds",
+        "ort": "Norderstedt",
+        "strasse": "Friedrichsgaber Weg 1 - 57",
+    },
     "una Bergkamen, Agnes-Miegel-Str.": {
         "service": "unna",
         "ort": "Bergkamen",
@@ -66,6 +71,12 @@ TEST_CASES = {
         "service": "frankenthal",
         "ort": "Frankenthal",
         "strasse": "Am Martinspfad",
+    },
+    "Solingen, Katternberger Straße 95 (street split by district)": {
+        "service": "solingen",
+        "ort": "Solingen",
+        "strasse": "Katternberger Straße",
+        "hausnummer": "95",
     },
 }
 

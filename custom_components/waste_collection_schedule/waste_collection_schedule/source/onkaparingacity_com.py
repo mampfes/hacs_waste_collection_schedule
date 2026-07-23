@@ -1,9 +1,8 @@
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "City of Onkaparinga Council"
 DESCRIPTION = "Source for City of Onkaparinga Council, Australia."
@@ -19,58 +18,22 @@ ICON_MAP = {
     "Green Waste": Icons.GARDEN,
 }
 
-API_URL = "https://www.onkaparingacity.com"
-HEADERS = {"referer": f"{API_URL}/Services/Waste-and-recycling/Bin-collections"}
+HEADERS = {
+    "referer": "https://www.onkaparingacity.com/Services/Waste-and-recycling/Bin-collections"
+}
+
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.onkaparingacity.com",
+    headers=HEADERS,
+    icon_keywords=ICON_MAP,
+    exclude_type_prefixes=("Calendar",),
+)
 
 
 class Source:
-    def __init__(self, address):
+    def __init__(self, address: str):
         self._address = address
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-
-        params = {"keywords": self._address}
-
-        r = requests.get(
-            f"{API_URL}/api/v1/myarea/search", params=params, headers=HEADERS
-        )
-        r.raise_for_status()
-
-        addresses = r.json()
-
-        if addresses == 0:
-            raise SourceArgumentNotFound("address", self._address)
-
-        params = {"geolocationid": addresses["Items"][0]["Id"], "ocsvclang": "en-AU"}
-
-        r = requests.get(
-            f"{API_URL}/ocapi/Public/myarea/wasteservices",
-            params=params,
-            headers=HEADERS,
-        )
-        r.raise_for_status()
-
-        waste = r.json()
-
-        soup = BeautifulSoup(waste["responseContent"], "html.parser")
-
-        waste_type = []
-
-        for tag in soup.find_all("h3"):
-            if tag.text.startswith("Calendar"):
-                continue
-            waste_type.append(tag.text)
-
-        waste_date = []
-        for tag in soup.find_all("div", {"class": "next-service"}):
-            tag_text = tag.text.strip()
-            if tag_text != "":
-                date_object = datetime.strptime(tag_text, "%a %d/%m/%Y").date()
-                waste_date.append(date_object)
-
-        waste = list(zip(waste_type, waste_date))
-
-        entries = []
-        for item in waste:
-            entries.append(Collection(item[1], item[0], icon=ICON_MAP.get(item[0])))
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch(address=self._address)

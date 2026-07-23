@@ -89,7 +89,6 @@ def main():
     # select service
     service_choices = [
         ("Frankfurt", "Fes"),
-        ("Düsseldorf", "Dus"),
         ("Rhein-Sieg-Kreis", "Rsa"),
         ("Bochum", "Usb"),
         ("Münster", "Awm"),

@@ -63,7 +63,7 @@ python -m pytest tests/test_source_components.py -k "test_name"
 cd custom_components/waste_collection_schedule/waste_collection_schedule/test
 python test_sources.py -s <source_name> -l
 
-# All pre-commit hooks (black, flake8, isort, mypy, codespell, bandit, pyupgrade, yamlfmt)
+# All pre-commit hooks (ruff lint + format, mypy, codespell, bandit, pyupgrade, yamlfmt)
 pre-commit run --all-files
 
 # Install dependencies
@@ -76,9 +76,7 @@ pip install -r requirements.txt
 
 ## Linting and formatting
 
-- **black**: `--safe --quiet`
-- **flake8** ignores: D100–D107, E501, W503, E203
-- **isort**: profile=black, multi-line=3, trailing-comma
+- **ruff** (replaces black, flake8 and isort): line-length 88, lint select `E,F,W,I` (pycodestyle + pyflakes + isort, profile=black), ignore `E203,E501,E721`. `ruff format` mirrors black; `ruff check` mirrors flake8 + isort. Config lives in `.pre-commit-config.yaml` / `pyproject.toml`.
 - **mypy**: `--ignore-missing-imports --explicit-package-bases`
 - **bandit**: config at `tests/bandit.yaml`
 - **pyupgrade**: targets Python 3.7+
@@ -87,8 +85,8 @@ pip install -r requirements.txt
 For a single source file edit:
 
 ```bash
-python -m black <file>
-python -m isort --profile black <file>
+ruff check --fix <file>
+ruff format <file>
 ```
 
 ---
@@ -145,7 +143,7 @@ If a site returns 403 with regular `requests`, switch to `curl_cffi` — it bypa
 - ❌ `if __name__ == "__main__":` blocks or standalone-script boilerplate.
 - ❌ Dummy parameters (e.g. `_`) just to satisfy the config GUI.
 - ❌ Login-required sources. The project only supports publicly accessible endpoints.
-- ❌ Sources for providers already covered by a shared platform — check `recollect.yaml`, `mein_abfallkalender_online.yaml`, `recyclecoach_com.py`'s `EXTRA_INFO` list, `c_trace_de`, and the other shared platforms first.
+- ❌ Sources for providers already covered by a shared platform — check `recollect.yaml`, `mein_abfallkalender_online.yaml`, `recyclecoach_com.py`'s `EXTRA_INFO` list, `c_trace_de`, `service/OpenCities.py` (OpenCities/MyArea council CMS widget — `api/v1/myarea/search` + `ocapi/Public/myarea/wasteservices` endpoints), and the other shared platforms first.
 
 ---
 
@@ -180,7 +178,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 2. **Generated files in the diff**. See list above. Revert before pushing.
 3. **Missing `doc/source/<id>.md`**. Required for every new source; create it manually.
 4. **Hardcoded data**. Fetch live; do not paste a schedule.
-5. **Provider already covered by a shared platform** (Recollect, RecycleCoach, ICS YAML, Publidata, IntraMaps, etc.). Check first.
+5. **Provider already covered by a shared platform** (Recollect, RecycleCoach, ICS YAML, Publidata, IntraMaps, OpenCities/MyArea, etc.). Check first.
 6. **Generic `Exception`**. Use `SourceArgumentNotFound` / `SourceArgumentNotFoundWithSuggestions`.
 7. **403 from a Cloudflare site**. Switch to `curl_cffi`.
 8. **Login-required**. Not supported — the project only consumes public endpoints.

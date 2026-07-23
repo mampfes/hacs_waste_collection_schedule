@@ -1,10 +1,8 @@
-import logging
-import re
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Yarra Ranges Council"
 DESCRIPTION = "Source for Yarra Ranges Council rubbish collection."
@@ -18,80 +16,25 @@ TEST_CASES = {
     },
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 ICON_MAP = {
     "New weekly FOGO collection": Icons.BIO_KITCHEN,
     "Rubbish Collection": Icons.GENERAL_WASTE,
     "Recycling Collection": Icons.RECYCLING,
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.yarraranges.vic.gov.au",
+    argument_name="street_address",
+    warm_up_url="https://www.yarraranges.vic.gov.au/Environment/Waste/Find-your-waste-collection-and-burning-off-dates",
+    icon_keywords=ICON_MAP,
+    exclude_types=("Burning off",),
+)
+
 
 class Source:
-    def __init__(self, street_address):
+    def __init__(self, street_address: str):
         self._street_address = street_address
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        session = requests.Session()
-
-        response = session.get(
-            "https://www.yarraranges.vic.gov.au/Environment/Waste/Find-your-waste-collection-and-burning-off-dates"
-        )
-        response.raise_for_status()
-
-        response = session.get(
-            "https://www.yarraranges.vic.gov.au/api/v1/myarea/search",
-            params={"keywords": self._street_address},
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            addressSearchApiResults["Items"] is None
-            or len(addressSearchApiResults["Items"]) < 1
-        ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.yarraranges.vic.gov.au/Environment/Waste/Find-your-waste-collection-and-burning-off-dates"
-            )
-
-        addressSearchTopHit = addressSearchApiResults["Items"][0]
-        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
-
-        geolocationid = addressSearchTopHit["Id"]
-        _LOGGER.debug("Geolocationid: %s", geolocationid)
-
-        response = session.get(
-            "https://www.yarraranges.vic.gov.au/ocapi/Public/myarea/wasteservices",
-            params={"geolocationid": geolocationid, "ocsvclang": "en-AU"},
-        )
-        response.raise_for_status()
-
-        wasteApiResult = response.json()
-        _LOGGER.debug("Waste API result: %s", wasteApiResult)
-
-        soup = BeautifulSoup(wasteApiResult["responseContent"], "html.parser")
-
-        entries = []
-        for article in soup.find_all("article"):
-            waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type)
-
-            if waste_type == "Burning off":
-                continue
-
-            next_pickup = (
-                article.find("div", {"class": "next-service"}).getText().strip()
-            )
-
-            if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
-                continue
-
-            next_pickup_date = datetime.strptime(
-                next_pickup.split(sep=" ")[1], "%d/%m/%Y"
-            ).date()
-
-            if next_pickup_date is None or waste_type is None:
-                continue
-
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch(address=self._street_address)

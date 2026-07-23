@@ -28,6 +28,7 @@ TEST_CASES = {
         "green": "RPP-RE-22-RV",
         "bulky": "RPP-REGIE-22",
     },
+    "Pierrefonds-Roxboro": {"sector": "PIRO-1"},
 }
 
 API_URL = [
@@ -40,12 +41,15 @@ API_URL = [
         "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d02dac7d-a114-4113-8e52-266001447591/download/collecte-des-matieres-recyclables.geojson",
     },
     {
-        "type": "Food",
-        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/61e8c7e6-9bf1-45d9-8ebe-d7c0d50cfdbb/download/collecte-des-residus-alimentaires.geojson",
-    },
-    {
+        # Green must be fetched before Food: some sectors report Food
+        # collection as simply "included in the collection of organic
+        # waste" without a weekday of their own (see get_green_schedule_message).
         "type": "Green",
         "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/d0882022-c74d-4fe2-813d-1aa37f6427c9/download/collecte-des-residus-verts-incluant-feuilles-mortes.geojson",
+    },
+    {
+        "type": "Food",
+        "url": "https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/61e8c7e6-9bf1-45d9-8ebe-d7c0d50cfdbb/download/collecte-des-residus-alimentaires.geojson",
     },
     {
         "type": "Bulky",
@@ -89,12 +93,20 @@ MONTHS = {
 
 MONTH_PATTERN = r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\b"
 
+# Some sectors report their Food (organic) waste collection with a message
+# such as "Food waste collections is included in the collection of organic
+# waste." and no weekday of their own. In that case, Food follows the same
+# schedule as the Green (organic waste) collection for the same sector.
+FOOD_INCLUDED_IN_GREEN_PATTERN = re.compile(
+    r"included in the collection of organic waste", re.IGNORECASE
+)
+
 LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": 'Download on your computer a <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.',
-    "fr": 'Téléchargez un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.',
-    "de": 'Laden Sie eine <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.',
-    "it": 'Scarica sul tuo computer un <a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson">file GeoJSON di Montreal</a><br/>Visita https://geojson.io/<br/>Clicca su *Apri* e seleziona il file GeoJSON di Montreal<br/>Trova il tuo settore sulla mappa.',
+    "en": 'Download on your computer a &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.',
+    "fr": 'Téléchargez un &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;fichier Montreal GeoJSON&lt;/a&gt;&lt;br/&gt;Visitez https://geojson.io/&lt;br/&gt;Ouvrez le fichier Montreal GeoJSON&lt;br/&gt;Trouvez votre secteur sur la carte.',
+    "de": 'Laden Sie eine &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;Montreal GeoJSON-Datei&lt;/a&gt; auf Ihren Computer herunter&lt;br/&gt;Besuchen Sie https://geojson.io/&lt;br/&gt;Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus&lt;br/&gt;Finden Sie Ihren Sektor auf der Karte.',
+    "it": 'Scarica sul tuo computer un &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;file GeoJSON di Montreal&lt;/a&gt;&lt;br/&gt;Visita https://geojson.io/&lt;br/&gt;Clicca su *Apri* e seleziona il file GeoJSON di Montreal&lt;br/&gt;Trova il tuo settore sulla mappa.',
 }
 
 PARAM_TRANSLATIONS = {
@@ -175,13 +187,17 @@ class Source:
             "food": food if food else sector,
             "green": green if green else sector,
         }
+        # Cache of the Green (organic waste) features, populated once the
+        # Green source has been fetched, so that Food can reuse them when
+        # its own message doesn't carry a weekday (see get_data_by_source).
+        self._green_features: list | None = None
 
     def parse_collection(self, source_type, schedule_message):
         """Parse GeoJSON from Info-Collecte data."""
         entries = []
         # Searching for the weekday in the sentence
         collection_day = None
-        for day in WEEKDAYS.keys():
+        for day in WEEKDAYS:
             if re.search(day, schedule_message, re.IGNORECASE):
                 collection_day = WEEKDAYS[day]
                 break  # Stop searching if the day is found
@@ -242,7 +258,7 @@ class Source:
             elif re.match(r"(.*\d+.*){1,}", line):
                 # Multiple dates ?
                 dates_defined = True
-                for month, month_id in MONTHS.items():
+                for month in MONTHS:
                     if re.search(rf"{month}", line, re.IGNORECASE):
                         months_found.append(month)
 
@@ -322,17 +338,45 @@ class Source:
             )
         return entries
 
+    def get_green_schedule_message(self, sector):
+        """Return the Green (organic waste) MESSAGE_EN for the given sector.
+
+        Some sectors report Food waste collection as simply "included in
+        the collection of organic waste" without stating their own
+        weekday. In that case, Food follows the same schedule as the
+        Green/organic waste collection for the same sector, so we reuse
+        the (already fetched) Green message instead.
+        """
+        if not self._green_features:
+            return None
+        for feature in self._green_features:
+            if feature["properties"]["SECTEUR"] != sector:
+                continue
+            if feature["properties"]["MESSAGE_EN"]:
+                return feature["properties"]["MESSAGE_EN"]
+        return None
+
     def get_data_by_source(self, source_type, url):
         # Get waste collection zone by longitude and latitude
 
-        r = requests.get(url, timeout=60)
-        r.raise_for_status()
+        if source_type == "Green" and self._green_features is not None:
+            features = self._green_features
+        else:
+            r = requests.get(url, timeout=60)
+            r.raise_for_status()
 
-        schedule = r.json()
+            schedule = r.json()
+            features = schedule["features"]
+            if source_type == "Green":
+                # Cache for a possible Food fallback (see
+                # get_green_schedule_message). Green is always fetched
+                # before Food (see API_URL order).
+                self._green_features = features
+
         entries = []
 
         # check the information for the sector
-        for feature in schedule["features"]:
+        for feature in features:
             if feature["properties"]["SECTEUR"] != self._sector[source_type.lower()]:
                 continue
             if feature["properties"]["JOUR"] and feature["properties"]["FREQUENCE"]:
@@ -341,6 +385,21 @@ class Source:
             else:
                 if feature["properties"]["MESSAGE_EN"]:
                     schedule_message = feature["properties"]["MESSAGE_EN"]
+                    if source_type == "Food" and FOOD_INCLUDED_IN_GREEN_PATTERN.search(
+                        schedule_message
+                    ):
+                        green_message = self.get_green_schedule_message(
+                            self._sector["food"]
+                        )
+                        if green_message is None:
+                            LOGGER.warning(
+                                "Food waste for sector %s is included in the "
+                                "organic waste collection, but no matching "
+                                "Green sector was found to determine the day.",
+                                self._sector["food"],
+                            )
+                            continue
+                        schedule_message = green_message
                     entries += self.parse_collection(source_type, schedule_message)
 
         return entries

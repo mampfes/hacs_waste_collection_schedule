@@ -47,7 +47,9 @@ class Source:
             r = session.get(url, allow_redirects=True, timeout=30)
             r.raise_for_status()
         except requests.exceptions.RequestException as e:
-            raise Exception(f"Error fetching data from Wolverhampton Council: {e}")
+            raise Exception(
+                f"Error fetching data from Wolverhampton Council: {e}"
+            ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []

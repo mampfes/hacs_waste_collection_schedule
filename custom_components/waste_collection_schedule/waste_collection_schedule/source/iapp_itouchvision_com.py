@@ -37,6 +37,10 @@ TEST_CASES = {
     },
     "Test Valley": {"uprn": 100060571645, "municipality": "TEST VALLEY"},
     "Hyndburn": {"uprn": 100010439798, "municipality": "HYNDBURN"},
+    "Epsom and Ewell: 100061354185": {
+        "uprn": "100061354185",
+        "municipality": "EPSOM AND EWELL",
+    },
 }
 COUNTRY = "uk"
 ICON_MAP = {
@@ -67,6 +71,8 @@ ICON_MAP = {
     "RECYCLING - GREEN": Icons.ORGANIC,
     "REFUSE": Icons.GENERAL_WASTE,
     "Green Garden Waste": Icons.GARDEN,
+    "Recycling and Food": Icons.RECYCLING,
+    "Refuse and Glass": Icons.GENERAL_WASTE,
 }
 
 # Global variables for encryption key and IV
@@ -213,6 +219,15 @@ MUNICIPALITIES: dict[str, Municipality] = {
         "title": "Hyndburn Borough Council",
         "url": "https://www.hyndburnbc.gov.uk/",
     },
+    "EPSOM AND EWELL": {
+        "PAYLOAD": {
+            "P_CLIENT_ID": 138,
+            "P_COUNCIL_ID": 140,
+        },
+        "API_URL": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+        "title": "Epsom and Ewell Borough Council",
+        "url": "https://www.epsom-ewell.gov.uk/",
+    },
 }
 
 MUNICIPALITY_LITERALS = Literal[
@@ -229,6 +244,7 @@ MUNICIPALITY_LITERALS = Literal[
     "SOMERSET COUNTY",
     "TEST VALLEY",
     "HYNDBURN",
+    "EPSOM AND EWELL",
 ]
 
 EXTRA_INFO = [
@@ -245,7 +261,7 @@ EXTRA_INFO = [
 class Source:
     def __init__(self, uprn: str | int, municipality: MUNICIPALITY_LITERALS):
         self._uprn: str | int = uprn
-        if not municipality.upper() in MUNICIPALITIES:
+        if municipality.upper() not in MUNICIPALITIES:
             raise ValueError(f"Unknown municipality: {municipality}")
         self._payload = MUNICIPALITIES[municipality.upper()]["PAYLOAD"]
         self._api_url = MUNICIPALITIES[municipality.upper()]["API_URL"]

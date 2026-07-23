@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime, timedelta
-from typing import List
 
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -90,8 +89,8 @@ class Source:
                 )
         except (ValueError, TypeError) as e:
             raise Exception(
-                f"Invalid coordinate format. Please provide numeric values. Error: {str(e)}"
-            )
+                f"Invalid coordinate format. Please provide numeric values. Error: {e!s}"
+            ) from e
 
     def fetch(self):
         try:
@@ -102,7 +101,7 @@ class Source:
             raise Exception(
                 f"Coordinates ({self._latitude}, {self._longitude}) not found in any Bendigo collection zone. "
                 "Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
-            )
+            ) from None
 
         _LOGGER.debug(
             "Found collection zone: %s",
@@ -149,7 +148,7 @@ class Source:
         weeks: int,
         start: str,
         collection_type: str,
-        entries: List[Collection],
+        entries: list[Collection],
     ):
         if not desc:
             raise ValueError(
@@ -194,9 +193,7 @@ class Source:
                     "Friday",
                     "Saturday",
                     "Sunday",
-                ].index(
-                    start_day
-                )
+                ].index(start_day)
                 if days_ahead <= 0:
                     days_ahead += 7
                 start_date = start_date + timedelta(days=days_ahead)

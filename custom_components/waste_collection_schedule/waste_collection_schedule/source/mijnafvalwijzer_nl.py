@@ -85,19 +85,25 @@ class Source:
         types_list = []
         for year in years:
             year_int = int(year.get("id")[-4:])
-            dates = soup.find_all("span", class_="span-line-break")
+            # Scope the date/type lookup to this year's own container.
+            # Searching the whole page (`soup`) here pulls in the
+            # dates/types of *every* year present on the page for *each*
+            # year iteration, duplicating entries and mislabeling half of
+            # them with the wrong year whenever two "jaar-XXXX" blocks are
+            # present at once (e.g. around a year boundary). See GH #5064.
+            dates = year.find_all("span", class_="span-line-break")
             for date in dates:
                 date_day.append(int(date.string.split()[1]))
                 date_month.append(dict_month[date.string.split()[2]])
                 date_year.append(year_int)
-            types = soup.find_all("span", class_="afvaldescr")
+            types = year.find_all("span", class_="afvaldescr")
             for type in types:
                 types_list.append(type.string)
 
         entries: list[Collection] = []
 
         for day, month, year, bin_type in zip(
-            date_day, date_month, date_year, types_list
+            date_day, date_month, date_year, types_list, strict=False
         ):
             try:
                 entries.append(

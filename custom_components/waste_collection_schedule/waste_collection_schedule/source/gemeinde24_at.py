@@ -22,6 +22,14 @@ TEST_CASES = {
         "gemeinde": "Gaal",
         "strasse": "Gaal",
     },
+    "St. Marien - Pachersdorf Straße (3-wöchentlich)": {
+        "gemeinde_id": "83",
+        "street_id": "4129",
+    },
+    "St. Marien - Pachersdorf Straße (6-wöchentlich)": {
+        "gemeinde_id": "83",
+        "street_id": "3911",
+    },
 }
 
 API_BASE_URL = "https://www.gemeinde24.at/admin/API"
@@ -85,11 +93,10 @@ PARAM_DESCRIPTIONS = {
         "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
         "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
         "gemeinde_id": (
-            "Numerische GemeindeID aus Gemeinde24 "
-            "(optional statt des Gemeinde-Feldes)."
+            "Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes)."
         ),
         "street_id": (
-            "Numerische streetID aus Gemeinde24 " "(optional statt des Straßen-Feldes)."
+            "Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes)."
         ),
     },
 }

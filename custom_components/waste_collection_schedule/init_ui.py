@@ -10,6 +10,7 @@ import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryError
 
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
@@ -17,8 +18,8 @@ from .waste_collection_schedule.service.DeviceKeyStore import (
 )
 from .wcs_coordinator import WCSCoordinator
 
-from . import const  # type: ignore # isort:skip # noqa: E402
-from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
+from . import const  # type: ignore # isort:skip
+from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,6 +63,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
         options.get(const.CONF_IGNORE_DUPLICATES, const.CONF_IGNORE_DUPLICATES_DEFAULT),
     )
+
+    if shell is None:
+        raise ConfigEntryError(
+            f"Failed to set up source '{entry.data[const.CONF_SOURCE_NAME]}'. "
+            "This is usually caused by a stale/invalid configuration, e.g. "
+            "after the source's arguments changed in an update. Please "
+            "reconfigure this integration entry. See the Home Assistant logs "
+            "for details."
+        )
 
     coordinator = WCSCoordinator(
         hass,
@@ -127,7 +137,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
     _LOGGER.debug("minor version %s", config_entry.minor_version)
 
     # Version number has gone backwards
-    if const.CONFIG_VERSION < config_entry.version:
+    if config_entry.version > const.CONFIG_VERSION:
         _LOGGER.error(
             "Backwards migration not possible. Please update the integration."
         )

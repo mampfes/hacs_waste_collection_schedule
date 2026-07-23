@@ -36,7 +36,9 @@ class Source:
         try:
             data = json.loads(table.attrs["data-entities"])
         except (json.JSONDecodeError, KeyError):
-            raise ValueError("Could not parse the waste collection data from the page")
+            raise ValueError(
+                "Could not parse the waste collection data from the page"
+            ) from None
 
         entries = []
         for item in data.get("data", []):
@@ -80,6 +82,6 @@ class Source:
                     )
 
             except Exception:
-                raise ValueError("Could not parse the waste collection entry")
+                raise ValueError("Could not parse the waste collection entry") from None
 
         return entries

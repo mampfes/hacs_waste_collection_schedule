@@ -16,5 +16,5 @@ howto:
     - Utilisez cette URL comme paramètre `url`.
     - Modèle d'URL: `https://api.sherbrooke.ca/collection-schedules/calendars/{calendar}/sectors/{sector}/days/{day}/ics`
 test_cases:
-  "Sample (Mardi)":
+  Sample (Mardi):
     url: https://api.sherbrooke.ca/collection-schedules/calendars/1/sectors/01/days/Mardi/ics

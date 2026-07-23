@@ -40,7 +40,7 @@ class Source:
             next_collect = next_collect + timedelta(days=7)
         next_dates = []
         next_dates.append(next_collect)
-        for i in range(1, int(4 / weeks)):
+        for _i in range(1, int(4 / weeks)):
             next_collect = next_collect + timedelta(days=(weeks * 7))
             next_dates.append(next_collect)
         return next_dates

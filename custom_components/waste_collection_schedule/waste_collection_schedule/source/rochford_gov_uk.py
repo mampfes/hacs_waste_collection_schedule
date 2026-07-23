@@ -1,7 +1,6 @@
 """Source for Rochford District Council, UK."""
 
 from datetime import datetime
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -86,7 +85,7 @@ class Source:
                 return command.get("data", "")
         return ""
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         s = requests.Session()
 
         # Step 0 - load page and scrape the initial form_build_id
@@ -142,7 +141,7 @@ class Source:
         insert_html = self._get_insert_html(r.json())
         soup = BeautifulSoup(insert_html, "html.parser")
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for row in soup.find_all("tr", {"class": "waste-collection__day"}):
             time_tag = row.find("time")
             type_cell = row.find("td", {"class": "waste-collection__day--type"})

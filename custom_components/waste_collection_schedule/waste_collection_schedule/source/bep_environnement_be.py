@@ -1,6 +1,5 @@
 import json
 from datetime import date
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -58,7 +57,7 @@ def GetLocalities() -> dict[str, str]:
     return localities
 
 
-def BepWasteParser(response: dict) -> List[Collection]:
+def BepWasteParser(response: dict) -> list[Collection]:
     """Specific implementation to parse response from Bep-Environement.
 
     Args:

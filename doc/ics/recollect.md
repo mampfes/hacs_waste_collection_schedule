@@ -56,6 +56,9 @@ known to work with:
 |Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|
 |City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|
 |Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|
+|Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|
+|City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|
+|City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|
 
 and probably a lot more.
 

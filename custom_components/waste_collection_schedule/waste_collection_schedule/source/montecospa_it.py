@@ -78,11 +78,14 @@ class Source:
         self._user_type = user_type
 
     def fetch(self) -> list[Collection]:
+        this_year = date.today().year
         where = {
             "serviceOnline": "1",
+            "language": "it",
             "municipality": self._municipality,
             "serviceZoneName": self._zone,
             "serviceUserClass": self._user_type,
+            "validityYear": {"$in": [this_year, this_year + 1]},
         }
         params = urllib.parse.urlencode({"where": json.dumps(where), "limit": 200})
         r = requests.get(
@@ -93,22 +96,28 @@ class Source:
         r.raise_for_status()
         data = r.json()
 
+        seen: set[tuple[date, str]] = set()
         entries: list[Collection] = []
         for record in data.get("results", []):
-            waste_type_obj = record.get("serviceWasteType") or {}
-            waste_name = (
-                waste_type_obj.get("name", "Unknown")
-                if isinstance(waste_type_obj, dict)
-                else "Unknown"
-            )
+            waste_type_obj = record.get("serviceWasteType")
+            if not isinstance(waste_type_obj, dict):
+                # Records without a waste type are informational notes
+                # (e.g. put-out time instructions), not collection events.
+                continue
+            waste_name = waste_type_obj.get("name") or "Unknown"
             icon = ICON_MAP.get(waste_name)
             calendar = record.get("serviceCalendar") or []
             for day in calendar:
-                if day.get("value") == "x":
-                    try:
-                        d = date.fromisoformat(day["date"])
-                    except (ValueError, KeyError):
-                        continue
-                    entries.append(Collection(date=d, t=waste_name, icon=icon))
+                if day.get("value") != "x":
+                    continue
+                try:
+                    d = date.fromisoformat(day["date"])
+                except (ValueError, KeyError):
+                    continue
+                key = (d, waste_name)
+                if key in seen:
+                    continue
+                seen.add(key)
+                entries.append(Collection(date=d, t=waste_name, icon=icon))
 
         return entries

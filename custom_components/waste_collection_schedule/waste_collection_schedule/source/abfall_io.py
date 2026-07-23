@@ -103,8 +103,10 @@ class Source:
         f_id_strasse,
         f_id_bezirk=None,
         f_id_strasse_hnr=None,
-        f_abfallarten=[],
+        f_abfallarten=None,
     ):
+        if f_abfallarten is None:
+            f_abfallarten = []
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk
@@ -135,8 +137,10 @@ class Source:
         if r.status_code == 401:
             raise ValueError(
                 f"API key '{self._key}' is no longer valid for the legacy abfall.io API. "
-                "This provider may have migrated to the new abfall.io v3 API, which is not yet supported. "
-                "See https://github.com/mampfes/hacs_waste_collection_schedule/issues/3788"
+                "This provider has likely migrated to the new abfall.io v3 API. "
+                "Please switch to the 'Abfall.IO / AbfallPlus (GraphQL)' source (abfall_io_graphql) instead, "
+                "which supports the v3 API. "
+                "See https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io_graphql.md"
             )
         r.raise_for_status()
 
@@ -173,7 +177,7 @@ class Source:
             args[f"f_id_abfalltyp_{i}"] = self._abfallarten[i]
 
         args["f_abfallarten_index_max"] = len(self._abfallarten)
-        args["f_abfallarten"] = ",".join(map(lambda x: str(x), self._abfallarten))
+        args["f_abfallarten"] = ",".join(str(x) for x in self._abfallarten)
 
         now = datetime.datetime.now()
         date2 = now + datetime.timedelta(days=365)

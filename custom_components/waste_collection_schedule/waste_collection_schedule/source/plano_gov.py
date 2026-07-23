@@ -185,7 +185,7 @@ class Source:
 
         # For standard trash we only get the day of the week, so we need to convert it to a date
 
-        trash_day_num = WEEKDAYMAP.get(trash_day, None)
+        trash_day_num = WEEKDAYMAP.get(trash_day)
 
         if trash_day_num is None:
             raise Exception(f"Invalid trash day: {trash_day}")

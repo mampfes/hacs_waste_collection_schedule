@@ -126,7 +126,7 @@ class Source:
     def _parse_waste_types(self, waste_type: str) -> list[str]:
         requested_types = []
         valid_types = list(WASTE_TYPES.keys())
-        accepted_types = valid_types + ["all", "both"]
+        accepted_types = [*valid_types, "all", "both"]
         for token in waste_type.lower().replace(";", ",").split(","):
             selected_type = token.strip()
             if not selected_type:

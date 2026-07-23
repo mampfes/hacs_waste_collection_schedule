@@ -65,6 +65,7 @@ List of customers (2021-07-09):
 - `aic-fdb`: Landratsamt Aichach-Friedberg
 - `ansbach`: Landkreis Ansbach
 - `awb-ak`: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
+- `awb-altenburg`: Abfallwirtschaft Altenburger Land
 - `awb-duerkheim`: AWB Landkreis Bad Dürkheim
 - `awld`: Abfallwirtschaft Lahn-Dill-Kreises
 - `awv-isar-inn`: Abfallwirtschaft Isar-Inn
@@ -96,6 +97,7 @@ List of customers (2021-07-09):
 - `ebe`: Markt Schwaben
 - `ebe`: Pöring (Zorneding)
 - `ebe`: Wolfesing (Zorneding)
+- `ebu`: EBU Ulm
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck

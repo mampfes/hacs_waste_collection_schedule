@@ -53,13 +53,21 @@ class Source:
         s: requests.Session,
         action: str,
         x_csrf_token: str,
-        changes: dict = {},
-        objects: list = [],
-        params: dict[str, str | list[str] | dict] = {},
-        profile_data: dict[str, int] = {},
+        changes: dict | None = None,
+        objects: list | None = None,
+        params: dict[str, str | list[str] | dict] | None = None,
+        profile_data: dict[str, int] | None = None,
         operation_id: str | None = None,
         validation_guids: list[str] | None = None,
     ) -> dict:
+        if profile_data is None:
+            profile_data = {}
+        if params is None:
+            params = {}
+        if objects is None:
+            objects = []
+        if changes is None:
+            changes = {}
         time_str = str(int(time.time()))
         headers = {
             "Content-Type": "application/json",
@@ -128,7 +136,7 @@ class Source:
 
         objects = data["objects"]
         changes_postcode = data["changes"]
-        changes_postcode[list(changes_postcode.keys())[0]][
+        changes_postcode[next(iter(changes_postcode.keys()))][
             "EnquiryPostcodeOrStreetName"
         ] = {"value": self._postcode}
 
@@ -170,7 +178,7 @@ class Source:
         params = {"Generic_Address": {"guid": objects[-1]["guid"]}}
 
         changes = changes_postcode.copy()
-        changes[list(changes.keys())[0]]["ShowAddressResults"] = {"value": True}
+        changes[next(iter(changes.keys()))]["ShowAddressResults"] = {"value": True}
 
         changes.update({uprn_chage_element[0]: uprn_chage_element[1]})
         data = self._do_request(

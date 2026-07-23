@@ -1,7 +1,8 @@
+---
 name: Source Request
 description: Request that a municipality or region is supported
-title: "[Source Request]: "
-labels: ["source request"]
+title: '[Source Request]: '
+labels: [source request]
 body:
   - type: markdown
     attributes:
@@ -94,7 +95,8 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have searched the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) and my provider is not already supported
+        - label: I have searched the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) and my provider is not
+            already supported
           required: true
         - label: I have provided a working example address (not my own) for testing
           required: true

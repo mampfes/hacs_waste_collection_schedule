@@ -111,7 +111,6 @@ class Source:
             if "start" in item:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
-
                     if item["event_type"] in ["recycle", "organic"]:
                         # Every collection day includes rubbish
                         entries.append(

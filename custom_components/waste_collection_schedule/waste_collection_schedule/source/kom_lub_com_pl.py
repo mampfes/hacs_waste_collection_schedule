@@ -152,7 +152,7 @@ def normalize_district(district: int | str | None) -> str:
         raise SourceArgumentException(
             "district",
             f"Nieprawidłowa wartość district={district!r}. Podaj liczbę 1–7.",
-        )
+        ) from None
 
     if n not in _DISTRICT_ROMAN:
         raise SourceArgumentException(

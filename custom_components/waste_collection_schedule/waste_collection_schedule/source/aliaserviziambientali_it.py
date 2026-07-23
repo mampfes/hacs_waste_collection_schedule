@@ -205,9 +205,10 @@ def print_municipalities() -> None:
         for link in junker_links:
             if "area" in link["href"]:
                 area = int(link["href"].split("/")[-2])
-                municipalities_with_area[mun_name] = municipalities_with_area.get(
-                    mun_name, []
-                ) + [area]
+                municipalities_with_area[mun_name] = [
+                    *municipalities_with_area.get(mun_name, []),
+                    area,
+                ]
             else:
                 municipalites_without_area.append(mun_name)
 

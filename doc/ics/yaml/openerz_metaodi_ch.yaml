@@ -38,8 +38,7 @@ default_params:
 
 test_cases:
   züich 8048:
-    url: 
-      https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
+    url: https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
     params:
       region: zurich
       zip: 8048
@@ -76,8 +75,7 @@ test_cases:
         - waste
     regex: (.*), .*
   waedenswil:
-    url: 
-      https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
+    url: https://openerz.metaodi.ch/api/calendar.ics?types=bulky_goods&types=cardboard&types=cargotram&types=chipping_service&types=etram&types=incombustibles&types=metal&types=oekibus&types=organic&types=paper&types=special&types=textile&types=waste&sort=date&offset=0&limit=500
     params:
       region: waedenswil
       area: C

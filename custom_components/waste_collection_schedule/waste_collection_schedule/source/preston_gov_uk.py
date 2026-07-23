@@ -1,6 +1,5 @@
 import logging
 from datetime import date, datetime
-from typing import Optional
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -181,7 +180,7 @@ class Source:
         return self._parse(cnt)
 
     @staticmethod
-    def _date(date_string: str) -> Optional[date]:
+    def _date(date_string: str) -> date | None:
         try:
             return datetime.strptime(date_string, "%A %d/%m/%Y").date()
         except ValueError:

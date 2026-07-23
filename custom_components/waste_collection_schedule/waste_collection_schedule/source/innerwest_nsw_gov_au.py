@@ -146,7 +146,9 @@ class Source:
                 key = (
                     "start"
                     if "start" in item
-                    else "start_date" if "start_date" in item else None
+                    else "start_date"
+                    if "start_date" in item
+                    else None
                 )
                 if key is None:
                     continue

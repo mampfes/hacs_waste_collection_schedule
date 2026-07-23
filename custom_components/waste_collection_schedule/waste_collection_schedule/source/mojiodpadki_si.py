@@ -40,7 +40,6 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-
     def __init__(self, uprn):
         _LOGGER.info(
             f"Initializing mojiodpadki.si waste collection service for uprn={uprn}"

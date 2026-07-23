@@ -80,7 +80,7 @@ def _nearest_color(color: tuple) -> str | None:
     """Return the nearest waste-type name for *color*, or None if too far away."""
     best_name, best_dist = None, float("inf")
     for known, name in COLOR_MAP.items():
-        dist = sum((a - b) ** 2 for a, b in zip(color, known)) ** 0.5
+        dist = sum((a - b) ** 2 for a, b in zip(color, known, strict=False)) ** 0.5
         if dist < best_dist:
             best_dist = dist
             best_name = name

@@ -4,7 +4,6 @@ import re
 from datetime import date
 from html import unescape
 from time import strptime
-from typing import List
 from urllib.parse import quote
 from xml.etree import ElementTree as ET
 
@@ -27,7 +26,7 @@ EXTRA_INFO = [
     },
 ]
 TEST_CASES = {
-    "Random Broadland address": {
+    "Broadland residential address - UPRN payload": {
         "address_payload": {
             "Uprn": "010014355477",
             "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
@@ -40,11 +39,11 @@ TEST_CASES = {
             "Authority": "2610",
         }
     },
-    "Random Broadland address new Method": {
+    "Broadland residential address - postcode": {
         "postcode": "NR7 8DN",
         "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
     },
-    "Random South Norfolk address": {
+    "South Norfolk residential address - UPRN payload": {
         "address_payload": {
             "Uprn": "002630130840",
             "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
@@ -57,11 +56,11 @@ TEST_CASES = {
             "Authority": "2630",
         }
     },
-    "Random South Norfolk address new Method": {
+    "South Norfolk residential address - postcode": {
         "postcode": "NR14 8BX",
         "address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
     },
-    "Big Tesco": {
+    "Broadland business address (Tesco) - UPRN payload": {
         "address_payload": {
             "Uprn": "100091575309",
             "Address": "Tesco Stores Ltd, Blue Boar Lane, Sprowston, Norwich, Norfolk, NR7 8AB",
@@ -121,13 +120,13 @@ def comparable(data: str) -> str:
     return data.replace(",", "").replace(" ", "").lower()
 
 
-def _parse_snc_svg_title(title_text: str) -> List[str]:
+def _parse_snc_svg_title(title_text: str) -> list[str]:
     """Extract waste-type names from the SVG <title> inside a calendar cell.
 
     Each line of the title looks like 'Rec date based on Round Name' or
     'Foo affected by start date of container'.  We match by prefix.
     """
-    bin_types: List[str] = []
+    bin_types: list[str] = []
     for line in title_text.strip().split("\n"):
         line = line.strip()
         for prefix, name in _SNC_BIN_TYPE_PREFIXES.items():
@@ -137,7 +136,7 @@ def _parse_snc_svg_title(title_text: str) -> List[str]:
     return bin_types
 
 
-def _fetch_snc_soap_calendar(uprn: str) -> List[Collection]:
+def _fetch_snc_soap_calendar(uprn: str) -> list[Collection]:
     """Fetch and parse the South Norfolk SOAP calendar for a given UPRN.
 
     The SOAP endpoint returns an HTML calendar where each collection day that
@@ -185,7 +184,7 @@ def _fetch_snc_soap_calendar(uprn: str) -> List[Collection]:
     html = unescape(result_el.text)
     page = soup(html, "html.parser")
 
-    results: List[Collection] = []
+    results: list[Collection] = []
     seen: set = set()
 
     for table in page.find_all("table", id=lambda x: x and x.startswith("CalTab")):
@@ -250,12 +249,12 @@ class Source:
         self._postcode = comparable(postcode) if postcode else None
         self._address = address if address else None
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         if self._address_payload:
             return self.__fetch_by_payload()
         return self.__fetch_by_postcode_and_address()
 
-    def __fetch_by_postcode_and_address(self) -> List[Collection]:
+    def __fetch_by_postcode_and_address(self) -> list[Collection]:
         if not self._postcode or not self._address:
             errors = []
             if self._postcode:
@@ -315,7 +314,7 @@ class Source:
         r.raise_for_status()
         return self.__get_data(r)
 
-    def __fetch_by_payload(self) -> List[Collection]:
+    def __fetch_by_payload(self) -> list[Collection]:
         r = requests.get(
             URL,
             headers={
@@ -325,7 +324,7 @@ class Source:
         r.raise_for_status()
         return self.__get_data(r)
 
-    def __get_data(self, r: requests.Response) -> List[Collection]:
+    def __get_data(self, r: requests.Response) -> list[Collection]:
         page = soup(r.text, "html.parser")
         bins_card = page.find("h3", string="Bins").parent
 

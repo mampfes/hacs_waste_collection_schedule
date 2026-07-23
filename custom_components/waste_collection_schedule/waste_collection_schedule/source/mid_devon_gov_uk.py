@@ -145,7 +145,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn",
                 f"Council lookup returned invalid response: {e}",
-            )
+            ) from e
         if not rows:
             raise SourceArgumentNotFound(
                 "uprn",

@@ -9,8 +9,8 @@ howto:
     - Replace `ZONE` with your zone ID (e.g. `z1890`).
 
 default_params:
-  split_at: ", "
+  split_at: ', '
 test_cases:
   Zone z1890:
-    url: "http://calendar.recyclecoach.com/calendar/export/586/GEO/zone-z1890.ics"
-    split_at: ", "
+    url: http://calendar.recyclecoach.com/calendar/export/586/GEO/zone-z1890.ics
+    split_at: ', '

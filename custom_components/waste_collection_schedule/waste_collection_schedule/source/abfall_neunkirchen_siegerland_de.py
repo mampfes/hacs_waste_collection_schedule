@@ -1,75 +1,63 @@
-import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
-    SourceArgumentNotFound,
-)
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Neunkirchen Siegerland"
-DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
+DESCRIPTION = "Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
-TEST_CASES = {"Waldstraße": {"strasse": "Waldstr"}}
+COUNTRY = "de"
+REFID = "3362.1"
+TEST_CASES = {
+    "Waldstraße": {"strasse": "Waldstr"},
+    "Altenseelbacher Weg (Neunkirchen)": {
+        "strasse": "Altenseelbacher Weg",
+        "ort": "Neunkirchen",
+    },
+}
+SOURCE_CODEOWNERS = ["@bbr111"]
 
 ICON_MAP = {
     "Biotonne": Icons.BIO_KITCHEN,
-    "Papiertonne / Papiercontainer": Icons.PAPER,
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Spartonne Restmüll": Icons.GENERAL_WASTE,
-    "Container Restmüll": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Restmüll": Icons.GENERAL_WASTE,
     "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Astschnittsammlung": Icons.GARDEN,
-    "Schadstoffsammlung": Icons.HAZARDOUS,
+    "Astschnitt": Icons.GARDEN,
+    "Schadstoff": Icons.HAZARDOUS,
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "strasse": "Street",
+        "ort": "District",
+    },
+    "de": {
+        "strasse": "Straße",
+        "ort": "Ortsteil",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße').",
+        "ort": "Optional district (Ortsteil) to disambiguate a street that exists in several places, i.e. the part shown in parentheses (e.g. 'Neunkirchen').",
+    },
+    "de": {
+        "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße').",
+        "ort": "Optionaler Ortsteil zur Eindeutigkeit, falls die Straße in mehreren Ortsteilen vorkommt, also der Teil in Klammern (z.B. 'Neunkirchen').",
+    },
 }
 
 
 class Source:
-    def __init__(self, strasse):
+    def __init__(self, strasse, ort=None):
         self._strasse = strasse
-        self._ics = ICS()
+        self._ort = ort
+        self._sitepark = SiteparkIES(
+            URL, refid=REFID, download_params={"kat": "1", "alarm": "0"}
+        )
 
     def fetch(self):
-        args = {
-            "out": "json",
-            "type": "abto",
-            "select": "2",
-            "refid": "3362.1",
-            "term": self._strasse,
-        }
-        header = {"Referer": URL}
-        r = requests.get(
-            "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
-            params=args,
-            headers=header,
-            timeout=30,
-        )
-        r.raise_for_status()
-
-        ids = r.json()
-
-        if not isinstance(ids, list):
-            raise Exception("Unexpected autocomplete response")
-
-        if not ids:
-            raise SourceArgumentNotFound(f"No address found for '{self._strasse}'")
-
-        if len(ids) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "strasse", self._strasse, [id[1] for id in ids]
-            )
-
-        args = {"ModID": 48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm": 0}
-        r = requests.get(
-            "https://www.neunkirchen-siegerland.de/output/options.php",
-            params=args,
-            headers=header,
-            timeout=30,
-        )
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
+        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
         return [
-            Collection(date, waste_type, ICON_MAP.get(waste_type, "mdi:trash-can"))
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
             for date, waste_type in dates
         ]

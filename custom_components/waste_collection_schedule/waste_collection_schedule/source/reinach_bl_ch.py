@@ -2,7 +2,6 @@
 
 import re
 from datetime import datetime
-from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -70,13 +69,13 @@ class Source:
             )
         self._zone = zone
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         response = requests.get(RSS_URL, timeout=30)
         response.raise_for_status()
 
         root = ElementTree.fromstring(response.content)
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for item in root.iter("item"):
             title_el = item.find("title")
             description_el = item.find("description")

@@ -5,7 +5,11 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 
 TITLE = "Fylde Council"
 DESCRIPTION = "Source for waste.fylde.gov.uk services for Fylde Council, UK."
@@ -107,8 +111,9 @@ class Source:
             "validation-summary-errors" in response.text
             or "/Identity/Account/Login" in response.url
         ):
-            raise Exception(
-                "Login failed. Please check your email and password credentials."
+            raise SourceArgumentExceptionMultiple(
+                ["email", "password"],
+                "Login failed. Please check your email and password credentials.",
             )
 
     def _extract_schedule_data(self, html: str) -> list:
@@ -154,13 +159,15 @@ class Source:
         for event in events:
             # Filter by UPRN if specified
             if self._uprn is not None:
-                event_uprn = event.get("UPRN")
-                if event_uprn != self._uprn and str(event_uprn) != str(self._uprn):
+                try:
+                    if int(float(event.get("UPRN"))) != int(self._uprn):
+                        continue
+                except (TypeError, ValueError):
                     continue
 
-            # Extract bin type from Subject field (e.g., "GREY BIN 240L" -> "Grey Bin")
-            subject = event.get("Subject", "")
-            bin_type_match = re.search(REGEX_BIN_TYPE, subject)
+            # Extract bin type from Description field (e.g., "GREY BIN 240L" -> "Grey Bin")
+            description = event.get("Description", "")
+            bin_type_match = re.search(REGEX_BIN_TYPE, description)
             if not bin_type_match:
                 # Skip entries without a recognised bin type
                 continue
@@ -179,19 +186,19 @@ class Source:
                 Collection(
                     date=collection_date,
                     t=bin_type,
-                    icon=ICON_MAP.get(bin_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(bin_type),
                 )
             )
 
         if not entries:
             if self._uprn is not None:
-                raise Exception(
-                    f"No collection events found for UPRN {self._uprn}. "
-                    "Please check that this property is registered on your waste portal account."
+                raise SourceArgumentNotFound(
+                    "uprn",
+                    self._uprn,
+                    "please check that this property is registered on your waste portal account.",
                 )
-            else:
-                raise Exception(
-                    "No collection events found. Please ensure your property is registered on the waste portal."
-                )
+            raise Exception(
+                "No collection events found. Please ensure your property is registered on the waste portal."
+            )
 
         return entries

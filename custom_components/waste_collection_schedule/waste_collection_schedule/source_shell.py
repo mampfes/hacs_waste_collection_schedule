@@ -1,16 +1,45 @@
 import datetime
+import fnmatch
 import importlib
 import logging
 import traceback
-from typing import Dict, Iterable, List, Optional, Protocol
+from collections.abc import Iterable
+from typing import Protocol
 
 from .collection import Collection
 
 _LOGGER = logging.getLogger(__name__)
 
+# Characters that mark a customize key as an fnmatch glob pattern.
+_GLOB_CHARS = "*?["
+
+
+def _is_glob(key: str) -> bool:
+    return any(ch in key for ch in _GLOB_CHARS)
+
+
+def match_customize(
+    customize: dict[str, "Customize"], waste_type: str
+) -> "Customize | None":
+    """Return the Customize entry for a waste type.
+
+    An exact key match always wins. If no exact key exists, the waste type is
+    matched against any customize key that contains an fnmatch glob wildcard
+    (``*``, ``?`` or ``[...]``), e.g. ``"Sonderabfall *"``. The first matching
+    glob key (in definition order) is used. Matching is case-sensitive, like
+    the exact lookup.
+    """
+    c = customize.get(waste_type)
+    if c is not None:
+        return c
+    for key, candidate in customize.items():
+        if _is_glob(key) and fnmatch.fnmatchcase(waste_type, key):
+            return candidate
+    return None
+
 
 class Fetchable(Protocol):
-    def fetch(self) -> list[Collection]: ...  # noqa: E704
+    def fetch(self) -> list[Collection]: ...
 
 
 class SourceModule(Protocol):
@@ -74,16 +103,15 @@ class Customize:
         return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
 
 
-def filter_function(entry: Collection, customize: Dict[str, Customize]):
-    c = customize.get(entry.type)
+def filter_function(entry: Collection, customize: dict[str, Customize]):
+    c = match_customize(customize, entry.type)
     if c is None:
         return True
-    else:
-        return c.show
+    return c.show
 
 
-def customize_function(entry: Collection, customize: Dict[str, Customize]):
-    c = customize.get(entry.type)
+def customize_function(entry: Collection, customize: dict[str, Customize]):
+    c = match_customize(customize, entry.type)
     if c is not None:
         if c.alias is not None:
             entry.set_type(c.alias)
@@ -103,11 +131,11 @@ class SourceShell:
     def __init__(
         self,
         source: Fetchable,
-        customize: Dict[str, Customize],
+        customize: dict[str, Customize],
         title: str,
         description: str,
-        url: Optional[str],
-        calendar_title: Optional[str],
+        url: str | None,
+        calendar_title: str | None,
         unique_id: str,
         day_offset: int,
         ignore_duplicates: bool = False,
@@ -120,7 +148,7 @@ class SourceShell:
         self._calendar_title = calendar_title
         self._unique_id = unique_id
         self._refreshtime: datetime.datetime | None = None
-        self._entries: List[Collection] = []
+        self._entries: list[Collection] = []
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
 
@@ -172,18 +200,18 @@ class SourceShell:
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
         # customize fetched entries
-        entries = map(lambda x: customize_function(x, self._customize), entries)
+        entries = (customize_function(x, self._customize) for x in entries)
 
         # apply day offset
         if self._day_offset != 0:
-            entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
+            entries = (apply_day_offset(x, self._day_offset) for x in entries)
 
         result = list(entries)
 
         # remove duplicate (date, type) pairs, keeping first occurrence
         if self._ignore_duplicates:
             seen: set[tuple] = set()
-            unique: List[Collection] = []
+            unique: list[Collection] = []
             for e in result:
                 key = (e.date, e.type)
                 if key not in seen:
@@ -194,10 +222,17 @@ class SourceShell:
         self._entries = result
 
     def get_dedicated_calendar_types(self) -> set[str]:
-        """Return set of waste types with a dedicated calendar."""
+        """Return set of waste types with a dedicated calendar.
+
+        Dedicated calendars require an exact type key. Glob customize keys are
+        skipped here: a single pattern can match many fetched types, so a
+        per-type dedicated calendar cannot be derived from it.
+        """
         types = set()
 
         for key, customize in self._customize.items():
+            if _is_glob(key):
+                continue
             if customize.show and customize.use_dedicated_calendar:
                 types.add(key)
 
@@ -205,14 +240,14 @@ class SourceShell:
 
     def get_calendar_title_for_type(self, type: str) -> str:
         """Return calendar title for waste type (used for dedicated calendars)."""
-        c = self._customize.get(type)
+        c = match_customize(self._customize, type)
         if c is not None and c.dedicated_calendar_title:
             return c.dedicated_calendar_title
 
         return self.get_collection_type_name(type)
 
     def get_collection_type_name(self, type: str) -> str:
-        c = self._customize.get(type)
+        c = match_customize(self._customize, type)
         if c is not None and c.alias:
             return c.alias
 
@@ -221,9 +256,9 @@ class SourceShell:
     @staticmethod
     def create(
         source_name: str,
-        customize: Dict[str, Customize],
+        customize: dict[str, Customize],
         source_args,
-        calendar_title: Optional[str] = None,
+        calendar_title: str | None = None,
         day_offset: int = 0,
         ignore_duplicates: bool = False,
     ) -> "SourceShell | None":
@@ -244,7 +279,19 @@ class SourceShell:
             return None
 
         # create source
-        source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        try:
+            source: Fetchable = source_module.Source(**source_args)  # type: ignore
+        except Exception as e:
+            _LOGGER.error(
+                f"error creating source {source_name} with arguments "
+                f"{source_args}: {e}\n"
+                "This is usually caused by a stale/invalid configuration, e.g. "
+                "after the source's arguments changed in an update, or a "
+                "'customize' entry that was nested under 'args' instead of "
+                "being a sibling of it. Please check the source's "
+                f"documentation and reconfigure it.\n{traceback.format_exc()}"
+            )
+            return None
 
         # create source shell
         g = SourceShell(

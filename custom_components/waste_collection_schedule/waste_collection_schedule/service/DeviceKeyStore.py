@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import logging
-from typing import Dict, Optional
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import storage
@@ -19,7 +18,7 @@ class DeviceKeyStore:
         """Initialize the device key store."""
         self._hass = hass
         self._store = storage.Store(hass, STORAGE_VERSION, STORAGE_KEY)
-        self._data: Dict[str, str] = {}
+        self._data: dict[str, str] = {}
         self._loaded = False
 
     async def async_load(self) -> None:
@@ -43,7 +42,7 @@ class DeviceKeyStore:
         except Exception as e:
             _LOGGER.error("Failed to save device keys to storage: %s", e)
 
-    def get_device_key(self, location_key: str) -> Optional[str]:
+    def get_device_key(self, location_key: str) -> str | None:
         """Get device key for location (sync method for worker threads)."""
         if not self._loaded:
             _LOGGER.warning(
@@ -56,16 +55,16 @@ class DeviceKeyStore:
         """Set device key for location (sync method for worker threads)."""
         self._data[location_key] = device_key
 
-    def get_all_keys(self) -> Dict[str, str]:
+    def get_all_keys(self) -> dict[str, str]:
         """Get all device keys (for debugging/inspection)."""
         return self._data.copy()
 
 
 # Global store instance
-_device_key_store: Optional[DeviceKeyStore] = None
+_device_key_store: DeviceKeyStore | None = None
 
 
-def get_device_key_store() -> Optional[DeviceKeyStore]:
+def get_device_key_store() -> DeviceKeyStore | None:
     """Get the global device key store instance."""
     return _device_key_store
 

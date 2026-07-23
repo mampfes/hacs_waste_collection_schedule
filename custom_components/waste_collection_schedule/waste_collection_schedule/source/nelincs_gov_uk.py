@@ -49,7 +49,7 @@ class Source:
 
         entries = []
         for heading, col_list in zip(
-            collection_div.select("div.h4"), collection_div.select("ul")
+            collection_div.select("div.h4"), collection_div.select("ul"), strict=False
         ):
             bin_type = heading.text.strip()
             icon = ICON_MAP.get(bin_type.casefold())  # Collection icon
