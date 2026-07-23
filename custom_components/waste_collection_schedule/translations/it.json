@@ -20669,8 +20669,8 @@
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
-          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)} mostra quali strade appartengono a quale zona.",
-          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — un valore non valido mostra l'elenco dei nomi validi."
+          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su {url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung} mostra quali strade appartengono a quale zona.",
+          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su kvatg.ch ({url_www_kvatg_ch_fuer_private_entsorgungsplaene_1} — un valore non valido mostra l'elenco dei nomi validi."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -20684,8 +20684,8 @@
         },
         "data_description": {
           "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
-          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)} mostra quali strade appartengono a quale zona.",
-          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — un valore non valido mostra l'elenco dei nomi validi."
+          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su {url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung} mostra quali strade appartengono a quale zona.",
+          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su kvatg.ch ({url_www_kvatg_ch_fuer_private_entsorgungsplaene_1} — un valore non valido mostra l'elenco dei nomi validi."
         }
       },
       "args_alchenstorf_ch": {

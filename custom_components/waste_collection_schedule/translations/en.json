@@ -21657,8 +21657,8 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
-          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the map {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)}.",
-          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — an invalid value shows a list of the valid names."
+          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the Kehricht, Abfuhrplan Kreuzlingen map at {url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung}",
+          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on kvatg.ch ({url_www_kvatg_ch_fuer_private_entsorgungsplaene_1} — an invalid value shows a list of the valid names."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -21672,8 +21672,8 @@
         },
         "data_description": {
           "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
-          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the map {Kehricht, Abfuhrplan Kreuzlingen (url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung)}.",
-          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on {kvatg.ch (url_www_kvatg_ch_fuer_private_entsorgungsplaene_1)} — an invalid value shows a list of the valid names."
+          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the Kehricht, Abfuhrplan Kreuzlingen map at {url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung}",
+          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on kvatg.ch ({url_www_kvatg_ch_fuer_private_entsorgungsplaene_1} — an invalid value shows a list of the valid names."
         }
       },
       "args_alchenstorf_ch": {

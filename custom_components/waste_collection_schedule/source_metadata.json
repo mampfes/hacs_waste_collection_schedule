@@ -4655,7 +4655,7 @@
       "it": "Cerca il tuo comune su https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ e inserisci il suo nome. Se il piano di smaltimento del tuo comune suddivide una raccolta per zone (ad es. le aree del verde a Kreuzlingen o le zone di raccolta a Frauenfeld), puoi facoltativamente indicare il nome della zona come stampato nel piano."
     },
     "urls": {
-      "url_www_kvatg_ch_fuer_private_entsorgungsplaene_1": "https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/",
+      "url_www_kvatg_ch_fuer_private_entsorgungsplaene_1": "https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/)",
       "url_www_kreuzlingen_ch_wir_fuer_sie_entsorgung": "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung"
     }
   },
