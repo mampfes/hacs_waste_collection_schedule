@@ -23,7 +23,12 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _API_URL = "https://www.awv-ot.de/tourenauskunft/auskunftbatix.php"
 _ICS_URL = "https://www.awv-ot.de/tourenauskunft/ics/ics.php"
@@ -40,6 +45,12 @@ class Source(BaseSource):
     URL = "https://www.awv-ot.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+
+    # Only "Hausmuelltonne" is in the map above; the other three summaries
+    # ("Biotonne", "Papiertonne", "Gelbe Tonne") resolve through the shared
+    # vocabulary, so the auto-derived set would miss them. Declare the full
+    # emittable vocabulary explicitly.
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Bethenhausen Caasen 15A": {

@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-07-23",
+  "interactions": [
+    {
+      "key": "GET https://api.phila.gov/phila/trashday/v1 ",
+      "method": "GET",
+      "url": "https://api.phila.gov/phila/trashday/v1",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Thu, 23 Jul 2026 10:17:12 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "1171",
+        "Connection": "keep-alive",
+        "Pragma": "no-cache",
+        "X-Powered-By": "Jarvus Gatekeeper",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "allow": "GET",
+        "cache-control": "max-age=1800",
+        "link": "<https://admin.phila.gov/wp-json/>; rel=\"https://api.w.org/\"",
+        "server": "nginx",
+        "vary": "Origin",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-robots-tag": "noindex",
+        "x-xss-protection": "1; mode=block",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 c378d79f6d61c9af35c366d426990acc.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "IAD55-P2",
+        "x-amz-cf-id": "iaQtmSWFXuFPUIjRnaB-Njf4zRt29bjrTvj3braJHTHAYoh6ItDkyw=="
+      },
+      "content_b64": "CQkKeyJob2xpZGF5cyI6W3siaG9saWRheV9sYWJlbCI6Ik5ldyBZZWFyJ3MgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMDEtMDEifSx7ImhvbGlkYXlfbGFiZWwiOiJNYXJ0aW4gTHV0aGVyIEtpbmcsIEpyLiBEYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0wMS0xOSJ9LHsiaG9saWRheV9sYWJlbCI6IlByZXNpZGVudHMnIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTAyLTE2In0seyJob2xpZGF5X2xhYmVsIjoiR29vZCBGcmlkYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0wNC0wMyJ9LHsiaG9saWRheV9sYWJlbCI6Ik1lbW9yaWFsIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTA1LTI1In0seyJob2xpZGF5X2xhYmVsIjoiSnVuZXRlZW50aCIsInN0YXJ0X2RhdGUiOiIyMDI2LTA2LTE5In0seyJob2xpZGF5X2xhYmVsIjoiSW5kZXBlbmRlbmNlIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTA3LTA0In0seyJob2xpZGF5X2xhYmVsIjoiTGFib3IgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMDktMDcifSx7ImhvbGlkYXlfbGFiZWwiOiJDb2x1bWJ1cyBEYXlcL0luZGlnZW5vdXMgUGVvcGxlcycgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMTAtMTIifSx7ImhvbGlkYXlfbGFiZWwiOiJWZXRlcmFucyBEYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0xMS0xMSJ9LHsiaG9saWRheV9sYWJlbCI6IlRoYW5rc2dpdmluZyIsInN0YXJ0X2RhdGUiOiIyMDI2LTExLTI2In0seyJob2xpZGF5X2xhYmVsIjoiVGhhbmtzZ2l2aW5nIEZyaWRheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTExLTI3In0seyJob2xpZGF5X2xhYmVsIjoiQ2hyaXN0bWFzIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTEyLTI1In1dLCJ1bmRldGVybWluZWQiOmZhbHNlLCJkZWxheSI6ZmFsc2UsInN0YXR1cyI6IlRyYXNoIGNvbGxlY3Rpb24gaXMgb24gc2NoZWR1bGUuIFJlY3ljbGluZyBjb2xsZWN0aW9uIG1heSBiZSBkZWxheWVkIGluIHNvbWUgYXJlYXMuIDxhIGhyZWY9XCJodHRwczpcL1wvd3d3LnBoaWxhLmdvdlwvc2VydmljZXNcL3RyYXNoLXJlY3ljbGluZy1jaXR5LXVwa2VlcFwvZmluZC1hLXNhbml0YXRpb24tY29udmVuaWVuY2UtY2VudGVyLXRvLWRyb3Atb2ZmLXRyYXNoLW9yLXJlY3ljbGluZ1wvXCI+U2FuaXRhdGlvbiBDb252ZW5pZW5jZSBDZW50ZXJzPFwvYT4gYXJlIG9wZW4uXHJcblxyXG4mbmJzcDsifQ=="
+    },
+    {
+      "key": "GET https://api.phila.gov/ais/v1/addresses/1830 FITZWATER STREET ",
+      "method": "GET",
+      "url": "https://api.phila.gov/ais/v1/addresses/1830 FITZWATER STREET",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Thu, 23 Jul 2026 10:17:14 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "3451",
+        "Connection": "keep-alive",
+        "Pragma": "no-cache",
+        "X-Powered-By": "Jarvus Gatekeeper",
+        "Server": "nginx/1.18.0",
+        "Expires": "Thu, 23 Jul 2026 11:17:14 GMT",
+        "Cache-Control": "max-age=3600",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "content_b64": "eyJzZWFyY2hfdHlwZSI6ICJhZGRyZXNzIiwgInNlYXJjaF9wYXJhbXMiOiB7fSwgInF1ZXJ5IjogIjE4MzAgRklUWldBVEVSIFNUUkVFVCIsICJub3JtYWxpemVkIjogIjE4MzAgRklUWldBVEVSIFNUIiwgImNycyI6IHsidHlwZSI6ICJsaW5rIiwgInByb3BlcnRpZXMiOiB7InR5cGUiOiAicHJvajQiLCAiaHJlZiI6ICJodHRwOi8vc3BhdGlhbHJlZmVyZW5jZS5vcmcvcmVmL2Vwc2cvNDMyNi9wcm9qNC8ifX0sICJwYWdlIjogMSwgInBhZ2VfY291bnQiOiAxLCAicGFnZV9zaXplIjogMSwgInRvdGFsX3NpemUiOiAxLCAidHlwZSI6ICJGZWF0dXJlQ29sbGVjdGlvbiIsICJmZWF0dXJlcyI6IFt7InR5cGUiOiAiRmVhdHVyZSIsICJhaXNfZmVhdHVyZV90eXBlIjogImFkZHJlc3MiLCAibWF0Y2hfdHlwZSI6ICJleGFjdCIsICJwcm9wZXJ0aWVzIjogeyJzdHJlZXRfYWRkcmVzcyI6ICIxODMwIEZJVFpXQVRFUiBTVCIsICJiYXNlX2FkZHJlc3MiOiAiMTgzMCBGSVRaV0FURVIgU1QiLCAiYWRkcmVzc19sb3ciOiAxODMwLCAiYWRkcmVzc19sb3dfc3VmZml4IjogIiIsICJhZGRyZXNzX2xvd19mcmFjIjogIiIsICJhZGRyZXNzX2hpZ2giOiBudWxsLCAic3RyZWV0X3ByZWRpciI6ICIiLCAic3RyZWV0X25hbWUiOiAiRklUWldBVEVSIiwgInN0cmVldF9zdWZmaXgiOiAiU1QiLCAic3RyZWV0X3Bvc3RkaXIiOiAiIiwgInVuaXRfdHlwZSI6ICIiLCAidW5pdF9udW0iOiAiIiwgImZsb29yIjogIiIsICJzdHJlZXRfZnVsbCI6ICJGSVRaV0FURVIgU1QiLCAic3RyZWV0X2NvZGUiOiAzNDI4MCwgInNlZ19pZCI6IDMyMTAwNiwgInppcF9jb2RlIjogIjE5MTQ2IiwgInppcF80IjogIjE4NTMiLCAidXNwc19ibGRnZmlybSI6ICIiLCAidXNwc190eXBlIjogIlMiLCAiZWxlY3Rpb25fYmxvY2tfaWQiOiAiMjQwMTQ4MTYiLCAiZWxlY3Rpb25fcHJlY2luY3QiOiAiMzAwNiIsICJwd2RfcGFyY2VsX2lkIjogIjIzNjAwMiIsICJkb3JfcGFyY2VsX2lkIjogIjAwNlMwMzAxMTMiLCAibGlfYWRkcmVzc19rZXkiOiAiMjkyMTk5IiwgImVjbGlwc2VfbG9jYXRpb25faWQiOiAiIiwgImJpbiI6ICIxNTM5MjI5IiwgImxpX3BhcmNlbF9pZCI6ICIyMzYwMDIiLCAiem9uaW5nX2RvY3VtZW50X2lkcyI6IFsiMjE5LTE1NjA1NiIsICIyNy0zMDEyNTAiXSwgInB3ZF9hY2NvdW50X251bXMiOiBbIjM0MjgwMDE4MzAwMDEiXSwgIm9wYV9hY2NvdW50X251bSI6ICIzMDExMDMwMDAiLCAib3BhX293bmVycyI6IFsiRlVMTEVSIEpFU1NJQ0EgRCIsICJGVUxMRVIgSk9ITiBDIl0sICJvcGFfYWRkcmVzcyI6ICIxODMwIEZJVFpXQVRFUiBTVCIsICJjZW50ZXJfY2l0eV9kaXN0cmljdCI6ICIiLCAiY3VhX3pvbmUiOiAiQmV0aGFubmEiLCAibGlfZGlzdHJpY3QiOiAiQ0VOVFJBTCBXRVNUIiwgInBoaWxseV9yaXNpbmdfYXJlYSI6ICIiLCAiY2Vuc3VzX3RyYWN0XzIwMTAiOiAiMDAxNDAwIiwgImNlbnN1c19ibG9ja19ncm91cF8yMDEwIjogIjEiLCAiY2Vuc3VzX2Jsb2NrXzIwMTAiOiAiMTAxMyIsICJjZW5zdXNfdHJhY3RfMjAyMCI6ICIwMDE0MDAiLCAiY2Vuc3VzX2Jsb2NrX2dyb3VwXzIwMjAiOiAiMSIsICJjZW5zdXNfYmxvY2tfMjAyMCI6ICIxMDEzIiwgImNvdW5jaWxfZGlzdHJpY3RfMjAxNiI6ICIyIiwgImNvdW5jaWxfZGlzdHJpY3RfMjAyNCI6ICIyIiwgInBvbGl0aWNhbF93YXJkIjogIjMwIiwgInBvbGl0aWNhbF9kaXZpc2lvbiI6ICIzMDA2IiwgInN0YXRlX2hvdXNlX3JlcF8yMDEyIjogIjE4NiIsICJzdGF0ZV9ob3VzZV9yZXBfMjAyMiI6ICIxODIiLCAic3RhdGVfc2VuYXRlXzIwMTIiOiAiMSIsICJzdGF0ZV9zZW5hdGVfMjAyMiI6ICIxIiwgInVzX2NvbmdyZXNzaW9uYWxfMjAxMiI6ICIyIiwgInVzX2NvbmdyZXNzaW9uYWxfMjAxOCI6ICIzIiwgInVzX2NvbmdyZXNzaW9uYWxfMjAyMiI6ICIzIiwgInBsYW5uaW5nX2Rpc3RyaWN0IjogIkNlbnRyYWwiLCAiZWxlbWVudGFyeV9zY2hvb2wiOiAiU3RhbnRvbiwgRWR3aW4gTSIsICJtaWRkbGVfc2Nob29sIjogIlN0YW50b24sIEVkd2luIE0iLCAiaGlnaF9zY2hvb2wiOiAiU291dGggUGhpbGFkZWxwaGlhIEhTIiwgInpvbmluZyI6ICJSU0EtNSIsICJ6b25pbmdfcmNvIjogIjI2M3wzMjZ8NDE3IiwgImNvbW1lcmNpYWxfY29ycmlkb3IiOiAiIiwgImhpc3RvcmljX2Rpc3RyaWN0IjogIiIsICJoaXN0b3JpY19zaXRlIjogIk5vIiwgInBvbGljZV9kaXZpc2lvbiI6ICJTUEQiLCAicG9saWNlX2Rpc3RyaWN0IjogIjE3IiwgInBvbGljZV9zZXJ2aWNlX2FyZWEiOiAiMTcxIiwgInJ1YmJpc2hfcmVjeWNsZV9kYXkiOiAiVFVFIiwgInNlY29uZGFyeV9ydWJiaXNoX2RheSI6ICJGUkkiLCAicmVjeWNsaW5nX2RpdmVyc2lvbl9yYXRlIjogMC4yMTIsICJsZWFmX2NvbGxlY3Rpb25fYXJlYSI6ICJTYXR1cmRheSBCYWcgRHJvcG9mZiIsICJzYW5pdGF0aW9uX2FyZWEiOiAiMiIsICJzYW5pdGF0aW9uX2Rpc3RyaWN0IjogIjJCIiwgInNhbml0YXRpb25fY29udmVuaWVuY2VfY2VudGVyIjogIldlc3QgUGhpbGFkZWxwaGlhIiwgImNsZWFuX3BoaWxseV9ibG9ja19jYXB0YWluIjogIk5vIiwgImhpc3RvcmljX3N0cmVldCI6ICIiLCAiaGlnaHdheV9kaXN0cmljdCI6ICIyIiwgImhpZ2h3YXlfc2VjdGlvbiI6ICIyQiIsICJoaWdod2F5X3N1YnNlY3Rpb24iOiAiMkIyIiwgInRyYWZmaWNfZGlzdHJpY3QiOiAiMSIsICJ0cmFmZmljX3BtX2Rpc3RyaWN0IjogIjExMDciLCAic3RyZWV0X2xpZ2h0X3JvdXRlIjogIjExIiwgImxhbmVfY2xvc3VyZSI6ICIiLCAicHdkX21haW50X2Rpc3RyaWN0IjogIjJOVyIsICJwd2RfcHJlc3N1cmVfZGlzdHJpY3QiOiAiRVBHIiwgInB3ZF90cmVhdG1lbnRfcGxhbnQiOiAiIiwgInB3ZF93YXRlcl9wbGF0ZSI6ICIyMiIsICJwd2RfY2VudGVyX2NpdHlfZGlzdHJpY3QiOiAiIiwgIm1ham9yX3BoaWxhX3dhdGVyc2hlZCI6ICJEZWxhd2FyZSBEaXJlY3QgV2F0ZXJzaGVkIiwgIm5laWdoYm9yaG9vZF9hZHZpc29yeV9jb21taXR0ZWUiOiAiIiwgInBwcl9mcmllbmRzIjogIkZyaWVuZHMgb2YgQ2FycGVudGVyIEdyZWVuIFBhcmsiLCAiZW5naW5lX2xvY2FsIjogIjAxIiwgImxhZGRlcl9sb2NhbCI6ICI1IiwgInRvYmFjY29fcmV0YWlsZXJfcGVybWl0X2NhcHBlZCI6ICJOb3xObyIsICJ0b2JhY2NvX2ZyZWVfc2Nob29sX3pvbmVzIjogIk5vIiwgImgzX2hleF9ncmlkX3I3IjogIjg3MmExMzRkNmZmZmZmZiIsICJoM19oZXhfZ3JpZF9yOCI6ICI4ODJhMTM0ZDYzZmZmZmYiLCAiaDNfaGV4X2dyaWRfcjkiOiAiODkyYTEzNGQ2MzNmZmZmIiwgImgzX2hleF9ncmlkX3IxMCI6ICI4YTJhMTM0ZDYzMmZmZmYifSwgImdlb21ldHJ5IjogeyJnZW9jb2RlX3R5cGUiOiAicHdkX3BhcmNlbCIsICJ0eXBlIjogIlBvaW50IiwgImNvb3JkaW5hdGVzIjogWy03NS4xNzM2NDUyNDk4NDUyMSwgMzkuOTQyNjE1MDExMzMzNzZdfX1dfQ=="
+    }
+  ]
+}
