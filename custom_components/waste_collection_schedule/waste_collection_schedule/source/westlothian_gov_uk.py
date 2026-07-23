@@ -148,11 +148,15 @@ class Source(BaseSource):
         if ical_content is not None:
             if ical_content.get("error") is not None:
                 raise SourceArgumentException("postcode", ical_content["error"])
-            # The UNTIL values are date-only (UK-based) but lack a timezone,
-            # which the ICS module requires for timezone-aware parsing.
+            # The RRULE UNTIL values are date-only (e.g. UNTIL=20310724) while
+            # DTSTART is a date-with-local-time (floating, no Z/TZID). RFC 5545
+            # requires UNTIL to match DTSTART's value type, so expand the bare
+            # date to a floating date-time. Appending a bare "Z" instead would
+            # produce a malformed value (20310724Z) that icalendar cannot parse
+            # into a recurrence rule, crashing the downstream parser.
             ics_data = re.sub(
                 r"UNTIL=([0-9]+)",
-                lambda m: "UNTIL=" + m.group(1) + "Z",
+                lambda m: "UNTIL=" + m.group(1) + "T000000",
                 ical_content["value"],
             )
             return ICS().convert(ics_data)
