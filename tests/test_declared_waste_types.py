@@ -61,6 +61,11 @@ _ALL_TYPE_IDS = frozenset(wt.id for wt in ALL_TYPES)
 
 _FIXTURES = discover_fixtures()
 
+_SOURCE_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "../custom_components/waste_collection_schedule/waste_collection_schedule/source",
+)
+
 # ---------------------------------------------------------------------------
 # BURN-DOWN ALLOWLIST — debt tracked by issue #6935.
 #
@@ -170,6 +175,104 @@ def test_returned_waste_types_are_declared(module_name, case_slug, path):
     assert not undeclared, (
         f"{module_name}::{case_slug}: returned undeclared waste types: "
         f"{sorted(undeclared)} — add them to WASTE_TYPES"
+    )
+
+
+# ---------------------------------------------------------------------------
+# STATIC (cassette-free) gate — closes the blind spot in #7029.
+#
+# The cassette replay above can only judge a source it actually exercises. A
+# gated pipeline source with NO cassette is never run, so it can silently rely
+# on the ``ALL_TYPES`` fallback (empty ``type_value_map``, no ``classify``, no
+# explicit ``WASTE_TYPES``) and still pass — the burn-down allowlist reads empty
+# and looks "done" while these sources are simply invisible.
+#
+# This check needs no cassette: it imports every gated pipeline source and flags
+# any whose declared ``WASTE_TYPES`` is the whole ``ALL_TYPES`` catalogue, which
+# is the fallback and not a real declaration. It is the static twin of the
+# ``uses_all_types_fallback`` assertion above, covering the sources the replay
+# cannot reach.
+#
+# BURN-DOWN ALLOWLIST — same contract as the cassette allowlists: a debt
+# register, not a permanent exception list. Each entry MUST be deleted when its
+# source gains a real declared vocabulary, and
+# ``test_static_all_types_allowlist_has_no_stale_entries`` fails if a listed
+# module has been fixed (or is no longer gated) without its entry going too.
+#
+# Seeded with the four DE/AT providers from #7028 that could not be recorded
+# from the maintainer's location: bare ``ICSTransformer()`` sources with no
+# cassette, still on the fallback pending a record-and-declare (#6935).
+# ---------------------------------------------------------------------------
+_STATIC_ALL_TYPES_ALLOWLIST: set[str] = {
+    "awn_de",
+    "data_umweltprofis_at",
+    "erlangen_hoechstadt_de",
+    "regioentsorgung_de",
+}
+
+
+def _all_pipeline_source_modules():
+    """Yield every source module name, cassette or not."""
+    for file in sorted(os.listdir(_SOURCE_PATH)):
+        if file.endswith(".py") and file not in ("__init__.py", "example.py"):
+            yield file[:-3]
+
+
+def _declares_all_types(cls) -> bool:
+    """True if a source's declared WASTE_TYPES is the whole ALL_TYPES catalogue."""
+    declared = frozenset(wt.id for wt in getattr(cls, "WASTE_TYPES", []))
+    return declared == _ALL_TYPE_IDS
+
+
+def test_no_gated_source_declares_all_types():
+    """No gated pipeline source may declare the whole ALL_TYPES catalogue.
+
+    Unlike the cassette replay, this exercises sources with no fixtures, so a
+    source cannot dodge the gate simply by lacking a cassette (#7029).
+    """
+    offenders: list[str] = []
+    for module_name in _all_pipeline_source_modules():
+        cls = _source_class(module_name)
+        if not _is_gated(module_name, cls):
+            continue
+        if module_name in _STATIC_ALL_TYPES_ALLOWLIST:
+            continue
+        if _declares_all_types(cls):
+            offenders.append(module_name)
+
+    assert not offenders, (
+        "Pipeline sources declaring the whole ALL_TYPES catalogue (empty-map "
+        "fallback), which is not a real declaration — declare the specific types "
+        f"each produces (#6935/#7028):\n{sorted(offenders)}"
+    )
+
+
+def test_static_all_types_allowlist_has_no_stale_entries():
+    """The static burn-down allowlist must not rot.
+
+    A stale entry is one whose module has been fixed (no longer declares the
+    whole ALL_TYPES catalogue), removed, or is no longer a gated pipeline
+    source. Any such entry must be deleted from the allowlist above.
+    """
+    stale: list[str] = []
+    for module_name in sorted(_STATIC_ALL_TYPES_ALLOWLIST):
+        try:
+            cls = _source_class(module_name)
+        except Exception as exc:
+            stale.append(f"{module_name}: no longer importable ({exc!r})")
+            continue
+        if not _is_gated(module_name, cls):
+            stale.append(f"{module_name}: no longer a gated pipeline source")
+            continue
+        if not _declares_all_types(cls):
+            stale.append(
+                f"{module_name}: no longer declares ALL_TYPES — remove from "
+                "_STATIC_ALL_TYPES_ALLOWLIST"
+            )
+
+    assert not stale, (
+        "Stale _STATIC_ALL_TYPES_ALLOWLIST entries (#7028 burn-down — delete "
+        "each):\n" + "\n".join(stale)
     )
 
 
