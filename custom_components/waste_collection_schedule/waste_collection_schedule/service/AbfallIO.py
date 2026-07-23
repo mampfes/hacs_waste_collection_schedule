@@ -28,11 +28,6 @@ SERVICE_MAP = [
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
     },
     {
-        "title": "Entsorgungsbetriebe Essen",
-        "url": "https://www.ebe-essen.de/",
-        "service_id": "9b5390f095c779b9128a51db35092c9c",
-    },
-    {
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",
@@ -151,11 +146,6 @@ SERVICE_MAP = [
         "title": "Landkreis Rottweil",
         "url": "https://landkreis-rottweil.de",
         "service_id": "d287412901d68d66825e588a60c94641",
-    },
-    {
-        "title": "ASG Nordsachsen",
-        "url": "https://www.asg-nordsachsen.de/",
-        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
     },
     {
         "title": "AVR Kommunal, Rhein-Neckar-Kreis",

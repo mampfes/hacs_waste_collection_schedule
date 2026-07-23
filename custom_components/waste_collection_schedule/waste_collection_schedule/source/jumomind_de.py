@@ -44,6 +44,11 @@ TEST_CASES = {
         "service_id": "mymuell",
         "city": "Bad Wünnenberg-Bleiwäsche",
     },
+    "mymuell Senden, Birkenweg": {
+        "service_id": "mymuell",
+        "city": "Senden",
+        "street": "Birkenweg (Senden)",
+    },
     "neustadt": {
         "service_id": "esn",
         "city": "Neustadt",
@@ -135,7 +140,6 @@ SERVICE_MAP = {
         "comment": "MyMuell App",
         "url": "https://www.mymuell.de/",
         "list": [
-            "Aschaffenburg",
             "Bad Arolsen",
             "Beverungen",
             "Darmstadt",
@@ -166,6 +170,7 @@ SERVICE_MAP = {
             "Schmitten im Taunus",
             "Schöneck",
             "Seligenstadt",
+            "Senden",
             "Ulm",
             "Usingen",
             "Volkmarsen",

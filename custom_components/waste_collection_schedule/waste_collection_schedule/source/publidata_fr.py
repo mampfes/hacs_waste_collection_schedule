@@ -51,6 +51,21 @@ TEST_CASES = {
         "insee_code": "54304",
         "instance_id": 1436,
     },
+    "Le Cotentin, Cherbourg-en-Cotentin": {
+        "address": "435 rue Maxime-Laubeuf",
+        "insee_code": "50129",
+        "instance_id": 1011,
+    },
+    "SIAVED, Verchain-Maugré": {
+        "address": "2 place du 8 mai",
+        "insee_code": "59610",
+        "instance_id": 1067,
+    },
+    "Sud Sainte Baume, Saint-Cyr-sur-Mer": {
+        "address": "20 Rue Victor Hugo",
+        "insee_code": "83112",
+        "instance_id": 1483,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -126,6 +141,7 @@ ICON_MAP = {
     "verre": Icons.GLASS,
     "bio": Icons.ORGANIC,
     "sapin": Icons.CHRISTMAS_TREE,
+    "jrm": Icons.PAPER,
 }
 
 LABEL_MAP = {
@@ -136,6 +152,7 @@ LABEL_MAP = {
     "verre": "Verres",
     "bio": "Biodéchets",
     "sapin": "Sapin",
+    "jrm": "Papiers / Magazines",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -291,6 +308,21 @@ EXTRA_INFO = [
         "title": "Métropole du Grand Nancy",
         "url": "https://mhdd.grandnancy.eu/",
         "default_params": {"instance_id": 1436},
+    },
+    {
+        "title": "Le Cotentin",
+        "url": "https://dechets.lecotentin.fr/",
+        "default_params": {"instance_id": 1011},
+    },
+    {
+        "title": "SIAVED (Valenciennes Métropole)",
+        "url": "https://www.siaved.fr/votre-calendrier-de-collecte",
+        "default_params": {"instance_id": 1067},
+    },
+    {
+        "title": "Sud Sainte Baume",
+        "url": "https://www.agglo-sudsaintebaume.fr/",
+        "default_params": {"instance_id": 1483},
     },
 ]
 
@@ -515,9 +547,9 @@ class Source:
         Parse a part of the opening_hours string and return the corresponding kwargs to rrule constructor.
 
         Example:
-            "Sep-Nov" -> {"bymonth": [9, 10, 11]}
-            "We[2,4]" -> {"byweekday": WE(2), WE(4)}
-            "2024-2025" -> {"dtstart": datetime(2024, 1, 1, tzinfo=timezone.utc), "until": datetime(2025, 12, 31, tzinfo=timezone.utc)}
+            "Sep-Nov" -&gt; {"bymonth": [9, 10, 11]}
+            "We[2,4]" -&gt; {"byweekday": WE(2), WE(4)}
+            "2024-2025" -&gt; {"dtstart": datetime(2024, 1, 1, tzinfo=timezone.utc), "until": datetime(2025, 12, 31, tzinfo=timezone.utc)}
         """
         if self._is_year(part):
             return self._parse_year(part)

@@ -1,127 +1,78 @@
-import json
-import urllib.parse
-from datetime import date, timedelta
-
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Logan City Council"
 DESCRIPTION = "Source for Logan City Council rubbish collection."
 URL = "https://www.logan.qld.gov.au"
+COUNTRY = "au"
 TEST_CASES = {
-    "The Family Place": {
-        "property_location": "35 North Road WOODRIDGE  4114 ",
+    "Lee Naki's Takeaway": {"property_location": "12 Ashton Street Kingston"},
+    "LCC Administration Centre": {
+        "property_location": "150 Wembley Road Logan Central"
     },
-    "Lee Naki's Takeaway": {
-        "property_location": "12 Ashton Street KINGSTON  4114",
-    },
-    "LCC ADMINISTRATION CENTRE - Fallback": {
-        "property_location": "LCC ADMINISTRATION CENTRE, 150 Wembley Road, LOGAN CENTRAL QLD 4114",
-    },
-    "The Family Place - Fallback": {
-        "property_location": "35 North Road, WOODRIDGE QLD 4114",
-    },
-    "Lee Naki's Takeaway - Fallback": {
-        "property_location": "2 Ashton Street, KINGSTON QLD 4114",
+    "Rochedale South (with green waste)": {
+        "property_location": "53 Wendron Street Rochedale South"
     },
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Enter your street address as used on the Logan City Council MyLogan tool "
+        "(https://www.logan.qld.gov.au/MyLogan), for example "
+        "'12 Ashton Street Kingston'."
+    )
+}
 
-API_URL = "https://services-ap1.arcgis.com/nHQ8JHPrW0Z3aeN4/arcgis/rest/services/Council_Property_view/FeatureServer/0/query"
-FALLBACK_API_URL = "https://services5.arcgis.com/ZUCWDRj8F77Xo351/arcgis/rest/services/Logan_City_Bin_Collection/FeatureServer/0/query"
+PARAM_TRANSLATIONS = {
+    "en": {
+        "property_location": "Street Address",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "property_location": (
+            "Your street address, e.g. '12 Ashton Street Kingston'. "
+            "The closest match from the MyLogan address search is used."
+        ),
+    },
+}
+
+HEADERS = {
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "referer": URL + "/MyLogan",
+    "user-agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "x-requested-with": "XMLHttpRequest",
+}
+
+ICON_MAP = {
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "green waste": Icons.ORGANIC,
+}
+
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.logan.qld.gov.au",
+    argument_name="property_location",
+    max_results=1,
+    headers=HEADERS,
+    use_curl_cffi=True,
+    date_format="%A %d %B %Y",
+    icon_keywords=ICON_MAP,
+)
 
 
 class Source:
-    def __init__(self, property_location):
-        self.property_location = urllib.parse.quote_plus(property_location.strip())
+    def __init__(self, property_location: str):
+        self._property_location = " ".join(property_location.split())
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        # Retrieve collection day and whether there is recycling or green waste bin
-        # Use LIKE as there is extra whitespaces at the end of the address
-        r = requests.get(
-            f"{API_URL}?where=Address%20LIKE%20%27{self.property_location}%25%27&outFields=Rubbish_Collection,Recycling_Collection,Green_Waste_Collection&f=json",
-            headers=HEADERS,
-        )
-        data = json.loads(r.text)
-
-        if data.get("features"):
-            collection_day = data["features"][0]["attributes"]["Rubbish_Collection"]
-            recycling_week = data["features"][0]["attributes"]["Recycling_Collection"]
-            green_waste_week = data["features"][0]["attributes"][
-                "Green_Waste_Collection"
-            ]
-        else:
-            # Fall back to old API
-            r = requests.get(
-                f"{FALLBACK_API_URL}?where=%20(Formatted_Property_Address%20%3D%20'{self.property_location}')%20&outFields=Collection_Day,Recycling_Week,Green_Waste_Week&outSR=4326&f=json",
-                headers=HEADERS,
-            )
-            data = json.loads(r.text)
-
-            if not data.get("features"):
-                raise SourceArgumentNotFound(
-                    "property_location", self.property_location
-                )
-
-            collection_day = data["features"][0]["attributes"]["Collection_Day"]
-            recycling_week = data["features"][0]["attributes"]["Recycling_Week"]
-            green_waste_week = data["features"][0]["attributes"]["Green_Waste_Week"]
-
-        today = date.today()
-        entries = []
-
-        if collection_day == "MON":
-            weekday = 0
-        elif collection_day == "TUE":
-            weekday = 1
-        elif collection_day == "WED":
-            weekday = 2
-        elif collection_day == "THU":
-            weekday = 3
-        elif collection_day == "FRI":
-            weekday = 4
-        elif collection_day == "SAT":
-            weekday = 5
-        elif collection_day == "SUN":
-            weekday = 6
-        else:
-            return []
-
-        next_collection_date = today + timedelta((weekday - today.weekday() + 7) % 7)
-
-        # Add next 52 collection days
-        for x in range(52):
-            collection_date = next_collection_date + timedelta(weeks=x)
-            week = collection_date.isocalendar().week % 2
-
-            entries.append(
-                Collection(date=collection_date, t="Rubbish", icon="mdi:trash-can")
-            )
-
-            # Check if Recycling Bin Collected
-            if recycling_week != "":
-                # Check if Recycling Week
-                if (recycling_week == "Week 1" and week == 1) or (
-                    recycling_week == "Week 2" and week == 0
-                ):
-                    entries.append(
-                        Collection(
-                            date=collection_date, t="Recycling", icon="mdi:recycle"
-                        )
-                    )
-
-            # Check if Green Waste Bin Collected
-            if green_waste_week is not None:
-                # Check if Green Waste Week
-                if (green_waste_week == "Week 1" and week == 1) or (
-                    green_waste_week == "Week 2" and week == 0
-                ):
-                    entries.append(
-                        Collection(
-                            date=collection_date, t="Green Waste", icon="mdi:leaf"
-                        )
-                    )
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch(address=self._property_location)

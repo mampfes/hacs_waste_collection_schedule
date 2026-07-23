@@ -36,6 +36,28 @@ PARAM_TRANSLATIONS = {
     },
 }
 
+CITIES = [
+    "Alsdorf",
+    "Baesweiler",
+    "Eschweiler",
+    "Heimbach",
+    "Herzogenrath",
+    "Inden",
+    "Langerwehe",
+    "Linnich",
+    "Monschau",
+    "Nideggen",
+    "Niederzier",
+    "Nörvenich",
+    "Roetgen",
+    "Simmerath",
+    "Stolberg",
+    "Vettweiß",
+    "Würselen",
+]
+
+EXTRA_INFO = [{"title": city, "default_params": {"city": city}} for city in CITIES]
+
 
 class FormStateParser(HTMLParser):
     def __init__(self):

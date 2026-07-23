@@ -7,6 +7,7 @@ Known to work with:
 | Region | URL |
 | ------ | --- |
 | Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
+| Stadtwerke Aschaffenburg | <https://www.stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk/> |
 
 
 ## How to get the configuration arguments
@@ -26,4 +27,13 @@ waste_collection_schedule:
     - name: ics
       args:
         url: https://www.stadtwerke-speyer.de/speyerGips/Gips?SessionMandant=Speyer&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Speyer&Abfuhrkalender=Speyer{%Y}&Bezirk_ID=22&Jahr={%Y}
+```
+### Aschaffenburg, Schillerstraße (bis Hs.Nrn. 108)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.stwab.de/aschaffenburgGips/Gips?SessionMandant=Aschaffenburg&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Aschaffenburg&Abfuhrkalender=Aschaffenburg&Bezirk_ID=1647&Jahr={%Y}
 ```

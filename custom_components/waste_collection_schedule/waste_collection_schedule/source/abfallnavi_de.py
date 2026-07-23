@@ -72,6 +72,12 @@ TEST_CASES = {
         "ort": "Frankenthal",
         "strasse": "Am Martinspfad",
     },
+    "Solingen, Katternberger Straße 95 (street split by district)": {
+        "service": "solingen",
+        "ort": "Solingen",
+        "strasse": "Katternberger Straße",
+        "hausnummer": "95",
+    },
 }
 
 

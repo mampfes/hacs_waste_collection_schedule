@@ -225,6 +225,15 @@ EXTRA_INFO = [
         },
     },
     {
+        "title": "West Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "WestKelowna",
+        },
+    },
+    {
         "title": "Plainville (CT)",
         "url": "https://www.plainvillect.com/",
         "country": "us",
@@ -319,6 +328,12 @@ EXTRA_INFO = [
         "url": "https://www.newrochelleny.gov/791/Collection-Dates",
         "country": "us",
         "default_params": {"project_id": "3015", "district_id": "NEWRO"},
+    },
+    {
+        "title": "Peoria (IL)",
+        "url": "https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
+        "country": "us",
+        "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
     },
 ]
 
@@ -429,6 +444,18 @@ TEST_CASES = {
         "district_id": "NEWRO",
         "project_id": 3015,
         "zone_id": "zone-z19582-z19705",
+    },
+    "West Kelowna, BC, Canada (with district_id & project_id)": {
+        "street": "2760 Cameron Rd",
+        "city": "West Kelowna",
+        "state": "British Columbia",
+        "district_id": "WestKelowna",
+        "project_id": "502",
+    },
+    "Peoria, IL, USA": {
+        "street": "10303 N Churchill Dr",
+        "city": "Peoria",
+        "state": "Illinois",
     },
 }
 
