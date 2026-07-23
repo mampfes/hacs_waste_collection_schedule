@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-07-23",
+  "interactions": [
+    {
+      "key": "POST https://www.hschmid24.de/BlaueTonne/php/ajax.php 35d9c99e97",
+      "method": "POST",
+      "url": "https://www.hschmid24.de/BlaueTonne/php/ajax.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Thu, 23 Jul 2026 10:13:55 GMT",
+        "server": "Apache/2.4.68 (Unix)",
+        "x-powered-by": "PHP/8.4.22",
+        "vary": "User-Agent",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "content_b64": "eyJzbCI6W10sInN0ciI6W10sImhvdXNlTnIiOltdLCJkIjoiRGllbnN0YWciLCJjYWwiOlsiMDAwMC0wMC0wMCIsIjIwMjYtMDEtMTMiLCIyMDI2LTAyLTEwIiwiMjAyNi0wMy0xMCIsIjIwMjYtMDQtMDgiLCIyMDI2LTA1LTA1IiwiMjAyNi0wNi0wMiIsIjIwMjYtMDYtMzAiLCIyMDI2LTA3LTI4IiwiMjAyNi0wOC0yNSIsIjIwMjYtMDktMjIiLCIyMDI2LTEwLTIwIiwiMjAyNi0xMS0xNyIsIjIwMjYtMTItMTUiLCIwMDAwLTAwLTAwIl19"
+    }
+  ]
+}

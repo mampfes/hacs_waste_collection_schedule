@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-07-23",
+  "interactions": [
+    {
+      "key": "GET https://api.phila.gov/phila/trashday/v1 ",
+      "method": "GET",
+      "url": "https://api.phila.gov/phila/trashday/v1",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Thu, 23 Jul 2026 10:17:17 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "1171",
+        "Connection": "keep-alive",
+        "Pragma": "no-cache",
+        "X-Powered-By": "Jarvus Gatekeeper",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "allow": "GET",
+        "cache-control": "max-age=1800",
+        "link": "<https://admin.phila.gov/wp-json/>; rel=\"https://api.w.org/\"",
+        "server": "nginx",
+        "vary": "Origin",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-robots-tag": "noindex",
+        "x-xss-protection": "1; mode=block",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 1c270697a065feaf9aaa711be1cb8b0c.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "IAD55-P2",
+        "x-amz-cf-id": "0FEK-6GDp-ZIXC5Vq2YxJBTZUdjH6MuyvUyxMRUKEYUGJmmRIB6ZAg=="
+      },
+      "content_b64": "CQkKeyJob2xpZGF5cyI6W3siaG9saWRheV9sYWJlbCI6Ik5ldyBZZWFyJ3MgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMDEtMDEifSx7ImhvbGlkYXlfbGFiZWwiOiJNYXJ0aW4gTHV0aGVyIEtpbmcsIEpyLiBEYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0wMS0xOSJ9LHsiaG9saWRheV9sYWJlbCI6IlByZXNpZGVudHMnIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTAyLTE2In0seyJob2xpZGF5X2xhYmVsIjoiR29vZCBGcmlkYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0wNC0wMyJ9LHsiaG9saWRheV9sYWJlbCI6Ik1lbW9yaWFsIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTA1LTI1In0seyJob2xpZGF5X2xhYmVsIjoiSnVuZXRlZW50aCIsInN0YXJ0X2RhdGUiOiIyMDI2LTA2LTE5In0seyJob2xpZGF5X2xhYmVsIjoiSW5kZXBlbmRlbmNlIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTA3LTA0In0seyJob2xpZGF5X2xhYmVsIjoiTGFib3IgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMDktMDcifSx7ImhvbGlkYXlfbGFiZWwiOiJDb2x1bWJ1cyBEYXlcL0luZGlnZW5vdXMgUGVvcGxlcycgRGF5Iiwic3RhcnRfZGF0ZSI6IjIwMjYtMTAtMTIifSx7ImhvbGlkYXlfbGFiZWwiOiJWZXRlcmFucyBEYXkiLCJzdGFydF9kYXRlIjoiMjAyNi0xMS0xMSJ9LHsiaG9saWRheV9sYWJlbCI6IlRoYW5rc2dpdmluZyIsInN0YXJ0X2RhdGUiOiIyMDI2LTExLTI2In0seyJob2xpZGF5X2xhYmVsIjoiVGhhbmtzZ2l2aW5nIEZyaWRheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTExLTI3In0seyJob2xpZGF5X2xhYmVsIjoiQ2hyaXN0bWFzIERheSIsInN0YXJ0X2RhdGUiOiIyMDI2LTEyLTI1In1dLCJ1bmRldGVybWluZWQiOmZhbHNlLCJkZWxheSI6ZmFsc2UsInN0YXR1cyI6IlRyYXNoIGNvbGxlY3Rpb24gaXMgb24gc2NoZWR1bGUuIFJlY3ljbGluZyBjb2xsZWN0aW9uIG1heSBiZSBkZWxheWVkIGluIHNvbWUgYXJlYXMuIDxhIGhyZWY9XCJodHRwczpcL1wvd3d3LnBoaWxhLmdvdlwvc2VydmljZXNcL3RyYXNoLXJlY3ljbGluZy1jaXR5LXVwa2VlcFwvZmluZC1hLXNhbml0YXRpb24tY29udmVuaWVuY2UtY2VudGVyLXRvLWRyb3Atb2ZmLXRyYXNoLW9yLXJlY3ljbGluZ1wvXCI+U2FuaXRhdGlvbiBDb252ZW5pZW5jZSBDZW50ZXJzPFwvYT4gYXJlIG9wZW4uXHJcblxyXG4mbmJzcDsifQ=="
+    },
+    {
+      "key": "GET https://api.phila.gov/ais/v1/addresses/9868 COWDEN ST ",
+      "method": "GET",
+      "url": "https://api.phila.gov/ais/v1/addresses/9868 COWDEN ST",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Thu, 23 Jul 2026 10:17:19 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "3413",
+        "Connection": "keep-alive",
+        "Pragma": "no-cache",
+        "X-Powered-By": "Jarvus Gatekeeper",
+        "Server": "nginx/1.18.0",
+        "Expires": "Thu, 23 Jul 2026 11:17:19 GMT",
+        "Cache-Control": "max-age=3600",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "content_b64": "eyJzZWFyY2hfdHlwZSI6ICJhZGRyZXNzIiwgInNlYXJjaF9wYXJhbXMiOiB7fSwgInF1ZXJ5IjogIjk4NjggQ09XREVOIFNUIiwgIm5vcm1hbGl6ZWQiOiAiOTg2OCBDT1dERU4gU1QiLCAiY3JzIjogeyJ0eXBlIjogImxpbmsiLCAicHJvcGVydGllcyI6IHsidHlwZSI6ICJwcm9qNCIsICJocmVmIjogImh0dHA6Ly9zcGF0aWFscmVmZXJlbmNlLm9yZy9yZWYvZXBzZy80MzI2L3Byb2o0LyJ9fSwgInBhZ2UiOiAxLCAicGFnZV9jb3VudCI6IDEsICJwYWdlX3NpemUiOiAxLCAidG90YWxfc2l6ZSI6IDEsICJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwgImZlYXR1cmVzIjogW3sidHlwZSI6ICJGZWF0dXJlIiwgImFpc19mZWF0dXJlX3R5cGUiOiAiYWRkcmVzcyIsICJtYXRjaF90eXBlIjogImV4YWN0IiwgInByb3BlcnRpZXMiOiB7InN0cmVldF9hZGRyZXNzIjogIjk4NjggQ09XREVOIFNUIiwgImJhc2VfYWRkcmVzcyI6ICI5ODY4IENPV0RFTiBTVCIsICJhZGRyZXNzX2xvdyI6IDk4NjgsICJhZGRyZXNzX2xvd19zdWZmaXgiOiAiIiwgImFkZHJlc3NfbG93X2ZyYWMiOiAiIiwgImFkZHJlc3NfaGlnaCI6IG51bGwsICJzdHJlZXRfcHJlZGlyIjogIiIsICJzdHJlZXRfbmFtZSI6ICJDT1dERU4iLCAic3RyZWV0X3N1ZmZpeCI6ICJTVCIsICJzdHJlZXRfcG9zdGRpciI6ICIiLCAidW5pdF90eXBlIjogIiIsICJ1bml0X251bSI6ICIiLCAiZmxvb3IiOiAiIiwgInN0cmVldF9mdWxsIjogIkNPV0RFTiBTVCIsICJzdHJlZXRfY29kZSI6IDI1NDgwLCAic2VnX2lkIjogOTYwNDgzLCAiemlwX2NvZGUiOiAiMTkxMTUiLCAiemlwXzQiOiAiMjMwOCIsICJ1c3BzX2JsZGdmaXJtIjogIiIsICJ1c3BzX3R5cGUiOiAiUyIsICJlbGVjdGlvbl9ibG9ja19pZCI6ICIyNDAwNzQ5NyIsICJlbGVjdGlvbl9wcmVjaW5jdCI6ICI1ODMwIiwgInB3ZF9wYXJjZWxfaWQiOiAiNTE0MjAiLCAiZG9yX3BhcmNlbF9pZCI6ICIxNTdOMDEwMTAxIiwgImxpX2FkZHJlc3Nfa2V5IjogIjEwMTczMSIsICJlY2xpcHNlX2xvY2F0aW9uX2lkIjogIiIsICJiaW4iOiAiMTM2MjkyNiIsICJsaV9wYXJjZWxfaWQiOiAiNTE0MjAiLCAiem9uaW5nX2RvY3VtZW50X2lkcyI6IFtdLCAicHdkX2FjY291bnRfbnVtcyI6IFsiMjU0ODAwOTg2ODAwMSJdLCAib3BhX2FjY291bnRfbnVtIjogIjU4MTQ1NjAwMCIsICJvcGFfb3duZXJzIjogWyJKQURIQVYgU05FSEFMIiwgIkpBREhBViBIRU1BIl0sICJvcGFfYWRkcmVzcyI6ICI5ODY4IENPV0RFTiBTVCIsICJjZW50ZXJfY2l0eV9kaXN0cmljdCI6ICIiLCAiY3VhX3pvbmUiOiAiQ2F0aG9saWMgQ29tbXVuaXR5IFNlcnZpY2VzIiwgImxpX2Rpc3RyaWN0IjogIkVBU1QiLCAicGhpbGx5X3Jpc2luZ19hcmVhIjogIiIsICJjZW5zdXNfdHJhY3RfMjAxMCI6ICIwMzU1MDAiLCAiY2Vuc3VzX2Jsb2NrX2dyb3VwXzIwMTAiOiAiMSIsICJjZW5zdXNfYmxvY2tfMjAxMCI6ICIxMDA5IiwgImNlbnN1c190cmFjdF8yMDIwIjogIjAzNTUwMCIsICJjZW5zdXNfYmxvY2tfZ3JvdXBfMjAyMCI6ICIxIiwgImNlbnN1c19ibG9ja18yMDIwIjogIjEwMDgiLCAiY291bmNpbF9kaXN0cmljdF8yMDE2IjogIjEwIiwgImNvdW5jaWxfZGlzdHJpY3RfMjAyNCI6ICIxMCIsICJwb2xpdGljYWxfd2FyZCI6ICI1OCIsICJwb2xpdGljYWxfZGl2aXNpb24iOiAiNTgzMCIsICJzdGF0ZV9ob3VzZV9yZXBfMjAxMiI6ICIxNzAiLCAic3RhdGVfaG91c2VfcmVwXzIwMjIiOiAiMTcwIiwgInN0YXRlX3NlbmF0ZV8yMDEyIjogIjUiLCAic3RhdGVfc2VuYXRlXzIwMjIiOiAiNSIsICJ1c19jb25ncmVzc2lvbmFsXzIwMTIiOiAiMTMiLCAidXNfY29uZ3Jlc3Npb25hbF8yMDE4IjogIjIiLCAidXNfY29uZ3Jlc3Npb25hbF8yMDIyIjogIjIiLCAicGxhbm5pbmdfZGlzdHJpY3QiOiAiVXBwZXIgRmFyIE5vcnRoZWFzdCIsICJlbGVtZW50YXJ5X3NjaG9vbCI6ICJGcmFuaywgQW5uZSIsICJtaWRkbGVfc2Nob29sIjogIkJhbGRpLCBDQ0EiLCAiaGlnaF9zY2hvb2wiOiAiV2FzaGluZ3RvbiwgR2VvcmdlIiwgInpvbmluZyI6ICJSU0EtMyIsICJ6b25pbmdfcmNvIjogIjIwOHw0NTYiLCAiY29tbWVyY2lhbF9jb3JyaWRvciI6ICIiLCAiaGlzdG9yaWNfZGlzdHJpY3QiOiAiIiwgImhpc3RvcmljX3NpdGUiOiAiTm8iLCAicG9saWNlX2RpdmlzaW9uIjogIk5FUEQiLCAicG9saWNlX2Rpc3RyaWN0IjogIjciLCAicG9saWNlX3NlcnZpY2VfYXJlYSI6ICIwNzIiLCAicnViYmlzaF9yZWN5Y2xlX2RheSI6ICJXRUQiLCAic2Vjb25kYXJ5X3J1YmJpc2hfZGF5IjogIiIsICJyZWN5Y2xpbmdfZGl2ZXJzaW9uX3JhdGUiOiAwLjE3NSwgImxlYWZfY29sbGVjdGlvbl9hcmVhIjogIlNhdHVyZGF5IEJhZyBEcm9wb2ZmIiwgInNhbml0YXRpb25fYXJlYSI6ICI2IiwgInNhbml0YXRpb25fZGlzdHJpY3QiOiAiNkEiLCAic2FuaXRhdGlvbl9jb252ZW5pZW5jZV9jZW50ZXIiOiAiTm9ydGhlYXN0IFBoaWxhZGVscGhpYSIsICJjbGVhbl9waGlsbHlfYmxvY2tfY2FwdGFpbiI6ICJObyIsICJoaXN0b3JpY19zdHJlZXQiOiAiIiwgImhpZ2h3YXlfZGlzdHJpY3QiOiAiNiIsICJoaWdod2F5X3NlY3Rpb24iOiAiNkUiLCAiaGlnaHdheV9zdWJzZWN0aW9uIjogIjZFNiIsICJ0cmFmZmljX2Rpc3RyaWN0IjogIjMiLCAidHJhZmZpY19wbV9kaXN0cmljdCI6ICIzMzE3IiwgInN0cmVldF9saWdodF9yb3V0ZSI6ICIzNiIsICJsYW5lX2Nsb3N1cmUiOiAiIiwgInB3ZF9tYWludF9kaXN0cmljdCI6ICI2IiwgInB3ZF9wcmVzc3VyZV9kaXN0cmljdCI6ICJUSFMvRkMiLCAicHdkX3RyZWF0bWVudF9wbGFudCI6ICJCQVhURVIiLCAicHdkX3dhdGVyX3BsYXRlIjogIjEwMiIsICJwd2RfY2VudGVyX2NpdHlfZGlzdHJpY3QiOiAiIiwgIm1ham9yX3BoaWxhX3dhdGVyc2hlZCI6ICJQZW5ueXBhY2sgQ3JlZWsgV2F0ZXJzaGVkIiwgIm5laWdoYm9yaG9vZF9hZHZpc29yeV9jb21taXR0ZWUiOiAiIiwgInBwcl9mcmllbmRzIjogIkZyaWVuZHMgb2YgUG9xdWVzc2luZyBXYXRlcnNoZWQiLCAiZW5naW5lX2xvY2FsIjogIjYyIiwgImxhZGRlcl9sb2NhbCI6ICIzNCIsICJ0b2JhY2NvX3JldGFpbGVyX3Blcm1pdF9jYXBwZWQiOiAiTm98Tm8iLCAidG9iYWNjb19mcmVlX3NjaG9vbF96b25lcyI6ICJObyIsICJoM19oZXhfZ3JpZF9yNyI6ICI4NzJhMTM0MzNmZmZmZmYiLCAiaDNfaGV4X2dyaWRfcjgiOiAiODgyYTEzNDMzZGZmZmZmIiwgImgzX2hleF9ncmlkX3I5IjogIjg5MmExMzQzM2QzZmZmZiIsICJoM19oZXhfZ3JpZF9yMTAiOiAiOGEyYTEzNDMzZDM3ZmZmIn0sICJnZW9tZXRyeSI6IHsiZ2VvY29kZV90eXBlIjogInB3ZF9wYXJjZWwiLCAidHlwZSI6ICJQb2ludCIsICJjb29yZGluYXRlcyI6IFstNzUuMDI2MzcwMTY0MTgzNDYsIDQwLjA5MzY1MDg2MzIxNjExXX19XX0="
+    }
+  ]
+}
