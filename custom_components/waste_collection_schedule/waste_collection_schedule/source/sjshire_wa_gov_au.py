@@ -1,3 +1,4 @@
+import re
 from datetime import date, timedelta
 from typing import ClassVar, final
 
@@ -6,18 +7,21 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
-    IntegrationClientConfig,
-    IntegrationClientRetriever,
-    IntegrationPanelParser,
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
+    MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-# Multiple addresses can share a street/suburb combination, so the search step
-# fetches every candidate (match_field="Address") and the retriever picks the
-# exact one, raising suggestions otherwise -- IntegrationClientRetriever's
-# generic disambiguation, not source-specific code. Rubbish is a bare weekday
-# name (weekly); Recycling is worded "<day> this/next week" (fortnightly).
+# The shire moved its map off the self-hosted maps.sjshire.wa.gov.au IntraMaps
+# server onto TechnologyOne's SaaS platform (ser.spatial.t1cloud.com). The old
+# apikey Integration API is gone (it now serves the MapBuilder HTML shell, hence
+# the JSONDecodeError), so this uses the stateful session handshake the sibling
+# WA councils on the same platform use (IntraMapsRetriever + MapsClientConfig,
+# see kwinana_wa_gov_au.py). The infoPanels field names are unchanged:
+# WasteCollectionDay is a bare weekday (weekly); RecycleDay is worded
+# "<day> this/next week" (fortnightly).
 #
 # The legacy source took a non-standard `predict` argument that limited the
 # result to a single upcoming occurrence unless the caller asked for more.
@@ -25,19 +29,23 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 # source: dropped here, and the pipeline always returns the full recurring
 # series (see doc/contributing_source.md, "Empty results and exceptions").
 
-INTRAMAPS_CONFIG = IntegrationClientConfig(
-    base_url="https://maps.sjshire.wa.gov.au",
-    instance="IntraMaps22B",
-    api_key="58383723-1396-43cc-a5cf-722e786208c6",
+INTRAMAPS_CONFIG = MapsClientConfig(
+    base_url="https://ser.spatial.t1cloud.com",
+    instance="spatial/intramaps",
+    config_id="93074f9e-ef2a-49d5-9866-91422949b9da",
+    project="2e3adc22-b61d-4548-92d1-c1b02f9a30a3",
+    module_id="bd33efd3-682b-478f-9dd1-82bdad11b52d",
 )
-
-SEARCH_FORM = "de2aecaf-1e4d-4d25-8146-b0f0109aa458"
-DETAILS_FORM = "a51626b7-3892-44f4-9fba-b0264486bda5"
 
 _TYPE_MAP = {
     "WasteCollectionDay": GENERAL_WASTE,
     "RecycleDay": RECYCLABLES,
 }
+
+# RecycleDay reads "<day> this/next week", but the "this week" variant arrives
+# with the day and "this" run together ("MondayThis Week") while "next week"
+# keeps the space ("Tuesday Next Week"); strip the suffix either way.
+_RECYCLE_SUFFIX = re.compile(r"\s*(?:this|next)\s*week\s*$")
 
 
 def _this_or_next_week(weekday: int, next_week: bool) -> date:
@@ -72,13 +80,12 @@ def _describe(record, source):
         return
 
     # column == "RecycleDay": "<day> this/next week"
-    parts = text.split()
-    if not parts:
-        return
-    weekday = recurrence.weekday(parts[0])
+    next_week = "next" in text
+    day = _RECYCLE_SUFFIX.sub("", text).strip()
+    weekday = recurrence.weekday(day)
     if weekday is None:
         return
-    start = _this_or_next_week(weekday, "next" in text)
+    start = _this_or_next_week(weekday, next_week)
     yield Schedule(column, start, recurrence.FORTNIGHTLY, 13)
 
 
@@ -100,14 +107,8 @@ class Source(BaseSource):
 
     PARAMS = (text_field("address", "Street Address"),)
 
-    retrieve = IntegrationClientRetriever(
-        INTRAMAPS_CONFIG,
-        search_form=SEARCH_FORM,
-        details_form=DETAILS_FORM,
-        address="address",
-        match_field="Address",
-    )
-    parse = IntegrationPanelParser()
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
+    parse = IntraMapsPanelParser()
     preprocess = RecurrenceExpander(_describe)
 
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
