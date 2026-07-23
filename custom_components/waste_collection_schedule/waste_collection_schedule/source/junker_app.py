@@ -328,6 +328,7 @@ SERVICE_PROVIDERS = {
     "Stradella",
     "Torre de' Passeri",
     "Scalea",
+    "San Giovanni Teatino",
 }
 
 
@@ -356,6 +357,10 @@ TEST_CASES = {
         "area": "Utenze domestiche",
     },
     "Scalea": {"municipality": "Scalea"},
+    "San Giovanni Teatino, Zona A": {
+        "municipality": "San Giovanni Teatino",
+        "area": "Zona A",
+    },
 }
 
 

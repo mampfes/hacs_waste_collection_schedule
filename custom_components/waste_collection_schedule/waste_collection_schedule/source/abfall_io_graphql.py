@@ -73,6 +73,22 @@ TEST_CASES = {
         "key": "80acad6c77fe9342ebafad29a8c58bf6",
         "idHouseNumber": 72827,
     },
+    "Landkreis Göttingen, Scheden": {
+        "key": "4b5702d771c82b611c386ebbc7629026",
+        "idHouseNumber": 641,
+    },
+    "Landkreis Böblingen, Böblingen, Dagersheim": {
+        "key": "76bdaac8568082d77e7a90cb41129f9b",
+        "idHouseNumber": 1057,
+    },
+    "ASG Nordsachsen, Delitzsch-Beerendorf": {
+        "key": "2085afd95285e645e15ee9623d0c5172",
+        "idHouseNumber": 360435,
+    },
+    "Schwarzwald-Baar-Kreis, Königsfeld": {
+        "key": "30628292bdd8b43db86a48f7e0d85f85",
+        "idHouseNumber": 16437,
+    },
 }
 
 

@@ -403,6 +403,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
 - [Gemeinde Bürmoos](/doc/source/buermoos_at.md) / buermoos.at
 - [Gemeinde Felixdorf](/doc/source/felixdorf_gv_at.md) / felixdorf.gv.at
+- [Gemeinde Mils](/doc/source/mils_tirol_at.md) / mils-tirol.at
 - [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeinde24](/doc/source/gemeinde24_at.md) / gemeinde24.at
@@ -575,6 +576,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marktgemeinde Kaltenleutgeben](/doc/source/kaltenleutgeben_gv_at.md) / kaltenleutgeben.gv.at
 - [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
+- [Marktgemeinde Pernitz](/doc/source/pernitz_gv_at.md) / pernitz.gv.at
 - [Marktgemeinde Schlierbach](/doc/source/schlierbach_at.md) / schlierbach.at
 - [Marktgemeinde Sollenau](/doc/ics/sollenau_at.md) / sollenau.noe.gv.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
@@ -951,6 +953,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ville de Saguenay](/doc/source/saguenay_ca.md) / ville.saguenay.ca
 - [Ville de Saint-Basile-le-Grand](/doc/source/villesblg_ca.md) / villesblg.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+- [West Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
 - [Whitby, ON](/doc/ics/recollect.md) / whitby.ca
 - [Winnipeg (MB)](/doc/source/myutility_winnipeg_ca.md) / myutility.winnipeg.ca
 </details>
@@ -1133,6 +1136,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
 - [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Nantes Métropole](/doc/source/data_nantesmetropole_fr.md) / data.nantesmetropole.fr
 - [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1171,6 +1175,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Saulx-Marchais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [SIAVED (Valenciennes Métropole)](/doc/source/publidata_fr.md) / siaved.fr/votre-calendrier-de-collecte
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
 - [SICTOM du Val de Saône](/doc/source/sictomvds_com.md) / sictomvds.com
 - [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
@@ -1179,6 +1184,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Sucy-en-Brie](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
+- [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Thiverval-Grignon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1248,6 +1254,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Kyffhäuserkreis](/doc/source/abfall_kyffhaeuser_de.md) / abfall-kyffhaeuser.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
+- [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io_graphql.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
@@ -1319,6 +1326,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Amelith](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amelsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amt Bad Wilsnack/Weisen (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis](/doc/source/abfall_io_graphql.md) / lrasbk.de
 - [Amt Lenzen-Elbtalaue (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Meyenburg (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Putlitz/Berge (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
@@ -1329,9 +1337,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ART Trier (Depreciated)](/doc/source/art_trier_de.md) / art-trier.de
-- [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Asche](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
-- [ASG Nordsachsen](/doc/source/abfall_io.md) / asg-nordsachsen.de
+- [ASG Nordsachsen](/doc/source/abfall_io_graphql.md) / asg-nordsachsen.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
@@ -1347,6 +1354,7 @@ If you already have enough information for your municipality/region, you are ver
 - [AWB Abfallwirtschaft Vechta](/doc/source/abfallwirtschaft_vechta_de.md) / abfallwirtschaft-vechta.de
 - [AWB Ammerland](/doc/source/awb_ammerland_de.md) / awb-ammerland.de
 - [AWB Bad Kreuznach](/doc/source/awb_bad_kreuznach_de.md) / blupassionsystem.de/city/rest/garbageregion/filterRegion
+- [AWB Birkenfeld](/doc/source/awb_bir_de.md) / awb-bir.de
 - [AWB Köln](/doc/source/awbkoeln_de.md) / awbkoeln.de
 - [AWB Landkreis Bad Dürkheim](/doc/source/awido_de.md) / awb.kreis-bad-duerkheim.de
 - [AWB Landkreis Fürstenfeldbruck](/doc/source/awido_de.md) / awb-ffb.de
@@ -1577,11 +1585,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Karstädt (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Gemeinde Kirchlengern](/doc/source/kirchlengern_de.md) / kirchlengern.de
 - [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
 - [Gemeinde Kriftel](/doc/source/kriftel_de.md) / kriftel.de
 - [Gemeinde Neuberg](/doc/ics/neuberg_de.md) / neuberg.eu
 - [Gemeinde Plattenburg (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
+- [Gemeinde Rödinghausen](/doc/ics/abfall_export_vcal.md) / roedinghausen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
@@ -1596,6 +1606,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
 - [Greene](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gremsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gronau](/doc/source/gronau_de.md) / abfallkalender.regioit.de/kalender-wml
 - [Großenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
@@ -1806,6 +1817,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
 - [Landkreis Görlitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkgr
+- [Landkreis Göttingen](/doc/source/abfall_io_graphql.md) / landkreisgoettingen.de
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
@@ -2077,6 +2089,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Seboldshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Senden (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Sievershausen (Dassel)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sievershausen (Einbeck)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2140,6 +2153,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [Stadtwerke Aschaffenburg](/doc/ics/gipsprojekt_de.md) / stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk
 - [Stadtwerke Bergheim](/doc/ics/swbm_de.md) / swbm.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
@@ -2707,6 +2721,7 @@ If you already have enough information for your municipality/region, you are ver
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
 - [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [San Giovanni Teatino](/doc/source/junker_app.md) / junker.app
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Zenone Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
@@ -2738,6 +2753,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Silea](/doc/source/silea_it.md) / sileaspa.it
 - [Silvi - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [SiUnet](/doc/source/siunet_it.md) / siunet.it
 - [Soleto](/doc/source/junker_app.md) / junker.app
 - [Solza](/doc/source/junker_app.md) / junker.app
 - [Sordio](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -2839,6 +2855,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
 - [Ekonovus](/doc/source/ekonovus_lt.md) / ekonovus.lt
+- [Gargždų švara](/doc/source/gargzdusvara_eu.md) / gargzdusvara.eu
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
@@ -2988,6 +3005,7 @@ If you already have enough information for your municipality/region, you are ver
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [Fredrikstad kommune](/doc/source/fredrikstad_no.md) / fredrikstad.kommune.no
+- [GLØR](/doc/source/glor_no.md) / glor.no
 - [Haugaland Interkommunale Miljøverk (HIM)](/doc/source/him_as.md) / him.as
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no
@@ -2996,6 +3014,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 - [ReMidt Orkland muni](/doc/source/remidt_no.md) / remidt.no
 - [Renovasjonsselskapet for Drammensregionen IKS (RfD)](/doc/source/rfd_no.md) / rfd.no
+- [RIR](/doc/source/rir_no.md) / rir.no
 - [ROAF (Romerike Avfallsforedling IKS)](/doc/source/minrenovasjon_no.md) / roaf.no
 - [Sandnes Kommune](/doc/source/sandnes_no.md) / sandnes.kommune.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
@@ -3011,6 +3030,7 @@ If you already have enough information for your municipality/region, you are ver
 - [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
+- [Czysty Region](/doc/source/czystyregion_pl.md) / czystyregion.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
@@ -3279,26 +3299,49 @@ If you already have enough information for your municipality/region, you are ver
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
 - [Aadorf](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Aarberg](/doc/source/aarberg_ch.md) / aarberg.ch
+- [Affeltrangen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
+- [Altnau](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Amlikon-Bissegg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Amriswil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
+- [Arbon](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Basadingen-Schlattingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Basel-Stadt](/doc/source/data_bs_ch.md) / data.bs.ch
 - [Beinwil am See](/doc/source/localcities_ch.md) / beinwil-am-see.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Berg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Berlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bettwiesen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Bichelsee-Balterswil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Birwinken](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Bischofszell](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Bottighofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
+- [Bussnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
 - [Büren an der Aare](/doc/source/localcities_ch.md) / bueren.ch
+- [Bürglen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bütschwil-Ganterschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Degersheim](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Diessenhofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Dozwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Ebnat-Kappel](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Egnach](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Erlen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Ermatingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Eschenz](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Eschlikon](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Felben-Wellhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Frauenfeld](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Gachnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
@@ -3309,36 +3352,60 @@ If you already have enough information for your municipality/region, you are ver
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Gossau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
+- [Gottlieben](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Grenchen](/doc/source/localcities_ch.md) / grenchen.ch
 - [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
+- [Güttingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hauptwil-Gottshaus](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hefenhofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
+- [Hemishofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Herdern](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Herisau](/doc/source/a_region_ch.md) / a-region.ch
+- [Hohentannen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Homburg](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Hüttlingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hüttwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kemmental](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Kesswil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Kirchberg](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kradolf-Schönenberg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Kreuzlingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [KVA Thurgau](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Langrickenbach](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Lengwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Lichtensteig](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Liestal](/doc/source/localcities_ch.md) / liestal.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
 - [localcities.ch](/doc/source/localcities_ch.md) / localcities.ch
+- [Lommis](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Lütisburg](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Mammern](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Matzingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
+- [Märstetten](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Müllheim](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
 - [Münchwilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Münsterlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Neckertal](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Nesslau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Neunforn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Niederbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Niederhelfenschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
@@ -3346,54 +3413,78 @@ If you already have enough information for your municipality/region, you are ver
 - [Oberbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Pfyn-Dettighofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Ramsen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Raperswilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Rapperswil](/doc/source/rapperswil_be_ch.md) / rapperswil-be.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Reinach BL](/doc/source/reinach_bl_ch.md) / reinach-bl.ch
 - [Rickenbach](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Roggwil](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Romanshorn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Salenstein](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Salmsach](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
+- [Schlatt](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Schliern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [Schönholzerswilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Sirnach](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Sommeri](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
+- [Steckborn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
+- [Stein am Rhein](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
+- [Stettfurt](/doc/source/kvatg_ch.md) / kvatg.ch
 - [SUIBR](/doc/source/suibr_ch.md) / suibr.ch
+- [Sulgen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Therwil](/doc/source/localcities_ch.md) / therwil.ch
+- [Thundorf](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Thörishaus](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Tobel-Tägerschen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
+- [Tägerwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
+- [Uesslingen-Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Uttwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Uzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Volketswil](/doc/source/localcities_ch.md) / volketswil.ch
 - [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Wagenhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
 - [Wangen bei Olten](/doc/source/localcities_ch.md) / wangen-bei-olten.ch
+- [Warth-Weiningen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wattwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Weinfelden](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
+- [Wigoltingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Wilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Winterthur](/doc/source/winterthur_ch.md) / winterthur.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
 - [Wuppenau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wäldi](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wängi](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAB Bazenheid](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
 - [Zeba](/doc/source/sammelkalender_ch.md) / zebazug.ch
+- [Zihlschlacht-Sitterdorf](/doc/source/kvatg_ch.md) / kvatg.ch
 - [ZKRI](/doc/source/sammelkalender_ch.md) / zkri.ch
 - [Zuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 </details>
@@ -3513,6 +3604,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Enfield Council](/doc/source/enfield_gov_uk.md) / enfield.gov.uk/services/rubbish-and-recycling/find-my-collection-day
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
 - [Epping Forest District Council](/doc/source/eppingforestdc_gov_uk.md) / eppingforestdc.gov.uk
+- [Epsom and Ewell Borough Council](/doc/source/iapp_itouchvision_com.md) / epsom-ewell.gov.uk
 - [Erewash Borough Council](/doc/source/erewash_gov_uk.md) / erewash.gov.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
@@ -3788,8 +3880,10 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
+- [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
+- [City of Stamford, CT](/doc/source/stamford_ct_us.md) / stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule
 - [City of Tallahassee](/doc/source/talgov_com.md) / talgov.com/you/swslookup
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
@@ -3797,8 +3891,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
+- [Kansas City, MO](/doc/source/kansas_city_mo_us.md) / kcmo.gov/city-hall/trash
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
+- [Mill Valley Refuse Service](/doc/source/millvalleyrefuse_com.md) / millvalleyrefuse.com
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
@@ -3807,6 +3903,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
+- [Peoria (IL)](/doc/source/recyclecoach_com.md) / peoriagov.org/533/Yes-Peoria-Picks-Up
 - [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
 - [Prince George's County, MD](/doc/source/prince_georges_county_md_us.md) / princegeorgescountymd.gov/departments-offices/environment/waste-recycling/residential-collections
 - [ReCollect](/doc/ics/recollect.md) / recollect.net

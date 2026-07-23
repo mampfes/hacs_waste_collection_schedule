@@ -148,11 +148,6 @@ SERVICE_MAP = [
         "service_id": "d287412901d68d66825e588a60c94641",
     },
     {
-        "title": "ASG Nordsachsen",
-        "url": "https://www.asg-nordsachsen.de/",
-        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
-    },
-    {
         "title": "AVR Kommunal, Rhein-Neckar-Kreis",
         "url": "https://www.avr-kommunal.de/",
         "service_id": "914fb9d000a9a05af4fd54cfba478860",
