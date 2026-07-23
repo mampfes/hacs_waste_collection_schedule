@@ -3299,26 +3299,49 @@ If you already have enough information for your municipality/region, you are ver
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
 - [Aadorf](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Aarberg](/doc/source/aarberg_ch.md) / aarberg.ch
+- [Affeltrangen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
+- [Altnau](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Amlikon-Bissegg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Amriswil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
+- [Arbon](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Basadingen-Schlattingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Basel-Stadt](/doc/source/data_bs_ch.md) / data.bs.ch
 - [Beinwil am See](/doc/source/localcities_ch.md) / beinwil-am-see.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Berg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Berlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bettwiesen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Bichelsee-Balterswil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Birwinken](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Bischofszell](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Bottighofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
+- [Bussnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
 - [Büren an der Aare](/doc/source/localcities_ch.md) / bueren.ch
+- [Bürglen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bütschwil-Ganterschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Degersheim](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Diessenhofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Dozwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Ebnat-Kappel](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Egnach](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Erlen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Ermatingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Eschenz](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Eschlikon](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Felben-Wellhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Frauenfeld](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Gachnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
@@ -3329,36 +3352,60 @@ If you already have enough information for your municipality/region, you are ver
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Gossau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
+- [Gottlieben](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Grenchen](/doc/source/localcities_ch.md) / grenchen.ch
 - [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
+- [Güttingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hauptwil-Gottshaus](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hefenhofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
+- [Hemishofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Herdern](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Herisau](/doc/source/a_region_ch.md) / a-region.ch
+- [Hohentannen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Homburg](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Hüttlingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Hüttwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kemmental](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Kesswil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Kirchberg](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kradolf-Schönenberg](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Kreuzlingen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [KVA Thurgau](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Langrickenbach](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Lengwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Lichtensteig](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Liestal](/doc/source/localcities_ch.md) / liestal.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
 - [localcities.ch](/doc/source/localcities_ch.md) / localcities.ch
+- [Lommis](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Lütisburg](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Mammern](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Matzingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
+- [Märstetten](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Müllheim](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
 - [Münchwilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Münsterlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Neckertal](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Nesslau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Neunforn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Niederbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Niederhelfenschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
@@ -3366,54 +3413,78 @@ If you already have enough information for your municipality/region, you are ver
 - [Oberbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Pfyn-Dettighofen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Ramsen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Raperswilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Rapperswil](/doc/source/rapperswil_be_ch.md) / rapperswil-be.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Reinach BL](/doc/source/reinach_bl_ch.md) / reinach-bl.ch
 - [Rickenbach](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Roggwil](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Romanshorn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Salenstein](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Salmsach](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
+- [Schlatt](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Schliern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
+- [Schönholzerswilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Sirnach](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Sommeri](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
+- [Steckborn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
+- [Stein am Rhein](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
+- [Stettfurt](/doc/source/kvatg_ch.md) / kvatg.ch
 - [SUIBR](/doc/source/suibr_ch.md) / suibr.ch
+- [Sulgen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Therwil](/doc/source/localcities_ch.md) / therwil.ch
+- [Thundorf](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Thörishaus](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Tobel-Tägerschen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
+- [Tägerwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
+- [Uesslingen-Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Uttwil](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Uzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Volketswil](/doc/source/localcities_ch.md) / volketswil.ch
 - [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Wagenhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
 - [Wangen bei Olten](/doc/source/localcities_ch.md) / wangen-bei-olten.ch
+- [Warth-Weiningen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wattwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Weinfelden](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
+- [Wigoltingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Wilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Winterthur](/doc/source/winterthur_ch.md) / winterthur.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
 - [Wuppenau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wäldi](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Wängi](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAB Bazenheid](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
 - [Zeba](/doc/source/sammelkalender_ch.md) / zebazug.ch
+- [Zihlschlacht-Sitterdorf](/doc/source/kvatg_ch.md) / kvatg.ch
 - [ZKRI](/doc/source/sammelkalender_ch.md) / zkri.ch
 - [Zuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 </details>
