@@ -16,6 +16,55 @@ class IcsEvent(NamedTuple):
     description: str | None = None
 
 
+def _repair_ics_data(ics_data: str) -> str:
+    """Repair common provider malformations before handing data to icalevents.
+
+    Every fix here targets a value the schedule does not depend on, or a purely
+    syntactic defect; the essential DTSTART/DTEND/SUMMARY are never altered.
+    """
+    # Give bare EXDATE;VALUE=DATE lines a time component so dateutil can compare
+    # them against timezone-aware recurrences.
+    ics_data = re.sub(
+        r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
+        lambda m: m.group(1) + "T010000\n",
+        ics_data,
+    )
+
+    # Fix truncated DTSTART/DTEND values where the time portion is missing
+    # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
+    ics_data = re.sub(
+        r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
+        r"\g<1>T000000\g<2>",
+        ics_data,
+    )
+
+    # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines.
+    # TZID is only valid on DATETIME values; combining it with VALUE=DATE is
+    # malformed ICS. When present, icalendar creates timezone-aware datetime
+    # objects for the recurrence rule while EXDATE lines (which lack TZID)
+    # stay naive, causing a TypeError when dateutil compares them.
+    ics_data = re.sub(
+        r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+        r"\1;\2",
+        ics_data,
+    )
+
+    # Drop the CREATED / LAST-MODIFIED metadata timestamps.
+    # icalevents dereferences their `.dt`, so a malformed value (e.g. RESO's
+    # doubled "20260101T000000ZT000000Z") aborts parsing of the whole feed even
+    # though these properties play no part in scheduling. Nothing in the
+    # conversion reads them, so removing them keeps DTSTART/SUMMARY intact and
+    # tolerates any corruption of these non-essential properties.
+    ics_data = re.sub(
+        r"^(?:CREATED|LAST-MODIFIED)[;:].*(?:\r?\n[ \t].*)*\r?\n",
+        "",
+        ics_data,
+        flags=re.MULTILINE | re.IGNORECASE,
+    )
+
+    return ics_data
+
+
 def _event_location_description(e: Any) -> tuple[str | None, str | None]:
     raw_loc = getattr(e, "location", None)
     if isinstance(raw_loc, str):
@@ -59,30 +108,7 @@ class ICS:
             start_date -= datetime.timedelta(days=self._offset)
         end_date = start_date + datetime.timedelta(days=365)
 
-        ics_data = re.sub(
-            r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
-            lambda m: m.group(1) + "T010000\n",
-            ics_data,
-        )
-
-        # Fix truncated DTSTART/DTEND values where the time portion is missing
-        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
-        ics_data = re.sub(
-            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
-            r"\g<1>T000000\g<2>",
-            ics_data,
-        )
-
-        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines.
-        # TZID is only valid on DATETIME values; combining it with VALUE=DATE is
-        # malformed ICS. When present, icalendar creates timezone-aware datetime
-        # objects for the recurrence rule while EXDATE lines (which lack TZID)
-        # stay naive, causing a TypeError when dateutil compares them.
-        ics_data = re.sub(
-            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
-            r"\1;\2",
-            ics_data,
-        )
+        ics_data = _repair_ics_data(ics_data)
 
         # parse ics data
         events: list[Any] = icalevents.events(
@@ -146,26 +172,7 @@ class ICS:
             start_date -= datetime.timedelta(days=self._offset)
         end_date = start_date + datetime.timedelta(days=365)
 
-        ics_data = re.sub(
-            r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
-            lambda m: m.group(1) + "T010000\n",
-            ics_data,
-        )
-
-        # Fix truncated DTSTART/DTEND values where the time portion is missing
-        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
-        ics_data = re.sub(
-            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
-            r"\g<1>T000000\g<2>",
-            ics_data,
-        )
-
-        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines — see convert().
-        ics_data = re.sub(
-            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
-            r"\1;\2",
-            ics_data,
-        )
+        ics_data = _repair_ics_data(ics_data)
 
         # parse ics data
         events: list[Any] = icalevents.events(
