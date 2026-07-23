@@ -109,9 +109,13 @@ class WasteCollectionApi:
             self._update_sensors_callback()
             return
 
+        fetch_succeeded = True
         for shell in self._source_shells:
-            shell.fetch()
-        self._last_fetch_date = today
+            if not shell.fetch():
+                fetch_succeeded = False
+
+        if fetch_succeeded:
+            self._last_fetch_date = today
 
         self._update_sensors_callback()
 
