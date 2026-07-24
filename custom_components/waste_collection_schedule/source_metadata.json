@@ -3669,6 +3669,14 @@
     "howto": {},
     "urls": {}
   },
+  "siunet_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siunet_it.md",
+    "howto": {
+      "en": "Check the 'Supported municipalities' list in this source's documentation page for the exact spelling of your municipality. If it has zones, look up the zone name from your local waste-management provider's calendar (e.g. Esacom for the Verona area) or the yard schedule from your last paper calendar.",
+      "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto."
+    },
+    "urls": {}
+  },
   "araccolta_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/araccolta_it.md",
     "howto": {
@@ -4636,6 +4644,16 @@
   "aarberg_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aarberg_ch.md",
     "howto": {},
+    "urls": {}
+  },
+  "kvatg_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kvatg_ch.md",
+    "howto": {
+      "de": "Suchen Sie Ihre Gemeinde auf https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ und geben Sie deren Namen ein. Falls der Entsorgungsplan Ihrer Gemeinde eine Sammlung nach Zonen unterteilt (z. B. die Grüngut-Gebiete in Kreuzlingen oder die Abfuhrgebiete in Frauenfeld), können Sie optional den Zonennamen wie im Plan gedruckt angeben.",
+      "en": "Find your community on https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ and enter its name. If your community's disposal plan splits a collection by zone (e.g. the green waste districts in Kreuzlingen or the collection areas in Frauenfeld), you can optionally enter the zone name as printed in the plan.",
+      "fr": "Recherchez votre commune sur https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ et saisissez son nom. Si le plan d'élimination de votre commune répartit une collecte par zones (p. ex. les secteurs de déchets verts à Kreuzlingen ou les zones de collecte à Frauenfeld), vous pouvez éventuellement indiquer le nom de la zone tel qu'imprimé dans le plan.",
+      "it": "Cerca il tuo comune su https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ e inserisci il suo nome. Se il piano di smaltimento del tuo comune suddivide una raccolta per zone (ad es. le aree del verde a Kreuzlingen o le zone di raccolta a Frauenfeld), puoi facoltativamente indicare il nome della zona come stampato nel piano."
+    },
     "urls": {}
   },
   "alchenstorf_ch": {
@@ -7088,6 +7106,11 @@
     "howto": {
       "en": "Use the same address you would enter on the MyJax hauler lookup page."
     },
+    "urls": {}
+  },
+  "kansas_city_mo_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kansas_city_mo_us.md",
+    "howto": {},
     "urls": {}
   },
   "marysville_wa_us": {

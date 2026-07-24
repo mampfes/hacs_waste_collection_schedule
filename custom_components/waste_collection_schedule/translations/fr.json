@@ -16739,6 +16739,28 @@
         },
         "data_description": {}
       },
+      "args_siunet_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_siunet_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Comune",
+          "zona": "Zona"
+        },
+        "data_description": {}
+      },
       "args_araccolta_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -20677,6 +20699,37 @@
         },
         "data_description": {
           "zone": "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+        }
+      },
+      "args_kvatg_ch": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "community": "Commune",
+          "kehricht_zone": "Zone Kehricht (Kreuzlingen uniquement, facultatif)",
+          "zone": "Zone / secteur de collecte (facultatif)"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "community": "Nom de la commune exactement comme indiqué sur la page des plans d'élimination de la KVA Thurgau (p. ex. 'Kreuzlingen').",
+          "kehricht_zone": "Uniquement pour Kreuzlingen : zone de collecte des ordures ménagères (Kehricht) selon le plan de zones de la ville — 'Süd & Tägerwilen', 'Nord und Ost' ou 'Zentrum'. Laisser vide pour les trois zones. La carte Kehricht, Abfuhrplan Kreuzlingen sur kreuzlingen.ch montre quelles rues appartiennent à quelle zone.",
+          "zone": "Zone ou secteur de collecte au sein de la commune, si le plan d'élimination répartit les collectes par secteur (p. ex. 'Ost' pour le secteur des déchets verts de Kreuzlingen). Laisser vide pour toutes les zones ; les collectes zonées portent alors le nom de la zone. Les noms de zones figurent à gauche de la grille des dates dans le plan de votre commune sur kvatg.ch — une valeur invalide affiche la liste des noms valides."
+        }
+      },
+      "reconfigure_kvatg_ch": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "community": "Commune",
+          "kehricht_zone": "Zone Kehricht (Kreuzlingen uniquement, facultatif)",
+          "zone": "Zone / secteur de collecte (facultatif)"
+        },
+        "data_description": {
+          "community": "Nom de la commune exactement comme indiqué sur la page des plans d'élimination de la KVA Thurgau (p. ex. 'Kreuzlingen').",
+          "kehricht_zone": "Uniquement pour Kreuzlingen : zone de collecte des ordures ménagères (Kehricht) selon le plan de zones de la ville — 'Süd & Tägerwilen', 'Nord und Ost' ou 'Zentrum'. Laisser vide pour les trois zones. La carte Kehricht, Abfuhrplan Kreuzlingen sur kreuzlingen.ch montre quelles rues appartiennent à quelle zone.",
+          "zone": "Zone ou secteur de collecte au sein de la commune, si le plan d'élimination répartit les collectes par secteur (p. ex. 'Ost' pour le secteur des déchets verts de Kreuzlingen). Laisser vide pour toutes les zones ; les collectes zonées portent alors le nom de la zone. Les noms de zones figurent à gauche de la grille des dates dans le plan de votre commune sur kvatg.ch — une valeur invalide affiche la liste des noms valides."
         }
       },
       "args_alchenstorf_ch": {
@@ -29280,6 +29333,26 @@
         }
       },
       "reconfigure_jacksonville_fl_us": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_kansas_city_mo_us": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_kansas_city_mo_us": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
