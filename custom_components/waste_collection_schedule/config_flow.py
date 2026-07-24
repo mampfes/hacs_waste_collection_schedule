@@ -89,6 +89,10 @@ from .const import (
 )
 from .init_ui import WCSCoordinator
 from .sensor import DetailsFormat
+from .sensor_config_helpers import (
+    preserve_device_control_options,
+    preserve_sensor_control_metadata,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -276,9 +280,11 @@ def _build_schema_from_params(
                 vol_args[key] = SelectSelector(
                     SelectSelectorConfig(
                         options=[
-                            SelectOptionDict(label=opt[0], value=opt[1])
-                            if isinstance(opt, tuple)
-                            else SelectOptionDict(label=opt, value=opt)
+                            (
+                                SelectOptionDict(label=opt[0], value=opt[1])
+                                if isinstance(opt, tuple)
+                                else SelectOptionDict(label=opt, value=opt)
+                            )
                             for opt in options
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
@@ -1500,7 +1506,10 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60
                     + user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["minutes"]
                 )
-                self._options = user_input
+                self._options = preserve_device_control_options(
+                    self._entry.options,
+                    user_input,
+                )
 
                 self._customize_select = user_input.get("customize_select", [])
                 self._customize_select_idx = 0
@@ -1612,7 +1621,9 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             )
 
             if len(errors) == 0:
-                self._options[CONF_SENSORS].append(args)
+                self._options[CONF_SENSORS].append(
+                    preserve_sensor_control_metadata(original_sensor, args)
+                )
                 self._sensor_select_idx += 1
                 return await self.async_step_sensor()
 

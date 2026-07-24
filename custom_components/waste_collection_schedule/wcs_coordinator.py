@@ -1,5 +1,6 @@
 import datetime
 import logging
+from collections.abc import Callable
 from random import randrange
 from typing import Any
 
@@ -66,33 +67,42 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         super().__init__(hass, _LOGGER, name=const.DOMAIN)
 
-        self._fetch_tracker = async_track_time_change(
-            hass,
-            self._fetch_callback,
-            self._fetch_time.hour,
-            self._fetch_time.minute,
-            self._fetch_time.second,
+        self._scheduled_callbacks: list[Callable[[], None]] = []
+        self._pending_fetch_cancel: Callable[[], None] | None = None
+
+        self._scheduled_callbacks.append(
+            async_track_time_change(
+                hass,
+                self._fetch_callback,
+                self._fetch_time.hour,
+                self._fetch_time.minute,
+                self._fetch_time.second,
+            )
         )
 
         # start timer for day-switch time
         if self._day_switch_time != self._fetch_time:
-            async_track_time_change(  # TODO: cancel on unload
-                hass,
-                self._update_sensors_callback,
-                self._day_switch_time.hour,
-                self._day_switch_time.minute,
-                self._day_switch_time.second,
+            self._scheduled_callbacks.append(
+                async_track_time_change(
+                    hass,
+                    self._update_sensors_callback,
+                    self._day_switch_time.hour,
+                    self._day_switch_time.minute,
+                    self._day_switch_time.second,
+                )
             )
 
         # add a timer at midnight (if not already there) to update days-to
         midnight = datetime.time.min
         if midnight != self._fetch_time and midnight != self._day_switch_time:
-            async_track_time_change(  # TODO: cancel on unload
-                hass,
-                self._update_sensors_callback,
-                midnight.hour,
-                midnight.minute,
-                midnight.second,
+            self._scheduled_callbacks.append(
+                async_track_time_change(
+                    hass,
+                    self._update_sensors_callback,
+                    midnight.hour,
+                    midnight.minute,
+                    midnight.second,
+                )
             )
 
     async def _async_update_data(self) -> dict[str, Any]:
@@ -127,11 +137,29 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     @callback
     async def _fetch_callback(self, *_):
-        async_call_later(
+        if self._pending_fetch_cancel is not None:
+            self._pending_fetch_cancel()
+        self._pending_fetch_cancel = async_call_later(
             self._hass,
             randrange(0, 60 * self._random_fetch_time_offset),
-            self._fetch_now,
+            self._run_scheduled_fetch,
         )
+
+    async def _run_scheduled_fetch(self, *_):
+        """Run a delayed fetch and release its cancellation handle."""
+        self._pending_fetch_cancel = None
+        await self._fetch_now()
+
+    @callback
+    def cancel_scheduled_callbacks(self) -> None:
+        """Cancel time trackers and delayed work owned by this coordinator."""
+        for cancel in self._scheduled_callbacks:
+            cancel()
+        self._scheduled_callbacks.clear()
+
+        if self._pending_fetch_cancel is not None:
+            self._pending_fetch_cancel()
+            self._pending_fetch_cancel = None
 
     @callback
     async def _update_sensors_callback(self, *_):

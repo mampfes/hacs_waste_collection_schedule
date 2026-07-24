@@ -56,6 +56,10 @@ CONF_DATE_TEMPLATE: Final = "date_template"
 CONF_COLLECTION_TYPES: Final = "types"
 CONF_ADD_DAYS_TO: Final = "add_days_to"
 CONF_EVENT_INDEX: Final = "event_index"
+CONF_DEVICE_SENSOR_CONTROLS: Final = "device_sensor_controls"
+CONF_SENSOR_ID: Final = "sensor_id"
+CONF_SENSOR_LEGACY_UNIQUE_ID: Final = "sensor_legacy_unique_id"
+CONF_PRESET_LANGUAGE: Final = "preset_language"
 
 
 CONF_SENSORS: Final = "sensors"
