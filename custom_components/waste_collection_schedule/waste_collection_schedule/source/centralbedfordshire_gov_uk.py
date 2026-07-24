@@ -1,8 +1,13 @@
 """
 Central Bedfordshire Council waste collection source.
 
-Rewritten for the council's new July 20216 site
+Rewritten for the council's new site, which runs on the
+"LocalGov Drupal Waste Collection" module
+(https://www.drupal.org/project/localgov_waste_collection).
 
+That module documents two useful GET-only URLs, which is why this version
+is much simpler than the old one (no more multi-step POST + session cookie
+dance):
     Postcode search : {base}/find?postcode={postcode}
     Direct schedule : {base}/view/{uprn}
 
@@ -34,7 +39,6 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
