@@ -294,6 +294,12 @@ EXTRA_INFO = [
         "default_params": {"project_id": "3179", "district_id": "CALED"},
     },
     {
+        "title": "Carleton Place (ON)",
+        "url": "https://carletonplace.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3149", "district_id": "CARLETON"},
+    },
+    {
         "title": "Burlington (ON)",
         "url": "https://www.burlington.ca/",
         "country": "ca",
