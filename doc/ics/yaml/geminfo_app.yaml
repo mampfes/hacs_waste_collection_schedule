@@ -1,0 +1,21 @@
+title: Geminfo.app
+url: https://geminfo.app
+country: Austria
+howto:
+    en: |
+      - Go to <https://geminfo.app> and select your municipality.
+      - In the search field "Deine Gemeinde oder Stadt suchen" put in the name of your municipality and select it from the list.
+      - Click on the "Termine (Kalender, Veranstaltungen)" button.
+      - On the left side, select the types of waste you want to include in your calendar (Abfallkalender, Altstoffsammelzentrum, Biomüll, Restmüll, Gelber Sack).
+      - On the top right, right-click on the button "als iCal herunterladen" and copy link address.
+      - Replace the `url` in the example configuration with this link.
+    de: |
+      - Gehen Sie zu <https://geminfo.app> und wählen Sie Ihre Gemeinde aus.
+      - Geben Sie im Suchfeld "Deine Gemeinde oder Stadt suchen" den Namen Ihrer Gemeinde ein und wählen Sie sie aus der Liste aus.
+      - Klicken Sie auf die Schaltfläche "Termine (Kalender, Veranstaltungen)".
+      - Wählen Sie auf der linken Seite die Abfallarten aus, die Sie in Ihren Kalender aufnehmen möchten (Abfallkalender, Altstoffsammelzentrum, Biomüll, Restmüll, Gelber Sack).
+      - Klicken Sie oben rechts mit der rechten Maustaste auf die Schaltfläche "als iCal herunterladen" und kopieren Sie die Link-Adresse.
+      - Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.
+test_cases:
+    Thannhausen:
+        url: https://graphql.sta.io/feed/c/i/5d9d1c1a5ff20a142ec8edc9/appointments.ics
