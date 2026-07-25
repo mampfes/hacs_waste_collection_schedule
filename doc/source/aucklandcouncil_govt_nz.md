@@ -31,6 +31,6 @@ waste_collection_schedule:
 
 The source argument is the area number from Auckland Council site:
 
-- Open your collection days page by  entering your address [on the Auckland Council collection day finder](https://new.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days.html)
+- Open your collection days page by  entering your address [on the Auckland Council collection day finder](https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days.html)
 - Once an address is selected, you will see a line such as: `Assessment number: 12342306525`
 - In this example the area number is `12342306525`.

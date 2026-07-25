@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Auckland Council"
-DESCRIPTION = "Source for Auckland council."
-URL = "https://new.aucklandcouncil.govt.nz"
+DESCRIPTION = "Source for Auckland Council."
+URL = "https://www.aucklandcouncil.govt.nz"
 
 TEST_CASES = {
     "429 Sea View Road": {"area_number": "12342453293"},  # Monday
@@ -47,8 +47,11 @@ def toDate(formattedDate: str, year: int | None = None) -> datetime.date:
     return datetime.date(year, month, day)
 
 
+# if this gets too old, it'll start failing
+# so grab the latest from Chrome and put it in here.
+
 HEADER = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36"
 }
 
 
@@ -57,8 +60,13 @@ class Source:
         self._area_number = str(area_number)
 
     def fetch(self) -> list[Collection]:
-        url = f"https://new.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{self._area_number}.html"
+        url = f"https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{self._area_number}.html"
         r = requests.get(url, headers=HEADER)
+
+        # If this is failing, this is your first thing to check - they have a WAF,
+        # so if the useragent etc is "old", it'll 406' you
+        # drop into the ../tests folder and run python test_sources.py -s aucklandcouncil_govt_nz -l to try it
+        # print(r.text)
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries: list[Collection] = []
