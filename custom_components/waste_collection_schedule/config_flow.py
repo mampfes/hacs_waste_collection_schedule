@@ -837,7 +837,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 vol.Optional(CONF_TYPE): SelectSelector(
                     SelectSelectorConfig(
                         options=self._fetched_types,
-                        mode=SelectSelectorMode.LIST,
+                        mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
                         multiple=True,
                     )
@@ -1124,7 +1124,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                                 for x in uncustomized_types
                             ],
                         ],
-                        mode=SelectSelectorMode.LIST,
+                        mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
                         multiple=True,
                     )
