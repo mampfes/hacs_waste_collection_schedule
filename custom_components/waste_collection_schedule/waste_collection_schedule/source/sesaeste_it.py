@@ -86,7 +86,7 @@ logger = logging.getLogger(__name__)
 ###############################################################################
 
 def fetch_municipality_id(municipality_name) -> str:
-    html_cercacomune = BeautifulSoup(requests.get(API_URL).text)
+    html_cercacomune = BeautifulSoup(requests.get(API_URL).text, features="lxml")
     select = html_cercacomune.find(id="RifComune")
     candidates: list[tuple[str, str]] = []
 
@@ -108,14 +108,18 @@ def fetch_municipality_id(municipality_name) -> str:
     return candidates[0][0]
 
 
-def fetch_pdf_calendar(municipality_id):
-    mun_id = fetch_municipality_id(municipality_id)
+def fetch_pdf_calendar(municipality_name):
+    mun_id = fetch_municipality_id(municipality_name)
+    req = requests.post(
+        API_URL,
+        data=f"RifComune={mun_id}&showheader=false",
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        allow_redirects=True
+    )
 
     html_calendar = BeautifulSoup(
-        requests.post(API_URL, {
-            'RifComune': mun_id,
-            'showheader': False
-        }).text
+        req.text,
+        features="lxml"
     )
     
     a = html_calendar.find('a', title='Scarica il calendario')
@@ -183,17 +187,17 @@ def parse_pdf(file_data: BytesIO) -> list[Collection]:
                 continue
 
             categories, shifts = _parse_day_block(block)
-            results.append(
-                Collection(
-                    date=d,
-                    t=categories[0], # TODO create more objects for more cats in the same day
-                    icon = ICON_MAP.get(categories[0])
+            if len(categories) >= 1:
+                results.append(
+                    Collection(
+                        date=d,
+                        t=categories[0], # TODO create more objects for more cats in the same day
+                        icon = ICON_MAP.get(categories[0])
+                    )
                 )
-            )
 
     results.sort(key=lambda e: e.date)
     return results
-
 
 def _page_lines(page) -> list[dict]:
     """Extract LTTextLines from a page with their coordinated"""
