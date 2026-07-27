@@ -1,4 +1,4 @@
-import time
+import re
 from datetime import datetime
 
 import requests
@@ -6,19 +6,23 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Central Bedfordshire Council"
 DESCRIPTION = (
     "Source for www.centralbedfordshire.gov.uk services for Central Bedfordshire"
 )
 URL = "https://www.centralbedfordshire.gov.uk"
+
 TEST_CASES = {
     "postcode has space": {"postcode": "SG15 6YF", "house_name": "10 Old School Walk"},
     "postcode without space": {
         "postcode": "SG180LL",
         "house_name": "1 Chestnut Avenue",
     },
+    "uprn direct": {"uprn": "10000863589"},
 }
 
 ICON_MAP = {
@@ -28,136 +32,166 @@ ICON_MAP = {
     "Food waste": Icons.BIO_KITCHEN,
 }
 
+_BASE_URL = "https://www.centralbedfordshire.gov.uk"
+_FORM_URL = f"{_BASE_URL}/waste-and-recycling/waste-collection-schedule"
+_ICAL_URL_TMPL = (
+    f"{_BASE_URL}/waste-and-recycling/waste-collection-schedule/download/{{uprn}}"
+)
+
+_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-GB,en;q=0.9",
+}
+
+# Multi-value summaries like "Refuse (black bin) and food waste collections"
+# split into individual canonical bin names via longest-match on this table.
+# Ordered longest-first so "Refuse (black bin)" matches before "Refuse".
+_BIN_ALIASES: list[tuple[str, str]] = [
+    ("refuse (black bin)", "Refuse (black bin)"),
+    ("black bin", "Refuse (black bin)"),
+    ("refuse", "Refuse (black bin)"),
+    ("recycling", "Recycling"),
+    ("garden waste", "Garden waste"),
+    ("food waste", "Food waste"),
+]
+
+
+def _split_summary(summary: str) -> list[str]:
+    """Convert one iCal SUMMARY into a list of canonical bin names.
+
+    Unknown fragments (e.g. the calendar-expiry reminder event) return [].
+
+    Examples:
+        "Refuse (black bin) and food waste collections"
+            -> ["Refuse (black bin)", "Food waste"]
+        "Recycling, garden waste and food waste collections"
+            -> ["Recycling", "Garden waste", "Food waste"]
+        "Garden Waste Collection"
+            -> ["Garden waste"]
+        "Download your bin collection calendar"
+            -> []
+    """
+    text = summary.strip().lower()
+    # remove trailing "collection"/"collections"
+    text = re.sub(r"\s+collections?\s*$", "", text)
+    # normalise separators (" and ", commas) into a single delimiter
+    parts = re.split(r"\s*,\s*|\s+and\s+", text)
+    result: list[str] = []
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        for needle, canon in _BIN_ALIASES:
+            if needle in part:
+                result.append(canon)
+                break
+        # Unknown fragments are silently dropped — the council emits non-collection
+        # reminder events (e.g. "Download your bin collection calendar") that must
+        # not become fake entries.
+    return result
+
 
 class Source:
-    def __init__(self, postcode, house_name):
+    def __init__(
+        self,
+        postcode: str | None = None,
+        house_name: str | None = None,
+        uprn: str | int | None = None,
+    ):
+        if uprn is None and not (postcode and house_name):
+            raise SourceArgumentRequiredWithSuggestions(
+                "uprn",
+                None,
+                ["Provide `uprn` OR both `postcode` and `house_name`."],
+            )
         self._postcode = postcode
         self._house_name = house_name
+        self._uprn: str | None = str(uprn) if uprn is not None else None
 
-    def fetch(self):
-        session = requests.Session()
+    def _resolve_uprn(self, session: requests.Session) -> str:
+        """Look up UPRN by scraping the council's postcode form (Drupal LocalGov)."""
+        # Step 1 — GET the form to obtain the CSRF-like form_build_id + cookies
+        r = session.get(_FORM_URL, timeout=30)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, features="html.parser")
+        postcode_form = soup.find(id="localgov-waste-collection-postcode-form")
+        if postcode_form is None:
+            raise RuntimeError(
+                "Postcode form not found on council page — layout may have changed."
+            )
+        fbid_input = postcode_form.find("input", attrs={"name": "form_build_id"})
+        if fbid_input is None:
+            raise RuntimeError("Postcode form is missing form_build_id.")
 
-        # Add realistic browser headers to avoid bot detection
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "DNT": "1",
-                "Connection": "keep-alive",
-                "Upgrade-Insecure-Requests": "1",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "same-origin",
-                "Cache-Control": "max-age=0",
-            }
-        )
-
-        # First, visit the page to establish session
-        url = "https://www.centralbedfordshire.gov.uk/info/163/bins_and_waste_collections_-_check_bin_collection_days"
-
-        try:
-            # Initial page load to get session cookies
-            session.get(url, timeout=30)
-            time.sleep(2)  # Be polite to the server
-
-            # Lookup postcode, then use house name to get UPRN
-            data = {
+        # Step 2 — POST the postcode
+        r = session.post(
+            _FORM_URL,
+            data={
                 "postcode": self._postcode,
-            }
-
-            r = session.post(url, data=data, timeout=30)
-            r.raise_for_status()
-
-            soup = BeautifulSoup(r.text, features="html.parser")
-
-            # Check if we got blocked or redirected
-            if "403" in r.text or "forbidden" in r.text.lower():
-                raise requests.exceptions.HTTPError(
-                    "403 Forbidden - IP may be temporarily blocked"
-                )
-
-            address_select = soup.find("select", id="address")
-            if not address_select:
-                raise ValueError(
-                    "Could not find address selection dropdown - page structure may have changed"
-                )
-
-            address = address_select.find(
-                "option",
-                text=lambda value: value and value.startswith(self._house_name),
+                "form_build_id": fbid_input["value"],
+                "form_id": "localgov_waste_collection_postcode_form",
+                "op": "Find",
+            },
+            timeout=30,
+        )
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, features="html.parser")
+        addr_select = soup.find("select", attrs={"name": "uprn"})
+        if addr_select is None:
+            raise RuntimeError(
+                "Address dropdown not found — postcode may be invalid or the page structure has changed."
             )
 
-            if address is None:
-                addresses = {
-                    option.text.removeprefix(self._postcode)
-                    for option in address_select.select("option")
-                } - {""}
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "house_name",
-                    self._house_name,
-                    addresses,
-                )
+        # Build {label: uprn} map, then prefix-match against house_name
+        addresses: dict[str, str] = {}
+        for opt in addr_select.find_all("option"):
+            val = (opt.get("value") or "").strip()
+            if not val:
+                continue
+            addresses[opt.get_text(strip=True)] = val
 
-            self._uprn = address["value"]
+        target = self._house_name.strip().lower()
+        for label, uprn in addresses.items():
+            if label.lower().startswith(target):
+                return uprn
 
-            # Add some delay between requests
-            time.sleep(3)
+        raise SourceArgumentNotFoundWithSuggestions(
+            "house_name", self._house_name, set(addresses.keys())
+        )
 
-            data = {
-                "address_text": address.text,
-                "address": self._uprn,
-                "postcode": self._postcode,
-            }
+    def fetch(self) -> list[Collection]:
+        session = requests.Session()
+        session.headers.update(_HEADERS)
 
-            r = session.post(url, data=data, timeout=30)
-            r.raise_for_status()
+        # Resolve UPRN once, then reuse for subsequent fetches.
+        if self._uprn is None:
+            self._uprn = self._resolve_uprn(session)
 
-            soup = BeautifulSoup(r.text, features="html.parser")
-            collections_div = soup.find("div", id="collections")
+        # Fetch the per-UPRN iCal feed — this is the stable, structured endpoint.
+        r = session.get(_ICAL_URL_TMPL.format(uprn=self._uprn), timeout=30)
+        r.raise_for_status()
 
-            if not collections_div:
-                raise ValueError(
-                    "Could not find collections data - page structure may have changed"
-                )
+        events = ICS().convert(r.text)
 
-            s = collections_div.find_all("h3")
-            entries = []
-
-            for collection in s:
-                try:
-                    date = datetime.strptime(collection.text, "%A, %d %B %Y").date()
-                    for sibling in collection.next_siblings:
-                        if (
-                            sibling.name == "h3"
-                            or sibling.name == "p"
-                            or sibling.name == "a"
-                            or sibling.name == "div"
-                        ):
-                            break
-                        if (
-                            sibling.name != "br"
-                            and hasattr(sibling, "text")
-                            and sibling.text.strip()
-                        ):
-                            entries.append(
-                                Collection(
-                                    date=date,
-                                    t=sibling.text.strip(),
-                                    icon=ICON_MAP.get(sibling.text.strip()),
-                                )
-                            )
-                except ValueError:
-                    # Skip dates that can't be parsed
+        # Dedupe (date, bin_name) — the council emits both a standalone
+        # "Garden Waste Collection" event AND a combined "Recycling, garden
+        # waste and food waste collections" event on the same day for
+        # addresses subscribed to the paid garden-waste service.
+        seen: set[tuple] = set()
+        entries: list[Collection] = []
+        for date, summary in events:
+            for bin_name in _split_summary(summary):
+                key = (date, bin_name)
+                if key in seen:
                     continue
-
-            return entries
-
-        except requests.exceptions.RequestException as e:
-            if "403" in str(e):
-                raise requests.exceptions.HTTPError(
-                    f"403 Forbidden - Central Bedfordshire Council is blocking requests. "
-                    f"Try again later or check if your IP is temporarily banned. Error: {e}"
-                ) from e
-            raise e
+                seen.add(key)
+                entries.append(
+                    Collection(
+                        date=date, t=bin_name, icon=ICON_MAP.get(bin_name)
+                    )
+                )
+        return entries
