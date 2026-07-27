@@ -141,6 +141,42 @@ def test_enfield_address_match_uses_whole_house_number() -> None:
     assert not module.Source._matches_address(normalized_input, embedded_candidate)
 
 
+def test_esch_lu_requests_identity_encoding() -> None:
+    module = _get_module("esch_lu")
+    calls: list[tuple[str, dict[str, Any]]] = []
+
+    class _Response:
+        content = (
+            b'<table id="garbage-table"><tr><td></td><td>Organique</td>'
+            b"<td>mardi, 28 juillet 2026</td></tr></table>"
+        )
+
+        @staticmethod
+        def raise_for_status() -> None:
+            return None
+
+    class _Session:
+        def get(self, url: str, **kwargs: Any) -> _Response:
+            calls.append((url, kwargs))
+            return _Response()
+
+    with patch.object(module, "get_legacy_session", return_value=_Session()):
+        entries = module.Source(zone="A").fetch()
+
+    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
+        ("2026-07-28", "Organique")
+    ]
+    assert calls == [
+        (
+            "https://administration.esch.lu/dechets/",
+            {
+                "params": {"street": 0, "tour": "1"},
+                "headers": {"Accept-Encoding": "identity"},
+            },
+        )
+    ]
+
+
 def _param_translation_check(
     source: str,
     translations: Any,

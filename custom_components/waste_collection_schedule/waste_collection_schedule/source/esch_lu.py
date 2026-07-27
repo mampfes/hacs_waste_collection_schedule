@@ -11,7 +11,7 @@ DESCRIPTION = "Source script for administration.esch.lu, communal website of the
 URL = "https://esch.lu"
 TEST_CASES = {"Zone A": {"zone": "A"}, "Zone B": {"zone": "B"}}
 
-API_URL = "https://administration.esch.lu/dechets/?street=0&tour="
+API_URL = "https://administration.esch.lu/dechets/"
 ICON_MAP = {
     "Poubelle ménage": Icons.GENERAL_WASTE,
     "Papier": Icons.PAPER,
@@ -53,7 +53,13 @@ class Source:
             "street": 0,
             "tour": self._zone,
         }
-        r = s.get("https://administration.esch.lu/dechets", params=params)
+        # The compressed response advertises chunked transfer encoding twice, which
+        # some urllib3 versions reject. Request identity encoding to avoid it.
+        r = s.get(
+            API_URL,
+            params=params,
+            headers={"Accept-Encoding": "identity"},
+        )
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
 
