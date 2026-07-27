@@ -45,6 +45,7 @@ HEADER = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "General": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -157,6 +158,7 @@ class Source:
 
         waste_date_strs = first_li_after_heading("general rubbish")
         recycling_date_strs = first_li_after_heading("recycling")
+        garden_date_strs = first_li_after_heading("garden waste")
 
         entries = []
         for waste_date_str in waste_date_strs:
@@ -164,7 +166,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(waste_date_str, "%A %d %B %Y").date(),
                     t="General rubbish",
-                    icon="mdi:trash-can",
+                    icon=ICON_MAP.General,
                 ),
             )
         for recycling_date_str in recycling_date_strs:
@@ -172,7 +174,15 @@ class Source:
                 Collection(
                     date=datetime.strptime(recycling_date_str, "%A %d %B %Y").date(),
                     t="Recycling",
-                    icon="mdi:recycle",
+                    icon=ICON_MAP.Recycling,
+                ),
+            )
+        for garden_date_str in garden_date_strs:
+            entries.append(
+                Collection(
+                    date=datetime.strptime(garden_date_str, "%A %d %B %Y").date(),
+                    t="Garden",
+                    icon=ICON_MAP.Garden,
                 ),
             )
         if not entries:
