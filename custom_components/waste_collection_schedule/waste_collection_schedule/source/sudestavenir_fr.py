@@ -70,17 +70,25 @@ DAY_MAP = {
 
 MONTH_MAP = {
     "janv": 1,
+    "janvier": 1,
     "fev": 2,
+    "fevrier": 2,
     "mars": 3,
     "avr": 4,
+    "avril": 4,
     "mai": 5,
     "juin": 6,
     "juill": 7,
+    "juillet": 7,
     "aout": 8,
     "sept": 9,
+    "septembre": 9,
     "oct": 10,
+    "octobre": 10,
     "nov": 11,
+    "novembre": 11,
     "dec": 12,
+    "decembre": 12,
 }
 
 WEEKLY_FREQUENCIES = {"HEBDOMADAIRE", "BIHEBDOMADAIRE", "TRIHEBDOMADAIRE"}
@@ -137,24 +145,51 @@ def _normalize(s: str) -> str:
     return re.sub(r"\s+", " ", _strip_accents(s).lower().strip())
 
 
+def _french_date(day: str, month: str, year: int) -> date | None:
+    month_number = MONTH_MAP.get(_normalize(month).rstrip("."))
+    if month_number is None or not day.isdigit():
+        return None
+    try:
+        return date(year, month_number, int(day))
+    except ValueError:
+        return None
+
+
 def _parse_precisi_dates(precisi: str, year: int) -> list[date]:
     dates: list[date] = []
     for line in precisi.splitlines():
-        m = re.match(r"^([A-Za-zÀ-ÿ]+)\.\s*:\s*([\d\s\-]+)$", line.strip())
-        if not m:
+        line = line.strip()
+        month_first = re.fullmatch(r"([A-Za-zÀ-ÿ]+)\.?\s*:\s*([\d\s-]+)", line)
+        if month_first:
+            for day in month_first.group(2).split("-"):
+                parsed = _french_date(day.strip(), month_first.group(1), year)
+                if parsed is not None:
+                    dates.append(parsed)
             continue
-        month = MONTH_MAP.get(_strip_accents(m.group(1)).lower().rstrip("."))
-        if month is None:
-            continue
-        for day_str in m.group(2).split("-"):
-            day_str = day_str.strip()
-            if not day_str.isdigit():
-                continue
-            try:
-                dates.append(date(year, month, int(day_str)))
-            except ValueError:
-                continue
+
+        day_first = re.fullmatch(r"(\d{1,2})\s+([A-Za-zÀ-ÿ]+)\.?", line)
+        if day_first:
+            parsed = _french_date(day_first.group(1), day_first.group(2), year)
+            if parsed is not None:
+                dates.append(parsed)
+
     return dates
+
+
+def _parse_precisi_range(precisi: str, year: int) -> tuple[date, date] | None:
+    match = re.search(
+        r"\ba partir du\s+(\d{1,2})\s+([a-z]+)"
+        r"\s+au\s+(\d{1,2})\s+([a-z]+)\b",
+        _normalize(precisi),
+    )
+    if not match:
+        return None
+
+    start = _french_date(match.group(1), match.group(2), year)
+    end = _french_date(match.group(3), match.group(4), year)
+    if start is None or end is None or end < start:
+        return None
+    return start, end
 
 
 def _weekly_dates(jour: str, start: date, end: date) -> list[date]:
@@ -183,6 +218,35 @@ def _biweekly_dates(jour: str, pairimp: str, start: date, end: date) -> list[dat
                 dates.append(d)
             d += timedelta(weeks=1)
     return dates
+
+
+def _schedule_dates(
+    *,
+    jour: str,
+    frequen: str,
+    pairimp: str,
+    precisi: str | None,
+    start: date,
+    end: date,
+) -> list[date]:
+    if precisi:
+        dates = _parse_precisi_dates(precisi, start.year)
+        recurring_range = _parse_precisi_range(precisi, start.year)
+        if recurring_range:
+            range_start = max(start, recurring_range[0])
+            range_end = min(end, recurring_range[1])
+            if range_start <= range_end:
+                if jour and frequen in WEEKLY_FREQUENCIES:
+                    dates.extend(_weekly_dates(jour, range_start, range_end))
+                elif jour and frequen == "QUINZAINE":
+                    dates.extend(_biweekly_dates(jour, pairimp, range_start, range_end))
+        return sorted({d for d in dates if start <= d <= end})
+
+    if jour and frequen in WEEKLY_FREQUENCIES:
+        return _weekly_dates(jour, start, end)
+    if jour and frequen == "QUINZAINE":
+        return _biweekly_dates(jour, pairimp, start, end)
+    return []
 
 
 class Source:
@@ -388,19 +452,17 @@ class Source:
                 "Matin" if am_pm == "AM" else "Après-midi" if am_pm == "PM" else None
             )
 
-            if precisi:
-                # The server precomputes exact days-of-month for the current
-                # annual calendar only; day-of-week alignment shifts each
-                # year so these figures cannot be extrapolated to next year.
-                dates = [
-                    d for d in _parse_precisi_dates(precisi, today.year) if d >= today
-                ]
-            elif jour and frequen in WEEKLY_FREQUENCIES:
-                dates = _weekly_dates(jour, today, end)
-            elif jour and frequen == "QUINZAINE":
-                dates = _biweekly_dates(jour, pairimp, today, end)
-            else:
-                continue
+            # Precision text belongs to the provider's current annual calendar.
+            # It may contain exact days, a bounded recurring range, or both;
+            # never extrapolate those ranges into the following year.
+            dates = _schedule_dates(
+                jour=jour,
+                frequen=frequen,
+                pairimp=pairimp,
+                precisi=precisi,
+                start=today,
+                end=end,
+            )
 
             for d in dates:
                 entries.append(
