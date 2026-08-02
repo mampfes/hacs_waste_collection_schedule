@@ -1,16 +1,16 @@
-import logging
-import re
 from datetime import date, datetime, timedelta
-from typing import ClassVar, final
+from typing import Any, ClassVar, final
 
-import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
-from waste_collection_schedule.service import ArcGis
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.service import ArcGis, NewEdgeServices
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
@@ -22,19 +22,16 @@ from waste_collection_schedule.waste_types import (
 )
 
 # CWD (North Texas) publishes pickup days/frequency per service across SIX ArcGIS
-# FeatureServer layers, queried with a single spatial point each. The point is
-# resolved with the shared ArcGis.geocode helper, asking it for the City field
-# too, which drives a holiday-delay lookup scraped from the support portal's
-# bundled JS.
+# FeatureServer layers, queried with a single spatial point each. The geocode
+# also asks for the City field, because the holiday overlay is published per
+# community on the hauler's New Edge Services support portal rather than on the
+# route layers.
 #
-# This source keeps its own retrieve() because it: (1) needs the geocoded City to
-# (2) fetch holiday delays before (3) querying multiple layers. retrieve() does
-# acquisition only (raw ArcGis.feature_query Responses per layer); parse()
-# extracts attrs per layer and skips empties; the week/holiday date arithmetic
-# stays in _describe (count=1 one-off Schedules so the exact legacy dates,
-# including holiday shifts, are reproduced).
-
-_LOGGER = logging.getLogger(__name__)
+# The pipeline is therefore: ArcGisMultiFeatureRetriever (one geocode with
+# geocode_fields="City", then one spatial query per layer) -> the multi-layer
+# parser keeping each layer's single matching route -> _describe projecting the
+# route's cadence into count=1 Schedules -> the New Edge holiday overlay
+# sliding whichever of those land on a holiday.
 
 FEATURE_BASE = "https://services3.arcgis.com/xeSJphIgrY4QfLVq/arcgis/rest/services/CWD_Routes_View/FeatureServer"
 
@@ -47,6 +44,11 @@ LAYER_TYPES = {
     4: "Yard Waste",
     5: "Compost",
 }
+
+LAYERS = [
+    (raw_type, f"{FEATURE_BASE}/{layer_id}")
+    for layer_id, raw_type in LAYER_TYPES.items()
+]
 
 _TYPE_MAP = {
     "HHW": HAZARDOUS,
@@ -68,15 +70,19 @@ WEEKDAY_MAP = {
 }
 
 
+def _community(source: Any) -> str:
+    """The city the geocoder matched, which keys the portal's holiday table."""
+    return ArcGis.geocoded_location(source).get("attributes", {}).get("City", "")
+
+
 def _generate_dates(
     day_name: str,
     frequency: str,
     timing_week: str,
     start_date: date,
     end_date: date,
-    holidays: dict[str, dict[str, int]],
 ) -> list[date]:
-    """Project a recurring pickup day into concrete dates (legacy arithmetic)."""
+    """Project a recurring pickup day into concrete dates."""
     weekday = WEEKDAY_MAP.get(day_name)
     if not weekday:
         return []
@@ -90,26 +96,15 @@ def _generate_dates(
     all_dates = [d.date() for d in rule]
 
     if "1st" in timing_week:
-        dates = [d for d in all_dates if d.day <= 7]
-    elif "biweekly" in frequency:
-        dates = [d for i, d in enumerate(all_dates) if d.isocalendar()[1] % 2 == 1]
-    else:
-        dates = all_dates
-
-    return [
-        (
-            d + timedelta(days=holidays[d.strftime("%Y-%m-%d")]["delay"])
-            if d.strftime("%Y-%m-%d") in holidays
-            else d
-        )
-        for d in dates
-    ]
+        return [d for d in all_dates if d.day <= 7]
+    if "biweekly" in frequency:
+        return [d for d in all_dates if d.isocalendar()[1] % 2 == 1]
+    return all_dates
 
 
 def _describe(record, source):
     """Yield one ``count=1`` Schedule per concrete pickup date for a layer."""
-    attrs = record["attrs"]
-    raw_type = record["type"]
+    raw_type, attrs = record
 
     pickup_days = [
         d.strip()
@@ -131,7 +126,6 @@ def _describe(record, source):
             timing_week,
             source._today,
             source._end_date,
-            source._holidays,
         ):
             yield Schedule(raw_type, collection_date, count=1)
 
@@ -158,120 +152,15 @@ class Source(BaseSource):
         ),
     }
 
-    preprocess = RecurrenceExpander(_describe)
+    retrieve = ArcGis.ArcGisMultiFeatureRetriever(LAYERS, geocode_fields="City")
+    parse = ArcGis.ArcGisMultiFeatureParser(first_per_layer=True)
+    preprocess = Compose(
+        RecurrenceExpander(_describe),
+        NewEdgeServices.HolidayDelayShift(community=_community),
+    )
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
-        super().__init__(address=address)
-        self._address = address.strip()
-        self._holidays: dict[str, dict[str, int]] = {}
+        super().__init__(address=address.strip())
         self._today = date.today()
         self._end_date = self._today + timedelta(days=365)
-
-    def _get_holidays(self, community: str) -> dict[str, dict[str, int]]:
-        try:
-            base_url = "https://support.newedgeservices.com/cwd/"
-            r = requests.get(base_url, timeout=15)
-            r.raise_for_status()
-            match = re.search(
-                r'<script[^>]+src=["\'](/cwd/static/js/main\.[0-9a-f]+\.js)["\']',
-                r.text,
-            )
-            if not match:
-                return {}
-            js_url = "https://support.newedgeservices.com" + match.group(1)
-            r = requests.get(js_url, timeout=15)
-            r.raise_for_status()
-            js_content = r.text
-        except requests.RequestException:
-            return {}
-
-        escaped = re.escape(community)
-        cm = re.search(rf'["\']?{escaped}["\']?\s*:\s*\[', js_content, re.IGNORECASE)
-        if not cm:
-            return {}
-
-        start = cm.start()
-        end_m = re.search(r"\],", js_content[start:])
-        end = start + end_m.end() if end_m else min(len(js_content), start + 50000)
-        segment = js_content[start:end]
-
-        hm = re.search(
-            r"service\s*:\s*Rt\.HOLIDAYS\s*,\s*dates\s*:\s*\[([^\]]+)\]", segment
-        )
-        if not hm:
-            return {}
-
-        holidays: dict[str, dict[str, int]] = {}
-        for start_str, end_str, skip_flag in re.findall(
-            r'start\s*:\s*At\(\)\(["\']([^"\']+)["\'].*?end\s*:\s*At\(\)\(["\']([^"\']+)["\'].*?skip\s*:\s*!([01])',
-            hm.group(1),
-        ):
-            delay = 1 if skip_flag == "1" else 0
-            if not delay:
-                continue
-            try:
-                parts = start_str.split("-")
-                start_date = date(int(parts[0]), int(parts[1]), int(parts[2]))
-            except (ValueError, TypeError, IndexError):
-                continue
-            end_date = start_date
-            if end_str:
-                try:
-                    parts = end_str.split("-")
-                    parsed = date(int(parts[0]), int(parts[1]), int(parts[2]))
-                    if parsed >= start_date:
-                        end_date = parsed
-                except (ValueError, TypeError, IndexError):
-                    pass
-            current = start_date
-            while current <= end_date:
-                holidays[current.strftime("%Y-%m-%d")] = {"delay": delay}
-                current += timedelta(days=1)
-
-        return holidays
-
-    def retrieve(self, source):
-        """Geocode (shared helper, with City), look up holidays, query layers."""
-        try:
-            location = ArcGis.geocode(self._address, out_fields="City")
-        except Exception as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-        community = location["attributes"].get("City", "")
-
-        self._holidays = self._get_holidays(community) if community else {}
-
-        responses = []
-        for layer_id, raw_type in LAYER_TYPES.items():
-            layer_url = f"{FEATURE_BASE}/{layer_id}"
-            try:
-                response = ArcGis.feature_query(layer_url, geometry=location)
-            except Exception:
-                continue
-            responses.append((raw_type, response))
-        return responses
-
-    def parse(self, raw, source):
-        """Extract the first feature's attributes per layer; skip empties."""
-        from waste_collection_schedule import response_shape
-
-        records = []
-        for raw_type, response in raw:
-            try:
-                response.raise_for_status()
-                data = response.json()
-            except Exception:
-                continue
-            # A valid (even empty) layer carries a "features" list; its absence
-            # means the ArcGIS API changed -> log and raise rather than skip.
-            response_shape.expect(
-                isinstance(data, dict) and "features" in data,
-                source_name=response_shape.source_name(source),
-                detail="ArcGIS response has no 'features'",
-                raw=data,
-            )
-            if not data["features"]:
-                continue
-            attrs = data["features"][0].get("attributes", {})
-            records.append({"type": raw_type, "attrs": attrs})
-        return records
