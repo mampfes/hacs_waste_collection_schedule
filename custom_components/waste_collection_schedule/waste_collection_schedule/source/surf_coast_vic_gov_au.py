@@ -1,46 +1,27 @@
-import logging
+from typing import final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-from ..service.WhatBinDay import WhatBinDayService
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import address
+from waste_collection_schedule.service.WhatBinDay import (
+    TYPE_VALUE_MAP,
+    WhatBinDayParser,
+    WhatBinDayRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 TITLE = "Surf Coast Shire"
 DESCRIPTION = "Source for Surf Coast Shire (VIC) waste collection."
 URL = "https://www.surfcoast.vic.gov.au"
 COUNTRY = "au"
 
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+HOWTO = {
     "en": (
         "Visit the Surf Coast Shire 'Bin collection calendars' page "
-        "(https://www.surfcoast.vic.gov.au/Property/Waste-and-recycling/Kerbside-bins/Bin-collection-calendars), "
-        "search for your address, and enter the street number, street name, "
-        "suburb and postcode exactly as they appear (suburb must be in "
-        "Title Case, e.g. 'Torquay', not 'TORQUAY')."
+        "(https://www.surfcoast.vic.gov.au/Property/Waste-and-recycling/"
+        "Kerbside-bins/Bin-collection-calendars), search for your address, "
+        "then enter the street number, street name, suburb and postcode as "
+        "they appear there."
     )
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_number": "Street number (e.g. '20')",
-        "street_name": "Street name (e.g. 'Bell Street')",
-        "suburb": "Suburb, in Title Case (e.g. 'Torquay')",
-        "post_code": "Postcode (e.g. '3228')",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_number": "Street number",
-        "street_name": "Street name",
-        "suburb": "Suburb",
-        "post_code": "Post code",
-    }
 }
 
 TEST_CASES = {
@@ -65,134 +46,50 @@ TEST_CASES = {
 }
 
 
-ICON_MAP = {
-    "WasteBin": Icons.GENERAL_WASTE,
-    "RecycleBin": Icons.RECYCLING,
-    "GreenBin": Icons.ORGANIC,
-    "GlassBin": Icons.GLASS,
-}
-
-BIN_NAMES = {
-    "WasteBin": "General waste (landfill)",
-    "RecycleBin": "Recycling",
-    "GreenBin": "Food and garden waste",
-    "GlassBin": "Glass",
-}
+def _location_key(parts: dict) -> str:
+    return (
+        f"{parts['street_number']}_{parts['street_name']}_"
+        f"{parts['suburb']}_{parts['post_code']}"
+    )
 
 
-class Source:
-    def __init__(
-        self, street_number: str, street_name: str, suburb: str, post_code: str
-    ):
-        self.street_number = str(street_number)
-        self.street_name = str(street_name)
-        # Surf Coast Shire's WhatBinDay backend matches the suburb name
-        # case-sensitively against its own dataset (e.g. "Torquay", not
-        # "TORQUAY"), so normalise user input to Title Case.
-        self.suburb = str(suburb).strip().title()
-        self.post_code = str(post_code)
+@final
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = COUNTRY
+    HOWTO = HOWTO
 
-        self._service = WhatBinDayService(
-            location_key=(
-                f"{self.street_number}_{self.street_name}_"
-                f"{self.suburb}_{self.post_code}"
-            ),
-            icon_map=ICON_MAP,
-            bin_names=BIN_NAMES,
-            app_package="com.socketsoftware.whatbinday.surfcoast",
-        )
+    TEST_CASES = TEST_CASES
 
-    def _geocode(self) -> dict:
-        """Resolve the address to coordinates via Nominatim.
+    # An address-lookup source: an empty result means the address didn't
+    # resolve, so surface a clear error rather than a silently-empty calendar.
+    RAISE_ON_EMPTY = True
 
-        Surf Coast Shire's roster lookup requires coordinates close to the
-        actual property (unlike some other WhatBinDay-backed councils, a
-        generic/default coordinate does not resolve to any bin service),
-        so we geocode the full address first.
-        """
-        query = (
-            f"{self.street_number} {self.street_name}, "
-            f"{self.suburb} VIC {self.post_code}, Australia"
-        )
-        response = requests.get(
-            NOMINATIM_URL,
-            params={
-                "q": query,
-                "format": "json",
-                "limit": "1",
-                "countrycodes": "au",
-            },
-            headers={"User-Agent": "hacs_waste_collection_schedule"},
-            timeout=30,
-        )
-        response.raise_for_status()
-        results = response.json()
-        if not results:
-            raise SourceArgumentNotFound("street_name", self.street_name)
+    PARAMS = (
+        address(
+            street_field="street_name",
+            number="street_number",
+            postcode_field="post_code",
+            city_field="suburb",
+        ),
+    )
 
-        return {
-            "lat": float(results[0]["lat"]),
-            "lng": float(results[0]["lon"]),
-        }
-
-    def _build_location_data(self, coordinates: dict) -> dict:
-        """Build the WhatBinDay address payload.
-
-        The shared WhatBinDayService.build_address_data() helper uses the
-        same string for both the state's long_name and short_name. Surf
-        Coast Shire's backend requires the full state name ("Victoria") as
-        the long_name, so the payload is built manually here instead of
-        via that helper.
-        """
-        formatted_address = (
-            f"{self.street_number} {self.street_name}, "
-            f"{self.suburb} VIC {self.post_code}, Australia"
-        )
-        return {
-            "address_components": [
-                {
-                    "long_name": self.street_number,
-                    "short_name": self.street_number,
-                    "types": ["street_number"],
-                },
-                {
-                    "long_name": self.street_name,
-                    "short_name": self.street_name,
-                    "types": ["route"],
-                },
-                {
-                    "long_name": self.suburb,
-                    "short_name": self.suburb,
-                    "types": ["locality", "political"],
-                },
-                {
-                    "long_name": self.post_code,
-                    "short_name": self.post_code,
-                    "types": ["postal_code"],
-                },
-                {
-                    "long_name": "Victoria",
-                    "short_name": "VIC",
-                    "types": ["administrative_area_level_1", "political"],
-                },
-                {
-                    "long_name": "Australia",
-                    "short_name": "AU",
-                    "types": ["country", "political"],
-                },
-            ],
-            "formatted_address": formatted_address,
-            "geometry": {
-                "location": coordinates,
-                "location_type": "APPROXIMATE",
-            },
-        }
-
-    def fetch(self) -> list[Collection]:
-        coordinates = self._geocode()
-        location_data = self._build_location_data(coordinates)
-
-        entries = self._service.get_collection_schedule(location_data)
-        if not entries:
-            raise SourceArgumentNotFound("street_name", self.street_name)
-        return entries
+    # Three provider quirks, each a declared option on the shared component:
+    # * geocode=True: a generic Victorian coordinate resolves to no bin service
+    #   here, so the roster lookup needs coordinates near the property itself.
+    # * suburb_case="title": the backend matches the suburb case-sensitively
+    #   against a dataset holding "Torquay", not "TORQUAY".
+    # * state_long_name="Victoria": this backend wants the full state name as
+    #   the administrative_area_level_1 long name, with "VIC" as the short one.
+    retrieve = WhatBinDayRetriever(
+        location_key=_location_key,
+        state="VIC",
+        state_long_name="Victoria",
+        suburb_case="title",
+        geocode=True,
+        app_package="com.socketsoftware.whatbinday.surfcoast",
+    )
+    parse = WhatBinDayParser()
+    transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
