@@ -1,0 +1,19 @@
+---
+title: Kelkheim (Taunus)
+url: https://www.kelkheim.de/mod_abfallkalender/
+howto:
+  en: |
+    - Go to <https://www.kelkheim.de/mod_abfallkalender/> (Persönlicher Abfallkalender).
+    - Enter your street (`Straße`) and house number (`Hausnummer`). House numbers with a letter suffix (e.g. `9f`) are supported.
+    - Leave all `Entsorgungsarten` checkboxes checked (or uncheck the ones you don't need) and click `Erstellen`.
+    - On the results page, click `Link in Zwischenablage kopieren` next to `oder im iCal-Format abonnieren` to copy the iCal link, or right-click the `abonnieren` link and select `copy link`.
+    - Use this link (starting with `https://`, not `webcal://`) as the `url` parameter.
+  de: |
+    - Gehen Sie auf <https://www.kelkheim.de/mod_abfallkalender/> (Persönlicher Abfallkalender).
+    - Geben Sie Ihre Straße und Hausnummer ein. Hausnummern mit Buchstabenzusatz (z. B. `9f`) werden unterstützt.
+    - Lassen Sie alle Häkchen bei den Entsorgungsarten gesetzt (oder entfernen Sie nicht benötigte) und klicken Sie auf `Erstellen`.
+    - Klicken Sie auf der Ergebnisseite bei `oder im iCal-Format abonnieren` auf `Link in Zwischenablage kopieren`, oder rechtsklicken Sie auf den `abonnieren`-Link und wählen Sie `Link kopieren`.
+    - Verwenden Sie diesen Link (beginnend mit `https://`, nicht `webcal://`) als `url`-Parameter.
+test_cases:
+  Rossertstraße 9f:
+    url: https://kelkheim.de/mod_abfallkalender/index.php?action=ical&area=B-7%2C+S-7+Do&datetype=Restmuell%2CBlaue+Tonne%2CBio-Tonne%2CGelber+Sack%2CSondermuell%2CSperrmuell%2CGruenabfuhr%2CRestmuell-Container%2CGruenschnittannahmestelle%2CWertstoffhof%2CSonstige&street=Rossertstra%DFe&number=9f

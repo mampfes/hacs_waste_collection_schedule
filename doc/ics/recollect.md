@@ -58,6 +58,7 @@ known to work with:
 |Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|
 |Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|
 |City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|
+|City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|
 
 and probably a lot more.
 

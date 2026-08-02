@@ -47,6 +47,7 @@ Go to the Affaldonline site for your municipality:
 - [Silkeborg](https://www.affaldonline.dk/kalender/silkeborg/)
 - [Sorø](https://www.affaldonline.dk/kalender/soroe/)
 - [Vejle](https://www.affaldonline.dk/kalender/vejle/)
+- [Viborg (Revas)](https://www.affaldonline.dk/kalender/viborg/)
 
 Open the developer console in your browser.
 

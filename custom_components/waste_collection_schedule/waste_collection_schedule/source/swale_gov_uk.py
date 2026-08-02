@@ -61,10 +61,10 @@ class Source:
 
         # mimic postcode search
         payload: dict = {
-            "SQ_FORM_499078_PAGE": "1",
-            "form_email_499078_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q499089:q1": self._postcode,
-            "form_email_499078_submit": "Choose Your Address &#10140;",
+            "SQ_FORM_535662_PAGE": "1",
+            "form_email_535662_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
+            "q535679:q1": self._postcode,
+            "form_email_535662_submit": "Choose Your Address &#10140;",
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
@@ -75,10 +75,10 @@ class Source:
 
         # mimic address selection
         payload = {
-            "SQ_FORM_499078_PAGE": "2",
-            "form_email_499078_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q499093:q1": self._uprn,
-            "form_email_499078_submit": "Get Bin Days &#10140;",
+            "SQ_FORM_535662_PAGE": "2",
+            "form_email_535662_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
+            "q535685:q1": self._uprn,
+            "form_email_535662_submit": "Get Bin Days &#10140;",
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",

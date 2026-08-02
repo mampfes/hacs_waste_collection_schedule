@@ -1,0 +1,5 @@
+---
+interface:
+  display_name: Cleanup Repository
+  short_description: Clean merged branches and resync the local fork
+  default_prompt: Use $cleanup to clean the repository after a merged pull request.

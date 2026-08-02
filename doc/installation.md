@@ -101,12 +101,26 @@ waste_collection_schedule:
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
 | sources | list | required | Contains information for the service provider being used. For details see [Attributes for sources](#attributes-for-sources) |
-| fetch_time | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
+| fetch_time | time | optional | representation of the time of day in `"HH:MM"` (**must be quoted**, see note below) that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
 | fetch_interval_days | int | optional | fetch interval in days. If set to `1` (default), behavior stays unchanged and fetching happens daily at `fetch_time` (plus optional random offset). If set to `>1`, data is fetched every _n_ days. |
 | random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
-| day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
+| day_switch_time | time | optional | time of the day in `"HH:MM"` (**must be quoted**, see note below) that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
 | separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
 | day_offset | int | optional | Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used |
+
+> **Note: always quote `fetch_time` and `day_switch_time`**
+>
+> Home Assistant's YAML loader follows the legacy YAML 1.1 spec, which parses an unquoted `H:MM` value as a **sexagesimal (base-60) number** rather than a string whenever the hour starts with a non-zero digit. For example, an unquoted `fetch_time: 10:00` is silently read as the integer `600` (10 × 60 + 0), which then fails validation with an error like `Invalid time specified: 600`. Times with a leading zero on the hour (e.g. `09:59`) happen to be unaffected, which is why this only seems to break for times from `10:00` onward.
+>
+> To avoid this, always wrap these values in quotes so they are parsed as strings:
+>
+> ```yaml
+> waste_collection_schedule:
+>   fetch_time: "10:00"
+>   day_switch_time: "18:30"
+> ```
+>
+> This is a characteristic of the YAML 1.1 parser used by Home Assistant/PyYAML, not something this integration can change on its own.
 
 ## Attributes for _sources_
 

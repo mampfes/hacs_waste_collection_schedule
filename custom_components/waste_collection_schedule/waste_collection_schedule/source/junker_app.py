@@ -339,6 +339,7 @@ SERVICE_PROVIDERS = {
     "Stradella",
     "Torre de' Passeri",
     "Scalea",
+    "San Giovanni Teatino",
 }
 
 # MUNICIPALITIES that are known to be supported but do not offer a calendar:
@@ -355,6 +356,10 @@ TEST_CASES = {
         "area": "Utenze domestiche",
     },
     "Scalea": {"municipality": "Scalea"},
+    "San Giovanni Teatino, Zona A": {
+        "municipality": "San Giovanni Teatino",
+        "area": "Zona A",
+    },
 }
 
 

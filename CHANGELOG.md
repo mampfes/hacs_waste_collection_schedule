@@ -25,6 +25,145 @@ Releases are listed in reverse chronological order.
 
 - migrated 261 source and shared-platform modules to the pipeline, including the ICS, AbfallIO, Jumomind, Müllmax and Abfallnavi/regio iT platforms (which each cover many more provider listings). Their waste-type labels are now canonical and language-aware. Full list in #6562. (#6562)
 
+## [2.32.0] - 2026-08-02
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@AlexSartori, @AlpenGlowNW, @Artixskillz, @ArzykDev, @AveCaesarAve, @carefulcomputer,
+@CpuID, @deal0f49-21, @delight-f, @djcode, @dlinsin, @edo2313, @grapple18,
+@jameswgm87, @jtbnz, @Liam-Whiteside, @patrickjmcd, @PrzemyslawKlys, @Smn-hns,
+@snowyukitty and @yeaaaaaahh. 🎉
+Thanks as well to our returning contributors (@bbr111, @CRZTFR, @framesfree,
+@igor-vovk, @Jab2870, @morotsgurka, @Troon) for the fixes and new sources below.
+
+The 3.0.0 architecture pre-release remains under active development on the
+`release/3.0.0` branch. Every source fix and addition landing on `master` in this
+release will be migrated to the new pipeline format as part of that stream. If
+you're able, install the 3.0.0 pre-release through HACS, try it against your own
+providers, and let us know what breaks.
+
+### Added Sources
+
+- added Coteau-du-Lac to generic ICS provider list, CA (thanks @grapple18) (#7081)
+- added Thannhausen to Geminfo.app ICS provider, AT (thanks @AveCaesarAve) (#7040)
+- added S.E.S.A. (sesaeste_it), IT (thanks @AlexSartori) (#6982)
+- added garden waste collection to herefordshire_gov_uk, UK (thanks @Jab2870) (#7073)
+- added Carleton Place, ON to RecycleCoach EXTRA_INFO, CA (thanks @djcode) (#7062)
+- added KVA Thurgau (kvatg_ch) covering 70 Thurgau communities, CH (thanks @Smn-hns) (#6952)
+- added sludge (Slam) week-number pickup parsing to edpevent_se, SE (thanks @morotsgurka) (#2355)
+- added siunet_it, IT (thanks @edo2313) (#7039)
+- added Kansas City, MO (kansas_city_mo_us), US (thanks @patrickjmcd) (#7043)
+- added Marktgemeinde Pernitz (pernitz_gv_at), AT (#7037)
+- added Nantes Métropole (data_nantesmetropole_fr), FR (#7036)
+- added San Giovanni Teatino to Junker APP source, IT (#7035)
+- added City of Stamford, CT (stamford_ct_us), US (#7033)
+- added Schwarzwald-Baar-Kreis (Königsfeld) to Abfall.IO / AbfallPlus GraphQL source, DE (#7031)
+- added millvalleyrefuse_com, US (thanks @Artixskillz) (#7018)
+- added Senden to MyMuell (Jumomind) source, DE (#7016)
+- added Gemeinde Kirchlengern (kirchlengern_de), DE (#7015)
+- added Gronau to regio iT Abfallkalender source, DE (#7014)
+- added Gemeinde Rödinghausen to Abfall Export (vCal) ICS provider, DE (#7013)
+- added Gemeinde Mils (mils_tirol_at), AT (#7012)
+- added Czysty Region (Opole/Silesia region) (czystyregion_pl), PL (#7010)
+- added RIR / Romsdalshalvøya Interkommunale Renovasjonsselskap (rir_no), NO (#7009)
+- added Landkreis Böblingen to abfall.io GraphQL service map, DE (#7007)
+- added Epsom and Ewell Borough Council to iTouchVision source, UK (#7006)
+- added West Kelowna, BC to recyclecoach_com source, CA (#7003)
+- added AWB Birkenfeld (awb_bir_de), DE (#7001)
+- added Landkreis Göttingen to abfall.io GraphQL service map, DE (#6998)
+- added City of Raleigh, NC to ReCollect shared platform, US (#6997)
+- added Stadtwerke Aschaffenburg to Gipsprojekt ICS platform; removed stale MyMuell listing, DE (#6996)
+- added SIAVED (Valenciennes Métropole) to Publidata source, FR (#6995)
+- added Gargždų švara (Klaipėda district) (gargzdusvara_eu), LT (#6994)
+- added GLØR (glor_no) for Innlandet, NO (#6993)
+- added Sud Sainte Baume (Saint-Cyr-sur-Mer) to Publidata source, FR (#6990)
+- added Peoria, IL to RecycleCoach EXTRA_INFO, US (#6989)
+- added Älvsbyns Energi (alvsbyns_energi_se), SE (#6976)
+- added Uddevalla Energi (uddevallaenergi_se), SE (#6974)
+- added Irado (irado_nl), NL (#6973)
+- added Popůvky (popuvky_cz), CZ (#6972)
+- added Kelkheim (Taunus) to generic ICS provider list, DE (#6971)
+- added KELL GmbH (Landkreis Leipzig) to abfall.io GraphQL service map, DE (#6969)
+- added Wirtschaftsbetriebe Duisburg (WBD) to abfall.io GraphQL source, DE (#6968)
+- added Clackmannanshire Council (clackmannanshire_gov_uk), UK (#6967)
+- added Montri (montri_fr), FR (#6965)
+- added Seuzach (seuzach_ch), CH (#6963)
+- added Abfallwirtschaft Altenburger Land to AWIDO service map, DE (#6962)
+- added extra cities to RegioEntsorgung source, DE (#6945)
+- added Perth and Kinross Council (pkc_gov_uk), UK (#6933)
+- added Stadt Kerpen via abfall_io, DE (thanks @dlinsin) (#6930)
+- added Le Cotentin (Cherbourg-en-Cotentin) to publidata_fr source, FR (#6928)
+- added Gemeinde Kriftel (kriftel_de), DE (#6923)
+- added City of Tallahassee (talgov_com), US (#6919)
+- added Gemeinde Muttenz (muttenz_ch), CH (#6918)
+- added Surf Coast Shire, VIC (surf_coast_vic_gov_au), AU (#6917)
+- added Southend-on-Sea City Council (southend_gov_uk), UK (#6916)
+- added Fermanagh and Omagh District Council (fermanaghomagh_gov_uk), UK (#6915)
+- added Omrin (omrin_nl), NL (thanks @igor-vovk) (#6914)
+- added GOAP Poznań (goap_poznan_pl), PL (#6913)
+- added East Suffolk Council (eastsuffolk_gov_uk), UK (#6910)
+- added De Afvalapp (deafvalapp_nl), NL (#6909)
+- added Předměřice nad Labem (predmerice_nad_labem_cz), CZ (thanks @ArzykDev) (#6907)
+- added Aarberg (aarberg_ch), CH (#6906)
+- added SUIBR (Nidwalden) (suibr_ch), CH (thanks @AlpenGlowNW) (#6905)
+- added Gemeinde Hille to generic ICS provider list, DE (#6904)
+- added Stadt Tengen to generic ICS provider list, DE (#6903)
+- added Haugaland Interkommunale Miljøverk / HIM (him_as), NO (#6902)
+- added Gemeinde Neuberg to generic ICS provider list, DE (#6901)
+- added City of Port Phillip, VIC (portphillip_vic_gov_au), AU (#6900)
+- added Gloucester City Council (gloucester_gov_uk), UK (#6899)
+- added Waikato District Council (waikato_district_council_govt_nz), NZ (#6898)
+- added Timrå kommun (timra_se), SE (#6894)
+- added City of Yarra, VIC (yarracity_vic_gov_au), AU (thanks @yeaaaaaahh) (#6888)
+- added Prince George's County, MD (prince_georges_county_md_us), US (#6887)
+- generalized isontinambiente_it to cover all Isontina Ambiente municipalities, IT (#6885)
+- added CEM Ambiente (cem_ambiente_it), IT (#6884)
+- added Viborg (Revas) to Affaldonline source, DK (#6883)
+
+### Fixed Sources
+
+- fixed swale_gov_uk: update form field IDs (thanks @jameswgm87) (#7071)
+- fixed sudestavenir_fr: parse mixed green-waste schedules (thanks @snowyukitty) (#7079)
+- fixed aucklandcouncil_govt_nz: bypass WAF 406 and fail loudly on empty results (thanks @jtbnz) (#7078)
+- fixed esch_lu: request identity encoding to avoid a malformed compressed response (thanks @framesfree) (#7075)
+- fixed centralbedfordshire_gov_uk: adapt to the council's new site (thanks @Liam-Whiteside) (#7063)
+- fixed kvatg_ch: drop URLs from PARAM_DESCRIPTIONS to avoid config-form placeholders (#7061)
+- fixed app_abfallplus_de: stop leaking other municipalities' Giftmobil dates for Landkreis München (#7034)
+- fixed north_kesteven_org_uk: use curl_cffi to avoid Cloudflare blocks (#7032)
+- fixed abfallnavi_de: don't abort fetch when a street name resolves to multiple split segments (#7011)
+- fixed abfall_io: migrate ASG Nordsachsen to v3 GraphQL API (#7005)
+- fixed carmarthenshire_gov_wales: handle UPRNs with no collection data (#6992)
+- fixed montreal_ca: fall back to Green schedule when the Food message has no weekday (#6991)
+- fixed lichfielddc_gov_uk: adapt to new web layout, added weekly food caddy collections (thanks @Troon) (#6986)
+- fixed: removed rotherham_gov_uk source (backend no longer provides structured data) (#6966)
+- fixed republicservices_com: holiday schedule adjustments (thanks @carefulcomputer) (#6964)
+- fixed abfall_io: migrate Entsorgungsbetriebe Essen to v3 GraphQL API (#6961)
+- fixed ecoharmonogram_pl: disambiguate single/multi-family schedules for multi-id streets (#6924)
+- fixed impactapps_com_au: corrected 7 wrong council website domains (thanks @deal0f49-21) (#6921)
+- fixed logan_qld_gov_au: migrated to the OpenCities API (thanks @CpuID) (#6920)
+- fixed mijnafvalwijzer_nl: scope date/type lookup to each year's own div (#6912)
+- fixed communitywastedisposal_com: honour call-to-schedule flag and week-of-month ordinals (#6911)
+- fixed abfallkalender_prezero_network: removed Willich, no longer served by PreZero (#6897)
+- fixed sutherlandshire_nsw_gov_au: council replaced its lookup form; now queries the public GIS layer (thanks @CRZTFR) (#6890)
+
+### Other
+
+- config flow: render the sensor and customise selectors as a scrollable list instead of a dropdown overlay (thanks @delight-f) (#6627)
+- retry config entry setup after a transient source fetch failure instead of loading sensors as unknown (thanks @PrzemyslawKlys) (#6983)
+- CI: test against the minimum and current supported Home Assistant versions (thanks @PrzemyslawKlys) (#6999)
+- CI: align validation with the supported Home Assistant version floor (thanks @PrzemyslawKlys) (#6987)
+- fixed master CI: update-docs workflow Python version, kvatg_ch translation placeholders (#7060)
+- a stale or renamed source argument no longer crashes the whole integration; surfaces a clear setup error instead (#7038)
+- added maintainer tooling: agents and skills for cleanup, new-source, release, issue-review and PR-review workflows (#6975)
+- refactored 32 AU/NZ councils onto a shared OpenCities.py service client, no behaviour change intended (#6934, #6946, #6951, #6953, #6955, #6957, #6960)
+- docs: announced the 3.0.0 architecture pre-release on the README/info preambles (#6892)
+- docs: warn that fetch_time/day_switch_time must be quoted in YAML (#6891)
+
+## [2.31.1] - 2026-07-18
+
+### Other
+
+- README/info: announce the 3.0.0 architecture pre-release and how to opt in via HACS "show beta versions" (#6561)
+
 ## [2.31.0] - 2026-07-17
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:

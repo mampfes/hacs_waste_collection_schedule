@@ -16,7 +16,7 @@ Support for waste collection schedules provided by [Grand Paris Sud Est Avenir (
 
 Collection days depend on the exact address (commune, street and house number) and are looked up live against GPSEA's interactive collection map.
 
-Depending on the waste type and address, the source returns either a recurring weekly/bi-weekly schedule (ordures ménagères, emballages) or a precomputed list of dates for the current calendar year (verre, encombrants, déchets végétaux), matching what the source website itself provides.
+Depending on the waste type and address, the source returns a recurring weekly or bi-weekly schedule (ordures ménagères, emballages), a precomputed list of dates for the current calendar year (verre, encombrants), or a mix of the two (déchets végétaux, which often lists individual winter dates plus a weekly rule bounded to the growing season). This matches what the source website itself provides. Bounded rules are never extrapolated into the following year.
 
 ## Configuration via configuration.yaml
 

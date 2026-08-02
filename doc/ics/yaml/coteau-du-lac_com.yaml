@@ -1,0 +1,22 @@
+---
+title: Coteau-du-Lac, Québec
+url: https://portail.coteau-du-lac.com
+country: ca
+howto:
+  en: |
+    - Visit <https://portail.coteau-du-lac.com/calendrier-de-collectes> (the portal is in French only).
+    - Enter your address under "Pour quelle adresse désirez-vous obtenir le calendrier?", pick it from the
+      suggestions and press "Soumettre".
+    - Under "Ajouter à mon calendrier", right-click the Apple calendar icon and select `Copy link address`.
+    - Use this copied URL as the `url` parameter. The `webcal://` prefix is handled automatically.
+  fr: |
+    - Visitez <https://portail.coteau-du-lac.com/calendrier-de-collectes>.
+    - Saisissez votre adresse sous "Pour quelle adresse désirez-vous obtenir le calendrier?", choisissez-la
+      dans les suggestions puis cliquez sur "Soumettre".
+    - Sous "Ajouter à mon calendrier", faites un clic droit sur l'icône du calendrier Apple et sélectionnez
+      `Copier l'adresse du lien`.
+    - Utilisez cette URL comme paramètre `url`. Le préfixe `webcal://` est géré automatiquement.
+
+test_cases:
+  Coteau-du-Lac:
+    url: https://portail.coteau-du-lac.com/avis/collectes/v2/calendrier.ics?collects=4,5

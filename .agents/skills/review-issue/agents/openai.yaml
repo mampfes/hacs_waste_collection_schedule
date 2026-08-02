@@ -1,0 +1,5 @@
+---
+interface:
+  display_name: Review Issue
+  short_description: Triage an issue and execute an approved plan
+  default_prompt: Use $review-issue to triage a GitHub issue and propose an execution plan.

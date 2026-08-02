@@ -4,18 +4,75 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
-TITLE = "isontina ambiente: Ronchi dei legionari"
-DESCRIPTION = "Source for isontina ambiente, serving Ronchi dei legionari."
+TITLE = "Isontina Ambiente"
+DESCRIPTION = (
+    "Source for isontina ambiente, serving the municipalities of the Gorizia "
+    "province (Italy) and others in the Isontina Ambiente network."
+)
 URL = "https://isontinambiente.it"
+
+# Isontina Ambiente resolves the collection calendar purely from the
+# "address_id" query parameter: the municipality name in the URL path is
+# only used to render the page (title, address dropdown), it does not
+# affect which calendar is returned. So any valid municipality slug can be
+# used as the request path for every address_id in the whole network.
+API_URL = "https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/"
+
 TEST_CASES = {
     "PIAZZA FURLAN, Ronchi dei Legionari Area B": {"address_id": 1172},
     "VIA DANTE  , Ronchi dei Legionari Area C": {"address_id": 75},
     "VIA GORIZIA  , Ronchi dei Legionari Area F": {"address_id": 147},
+    "ANDRONA DELLA PERGOLA, Gorizia Area B": {"address_id": 488},
+    "ANDRONA AQUILEIA, Monfalcone Area Monfalcone Ovest": {"address_id": 819},
+    "CORTE DEI MAGAZZINI, Cormons Area B": {"address_id": 1145},
+    "VIA AVERTO, Grado Area Grado Fossalon Boscat": {"address_id": 1219},
 }
 
+
+def EXTRA_INFO():
+    return [
+        {
+            "title": f"Isontina Ambiente: {name}",
+            "url": f"https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/{slug}/",
+            "country": "it",
+            "default_params": {},
+        }
+        for slug, name in [
+            ("capriva-del-friuli", "Capriva del Friuli"),
+            ("cormons", "Cormons"),
+            ("doberdo-del-lago", "Doberdò del Lago"),
+            ("dolegna-del-collio", "Dolegna del Collio"),
+            ("duino-aurisina", "Duino Aurisina"),
+            ("farra-disonzo", "Farra d'Isonzo"),
+            ("fogliano-redipuglia", "Fogliano Redipuglia"),
+            ("gorizia", "Gorizia"),
+            ("gradisca-disonzo", "Gradisca d'Isonzo"),
+            ("grado", "Grado"),
+            ("mariano-del-friuli", "Mariano del Friuli"),
+            ("medea", "Medea"),
+            ("monfalcone", "Monfalcone"),
+            ("monrupino", "Monrupino"),
+            ("moraro", "Moraro"),
+            ("mossa", "Mossa"),
+            ("romans-disonzo", "Romans d'Isonzo"),
+            ("ronchi-dei-legionari", "Ronchi dei Legionari"),
+            ("sagrado", "Sagrado"),
+            ("san-canzian-disonzo", "San Canzian d'Isonzo"),
+            ("san-floriano-del-collio", "San Floriano del Collio"),
+            ("san-lorenzo-isontino", "San Lorenzo Isontino"),
+            ("san-pier-disonzo", "San Pier d'Isonzo"),
+            ("savogna-disonzo", "Savogna d'Isonzo"),
+            ("sgonico-zgonik", "Sgonico - Zgonik"),
+            ("staranzano", "Staranzano"),
+            ("turriaco", "Turriaco"),
+            ("villesse", "Villesse"),
+        ]
+    ]
+
+
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
-    "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`.",
+    "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, pick your municipality from the list, and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
+    "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, scegli il tuo comune dall'elenco e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`.",
 }
 
 
@@ -40,9 +97,6 @@ ITALIAN_MONTHS = {
     "novembre": 11,
     "dicembre": 12,
 }
-
-
-API_URL = "https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/"
 
 
 class Source:

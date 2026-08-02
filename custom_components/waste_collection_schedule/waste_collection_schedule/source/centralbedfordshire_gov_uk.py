@@ -1,10 +1,47 @@
-import time
+"""
+Central Bedfordshire Council waste collection source.
+
+Rewritten for the council's new site, which runs on the
+"LocalGov Drupal Waste Collection" module
+(https://www.drupal.org/project/localgov_waste_collection).
+
+That module documents two useful GET-only URLs, which is why this version
+is much simpler than the old one (no more multi-step POST + session cookie
+dance):
+    Postcode search : {base}/find?postcode={postcode}
+    Direct schedule : {base}/view/{uprn}
+
+On this council's site {base} = /waste-and-recycling/waste-collection-schedule
+
+Address lookup:
+    The /find?postcode=... page has a <select id="edit-uprn" name="uprn">
+    with one <option value="{uprn}">{full address}</option> per property.
+
+Results page:
+    Each collection day is a <li class="waste-collection__day"> containing:
+        <span class="waste-collection__day--day"><time datetime="DD-MM-YYYY">
+        <span class="waste-collection__day--type">Recycling, garden waste
+            and food waste collections</span>
+    Note the type is a single natural-language sentence combining every bin
+    collected that day (e.g. "Refuse (black bin) and food waste
+    collections"), not one element per bin - so it has to be split apart
+    rather than read as one string.
+
+    Some properties (e.g. those with a separate garden waste subscription)
+    have TWO <li> rows sharing the same date - one standalone "Garden Waste
+    Collection" row plus the usual combined "Recycling, garden waste and
+    food waste collections" row. Bin types are therefore deduplicated per
+    calendar date across all rows, not just within a single row's text.
+"""
+
+import re
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -13,19 +50,46 @@ DESCRIPTION = (
     "Source for www.centralbedfordshire.gov.uk services for Central Bedfordshire"
 )
 URL = "https://www.centralbedfordshire.gov.uk"
+
+BASE_PATH = "/waste-and-recycling/waste-collection-schedule"
+FIND_URL = f"{URL}{BASE_PATH}/find"
+VIEW_URL_TEMPLATE = f"{URL}{BASE_PATH}/view/{{uprn}}"
+
 TEST_CASES = {
-    "postcode has space": {"postcode": "SG15 6YF", "house_name": "10 Old School Walk"},
-    "postcode without space": {
+    "Buttermere Avenue, Dunstable": {
+        "postcode": "LU6 3PD",
+        "house_name": "1 Buttermere Avenue",
+    },
+    # Postcode deliberately unspaced here: the site accepts both forms, and
+    # this keeps the "postcode without space" coverage the old test cases had.
+    # This address also has a separate garden waste row, exercising the
+    # per-date deduplication below.
+    "Chestnut Avenue, Biggleswade (unspaced postcode, separate garden waste row)": {
         "postcode": "SG180LL",
         "house_name": "1 Chestnut Avenue",
     },
 }
 
-ICON_MAP = {
-    "Refuse (black bin)": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden waste": Icons.GARDEN,
-    "Food waste": Icons.BIO_KITCHEN,
+
+# Keyed by lowercased bin name, since the site capitalises the first item of
+# each sentence but not the rest (e.g. "Refuse (black bin) and food waste
+# collections" vs "Recycling, garden waste and food waste collections").
+BIN_TYPES = {
+    "refuse (black bin)": ("Refuse (black bin)", Icons.GENERAL_WASTE),
+    "recycling": ("Recycling", Icons.RECYCLING),
+    "garden waste": ("Garden waste", Icons.GARDEN),
+    "food waste": ("Food waste", Icons.BIO_KITCHEN),
+}
+
+# Matches the trailing "collection"/"collections" the site appends, e.g.
+# "Recycling, garden waste and food waste collections".
+_TRAILING_COLLECTIONS_RE = re.compile(r"\s+collections?\s*$", re.IGNORECASE)
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-GB,en;q=0.9",
 }
 
 
@@ -36,128 +100,94 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
+        session.headers.update(HEADERS)
 
-        # Add realistic browser headers to avoid bot detection
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "DNT": "1",
-                "Connection": "keep-alive",
-                "Upgrade-Insecure-Requests": "1",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "same-origin",
-                "Cache-Control": "max-age=0",
-            }
-        )
+        uprn = self._lookup_uprn(session)
+        r = session.get(VIEW_URL_TEMPLATE.format(uprn=uprn), timeout=30)
+        r.raise_for_status()
 
-        # First, visit the page to establish session
-        url = "https://www.centralbedfordshire.gov.uk/info/163/bins_and_waste_collections_-_check_bin_collection_days"
+        soup = BeautifulSoup(r.text, features="html.parser")
+        return self._parse_collections(soup)
 
-        try:
-            # Initial page load to get session cookies
-            session.get(url, timeout=30)
-            time.sleep(2)  # Be polite to the server
+    def _lookup_uprn(self, session):
+        r = session.get(FIND_URL, params={"postcode": self._postcode}, timeout=30)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, features="html.parser")
 
-            # Lookup postcode, then use house name to get UPRN
-            data = {
-                "postcode": self._postcode,
-            }
-
-            r = session.post(url, data=data, timeout=30)
-            r.raise_for_status()
-
-            soup = BeautifulSoup(r.text, features="html.parser")
-
-            # Check if we got blocked or redirected
-            if "403" in r.text or "forbidden" in r.text.lower():
-                raise requests.exceptions.HTTPError(
-                    "403 Forbidden - IP may be temporarily blocked"
-                )
-
-            address_select = soup.find("select", id="address")
-            if not address_select:
-                raise ValueError(
-                    "Could not find address selection dropdown - page structure may have changed"
-                )
-
-            address = address_select.find(
-                "option",
-                text=lambda value: value and value.startswith(self._house_name),
+        address_select = soup.find("select", id="edit-uprn")
+        if not address_select:
+            # The site omits the address dropdown entirely when the postcode
+            # is not recognised, so this is far more likely to be a bad
+            # postcode than a change in page structure.
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "no addresses were returned for this postcode, please check "
+                "it and try again.",
             )
 
-            if address is None:
-                addresses = {
-                    option.text.removeprefix(self._postcode)
-                    for option in address_select.select("option")
-                } - {""}
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "house_name",
-                    self._house_name,
-                    addresses,
-                )
-
-            self._uprn = address["value"]
-
-            # Add some delay between requests
-            time.sleep(3)
-
-            data = {
-                "address_text": address.text,
-                "address": self._uprn,
-                "postcode": self._postcode,
+        option = address_select.find(
+            "option",
+            string=lambda value: value and value.strip().startswith(self._house_name),
+        )
+        if option is None:
+            addresses = {
+                opt.text.strip()
+                for opt in address_select.select("option")
+                if opt.get("value")
             }
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_name",
+                self._house_name,
+                addresses,
+            )
 
-            r = session.post(url, data=data, timeout=30)
-            r.raise_for_status()
+        return option["value"]
 
-            soup = BeautifulSoup(r.text, features="html.parser")
-            collections_div = soup.find("div", id="collections")
+    def _parse_collections(self, soup):
+        days = soup.select(".waste-collection__day")
+        if not days:
+            raise ValueError(
+                "Could not find any collections for this address - the page "
+                "structure may have changed."
+            )
 
-            if not collections_div:
-                raise ValueError(
-                    "Could not find collections data - page structure may have changed"
-                )
+        # Some addresses (e.g. properties with a separate garden waste
+        # subscription) have two <li> rows sharing the same date - one for
+        # "Garden Waste Collection" on its own, one for the combined
+        # "Recycling, garden waste and food waste collections" row. Collect
+        # everything per date first so a bin type mentioned in more than one
+        # row for the same day is only reported once.
+        bins_by_date = {}
+        for day in days:
+            time_el = day.select_one(".waste-collection__day--day time")
+            type_el = day.select_one(".waste-collection__day--type")
+            if time_el is None or type_el is None or not time_el.get("datetime"):
+                continue
 
-            s = collections_div.find_all("h3")
-            entries = []
+            try:
+                date = datetime.strptime(time_el["datetime"], "%d-%m-%Y").date()
+            except ValueError:
+                continue
 
-            for collection in s:
-                try:
-                    date = datetime.strptime(collection.text, "%A, %d %B %Y").date()
-                    for sibling in collection.next_siblings:
-                        if (
-                            sibling.name == "h3"
-                            or sibling.name == "p"
-                            or sibling.name == "a"
-                            or sibling.name == "div"
-                        ):
-                            break
-                        if (
-                            sibling.name != "br"
-                            and hasattr(sibling, "text")
-                            and sibling.text.strip()
-                        ):
-                            entries.append(
-                                Collection(
-                                    date=date,
-                                    t=sibling.text.strip(),
-                                    icon=ICON_MAP.get(sibling.text.strip()),
-                                )
-                            )
-                except ValueError:
-                    # Skip dates that can't be parsed
-                    continue
+            day_bins = bins_by_date.setdefault(date, {})
+            for bin_type in self._split_bin_types(type_el.text):
+                key = bin_type.lower()
+                label, icon = BIN_TYPES.get(key, (bin_type, None))
+                day_bins[key] = (label, icon)
 
-            return entries
+        entries = [
+            Collection(date=date, t=label, icon=icon)
+            for date, day_bins in bins_by_date.items()
+            for label, icon in day_bins.values()
+        ]
 
-        except requests.exceptions.RequestException as e:
-            if "403" in str(e):
-                raise requests.exceptions.HTTPError(
-                    f"403 Forbidden - Central Bedfordshire Council is blocking requests. "
-                    f"Try again later or check if your IP is temporarily banned. Error: {e}"
-                ) from e
-            raise e
+        return entries
+
+    @staticmethod
+    def _split_bin_types(text):
+        """Split "Recycling, garden waste and food waste collections" into
+        ["Recycling", "garden waste", "food waste"]."""
+        text = _TRAILING_COLLECTIONS_RE.sub("", text.strip())
+        text = text.replace(" and ", ", ")
+        return [part.strip() for part in text.split(",") if part.strip()]

@@ -1,0 +1,19 @@
+---
+title: Gemeinde Hille
+url: https://www.hille.de
+howto:
+  en: |
+    - Go to <https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/>.
+    - Find the `ICS` download link matching your `Abfuhrbezirk` (collection district). Reminders are not needed for Home Assistant, so the `Ohne Erinnerung` (without reminder) files are recommended.
+    - Right click the matching link and select `copy link` to get the URL.
+    - Use this link as the `url` parameter.
+  de: |
+    - Gehen Sie auf <https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/>.
+    - Suchen Sie den `ICS`-Download-Link für Ihren Abfuhrbezirk. Erinnerungen werden für Home Assistant nicht benötigt, daher werden die Dateien "Ohne Erinnerung" empfohlen.
+    - Klicken Sie mit der rechten Maustaste auf den passenden Link und wählen Sie `Link kopieren`, um die URL zu erhalten.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+test_cases:
+  Bezirk 1:
+    url: https://www.hille.de/media/custom/3015_1711_1.ICS
+  Bezirk 2:
+    url: https://www.hille.de/media/custom/3015_1712_1.ICS
