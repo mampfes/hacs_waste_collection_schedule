@@ -2980,7 +2980,7 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>New Zealand</summary>
 
-- [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / new.aucklandcouncil.govt.nz
+- [Auckland Council](/doc/source/aucklandcouncil_govt_nz.md) / aucklandcouncil.govt.nz
 - [Christchurch City Council](/doc/source/ccc_govt_nz.md) / ccc.govt.nz
 - [Dunedin District Council](/doc/source/dunedin_govt_nz.md) / dunedin.govt.nz
 - [GardenBags NZ](/doc/source/gardenbags_co_nz.md) / gardenbags.co.nz
