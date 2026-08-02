@@ -20,8 +20,8 @@ Start from the current numbers, never from this file:
 python tools/arch_coverage.py --debt
 ```
 
-At the time of writing, on `release/3.0.0`: 150/959 migrated, 263 on the
-pipeline, 113 carrying their own steps.
+At the time of writing, on `release/3.0.0`: 202/959 migrated, 263 on the
+pipeline, 61 carrying their own steps. The campaign opened at 113.
 
 ## Why it is safe
 
@@ -43,12 +43,27 @@ them. One agent did this across all 674 recordings for an unconditional change
 to the ICS repair path, and that diff, not the passing test count, is what made
 the change reviewable.
 
+### Where the safety property does not hold: POST bodies
+
+Replay proves less than it looks for a source that POSTs. `tests/cassette.py`
+matches on an exact key (method, url and a body hash) and then falls back to
+matching on method and url alone, and a recorded interaction does not store the
+request body. So when a refactor changes a POST body, the key misses, the
+fallback matches anyway, and the test goes green having checked nothing about
+what was sent. There are 859 POST interactions across 92 sources.
+
+This is tracked as #7102 and should be fixed in the harness. Until it is, a
+migration that touches how a request is built must compare the outgoing bodies
+by hand, by instrumenting the session layer, and say so in the PR. An agent
+doing the Athos wizard did this unprompted and hash-matched three POST bodies
+field-for-field; that is the standard, not a bonus.
+
 ## Sources with no cassette
 
-Ten sources in the backlog have none, and cannot be verified by replay. Do not
-assume the reason: probe first, because the grouping has been wrong before.
-`berdorf_lu` and `kumberg_gv_at` were both listed as unreachable and both
-recorded cleanly on the first attempt.
+Eight sources in the backlog have none, and cannot be verified by replay. Do
+not assume the reason: probe first, because the grouping has been wrong before.
+`berdorf_lu` and `kumberg_gv_at` were both listed as unreachable, both recorded
+cleanly on the first attempt, and are now migrated.
 
 ```bash
 python tests/record_fixtures.py <module>   # needs the live provider to be up
@@ -165,7 +180,21 @@ time. Three things bite:
   module will conflict. Group by platform, give one agent the whole group, and
   tell each agent which module it owns and who owns the rest. An agent that
   knows it is borrowing someone else's file will say so, or move its change
-  somewhere better.
+  somewhere better. One ICS agent, told `parsers.py` was not its file, reverted
+  a change it had already made there and rebuilt it in `service/ICS.py`
+  composing the shared parser, which was the better design anyway.
+- **Split the batch on "does it override `retrieve`".** Platform grouping alone
+  still let two agents collide in `preprocessors.py`. Giving one agent only
+  sources with no `retrieve` override lets it own `parsers.py` and
+  `preprocessors.py` outright while another owns `retrievers.py`, and the
+  collisions stop.
+- **Hand a deferral on as a claim, not a fact.** When an agent defers a source
+  and explains why, the next agent must verify that reasoning rather than
+  design around it. Of four documented reasons `awg_de` could not be migrated,
+  two were wrong: an "unavoidable" multipart body returned a byte-identical
+  calendar when sent urlencoded, and a per-`Zeitraum` fan-out turned out to
+  reference a string that appears in no response, live or recorded, so that
+  code path had never run.
 - **Agents lose their turn, not their work.** A dropped connection or a
   restarted process leaves the worktree edits in place and uncommitted. Check
   `git status` in the worktree before assuming anything was lost, and resume
@@ -214,6 +243,18 @@ most cases and is trivial when it does not.
 
 - Base every PR on `release/3.0.0`, never `master`.
 - Tag every PR with the **3.0.0 milestone**.
+- **Stack the next batch on the last one** rather than waiting for a merge. It
+  is what lets each batch extend the components the previous batch added
+  instead of reinventing them: by batch 4 two ICS sources migrated with no new
+  component at all.
+- **Expect a conflict when the PR below is squash-merged,** and do not be
+  alarmed by it. Squashing puts one new commit upstream while the stacked
+  branch still carries the originals: same tree, different SHAs, so git reports
+  a conflict on every line. Fix it with
+  `git rebase --onto upstream/release/3.0.0 <old-base>`, which drops the
+  already-merged commits cleanly because the trees match. There is normally
+  nothing to resolve by hand. Only a squash that included review edits will
+  need real merging.
 - One PR per batch of roughly eight sources, grouped by platform where
   possible, so a reviewer sees the component change and its consumers together.
 - Title: `refactor(v3): move <platform> behaviour into the shared component`.
