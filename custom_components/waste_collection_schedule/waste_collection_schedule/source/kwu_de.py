@@ -1,11 +1,11 @@
 """KWU Entsorgung Landkreis Oder-Spree (kwu-entsorgung.de).
 
-Demonstrates: a four-request HTML-dropdown cascade (city -> street -> object)
-ending in a scraped "ICal herunterladen" download link, whose href sometimes
-points at the provider's internal ``kwu.lokal`` hostname and must be rewritten
-to the public one before it can be fetched. No configured retriever expresses
-"resolve three dropdowns, scrape a link, rewrite its host, then download it",
-hence a source-defined ``retrieve()``.
+A four-request HTML-dropdown cascade (city -> street -> object) ending in a
+scraped "ICal herunterladen" download link, whose href sometimes points at the
+provider's internal ``kwu.lokal`` hostname and must be rewritten to the public
+one before it can be fetched. Each dropdown is one lookup step below, the link
+scrape is the last of them, and the shared ``LookupChainRetriever`` downloads
+the URL that step resolved.
 """
 
 from datetime import date
@@ -16,6 +16,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -37,6 +38,71 @@ def _find_option(options, value: str, field: str) -> str:
         if text.lower() == normalised:
             return option["value"]
     raise SourceArgumentNotFoundWithSuggestions(field, value, labels)
+
+
+def _options(source: BaseSource, url: str, params: dict | None = None):
+    """GET one level of the dropdown cascade and return its ``<option>`` tags."""
+    r = source.session.get(url, params=params, headers=_HEADERS)
+    r.raise_for_status()
+    return BeautifulSoup(r.text, "html.parser").find_all("option")
+
+
+def _resolve_city(source: BaseSource, keys: tuple) -> str:
+    return _find_option(_options(source, _BASE_URL), source.params["city"], "city")
+
+
+def _resolve_street(source: BaseSource, keys: tuple) -> str:
+    (ort,) = keys
+    return _find_option(
+        _options(source, f"{_BASE_URL}/kal_str2ort.php", {"ort": ort}),
+        source.params["street"],
+        "street",
+    )
+
+
+def _resolve_object(source: BaseSource, keys: tuple) -> str:
+    ort, strasse = keys
+    return _find_option(
+        _options(
+            source,
+            f"{_BASE_URL}/kal_str2ort.php",
+            {"ort": ort, "strasse": strasse},
+        ),
+        str(source.params["number"]),
+        "number",
+    )
+
+
+def _resolve_ics_url(source: BaseSource, keys: tuple) -> str:
+    """POST the resolved cascade and scrape the ICS download link off the result."""
+    ort, strasse, objekt = keys
+
+    r = source.session.post(
+        f"{_BASE_URL}/kal_uebersicht-2023.php",
+        data={
+            "ort": ort,
+            "strasse": strasse,
+            "objekt": objekt,
+            "jahr": date.today().year,
+        },
+        headers=_HEADERS,
+    )
+    r.raise_for_status()
+
+    ics_url = None
+    for link in BeautifulSoup(r.text, "html.parser").find_all("a"):
+        if "ICal herunterladen" in link.text:
+            ics_url = str(link["href"])
+            break
+    if ics_url is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "number", str(source.params["number"]), []
+        )
+
+    # The link is sometimes emitted with the provider's internal hostname.
+    if "kwu.lokal" in ics_url:
+        ics_url = ics_url.replace("http://kalender.kwu.lokal", _BASE_URL)
+    return ics_url
 
 
 @final
@@ -64,64 +130,14 @@ class Source(BaseSource):
         house_number(field="number"),
     )
 
+    retrieve = LookupChainRetriever(
+        steps=(_resolve_city, _resolve_street, _resolve_object, _resolve_ics_url),
+        url=lambda ort, strasse, objekt, ics_url, **_: ics_url,
+        headers=_HEADERS,
+        raise_for_status=True,
+    )
     parse = IcsParser()
     transform = ICSTransformer()
 
     def __init__(self, city: str, street: str, number: "str | int"):
         super().__init__(city=city, street=street, number=number)
-
-    def retrieve(self, source):
-        session = source.session
-        city_value = self.params["city"]
-        street_value = self.params["street"]
-        number_value = str(self.params["number"])
-
-        r = session.get(_BASE_URL, headers=_HEADERS)
-        r.raise_for_status()
-        cities = BeautifulSoup(r.text, "html.parser").find_all("option")
-        ort_value = _find_option(cities, city_value, "city")
-
-        r = session.get(
-            f"{_BASE_URL}/kal_str2ort.php",
-            params={"ort": ort_value},
-            headers=_HEADERS,
-        )
-        r.raise_for_status()
-        streets = BeautifulSoup(r.text, "html.parser").find_all("option")
-        strasse_value = _find_option(streets, street_value, "street")
-
-        r = session.get(
-            f"{_BASE_URL}/kal_str2ort.php",
-            params={"ort": ort_value, "strasse": strasse_value},
-            headers=_HEADERS,
-        )
-        r.raise_for_status()
-        objects = BeautifulSoup(r.text, "html.parser").find_all("option")
-        objekt_value = _find_option(objects, number_value, "number")
-
-        r = session.post(
-            f"{_BASE_URL}/kal_uebersicht-2023.php",
-            data={
-                "ort": ort_value,
-                "strasse": strasse_value,
-                "objekt": objekt_value,
-                "jahr": date.today().year,
-            },
-            headers=_HEADERS,
-        )
-        r.raise_for_status()
-
-        ics_url = None
-        for link in BeautifulSoup(r.text, "html.parser").find_all("a"):
-            if "ICal herunterladen" in link.text:
-                ics_url = str(link["href"])
-                break
-        if ics_url is None:
-            raise SourceArgumentNotFoundWithSuggestions("number", number_value, [])
-
-        if "kwu.lokal" in ics_url:
-            ics_url = ics_url.replace("http://kalender.kwu.lokal", _BASE_URL)
-
-        r = session.get(ics_url, headers=_HEADERS)
-        r.raise_for_status()
-        return r

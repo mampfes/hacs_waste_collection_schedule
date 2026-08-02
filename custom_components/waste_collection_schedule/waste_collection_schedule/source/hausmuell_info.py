@@ -1,12 +1,10 @@
 """hausmüll.info, a multi-tenant calendar platform for several German operators.
 
-Demonstrates: a cascading address-refinement wizard (Ort -> Ortsteil ->
-Straße -> Hausnummer -> Zusatz) where each step is itself a fuzzy search that
-may need retrying with special characters folded or replaced (the provider's
-search endpoints are inconsistent about matching "ß"/umlauts verbatim). No
-configured retriever expresses "repeat this lookup, trying several character
-foldings, until one returns a non-empty result", so the whole flow stays a
-source-defined ``retrieve``.
+A hausmüll.info deployment in its "search dialect": the address cascade
+(Ort -> Ortsteil -> Straße -> Hausnummer -> Zusatz) runs against one endpoint
+per level under ``search/``, each level a fuzzy search that may need retrying
+with special characters folded. See ``service/HausmuellInfo.py`` for the
+platform.
 
 Every operator in ``SUPPORTED_PROVIDERS`` is preserved as its own ``Region``
 (the typed successor to the legacy ``EXTRA_INFO`` list), so none of the towns
@@ -15,9 +13,7 @@ this source covers are dropped by the conversion.
 
 from datetime import datetime
 from typing import ClassVar, final
-from urllib.parse import urlencode, urljoin
 
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -26,9 +22,12 @@ from waste_collection_schedule.config_params import (
     street,
     text_field,
 )
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.regions import region
-from waste_collection_schedule.retrievers import Response
+from waste_collection_schedule.service.HausmuellInfo import (
+    FromForm,
+    HausmuellInfoRetriever,
+    Lookup,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -81,51 +80,7 @@ SUPPORTED_PROVIDERS: list = [
     {"subdomain": "wesel", "title": "ASG Wesel", "url": "https://www.asg-wesel.de/"},
 ]
 
-
-def _replace_special_chars(s: str) -> str:
-    return (
-        s.replace("ß", "s")
-        .replace("ä", "a")
-        .replace("ö", "o")
-        .replace("ü", "u")
-        .replace("Ä", "A")
-        .replace("Ö", "O")
-        .replace("Ü", "U")
-    )
-
-
-def _replace_special_chars_with_underscore(s: str) -> str:
-    return (
-        s.replace("ß", "_")
-        .replace("ä", "_")
-        .replace("ö", "_")
-        .replace("ü", "_")
-        .replace("Ä", "_")
-        .replace("Ö", "_")
-        .replace("Ü", "_")
-    )
-
-
-def _replace_special_chars_args(d: dict, replace_func=_replace_special_chars) -> dict:
-    return {
-        k: ([replace_func(i) for i in v] if isinstance(v, list) else replace_func(v))
-        for k, v in d.items()
-    }
-
-
-# curl_cffi's ``data=`` (unlike plain ``requests``) stringifies a list value
-# (``{"input_str": ["a", "a"]}`` becomes the literal text ``"['a', 'a']"``)
-# instead of repeating the key, and this provider's search endpoints only
-# work with the latter. The body is therefore pre-encoded with ``doseq=True``
-# to match the wire format the legacy source actually sent -- which also
-# means the Content-Type curl_cffi infers for a dict body (form-urlencoded)
-# must be set explicitly, since a raw string body defaults to
-# application/octet-stream and the server won't populate $_POST from it.
-_FORM_HEADERS = {"Content-Type": "application/x-www-form-urlencoded"}
-
-
-def _urlencode_form(data: dict) -> str:
-    return urlencode(data, doseq=True)
+_REJECTED_TEXT = "Bitte geben Sie Ihre Daten korrekt an."
 
 
 def _clean_label(label: str) -> str:
@@ -147,6 +102,27 @@ def _clean_label(label: str) -> str:
     if idx != -1:
         text = text[:idx] + text[idx + len(marker) :]
     return text.strip()
+
+
+def _lookup_form(ort: str, ortsteil: str, strasse: str, hausnummer: str, **_) -> dict:
+    """The platform's own search form, in the order its page submits it."""
+    return {
+        "hidden_kalenderart": "privat",
+        "input_ort": ort,
+        "input_ortsteil": ortsteil,
+        "input_str": [strasse, strasse],
+        "input_hnr": [hausnummer, hausnummer],
+        "ort_id": "0",
+        "ortteil_id": "0",
+        "str_id": "0",
+        "hidden_id_ort": "0",
+        "hidden_id_ortsteil": "0",
+        "hidden_id_str": "0",
+        "hidden_id_hnr": "0",
+        "hidden_id_egebiet": "0",
+        "hidden_send_btn": "ics",
+        "hiddenYear": str(datetime.now().year),
+    }
 
 
 @final
@@ -241,6 +217,48 @@ class Source(BaseSource):
         house_number(field="hausnummer", optional=True),
     )
 
+    retrieve = HausmuellInfoRetriever(
+        base_url=lambda subdomain, **_: API_URL.format(subdomain),
+        form=_lookup_form,
+        steps=(
+            Lookup(
+                field="ort",
+                endpoint="search/search_orte.php",
+                query={"ort_id": "0"},
+                assign=("hidden_id_ort", "ort_id"),
+            ),
+            Lookup(
+                field="ortsteil",
+                endpoint="search/search_ortsteile.php",
+                query={"ort_id": FromForm("ort_id")},
+                assign=("ort_id", "hidden_id_ortsteil"),
+                zero_falls_back_to="hidden_id_ort",
+                set_input=False,
+            ),
+            Lookup(
+                field="strasse",
+                endpoint="search/search_strassen.php",
+                query={"str_id": "0", "ort_id": FromForm("ort_id")},
+                assign=("hidden_id_str", "str_id"),
+                set_input=False,
+            ),
+            Lookup(
+                field="hausnummer",
+                endpoint="search/search_hnr.php",
+                query={"hnr_id": "0", "str_id": FromForm("str_id")},
+                assign=("hidden_id_hnr", "hnr_id"),
+            ),
+        ),
+        area_key="hidden_id_egebiet",
+        landing_page=True,
+        check_zusatz=True,
+        repeat_list_values=True,
+        retry_folded=True,
+        encoding="utf-8",
+        rejected_text=_REJECTED_TEXT,
+        rejected_field="subdomain",
+        check_lookup_status=False,
+    )
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         clean=_clean_label,
@@ -285,191 +303,3 @@ class Source(BaseSource):
             strasse=strasse or "",
             hausnummer=str(hausnummer) if hausnummer else "",
         )
-
-    @staticmethod
-    def _get_elemts(response_text: str) -> list:
-        li = BeautifulSoup(response_text, "html.parser").find("li")
-        if not isinstance(li, Tag):
-            return ["0"]
-        onclick = li.get("onclick")
-        if not isinstance(onclick, str):
-            return ["0"]
-        ids = onclick.split(")")[0].split("(")[1].split(",")
-        return [i.strip() for i in ids if i.strip().isdigit()]
-
-    @staticmethod
-    def _has_result(response_text: str) -> bool:
-        """Whether a search response actually contains a matching entry.
-
-        The API returns a ``<li>`` with an ``onclick`` attribute for a real
-        match, and either an empty ``<ul>`` or a ``<li>Keinen Eintrag
-        gefunden</li>`` (no ``onclick``) when nothing matches. Detecting the
-        onclick ``<li>`` is robust to the exact "not found" wording and markup,
-        which the literal-string checks got wrong (see #6877).
-        """
-        return (
-            BeautifulSoup(response_text, "html.parser").find(
-                "li", attrs={"onclick": True}
-            )
-            is not None
-        )
-
-    def _request_all(
-        self, session, field: str, url: str, data: dict, params: dict
-    ) -> Response:
-        r = session.post(
-            url, data=_urlencode_form(data), params=params, headers=_FORM_HEADERS
-        )
-        if self._has_result(r.text):
-            return r
-        r = session.post(
-            url,
-            data=_urlencode_form(_replace_special_chars_args(data)),
-            params=_replace_special_chars_args(params),
-            headers=_FORM_HEADERS,
-        )
-        if self._has_result(r.text):
-            return r
-        r = session.post(
-            url,
-            data=_urlencode_form(
-                _replace_special_chars_args(
-                    data, _replace_special_chars_with_underscore
-                )
-            ),
-            params=_replace_special_chars_args(params),
-            headers=_FORM_HEADERS,
-        )
-        if self._has_result(r.text):
-            return r
-        raise SourceArgumentNotFoundWithSuggestions(field, params.get("input"), [])
-
-    def retrieve(self, source):
-        session = self.session
-        p = self.params
-        api_url = API_URL.format(p["subdomain"])
-
-        args = {
-            "hidden_kalenderart": "privat",
-            "input_ort": p["ort"],
-            "input_ortsteil": p["ortsteil"],
-            "input_str": [p["strasse"], p["strasse"]],
-            "input_hnr": [p["hausnummer"], p["hausnummer"]],
-            "ort_id": "0",
-            "ortteil_id": "0",
-            "str_id": "0",
-            "hidden_id_ort": "0",
-            "hidden_id_ortsteil": "0",
-            "hidden_id_str": "0",
-            "hidden_id_hnr": "0",
-            "hidden_id_egebiet": "0",
-            "hidden_send_btn": "ics",
-            "hiddenYear": str(datetime.now().year),
-        }
-
-        # Some operators (e.g. "erfurt") permanently redirect their
-        # hausmuell.info subdomain to their own domain. Follow redirects
-        # manually (rather than relying on the auto-followed response's
-        # resolved .url, as the legacy source did) so every hop is a
-        # separately recorded/replayable interaction for the offline fixture
-        # tests, instead of a single followed response whose pre-redirect
-        # request URL would otherwise be indistinguishable from its target.
-        r = session.get(api_url, allow_redirects=False)
-        hops = 0
-        while r.status_code in (301, 302, 303, 307, 308) and hops < 5:
-            location = r.headers.get("location")
-            if not location:
-                break
-            api_url = urljoin(api_url, location)
-            r = session.get(api_url, allow_redirects=False)
-            hops += 1
-        search_url = api_url + "search/"
-        ics_url = api_url + "ics/ics.php"
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        for i in soup.find_all("input"):
-            name = str(i.get("name") or "")
-            if name.startswith("showBins"):
-                args[name] = "on"
-
-        if p["ort"]:
-            # Mirrors the legacy source: "input" is left set to whichever
-            # field was searched last (the endpoints key off the query-string
-            # "input" passed as `params` below; this body value is otherwise
-            # stale/unused, but is replicated for exact wire-format parity).
-            args["input"] = p["ort"]
-            r = self._request_all(
-                session,
-                "ort",
-                search_url + "search_orte.php",
-                args,
-                {"input": p["ort"], "ort_id": "0"},
-            )
-            ids = self._get_elemts(r.text)
-            args["hidden_id_ort"] = args["ort_id"] = ids[0]
-            if len(ids) > 1:
-                args["hidden_id_egebiet"] = ids[1]
-
-        if p["ortsteil"]:
-            r = self._request_all(
-                session,
-                "ortsteil",
-                search_url + "search_ortsteile.php",
-                args,
-                {"input": p["ortsteil"], "ort_id": args["ort_id"]},
-            )
-            ids = self._get_elemts(r.text)
-            args["ort_id"] = args["hidden_id_ortsteil"] = (
-                args["hidden_id_ort"] if ids[0] == "0" else ids[0]
-            )
-            if len(ids) > 1:
-                args["hidden_id_egebiet"] = ids[1]
-
-        if p["strasse"]:
-            r = self._request_all(
-                session,
-                "strasse",
-                search_url + "search_strassen.php",
-                args,
-                {"input": p["strasse"], "str_id": "0", "ort_id": args["ort_id"]},
-            )
-            ids = self._get_elemts(r.text)
-            args["hidden_id_str"] = args["str_id"] = ids[0]
-            if len(ids) > 1:
-                args["hidden_id_egebiet"] = ids[1]
-
-        if p["hausnummer"]:
-            args["input"] = p["hausnummer"]
-            r = self._request_all(
-                session,
-                "hausnummer",
-                search_url + "search_hnr.php",
-                args,
-                {"input": p["hausnummer"], "hnr_id": "0", "str_id": args["str_id"]},
-            )
-            ids = self._get_elemts(r.text)
-            args["hidden_id_hnr"] = args["hnr_id"] = ids[0]
-            if len(ids) > 1:
-                args["hidden_id_egebiet"] = ids[1]
-
-        r = session.post(
-            search_url + "check_zusatz.php",
-            data=_urlencode_form(args),
-            headers=_FORM_HEADERS,
-        )
-        id_string = BeautifulSoup(r.text, "html.parser").find("span")
-        args["hidden_id_zusatz"] = (
-            args["hidden_id_hnr"] if id_string is None else id_string.text.strip()
-        )
-
-        r = session.post(ics_url, data=_urlencode_form(args), headers=_FORM_HEADERS)
-        r.raise_for_status()
-        # Force the encoding before the first .text access: some HTTP clients
-        # (curl_cffi included) cache the decoded text on first read and
-        # refuse a later re-decode, unlike plain requests.
-        r.encoding = "utf-8"
-
-        if "Bitte geben Sie Ihre Daten korrekt an." in r.text:
-            raise SourceArgumentNotFoundWithSuggestions("subdomain", p["subdomain"], [])
-
-        return r

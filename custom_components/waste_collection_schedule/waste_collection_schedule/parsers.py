@@ -17,6 +17,7 @@ Configurable parsers (pass arguments to the constructor):
 """
 
 import datetime
+import re
 from collections.abc import Callable, Iterable
 from typing import (
     TYPE_CHECKING,
@@ -425,6 +426,65 @@ class HtmlParser(Parser[list[Tag]]):
                     raw=response.text,
                 )
         return soup.select(self.selector)[self.skip :]
+
+
+class HtmlTextParser(Parser[str]):
+    """Parse response as HTML and return its visible text.
+
+    For the page that states its schedule in prose rather than in a table: "if
+    your regular pick-up is Monday & Thursday (District 1) ...", or a run of
+    dates listed under a heading. There is no row to select and no attribute to
+    read, so :class:`HtmlParser` has nothing to hand a transformer; what the
+    source wants is the sentence. This strips the markup and hands over the text,
+    which the text-shaped preprocessors then read::
+
+        parse = parsers.HtmlTextParser()
+        preprocess = preprocessors.TextGroupedDates(keys=TYPE_MAP, ...)
+
+    It is the HTML sibling of :class:`PdfTextParser`, and produces the same
+    thing: one string for the whole document. Pair it with a preprocessor that
+    fans that string out into records (:class:`~waste_collection_schedule.preprocessors.TextGroupedDates`,
+    :class:`~waste_collection_schedule.preprocessors.TextCalendarGrid`, or an
+    :class:`~waste_collection_schedule.preprocessors.ArgumentLookup` reading a
+    table out of the prose); the default preprocessor and ``classify()`` both
+    expect per-record input and won't fit.
+
+    Args:
+        separator: placed between the text of adjacent elements, so words either
+            side of a tag boundary do not run together. Default a single space;
+            pass ``"\\n"`` to keep the page's block structure.
+        collapse_whitespace: fold every run of whitespace (including the newlines
+            and indentation of the source markup) to one space, so a pattern can
+            be written against the sentence as it reads rather than against the
+            HTML's line breaks. On by default.
+        min_chars: minimum character count expected. Fewer (the provider returned
+            an empty body or a short error page) logs the response and raises
+            ``ResponseShapeError`` rather than parsing nothing.
+    """
+
+    def __init__(
+        self,
+        *,
+        separator: str = " ",
+        collapse_whitespace: bool = True,
+        min_chars: "int | None" = None,
+    ):
+        self.separator = separator
+        self.collapse_whitespace = collapse_whitespace
+        self.min_chars = min_chars
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> str:
+        text = BeautifulSoup(response.text, "html.parser").get_text(self.separator)
+        if self.collapse_whitespace:
+            text = re.sub(r"\s+", " ", text)
+        if self.min_chars is not None:
+            response_shape.expect(
+                len(text.strip()) >= self.min_chars,
+                source_name=response_shape.source_name(source),
+                detail=f"page text under {self.min_chars} chars (empty/error page?)",
+                raw=response.text[:500],
+            )
+        return text
 
 
 class AttributeJsonParser(Parser["list[Any]"]):

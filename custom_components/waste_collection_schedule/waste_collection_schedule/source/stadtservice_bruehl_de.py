@@ -1,11 +1,10 @@
 """StadtService Brühl (stadtservice-bruehl.de).
 
-Demonstrates: a two-POST resolve-then-download shape where the first POST's
-only job is to scrape a hidden ``post_district`` field out of the response
-HTML, which the second POST then needs alongside the street/house number and
-a fixed set of "include every waste type" checkboxes. Both calls are POSTs
-(not the GET+GET ``TwoStepRetriever`` supports), hence a source-defined
-``retrieve()``.
+A two-POST resolve-then-download shape where the first POST's only job is to
+scrape a hidden ``post_district`` field out of the response HTML, which the
+second POST then needs alongside the street/house number and a fixed set of
+"include every waste type" checkboxes. The district lookup is the step below;
+the shared ``LookupChainRetriever`` POSTs for the ICS download.
 
 Labels carry a trailing bin colour (e.g. "Hausmüll (Grau)", "Biotonne
 (Braun)"), stripped by ``clean`` before mapping/resolving.
@@ -19,6 +18,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -37,6 +37,31 @@ _CALENDAR_URL = (
 _clean_type = label_cleaner(
     strip_suffixes=[" (Grau)", " (Braun)", " (Gelb)", " (Blau)"]
 )
+
+
+def _resolve_district(source: BaseSource, keys: tuple) -> str:
+    """POST the address and read the collection district back out of the page."""
+    strasse = source.params["strasse"]
+
+    r = source.session.post(
+        _DISTRICT_URL,
+        data={
+            "street": strasse,
+            "street_number": source.params["hnr"],
+            "send_street_and_nummber_data": "",
+        },
+    )
+    r.raise_for_status()
+
+    soup = BeautifulSoup(r.text, "html.parser")
+    post_district = None
+    for tag in soup.find_all("input", type="hidden"):
+        if tag.get("name") == "post_district":
+            post_district = tag.get("value")
+
+    if not post_district:
+        raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
+    return str(post_district)
 
 
 @final
@@ -63,6 +88,27 @@ class Source(BaseSource):
         house_number(field="hnr"),
     )
 
+    retrieve = LookupChainRetriever(
+        steps=(_resolve_district,),
+        url=_CALENDAR_URL,
+        method="POST",
+        data=lambda district, strasse, hnr, **_: {
+            "post_year": date.today().year,
+            "post_district": district,
+            "post_street_name": strasse,
+            "post_street_number": hnr,
+            "checked_waste_type_hausmuell": "on",
+            "checked_waste_type_gelber_sack": "on",
+            "checked_waste_type_altpapier": "on",
+            "checked_waste_type_bio": "on",
+            "checked_waste_type_weihnachtsbaeume": "on",
+            "checked_waste_type_strassenlaub": "on",
+            "form_page_id": "9",
+            "reminder_time": "8",
+            "send_ics_download_configurator_data": "",
+        },
+        raise_for_status=True,
+    )
     parse = IcsParser(regex=r"(.*?) \- ", split_at=", ")
     transform = ICSTransformer(
         clean=_clean_type,
@@ -71,48 +117,3 @@ class Source(BaseSource):
 
     def __init__(self, strasse: str, hnr: str):
         super().__init__(strasse=strasse, hnr=hnr)
-
-    def retrieve(self, source):
-        session = source.session
-        strasse = self.params["strasse"]
-        hnr = self.params["hnr"]
-
-        r = session.post(
-            _DISTRICT_URL,
-            data={
-                "street": strasse,
-                "street_number": hnr,
-                "send_street_and_nummber_data": "",
-            },
-        )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        post_district = None
-        for tag in soup.find_all("input", type="hidden"):
-            if tag.get("name") == "post_district":
-                post_district = tag.get("value")
-
-        if not post_district:
-            raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
-
-        r = session.post(
-            _CALENDAR_URL,
-            data={
-                "post_year": date.today().year,
-                "post_district": post_district,
-                "post_street_name": strasse,
-                "post_street_number": hnr,
-                "checked_waste_type_hausmuell": "on",
-                "checked_waste_type_gelber_sack": "on",
-                "checked_waste_type_altpapier": "on",
-                "checked_waste_type_bio": "on",
-                "checked_waste_type_weihnachtsbaeume": "on",
-                "checked_waste_type_strassenlaub": "on",
-                "form_page_id": "9",
-                "reminder_time": "8",
-                "send_ics_download_configurator_data": "",
-            },
-        )
-        r.raise_for_status()
-        return r
