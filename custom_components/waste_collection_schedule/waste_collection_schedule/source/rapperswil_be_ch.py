@@ -2,17 +2,20 @@
 
 Demonstrates: a parameter-less, single-municipality source built with
 ``TwoStepRetriever`` -- the calendar page is scraped for its "icalTermine"
-download link, which is then fetched directly. ``parse`` still needs a
-source-defined override because the feed ships a malformed
-``X-WR-TIMEZONE`` line that must be stripped before ``ICS`` can read it.
+download link, which is then fetched directly.
+
+The feed ships a malformed ``X-WR-TIMEZONE`` property line that used to abort
+the whole parse. That is now repaired inside the shared converter
+(``service.ICS._drop_malformed_content_lines``), so any provider with a broken
+property line is covered, not just this one.
 """
 
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.retrievers import TwoStepRetriever
-from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
@@ -56,10 +59,7 @@ class Source(BaseSource):
         extract=_pick_ics_url,
         schedule_url=lambda key, **_: key,
     )
-
-    def parse(self, response, source=None):
-        text = response.text.replace("X-WR-TIMEZONE','EUROPE/BERLIN:", "")
-        return ICS().convert(text)
+    parse = parsers.IcsParser()
 
     transform = ICSTransformer(
         type_value_map={

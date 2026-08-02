@@ -4106,7 +4106,6 @@ _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "1coast_com_au",
     "abfallkalender_prezero_network",
-    "abfallwirtschaft_fuerth_eu",
     "abfallwirtschaft_germersheim_de",
     "abfallwirtschaft_vechta_de",
     "abfuhrplan_landkreis_neumarkt_de",
@@ -4186,7 +4185,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "okc_gov",
     "phila_gov",
     "portsmouth_gov_uk",
-    "rapperswil_be_ch",
     "red_bank_tn_us",
     "redbridge_gov_uk",
     "regioentsorgung_de",
@@ -4205,12 +4203,10 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "vevg_karlsburg_de",
     "wanneroo_wa_gov_au",
     "wellington_govt_nz",
-    "wermelskirchen_de",
     "westlothian_gov_uk",
     "wrexham_gov_uk",
     "zakb_de",
     "zva_sek_de",
-    "zva_wmk_de",
     "zys_harmonogram_pl",
 }
 

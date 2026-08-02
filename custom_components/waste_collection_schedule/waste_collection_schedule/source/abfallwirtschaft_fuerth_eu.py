@@ -1,27 +1,21 @@
 """Abfallwirtschaft Stadt Fürth.
 
-Demonstrates: a static, param-built ICS GET that still needs a custom
-``parse`` override, because the feed needs two things ``parsers.IcsParser``
-does not expose:
+Demonstrates: a static, param-built ICS GET, fully declarative. The provider
+puts one VEVENT per collection day and lists several bin types in a single
+summary separated by "/", which ``IcsParser``'s ``split_at`` handles.
 
-* the provider emits non-ASCII UID lines that break the ICS parser unless
-  the umlauts are transliterated first (no hook in the standard parser for
-  pre-processing the raw ICS text), and
-* the summary needs ``split_at="/"`` (one VEVENT covers several bin types
-  separated by "/"), an ``ICS()`` option ``IcsParser`` does not currently
-  forward.
-
-Both are exactly the shared-component gap called out in the service probe
-report: this module works around it locally by calling ``service.ICS.ICS``
-directly (the same class ``IcsParser`` wraps) with the option it needs.
+The feed has historically emitted UID lines containing umlauts, which older
+icalendar releases refuse to parse. That is now repaired inside the shared
+converter (``service.ICS._ascii_fold_uids``), so every ICS provider is covered
+rather than this one alone.
 """
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -31,19 +25,6 @@ from waste_collection_schedule.waste_types import (
 )
 
 _API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
-
-_UMLAUT_MAP = (("ä", "ae"), ("ö", "oe"), ("ü", "ue"))
-
-
-def _fix_uid_umlauts(ics_text: str) -> str:
-    """Transliterate umlauts on UID lines; the ICS parser chokes otherwise."""
-    lines = []
-    for line in ics_text.splitlines():
-        if line.startswith("UID"):
-            for src, dest in _UMLAUT_MAP:
-                line = line.replace(src, dest)
-        lines.append(line)
-    return "\n".join(lines) + "\n"
 
 
 @final
@@ -68,9 +49,7 @@ class Source(BaseSource):
     }
 
     retrieve = HttpGetRetriever(url=lambda id, **_: f"{_API_URL}?icalexport={id}")
-
-    def parse(self, response, source=None):
-        return ICS(split_at="/").convert(_fix_uid_umlauts(response.text))
+    parse = parsers.IcsParser(split_at="/")
 
     transform = ICSTransformer(
         type_value_map={
