@@ -2248,6 +2248,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "Geminfo.app",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_geminfo_app"
+    },
+    {
       "title": "Gerasdorf bei Wien",
       "module": "ics",
       "default_params": {},
@@ -4458,6 +4464,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Thannhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_geminfo_app"
     },
     {
       "title": "Tieschen",

@@ -408,6 +408,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeinde24](/doc/source/gemeinde24_at.md) / gemeinde24.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
+- [Geminfo.app](/doc/ics/geminfo_app.md) / geminfo.app
 - [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
@@ -772,6 +773,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Taufkirchen an der Trattnach](/doc/source/citiesapps_com.md) / taufkirchen.at/home
 - [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Thal](/doc/source/citiesapps_com.md) / thal.gv.at
+- [Thannhausen](/doc/ics/geminfo_app.md) / thannhausen.at
 - [Tieschen](/doc/source/citiesapps_com.md) / tieschen.gv.at
 - [Tobaj](/doc/source/citiesapps_com.md) / tobaj.gv.at
 - [Tragöß - St. Katharein](/doc/source/citiesapps_com.md) / tragoess-st-katharein.gv.at

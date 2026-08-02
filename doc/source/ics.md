@@ -48,6 +48,7 @@ This source has been successfully tested with the following service providers:
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
 - [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
+- [Geminfo.app](/doc/ics/geminfo_app.md) / geminfo.app
 - [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -154,6 +155,7 @@ This source has been successfully tested with the following service providers:
 - [Straßwalchen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Söll](/doc/ics/muellapp_com.md) / muellapp.com
 - [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Thannhausen](/doc/ics/geminfo_app.md) / thannhausen.at
 - [Traun](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
