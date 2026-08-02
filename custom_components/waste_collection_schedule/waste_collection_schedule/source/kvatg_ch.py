@@ -27,7 +27,7 @@ _OVERVIEW_URL = "https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/"
 
 # The KVA plan for Kreuzlingen contains no Kehricht dates — the city publishes
 # its own zone plan (a map PDF with a parseable zone/weekday legend) here:
-_KREUZLINGEN_ENTSORGUNG_URL = "kreuzlingen.ch"
+_KREUZLINGEN_ENTSORGUNG_URL = "https://www.kreuzlingen.ch/wir-fuer-sie/entsorgung"
 
 COMMUNITIES = [
     "Affeltrangen",
