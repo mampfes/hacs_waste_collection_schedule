@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from ..parsers import Parser
 from ..retrievers import RetrieverFunc
@@ -49,7 +49,32 @@ class AbfallIoGraphQLRetriever(RetrieverFunc):
     Reads ``key`` and ``idHouseNumber`` from ``source.params`` (and an optional
     ``wasteTypes`` filter); when no filter is given the provider's default
     checked waste types are used. Both requests run on the shared session.
+
+    Some providers (e.g. KELL GmbH) enforce an Origin allowlist on their key and
+    answer 401 to a GraphQL query that carries no matching Origin/Referer. The
+    provider's own website is already declared as the region's ``url``, so the
+    retriever looks it up from the source's REGIONS and sends it proactively.
     """
+
+    @staticmethod
+    def _origin_for(source: "BaseSource", key: str) -> str | None:
+        """Return the website of the region selected by ``key``, if declared.
+
+        Resolved via the class (REGIONS may be a staticmethod, a plain function
+        or a list) so instance access does not bind ``self``. Keeps the provider
+        registry in the source: this module holds no provider list.
+        """
+        regions: Any = getattr(type(source), "REGIONS", [])
+        if callable(regions):
+            regions = regions()
+        return next(
+            (
+                r.url.rstrip("/")
+                for r in regions
+                if r.url and r.params.get("key") == key
+            ),
+            None,
+        )
 
     def __call__(self, source: "BaseSource"):
         params = source.params
@@ -83,6 +108,10 @@ class AbfallIoGraphQLRetriever(RetrieverFunc):
             "Content-Type": "application/json",
             "x-abfallplus-api-key": api_key,
         }
+        origin = self._origin_for(source, key)
+        if origin:
+            gql_headers["Origin"] = origin
+            gql_headers["Referer"] = f"{origin}/"
         return session.post(
             GQL_URL,
             json={
