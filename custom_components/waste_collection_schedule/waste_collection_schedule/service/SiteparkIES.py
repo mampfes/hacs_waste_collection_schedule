@@ -255,12 +255,31 @@ class SiteparkIESRetriever(RetrieverFunc):
     for ``parsers.IcsParser`` to convert. A source built on this needs no
     ``retrieve`` override and no hand-rolled request params.
 
+    Two flavours of installation are supported:
+
+    * The common one, where the refid is static (a construction-time ``refid``,
+      or none at all) and the Ort, when the user gives one, narrows the
+      autocomplete labels ("Street (Place)") locally.
+    * Installations that require a *dynamic* per-request refid, where the Ort
+      is a ``<select id="sf_locid">`` dropdown on the calendar page rather than
+      a label suffix (e.g. landkreis-wittmund.de). Set ``refid_page_url`` and
+      the Ort is resolved to its refid against that page first, then used for
+      the street lookup. Because the Ort has already selected the district, it
+      is not applied a second time as a label filter.
+
     Args:
         base_url: The municipality's Sitepark base URL.
-        refid: Optional district/municipality id for the autocomplete endpoint.
+        refid: Optional static district/municipality id for the autocomplete
+            endpoint.
+        refid_page_url: Optional page carrying the ``sf_locid`` dropdown. When
+            set, the Ort is resolved to a refid there on every request instead
+            of using ``refid``.
+        refid_value_prefix: Optional prefix an ``sf_locid`` option value must
+            start with to be considered (installations that mix other ids into
+            the same dropdown).
         download_params: Extra query params for the ICS download (e.g. kat/alarm).
         strasse: The ``source.params`` field holding the street.
-        ort: The ``source.params`` field holding the optional place/Ortsteil.
+        ort: The ``source.params`` field holding the place/Ortsteil.
     """
 
     def __init__(
@@ -268,12 +287,16 @@ class SiteparkIESRetriever(RetrieverFunc):
         base_url: str,
         *,
         refid: str | None = None,
+        refid_page_url: str | None = None,
+        refid_value_prefix: str | None = None,
         download_params: dict | None = None,
         strasse: str = "strasse",
         ort: str = "ort",
     ):
         self._base_url = base_url
         self._refid = refid
+        self._refid_page_url = refid_page_url
+        self._refid_value_prefix = refid_value_prefix
         self._download_params = download_params
         self._strasse = strasse
         self._ort = ort
@@ -284,8 +307,18 @@ class SiteparkIESRetriever(RetrieverFunc):
             refid=self._refid,
             download_params=self._download_params,
         )
+        ort = source.params.get(self._ort)
+        refid = None
+        if self._refid_page_url is not None:
+            refid = client.resolve_refid(
+                ort or "", self._refid_page_url, self._refid_value_prefix
+            )
+            # The Ort picked the district; the labels behind that refid do not
+            # repeat it, so filtering on it again would drop every candidate.
+            ort = None
         pois = client.get_pois(
             strasse=source.params.get(self._strasse),
-            ort=source.params.get(self._ort),
+            ort=ort,
+            refid=refid,
         )
         return client.fetch_ics_response(pois)

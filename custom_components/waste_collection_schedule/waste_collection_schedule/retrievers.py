@@ -34,11 +34,13 @@ problem):
 from __future__ import annotations
 
 import datetime
+import json
 import re
 import time
 from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Any, Protocol, TypeVar, cast
 from urllib.parse import urljoin
+from weakref import WeakKeyDictionary
 
 import requests as _plain_requests
 from bs4 import BeautifulSoup
@@ -228,6 +230,202 @@ class TwoStepRetriever(_BaseRetriever):
         return source.session.get(
             self.schedule_url(key, **source.params), headers=headers
         )
+
+
+#: Default pattern for the JS chunks a Next.js page loads. Group 1 is the
+#: chunk's href, resolved against the page URL; any ``?v=`` cache-buster after
+#: the ``.js`` is dropped so the same chunk is only fetched once.
+NEXT_CHUNK_PATTERN = r'src="([^"]*/_next/static/chunks/[^"?]+\.js)(?:\?[^"]*)?"'
+
+
+class NextActionRetriever(_BaseRetriever):
+    """Call a Next.js "server action", then fetch the schedule with its result.
+
+    Same two-step shape as :class:`TwoStepRetriever` (lookup -> key -> schedule)
+    for sites whose address search is a React Server Component *server action*
+    rather than a documented REST endpoint. There is no stable URL to call: the
+    action is addressed by a 40+ hex-character id that Next.js mints at build
+    time and only ever emits inside the page's JS bundle, so it has to be read
+    out of the bundle and changes with every deployment.
+
+    Mechanics:
+
+    1. GET ``page_url`` and collect the JS chunk hrefs it loads
+       (``chunk_pattern``, resolved against the page URL).
+    2. GET each chunk and regex out every action id tagged with ``action_name``.
+       Several stale ids from older deployments usually sit alongside the
+       current one, and a chunk that fails to download is skipped.
+    3. POST ``arguments`` to ``page_url`` as a JSON array with the
+       ``next-action`` header set to a candidate id, until one is accepted
+       (HTTP 200). The winning id is remembered on the source instance, so a
+       long-lived source (Home Assistant re-polls the same instance) skips the
+       bundle scan on later fetches.
+    4. Decode the RSC "flight" line prefixed ``result_prefix`` into the action's
+       return value, hand it to ``extract`` to pull out the key, and GET
+       ``schedule_url(key, **source.params)``.
+
+    ``extract`` receives ``None`` when no candidate id was accepted or no result
+    line came back, so a source can raise its own ``SourceArgumentNotFound*``
+    for a bad address rather than a bare transport error::
+
+        retrieve = retrievers.NextActionRetriever(
+            page_url=BASE_URL,
+            action_name="searchAddressAction",
+            arguments=lambda street, house_number, **_: [f"{street} {house_number}"],
+            extract=_first_address_id,
+            schedule_url=lambda key, **_: f"{BASE_URL}/{key}/calendar.ics",
+            direct_key=lambda source: source.params.get("uuid"),
+        )
+
+    Args:
+        page_url: the page hosting the action; also the POST target (literal or
+            ``callable(**source.params) -> str``).
+        action_name: the exported action's name as it appears in the bundle,
+            e.g. ``"searchAddressAction"``.
+        arguments: the action's argument array (literal, or
+            ``callable(**source.params) -> list``), sent as the JSON body.
+        extract: ``callable(result, source) -> key``; ``result`` is the decoded
+            action return value, or ``None`` if the call did not succeed.
+        schedule_url: ``callable(key, **source.params) -> str`` for the final GET.
+        direct_key: optional ``callable(source) -> key | None``; when it returns
+            a key the whole action dance is skipped (the user supplied the id).
+        chunk_pattern: regex whose group 1 is a JS chunk href
+            (default :data:`NEXT_CHUNK_PATTERN`).
+        result_prefix: the flight-line prefix carrying the return value
+            (default ``"1:"``).
+        headers: optional extra headers merged into every request.
+        timeout: per-request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        *,
+        page_url: UrlArgs,
+        action_name: str,
+        arguments: Callable[..., list] | list,
+        extract: Callable[..., Any],
+        schedule_url: Callable[..., str],
+        direct_key: Callable[[BaseSource], Any] | None = None,
+        chunk_pattern: str = NEXT_CHUNK_PATTERN,
+        result_prefix: str = "1:",
+        headers: HeadersArgs = None,
+        timeout: int = 30,
+    ):
+        self.page_url = page_url
+        self.action_name = action_name
+        self.arguments = arguments
+        self.extract = extract
+        self.schedule_url = schedule_url
+        self.direct_key = direct_key
+        self.chunk_pattern = re.compile(chunk_pattern)
+        self.action_pattern = re.compile(
+            r'"([0-9a-f]{40,})"[\s\S]{0,120}?' + re.escape(action_name)
+        )
+        self.result_prefix = result_prefix
+        self.headers = headers
+        self.timeout = timeout
+        # A retriever is a class attribute shared by every instance of the
+        # source, so the scan results are kept per source instance (weakly, so
+        # a discarded source is not held alive by its cache entry).
+        self._cache_by_source: WeakKeyDictionary[BaseSource, dict[str, Any]] = (
+            WeakKeyDictionary()
+        )
+
+    def _cache(self, source: BaseSource) -> dict[str, Any]:
+        """Per-source-instance store for the bundle scan's results."""
+        cache = self._cache_by_source.get(source)
+        if cache is None:
+            cache = {"candidates": None, "winner": None}
+            self._cache_by_source[source] = cache
+        return cache
+
+    def _candidates(
+        self, source: BaseSource, page_url: str, headers: HeadersType
+    ) -> list[str]:
+        cache = self._cache(source)
+        if cache["candidates"] is not None:
+            return cache["candidates"]
+
+        page = source.session.get(page_url, headers=headers, timeout=self.timeout)
+        page.raise_for_status()
+
+        candidates: list[str] = []
+        for href in dict.fromkeys(self.chunk_pattern.findall(page.text)):
+            try:
+                chunk = source.session.get(
+                    urljoin(page_url, href), headers=headers, timeout=self.timeout
+                )
+                chunk.raise_for_status()
+            # A single unavailable chunk must not sink the whole lookup: the
+            # action id is only ever in one of them, and which one varies.
+            except Exception:
+                continue
+            for match in self.action_pattern.finditer(chunk.text):
+                if match.group(1) not in candidates:
+                    candidates.append(match.group(1))
+
+        cache["candidates"] = candidates
+        return candidates
+
+    def _invoke(
+        self,
+        source: BaseSource,
+        page_url: str,
+        action: str,
+        body: str,
+        headers: HeadersType,
+    ) -> Any:
+        response = source.session.post(
+            page_url,
+            headers={
+                "content-type": "text/plain;charset=UTF-8",
+                "accept": "text/x-component",
+                "next-action": action,
+                **(headers or {}),
+            },
+            data=body,
+            timeout=self.timeout,
+        )
+        if response.status_code != 200:
+            return None
+        for line in response.text.splitlines():
+            if line.startswith(self.result_prefix):
+                return json.loads(line[len(self.result_prefix) :])
+        return None
+
+    def _call_action(
+        self, source: BaseSource, page_url: str, headers: HeadersType
+    ) -> Any:
+        body = json.dumps(self._resolve(self.arguments, source))
+        cache = self._cache(source)
+
+        candidates = self._candidates(source, page_url, headers)
+        winner = cache["winner"]
+        if winner and winner in candidates:
+            candidates = [winner] + [c for c in candidates if c != winner]
+
+        for action in candidates:
+            result = self._invoke(source, page_url, action, body, headers)
+            if result is not None:
+                cache["winner"] = action
+                return result
+        return None
+
+    def __call__(self, source: BaseSource) -> Response:
+        headers = self._resolve(self.headers, source)
+        page_url = self._resolve(self.page_url, source)
+
+        key = self.direct_key(source) if self.direct_key else None
+        if key is None:
+            key = self.extract(self._call_action(source, page_url, headers), source)
+
+        schedule = source.session.get(
+            self.schedule_url(key, **source.params),
+            headers=headers,
+            timeout=self.timeout,
+        )
+        schedule.raise_for_status()
+        return schedule
 
 
 class PdfLinkRetriever(_BaseRetriever):

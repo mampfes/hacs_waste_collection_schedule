@@ -1,15 +1,11 @@
 """Landkreis Wittmund waste calendar (Sitepark IES platform).
 
-A BaseSource pipeline with a source-defined ``retrieve()``. Most Sitepark IES
-installations resolve a pois from a static, construction-time ``refid`` (or
-none at all), which the shared ``SiteparkIESRetriever`` supports directly.
-Wittmund's installation instead requires a *dynamic* per-request refid: it is
-looked up from a live ``<select id="sf_locid">`` dropdown on the collection
-calendar page (``SiteparkIES.resolve_refid``) for the Ort the user entered,
-then used to resolve the street to a pois. No configured retriever expresses
-a lookup-before-lookup like this, so ``retrieve`` is overridden here,
-mirroring the legacy ``fetch()``'s two-call shape. The method returns the raw
-ICS response, so ``parse``/``transform`` stay declarative.
+Most Sitepark IES installations resolve a pois from a static, construction-time
+``refid`` (or none at all). Wittmund's instead requires a *dynamic*
+per-request refid, looked up from the live ``<select id="sf_locid">`` dropdown
+on the collection calendar page for the Ort the user entered, then used to
+resolve the street to a pois. The shared ``SiteparkIESRetriever`` covers that
+with ``refid_page_url``, so this source is a plain composition of shared steps.
 """
 
 from typing import ClassVar, final
@@ -17,7 +13,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -67,6 +63,11 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
+    retrieve = SiteparkIESRetriever(
+        _BASE_URL,
+        refid_page_url=_API_URL,
+        download_params=_DOWNLOAD_PARAMS,
+    )
     parse = parsers.IcsParser()
     # "Baum- und Strauchschnitt", "Biotonne", "Papiertonne" and "Wertstofftonne"
     # already auto-resolve against the shared vocabulary; "Restabfalltonne"
@@ -80,9 +81,3 @@ class Source(BaseSource):
 
     def __init__(self, ort: str, strasse: str | None = None):
         super().__init__(ort=ort, strasse=strasse)
-
-    def retrieve(self, source):
-        client = SiteparkIES(_BASE_URL, download_params=_DOWNLOAD_PARAMS)
-        refid = client.resolve_refid(source.params.get("ort"), _API_URL)
-        pois = client.get_pois(strasse=source.params.get("strasse"), refid=refid)
-        return client.fetch_ics_response(pois)
