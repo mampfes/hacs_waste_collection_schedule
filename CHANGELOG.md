@@ -4,12 +4,6 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
-## [2.31.1] - 2026-07-18
-
-### Other
-
-- README/info: announce the 3.0.0 architecture pre-release and how to opt in via HACS "show beta versions" (#6561)
-
 ## [2.32.0] - 2026-08-02
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
@@ -142,6 +136,12 @@ providers, and let us know what breaks.
 - refactored 32 AU/NZ councils onto a shared OpenCities.py service client, no behaviour change intended (#6934, #6946, #6951, #6953, #6955, #6957, #6960)
 - docs: announced the 3.0.0 architecture pre-release on the README/info preambles (#6892)
 - docs: warn that fetch_time/day_switch_time must be quoted in YAML (#6891)
+
+## [2.31.1] - 2026-07-18
+
+### Other
+
+- README/info: announce the 3.0.0 architecture pre-release and how to opt in via HACS "show beta versions" (#6561)
 
 ## [2.31.0] - 2026-07-17
 
