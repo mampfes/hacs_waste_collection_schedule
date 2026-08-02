@@ -15,6 +15,13 @@ python3 -m pip install -r requirements.txt
 echo "==> Installing development tooling (pre-commit, pytest)"
 python3 -m pip install pre-commit pytest
 
+# The CI "minimum" lane pins the oldest supported Home Assistant. Install the
+# same pins here so this container reproduces that lane, and so the tests that
+# import homeassistant (test_config_flow.py, test_fetch_retry.py and friends)
+# can actually run locally instead of failing to collect.
+echo "==> Installing Home Assistant (CI minimum lane pins)"
+python3 -m pip install "homeassistant==2024.4.0" "josepy<2"
+
 # Standalone linters/formatters so they can be run directly from the terminal
 # (e.g. `ruff check .`, `bandit -c tests/bandit.yaml -r .`, `mypy ...`).
 # Versions are pinned to match the hooks in .pre-commit-config.yaml so local

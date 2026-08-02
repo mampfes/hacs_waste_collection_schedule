@@ -139,6 +139,7 @@ Only a **legacy** module-level source still needs a hand-written `doc/source/<mo
 6. Run the structural tests:
    ```bash
    python -m pytest tests/test_source_components.py -q
+   pre-commit run --all-files
    ```
    This catches missing fields, invalid `COUNTRY` codes, malformed `EXTRA_INFO`, etc.
 7. Live-test against the test cases:
