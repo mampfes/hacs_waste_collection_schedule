@@ -1,54 +1,76 @@
+from typing import ClassVar, final
+
+from waste_collection_schedule import field_terms
+from waste_collection_schedule.config_params import cascading_select, waste_types
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.source.abfall_io import Source as AbfallIOSource
 
-TITLE = "Stadt Kerpen"
-DESCRIPTION = "Source for waste collection services in Kerpen."
-URL = "https://www.stadt-kerpen.de"
-COUNTRY = "de"
+# Kerpen's waste collection is run by Schönmackers, whose MüllALARM service is
+# the abfall.io platform. This is the same structure as abfall_io with the key
+# and kommune pinned to Kerpen, so it subclasses the abfall.io pipeline source
+# and only overrides metadata, the params the user still has to supply, and
+# __init__. PINNED_PARAMS feeds the fixed values back into the config flow's
+# cascade so the street and house-number dropdowns still populate.
 
-TEST_CASES = {
-    "Amselweg": {
-        "f_id_strasse": "3703amselweg",
-        "f_id_strasse_hnr": "19409",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "f_id_strasse": "Street",
-        "f_id_strasse_hnr": "House Number",
-        "f_abfallarten": "Waste Types",
-    },
-    "de": {
-        "f_id_strasse": "Straße",
-        "f_id_strasse_hnr": "Hausnummer",
-        "f_abfallarten": "Abfallarten",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "f_id_strasse": "The internal ID of your street (use the wizard to get this)",
-        "f_id_strasse_hnr": "The internal ID of your house number (use the wizard to get this)",
-        "f_abfallarten": "List of waste types (internal IDs). Leave empty to get all.",
-    },
-    "de": {
-        "f_id_strasse": "Die interne ID der Straße (nutzen Sie den Wizard, um diese zu ermitteln)",
-        "f_id_strasse_hnr": "Die interne ID der Hausnummer (nutzen Sie den Wizard, um diese zu ermitteln)",
-        "f_abfallarten": "Liste der Abfallarten (interne IDs). Leer lassen, um alle abzurufen.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can get the internal IDs for the street and house number by using the abfall_io wizard script (`custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py`) or by inspecting the network traffic on the provider's MüllALARM website. The commune ID is preconfigured for Kerpen.",
-    "de": "Sie können die internen IDs für die Straße und Hausnummer über das abfall_io Wizard Skript (`custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py`) oder durch das Analysieren des Netzwerkverkehrs auf der MüllALARM Webseite des Anbieters ermitteln. Die ID der Kommune ist für Kerpen vorkonfiguriert.",
-}
+_KEY = "e5543a3e190cb8d91c645660ad60965f"
+_KOMMUNE = 3703
 
 
+@final
 class Source(AbfallIOSource):
-    def __init__(self, f_id_strasse, f_id_strasse_hnr=None, f_abfallarten=None):
+    TITLE = "Stadt Kerpen"
+    DESCRIPTION = "Source for waste collection services in Kerpen."
+    URL = "https://www.stadt-kerpen.de"
+    COUNTRY = "de"
+
+    REGIONS = (region(TITLE, url=URL),)
+
+    TEST_CASES: ClassVar[dict] = {
+        "Amselweg": {
+            "f_id_strasse": "3703amselweg",
+            "f_id_strasse_hnr": "19409",
+        }
+    }
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open the MüllALARM web app at "
+            "https://www.schoenmackers.de/kommunen/muellalarm-app/, choose Kerpen, "
+            "then enter your street and house number with the browser's network "
+            "tab open. The form data of the requests to api.abfall.io carries the "
+            "f_id_strasse and f_id_strasse_hnr values. The kommune id is already "
+            "set to Kerpen."
+        ),
+        "de": (
+            "Öffnen Sie die MüllALARM Web-App unter "
+            "https://www.schoenmackers.de/kommunen/muellalarm-app/, wählen Sie "
+            "Kerpen und geben Sie Straße und Hausnummer bei geöffnetem Netzwerk-Tab "
+            "des Browsers ein. In den Formulardaten der Anfragen an api.abfall.io "
+            "stehen die Werte für f_id_strasse und f_id_strasse_hnr. Die ID der "
+            "Kommune ist für Kerpen bereits vorgegeben."
+        ),
+    }
+
+    # The key and kommune are fixed for Kerpen, so they are not user params.
+    PARAMS = (
+        cascading_select(
+            ("f_id_strasse", field_terms.STREET),
+            ("f_id_strasse_hnr", field_terms.HOUSE_NUMBER),
+        ),
+        waste_types("f_abfallarten"),
+    )
+
+    PINNED_PARAMS: ClassVar[dict] = {"key": _KEY, "f_id_kommune": _KOMMUNE}
+
+    def __init__(
+        self,
+        f_id_strasse: int | str,
+        f_id_strasse_hnr: int | str | None = None,
+        f_abfallarten: list[int] | None = None,
+    ):
         super().__init__(
-            key="e5543a3e190cb8d91c645660ad60965f",
-            f_id_kommune=3703,
+            key=_KEY,
+            f_id_kommune=_KOMMUNE,
             f_id_strasse=f_id_strasse,
             f_id_strasse_hnr=f_id_strasse_hnr,
             f_abfallarten=f_abfallarten,

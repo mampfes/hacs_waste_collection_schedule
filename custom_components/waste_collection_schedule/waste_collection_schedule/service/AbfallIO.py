@@ -150,9 +150,10 @@ class AbfallIoRetriever(RetrieverFunc):
         if r.status_code == 401:
             raise ValueError(
                 f"API key '{key}' is no longer valid for the legacy abfall.io API. "
-                "This provider may have migrated to the new abfall.io v3 API, which "
-                "is not yet supported. See "
-                "https://github.com/mampfes/hacs_waste_collection_schedule/issues/3788"
+                "This provider has likely migrated to the new abfall.io v3 API. "
+                "Please switch to the 'Abfall.IO / AbfallPlus (GraphQL)' source "
+                "(abfall_io_graphql) instead, which supports the v3 API. See "
+                "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io_graphql.md"
             )
         r.raise_for_status()
         # Holds hidden form fields (str) plus the int/str IDs we inject; all are
