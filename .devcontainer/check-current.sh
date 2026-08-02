@@ -20,10 +20,12 @@ source "${VENV}/bin/activate"
 
 python -m pip install --upgrade pip >/dev/null
 echo "==> Installing latest Home Assistant and project requirements"
-python -m pip install ruff pytest -r requirements.txt homeassistant josepy
+python -m pip install ruff pytest freezegun -r requirements.txt homeassistant josepy
 
+# -m "not live" matches the gating CI job. Without it pytest also collects the
+# live-provider tests, which sit on real HTTP for well over ten minutes.
 echo "==> pytest"
-pytest
+pytest -m "not live"
 
 echo "==> pre-commit (all files, all hooks)"
 python -m pip install pre-commit >/dev/null

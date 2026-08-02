@@ -12,8 +12,11 @@ python3 -m pip install --upgrade pip setuptools wheel
 echo "==> Installing project requirements (requirements.txt)"
 python3 -m pip install -r requirements.txt
 
-echo "==> Installing development tooling (pre-commit, pytest)"
-python3 -m pip install pre-commit pytest
+# freezegun is a hard import in tests/cassette.py, so the offline fixture tests
+# cannot even be collected without it. CI installs it explicitly rather than via
+# requirements.txt, so install it here too.
+echo "==> Installing development tooling (pre-commit, pytest, freezegun)"
+python3 -m pip install pre-commit pytest freezegun
 
 # The CI "minimum" lane pins the oldest supported Home Assistant. Install the
 # same pins here so this container reproduces that lane, and so the tests that

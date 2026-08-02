@@ -22,9 +22,11 @@ This matters more than it sounds. The checks are sensitive to the environment th
 Before pushing, run the same checks CI runs:
 
 ```bash
-pytest
+pytest -m "not live"
 pre-commit run --all-files
 ```
+
+`-m "not live"` matters. A plain `pytest` also collects the live-provider tests, which fetch real endpoints for hundreds of sources and take well over ten minutes. The gating CI job excludes them, because the offline cassettes under `tests/fixtures/` cover the same ground in seconds. Run `pytest -m live` deliberately when you want the real thing.
 
 `pre-commit run --all-files` is the important one. Running the linters directly (`ruff`, `mypy`, `pyright` and so on) uses whatever versions happen to be on your PATH, while the hooks are pinned. Use the hooks. `pyright` in particular resolves type stubs from the installed dependency set, so a bare run and the hook can disagree about which errors exist.
 
