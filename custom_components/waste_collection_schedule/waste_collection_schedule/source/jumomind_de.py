@@ -97,7 +97,6 @@ _PROVIDERS = [
         "url": "https://www.mymuell.de/",
         "comment": "MyMuell App",
         "cities": [
-            "Aschaffenburg",
             "Bad Arolsen",
             "Beverungen",
             "Darmstadt",
@@ -127,6 +126,7 @@ _PROVIDERS = [
             "Schmitten im Taunus",
             "Schöneck",
             "Seligenstadt",
+            "Senden",
             "Ulm",
             "Usingen",
             "Volkmarsen",
@@ -248,6 +248,11 @@ class Source(BaseSource):
         "mymuell only city": {
             "service_id": "mymuell",
             "city": "Bad Wünnenberg-Bleiwäsche",
+        },
+        "mymuell Senden, Birkenweg": {
+            "service_id": "mymuell",
+            "city": "Senden",
+            "street": "Birkenweg (Senden)",
         },
         "neustadt": {
             "service_id": "esn",
