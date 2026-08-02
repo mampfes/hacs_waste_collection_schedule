@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Auckland Council"
-DESCRIPTION = "Source for Auckland council."
+DESCRIPTION = "Source for Auckland Council."
 URL = "https://www.aucklandcouncil.govt.nz"
 
 TEST_CASES = {
@@ -125,7 +125,7 @@ class Source:
         # The site's WAF answers HTTP 406 to plain requests/urllib clients, so
         # impersonate a real browser (TLS fingerprint included).
         session = requests.Session(impersonate="chrome")
-        r = session.get(API_URL.format(self._area_number))
+        r = session.get(API_URL.format(self._area_number), timeout=30)
         r.raise_for_status()
 
         entries = parse_page(r.text)
