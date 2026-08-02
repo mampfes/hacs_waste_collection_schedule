@@ -17,9 +17,12 @@ into individual collection dates::
 """
 
 import datetime
-from collections.abc import Callable, Iterable, Mapping
+import re
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal, Protocol, TypeVar
+
+from bs4 import Tag
 
 from waste_collection_schedule import recurrence
 
@@ -61,6 +64,168 @@ class DefaultPreprocessor(Preprocessor[Any, Any]):
         yield from records
 
 
+class FlattenGroups(Preprocessor[Any, Any]):
+    """Flatten a ``{group: [record, ...]}`` mapping into a flat record stream.
+
+    For a provider that groups its collections server-side -- most often by
+    date, occasionally by round -- so the payload is a mapping of lists rather
+    than the flat record list a transformer consumes. The default preprocessor
+    would treat the whole mapping as a single record; this fans it out, yielding
+    each list's entries individually in the mapping's own order::
+
+        parse = parsers.JsonParser("dates")     # {"2026-07-03": [{...}, {...}], ...}
+        preprocess = preprocessors.FlattenGroups()
+
+    The group key is dropped, so use this only where each record carries
+    everything the transformer needs. A date-keyed feed nearly always repeats
+    the date inside the record; if it does not, the key is the only place the
+    date exists and a source-specific expansion is the right tool instead.
+    """
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        if not records:
+            return
+        for group in records.values():
+            yield from group
+
+
+class RowFilter(Preprocessor[Any, Any]):
+    """Drop records a source must not publish, via a per-record predicate.
+
+    The reusable home for "this feed carries more than this address wants".
+    ``keep`` is ``callable(record, source) -> bool``; records it rejects never
+    reach the transformer. Records pass through otherwise unchanged, so this
+    composes with any record shape::
+
+        preprocess = Compose(
+            RowFilter(_keep_chosen_round),
+            RowRelabel(rename={"Recycling (odd ISO weeks)": "Recycling"}),
+        )
+
+    Args:
+        keep: ``callable(record, source) -> bool``.
+    """
+
+    def __init__(self, keep: "Callable[[Any, BaseSource | None], bool]"):
+        self._keep = keep
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        for record in records:
+            if self._keep(record, source):
+                yield record
+
+
+class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Rewrite the key of ``(date, key)`` rows before the transformer maps it.
+
+    Keeps label tidying out of the transformer's ``type_value_map``, which
+    should stay a plain vocabulary of the provider's own wording rather than
+    accumulating one entry per spelling variant.
+
+    Args:
+        rename: a ``{old: new}`` mapping applied first; a key not listed is left
+            alone. Use it to fold a variant spelling of a round onto the name
+            the ``type_value_map`` knows.
+        vocabulary: when set, a key that is *not* in ``vocabulary`` is retried as
+            its first whitespace-separated word, and rewritten to that word if
+            the word is in the vocabulary. This is the common case of a provider
+            appending extra words to the bin name in an ICS SUMMARY
+            ("Restmüll Abfuhr" -> "Restmüll") while leaving a genuinely
+            multi-word label ("Gelbe(r) Sack/Tonne") untouched. Pass the
+            transformer's ``type_value_map`` directly; its keys are exactly the
+            vocabulary::
+
+                preprocess = RowRelabel(vocabulary=_TYPE_VALUE_MAP)
+                transform = ICSTransformer(type_value_map=_TYPE_VALUE_MAP)
+    """
+
+    def __init__(
+        self,
+        rename: "Mapping[str, str] | None" = None,
+        vocabulary: "Iterable[str] | None" = None,
+    ):
+        self._rename = dict(rename or {})
+        self._vocabulary = None if vocabulary is None else frozenset(vocabulary)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        for collection_date, key in records:
+            renamed = self._rename.get(key)
+            if renamed is not None:
+                key = renamed
+            if self._vocabulary is not None and key not in self._vocabulary:
+                first_word = key.split(" ")[0]
+                if first_word in self._vocabulary:
+                    key = first_word
+            yield collection_date, key
+
+
+class HtmlGroupedDates(Preprocessor[list[Tag], "tuple[datetime.date, str]"]):
+    """Expand per-round HTML containers into ``(date, key)`` rows.
+
+    For a page that groups its dates *under* the round rather than beside it:
+    one container element per waste type, identified by a CSS class, with the
+    dates listed in repeated child elements beneath it. There is nothing on the
+    dated child saying which round it belongs to, so the usual
+    row-per-collection HTML transform does not fit.
+    :class:`~waste_collection_schedule.parsers.HtmlParser` selects the
+    containers and this reads the round off the container's class, pairing it
+    with every date found beneath::
+
+        parse = parsers.HtmlParser(".rest, .bio, .papier")
+        preprocess = preprocessors.HtmlGroupedDates(
+            keys=TYPE_MAP,
+            date_pattern=r"\\d{2}\\.\\d{2}\\.\\d{4}",
+            parse_date=date_parsers.for_format("%d.%m.%Y"),
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    A container whose classes name no known round is skipped, as is a child
+    element with no date in its text (a heading or a "no collections" note).
+
+    Args:
+        keys: the CSS class tokens that name a round. Pass the transformer's
+            ``type_value_map`` directly; its keys are exactly that set.
+        date_pattern: regex searched against each child's text. Its first
+            capturing group is the date string, or the whole match when the
+            pattern has no group.
+        parse_date: callable turning that string into a ``datetime.date``.
+        item_selector: CSS selector for the dated children within a container
+            (default ``"li"``).
+    """
+
+    def __init__(
+        self,
+        *,
+        keys: Iterable[str],
+        date_pattern: str,
+        parse_date: Callable[[str], datetime.date],
+        item_selector: str = "li",
+    ):
+        self._keys = frozenset(keys)
+        self._date_pattern = re.compile(date_pattern)
+        self._parse_date = parse_date
+        self._item_selector = item_selector
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        for container in records:
+            classes = container.get("class") or []
+            key = next((token for token in classes if token in self._keys), None)
+            if key is None:
+                continue
+            for item in container.select(self._item_selector):
+                match = self._date_pattern.search(item.get_text())
+                if match:
+                    yield self._parse_date(match.group(1 if match.groups() else 0)), key
+
+
 @dataclass
 class Schedule:
     """A recurring-collection descriptor: a start date, cadence and count.
@@ -93,6 +258,15 @@ class Schedule:
     # (where naive fortnightly stepping would drift). The provider only has to
     # say which parity; no per-source week arithmetic.
     iso_week_parity: Literal["even", "odd"] | None = None
+    # One-off adjustments the provider publishes alongside the cadence: ``extra``
+    # dates are collected even though the cadence does not produce them (a
+    # make-up run), ``exclude`` dates are not collected even though it does (a
+    # public-holiday cancellation). ``extra`` dates are appended after the
+    # projected ones and are not parity-filtered; ``exclude`` then drops matching
+    # dates from both. Use these when the provider hands over explicit date
+    # lists; use HolidayShift when a collection *moves* rather than disappears.
+    extra: Sequence[datetime.date] = ()
+    exclude: Sequence[datetime.date] = ()
 
 
 class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
@@ -152,6 +326,11 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     dates = [
                         d for d in dates if (d.isocalendar().week % 2 == 0) == want_even
                     ]
+                if schedule.extra:
+                    dates = [*dates, *schedule.extra]
+                if schedule.exclude:
+                    cancelled = set(schedule.exclude)
+                    dates = [d for d in dates if d not in cancelled]
                 for collection_date in dates:
                     yield collection_date, schedule.key
 

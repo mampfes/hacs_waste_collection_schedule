@@ -3,9 +3,9 @@ from typing import Any, ClassVar, final
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
+    ArcGisDistinctValues,
     ArcGisFeatureParser,
     ArcGisFeatureRetriever,
 )
@@ -19,10 +19,8 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLAB
 # one or more weekdays, all recurring weekly. The where clause is a
 # source-specific attribute query; the PT abbreviation table is the API's own
 # vocabulary (not a recurrence.weekday()-covered language form), and _describe()
-# fans each field's weekdays out. ``parse`` is overridden as a method (rather
-# than the plain ArcGisFeatureParser instance) only to reproduce the legacy
-# "suggest known area names" behaviour on a no-match, a genuinely irregular
-# extra lookup that no declarative parser expresses.
+# fans each field's weekdays out. An unknown area name is answered with the
+# names the layer does know, via the platform's returnDistinctValues lookup.
 
 FEATURE_URL = "https://services.arcgis.com/1dSrzEWVQn5kHHyK/ArcGIS/rest/services/Amb_Reciclagem/FeatureServer/7"
 
@@ -110,43 +108,13 @@ class Source(BaseSource):
         where=_where,
         out_fields="NOME,DIAS_IND,DIAS_PAPEL,DIAS_EMBAL",
     )
+    parse = ArcGisFeatureParser(
+        argument="area_name",
+        # Only areas with a general-waste schedule are real collection areas.
+        suggestions=ArcGisDistinctValues(FEATURE_URL, "NOME", where="DIAS_IND <> ' '"),
+    )
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, area_name: str):
         super().__init__(area_name=area_name.strip())
-
-    def parse(self, response, source: "Source | None" = None) -> list[dict]:
-        features = ArcGisFeatureParser()(response, source)
-        if not features:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "area_name", self.params["area_name"], self._get_area_names()
-            )
-        return features
-
-    def _get_area_names(self) -> list[str]:
-        """Fetch all available area names for suggestions (best-effort)."""
-        try:
-            response = self.session.get(
-                f"{FEATURE_URL}/query",
-                params={
-                    "where": "DIAS_IND <> ' '",
-                    "outFields": "NOME",
-                    "returnGeometry": "false",
-                    "returnDistinctValues": "true",
-                    "orderByFields": "NOME",
-                    "f": "json",
-                },
-                timeout=30,
-            )
-            response.raise_for_status()
-            data = response.json()
-            return sorted(
-                {
-                    f["attributes"]["NOME"]
-                    for f in data.get("features", [])
-                    if f["attributes"].get("NOME")
-                }
-            )
-        except Exception:
-            return []

@@ -1,14 +1,15 @@
-import logging
 from datetime import date, datetime, timedelta
 from typing import ClassVar, final
 
-from dateutil.rrule import WEEKLY, rrule, weekday
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import coords
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureParser,
-    feature_query,
+    ArcGisMultiFeatureRetriever,
+    coords_point,
 )
 from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import (
@@ -19,18 +20,12 @@ from waste_collection_schedule.waste_types import (
 )
 
 # My Local Services (used by ~45 South Australian councils) takes a lat/lon
-# straight from the map picker: there's no address to geocode, so the shared
-# ArcGIS retrievers (which hard-code a geocode() call) don't fit. retrieve()
-# spatially queries the four FeatureServer layers directly at that point.
-# Each matched feature also carries its own recurring cadence (a weekday, a
-# frequency in weeks and a phase offset) plus provider-supplied additive and
-# exclusion date lists that adjust the projected schedule -- more than
-# RecurrenceExpander/HolidayShift express (they shift/cancel *existing* rows,
-# they don't also splice in dates that aren't part of the cadence at all), so
-# preprocess() projects the cadence and applies both adjustments itself,
-# unchanged from the legacy implementation.
-
-_LOGGER = logging.getLogger(__name__)
+# straight from the map picker: there is no address to geocode, so the shared
+# multi-layer retriever runs its spatial query at the params point
+# (coords_point()) instead. Each matched feature carries its own recurring
+# cadence (a weekday, a frequency in weeks and a phase offset) plus the
+# provider's own additive and exclusion date lists, which the shared Schedule
+# expresses as a windowed cadence with extra/exclude dates.
 
 FEATURE_SERVER = (
     "https://services1.arcgis.com/37apdbovSVEwr4YE/ArcGIS/rest/services/"
@@ -41,6 +36,48 @@ OUT_FIELDS = (
     "Waste_Type,Col_Day,Col_Freq,Colour,Col_Offset,Alternate,Exclusion,Additional"
 )
 SCHEDULE_DAYS = 365
+
+
+def _dates(value: str | None, *, skip_invalid: bool = False) -> list[date]:
+    """Parse the API's comma-separated ``YYYY-MM-DD`` adjustment lists."""
+    parsed: list[date] = []
+    for part in (value or "").split(","):
+        if not part.strip():
+            continue
+        try:
+            parsed.append(datetime.strptime(part.strip(), "%Y-%m-%d").date())
+        except ValueError:
+            if not skip_invalid:
+                raise
+    return parsed
+
+
+def _describe(record: tuple, source):
+    """Project one layer's feature into its weekly/fortnightly/... cadence.
+
+    ``Col_Day`` is 1 (Sunday) to 7 (Saturday); ``Col_Freq`` is the interval in
+    weeks and ``Col_Offset`` phases the cycle off the first of the year. The
+    provider anchors the cycle on the week containing that offset start, so the
+    cadence phase is that week's collection weekday and the window opens at the
+    offset start itself.
+    """
+    _layer, attrs = record
+    weekday = (attrs["Col_Day"] - 2) % 7
+
+    today = date.today()
+    start = date(today.year, 1, 1) + timedelta(weeks=attrs["Col_Offset"])
+    phase = start - timedelta(days=start.weekday()) + timedelta(days=weekday)
+
+    yield Schedule(
+        attrs["Waste_Type"],
+        phase,
+        recurrence.WEEKLY * attrs["Col_Freq"],
+        not_before=start,
+        until=today + timedelta(days=SCHEDULE_DAYS),
+        extra=_dates(attrs["Additional"]),
+        exclude=_dates(attrs["Exclusion"], skip_invalid=True),
+    )
+
 
 _TYPE_MAP = {
     "General Waste": GENERAL_WASTE,
@@ -133,7 +170,14 @@ class Source(BaseSource):
 
     PARAMS = (coords(),)
 
+    retrieve = ArcGisMultiFeatureRetriever(
+        [(layer, f"{FEATURE_SERVER}/{layer}") for layer in LAYERS],
+        point=coords_point(),
+        out_fields=OUT_FIELDS,
+        timeout=30,
+    )
     parse = ArcGisMultiFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, lat, lon):
@@ -148,69 +192,3 @@ class Source(BaseSource):
             except ValueError:
                 raise ValueError("Longitude must be a float") from None
         super().__init__(lat=lat, lon=lon)
-
-    def retrieve(self, source: "Source"):
-        location = {"x": self.params["lon"], "y": self.params["lat"]}
-        return [
-            (
-                endpoint,
-                feature_query(
-                    f"{FEATURE_SERVER}/{endpoint}",
-                    geometry=location,
-                    out_fields=OUT_FIELDS,
-                    timeout=self.TIMEOUT,
-                ),
-            )
-            for endpoint in LAYERS
-        ]
-
-    def preprocess(self, records, source=None):
-        for _endpoint, attrs in records:
-            yield from self._expand(attrs)
-
-    @staticmethod
-    def _expand(attrs):
-        exclusions_str: str | None = attrs["Exclusion"]
-        additionals_str: str | None = attrs["Additional"]
-        waste_type: str = attrs["Waste_Type"]
-
-        # Normalise to 0(Monday)-6(Sunday); the API returns 1(Sunday)-7(Saturday).
-        weekday_int: int = (attrs["Col_Day"] + -2) % 7
-        freq: int = attrs["Col_Freq"]
-        offset: int = attrs["Col_Offset"]
-
-        start = datetime.now().replace(
-            month=1, day=1, hour=0, minute=0, second=0, microsecond=0
-        ).date() + timedelta(weeks=offset)
-        end = datetime.now().replace(
-            hour=0, minute=0, second=0, microsecond=0
-        ).date() + timedelta(days=SCHEDULE_DAYS)
-
-        dates: list[date] = [
-            d.date()
-            for d in rrule(
-                WEEKLY,
-                byweekday=weekday(weekday_int),
-                interval=freq,
-                dtstart=start,
-                until=end,
-            )
-        ]
-        if additionals_str:
-            for additional_str in additionals_str.split(","):
-                dates.append(
-                    datetime.strptime(additional_str.strip(), "%Y-%m-%d").date()
-                )
-        if exclusions_str:
-            for exclusion_str in exclusions_str.split(","):
-                try:
-                    dates.remove(
-                        datetime.strptime(exclusion_str.strip(), "%Y-%m-%d").date()
-                    )
-                except ValueError:
-                    _LOGGER.debug(
-                        "Exclusion date not found in dates: %s", exclusion_str
-                    )
-
-        for d in dates:
-            yield d, waste_type

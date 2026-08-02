@@ -9,10 +9,14 @@ import jinja2
 from bs4 import BeautifulSoup, Tag
 from icalevents import icalevents
 
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
     from waste_collection_schedule.base_source import BaseSource
     from waste_collection_schedule.parsers import Parser
@@ -26,6 +30,13 @@ if TYPE_CHECKING:
     type QueryArgs = Callable[..., ParamsType] | ParamsType
     type IcsEntries = list[tuple[datetime.date, str]]
 
+#: One preparatory request in an :class:`IcsSessionRetriever` chain. Keys:
+#: ``url`` (required), ``method`` (default ``"GET"``), ``params`` / ``data`` /
+#: ``headers``, ``extract`` (``callable(response, context) -> dict`` merged into
+#: the running context) and ``cookies`` (``callable(**context) -> dict`` merged
+#: into the running cookie jar, evaluated after ``extract``).
+type IcsSessionStep = "dict[str, Any]"
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -38,6 +49,10 @@ class IcsEvent(NamedTuple):
 
 # RFC 5545 allows only ALPHA, DIGIT and "-" in a property name.
 _PROPERTY_NAME = re.compile(r"[A-Za-z0-9-]+")
+
+# An RFC 5545 DATE value: eight digits and nothing else (a DATE-TIME carries a
+# "T" and a time, and often a trailing "Z").
+_DATE_VALUE = re.compile(r"\d{8}")
 
 # The few German letters NFKD does not decompose, so a folded UID stays legible
 # rather than losing the character entirely.
@@ -84,6 +99,71 @@ def _drop_malformed_content_lines(ics_data: str) -> str:
     return "".join(kept)
 
 
+def _is_date_only(line: str) -> bool:
+    """True if a DTSTART/DTEND content line carries a DATE (not DATE-TIME) value."""
+    name, _, value = line.partition(":")
+    if "VALUE=DATE-TIME" in name.upper():
+        return False
+    if "VALUE=DATE" in name.upper():
+        return True
+    return _DATE_VALUE.fullmatch(value.strip()) is not None
+
+
+def _repair_event_block(block: list[str]) -> list[str]:
+    """Drop a VEVENT's DTEND when its value type disagrees with DTSTART's."""
+    date_only_start = any(
+        line.upper().startswith("DTSTART") and _is_date_only(line) for line in block
+    )
+    if not date_only_start:
+        return block
+    kept: list[str] = []
+    dropping = False
+    for line in block:
+        if line[:1] in (" ", "\t"):
+            # Folded continuation line: it belongs to the preceding property.
+            if not dropping:
+                kept.append(line)
+            continue
+        dropping = line.upper().startswith("DTEND") and not _is_date_only(line)
+        if not dropping:
+            kept.append(line)
+    return kept
+
+
+def _drop_mismatched_dtend(ics_data: str) -> str:
+    """Drop a DTEND whose value type disagrees with its VEVENT's DTSTART.
+
+    RFC 5545 requires DTEND to use the same value type as DTSTART. A provider
+    that pairs an all-day ``DTSTART;VALUE=DATE`` with a date-time ``DTEND``
+    (``DTSTART;VALUE=DATE:20260709`` / ``DTEND:20260710T000000``) leaves
+    dateutil comparing a date against a datetime, which aborts the feed.
+    Nothing in the conversion reads DTEND — only DTSTART decides the collection
+    day — so dropping the offending line is lossless, and a feed whose two
+    properties agree is returned untouched.
+    """
+    if "DTEND" not in ics_data:
+        return ics_data
+    out: list[str] = []
+    block: list[str] | None = None
+    for line in ics_data.splitlines(keepends=True):
+        upper = line.upper()
+        if upper.startswith("BEGIN:VEVENT"):
+            if block is not None:
+                out.extend(_repair_event_block(block))
+            block = [line]
+            continue
+        if block is None:
+            out.append(line)
+            continue
+        block.append(line)
+        if upper.startswith("END:VEVENT"):
+            out.extend(_repair_event_block(block))
+            block = None
+    if block is not None:
+        out.extend(_repair_event_block(block))
+    return "".join(out)
+
+
 def _ascii_fold_uid_value(value: str) -> str:
     if value.isascii():
         return value
@@ -114,7 +194,8 @@ def _repair_ics_data(ics_data: str) -> str:
     """Repair common provider malformations before handing data to icalevents.
 
     Every fix here targets a value the schedule does not depend on, or a purely
-    syntactic defect; the essential DTSTART/DTEND/SUMMARY are never altered.
+    syntactic defect; DTSTART and SUMMARY, which are all the conversion reads,
+    are never altered.
     """
     # Give bare EXDATE;VALUE=DATE lines a time component so dateutil can compare
     # them against timezone-aware recurrences.
@@ -159,6 +240,10 @@ def _repair_ics_data(ics_data: str) -> str:
     # Drop property lines whose name is not valid iCalendar; icalendar aborts
     # the whole feed on one of them.
     ics_data = _drop_malformed_content_lines(ics_data)
+
+    # Drop a DTEND that disagrees with its DTSTART's value type; nothing in the
+    # conversion reads DTEND, and the mismatch aborts the feed.
+    ics_data = _drop_mismatched_dtend(ics_data)
 
     # Fold non-ASCII UID values to ASCII; the schedule never reads a UID except
     # to match a recurrence exception to its parent.
@@ -357,6 +442,33 @@ def _resolve_arg(mapping: Any, source: "BaseSource", **extra: Any) -> Any:
     return mapping
 
 
+def _resolve_context(mapping: Any, context: "dict[str, Any]") -> Any:
+    """Resolve a step argument against a running request context.
+
+    The context is the source's params plus whatever the chain has established
+    so far (``year``, ``variant``, and every value a step's ``extract``
+    returned), so a later step's URL or query can be written in terms of an
+    earlier step's answer.
+    """
+    if callable(mapping):
+        return mapping(**context)
+    return mapping
+
+
+def _calendar_years(lookahead_month: int) -> list[int]:
+    """The calendar years a schedule can span as at today.
+
+    Always the current year, plus next year from ``lookahead_month`` onwards,
+    because providers on a per-year calendar publish the following year some
+    weeks before it starts.
+    """
+    today = datetime.date.today()
+    years = [today.year]
+    if today.month >= lookahead_month:
+        years.append(today.year + 1)
+    return years
+
+
 class IcsYearRetriever(RetrieverFunc):
     """GET one ICS feed per calendar year the schedule can span.
 
@@ -416,11 +528,10 @@ class IcsYearRetriever(RetrieverFunc):
         self.fallback_params = fallback_params
 
     def __call__(self, source: "BaseSource") -> "list[Response]":
-        today = datetime.date.today()
-        years = [today.year]
-        if today.month >= self.lookahead_month:
-            years.append(today.year + 1)
-        return [self._fetch_year(source, year) for year in years]
+        return [
+            self._fetch_year(source, year)
+            for year in _calendar_years(self.lookahead_month)
+        ]
 
     def _fetch_year(self, source: "BaseSource", year: int) -> "Response":
         response = self._attempt(source, year, self.url, self.params)
@@ -468,6 +579,278 @@ class IcsYearRetriever(RetrieverFunc):
         the right calendar without the source writing a ``retrieve`` of its own.
         """
         return _resolve_arg(mapping, source, **extra)
+
+
+class IcsSessionRetriever(RetrieverFunc):
+    """Establish the server's idea of "your address", then GET the ICS feed.
+
+    The ICS counterpart to
+    :class:`~waste_collection_schedule.retrievers.AthosWasteManagementRetriever`:
+    a small, fixed chain of preparatory requests, expressed as data rather than
+    per-source control flow, followed by the calendar download. It covers the
+    two shapes a plain :class:`IcsYearRetriever` GET cannot reach:
+
+    * **Stateful POST-then-GET.** Submitting the address stores it in a
+      server-side session and the feed is then read back with a bare GET that
+      carries no address at all. Both requests share ``source.session``, so the
+      session cookie ties them together.
+    * **Chained id lookups.** The feed needs ids the site only hands out one
+      request at a time (city id, then street id), threaded forward through the
+      query and a growing cookie jar.
+
+    Each entry in ``steps`` runs in order and may contribute to a running
+    ``context`` (the source's params, plus ``year``, ``variant``, and every key
+    a step's ``extract`` returned) and to a running cookie jar. Every callable
+    argument is called with ``**context``, so later steps and the feed request
+    are written in terms of what the earlier ones found::
+
+        retrieve = IcsSessionRetriever(
+            steps=[
+                {
+                    "url": SEARCH_URL,
+                    "params": lambda city, **_: {"term": city},
+                    "extract": lambda r, ctx: {"city_id": r.json()[0]["id"]},
+                    "cookies": lambda city_id, **_: {"stadt": str(city_id)},
+                },
+            ],
+            feed_url=ICS_URL,
+            feed_params=lambda city_id, year, **_: {"stadt": city_id, "jahr": year},
+        )
+        parse = IcsFeedsParser(parsers.IcsParser())
+
+    The chain runs once per calendar year the schedule can span (see
+    ``lookahead_month``) and, within a year, once per entry in ``variants``, so
+    the whole thing returns a list of feed responses for :class:`IcsFeedsParser`
+    to merge.
+
+    Args:
+        feed_url: the calendar URL (literal or ``callable(**context) -> str``).
+        steps: ordered preparatory requests; see :data:`IcsSessionStep`. May be
+            empty, which reduces this to a per-year GET.
+        feed_params: query arguments for the feed request (literal or
+            ``callable(**context)``).
+        cookies: cookies seeded before the first step (literal or
+            ``callable(**context)``); steps add to the same jar.
+        variants: values the whole chain is repeated for, one feed each, bound
+            in the context as ``variant``. For a provider that splits one
+            address's calendar across parallel feeds (a separate contractor per
+            waste stream). ``None`` runs the chain once with ``variant=None``.
+        headers: default headers for every request; a step may override its own.
+        timeout: per-request timeout in seconds (default 30).
+        encoding: response encoding forced on the feed response before its text
+            is read; ``None`` (default) leaves the transport's own detection
+            alone.
+        lookahead_month: from this month (1-12) onwards, also run for year + 1.
+            Default 12: in December, next year's calendar is fetched too.
+        require_lookahead: by default a failure fetching a lookahead year is
+            tolerated (the provider has simply not published it yet) while the
+            current year still propagates. Set ``True`` to insist on both.
+        require_entries: check each feed converts to at least one dated entry,
+            and raise if not. Off by default; prefer the source's
+            ``RAISE_ON_EMPTY``, and reach for this only when an empty *year*
+            must fail even though a sibling year came back populated.
+        empty_message: the message ``require_entries`` raises with, for a
+            provider that can say something more useful than the default about
+            why the address found nothing.
+    """
+
+    def __init__(
+        self,
+        *,
+        feed_url: "UrlArgs",
+        steps: "Sequence[IcsSessionStep]" = (),
+        feed_params: "QueryArgs" = None,
+        cookies: "Callable[..., dict] | dict | None" = None,
+        variants: "Sequence[Any] | None" = None,
+        headers: "HeadersArgs" = None,
+        timeout: int = 30,
+        encoding: str | None = None,
+        lookahead_month: int = 12,
+        require_lookahead: bool = False,
+        require_entries: bool = False,
+        empty_message: str | None = None,
+    ):
+        self.feed_url = feed_url
+        self.steps = list(steps)
+        self.feed_params = feed_params
+        self.cookies = cookies
+        self.variants = variants
+        self.headers = headers
+        self.timeout = timeout
+        self.encoding = encoding
+        self.lookahead_month = lookahead_month
+        self.require_lookahead = require_lookahead
+        self.require_entries = require_entries
+        self.empty_message = empty_message
+
+    def __call__(self, source: "BaseSource") -> "list[Response]":
+        feeds: list[Response] = []
+        for index, year in enumerate(_calendar_years(self.lookahead_month)):
+            try:
+                # Built in full before it is kept, so a year that fails halfway
+                # through its variants contributes nothing rather than half a
+                # calendar.
+                feeds.extend(self._fetch_year(source, year))
+            except Exception:
+                if index == 0 or self.require_lookahead:
+                    raise
+        return feeds
+
+    def _fetch_year(self, source: "BaseSource", year: int) -> "list[Response]":
+        variants: Sequence[Any] = (
+            self.variants if self.variants is not None else (None,)
+        )
+        return [self._fetch(source, year, variant) for variant in variants]
+
+    def _fetch(self, source: "BaseSource", year: int, variant: Any) -> "Response":
+        context: dict[str, Any] = {**source.params, "year": year, "variant": variant}
+        cookies: dict[str, str] = {}
+        if self.cookies is not None:
+            cookies.update(_resolve_context(self.cookies, context))
+
+        for step in self.steps:
+            response = source.session.request(
+                step.get("method", "GET"),
+                _resolve_context(step["url"], context),
+                params=_resolve_context(step.get("params"), context),
+                data=_resolve_context(step.get("data"), context),
+                headers=_resolve_context(step.get("headers", self.headers), context),
+                # Only pass a jar once there is something in it, so a provider
+                # that relies purely on the session's own cookies is untouched.
+                cookies=cookies or None,
+                timeout=self.timeout,
+            )
+            response.raise_for_status()
+            if "extract" in step:
+                context.update(step["extract"](response, context))
+            if "cookies" in step:
+                cookies.update(step["cookies"](**context))
+
+        feed = source.session.get(
+            _resolve_context(self.feed_url, context),
+            params=_resolve_context(self.feed_params, context),
+            headers=_resolve_context(self.headers, context),
+            cookies=cookies or None,
+            timeout=self.timeout,
+        )
+        feed.raise_for_status()
+        if self.encoding is not None:
+            feed.encoding = self.encoding
+        if self.require_entries and not ICS().convert(feed.text):
+            raise ValueError(self.empty_message or f"No ICS entries found for {year}")
+        return feed
+
+
+class IcsLookupRetriever(RetrieverFunc):
+    """Read a key off a lookup page, then GET the ICS feed with it as a query.
+
+    The address-to-id shape of
+    :class:`~waste_collection_schedule.retrievers.TwoStepRetriever`, for the
+    many ICS endpoints that take the resolved id (and a date window) as *query
+    arguments* rather than in the path, which is what stops the schedule URL
+    from being expressible as a single string::
+
+        retrieve = IcsLookupRetriever(
+            base_url="https://abfall.example.de",
+            extract=_pick_location,
+            feed_path="/ical",
+            params=lambda key, **_: {"location": key, "startDate": ...},
+        )
+        parse = IcsFeedsParser(parsers.IcsParser())
+
+    Both requests go through ``source.session``, and the result is a list of
+    responses so :class:`IcsFeedsParser` handles it unchanged.
+
+    Args:
+        base_url: the site root both requests are built from (literal or
+            ``callable(**source.params) -> str``).
+        extract: ``callable(lookup_response, source) -> key``; pulls the id out
+            of the lookup page and may raise ``SourceArgumentNotFound`` /
+            ``SourceArgumentNotFoundWithSuggestions`` for an address the page
+            does not list.
+        lookup_path: appended to ``base_url`` for the lookup request (default
+            ``""``: the site root is itself the page carrying the id list).
+        feed_path: appended to ``base_url`` for the calendar request.
+        params: query arguments for the calendar request, as
+            ``callable(key=..., **source.params) -> dict`` or a literal.
+        headers: optional headers applied to both requests.
+        timeout: per-request timeout in seconds (default 30).
+        stale_year_base_url: optional alternate site root, as
+            ``callable(year=..., **source.params) -> str``. Consulted only when
+            the primary feed's earliest event falls outside the current year,
+            which is how a provider that publishes each year on a year-suffixed
+            host reads once the new year's calendar has taken over the primary
+            one. Both requests are repeated there and the second feed is merged
+            in. Best effort: an alternate host that does not exist yet leaves
+            the primary schedule as it is.
+    """
+
+    def __init__(
+        self,
+        *,
+        base_url: "UrlArgs",
+        extract: "Callable[..., Any]",
+        feed_path: str = "",
+        lookup_path: str = "",
+        params: "QueryArgs" = None,
+        headers: "HeadersArgs" = None,
+        timeout: int = 30,
+        stale_year_base_url: "UrlArgs | None" = None,
+    ):
+        self.base_url = base_url
+        self.extract = extract
+        self.feed_path = feed_path
+        self.lookup_path = lookup_path
+        self.params = params
+        self.headers = headers
+        self.timeout = timeout
+        self.stale_year_base_url = stale_year_base_url
+
+    def __call__(self, source: "BaseSource") -> "list[Response]":
+        feeds = [self._fetch(source, _resolve_arg(self.base_url, source))]
+        alternate = self._stale_year_feed(source, feeds[0])
+        if alternate is not None:
+            feeds.append(alternate)
+        return feeds
+
+    def _fetch(self, source: "BaseSource", base_url: str) -> "Response":
+        headers = _resolve_arg(self.headers, source)
+        lookup = source.session.get(
+            f"{base_url}{self.lookup_path}", headers=headers, timeout=self.timeout
+        )
+        lookup.raise_for_status()
+        key = self.extract(lookup, source)
+        feed = source.session.get(
+            f"{base_url}{self.feed_path}",
+            params=_resolve_arg(self.params, source, key=key),
+            headers=headers,
+            timeout=self.timeout,
+        )
+        feed.raise_for_status()
+        return feed
+
+    def _stale_year_feed(
+        self, source: "BaseSource", feed: "Response"
+    ) -> "Response | None":
+        """Fetch the alternate host's feed, if the primary one has aged out.
+
+        Reading the body is normally the parser's job, but "is this still the
+        current year's calendar?" is the only question that can decide whether
+        the alternate host is worth a request, and it is an ICS question.
+        """
+        if self.stale_year_base_url is None:
+            return None
+        try:
+            year = datetime.date.today().year
+            if min(date for date, _ in ICS().convert(feed.text)).year == year:
+                return None
+            return self._fetch(
+                source, _resolve_arg(self.stale_year_base_url, source, year=year)
+            )
+        except Exception:
+            # Best effort: the alternate host may not be published yet, and the
+            # primary feed on its own is still a usable schedule.
+            return None
 
 
 class IcsIndexRetriever(RetrieverFunc):
@@ -598,10 +981,91 @@ class IcsFeedsParser:
     which is the useful reading for a per-year calendar: a year that came back
     all but empty is the failure worth catching, and it would otherwise hide
     behind a well-populated sibling year.
+
+    The remaining options handle what merging several provider feeds tends to
+    need on top of the per-feed parse:
+
+    * ``clean`` — ``callable(title) -> title`` applied to every entry's title
+      before ``exclude`` and ``dedupe`` see it. Use it for the label tidy-up
+      that has to happen *before* de-duplication (two feeds spelling the same
+      collection differently); a tidy-up that only affects the displayed label
+      belongs on ``ICSTransformer(clean=...)`` instead.
+    * ``exclude`` — regex; an entry whose title matches (case-insensitively,
+      anywhere in the title) is dropped. For the housekeeping VEVENT a provider
+      mixes into the schedule ("Abfallkalender endet bald"), which carries no
+      waste type.
+    * ``dedupe`` — drop repeated entries, keeping first-seen order. Several
+      providers publish overlapping feeds (one per paper contractor, per
+      district, per year) that repeat the shared collections in each.
+
+    A provider whose feed doubles as the address check is served by
+    ``argument`` plus one or both of:
+
+    * ``require_calendar`` — the endpoint answers 200 with an HTML page rather
+      than an HTTP error when the id is unknown, so a body that is not an
+      iCalendar document means "bad argument", not "provider broken".
+    * ``suggestions`` — ``callable(source) -> list[str]`` consulted only when
+      the merged result is empty, to turn "no collections" into
+      ``SourceArgumentNotFoundWithSuggestions`` listing the values that do
+      work. It runs on the error path only, which is why it belongs here and
+      not in the retriever.
+
+    Both name the offending config parameter through ``argument``, so the HA
+    UI blames the field the user actually filled in.
     """
 
-    def __init__(self, parser: "Parser[IcsEntries] | None" = None):
+    def __init__(
+        self,
+        parser: "Parser[IcsEntries] | None" = None,
+        *,
+        clean: "Callable[[str], str] | None" = None,
+        exclude: str | None = None,
+        dedupe: bool = False,
+        argument: str | None = None,
+        require_calendar: bool = False,
+        suggestions: "Callable[[BaseSource], list[str]] | None" = None,
+    ):
+        if (require_calendar or suggestions is not None) and argument is None:
+            raise ValueError(
+                "IcsFeedsParser: require_calendar/suggestions need `argument`, "
+                "the name of the config parameter to report the failure against"
+            )
         self._parser = parser
+        self._clean = clean
+        self._exclude = re.compile(exclude, re.IGNORECASE) if exclude else None
+        self._dedupe = dedupe
+        self._argument = argument
+        self._require_calendar = require_calendar
+        self._suggestions = suggestions
+
+    def _check_calendar(self, feed: Any, source: "BaseSource | None") -> None:
+        if not self._require_calendar or self._argument is None:
+            return
+        if feed.text.lstrip("\ufeff \t\r\n").startswith("BEGIN:VCALENDAR"):
+            return
+        value = source.params.get(self._argument) if source is not None else None
+        raise SourceArgumentNotFound(
+            self._argument,
+            value,
+            "no calendar found for this location, please check this value is correct.",
+        )
+
+    def _clean_entry(self, entry: Any) -> Any:
+        """Apply ``clean`` to an entry's title, whichever record shape it is."""
+        if self._clean is None:
+            return entry
+        if isinstance(entry, IcsEvent):
+            return entry._replace(title=self._clean(entry.title))
+        return (entry[0], self._clean(entry[1]))
+
+    def _raise_unknown_argument(self, source: "BaseSource") -> None:
+        # The constructor guarantees `argument` is set whenever `suggestions` is.
+        argument = str(self._argument)
+        value = source.params.get(argument)
+        suggestions = self._suggestions(source) if self._suggestions else []
+        if suggestions:
+            raise SourceArgumentNotFoundWithSuggestions(argument, value, suggestions)
+        raise SourceArgumentNotFound(argument, value)
 
     def __call__(
         self, response: Any, source: "BaseSource | None" = None
@@ -615,6 +1079,19 @@ class IcsFeedsParser:
 
         feeds = response if isinstance(response, (list, tuple)) else [response]
         entries: IcsEntries = []
+        seen: set = set()
         for feed in feeds:
-            entries.extend(parser(feed, source))
+            self._check_calendar(feed, source)
+            for parsed in parser(feed, source):
+                entry = self._clean_entry(parsed)
+                if self._exclude is not None and self._exclude.search(entry[1].strip()):
+                    continue
+                if self._dedupe:
+                    if entry in seen:
+                        continue
+                    seen.add(entry)
+                entries.append(entry)
+
+        if not entries and self._suggestions is not None and source is not None:
+            self._raise_unknown_argument(source)
         return entries
