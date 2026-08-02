@@ -1,21 +1,24 @@
 """PreZero waste collection calendar network (abfallkalender.prezero.network).
 
-Demonstrates: a redirect-driven street lookup (a POST that 302s to a URL
-carrying the resolved street id, with an HTML meta-refresh fallback for
-deployments that redirect that way instead) feeding two fixed-year ICS
-downloads. No configured retriever expresses "POST, read the id out of the
-redirect target rather than the response body, then always fetch two ICS
-years", hence a source-defined retrieve()/parse() pair.
+Composes: :class:`~waste_collection_schedule.retrievers.FanOutRetriever`. The
+address is resolved once in the retriever's ``prepare`` step (a POST that 302s
+to a URL carrying the street id, with an HTML meta-refresh fallback for
+deployments that redirect that way instead), and the calendar is then split
+across one ICS download per year, which is what the fan-out's targets are.
+Both years are always fetched and both must succeed, so this is a fan-out over
+a fixed target list rather than a
+:class:`~waste_collection_schedule.retrievers.YearlyRetriever`, whose second
+year is deliberately best-effort.
 """
 
 import re
 from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -32,11 +35,17 @@ _META_REFRESH_RE = re.compile(r'url=[\'"]?([^\'" >]+)')
 _STREET_ID_RE = re.compile(r"/calendar/(\d+)/")
 
 
-def _resolve_street_id(session, city: str, street_name: str, house_no: str) -> str:
-    base_url = f"{_BASE_URL}/{city}"
-    r = session.post(
-        base_url,
-        data={"street": street_name, "houseNo": house_no},
+def _resolve_street_id(source) -> str:
+    """The fan-out's prepare step: address -> the site's own street id.
+
+    The id is only ever handed back in the redirect target, so the redirect is
+    read rather than followed. A deployment that redirects with an HTML
+    meta-refresh instead of a ``Location`` header is read the same way.
+    """
+    street_name = source.params["street"]
+    r = source.session.post(
+        f"{_BASE_URL}/{source.params['city']}",
+        data={"street": street_name, "houseNo": source.params["house_number"]},
         allow_redirects=False,
     )
 
@@ -70,6 +79,24 @@ def _resolve_street_id(session, city: str, street_name: str, house_no: str) -> s
             "might be incorrect.",
         )
     return match.group(1)
+
+
+def _ical_urls(source, street_id: str) -> list[str]:
+    """One ICS download per calendar year the schedule can span."""
+    city = source.params["city"]
+    house_no = source.params["house_number"]
+    now = datetime.now()
+    return [
+        f"{_BASE_URL}/{city}/download/ical/{street_id}/{house_no}/{year}"
+        for year in (now.year, now.year + 1)
+    ]
+
+
+def _download_ical(source, url: str, street_id: str):
+    """Fetch one year's calendar. The download is a POST, with no body."""
+    r = source.session.post(url)
+    r.raise_for_status()
+    return r
 
 
 @final
@@ -119,29 +146,12 @@ class Source(BaseSource):
         ),
     }
 
-    def retrieve(self, source):
-        session = source.session
-        city = self.params["city"]
-        street_name = self.params["street"]
-        house_no = self.params["house_number"]
-
-        street_id = _resolve_street_id(session, city, street_name, house_no)
-
-        now = datetime.now()
-        responses = []
-        for year in (now.year, now.year + 1):
-            ical_url = f"{_BASE_URL}/{city}/download/ical/{street_id}/{house_no}/{year}"
-            r = session.post(ical_url)
-            r.raise_for_status()
-            responses.append(r)
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        entries = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries
+    retrieve = retrievers.FanOutRetriever(
+        prepare=_resolve_street_id,
+        targets=_ical_urls,
+        fetch=_download_ical,
+    )
+    parse = parsers.EachResponse(parsers.IcsParser())
 
     transform = ICSTransformer(
         type_value_map={

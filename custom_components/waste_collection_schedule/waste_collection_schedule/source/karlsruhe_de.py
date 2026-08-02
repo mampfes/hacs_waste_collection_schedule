@@ -1,24 +1,26 @@
 """City of Karlsruhe (karlsruhe.de).
 
-Demonstrates: an ICS POST that needs a custom ``retrieve`` override rather
-than a shared retriever — the legacy source tries up to six URL variants
-(current/next/previous year x two load-balanced hosts, ``web4``/``web6``)
-until one returns a populated calendar. None of the shared retrievers model a
-multi-host/multi-year fallback, so this stays a plain method override;
-everything else (``IcsParser`` + ``ICSTransformer``) is standard.
+Composes: :class:`~waste_collection_schedule.retrievers.FirstMatchRetriever`.
+The city publishes the same ICS export on two load-balanced hosts
+(``web4``/``web6``) under a per-year path, and which combination is live is
+only discoverable by asking, so the source POSTs each of the six in turn
+(current, next, previous year x both hosts) and keeps the first that comes back
+with events. That candidate-fallback shape is now a shared retriever rather
+than a source-local loop; everything else (``IcsParser`` + ``ICSTransformer``)
+is standard.
 
 The legacy comment recorded a ``SSLCertVerificationError`` with
 ``verify=True`` and worked around it with ``verify=False``. Re-checked live
-during this conversion: both curl_cffi (browser impersonation) and plain
-``requests`` reach every host/year combination with default TLS verification
-now, so ``verify=False`` is dropped rather than carried forward — the
-provider's certificate has apparently since been fixed.
+during the pipeline conversion: both curl_cffi (browser impersonation) and
+plain ``requests`` reach every host/year combination with default TLS
+verification now, so ``verify=False`` is not carried forward — the provider's
+certificate has apparently since been fixed.
 """
 
 from datetime import datetime
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.transformers import ICSTransformer
@@ -36,6 +38,26 @@ _API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 def _clean_first_segment(label: str) -> str:
     """Keep only the text before the first comma (legacy behaviour)."""
     return label.split(",")[0].strip()
+
+
+def _years_by_host(**_) -> list[tuple[int, int]]:
+    """Every (year, host) combination worth asking, most likely first."""
+    now = datetime.now()
+    return [
+        (year, host)
+        for year in (now.year, now.year + 1, now.year - 1)
+        for host in (4, 6)
+    ]
+
+
+def _has_events(response) -> bool:
+    """True once a candidate answers with a populated calendar.
+
+    An unserved year or a host that has not been given the file answers 200
+    with an empty calendar rather than an error, so the status code cannot tell
+    the candidates apart.
+    """
+    return "BEGIN:VEVENT" in response.text
 
 
 @final
@@ -70,6 +92,19 @@ class Source(BaseSource):
         text_field("ladeort", label="Ladeort", optional=True),
     )
 
+    retrieve = retrievers.FirstMatchRetriever(
+        candidates=_years_by_host,
+        url=lambda candidate, **_: _API_URL.format(year=candidate[0], i=candidate[1]),
+        method="POST",
+        data=lambda candidate, street, hnr, ladeort=None, **_: {
+            "strasse_n": street,
+            "hausnr": hnr,
+            "ical": "+iCalendar",
+            "ladeort": ladeort,
+        },
+        params=lambda candidate, hnr, **_: {"hausnr": hnr},
+        accept=_has_events,
+    )
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
@@ -84,44 +119,3 @@ class Source(BaseSource):
 
     def __init__(self, street: str, hnr: str | int, ladeort: int | None = None):
         super().__init__(street=street, hnr=hnr, ladeort=ladeort)
-
-    def retrieve(self, source: "Source"):
-        """Try each year x host combination until one returns real events.
-
-        Mirrors the legacy ``fetch()``/``get_data()`` retry exactly: for each
-        of (this year, next year, last year) x (host 4, host 6), POST and
-        accept the first response containing at least one ``VEVENT``. If none
-        do, return the last response received (so the parser's own shape
-        check surfaces a clear error) or, failing even that, re-raise the
-        last transport error.
-        """
-        now = datetime.now()
-        data = {
-            "strasse_n": source.params["street"],
-            "hausnr": source.params["hnr"],
-            "ical": "+iCalendar",
-            "ladeort": source.params.get("ladeort"),
-        }
-        params = {"hausnr": source.params["hnr"]}
-
-        last_response = None
-        last_error: Exception | None = None
-        for year in (now.year, now.year + 1, now.year - 1):
-            for i in (4, 6):
-                url = _API_URL.format(year=year, i=i)
-                try:
-                    response = source.session.post(
-                        url,
-                        data=data,
-                        params=params,
-                        timeout=30,
-                    )
-                except Exception as e:
-                    last_error = e
-                    continue
-                last_response = response
-                if "BEGIN:VEVENT" in response.text:
-                    return response
-        if last_response is not None:
-            return last_response
-        raise last_error  # type: ignore[misc]

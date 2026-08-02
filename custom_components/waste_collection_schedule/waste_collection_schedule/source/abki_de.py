@@ -1,15 +1,15 @@
 """Abfallwirtschaftsbetrieb Kiel (ABK) (abki.de).
 
-Demonstrates: a genuinely bespoke multi-step retrieve -- a street-name lookup,
-then a house-number lookup keyed off the resolved street id, then a request
-that generates a downloadable ICS data token, and finally the ICS calendar
-fetch itself. Four sequential requests with state threaded between each (a
-street id, then a house-number id plus a "Standort" id) is not a shape any
-configured retriever expresses, hence a source-defined ``retrieve``/``parse``
-pair. Preserves the legacy source's December quirk: the provider's own
-calendar also lists the first weeks of the following year once the current
-month reaches December, so a second, best-effort request is made for that
-year too.
+Composes: :class:`~waste_collection_schedule.retrievers.YearlyRetriever`. The
+address costs two requests to resolve (a street-name lookup, then a
+house-number lookup keyed off the resolved street id) and neither depends on
+the calendar year, so both sit in the retriever's ``prepare`` step and run once
+per fetch. Each year then costs two more requests: one that mints a
+downloadable ICS data token, and the calendar fetch that redeems it. That is
+the retriever's documented shape, and it keeps the provider's December quirk
+without any source-local control flow: the provider's own calendar also lists
+the first weeks of the following year once the current month reaches December,
+which is exactly ``rollover_month=12``'s best-effort second year.
 
 Each collection's label carries a bin-size suffix (e.g. "Restabfall 240 l")
 that the shared multilingual vocabulary does not recognise verbatim; ``clean``
@@ -20,13 +20,12 @@ explicitly.
 """
 
 import re
-from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -51,8 +50,16 @@ def _normalize(value: str) -> str:
     return value.lower().replace(" ", "").replace("-", "")
 
 
-def _resolve_ids(session, street_name: str, number: str) -> tuple[str, str, str]:
-    """Resolve a street name + house number to (street_id, number_id, standort_id)."""
+def _resolve_ids(source) -> tuple[str, str, str]:
+    """Resolve a street name + house number to (street_id, number_id, standort_id).
+
+    The ``YearlyRetriever``'s prepare step: neither lookup depends on the year,
+    so both run once per fetch rather than once per calendar year.
+    """
+    session = source.session
+    street_name = source.params["street"]
+    number = source.params["number"]
+
     r = session.get(
         _STREETS_URL,
         params={
@@ -79,12 +86,15 @@ def _resolve_ids(session, street_name: str, number: str) -> tuple[str, str, str]
     raise SourceArgumentNotFound("number", number)
 
 
-def _fetch_ics(session, street_name, street_id, number_id, standort_id, year: int):
+def _calendar_for_year(source, year: int, context: tuple[str, str, str]):
+    """Mint one year's ICS download token, then fetch the calendar with it."""
+    session = source.session
+    street_id, number_id, standort_id = context
     r = session.get(
         _DATA_URL,
         params={
             "Zeitraum": year,
-            "Strasse_input": street_name,
+            "Strasse_input": source.params["street"],
             "Strasse": street_id,
             "IDSTANDORT_input": 2,
             "IDSTANDORT": standort_id,
@@ -124,6 +134,12 @@ class Source(BaseSource):
         house_number(field="number"),
     )
 
+    retrieve = retrievers.YearlyRetriever(
+        prepare=_resolve_ids,
+        fetch=_calendar_for_year,
+    )
+    parse = parsers.EachResponse(parsers.IcsParser())
+
     transform = ICSTransformer(
         clean=_strip_size,
         type_value_map={"gelbe tonne / gelber sack": RECYCLABLES},
@@ -131,39 +147,3 @@ class Source(BaseSource):
 
     def __init__(self, street: str, number: "str | int"):
         super().__init__(street=street, number=str(number))
-
-    def retrieve(self, source):
-        street_name = source.params["street"]
-        number = source.params["number"]
-        session = source.session
-
-        street_id, number_id, standort_id = _resolve_ids(session, street_name, number)
-
-        now = datetime.now()
-        responses = [
-            _fetch_ics(
-                session, street_name, street_id, number_id, standort_id, now.year
-            )
-        ]
-        if now.month == 12:
-            try:
-                responses.append(
-                    _fetch_ics(
-                        session,
-                        street_name,
-                        street_id,
-                        number_id,
-                        standort_id,
-                        now.year + 1,
-                    )
-                )
-            except Exception:
-                pass
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        entries = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries

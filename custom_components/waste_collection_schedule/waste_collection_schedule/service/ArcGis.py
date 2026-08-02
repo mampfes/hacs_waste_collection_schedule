@@ -13,6 +13,8 @@ Provides:
     id via one ``where`` clause, then fetch the full record by that id)
   - coords_point(): use a lat/lon already in ``source.params`` as the query
     point instead of geocoding an address
+  - parcel_centroid(): use the council's own parcel layer as the geocoder,
+    reading the matched property's centroid as the query point
   - ArcGisDistinctValues: the distinct values of one field, for suggesting what
     a no-match input should have been
   - geocoded_params(): geocode an address into the query params of an ordinary
@@ -44,6 +46,7 @@ import requests
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -55,6 +58,18 @@ class FeatureEnvelope(TypedDict):
     """The ArcGIS ``/query`` response shape every Feature parser relies on."""
 
     features: list
+
+
+class CountEnvelope(TypedDict):
+    """The ArcGIS ``/query`` response shape for a ``returnCountOnly`` query."""
+
+    count: int
+
+
+#: Attribute the retrievers stash the resolved query point on, so a later stage
+#: can read what the geocoder returned alongside the point (see
+#: :func:`geocoded_location`).
+_LOCATION_ATTR = "arcgis_location"
 
 
 if TYPE_CHECKING:
@@ -176,15 +191,37 @@ def _locate(
     source: BaseSource,
     address: str | Callable[..., str] | None,
     point: Callable[..., dict[str, Any]] | None = None,
+    *,
+    fields: str | None = None,
 ) -> dict[str, Any]:
-    """Resolve the point a spatial query runs at: params lat/lon, or a geocode."""
+    """Resolve the point a spatial query runs at: params lat/lon, or a geocode.
+
+    The resolved point is stashed on the source (see :func:`geocoded_location`)
+    so a later stage can read whatever the geocoder returned with it, such as
+    the ``City`` a provider keys a holiday table by.
+    """
     if point is not None:
-        return point(**source.params)
-    query, field = _resolve_address(address, source.params)
-    try:
-        return geocode(query)
-    except ArcGisGeocodeError as e:
-        raise SourceArgumentNotFound(field, query) from e
+        location = point(**source.params)
+    else:
+        query, field = _resolve_address(address, source.params)
+        try:
+            location = geocode(query, out_fields=fields)
+        except ArcGisGeocodeError as e:
+            raise SourceArgumentNotFound(field, query) from e
+    setattr(source, _LOCATION_ATTR, location)
+    return location
+
+
+def geocoded_location(source: BaseSource | None) -> dict[str, Any]:
+    """The point the retriever resolved for this fetch, or ``{}`` before it ran.
+
+    A retriever returns the layer responses, not the point it queried them at,
+    but a source configured with ``geocode_fields`` asked the geocoder for a
+    field precisely because a later stage needs it::
+
+        city = ArcGis.geocoded_location(source).get("attributes", {}).get("City")
+    """
+    return getattr(source, _LOCATION_ATTR, None) or {}
 
 
 def geocoded_params(
@@ -253,29 +290,60 @@ def feature_query(
     where: str | None = None,
     out_fields: str = "*",
     in_sr: int = 4326,
+    return_centroid: bool = False,
+    result_record_count: int | None = None,
+    count_only: bool = False,
     timeout: int = 20,
 ) -> Response:
     """GET a FeatureServer ``/query`` and return the *raw* Response (unparsed).
 
     The low-level acquisition primitive — supports both a spatial point query
-    (``geometry``) and an attribute query (``where``). Pair with
-    :class:`ArcGisFeatureParser`. A source that must hit several layers calls
-    this once per layer from its own ``retrieve``.
+    (``geometry``) and an attribute query (``where``), and the two together for
+    a spatial query narrowed by a clause. Pair with
+    :class:`ArcGisFeatureParser`. A source that must hit several layers uses
+    :class:`ArcGisMultiFeatureRetriever` rather than calling this per layer.
+
+    Args:
+        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
+        geometry: query point. ``x``/``y`` are read from it, and its
+            ``spatialReference`` is carried through when it has one, for a
+            service whose native reference is not the request's ``in_sr``.
+        where: SQL where clause.
+        out_fields: ``outFields`` for the query.
+        in_sr: input spatial reference WKID for ``geometry``.
+        return_centroid: ask for each matched feature's ``centroid``, which is
+            how a polygon layer (a parcel, a zone) answers "where is it?"
+            without returning the whole ring. See :func:`parcel_centroid`.
+        result_record_count: cap on the features returned.
+        count_only: ask only how many features match, giving a
+            :class:`CountEnvelope` (``{"count": n}``) instead of features. The
+            field list and ``returnGeometry`` are then left off the request,
+            since a count carries neither.
+        timeout: request timeout in seconds.
     """
-    params: dict[str, Any] = {
-        "outFields": out_fields,
-        "returnGeometry": "false",
-        "f": "json",
-    }
+    params: dict[str, Any] = {}
+    if not count_only:
+        params["outFields"] = out_fields
+        params["returnGeometry"] = "false"
+    params["f"] = "json"
     if geometry is not None:
         # Use only the point coordinates; geocode() returns a richer dict (with
         # an attributes map) and a caller may hand the whole thing straight in.
-        params["geometry"] = json.dumps({"x": geometry["x"], "y": geometry["y"]})
+        point: dict[str, Any] = {"x": geometry["x"], "y": geometry["y"]}
+        if geometry.get("spatialReference"):
+            point["spatialReference"] = geometry["spatialReference"]
+        params["geometry"] = json.dumps(point)
         params["geometryType"] = "esriGeometryPoint"
         params["spatialRel"] = "esriSpatialRelIntersects"
         params["inSR"] = str(in_sr)
     if where is not None:
         params["where"] = where
+    if return_centroid:
+        params["returnCentroid"] = "true"
+    if result_record_count is not None:
+        params["resultRecordCount"] = result_record_count
+    if count_only:
+        params["returnCountOnly"] = "true"
     return requests.get(
         f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout
     )
@@ -374,6 +442,90 @@ class ArcGisFeatureRetriever(RetrieverFunc):
             in_sr=self.in_sr,
             timeout=self.timeout,
         )
+
+
+def parcel_centroid(
+    feature_url: str,
+    *,
+    where: str | Callable[..., str],
+    argument: str = "address",
+    disambiguate_by: str | None = None,
+    out_fields: str = "*",
+    result_record_count: int | None = None,
+    wkid: int | None = None,
+    timeout: int = 20,
+) -> Callable[..., dict[str, Any]]:
+    """Build a ``point`` resolver that reads a centroid off the council's parcel layer.
+
+    The council's own address layer is the geocoder: an attribute query with
+    ``returnCentroid=true`` turns a house number and street into the point its
+    zone layers are then queried at, with no Esri World geocode in the way and
+    no dependence on how Esri spells the street. Pass the result as the
+    ``point`` argument of :class:`ArcGisFeatureRetriever` or
+    :class:`ArcGisMultiFeatureRetriever`, exactly like :func:`coords_point`::
+
+        retrieve = ArcGisMultiFeatureRetriever(
+            DAY_LAYERS,
+            point=parcel_centroid(PARCELS_URL, where=_where, argument="address"),
+        )
+
+    Args:
+        feature_url: Full FeatureServer layer URL of the parcel/address layer.
+        where: SQL clause locating the property: a string, or a callable
+            resolved against ``**source.params``. A callable may raise
+            ``SourceArgumentNotFound`` itself for an address it cannot even
+            build a clause from.
+        argument: ``source.params`` field to blame when nothing matched.
+        disambiguate_by: feature field naming one property. A parcel split
+            across several polygons repeats the same value and collapses to a
+            single match; genuinely different values mean the clause matched
+            more than one property, which raises
+            ``SourceArgAmbiguousWithSuggestions`` listing them rather than
+            silently handing back a neighbour's point.
+        out_fields: ``outFields`` for the lookup (needs ``disambiguate_by``).
+        result_record_count: cap on the parcels considered.
+        wkid: spatial reference of the returned centroid, carried into the
+            follow-up spatial query. Leave unset for a layer already in 4326.
+        timeout: request timeout in seconds.
+    """
+
+    def resolve(**params: Any) -> dict[str, Any]:
+        clause = where(**params) if callable(where) else where
+        value = params.get(argument)
+        response = feature_query(
+            feature_url,
+            where=clause,
+            out_fields=out_fields,
+            return_centroid=True,
+            result_record_count=result_record_count,
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        data = response_shape.validate(response.json(), FeatureEnvelope)
+        features = data["features"]
+        if not features:
+            raise SourceArgumentNotFound(argument, value)
+
+        if disambiguate_by is not None:
+            by_property: dict[str, Any] = {}
+            for feature in features:
+                name = feature.get("attributes", {}).get(disambiguate_by) or ""
+                by_property.setdefault(name, feature)
+            if len(by_property) > 1:
+                raise SourceArgAmbiguousWithSuggestions(
+                    argument, value, sorted(by_property)
+                )
+            features = list(by_property.values())
+
+        centroid = features[0].get("centroid")
+        if not centroid:
+            raise SourceArgumentNotFound(argument, value)
+        point: dict[str, Any] = {"x": centroid["x"], "y": centroid["y"]}
+        if wkid is not None:
+            point["spatialReference"] = {"wkid": wkid}
+        return point
+
+    return resolve
 
 
 class ArcGisDistinctValues:
@@ -577,18 +729,41 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         timeout: request timeout in seconds.
         point: callable resolved against ``**source.params`` returning the
             ``{"x": lon, "y": lat}`` query point, bypassing the geocoder (see
-            :func:`coords_point`).
+            :func:`coords_point`, :func:`parcel_centroid`).
+        geocode_fields: ``outFields`` asked of the geocoder, for a source whose
+            later stages need a field of the matched address (a city, a zone)
+            and not only its point. Read it back with :func:`geocoded_location`.
+        where: SQL clause applied to every layer alongside the point: a string,
+            or a callable resolved as ``where(label, **source.params)`` when
+            each layer needs its own. Pass ``address=None`` with it (and no
+            ``point``) for layers keyed purely by attribute, with no geometry.
+        count_only: query each layer with ``returnCountOnly``, for a scan that
+            only asks *whether* the point falls in a layer. Pair with
+            ``ArcGisMultiFeatureParser(count_only=True)``.
+        first_match: stop at the first layer that matched, leaving the rest
+            unqueried. For an ordered scan over mutually exclusive zone layers
+            (one per collection weekday), where later layers cannot add
+            anything. A failing layer then aborts the scan rather than being
+            skipped, because an ordered scan that skipped a layer could report
+            a later layer's answer as if it were the first.
+        argument: with ``first_match``, the ``source.params`` field to blame
+            when no layer matched. Leave unset to return no responses.
     """
 
     def __init__(
         self,
         layers,
-        address: str | Callable[..., str] = "address",
+        address: str | Callable[..., str] | None = "address",
         out_fields: str = "*",
         in_sr: int = 4326,
         timeout: int = 20,
         *,
         point: Callable[..., dict[str, Any]] | None = None,
+        geocode_fields: str | None = None,
+        where: str | Callable[..., str] | None = None,
+        count_only: bool = False,
+        first_match: bool = False,
+        argument: str | None = None,
     ):
         # Normalise to (label, url, out_fields) triples.
         self.layers: list[tuple[Any, str, str]] = []
@@ -599,41 +774,80 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
                 parts: list[Any] = list(entry)
                 fields = parts[2] if len(parts) > 2 else out_fields
                 self.layers.append((parts[0], parts[1], fields))
-        self.address = address
+        # A point resolver supersedes the address, and a purely attribute-keyed
+        # set of layers has neither.
+        self.address = None if point is not None else address
         self.in_sr = in_sr
         self.timeout = timeout
         self.point = point
+        self.geocode_fields = geocode_fields
+        self.where = where
+        self.count_only = count_only
+        self.first_match = first_match
+        self.argument = argument
+
+    def _where_for(self, label: Any, params: dict[str, Any]) -> str | None:
+        if callable(self.where):
+            return self.where(label, **params)
+        return self.where
+
+    def _matched(self, response: Response) -> bool:
+        """Did this layer answer with anything? (peeked at, for ``first_match``)."""
+        data = response.json()
+        if self.count_only:
+            return bool(data.get("count", 0))
+        return bool(data.get("features"))
 
     def __call__(self, source: BaseSource) -> list[tuple[Any, Response]]:
-        location = _locate(source, self.address, self.point)
+        located = self.point is not None or self.address is not None
+        location = (
+            _locate(source, self.address, self.point, fields=self.geocode_fields)
+            if located
+            else None
+        )
 
         # Query each layer independently and tolerate a single failing layer
         # (HTTP/connection error) by skipping it, so one bad layer doesn't abort
         # the whole fetch — matching the per-layer try/except councils relied on.
         results: list[tuple[Any, Response]] = []
         last_error: requests.RequestException | None = None
+        failures = 0
         for label, url, fields in self.layers:
             try:
                 response = feature_query(
                     url,
                     geometry=location,
+                    where=self._where_for(label, source.params),
                     out_fields=fields,
                     in_sr=self.in_sr,
+                    count_only=self.count_only,
                     timeout=self.timeout,
                 )
                 response.raise_for_status()
             except requests.RequestException as err:
+                if self.first_match:
+                    raise
                 _LOGGER.debug("ArcGIS layer %s failed, skipping: %s", url, err)
                 last_error = err
+                failures += 1
                 continue
             results.append((label, response))
+            if self.first_match and self._matched(response):
+                return results
         # Tolerating one bad layer is fine, but if EVERY layer failed the
         # provider is down or has moved: surface that instead of returning a
         # silently-empty schedule that reads to the user as "no collections".
-        if self.layers and not results:
+        if self.layers and failures == len(self.layers):
             raise ArcGisError(
                 f"all {len(self.layers)} ArcGIS layers failed to load"
             ) from last_error
+        if self.first_match:
+            # Every layer answered and none contained the point.
+            if self.argument is not None:
+                raise SourceArgumentNotFound(
+                    self.argument, source.params.get(self.argument)
+                )
+            return []
         return results
 
 
@@ -643,7 +857,21 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
     Consumes the ``[(label, Response), ...]`` produced by
     :class:`ArcGisMultiFeatureRetriever` and yields one ``(label, attributes)``
     per matching feature; layers whose point matched nothing are skipped.
+
+    Args:
+        first_per_layer: keep only each layer's first feature. A point query
+            against a route- or zone-polygon layer is meant to match exactly
+            one polygon, and a council whose polygons overlap at the edges
+            should not report the boundary twice.
+        count_only: read a :class:`CountEnvelope` instead of features, for a
+            retriever run with ``count_only=True``. Yields ``(label,
+            {"count": n})`` for each layer that counted anything, so the label
+            (the zone, the weekday) is the record.
     """
+
+    def __init__(self, *, first_per_layer: bool = False, count_only: bool = False):
+        self.first_per_layer = first_per_layer
+        self.count_only = count_only
 
     def __call__(
         self,
@@ -654,10 +882,20 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
         name = response_shape.source_name(source)
         for label, response in responses:
             response.raise_for_status()
+            if self.count_only:
+                counted = response_shape.validate(
+                    response.json(), CountEnvelope, source_name=name
+                )
+                if counted["count"]:
+                    records.append((label, {"count": counted["count"]}))
+                continue
             data = response_shape.validate(
                 response.json(), FeatureEnvelope, source_name=name
             )
-            for feature in data["features"]:
+            features = data["features"]
+            if self.first_per_layer:
+                features = features[:1]
+            for feature in features:
                 records.append((label, feature.get("attributes", {})))
         return records
 

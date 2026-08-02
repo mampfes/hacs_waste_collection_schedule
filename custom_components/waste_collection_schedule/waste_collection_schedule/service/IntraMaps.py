@@ -14,11 +14,13 @@ Typical workflow:
 from __future__ import annotations
 
 import logging
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import requests
+from bs4 import BeautifulSoup, Tag
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -800,6 +802,393 @@ class IntegrationClientRetriever(RetrieverFunc):
             if _normalise_address(value) == normalised:
                 return candidate
         raise SourceArgumentNotFoundWithSuggestions(self.address, addr, options)
+
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture) — Integration widget
+#
+# A third flow, for the council that embeds IntraMaps' bin-lookup widget rather
+# than publishing a static Integration API config:
+#
+#     retrieve = IntegrationWidgetRetriever(CONFIG)
+#     parse    = IntraMapsPanelParser()          # the stateful flow's parser
+#
+# The credentials are scraped from the widget script (they rotate), the search
+# resolves an address to a mapkey/dbkey pair, and the collection fields come
+# from a MapBuilder selection made inside a session, so the response is the same
+# infoPanels payload the stateful flow returns.
+# --------------------------------------------------------------------------- #
+
+# A browser User-Agent: these councils' IIS front end rejects a default one.
+_BROWSER_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+)
+
+# Abbreviated street types as an Australian/New Zealand property register
+# stores them ("23 Bakana LP LANDSDALE"), against the words users type.
+STREET_TYPE_ABBREVIATIONS = {
+    "ST": "STREET",
+    "RD": "ROAD",
+    "DR": "DRIVE",
+    "DRV": "DRIVE",
+    "AVE": "AVENUE",
+    "AV": "AVENUE",
+    "LP": "LOOP",
+    "PL": "PLACE",
+    "BVD": "BOULEVARD",
+    "BLVD": "BOULEVARD",
+    "CL": "CLOSE",
+    "CT": "COURT",
+    "CRES": "CRESCENT",
+    "CR": "CRESCENT",
+    "CIR": "CIRCLE",
+    "CCT": "CIRCUIT",
+    "GTE": "GATE",
+    "PDE": "PARADE",
+    "TCE": "TERRACE",
+    "HWY": "HIGHWAY",
+    "GRV": "GROVE",
+    "GR": "GROVE",
+    "LN": "LANE",
+    "SQ": "SQUARE",
+    "ESP": "ESPLANADE",
+    "PWY": "PARKWAY",
+    "PKWY": "PARKWAY",
+    "GDNS": "GARDENS",
+}
+
+
+def expand_street_types(address: str) -> str:
+    """An address as a comparison key: upper case, street type spelled out.
+
+    Applied to both sides of a comparison, so "23 Bakana Loop, Landsdale"
+    matches the register's "23 Bakana LP LANDSDALE" (#6873).
+    """
+    tokens = address.upper().replace(",", " ").split()
+    return " ".join(STREET_TYPE_ABBREVIATIONS.get(t, t) for t in tokens)
+
+
+def shortened_queries(address: str, limit: int = 2) -> list[str]:
+    """Progressively shorter search terms, for a register that found nothing.
+
+    A strict register returns no candidates at all for a spelled-out street
+    type or an appended suburb, but happily lists them for "23 Bakana". Each
+    term drops one trailing token, never cutting below "<number> <name>" and
+    never ending on a street type (which is the part the register disagrees
+    about).
+    """
+    tokens = address.upper().replace(",", " ").split()
+    queries = []
+    for cut in range(len(tokens) - 1, 0, -1):
+        head = tokens[:cut]
+        if len(head) < 2:
+            break
+        if head[-1] in STREET_TYPE_ABBREVIATIONS or head[-1] in set(
+            STREET_TYPE_ABBREVIATIONS.values()
+        ):
+            continue
+        queries.append(" ".join(head))
+    return queries[:limit]
+
+
+def _header(headers: Any, name: str) -> str | None:
+    """Case-insensitive header lookup.
+
+    ``requests``' own ``CaseInsensitiveDict`` handles this for a live response,
+    but the offline-fixture replay layer (``tests/cassette.py``) serves a plain
+    ``dict`` keyed by whatever case the server sent, so a bare ``.get(name)``
+    would only work live.
+    """
+    name_lower = name.lower()
+    for key, value in headers.items():
+        if key.lower() == name_lower:
+            return value
+    return None
+
+
+@dataclass(frozen=True)
+class IntegrationWidgetConfig:
+    """Configuration for a council on the IntraMaps bin-lookup widget.
+
+    Attributes:
+        page_url: the council page embedding the widget, where the credentials
+            are scraped from.
+        base_url: the root URL of the IntraMaps server.
+        instance: the software instance path (SaaS: ``spatial/intramaps``).
+        map_project: UUID of the MapBuilder project the selection runs in.
+            Distinct from the widget's own (scraped) project name, which names
+            the *search* form's project.
+        map_module: UUID of the module to initialise in the session.
+        selection_layer: the layer a property is selected on.
+        app_type: the IntraMaps application module.
+        script_match: substring identifying the widget script on the page.
+        timeout_s: request timeout in seconds.
+        user_agent: User-Agent sent on every request.
+    """
+
+    page_url: str
+    base_url: str
+    instance: str = "spatial/intramaps"
+    map_project: str = ""
+    map_module: str = ""
+    selection_layer: str = "Property"
+    app_type: str = "MapBuilder"
+    script_match: str = "widget.js"
+    timeout_s: int = 25
+    user_agent: str = _BROWSER_USER_AGENT
+
+
+@dataclass(frozen=True)
+class WidgetCredentials:
+    """The rotating Integration API credentials a widget script carries."""
+
+    api_url: str
+    api_key: str
+    form_id: str
+    config_id: str
+    project_name: str
+
+
+_WIDGET_CONSTANTS = (
+    ("api_url", re.compile(r'const\s+API_URL\s*=\s*"(.*?Search/)";')),
+    ("api_key", re.compile(r'const\s+API_KEY\s*=\s*"(.*?)";')),
+    ("form_id", re.compile(r'const\s+FORM_ID\s*=\s*"(.*?)";')),
+    ("config_id", re.compile(r'const\s+CONFIG_ID\s*=\s*"(.*?)";')),
+    ("project_name", re.compile(r'const\s+PROJECT_NAME\s*=\s*"(.*?)";')),
+)
+
+
+def scrape_widget_credentials(
+    session: requests.Session,
+    config: IntegrationWidgetConfig,
+    argument: str = "address",
+) -> WidgetCredentials:
+    """Read a widget's Integration API credentials off the council's own page.
+
+    There is no static config to declare for these councils: the widget script
+    embeds a freshly generated api key, form id, config id and project name, so
+    they are scraped on every fetch. ``argument`` names the source argument a
+    layout change is reported against.
+    """
+    r = session.get(config.page_url)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "html.parser")
+    script = soup.find(
+        "script",
+        {"src": lambda x: bool(x and config.script_match in x)},  # type: ignore[dict-item]
+    )
+    if not isinstance(script, Tag):
+        raise SourceArgumentNotFound(
+            argument,
+            "",
+            "the council's bin-lookup page could not be parsed "
+            "(it may have changed layout)",
+        )
+    script_url = script["src"]
+    if isinstance(script_url, list):
+        script_url = script_url[0]
+    if script_url.startswith("//"):
+        script_url = "https:" + script_url
+
+    r = session.get(script_url)
+    r.raise_for_status()
+
+    values: dict[str, str] = {}
+    for key, pattern in _WIDGET_CONSTANTS:
+        match = pattern.search(r.text)
+        if not match:
+            raise SourceArgumentNotFound(
+                argument,
+                "",
+                f"could not find {key} in the council's widget script "
+                "(it may have changed layout)",
+            )
+        values[key] = match.group(1)
+    return WidgetCredentials(**values)
+
+
+class IntegrationWidgetRetriever(RetrieverFunc):
+    """Run the Integration widget search -> MapBuilder session -> selection flow.
+
+    The third IntraMaps flow, for a council that embeds IntraMaps' own
+    bin-lookup *widget* in its website rather than exposing a static Integration
+    API config. Two things follow from that:
+
+    * The credentials rotate, so there is nothing to declare: the api key, form
+      id, config id and project name are read out of the ``widget.js`` the
+      council's page embeds (:func:`scrape_widget_credentials`) on every fetch.
+    * The widget's search form resolves an address to a ``mapkey``/``dbkey``
+      pair but serves no collection fields itself. Those come from the
+      MapBuilder ``Integration/set`` selection endpoint, which needs a session:
+      GET ``Projects/`` for an ``X-IntraMaps-Session`` token, POST ``Modules/``
+      to initialise the module, then POST the selection. The response is the
+      same raw ``infoPanels`` payload :class:`IntraMapsPanelParser` reads, so a
+      source on this flow parses exactly like one on the stateful flow.
+
+    Every request goes through a plain ``requests`` session rather than the
+    shared curl_cffi ``source.session``: these councils' IIS/ASP.NET
+    Modules-init endpoint answers a bare HTTP 500 under Chrome's TLS/HTTP2
+    fingerprint. That is the same reason :class:`MapsClient` keeps its own
+    private ``requests.Session``.
+
+    The register search is strict about how an address is written, so this
+    matches candidates on :func:`expand_street_types` (the council stores
+    ``23 Bakana LP``, users type ``23 Bakana Loop``) and retries a search that
+    found nothing with the progressively shorter terms
+    :func:`shortened_queries` builds, whose candidates then feed the
+    suggestions on a miss (#6873). Both are unconditional: neither can turn a
+    match into a different match, only a miss into a hit.
+
+    Args:
+        config: the council's :class:`IntegrationWidgetConfig`.
+        address: ``source.params`` field name holding the street address.
+        match_field: search-result field naming each candidate's address.
+    """
+
+    def __init__(
+        self,
+        config: IntegrationWidgetConfig,
+        address: str = "address",
+        match_field: str = "Address",
+    ):
+        self.config = config
+        self.address = address
+        self.match_field = match_field
+
+    def _url(self, path: str) -> str:
+        base = self.config.base_url.rstrip("/")
+        return f"{base}/{self.config.instance}/ApplicationEngine/{path}"
+
+    def __call__(self, source: BaseSource) -> dict[str, Any]:
+        addr = str(source.params[self.address])
+
+        session = requests.Session()
+        session.headers.update({"User-Agent": self.config.user_agent})
+
+        credentials = scrape_widget_credentials(session, self.config, self.address)
+
+        results = self._search(session, credentials, addr)
+        if not results:
+            for reduced in shortened_queries(addr):
+                results = self._search(session, credentials, reduced)
+                if results:
+                    break
+        if not results:
+            raise SourceArgumentNotFound(self.address, addr)
+
+        dbkey, mapkey = self._select(results, addr)
+        intramaps_session = self._open_session(session, credentials, addr)
+        self._initialise_module(session, intramaps_session)
+        return self._select_feature(session, intramaps_session, dbkey, mapkey)
+
+    def _search(
+        self, session: requests.Session, credentials: WidgetCredentials, fields: str
+    ) -> list[list[dict[str, str]]]:
+        """One search against the widget's own (scraped) search endpoint.
+
+        Not :meth:`IntegrationClient.search_all`: the widget hands out a
+        complete search URL, which a client that builds its own from
+        ``base_url`` + ``instance`` cannot honour.
+        """
+        r = session.get(
+            credentials.api_url,
+            params={
+                "configId": credentials.config_id,
+                "form": credentials.form_id,
+                "project": credentials.project_name,
+                "fields": fields,
+            },
+            headers={
+                "Authorization": f"apikey {credentials.api_key}",
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            timeout=self.config.timeout_s,
+        )
+        r.raise_for_status()
+        return r.json()
+
+    def _select(
+        self, results: list[list[dict[str, str]]], addr: str
+    ) -> tuple[str, str]:
+        """The searched-for address's ``(dbkey, mapkey)``, else suggestions."""
+        target = expand_street_types(addr)
+        options: list[str] = []
+        for entry in results:
+            by_name = {item["name"]: item["value"] for item in entry}
+            candidate = by_name.get(self.match_field, "")
+            options.append(candidate)
+            if expand_street_types(candidate) == target:
+                dbkey = by_name.get("dbkey")
+                mapkey = by_name.get("mapkey")
+                if dbkey is not None and mapkey is not None:
+                    return dbkey, mapkey
+                break
+        raise SourceArgumentNotFoundWithSuggestions(self.address, addr, options)
+
+    def _open_session(
+        self, session: requests.Session, credentials: WidgetCredentials, addr: str
+    ) -> str:
+        """Mint an ``X-IntraMaps-Session`` token for the selection requests."""
+        r = session.get(
+            self._url("Projects/"),
+            params={
+                "configId": credentials.config_id,
+                "appType": self.config.app_type,
+                "project": self.config.map_project,
+                "datasetCode": "",
+            },
+            timeout=self.config.timeout_s,
+        )
+        r.raise_for_status()
+        token = _header(r.headers, "X-IntraMaps-Session")
+        if not token:
+            raise SourceArgumentNotFound(
+                self.address, addr, "failed to establish an IntraMaps session"
+            )
+        return token
+
+    def _initialise_module(self, session: requests.Session, token: str) -> None:
+        """Load the module the selection runs against into the new session."""
+        r = session.post(
+            self._url("Modules/"),
+            json={
+                "module": self.config.map_module,
+                "includeBasemaps": False,
+                "includeWktInSelection": True,
+            },
+            params={"IntraMapsSession": token},
+            headers={"Content-Type": "application/json"},
+            timeout=self.config.timeout_s,
+        )
+        r.raise_for_status()
+
+    def _select_feature(
+        self, session: requests.Session, token: str, dbkey: str, mapkey: str
+    ) -> dict[str, Any]:
+        """Select the property on the map and return its raw infoPanels."""
+        r = session.post(
+            self._url("Integration/set"),
+            json={
+                "dbKey": dbkey,
+                "infoPanelWidth": 0,
+                "mapKeys": [mapkey],
+                "multiLayer": False,
+                "selectionLayer": self.config.selection_layer,
+                "useCatalogId": False,
+                "zoomTo": "entire",
+            },
+            params={"IntraMapsSession": token},
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            timeout=self.config.timeout_s,
+        )
+        r.raise_for_status()
+        return r.json()
 
 
 class IntegrationPanelParser(Parser["list[dict[str, str]]"]):

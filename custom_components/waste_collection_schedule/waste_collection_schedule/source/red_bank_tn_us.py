@@ -1,34 +1,30 @@
 import datetime
-import json
 import re
+from functools import lru_cache
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
-    SourceArgumentNotFound,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import (
     Compose,
     HolidayShift,
     RecurrenceExpander,
     Schedule,
 )
+from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 # City of Red Bank, TN "trash day" ArcGIS FeatureServer: layer 1 holds parcels
 # (STNUM/STNAME, one polygon per address), layers 2-6 are the Monday..Friday
-# collection-zone polygons. The flow is where-clause -> centroid (a
-# ``returnCentroid=true`` attribute query, raising on no match or on an
-# ambiguous multi-parcel address) -> a spatial COUNT-only query against each
-# day-zone layer in turn, stopping at the first with a non-zero count.
-# feature_query()/ArcGisFeatureRetriever don't expose ``returnCentroid`` or a
-# count-only query, so this is a source-defined retrieve() (via
-# source.session) rather than the shared ArcGIS retriever pair; the resolved
-# weekday is then handed to the framework's recurrence + holiday helpers.
+# collection-zone polygons. The city's own parcel layer is the geocoder
+# (ArcGis.parcel_centroid: a where clause plus returnCentroid, collapsing the
+# several polygons one address can have and refusing an address that matched
+# two properties), and the day-zone layers are then scanned in order with
+# count-only spatial queries until one contains that point. The weekday that
+# layer stands for is handed to the framework's recurrence + holiday helpers.
 
 FEATURE_SERVER = (
     "https://services9.arcgis.com/b7VbpZSIoQ7S1Sl6/arcgis/rest/services/"
@@ -124,35 +120,54 @@ def _parse_street_address(street_address: str) -> tuple:
     return stnum, " ".join(cleaned)
 
 
-def _red_bank_holiday_set(years) -> set:
+def _parcel_where(**params: Any) -> str:
+    """The parcel-layer clause for the configured address."""
+    address = params["street_address"]
+    stnum, street_name = _parse_street_address(address)
+    if not stnum or not street_name:
+        raise SourceArgumentNotFound("street_address", address)
+    esc = street_name.replace("'", "''")
+    return f"STNUM='{stnum}' AND UPPER(STNAME) LIKE '{esc}%'"
+
+
+@lru_cache(maxsize=4)
+def _red_bank_holiday_set(first_year: int, last_year: int) -> frozenset:
     """No-collection weekdays: US federal holidays per Tennessee's calendar
     (adds Good Friday, drops Columbus Day, which the city does not observe),
     plus the day after Thanksgiving."""
+    years = range(first_year, last_year)
     days = recurrence.us_federal_holidays(years, subdiv="TN")
     for year in years:
         thanksgiving = recurrence.monthly_nth_weekday(
             3, 4, on_or_after=datetime.date(year, 11, 1)
         )
         days.add(thanksgiving + datetime.timedelta(days=1))
-    return days
+    return frozenset(days)
 
 
-def _describe(record: dict, source: Any):
+def _holidays() -> frozenset:
+    today = datetime.date.today()
+    end = today + datetime.timedelta(days=HORIZON_DAYS)
+    return _red_bank_holiday_set(today.year, end.year + 2)
+
+
+def _describe(record: tuple, source: Any):
+    weekday, _count = record
     today = datetime.date.today()
     end = today + datetime.timedelta(days=HORIZON_DAYS)
     # This calendar week's occurrence of the collection weekday (which may
     # already have passed this week) starts the weekly cadence, matching the
     # legacy source's own base-line calculation.
     week_start = today - datetime.timedelta(days=today.weekday())
-    first = week_start + datetime.timedelta(days=record["weekday"])
+    first = week_start + datetime.timedelta(days=weekday)
     yield Schedule("Trash", first, recurrence.WEEKLY, until=end)
 
 
 def _adjust(collection_date: datetime.date, key: str, source: Any):
     """Delay onto the next weekday that is neither a weekend day nor a
     no-collection holiday (chained: a bump that lands on another holiday or a
-    weekend keeps moving forward), matching the legacy source exactly."""
-    holidays = source._holidays
+    weekend keeps moving forward)."""
+    holidays = _holidays()
     while collection_date.weekday() >= 5 or collection_date in holidays:
         collection_date += datetime.timedelta(days=1)
     return collection_date
@@ -175,9 +190,6 @@ class Source(BaseSource):
 
     PARAMS = (text_field("street_address", "Street Address"),)
 
-    # Stashed by retrieve() per fetch, read back by _adjust() via HolidayShift.
-    _holidays: set[datetime.date]
-
     HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address as it appears in Red Bank (e.g. '1107 "
@@ -186,89 +198,31 @@ class Source(BaseSource):
         ),
     }
 
+    retrieve = ArcGis.ArcGisMultiFeatureRetriever(
+        [
+            (weekday, f"{FEATURE_SERVER}/{layer_id}")
+            for layer_id, weekday in DAY_LAYERS.items()
+        ],
+        point=ArcGis.parcel_centroid(
+            f"{FEATURE_SERVER}/{PARCELS_LAYER}",
+            where=_parcel_where,
+            argument="street_address",
+            disambiguate_by="ADDRESS",
+            out_fields="ADDRESS,STNUM,STNAME",
+            result_record_count=50,
+            wkid=WKID,
+            timeout=30,
+        ),
+        where="1=1",
+        in_sr=WKID,
+        count_only=True,
+        first_match=True,
+        argument="street_address",
+        timeout=30,
+    )
+    parse = ArcGis.ArcGisMultiFeatureParser(count_only=True)
     preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, street_address: str):
         super().__init__(street_address=street_address.strip())
-
-    def retrieve(self, source: "Source"):
-        address = source.params["street_address"]
-        stnum, street_name = _parse_street_address(address)
-        if not stnum or not street_name:
-            raise SourceArgumentNotFound("street_address", address)
-
-        esc = street_name.replace("'", "''")
-        where = f"STNUM='{stnum}' AND UPPER(STNAME) LIKE '{esc}%'"
-
-        resp = source.session.get(
-            f"{FEATURE_SERVER}/{PARCELS_LAYER}/query",
-            params={
-                "f": "json",
-                "where": where,
-                "outFields": "ADDRESS,STNUM,STNAME",
-                "returnGeometry": "false",
-                "returnCentroid": "true",
-                "resultRecordCount": 50,
-            },
-            timeout=30,
-        )
-        resp.raise_for_status()
-        features = resp.json().get("features", [])
-        if not features:
-            raise SourceArgumentNotFound("street_address", address)
-
-        # collapse multi-polygon parcels that share one address
-        by_address: dict = {}
-        for feat in features:
-            addr = feat.get("attributes", {}).get("ADDRESS") or ""
-            by_address.setdefault(addr, feat)
-
-        if len(by_address) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "street_address", address, sorted(by_address.keys())
-            )
-
-        feat = next(iter(by_address.values()))
-        centroid = feat.get("centroid")
-        if not centroid:
-            raise SourceArgumentNotFound("street_address", address)
-
-        geometry = json.dumps(
-            {
-                "x": centroid["x"],
-                "y": centroid["y"],
-                "spatialReference": {"wkid": WKID},
-            }
-        )
-        weekday = None
-        for layer_id, wd in DAY_LAYERS.items():
-            r = source.session.get(
-                f"{FEATURE_SERVER}/{layer_id}/query",
-                params={
-                    "f": "json",
-                    "geometry": geometry,
-                    "geometryType": "esriGeometryPoint",
-                    "inSR": WKID,
-                    "spatialRel": "esriSpatialRelIntersects",
-                    "where": "1=1",
-                    "returnCountOnly": "true",
-                },
-                timeout=30,
-            )
-            r.raise_for_status()
-            if r.json().get("count", 0) > 0:
-                weekday = wd
-                break
-        if weekday is None:
-            raise SourceArgumentNotFound("street_address", address)
-
-        today = datetime.date.today()
-        end = today + datetime.timedelta(days=HORIZON_DAYS)
-        # Stashed on the source instance for HolidayShift's _adjust() to read.
-        source._holidays = _red_bank_holiday_set(range(today.year, end.year + 2))
-
-        return [{"weekday": weekday}]
-
-    def parse(self, raw, source: "Source | None" = None):
-        return raw
