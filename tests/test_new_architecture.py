@@ -4020,3 +4020,249 @@ def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
         "so other providers on the same platform can use it. If this really is a "
         "one-off, add it to SOURCE_LOCAL_STEP_EXCEPTIONS with a reason."
     )
+
+
+# --------------------------------------------------------------------------- #
+# Cassette gate
+#
+# Every pipeline source ships a recorded cassette under tests/fixtures/<module>/
+# so CI exercises the source offline: no live provider calls, no flakes when a
+# council's site is down, and a real regression signal when a refactor changes
+# parsed output.
+#
+# Record with:  python tests/record_fixtures.py <module>
+#
+# The names below are a backlog, not an exemption. They are pipeline sources
+# that predate this gate and still need a recording. Do not add to this list to
+# make a new source pass; if a provider genuinely cannot be recorded (hard
+# geo-block, per-request challenge, credentials), say so in the PR and get it
+# added deliberately.
+# --------------------------------------------------------------------------- #
+
+SOURCES_AWAITING_CASSETTE = {
+    "alba_com_pl",
+    "allerdale_gov_uk",
+    "awn_de",
+    "berdorf_lu",
+    "bielefeld_de",
+    "chesapeake_va_us",
+    "data_umweltprofis_at",
+    "erlangen_hoechstadt_de",
+    "fredrikstad_no",
+    "fuquay_varina_nc_us",
+    "goessendorf_at",
+    "kumberg_gv_at",
+    "nemaffaldsservice_kk_dk",
+    "nuernberger_land_de",
+    "obdach_at",
+    "plano_gov",
+    "regioentsorgung_de",
+    "sepan_remondis_pl",
+    # Arrived from master in the v2.32.0 merge; never recorded.
+    "stadt_kerpen_de",
+    "shawinigan_ca",
+    "stadt_bamberg_de",
+}
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
+    """Pipeline sources must ship an offline cassette covering their TEST_CASES."""
+    from pathlib import Path
+
+    if stem in SOURCES_AWAITING_CASSETTE:
+        return
+    fixture_dir = Path(__file__).resolve().parent / "fixtures" / stem
+    assert fixture_dir.is_dir() and any(fixture_dir.glob("*.json")), (
+        f"{stem} has no cassette under tests/fixtures/{stem}/. Record one with "
+        f"`python tests/record_fixtures.py {stem}` and commit the JSON so CI can "
+        "replay this source offline."
+    )
+
+
+# --------------------------------------------------------------------------- #
+# Step-override ratchet
+#
+# Overriding retrieve/parse/preprocess/transform on a source puts provider
+# behaviour where the next provider on the same platform cannot reach it. A
+# large number of sources converted before this rule existed still do it, so
+# this is a ratchet rather than a ban: the set below is frozen, and a source
+# outside it may not introduce an override.
+#
+# The list only ever shrinks. Moving behaviour into a shared component under
+# waste_collection_schedule/service/ and deleting the entry is always the right
+# direction. Never add to it to make a conversion pass: if a provider seems to
+# need a bespoke step, the component is missing a capability.
+# --------------------------------------------------------------------------- #
+
+_STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
+
+SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
+    "1coast_com_au",
+    "abfallkalender_prezero_network",
+    "abfallwirtschaft_fuerth_eu",
+    "abfallwirtschaft_germersheim_de",
+    "abfallwirtschaft_vechta_de",
+    "abfuhrplan_landkreis_neumarkt_de",
+    "abfuhrplan_schwabach_de",
+    "abki_de",
+    "aha_region_de",
+    "api_hubert_schmid_de",
+    "app_my_local_services_au",
+    "asr_chemnitz_de",
+    "aw_harburg_de",
+    "awb_es_de",
+    "awb_oldenburg_de",
+    "awg_de",
+    "awg_wuppertal_de",
+    "awigo_de",
+    "awista_kommunal_de",
+    "awm_muenchen_de",
+    "awr_de",
+    "awsh_de",
+    "awv_ot_de",
+    "berdorf_lu",
+    "bielefeld_de",
+    "boroondara_vic_gov_au",
+    "bsr_de",
+    "burnley_gov_uk",
+    "c_trace_de",
+    "ceb_coburg_de",
+    "cheshire_west_and_chester_gov_uk",
+    "cm_lisboa_pt",
+    "communitywastedisposal_com",
+    "data_umweltprofis_at",
+    "durban_gov_za",
+    "eastcambs_gov_uk",
+    "eigenbetrieb_abfallwirtschaft_de",
+    "eilenburg_de",
+    "eko_tom_pl",
+    "elmbridge_gov_uk",
+    "erlangen_hoechstadt_de",
+    "frankenberg_de",
+    "fredrikstad_no",
+    "fuquay_varina_nc_us",
+    "gemeinde24_at",
+    "gemuenden_wohra_de",
+    "geoport_nwm_de",
+    "gruppoveritas_it",
+    "hausmuell_info",
+    "highland_gov_uk",
+    "hohokus_nj_us",
+    "ics",
+    "infeo_at",
+    "isaac_qld_gov_au",
+    "jacksonville_fl_us",
+    "kaev_niederlausitz",
+    "karlsruhe_de",
+    "kirklees_gov_uk",
+    "korneuburg_stadtservice_at",
+    "ks_boerde_de",
+    "kumberg_gv_at",
+    "kwb_goslar_de",
+    "kwu_de",
+    "landkreis_helmstedt_de",
+    "landkreis_kusel_de",
+    "landkreis_wittmund_de",
+    "lawrence_ma_us",
+    "lincoln_gov_uk",
+    "lobbe_app",
+    "magdeburg_de",
+    "melvillecity_com_au",
+    "merri_bek_vic_gov_au",
+    "mid_devon_gov_uk",
+    "mpo_krakow_pl",
+    "mulhouse_alsace_fr",
+    "muttenz_ch",
+    "mzv_rotenburg_bebra_de",
+    "narab_se",
+    "nemaffaldsservice_kk_dk",
+    "nsr_se",
+    "okc_gov",
+    "phila_gov",
+    "plymouth_gov_uk",
+    "portsmouth_gov_uk",
+    "rapperswil_be_ch",
+    "red_bank_tn_us",
+    "redbridge_gov_uk",
+    "regioentsorgung_de",
+    "reso_gmbh_de",
+    "rsag_de",
+    "seab_biella_it",
+    "selwyn_govt_nz",
+    "shawinigan_ca",
+    "stadtreinigung_dresden_de",
+    "stadtreinigung_giessen_de",
+    "stadtreinigung_leipzig_de",
+    "stadtservice_bruehl_de",
+    "staedteservice_de",
+    "stevenage_gov_uk",
+    "stkh_hu",
+    "tunbridgewells_gov_uk",
+    "verl_de",
+    "vevg_karlsburg_de",
+    "walthamforest_gov_uk",
+    "wanneroo_wa_gov_au",
+    "wellington_govt_nz",
+    "wermelskirchen_de",
+    "westlothian_gov_uk",
+    "wrexham_gov_uk",
+    "zakb_de",
+    "zva_sek_de",
+    "zva_wmk_de",
+    "zys_harmonogram_pl",
+}
+
+
+def _overridden_steps(stem: str) -> list[str]:
+    """Step methods defined directly on a source's BaseSource subclass."""
+    import ast
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    found: list[str] = []
+    for node in ast.parse(path.read_text(encoding="utf-8")).body:
+        if not isinstance(node, ast.ClassDef):
+            continue
+        if not any(
+            isinstance(base, ast.Name) and base.id == "BaseSource"
+            for base in node.bases
+        ):
+            continue
+        found += [
+            member.name
+            for member in node.body
+            if isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and member.name in _STEP_METHODS
+        ]
+    return found
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_no_new_source_local_step_overrides(stem: str) -> None:
+    """Sources outside the frozen baseline must not override pipeline steps."""
+    if stem in SOURCES_WITH_LEGACY_STEP_OVERRIDES:
+        return
+    overridden = _overridden_steps(stem)
+    assert not overridden, (
+        f"{stem} overrides {overridden} on its Source class. Provider behaviour "
+        "belongs in a reusable component under waste_collection_schedule/service/ "
+        "so every provider on that platform gets it. Extend the component instead "
+        "of adding a bespoke step here."
+    )
