@@ -3,8 +3,10 @@ import logging
 import re
 import unicodedata
 from typing import TYPE_CHECKING, Any, NamedTuple
+from urllib.parse import urljoin
 
 import jinja2
+from bs4 import BeautifulSoup, Tag
 from icalevents import icalevents
 
 from waste_collection_schedule.retrievers import RetrieverFunc
@@ -343,6 +345,18 @@ class ICS:
         return entries
 
 
+def _resolve_arg(mapping: Any, source: "BaseSource", **extra: Any) -> Any:
+    """Resolve a retriever constructor argument against the source's params.
+
+    A literal is returned unchanged; a callable is invoked with ``**extra`` plus
+    ``**source.params``, so a URL or query template can be written in terms of
+    the user's arguments (and, for the per-year retriever, the ``year``).
+    """
+    if callable(mapping):
+        return mapping(**extra, **source.params)
+    return mapping
+
+
 class IcsYearRetriever(RetrieverFunc):
     """GET one ICS feed per calendar year the schedule can span.
 
@@ -453,9 +467,116 @@ class IcsYearRetriever(RetrieverFunc):
         Callables also receive ``year``, so a URL or query template can select
         the right calendar without the source writing a ``retrieve`` of its own.
         """
-        if callable(mapping):
-            return mapping(**extra, **source.params)
-        return mapping
+        return _resolve_arg(mapping, source, **extra)
+
+
+class IcsIndexRetriever(RetrieverFunc):
+    """Scrape an index page for ICS feed links, then GET every one.
+
+    For a provider that publishes not one calendar but a small fixed set: one
+    feed per waste type or per district, each linked from a stable index page.
+    A WordPress events calendar's per-category ``?ical=download`` links and a
+    council's list of ``.ics`` downloads are both this shape. There is no lookup
+    key to submit, so :class:`~waste_collection_schedule.retrievers.TwoStepRetriever`
+    does not fit: every listed feed is fetched and the results merged. Pair it
+    with :class:`IcsFeedsParser`, which already accepts a list of responses::
+
+        retrieve = IcsIndexRetriever(
+            index_url="https://www.example.gv.at/kalender/",
+            link_selector="i.fa-calendar-plus",
+            pattern=r"abfalltyp",
+        )
+        parse = IcsFeedsParser(parsers.IcsParser())
+
+    Links are kept in document order and de-duplicated, and each href is
+    resolved against the index URL, so a relative link works.
+
+    Like :class:`~waste_collection_schedule.retrievers.PdfLinkRetriever` this
+    reads the first response's body to find the links; that is the sanctioned
+    exception to "a retriever only does HTTP".
+
+    Args:
+        index_url: the page listing the feeds (literal or
+            ``callable(**source.params) -> str``).
+        pattern: regex an ``<a href>`` must match to count as a feed link,
+            searched case-insensitively. Default ``r"\\.ics(?:$|\\?)"`` matches
+            a plain ``.ics`` download; override it for a provider whose export
+            links are recognised by a path segment or query instead.
+        link_selector: optional CSS selector narrowing which anchors count. A
+            matching element that is not itself an ``<a href>`` resolves to its
+            nearest enclosing one, so the selector may name the download icon
+            rather than the link (e.g. ``"i.fa-calendar-plus"``). ``None``
+            considers every anchor on the page.
+        min_feeds: minimum number of feed links expected. Fewer raises rather
+            than returning a silently short schedule (default 1).
+        headers: optional headers applied to every request.
+        timeout: per-request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        *,
+        index_url: "UrlArgs",
+        pattern: str = r"\.ics(?:$|\?)",
+        link_selector: "str | None" = None,
+        min_feeds: int = 1,
+        headers: "HeadersArgs" = None,
+        timeout: int = 30,
+    ):
+        self.index_url = index_url
+        self.pattern = re.compile(pattern, re.IGNORECASE)
+        self.link_selector = link_selector
+        self.min_feeds = min_feeds
+        self.headers = headers
+        self.timeout = timeout
+
+    def _anchors(self, soup: BeautifulSoup) -> "list[Tag]":
+        if self.link_selector is None:
+            return list(soup.find_all("a", href=True))
+        anchors: list[Tag] = []
+        for element in soup.select(self.link_selector):
+            anchor = (
+                element
+                if element.name == "a" and element.has_attr("href")
+                else element.find_parent("a", href=True)
+            )
+            if isinstance(anchor, Tag):
+                anchors.append(anchor)
+        return anchors
+
+    def _feed_urls(self, index_url: str, html: str) -> list[str]:
+        soup = BeautifulSoup(html, "html.parser")
+        urls: list[str] = []
+        for anchor in self._anchors(soup):
+            href = str(anchor["href"])
+            if not self.pattern.search(href):
+                continue
+            url = urljoin(index_url, href)
+            if url not in urls:
+                urls.append(url)
+        return urls
+
+    def __call__(self, source: "BaseSource") -> "list[Response]":
+        headers = _resolve_arg(self.headers, source)
+        index_url = _resolve_arg(self.index_url, source)
+
+        index = source.session.get(index_url, headers=headers, timeout=self.timeout)
+        index.raise_for_status()
+
+        urls = self._feed_urls(index_url, index.text)
+        if len(urls) < self.min_feeds:
+            raise ValueError(
+                f"found {len(urls)} ICS feed link(s) matching "
+                f"{self.pattern.pattern!r} on {index_url}, expected at least "
+                f"{self.min_feeds}; the page layout may have changed."
+            )
+
+        feeds = []
+        for url in urls:
+            feed = source.session.get(url, headers=headers, timeout=self.timeout)
+            feed.raise_for_status()
+            feeds.append(feed)
+        return feeds
 
 
 class IcsFeedsParser:
