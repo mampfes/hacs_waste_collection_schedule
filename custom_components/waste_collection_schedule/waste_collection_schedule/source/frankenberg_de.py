@@ -2,27 +2,31 @@
 
 Demonstrates: a two-level id resolution (district, then street within that
 district unless the district is a single-street "-0" area) against a
-semicolon-delimited legacy endpoint, feeding a year-scoped ICS generator with
-a best-effort next-year fetch in December. The legacy source cached resolved
-ids on the instance and retried once after refreshing them if a later fetch
-failed (guarding against the site's dropdown ids drifting between polls);
-this version resolves ids fresh on every retrieve() call (no cross-call state
-to go stale) but keeps a single refresh-and-retry around the collections
-request for resilience against a transient failure. No configured retriever
-expresses "resolve two ids, then generate one-or-two year-scoped calendars",
-hence a source-defined retrieve()/parse() pair.
+semicolon-delimited legacy endpoint, feeding a year-scoped ICS generator with a
+best-effort next-year fetch in December. That whole shape is
+``retrievers.YearlyRetriever``: the id resolution is its ``prepare`` step (run
+once, not once per year), the calendar POST is its ``fetch``, and
+``refresh_on_failure`` keeps the legacy source's single refresh-and-retry for
+when the site's dropdown ids drift between polls. ``parsers.EachResponse``
+folds the one-or-two generated calendars into one record list.
+
+The id lookups themselves stay here rather than moving to a shared component:
+zva-sek.de runs the same vendor module under the same ``get_ortsteile.php`` /
+``get_strassen.php`` / ``generate_ical.php`` paths, but the two read the reply
+differently, and this one has a quirk (see ``_resolve_street``) that a shared
+decoder would silently normalise away.
 """
 
 from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
-from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -71,6 +75,11 @@ def _resolve_district(session, district_name: str) -> str:
 def _resolve_street(
     session, district_id: str, street_name: "str | None"
 ) -> "str | None":
+    # The street endpoint writes its ids quoted (``... .value = '167';``) and
+    # this splits on " = ", so the id keeps its quotes and is POSTed as
+    # ``ak_strasse="'167'"``. The servlet accepts that, and the recorded
+    # calendars were generated with it, so it is preserved verbatim here rather
+    # than "tidied" as part of a refactor.
     r = session.get(_STRASSEN_URL, params={"ot_id": district_id.split("-")[0]})
     r.raise_for_status()
     result = r.text.split(";")[1:-2]
@@ -94,9 +103,17 @@ def _resolve_street(
     raise SourceArgumentNotFoundWithSuggestions("street", street_name, names)
 
 
-def _resolve_ids(
-    session, district_name: str, street_name: "str | None"
-) -> "tuple[str, str | None]":
+def _resolve_ids(source) -> "tuple[str, str | None]":
+    """Resolve the district and (where the district has streets) the street id.
+
+    The ``YearlyRetriever``'s prepare step: run once per fetch, ahead of the
+    year calendars, and again if ``refresh_on_failure`` decides the ids drifted.
+    A district id ending ``-0`` is a single-street area with no street dropdown.
+    """
+    session = source.session
+    district_name = source.params["district"]
+    street_name = source.params.get("street")
+
     district_id = _resolve_district(session, district_name)
     street_id = (
         _resolve_street(session, district_id, street_name)
@@ -106,7 +123,9 @@ def _resolve_ids(
     return district_id, street_id
 
 
-def _fetch_year(session, district_id: str, street_id: "str | None", year: int):
+def _calendar_for_year(source, year: int, context: "tuple[str, str | None]"):
+    """Generate one calendar year's ICS for the resolved district/street."""
+    district_id, street_id = context
     data = {
         "year": year,
         "ak_bezirk": 1,
@@ -117,20 +136,9 @@ def _fetch_year(session, district_id: str, street_id: "str | None", year: int):
     }
     if street_id is not None:
         data["ak_strasse"] = street_id
-    r = session.post(_ICAL_URL, data=data)
+    r = source.session.post(_ICAL_URL, data=data)
     r.raise_for_status()
     return r
-
-
-def _fetch_collections(session, district_id: str, street_id: "str | None") -> list:
-    now = datetime.now()
-    responses = [_fetch_year(session, district_id, street_id, now.year)]
-    if now.month == 12:
-        try:
-            responses.append(_fetch_year(session, district_id, street_id, now.year + 1))
-        except Exception:
-            pass
-    return responses
 
 
 @final
@@ -160,25 +168,14 @@ class Source(BaseSource):
         street(field="street", optional=True),
     )
 
-    def retrieve(self, source):
-        session = source.session
-        district_name = source.params["district"]
-        street_name = source.params.get("street")
-
-        district_id, street_id = _resolve_ids(session, district_name, street_name)
-        try:
-            return _fetch_collections(session, district_id, street_id)
-        except Exception:
-            # The site's dropdown ids occasionally drift; refresh once and retry.
-            district_id, street_id = _resolve_ids(session, district_name, street_name)
-            return _fetch_collections(session, district_id, street_id)
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser(regex=r"(.*) am \d{2}.\d{2}.\d{4}")
-        entries = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries
+    # The site's dropdown ids occasionally drift between polls, so a failed
+    # calendar request re-resolves them once before giving up.
+    retrieve = retrievers.YearlyRetriever(
+        prepare=_resolve_ids,
+        fetch=_calendar_for_year,
+        refresh_on_failure=True,
+    )
+    parse = parsers.EachResponse(parsers.IcsParser(regex=r"(.*) am \d{2}.\d{2}.\d{4}"))
 
     transform = ICSTransformer(
         type_value_map={

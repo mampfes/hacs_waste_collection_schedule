@@ -74,6 +74,44 @@ class Parser(Protocol[T]):
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> T: ...
 
 
+class EachResponse(Parser["list[Any]"]):
+    """Apply an inner parser to every response of a multi-response retrieve.
+
+    ``retrieve`` may hand back an iterable of responses rather than one: a
+    provider that publishes a separate calendar file per year (see
+    :class:`~waste_collection_schedule.retrievers.YearlyRetriever`), or a
+    paginated API. Each response parses exactly as a single one would, so this
+    maps the inner parser over them and concatenates the records, leaving the
+    rest of the pipeline seeing one flat list and the source needing no
+    ``parse`` of its own::
+
+        retrieve = retrievers.YearlyRetriever(fetch=_calendar_for_year)
+        parse = parsers.EachResponse(parsers.IcsParser())
+
+    A single response is passed straight through to the inner parser, so a
+    retriever that returns one response in some configurations and several in
+    others needs no special casing. Records are concatenated in the order the
+    retriever produced the responses.
+
+    Note that a per-response shape check (an ``IcsParser(min_events=...)``, say)
+    then applies to *each* response individually, which is usually what you
+    want: a year that came back empty is caught rather than masked by a healthy
+    neighbouring year.
+    """
+
+    def __init__(self, parser: Parser):
+        self.parser = parser
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[Any]":
+        responses = [response] if hasattr(response, "status_code") else response  # type: ignore[list-item]
+        records: list[Any] = []
+        for item in responses:  # type: ignore[union-attr]
+            records.extend(self.parser(item, source))
+        return records
+
+
 class JsonParser(Parser[Any]):
     """Parse response as JSON, optionally drilling into a nested key path.
 

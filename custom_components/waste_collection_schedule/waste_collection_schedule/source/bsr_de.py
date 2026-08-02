@@ -1,11 +1,11 @@
 import datetime
-from collections.abc import Iterable
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import FlattenGroups
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -78,19 +78,13 @@ class Source(BaseSource):
 
     retrieve = HttpGetRetriever(url=ENDPOINT_PICKUPS, params=_filter)
     parse = JsonParser("dates")
+    # ``dates`` maps an ISO date to a list of pickups; flatten to one record per
+    # pickup so classify() handles each individually. Each pickup repeats its own
+    # date in ``serviceDate_actual``, so dropping the grouping key loses nothing.
+    preprocess = FlattenGroups()
 
     def __init__(self, schedule_id: str) -> None:
         super().__init__(schedule_id=schedule_id)
-
-    def preprocess(
-        self, dates: Any, source: "BaseSource | None" = None
-    ) -> Iterable[dict[str, Any]]:
-        # ``dates`` maps an ISO date to a list of pickups; flatten to one record
-        # per pickup so classify() handles each individually.
-        if not dates:
-            return
-        for pickups in dates.values():
-            yield from pickups
 
     def classify(self, record: dict[str, Any]) -> Collection | None:
         date = datetime.datetime.strptime(

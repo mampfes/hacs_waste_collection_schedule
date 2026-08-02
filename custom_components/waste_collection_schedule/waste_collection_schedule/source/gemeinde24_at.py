@@ -9,6 +9,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
@@ -228,6 +229,18 @@ def _resolve_street_id(session, gemeinde_id: str, strasse: str, street_id: str) 
     )
 
 
+def _gemeinde_step(source, _keys) -> str:
+    """First link of the lookup chain: municipality name -> GemeindeID."""
+    return _resolve_gemeinde_id(source.session, _clean(source.params.get("gemeinde")))
+
+
+def _street_step(source, keys) -> str:
+    """Second link: street name -> streetID, within the resolved municipality."""
+    return _resolve_street_id(
+        source.session, keys[0], _clean(source.params.get("strasse")), ""
+    )
+
+
 @final
 class Source(BaseSource):
     TITLE = "Gemeinde24"
@@ -261,6 +274,16 @@ class Source(BaseSource):
         ),
     }
 
+    retrieve = LookupChainRetriever(
+        steps=(_gemeinde_step, _street_step),
+        url=f"{API_BASE_URL}/content2.php",
+        params=lambda gemeinde_id, street_id, **_: {
+            "GemeindeID": gemeinde_id,
+            "apiKEY": API_KEY,
+            "StreetID": street_id,
+            "appversion": APP_VERSION,
+        },
+    )
     parse = parsers.JsonParser("waste_list.php", shape=list[_WasteItem])
 
     # The date split (weekday prefix) and the wasteID code override are folded
@@ -274,8 +297,6 @@ class Source(BaseSource):
     def __init__(self, gemeinde: str | None = None, strasse: str | None = None):
         # validate() (in super) enforces the required gemeinde + strasse cascade.
         super().__init__(gemeinde=gemeinde, strasse=strasse)
-        self._gemeinde = _clean(gemeinde)
-        self._strasse = _clean(strasse)
 
     @classmethod
     def get_parent_choices(cls) -> list[str]:
@@ -306,17 +327,3 @@ class Source(BaseSource):
         session = _cffi.Session(impersonate="chrome")
         gemeinde_id = _resolve_gemeinde_id(session, _clean(parent_value))
         return _deduplicate([name for name, _ in _streets(session, gemeinde_id)])
-
-    def retrieve(self, source):
-        gemeinde_id = _resolve_gemeinde_id(source.session, self._gemeinde)
-        street_id = _resolve_street_id(source.session, gemeinde_id, self._strasse, "")
-        return source.session.get(
-            f"{API_BASE_URL}/content2.php",
-            params={
-                "GemeindeID": gemeinde_id,
-                "apiKEY": API_KEY,
-                "StreetID": street_id,
-                "appversion": APP_VERSION,
-            },
-            timeout=30,
-        )

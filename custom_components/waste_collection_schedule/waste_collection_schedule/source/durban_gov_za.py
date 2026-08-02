@@ -16,6 +16,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.preprocessors import Compose, RowFilter, RowRelabel
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
@@ -45,6 +46,22 @@ def _validate_and_get_area(lookup, source) -> str:
             "area", source.params["area"], sorted(areas)
         )
     return area_key
+
+
+def _keep_chosen_parity(row, source) -> bool:
+    """Keep only the recycling round matching the user's odd/even ISO week.
+
+    The shared feed carries both parities of the fortnightly recycling round,
+    one labelled for even weeks and one for odd; exactly one of them applies to
+    any given address. Everything that is not a recycling round passes through.
+    """
+    _date, summary = row
+    even = bool(source.params.get("recycling_in_even_week", True))
+    if summary == _ODD_RECYCLING_SUMMARY:
+        return not even
+    if summary == "Recycling":
+        return even
+    return True
 
 
 @final
@@ -127,17 +144,12 @@ class Source(BaseSource):
         ),
     )
     parse = IcsParser()
-
-    def preprocess(self, entries, source):
-        even = bool(source.params.get("recycling_in_even_week", True))
-        for date_, summary in entries:
-            if summary == _ODD_RECYCLING_SUMMARY:
-                if even:
-                    continue
-                summary = "Recycling"
-            elif summary == "Recycling" and not even:
-                continue
-            yield (date_, summary)
+    # Drop the parity the address does not use, then fold the surviving
+    # odd-week label onto the plain "Recycling" the transformer maps.
+    preprocess = Compose(
+        RowFilter(_keep_chosen_parity),
+        RowRelabel(rename={_ODD_RECYCLING_SUMMARY: "Recycling"}),
+    )
 
     transform = ICSTransformer(
         type_value_map={"General Waste": GENERAL_WASTE, "Recycling": RECYCLABLES}

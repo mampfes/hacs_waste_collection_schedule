@@ -37,13 +37,13 @@ import datetime
 import json
 import re
 import time
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from typing import TYPE_CHECKING, Any, Protocol, TypeVar, cast
 from urllib.parse import urljoin
 from weakref import WeakKeyDictionary
 
 import requests as _plain_requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
@@ -229,6 +229,78 @@ class TwoStepRetriever(_BaseRetriever):
             key = self.extract(lookup, source)
         return source.session.get(
             self.schedule_url(key, **source.params), headers=headers
+        )
+
+
+class LookupChainRetriever(_BaseRetriever):
+    """Narrow an address through successive lookups, then fetch the schedule.
+
+    :class:`TwoStepRetriever` generalised past a single lookup, for a provider
+    whose address resolves one level at a time: municipality, then the street
+    within that municipality, then whatever comes below it. Each level's answer
+    is the input to the next, so the lookups cannot be issued in parallel or
+    folded into one request.
+
+    Each entry in ``steps`` is a ``callable(source, keys) -> key``, where
+    ``keys`` is the tuple of ids resolved so far. The step issues whatever
+    requests it needs through ``source.session`` and raises
+    ``SourceArgumentNotFound*`` / ``SourceArgAmbiguous*`` for a level that did
+    not resolve. The step owns its request rather than the retriever templating
+    it because these lookups vary too much to template: one level is a POST with
+    form data, the next a GET with query params, each with its own matching and
+    normalisation rules.
+
+    The schedule request is a GET built from every resolved key, positionally,
+    plus the source's params::
+
+        retrieve = retrievers.LookupChainRetriever(
+            steps=(_resolve_municipality, _resolve_street),
+            url=f"{API}/content.php",
+            params=lambda municipality_id, street_id, **_: {
+                "GemeindeID": municipality_id,
+                "StreetID": street_id,
+            },
+        )
+
+    Args:
+        steps: the ordered lookups. Must not be empty.
+        url: the schedule URL: a literal, or
+            ``callable(*keys, **source.params) -> str`` when an id goes in the
+            path.
+        params: optional ``callable(*keys, **source.params) -> params``, for the
+            (at least as common) case of the ids going in the query string.
+        headers: optional headers for the schedule request.
+        timeout: schedule-request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        *,
+        steps: Sequence[Callable[[BaseSource, tuple], Any]],
+        url: UrlArgs,
+        params: Callable[..., ParamsType] | None = None,
+        headers: HeadersArgs = None,
+        timeout: int = 30,
+    ):
+        if not steps:
+            raise ValueError("LookupChainRetriever requires at least one step")
+        self.steps = steps
+        self.url = url
+        self.params = params
+        self.headers = headers
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        keys: tuple[Any, ...] = ()
+        for step in self.steps:
+            keys = (*keys, step(source, keys))
+        return source.session.get(
+            self.url(*keys, **source.params) if callable(self.url) else self.url,
+            params=(
+                self.params(*keys, **source.params) if self.params is not None else None
+            ),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
         )
 
 
@@ -707,6 +779,149 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             self._apply_encoding(response)
 
         return response
+
+
+class YearlyRetriever(_BaseRetriever):
+    """Fetch one calendar per year, rolling into next year late in the year.
+
+    For a provider that publishes a separate, year-scoped calendar: a
+    ``/abfuhrtermine/2026/...`` page, or an ICS generator that takes a year as a
+    form field. The current year is always fetched; from ``rollover_month`` the
+    following year is fetched too, so a schedule polled on 28 December does not
+    run dry on 1 January. That second fetch is best-effort, because the provider
+    typically publishes next year's calendar some time during the rollover
+    month and a 404 before then must not fail the whole retrieve.
+
+    Returns a *list* of responses, so pair it with
+    :class:`~waste_collection_schedule.parsers.EachResponse` around whatever
+    parser reads one year::
+
+        retrieve = retrievers.YearlyRetriever(
+            prepare=_resolve_ids,
+            fetch=_calendar_for_year,
+            refresh_on_failure=True,
+        )
+        parse = parsers.EachResponse(parsers.IcsParser())
+
+    Args:
+        fetch: ``callable(source, year, context) -> Response``; issues the
+            request for one year through ``source.session``. ``context`` is
+            whatever ``prepare`` returned, or ``None`` when there is no
+            ``prepare``. Raise to signal that year is unavailable.
+        prepare: optional ``callable(source) -> context``, run once before the
+            year fetches. This is where an address is resolved to the ids the
+            calendar request needs, so that lookup happens once rather than
+            once per year.
+        rollover_month: calendar month (1-12) from and including which the
+            following year is also attempted (default 12, December). Set it
+            earlier for a provider that publishes early; pass ``None`` to fetch
+            only the current year.
+        refresh_on_failure: when True (and ``prepare`` is set), a failure of the
+            year fetches re-runs ``prepare`` once and retries them. For a
+            provider whose dropdown ids drift between polls, so a stale id is
+            corrected rather than surfaced to the user as an error. Off by
+            default: a retry doubles the request count on a genuinely broken
+            endpoint.
+    """
+
+    def __init__(
+        self,
+        *,
+        fetch: Callable[..., Response],
+        prepare: Callable[[BaseSource], Any] | None = None,
+        rollover_month: int | None = 12,
+        refresh_on_failure: bool = False,
+    ):
+        self.fetch = fetch
+        self.prepare = prepare
+        self.rollover_month = rollover_month
+        self.refresh_on_failure = refresh_on_failure
+
+    def _all_years(self, source: BaseSource, context: Any) -> list[Response]:
+        now = datetime.datetime.now()
+        responses = [self.fetch(source, now.year, context)]
+        if self.rollover_month is not None and now.month >= self.rollover_month:
+            try:
+                responses.append(self.fetch(source, now.year + 1, context))
+            # Next year's calendar is routinely not up yet during the rollover
+            # month; this year's is still a complete answer on its own.
+            except Exception:
+                pass
+        return responses
+
+    def __call__(self, source: BaseSource) -> Any:
+        context = self.prepare(source) if self.prepare is not None else None
+        try:
+            return self._all_years(source, context)
+        except Exception:
+            if not (self.refresh_on_failure and self.prepare is not None):
+                raise
+            context = self.prepare(source)
+            return self._all_years(source, context)
+
+
+def submit_page_form(
+    source: BaseSource,
+    url: str,
+    *,
+    marker: str,
+    base_url: str = "",
+    encoding: str | None = None,
+    headers: HeadersType = None,
+) -> Response:
+    """GET a page, scrape the form carrying ``marker``, and POST it straight back.
+
+    For a download that sits behind a same-page form rather than a link: the
+    page renders a small self-submitting form and the file only comes back from
+    POSTing it. Rather than hardcode a body that goes stale, this replays what
+    the page itself would send: every ``<input>`` in that form, by name and
+    current value, posted to the form's own ``action``.
+
+    A page usually carries several forms (search, newsletter, the download), so
+    ``marker`` names an ``<input>`` unique to the one wanted and the form is
+    found as that input's parent.
+
+    Args:
+        source: the source, for its shared curl_cffi session.
+        url: the page carrying the form.
+        marker: the ``name`` of an ``<input>`` identifying which form to submit.
+        base_url: prefix for a root-relative ``action``, i.e. the scheme and
+            host to put back in front of an ``/foo`` action.
+        encoding: forced on the POST response before its ``.text`` is read.
+            Several providers mis-declare their charset and corrupt umlauts
+            otherwise. ``None`` leaves the transport's detection alone.
+        headers: optional headers applied to both requests.
+
+    Raises:
+        ValueError: the page did not load, or carries no such form.
+    """
+    response = source.session.get(url, headers=headers)
+    if response.status_code != 200:
+        raise ValueError(
+            f"Error loading page {url}, status code {response.status_code}."
+        )
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    input_element = soup.find("input", {"name": marker})
+    if not input_element:
+        raise ValueError(f"Didn't find the input named {marker}.")
+    form = input_element.find_parent("form")
+    if not isinstance(form, Tag):
+        raise ValueError(f"Didn't find the form around the input named {marker}.")
+
+    form_data = {
+        input_tag.get("name"): input_tag.get("value", "")
+        for input_tag in form.find_all("input")
+    }
+    action = form.get("action")
+    if not isinstance(action, str):
+        raise ValueError("Didn't find the form action URL.")
+
+    result = source.session.post(base_url + action, data=form_data, headers=headers)
+    result.raise_for_status()
+    if encoding is not None:
+        result.encoding = encoding
+    return result
 
 
 class PollingIcsRetriever(_BaseRetriever):
