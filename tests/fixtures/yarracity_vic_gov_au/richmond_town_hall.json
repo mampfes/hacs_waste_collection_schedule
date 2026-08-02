@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-08-02",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 4400d74da0",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 02 Aug 2026 11:06:28 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "233",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"68b20621\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMzMzIEJyaWRnZSBSb2FkLCBSaWNobW9uZCwgTWVsYm91cm5lLCBWaWN0b3JpYSwgMzEyMSIsImxvY2F0aW9uIjp7IngiOjE0NS4wMDA3MDUzMTE1NDEsInkiOi0zNy44MTgzODkzNjE2NH0sInNjb3JlIjo5OS4zMywiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxNDQuOTk5NzA1MzExNTQxLCJ5bWluIjotMzcuODE5Mzg5MzYxNjQsInhtYXgiOjE0NS4wMDE3MDUzMTE1NDEsInltYXgiOi0zNy44MTczODkzNjE2NH19XX0="
+    },
+    {
+      "key": "GET https://yccgis-prd.esriaustraliaonline.com.au/arcgis/rest/services/Waste_Services/CW_FC_PRD_Waste_Collection/MapServer/0/query 45e08e0ef8",
+      "method": "GET",
+      "url": "https://yccgis-prd.esriaustraliaonline.com.au/arcgis/rest/services/Waste_Services/CW_FC_PRD_Waste_Collection/MapServer/0/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 02 Aug 2026 11:06:28 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "209",
+        "Connection": "keep-alive",
+        "Set-Cookie": "AWSALB=2BBwn9xig4PtkOYGUyQ0glyvVKFYNLDwWMLAeuoB4fECDoSZVAYtj2mGsN4xEfhvuH856npbcniFWBVyFTDGMw4nLoeNyjIAv0nR5VGHkNtIMVLbNYDmKDnZhUhe; Expires=Sun, 09 Aug 2026 11:06:28 GMT; Path=/, AWSALBCORS=2BBwn9xig4PtkOYGUyQ0glyvVKFYNLDwWMLAeuoB4fECDoSZVAYtj2mGsN4xEfhvuH856npbcniFWBVyFTDGMw4nLoeNyjIAv0nR5VGHkNtIMVLbNYDmKDnZhUhe; Expires=Sun, 09 Aug 2026 11:06:28 GMT; Path=/; SameSite=None; Secure, AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 02 Aug 2026 11:07:28 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "Cache-Control": "max-age=0,must-revalidate",
+        "X-Content-Type-Options": "nosniff",
+        "Vary": "Origin",
+        "Server": "",
+        "ETag": "\"e9b8b1eb\"",
+        "Content-Encoding": "gzip"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiY29sbGVjdGlvbl9kYXkiLCJmaWVsZEFsaWFzZXMiOnsiYW5jaG9yX2RhdGUiOiJBbmNob3JfRGF0ZSIsImZyZXF1ZW5jeV9kYXlzIjoiRnJlcXVlbmN5X0RheXMifSwiZmllbGRzIjpbeyJuYW1lIjoiYW5jaG9yX2RhdGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGVPbmx5IiwiYWxpYXMiOiJBbmNob3JfRGF0ZSIsImxlbmd0aCI6OH0seyJuYW1lIjoiZnJlcXVlbmN5X2RheXMiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVNtYWxsSW50ZWdlciIsImFsaWFzIjoiRnJlcXVlbmN5X0RheXMifV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7ImFuY2hvcl9kYXRlIjoiMjAyNi0wNy0xNCIsImZyZXF1ZW5jeV9kYXlzIjoyOH19XX0="
+    },
+    {
+      "key": "GET https://yccgis-prd.esriaustraliaonline.com.au/arcgis/rest/services/Waste_Services/CW_FC_PRD_Waste_Collection/MapServer/1/query 9bc9e321d1",
+      "method": "GET",
+      "url": "https://yccgis-prd.esriaustraliaonline.com.au/arcgis/rest/services/Waste_Services/CW_FC_PRD_Waste_Collection/MapServer/1/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 02 Aug 2026 11:06:29 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "210",
+        "Connection": "keep-alive",
+        "Set-Cookie": "AWSALB=zKM8RuMRbDxAnSJil9z+wRJRIQ8CGOxwYSzqRVYn7osWI+qEU/2+qFGC6oYOSsC+MQwRtAURI+7gAzkRfqh97oBppxKHPPOC0VyIo0IEprTX7eVxPc1wrIC1qVSr; Expires=Sun, 09 Aug 2026 11:06:29 GMT; Path=/, AWSALBCORS=zKM8RuMRbDxAnSJil9z+wRJRIQ8CGOxwYSzqRVYn7osWI+qEU/2+qFGC6oYOSsC+MQwRtAURI+7gAzkRfqh97oBppxKHPPOC0VyIo0IEprTX7eVxPc1wrIC1qVSr; Expires=Sun, 09 Aug 2026 11:06:29 GMT; Path=/; SameSite=None; Secure, AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 02 Aug 2026 11:07:29 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "Cache-Control": "max-age=0,must-revalidate",
+        "X-Content-Type-Options": "nosniff",
+        "Vary": "Origin",
+        "Server": "",
+        "ETag": "\"62bed2d\"",
+        "Content-Encoding": "gzip"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiY29sbGVjdGlvbl9kYXkiLCJmaWVsZEFsaWFzZXMiOnsiY29sbGVjdGlvbl9kYXkiOiJDb2xsZWN0aW9uIERheSIsInJlY3ljbGluZ19hbmNob3JfZGF0ZSI6ImFuY2hvcl9kYXRlIn0sImZpZWxkcyI6W3sibmFtZSI6ImNvbGxlY3Rpb25fZGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbGxlY3Rpb24gRGF5IiwibGVuZ3RoIjoxMH0seyJuYW1lIjoicmVjeWNsaW5nX2FuY2hvcl9kYXRlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlT25seSIsImFsaWFzIjoiYW5jaG9yX2RhdGUiLCJsZW5ndGgiOjh9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiY29sbGVjdGlvbl9kYXkiOiJUdWVzZGF5IiwicmVjeWNsaW5nX2FuY2hvcl9kYXRlIjoiMjAyNi0wNy0xNCJ9fV19"
+    }
+  ]
+}
