@@ -41,6 +41,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -59,8 +60,12 @@ TEST_CASES = {
         "postcode": "LU6 3PD",
         "house_name": "1 Buttermere Avenue",
     },
-    "Chestnut Avenue, Biggleswade (separate garden waste row)": {
-        "postcode": "SG18 0LL",
+    # Postcode deliberately unspaced here: the site accepts both forms, and
+    # this keeps the "postcode without space" coverage the old test cases had.
+    # This address also has a separate garden waste row, exercising the
+    # per-date deduplication below.
+    "Chestnut Avenue, Biggleswade (unspaced postcode, separate garden waste row)": {
+        "postcode": "SG180LL",
         "house_name": "1 Chestnut Avenue",
     },
 }
@@ -111,10 +116,14 @@ class Source:
 
         address_select = soup.find("select", id="edit-uprn")
         if not address_select:
-            raise ValueError(
-                "Could not find address selection dropdown - page structure "
-                "may differ from what was expected. Inspect the /find page "
-                "HTML and update the selector in _lookup_uprn()."
+            # The site omits the address dropdown entirely when the postcode
+            # is not recognised, so this is far more likely to be a bad
+            # postcode than a change in page structure.
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "no addresses were returned for this postcode, please check "
+                "it and try again.",
             )
 
         option = address_select.find(
@@ -139,9 +148,8 @@ class Source:
         days = soup.select(".waste-collection__day")
         if not days:
             raise ValueError(
-                "Could not find collections data - page structure may have "
-                "changed. Inspect the /view/{uprn} page and update "
-                "_parse_collections()."
+                "Could not find any collections for this address - the page "
+                "structure may have changed."
             )
 
         # Some addresses (e.g. properties with a separate garden waste

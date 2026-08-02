@@ -1,6 +1,6 @@
 # Central Bedfordshire Council
 
-Support for schedules provided by [Central Bedfordshire Council](https://www.centralbedfordshire.gov.uk/info/163/bins_and_waste_collections_-_check_bin_collection_days/), serving Central Bedfordshire, UK.
+Support for schedules provided by [Central Bedfordshire Council](https://www.centralbedfordshire.gov.uk/waste-and-recycling/waste-collection-schedule), serving Central Bedfordshire, UK.
 
 ## Configuration via configuration.yaml
 
@@ -11,19 +11,20 @@ waste_collection_schedule:
       args:
         postcode: POSTCODE
         house_name: HOUSE_NAME
-        version: 1
 
 ```
 
 ### Configuration Variables
 
-**POSTCODE**  
+**POSTCODE**
 *(string) (required)*
 
-**HOUSE_NAME**  
+Your postcode, with or without a space (both `SG18 0LL` and `SG180LL` work).
+
+**HOUSE_NAME**
 *(string) (required)*
 
-This must exactly match your house name that the search on [Central Bedfordshire Council's website](https://www.centralbedfordshire.gov.uk/info/163/bins_and_waste_collections_-_check_bin_collection_days) returns for your given postcode EXCLUDING the comma and postcode
+The start of your address exactly as it appears in the address dropdown on [Central Bedfordshire Council's website](https://www.centralbedfordshire.gov.uk/waste-and-recycling/waste-collection-schedule) after you search for your postcode. The dropdown lists entries in the form `1 Chestnut Avenue, Biggleswade, SG18 0LL`, so use just the leading house number and street (`1 Chestnut Avenue`).
 
 ## Example
 
@@ -32,6 +33,6 @@ waste_collection_schedule:
     sources:
     - name: centralbedfordshire_gov_uk
       args:
-        postcode: "SG156YF"
-        house_name: "10 Old School Walk"
+        postcode: "SG180LL"
+        house_name: "1 Chestnut Avenue"
 ```
