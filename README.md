@@ -866,6 +866,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Caledon (ON)](/doc/source/recyclecoach_com.md) / caledon.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
+- [Carleton Place (ON)](/doc/source/recyclecoach_com.md) / carletonplace.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [Chatham-Kent (ON)](/doc/source/recyclecoach_com.md) / chatham-kent.ca
 - [City of Barrie](/doc/source/barrie_ca.md) / barrie.ca/services-payments/garbage-recycling-organics/curbside-collection/collection-schedules

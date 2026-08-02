@@ -4988,6 +4988,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Carleton Place (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "CARLETON",
+        "project_id": "3149"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Castlegar, BC",
       "module": "ics",
       "default_params": {
