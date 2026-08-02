@@ -4112,7 +4112,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "abfuhrplan_schwabach_de",
     "abki_de",
     "aha_region_de",
-    "api_hubert_schmid_de",
     "app_my_local_services_au",
     "asr_chemnitz_de",
     "aw_harburg_de",

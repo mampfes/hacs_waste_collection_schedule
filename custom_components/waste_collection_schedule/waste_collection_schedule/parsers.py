@@ -13,9 +13,11 @@ Configurable parsers (pass arguments to the constructor):
 
     parse = parsers.JsonParser("collections")  # response.json()["collections"]
     parse = parsers.HtmlParser("tr", skip=1)    # <tr> elements, header skipped
+    parse = parsers.DateListParser("cal", label="Blaue Tonne")  # flat date array
 """
 
 import datetime
+from collections.abc import Iterable
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -107,6 +109,58 @@ class JsonParser(Parser[Any]):
                 data, self.shape, source_name=response_shape.source_name(source)
             )
         return data
+
+
+class DateListParser(Parser["list[tuple[str, str]]"]):
+    """Parse a JSON payload that is a flat array of date strings.
+
+    For a single-stream provider: the response carries dates only, with no waste
+    type field, because the whole feed is one collection round (e.g. a "blue
+    bin" only service)::
+
+        {"cal": ["2026-01-13", "2026-02-10", ...]}
+
+    ``keys`` drills into the payload exactly as :class:`JsonParser` does, then
+    each remaining date is paired with the fixed ``label`` so the shared
+    :class:`~waste_collection_schedule.transformers.RowTransformer` can map that
+    label to a canonical WasteType. That keeps the round's name in the source's
+    ``type_value_map`` where every other source declares it, instead of hiding a
+    hardcoded WasteType inside a ``classify()``::
+
+        parse = parsers.DateListParser("cal", label="Blaue Tonne")
+        transform = RowTransformer(type_value_map={"Blaue Tonne": RECYCLABLES})
+
+    Args:
+        keys: Optional key path to the array (omit if the payload is the array).
+        label: The round's raw label, attached to every date. The transformer
+            maps it, so use the provider's own wording.
+        drop_values: Placeholder entries to discard before pairing. A fixed-size
+            array padded with a filler date is common in PHP-backed feeds, which
+            spell "no date" as the SQL zero date ``"0000-00-00"``; without this
+            the filler reaches the transformer and fails to parse::
+
+                parse = parsers.DateListParser(
+                    "cal", label="Blaue Tonne", drop_values=("0000-00-00",)
+                )
+    """
+
+    def __init__(
+        self,
+        *keys: str,
+        label: str,
+        drop_values: Iterable[str] = (),
+    ):
+        self.keys = keys
+        self.label = label
+        self.drop_values = frozenset(drop_values)
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[str, str]]":
+        data = response.json()
+        for key in self.keys:
+            data = data[key]
+        return [(value, self.label) for value in data if value not in self.drop_values]
 
 
 class TextParser(Parser[str]):
