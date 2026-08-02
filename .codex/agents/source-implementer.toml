@@ -19,6 +19,7 @@ Requirements:
 - Never edit generated files or run update_docu_links.py.
 - Run ruff check --fix and ruff format on every changed Python file.
 - Run python -m pytest tests/test_source_components.py -q.
+- Run pre-commit run --all-files. Use the pinned hooks rather than bare ruff, mypy or pyright: a bare pyright resolves a different type-stub set and reports a different error set from CI.
 - For a Python source, run its live test_sources.py TEST_CASES and iterate until results are non-empty or report the real upstream blocker.
 - For a pipeline source, record a cassette once it works live: python tests/record_fixtures.py <module>, and commit tests/fixtures/<module>/*.json so CI replays it offline. A shared-service source keeps one cassette per distinct response shape. Enforced by tests/test_new_architecture.py::test_pipeline_sources_ship_a_cassette.
 - Compose shared components. Never define a Retriever or Parser subclass inside a source module, and never override retrieve, parse, preprocess or transform on the Source class. If the platform lacks something the provider needs, add it to the shared component under waste_collection_schedule/service/ so every provider on that platform benefits. Enforced by test_pipeline_sources_reuse_shared_components and test_no_new_source_local_step_overrides. Adding the source to a gate allowlist is not an acceptable fix.

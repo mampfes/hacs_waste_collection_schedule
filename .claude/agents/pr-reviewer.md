@@ -127,7 +127,7 @@ These cause CI failure if violated. Check the diff for each:
    ```
    (Repeat per file. Omit this step if no edits or new files.)
 4. [format commands: `ruff check --fix <file>` and/or `ruff format <file>`]
-5. **Mandatory structural test (do not skip):** `python -m pytest tests/test_source_components.py -q` — must pass before commit.
+5. **Mandatory checks (do not skip):** `python -m pytest tests/test_source_components.py -q` and `pre-commit run --all-files` — both must pass before commit. Use the hooks, not bare `ruff`/`mypy`/`pyright`: the hooks are pinned, and a bare `pyright` resolves a different stub set, so it reports a different error set from CI.
 6. `git add <files>`
 7. `git commit -m "<exact commit message>"`
 8. `git push https://github.com/<HEAD_OWNER>/hacs_waste_collection_schedule.git HEAD:<HEAD_BRANCH>`

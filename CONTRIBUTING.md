@@ -13,6 +13,29 @@ There are several ways of contributing to this project, including:
 - Helping answer/fix any issues raised
 - Join in with the Home Assistant Community discussion
 
+## Setting Up Your Development Environment
+
+**Use the devcontainer.** Open the repository in VS Code and choose "Reopen in Container" (or use GitHub Codespaces). It provisions Python 3.12, the project requirements, Home Assistant, and the linters pinned to the exact versions CI uses.
+
+This matters more than it sounds. The checks are sensitive to the environment they run in: dependency and type-stub versions differ between operating systems and Python versions, so a local run outside the container can report different errors from CI, in both directions. The container also fixes tooling that does not work on Windows, and installs Home Assistant so the tests that import it can run at all.
+
+Before pushing, run the same checks CI runs:
+
+```bash
+pytest
+pre-commit run --all-files
+```
+
+`pre-commit run --all-files` is the important one. Running the linters directly (`ruff`, `mypy`, `pyright` and so on) uses whatever versions happen to be on your PATH, while the hooks are pinned. Use the hooks. `pyright` in particular resolves type stubs from the installed dependency set, so a bare run and the hook can disagree about which errors exist.
+
+The container reproduces the CI **minimum** lane, the oldest supported Home Assistant, which is the floor every change must clear. CI also runs a **current** lane on the latest Home Assistant, which can fail on newer transitive dependencies. Reproduce that one on demand:
+
+```bash
+.devcontainer/check-current.sh
+```
+
+If you cannot use the container, everything still works locally, but expect occasional differences from CI and lean on the PR checks.
+
 ## Adding New Service Providers
 
 ### Fork And Clone The Repository, And Checkout A New Branch
