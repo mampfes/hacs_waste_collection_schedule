@@ -26,6 +26,11 @@ from typing import TYPE_CHECKING, Any, Literal, NamedTuple, Protocol, TypeVar
 from bs4 import Tag
 
 from waste_collection_schedule import lookups, recurrence
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
@@ -167,6 +172,79 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
             yield collection_date, key
 
 
+class RoundAreaSelector(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Keep the rows for this household's collection area, one area per round.
+
+    For the municipal calendar that covers every collection area at once and
+    tells them apart in the entry itself ("Restabfall 1", "Altpapier 5"), with
+    the user supplying the area they are in for each round. Common in German
+    districts, where the printed calendar assigns an Abfuhrbezirk per waste
+    stream and one ICS feed serves the whole municipality. A surviving row is
+    relabelled to its round alone, so the transformer's vocabulary stays the
+    round names rather than every round/area combination::
+
+        preprocess = preprocessors.RoundAreaSelector(
+            rounds={"restabfall": "Restabfall", "altpapier": "Altpapier"},
+            hint="check the PDF calendar for valid collection areas",
+        )
+
+    A round that never appears means the area number given for it is not one
+    this calendar publishes, which is a wrong argument rather than an empty
+    schedule, so it raises ``SourceArgumentNotFoundWithSuggestions`` naming that
+    argument. The check runs over the whole feed, so this returns a list rather
+    than streaming.
+
+    Args:
+        rounds: ``{config param name: round label}``. A row is kept when its
+            round is one of these labels and its area equals
+            ``str(params[name])``.
+        pattern: regex matched against the entry, with named groups ``round``
+            and ``area``. Defaults to a round name followed by a number.
+        require: the param names whose round must appear, in the order they
+            should be reported. Defaults to every key of ``rounds``.
+        hint: the provider's own "where to find your area number" instruction,
+            offered as the suggestion when a round is missing.
+    """
+
+    def __init__(
+        self,
+        *,
+        rounds: Mapping[str, str],
+        pattern: str = r"^(?P<round>.+?)\s+(?P<area>\d+)$",
+        require: "Sequence[str] | None" = None,
+        hint: str = "",
+    ):
+        self._rounds = dict(rounds)
+        self._pattern = re.compile(pattern)
+        self._require = tuple(rounds if require is None else require)
+        self._hint = hint
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        params = source.params if source is not None else {}
+        wanted = {label: str(params.get(name)) for name, label in self._rounds.items()}
+
+        seen: set[str] = set()
+        kept: list[tuple[datetime.date, str]] = []
+        for collection_date, entry in records:
+            match = self._pattern.match(str(entry).strip())
+            if match is None:
+                continue
+            round_name = match.group("round")
+            if wanted.get(round_name) != match.group("area"):
+                continue
+            seen.add(round_name)
+            kept.append((collection_date, round_name))
+
+        for name in self._require:
+            if self._rounds[name] not in seen:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    name, params.get(name), [self._hint] if self._hint else []
+                )
+        return kept
+
+
 class HtmlGroupedDates(Preprocessor[list[Tag], "tuple[datetime.date, str]"]):
     """Expand per-round HTML containers into ``(date, key)`` rows.
 
@@ -274,6 +352,128 @@ class ArgumentLookup(Preprocessor[Any, Any]):
         yield lookups.resolve(
             self._table(records, source), value, argument=self._argument
         )
+
+
+class RequireRecords(Preprocessor[Any, Any]):
+    """Reject an empty record stream, blaming a config argument.
+
+    The record-level twin of
+    :class:`~waste_collection_schedule.parsers.ArgumentGuard`, for the provider
+    that answers an unknown town or street with HTTP 200 and an empty result
+    set. ``RAISE_ON_EMPTY`` already turns that into an argument error, but only
+    at the end of the pipeline and without saying what the valid values were.
+    This raises as soon as the lookup comes back empty, offering the provider's
+    own list of them::
+
+        preprocess = Compose(
+            RequireRecords(argument="commune", suggestions=_list_communes),
+            Disambiguate(argument="quartier", key=_quartier),
+        )
+
+    Args:
+        argument: the config param blamed for the empty result.
+        suggestions: optional ``callable(source) -> Iterable[str]`` returning the
+            valid values, usually one cheap extra request to the provider's own
+            index. It runs only on the failure path, so a healthy fetch pays
+            nothing for it. If it fails in turn, the plainer ``hint`` error is
+            raised instead, so a second outage cannot hide the first error.
+        hint: guidance shown when no suggestions are available.
+    """
+
+    def __init__(
+        self,
+        *,
+        argument: str,
+        suggestions: "Callable[[BaseSource | None], Iterable[str]] | None" = None,
+        hint: str = "",
+    ):
+        self._argument = argument
+        self._suggestions = suggestions
+        self._hint = hint
+
+    def __call__(self, records: Any, source: "BaseSource | None" = None) -> list[Any]:
+        candidates = list(records or [])
+        if not candidates:
+            self._reject(source)
+        return candidates
+
+    def _reject(self, source: "BaseSource | None") -> None:
+        value = source.params.get(self._argument) if source is not None else None
+        if self._suggestions is not None:
+            try:
+                options = list(self._suggestions(source))
+            except Exception as e:
+                raise SourceArgumentNotFound(self._argument, value, self._hint) from e
+            raise SourceArgumentNotFoundWithSuggestions(self._argument, value, options)
+        raise SourceArgumentNotFound(self._argument, value, self._hint)
+
+
+class Disambiguate(Preprocessor[Any, Any]):
+    """Narrow several candidate records to the one the user named.
+
+    For the lookup that answers with every variant of the place asked for: one
+    row per district of a town, one per round of a street. A single candidate
+    needs no further input and passes straight through, which is what keeps the
+    extra argument optional for the many places that have only one. Several mean
+    the user has to say which, so an unset argument raises
+    ``SourceArgumentRequiredWithSuggestions`` and an unrecognised one
+    ``SourceArgumentNotFoundWithSuggestions``, both listing the candidates::
+
+        preprocess = Compose(
+            Disambiguate(
+                argument="quartier",
+                key=lambda row: row.get("quartier"),
+                reason="{commune} has multiple districts; please specify one.",
+            ),
+            RecurrenceExpander(_describe),
+        )
+
+    Yields exactly one record, so the stage after it describes one household's
+    schedule rather than the whole town's. Matching is case- and
+    whitespace-insensitive (:mod:`lookups`).
+
+    Args:
+        argument: the config param naming the candidate, and the one blamed.
+        key: ``callable(record) -> str`` reading a candidate's name off a
+            record. Its value is what the argument is matched against and what
+            the suggestions list.
+        reason: why the argument is needed, shown when it was not given. May
+            reference the source's other params by name, as above.
+    """
+
+    def __init__(
+        self,
+        *,
+        argument: str,
+        key: Callable[[Any], Any],
+        reason: str = "the lookup matched several candidates; please name one.",
+    ):
+        self._argument = argument
+        self._key = key
+        self._reason = reason
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        candidates = list(records or [])
+        if len(candidates) == 1:
+            yield candidates[0]
+            return
+        if not candidates:
+            return
+
+        params = source.params if source is not None else {}
+        value = params.get(self._argument)
+        table = {self._name(record): record for record in candidates}
+        if value is None:
+            raise SourceArgumentRequiredWithSuggestions(
+                self._argument, self._reason.format(**params), sorted(table)
+            )
+        yield lookups.resolve(table, value, argument=self._argument)
+
+    def _name(self, record: Any) -> str:
+        value = self._key(record)
+        return "" if value is None else str(value).strip()
 
 
 class Deduplicate(Preprocessor[Any, Any]):
@@ -448,6 +648,115 @@ class PdfCalendarColumns(Preprocessor["list[PdfRow]", PdfColumn]):
         )
 
 
+class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
+    """Read a months-side-by-side PDF calendar whose columns name their month.
+
+    The sibling of :class:`PdfCalendarColumns` for the other way a printed
+    calendar is laid out, and the other way a source can know its geometry.
+    Where that one takes the column positions as measurements the source supplies
+    and hands back day cells to interpret, this one *finds* the columns from the
+    header row that prints the month names, and reads each day cell itself: a
+    day number, and whichever round labels are printed beside it::
+
+        parse = parsers.PdfTableParser(min_words=50)
+        preprocess = preprocessors.PdfMonthColumns(
+            labels=TYPE_MAP, year_pattern=r"Raccolta rifiuti (\\d{4})"
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Reach for it when the calendar shows a run of months across the page (a
+    half-year per sheet is the usual print), which plain text extraction
+    collapses into unreadable interleaved lines. Nothing about the page needs
+    measuring: the month names are the column anchors, and a run of text belongs
+    to the column whose month heading it sits nearest, splitting at the
+    midpoints between adjacent headings.
+
+    A page with fewer than two month names in any one row is skipped, since its
+    columns cannot be located that way; use :class:`PdfCalendarColumns` for a
+    calendar whose blocks are not headed by their month.
+
+    Args:
+        labels: the round labels printed in the day cells, matched
+            case-insensitively as substrings of the cell, in the order given.
+            Pass the transformer's ``type_value_map`` directly.
+        day_pattern: regex locating the day number in a cell, matched against
+            the cell text lowercased, its first group the number. Defaults to a
+            day number followed by a three-letter weekday abbreviation, which is
+            what a dated cell prints.
+        year_pattern: a regex searched against the whole document, its first
+            group the four-digit year the calendar is published for. Falls back
+            to the current year when unset or unmatched.
+    """
+
+    def __init__(
+        self,
+        *,
+        labels: Iterable[str],
+        day_pattern: str = r"(\d{1,2})\s+[a-z]{3}",
+        year_pattern: "str | None" = None,
+    ):
+        self._labels = {str(label).upper(): label for label in labels}
+        self._day_re = re.compile(day_pattern)
+        self._year_re = re.compile(year_pattern) if year_pattern else None
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        rows = list(records)
+        year = self._document_year(rows)
+
+        for page in sorted({row.page for row in rows}):
+            page_rows = [row for row in rows if row.page == page]
+            columns = self._month_columns(page_rows)
+            if columns is None:
+                continue
+            xs = [x for x, _ in columns]
+            months = [month for _, month in columns]
+            # A column owns everything up to the midpoint of the gap to the next.
+            mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
+
+            for row in page_rows:
+                cells: dict[int, list[str]] = {}
+                for word in row.words:
+                    column = sum(1 for mid in mids if word.x0 >= mid)
+                    cells.setdefault(column, []).append(word.text)
+                for column, texts in cells.items():
+                    chunk = " ".join(texts).upper()
+                    match = self._day_re.search(chunk.lower())
+                    if match is None:
+                        continue
+                    try:
+                        collection_date = datetime.date(
+                            year, months[column], int(match.group(1))
+                        )
+                    except ValueError:
+                        continue
+                    for upper, label in self._labels.items():
+                        if upper in chunk:
+                            yield collection_date, label
+
+    @staticmethod
+    def _month_columns(page_rows: "list[PdfRow]") -> "list[tuple[float, int]] | None":
+        """The (x, month) of each column, off the row that names the months."""
+        for row in page_rows:
+            found = [
+                (word.x0, number)
+                for word in row.words
+                if (number := recurrence.month(word.text)) is not None
+            ]
+            if len(found) >= 2:
+                return sorted(found)
+        return None
+
+    def _document_year(self, rows: "list[PdfRow]") -> int:
+        if self._year_re is not None:
+            text = " ".join(word.text for row in rows for word in row.words)
+            match = self._year_re.search(text)
+            if match:
+                return int(match.group(1))
+        return datetime.date.today().year
+
+
 class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
     """Expand a labelled plain-text schedule into ``(date, key)`` rows.
 
@@ -525,6 +834,113 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
             if match:
                 return int(match.group(1))
         return datetime.date.today().year
+
+
+# A calendar grid's own furniture, in any language: a row of nothing but day
+# numbers, and a row of nothing but short weekday abbreviations.
+_DAY_ROW_PATTERN = r"^(?:\d{1,2})(?:\s+\d{1,2})*$"
+_WEEKDAY_ROW_PATTERN = r"^[^\W\d_]{2,3}(?:\s+[^\W\d_]{2,3}){2,}$"
+
+
+class TextCalendarGrid(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Read a printed month-grid calendar out of a plain-text layer.
+
+    The inverse of :class:`TextGroupedDates`, for the other way a text PDF
+    presents a schedule: rather than a round's label introducing its dates, a
+    month grid prints the dates and lists the rounds collected under them. The
+    text layer comes out as a month heading, a weekday header, then alternating
+    day rows and the round names printed in those days' cells::
+
+        parse = parsers.PdfTextParser(min_chars=100)
+        preprocess = preprocessors.TextCalendarGrid(
+            keys=TYPE_MAP, stop_contains=("your collection schedule",)
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    The binding rule is the one a text extractor gives: the round names that
+    follow a day row belong to the highest day number printed on that row. A
+    round name is the first word of its line, matched case-insensitively against
+    ``keys``; any other line inside the block is ignored, and the block ends at
+    the next heading, day row, weekday header or stop phrase.
+
+    Use :class:`~waste_collection_schedule.parsers.PdfTableParser` with
+    :class:`PdfMonthColumns` instead when the extractor interleaves the columns
+    of a multi-month page, which no line-by-line reading can unpick.
+
+    Args:
+        keys: the round names printed in the grid. Pass the transformer's
+            ``type_value_map`` directly; its keys are exactly that set.
+        stop_contains: phrases that also end a block, matched
+            case-insensitively as substrings (a footer or a section title
+            printed between the months).
+        month_pattern: regex for the month heading, its first group the month
+            name (resolved in any supported language) and its second the year.
+    """
+
+    def __init__(
+        self,
+        *,
+        keys: Iterable[str],
+        stop_contains: Iterable[str] = (),
+        month_pattern: str = r"^([^\W\d_]+)\s+(\d{4})$",
+    ):
+        self._keys = {str(key).upper(): key for key in keys}
+        self._stop_contains = tuple(phrase.lower() for phrase in stop_contains)
+        self._month_re = re.compile(month_pattern, re.IGNORECASE)
+        self._day_row_re = re.compile(_DAY_ROW_PATTERN)
+        self._weekday_row_re = re.compile(_WEEKDAY_ROW_PATTERN)
+
+    def _month_heading(self, line: str) -> "tuple[int, int] | None":
+        match = self._month_re.match(line)
+        if match is None:
+            return None
+        number = recurrence.month(match.group(1))
+        return None if number is None else (number, int(match.group(2)))
+
+    def _is_boundary(self, line: str) -> bool:
+        lower = line.lower()
+        return (
+            self._month_heading(line) is not None
+            or bool(self._weekday_row_re.match(line))
+            or bool(self._day_row_re.match(line))
+            or any(phrase in lower for phrase in self._stop_contains)
+        )
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        lines = [line.strip() for line in str(records).splitlines() if line.strip()]
+        month = year = None
+        index = 0
+        while index < len(lines):
+            line = lines[index]
+            heading = self._month_heading(line)
+            if heading is not None:
+                month, year = heading
+                index += 1
+                continue
+            if not (month and year and self._day_row_re.match(line)):
+                index += 1
+                continue
+
+            days = [int(token) for token in line.split() if 1 <= int(token) <= 31]
+            found: list[str] = []
+            end = index + 1
+            while end < len(lines) and not self._is_boundary(lines[end]):
+                key = self._keys.get(lines[end].split(" ")[0].upper())
+                if key is not None:
+                    found.append(key)
+                end += 1
+
+            if days and found:
+                try:
+                    collection_date = datetime.date(year, month, max(days))
+                except ValueError:
+                    collection_date = None
+                if collection_date is not None:
+                    for key in found:
+                        yield collection_date, key
+            index = end
 
 
 def _date_from_groups(

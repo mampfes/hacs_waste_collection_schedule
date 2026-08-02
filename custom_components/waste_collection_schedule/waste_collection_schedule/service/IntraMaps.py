@@ -28,6 +28,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.preprocessors import Preprocessor
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
@@ -599,6 +600,30 @@ class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
                     }
                 )
         return records
+
+
+class PanelFieldSet(Preprocessor[Any, "dict[str, str]"]):
+    """Collapse a panel's ``{"column", "value"}`` records into one field set.
+
+    Both panel parsers emit one record per field, which is what a council whose
+    every field stands on its own wants: a ``describe()`` reads the column, reads
+    its value, and yields that round's schedule. Some councils split one round
+    across two fields, though: a flag saying the address has the service and a
+    separate field naming the day it runs on. No per-record step can see both at
+    once, so this yields the whole panel as a single ``{column: value}`` mapping
+    instead, one record for the address::
+
+        parse = IntegrationPanelParser()
+        preprocess = Compose(PanelFieldSet(), RecurrenceExpander(_describe))
+
+    A repeated column keeps its last value, matching the flat name→value dict
+    the Integration API's own client builds.
+    """
+
+    def __call__(
+        self, records: Any, source: BaseSource | None = None
+    ) -> list[dict[str, str]]:
+        return [{r.get("column", ""): r.get("value", "") for r in records}]
 
 
 def extract_panel_fields(

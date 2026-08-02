@@ -250,8 +250,8 @@ class LookupChainRetriever(_BaseRetriever):
     form data, the next a GET with query params, each with its own matching and
     normalisation rules.
 
-    The schedule request is a GET built from every resolved key, positionally,
-    plus the source's params::
+    The schedule request is built from every resolved key, positionally, plus
+    the source's params. It is a GET by default::
 
         retrieve = retrievers.LookupChainRetriever(
             steps=(_resolve_municipality, _resolve_street),
@@ -262,6 +262,19 @@ class LookupChainRetriever(_BaseRetriever):
             },
         )
 
+    and a POST when the calendar is behind a download form rather than a URL,
+    which is just as common on the German municipal platforms::
+
+        retrieve = retrievers.LookupChainRetriever(
+            steps=(_resolve_street,),
+            url=CALENDAR_URL,
+            method="POST",
+            data=lambda street_id, house_number, **_: {
+                "strasse": street_id,
+                "hausnr": house_number,
+            },
+        )
+
     Args:
         steps: the ordered lookups. Must not be empty.
         url: the schedule URL: a literal, or
@@ -269,7 +282,19 @@ class LookupChainRetriever(_BaseRetriever):
             path.
         params: optional ``callable(*keys, **source.params) -> params``, for the
             (at least as common) case of the ids going in the query string.
+            Applies to a POST too, where a provider splits its ids between the
+            query string and the form body.
+        method: ``"GET"`` (default) or ``"POST"`` for the schedule request.
+        data: optional ``callable(*keys, **source.params) -> data`` form body,
+            for ``method="POST"``.
         headers: optional headers for the schedule request.
+        encoding: response encoding forced on the schedule response before its
+            ``.text`` is read. ``None`` (default) leaves the transport's
+            auto-detected encoding alone; several providers mis-declare their
+            charset and corrupt umlauts otherwise.
+        raise_for_status: raise on an error status instead of handing the error
+            body to the parser. Off by default so the existing callers are
+            unaffected.
         timeout: schedule-request timeout in seconds.
     """
 
@@ -279,29 +304,117 @@ class LookupChainRetriever(_BaseRetriever):
         steps: Sequence[Callable[[BaseSource, tuple], Any]],
         url: UrlArgs,
         params: Callable[..., ParamsType] | None = None,
+        method: str = "GET",
+        data: Callable[..., Any] | None = None,
         headers: HeadersArgs = None,
+        encoding: str | None = None,
+        raise_for_status: bool = False,
         timeout: int = 30,
     ):
         if not steps:
             raise ValueError("LookupChainRetriever requires at least one step")
+        if method.upper() not in ("GET", "POST"):
+            raise ValueError(
+                f"unknown LookupChainRetriever method {method!r}: expected GET or POST"
+            )
+        if data is not None and method.upper() != "POST":
+            raise ValueError("LookupChainRetriever data requires method='POST'")
         self.steps = steps
         self.url = url
         self.params = params
+        self.method = method.upper()
+        self.data = data
         self.headers = headers
+        self.encoding = encoding
+        self.raise_for_status = raise_for_status
         self.timeout = timeout
 
     def __call__(self, source: BaseSource) -> Response:
         keys: tuple[Any, ...] = ()
         for step in self.steps:
             keys = (*keys, step(source, keys))
-        return source.session.get(
-            self.url(*keys, **source.params) if callable(self.url) else self.url,
-            params=(
-                self.params(*keys, **source.params) if self.params is not None else None
-            ),
-            headers=self._resolve(self.headers, source),
-            timeout=self.timeout,
+
+        url = self.url(*keys, **source.params) if callable(self.url) else self.url
+        params = (
+            self.params(*keys, **source.params) if self.params is not None else None
         )
+        headers = self._resolve(self.headers, source)
+
+        if self.method == "POST":
+            response = source.session.post(
+                url,
+                params=params,
+                data=(
+                    self.data(*keys, **source.params) if self.data is not None else None
+                ),
+                headers=headers,
+                timeout=self.timeout,
+            )
+        else:
+            response = source.session.get(
+                url, params=params, headers=headers, timeout=self.timeout
+            )
+
+        if self.raise_for_status:
+            response.raise_for_status()
+        if self.encoding is not None:
+            response.encoding = self.encoding
+        return response
+
+
+class FanOutRetriever(_BaseRetriever):
+    """Fetch one response per target and return them all.
+
+    :class:`YearlyRetriever` fans out over years; this fans out over whatever
+    the provider splits its calendar by. A municipality that publishes one ICS
+    feed per waste type (four rounds, four downloads) has no single response to
+    retrieve, and the list of feeds is usually not known until an address has
+    been resolved. Returns a *list* of responses, so pair it with
+    :class:`~waste_collection_schedule.parsers.EachResponse` around whatever
+    parser reads one::
+
+        retrieve = retrievers.FanOutRetriever(
+            prepare=_resolve_area,
+            targets=lambda source, area: _feed_urls(source, area),
+        )
+        parse = parsers.EachResponse(parsers.IcsParser())
+
+    Args:
+        targets: ``callable(source, context) -> Sequence`` listing what to
+            fetch, one response each. ``context`` is whatever ``prepare``
+            returned, or ``None`` when there is no ``prepare``. Usually a list
+            of URLs, but any value ``fetch`` understands will do.
+        prepare: optional ``callable(source) -> context``, run once before the
+            targets are listed. This is where an address is resolved to the ids
+            (or the session state) the feeds need, so that lookup happens once
+            rather than once per feed.
+        fetch: optional ``callable(source, target, context) -> Response``,
+            issuing the request for one target through ``source.session``.
+            Defaults to a plain GET of the target as a URL; pass one when the
+            requests need cookies or headers carried over from ``prepare``.
+    """
+
+    def __init__(
+        self,
+        *,
+        targets: Callable[[BaseSource, Any], Sequence[Any]],
+        prepare: Callable[[BaseSource], Any] | None = None,
+        fetch: Callable[[BaseSource, Any, Any], Response] | None = None,
+    ):
+        self.targets = targets
+        self.prepare = prepare
+        self.fetch = fetch
+
+    def __call__(self, source: BaseSource) -> list[Response]:
+        context = self.prepare(source) if self.prepare is not None else None
+        return [
+            (
+                self.fetch(source, target, context)
+                if self.fetch is not None
+                else source.session.get(target)
+            )
+            for target in self.targets(source, context)
+        ]
 
 
 #: Default pattern for the JS chunks a Next.js page loads. Group 1 is the

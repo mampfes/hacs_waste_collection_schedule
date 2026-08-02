@@ -1,6 +1,7 @@
 from typing import Any, ClassVar, final
 from urllib.parse import urlencode
 
+from waste_collection_schedule import parsers, preprocessors
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.date_parsers import for_format
@@ -99,6 +100,11 @@ class Source(BaseSource):
         extract=_extract_feature,
         schedule_url=_schedule_url,
     )
+    # AddressDetails answers with a single-element list whose one object holds a
+    # date array per round; the arrays repeat a date when a round is listed
+    # twice, hence the Deduplicate.
+    parse = parsers.KeyedDateListsParser(0, fields=_TYPE_MAP)
+    preprocess = preprocessors.Deduplicate()
     transform = RowTransformer(
         parse_date=for_format("%d-%m-%Y"),
         type_value_map=_TYPE_MAP,
@@ -106,21 +112,3 @@ class Source(BaseSource):
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())
-
-    def parse(self, response, source: "Source | None" = None) -> list[tuple[str, str]]:
-        response.raise_for_status()
-        data = response.json()
-        if not data:
-            raise SourceArgumentNotFound("address", self.params["address"])
-        schedule = data[0]
-
-        seen: set[tuple[str, str]] = set()
-        records: list[tuple[str, str]] = []
-        for api_key in _TYPE_MAP:
-            for collection_date in schedule.get(api_key, []):
-                record = (collection_date, api_key)
-                if record in seen:
-                    continue
-                seen.add(record)
-                records.append(record)
-        return records

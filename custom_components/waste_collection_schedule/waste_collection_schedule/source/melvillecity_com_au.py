@@ -4,10 +4,16 @@ from dateutil.parser import parse as _dateutil_parse
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.service.IntraMaps import (
     IntegrationClientConfig,
     IntegrationClientRetriever,
     IntegrationPanelParser,
+    PanelFieldSet,
     nominatim_reproject,
 )
 from waste_collection_schedule.transformers import ICSTransformer
@@ -17,11 +23,10 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCL
 # first: its single search form takes reprojected map coordinates rather than
 # a free-text address, and returns the collection fields directly (no
 # separate mapkey/dbkey details form). GreenLid (FOGO) is a weekly collection
-# whose weekday lives in a SEPARATE "collection_district" field, so it can't
-# be read from one column alone the way RecurrenceExpander's per-record
-# describe() assumes; preprocess is overridden as a method instead, reading
-# the whole field set at once. RedLid/YellowLid each carry their own explicit
-# next-collection date (fortnightly).
+# whose weekday lives in a SEPARATE "collection_district" field, so it cannot
+# be read from one column alone: PanelFieldSet hands the whole panel over as
+# one record so _describe sees both fields at once. RedLid/YellowLid each
+# carry their own explicit next-collection date (fortnightly).
 
 INTRAMAPS_CONFIG = IntegrationClientConfig(
     base_url="https://melville.spatial.t1cloud.com",
@@ -38,6 +43,37 @@ _TYPE_MAP = {
     "General Waste": GENERAL_WASTE,
     "Recycling": RECYCLABLES,
 }
+
+# Column carrying an explicit next-collection date -> the round it belongs to.
+_DATED_COLUMNS = (("RedLid", "General Waste"), ("YellowLid", "Recycling"))
+
+
+def _describe(fields: dict, source=None):
+    """Read one address's panel into a Schedule per round it is served by."""
+    if fields.get("GreenLid"):
+        # GreenLid only says the address has a FOGO service; the weekday it
+        # runs on is in the sibling "collection_district" field.
+        weekday = recurrence.weekday(fields.get("collection_district", ""))
+        if weekday is not None:
+            yield Schedule(
+                "FOGO",
+                recurrence.next_weekday(weekday),
+                recurrence.WEEKLY,
+                26,
+            )
+
+    for column, key in _DATED_COLUMNS:
+        text = fields.get(column, "").strip()
+        if not text:
+            continue
+        try:
+            # dayfirst=True: the provider's next-collection date is
+            # day/month/year, which dateutil's default US-style guess
+            # would otherwise misread.
+            start = _dateutil_parse(text, dayfirst=True).date()
+        except (ValueError, TypeError):
+            continue
+        yield Schedule(key, start, recurrence.FORTNIGHTLY, 13)
 
 
 @final
@@ -72,42 +108,9 @@ class Source(BaseSource):
         ),
     )
     parse = IntegrationPanelParser()
+    preprocess = Compose(PanelFieldSet(), RecurrenceExpander(_describe))
 
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address)
-
-    def preprocess(self, records, source=None):
-        """Combine GreenLid's presence with its weekday from a sibling field.
-
-        The one place in this source that needs more than a single column:
-        GreenLid's own value only signals "this address has a FOGO service",
-        the weekday it runs on is a separate "collection_district" field.
-        """
-        fields = {r.get("column", ""): r.get("value", "") for r in records}
-
-        if fields.get("GreenLid"):
-            weekday = recurrence.weekday(fields.get("collection_district", ""))
-            if weekday is not None:
-                start = recurrence.next_weekday(weekday)
-                for collection_date in recurrence.recurring(
-                    start, recurrence.WEEKLY, 26
-                ):
-                    yield collection_date, "FOGO"
-
-        for column, key in (("RedLid", "General Waste"), ("YellowLid", "Recycling")):
-            text = fields.get(column, "").strip()
-            if not text:
-                continue
-            try:
-                # dayfirst=True: the provider's next-collection date is
-                # day/month/year, which dateutil's default US-style guess
-                # would otherwise misread.
-                start = _dateutil_parse(text, dayfirst=True).date()
-            except (ValueError, TypeError):
-                continue
-            for collection_date in recurrence.recurring(
-                start, recurrence.FORTNIGHTLY, 13
-            ):
-                yield collection_date, key

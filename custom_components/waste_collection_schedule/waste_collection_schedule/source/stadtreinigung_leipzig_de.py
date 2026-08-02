@@ -1,9 +1,9 @@
 """Stadtreinigung Leipzig.
 
-Demonstrates: a two-step address lookup (street/house-number search resolves
-an opaque position id) feeding a single ICS download — no year window or
-feed fan-out here, but the lookup itself must run inside a custom
-``retrieve`` since the second request depends on the first response.
+A two-step address lookup (a street/house-number search resolves an opaque
+position id) feeding a single ICS download, which is the shared
+``LookupChainRetriever``: the lookup step below resolves the id and the
+retriever fetches the calendar with it.
 """
 
 import json
@@ -16,6 +16,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -53,6 +54,33 @@ def _clean(label: str) -> str:
     return label
 
 
+def _resolve_position(source: BaseSource, keys: tuple) -> str:
+    """Resolve the street and house number to the feed's opaque position id."""
+    street_name = source.params["street"]
+    house_number_value = source.params["house_number"]
+
+    params = {"old_format": 1, "search": street_name}
+    r = source.session.get(_STREETS_URL, params=params)
+
+    data = json.loads(r.text)
+    if len(data["results"]) == 0:
+        raise SourceArgumentNotFound("street", street_name)
+    street_entry = data["results"].get(street_name)
+    if street_entry is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", street_name, data["results"].keys()
+        )
+
+    location_id = street_entry.get(str(house_number_value))
+    if location_id is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "house_number",
+            house_number_value,
+            street_entry.keys(),
+        )
+    return location_id
+
+
 @final
 class Source(BaseSource):
     TITLE = "Stadtreinigung Leipzig"
@@ -67,34 +95,15 @@ class Source(BaseSource):
 
     PARAMS = (street(), house_number())
 
-    def retrieve(self, source):
-        params = {"old_format": 1, "search": self.params["street"]}
-        r = self.session.get(_STREETS_URL, params=params)
-
-        data = json.loads(r.text)
-        if len(data["results"]) == 0:
-            raise SourceArgumentNotFound("street", self.params["street"])
-        street_entry = data["results"].get(self.params["street"])
-        if street_entry is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self.params["street"], data["results"].keys()
-            )
-
-        location_id = street_entry.get(str(self.params["house_number"]))
-        if location_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number",
-                self.params["house_number"],
-                street_entry.keys(),
-            )
-
-        ics_params = {
-            "position_nos": location_id,
-            "name": f"{self.params['street']} {self.params['house_number']}",
+    retrieve = LookupChainRetriever(
+        steps=(_resolve_position,),
+        url=_ICS_URL,
+        params=lambda position_nos, street, house_number, **_: {
+            "position_nos": position_nos,
+            "name": f"{street} {house_number}",
             "mode": "download",
-        }
-        return self.session.get(_ICS_URL, params=ics_params)
-
+        },
+    )
     parse = parsers.IcsParser()
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 

@@ -266,6 +266,58 @@ class DateListParser(Parser["list[tuple[str, str]]"]):
         return [(value, self.label) for value in data if value not in self.drop_values]
 
 
+class KeyedDateListsParser(Parser["list[tuple[Any, str]]"]):
+    """Parse a payload holding one array of dates per round, keyed by field name.
+
+    The multi-round sibling of :class:`DateListParser`. Instead of one flat
+    array for a single-stream provider, the payload carries a field per round,
+    each holding that round's dates and nothing else to say which round it is::
+
+        [{"allBinDays": ["01-07-2026", ...], "allRecycleDays": [...], ...}]
+
+    ``keys`` drills to the object holding those fields exactly as
+    :class:`JsonParser` does, except that an index into a list is written as an
+    int. Each listed field's dates are then paired with the field's own name, so
+    the round's name stays in the transformer's ``type_value_map`` where every
+    other source declares it, rather than being hardcoded in a ``classify()``::
+
+        parse = parsers.KeyedDateListsParser(0, fields=_TYPE_MAP)
+        transform = RowTransformer(
+            parse_date=date_parsers.for_format("%d-%m-%Y"),
+            type_value_map=_TYPE_MAP,
+        )
+
+    Rows come out grouped by field, in ``fields`` order. A field the payload
+    omits contributes nothing, and a key path that does not resolve (the
+    provider answered a bad lookup with an empty list) yields no rows at all, so
+    pair this with ``RAISE_ON_EMPTY`` on an address/lookup source.
+
+    Args:
+        keys: optional path to the object carrying the arrays.
+        fields: the field names to read, one per round. Pass the transformer's
+            ``type_value_map`` directly; its keys are exactly that set.
+    """
+
+    def __init__(self, *keys: "str | int", fields: Iterable[str]):
+        self.keys = keys
+        self.fields = tuple(fields)
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[Any, str]]":
+        data = response.json()
+        try:
+            for key in self.keys:
+                data = data[key]
+        except (KeyError, IndexError, TypeError):
+            return []
+        if not isinstance(data, dict):
+            return []
+        return [
+            (value, field) for field in self.fields for value in (data.get(field) or [])
+        ]
+
+
 class TextParser(Parser[str]):
     """Return response as plain text.
 

@@ -13,6 +13,7 @@ collection record creation and customisation:
 
 import calendar  # noqa: F401 — must import stdlib calendar FIRST
 import datetime
+import json
 import os
 import sys
 from dataclasses import FrozenInstanceError
@@ -21,6 +22,7 @@ from typing import ClassVar
 from unittest.mock import MagicMock, patch
 
 import pytest
+from freezegun import freeze_time
 
 # Ensure source path is available.
 # IMPORTANT: stdlib calendar must be imported ABOVE before this path is added,
@@ -4098,6 +4100,254 @@ class TestPdfTableParser:
             self._run(pages, min_words=5)
 
 
+class TestIcsRepairs:
+    """Unconditional repairs applied to every feed before it is converted."""
+
+    def _repair(self, ics_data):
+        from waste_collection_schedule.service.ICS import _repair_ics_data
+
+        return _repair_ics_data(ics_data)
+
+    def test_empty_vtimezone_and_its_references_are_dropped(self):
+        """A VTIMEZONE with no STANDARD/DAYLIGHT defines no offset at all."""
+        repaired = self._repair(
+            "BEGIN:VCALENDAR\r\n"
+            "BEGIN:VTIMEZONE\r\nTZID:W. Europe Standard Time\r\nEND:VTIMEZONE\r\n"
+            "BEGIN:VEVENT\r\n"
+            "DTSTART;TZID=W. Europe Standard Time;VALUE=DATE:20260709\r\n"
+            "SUMMARY:Restmüll\r\n"
+            "END:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert "VTIMEZONE" not in repaired
+        assert "DTSTART;VALUE=DATE:20260709\r\n" in repaired
+        assert "SUMMARY:Restmüll" in repaired
+
+    def test_populated_vtimezone_is_left_alone(self):
+        ics_data = (
+            "BEGIN:VCALENDAR\r\n"
+            "BEGIN:VTIMEZONE\r\nTZID:Europe/Berlin\r\n"
+            "BEGIN:STANDARD\r\nTZOFFSETFROM:+0200\r\nTZOFFSETTO:+0100\r\n"
+            "DTSTART:19701025T030000\r\nEND:STANDARD\r\n"
+            "END:VTIMEZONE\r\n"
+            "BEGIN:VEVENT\r\n"
+            "DTSTART;TZID=Europe/Berlin:20260709T060000\r\n"
+            "SUMMARY:Restmüll\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert self._repair(ics_data) == ics_data
+
+    def test_bare_until_is_expanded_against_a_floating_dtstart(self):
+        repaired = self._repair(
+            "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n"
+            "DTSTART:20260729T070000\r\n"
+            "RRULE:FREQ=WEEKLY;INTERVAL=4;UNTIL=20310724\r\n"
+            "SUMMARY:BLUE\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert "UNTIL=20310724T000000\r\n" in repaired
+
+    def test_bare_until_is_expanded_to_utc_against_an_aware_dtstart(self):
+        repaired = self._repair(
+            "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n"
+            "DTSTART;TZID=Europe/London:20260729T070000\r\n"
+            "RRULE:FREQ=WEEKLY;UNTIL=20310724\r\n"
+            "SUMMARY:BLUE\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert "UNTIL=20310724T000000Z\r\n" in repaired
+
+    def test_until_left_alone_when_dtstart_is_date_only(self):
+        """A date-only DTSTART wants the date-only UNTIL it already has."""
+        ics_data = (
+            "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n"
+            "DTSTART;VALUE=DATE:20260729\r\n"
+            "RRULE:FREQ=WEEKLY;UNTIL=20310724\r\n"
+            "SUMMARY:BLUE\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert self._repair(ics_data) == ics_data
+
+    def test_until_that_already_has_a_time_is_left_alone(self):
+        ics_data = (
+            "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\n"
+            "DTSTART:20260729T070000\r\n"
+            "RRULE:FREQ=WEEKLY;UNTIL=20310724T235959\r\n"
+            "SUMMARY:BLUE\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+        assert self._repair(ics_data) == ics_data
+
+
+class TestIcsYearRetrieverOptionalUrls:
+    """Extra per-contractor feeds merged into a year, best effort."""
+
+    def _source(self):
+        source = MagicMock()
+        source.params = {"district": "Ruesting"}
+        return source
+
+    def _feed(self, populated=True):
+        response = MagicMock()
+        response.status_code = 200
+        response.text = (
+            "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20260709\r\n"
+            "SUMMARY:Restmüll\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+            if populated
+            else "BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n"
+        )
+        return response
+
+    # The feeds above are dated, so the clock is pinned rather than left to
+    # drift past them.
+    frozen = staticmethod(lambda: freeze_time("2026-07-01"))
+
+    def test_optional_feeds_are_merged_and_failures_skipped(self):
+        from waste_collection_schedule.service.ICS import IcsYearRetriever
+
+        source = self._source()
+        main, extra = self._feed(), self._feed()
+        source.session.get.side_effect = [main, OSError("404"), extra]
+
+        retriever = IcsYearRetriever(
+            url="https://example.com/main.ics",
+            optional_urls=lambda year, **_: [
+                f"https://example.com/{year}/gone.ics",
+                "https://example.com/extra.ics",
+            ],
+            lookahead_month=None,
+        )
+        with self.frozen():
+            assert retriever(source) == [main, extra]
+
+    def test_a_required_year_still_raises_when_nothing_comes_back(self):
+        from waste_collection_schedule.service.ICS import IcsYearRetriever
+
+        source = self._source()
+        source.session.get.side_effect = OSError("404")
+
+        retriever = IcsYearRetriever(url="https://example.com/main.ics")
+        with self.frozen(), pytest.raises(ValueError):
+            retriever(source)
+
+    def test_require_lookahead_false_tolerates_the_extra_year(self):
+        from waste_collection_schedule.service.ICS import IcsYearRetriever
+
+        source = self._source()
+        main = self._feed()
+        source.session.get.side_effect = [main, OSError("not published yet")]
+
+        retriever = IcsYearRetriever(
+            url=lambda year, **_: f"https://example.com/{year}.ics",
+            lookahead_month=1,  # always looks ahead, whatever today is
+            require_lookahead=False,
+        )
+        with self.frozen():
+            assert retriever(source) == [main]
+
+    def test_require_lookahead_defaults_to_insisting_on_every_year(self):
+        from waste_collection_schedule.service.ICS import IcsYearRetriever
+
+        source = self._source()
+        source.session.get.side_effect = [self._feed(), OSError("not published yet")]
+
+        retriever = IcsYearRetriever(
+            url=lambda year, **_: f"https://example.com/{year}.ics",
+            lookahead_month=1,
+        )
+        with self.frozen(), pytest.raises(ValueError):
+            retriever(source)
+
+
+class TestIcsSessionRetrieverFeedFromLastStep:
+    """A form submission whose own response is the calendar."""
+
+    def _source(self):
+        source = MagicMock()
+        source.params = {"uprn": "12345"}
+        return source
+
+    def test_last_step_response_is_the_feed(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source()
+        page, submitted = MagicMock(), MagicMock()
+        source.session.request.side_effect = [page, submitted]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/form"},
+                {"method": "POST", "url": "https://example.com/submit"},
+            ],
+            lookahead_month=None,
+        )
+        assert retriever(source) == [submitted]
+        # No separate calendar download was issued.
+        source.session.get.assert_not_called()
+
+    def test_a_json_step_body_is_forwarded(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source()
+        source.session.request.return_value = MagicMock()
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {
+                    "method": "POST",
+                    "url": "https://example.com/lookup",
+                    "json": lambda uprn, **_: {"query": uprn},
+                }
+            ],
+            lookahead_month=None,
+        )
+        retriever(source)
+
+        assert source.session.request.call_args.kwargs["json"] == {"query": "12345"}
+
+    def test_lookahead_month_none_runs_the_chain_once(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source()
+        source.session.get.return_value = MagicMock()
+
+        with patch("waste_collection_schedule.service.ICS.datetime.date") as mock_date:
+            mock_date.today.return_value = datetime.date(2026, 12, 15)
+            retriever = IcsSessionRetriever(
+                feed_url="https://example.com/feed.ics", lookahead_month=None
+            )
+            feeds = retriever(source)
+
+        assert len(feeds) == 1
+
+    def test_neither_a_feed_url_nor_a_step_is_rejected(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        with pytest.raises(ValueError):
+            IcsSessionRetriever()
+
+
+class TestWestLothianJsonFallback:
+    """The bin list West Lothian embeds when its own ICS generation fails."""
+
+    def test_collections_blob_is_rendered_as_a_calendar(self):
+        from waste_collection_schedule.service.ICS import ICS
+        from waste_collection_schedule.source.westlothian_gov_uk import (
+            _calendar_from_collections,
+        )
+
+        ics_data = _calendar_from_collections(
+            json.dumps(
+                [
+                    {"binType": "GREY", "nextCollectionISO": "2026-08-05"},
+                    {"binType": "BROWN", "nextCollectionISO": "2026-08-07"},
+                ]
+            )
+        )
+
+        with freeze_time("2026-08-01"):
+            entries = ICS().convert(ics_data)
+
+        assert entries == [
+            (datetime.date(2026, 8, 5), "GREY"),
+            (datetime.date(2026, 8, 7), "BROWN"),
+        ]
+
+
 # --------------------------------------------------------------------------- #
 # Reuse gate
 #
@@ -4248,8 +4498,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "1coast_com_au",
     "abfallkalender_prezero_network",
     "abfallwirtschaft_germersheim_de",
-    "abfuhrplan_landkreis_neumarkt_de",
-    "abfuhrplan_schwabach_de",
     "abki_de",
     "aha_region_de",
     "asr_chemnitz_de",
@@ -4269,41 +4517,28 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "fredrikstad_no",
     "fuquay_varina_nc_us",
     "gemuenden_wohra_de",
-    "geoport_nwm_de",
     "hausmuell_info",
     "hohokus_nj_us",
     "ics",
     "infeo_at",
-    "kaev_niederlausitz",
     "karlsruhe_de",
-    "korneuburg_stadtservice_at",
     "ks_boerde_de",
-    "kwb_goslar_de",
     "kwu_de",
-    "landkreis_helmstedt_de",
-    "melvillecity_com_au",
-    "merri_bek_vic_gov_au",
     "mpo_krakow_pl",
-    "mulhouse_alsace_fr",
     "narab_se",
     "nemaffaldsservice_kk_dk",
     "okc_gov",
     "phila_gov",
     "red_bank_tn_us",
-    "redbridge_gov_uk",
     "regioentsorgung_de",
     "reso_gmbh_de",
     "rsag_de",
-    "seab_biella_it",
     "selwyn_govt_nz",
     "shawinigan_ca",
-    "stadtreinigung_giessen_de",
-    "stadtreinigung_leipzig_de",
     "stadtservice_bruehl_de",
     "verl_de",
     "wanneroo_wa_gov_au",
     "wellington_govt_nz",
-    "westlothian_gov_uk",
     "zva_sek_de",
     "zys_harmonogram_pl",
 }
