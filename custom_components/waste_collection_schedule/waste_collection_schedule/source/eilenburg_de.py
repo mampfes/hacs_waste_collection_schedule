@@ -1,19 +1,19 @@
 """Eilenburg (Saxony, Germany).
 
-Demonstrates: the "discover feeds from an HTML index, fan out across
-selected named areas" shape. There is one ICS feed per collection area; the
-list of feeds (and their download URLs) is only discoverable by scraping the
-municipality's calendar page, so ``retrieve`` scrapes that page once, then
-fetches one feed per area the user asked for.
+Demonstrates ``IcsIndexRetriever``'s labelled selection: there is one ICS feed
+per collection area, and the feeds are only discoverable by scraping the
+municipality's calendar page. Each download link is named by the ``.ics``
+filename quoted in its title attribute, and the ``areas`` argument picks which
+of those the user belongs to.
 """
 
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsIndexRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
@@ -43,10 +43,19 @@ _CALENDAR_PAGE_URL = (
     "https://www.eilenburg.de/portal/seiten/abfallwirtschaft-900000136-27670.html"
 )
 
-_ICS_LINK_PATTERN = re.compile(
-    r'data-extension="ICS"[^>]*href="(https://www\.eilenburg\.de/downloads/datei/[^"]+)"[^>]*title="[^"]*&quot;([^&]+\.ics)&quot;'
-)
+# Each download link's title attribute quotes the file it serves, e.g.
+# '© Stadt Eilenburg. "Abfallkalender Remondis 2026 - EB Berg.ics" .'
+_ICS_FILENAME_PATTERN = re.compile(r'"([^"]+\.ics)"')
 _AREA_NAME_PATTERN = re.compile(r"- (EB .+?)\.ics$")
+
+
+def _area_name(anchor) -> str | None:
+    """The collection area a download link serves, read off its title."""
+    filename = _ICS_FILENAME_PATTERN.search(str(anchor.get("title") or ""))
+    if filename is None:
+        return None
+    area = _AREA_NAME_PATTERN.search(filename.group(1))
+    return area.group(1) if area else None
 
 
 @final
@@ -78,45 +87,16 @@ class Source(BaseSource):
 
     PARAMS = (text_field("areas", "Collection areas"),)
 
-    def retrieve(self, source):
-        r = self.session.get(
-            _CALENDAR_PAGE_URL, headers={"User-Agent": "Mozilla/5.0"}, timeout=30
-        )
-        r.raise_for_status()
-        html = r.text
+    retrieve = IcsIndexRetriever(
+        index_url=_CALENDAR_PAGE_URL,
+        link_selector='a[data-extension="ICS"]',
+        pattern=r"/downloads/datei/",
+        label=_area_name,
+        argument="areas",
+        headers={"User-Agent": "Mozilla/5.0"},
+    )
 
-        available: dict[str, str] = {}
-        for ics_url, filename in _ICS_LINK_PATTERN.findall(html):
-            m = _AREA_NAME_PATTERN.search(filename)
-            if m:
-                available[m.group(1)] = ics_url
-
-        texts: list[str] = []
-        for area in self.params["areas"]:
-            matched_url = None
-            for available_area, ics_url in available.items():
-                if available_area.lower() == area.lower():
-                    matched_url = ics_url
-                    break
-
-            if matched_url is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "areas", area, list(available.keys())
-                )
-
-            ics_r = self.session.get(
-                matched_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=30
-            )
-            ics_r.raise_for_status()
-            texts.append(ics_r.text)
-
-        return texts
-
-    def parse(self, response, source=None):
-        entries: list = []
-        for text in response:
-            entries.extend(ICS().convert(text))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 

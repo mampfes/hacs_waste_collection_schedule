@@ -1,21 +1,22 @@
 """Lobbe App (lobbe.app).
 
-Demonstrates: a three-level cascade (state -> city -> street, each an AJAX
-lookup keyed off the previous id) that then requests an ICS *download URL*
-(one more AJAX call) before finally fetching the calendar itself. That's more
-hops than ``TwoStepRetriever`` models, so ``retrieve`` is a source-defined
-override; it also reproduces the legacy source's December quirk (also fetch
-next year's calendar) and its ids-gone-stale retry for that second fetch.
+Demonstrates: a four-step ``IcsSessionRetriever`` chain. A three-level cascade
+(state -> city -> street, each an AJAX lookup keyed off the previous id) is
+followed by one more AJAX call that mints the ICS *download URL*, which the
+retriever's feed request then fetches. The chain runs once per calendar year
+the schedule can span, so the legacy source's December quirk (also fetch next
+year) and its ids-gone-stale retry both come from the retriever: next year is
+best-effort, and it re-resolves the ids rather than reusing this year's.
 """
 
-from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.regions import region
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     ELECTRONICS,
@@ -105,58 +106,52 @@ def _make_comparable(s: str) -> str:
     )
 
 
-def _get_id(
-    session, action: str, compare_to: str, param_name: str, params=None
-) -> tuple[int, str]:
-    params = {"action": action, **(params or {})}
-    r = session.get(_API_URL, params=params)
-    r.raise_for_status()
-    data = r.json()
-    original_compare_to = compare_to
-    compare_to = _make_comparable(compare_to)
-    for d in data:
-        if _make_comparable(d["text"]) == compare_to:
-            return d["id"], d["text"]
+def _pick_id(level: str, argument: str):
+    """An ``extract`` matching the user's value against one AJAX dropdown.
 
-    raise SourceArgumentNotFoundWithSuggestions(
-        param_name, original_compare_to, [d["text"] for d in data]
-    )
+    The site answers each lookup with ``[{"id": ..., "text": ...}, ...]``; the
+    id and the site's own spelling of the name are both bound into the chain's
+    context, because the calendar request wants the pair.
+    """
 
+    def extract(response, context) -> dict:
+        options = response.json()
+        wanted = _make_comparable(context[argument])
+        for option in options:
+            if _make_comparable(option["text"]) == wanted:
+                return {f"{level}_id": option["id"], f"{level}_text": option["text"]}
+        raise SourceArgumentNotFoundWithSuggestions(
+            argument, context[argument], [option["text"] for option in options]
+        )
 
-def _resolve_ids(
-    session, state: str, city: str, street: str
-) -> tuple[int, str, int, str, int, str]:
-    state_id, state_name = _get_id(session, "state", state, "state")
-    city_id, city_name = _get_id(session, "place", city, "city", {"id": state_id})
-    street_id, street_name = _get_id(
-        session, "street", street, "street", {"id": city_id}
-    )
-    return state_id, state_name, city_id, city_name, street_id, street_name
+    return extract
 
 
-def _fetch_year(session, year: int, ids: tuple[int, str, int, str, int, str]) -> str:
-    state_id, state_name, city_id, city_name, street_id, street_name = ids
-    params = {
+def _ical_request(
+    state_id,
+    state_text,
+    place_id,
+    place_text,
+    street_id,
+    street_text,
+    year,
+    **_,
+) -> dict:
+    """Query minting one year's ICS download URL for the resolved address."""
+    return {
         "year[id]": 1,
         "year[text]": year,
         "state[id]": state_id,
-        "state[text]": state_name,
-        "place[id]": city_id,
-        "place[text]": city_name,
+        "state[text]": state_text,
+        "place[id]": place_id,
+        "place[text]": place_text,
         "street[id]": street_id,
-        "street[text]": street_name,
+        "street[text]": street_text,
         **dict.fromkeys(_TYPES, 1),
         "hours": 18,
         "minutes": 0,
         "action": "create_ical",
     }
-    r = session.get(_API_URL, params=params)
-    r.raise_for_status()
-    ics_url = r.json()["url"]
-
-    r = session.get(ics_url)
-    r.raise_for_status()
-    return r.text
 
 
 def _extra_info():
@@ -202,32 +197,33 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
-    def retrieve(self, source):
-        state = source.params["state"]
-        city = source.params["city"]
-        street = source.params["street"]
-        ids = _resolve_ids(source.session, state, city, street)
+    retrieve = IcsSessionRetriever(
+        steps=[
+            {
+                "url": _API_URL,
+                "params": {"action": "state"},
+                "extract": _pick_id("state", "state"),
+            },
+            {
+                "url": _API_URL,
+                "params": lambda state_id, **_: {"action": "place", "id": state_id},
+                "extract": _pick_id("place", "city"),
+            },
+            {
+                "url": _API_URL,
+                "params": lambda place_id, **_: {"action": "street", "id": place_id},
+                "extract": _pick_id("street", "street"),
+            },
+            {
+                "url": _API_URL,
+                "params": _ical_request,
+                "extract": lambda response, _: {"ics_url": response.json()["url"]},
+            },
+        ],
+        feed_url=lambda ics_url, **_: ics_url,
+    )
 
-        now = datetime.now()
-        texts = [_fetch_year(source.session, now.year, ids)]
-        if now.month != 12:
-            return texts
-
-        try:
-            texts.append(_fetch_year(source.session, now.year + 1, ids))
-        except Exception:
-            try:
-                ids = _resolve_ids(source.session, state, city, street)
-                texts.append(_fetch_year(source.session, now.year + 1, ids))
-            except Exception:
-                pass
-        return texts
-
-    def parse(self, response, source=None):
-        entries = []
-        for text in response:
-            entries.extend(ICS().convert(text))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer(
         type_value_map={
