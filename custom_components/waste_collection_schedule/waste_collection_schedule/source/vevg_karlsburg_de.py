@@ -1,24 +1,28 @@
 """VEVG Vorpommern-Greifswald (vevg-karlsburg.de).
 
 Demonstrates: a static, param-built ICS GET across two endpoints (one for
-Stadt Greifswald streets, ``kreis="H"``; one for every other district) whose
-raw feed needs pre-parse text fixes ``parsers.IcsParser`` has no hook for
-(non-standard ``TRIGGER:-P10H`` durations instead of ``-PT10H``, and
-malformed ``DTEND`` values such as "20260204T 1.000"), and whose calendar is
-generated one year at a time -- so this also fetches the following year once
-the season turns (best-effort: swallowed if it isn't published yet). Label
-tidying (stripping the "Leerung der " prefix, and folding every operator's
-"Papiertonne <extra>" variant down to a plain "Papiertonne") is expressed as
-the transformer's ``clean=`` rather than a custom parse of the label itself.
+Stadt Greifswald streets, ``kreis="H"``; one for every other district), whose
+calendar is generated one year at a time -- so ``IcsSessionRetriever`` runs
+with no preparatory steps at all, purely for its per-year lookahead, which
+fetches the following year once the season turns (best-effort: swallowed if it
+isn't published yet).
+
+The raw feed carries two malformations, a non-standard ``TRIGGER:-P10H``
+duration and a corrupted ``DTEND`` such as "20260408T.300", each of which
+stops icalendar reading the feed. Both are repaired for every provider in
+``service.ICS``: they are syntactic defects in properties the conversion never
+reads. Label tidying (stripping the "Leerung der " prefix, and folding every
+operator's "Papiertonne <extra>" variant down to a plain "Papiertonne") is
+expressed as the transformer's ``clean=``.
 """
 
-import datetime
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -32,19 +36,7 @@ _ICAL_UHGW_URL = "https://vevg-karlsburg.de/abfallkalender/ical_uhgw_get_utf8.ph
 # Endpoint for all other districts
 _ICAL_REST_URL = "https://vevg-karlsburg.de/abfallkalender/ical_rest_get_utf8.php"
 
-# Provider uses non-standard durations: -P10H (invalid) instead of -PT10H
-_FIX_TRIGGER = re.compile(r"TRIGGER:-P(\d+)H")
-# Provider sometimes emits malformed DTEND such as "20260204T 1.000" or "20260408T.300"
-_FIX_DTEND = re.compile(r"DTEND[^\r\n]*T[ .][^\r\n]*")
-
 _LEERUNG_RE = re.compile(r"Leerung der (.*)", re.IGNORECASE)
-
-
-def _fix_ics(text: str) -> str:
-    """Apply provider-specific ICS fixes before parsing."""
-    text = _FIX_TRIGGER.sub(r"TRIGGER:-PT\1H", text)
-    text = _FIX_DTEND.sub("", text)
-    return text
 
 
 def _clean_label(label: str) -> str:
@@ -135,34 +127,14 @@ class Source(BaseSource):
         ),
     }
 
-    def retrieve(self, source):
-        ort = source.params["ort"]
-        kreis = str(source.params["kreis"])
-        url = _ical_url(kreis)
-        now = datetime.date.today()
+    retrieve = IcsSessionRetriever(
+        feed_url=lambda kreis, **_: _ical_url(kreis),
+        feed_params=lambda ort, kreis, year, **_: _year_params(ort, kreis, year),
+        # The provider starts publishing the following year in November.
+        lookahead_month=11,
+    )
 
-        responses = [
-            source.session.get(
-                url, params=_year_params(ort, kreis, now.year), timeout=30
-            )
-        ]
-        if now.month >= 11:
-            try:
-                extra = source.session.get(
-                    url, params=_year_params(ort, kreis, now.year + 1), timeout=30
-                )
-                extra.raise_for_status()
-                responses.append(extra)
-            except Exception:
-                pass
-        return responses
-
-    def parse(self, raw, source):
-        entries = []
-        for response in raw:
-            response.raise_for_status()
-            entries.extend(ICS().convert(_fix_ics(response.text)))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer(
         clean=_clean_label,

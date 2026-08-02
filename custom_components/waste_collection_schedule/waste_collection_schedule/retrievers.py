@@ -615,11 +615,15 @@ class PdfLinkRetriever(_BaseRetriever):
 #       running state before this step's POST (a step that must not resend
 #       fields an earlier step set, e.g. the final step of the bmv_at
 #       variant).
+#   reset         -- (optional) True to empty the running state before this
+#       step's `fields` are applied, so the step posts only its own fields
+#       (a deployment whose download step takes a fresh two-field payload
+#       rather than the whole accumulated form, e.g. zakb_de).
 #
-# Not a TypedDict: `submit_action` is required while `fields`/`remove` are
-# not, and PEP 655 Required/NotRequired needs a newer typing than this
-# module's pyright target -- a plain dict keeps step access unchecked but
-# simple; see AthosWasteManagementRetriever's docstring for the worked shape.
+# Not a TypedDict: `submit_action` is required while the rest are not, and
+# PEP 655 Required/NotRequired needs a newer typing than this module's
+# pyright target -- a plain dict keeps step access unchecked but simple; see
+# AthosWasteManagementRetriever's docstring for the worked shape.
 type AthosStep = "dict[str, Any]"
 
 
@@ -661,19 +665,20 @@ class AthosWasteManagementRetriever(_BaseRetriever):
        set, retry there instead (a servlet that moved host/path while old
        deployments still link the previous one).
     2. Scrape the response's ``<input type=hidden>`` fields into the running
-       form state (the wizard's server-side session key/values).
+       form state (the wizard's server-side session key/values). See
+       ``state`` for the two deployments that seed it differently.
     3. For each entry in ``steps`` (in order): merge ``fields(**source.params)``
-       into the running state, drop any ``remove`` keys, set
-       ``SubmitAction`` to ``submit_action`` (resolved against
-       ``source.params`` if callable), then POST the accumulated state back to
-       the servlet URL.
+       into the running state, drop any ``remove`` keys, set the submit-action
+       field (``SubmitAction`` by default) to ``submit_action`` (resolved
+       against ``source.params`` if callable), then POST the accumulated state
+       back to the servlet URL.
     4. Return the *last* step's response (the ICS download) unparsed; pair
        with ``parsers.IcsParser()`` / ``parsers.IcsEventsParser()``.
 
     The form state accumulates across steps (a later step inherits every
-    earlier step's fields unless a step's ``remove`` drops them) because the
-    servlet is itself stateless between POSTs — the growing form *is* the
-    session.
+    earlier step's fields unless a step's ``remove`` drops them, or its
+    ``reset`` empties it) because the servlet is itself stateless between
+    POSTs — the growing form *is* the session.
 
     Example (the awn_de shape: one field-setting step, one container-selection
     step, one download step)::
@@ -719,6 +724,34 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             ``.text`` (default ``"utf-8"``; several deployments mis-declare
             their charset, corrupting umlauts otherwise). Pass ``None`` to
             leave the transport's auto-detected encoding alone.
+        submit_action_field: form field carrying the step's action (default
+            ``"SubmitAction"``). A deployment fronted by a CMS rather than the
+            servlet itself renames it (zakb_de posts ``submitAction``).
+        state: how the running form state is seeded between steps.
+
+            * ``"accumulate"`` (default) — scrape the hidden inputs of the
+              initial GET once, then carry that state forward through every
+              step, which is what most deployments here need.
+            * ``"rescrape"`` — re-seed from *each step's own response* before
+              the next POST, so the page's current ``ApplicationName`` /
+              ``PageName`` / ``IsLastPage`` are echoed back rather than the
+              values the wizard started with. This is what the servlet's own
+              JavaScript does; deployments on ``"accumulate"`` compensate by
+              naming those fields per step instead (see the awn_de example
+              above).
+            * ``"none"`` — never scrape; the state is only what the steps'
+              ``fields`` put there. For a deployment whose page carries
+              unrelated hidden inputs that must *not* be posted back (zakb_de
+              sits inside a TYPO3 page whose hidden inputs are login-form
+              tokens).
+
+        verify: TLS verification for every request, passed straight to the
+            session (default ``True``). ``False`` disables it; a path to a CA
+            bundle uses that bundle instead. Needed by a deployment whose
+            certificate is itself valid but whose server omits the issuing
+            intermediate, so the chain cannot be built from the default trust
+            store (awg_de). Prefer a completed bundle over ``False`` where the
+            missing intermediate is known and stable.
     """
 
     def __init__(
@@ -730,9 +763,17 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         fallback_url: UrlArgs | None = None,
         headers: HeadersArgs = None,
         encoding: str | None = "utf-8",
+        submit_action_field: str = "SubmitAction",
+        state: str = "accumulate",
+        verify: bool | str = True,
     ):
         if not steps:
             raise ValueError("AthosWasteManagementRetriever requires at least one step")
+        if state not in ("accumulate", "rescrape", "none"):
+            raise ValueError(
+                f"unknown Athos state mode {state!r}: "
+                "expected 'accumulate', 'rescrape' or 'none'"
+            )
         self.url = url
         self.steps = steps
         self.initial_params = (
@@ -743,6 +784,9 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         self.fallback_url = fallback_url
         self.headers = headers
         self.encoding = encoding
+        self.submit_action_field = submit_action_field
+        self.state = state
+        self.verify = verify
 
     def _apply_encoding(self, response: Response) -> Response:
         if self.encoding is not None:
@@ -753,28 +797,42 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         headers = self._resolve(self.headers, source)
         url = self._resolve(self.url, source)
 
-        initial = source.session.get(url, params=self.initial_params, headers=headers)
+        initial = source.session.get(
+            url, params=self.initial_params, headers=headers, verify=self.verify
+        )
         if initial.status_code == 404 and self.fallback_url is not None:
             url = self._resolve(self.fallback_url, source)
             initial = source.session.get(
-                url, params=self.initial_params, headers=headers
+                url, params=self.initial_params, headers=headers, verify=self.verify
             )
         initial.raise_for_status()
         self._apply_encoding(initial)
 
-        state: dict[str, Any] = _scrape_hidden_inputs(initial.text)
+        state: dict[str, Any] = (
+            {} if self.state == "none" else _scrape_hidden_inputs(initial.text)
+        )
 
         response = initial
-        for step in self.steps:
+        for index, step in enumerate(self.steps):
+            # index 0 already holds the inputs of the initial GET, so only
+            # the later steps need re-seeding from the page just received.
+            if self.state == "rescrape" and index:
+                state = _scrape_hidden_inputs(response.text)
+            if step.get("reset"):
+                state = {}
             state.update(step["fields"](**source.params) if "fields" in step else {})
             for key in step.get("remove", ()):
                 state.pop(key, None)
-            state["SubmitAction"] = self._resolve(step["submit_action"], source)
+            state[self.submit_action_field] = self._resolve(
+                step["submit_action"], source
+            )
             # A fresh copy per POST: state is mutated further by later steps,
             # and callers (session mocks in tests, request logging, retry
             # wrappers) may hold onto the `data` they were given rather than
             # consuming it immediately.
-            response = source.session.post(url, data=dict(state), headers=headers)
+            response = source.session.post(
+                url, data=dict(state), headers=headers, verify=self.verify
+            )
             response.raise_for_status()
             self._apply_encoding(response)
 

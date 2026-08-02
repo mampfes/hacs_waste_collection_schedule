@@ -2,19 +2,21 @@
 
 Demonstrates: a JSON-wrapped-base64-ICS API. The calendar endpoint returns a
 JSON envelope whose payload is the ICS feed itself, base64-encoded, and
-(in December) must be requested twice -- the current and following year --
-since the site starts publishing next year's calendar in December. No
-configured retriever expresses "decode a base64 field out of a JSON
-response, possibly twice", hence a source-defined ``retrieve()``/``parse()``
-pair. The street can be supplied either as the portal's own opaque street id
-(``street_number``, skipping the lookup) or as a human street name
-(``street_name``, resolved against the portal's street list first).
+(in December) must be requested twice, the current and following year, since
+the site starts publishing next year's calendar in December. That is
+``retrievers.YearlyRetriever``: ``prepare`` resolves the street once (skipped
+entirely when the user supplied the portal's own opaque ``street_number``
+instead of a ``street_name``), and ``fetch`` posts one year's request.
+
+Unpacking the envelope is ``IcsFeedsParser``'s ``unwrap``, so the feed reaches
+``parsers.IcsParser`` as ordinary iCalendar text.
 """
 
 import base64
-import datetime
+import json
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     dropdown,
@@ -26,7 +28,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -41,6 +43,71 @@ _API_URL = "https://portal.staedteservice.de/api/ZeigeAbfallkalender"
 _STREETS_URL = "https://portal.staedteservice.de/api/Strassen"
 
 _CITY_CODE_MAP = {"Rüsselsheim": 1, "Raunheim": 2}
+
+
+def _lookup_street(session, city_code: int, street_name: str) -> str:
+    """The portal's opaque id for a street name in one of the two cities."""
+    r = session.get(
+        _STREETS_URL,
+        params={"$filter": f"Ort/OrteId eq {city_code}"},
+        headers={"Accept": "application/json, text/plain;q=0.5, */*;q=0.1"},
+    )
+    r.raise_for_status()
+
+    streets = r.json()["d"]
+    for entry in streets:
+        if (
+            entry["Name"].replace(" ", "").lower()
+            == street_name.replace(" ", "").lower()
+        ):
+            return entry["StrassenId"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_name", street_name, [x["Name"] for x in streets]
+    )
+
+
+def _resolve_address(source) -> tuple[int, str, str]:
+    """City code, street id and house number, resolving the street if needed."""
+    city_code = _CITY_CODE_MAP[source.params["city"]]
+    street_number = source.params.get("street_number")
+    house_number_value = str(source.params.get("house_number") or "")
+    if not street_number:
+        street_number = _lookup_street(
+            source.session, city_code, source.params["street_name"]
+        )
+    return city_code, street_number, house_number_value
+
+
+def _calendar_for_year(source, year: int, context: tuple[int, str, str]):
+    """One year's calendar request; the response body is the JSON envelope."""
+    city_code, street_number, house_number_value = context
+    payload = {
+        "orteId": city_code,
+        "strassenId": street_number,
+        "hausNr": f"'{house_number_value}'",
+        "dateiName": f"'Abfallkalender{year}.ics'",
+        "unixZeitOption": "-25200",
+        "fixedYear": str(year),
+    }
+    r = source.session.post(
+        _API_URL,
+        params=payload,
+        data=payload,
+        headers={
+            "Accept": "application/json, text/plain;q=0.5, text/calendar",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (HomeAssistant)",
+        },
+        timeout=30,
+    )
+    r.raise_for_status()
+    return r
+
+
+def _ics_from_envelope(body: str) -> str:
+    """The iCalendar document the JSON envelope carries, base64-encoded."""
+    encoded = json.loads(body)["d"]["ZeigeAbfallkalender"]["FileContents"]
+    return base64.b64decode(encoded).decode("utf-8")
 
 
 @final
@@ -84,6 +151,16 @@ class Source(BaseSource):
         house_number(field="house_number", optional=True),
     )
 
+    retrieve = retrievers.YearlyRetriever(
+        prepare=_resolve_address,
+        fetch=_calendar_for_year,
+    )
+
+    parse = IcsFeedsParser(
+        parsers.IcsParser(regex=r"Abfuhr: (.*)"),
+        unwrap=_ics_from_envelope,
+    )
+
     transform = ICSTransformer(type_value_map={"blaue tonne": RECYCLABLES})
 
     def __init__(
@@ -108,82 +185,3 @@ class Source(BaseSource):
                 ("street_name", "street_number"),
                 "Either street_name or street_number must be set",
             )
-
-    def _get_street(self, session, city_code: int, street_name: str) -> str:
-        r = session.get(
-            _STREETS_URL,
-            params={"$filter": f"Ort/OrteId eq {city_code}"},
-            headers={"Accept": "application/json, text/plain;q=0.5, */*;q=0.1"},
-        )
-        r.raise_for_status()
-
-        streets = r.json()["d"]
-        for entry in streets:
-            if (
-                entry["Name"].replace(" ", "").lower()
-                == street_name.replace(" ", "").lower()
-            ):
-                return entry["StrassenId"]
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street_name", street_name, [x["Name"] for x in streets]
-        )
-
-    def _get_calendar_text(
-        self, session, city_code: int, street_number: str, house_number: str, year: int
-    ) -> str:
-        payload = {
-            "orteId": city_code,
-            "strassenId": street_number,
-            "hausNr": f"'{house_number}'",
-            "dateiName": f"'Abfallkalender{year}.ics'",
-            "unixZeitOption": "-25200",
-            "fixedYear": str(year),
-        }
-        r = session.post(
-            _API_URL,
-            params=payload,
-            data=payload,
-            headers={
-                "Accept": "application/json, text/plain;q=0.5, text/calendar",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "Mozilla/5.0 (HomeAssistant)",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        return base64.b64decode(
-            r.json()["d"]["ZeigeAbfallkalender"]["FileContents"]
-        ).decode("utf-8")
-
-    def retrieve(self, source):
-        session = source.session
-        city_code = _CITY_CODE_MAP[self.params["city"]]
-        street_number = self.params.get("street_number")
-        house_number = str(self.params.get("house_number") or "")
-
-        if not street_number:
-            street_number = self._get_street(
-                session, city_code, self.params["street_name"]
-            )
-
-        now = datetime.datetime.now()
-        texts = [
-            self._get_calendar_text(
-                session, city_code, street_number, house_number, now.year
-            )
-        ]
-        # In December the calendar for the next year is already available.
-        if now.month == 12:
-            texts.append(
-                self._get_calendar_text(
-                    session, city_code, street_number, house_number, now.year + 1
-                )
-            )
-        return texts
-
-    def parse(self, texts, source):
-        ics = ICS(regex=r"Abfuhr: (.*)")
-        entries = []
-        for text in texts:
-            entries.extend(ics.convert(text))
-        return entries

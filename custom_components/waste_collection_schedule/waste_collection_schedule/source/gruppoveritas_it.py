@@ -5,12 +5,12 @@ calendar. Gruppo Veritas publishes a per-municipality calendar whose every page
 shows two months side by side, with each day cell holding waste-type badge
 codes and, occasionally, a "raccolta sospesa" (collection suspended) or
 "posticipata al ..." (postponed to ...) note. ``PdfTableParser`` returns each
-text run with its coordinates grouped into rows; this source splits every row
-into a left and a right month column by ``x0``, bins the codes and notes of each
-column into day cells by vertical position, and applies the suspension /
-postponement rules. ``ICSTransformer`` maps the badge codes onto canonical
-WasteTypes. The provider-specific part is only the column split, the day banding
-and the two note rules; the coordinate extraction is the shared component's job.
+text run with its coordinates grouped into rows, and
+``preprocessors.PdfCalendarColumns`` bins those runs into the calendar's own
+shape: one column per month, each with its heading runs and its numbered day
+cells. All this source adds is what the printing *means*: the month and year in
+the heading, the badge codes, and the two note rules. ``ICSTransformer`` maps the
+badge codes onto canonical WasteTypes.
 """
 
 import datetime
@@ -20,7 +20,17 @@ from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import integer, text_field
-from waste_collection_schedule.parsers import PdfRow, PdfTableParser
+from waste_collection_schedule.parsers import PdfTableParser
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    Deduplicate,
+    PdfCalendarColumns,
+    PdfColumn,
+    PdfDayCell,
+    RecurrenceExpander,
+    RowFilter,
+    Schedule,
+)
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -63,7 +73,7 @@ _SUSPEND_RE = re.compile(r"\bSOSPESA\b", re.IGNORECASE)
 _POSTPONE_RE = re.compile(
     r"\bPOSTICIPATA\s+AL\s+(\d{1,2})(?:/(\d{1,2}))?\b", re.IGNORECASE
 )
-# The two-digit year suffix printed in each month header ("26" -> 2026). Each
+# The two-digit year suffix printed in each month heading ("26" -> 2026). Each
 # page carries its own, so a trailing next-year preview (dated e.g. "27") is
 # detected here and dropped by the final year filter, exactly as the legacy
 # source did.
@@ -75,9 +85,72 @@ _COL_SPLIT = 300.0
 # The x0 band the day-number run sits in, per column (the weekday abbreviation
 # and the badge codes sit further right and so are excluded as day anchors).
 _DAY_BAND = {0: (30.0, 66.0), 1: (340.0, 375.0)}
-# Header runs (month name, decorative "20", year suffix, "PORTA A PORTA") sit
+# Heading runs (month name, decorative "20", year suffix, "PORTA A PORTA") sit
 # above the grid; the topmost day cell starts well below this baseline.
 _HEADER_Y = 845.0
+
+
+def _column_month(header: tuple[str, ...]) -> int | None:
+    """Read the month named in a column's heading."""
+    for word in header:
+        month = _MONTHS.get(word.strip().upper())
+        if month is not None:
+            return month
+    return None
+
+
+def _column_year(header: tuple[str, ...], fallback: int) -> int:
+    """Read the two-digit year suffix from a column's heading, else fall back."""
+    for word in header:
+        match = _YEAR_RE.match(word)
+        if match:
+            return 2000 + int(match.group(1))
+    return fallback
+
+
+def _cell_schedules(cell: PdfDayCell, month: int, year: int) -> Iterable[Schedule]:
+    """Resolve one day cell's badge codes and note into single-date schedules."""
+    codes = set(_CODES_RE.findall(cell.text))
+
+    postpone = _POSTPONE_RE.search(cell.text)
+    if postpone:
+        target_day = int(postpone.group(1))
+        raw_month = postpone.group(2)
+        target_month = int(raw_month) if raw_month else month
+        target_year = year + 1 if raw_month and target_month < month else year
+        try:
+            date = datetime.date(target_year, target_month, target_day)
+        except ValueError:
+            return
+    elif _SUSPEND_RE.search(cell.text):
+        return
+    else:
+        try:
+            date = datetime.date(year, month, cell.day)
+        except ValueError:
+            return
+
+    for code in codes:
+        yield Schedule(code, date)
+
+
+def _describe(column: PdfColumn, source) -> Iterable[Schedule]:
+    """Turn one month column into a single-date schedule per badge printed."""
+    month = _column_month(column.header)
+    if month is None:
+        return
+    year = _column_year(column.header, int(source.params["year"]))
+    for cell in column.cells:
+        yield from _cell_schedules(cell, month, year)
+
+
+def _requested_year(row: tuple[datetime.date, str], source) -> bool:
+    """Keep only the year the user asked for.
+
+    Drops a postponement pushed into the next year, and any trailing next-year
+    preview page the calendar carries.
+    """
+    return row[0].year == int(source.params["year"])
 
 
 @final
@@ -118,6 +191,17 @@ class Source(BaseSource):
     retrieve = HttpGetRetriever(url=lambda pdf_url, **_: pdf_url)
     parse = PdfTableParser(min_words=200)
 
+    preprocess = Compose(
+        PdfCalendarColumns(
+            column_bounds=(_COL_SPLIT,),
+            day_bands=_DAY_BAND,
+            header_y=_HEADER_Y,
+        ),
+        RecurrenceExpander(_describe),
+        RowFilter(_requested_year),
+        Deduplicate(),
+    )
+
     # VPL is Vetro/Plastica/Lattine (glass, plastic and cans together); it is
     # mapped to GLASS to match the legacy icon intent, even though it also
     # covers plastic and metal packaging.
@@ -133,114 +217,3 @@ class Source(BaseSource):
 
     def __init__(self, pdf_url: str = DEFAULT_PDF_URL, year: int = 2026) -> None:
         super().__init__(pdf_url=pdf_url, year=year)
-
-    def preprocess(
-        self, rows: list[PdfRow], source=None
-    ) -> Iterable[tuple[datetime.date, str]]:
-        """Split each page into two month columns and yield (date, code) records.
-
-        Deduplicates and keeps only the requested year, so a postponement pushed
-        into the next year and any trailing next-year preview pages fall away.
-        """
-        param_year = int(self.params["year"])
-        seen: set[tuple[datetime.date, str]] = set()
-        for page in sorted({r.page for r in rows}):
-            page_rows = [r for r in rows if r.page == page]
-            for column, month in _month_columns(page_rows).items():
-                year = _column_year(page_rows, column, param_year)
-                for date, code in _parse_column(page_rows, column, month, year):
-                    if date.year == param_year and (date, code) not in seen:
-                        seen.add((date, code))
-                        yield date, code
-
-
-def _column_of(x0: float) -> int:
-    return 0 if x0 < _COL_SPLIT else 1
-
-
-def _month_columns(page_rows: list[PdfRow]) -> dict[int, int]:
-    """Map each column index to the month named in that column's header."""
-    columns: dict[int, int] = {}
-    for row in page_rows:
-        for word in row.words:
-            month = _MONTHS.get(word.text.strip().upper())
-            if month is not None:
-                columns.setdefault(_column_of(word.x0), month)
-    return columns
-
-
-def _column_year(page_rows: list[PdfRow], column: int, fallback: int) -> int:
-    """Read the two-digit year suffix from a column's header, else fall back."""
-    for row in page_rows:
-        if row.y <= _HEADER_Y:
-            continue
-        for word in row.words:
-            if _column_of(word.x0) != column:
-                continue
-            match = _YEAR_RE.match(word.text)
-            if match:
-                return 2000 + int(match.group(1))
-    return fallback
-
-
-def _parse_column(
-    page_rows: list[PdfRow], column: int, month: int, year: int
-) -> list[tuple[datetime.date, str]]:
-    """Bin one month column into day cells and resolve each cell's codes."""
-    low, high = _DAY_BAND[column]
-    anchors: list[tuple[float, int]] = []  # (y, day number)
-    notes: list[tuple[float, str]] = []  # (y, text) of every other run
-    for row in page_rows:
-        if row.y >= _HEADER_Y:
-            continue
-        for word in row.words:
-            if _column_of(word.x0) != column:
-                continue
-            if (
-                low <= word.x0 <= high
-                and word.text.isdigit()
-                and 1 <= int(word.text) <= 31
-            ):
-                anchors.append((row.y, int(word.text)))
-            else:
-                notes.append((row.y, word.text))
-
-    if not anchors:
-        return []
-    anchors.sort(key=lambda a: -a[0])
-
-    # Assign each note run to the day whose anchor is vertically nearest.
-    cells: dict[int, list[tuple[float, str]]] = {i: [] for i in range(len(anchors))}
-    for note_y, text in notes:
-        nearest = min(range(len(anchors)), key=lambda i: abs(anchors[i][0] - note_y))
-        cells[nearest].append((note_y, text))
-
-    events: list[tuple[datetime.date, str]] = []
-    for index, (_, day_num) in enumerate(anchors):
-        combined = " ".join(
-            text for _, text in sorted(cells[index], key=lambda p: -p[0])
-        )
-        codes = set(_CODES_RE.findall(combined))
-
-        postpone = _POSTPONE_RE.search(combined)
-        if postpone:
-            target_day = int(postpone.group(1))
-            raw_month = postpone.group(2)
-            target_month = int(raw_month) if raw_month else month
-            target_year = year + 1 if raw_month and target_month < month else year
-            try:
-                date = datetime.date(target_year, target_month, target_day)
-            except ValueError:
-                continue
-            events.extend((date, code) for code in codes)
-            continue
-
-        if _SUSPEND_RE.search(combined):
-            continue
-
-        try:
-            date = datetime.date(year, month, day_num)
-        except ValueError:
-            continue
-        events.extend((date, code) for code in codes)
-    return events

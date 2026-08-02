@@ -17,7 +17,7 @@ Configurable parsers (pass arguments to the constructor):
 """
 
 import datetime
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -29,6 +29,10 @@ from typing import (
 from bs4 import BeautifulSoup, Tag
 
 from waste_collection_schedule import response_shape
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import IcsEvent
 
 if TYPE_CHECKING:
@@ -110,6 +114,67 @@ class EachResponse(Parser["list[Any]"]):
         for item in responses:  # type: ignore[union-attr]
             records.extend(self.parser(item, source))
         return records
+
+
+class ArgumentGuard(Parser[Any]):
+    """Reject a response that is not the expected feed, blaming the argument.
+
+    Plenty of providers answer an unknown lookup key with HTTP 200 and an
+    ordinary web page rather than an error. The pipeline then parses nothing and
+    the user is told they have no collections, when in truth their town or street
+    was misspelt. This wraps the real parser in the cheap marker check that tells
+    the two apart, and raises the argument error the HA UI knows how to present,
+    listing the valid values when the source can find them::
+
+        parse = parsers.ArgumentGuard(
+            parsers.IcsEventsParser(min_events=1),
+            argument="city",
+            contains="BEGIN:VCALENDAR",
+            suggestions=_possible_cities,
+            hint="spell the city exactly as in the links on the web-app page",
+        )
+
+    Args:
+        parser: the inner parser, applied once the response passes the check.
+        argument: the config param blamed for the mismatch.
+        contains: text that every valid response carries.
+        suggestions: optional ``callable(source) -> Iterable[str]`` returning the
+            valid values, usually read off the provider's own index page. It runs
+            only on the failure path, so a healthy fetch pays nothing for it. If
+            it fails in turn, the plainer ``hint`` error is raised instead, so a
+            second outage cannot hide the first error.
+        hint: guidance shown when no suggestions are available.
+    """
+
+    def __init__(
+        self,
+        parser: Parser,
+        *,
+        argument: str,
+        contains: str,
+        suggestions: "Callable[[BaseSource | None], Iterable[str]] | None" = None,
+        hint: str = "",
+    ):
+        self.parser = parser
+        self.argument = argument
+        self.contains = contains
+        self.suggestions = suggestions
+        self.hint = hint
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
+        if self.contains not in response.text:
+            self._reject(source)
+        return self.parser(response, source)
+
+    def _reject(self, source: "BaseSource | None") -> None:
+        value = source.params.get(self.argument) if source is not None else None
+        if self.suggestions is not None:
+            try:
+                options = list(self.suggestions(source))
+            except Exception as e:
+                raise SourceArgumentNotFound(self.argument, value, self.hint) from e
+            raise SourceArgumentNotFoundWithSuggestions(self.argument, value, options)
+        raise SourceArgumentNotFound(self.argument, value, self.hint)
 
 
 class JsonParser(Parser[Any]):
@@ -310,6 +375,98 @@ class HtmlParser(Parser[list[Tag]]):
         return soup.select(self.selector)[self.skip :]
 
 
+class AttributeJsonParser(Parser["list[Any]"]):
+    """Parse a JSON payload carried in an HTML element's attribute.
+
+    The mirror image of ``HtmlParser(from_json_key=...)``: rather than HTML
+    rendered inside a JSON field, this is a JSON document embedded in a ``data-``
+    attribute of a server-rendered page. Swiss municipal sites on the "i-web" CMS
+    ship a whole collection table that way, and the same trick is common wherever
+    a table widget is hydrated client-side::
+
+        parse = parsers.AttributeJsonParser(
+            "[data-entities]", "data-entities", "data",
+            require_keys=("_anlassDate",),
+            strip_html=True,
+        )
+
+    Args:
+        selector: CSS selector for the elements carrying the attribute.
+        attribute: the attribute holding the JSON. BeautifulSoup has already
+            HTML-unescaped the value, so it is decoded as it stands.
+        keys: optional key path into the decoded JSON, walked exactly as
+            :class:`JsonParser` walks one.
+        require_keys: field names a record must carry for its block to be the
+            one wanted. A page routinely holds several such payloads (a legend
+            as well as the schedule), and the first block with a record carrying
+            all of these wins. A block that is not JSON, or whose key path does
+            not resolve, is skipped.
+        strip_html: reduce every string field of every record to its visible
+            text. These payloads commonly hold an HTML fragment per field (an
+            ``<a>`` around the name, a pair of responsive ``<span>``s around the
+            date), which no transformer should have to unpick.
+
+    Returns an empty list when no block matches, so pair it with
+    ``RAISE_ON_EMPTY`` on an address/lookup source.
+    """
+
+    def __init__(
+        self,
+        selector: str,
+        attribute: str,
+        *keys: str,
+        require_keys: Iterable[str] = (),
+        strip_html: bool = False,
+    ):
+        self.selector = selector
+        self.attribute = attribute
+        self.keys = keys
+        self.require_keys = tuple(require_keys)
+        self.strip_html = strip_html
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[Any]":
+        import json
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        for element in soup.select(self.selector):
+            blob = element.get(self.attribute)
+            if not isinstance(blob, str):
+                continue
+            try:
+                data = json.loads(blob)
+                for key in self.keys:
+                    data = data[key]
+            except (ValueError, TypeError, KeyError, IndexError):
+                continue
+            records = list(data or [])
+            if self.require_keys and not any(
+                isinstance(record, dict)
+                and all(key in record for key in self.require_keys)
+                for record in records
+            ):
+                continue
+            if self.strip_html:
+                return [_visible_text_values(record) for record in records]
+            return records
+        return []
+
+
+def _visible_text_values(record: Any) -> Any:
+    """Reduce a record's HTML-fragment string values to whitespace-collapsed text."""
+    if not isinstance(record, dict):
+        return record
+    return {
+        key: (
+            BeautifulSoup(value, "html.parser").get_text(" ", strip=True)
+            if isinstance(value, str)
+            else value
+        )
+        for key, value in record.items()
+    }
+
+
 class IcsParser(Parser[list[tuple[datetime.date, str]]]):
     """Parse response as an iCalendar feed.
 
@@ -437,17 +594,20 @@ class PdfTextParser(Parser[str]):
 
     For providers whose calendar is a text-PDF (``pypdf`` text extraction
     returns the schedule). Returns the *whole page text as one string*. Because
-    a text PDF is one blob that fans out into many rows, pair it with a custom
-    ``preprocessor`` (defined as a method, not a bare function) that yields the
-    rows; the default preprocessor / ``classify()`` expect per-record input and
-    won't fit::
+    a text PDF is one blob that fans out into many rows, pair it with a
+    preprocessor that yields those rows; the default preprocessor and
+    ``classify()`` both expect per-record input and won't fit. Where the text
+    groups its dates under a round's label,
+    :class:`~waste_collection_schedule.preprocessors.TextGroupedDates` does the
+    whole job declaratively::
 
         parse = parsers.PdfTextParser(min_chars=200)
-        transform = ICSTransformer(type_value_map={...})
-
-        def preprocess(self, text, source=None):
-            for date, key in _rows_from_text(text):   # source-specific parsing
-                yield (date, key)
+        preprocess = preprocessors.TextGroupedDates(
+            keys=TYPE_MAP,
+            date_pattern=r"\\b(?P<month>\\d{2})\\.(?P<day>\\d{2})\\.",
+            year_pattern=r"(\\d{4})\\.\\s*évi",
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
 
     Pass ``min_chars`` (a minimum character count) to flag an image-only/empty
     PDF, which is logged and raises ``ResponseShapeError`` rather than yielding
@@ -501,17 +661,19 @@ class PdfTableParser(Parser["list[PdfRow]"]):
     ``extract_text`` collapses (e.g. a calendar showing several months
     side-by-side). Rather than guess column boundaries from character offsets,
     this reads each text run's real coordinates and clusters runs sharing a
-    horizontal line into a :class:`PdfRow`. A source's ``preprocess`` /
-    ``classify`` then bins each row's words into columns by ``x0`` -- which is
-    the only genuinely provider-specific part (which x range is which month /
-    column), so it stays in the source::
+    horizontal line into a :class:`PdfRow`. The preprocessor then bins each
+    row's words into columns by ``x0``; for the usual printed month-grid
+    calendar,
+    :class:`~waste_collection_schedule.preprocessors.PdfCalendarColumns` does
+    that from three geometry numbers, leaving the source to say only what the
+    printing means::
 
         parse = parsers.PdfTableParser(min_words=50)
-
-        def preprocess(self, rows, source=None):
-            for row in rows:
-                for word in row.words:
-                    ...  # assign word.x0 to a column, read the day/waste type
+        preprocess = preprocessors.PdfCalendarColumns(
+            column_bounds=(300.0,),
+            day_bands={0: (30.0, 66.0), 1: (340.0, 375.0)},
+            header_y=845.0,
+        )
 
     No OCR. Pass ``min_words`` (a minimum total run count) to flag an
     image-only/empty PDF, which is logged and raises ``ResponseShapeError``

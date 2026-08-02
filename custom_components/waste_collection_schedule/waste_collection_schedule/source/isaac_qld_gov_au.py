@@ -1,19 +1,24 @@
 import re
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import lookups, recurrence
+from waste_collection_schedule import parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentRequired
-from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-# Demonstrates: scraping a town-wide collection weekday out of static HTML, then
-# projecting it into a weekly schedule with RecurrenceExpander + ICSTransformer;
-# plus a manual day-select fallback for providers with no address lookup.
+# Demonstrates: scraping a town-wide collection weekday out of static HTML,
+# resolving the chosen town with ArgumentLookup, then projecting the result into
+# a weekly schedule with RecurrenceExpander + ICSTransformer; plus a manual
+# day-select fallback for providers with no address lookup.
 #
 # Isaac Regional Council (issue #4830) has no address lookup or API. The page
 # states a single town-wide weekday for the smaller towns, which this source
@@ -62,9 +67,41 @@ _SINGLE_DAY_RE = re.compile(
 _WEEKS_AHEAD = 52
 
 
-def _describe(record, source):
-    """Turn a parsed (weekday-int) record into a weekly general-waste Schedule."""
-    weekday = record.get("weekday")
+def _town_weekdays(headings, source) -> dict[str, int | None]:
+    """Map each single-day town to the weekday stated in its intro sentence.
+
+    A user-supplied ``collection_day`` (the manual fallback for the multi-day
+    towns, whose days are published only on a map) wins outright, so the table
+    is then just the chosen town.
+    """
+    collection_day = source.params["collection_day"]
+    if collection_day:
+        return {source.params["town"]: recurrence.weekday(collection_day)}
+
+    town_weekdays: dict[str, int | None] = {}
+    for heading in headings:
+        town = heading.get_text(" ", strip=True)
+        if town not in SINGLE_DAY_TOWNS:
+            continue
+        # Read the first paragraph after the heading (the intro sentence),
+        # stopping at the next town heading.
+        intro = ""
+        for sib in heading.find_all_next(["p", "h2"]):
+            if sib.name == "h2":
+                break
+            intro = sib.get_text(" ", strip=True)
+            break
+        match = _SINGLE_DAY_RE.search(intro)
+        if not match:
+            continue
+        weekday = recurrence.weekday(match.group(1))
+        if weekday is not None:
+            town_weekdays[town] = weekday
+    return town_weekdays
+
+
+def _describe(weekday, source):
+    """Turn the resolved weekday into a weekly general-waste Schedule."""
     if weekday is None:
         return
     start = recurrence.next_weekday(weekday)
@@ -118,7 +155,12 @@ class Source(BaseSource):
         for town in SINGLE_DAY_TOWNS
     ]
 
-    preprocess = RecurrenceExpander(_describe)
+    parse = parsers.HtmlParser("h2")
+
+    preprocess = Compose(
+        ArgumentLookup(_town_weekdays, argument="town"),
+        RecurrenceExpander(_describe),
+    )
     transform = ICSTransformer(type_value_map={"general waste": GENERAL_WASTE})
 
     def __init__(self, town: str, collection_day: str | None = None):
@@ -129,40 +171,3 @@ class Source(BaseSource):
                 f"{town} has several collection days that depend on your street; "
                 "look yours up on the council collection map and select it.",
             )
-
-    def parse(self, response, source):
-        """Resolve the collection weekday for the selected town.
-
-        A user-supplied ``collection_day`` (the manual fallback for multi-day
-        towns) wins; otherwise the town's single town-wide weekday is read live
-        from the page. Returns ``[{"weekday": <0-6>}]``.
-        """
-        collection_day = self.params["collection_day"]
-        if collection_day:
-            weekday = recurrence.weekday(collection_day)
-            return [{"weekday": weekday}]
-
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        town_weekdays: dict[str, int] = {}
-        for heading in soup.find_all("h2"):
-            town = heading.get_text(" ", strip=True)
-            if town not in SINGLE_DAY_TOWNS:
-                continue
-            # Read the first paragraph after the heading (the intro sentence),
-            # stopping at the next town heading.
-            intro = ""
-            for sib in heading.find_all_next(["p", "h2"]):
-                if sib.name == "h2":
-                    break
-                intro = sib.get_text(" ", strip=True)
-                break
-            match = _SINGLE_DAY_RE.search(intro)
-            if not match:
-                continue
-            weekday = recurrence.weekday(match.group(1))
-            if weekday is not None:
-                town_weekdays[town] = weekday
-
-        weekday = lookups.resolve(town_weekdays, self.params["town"], argument="town")
-        return [{"weekday": weekday}]
