@@ -1,32 +1,33 @@
 """Landkreis Nordwestmecklenburg (geoport-nwm.de).
 
 Demonstrates: the "year-in-URL, fan out across several per-waste-type ICS
-files and merge" shape. There is no dedicated retriever for this yet, so the
-whole fetch (main calendar plus the optional per-waste-type feeds) is done in
-a ``retrieve`` override using ``self.session``, tolerating the individual
-feeds that 404 for a given district/year/name-variant.
+files and merge" shape, which is ``IcsYearRetriever`` with ``optional_urls``.
+The district's own calendar is required; the four per-contractor feeds
+published alongside it exist only where that contractor collects, so they are
+best effort and a 404 simply means "not here".
 
 Preserves the original's date-window quirk: in December the current and the
 following year are both queried (the provider publishes next year's calendar
-early); outside December only the current year is used.
+early). ``require_lookahead=False`` keeps that extra year best effort, so
+December still works before next year's files appear.
 
 Also fixes a latent bug surfaced by converting this source: the district-name
 transliteration is ambiguous for names with a dash ("Seefeld/ Testorf-
-Steinfort"), so ``_convert_to_arg`` already computes two candidate spellings —
-but the legacy ``fetch_year`` only ever tried the first for the *main*
-calendar (only the optional extra-prefix feeds tried both). For "Seefeld"
-that first spelling 404s live; the second succeeds. The legacy source has
-therefore always failed for this TEST_CASE outside December. This version
-tries every candidate spelling for the main calendar too, which resolves it.
+Steinfort"), so ``_convert_to_arg`` computes two candidate spellings. The
+legacy ``fetch_year`` only ever tried the first for the *main* calendar (only
+the optional extra-prefix feeds tried both). For "Seefeld" that first spelling
+404s live; the second succeeds. The legacy source has therefore always failed
+for this TEST_CASE outside December. Here the second spelling is the
+retriever's ``fallback_url``, so the main calendar tries both too.
 """
 
-import datetime
 import urllib.parse
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsYearRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import HAZARDOUS, ORGANIC, RECYCLABLES
 
@@ -59,6 +60,25 @@ def _convert_to_arg(district: str) -> list[str]:
     return [arg]
 
 
+def _main_url(year: int, district: str, **_) -> str:
+    """The district's own calendar, at the first candidate spelling."""
+    return _API_URL.format(year=year, arg=_convert_to_arg(district)[0])
+
+
+def _alternate_url(year: int, district: str, **_) -> str:
+    """The same calendar at the other candidate spelling, where there is one."""
+    return _API_URL.format(year=year, arg=_convert_to_arg(district)[-1])
+
+
+def _contractor_urls(year: int, district: str, **_) -> list[str]:
+    """Every per-contractor feed, at every candidate spelling."""
+    return [
+        _API_URL.format(year=year, arg=f"{prefix}_{arg}")
+        for prefix in _EXTRA_PREFIXES
+        for arg in _convert_to_arg(district)
+    ]
+
+
 @final
 class Source(BaseSource):
     TITLE = "Landkreis Nordwestmecklenburg"
@@ -82,49 +102,16 @@ class Source(BaseSource):
 
     PARAMS = (district("district"),)
 
-    def retrieve(self, source):
-        district_arg = self.params["district"]
-        args = _convert_to_arg(district_arg)
-        today = datetime.date.today()
-        years = [today.year, today.year + 1] if today.month == 12 else [today.year]
+    retrieve = IcsYearRetriever(
+        url=_main_url,
+        fallback_url=_alternate_url,
+        optional_urls=_contractor_urls,
+        # The provider publishes next year's calendar during December; before
+        # it appears, the current year on its own is still the right answer.
+        require_lookahead=False,
+    )
 
-        texts: list[str] = []
-        for i, year in enumerate(years):
-            main_text = None
-            for arg in args:
-                try:
-                    r = self.session.get(_API_URL.format(year=year, arg=arg))
-                    r.raise_for_status()
-                    main_text = r.text
-                    break
-                except Exception:
-                    continue
-            if main_text is not None:
-                texts.append(main_text)
-            elif i == 0:
-                # No spelling worked for the required year: nothing to show.
-                raise ValueError(
-                    f"no calendar found for district {district_arg!r} ({year})"
-                )
-
-            for prefix in _EXTRA_PREFIXES:
-                for arg in args:
-                    try:
-                        r = self.session.get(
-                            _API_URL.format(year=year, arg=f"{prefix}_{arg}")
-                        )
-                        r.raise_for_status()
-                        texts.append(r.text)
-                    except Exception:
-                        pass
-
-        return texts
-
-    def parse(self, response, source=None):
-        entries: list = []
-        for text in response:
-            entries.extend(ICS().convert(text))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer()
 

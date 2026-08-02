@@ -32,9 +32,9 @@ if TYPE_CHECKING:
 
 #: One preparatory request in an :class:`IcsSessionRetriever` chain. Keys:
 #: ``url`` (required), ``method`` (default ``"GET"``), ``params`` / ``data`` /
-#: ``headers``, ``extract`` (``callable(response, context) -> dict`` merged into
-#: the running context) and ``cookies`` (``callable(**context) -> dict`` merged
-#: into the running cookie jar, evaluated after ``extract``).
+#: ``json`` / ``headers``, ``extract`` (``callable(response, context) -> dict``
+#: merged into the running context) and ``cookies`` (``callable(**context) ->
+#: dict`` merged into the running cookie jar, evaluated after ``extract``).
 type IcsSessionStep = "dict[str, Any]"
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,6 +56,12 @@ _DATE_VALUE = re.compile(r"\d{8}")
 
 # An RFC 5545 DATE *or* DATE-TIME value, which is all a DTEND may legally carry.
 _DATE_OR_DATETIME_VALUE = re.compile(r"\d{8}(?:T\d{6}Z?)?")
+
+# A whole VTIMEZONE component, so an empty one can be recognised and dropped.
+_VTIMEZONE_BLOCK = re.compile(r"BEGIN:VTIMEZONE\r?\n(.*?)END:VTIMEZONE\r?\n", re.DOTALL)
+
+# An RRULE UNTIL carrying a bare DATE (no time component follows the digits).
+_BARE_UNTIL = re.compile(r"(UNTIL=\d{8})(?=[;\r\n]|$)")
 
 # A duration written without the "T" that must precede a time component, so
 # "-P10H" where RFC 5545 requires "-PT10H". Only the H/M/S forms are wrong;
@@ -138,6 +144,34 @@ def _repair_event_block(block: list[str]) -> list[str]:
     return kept
 
 
+def _map_event_blocks(ics_data: str, repair: "Callable[[list[str]], list[str]]") -> str:
+    """Rebuild a feed with ``repair`` applied to each VEVENT's lines.
+
+    Lines outside a VEVENT are passed through untouched, so a repair that needs
+    to see a whole event (a property whose validity depends on that event's
+    DTSTART) can be written as a function of the block alone.
+    """
+    out: list[str] = []
+    block: list[str] | None = None
+    for line in ics_data.splitlines(keepends=True):
+        upper = line.upper()
+        if upper.startswith("BEGIN:VEVENT"):
+            if block is not None:
+                out.extend(repair(block))
+            block = [line]
+            continue
+        if block is None:
+            out.append(line)
+            continue
+        block.append(line)
+        if upper.startswith("END:VEVENT"):
+            out.extend(repair(block))
+            block = None
+    if block is not None:
+        out.extend(repair(block))
+    return "".join(out)
+
+
 def _drop_mismatched_dtend(ics_data: str) -> str:
     """Drop a DTEND whose value type disagrees with its VEVENT's DTSTART.
 
@@ -151,25 +185,85 @@ def _drop_mismatched_dtend(ics_data: str) -> str:
     """
     if "DTEND" not in ics_data:
         return ics_data
-    out: list[str] = []
-    block: list[str] | None = None
-    for line in ics_data.splitlines(keepends=True):
-        upper = line.upper()
-        if upper.startswith("BEGIN:VEVENT"):
-            if block is not None:
-                out.extend(_repair_event_block(block))
-            block = [line]
-            continue
-        if block is None:
-            out.append(line)
-            continue
-        block.append(line)
-        if upper.startswith("END:VEVENT"):
-            out.extend(_repair_event_block(block))
-            block = None
-    if block is not None:
-        out.extend(_repair_event_block(block))
-    return "".join(out)
+    return _map_event_blocks(ics_data, _repair_event_block)
+
+
+def _dtstart_line(block: "list[str]") -> "str | None":
+    for line in block:
+        if line.upper().startswith("DTSTART"):
+            return line.rstrip("\r\n")
+    return None
+
+
+def _repair_until_block(block: "list[str]") -> "list[str]":
+    """Give a bare-DATE RRULE UNTIL the time its DTSTART's value type requires."""
+    dtstart = _dtstart_line(block)
+    if dtstart is None or _is_date_only(dtstart):
+        # A date-only DTSTART wants a date-only UNTIL, which is what it has.
+        return block
+    value = _content_line_value(dtstart)
+    parameters = dtstart[: len(dtstart) - len(value)].upper()
+    # RFC 5545: when DTSTART is timezone-aware, UNTIL must be a UTC date-time;
+    # when it is floating, UNTIL is floating too.
+    aware = value.strip().endswith("Z") or "TZID=" in parameters
+    suffix = "T000000Z" if aware else "T000000"
+    return [
+        _BARE_UNTIL.sub(r"\g<1>" + suffix, line)
+        if line.upper().startswith("RRULE")
+        else line
+        for line in block
+    ]
+
+
+def _match_until_to_dtstart(ics_data: str) -> str:
+    """Expand an RRULE UNTIL that is a DATE where DTSTART is a DATE-TIME.
+
+    RFC 5545 requires UNTIL to carry the same value type as its event's
+    DTSTART. A provider that pairs a date-with-time ``DTSTART:20260729T070000``
+    with a bare ``UNTIL=20310724`` gives icalendar a recurrence rule it cannot
+    build, which aborts the whole feed. Expanding the date to a date-time on
+    the same day keeps the recurrence ending where the provider meant it to,
+    and an event whose two properties already agree is left untouched.
+    """
+    if "UNTIL=" not in ics_data:
+        return ics_data
+    return _map_event_blocks(ics_data, _repair_until_block)
+
+
+def _drop_empty_vtimezones(ics_data: str) -> str:
+    """Drop VTIMEZONE components that define nothing, and references to them.
+
+    RFC 5545 requires a VTIMEZONE to carry at least one STANDARD or DAYLIGHT
+    subcomponent. Some generators emit the shell on its own
+    (``BEGIN:VTIMEZONE`` / ``TZID:W. Europe Standard Time`` /
+    ``END:VTIMEZONE``), so every ``TZID=`` parameter naming it points at a
+    timezone with no offset, and icalendar either rejects the feed or produces
+    a naive datetime that cannot be compared against an aware one. A definition
+    that carries no offset cannot move a collection day, so dropping it and the
+    parameters referencing it leaves DTSTART's date exactly where it was. A
+    feed with real VTIMEZONE definitions is returned untouched.
+    """
+    if "BEGIN:VTIMEZONE" not in ics_data:
+        return ics_data
+    empty: list[str] = []
+
+    def drop(match: "re.Match[str]") -> str:
+        body = match.group(1)
+        if "BEGIN:STANDARD" in body.upper() or "BEGIN:DAYLIGHT" in body.upper():
+            return match.group(0)
+        tzid = re.search(r"^TZID:(.*?)\r?$", body, re.MULTILINE)
+        if tzid:
+            empty.append(tzid.group(1))
+        return ""
+
+    ics_data = _VTIMEZONE_BLOCK.sub(drop, ics_data)
+    for tzid in empty:
+        ics_data = re.sub(
+            rf';TZID="?{re.escape(tzid)}"?(?=[;:])',
+            "",
+            ics_data,
+        )
+    return ics_data
 
 
 def _content_line_value(line: str) -> str:
@@ -276,6 +370,14 @@ def _repair_ics_data(ics_data: str) -> str:
         r"\1;\2",
         ics_data,
     )
+
+    # Drop VTIMEZONE definitions that carry no offset, and the TZID parameters
+    # that reference them; they name a timezone that does not exist.
+    ics_data = _drop_empty_vtimezones(ics_data)
+
+    # Give an RRULE UNTIL the value type its event's DTSTART requires; a bare
+    # date against a date-time DTSTART is a rule icalendar cannot build.
+    ics_data = _match_until_to_dtstart(ics_data)
 
     # Drop the CREATED / LAST-MODIFIED metadata timestamps.
     # icalevents dereferences their `.dt`, so a malformed value (e.g. RESO's
@@ -517,16 +619,21 @@ def _resolve_context(mapping: Any, context: "dict[str, Any]") -> Any:
     return mapping
 
 
-def _calendar_years(lookahead_month: int) -> list[int]:
+def _calendar_years(lookahead_month: "int | None") -> list[int]:
     """The calendar years a schedule can span as at today.
 
     Always the current year, plus next year from ``lookahead_month`` onwards,
     because providers on a per-year calendar publish the following year some
     weeks before it starts.
+
+    ``None`` means the provider does not publish per year at all: its feed is a
+    rolling window that already covers the year turning, so the chain runs once
+    whatever today's date is. Fetching a second time would only duplicate every
+    entry.
     """
     today = datetime.date.today()
     years = [today.year]
-    if today.month >= lookahead_month:
+    if lookahead_month is not None and today.month >= lookahead_month:
         years.append(today.year + 1)
     return years
 
@@ -547,6 +654,12 @@ class IcsYearRetriever(RetrieverFunc):
     A year that yields nothing from both attempts raises, so a silently empty
     calendar is never mistaken for "no collections this year".
 
+    Where one address's calendar is spread over several parallel feeds (a
+    separate paper contractor per district, say), ``optional_urls`` names the
+    extras: they are merged into the same year's result and each is best
+    effort, because a contractor that does not serve the address publishes no
+    feed for it.
+
     Args:
         url: the feed URL, as ``callable(year=..., **source.params) -> str``
             or a literal.
@@ -556,10 +669,25 @@ class IcsYearRetriever(RetrieverFunc):
         timeout: per-request timeout in seconds (default 30).
         lookahead_month: from this month (1-12) onwards, also fetch year + 1.
             Default 12: in December, next year's calendar is pulled too.
+            ``None`` for a rolling feed that is not published per year.
         fallback_url: optional alternative URL, same calling convention as
             ``url``, retried for a year the first attempt did not satisfy.
         fallback_params: optional alternative query arguments for that retry;
             ignored unless ``fallback_url`` is set.
+        optional_urls: additional feeds merged into the same year's result, as
+            ``callable(year=..., **source.params) -> list[str]`` or a literal
+            list. Every one is fetched, and one that fails or comes back empty
+            is simply left out. For a provider that splits an address's
+            calendar across parallel per-contractor or per-waste-type feeds
+            that exist for some districts and not others, where a missing feed
+            means "that contractor does not serve this address", not an error.
+        require_lookahead: whether a failure fetching a lookahead year is fatal.
+            Default ``True``, which is this retriever's long-standing contract:
+            a per-year provider that stops answering for a year it used to
+            publish has usually moved its URLs, and that is worth surfacing.
+            Set ``False`` for a provider that simply publishes next year late,
+            so the current year still propagates on its own. (Note the sibling
+            :class:`IcsSessionRetriever` defaults this the other way round.)
 
     Example::
 
@@ -577,9 +705,11 @@ class IcsYearRetriever(RetrieverFunc):
         params: "QueryArgs" = None,
         headers: "HeadersArgs" = None,
         timeout: int = 30,
-        lookahead_month: int = 12,
+        lookahead_month: "int | None" = 12,
         fallback_url: "UrlArgs | None" = None,
         fallback_params: "QueryArgs" = None,
+        optional_urls: "Callable[..., Sequence[str]] | Sequence[str] | None" = None,
+        require_lookahead: bool = True,
     ):
         self.url = url
         self.params = params
@@ -588,14 +718,20 @@ class IcsYearRetriever(RetrieverFunc):
         self.lookahead_month = lookahead_month
         self.fallback_url = fallback_url
         self.fallback_params = fallback_params
+        self.optional_urls = optional_urls
+        self.require_lookahead = require_lookahead
 
     def __call__(self, source: "BaseSource") -> "list[Response]":
-        return [
-            self._fetch_year(source, year)
-            for year in _calendar_years(self.lookahead_month)
-        ]
+        feeds: list[Response] = []
+        for index, year in enumerate(_calendar_years(self.lookahead_month)):
+            try:
+                feeds.extend(self._fetch_year(source, year))
+            except Exception:
+                if index == 0 or self.require_lookahead:
+                    raise
+        return feeds
 
-    def _fetch_year(self, source: "BaseSource", year: int) -> "Response":
+    def _fetch_year(self, source: "BaseSource", year: int) -> "list[Response]":
         response = self._attempt(source, year, self.url, self.params)
         if response is None and self.fallback_url is not None:
             response = self._attempt(
@@ -603,7 +739,15 @@ class IcsYearRetriever(RetrieverFunc):
             )
         if response is None:
             raise ValueError(f"No ICS entries found for {year}")
-        return response
+        return [response, *self._optional(source, year)]
+
+    def _optional(self, source: "BaseSource", year: int) -> "list[Response]":
+        """The extra feeds for a year, best effort: a missing one is skipped."""
+        if self.optional_urls is None:
+            return []
+        urls = self._resolve(self.optional_urls, source, year=year) or ()
+        feeds = [self._attempt(source, year, url, None) for url in urls]
+        return [feed for feed in feeds if feed is not None]
 
     def _attempt(
         self,
@@ -687,6 +831,10 @@ class IcsSessionRetriever(RetrieverFunc):
 
     Args:
         feed_url: the calendar URL (literal or ``callable(**context) -> str``).
+            ``None`` (the default) means the last step's own response *is* the
+            calendar, for a provider that answers the form submission with the
+            feed rather than redirecting to a download URL; at least one step
+            is then required.
         steps: ordered preparatory requests; see :data:`IcsSessionStep`. May be
             empty, which reduces this to a per-year GET.
         feed_params: query arguments for the feed request (literal or
@@ -704,6 +852,8 @@ class IcsSessionRetriever(RetrieverFunc):
             alone.
         lookahead_month: from this month (1-12) onwards, also run for year + 1.
             Default 12: in December, next year's calendar is fetched too.
+            ``None`` for a provider whose feed is a rolling window rather than
+            a per-year calendar, so the chain runs exactly once.
         require_lookahead: by default a failure fetching a lookahead year is
             tolerated (the provider has simply not published it yet) while the
             current year still propagates. Set ``True`` to insist on both.
@@ -719,7 +869,7 @@ class IcsSessionRetriever(RetrieverFunc):
     def __init__(
         self,
         *,
-        feed_url: "UrlArgs",
+        feed_url: "UrlArgs | None" = None,
         steps: "Sequence[IcsSessionStep]" = (),
         feed_params: "QueryArgs" = None,
         cookies: "Callable[..., dict] | dict | None" = None,
@@ -727,11 +877,16 @@ class IcsSessionRetriever(RetrieverFunc):
         headers: "HeadersArgs" = None,
         timeout: int = 30,
         encoding: str | None = None,
-        lookahead_month: int = 12,
+        lookahead_month: "int | None" = 12,
         require_lookahead: bool = False,
         require_entries: bool = False,
         empty_message: str | None = None,
     ):
+        if feed_url is None and not steps:
+            raise ValueError(
+                "IcsSessionRetriever: give a `feed_url`, or at least one step "
+                "whose own response is the calendar"
+            )
         self.feed_url = feed_url
         self.steps = list(steps)
         self.feed_params = feed_params
@@ -770,12 +925,14 @@ class IcsSessionRetriever(RetrieverFunc):
         if self.cookies is not None:
             cookies.update(_resolve_context(self.cookies, context))
 
+        last: Any = None
         for step in self.steps:
             response = source.session.request(
                 step.get("method", "GET"),
                 _resolve_context(step["url"], context),
                 params=_resolve_context(step.get("params"), context),
                 data=_resolve_context(step.get("data"), context),
+                json=_resolve_context(step.get("json"), context),
                 headers=_resolve_context(step.get("headers", self.headers), context),
                 # Only pass a jar once there is something in it, so a provider
                 # that relies purely on the session's own cookies is untouched.
@@ -783,19 +940,25 @@ class IcsSessionRetriever(RetrieverFunc):
                 timeout=self.timeout,
             )
             response.raise_for_status()
+            last = response
             if "extract" in step:
                 context.update(step["extract"](response, context))
             if "cookies" in step:
                 cookies.update(step["cookies"](**context))
 
-        feed = source.session.get(
-            _resolve_context(self.feed_url, context),
-            params=_resolve_context(self.feed_params, context),
-            headers=_resolve_context(self.headers, context),
-            cookies=cookies or None,
-            timeout=self.timeout,
-        )
-        feed.raise_for_status()
+        if self.feed_url is None:
+            # The last step's own response is the calendar. The constructor
+            # guarantees there is at least one step in that case.
+            feed = last
+        else:
+            feed = source.session.get(
+                _resolve_context(self.feed_url, context),
+                params=_resolve_context(self.feed_params, context),
+                headers=_resolve_context(self.headers, context),
+                cookies=cookies or None,
+                timeout=self.timeout,
+            )
+            feed.raise_for_status()
         if self.encoding is not None:
             feed.encoding = self.encoding
         if self.require_entries and not ICS().convert(feed.text):
