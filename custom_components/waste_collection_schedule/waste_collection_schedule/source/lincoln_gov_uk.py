@@ -1,13 +1,19 @@
 from collections.abc import Iterable
 from datetime import datetime
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    AchieveFormsRowsPreprocessor,
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
@@ -36,6 +42,28 @@ BIN_FIELDS: tuple[tuple[str, str, str], ...] = (
     ("recyclenextdate", "Recycling", "recycle_freq"),
     ("gardennextdate", "Garden", "garden_freq"),
 )
+
+
+def _property_row_key(source: "BaseSource | None") -> str:
+    """The row this property's schedule is under: the lookup keys by UPRN."""
+    return str(source.params["uprn"]) if source is not None else ""
+
+
+def _describe(row: dict, source: "BaseSource | None" = None) -> "Iterable[Schedule]":
+    """Turn the property's row into one recurring schedule per bin."""
+    for date_field, label, freq_field in BIN_FIELDS:
+        raw_date = row.get(date_field)
+        if not raw_date:
+            continue
+        start = datetime.strptime(raw_date, "%Y-%m-%d").date()
+        frequency = str(row.get(freq_field) or "").strip().lower()
+        if frequency == "fortnightly":
+            step, count = recurrence.FORTNIGHTLY, 27
+        elif frequency == "weekly":
+            step, count = recurrence.WEEKLY, 53
+        else:
+            step, count = recurrence.WEEKLY, 1
+        yield Schedule(label, start, step, count)
 
 
 @final
@@ -72,6 +100,13 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    # The lookup returns every property at the postcode, keyed by UPRN; only
+    # the chosen one is this schedule, and its row carries a next date plus a
+    # cadence per bin rather than explicit collection dates.
+    preprocess = Compose(
+        AchieveFormsRowsPreprocessor(row_key=_property_row_key),
+        RecurrenceExpander(_describe),
+    )
     transform = RowTransformer(
         type_value_map={
             "refuse": GENERAL_WASTE,
@@ -84,24 +119,3 @@ class Source(BaseSource):
         normalised_postcode = postcode.replace(" ", "").upper()
         normalised_postcode = normalised_postcode[:3] + " " + normalised_postcode[3:]
         super().__init__(postcode=normalised_postcode, uprn=str(uprn).zfill(12))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[Any, str]]":
-        row = rows.get(self.params["uprn"]) if isinstance(rows, dict) else None
-        if not isinstance(row, dict):
-            return
-        for date_field, label, freq_field in BIN_FIELDS:
-            raw_date = row.get(date_field)
-            if not raw_date:
-                continue
-            start = datetime.strptime(raw_date, "%Y-%m-%d").date()
-            frequency = str(row.get(freq_field) or "").strip().lower()
-            if frequency == "fortnightly":
-                step, count = recurrence.FORTNIGHTLY, 27
-            elif frequency == "weekly":
-                step, count = recurrence.WEEKLY, 53
-            else:
-                step, count = recurrence.WEEKLY, 1
-            for collection_date in recurrence.recurring(start, step, count):
-                yield collection_date, label

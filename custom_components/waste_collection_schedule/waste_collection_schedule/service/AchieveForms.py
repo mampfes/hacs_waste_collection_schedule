@@ -39,7 +39,8 @@ Usage::
 import json
 import re
 import time
-from collections.abc import Callable, Hashable
+from collections.abc import Callable, Hashable, Mapping, Sequence
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import requests
@@ -235,14 +236,49 @@ def run_lookup(
 # AchieveFormsRetriever covers the handshake-plus-N-lookups acquisition (HTTP
 # only, still returns the raw response); LookupStep declares one call in that
 # chain. AchieveFormsRowsParser does the one universal bit of interpretation
-# (unwrap integration.transformed.rows_data) with no I/O. The shape
-# preprocessors below (one row per collection; wide single-row field map;
-# JSON-embedded-in-a-field; labels read off the row's own key names) cover the
-# response shapes found across the ~20 dependent sources; a genuinely
-# different shape (an HTML fragment inside a field) still fits the pipeline but
-# needs a source- or preprocessor-specific step of its own, same as
-# FirmstepSelfService's per-source row classifiers.
+# (unwrap integration.transformed.<key>) with no I/O. The shape preprocessors
+# below cover the response shapes found across the ~25 dependent sources:
+#
+#   * one row per collection, whole row  (AchieveFormsRowsPreprocessor)
+#   * one row per collection, date + label field(s) read off each row
+#     (AchieveFormsRowFieldsPreprocessor)
+#   * a wide single row with a date field per waste type
+#     (AchieveFormsFieldMapPreprocessor; DateList when one field holds a whole
+#     run of dates)
+#   * a wide single row whose key names carry the labels
+#     (AchieveFormsDynamicRowsPreprocessor)
+#   * records JSON-encoded inside a field  (AchieveFormsJsonRowsPreprocessor)
+#   * a "<waste type> - <date>" dropdown option list
+#     (AchieveFormsLabelSplitPreprocessor)
+#
+# A council publishing an HTML fragment inside a field needs no AchieveForms
+# component at all: parsers.HtmlParser(from_json_key=...) reads the fragment
+# straight out of the raw response. A council that projects a next-collection
+# date forward composes preprocessors.RecurrenceExpander after one of the
+# above with preprocessors.Compose.
 # --------------------------------------------------------------------------- #
+
+
+#: Attribute :class:`AchieveFormsRetriever` publishes its chain context under.
+CONTEXT_ATTR = "achieveforms_context"
+
+
+def lookup_context(source: "BaseSource | None") -> "dict[str, Any]":
+    """Return the retrieve chain's context for the fetch in progress.
+
+    A :class:`LookupStep`'s ``extract`` can only reach the chain's own context
+    dict, which used to end at ``retrieve``: a council whose *first* lookup
+    discovers something the *records* need (a per-property service-name map,
+    say) had no way to hand it to ``preprocess``. :class:`AchieveFormsRetriever`
+    now publishes the same dict on the source for the rest of the pipeline to
+    read, and this is the accessor::
+
+        label_lookup=lambda source: lookup_context(source).get("map", {})
+
+    Returns an empty dict when the source did not run an AchieveForms chain
+    (or has not run one yet), so a caller never has to guard the attribute.
+    """
+    return getattr(source, CONTEXT_ATTR, None) or {}
 
 
 class LookupStep:
@@ -477,6 +513,11 @@ class AchieveFormsRetriever(RetrieverFunc):
             skip_landing_page=self.skip_landing_page,
         )
         context: dict[str, Any] = {}
+        # Publish the chain's context on the source so the pipeline steps that
+        # run after retrieve can read what an earlier LookupStep discovered.
+        # The same dict object is mutated as the steps run, so a reader in
+        # preprocess sees the finished state. See :func:`lookup_context`.
+        setattr(source, CONTEXT_ATTR, context)
         result: dict = {}
         results: list[dict] = []
         for step in self.steps:
@@ -515,24 +556,69 @@ class AchieveFormsRetriever(RetrieverFunc):
 
 
 class AchieveFormsRowsParser(Parser[Any]):
-    """Unwrap ``integration.transformed.rows_data`` from an AchieveForms response.
+    """Unwrap ``integration.transformed.<key>`` from an AchieveForms response.
 
     Does no further interpretation: ``rows_data`` comes back from the platform
     as either a dict keyed by row index (``{"0": {...}, "1": {...}}``) or,
     less often, a bare list — this returns it unchanged so a preprocessor can
     handle whichever shape this council's lookup returns. No I/O, so it runs
     standalone against a cached JSON fixture.
+
+    Args:
+        key: which ``integration.transformed`` collection to unwrap. Defaults
+            to ``"rows_data"``, the platform's normal per-record payload. Set
+            it to ``"select_data"`` for a council that publishes the schedule
+            as the option list behind a dropdown instead (a list of
+            ``{"label": ..., "value": ...}`` entries, the label combining the
+            waste type and the date) — pair that with
+            :class:`AchieveFormsLabelSplitPreprocessor`.
     """
 
+    def __init__(self, key: str = "rows_data"):
+        self.key = key
+
     def __call__(self, raw: dict, source: "BaseSource | None" = None) -> Any:
-        rows = raw.get("integration", {}).get("transformed", {}).get("rows_data")
+        rows = raw.get("integration", {}).get("transformed", {}).get(self.key)
         response_shape.expect(
             isinstance(rows, (dict, list)),
             source_name=response_shape.source_name(source),
-            detail="AchieveForms response missing integration.transformed.rows_data",
+            detail=f"AchieveForms response missing integration.transformed.{self.key}",
             raw=raw,
         )
         return rows
+
+
+def _rows(rows: Any) -> "list[dict]":
+    """Normalise a parsed AchieveForms container into a list of row dicts.
+
+    ``rows_data`` arrives either keyed by row index or as a bare list, and an
+    entry that isn't a dict is dropped rather than passed on.
+    """
+    if isinstance(rows, dict):
+        values: Any = rows.values()
+    elif isinstance(rows, list):
+        values = rows
+    else:
+        return []
+    return [row for row in values if isinstance(row, dict)]
+
+
+def _single_row(rows: Any, row_key: str) -> dict:
+    """Pick the one summary row out of a parsed AchieveForms container.
+
+    ``row_key`` selects it when the container is keyed by row index; a
+    container that is already a single flat dict is used as-is, and a list
+    falls back to its first entry.
+    """
+    if isinstance(rows, dict) and row_key in rows:
+        row = rows[row_key]
+    elif isinstance(rows, dict):
+        row = rows
+    elif rows:
+        row = rows[0]
+    else:
+        row = {}
+    return row if isinstance(row, dict) else {}
 
 
 class AchieveFormsRowsPreprocessor(preprocessors.Preprocessor[Any, dict]):
@@ -551,18 +637,32 @@ class AchieveFormsRowsPreprocessor(preprocessors.Preprocessor[Any, dict]):
 
     Either container shape is accepted, and an entry that isn't a row dict is
     skipped rather than passed on to the transformer.
+
+    Args:
+        row_key: when set, yield only this one row instead of every row. Use
+            it for a council whose lookup returns a row *per property* keyed
+            by UPRN (pass a ``(source) -> str`` callable reading
+            ``source.params``) or a single wide summary row under ``"0"``,
+            where the rest of the container is not this property's schedule.
+            The selected row is then the single record a follow-up stage (e.g.
+            ``preprocessors.RecurrenceExpander``) reads its fields off.
     """
 
+    def __init__(
+        self,
+        *,
+        row_key: "str | Callable[[BaseSource | None], str] | None" = None,
+    ):
+        self.row_key = row_key
+
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
-        if isinstance(rows, dict):
-            values: Any = rows.values()
-        elif isinstance(rows, list):
-            values = rows
-        else:
-            return
-        for row in values:
+        if self.row_key is not None:
+            key = self.row_key(source) if callable(self.row_key) else self.row_key
+            row = rows.get(key) if isinstance(rows, dict) else None
             if isinstance(row, dict):
                 yield row
+            return
+        yield from _rows(rows)
 
 
 class LabelField(str):
@@ -594,6 +694,47 @@ class LabelField(str):
 type FieldMapEntry = "tuple[str, str] | tuple[str, str, str]"
 
 
+@dataclass(frozen=True)
+class DateList:
+    """Marker: an :class:`AchieveFormsFieldMapPreprocessor` field holds *many* dates.
+
+    The usual field-map shape is one date per field. Some councils instead put
+    the whole run of upcoming dates for a bin type into a single field as a
+    small HTML fragment (``"<br />Wednesday 15 July 2026<br />Wednesday 22
+    July 2026..."``), sometimes with a footnote paragraph after it. Pass one
+    of these as ``date_list`` and each entry in the field becomes its own
+    record, all sharing that field's label::
+
+        preprocess = AchieveFormsFieldMapPreprocessor(
+            fields=[("listRefDatesHTML", "refuse bin")],
+            date_list=DateList(stop_at="<p>", strip="* "),
+            parse_date=date_parsers.for_format("%A %d %B %Y"),
+        )
+
+    Args:
+        separator: what joins the dates within the field.
+        stop_at: when set, everything from the first occurrence of this marker
+            onwards is discarded before splitting (a trailing note after the
+            list of dates).
+        strip: when set, these characters are stripped from the *end* of each
+            entry (a footnote marker such as ``"*"``).
+    """
+
+    separator: str = "<br />"
+    stop_at: "str | None" = None
+    strip: "str | None" = None
+
+    def entries(self, raw: str) -> "list[str]":
+        """Split one field's raw value into its individual date strings."""
+        text = raw.split(self.stop_at)[0] if self.stop_at else raw
+        found = []
+        for entry in text.split(self.separator):
+            if not entry:
+                continue
+            found.append(entry.rstrip(self.strip) if self.strip else entry)
+        return found
+
+
 def _looks_true(value: Any) -> bool:
     """AchieveForms represents booleans as strings; treat the common truthy ones."""
     return str(value).strip().lower() in {"true", "yes", "1"}
@@ -618,7 +759,7 @@ class AchieveFormsFieldMapPreprocessor(
         transform = RowTransformer(type_value_map={...})
 
     Args:
-        fields: a list of ``(date_field, label)`` or ``(date_field, label,
+        fields: a sequence of ``(date_field, label)`` or ``(date_field, label,
             condition_field)`` entries (see :data:`FieldMapEntry`). ``label``
             is a literal string by default; wrap it in ``LabelField(...)`` to
             read the label from another field on the same row instead (a
@@ -642,16 +783,20 @@ class AchieveFormsFieldMapPreprocessor(
             leading characters before parsing (e.g. ``truncate=10`` to drop a
             trailing ``" HH:MM:SS"`` AchieveForms sometimes appends to a
             otherwise-fixed-width date).
+        date_list: set a :class:`DateList` when each field holds a *run* of
+            dates for that bin type rather than a single next-collection date;
+            every entry becomes its own record under the field's label.
     """
 
     def __init__(
         self,
-        fields: "list[FieldMapEntry]",
+        fields: "Sequence[FieldMapEntry]",
         *,
         row_key: str = "0",
         min_year: int = 2000,
         parse_date: "Any | None" = None,
         truncate: "int | None" = None,
+        date_list: "DateList | None" = None,
     ):
         from waste_collection_schedule import date_parsers
 
@@ -660,17 +805,11 @@ class AchieveFormsFieldMapPreprocessor(
         self.min_year = min_year
         self.parse_date = parse_date or date_parsers.auto
         self.truncate = truncate
+        self.date_list = date_list
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
-        if isinstance(rows, dict) and self.row_key in rows:
-            row = rows[self.row_key]
-        elif isinstance(rows, dict):
-            row = rows
-        elif rows:
-            row = rows[0]
-        else:
-            row = {}
-        if not isinstance(row, dict):
+        row = _single_row(rows, self.row_key)
+        if not row:
             return
 
         for entry in self.fields:
@@ -684,18 +823,184 @@ class AchieveFormsFieldMapPreprocessor(
                     continue
             else:
                 resolved_label = label
-            raw_date = str(row.get(date_field) or "").strip()
+            raw_value = str(row.get(date_field) or "").strip()
+            if not raw_value:
+                continue
+            raw_dates = (
+                self.date_list.entries(raw_value)
+                if self.date_list is not None
+                else [raw_value]
+            )
+            for raw_date in raw_dates:
+                if self.truncate is not None:
+                    raw_date = raw_date[: self.truncate]
+                try:
+                    parsed = self.parse_date(raw_date)
+                except (ValueError, TypeError):
+                    continue
+                if parsed.year < self.min_year:
+                    continue
+                yield parsed, resolved_label
+
+
+class AchieveFormsRowFieldsPreprocessor(
+    preprocessors.Preprocessor[Any, "tuple[Any, str]"]
+):
+    """Read ``(date, label)`` records off each AchieveForms row.
+
+    The counterpart to :class:`AchieveFormsFieldMapPreprocessor`: there, one
+    wide row carries a date field per waste type; here the council returns one
+    row *per collection date*, carrying the waste type alongside it. Where
+    :class:`AchieveFormsRowsPreprocessor` hands the whole row to a
+    ``JsonTransformer``, this narrows each row to the two fields that matter,
+    which is what the shapes below need::
+
+        preprocess = AchieveFormsRowFieldsPreprocessor(
+            date_field="Date",
+            label_fields=("Service1", "Service2", "Service3"),
+            truncate=10,
+        )
+        transform = RowTransformer(parse_date=date_parsers.for_format("%d/%m/%Y"), ...)
+
+    Args:
+        date_field: the row field holding this collection's date.
+        label_fields: the row field(s) naming the waste type(s). By default a
+            row emits one record per *populated* field, for a council that
+            lists several services collected on the same date in sibling
+            fields (``Service1``/``Service2``/``Service3``).
+        first_label_only: treat ``label_fields`` as a fallback chain instead:
+            only the first populated field is used, for a council that
+            publishes a human-readable name and an internal code side by side
+            (``label`` then ``ServiceItemName``) and means them as one label.
+        split_labels: a separator (string or compiled regex) when one field
+            names several items at once ("Blue Food Caddy and Black & Green
+            Recycling Boxes"); each becomes its own record. Empty fragments
+            are dropped.
+        label_lookup: ``(source) -> mapping``, applied to every raw label, for
+            a council whose per-property service names are only meaningful via
+            a map an earlier :class:`LookupStep` discovered — read it with
+            :func:`lookup_context`. A label missing from the mapping drops
+            that record, which is how the property's own subscribed services
+            get filtered out of a generic task list.
+        truncate: slice each raw date to this many leading characters (e.g.
+            ``truncate=10`` to drop the trailing ``" HH:MM:SS"`` AchieveForms
+            sometimes appends to an otherwise-fixed-width date).
+        parse_date: when set, the date is parsed here (a row whose date won't
+            parse is skipped) rather than being passed to the transformer as a
+            string. Needed when a follow-up stage wants a real ``date`` — a
+            ``preprocessors.RecurrenceExpander`` projecting the next
+            collection forward, say. Leave unset to let the transformer parse.
+        dedupe: drop a record whose ``(date, label)`` pair has already been
+            emitted during this fetch, for a provider whose job feed repeats
+            an entry.
+    """
+
+    def __init__(
+        self,
+        *,
+        date_field: str,
+        label_fields: "Sequence[str]",
+        first_label_only: bool = False,
+        split_labels: "str | re.Pattern[str] | None" = None,
+        label_lookup: "Callable[[BaseSource | None], Mapping[str, str]] | None" = None,
+        truncate: "int | None" = None,
+        parse_date: "Any | None" = None,
+        dedupe: bool = False,
+    ):
+        self.date_field = date_field
+        self.label_fields = tuple(label_fields)
+        self.first_label_only = first_label_only
+        self.split_labels = (
+            re.compile(split_labels) if isinstance(split_labels, str) else split_labels
+        )
+        self.label_lookup = label_lookup
+        self.truncate = truncate
+        self.parse_date = parse_date
+        self.dedupe = dedupe
+
+    def _labels(self, row: dict) -> "list[str]":
+        labels: list[str] = []
+        for field_name in self.label_fields:
+            value = row.get(field_name)
+            if not value:
+                continue
+            if self.split_labels is not None:
+                labels += [
+                    part.strip()
+                    for part in self.split_labels.split(str(value))
+                    if part.strip()
+                ]
+            else:
+                labels.append(str(value))
+            if self.first_label_only:
+                break
+        return labels
+
+    def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
+        mapping = self.label_lookup(source) if self.label_lookup is not None else None
+        seen: set[tuple] = set()
+        for row in _rows(rows):
+            raw_date = row.get(self.date_field)
             if not raw_date:
                 continue
+            date_value: Any = str(raw_date)
             if self.truncate is not None:
-                raw_date = raw_date[: self.truncate]
-            try:
-                parsed = self.parse_date(raw_date)
-            except (ValueError, TypeError):
+                date_value = date_value[: self.truncate]
+            if self.parse_date is not None:
+                try:
+                    date_value = self.parse_date(date_value)
+                except (ValueError, TypeError):
+                    continue
+            for label in self._labels(row):
+                if mapping is not None:
+                    mapped = mapping.get(label)
+                    if mapped is None:
+                        continue
+                    label = mapped
+                if self.dedupe:
+                    key = (date_value, label.lower())
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                yield date_value, label
+
+
+class AchieveFormsLabelSplitPreprocessor(
+    preprocessors.Preprocessor[Any, "tuple[str, str]"]
+):
+    """Split a combined ``"<waste type> - <date>"`` label into a ``(date, label)`` row.
+
+    The shape a council produces when the schedule is published as the option
+    list behind a dropdown (``integration.transformed.select_data``, reachable
+    via ``AchieveFormsRowsParser(key="select_data")``) rather than as rows: the
+    only useful content is each option's display label, which combines the bin
+    type and the collection date::
+
+        parse = AchieveFormsRowsParser(key="select_data")
+        preprocess = AchieveFormsLabelSplitPreprocessor()
+        transform = RowTransformer(parse_date=date_parsers.for_format("%d/%m/%Y"), ...)
+
+    Only the *last* separator splits, so a bin type that contains the
+    separator itself ("RECYCLING BIN - 240L - 25/09/2026") stays intact. An
+    entry with no separator is skipped.
+
+    Args:
+        field: the entry field holding the combined label.
+        separator: what separates the date from the waste type.
+    """
+
+    def __init__(self, *, field: str = "label", separator: str = " - "):
+        self.field = field
+        self.separator = separator
+
+    def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
+        for row in _rows(rows):
+            label = str(row.get(self.field) or "").strip()
+            parts = label.rsplit(self.separator, 1)
+            if len(parts) != 2:
                 continue
-            if parsed.year < self.min_year:
-                continue
-            yield parsed, resolved_label
+            waste_type, date_str = parts
+            yield date_str.strip(), waste_type.strip()
 
 
 class AchieveFormsJsonRowsPreprocessor(preprocessors.Preprocessor[Any, dict]):
@@ -819,16 +1124,7 @@ class AchieveFormsDynamicRowsPreprocessor(
         self.parse_date = parse_date or date_parsers.auto
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
-        if isinstance(rows, dict) and self.row_key in rows:
-            row = rows[self.row_key]
-        elif isinstance(rows, dict):
-            row = rows
-        elif rows:
-            row = rows[0]
-        else:
-            row = {}
-        if not isinstance(row, dict):
-            return
+        row = _single_row(rows, self.row_key)
 
         for key, value in row.items():
             if not value:

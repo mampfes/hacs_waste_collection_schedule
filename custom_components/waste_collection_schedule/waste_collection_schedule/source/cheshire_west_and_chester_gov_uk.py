@@ -1,4 +1,3 @@
-from collections.abc import Iterable
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
@@ -6,10 +5,12 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
+    AchieveFormsRowFieldsPreprocessor,
     AchieveFormsRowsParser,
     LookupStep,
+    lookup_context,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -64,16 +65,6 @@ def _uprn_form_values(context: dict, source: Any) -> dict:
     }
 
 
-def _schedule_form_values(context: dict, source: Any) -> dict:
-    # Stash the service-type map onto the source so preprocess() can resolve
-    # each row's generic waste-type label; a LookupStep's extract can only
-    # mutate the retrieve chain's own context, not reach the pipeline steps
-    # that run after retrieve, so form_values (which also receives source) is
-    # the source-only side channel for handing it across.
-    source._service_map = context.get("map", {})
-    return _uprn_form_values(context, source)
-
-
 @final
 class Source(BaseSource):
     TITLE = "Cheshire West and Chester Council"
@@ -113,30 +104,25 @@ class Source(BaseSource):
             ),
             LookupStep(
                 SCHEDULE_LOOKUP_ID,
-                form_values=_schedule_form_values,
+                form_values=_uprn_form_values,
             ),
         ],
     )
     parse = AchieveFormsRowsParser()
-    transform = JsonTransformer(
-        date_key="collectionDateTime",
-        type_key="type",
+    # The schedule lookup returns every task on the property's rounds, named
+    # in this area's own vocabulary. The serviceTypes lookup earlier in the
+    # chain left a {serviceType -> generic category} map in the retrieve
+    # context: it both relabels each row and filters out the tasks that are
+    # not one of the four generic collections.
+    preprocess = AchieveFormsRowFieldsPreprocessor(
+        date_field="collectionDateTime",
+        label_fields=("serviceType",),
+        label_lookup=lambda source: lookup_context(source).get("map", {}),
+    )
+    transform = RowTransformer(
         parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
         type_value_map=GENERIC_SERVICE_TYPES,
     )
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[dict]":
-        service_map = getattr(self, "_service_map", {})
-        values = rows.values() if isinstance(rows, dict) else rows
-        for row in values or []:
-            if not isinstance(row, dict):
-                continue
-            generic = service_map.get(row.get("serviceType"))
-            if generic is None:
-                continue
-            yield {"collectionDateTime": row.get("collectionDateTime"), "type": generic}

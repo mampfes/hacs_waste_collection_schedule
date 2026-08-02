@@ -1,14 +1,15 @@
 import re
-from collections.abc import Iterable
 from datetime import date, timedelta
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
-from waste_collection_schedule import date_parsers, response_shape
+from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
 from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsLabelSplitPreprocessor,
     AchieveFormsRetriever,
+    AchieveFormsRowsParser,
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
@@ -41,9 +42,10 @@ COLLECTIONS_LOOKUP_ID = "6784e74793b68"
 # to it (mirrors the legacy source's behaviour, not a fabricated schedule).
 SERVICE_START = date(2026, 6, 1)
 
-# A wide "BIN TYPE[ - size/count] - DD/MM/YYYY" label is split in preprocess()
-# into (date, bin type); this strips the trailing size ("- 240L") or bag-count
-# ("X3") qualifier so the bin type maps cleanly onto a canonical WasteType.
+# Each dropdown option's label is "BIN TYPE[ - size/count] - DD/MM/YYYY",
+# split into (date, bin type) by AchieveFormsLabelSplitPreprocessor; this
+# strips the trailing size ("- 240L") or bag-count ("X3") qualifier so the bin
+# type maps cleanly onto a canonical WasteType.
 _SIZE_SUFFIX_RE = re.compile(r"\s*-\s*\d+L$", re.IGNORECASE)
 _COUNT_SUFFIX_RE = re.compile(r"\s*X\d+$", re.IGNORECASE)
 
@@ -108,6 +110,10 @@ class Source(BaseSource):
             ),
         ],
     )
+    # East Cambridgeshire publishes the schedule as the option list behind the
+    # form's collection dropdown, not as rows_data.
+    parse = AchieveFormsRowsParser(key="select_data")
+    preprocess = AchieveFormsLabelSplitPreprocessor()
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         clean=_clean_bin_type,
@@ -129,29 +135,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn).strip())
-
-    def parse(self, raw: dict, source: "BaseSource | None" = None) -> Any:
-        select_data = (
-            raw.get("integration", {}).get("transformed", {}).get("select_data")
-        )
-        response_shape.expect(
-            isinstance(select_data, list),
-            source_name=response_shape.source_name(source),
-            detail="East Cambridgeshire response missing integration.transformed.select_data",
-            raw=raw,
-        )
-        return select_data
-
-    def preprocess(
-        self, records: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[str, str]]":
-        for item in records:
-            label = str(item.get("label") or "").strip()
-            # Label format: "BIN TYPE[ - size/count] - DD/MM/YYYY"; only the
-            # trailing " - " separates the date from the (possibly multi-part)
-            # bin type, so split off the last segment only.
-            parts = label.rsplit(" - ", 1)
-            if len(parts) != 2:
-                continue
-            bin_type, date_str = parts
-            yield date_str.strip(), bin_type.strip()

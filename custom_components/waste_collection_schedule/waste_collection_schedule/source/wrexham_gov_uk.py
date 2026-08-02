@@ -1,6 +1,6 @@
-from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
+from bs4 import Tag
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
@@ -9,7 +9,7 @@ from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
     LookupStep,
 )
-from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.transformers import HtmlTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -25,6 +25,13 @@ INITIAL_URL = (
     "&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes&noLoginPrompt=1"
 )
 LOOKUP_ID = "5beab9a792bb5"
+
+
+def _row_date(li: Tag) -> "str | None":
+    """The collection date from the first cell of this <li>'s own table row."""
+    row = li.find_parent("tr")
+    cell = row.find("td") if row is not None else None
+    return cell.get_text(strip=True) if isinstance(cell, Tag) else None
 
 
 @final
@@ -59,10 +66,12 @@ class Source(BaseSource):
     )
     # The schedule is an HTML table embedded inside a JSON field of the
     # runLookup response; HtmlParser's from_json_key drills straight to it
-    # (the raw dict from AchieveFormsRetriever needs no .json() call).
+    # (the raw dict from AchieveFormsRetriever needs no .json() call). Each
+    # date row lists the bins collected that day as <li>s in its second cell,
+    # so selecting the <li>s makes one record per collection, and the date
+    # comes off the first cell of the <li>'s own row.
     parse = HtmlParser(
-        "tr",
-        skip=1,
+        "tr td:nth-of-type(2) li",
         from_json_key=(
             "integration",
             "transformed",
@@ -71,7 +80,9 @@ class Source(BaseSource):
             "UpcomingCollections",
         ),
     )
-    transform = RowTransformer(
+    transform = HtmlTransformer(
+        date_getter=_row_date,
+        type_getter=lambda li: li.get_text(strip=True),
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         # A single <li> can name a combined round ("Recycling / food").
         type_value_map={
@@ -83,14 +94,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn).zfill(12))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[str, str]]":
-        for row in rows:
-            cells = row.find_all("td")
-            if len(cells) < 2:
-                continue
-            date_str = cells[0].get_text(strip=True)
-            for li in cells[1].find_all("li"):
-                yield date_str, li.get_text(strip=True)

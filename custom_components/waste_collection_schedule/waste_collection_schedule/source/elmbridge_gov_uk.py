@@ -1,11 +1,11 @@
-from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
+    AchieveFormsRowFieldsPreprocessor,
     AchieveFormsRowsParser,
     LookupStep,
 )
@@ -58,6 +58,13 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    # AchieveForms sometimes appends a trailing " HH:MM:SS" to an otherwise
+    # fixed-width "%d/%m/%Y" date; keep only the date part.
+    preprocess = AchieveFormsRowFieldsPreprocessor(
+        date_field="Date",
+        label_fields=SERVICE_FIELDS,
+        truncate=10,
+    )
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         clean=label_cleaner(strip_suffixes=[" Collection Service"]),
@@ -71,28 +78,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn).strip())
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[Any, str]]":
-        values = (
-            rows.values()
-            if isinstance(rows, dict)
-            else rows
-            if isinstance(rows, list)
-            else []
-        )
-        for row in values:
-            if not isinstance(row, dict):
-                continue
-            date = row.get("Date")
-            if not date:
-                continue
-            # AchieveForms sometimes appends a trailing " HH:MM:SS" to an
-            # otherwise fixed-width "%d/%m/%Y" date; keep only the date part.
-            date = str(date)[:10]
-            for field_name in SERVICE_FIELDS:
-                service = row.get(field_name)
-                if not service:
-                    continue
-                yield date, service

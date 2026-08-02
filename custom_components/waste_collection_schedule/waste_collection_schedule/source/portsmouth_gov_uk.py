@@ -1,12 +1,13 @@
-from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsFieldMapPreprocessor,
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    DateList,
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
@@ -23,10 +24,10 @@ LOOKUP_ID = "5e81ed10c0241"
 
 # (row field, waste-type label). Each field is a "<br />"-joined list of date
 # strings (not a table of rows), one per bin type.
-DATE_FIELDS: tuple[tuple[str, str], ...] = (
+DATE_FIELDS: "list[tuple[str, str]]" = [
     ("listRefDatesHTML", "refuse bin"),
     ("listRecDatesHTML", "recycling bin"),
-)
+]
 
 
 @final
@@ -60,8 +61,15 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
-    transform = RowTransformer(
+    # One summary row, each bin type's whole run of upcoming dates in a single
+    # field as an HTML fragment, sometimes followed by a <p> note. A date can
+    # carry a trailing "*" footnote marker.
+    preprocess = AchieveFormsFieldMapPreprocessor(
+        DATE_FIELDS,
+        date_list=DateList(stop_at="<p>", strip="* "),
         parse_date=date_parsers.for_format("%A %d %B %Y"),
+    )
+    transform = RowTransformer(
         type_value_map={
             "refuse bin": GENERAL_WASTE,
             "recycling bin": RECYCLABLES,
@@ -70,25 +78,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[Any, str]]":
-        if isinstance(rows, dict) and "0" in rows:
-            row = rows["0"]
-        elif isinstance(rows, dict):
-            row = rows
-        elif rows:
-            row = rows[0]
-        else:
-            row = {}
-        if not isinstance(row, dict):
-            return
-        for field_name, label in DATE_FIELDS:
-            raw = row.get(field_name)
-            if not raw:
-                continue
-            for entry in raw.split("<p>")[0].split("<br />"):
-                if not entry:
-                    continue
-                yield entry.rstrip("* "), label
