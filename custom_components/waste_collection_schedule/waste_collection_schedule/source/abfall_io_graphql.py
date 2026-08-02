@@ -38,6 +38,41 @@ _PROVIDERS = [
         "url": "https://www.kreis-reutlingen.de/",
         "service_id": "15f69fab91c4cae50d9dbb5bcfd383f0",
     },
+    {
+        "title": "Entsorgungsbetriebe Essen",
+        "url": "https://www.ebe-essen.de/",
+        "service_id": "51be67f3758f1fb57b420efe065c0663",
+    },
+    {
+        "title": "KELL Kommunalentsorgung Landkreis Leipzig GmbH",
+        "url": "https://kell-gmbh.de/",
+        "service_id": "0d7a92192ba3ae914c028ac37d73e222",
+    },
+    {
+        "title": "Wirtschaftsbetriebe Duisburg (WBD)",
+        "url": "https://www.wb-duisburg.de/",
+        "service_id": "80acad6c77fe9342ebafad29a8c58bf6",
+    },
+    {
+        "title": "Landkreis Göttingen",
+        "url": "https://www.landkreisgoettingen.de/",
+        "service_id": "4b5702d771c82b611c386ebbc7629026",
+    },
+    {
+        "title": "Abfallwirtschaft Landkreis Böblingen",
+        "url": "https://www.awb-bb.de/",
+        "service_id": "76bdaac8568082d77e7a90cb41129f9b",
+    },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "2085afd95285e645e15ee9623d0c5172",
+    },
+    {
+        "title": "Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis",
+        "url": "https://www.lrasbk.de/",
+        "service_id": "30628292bdd8b43db86a48f7e0d85f85",
+    },
 ]
 
 
@@ -74,6 +109,34 @@ class Source(BaseSource):
         "Landkreis Reutlingen, Wannweil, Bahnhofstraße 5": {
             "key": "15f69fab91c4cae50d9dbb5bcfd383f0",
             "idHouseNumber": 58444,
+        },
+        "Entsorgungsbetriebe Essen": {
+            "key": "51be67f3758f1fb57b420efe065c0663",
+            "idHouseNumber": 74629,
+        },
+        "KELL Kommunalentsorgung Landkreis Leipzig GmbH, Großpösna": {
+            "key": "0d7a92192ba3ae914c028ac37d73e222",
+            "idHouseNumber": 1257,
+        },
+        "Wirtschaftsbetriebe Duisburg (WBD), Buchholz, Altenbrucher Damm 8": {
+            "key": "80acad6c77fe9342ebafad29a8c58bf6",
+            "idHouseNumber": 72827,
+        },
+        "Landkreis Göttingen, Scheden": {
+            "key": "4b5702d771c82b611c386ebbc7629026",
+            "idHouseNumber": 641,
+        },
+        "Landkreis Böblingen, Böblingen, Dagersheim": {
+            "key": "76bdaac8568082d77e7a90cb41129f9b",
+            "idHouseNumber": 1057,
+        },
+        "ASG Nordsachsen, Delitzsch-Beerendorf": {
+            "key": "2085afd95285e645e15ee9623d0c5172",
+            "idHouseNumber": 360435,
+        },
+        "Schwarzwald-Baar-Kreis, Königsfeld": {
+            "key": "30628292bdd8b43db86a48f7e0d85f85",
+            "idHouseNumber": 16437,
         },
     }
 

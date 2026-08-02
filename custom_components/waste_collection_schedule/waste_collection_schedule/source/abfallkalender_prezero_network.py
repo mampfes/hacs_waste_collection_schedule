@@ -88,16 +88,6 @@ class Source(BaseSource):
             "street": "Ackerstraße",
             "house_number": "2",
         },
-        "Willich Aachener Straße": {
-            "city": "willich",
-            "street": "Aachener Straße",
-            "house_number": "1",
-        },
-        "Willich Ahornweg": {
-            "city": "willich",
-            "street": "Ahornweg",
-            "house_number": "5",
-        },
     }
 
     REGIONS = (
@@ -106,7 +96,6 @@ class Source(BaseSource):
             url=f"{_BASE_URL}/bad-oeynhausen",
             city="bad-oeynhausen",
         ),
-        region("Willich", url=f"{_BASE_URL}/willich", city="willich"),
     )
 
     PARAMS = (
@@ -121,13 +110,12 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "de": (
-            "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist "
-            "standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad "
-            "Oeynhausen, Willich)."
+            "Geben Sie Ihre Straße und Hausnummer ein. Diese Quelle "
+            "unterstützt derzeit nur Bad Oeynhausen."
         ),
         "en": (
-            "Enter your street and house number. The city defaults to Bad "
-            "Oeynhausen (supported: Bad Oeynhausen, Willich)."
+            "Enter your street and house number. This source currently only "
+            "supports Bad Oeynhausen."
         ),
     }
 

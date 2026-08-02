@@ -11,7 +11,12 @@ from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    RECYCLABLES,
+)
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
@@ -35,13 +40,26 @@ def get_device_key_store() -> DeviceKeyStore | None:
 _LOGGER = logging.getLogger(__name__)
 
 # WhatBinDay's raw bin-type codes are consistent across every known provider
-# on the platform (WasteBin/RecycleBin/GreenBin), so the mapping to the
+# on the platform (WasteBin/RecycleBin/GreenBin/GlassBin), so the mapping to the
 # canonical multilingual WasteType lives here once rather than being repeated
-# (and re-worded) per source.
+# (and re-worded) per source. A council that does not run a given stream simply
+# never returns that code.
 TYPE_VALUE_MAP = {
     "WasteBin": GENERAL_WASTE,
     "RecycleBin": RECYCLABLES,
     "GreenBin": ORGANIC,
+    "GlassBin": GLASS,
+}
+
+# Casing a council's WhatBinDay dataset expects for the suburb it is asked
+# about. The backend matches the submitted suburb case-sensitively, and the
+# councils do not agree on a convention: Kingston stores "CLAYTON SOUTH",
+# Surf Coast stores "Torquay". A source declares which one applies so a user
+# typing their suburb in any case still resolves.
+SUBURB_CASES: dict[str, Callable[[str], str]] = {
+    "title": str.title,
+    "upper": str.upper,
+    "lower": str.lower,
 }
 
 # Address parts a source resolves before calling the retriever, either read
@@ -93,6 +111,13 @@ class WhatBinDayRetriever(RetrieverFunc):
     * ``state``: literal state used when ``split_address`` is not given (a
       source with separate address fields, like Kingston, does not also ask
       the user for their state).
+    * ``state_long_name``: the ``administrative_area_level_1`` long name, when
+      the council's backend wants the full state name ("Victoria") rather than
+      the abbreviation it also submits as the short name (Surf Coast's case).
+      Defaults to using the abbreviation for both.
+    * ``suburb_case``: a key of :data:`SUBURB_CASES` normalising the suburb to
+      the casing this council's dataset stores, so the case-sensitive match on
+      the backend succeeds whatever the user typed.
     * ``geocode``: whether to resolve coordinates via Nominatim.
     * ``location_key``: a literal device-key-store key, or
       ``callable(AddressParts) -> str`` to derive one per address.
@@ -119,21 +144,30 @@ class WhatBinDayRetriever(RetrieverFunc):
         suburb_field: str = "suburb",
         post_code_field: str = "post_code",
         state: str = "VIC",
+        state_long_name: str | None = None,
         country: str = "Australia",
         app_package: str = DEFAULT_APP_PACKAGE,
         geocode: bool = False,
+        suburb_case: str | None = None,
         split_address: Callable[[str], AddressParts] | None = None,
         address_field: str = "address",
     ):
+        if suburb_case is not None and suburb_case not in SUBURB_CASES:
+            raise ValueError(
+                f"unknown suburb_case {suburb_case!r}, expected one of "
+                f"{sorted(SUBURB_CASES)}"
+            )
         self.location_key = location_key
         self.street_number_field = street_number_field
         self.street_name_field = street_name_field
         self.suburb_field = suburb_field
         self.post_code_field = post_code_field
         self.state = state
+        self.state_long_name = state_long_name
         self.country = country
         self.app_package = app_package
         self.geocode = geocode
+        self.suburb_case = suburb_case
         self.split_address = split_address
         self.address_field = address_field
 
@@ -149,6 +183,9 @@ class WhatBinDayRetriever(RetrieverFunc):
                 "post_code": str(params[self.post_code_field]),
                 "state": self.state,
             }
+
+        if self.suburb_case is not None:
+            parts["suburb"] = SUBURB_CASES[self.suburb_case](parts["suburb"].strip())
 
         coordinates = None
         if self.geocode:
@@ -292,7 +329,7 @@ class WhatBinDayRetriever(RetrieverFunc):
                 "types": ["postal_code"],
             },
             {
-                "long_name": state,
+                "long_name": self.state_long_name or state,
                 "short_name": state,
                 "types": ["administrative_area_level_1", "political"],
             },

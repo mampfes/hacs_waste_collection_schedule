@@ -66,11 +66,6 @@ _PROVIDERS = [
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
     },
     {
-        "title": "Entsorgungsbetriebe Essen",
-        "url": "https://www.ebe-essen.de/",
-        "service_id": "9b5390f095c779b9128a51db35092c9c",
-    },
-    {
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",
@@ -189,11 +184,6 @@ _PROVIDERS = [
         "title": "Landkreis Rottweil",
         "url": "https://landkreis-rottweil.de",
         "service_id": "d287412901d68d66825e588a60c94641",
-    },
-    {
-        "title": "ASG Nordsachsen",
-        "url": "https://www.asg-nordsachsen.de/",
-        "service_id": "1d78841c5d7fc43ebe52b9dc01f6b962",
     },
     {
         "title": "AVR Kommunal, Rhein-Neckar-Kreis",
@@ -333,6 +323,12 @@ class Source(BaseSource):
         waste_types("f_abfallarten"),
     )
 
+    # Cascade values a subclass fixes rather than asking the user for (see
+    # stadt_kerpen_de, which pins the key and kommune). They never reach the
+    # config flow's selections, so get_choices merges them back in before
+    # walking the form. Empty here: this source asks for every level.
+    PINNED_PARAMS: ClassVar[dict] = {}
+
     retrieve = AbfallIoRetriever()
     parse = AbfallIoParser()
     transform = ICSTransformer()
@@ -369,6 +365,7 @@ class Source(BaseSource):
         (visible name, stored id) pairs walked live from the abfall.io form, or
         [] when this level does not apply to the current selections.
         """
+        selections = {**cls.PINNED_PARAMS, **selections}
         key = selections.get("key")
         if not key:
             return []

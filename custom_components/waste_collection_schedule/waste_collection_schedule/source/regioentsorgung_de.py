@@ -25,11 +25,33 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_URL = "https://tonnen.regioentsorgung.de/WasteManagementRegioentsorgung/WasteManagementServlet"
 _HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)"}
 _APP = "com.athos.kd.regioentsorgung"
+
+# The municipalities RegioEntsorgung serves: one structure, one listing each.
+_CITIES = (
+    "Alsdorf",
+    "Baesweiler",
+    "Eschweiler",
+    "Heimbach",
+    "Herzogenrath",
+    "Inden",
+    "Langerwehe",
+    "Linnich",
+    "Monschau",
+    "Nideggen",
+    "Niederzier",
+    "Nörvenich",
+    "Roetgen",
+    "Simmerath",
+    "Stolberg",
+    "Vettweiß",
+    "Würselen",
+)
 
 
 class _FormStateParser(HTMLParser):
@@ -130,6 +152,8 @@ class Source(BaseSource):
             "house_number": 10,
         },
     }
+
+    REGIONS = tuple(region(name, city=name) for name in _CITIES)
 
     PARAMS = (
         municipality(field="city"),

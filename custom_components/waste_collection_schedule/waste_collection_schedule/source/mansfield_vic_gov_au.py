@@ -1,10 +1,8 @@
-import logging
-import re
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Mansfield Shire Council"
 DESCRIPTION = "Source for Mansfield Shire Council rubbish collection."
@@ -14,71 +12,23 @@ TEST_CASES = {
     "Mansfield Zoo": {"street_address": "1064 Mansfield-Woods Point Road, Mansfield"},
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 ICON_MAP = {
     "General Waste": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.mansfield.vic.gov.au",
+    argument_name="street_address",
+    warm_up_url="https://www.mansfield.vic.gov.au/Community/Residents/Waste-Recycling/Check-My-Bin-Day",
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
-    def __init__(self, street_address):
+    def __init__(self, street_address: str):
         self._street_address = street_address
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        session = requests.Session()
-
-        response = session.get(
-            "https://www.mansfield.vic.gov.au/Community/Residents/Waste-Recycling/Check-My-Bin-Day"
-        )
-        response.raise_for_status()
-
-        response = session.get(
-            "https://www.mansfield.vic.gov.au/api/v1/myarea/search",
-            params={"keywords": self._street_address},
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            addressSearchApiResults["Items"] is None
-            or len(addressSearchApiResults["Items"]) < 1
-        ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.mansfield.vic.gov.au/Community/Residents/Waste-Recycling/Check-My-Bin-Day"
-            )
-
-        addressSearchTopHit = addressSearchApiResults["Items"][0]
-        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
-
-        geolocationid = addressSearchTopHit["Id"]
-        _LOGGER.debug("Geolocationid: %s", geolocationid)
-
-        response = session.get(
-            "https://www.mansfield.vic.gov.au/ocapi/Public/myarea/wasteservices?ocsvclang=en-AU",
-            params={"geolocationid": geolocationid},
-        )
-        response.raise_for_status()
-
-        wasteApiResult = response.json()
-        _LOGGER.debug("Waste API result: %s", wasteApiResult)
-
-        soup = BeautifulSoup(wasteApiResult["responseContent"], "html.parser")
-
-        entries = []
-        for article in soup.find_all("article"):
-            waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type)
-            next_pickup = article.find(class_="next-service").string
-            if next_pickup is None:
-                continue
-            date_match = re.search(r"\d{1,2}\/\d{1,2}\/\d{4}", next_pickup)
-            if date_match:
-                next_pickup_date = datetime.strptime(
-                    date_match.group(0), "%d/%m/%Y"
-                ).date()
-                entries.append(
-                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
-                )
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch(address=self._street_address)

@@ -1,10 +1,8 @@
-import logging
-import re
-from datetime import datetime
-
-from bs4 import BeautifulSoup
-from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Maroondah City Council"
 DESCRIPTION = "Source for Maroondah City Council. Finds both green waste and general recycling dates."
@@ -33,8 +31,6 @@ TEST_CASES = {
     "Friday - Area B": {"address": "61 Timms Avenue, KILSYTH 3137"},  # Friday - Area B
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 ICON_MAP = {
     "General waste": Icons.GENERAL_WASTE,
     "Food and Garden organics": Icons.BIO_KITCHEN,
@@ -52,64 +48,19 @@ HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.maroondah.vic.gov.au",
+    use_curl_cffi=True,
+    headers=HEADERS,
+    warm_up_url="https://www.maroondah.vic.gov.au/Residents-property/Waste-rubbish/Waste-collection-schedule",
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
-    def __init__(self, address):
+    def __init__(self, address: str):
         self._street_address = address
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        session = requests.Session(impersonate="chrome")
-        session.headers.update(HEADERS)
-
-        response = session.get(
-            "https://www.maroondah.vic.gov.au/Residents-property/Waste-rubbish/Waste-collection-schedule"
-        )
-        response.raise_for_status()
-
-        response = session.get(
-            "https://www.maroondah.vic.gov.au/api/v1/myarea/search",
-            params={"keywords": self._street_address},
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            addressSearchApiResults["Items"] is None
-            or len(addressSearchApiResults["Items"]) < 1
-        ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.maroondah.vic.gov.au/Residents-property/Waste-rubbish/Waste-collection-schedule"
-            )
-
-        addressSearchTopHit = addressSearchApiResults["Items"][0]
-        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
-
-        geolocationid = addressSearchTopHit["Id"]
-        _LOGGER.debug("Geolocationid: %s", geolocationid)
-
-        response = session.get(
-            "https://www.maroondah.vic.gov.au/ocapi/Public/myarea/wasteservices?ocsvclang=en-AU",
-            params={"geolocationid": geolocationid},
-        )
-        response.raise_for_status()
-
-        wasteApiResult = response.json()
-        _LOGGER.debug("Waste API result: %s", wasteApiResult)
-
-        soup = BeautifulSoup(wasteApiResult["responseContent"], "html.parser")
-
-        entries = []
-        for article in soup.find_all("article"):
-            waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type)
-            next_pickup = (
-                article.find("div", {"class": "next-service"}).getText().strip()
-            )
-            if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
-                next_pickup_date = datetime.strptime(
-                    next_pickup.split(sep=" ")[1], "%d/%m/%Y"
-                ).date()
-                entries.append(
-                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
-                )
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch(address=self._street_address)

@@ -1,10 +1,8 @@
-from datetime import datetime
-from typing import TypedDict
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "City of Hobart "
 DESCRIPTION = "Source for City of Hobart"
@@ -25,89 +23,24 @@ ICON_MAP = {
     "fogo": Icons.BIO_KITCHEN,
 }
 
-SEARCH_URL = "https://www.hobartcity.com.au/api/v1/myarea/search"
-API_URL = "https://www.hobartcity.com.au/ocapi/Public/myarea/wasteservices"
-API_PARAMS = {
-    "geolocationid": "",  # filled in later
-    "ocsvclang": "en-AU",
-    "pageLink": "/$720cfbd8-df7e-4b88-bf92-e218d51ee173$/Residents/Waste-and-recycling/When-is-my-bin-collected",
-}
-
 PARAM_DESCRIPTIONS = {
     "en": {
         "address": "The address should exactly match the address autocompleted by the website: https://www.hobartcity.com.au/Residents/Waste-and-recycling/When-is-my-bin-collected",
     }
 }
 
-
-class Address(TypedDict):
-    Id: str
-    AddressSingleLine: str
-    MunicipalSubdivision: str
-    Distance: int
-    Score: float
-    LatLon: None
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.hobartcity.com.au",
+    page_link="/$720cfbd8-df7e-4b88-bf92-e218d51ee173$/Residents/Waste-and-recycling/When-is-my-bin-collected",
+    icon_keywords=ICON_MAP,
+    strict_address_matching=True,
+)
 
 
 class Source:
     def __init__(self, address: str) -> None:
-        self._address: str = address
-        self._address_id: str | None = None
-
-    def _fetch_address_id(self) -> None:
-        args = {"keywords": self._address}
-        r = requests.get(SEARCH_URL, params=args)
-        r.raise_for_status()
-        addresses: list[Address] = r.json()["Items"]
-        if len(addresses) == 1:
-            self._address_id = addresses[0]["Id"]
-            return
-
-        for address in addresses:
-            if address["AddressSingleLine"].lower().replace(
-                " ", ""
-            ) == self._address.lower().replace(" ", ""):
-                self._address_id = address["Id"]
-                return
-        raise SourceArgumentNotFoundWithSuggestions(
-            argument="address",
-            value=self._address,
-            suggestions=[a["AddressSingleLine"] for a in addresses],
-        )
+        self._address = address
+        self._client = OpenCitiesClient(_CONFIG)
 
     def fetch(self) -> list[Collection]:
-        fresh = False
-        if not self._address_id:
-            self._fetch_address_id()
-            fresh = True
-        try:
-            return self.get_collections()
-        except Exception as e:
-            if fresh:
-                raise e
-            return self.get_collections()
-
-    def get_collections(self) -> list[Collection]:
-        if not self._address_id:
-            raise ValueError("Address ID not set")  # this should never happen
-        params = API_PARAMS.copy()
-        params["geolocationid"] = self._address_id
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
-        if data["success"] is False:
-            raise ValueError("API request failed")
-
-        soup = BeautifulSoup(data["responseContent"], "html.parser")
-        entries = []
-        for article in soup.select("article"):
-            bin_type = article.select_one("h3").text.strip()
-            date_tag = article.select_one("div.next-service").text.strip()
-            if not date_tag:  # Skip entries with empty dates (e.g., calendar download)
-                continue
-            # Wed 4/12/2024
-            date_ = datetime.strptime(date_tag, "%a %d/%m/%Y").date()
-            icon = ICON_MAP.get(bin_type.lower().split("/")[0])
-            entries.append(Collection(date=date_, t=bin_type, icon=icon))
-
-        return entries
+        return self._client.fetch(address=self._address)

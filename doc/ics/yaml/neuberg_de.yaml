@@ -1,0 +1,16 @@
+---
+title: Gemeinde Neuberg
+url: https://neuberg.eu/
+country: de
+howto:
+  en: |
+    - Go to <https://neuberg.eu/leben-und-wohnen/abfallkalender>.
+    - Scroll down to the download section and right-click on the entry titled `Abfallkalender <year>` (the one linking to a file ending in `.ICS`) and copy the link address.
+    - Use this link as the `url` parameter.
+  de: |
+    - Öffnen Sie <https://neuberg.eu/leben-und-wohnen/abfallkalender>.
+    - Scrollen Sie zum Download-Bereich und klicken Sie mit der rechten Maustaste auf den Eintrag `Abfallkalender <Jahr>` (der auf eine Datei mit der Endung `.ICS` verweist) und kopieren Sie die Link-Adresse.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+test_cases:
+  Neuberg:
+    url: https://neuberg.eu/output/download.php?fid=3502.1370.1.ICS

@@ -64,6 +64,18 @@ type AnyArgs = Callable[..., Any] | Any
 type JsonArgs = Callable[..., JsonType] | JsonType
 
 
+def _plain_headers(headers: HeadersType) -> dict[str, str] | None:
+    """Drop ``None`` header values for plain ``requests``.
+
+    curl_cffi treats a ``None`` value as "suppress this default header", which
+    is why HeadersType allows it. requests has no such concept and its stubs
+    reject it, so the Legacy* retrievers strip those entries instead.
+    """
+    if headers is None:
+        return None
+    return {key: value for key, value in headers.items() if value is not None}
+
+
 class RetrieverFunc(Protocol):
     """A callable that fetches a raw HTTP response for a source.
 
@@ -580,7 +592,7 @@ class LegacyHttpGetRetriever(HttpGetRetriever):
         return _plain_requests.get(
             self._resolve(self.url, source),
             params=self._resolve(self.params, source),
-            headers=self._resolve(self.headers, source),
+            headers=_plain_headers(self._resolve(self.headers, source)),
             timeout=self.timeout,
         )
 
@@ -598,7 +610,7 @@ class LegacySslHttpGetRetriever(LegacyHttpGetRetriever):
         return get_legacy_session().get(
             self._resolve(self.url, source),
             params=self._resolve(self.params, source),
-            headers=self._resolve(self.headers, source),
+            headers=_plain_headers(self._resolve(self.headers, source)),
             timeout=self.timeout,
         )
 
@@ -616,7 +628,7 @@ class LegacyHttpPostRetriever(HttpPostRetriever):
             params=self._resolve(self.params, source),
             data=self._resolve(self.data, source),
             json=self._resolve(self.json, source),
-            headers=self._resolve(self.headers, source),
+            headers=_plain_headers(self._resolve(self.headers, source)),
             timeout=self.timeout,
         )
 

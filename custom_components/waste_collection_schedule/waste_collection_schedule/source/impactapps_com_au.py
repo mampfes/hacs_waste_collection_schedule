@@ -217,7 +217,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Brisbane City Council",
         "url": "https://brisbane.waste-info.com.au",
-        "website": "https://www.brisbane.nsw.gov.au",
+        "website": "https://www.brisbane.qld.gov.au",
     },
     {
         "name": "Burwood City Council",
@@ -227,12 +227,12 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Campbeltown City Council",
         "url": "https://campbelltown.waste-info.com.au",
-        "website": "https://www.campbelltown.vic.gov.au",
+        "website": "https://www.campbelltown.nsw.gov.au",
     },
     {
         "name": "City of Canada Bay Council",
         "url": "https://canada-bay.waste-info.com.au",
-        "website": "https://www.canadabay.vic.gov.au",
+        "website": "https://www.canadabay.nsw.gov.au",
     },
     {
         "name": "Cowra Council",
@@ -242,7 +242,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Cumberland City Council",
         "url": "https://cumberland.waste-info.com.au",
-        "website": "https://www.cumberland.vic.gov.au",
+        "website": "https://www.cumberland.nsw.gov.au",
     },
     {
         "name": "Forbes Shire Council",
@@ -257,7 +257,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Lithgow City Council",
         "url": "https://lithgow.waste-info.com.au",
-        "website": "https://www.lithgow.nsw.gov.au",
+        "website": "https://council.lithgow.com/",
     },
     {
         "name": "Livingstone Shire Council",
@@ -282,7 +282,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Port Stephens Council",
         "url": "https://port-stephens.waste-info.com.au",
-        "website": "https://www.portstephens.vic.gov.au",
+        "website": "https://www.portstephens.nsw.gov.au",
     },
     {
         "name": "Port Macquarie Hastings Council",
@@ -317,7 +317,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
     {
         "name": "Wollongong City Council",
         "url": "https://wollongong.waste-info.com.au",
-        "website": "https://www.wollongong.vic.gov.au",
+        "website": "https://www.wollongong.nsw.gov.au",
     },
     {
         "name": "Gympie Regional Council",

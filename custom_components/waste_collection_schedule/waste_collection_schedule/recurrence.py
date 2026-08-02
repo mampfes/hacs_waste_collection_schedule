@@ -26,6 +26,9 @@ work out the start date and cadence. Once you have those, use these helpers::
 
     # US federal holidays (for a HolidayShift preprocess), for one state's rules
     tn_holidays = recurrence.us_federal_holidays(range(2026, 2028), subdiv="TN")
+
+    # Good Friday (the one movable feast sources defer collections around)
+    no_collection = recurrence.good_friday(2026)
 """
 
 import datetime
@@ -34,6 +37,7 @@ from collections.abc import Iterable
 
 import holidays as _holidays
 from babel import Locale
+from dateutil.easter import easter as _easter
 
 WEEKLY = datetime.timedelta(weeks=1)
 FORTNIGHTLY = datetime.timedelta(days=14)
@@ -298,6 +302,18 @@ def monthly_nth_weekdays(
         dates.append(found)
         base = found + datetime.timedelta(days=1)
     return dates
+
+
+def good_friday(year: int) -> datetime.date:
+    """Return Good Friday (two days before Easter Sunday) for ``year``.
+
+    Good Friday is the movable feast waste providers most often suspend or
+    defer a collection on, in every country that observes it, so the Easter
+    arithmetic lives here rather than being hand-rolled per source. Pair it
+    with a :class:`~waste_collection_schedule.preprocessors.HolidayShift`
+    adjust callable that encodes the provider's own deferral rule.
+    """
+    return _easter(year) - datetime.timedelta(days=2)
 
 
 def us_federal_holidays(

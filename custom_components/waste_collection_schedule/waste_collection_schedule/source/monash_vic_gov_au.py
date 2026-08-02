@@ -1,8 +1,8 @@
-import datetime
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "City of Monash"
 DESCRIPTION = "Source for City of Monash rubbish collection."
@@ -40,49 +40,16 @@ PARAM_TRANSLATIONS = {
 
 # ### End of arguments affecting the configuration GUI ####
 
+_CONFIG = OpenCitiesConfig(
+    domain=URL.rstrip("/"),
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
     def __init__(self, address: str):
         self._address = address
+        self._client = OpenCitiesClient(_CONFIG)
 
     def fetch(self) -> list[Collection]:
-        s = requests.Session()
-
-        r = s.get(
-            f"{URL}api/v1/myarea/search",
-            params={"keywords": self._address},
-        )
-        if r.status_code != requests.codes.ok:
-            raise Exception("Error Accessing myarea API")  # DO NOT JUST return []
-        data = r.json()
-        geoid = data["Items"][0]["Id"]  # assume first one is correct and get geoid
-
-        r = s.get(
-            f"{URL}ocapi/Public/myarea/wasteservices",
-            params={"geolocationid": geoid, "ocsvclang": "en-AU"},
-        )
-
-        if r.status_code != requests.codes.ok:
-            raise Exception(
-                "Error Accessing Waste Services API"
-            )  # DO NOT JUST return []
-        html = r.json()["responseContent"]
-        soup = BeautifulSoup(html, "html.parser")
-
-        entries = []  # List that holds collection schedule
-        for article in soup.find_all("article"):
-            waste_type = article.find("h3").get_text(strip=True)
-
-            next_date_str = article.find("div", class_="next-service").get_text(
-                strip=True
-            )
-            next_date = datetime.datetime.strptime(next_date_str, "%a %d/%m/%Y").date()
-            entries.append(
-                Collection(
-                    date=next_date,  # Collection date
-                    t=waste_type,  # Collection type
-                    icon=ICON_MAP.get(waste_type),  # Collection icon
-                )
-            )
-
-        return entries
+        return self._client.fetch(address=self._address)

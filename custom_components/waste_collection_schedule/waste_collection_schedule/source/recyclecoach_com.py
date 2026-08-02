@@ -72,6 +72,15 @@ ICON_MAP = {
     "Blue Recycling Cart": Icons.RECYCLING,
     "Green Organic Waste Cart": Icons.ORGANIC,
     "No Collection Day": Icons.NO_COLLECTION,
+    "Blue Bin Paper Recycling": Icons.PAPER,
+    "Yellow Bin Container Recycling": Icons.RECYCLING,
+    "Christmas Tree": Icons.CHRISTMAS_TREE,
+    "Household Hazardous Waste Drop-Off": Icons.HAZARDOUS,
+    "Large Items": Icons.BULKY,
+    "Leaf": Icons.GARDEN,
+    "Compost Yard Open Saturday": Icons.EVENT,
+    "Compost Yard Open Wednesday": Icons.EVENT,
+    "3 Bags of Waste": Icons.GENERAL_WASTE,
 }
 
 EXTRA_INFO = [
@@ -225,6 +234,15 @@ EXTRA_INFO = [
         },
     },
     {
+        "title": "West Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "WestKelowna",
+        },
+    },
+    {
         "title": "Plainville (CT)",
         "url": "https://www.plainvillect.com/",
         "country": "us",
@@ -285,6 +303,12 @@ EXTRA_INFO = [
         "default_params": {"project_id": "3179", "district_id": "CALED"},
     },
     {
+        "title": "Carleton Place (ON)",
+        "url": "https://carletonplace.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3149", "district_id": "CARLETON"},
+    },
+    {
         "title": "Burlington (ON)",
         "url": "https://www.burlington.ca/",
         "country": "ca",
@@ -319,6 +343,12 @@ EXTRA_INFO = [
         "url": "https://www.newrochelleny.gov/791/Collection-Dates",
         "country": "us",
         "default_params": {"project_id": "3015", "district_id": "NEWRO"},
+    },
+    {
+        "title": "Peoria (IL)",
+        "url": "https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
+        "country": "us",
+        "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
     },
 ]
 
@@ -429,6 +459,23 @@ TEST_CASES = {
         "district_id": "NEWRO",
         "project_id": 3015,
         "zone_id": "zone-z19582-z19705",
+    },
+    "West Kelowna, BC, Canada (with district_id & project_id)": {
+        "street": "2760 Cameron Rd",
+        "city": "West Kelowna",
+        "state": "British Columbia",
+        "district_id": "WestKelowna",
+        "project_id": "502",
+    },
+    "Peoria, IL, USA": {
+        "street": "10303 N Churchill Dr",
+        "city": "Peoria",
+        "state": "Illinois",
+    },
+    "Carleton Place, ON, Canada": {
+        "street": "175 Bridge St",
+        "city": "Carleton Place",
+        "state": "Ontario",
     },
 }
 
