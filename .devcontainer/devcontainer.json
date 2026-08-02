@@ -13,7 +13,8 @@
 			"version": "3.12",
 			"installTools": true
 		},
-		// Claude Code CLI — comment out this line if you don't use Claude Code.
+		// Claude Code CLI — comment out these two lines if you don't use Claude Code.
+		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
