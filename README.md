@@ -2713,6 +2713,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ronco Briantino](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
+- [S.E.S.A.](/doc/source/sesaeste_it.md) / sesaeste.it
 - [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
 - [Sala Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app

@@ -17414,6 +17414,29 @@
           "zone": "Zone name as shown in the URL/map on the Monteco website (e.g. 'zona_centro_storico')."
         }
       },
+      "args_sesaeste_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "user_municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "user_municipality": "Name of your municipality, spelled as in the S.E.S.A. app."
+        }
+      },
+      "reconfigure_sesaeste_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "user_municipality": "Municipality"
+        },
+        "data_description": {
+          "user_municipality": "Name of your municipality, spelled as in the S.E.S.A. app."
+        }
+      },
       "args_seab_biella_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

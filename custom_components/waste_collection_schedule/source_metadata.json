@@ -3662,6 +3662,14 @@
     },
     "urls": {}
   },
+  "sesaeste_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sesaeste_it.md",
+    "howto": {
+      "en": "Use the name of your municipality exactly as it appears in the municipality list of the S.E.S.A. app, for example `Legnaro`.",
+      "it": "Usa il nome del tuo comune esattamente come appare nell'elenco dei comuni dell'app S.E.S.A., ad esempio `Legnaro`."
+    },
+    "urls": {}
+  },
   "seab_biella_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seab_biella_it.md",
     "howto": {

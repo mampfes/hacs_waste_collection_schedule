@@ -18108,6 +18108,12 @@
       "id": "junker_app"
     },
     {
+      "title": "S.E.S.A.",
+      "module": "sesaeste_it",
+      "default_params": {},
+      "id": "sesaeste_it"
+    },
+    {
       "title": "Sabaudia - Del Prete Srl",
       "module": "junker_app",
       "default_params": {},
