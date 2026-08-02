@@ -110,6 +110,8 @@ Both styles need this metadata (on the class for pipeline sources, at module lev
 
 Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`). Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
 
+**Cassette rule (enforced).** Every pipeline source ships a recorded cassette under `tests/fixtures/<module>/`, so CI replays it offline instead of calling live providers. Record with `python tests/record_fixtures.py <module>` and commit the JSON. `tests/test_new_architecture.py::test_pipeline_sources_ship_a_cassette` enforces it. A shared-service source keeps one cassette per distinct response shape.
+
 **Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails on any source that declares its own `Retriever` or `Parser` subclass, with a narrow allowlist for genuinely single-consumer cases. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
 
 Optional:

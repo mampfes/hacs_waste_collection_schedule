@@ -59,6 +59,15 @@ There are 2 ways to add support for a new service provider:
 
    New dedicated sources should use the `BaseSource` pipeline. You subclass `BaseSource` and declare which standard, reusable steps to use (retrieve, parse, preprocess, transform) as class attributes; for most providers the only source-specific code is `__init__`. This removes most of the boilerplate (no hand-written `fetch()`, no per-source icon map, no manual date parsing) and reuses tested components. The older module-level `fetch()` style still works and powers most of the ~600 existing sources, so a bug fix to one of those does not need converting, but please prefer the pipeline for anything new. The [dedicated source guide](doc/contributing_source.md) is the full reference: the pipeline, the reusable retrievers / parsers / transformers, the canonical waste types, and the reusable service platforms (ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService, IntraMaps, Abfallnavi / regio iT, Sitepark IES, Pozi, WhatBinDay, Sepan, Junker app, A Region, Ecoharmonogram, Cloud9 apps, and the whole ICS platform) worth checking before you write any new code.
 
+### Requirements for pipeline sources
+
+A new or migrated source on the 3.0.0 pipeline must:
+
+1. **Ship a recorded cassette.** Run `python tests/record_fixtures.py <module>` once the source works live, and commit `tests/fixtures/<module>/*.json`. CI replays these offline, so it never depends on a council's website being up.
+2. **Compose shared components.** Build on the components in `waste_collection_schedule/service/`. Do not define a `Retriever`/`Parser` in your source module, and do not override `retrieve`, `parse`, `preprocess` or `transform`. If the platform is missing something your provider needs, add it to the shared component so every provider on that platform gets it.
+
+Both are checked by CI in `tests/test_new_architecture.py`. See `doc/contributing_source.md` for the detail.
+
 ### Example Implementations
 
 If you want to contribute a new source, these existing implementations can be used as practical examples:

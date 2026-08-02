@@ -22,7 +22,8 @@ description: Investigate and implement support for a new waste-collection provid
 
 1. Spawn the `source-implementer` custom agent with the full Investigation Report and any user decisions.
 2. Tell it to write the source or shared-config change, create required documentation, lint every changed Python file, run structural tests, and live-test real `TEST_CASES` where applicable.
-3. Present its Implementation Report and resolve test failures before submission.
+3. Require, for a pipeline source: a recorded cassette committed under `tests/fixtures/<module>/` (`python tests/record_fixtures.py <module>`), and composition of shared components with no source-local `Retriever`/`Parser` and no `retrieve`/`parse`/`preprocess`/`transform` override. Anything the platform lacks goes into the shared component in `waste_collection_schedule/service/`, not the source. Both are CI-enforced in `tests/test_new_architecture.py`.
+4. Present its Implementation Report and resolve test failures before submission.
 
 ## Prepare submission
 

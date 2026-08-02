@@ -11,6 +11,8 @@ Review priorities:
 - Validate every changed source against the current Source contract in AGENTS.md.
 - Check supported language keys, canonical Icons enum use, valid lowercase COUNTRY, live upstream data, TEST_CASES, exceptions, documentation, and absence of main blocks or dummy parameters.
 - Minor issues may be planned as fixes: style, formatting, small clear bugs, missing docs, and mechanical reviewer requests.
+- For a new or migrated pipeline source, require a recorded cassette at tests/fixtures/<module>/*.json covering its TEST_CASES. Flag a missing one rather than approving without offline coverage.
+- For a new or migrated pipeline source, require component reuse: no Retriever or Parser subclass defined in the source module, and no retrieve, parse, preprocess or transform override on the Source class. Ask for the behaviour to move into the shared component under waste_collection_schedule/service/. Adding the source to a gate allowlist is not an acceptable fix.
 - Escalate substantive issues without inventing fixes: hardcoded schedules, missing live integration, security problems, fundamentally wrong design, or no usable TEST_CASES.
 
 Return this exact report and stop:
