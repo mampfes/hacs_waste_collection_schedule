@@ -2,17 +2,15 @@ import re
 from datetime import date, timedelta
 from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
-from waste_collection_schedule.service.IntraMaps import IntraMapsPanelParser
+from waste_collection_schedule.service.IntraMaps import (
+    IntegrationWidgetConfig,
+    IntegrationWidgetRetriever,
+    IntraMapsPanelParser,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -20,48 +18,26 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-# Unlike the other IntraMaps sources, Wanneroo has no static MapsClientConfig
-# to declare: the address-search api key/form id/config id/project name are
-# only ever available by scraping the `widget.js` the council's own
-# bin-lookup page embeds (they rotate). That's a genuinely irregular flow no
-# configured retriever can express, so Source.retrieve() replicates the
-# scrape and the session handshake itself, then returns the same raw
-# infoPanels dict the shared IntraMapsPanelParser already knows how to read
-# -- only the *fetch* is irregular here, not the response shape.
-#
-# retrieve() uses its own plain `requests.Session()` rather than the shared
-# `source.session` (curl_cffi, Chrome impersonation): this council's legacy
-# IIS/ASP.NET Modules-init endpoint returns a bare HTTP 500 under Chrome's
-# TLS/HTTP2 fingerprint, confirmed by testing both directly, and only
-# succeeds over a plain session -- exactly why the shared IntraMaps.py
-# MapsClient this source doesn't otherwise use also keeps its own private
-# `requests.Session()` instead of going through `source.session`.
+# The council embeds IntraMaps' own bin-lookup widget rather than publishing a
+# static Integration API config, so there is no MapsClientConfig to declare:
+# the api key, form id, config id and project name rotate and are scraped from
+# the widget script on every fetch. That whole flow (scrape -> search ->
+# MapBuilder session -> Integration/set selection) is the shared
+# IntegrationWidgetRetriever, and it hands back the same raw infoPanels dict
+# IntraMapsPanelParser reads for every other IntraMaps council.
 #
 # The cadence ("General Bin -THURSDAY NEXT Week", "Greens Bin - MONDAY Week
 # AFTER NEXT") is embedded in each field's value rather than a caption, so
-# _describe (the only other source-specific code) is what tells the bin type
-# and cadence apart.
+# _describe (the only source-specific code left) is what tells the bin type and
+# cadence apart.
 
-BIN_COLLECTIONS_URL = "https://www.wanneroo.wa.gov.au/bincollections"
-MAP_SESSION_URL = (
-    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Projects/"
+INTRAMAPS_CONFIG = IntegrationWidgetConfig(
+    page_url="https://www.wanneroo.wa.gov.au/bincollections",
+    base_url="https://wanneroo.spatial.t1cloud.com",
+    instance="spatial/intramaps",
+    map_project="4c19a56b-7a9e-437b-a3f1-a584aa3184fd",
+    map_module="aae4bf39-9508-4528-9436-5942a23ddd7a",
 )
-MAP_INITIALIZE_URL = (
-    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Modules/"
-)
-COLLECTION_URL = "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/set"
-
-# Fixed MapBuilder project/module used only for the session handshake;
-# distinct from the PROJECT_NAME scraped below, which names the address
-# search's own project.
-_MAP_PROJECT_ID = "4c19a56b-7a9e-437b-a3f1-a584aa3184fd"
-_MAP_MODULE_ID = "aae4bf39-9508-4528-9436-5942a23ddd7a"
-
-_API_URL_RE = re.compile(r'const\s+API_URL\s*=\s*"(.*?Search/)";')
-_API_KEY_RE = re.compile(r'const\s+API_KEY\s*=\s*"(.*?)";')
-_FORM_ID_RE = re.compile(r'const\s+FORM_ID\s*=\s*"(.*?)";')
-_CONFIG_ID_RE = re.compile(r'const\s+CONFIG_ID\s*=\s*"(.*?)";')
-_PROJECT_NAME_RE = re.compile(r'const\s+PROJECT_NAME\s*=\s*"(.*?)";')
 
 # Bin-type label -> canonical waste type. Each IntraMaps column
 # (General_Waste_Day, Recycling_Day, Go_Green_Bin_Day) already carries a
@@ -81,83 +57,6 @@ _WEEK_AFTER_NEXT_RE = re.compile(
     r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+week\s+after\s+next"
 )
 _DATE_RE = re.compile(r"(\d{1,2}\s+\w+\s+\d{4})")
-
-
-# The council's register stores abbreviated street types ("23 Bakana LP
-# LANDSDALE"). Users typically spell them out; expand both sides before
-# comparing so "23 Bakana Loop, Landsdale" matches the canonical entry (#6873).
-STREET_TYPE_ABBREVIATIONS = {
-    "ST": "STREET",
-    "RD": "ROAD",
-    "DR": "DRIVE",
-    "DRV": "DRIVE",
-    "AVE": "AVENUE",
-    "AV": "AVENUE",
-    "LP": "LOOP",
-    "PL": "PLACE",
-    "BVD": "BOULEVARD",
-    "BLVD": "BOULEVARD",
-    "CL": "CLOSE",
-    "CT": "COURT",
-    "CRES": "CRESCENT",
-    "CR": "CRESCENT",
-    "CIR": "CIRCLE",
-    "CCT": "CIRCUIT",
-    "GTE": "GATE",
-    "PDE": "PARADE",
-    "TCE": "TERRACE",
-    "HWY": "HIGHWAY",
-    "GRV": "GROVE",
-    "GR": "GROVE",
-    "LN": "LANE",
-    "SQ": "SQUARE",
-    "ESP": "ESPLANADE",
-    "PWY": "PARKWAY",
-    "PKWY": "PARKWAY",
-    "GDNS": "GARDENS",
-}
-
-
-def _normalise_address(address: str) -> str:
-    tokens = address.upper().replace(",", " ").split()
-    return " ".join(STREET_TYPE_ABBREVIATIONS.get(t, t) for t in tokens)
-
-
-def _reduced_queries(address: str) -> list[str]:
-    """Progressively shorter search terms for a strict register search (#6873).
-
-    The register search returns nothing for spelled-out street types or
-    appended suburbs, but happily lists candidates for "23 Bakana" -- which
-    then feed the suggestions flow.
-    """
-    tokens = address.upper().replace(",", " ").split()
-    queries = []
-    for cut in range(len(tokens) - 1, 0, -1):
-        head = tokens[:cut]
-        # Stop shrinking below "<number> <name>".
-        if len(head) < 2:
-            break
-        if head[-1] in STREET_TYPE_ABBREVIATIONS or head[-1] in set(
-            STREET_TYPE_ABBREVIATIONS.values()
-        ):
-            continue
-        queries.append(" ".join(head))
-    return queries[:2]
-
-
-def _header(headers, name: str) -> str | None:
-    """Case-insensitive header lookup.
-
-    ``requests``' own ``CaseInsensitiveDict`` handles this for a live
-    response, but the offline-fixture replay layer (``tests/cassette.py``)
-    serves a plain ``dict`` keyed by whatever case the server sent
-    (``X-IntraMaps-Session``), so a bare ``.get(name)`` would only work live.
-    """
-    name_lower = name.lower()
-    for key, value in headers.items():
-        if key.lower() == name_lower:
-            return value
-    return None
 
 
 def _bin_type_label(bin_type_raw: str) -> str:
@@ -231,53 +130,6 @@ def _describe(record, source):
         yield Schedule(label, start, recurrence.FORTNIGHTLY, 10)
 
 
-def _scrape_widget_config(session) -> dict[str, str]:
-    """Scrape the council's widget.js for the IntraMaps Integration API creds.
-
-    Wanneroo doesn't publish a static config: the bin-lookup widget embeds a
-    freshly-generated api key/form id/config id/project name in its own JS,
-    so there is no fixed MapsClientConfig to declare here.
-    """
-    r = session.get(BIN_COLLECTIONS_URL)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    script = soup.find("script", {"src": lambda x: bool(x and "widget.js" in x)})  # type: ignore[dict-item]
-    if not isinstance(script, Tag):
-        raise SourceArgumentNotFound(
-            "address",
-            "",
-            "the council's bin-lookup page could not be parsed "
-            "(it may have changed layout)",
-        )
-    script_url = script["src"]
-    if isinstance(script_url, list):
-        script_url = script_url[0]
-    if script_url.startswith("//"):
-        script_url = "https:" + script_url
-
-    r = session.get(script_url)
-    r.raise_for_status()
-
-    values: dict[str, str] = {}
-    for key, pattern in (
-        ("api_url", _API_URL_RE),
-        ("api_key", _API_KEY_RE),
-        ("form_id", _FORM_ID_RE),
-        ("config_id", _CONFIG_ID_RE),
-        ("project_name", _PROJECT_NAME_RE),
-    ):
-        match = pattern.search(r.text)
-        if not match:
-            raise SourceArgumentNotFound(
-                "address",
-                "",
-                f"could not find {key} in the council's widget script "
-                "(it may have changed layout)",
-            )
-        values[key] = match.group(1)
-    return values
-
-
 @final
 class Source(BaseSource):
     TITLE = "City of Wanneroo"
@@ -303,6 +155,7 @@ class Source(BaseSource):
         ),
     }
 
+    retrieve = IntegrationWidgetRetriever(INTRAMAPS_CONFIG)
     parse = IntraMapsPanelParser()
     preprocess = RecurrenceExpander(_describe)
 
@@ -310,115 +163,3 @@ class Source(BaseSource):
 
     def __init__(self, address: str):
         super().__init__(address=address)
-
-    def retrieve(self, source):
-        address = source.params["address"]
-        # See the module docstring: a plain session, not source.session --
-        # this council's IntraMaps handshake 500s under curl_cffi's Chrome
-        # impersonation.
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-                ),
-            }
-        )
-
-        widget = _scrape_widget_config(session)
-
-        def _search(fields: str) -> list:
-            r = session.get(
-                widget["api_url"],
-                params={
-                    "configId": widget["config_id"],
-                    "form": widget["form_id"],
-                    "project": widget["project_name"],
-                    "fields": fields,
-                },
-                headers={
-                    "Authorization": f"apikey {widget['api_key']}",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-            )
-            r.raise_for_status()
-            return r.json()
-
-        results = _search(address)
-        if not results:
-            # The register search is strict: spelled-out street types, commas
-            # or an appended suburb return nothing. Retry with a shortened
-            # query ("23 Bakana") whose candidates either match after
-            # normalisation or become suggestions (#6873).
-            for reduced in _reduced_queries(address):
-                results = _search(reduced)
-                if results:
-                    break
-        if not results:
-            raise SourceArgumentNotFound("address", address)
-
-        target_norm = _normalise_address(address)
-        addresses = []
-        dbkey = mapkey = None
-        for entry in results:
-            by_name = {item["name"]: item["value"] for item in entry}
-            entry_address = by_name.get("Address", "")
-            addresses.append(entry_address)
-            if _normalise_address(entry_address) == target_norm:
-                dbkey = by_name.get("dbkey")
-                mapkey = by_name.get("mapkey")
-                break
-
-        if dbkey is None or mapkey is None:
-            raise SourceArgumentNotFoundWithSuggestions("address", address, addresses)
-
-        r = session.get(
-            MAP_SESSION_URL,
-            params={
-                "configId": widget["config_id"],
-                "appType": "MapBuilder",
-                "project": _MAP_PROJECT_ID,
-                "datasetCode": "",
-            },
-        )
-        r.raise_for_status()
-        intramaps_session = _header(r.headers, "X-IntraMaps-Session")
-        if not intramaps_session:
-            raise SourceArgumentNotFound(
-                "address", address, "failed to establish an IntraMaps session"
-            )
-
-        r = session.post(
-            MAP_INITIALIZE_URL,
-            json={
-                "module": _MAP_MODULE_ID,
-                "includeBasemaps": False,
-                "includeWktInSelection": True,
-            },
-            params={"IntraMapsSession": intramaps_session},
-            headers={"Content-Type": "application/json"},
-        )
-        r.raise_for_status()
-
-        r = session.post(
-            COLLECTION_URL,
-            json={
-                "dbKey": dbkey,
-                "infoPanelWidth": 0,
-                "mapKeys": [mapkey],
-                "multiLayer": False,
-                "selectionLayer": "Property",
-                "useCatalogId": False,
-                "zoomTo": "entire",
-            },
-            params={"IntraMapsSession": intramaps_session},
-            headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        )
-        r.raise_for_status()
-        return r.json()
