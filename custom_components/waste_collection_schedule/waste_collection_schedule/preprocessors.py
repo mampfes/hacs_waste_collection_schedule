@@ -18,7 +18,7 @@ into individual collection dates::
 
 import datetime
 import re
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal, Protocol, TypeVar
 
@@ -258,6 +258,15 @@ class Schedule:
     # (where naive fortnightly stepping would drift). The provider only has to
     # say which parity; no per-source week arithmetic.
     iso_week_parity: Literal["even", "odd"] | None = None
+    # One-off adjustments the provider publishes alongside the cadence: ``extra``
+    # dates are collected even though the cadence does not produce them (a
+    # make-up run), ``exclude`` dates are not collected even though it does (a
+    # public-holiday cancellation). ``extra`` dates are appended after the
+    # projected ones and are not parity-filtered; ``exclude`` then drops matching
+    # dates from both. Use these when the provider hands over explicit date
+    # lists; use HolidayShift when a collection *moves* rather than disappears.
+    extra: Sequence[datetime.date] = ()
+    exclude: Sequence[datetime.date] = ()
 
 
 class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
@@ -317,6 +326,11 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     dates = [
                         d for d in dates if (d.isocalendar().week % 2 == 0) == want_even
                     ]
+                if schedule.extra:
+                    dates = [*dates, *schedule.extra]
+                if schedule.exclude:
+                    cancelled = set(schedule.exclude)
+                    dates = [d for d in dates if d not in cancelled]
                 for collection_date in dates:
                     yield collection_date, schedule.key
 

@@ -1,28 +1,24 @@
 import json
 import re
 from datetime import date, timedelta
-from typing import ClassVar, final
+from typing import Any, ClassVar, final
 
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
-from waste_collection_schedule.service.ArcGis import ArcGisError, geocode
+from waste_collection_schedule.service.ArcGis import ArcGisZoneParser
 from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
-# Boroondara has no FeatureServer to query: the ArcGIS World GeocodeServer
-# resolves the address to a point (the one thing the shared ArcGis service
-# still contributes here), but the collection zone comes from a bespoke
-# JS-embedded GeoJSON bundle (main-v2.min.js) matched by point-in-polygon, not
-# an ArcGIS /query. That combination -- a hand-rolled JS-object-literal parse
-# plus a point-in-polygon match -- is a genuinely irregular flow no configured
-# retriever/parser expresses, so retrieve/parse are overridden as methods
-# (same shape as jacksonville_fl_us.py). Once the matched zone (day + A/B
-# week) is known, the recurring weekly/fortnightly cadence it describes is
-# projected via the shared RecurrenceExpander rather than hand-rolled date
-# maths.
+# Boroondara has no FeatureServer to query: the collection zones ship as a
+# GeoJSON bundle embedded in the council's own JS (main-v2.min.js), so the
+# shared ArcGisZoneParser geocodes the address and matches it against those
+# polygons. The only source-specific part is _zones(), which cuts the GeoJSON
+# out of the script and quotes its JS object keys. Once the matched zone (day +
+# A/B week) is known, the weekly/fortnightly cadence it describes is projected
+# via the shared RecurrenceExpander.
 
 JS_URL = "https://cdn.boroondara.vic.gov.au/binday/js/main-v2.min.js"
 
@@ -53,19 +49,25 @@ _TYPE_MAP = {
 WEEKS_AHEAD = 8
 
 
-def _point_in_polygon(x: float, y: float, polygon: list) -> bool:
-    n = len(polygon)
-    inside = False
-    p1x, p1y = polygon[0]
-    for i in range(1, n + 1):
-        p2x, p2y = polygon[i % n]
-        if min(p1y, p2y) < y <= max(p1y, p2y) and x <= max(p1x, p2x):
-            if p1y != p2y:
-                xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-            if p1x == p2x or x <= xinters:
-                inside = not inside
-        p1x, p1y = p2x, p2y
-    return inside
+def _geocode_address(address: str, **_: Any) -> str:
+    """Qualify the address so the world geocoder lands in the right Melbourne."""
+    return f"{address}, Victoria, Australia"
+
+
+def _zones(response, source) -> dict:
+    """Cut the zone GeoJSON out of the council's minified JS bundle."""
+    data = response.text
+    start = data.find("const polygonData=") + len("const polygonData=")
+    end_match = re.search(r'week:"[AB]"\}\}\]\}', data)
+    if not end_match:
+        raise SourceArgumentNotFound(
+            "address",
+            source.params["address"],
+            "could not read the collection zone data.",
+        )
+    # Convert the JS object literal (unquoted keys) to valid JSON.
+    geojson_js = data[start : end_match.end()]
+    return json.loads(re.sub(r'(?<!["\w])([a-zA-Z_]\w*):', r'"\1":', geojson_js))
 
 
 def _get_week_type(d: date) -> str:
@@ -110,39 +112,10 @@ class Source(BaseSource):
         "en": "Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey Hills').",
     }
 
+    retrieve = retrievers.HttpGetRetriever(url=JS_URL, timeout=30)
+    parse = ArcGisZoneParser(extract=_zones, address=_geocode_address)
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())
-
-    def retrieve(self, source: "Source"):
-        return self.session.get(JS_URL, timeout=30)
-
-    def parse(self, response, source: "Source | None" = None) -> list[dict]:
-        address = self.params["address"]
-        try:
-            location = geocode(f"{address}, Victoria, Australia")
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", address) from e
-
-        data = response.text
-        start = data.find("const polygonData=") + len("const polygonData=")
-        end_match = re.search(r'week:"[AB]"\}\}\]\}', data)
-        if not end_match:
-            raise SourceArgumentNotFound(
-                "address", address, "could not read the collection zone data."
-            )
-        geojson_js = data[start : end_match.end()]
-
-        # Convert JS object literal (unquoted keys) to valid JSON
-        geojson_str = re.sub(r'(?<!["\w])([a-zA-Z_]\w*):', r'"\1":', geojson_js)
-        features = json.loads(geojson_str)["features"]
-
-        lat, lng = location["y"], location["x"]
-        for feature in features:
-            coords = feature["geometry"]["coordinates"][0]
-            if _point_in_polygon(lng, lat, coords):
-                return [feature["properties"]]
-
-        raise SourceArgumentNotFound("address", address)
