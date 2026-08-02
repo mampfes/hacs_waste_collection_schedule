@@ -250,6 +250,14 @@ class LookupChainRetriever(_BaseRetriever):
     form data, the next a GET with query params, each with its own matching and
     normalisation rules.
 
+    A key is whatever the next request needs, not necessarily an id. A level
+    that yields several values at once returns them together (verl_de reads a
+    middleware key and a page id off one page, as a NamedTuple, because a
+    second step would mean a second identical GET), and a level whose answer
+    *is* the download address returns that, leaving ``url`` to hand it straight
+    back (``url=lambda *keys, **_: keys[-1]``, as kwu_de does with a scraped
+    link).
+
     The schedule request is built from every resolved key, positionally, plus
     the source's params. It is a GET by default::
 
