@@ -45,6 +45,7 @@ HEADER = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "General": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -155,26 +156,32 @@ class Source:
                             )
             return resulsts
 
-        waste_date_strs = first_li_after_heading("general rubbish")
-        recycling_date_strs = first_li_after_heading("recycling")
+        sections = (
+            ("General", "General rubbish", first_li_after_heading("general rubbish")),
+            ("Recycling", "Recycling", first_li_after_heading("recycling")),
+            ("Garden", "Garden", first_li_after_heading("garden waste")),
+        )
 
         entries = []
-        for waste_date_str in waste_date_strs:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date_str, "%A %d %B %Y").date(),
-                    t="General rubbish",
-                    icon="mdi:trash-can",
-                ),
-            )
-        for recycling_date_str in recycling_date_strs:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(recycling_date_str, "%A %d %B %Y").date(),
-                    t="Recycling",
-                    icon="mdi:recycle",
-                ),
-            )
+        for icon_key, waste_type, date_strs in sections:
+            for date_str in date_strs:
+                try:
+                    date = datetime.strptime(date_str, "%A %d %B %Y").date()
+                except ValueError:
+                    # Not every heading lists dates. Properties without a garden
+                    # waste subscription get a link to the calendar instead, so
+                    # skip anything that is not a date rather than failing.
+                    _LOGGER.debug(
+                        "Skipping non-date entry under %s: %r", waste_type, date_str
+                    )
+                    continue
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=waste_type,
+                        icon=ICON_MAP[icon_key],
+                    ),
+                )
         if not entries:
             raise Exception(
                 "No collection dates found for this address, make sure there are any concrete collection dates listed on the website for this address."
