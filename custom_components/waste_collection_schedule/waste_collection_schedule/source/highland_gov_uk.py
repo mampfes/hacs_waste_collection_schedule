@@ -1,14 +1,20 @@
 import re
 from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field, uprn
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsDynamicRowsPreprocessor,
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    AchieveFormsRowsPreprocessor,
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
@@ -54,6 +60,27 @@ def _weeks(frequency: str) -> "int | None":
     return int(match.group(1)) if match.group(1) else 1
 
 
+_DATES = AchieveFormsDynamicRowsPreprocessor(_KEY_PATTERN, key_filter=_variant_filter)
+
+
+def _describe(row: dict, source: "BaseSource | None" = None) -> "Iterable[Schedule]":
+    """Turn the property's row into one schedule per bin type.
+
+    The response only carries each bin's *next* date. With `predict` set, the
+    row's matching frequency field ("every 2 weeks") extends that into a run
+    of 10 occurrences, matching the legacy source's fixed look-ahead window;
+    otherwise (or when the frequency is missing) only the next date is used.
+    """
+    suffix = "New" if _use_new(row) else "Old"
+    predict = bool(source.params.get("predict")) if source is not None else False
+    for collection_date, label in _DATES(row):
+        weeks = _weeks(row.get(f"{label}Frequency{suffix}", "")) if predict else None
+        if weeks:
+            yield Schedule(label, collection_date, recurrence.WEEKLY * weeks, 10)
+        else:
+            yield Schedule(label, collection_date, recurrence.WEEKLY, 1)
+
+
 @final
 class Source(BaseSource):
     TITLE = "Highland"
@@ -93,6 +120,10 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    preprocess = Compose(
+        AchieveFormsRowsPreprocessor(row_key="0"),
+        RecurrenceExpander(_describe),
+    )
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map={
@@ -110,27 +141,3 @@ class Source(BaseSource):
             uprn=str(uprn),
             predict=str(predict).strip().lower() in {"true", "yes", "1"},
         )
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[Any, str]]":
-        row = rows.get("0", {}) if isinstance(rows, dict) else {}
-        if not isinstance(row, dict):
-            return
-        use_new = _use_new(row)
-        suffix = "New" if use_new else "Old"
-        for collection_date, label in AchieveFormsDynamicRowsPreprocessor(
-            _KEY_PATTERN, key_filter=_variant_filter
-        )(rows, source):
-            yield collection_date, label
-            if not self.params.get("predict"):
-                continue
-            weeks = _weeks(row.get(f"{label}Frequency{suffix}", ""))
-            if not weeks:
-                continue
-            # 10 further occurrences at the parsed cadence, matching the
-            # legacy source's fixed look-ahead window.
-            for future_date in recurrence.recurring(
-                collection_date, recurrence.WEEKLY * weeks, 10
-            )[1:]:
-                yield future_date, label

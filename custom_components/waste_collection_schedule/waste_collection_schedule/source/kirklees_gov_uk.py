@@ -13,12 +13,18 @@ from collections.abc import Iterable
 from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
-from waste_collection_schedule import date_parsers
+from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, text_field, uprn
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
+    AchieveFormsRowFieldsPreprocessor,
     AchieveFormsRowsParser,
     LookupStep,
 )
@@ -148,6 +154,25 @@ def _collections_form_values(ctx: dict, source: "BaseSource") -> dict:
     return section
 
 
+def _describe(
+    record: "tuple[date, str]", source: "BaseSource | None" = None
+) -> "Iterable[Schedule]":
+    """Turn each bin's next collection date into a schedule.
+
+    The lookup only reports the next date per bin. With `predict` set, that is
+    projected forward at the fortnightly cadence Kirklees residential
+    collections run on, over the legacy source's 365-day look-ahead window.
+    """
+    collection_date, label = record
+    predict = bool(source.params.get("predict")) if source is not None else False
+    yield Schedule(
+        label,
+        collection_date,
+        recurrence.FORTNIGHTLY,
+        365 // 14 if predict else 1,
+    )
+
+
 @final
 class Source(BaseSource):
     TITLE = "Kirklees Council"
@@ -206,6 +231,18 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    # One row per bin. `label` is the human-readable name ("Grey wheelie
+    # bin"); `ServiceItemName` is the council's internal code ("240D") and
+    # only stands in when the name is missing.
+    preprocess = Compose(
+        AchieveFormsRowFieldsPreprocessor(
+            date_field="NextCollectionDate",
+            label_fields=("label", "ServiceItemName"),
+            first_label_only=True,
+            parse_date=date_parsers.auto,
+        ),
+        RecurrenceExpander(_describe),
+    )
     transform = RowTransformer(
         type_value_map={
             "grey wheelie bin": GENERAL_WASTE,
@@ -223,35 +260,3 @@ class Source(BaseSource):
             postcode=normalised_postcode,
             predict=str(predict).strip().lower() in {"true", "yes", "1"},
         )
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[tuple[Any, str]]":
-        values: Iterable[Any]
-        if isinstance(rows, dict):
-            values = rows.values()
-        elif isinstance(rows, list):
-            values = rows
-        else:
-            return
-        predict = bool(self.params.get("predict"))
-        for row in values:
-            if not isinstance(row, dict):
-                continue
-            date_str = row.get("NextCollectionDate")
-            label = row.get("label") or row.get("ServiceItemName")
-            if not date_str or not label:
-                continue
-            try:
-                base_date = date_parsers.auto(str(date_str))
-            except (ValueError, TypeError):
-                continue
-            dates = [base_date]
-            if predict:
-                # Kirklees residential collections are fortnightly; mirrors the
-                # legacy source's 365-day look-ahead window.
-                dates.extend(
-                    base_date + timedelta(days=14 * i) for i in range(1, 365 // 14)
-                )
-            for collection_date in dates:
-                yield collection_date, str(label)
