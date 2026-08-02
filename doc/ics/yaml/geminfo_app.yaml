@@ -1,6 +1,7 @@
+---
 title: Geminfo.app
 url: https://geminfo.app
-country: Austria
+country: at
 howto:
   en: |
     - Go to <https://geminfo.app> and select your municipality.
@@ -19,3 +20,7 @@ howto:
 test_cases:
   Thannhausen:
     url: https://graphql.sta.io/feed/c/i/5d9d1c1a5ff20a142ec8edc9/appointments.ics
+extra_info:
+  - title: Thannhausen
+    url: https://www.thannhausen.at
+    country: at
