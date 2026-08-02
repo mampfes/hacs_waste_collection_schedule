@@ -425,6 +425,137 @@ class FanOutRetriever(_BaseRetriever):
         ]
 
 
+class FirstMatchRetriever(_BaseRetriever):
+    """Try interchangeable candidate requests; keep the first that answers.
+
+    For a provider that serves one address's calendar from more than one place
+    and will only tell you which of them is live by answering: a load-balanced
+    pair of hosts, a per-year path where next year's file appears at its own
+    time, or, as with karlsruhe_de, both axes at once. The candidates are
+    equivalent, so unlike :class:`LookupChainRetriever` there is nothing to
+    resolve up front, and unlike :class:`FanOutRetriever` (which fetches every
+    target and keeps them all) the search stops at the first response that is
+    the calendar.
+
+    The same idea already sits in two narrow, hard-coded forms elsewhere:
+    :class:`AthosWasteManagementRetriever`'s ``fallback_url`` (a second URL
+    tried when the first 404s) and the ICS platform's
+    ``IcsYearRetriever.fallback_url`` (a second URL tried when the first came
+    back empty). This is that pattern with the candidate list left open and the
+    acceptance test named.
+
+    Mechanics: build and issue the request for each candidate in turn. A
+    candidate that raises (DNS, TLS, timeout) is skipped and its error
+    remembered. The first response ``accept`` returns True for is returned. If
+    no candidate is accepted, the last response received is returned anyway, so
+    the parser's own shape check reports what the provider actually said rather
+    than a bare transport error; only if every candidate raised is the last
+    error re-raised::
+
+        retrieve = retrievers.FirstMatchRetriever(
+            candidates=_years_by_host,
+            url=lambda candidate, **_: API_URL.format(
+                year=candidate[0], i=candidate[1]
+            ),
+            method="POST",
+            data=lambda candidate, street, **_: {"strasse_n": street},
+            accept=_has_events,
+        )
+
+    Args:
+        candidates: what to try, in order, as ``callable(**source.params) ->
+            Sequence`` or a literal sequence. A candidate is whatever the
+            request template needs: a URL, a year, a (year, host) pair. An
+            empty list is a configuration error, and raises.
+        url: the request URL, as ``callable(candidate, **source.params) -> str``
+            or a literal (for candidates that vary only the body).
+        accept: ``callable(response) -> bool``, deciding whether a response is
+            the real calendar rather than the empty stand-in an unserved
+            candidate returns. Required, and deliberately not defaulted: what
+            "unserved" looks like is provider knowledge, and a wrong guess here
+            silently settles on the wrong host.
+        method: ``"GET"`` (default) or ``"POST"``.
+        params: optional query arguments, as
+            ``callable(candidate, **source.params)`` or a literal.
+        data: optional form body for ``method="POST"``, same calling
+            convention.
+        headers: optional headers, same calling convention.
+        timeout: per-request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        *,
+        candidates: Callable[..., Sequence[Any]] | Sequence[Any],
+        url: Callable[..., str] | str,
+        accept: Callable[[Response], bool],
+        method: str = "GET",
+        params: Callable[..., ParamsType] | ParamsType = None,
+        data: Callable[..., Any] | Any = None,
+        headers: Callable[..., HeadersType] | HeadersType = None,
+        timeout: int = 30,
+    ):
+        if method.upper() not in ("GET", "POST"):
+            raise ValueError(
+                f"unknown FirstMatchRetriever method {method!r}: expected GET or POST"
+            )
+        if data is not None and method.upper() != "POST":
+            raise ValueError("FirstMatchRetriever data requires method='POST'")
+        self.candidates = candidates
+        self.url = url
+        self.accept = accept
+        self.method = method.upper()
+        self.params = params
+        self.data = data
+        self.headers = headers
+        self.timeout = timeout
+
+    def _for(self, mapping: Callable[..., T] | T, candidate: Any, source: BaseSource):
+        """Resolve a per-candidate argument: the candidate, then the params."""
+        if callable(mapping):
+            return mapping(candidate, **source.params)
+        return mapping
+
+    def _request(self, source: BaseSource, candidate: Any) -> Response:
+        url = self._for(self.url, candidate, source)
+        params = self._for(self.params, candidate, source)
+        headers = self._for(self.headers, candidate, source)
+        if self.method == "POST":
+            return source.session.post(
+                url,
+                params=params,
+                data=self._for(self.data, candidate, source),
+                headers=headers,
+                timeout=self.timeout,
+            )
+        return source.session.get(
+            url, params=params, headers=headers, timeout=self.timeout
+        )
+
+    def __call__(self, source: BaseSource) -> Response:
+        candidates = list(self._resolve(self.candidates, source))
+        if not candidates:
+            raise ValueError("FirstMatchRetriever was given no candidates to try")
+
+        last_response: Response | None = None
+        last_error: Exception | None = None
+        for candidate in candidates:
+            try:
+                response = self._request(source, candidate)
+            # A candidate that cannot even be reached is simply not the live
+            # one; the next candidate is the whole point of the list.
+            except Exception as error:
+                last_error = error
+                continue
+            last_response = response
+            if self.accept(response):
+                return response
+
+        if last_response is not None:
+            return last_response
+        raise cast("Exception", last_error)
+
+
 #: Default pattern for the JS chunks a Next.js page loads. Group 1 is the
 #: chunk's href, resolved against the page URL; any ``?v=`` cache-buster after
 #: the ``.js`` is dropped so the same chunk is only fetched once.

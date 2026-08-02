@@ -1,22 +1,26 @@
 """RESO GmbH (reso-gmbh.de).
 
-Demonstrates: a static, param-built ICS POST whose feed is generated one
-calendar year at a time. Near year-end the provider's own calendar app also
-shows the first weeks of the following year, so this mirrors that by fetching
-the next year too (best-effort: swallowed if the following year isn't
-published yet) once the current month reaches December. No configured
-retriever expresses "POST, then conditionally POST again for a second year",
-hence a source-defined retrieve()/parse() pair; parsing itself is the plain
-IcsParser with the same ``split_at`` the legacy ``ICS()`` call used.
+Composes: the ICS platform's
+:class:`~waste_collection_schedule.service.ICS.IcsSessionRetriever`. The
+provider answers a single form POST with the calendar itself rather than
+redirecting to a download URL, which is what ``feed_url=None`` (the feed is the
+last step's own response) describes. The form takes the calendar year, so the
+whole one-step chain is what runs per year: near year-end the provider's own
+calendar app also shows the first weeks of the following year, and
+``lookahead_month=12`` mirrors that, best-effort, so a year that is not
+published yet leaves the current one intact.
+
+Parsing is the plain ``IcsParser`` with the same ``split_at`` the legacy
+``ICS()`` call used.
 """
 
-from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, municipality
-from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.ICS import IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -43,16 +47,6 @@ _TOWNS = (
 )
 
 
-def _post_args(ort: str, ortsteil: str, year: int) -> dict:
-    return {
-        "Ort": ort,
-        "Ortsteil": ortsteil,
-        "Jahr": year,
-        "art": 1,
-        "downOderurl2": "Semikolon",
-    }
-
-
 @final
 class Source(BaseSource):
     TITLE = "RESO"
@@ -74,32 +68,22 @@ class Source(BaseSource):
         district(field="ortsteil"),
     )
 
-    def retrieve(self, source):
-        ort = source.params["ort"]
-        ortsteil = source.params["ortsteil"]
-        now = datetime.now()
-
-        responses = [
-            source.session.post(_API_URL, data=_post_args(ort, ortsteil, now.year))
-        ]
-        if now.month == 12:
-            try:
-                extra = source.session.post(
-                    _API_URL, data=_post_args(ort, ortsteil, now.year + 1)
-                )
-                extra.raise_for_status()
-                responses.append(extra)
-            except Exception:
-                pass
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser(split_at=r" \+ ")
-        entries = []
-        for response in raw:
-            response.raise_for_status()
-            entries.extend(ics_parser(response, source))
-        return entries
+    retrieve = IcsSessionRetriever(
+        steps=[
+            {
+                "url": _API_URL,
+                "method": "POST",
+                "data": lambda ort, ortsteil, year, **_: {
+                    "Ort": ort,
+                    "Ortsteil": ortsteil,
+                    "Jahr": year,
+                    "art": 1,
+                    "downOderurl2": "Semikolon",
+                },
+            }
+        ],
+    )
+    parse = parsers.EachResponse(parsers.IcsParser(split_at=r" \+ "))
 
     transform = ICSTransformer(
         type_value_map={

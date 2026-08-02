@@ -1,13 +1,20 @@
 """Abfallwirtschaftsbetrieb Esslingen (awb-es.de).
 
-Demonstrates: a page that lists several distinct ICS download links (one per
-waste-type calendar) rather than a single combined feed, discovered by
-scraping the property overview page for every ``t=ics`` link. No configured
-retriever expresses "GET a page, scrape N distinct download links off it,
-then fetch every one of those", hence a source-defined ``retrieve``/``parse``
-pair. When no ICS link is found, the legacy source's city/street
-autocomplete-validation calls are preserved so a bad argument is reported
-with suggestions rather than a generic "not found".
+Composes: :class:`~waste_collection_schedule.retrievers.FanOutRetriever`. The
+council's own page lists several distinct ICS download links (one per
+waste-type calendar) rather than a single combined feed, so listing them by
+scraping that page for every ``t=ics`` link is the fan-out's ``targets`` step
+and each link is one fetched response. When no ICS link is found, the legacy
+source's city/street autocomplete-validation calls are preserved so a bad
+argument is reported with suggestions rather than a generic "not found".
+
+The links themselves point at ``api.abfall.io``, but this is not the
+:mod:`~waste_collection_schedule.service.AbfallIO` platform's server-side
+wizard: the council embeds a ready-made customer key and calendar id in a
+plain export URL, so there is no cascade to walk and nothing for
+``AbfallIoRetriever`` to do. The ``statics/abfallplus`` autocomplete on the
+council's own host is likewise its own small endpoint, not the app platform in
+:mod:`~waste_collection_schedule.service.AppAbfallplusDe`.
 
 "Papiertonne" already resolves against the standard German aliases (to the
 same PAPER that "Papiersammlung (Vereine)" is mapped to). "Biotonne",
@@ -25,10 +32,11 @@ single household's collection dates rather than both cadences merged.
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, dropdown, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.preprocessors import RowFilter
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -58,6 +66,14 @@ def _is_unselected_restmuell(summary: str, cadence: str) -> bool:
     return any(c in low and c != cadence.lower() for c in _CADENCES)
 
 
+def _keep_chosen_cadence(record, source) -> bool:
+    """Drop the general-waste series the resident did not choose."""
+    cadence = source.params.get("restmuell_cadence") if source is not None else None
+    if not cadence:
+        return True
+    return not _is_unselected_restmuell(record[1], cadence)
+
+
 def _suggestions(session, search: str, parent: str, kind: str) -> list[str]:
     r = session.post(
         _SEARCH_URL,
@@ -73,6 +89,46 @@ def _validate(session, value: str, parent: str, kind: str, field: str) -> None:
         if suggestion.lower() == value.lower():
             return
     raise SourceArgumentNotFoundWithSuggestions(field, value, suggestions)
+
+
+def _ics_urls(source, _context=None) -> list[str]:
+    """The fan-out's targets: every ICS download the property page lists.
+
+    An address that resolves to no download at all is almost always a misspelt
+    city or street, so the site's own autocomplete is asked which values it
+    does know before the error is raised.
+    """
+    session = source.session
+    city_value = source.params["city"]
+    street_value = source.params.get("street")
+
+    r = session.get(
+        _CALENDAR_URL,
+        params={"city": city_value, "street": street_value, "direct": "true"},
+    )
+    r.raise_for_status()
+
+    soup = BeautifulSoup(r.text, features="html.parser")
+    ics_urls: list[str] = []
+    for download in soup.find_all("a", href=True):
+        href = str(download["href"])
+        # The website lists the same url multiple times; keep it once.
+        if "t=ics" in href and href not in ics_urls:
+            ics_urls.append(href)
+
+    if not ics_urls:
+        _validate(session, city_value, "", "removaldate.city", "city")
+        if street_value:
+            _validate(session, street_value, city_value, "removaldate.street", "street")
+        raise SourceArgumentNotFoundWithSuggestions("street", street_value, [])
+
+    return ics_urls
+
+
+def _download_feed(source, url: str, _context=None):
+    r = source.session.get(url)
+    r.raise_for_status()
+    return r
 
 
 @final
@@ -99,6 +155,13 @@ class Source(BaseSource):
         ),
     )
 
+    retrieve = retrievers.FanOutRetriever(
+        targets=_ics_urls,
+        fetch=_download_feed,
+    )
+    parse = parsers.EachResponse(parsers.IcsParser())
+    preprocess = RowFilter(_keep_chosen_cadence)
+
     transform = ICSTransformer(
         type_value_map={
             "biotonne": ORGANIC,
@@ -116,48 +179,3 @@ class Source(BaseSource):
         restmuell_cadence: "str | None" = None,
     ):
         super().__init__(city=city, street=street, restmuell_cadence=restmuell_cadence)
-
-    def retrieve(self, source):
-        session = source.session
-        city_value = source.params["city"]
-        street_value = source.params.get("street")
-
-        r = session.get(
-            _CALENDAR_URL,
-            params={"city": city_value, "street": street_value, "direct": "true"},
-        )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        ics_urls: list[str] = []
-        for download in soup.find_all("a", href=True):
-            href = str(download["href"])
-            # The website lists the same url multiple times; keep it once.
-            if "t=ics" in href and href not in ics_urls:
-                ics_urls.append(href)
-
-        if not ics_urls:
-            _validate(session, city_value, "", "removaldate.city", "city")
-            if street_value:
-                _validate(
-                    session, street_value, city_value, "removaldate.street", "street"
-                )
-            raise SourceArgumentNotFoundWithSuggestions("street", street_value, [])
-
-        responses = []
-        for ics_url in ics_urls:
-            resp = session.get(ics_url)
-            resp.raise_for_status()
-            responses.append(resp)
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        cadence = source.params.get("restmuell_cadence")
-        entries = []
-        for response in raw:
-            for date, summary in ics_parser(response, source):
-                if cadence and _is_unselected_restmuell(summary, cadence):
-                    continue
-                entries.append((date, summary))
-        return entries

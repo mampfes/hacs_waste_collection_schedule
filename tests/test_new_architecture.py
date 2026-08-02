@@ -4496,12 +4496,9 @@ _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "1coast_com_au",
-    "abfallkalender_prezero_network",
     "abfallwirtschaft_germersheim_de",
-    "abki_de",
     "aha_region_de",
     "aw_harburg_de",
-    "awb_es_de",
     "awb_oldenburg_de",
     "awg_wuppertal_de",
     "awigo_de",
@@ -4516,7 +4513,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "fuquay_varina_nc_us",
     "ics",
     "infeo_at",
-    "karlsruhe_de",
     "mpo_krakow_pl",
     "narab_se",
     "nemaffaldsservice_kk_dk",
@@ -4524,7 +4520,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "phila_gov",
     "red_bank_tn_us",
     "regioentsorgung_de",
-    "reso_gmbh_de",
     "rsag_de",
     "shawinigan_ca",
     "wellington_govt_nz",
