@@ -3953,3 +3953,70 @@ class TestPdfTableParser:
         pages = self._pages([("only", 10, 20, 100.0)])
         with pytest.raises(ResponseShapeError):
             self._run(pages, min_words=5)
+
+
+# --------------------------------------------------------------------------- #
+# Reuse gate
+#
+# The pipeline exists so that provider behaviour lives in shared, reusable
+# components under waste_collection_schedule/service/ (plus the shared
+# retrievers/parsers modules), and a source module stays declarative: metadata,
+# PARAMS, REGIONS and a composition of those components.
+#
+# A source that defines its own Retriever or Parser subclass has, by
+# definition, put platform behaviour in the wrong place: the next provider on
+# the same platform cannot reuse it. This gate keeps that from spreading during
+# the master -> 3.0.0 source migration.
+#
+# Adding a name here is a deliberate architectural exception, not a formality.
+# Prefer extending the shared component instead.
+# --------------------------------------------------------------------------- #
+
+SOURCE_LOCAL_STEP_EXCEPTIONS = {
+    # regioentsorgung's form-state handling has no second consumer yet; revisit
+    # if another provider on the same platform needs it.
+    "regioentsorgung_de",
+}
+
+
+def _source_local_step_classes(stem: str) -> list[str]:
+    """Names of Retriever/Parser subclasses defined in a source module itself."""
+    import ast
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    return [
+        node.name
+        for node in tree.body
+        if isinstance(node, ast.ClassDef)
+        and any(
+            isinstance(base, ast.Name)
+            and ("Retriever" in base.id or "Parser" in base.id)
+            for base in node.bases
+        )
+    ]
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
+    """Pipeline sources must compose shared components, not define their own."""
+    local = _source_local_step_classes(stem)
+    if stem in SOURCE_LOCAL_STEP_EXCEPTIONS:
+        return
+    assert not local, (
+        f"{stem} defines its own pipeline step(s) {local}. Provider behaviour "
+        "belongs in a reusable component under waste_collection_schedule/service/ "
+        "so other providers on the same platform can use it. If this really is a "
+        "one-off, add it to SOURCE_LOCAL_STEP_EXCEPTIONS with a reason."
+    )

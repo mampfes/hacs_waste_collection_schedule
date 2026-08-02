@@ -395,6 +395,15 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | a private weekday/month name dict | `recurrence.weekday()` / `recurrence.month()` |
 | hand-rolled ArcGIS geocode + query | `ArcGisFeatureRetriever` / `ArcGisMultiFeatureRetriever` + the matching parser; route any custom lookup through `ArcGisFeatureParser` |
 | dead module-level `TITLE = ...` re-aliased as `TITLE = TITLE` in the class | put the literal metadata on the class only |
+| a `Retriever` or `Parser` subclass defined inside a source module | put it in the shared component under `waste_collection_schedule/service/` and declare it, so the next provider on that platform reuses it |
+
+### The reuse gate
+
+The last row is enforced. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails if a pipeline source defines its own `Retriever` or `Parser` subclass.
+
+The reasoning is about the second provider, not the first. A step written inside `some_council.py` works fine for that council and is invisible to the next one on the same platform, so the same logic gets written again, slightly differently, and the two drift. Putting it in the service module means the fix lands once for everyone. That is also why porting a fix from a legacy source is not a copy-paste job: ask which layer the behaviour belongs to before writing it down.
+
+There is an allowlist, `SOURCE_LOCAL_STEP_EXCEPTIONS`, for behaviour that genuinely has one consumer. It currently holds a single entry. Adding to it is an architectural decision that needs a stated reason, not a way to make the test pass.
 
 ## Empty results and exceptions
 

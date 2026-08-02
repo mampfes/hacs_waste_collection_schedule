@@ -110,6 +110,8 @@ Both styles need this metadata (on the class for pipeline sources, at module lev
 
 Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`). Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
 
+**Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails on any source that declares its own `Retriever` or `Parser` subclass, with a narrow allowlist for genuinely single-consumer cases. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
+
 Optional:
 
 - `REGIONS` (pipeline, preferred): a `list[Region]` (from `regions.region(title, **params)`) declaring the regions one structure covers, each becoming its own discoverable listing in the README / `sources.json` with its `params` pre-filled. A source is one structure (pipeline + `PARAMS`) applied to one or more regions; a single-region source leaves it empty. May be a callable returning the list (for large external registries).
