@@ -1,12 +1,11 @@
 """Stadtreinigung Gießen (stadtreinigung.giessen.de).
 
-Demonstrates: a street lookup keyed by alphabet range rather than a search
-endpoint -- the site's street dropdown is only ever rendered a page at a
-time, filtered by a "von"/"bis" (from/to) letter-range query param, so
-resolving one street name means loading its first letter's page and matching
-within it. No configured retriever expresses "load one alphabet-range page,
-fuzzy-match a street within it, then POST for the ICS download using the
-same range", hence a source-defined ``retrieve()``.
+A street lookup keyed by alphabet range rather than a search endpoint: the
+site's street dropdown is only ever rendered a page at a time, filtered by a
+"von"/"bis" (from/to) letter-range query param, so resolving one street name
+means loading its first letter's page and matching within it. That is the
+lookup step below; the shared ``LookupChainRetriever`` then POSTs for the ICS
+download using the same range.
 
 The provider suffixes most labels with a cadence phrase (e.g. "Restmüll
 wöchentlich", "Altpapier 4-wöchentlich"), so ``clean`` strips that down to
@@ -20,6 +19,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -69,34 +69,41 @@ def _load_streets_for_letter(session, letter: str) -> dict[str, str]:
     return streets
 
 
-def _find_street_value(session, street_value: str) -> tuple[str, str, str]:
-    """Find the street value by searching through the alphabet pages.
+def _find_street_value(source: BaseSource, keys: tuple) -> str:
+    """Find the street's id by searching through its alphabet page.
 
-    Returns (street_value, von, bis): the street id and the alphabet-range
-    params that page was loaded with (needed again for the ICS POST).
+    The alphabet range that page was loaded with is needed again for the ICS
+    POST, but it follows from the street's first letter, so the request
+    callables recompute it rather than carrying it along.
     """
+    street_value = source.params["street"]
     first_letter = street_value[0].upper()
-    streets = _load_streets_for_letter(session, first_letter)
-    von, bis = _alphabet_range(first_letter)
+    streets = _load_streets_for_letter(source.session, first_letter)
 
     if street_value in streets:
-        return streets[street_value], von, bis
+        return streets[street_value]
 
     street_lower = street_value.lower()
     for name, value in streets.items():
         if name.lower() == street_lower:
-            return value, von, bis
+            return value
 
     partial_matches = {
         name: value for name, value in streets.items() if street_lower in name.lower()
     }
     if len(partial_matches) == 1:
-        return next(iter(partial_matches.values())), von, bis
+        return next(iter(partial_matches.values()))
     if len(partial_matches) > 1:
         raise SourceArgumentNotFoundWithSuggestions(
             "street", street_value, sorted(partial_matches)
         )
     raise SourceArgumentNotFoundWithSuggestions("street", street_value, sorted(streets))
+
+
+def _range_params(street: str) -> dict[str, str]:
+    """The 'von'/'bis' query params for the street's alphabet page."""
+    von, bis = _alphabet_range(street[0])
+    return {"von": von, "bis": bis}
 
 
 @final
@@ -134,6 +141,19 @@ class Source(BaseSource):
         house_number(field="house_number"),
     )
 
+    retrieve = LookupChainRetriever(
+        steps=(_find_street_value,),
+        url=_BASE_URL,
+        method="POST",
+        params=lambda street_id, street, **_: _range_params(street),
+        data=lambda street_id, street, house_number, **_: {
+            "strasse": street_id,
+            "hausnr": house_number,
+            "ical": " iCalendar",  # The button value
+        },
+        raise_for_status=True,
+        encoding="utf-8",
+    )
     parse = IcsParser()
     transform = ICSTransformer(
         clean=_clean_type,
@@ -142,23 +162,3 @@ class Source(BaseSource):
 
     def __init__(self, street: str, house_number: str):
         super().__init__(street=street.strip(), house_number=str(house_number).strip())
-
-    def retrieve(self, source):
-        session = source.session
-        street_value = self.params["street"]
-        house_number_value = self.params["house_number"]
-
-        street_value_id, von, bis = _find_street_value(session, street_value)
-
-        r = session.post(
-            _BASE_URL,
-            params={"von": von, "bis": bis},
-            data={
-                "strasse": street_value_id,
-                "hausnr": house_number_value,
-                "ical": " iCalendar",  # The button value
-            },
-        )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-        return r

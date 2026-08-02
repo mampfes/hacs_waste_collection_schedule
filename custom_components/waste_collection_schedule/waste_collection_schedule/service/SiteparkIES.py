@@ -280,6 +280,11 @@ class SiteparkIESRetriever(RetrieverFunc):
         download_params: Extra query params for the ICS download (e.g. kat/alarm).
         strasse: The ``source.params`` field holding the street.
         ort: The ``source.params`` field holding the place/Ortsteil.
+        pois: Optional ``source.params`` field holding a pois id supplied
+            directly by the user (some municipalities print it on the
+            household's collection card). When that field carries a value the
+            address lookup is skipped entirely and the id is downloaded as
+            given. Leave unset on an installation that does not publish the id.
     """
 
     def __init__(
@@ -292,6 +297,7 @@ class SiteparkIESRetriever(RetrieverFunc):
         download_params: dict | None = None,
         strasse: str = "strasse",
         ort: str = "ort",
+        pois: str | None = None,
     ):
         self._base_url = base_url
         self._refid = refid
@@ -300,6 +306,7 @@ class SiteparkIESRetriever(RetrieverFunc):
         self._download_params = download_params
         self._strasse = strasse
         self._ort = ort
+        self._pois = pois
 
     def __call__(self, source: "BaseSource"):
         client = SiteparkIES(
@@ -307,6 +314,10 @@ class SiteparkIESRetriever(RetrieverFunc):
             refid=self._refid,
             download_params=self._download_params,
         )
+        if self._pois is not None:
+            given = source.params.get(self._pois)
+            if given:
+                return client.fetch_ics_response(given)
         ort = source.params.get(self._ort)
         refid = None
         if self._refid_page_url is not None:

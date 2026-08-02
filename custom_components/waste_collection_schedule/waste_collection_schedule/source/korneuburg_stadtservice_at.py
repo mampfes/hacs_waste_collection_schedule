@@ -5,7 +5,8 @@ from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.parsers import EachResponse, IcsParser
+from waste_collection_schedule.retrievers import FanOutRetriever
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -15,16 +16,16 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-# Demonstrates: a RiSKommunal municipality whose calendar is not exposed
-# through the platform's usual kalender.aspx table/list rendering at all.
-# Korneuburg instead resolves a "Teilgebiet" (subarea, 1-4) from the address
-# via the same street-dropdown + strassenArr address picker every RiSKommunal
-# install exposes (so RiSKommunalSource's parsing of those is reused rather
-# than re-implemented), then scrapes four fixed per-subarea pages for a
+# A RiSKommunal municipality whose calendar is not exposed through the
+# platform's usual kalender.aspx table/list rendering at all. Korneuburg
+# instead resolves a "Teilgebiet" (subarea, 1-4) from the address via the same
+# street-dropdown + strassenArr address picker every RiSKommunal install
+# exposes (so RiSKommunalSource's parsing of those is reused rather than
+# re-implemented), then scrapes four fixed per-subarea pages for a
 # piwik_download_tracker iCal link each, and finally downloads those iCal
-# feeds. No configured retriever expresses "resolve an id, then scrape N
-# unrelated pages for a download link each, then fetch every one of those" --
-# hence a source-defined retrieve()/parse() pair.
+# feeds. One feed per waste type is the shared FanOutRetriever's shape: the
+# address resolution is its `prepare`, the link scrape lists its targets, and
+# EachResponse folds the four calendars back into one record stream.
 
 _BASE_URL = "https://www.korneuburg.gv.at"
 _ADDRESS_URL = urljoin(_BASE_URL, "Rathaus/Buergerservice/Muellabfuhr")
@@ -146,6 +147,24 @@ def _region_ical_urls(session, teilgebiet: str, cookies: dict[str, str]) -> list
     return urls
 
 
+def _prepare_area(source: BaseSource) -> tuple[str, dict[str, str]]:
+    """Resolve the Teilgebiet (unless given directly) and the cookies to use."""
+    cookies = dict(_BASE_COOKIES)
+    teilgebiet = _valid_teilgebiet(source.params.get("teilgebiet"))
+    if teilgebiet is None:
+        teilgebiet, cookies = _resolve_teilgebiet(source, source.session, cookies)
+    return teilgebiet, cookies
+
+
+def _ical_urls(source: BaseSource, area: tuple[str, dict[str, str]]) -> list[str]:
+    teilgebiet, cookies = area
+    return _region_ical_urls(source.session, teilgebiet, cookies)
+
+
+def _fetch_ical(source: BaseSource, url: str, area: tuple[str, dict[str, str]]):
+    return source.session.get(url, cookies=area[1], timeout=source.TIMEOUT)
+
+
 @final
 class Source(BaseSource):
     TITLE = "Stadtservice Korneuburg"
@@ -171,6 +190,10 @@ class Source(BaseSource):
         text_field("teilgebiet", "Subarea", optional=True),
     )
 
+    retrieve = FanOutRetriever(
+        prepare=_prepare_area, targets=_ical_urls, fetch=_fetch_ical
+    )
+    parse = EachResponse(IcsParser())
     transform = ICSTransformer()
 
     def __init__(
@@ -184,21 +207,3 @@ class Source(BaseSource):
             street_number=street_number,
             teilgebiet=teilgebiet,
         )
-
-    def retrieve(self, source):
-        session = source.session
-        cookies = dict(_BASE_COOKIES)
-
-        teilgebiet = _valid_teilgebiet(source.params.get("teilgebiet"))
-        if teilgebiet is None:
-            teilgebiet, cookies = _resolve_teilgebiet(source, session, cookies)
-
-        return [
-            session.get(url, cookies=cookies, timeout=source.TIMEOUT)
-            for url in _region_ical_urls(session, teilgebiet, cookies)
-        ]
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        for response in raw:
-            yield from ics_parser(response, source)

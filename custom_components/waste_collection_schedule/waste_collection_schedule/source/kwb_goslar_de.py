@@ -1,15 +1,11 @@
 """Kreiswirtschaftsbetriebe Goslar waste calendar (Sitepark IES platform).
 
-A BaseSource pipeline with a source-defined ``retrieve()``. The shared
-``SiteparkIESRetriever`` always resolves the pois via the street/Ort
-autocomplete lookup, but this provider's legacy source also accepted a direct
-``pois`` id (e.g. printed on a household's collection card) that bypasses that
-lookup entirely. That is a genuinely irregular flow no configured retriever
-expresses (a retriever is picked once, at class-definition time, and cannot
-branch per request), so ``retrieve`` is overridden here: when ``pois`` is
-supplied it is used directly; otherwise the street/Ort is resolved via the
-shared client exactly as ``SiteparkIESRetriever`` would. Either way the method
-returns the raw ICS response, so ``parse``/``transform`` stay declarative.
+The shared ``SiteparkIESRetriever`` resolves the street/Ort to a pois and
+returns the raw ICS response; the shared ``IcsParser`` + ``ICSTransformer`` do
+the parsing and typing. This provider also accepts a direct ``pois`` id (e.g.
+printed on a household's collection card), which the retriever's ``pois``
+option takes straight to the download, so the source is a plain composition of
+shared steps.
 """
 
 from typing import ClassVar, final
@@ -22,7 +18,7 @@ from waste_collection_schedule.config_params import (
     street,
     text_field,
 )
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     ELECTRONICS,
@@ -80,6 +76,7 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
+    retrieve = SiteparkIESRetriever(_BASE_URL, pois="pois")
     parse = parsers.IcsParser()
     # "Baum- und Strauchschnitt", "Biotonne", "Blaue Tonne", "Gelbe Tonne" and
     # "Restmülltonne" already auto-resolve against the shared vocabulary;
@@ -101,13 +98,3 @@ class Source(BaseSource):
     ):
         # validate() enforces the strasse-or-pois alternative via PARAMS.
         super().__init__(strasse=strasse, ort=ort, pois=pois)
-
-    def retrieve(self, source):
-        client = SiteparkIES(_BASE_URL)
-        pois = source.params.get("pois")
-        if not pois:
-            pois = client.get_pois(
-                strasse=source.params.get("strasse"),
-                ort=source.params.get("ort"),
-            )
-        return client.fetch_ics_response(pois)
