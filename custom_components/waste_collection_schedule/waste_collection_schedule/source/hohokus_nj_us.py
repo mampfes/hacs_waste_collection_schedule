@@ -1,13 +1,17 @@
 import re
 from datetime import date, timedelta
-from typing import ClassVar, final
+from typing import Any, ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import recurrence, retrievers
+from waste_collection_schedule import parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE
 
@@ -43,6 +47,42 @@ _HORIZON_DAYS = 400
 
 GENERAL = "general waste"
 YARD = "yard waste"
+
+
+def _district_schedules(text: str, source) -> dict[str, dict[str, Any]]:
+    """The page's prose -> one seasonal schedule per district, keyed as printed."""
+    season_match = _SEASON_RE.search(text)
+    start_month = end_month = None
+    if season_match is not None:
+        start_month = recurrence.month(season_match.group(1))
+        end_month = recurrence.month(season_match.group(3))
+    if season_match is None or start_month is None or end_month is None:
+        raise SourceArgumentNotFound(
+            "district",
+            source.params.get("district") if source is not None else None,
+            "could not read the collection season",
+        )
+    season = (
+        start_month,
+        int(season_match.group(2)),
+        end_month,
+        int(season_match.group(4)),
+    )
+
+    districts: dict[str, dict[str, Any]] = {}
+    for day1, day2, num, winter in _DISTRICT_RE.findall(text):
+        weekdays = (
+            recurrence.weekday(day1),
+            recurrence.weekday(day2),
+            recurrence.weekday(winter),
+        )
+        if all(wd is not None for wd in weekdays):
+            districts[f"District {num}"] = {
+                "summer_days": (weekdays[0], weekdays[1]),
+                "winter_day": weekdays[2],
+                "season": season,
+            }
+    return districts
 
 
 def _window(key, weekday, start, end, today, horizon):
@@ -108,8 +148,13 @@ class Source(BaseSource):
     }
 
     retrieve = retrievers.HttpGetRetriever(url=API_URL)
+    # The schedule is stated in prose, not in a table, so read the page as text.
+    parse = parsers.HtmlTextParser()
 
-    preprocess = RecurrenceExpander(_describe)
+    preprocess = Compose(
+        ArgumentLookup(_district_schedules, argument="district"),
+        RecurrenceExpander(_describe),
+    )
 
     transform = ICSTransformer(
         type_value_map={GENERAL: GENERAL_WASTE, YARD: GARDEN_WASTE},
@@ -117,53 +162,3 @@ class Source(BaseSource):
 
     def __init__(self, district: str):
         super().__init__(district=district)
-        match = re.search(r"\d", district)
-        if match is None:
-            raise SourceArgumentNotFound("district", district)
-        self._district = match.group(0)
-
-    def parse(self, response, source):
-        text = re.sub(
-            r"\s+", " ", BeautifulSoup(response.text, "html.parser").get_text(" ")
-        )
-
-        districts: dict[str, tuple] = {}
-        for day1, day2, num, winter in _DISTRICT_RE.findall(text):
-            weekdays = (
-                recurrence.weekday(day1),
-                recurrence.weekday(day2),
-                recurrence.weekday(winter),
-            )
-            if all(wd is not None for wd in weekdays):
-                districts[num] = weekdays
-
-        if self._district not in districts:
-            raise SourceArgumentNotFound(
-                "district", self._district, "could not read this district's days"
-            )
-
-        season_match = _SEASON_RE.search(text)
-        if season_match is None:
-            raise SourceArgumentNotFound(
-                "district", self._district, "could not read the collection season"
-            )
-        start_month = recurrence.month(season_match.group(1))
-        end_month = recurrence.month(season_match.group(3))
-        if start_month is None or end_month is None:
-            raise SourceArgumentNotFound(
-                "district", self._district, "could not read the collection season"
-            )
-
-        day1_wd, day2_wd, winter_wd = districts[self._district]
-        return [
-            {
-                "summer_days": (day1_wd, day2_wd),
-                "winter_day": winter_wd,
-                "season": (
-                    start_month,
-                    int(season_match.group(2)),
-                    end_month,
-                    int(season_match.group(4)),
-                ),
-            }
-        ]

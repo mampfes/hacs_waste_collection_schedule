@@ -27,6 +27,7 @@ from bs4 import Tag
 
 from waste_collection_schedule import lookups, recurrence
 from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -476,6 +477,81 @@ class Disambiguate(Preprocessor[Any, Any]):
         return "" if value is None else str(value).strip()
 
 
+class SelectExactMatch(Preprocessor[Any, Any]):
+    """Keep the rows of the one entity an over-broad lookup was asked for.
+
+    The companion to :class:`Disambiguate` for the query that cannot be narrowed
+    server-side: an address ``LIKE 'x%'`` clause, a street-name search, any
+    lookup whose own argument is a fragment. It usually matches one property and
+    returns that property's several rows (one per bin, one per charge), but a
+    short fragment can match several distinct properties at once, and the
+    provider does not order them meaningfully, so picking one silently would give
+    the user a neighbour's schedule::
+
+        preprocess = Compose(
+            SelectExactMatch(argument="address", key=lambda row: row["Address_full"]),
+            RecurrenceExpander(_describe),
+            Deduplicate(),
+        )
+
+    One entity matched means the fragment was unambiguous and every row passes
+    through, which is what keeps a partial address usable. Several mean the
+    argument has to name one of them outright: an argument equal to a matched
+    entity (case- and whitespace-insensitively, :mod:`lookups`) selects that
+    entity's rows, and anything else raises ``SourceArgAmbiguousWithSuggestions``
+    listing what matched, so the user can copy the full name back into the
+    config.
+
+    Unlike :class:`Disambiguate` this yields *every* row of the chosen entity,
+    not one record, because the rows are the entity's collection rounds rather
+    than competing candidates. It also blames the argument that ran the query
+    rather than a second one, so there is no "please also specify" state.
+
+    Args:
+        argument: the config param that ran the lookup, and the one blamed.
+        key: ``callable(record) -> str`` reading the entity's full name off a
+            row. Rows with no name are dropped; an empty result yields nothing,
+            so pair this with ``RAISE_ON_EMPTY`` on an address source.
+        max_suggestions: how many matched names to offer. A one-word fragment can
+            match hundreds, and a list that long helps nobody.
+    """
+
+    def __init__(
+        self,
+        *,
+        argument: str,
+        key: Callable[[Any], Any],
+        max_suggestions: int = 10,
+    ):
+        self._argument = argument
+        self._key = key
+        self._max_suggestions = max_suggestions
+
+    def __call__(self, records: Any, source: "BaseSource | None" = None) -> list[Any]:
+        named = [(self._name(record), record) for record in records or []]
+        named = [(name, record) for name, record in named if name]
+        matched = sorted({name for name, _ in named})
+        if not matched:
+            return []
+
+        value = source.params.get(self._argument) if source is not None else None
+        if len(matched) > 1:
+            wanted = lookups.normalize_text(value)
+            exact = [name for name in matched if lookups.normalize_text(name) == wanted]
+            if not exact:
+                raise SourceArgAmbiguousWithSuggestions(
+                    self._argument, value, matched[: self._max_suggestions]
+                )
+            target = exact[0]
+        else:
+            target = matched[0]
+        return [record for name, record in named if name == target]
+
+    def _name(self, record: Any) -> str:
+        value = self._key(record)
+        return "" if value is None else str(value).strip()
+
+
 class Deduplicate(Preprocessor[Any, Any]):
     """Drop repeated records, keeping the first occurrence and the input order.
 
@@ -673,12 +749,23 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
 
     A page with fewer than two month names in any one row is skipped, since its
     columns cannot be located that way; use :class:`PdfCalendarColumns` for a
-    calendar whose blocks are not headed by their month.
+    calendar whose blocks are not headed by their month. Everything printed level
+    with or above that header row is the sheet's own furniture -- its title, and
+    often a tail of the previous December carried over -- so it is ignored rather
+    than binned into a column it does not belong to.
 
     Args:
         labels: the round labels printed in the day cells, matched
             case-insensitively as substrings of the cell, in the order given.
             Pass the transformer's ``type_value_map`` directly.
+        read_cell: for a calendar that prints codes rather than names, a
+            ``callable(cell_text, source) -> Iterable[str]`` returning the labels
+            a dated cell means, used instead of ``labels``. It receives the cell
+            exactly as printed (case intact, runs joined by single spaces), and
+            it may read ``source.params``, which is what a sheet serving several
+            collection tours in one grid needs: the cell says ``B 1``/``B 2`` and
+            only the resident's tour applies. Where the columns are, and which
+            day a cell is, stay this preprocessor's job either way.
         day_pattern: regex locating the day number in a cell, matched against
             the cell text lowercased, its first group the number. Defaults to a
             day number followed by a three-letter weekday abbreviation, which is
@@ -691,11 +778,15 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
     def __init__(
         self,
         *,
-        labels: Iterable[str],
+        labels: Iterable[str] = (),
+        read_cell: "Callable[[str, BaseSource | None], Iterable[str]] | None" = None,
         day_pattern: str = r"(\d{1,2})\s+[a-z]{3}",
         year_pattern: "str | None" = None,
     ):
         self._labels = {str(label).upper(): label for label in labels}
+        self._read_cell = read_cell
+        if not self._labels and read_cell is None:
+            raise ValueError("PdfMonthColumns needs either labels or read_cell")
         self._day_re = re.compile(day_pattern)
         self._year_re = re.compile(year_pattern) if year_pattern else None
 
@@ -707,21 +798,25 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
 
         for page in sorted({row.page for row in rows}):
             page_rows = [row for row in rows if row.page == page]
-            columns = self._month_columns(page_rows)
-            if columns is None:
+            header = self._month_columns(page_rows)
+            if header is None:
                 continue
+            header_y, columns = header
             xs = [x for x, _ in columns]
             months = [month for _, month in columns]
             # A column owns everything up to the midpoint of the gap to the next.
             mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
 
             for row in page_rows:
+                # The header row and anything above it is the sheet's heading.
+                if row.y >= header_y:
+                    continue
                 cells: dict[int, list[str]] = {}
                 for word in row.words:
                     column = sum(1 for mid in mids if word.x0 >= mid)
                     cells.setdefault(column, []).append(word.text)
                 for column, texts in cells.items():
-                    chunk = " ".join(texts).upper()
+                    chunk = " ".join(texts)
                     match = self._day_re.search(chunk.lower())
                     if match is None:
                         continue
@@ -731,13 +826,20 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
                         )
                     except ValueError:
                         continue
-                    for upper, label in self._labels.items():
-                        if upper in chunk:
-                            yield collection_date, label
+                    for label in self._cell_labels(chunk, source):
+                        yield collection_date, label
+
+    def _cell_labels(self, chunk: str, source: "BaseSource | None") -> Iterable[str]:
+        if self._read_cell is not None:
+            return self._read_cell(chunk, source)
+        upper_chunk = chunk.upper()
+        return [label for upper, label in self._labels.items() if upper in upper_chunk]
 
     @staticmethod
-    def _month_columns(page_rows: "list[PdfRow]") -> "list[tuple[float, int]] | None":
-        """The (x, month) of each column, off the row that names the months."""
+    def _month_columns(
+        page_rows: "list[PdfRow]",
+    ) -> "tuple[float, list[tuple[float, int]]] | None":
+        """The header row's y, and the (x, month) of each column it names."""
         for row in page_rows:
             found = [
                 (word.x0, number)
@@ -745,7 +847,7 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
                 if (number := recurrence.month(word.text)) is not None
             ]
             if len(found) >= 2:
-                return sorted(found)
+                return row.y, sorted(found)
         return None
 
     def _document_year(self, rows: "list[PdfRow]") -> int:
