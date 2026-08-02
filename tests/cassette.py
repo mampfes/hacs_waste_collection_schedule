@@ -28,6 +28,7 @@ import hashlib
 import json
 import threading
 from typing import Any
+from urllib.parse import urlencode
 
 import curl_cffi.requests as _cffi
 import requests
@@ -48,6 +49,25 @@ def _body_hash(kwargs: dict) -> str:
 
 def _key(method: str, url: str, kwargs: dict) -> str:
     return f"{method.upper()} {url} {_body_hash(kwargs)}"
+
+
+def _url_with_params(url: str, kwargs: dict) -> str:
+    """``url`` with any ``params`` folded into its query string.
+
+    A cassette recorded from a source that built its own query string stores
+    the whole thing in ``url``; the same request issued as ``url`` plus
+    ``params=`` records a bare ``url`` instead. The two are the same HTTP
+    request, so this gives the replay matcher a way to see that (a refactor
+    moving a hand-built query onto ``params=`` must not need a re-recording).
+    """
+    params = kwargs.get("params")
+    if not params:
+        return url
+    try:
+        query = urlencode(params, doseq=True)
+    except TypeError:
+        return url
+    return f"{url}{'&' if '?' in url else '?'}{query}"
 
 
 class CassetteResponse:
@@ -237,20 +257,30 @@ def replaying(path: str):
     interactions = cassette["interactions"]
     used = [False] * len(interactions)
 
-    def _find(key: str, method: str, url: str) -> dict:
+    def _find(key: str, method: str, url: str, full_url: str | None = None) -> dict:
         for i, it in enumerate(interactions):
             if not used[i] and it["key"] == key:
                 used[i] = True
                 return it
-        # Fall back to method+url (body may not reproduce byte-for-byte).
-        for i, it in enumerate(interactions):
-            if not used[i] and it["method"] == method.upper() and it["url"] == url:
-                used[i] = True
-                return it
+        # Fall back to method+url (body may not reproduce byte-for-byte), then
+        # to the url with any params folded in (recorded as a hand-built query).
+        for candidate in (url, full_url):
+            if candidate is None:
+                continue
+            for i, it in enumerate(interactions):
+                if (
+                    not used[i]
+                    and it["method"] == method.upper()
+                    and it["url"] == candidate
+                ):
+                    used[i] = True
+                    return it
         raise AssertionError(f"no recorded interaction for {method.upper()} {url}")
 
     def lookup(method: str, url: str, kwargs: dict) -> CassetteResponse:
-        return CassetteResponse(_find(_key(method, url, kwargs), method, url))
+        return CassetteResponse(
+            _find(_key(method, url, kwargs), method, url, _url_with_params(url, kwargs))
+        )
 
     def lookup_prepared(request: Any) -> requests.Response:
         return _requests_response(
@@ -258,7 +288,9 @@ def replaying(path: str):
         )
 
     def lookup_request_real(method: str, url: str, kwargs: dict) -> requests.Response:
-        return _requests_response(_find(_key(method, url, kwargs), method, url))
+        return _requests_response(
+            _find(_key(method, url, kwargs), method, url, _url_with_params(url, kwargs))
+        )
 
     orig_cffi_request = _cffi.Session.request
     orig_request = _requests_sessions.Session.request

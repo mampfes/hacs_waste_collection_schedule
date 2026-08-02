@@ -1899,6 +1899,7 @@ class TestAthosWasteManagementRetriever:
             "https://example.com/Servlet",
             params={"SubmitAction": "wasteDisposalServices"},
             headers=None,
+            verify=True,
         )
         assert source.session.post.call_count == 2
         first_call, second_call = source.session.post.call_args_list
@@ -1991,6 +1992,148 @@ class TestAthosWasteManagementRetriever:
 
         with pytest.raises(ValueError):
             AthosWasteManagementRetriever(url="https://example.com/Servlet", steps=[])
+
+    def test_rejects_unknown_state_mode(self):
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        with pytest.raises(ValueError):
+            AthosWasteManagementRetriever(
+                url="https://example.com/Servlet",
+                steps=[{"submit_action": "forward"}],
+                state="carry",
+            )
+
+    def test_rescrape_state_reseeds_from_each_response(self):
+        """state="rescrape" posts the inputs of the page just received, not
+        the state the wizard started with (the awg_de deployment)."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page(PageName="Lageadresse", Step="1")
+        second = MagicMock()
+        second.text = self._hidden_input_page(PageName="Terminliste", Step="2")
+        source.session.get.return_value = initial
+        source.session.post.side_effect = [second, MagicMock()]
+
+        AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            state="rescrape",
+            steps=[
+                {"submit_action": "CITYCHANGED"},
+                {"submit_action": "filedownload_ICAL"},
+            ],
+        )(source)
+
+        first_call, second_call = source.session.post.call_args_list
+        assert first_call.kwargs["data"] == {
+            "PageName": "Lageadresse",
+            "Step": "1",
+            "SubmitAction": "CITYCHANGED",
+        }
+        # The second step carries the *second* page's inputs, so PageName has
+        # moved on instead of repeating the first page's value.
+        assert second_call.kwargs["data"] == {
+            "PageName": "Terminliste",
+            "Step": "2",
+            "SubmitAction": "filedownload_ICAL",
+        }
+
+    def test_state_none_ignores_the_pages_hidden_inputs(self):
+        """state="none" posts only what the steps declare, for a wizard
+        embedded in a CMS page whose hidden inputs belong to that page."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page(__RequestToken="tokenvalue")
+        source.session.get.return_value = initial
+        source.session.post.return_value = MagicMock()
+
+        AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            state="none",
+            steps=[
+                {"submit_action": "forward", "fields": lambda **_: {"Ort": "Rimbach"}}
+            ],
+        )(source)
+
+        assert source.session.post.call_args.kwargs["data"] == {
+            "Ort": "Rimbach",
+            "SubmitAction": "forward",
+        }
+
+    def test_step_reset_empties_the_state_before_its_own_fields(self):
+        """A step's `reset` posts a fresh payload rather than the accumulated
+        form (the zakb_de download step)."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page(SessionId="abc123")
+        source.session.get.return_value = initial
+        source.session.post.return_value = MagicMock()
+
+        AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            steps=[
+                {"submit_action": "CITYCHANGED", "fields": lambda **_: {"Ort": "x"}},
+                {
+                    "submit_action": "filedownload_ICAL",
+                    "reset": True,
+                    "fields": lambda **_: {"pageName": "Terminliste"},
+                },
+            ],
+        )(source)
+
+        assert source.session.post.call_args_list[-1].kwargs["data"] == {
+            "pageName": "Terminliste",
+            "SubmitAction": "filedownload_ICAL",
+        }
+
+    def test_submit_action_field_can_be_renamed(self):
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page()
+        source.session.get.return_value = initial
+        source.session.post.return_value = MagicMock()
+
+        AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            submit_action_field="submitAction",
+            steps=[{"submit_action": "nextPage"}],
+        )(source)
+
+        assert source.session.post.call_args.kwargs["data"] == {
+            "submitAction": "nextPage"
+        }
+
+    def test_verify_is_passed_through_to_every_request(self):
+        """A deployment whose server omits its issuing intermediate needs the
+        verification setting on the GET and every POST alike (awg_de)."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page()
+        source.session.get.return_value = initial
+        source.session.post.return_value = MagicMock()
+
+        AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            verify=False,
+            steps=[{"submit_action": "forward"}],
+        )(source)
+
+        assert source.session.get.call_args.kwargs["verify"] is False
+        assert source.session.post.call_args.kwargs["verify"] is False
 
     def test_forces_utf8_encoding_by_default(self):
         """Every response's encoding is forced to utf-8 (umlaut safety) unless
@@ -4113,7 +4256,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "aw_harburg_de",
     "awb_es_de",
     "awb_oldenburg_de",
-    "awg_de",
     "awg_wuppertal_de",
     "awigo_de",
     "awm_muenchen_de",
@@ -4173,7 +4315,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "wanneroo_wa_gov_au",
     "wellington_govt_nz",
     "westlothian_gov_uk",
-    "zakb_de",
     "zva_sek_de",
     "zys_harmonogram_pl",
 }
