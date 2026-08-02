@@ -13,8 +13,8 @@
 #   best to only replay the app's useful traffic, and I have reason to think all these
 #   steps are essential. Removing some of them still leads to a JSON schedule, but it will
 #   be from unspecified municipalities even if the address is set, with no error or notice.
-# 
-# The worflow is as follows:
+#
+# The workflow is as follows:
 #   1. POST /controller/controllerRegistration.php
 #      This registers a new device uuid and opens a session.
 #   2. GET /?p=new-indirizzo&uuid=X
@@ -35,16 +35,25 @@
 #      lead to locale differences? Idk, didn't try.
 
 import datetime
-import re
-import requests
-import secrets
 import logging
+import re
+import secrets
 
+import requests
+import urllib3
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
-from waste_collection_schedule.exceptions import SourceArgAmbiguousWithSuggestions, SourceArgumentNotFound
-from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.icons import Icons
+# app.sesaeste.it serves its leaf certificate without the RapidSSL intermediate, so
+# strict clients (requests + certifi, curl_cffi) fail with SSLCertVerificationError
+# while browsers and Android recover via AIA fetching. verify=False is the same
+# workaround already used by awn_de, awg_de, basingstoke_gov_uk and others here.
+# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 ###############################################################################
@@ -53,14 +62,17 @@ from waste_collection_schedule.icons import Icons
 
 TITLE = "S.E.S.A."
 DESCRIPTION = "Source script for sesaeste.it"
-SOURCE_CODEOWNERS = ['@AlexSartori']
 URL = "https://sesaeste.it"
-API_URL = 'https://app.sesaeste.it'
+COUNTRY = "it"
+SOURCE_CODEOWNERS = ["@AlexSartori"]
+
+API_URL = "https://app.sesaeste.it"
+REQUEST_TIMEOUT = 30
 
 TEST_CASES = {
     "Legnaro": {"user_municipality": "Legnaro"},
     "Solesino": {"user_municipality": "Solesino"},
-    "Polverara": {"user_municipality": "Polverara"}
+    "Polverara": {"user_municipality": "Polverara"},
 }
 
 ICON_MAP = {
@@ -72,13 +84,27 @@ ICON_MAP = {
     "VERDE": Icons.GARDEN,
 }
 
-PARAM_DESCRIPTIONS = {
+PARAM_TRANSLATIONS = {
     "en": {
         "user_municipality": "Municipality",
     },
     "it": {
         "user_municipality": "Comune",
     },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "user_municipality": "Name of your municipality, spelled as in the S.E.S.A. app.",
+    },
+    "it": {
+        "user_municipality": "Nome del tuo comune, scritto come nell'app S.E.S.A.",
+    },
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Use the name of your municipality exactly as it appears in the municipality list of the S.E.S.A. app, for example `Legnaro`.",
+    "it": "Usa il nome del tuo comune esattamente come appare nell'elenco dei comuni dell'app S.E.S.A., ad esempio `Legnaro`.",
 }
 
 
@@ -91,95 +117,121 @@ logger = logging.getLogger(__name__)
 
 def _fetch_json_payload(municipality_name: str):
     s = requests.Session()
-    s.headers.update({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0 (Android 14; Mobile; rv:148.0) Gecko/148.0 Firefox/148.0',
-        'Referer': API_URL,
-        'Cache-Control': 'no-cache'
-    })
+    s.verify = False
+    s.headers.update(
+        {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Android 14; Mobile; rv:148.0) Gecko/148.0 Firefox/148.0",
+            "Referer": API_URL,
+            "Cache-Control": "no-cache",
+        }
+    )
 
     # 1. Register our uuid and get a session
     uuid = secrets.token_hex(16)
     r = s.post(
-        API_URL + '/controller/controllerRegistration.php', {
-            'action': 'registration',
-            'token': uuid,
-            'uuid': uuid,
-            'ip': '0.0.0.0',
-            'platform': 'Android',
-            'model': 'to mare omo',
-            'lastLogin': datetime.datetime.strftime(datetime.datetime.today(), '%Y-%m-%d')
-        }
+        API_URL + "/controller/controllerRegistration.php",
+        {
+            "action": "registration",
+            "token": uuid,
+            "uuid": uuid,
+            "ip": "0.0.0.0",
+            "platform": "Android",
+            "model": "Home Assistant",
+            "lastLogin": datetime.date.today().strftime("%Y-%m-%d"),
+        },
+        timeout=REQUEST_TIMEOUT,
     )
     r.raise_for_status()
-    logger.info(f"{r.url}\t{r.status_code}")
+    logger.debug("%s\t%s", r.url, r.status_code)
 
     # 2. Mysterious essential step. Also, get the HTML list of municipalities.
-    r = s.get(API_URL + '/?p=new-indirizzo&uuid=' + uuid)
+    r = s.get(API_URL + "/?p=new-indirizzo&uuid=" + uuid, timeout=REQUEST_TIMEOUT)
     r.raise_for_status()
     municipality_id = _fetch_municipality_id(r.text, municipality_name)
 
     # 3. Set the municipality ID for the session
     r = s.post(
-        API_URL + '/controller/controllerIndirizzi.php', {
-            'action': 'asyncAddress',
-            'comune': municipality_id
-        }
+        API_URL + "/controller/controllerIndirizzi.php",
+        {
+            "action": "asyncAddress",
+            "comune": municipality_id,
+        },
+        timeout=REQUEST_TIMEOUT,
     )
     r.raise_for_status()
-    logger.info(f"{r.url}\t{r.status_code}")
+    logger.debug("%s\t%s", r.url, r.status_code)
 
     # 4. Save the settings (?)
     r = s.post(
-        API_URL + '/controller/controllerUserSettings.php', {
-            'action': 'saveSettings',
-            'orario': -1,
-            'comune': municipality_id,
-            'notifiche': '0'
-        }
+        API_URL + "/controller/controllerUserSettings.php",
+        {
+            "action": "saveSettings",
+            "orario": -1,
+            "comune": municipality_id,
+            "notifiche": "0",
+        },
+        timeout=REQUEST_TIMEOUT,
     )
     r.raise_for_status()
-    logger.info(f"{r.url}\t{r.status_code}")
+    logger.debug("%s\t%s", r.url, r.status_code)
 
-    # 5. Get the schedule
-    curr_year = datetime.datetime.today().year
+    # 5. Get the schedule. Ask for the whole of this year plus the whole of the next
+    # one, so that the calendar does not run dry towards the end of December. The
+    # backend simply stops at the last published date.
+    curr_year = datetime.date.today().year
     r = s.post(
-        API_URL + '/controller/controllerCalendario.php', {
-            'action': 'calendario',
-            'today': f"{curr_year}-01-01",
-            'lastday': f"{curr_year}-12-31"
-        }
+        API_URL + "/controller/controllerCalendario.php",
+        {
+            "action": "calendario",
+            "today": f"{curr_year}-01-01",
+            "lastday": f"{curr_year + 1}-12-31",
+        },
+        timeout=REQUEST_TIMEOUT,
     )
     r.raise_for_status()
-    logger.info(f"{r.url}\t{r.status_code}")
+    logger.debug("%s\t%s", r.url, r.status_code)
 
     return r.json()
 
 
-def _fetch_municipality_id(html: str, municipality_name) -> str:
+def _fetch_municipality_id(html: str, municipality_name: str) -> str:
     html_cercacomune = BeautifulSoup(html, features="lxml")
-    select = html_cercacomune.find('select', id="comuni", recursive=True)
-    candidates: list[tuple[str, str]] = []
+    select = html_cercacomune.find("select", id="comuni", recursive=True)
 
     if select is None:
-        raise ValueError(f"The S.E.S.A. webapp HTML has an unexpected format and the list of municipalities could not be found.")
+        raise ValueError(
+            "The S.E.S.A. webapp HTML has an unexpected format and the list of municipalities could not be found."
+        )
 
-    for opt in select.find_all('option'):
+    wanted = municipality_name.strip().lower()
+    candidates: list[tuple[str, str]] = []
+    all_municipalities: list[str] = []
+
+    for opt in select.find_all("option"):
         txt = opt.string
-        val = opt.get('value')
-        if txt is None or txt.strip() in ['', 'Comune'] or val is None:
+        val = opt.get("value")
+        if txt is None or val is None:
             continue
-        if txt.lower() == municipality_name.lower():
+        txt = txt.strip()
+        if txt in ("", "Comune"):
+            continue
+        all_municipalities.append(txt)
+        if txt.lower() == wanted:
             candidates = [(str(val), txt)]
             break
-        if municipality_name.lower() in txt.lower():
+        if wanted in txt.lower():
             candidates.append((str(val), txt))
-    
+
     if len(candidates) == 0:
-        raise SourceArgumentNotFound("user_municipality", municipality_name)
+        raise SourceArgumentNotFoundWithSuggestions(
+            "user_municipality", municipality_name, all_municipalities
+        )
     if len(candidates) > 1:
-        raise SourceArgAmbiguousWithSuggestions("user_municipality", municipality_name, [m for _, m in candidates])
-    
+        raise SourceArgAmbiguousWithSuggestions(
+            "user_municipality", municipality_name, [m for _, m in candidates]
+        )
+
     return candidates[0][0]
 
 
@@ -187,15 +239,15 @@ def _parse_json_to_schedule(json_data) -> list[Collection]:
     entries = []
 
     for item in json_data:
-        d = datetime.date.strptime(item['Giorno'], "%Y-%m-%d")
-        cat = re.findall(r'class="rifiuto (.+?)"', item['Stile'])
-        for waste_type in cat:
-
-            entries.append(Collection(
-                date=d,
-                t=waste_type.capitalize(),
-                icon=ICON_MAP[waste_type.upper()]
-            ))
+        d = datetime.datetime.strptime(item["Giorno"], "%Y-%m-%d").date()
+        for waste_type in re.findall(r'class="rifiuto (.+?)"', item["Stile"]):
+            entries.append(
+                Collection(
+                    date=d,
+                    t=waste_type.capitalize(),
+                    icon=ICON_MAP.get(waste_type.upper()),
+                )
+            )
 
     return entries
 
@@ -203,6 +255,7 @@ def _parse_json_to_schedule(json_data) -> list[Collection]:
 ###############################################################################
 ##########                      Integration API                      ##########
 ###############################################################################
+
 
 class Source:
     def __init__(self, user_municipality: str):
