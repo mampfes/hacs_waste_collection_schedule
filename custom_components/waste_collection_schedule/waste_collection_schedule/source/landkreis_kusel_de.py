@@ -1,13 +1,12 @@
 """Landkreis Kusel (landkreis-kusel.de).
 
 Demonstrates: a two-step "scrape a <select> for the location id, then GET the
-ICS feed with it" shape, plus a year-boundary retry the legacy source already
+ICS feed with it" shape, where the id and the date window are *query*
+arguments rather than path segments, which is what ``IcsLookupRetriever``
+exists for. It also carries a year-boundary quirk the legacy source already
 had: if the primary host's earliest event isn't in the current year, the same
-two steps are repeated against a year-suffixed alternate host and the results
-are merged. No dedicated retriever expresses that merge/retry, so ``retrieve``
-is a source-defined override (returning a list of raw ICS texts) paired with a
-custom ``parse`` that converts and concatenates them -- the same shape used by
-geoport_nwm_de for its own multi-feed merge.
+two steps are repeated against a year-suffixed alternate host and the feeds
+are merged (``stale_year_base_url``).
 """
 
 from datetime import datetime, timedelta
@@ -15,10 +14,11 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsLookupRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
@@ -42,8 +42,9 @@ def _make_comparable(ortsgemeinde: str) -> str:
     )
 
 
-def _pick_location(html: str, ortsgemeinde: str) -> str:
-    soup = BeautifulSoup(html, "html.parser")
+def _pick_location(lookup, source) -> str:
+    ortsgemeinde = source.params["ortsgemeinde"]
+    soup = BeautifulSoup(lookup.text, "html.parser")
     select = soup.find("select", {"class": "form-select"})
     if not select or isinstance(select, NavigableString):
         raise ValueError("Invalid response from API")
@@ -62,22 +63,14 @@ def _pick_location(html: str, ortsgemeinde: str) -> str:
     )
 
 
-def _fetch_ics_text(session, api_url: str, ortsgemeinde: str) -> str:
-    lookup = session.get(api_url)
-    lookup.raise_for_status()
-    location = _pick_location(lookup.text, ortsgemeinde)
-
+def _feed_params(key: str, **_) -> dict:
+    """The location and the rolling one-year window the feed is asked for."""
     now = datetime.now()
-    schedule = session.get(
-        f"{api_url}/ical",
-        params={
-            "location": location,
-            "startDate": now.strftime("%Y-%m-%d"),
-            "endDate": (now + timedelta(days=365)).strftime("%Y-%m-%d"),
-        },
-    )
-    schedule.raise_for_status()
-    return schedule.text
+    return {
+        "location": key,
+        "startDate": now.strftime("%Y-%m-%d"),
+        "endDate": (now + timedelta(days=365)).strftime("%Y-%m-%d"),
+    }
 
 
 @final
@@ -98,30 +91,20 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
-    def retrieve(self, source):
-        ortsgemeinde = source.params["ortsgemeinde"]
-        texts = [_fetch_ics_text(source.session, _API_URL, ortsgemeinde)]
+    retrieve = IcsLookupRetriever(
+        base_url=_API_URL,
+        extract=_pick_location,
+        feed_path="/ical",
+        params=_feed_params,
+        # The site publishes each year on its own host ("abfall26" for 2026)
+        # once the new calendar takes over; merged in when the primary feed has
+        # aged out of the current year.
+        stale_year_base_url=lambda year, **_: _API_URL.replace(
+            "abfallwirtschaft", f"abfall{str(year)[2:]}"
+        ),
+    )
 
-        # Legacy year-boundary quirk: if the primary feed's earliest event
-        # isn't in the current year, the site also publishes a year-suffixed
-        # alternate host (e.g. "abfall26" for 2026) that is merged in.
-        try:
-            first_date = min(d for d, _ in ICS().convert(texts[0]))
-            if first_date.year != datetime.now().year:
-                alt_url = _API_URL.replace(
-                    "abfallwirtschaft", f"abfall{str(datetime.now().year)[2:]}"
-                )
-                texts.append(_fetch_ics_text(source.session, alt_url, ortsgemeinde))
-        except Exception:
-            pass
-
-        return texts
-
-    def parse(self, response, source=None):
-        entries = []
-        for text in response:
-            entries.extend(ICS().convert(text))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer(
         type_value_map={

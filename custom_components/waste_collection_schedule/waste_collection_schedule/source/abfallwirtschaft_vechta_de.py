@@ -1,27 +1,26 @@
 """AWB Abfallwirtschaft Vechta, Germany.
 
 Demonstrates: a per-street calendar assembled from *two* independent paper-
-collector feeds ("pamo" and "siemer") that must each be resolved (city
-search, then street search, threading the previous step's id through a
-cookie jar) and fetched separately, then merged and de-duplicated. Near
-year-end the provider also publishes the first weeks of the following year,
-best-effort (swallowed if not yet published). No configured retriever
-expresses "resolve an id twice over, fetch two related but separate feeds,
-optionally a third year", hence a source-defined retrieve(); the label
-clean-up (stripping a fixed prefix/suffix and the per-district digit
-suffix) happens before the record reaches ICSTransformer, since a stripped
-digit does not change the record's canonical waste type -- only its
-now-superseded display text.
+collector feeds ("pamo" and "siemer"), each needing the same chain of id
+lookups (city search, then street search, threading the previous answer
+through the query and a growing cookie jar) before its own ICS download. That
+is ``IcsSessionRetriever`` with two steps and two ``variants``; near year-end
+the provider also publishes the first weeks of the following year, which the
+retriever's lookahead picks up best-effort. The two feeds repeat every shared
+collection, so the labels are tidied and de-duplicated in ``IcsFeedsParser``
+before the records reach ``ICSTransformer``: a stripped per-district digit
+does not change the record's canonical waste type, only its now-superseded
+display text.
 """
 
 import json
 import re
-from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -42,61 +41,49 @@ _DIGITS_RE = re.compile(r"[0-9]")
 
 
 def _clean_bin_type(title: str) -> str:
+    """Strip the fixed wording and the per-district digit off a summary."""
     for phrase in _TITLE_STRIP:
         title = title.replace(phrase, "")
     title = _DIGITS_RE.sub("", title).strip().replace("  ", " ")
     return title
 
 
-def _fetch_year(session, stadt: str, strasse: str, jahr: int) -> "list[tuple]":
-    entries: list = []
-    seen: set = set()
+def _street_entry(response, context) -> dict:
+    """Read the street's ids out of the search response's padded JSON."""
+    entry = json.loads(response.text[1:-2])["strassen"][0]
+    return {
+        "strasse_id": entry["id"],
+        "abfuhrbezirk": entry["abfuhrbezirk"],
+        # Each paper contractor runs its own district numbering.
+        "abfuhrbezirkpapier": entry[context["variant"]],
+    }
 
-    for papier_typ in ("pamo", "siemer"):
-        cookies = {"jahr": str(jahr)}
 
-        r = session.get(_STADT_SUCHE_URL, params={"term": stadt}, cookies=cookies)
-        r.raise_for_status()
-        city_id = r.json()[0]["id"]
-        cookies["stadt"] = str(city_id)
+def _street_cookies(strasse_id, abfuhrbezirk, abfuhrbezirkpapier, variant, **_) -> dict:
+    """What the site puts in the jar once a street is chosen.
 
-        r = session.get(
-            _STRASSE_SUCHE_URL,
-            params={"stadt": city_id, "term": strasse},
-            cookies=cookies,
-        )
-        r.raise_for_status()
-        street_entry = json.loads(r.text[1:-2])["strassen"][0]
-        cookies["stadt"] = str(street_entry["id"])
-        cookies["abfuhrbezirk"] = str(street_entry["abfuhrbezirk"])
-        cookies["abfuhrbezirkpapir"] = str(street_entry[papier_typ])
-        cookies["papier"] = papier_typ
+    The paper district's cookie name is spelt without the "e"
+    ("abfuhrbezirkpapir"), unlike the query argument; the server reads both.
+    """
+    return {
+        "stadt": str(strasse_id),
+        "abfuhrbezirk": str(abfuhrbezirk),
+        "abfuhrbezirkpapir": str(abfuhrbezirkpapier),
+        "papier": variant,
+    }
 
-        args = {
-            "stadt": city_id,
-            "strasse": street_entry["id"],
-            "abfuhrbezirkpapier": street_entry[papier_typ],
-            "jahr": jahr,
-            "papier": papier_typ,
-            "trigger": "false",
-            "triggerday": "false",
-            "triggertime": "false",
-        }
-        r = session.get(_ICS_URL, params=args, cookies=cookies)
-        r.raise_for_status()
-        r.encoding = "utf-8"
 
-        # Sometimes has a non-ASCII UID, which would raise while converting.
-        text = r.text.replace("UID:", "NOTUID: ")
-        for date_, title in ICS().convert(text):
-            bin_type = _clean_bin_type(title)
-            key = (date_, bin_type)
-            if key in seen:
-                continue
-            seen.add(key)
-            entries.append(key)
-
-    return entries
+def _feed_params(stadt_id, strasse_id, abfuhrbezirkpapier, year, variant, **_) -> dict:
+    return {
+        "stadt": stadt_id,
+        "strasse": strasse_id,
+        "abfuhrbezirkpapier": abfuhrbezirkpapier,
+        "jahr": year,
+        "papier": variant,
+        "trigger": "false",
+        "triggerday": "false",
+        "triggertime": "false",
+    }
 
 
 @final
@@ -128,22 +115,32 @@ class Source(BaseSource):
         street(field="strasse"),
     )
 
-    def retrieve(self, source):
-        session = source.session
-        stadt = self.params["stadt"]
-        strasse = self.params["strasse"]
-        now = datetime.now()
+    retrieve = IcsSessionRetriever(
+        variants=("pamo", "siemer"),
+        cookies=lambda year, **_: {"jahr": str(year)},
+        steps=[
+            {
+                "url": _STADT_SUCHE_URL,
+                "params": lambda stadt, **_: {"term": stadt},
+                "extract": lambda response, _: {"stadt_id": response.json()[0]["id"]},
+                "cookies": lambda stadt_id, **_: {"stadt": str(stadt_id)},
+            },
+            {
+                "url": _STRASSE_SUCHE_URL,
+                "params": lambda stadt_id, strasse, **_: {
+                    "stadt": stadt_id,
+                    "term": strasse,
+                },
+                "extract": _street_entry,
+                "cookies": _street_cookies,
+            },
+        ],
+        feed_url=_ICS_URL,
+        feed_params=_feed_params,
+        encoding="utf-8",
+    )
 
-        entries = _fetch_year(session, stadt, strasse, now.year)
-        if now.month == 12:
-            try:
-                entries = entries + _fetch_year(session, stadt, strasse, now.year + 1)
-            except Exception:
-                pass
-        return entries
-
-    def parse(self, raw, source):
-        return raw
+    parse = IcsFeedsParser(parsers.IcsParser(), clean=_clean_bin_type, dedupe=True)
 
     transform = ICSTransformer(
         type_value_map={

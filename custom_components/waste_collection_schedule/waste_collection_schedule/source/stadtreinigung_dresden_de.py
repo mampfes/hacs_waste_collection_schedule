@@ -5,19 +5,19 @@ computed fresh at request time (today .. today + 365 days) rather than being
 literal, and whose feed needs two things ``parsers.IcsParser`` does not
 expose: rejecting a bad ``standort`` (the endpoint answers 200 with a non-ICS
 body instead of an HTTP error) and dropping a housekeeping "calendar ends
-soon" VEVENT that carries no waste type at all. Both are handled in a small
-source-defined ``parse`` around the plain ``ICS()`` service class; retrieval
-itself is the standard ``HttpGetRetriever``.
+soon" VEVENT that carries no waste type at all. Both are ``IcsFeedsParser``
+options (``require_calendar`` and ``exclude``); retrieval itself is the
+standard ``HttpGetRetriever``.
 """
 
 import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import location_id
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -32,7 +32,7 @@ _ICAL_URL = (
 
 # Housekeeping VEVENT the feed emits once the published window nears its end;
 # it carries no waste type and must be dropped rather than surfaced.
-_END_OF_CALENDAR_NOTICE = "abfallkalender endet bald"
+_END_OF_CALENDAR_NOTICE = r"^Abfallkalender endet bald$"
 
 
 def _date_range_params(standort) -> dict:
@@ -75,19 +75,12 @@ class Source(BaseSource):
         url=_ICAL_URL, params=lambda standort, **_: _date_range_params(standort)
     )
 
-    def parse(self, response, source=None):
-        if not response.text.startswith("BEGIN:VCALENDAR"):
-            raise SourceArgumentNotFound(
-                "standort",
-                self.params["standort"],
-                "no calendar found for this location, please check this value is correct.",
-            )
-        events = ICS(regex=r"^Leerung (.*)", split_at=r", ").convert(response.text)
-        return [
-            (date, title)
-            for date, title in events
-            if title.strip().lower() != _END_OF_CALENDAR_NOTICE
-        ]
+    parse = IcsFeedsParser(
+        parsers.IcsParser(regex=r"^Leerung (.*)", split_at=r", "),
+        exclude=_END_OF_CALENDAR_NOTICE,
+        argument="standort",
+        require_calendar=True,
+    )
 
     transform = ICSTransformer(
         type_value_map={

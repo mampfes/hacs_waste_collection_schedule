@@ -2,23 +2,21 @@
 
 Demonstrates: a single static ICS GET that, only on an *empty* result, falls
 back to a second lookup request for street-name suggestions. That secondary
-request only fires on the error path, so it lives in a source-defined
-``parse`` override (which also strips the feed's stray ``DTEND`` lines and its
-title prefix) rather than in ``retrieve``.
+request fires on the error path only, which is what ``IcsFeedsParser``'s
+``suggestions`` hook is for. The feed's stray ``DTEND`` lines (a date-time end
+on an all-day start) are repaired for every provider by the ICS service, and
+the title prefix comes off in the transformer's ``clean``.
 """
 
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -32,12 +30,14 @@ _STREET_LIST_URL = "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
 _PREFIX = "Abfallkalender: "
 
 
-def _street_suggestions(session, street: str) -> list[str]:
+def _street_suggestions(source) -> list[str]:
+    """Streets the provider does know that share the given street's first word."""
     try:
-        r = session.get(_STREET_LIST_URL, timeout=15)
+        r = source.session.get(_STREET_LIST_URL, timeout=15)
         r.raise_for_status()
     except Exception:
         return []
+    street = source.params["street"]
     streets = re.findall(r'option value="([^"]+)"', r.text)
     query = street.split()[0].lower() if street else ""
     return [s for s in streets if query in s.lower()][:20]
@@ -86,23 +86,11 @@ class Source(BaseSource):
         params=lambda street, **_: {"street": street, "city": "Magdeburg"},
     )
 
-    def parse(self, response, source=None):
-        # Remove DTEND lines — they use datetime format while DTSTART uses
-        # date-only, which causes icalevents comparison errors. DTEND is not
-        # needed for parsing.
-        text = re.sub(r"DTEND:[^\r\n]+\r?\n", "", response.text)
-        events = ICS().convert(text)
-
-        if not events and source is not None:
-            street = source.params["street"]
-            suggestions = _street_suggestions(source.session, street)
-            if suggestions:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street", street, suggestions
-                )
-            raise SourceArgumentNotFound("street", street)
-
-        return events
+    parse = IcsFeedsParser(
+        parsers.IcsParser(),
+        argument="street",
+        suggestions=_street_suggestions,
+    )
 
     transform = ICSTransformer(
         type_value_map={

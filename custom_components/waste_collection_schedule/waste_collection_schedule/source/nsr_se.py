@@ -2,13 +2,13 @@
 
 Demonstrates: an address-search lookup (optionally filtered by a trailing
 ", City") feeding an ICS-download request, via ``TwoStepRetriever``. The feed
-itself duplicates every event, so ``parse`` is a source-defined override that
-de-duplicates after conversion.
+itself duplicates every event, which ``IcsFeedsParser(dedupe=True)`` handles.
 """
 
 from typing import ClassVar, final
 from urllib.parse import urlencode
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
@@ -17,7 +17,7 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import TwoStepRetriever
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
@@ -123,15 +123,7 @@ class Source(BaseSource):
         schedule_url=_schedule_url,
     )
 
-    def parse(self, response, source=None):
-        seen: set = set()
-        entries = []
-        for entry in ICS().convert(response.text):
-            if entry in seen:
-                continue
-            seen.add(entry)
-            entries.append(entry)
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser(), dedupe=True)
 
     transform = ICSTransformer(
         type_value_map={
