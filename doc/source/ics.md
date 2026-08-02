@@ -201,6 +201,7 @@ This source has been successfully tested with the following service providers:
 - [City of Windsor](/doc/ics/citywindsor_ca.md) / citywindsor.ca
 - [Colchester, NS](/doc/ics/recollect.md) / colchester.ca
 - [Community Recycling (Lunenburg, NS)](/doc/ics/recollect.md) / communityrecycling.ca
+- [Coteau-du-Lac, Québec](/doc/ics/coteau-du-lac_com.md) / portail.coteau-du-lac.com
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca

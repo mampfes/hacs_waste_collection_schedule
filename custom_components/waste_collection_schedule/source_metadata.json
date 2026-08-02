@@ -1357,6 +1357,14 @@
     },
     "urls": {}
   },
+  "ics_coteau-du-lac_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/coteau-du-lac_com.md",
+    "howto": {
+      "en": "- Visit <https://portail.coteau-du-lac.com/calendrier-de-collectes> (the portal is in French only).\n- Enter your address under \"Pour quelle adresse désirez-vous obtenir le calendrier?\", pick it from the\n  suggestions and press \"Soumettre\".\n- Under \"Ajouter à mon calendrier\", right-click the Apple calendar icon and select `Copy link address`.\n- Use this copied URL as the `url` parameter. The `webcal://` prefix is handled automatically.\n",
+      "fr": "- Visitez <https://portail.coteau-du-lac.com/calendrier-de-collectes>.\n- Saisissez votre adresse sous \"Pour quelle adresse désirez-vous obtenir le calendrier?\", choisissez-la\n  dans les suggestions puis cliquez sur \"Soumettre\".\n- Sous \"Ajouter à mon calendrier\", faites un clic droit sur l'icône du calendrier Apple et sélectionnez\n  `Copier l'adresse du lien`.\n- Utilisez cette URL comme paramètre `url`. Le préfixe `webcal://` est géré automatiquement.\n"
+    },
+    "urls": {}
+  },
   "ics_georgina_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/georgina_ca.md",
     "howto": {

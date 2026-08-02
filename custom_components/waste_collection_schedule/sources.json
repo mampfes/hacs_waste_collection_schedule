@@ -5148,6 +5148,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Coteau-du-Lac, Qu\u00e9bec",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_coteau-du-lac_com"
+    },
+    {
       "title": "County of Simcoe, ON",
       "module": "ics",
       "default_params": {
