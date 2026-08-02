@@ -1,17 +1,21 @@
 import re
 from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import lookups, recurrence, retrievers
+from waste_collection_schedule import lookups, parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-# Demonstrates: a weekday-list scrape projected into a recurring weekly schedule.
+# Demonstrates: a weekday-list scrape resolved by preprocessors.ArgumentLookup
+# and projected into a recurring weekly schedule.
 #
 # The City of Lawrence publishes its curbside collection schedule as five
 # weekday tabs (Monday-Friday). Each tab lists the streets collected that
@@ -20,10 +24,12 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 # schedule and a weekly recycling schedule.
 #
 # The streets are in the delivered HTML (a CivicPlus tabbed widget), so a plain
-# GET plus a small parse method is enough. A street may be listed on more than
-# one weekday when it is split into segments (e.g. "Andover Street (State Street
-# to Ballard Road)" on Monday and "Andover Street (State Street to Shawsheen
-# Road)" on Tuesday); in that case every matching weekday is scheduled.
+# GET plus an HtmlParser is enough; ArgumentLookup then matches the resident's
+# street against the scraped table and lists the valid streets when it misses. A
+# street may be listed on more than one weekday when it is split into segments
+# (e.g. "Andover Street (State Street to Ballard Road)" on Monday and "Andover
+# Street (State Street to Shawsheen Road)" on Tuesday); in that case every
+# matching weekday is scheduled.
 
 # Number of weekly occurrences to project per matched weekday (~6 months).
 _WEEKS_AHEAD = 26
@@ -34,17 +40,28 @@ def _base_street(name: str) -> str:
     return lookups.normalize_text(re.split(r"\s*\(", name, maxsplit=1)[0])
 
 
-def _describe(
-    record: tuple[int, list[str]], source: "BaseSource | None"
-) -> Iterable[Schedule]:
-    weekday, streets = record
-    assert source is not None
-    wanted = lookups.normalize_text(source.params["street"])
-    if not any(_base_street(s) == wanted for s in streets):
-        return
-    start = recurrence.next_weekday(weekday)
-    yield Schedule("trash", start, recurrence.WEEKLY, _WEEKS_AHEAD)
-    yield Schedule("recycling", start, recurrence.WEEKLY, _WEEKS_AHEAD)
+def _street_weekdays(panels, source) -> dict[str, list[int]]:
+    """Map each street to the weekday panels listing it (Monday=0).
+
+    The five panels render in weekday order Monday (0) to Friday (4).
+    """
+    weekdays: dict[str, list[int]] = {}
+    for weekday, panel in enumerate(panels):
+        for item in panel.select("ul li"):
+            text = item.get_text(" ", strip=True)
+            if not text:
+                continue
+            listed = weekdays.setdefault(_base_street(text).title(), [])
+            if weekday not in listed:
+                listed.append(weekday)
+    return weekdays
+
+
+def _describe(weekdays: list[int], source) -> Iterable[Schedule]:
+    for weekday in weekdays:
+        start = recurrence.next_weekday(weekday)
+        yield Schedule("trash", start, recurrence.WEEKLY, _WEEKS_AHEAD)
+        yield Schedule("recycling", start, recurrence.WEEKLY, _WEEKS_AHEAD)
 
 
 @final
@@ -79,8 +96,12 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     retrieve = retrievers.HttpGetRetriever(url=API_URL)
+    parse = parsers.HtmlParser("div.cpTabPanel")
 
-    preprocess = RecurrenceExpander(_describe)
+    preprocess = Compose(
+        ArgumentLookup(_street_weekdays, argument="street"),
+        RecurrenceExpander(_describe),
+    )
 
     transform = ICSTransformer(
         type_value_map={"trash": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -88,38 +109,3 @@ class Source(BaseSource):
 
     def __init__(self, street: str):
         super().__init__(street=street)
-        self._street = street.strip()
-
-    def parse(
-        self, response: Any, source: "BaseSource | None" = None
-    ) -> list[tuple[int, list[str]]]:
-        """Extract (weekday index, [street names]) for each weekday panel.
-
-        The five panels render in weekday order Monday (0) to Friday (4).
-        """
-        soup = BeautifulSoup(response.text, "html.parser")
-        panels = soup.select("div.cpTabPanel")
-
-        records: list[tuple[int, list[str]]] = []
-        for weekday, panel in enumerate(panels):
-            streets = [
-                text
-                for li in panel.select("ul li")
-                if (text := li.get_text(" ", strip=True))
-            ]
-            if streets:
-                records.append((weekday, streets))
-
-        if not any(
-            _base_street(s) == self._street.casefold()
-            for _, streets in records
-            for s in streets
-        ):
-            all_streets = {
-                _base_street(s).title() for _, streets in records for s in streets
-            }
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, sorted(all_streets)
-            )
-
-        return records

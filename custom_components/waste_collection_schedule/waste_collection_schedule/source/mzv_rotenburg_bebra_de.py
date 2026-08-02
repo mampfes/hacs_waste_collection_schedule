@@ -6,10 +6,6 @@ from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
     ELECTRONICS,
@@ -23,13 +19,39 @@ from waste_collection_schedule.waste_types import (
 
 WEBAPP_URL = "https://www.mzv-rotenburg-bebra.de//webapp.html"
 
-# Demonstrates: parsers.IcsEventsParser + the classify() escape hatch.
-# Notable: per-route filtering (yellow_route / paper_route) needs the ICS
-# LOCATION / DESCRIPTION fields, which the (date, summary) tuples from
-# parsers.IcsParser discard. parsers.IcsEventsParser exposes the full IcsEvent,
-# and classify() does the route filtering plus route-suffix normalisation
-# ("Gelbe Tonne 2", "Papier Ost", ...); the cleaned bin name is then classified
-# by the shared multilingual vocabulary (resolve), not a per-source map.
+# Demonstrates: parsers.ArgumentGuard + parsers.IcsEventsParser + the classify()
+# escape hatch.
+# Notable: the endpoint answers an unknown `ort` with an ordinary web page and
+# HTTP 200, so parsers.ArgumentGuard checks for the calendar marker first and
+# raises against the `city` argument (listing the valid names off the web-app
+# page) rather than reporting an empty calendar.
+# Per-route filtering (yellow_route / paper_route) needs the ICS LOCATION /
+# DESCRIPTION fields, which the (date, summary) tuples from parsers.IcsParser
+# discard. parsers.IcsEventsParser exposes the full IcsEvent, and classify() does
+# the route filtering plus route-suffix normalisation ("Gelbe Tonne 2",
+# "Papier Ost", ...); the cleaned bin name is then classified by the shared
+# multilingual vocabulary (resolve), not a per-source map.
+
+_CITY_HINT = (
+    "make sure the city is spelled exactly like in the link of the website "
+    "https://www.mzv-rotenburg-bebra.de//webapp.html"
+)
+
+
+def _possible_cities(source=None) -> list[str]:
+    """List the `ort` values linked from the provider's web-app page."""
+    r = requests.get(WEBAPP_URL, headers={"User-Agent": "Mozilla/5.0"})
+    r.raise_for_status()
+
+    soup = BeautifulSoup(r.content, "html.parser")
+    cities: list[str] = []
+    for link in soup.find_all("a", href=True):
+        if not isinstance(link, Tag):
+            continue
+        href = str(link.get("href", ""))
+        if "entsorgung.php?ort=" in href:
+            cities.append(href.split("?ort=")[1])
+    return cities
 
 
 @final
@@ -77,7 +99,13 @@ class Source(BaseSource):
 
     # min_events=1: a valid feed has at least one event; an HTML error page (no
     # events) is logged and raises ResponseShapeError.
-    _ics_parser = parsers.IcsEventsParser(min_events=1)
+    parse = parsers.ArgumentGuard(
+        parsers.IcsEventsParser(min_events=1),
+        argument="city",
+        contains="BEGIN:VCALENDAR",
+        suggestions=_possible_cities,
+        hint=_CITY_HINT,
+    )
 
     def __init__(
         self,
@@ -88,41 +116,6 @@ class Source(BaseSource):
         super().__init__(city=city, yellow_route=yellow_route, paper_route=paper_route)
         self._params = {"ort": city}
         self._headers = {"User-Agent": "Mozilla/5.0"}
-
-    def parse(self, response, source):
-        # The endpoint returns an ICS feed for a valid `ort`; an unknown city
-        # yields non-ICS content. Detect that and raise with the list of valid
-        # city names (recovered from the web-app page), matching the upstream
-        # behaviour, instead of silently returning no events.
-        if "BEGIN:VCALENDAR" not in response.text:
-            try:
-                cities = self._get_possible_cities()
-            except Exception as e:
-                raise SourceArgumentNotFound(
-                    "city",
-                    self.params["city"],
-                    "make sure the city is spelled exactly like in the link of "
-                    "the website https://www.mzv-rotenburg-bebra.de//webapp.html",
-                ) from e
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self.params["city"], cities
-            )
-        return self._ics_parser(response, source)
-
-    @staticmethod
-    def _get_possible_cities() -> list[str]:
-        r = requests.get(WEBAPP_URL, headers={"User-Agent": "Mozilla/5.0"})
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.content, "html.parser")
-        cities: list[str] = []
-        for link in soup.find_all("a", href=True):
-            if not isinstance(link, Tag):
-                continue
-            href = str(link.get("href", ""))
-            if "entsorgung.php?ort=" in href:
-                cities.append(href.split("?ort=")[1])
-        return cities
 
     def classify(self, record) -> Collection | None:
         summary = (record.title or "").strip()

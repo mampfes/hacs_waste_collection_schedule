@@ -1,9 +1,7 @@
-import json
 import re
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import date_parsers
+from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.waste_types import (
@@ -14,7 +12,8 @@ from waste_collection_schedule.waste_types import (
     WasteType,
 )
 
-# Demonstrates: a JSON payload embedded inside an HTML data-attribute.
+# Demonstrates: parsers.AttributeJsonParser, for a JSON payload embedded inside
+# an HTML data-attribute.
 #
 # Muttenz runs on the Swiss "i-web" municipal CMS. The waste page is fully
 # server-rendered, but the collection table is not plain <tr>/<td> markup the
@@ -22,17 +21,13 @@ from waste_collection_schedule.waste_types import (
 # Instead the whole schedule ships as a JSON array inside a single
 # ``data-entities`` attribute on the table element, and every field inside that
 # JSON is itself a fragment of escaped HTML (an <a> for the waste-type name, a
-# pair of responsive <span>s for the date). So the parse shape is: pick the
-# attribute, read its JSON (BeautifulSoup already HTML-unescapes attribute
-# values), then strip the nested HTML out of each record's fields. That is a
-# distinct wrinkle from both the flat-JSON-API and the table-scrape examples,
-# and i-web powers many other Swiss municipalities, so the pattern generalises.
+# pair of responsive <span>s for the date). AttributeJsonParser reads exactly
+# that shape, and i-web powers many other Swiss municipalities.
 #
 # The page carries two data-entities blocks: the schedule (records have an
-# ``_anlassDate``) and a waste-type legend (records do not). The parser keeps
-# only the block whose records carry a date. Dates are dd.mm.yyyy (Swiss
-# German), which dateutil parses, so no custom locale handling is needed; the
-# wrinkle here is purely the embedded-JSON-in-an-attribute parse.
+# ``_anlassDate``) and a waste-type legend (records do not), which is what
+# ``require_keys`` selects between. Dates are dd.mm.yyyy (Swiss German), which
+# dateutil parses, so no custom locale handling is needed.
 
 _TYPE_MAP: dict[str, WasteType] = {
     "Papiersammlung": PAPER,
@@ -44,11 +39,6 @@ _TYPE_MAP: dict[str, WasteType] = {
     "Häckseltag": GARDEN_WASTE,
     "Sonderabfallsammlung": HAZARDOUS,
 }
-
-
-def _strip_html(fragment: str) -> str:
-    """Return the visible text of an HTML fragment, whitespace-collapsed."""
-    return BeautifulSoup(fragment or "", "html.parser").get_text(" ", strip=True)
 
 
 @final
@@ -85,37 +75,17 @@ class Source(BaseSource):
     # preserved verbatim.
     WASTE_TYPES: ClassVar[list] = [PAPER, RECYCLABLES, GARDEN_WASTE, HAZARDOUS]
 
-    def parse(self, response: Any, source: "Source") -> list[dict[str, str]]:
-        """Pull the schedule out of the table's ``data-entities`` JSON blob.
-
-        The page has two such blobs; only the schedule's records carry an
-        ``_anlassDate`` field, so that is how the right one is selected. Each
-        record's ``name`` (waste type) and ``_anlassDate`` (date) are fragments
-        of HTML, reduced here to plain text for ``classify`` to consume.
-        """
-        soup = BeautifulSoup(response.text, "html.parser")
-        for element in soup.select("[data-entities]"):
-            blob = element["data-entities"]
-            if not isinstance(blob, str):
-                continue
-            try:
-                rows = json.loads(blob).get("data", [])
-            except (ValueError, TypeError):
-                continue
-            if not any("_anlassDate" in row for row in rows):
-                continue
-            return [
-                {
-                    "type": _strip_html(row.get("name", "")),
-                    "date": _strip_html(row.get("_anlassDate", "")),
-                }
-                for row in rows
-            ]
-        return []
+    parse = parsers.AttributeJsonParser(
+        "[data-entities]",
+        "data-entities",
+        "data",
+        require_keys=("_anlassDate",),
+        strip_html=True,
+    )
 
     def classify(self, record: dict[str, str]) -> Collection | None:
-        label = record.get("type")
-        date_text = record.get("date") or ""
+        label = record.get("name")
+        date_text = record.get("_anlassDate") or ""
         # The date field renders the same dd.mm.yyyy twice (one span per
         # breakpoint), so take the first match rather than the whole string.
         match = re.search(r"\d{1,2}\.\d{1,2}\.\d{4}", date_text)

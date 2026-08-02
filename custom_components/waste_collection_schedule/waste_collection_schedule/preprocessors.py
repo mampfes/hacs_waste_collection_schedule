@@ -16,18 +16,20 @@ into individual collection dates::
     preprocess = preprocessors.RecurrenceExpander(_describe)
 """
 
+import bisect
 import datetime
 import re
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Literal, Protocol, TypeVar
+from typing import TYPE_CHECKING, Any, Literal, NamedTuple, Protocol, TypeVar
 
 from bs4 import Tag
 
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import lookups, recurrence
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.parsers import PdfRow
 
 InT = TypeVar("InT", contravariant=True)
 OutT = TypeVar("OutT", covariant=True)
@@ -224,6 +226,319 @@ class HtmlGroupedDates(Preprocessor[list[Tag], "tuple[datetime.date, str]"]):
                 match = self._date_pattern.search(item.get_text())
                 if match:
                     yield self._parse_date(match.group(1 if match.groups() else 0)), key
+
+
+class ArgumentLookup(Preprocessor[Any, Any]):
+    """Resolve a config argument against a table read out of the response.
+
+    The shape behind every "which day is my street collected?" provider that
+    publishes a list instead of an address API: the page names the rounds and
+    their members, the user names their member, and the source has to match the
+    two and say what the valid values were when it cannot. The matching and the
+    "did you mean" error are :mod:`lookups`' job, so all the source supplies is
+    the table::
+
+        parse = parsers.HtmlParser("div.cpTabPanel")
+        preprocess = Compose(
+            preprocessors.ArgumentLookup(_street_weekdays, argument="street"),
+            RecurrenceExpander(_describe),
+        )
+
+    Yields exactly one record, the resolved value (a weekday, a zone id, a list
+    of weekdays: whatever the table maps to), so the stage after it describes one
+    household's schedule rather than the whole town's. An argument that does not
+    match raises ``SourceArgumentNotFoundWithSuggestions`` listing the table's
+    keys, which is what the config flow shows the user.
+
+    Args:
+        table: ``callable(records, source) -> Mapping[str, V]`` building the
+            lookup table from the parsed output. Key it the way the provider
+            spells it: matching is case- and whitespace-insensitive, and the keys
+            are what an unmatched argument is offered as suggestions.
+        argument: the config param looked up, and the one blamed on a miss.
+    """
+
+    def __init__(
+        self,
+        table: "Callable[[Any, BaseSource | None], Mapping[str, Any]]",
+        *,
+        argument: str,
+    ):
+        self._table = table
+        self._argument = argument
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        value = source.params.get(self._argument) if source is not None else None
+        yield lookups.resolve(
+            self._table(records, source), value, argument=self._argument
+        )
+
+
+class Deduplicate(Preprocessor[Any, Any]):
+    """Drop repeated records, keeping the first occurrence and the input order.
+
+    For a provider that publishes the same collection more than once: a printed
+    calendar whose pages overlap at the month boundary, a postponement landing on
+    a day that already has a collection, or two feeds merged server-side. Put it
+    last in a :class:`Compose` so it sees the finished rows::
+
+        preprocess = Compose(RecurrenceExpander(_describe), Deduplicate())
+
+    Records must be hashable, which the usual ``(date, key)`` row is.
+    """
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        seen: set[Any] = set()
+        for record in records:
+            if record in seen:
+                continue
+            seen.add(record)
+            yield record
+
+
+class PdfDayCell(NamedTuple):
+    """One day cell of a printed calendar grid: its day number and its text.
+
+    ``text`` is every text run the grid bound to this day, top of the cell
+    first, joined by single spaces.
+    """
+
+    day: int
+    text: str
+
+
+class PdfColumn(NamedTuple):
+    """One calendar column of a positioned-PDF page: its heading and its days.
+
+    ``column`` is the column's position on the page, counting from zero at the
+    left. ``header`` is its heading runs in page order (the month name, the year,
+    whatever else is printed above the grid); ``cells`` are its day cells top to
+    bottom.
+    """
+
+    page: int
+    column: int
+    header: tuple[str, ...]
+    cells: tuple[PdfDayCell, ...]
+
+
+class PdfCalendarColumns(Preprocessor["list[PdfRow]", PdfColumn]):
+    """Group a positioned-PDF calendar into per-column day cells.
+
+    For the printed month-grid calendar many municipalities publish: one or more
+    month blocks per page, each with a heading and a grid of numbered day cells
+    holding waste-type badges and the odd "collection suspended" note.
+    :class:`~waste_collection_schedule.parsers.PdfTableParser` reads the page
+    into positioned rows; this bins those runs into the calendar's own shape, so
+    a source is left describing only what the badges and notes *mean*::
+
+        parse = parsers.PdfTableParser(min_words=200)
+        preprocess = Compose(
+            preprocessors.PdfCalendarColumns(
+                column_bounds=(300.0,),
+                day_bands={0: (30.0, 66.0), 1: (340.0, 375.0)},
+                header_y=845.0,
+            ),
+            RecurrenceExpander(_describe),   # column -> Schedule per collection
+            Deduplicate(),
+        )
+
+    The binding rule is the one printed calendars obey: a day number anchors a
+    cell, and every other run in the column belongs to the day whose number sits
+    nearest it vertically. A column with no day numbers yields nothing, so a
+    decorative or empty block costs the source no special casing.
+
+    Args:
+        column_bounds: the x positions splitting a page into columns, ascending.
+            A page of two months side by side has one bound; a single-column
+            calendar passes ``()``.
+        day_bands: per column index, the ``(min, max)`` x range the day number
+            occupies. The weekday abbreviation and the badges sit further right,
+            so this is what separates the cell's anchor from its contents.
+        header_y: runs above this y belong to the column heading, runs below to
+            the grid. pdfminer's y grows upwards, so this is the baseline of the
+            lowest heading line.
+        day_range: the numbers accepted as a day anchor (default 1 to 31).
+    """
+
+    def __init__(
+        self,
+        *,
+        column_bounds: Sequence[float],
+        day_bands: Mapping[int, tuple[float, float]],
+        header_y: float,
+        day_range: tuple[int, int] = (1, 31),
+    ):
+        self._column_bounds = list(column_bounds)
+        self._day_bands = dict(day_bands)
+        self._header_y = header_y
+        self._day_range = day_range
+
+    def _column_of(self, x0: float) -> int:
+        return bisect.bisect_right(self._column_bounds, x0)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[PdfColumn]:
+        rows = list(records)
+        for page in sorted({row.page for row in rows}):
+            page_rows = [row for row in rows if row.page == page]
+            for index in sorted(self._day_bands):
+                cells = self._cells(page_rows, index)
+                if cells:
+                    yield PdfColumn(
+                        page=page,
+                        column=index,
+                        header=self._header(page_rows, index),
+                        cells=cells,
+                    )
+
+    def _header(self, page_rows: "list[PdfRow]", index: int) -> tuple[str, ...]:
+        return tuple(
+            word.text
+            for row in page_rows
+            if row.y > self._header_y
+            for word in row.words
+            if self._column_of(word.x0) == index
+        )
+
+    def _cells(self, page_rows: "list[PdfRow]", index: int) -> tuple[PdfDayCell, ...]:
+        low, high = self._day_bands[index]
+        first_day, last_day = self._day_range
+        anchors: list[tuple[float, int]] = []  # (y, day number)
+        notes: list[tuple[float, str]] = []  # (y, text) of every other run
+        for row in page_rows:
+            if row.y >= self._header_y:
+                continue
+            for word in row.words:
+                if self._column_of(word.x0) != index:
+                    continue
+                if (
+                    low <= word.x0 <= high
+                    and word.text.isdigit()
+                    and first_day <= int(word.text) <= last_day
+                ):
+                    anchors.append((row.y, int(word.text)))
+                else:
+                    notes.append((row.y, word.text))
+
+        if not anchors:
+            return ()
+        anchors.sort(key=lambda anchor: -anchor[0])
+
+        bound: dict[int, list[tuple[float, str]]] = {i: [] for i in range(len(anchors))}
+        for note_y, text in notes:
+            nearest = min(
+                range(len(anchors)), key=lambda i: abs(anchors[i][0] - note_y)
+            )
+            bound[nearest].append((note_y, text))
+
+        return tuple(
+            PdfDayCell(
+                day=day,
+                text=" ".join(
+                    text for _, text in sorted(bound[i], key=lambda pair: -pair[0])
+                ),
+            )
+            for i, (_, day) in enumerate(anchors)
+        )
+
+
+class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Expand a labelled plain-text schedule into ``(date, key)`` rows.
+
+    The plain-text sibling of :class:`HtmlGroupedDates`, for a document with no
+    markup to select on: a PDF text layer, or a text calendar, where a round's
+    label introduces a run of dates and the next label ends it. A row whose
+    dates wrap across several extracted lines is still captured as one segment,
+    which is what makes this work on PDF text where the line breaks are an
+    artefact of extraction rather than of the table::
+
+        parse = parsers.PdfTextParser(min_chars=200)
+        preprocess = preprocessors.TextGroupedDates(
+            keys=TYPE_MAP,
+            date_pattern=r"\\b(?P<month>\\d{2})\\.(?P<day>\\d{2})\\.",
+            year_pattern=r"(\\d{4})\\.\\s*évi",
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Text before the first label is ignored, as is a date that does not name a
+    real day (a "31.11." typo, or a stray number pair that matched the pattern).
+
+    Args:
+        keys: the labels that introduce a round's dates, matched verbatim and
+            case-sensitively, longest first so one label may contain another.
+            Pass the transformer's ``type_value_map`` directly; its keys are
+            exactly that set.
+        date_pattern: regex scanned across each segment. It must carry named
+            groups ``day`` and ``month``, and may carry ``year`` when the
+            document dates each cell in full.
+        year_pattern: for the usual per-year calendar whose cells omit the year
+            and whose heading states it once: a regex searched against the whole
+            document, its first group the four-digit year. Falls back to the
+            current year when unset or unmatched, which is what a calendar
+            published for the year in progress means.
+    """
+
+    def __init__(
+        self,
+        *,
+        keys: Iterable[str],
+        date_pattern: str,
+        year_pattern: "str | None" = None,
+    ):
+        labels = sorted(keys, key=len, reverse=True)
+        if not labels:
+            raise ValueError("TextGroupedDates needs at least one key")
+        self._label_re = re.compile(
+            "(" + "|".join(re.escape(label) for label in labels) + ")"
+        )
+        self._date_re = re.compile(date_pattern)
+        missing = {"day", "month"} - set(self._date_re.groupindex)
+        if missing:
+            raise ValueError(
+                f"date_pattern is missing the named group(s) {sorted(missing)}"
+            )
+        self._year_re = re.compile(year_pattern) if year_pattern else None
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text: str = records
+        year = self._document_year(text)
+        labels = list(self._label_re.finditer(text))
+        for index, label in enumerate(labels):
+            start = label.end()
+            end = labels[index + 1].start() if index + 1 < len(labels) else len(text)
+            for match in self._date_re.finditer(text[start:end]):
+                collection_date = _date_from_groups(match.groupdict(), year)
+                if collection_date is not None:
+                    yield collection_date, label.group(1)
+
+    def _document_year(self, text: str) -> int:
+        if self._year_re is not None:
+            match = self._year_re.search(text)
+            if match:
+                return int(match.group(1))
+        return datetime.date.today().year
+
+
+def _date_from_groups(
+    groups: "Mapping[str, str | None]", year: int
+) -> "datetime.date | None":
+    """Build a date from ``day``/``month``/optional ``year`` groups, else None."""
+    try:
+        return datetime.date(
+            int(groups.get("year") or year),
+            int(groups["month"] or 0),
+            int(groups["day"] or 0),
+        )
+    except ValueError:
+        return None
 
 
 @dataclass
