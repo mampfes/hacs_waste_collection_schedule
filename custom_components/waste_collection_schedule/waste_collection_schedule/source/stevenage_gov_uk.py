@@ -1,4 +1,3 @@
-from collections.abc import Iterable
 from datetime import date
 from typing import Any, ClassVar, final
 
@@ -8,6 +7,7 @@ from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    AchieveFormsRowsPreprocessor,
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
@@ -77,6 +77,7 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsRowsPreprocessor()
     transform = JsonTransformer(
         date_key="collectiondate",
         type_key="bintype",
@@ -89,11 +90,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[dict]":
-        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
-        # one row per collection; JsonTransformer needs each row, not the
-        # whole rows_data dict as a single record.
-        yield from (rows.values() if isinstance(rows, dict) else rows)

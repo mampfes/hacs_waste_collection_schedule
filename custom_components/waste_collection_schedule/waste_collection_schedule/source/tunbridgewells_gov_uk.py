@@ -1,5 +1,4 @@
-from collections.abc import Iterable
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -7,6 +6,7 @@ from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    AchieveFormsRowsPreprocessor,
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
@@ -58,6 +58,7 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsRowsPreprocessor()
     # `nextDate` is published without a year ("Friday 10 July") since the
     # collection is always in the near future; date_parsers.next_weekday
     # rolls it to whichever of this/next year puts it on/after today.
@@ -74,11 +75,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn))
-
-    def preprocess(
-        self, rows: Any, source: "BaseSource | None" = None
-    ) -> "Iterable[dict]":
-        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
-        # one row per collection; JsonTransformer needs each row, not the
-        # whole rows_data dict as a single record.
-        yield from (rows.values() if isinstance(rows, dict) else rows)

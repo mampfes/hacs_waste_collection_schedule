@@ -1,17 +1,20 @@
 from typing import ClassVar, final
 
-from waste_collection_schedule import retrievers
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import RECYCLABLES
 
-# Demonstrates: http_post retriever + classify() escape hatch
-# Notable: the API returns a flat date array (no bin type field), so JsonTransformer
-# can't be used — classify() receives each date string and returns a fixed type.
+# Demonstrates: http_post retriever + DateListParser for a single-stream feed.
+# Notable: the API returns a flat date array with no bin type field, so
+# DateListParser pairs every date with the round's label and a plain
+# RowTransformer maps that label to a canonical WasteType. The array is padded
+# with the SQL zero date, dropped via drop_values.
 # _data (not _json) is used because the endpoint expects form-encoded POST data.
 
 SENTINEL = "0000-00-00"
+BLAUE_TONNE = "Blaue Tonne"
 
 
 @final
@@ -39,7 +42,8 @@ class Source(BaseSource):
     )
 
     retrieve = retrievers.http_post
-    WASTE_TYPES: ClassVar[list] = [RECYCLABLES]
+    parse = parsers.DateListParser("cal", label=BLAUE_TONNE, drop_values=(SENTINEL,))
+    transform = RowTransformer(type_value_map={BLAUE_TONNE: RECYCLABLES})
 
     def __init__(
         self,
@@ -50,11 +54,3 @@ class Source(BaseSource):
         super().__init__(city=city, ortsteil=ortsteil, strasse=strasse)
         # Form-encoded POST body (not JSON): use _data, not _json.
         self._data = {"l": 3, "p1": city, "p2": ortsteil, "p3": strasse}
-
-    def parse(self, response, source):
-        # API returns {"cal": ["YYYY-MM-DD", ...]} with "0000-00-00" as a no-date sentinel.
-        return [d for d in response.json()["cal"] if d != SENTINEL]
-
-    def classify(self, record) -> Collection | None:
-        # Each record is a plain date string; the only collection type is Blaue Tonne.
-        return Collection(date=self.parse_date(record), waste_type=RECYCLABLES)

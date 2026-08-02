@@ -235,12 +235,13 @@ def run_lookup(
 # AchieveFormsRetriever covers the handshake-plus-N-lookups acquisition (HTTP
 # only, still returns the raw response); LookupStep declares one call in that
 # chain. AchieveFormsRowsParser does the one universal bit of interpretation
-# (unwrap integration.transformed.rows_data) with no I/O. The two shape
-# preprocessors below (wide single-row field map; JSON-embedded-in-a-field)
-# cover two of the response shapes found across the ~20 dependent sources;
-# a genuinely different shape (a dynamic-key row, or an HTML fragment inside a
-# field) still fits the pipeline but needs a source- or preprocessor-specific
-# step of its own, same as FirmstepSelfService's per-source row classifiers.
+# (unwrap integration.transformed.rows_data) with no I/O. The shape
+# preprocessors below (one row per collection; wide single-row field map;
+# JSON-embedded-in-a-field; labels read off the row's own key names) cover the
+# response shapes found across the ~20 dependent sources; a genuinely
+# different shape (an HTML fragment inside a field) still fits the pipeline but
+# needs a source- or preprocessor-specific step of its own, same as
+# FirmstepSelfService's per-source row classifiers.
 # --------------------------------------------------------------------------- #
 
 
@@ -532,6 +533,36 @@ class AchieveFormsRowsParser(Parser[Any]):
             raw=raw,
         )
         return rows
+
+
+class AchieveFormsRowsPreprocessor(preprocessors.Preprocessor[Any, dict]):
+    """Yield each AchieveForms row as its own record.
+
+    The most common AchieveForms response shape is one row per collection,
+    which the platform returns as ``rows_data`` keyed by row index
+    (``{"0": {...}, "1": {...}}``) and, less often, as a bare list.
+    :class:`AchieveFormsRowsParser` deliberately passes that container through
+    unchanged, so a row-per-collection council needs the container turned into
+    a stream of rows before a row transformer sees it::
+
+        parse = AchieveFormsRowsParser()
+        preprocess = AchieveFormsRowsPreprocessor()
+        transform = JsonTransformer(date_key="Date", type_key="Round_Type", ...)
+
+    Either container shape is accepted, and an entry that isn't a row dict is
+    skipped rather than passed on to the transformer.
+    """
+
+    def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
+        if isinstance(rows, dict):
+            values: Any = rows.values()
+        elif isinstance(rows, list):
+            values = rows
+        else:
+            return
+        for row in values:
+            if isinstance(row, dict):
+                yield row
 
 
 class LabelField(str):

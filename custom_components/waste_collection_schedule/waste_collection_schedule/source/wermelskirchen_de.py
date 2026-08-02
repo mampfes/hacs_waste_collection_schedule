@@ -1,24 +1,29 @@
 """Abfallabholung Wermelskirchen (bavweb.de).
 
-Demonstrates: a static, param-built ICS GET whose "street" query argument is
-a base64 token of a fixed prefix plus the street name, and whose response
-mis-declares its charset (umlauts corrupt unless ``response.encoding`` is
-forced to UTF-8 before ``.text`` is read) -- both handled in a small
-source-defined ``parse`` around the plain ``ICS()`` service class; retrieval
-itself is the standard ``HttpGetRetriever``. ``house_number`` is accepted for
-parity with the provider's other calendars but, like the legacy source, is
-not actually part of the request: this endpoint serves one calendar per
-street, not per address.
+Demonstrates: a static, param-built ICS GET whose "street" query argument is a
+base64 token of a fixed prefix plus the street name. That encoding is a
+provider-specific way of spelling one query argument, not an ICS concern, so it
+stays here as the ``params`` callable ``HttpGetRetriever`` already takes.
+
+The endpoint serves the calendar as ``application/octet-stream`` with no
+charset. The legacy source forced ``response.encoding`` to UTF-8 because plain
+``requests`` would otherwise guess (and corrupt the umlauts); curl_cffi, which
+every pipeline retriever uses, already defaults to UTF-8 when the Content-Type
+names no charset, so no override is needed.
+
+``house_number`` is accepted for parity with the provider's other calendars
+but, like the legacy source, is not actually part of the request: this endpoint
+serves one calendar per street, not per address.
 """
 
 import base64
 from datetime import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -79,10 +84,7 @@ class Source(BaseSource):
     )
 
     retrieve = HttpGetRetriever(url=_URL, params=_params)
-
-    def parse(self, response, source=None):
-        response.encoding = "utf-8"
-        return ICS().convert(response.text)
+    parse = parsers.IcsParser()
 
     transform = ICSTransformer(
         type_value_map={

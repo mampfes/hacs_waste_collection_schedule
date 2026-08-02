@@ -6,6 +6,7 @@ from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
     AchieveFormsRetriever,
     AchieveFormsRowsParser,
+    AchieveFormsRowsPreprocessor,
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
@@ -54,6 +55,7 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsRowsPreprocessor()
     # Round_Type is a short provider code (DO = Domestic Brown Bin, RE =
     # Recycling Green Bin); an unmapped code is preserved verbatim rather than
     # collapsed, in case the council introduces a new round type.
@@ -69,9 +71,3 @@ class Source(BaseSource):
 
     def __init__(self, uprn: str | int):
         super().__init__(uprn=str(uprn).strip())
-
-    def preprocess(self, rows, source=None):
-        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
-        # one row per collection; JsonTransformer needs each row, not the
-        # whole rows_data dict as a single record.
-        yield from (rows.values() if isinstance(rows, dict) else rows)
