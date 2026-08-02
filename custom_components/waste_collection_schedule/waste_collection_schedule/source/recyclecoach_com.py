@@ -72,6 +72,15 @@ ICON_MAP = {
     "Blue Recycling Cart": Icons.RECYCLING,
     "Green Organic Waste Cart": Icons.ORGANIC,
     "No Collection Day": Icons.NO_COLLECTION,
+    "Blue Bin Paper Recycling": Icons.PAPER,
+    "Yellow Bin Container Recycling": Icons.RECYCLING,
+    "Christmas Tree": Icons.CHRISTMAS_TREE,
+    "Household Hazardous Waste Drop-Off": Icons.HAZARDOUS,
+    "Large Items": Icons.BULKY,
+    "Leaf": Icons.GARDEN,
+    "Compost Yard Open Saturday": Icons.EVENT,
+    "Compost Yard Open Wednesday": Icons.EVENT,
+    "3 Bags of Waste": Icons.GENERAL_WASTE,
 }
 
 EXTRA_INFO = [
@@ -462,6 +471,11 @@ TEST_CASES = {
         "street": "10303 N Churchill Dr",
         "city": "Peoria",
         "state": "Illinois",
+    },
+    "Carleton Place, ON, Canada": {
+        "street": "175 Bridge St",
+        "city": "Carleton Place",
+        "state": "Ontario",
     },
 }
 
