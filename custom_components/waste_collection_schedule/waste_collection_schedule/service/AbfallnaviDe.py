@@ -222,16 +222,43 @@ class AbfallnaviRetriever(RetrieverFunc):
         fraktionen = client.get_waste_types()
 
         termine: list[dict] = []
+        not_found_errors: list[SourceArgumentNotFoundWithSuggestions] = []
         for street_id in street_ids:
-            house_number_id = client.get_house_number_id(
-                street_id, params.get(self.house_number)
-            )
+            try:
+                house_number_id = client.get_house_number_id(
+                    street_id, params.get(self.house_number)
+                )
+            except SourceArgumentNotFoundWithSuggestions as e:
+                # Some providers split a single street name into multiple
+                # entries covering different house-number ranges (e.g. by
+                # city district; see Solingen "Katternberger Straße" in
+                # issue #4701, where "Mitte" and "Burg-Höhscheid" share the
+                # same street name but cover disjoint house numbers). If the
+                # requested house number isn't part of this particular
+                # split, skip it and keep trying the other matches instead
+                # of aborting the whole fetch.
+                if len(street_ids) > 1:
+                    not_found_errors.append(e)
+                    continue
+                raise
             if house_number_id is not None:
                 target, object_id = "hausnummern", house_number_id
             else:
                 target, object_id = "strassen", street_id
             args = [("fraktion", fraktion_id) for fraktion_id in fraktionen]
             termine += client._fetch_json(f"{target}/{object_id}/termine", params=args)
+
+        if not termine and not_found_errors:
+            # None of the split street entries contained the requested house
+            # number: raise with the combined suggestions from all of them.
+            suggestions: list = []
+            for err in not_found_errors:
+                for s in err.suggestions:
+                    if s not in suggestions:
+                        suggestions.append(s)
+            raise SourceArgumentNotFoundWithSuggestions(
+                self.house_number, params.get(self.house_number), suggestions
+            )
 
         return {"termine": termine, "fraktionen": fraktionen}
 
