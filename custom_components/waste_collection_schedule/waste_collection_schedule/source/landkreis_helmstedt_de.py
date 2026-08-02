@@ -3,10 +3,10 @@
 Classic TwoStepRetriever shape: a lookup page lists every municipal ICS
 calendar download link; the matching municipality's href is the schedule
 URL directly. Each municipal calendar covers every collection area at once,
-tagged by a trailing area number ("Restabfall 1", "Altpapier 5", ...); a
-custom ``preprocess`` filters to the user's selected area per waste stream
-and validates every stream was found, mirroring the legacy source's
-per-argument checks.
+tagged by a trailing area number ("Restabfall 1", "Altpapier 5", ...), which
+is the shape ``RoundAreaSelector`` reads: it keeps the user's area per waste
+stream and reports any stream whose area number matched nothing, mirroring
+the legacy source's per-argument checks.
 """
 
 from typing import ClassVar, final
@@ -17,6 +17,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.preprocessors import RoundAreaSelector
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -137,43 +138,13 @@ class Source(BaseSource):
         headers=HEADERS,
     )
     parse = IcsParser()
+    # Same validation order as the legacy source.
+    preprocess = RoundAreaSelector(
+        rounds=_FIELD_TO_TYPE,
+        require=("gelber_sack", "altpapier", "bioabfall", "restabfall"),
+        hint="check the PDF calendar for valid collection areas",
+    )
     transform = ICSTransformer()
-
-    def preprocess(self, records, source=None):
-        selection = {
-            field_type: str(self.params[field_name])
-            for field_name, field_type in _FIELD_TO_TYPE.items()
-        }
-        seen = dict.fromkeys(selection, False)
-
-        filtered = []
-        for date_, summary in records:
-            pick_up_type = summary[:-2]
-            pick_up_area = summary[-1:]
-            if pick_up_type in selection and pick_up_area == selection[pick_up_type]:
-                seen[pick_up_type] = True
-                filtered.append((date_, pick_up_type))
-
-        # Same validation order as the legacy source.
-        for pick_up_type in (
-            COLLECTION_TYPE_GELBER_SACK,
-            COLLECTION_TYPE_ALTPAPIER,
-            COLLECTION_TYPE_BIOABFALL,
-            COLLECTION_TYPE_RESTABFALL,
-        ):
-            if not seen[pick_up_type]:
-                field_name = next(
-                    name
-                    for name, type_ in _FIELD_TO_TYPE.items()
-                    if type_ == pick_up_type
-                )
-                raise SourceArgumentNotFoundWithSuggestions(
-                    field_name,
-                    self.params[field_name],
-                    ["check the PDF calendar for valid collection areas"],
-                )
-
-        return filtered
 
     def __init__(
         self,

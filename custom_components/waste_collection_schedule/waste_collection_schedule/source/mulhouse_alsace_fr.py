@@ -1,14 +1,18 @@
 import re
 from datetime import date, timedelta
-from typing import ClassVar, final
+from typing import Any, ClassVar, Literal, final
 
 import holidays
 from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    Disambiguate,
+    HolidayShift,
+    RecurrenceExpander,
+    RequireRecords,
+    Schedule,
 )
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
@@ -22,9 +26,10 @@ from waste_collection_schedule.waste_types import (
 # Demonstrates: a recurrence source whose holiday calendar comes from the
 # holidays library (France, Alsace-Moselle subdivision "6AE") instead of
 # hand-rolled easter arithmetic, and whose French weekday names resolve via the
-# Babel-backed recurrence vocabulary. The provider-specific bits (the free-text
-# "ferie" move/cancellation rules, the even/odd-week cadence) stay in the
-# preprocess, which yields (date, label) rows for a standard ICSTransformer.
+# Babel-backed recurrence vocabulary. The whole pipeline is shared components:
+# the commune lookup guard, the district disambiguation, the cadence expansion
+# and the holiday shift. The provider-specific bits (reading the free-text
+# "ferie" rules and the even/odd-week wording) are the two callables below.
 
 API_URL = (
     "https://data.mulhouse-alsace.fr/api/explore/v2.1/catalog/datasets/"
@@ -96,32 +101,66 @@ def _parse_ferie(
     return moves, cancellations
 
 
-def _project_dates(jour: str, freq: str, start: date, weeks: int) -> list[date]:
-    """Project a French weekday-plus-cadence string into concrete dates."""
-    weekdays = [
+def _weekdays(jour: str) -> list[int]:
+    """The weekdays named in a French "Mardi Jeudi et Samedi" style field."""
+    return [
         wd
         for token in re.split(r"\s+|,|;|\bet\b", jour.lower())
         if (wd := recurrence.weekday(token.strip())) is not None
     ]
-    if not weekdays:
-        return []
 
-    dates: list[date] = []
-    for wd in weekdays:
-        first = recurrence.next_weekday(wd, on_or_after=start)
-        dates.extend(recurrence.recurring(first, recurrence.WEEKLY, weeks))
 
+def _parity(freq: str) -> "Literal['even', 'odd'] | None":
+    """The ISO-week parity a "toutes les 2 semaines" cadence runs on, if stated."""
     f = freq.lower()
     if "toutes les 2 semaines" in f:
         if "paire" in f and "impaire" not in f:
-            return [d for d in dates if d.isocalendar().week % 2 == 0]
+            return "even"
         if "impaire" in f:
-            return [d for d in dates if d.isocalendar().week % 2 == 1]
-    return sorted(dates)
+            return "odd"
+    return None
 
 
-def _clean(value) -> str:
-    return "" if value is None else str(value).strip()
+def _list_communes(source: Any) -> list[str]:
+    """Every commune the dataset covers; the suggestions for an unknown one."""
+    resp = source.session.get(
+        API_URL,
+        params={"select": "com_nom", "limit": 100, "group_by": "com_nom"},
+        timeout=30,
+    )
+    return sorted({r["com_nom"] for r in resp.json().get("results", [])})
+
+
+def _describe(row: dict, source: Any = None):
+    """One Schedule per weekday of each round this district is served by."""
+    today = date.today()
+    end = today + timedelta(weeks=HORIZON_WEEKS)
+    # Read once here, applied per collection by _adjust below.
+    source.ferie = _parse_ferie(row.get("ferie"), (today, end))
+
+    for freq_field, jour_field, label, _waste_type in WASTE_FIELDS:
+        jour = row.get(jour_field)
+        freq = row.get(freq_field)
+        if not jour or not freq:
+            continue
+        parity = _parity(freq)
+        for wd in _weekdays(jour):
+            yield Schedule(
+                label,
+                recurrence.next_weekday(wd, on_or_after=today),
+                recurrence.WEEKLY,
+                HORIZON_WEEKS,
+                iso_week_parity=parity,
+            )
+
+
+def _adjust(collection_date: date, key: str, source: Any = None) -> "date | None":
+    """Apply the district's holiday notes: move a collection, or cancel it."""
+    moves, cancellations = getattr(source, "ferie", ({}, set()))
+    if collection_date in cancellations:
+        return None
+    effective = moves.get(collection_date, collection_date)
+    return None if effective in cancellations else effective
 
 
 @final
@@ -205,57 +244,20 @@ class Source(BaseSource):
         params=lambda commune, **_: {"where": f'com_nom="{commune}"', "limit": 100},
     )
     parse = parsers.JsonParser("results")
+    # One record per district of the commune, so: reject a commune the dataset
+    # does not cover, narrow to the district asked for, expand its cadences,
+    # then apply that district's own holiday notes.
+    preprocess = Compose(
+        RequireRecords(argument="commune", suggestions=_list_communes),
+        Disambiguate(
+            argument="quartier",
+            key=lambda row: row.get("quartier"),
+            reason="{commune} has multiple districts; please specify one.",
+        ),
+        RecurrenceExpander(_describe),
+        HolidayShift(_adjust),
+    )
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, commune: str, quartier: str | None = None):
         super().__init__(commune=commune, quartier=quartier)
-
-    def _list_communes(self, source) -> list[str]:
-        resp = source.session.get(
-            API_URL,
-            params={"select": "com_nom", "limit": 100, "group_by": "com_nom"},
-            timeout=30,
-        )
-        return sorted({r["com_nom"] for r in resp.json().get("results", [])})
-
-    def _select_row(self, rows: list[dict]) -> dict:
-        if len(rows) == 1:
-            return rows[0]
-        commune = self.params["commune"]
-        quartier = self.params.get("quartier")
-        quartiers = sorted({_clean(r.get("quartier")) for r in rows})
-        if quartier is None:
-            raise SourceArgumentRequiredWithSuggestions(
-                "quartier",
-                f"{commune} has multiple districts; please specify one.",
-                quartiers,
-            )
-        for row in rows:
-            if _clean(row.get("quartier")) == quartier:
-                return row
-        raise SourceArgumentNotFoundWithSuggestions("quartier", quartier, quartiers)
-
-    def preprocess(self, records, source=None):
-        if not records:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self.params["commune"], self._list_communes(source)
-            )
-
-        row = self._select_row(list(records))
-        today = date.today()
-        end = today + timedelta(weeks=HORIZON_WEEKS)
-        moves, cancellations = _parse_ferie(row.get("ferie"), (today, end))
-
-        for freq_field, jour_field, label, _waste_type in WASTE_FIELDS:
-            jour = row.get(jour_field)
-            freq = row.get(freq_field)
-            if not jour or not freq:
-                continue
-            for collection_date in _project_dates(jour, freq, today, HORIZON_WEEKS):
-                if collection_date in cancellations:
-                    continue
-                effective = moves.get(collection_date, collection_date)
-                if effective in cancellations:
-                    continue
-                # (date, label) row for the standard ICSTransformer.
-                yield (effective, label)
