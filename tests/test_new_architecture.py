@@ -4497,7 +4497,6 @@ _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "1coast_com_au",
     "aw_harburg_de",
-    "awg_wuppertal_de",
     "awigo_de",
     "awm_muenchen_de",
     "bielefeld_de",
@@ -4507,14 +4506,11 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "fuquay_varina_nc_us",
     "ics",
     "infeo_at",
-    "mpo_krakow_pl",
     "narab_se",
     "nemaffaldsservice_kk_dk",
     "okc_gov",
-    "phila_gov",
     "regioentsorgung_de",
     "shawinigan_ca",
-    "wellington_govt_nz",
     "zva_sek_de",
     "zys_harmonogram_pl",
 }
