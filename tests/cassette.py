@@ -78,7 +78,7 @@ class CassetteResponse:
         self._content: bytes = base64.b64decode(interaction["content_b64"])
         self.encoding: str = interaction.get("encoding") or "utf-8"
         self.headers: dict = interaction.get("headers") or {}
-        self.url: str = interaction.get("url", "")
+        self.url: str = interaction.get("final_url") or interaction.get("url", "")
 
     @property
     def content(self) -> bytes:
@@ -129,7 +129,7 @@ def _requests_response(interaction: dict) -> requests.Response:
     resp._content = base64.b64decode(interaction["content_b64"])
     resp.encoding = interaction.get("encoding") or "utf-8"
     resp.headers.update(interaction.get("headers") or {})
-    resp.url = interaction.get("url", "")
+    resp.url = interaction.get("final_url") or interaction.get("url", "")
     return resp
 
 
@@ -138,10 +138,18 @@ def _capture(resp: Any, method: str, url: str, kwargs: dict) -> dict:
         headers = dict(resp.headers)
     except Exception:
         headers = {}
+    # The request URL and the URL the response came back from differ whenever
+    # the provider redirected, and a source may read state out of the latter (a
+    # customer id in the query string, say). Recording only the request URL made
+    # such a source unreplayable: on replay it saw the pre-redirect URL and the
+    # id was simply absent. Kept as a separate field so cassettes recorded
+    # before this still load, with the request URL as the fallback.
+    final_url = str(getattr(resp, "url", "") or "") or url
     return {
         "key": _key(method, url, kwargs),
         "method": method.upper(),
         "url": url,
+        "final_url": final_url,
         "status": resp.status_code,
         "encoding": getattr(resp, "encoding", None),
         "headers": headers,
