@@ -192,9 +192,9 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         forwards its arguments here (``test_pipeline_sources_dont_redeclare_init``
         enforces that). Override it only to do real work, and still call
         ``super().__init__(**kwargs)``. Declare defaults on the ConfigParam
-        rather than in an override's signature: ``defaults`` is independent of
-        ``required``, so a field that is only ``optional=True`` is absent from
-        ``self.params`` when omitted rather than present as None.
+        rather than in an override's signature: every field declared in PARAMS is
+        a key in ``self.params`` (its default, or None for an unset optional
+        field), so a signature default of None adds nothing.
         """
         prepared = apply_defaults(self.PARAMS, dict(kwargs))
         validate(self.PARAMS, prepared)

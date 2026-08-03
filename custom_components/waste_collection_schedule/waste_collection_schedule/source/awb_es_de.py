@@ -171,11 +171,3 @@ class Source(BaseSource):
             "restmüll 4-wöchentlich": GENERAL_WASTE,
         }
     )
-
-    def __init__(
-        self,
-        city: str,
-        street: "str | None" = None,
-        restmuell_cadence: "str | None" = None,
-    ):
-        super().__init__(city=city, street=street, restmuell_cadence=restmuell_cadence)

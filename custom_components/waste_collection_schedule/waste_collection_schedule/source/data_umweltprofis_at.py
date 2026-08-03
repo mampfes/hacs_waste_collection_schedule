@@ -107,6 +107,3 @@ class Source(BaseSource):
         return _parse_xml(text)
 
     transform = ICSTransformer()
-
-    def __init__(self, url: "str | None" = None, xmlurl: "str | None" = None):
-        super().__init__(url=url, xmlurl=xmlurl)

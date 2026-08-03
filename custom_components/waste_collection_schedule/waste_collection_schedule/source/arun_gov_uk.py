@@ -66,6 +66,3 @@ class Source(BaseSource):
             "Garden Waste Bins": GARDEN_WASTE,
         },
     )
-
-    def __init__(self, uprn=None, postcode=None, address=None):
-        super().__init__(uprn=uprn, postcode=postcode, address=address)

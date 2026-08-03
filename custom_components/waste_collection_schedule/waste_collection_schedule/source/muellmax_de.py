@@ -168,20 +168,6 @@ class Source(BaseSource):
     parse = parsers.IcsParser(min_events=1)
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
-    def __init__(
-        self,
-        service: str,
-        mm_frm_ort_sel: str | None = None,
-        mm_frm_str_sel: str | None = None,
-        mm_frm_hnr_sel: str | None = None,
-    ):
-        super().__init__(
-            service=service,
-            mm_frm_ort_sel=mm_frm_ort_sel,
-            mm_frm_str_sel=mm_frm_str_sel,
-            mm_frm_hnr_sel=mm_frm_hnr_sel,
-        )
-
     @staticmethod
     def REGIONS() -> list[Region]:
         return [

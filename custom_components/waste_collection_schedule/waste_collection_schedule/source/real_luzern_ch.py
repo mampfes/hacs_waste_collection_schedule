@@ -104,8 +104,3 @@ class Source(BaseSource):
         },
         clean=label_cleaner(remap=_OLD_WASTE_NAME),
     )
-
-    def __init__(
-        self, municipality_id: "str | int", street_id: "str | int | None" = None
-    ):
-        super().__init__(municipality_id=municipality_id, street_id=street_id)

@@ -112,12 +112,3 @@ class Source(BaseSource):
             "yellow": RECYCLABLES,
         },
     )
-
-    def __init__(
-        self,
-        address: str | None = None,
-        lat: float | None = None,
-        lon: float | None = None,
-    ):
-        # validate() (in super) enforces the address-or-(lat+lon) alternative.
-        super().__init__(address=address, lat=lat, lon=lon)

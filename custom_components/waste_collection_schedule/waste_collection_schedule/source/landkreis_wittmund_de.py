@@ -78,6 +78,3 @@ class Source(BaseSource):
             "Restabfalltonne": GENERAL_WASTE,
         }
     )
-
-    def __init__(self, ort: str, strasse: str | None = None):
-        super().__init__(ort=ort, strasse=strasse)
