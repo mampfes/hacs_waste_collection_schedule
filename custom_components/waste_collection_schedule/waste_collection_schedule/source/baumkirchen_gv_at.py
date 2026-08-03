@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
 
 _BASE_URL = "https://www.baumkirchen.gv.at"
 
@@ -42,6 +42,6 @@ class Source(BaseSource):
     # type (matching the legacy Icons.PLASTIC_PACKAGING classification).
     transform = ICSTransformer(
         type_value_map={
-            "Plastikmüll": RECYCLABLES,
+            "Plastikmüll": wt.RECYCLABLES,
         },
     )

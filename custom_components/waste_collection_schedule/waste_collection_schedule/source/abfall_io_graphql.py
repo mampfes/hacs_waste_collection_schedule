@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import api_key, text_field, waste_types
 from waste_collection_schedule.regions import Region, region
@@ -8,13 +9,6 @@ from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Declarative source on the abfall.io v3 GraphQL components (AbfallIoGraphQL-
 # Retriever + AbfallIoGraphQLParser). The transformer turns each appointment into a
@@ -86,11 +80,11 @@ class Source(BaseSource):
     # Canonical types observed across the registered providers; the transformer
     # resolves each provider's German labels through the shared vocabulary.
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        HAZARDOUS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {

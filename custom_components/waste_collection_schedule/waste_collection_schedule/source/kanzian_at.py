@@ -1,13 +1,13 @@
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
 
 _BASE_URL = "https://www.kanzian.at"
 
@@ -60,6 +60,6 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_clean,
         type_value_map={
-            "Leicht- und Metallverpackungen": RECYCLABLES,
+            "Leicht- und Metallverpackungen": wt.RECYCLABLES,
         },
     )

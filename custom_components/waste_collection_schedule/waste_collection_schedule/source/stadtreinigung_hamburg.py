@@ -1,16 +1,11 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Demonstrates: a plain ICS feed (parsers.IcsParser + ICSTransformer) keyed by a
 # property id (hnId) carried in the query string. A configured HttpGetRetriever
@@ -36,10 +31,10 @@ def _clean(label: str) -> str:
 
 
 _TYPE_VALUE_MAP = {
-    "bioabfall": ORGANIC,
-    "wertstoff": RECYCLABLES,
-    "restmüll": GENERAL_WASTE,
-    "papier": PAPER,
+    "bioabfall": wt.ORGANIC,
+    "wertstoff": wt.RECYCLABLES,
+    "restmüll": wt.GENERAL_WASTE,
+    "papier": wt.PAPER,
 }
 
 API_URL = "https://backend.stadtreinigung.hamburg/kalender/abholtermine.ics"

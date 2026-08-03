@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, text_field
 from waste_collection_schedule.regions import Region, region
@@ -9,13 +10,6 @@ from waste_collection_schedule.service.CMCityMedia import (
     CMCityMediaRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Declarative source on the CM City Media components (CMCityMediaRetriever +
 # CMCityMediaParser). The provider registry lives here, in the source that owns
@@ -80,11 +74,11 @@ class Source(BaseSource):
     # vocabulary; the canonical types the enabled providers actually emit
     # (verified by cassette replay) are declared here.
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        HAZARDOUS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     # Both cases exercise the enabled Blankenheim provider (district-based and

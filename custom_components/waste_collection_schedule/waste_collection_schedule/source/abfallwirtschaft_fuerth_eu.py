@@ -13,16 +13,11 @@ rather than this one alone.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import location_id
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
 
@@ -53,9 +48,9 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall": GENERAL_WASTE,
-            "Biotonne": ORGANIC,
-            "Gelber Sack": RECYCLABLES,
-            "Altpapier": PAPER,
+            "Restabfall": wt.GENERAL_WASTE,
+            "Biotonne": wt.ORGANIC,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Altpapier": wt.PAPER,
         }
     )

@@ -10,6 +10,7 @@ import json
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import (
@@ -18,12 +19,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _STREETS_URL = "https://stadtreinigung-leipzig.de/rest/Navision/Streets"
 _ICS_URL = (
@@ -34,10 +29,10 @@ _ICS_URL = (
 # the shared vocabulary does not match. Drop the parenthetical and reduce the
 # label to its core bin term for the type_value_map.
 _TYPE_VALUE_MAP = {
-    "biotonne": ORGANIC,
-    "gelbe tonne": RECYCLABLES,
-    "blaue tonne": PAPER,
-    "restabfall": GENERAL_WASTE,
+    "biotonne": wt.ORGANIC,
+    "gelbe tonne": wt.RECYCLABLES,
+    "blaue tonne": wt.PAPER,
+    "restabfall": wt.GENERAL_WASTE,
 }
 
 

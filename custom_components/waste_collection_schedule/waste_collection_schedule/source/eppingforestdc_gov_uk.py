@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,13 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 HOSTNAME = "eppingforestdc-self.achieveservice.com"
 LOOKUP_COLLECTIONS = "6651dfb99a74d"
@@ -76,10 +70,10 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "food waste service": FOOD_WASTE,
-            "food and garden service": ORGANIC,
-            "garden waste service": GARDEN_WASTE,
-            "recycling service": RECYCLABLES,
-            "refuse service": GENERAL_WASTE,
+            "food waste service": wt.FOOD_WASTE,
+            "food and garden service": wt.ORGANIC,
+            "garden waste service": wt.GARDEN_WASTE,
+            "recycling service": wt.RECYCLABLES,
+            "refuse service": wt.GENERAL_WASTE,
         },
     )

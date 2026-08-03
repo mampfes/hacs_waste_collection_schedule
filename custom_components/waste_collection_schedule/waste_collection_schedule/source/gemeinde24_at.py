@@ -2,6 +2,7 @@ from collections.abc import Mapping
 from typing import Any, ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     dependent_select,
@@ -13,17 +14,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    ELECTRONICS,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Demonstrates: the config_params.dependent_select(parent, child) PARAM and the
 # get_choices() contract it relies on, on the BaseSource pipeline.
@@ -50,16 +40,16 @@ SEARCH_LONGITUDE = "14.5000"
 # also resolved against the shared German vocabulary; the code map is the
 # authoritative override (titles are free text and occasionally custom).
 _CODE_MAP = {
-    "rm": GENERAL_WASTE,
-    "bm": ORGANIC,
-    "lf": RECYCLABLES,
-    "ap": PAPER,
-    "ag": GLASS,
-    "am": ELECTRONICS,
-    "sp": BULKY_WASTE,
-    "gs": GARDEN_WASTE,
-    "ps": HAZARDOUS,
-    "el": ELECTRONICS,
+    "rm": wt.GENERAL_WASTE,
+    "bm": wt.ORGANIC,
+    "lf": wt.RECYCLABLES,
+    "ap": wt.PAPER,
+    "ag": wt.GLASS,
+    "am": wt.ELECTRONICS,
+    "sp": wt.BULKY_WASTE,
+    "gs": wt.GARDEN_WASTE,
+    "ps": wt.HAZARDOUS,
+    "el": wt.ELECTRONICS,
 }
 
 
@@ -253,10 +243,10 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {

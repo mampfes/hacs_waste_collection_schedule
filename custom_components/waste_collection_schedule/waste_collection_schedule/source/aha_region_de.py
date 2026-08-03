@@ -19,6 +19,7 @@ source's ``d[1].replace("Abfuhr", "").strip().replace(" *", "")``.
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     house_number,
@@ -33,12 +34,6 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
 
@@ -153,7 +148,12 @@ class Source(BaseSource):
     URL = "https://www.aha-region.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Neustadt a. Rbge., Am Rotdorn / Nöpke, 1 ": {

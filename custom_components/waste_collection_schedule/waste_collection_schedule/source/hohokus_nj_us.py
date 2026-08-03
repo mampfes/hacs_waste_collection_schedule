@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     dropdown,
@@ -15,7 +16,6 @@ from waste_collection_schedule.preprocessors import (
     Schedule,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE
 
 # Demonstrates: seasonal/windowed recurrence (Schedule.not_before/until).
 #
@@ -159,5 +159,5 @@ class Source(BaseSource):
     )
 
     transform = ICSTransformer(
-        type_value_map={GENERAL: GENERAL_WASTE, YARD: GARDEN_WASTE},
+        type_value_map={GENERAL: wt.GENERAL_WASTE, YARD: wt.GARDEN_WASTE},
     )

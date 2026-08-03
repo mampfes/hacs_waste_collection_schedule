@@ -13,6 +13,7 @@ import re
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import alternatives, text_field, uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
@@ -22,12 +23,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import HtmlTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Live-verified (2026-07): the standard AchieveForms handshake
 # (init_session -> authapi/isauthenticated on the service landing page)
@@ -145,10 +140,10 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         clean=_clean_bin_label,
         type_value_map={
-            "non-recyclable waste": GENERAL_WASTE,
-            "garden waste": GARDEN_WASTE,
-            "recycling": RECYCLABLES,
-            "food waste": FOOD_WASTE,
+            "non-recyclable waste": wt.GENERAL_WASTE,
+            "garden waste": wt.GARDEN_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "food waste": wt.FOOD_WASTE,
         },
     )
 

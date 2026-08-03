@@ -2,6 +2,7 @@ from datetime import date
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -11,11 +12,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "stevenage-self.achieveservice.com"
 BASE_URL = f"https://{HOSTNAME}"
@@ -49,7 +45,7 @@ class Source(BaseSource):
     URL = "https://www.stevenage.gov.uk/"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [FOOD_WASTE, GENERAL_WASTE, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.FOOD_WASTE, wt.GENERAL_WASTE, wt.RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Chepstow Close": {"uprn": "100080879233"},
@@ -83,7 +79,7 @@ class Source(BaseSource):
         type_key="bintype",
         parse_date=date_parsers.for_format("%A %d %B %Y"),
         type_value_map={
-            "general waste": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
+            "general waste": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
         },
     )

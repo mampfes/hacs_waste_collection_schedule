@@ -2,10 +2,10 @@ from typing import ClassVar, final
 
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.transformers import HtmlTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER, RECYCLABLES
 
 # Demonstrates: HtmlTransformer + parsers.HtmlParser(selector) + legacy SSL GET.
 # No custom methods needed — retrieve and parse are declarative class attributes.
@@ -55,14 +55,14 @@ class Source(BaseSource):
     parse = parsers.HtmlParser("tr", skip=1, require=["tr td"])
 
     # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
-    WASTE_TYPES: ClassVar[list] = [RECYCLABLES, GENERAL_WASTE, OTHER]
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES, wt.GENERAL_WASTE, wt.OTHER]
 
     transform = HtmlTransformer(
         date_getter=lambda el: _cell_text(el, "td:nth-child(1)").split(" ")[0],
         type_getter=lambda el: _cell_text(el, "td:nth-child(2)"),
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         type_value_map={
-            "Mixed recycling and food waste": RECYCLABLES,
-            "Refuse and food waste": GENERAL_WASTE,
+            "Mixed recycling and food waste": wt.RECYCLABLES,
+            "Refuse and food waste": wt.GENERAL_WASTE,
         },
     )

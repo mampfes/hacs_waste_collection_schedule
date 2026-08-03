@@ -21,16 +21,10 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 
@@ -108,11 +102,11 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Bioabfall": ORGANIC,
-            "Papier": PAPER,
-            "Wertstoff": RECYCLABLES,
-            "Sperrmüllabholung": BULKY_WASTE,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Bioabfall": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Wertstoff": wt.RECYCLABLES,
+            "Sperrmüllabholung": wt.BULKY_WASTE,
         },
         clean=_clean_first_segment,
     )

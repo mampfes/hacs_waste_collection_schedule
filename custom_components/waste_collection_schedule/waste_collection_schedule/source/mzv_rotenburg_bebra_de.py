@@ -3,21 +3,12 @@ from typing import ClassVar, final
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import (
     city,
     text_field,
-)
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    ELECTRONICS,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-    preserved,
-    resolve,
 )
 
 WEBAPP_URL = "https://www.mzv-rotenburg-bebra.de//webapp.html"
@@ -92,12 +83,12 @@ class Source(BaseSource):
 
     # classify() produces these — declared explicitly (no transformer to derive from).
     WASTE_TYPES: ClassVar[list] = [
-        RECYCLABLES,
-        ORGANIC,
-        GENERAL_WASTE,
-        PAPER,
-        BULKY_WASTE,
-        ELECTRONICS,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.BULKY_WASTE,
+        wt.ELECTRONICS,
     ]
 
     # min_events=1: a valid feed has at least one event; an HTML error page (no
@@ -144,5 +135,5 @@ class Source(BaseSource):
             bin_type = "papier"
 
         return Collection(
-            date=record.date, waste_type=resolve(bin_type) or preserved(bin_type)
+            date=record.date, waste_type=wt.resolve(bin_type) or wt.preserved(bin_type)
         )

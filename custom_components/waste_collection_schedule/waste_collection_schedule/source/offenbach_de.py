@@ -1,9 +1,9 @@
 import logging
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.source.insert_it_de import Source as InsertItSource
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ class Source(InsertItSource):
     DESCRIPTION = "Source für Abfallkalender Offenbach (deprecated)"
     URL = "https://www.offenbach.de"
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "offenbach": {"f_id_location": 7036},  # Kaiserstraße 1

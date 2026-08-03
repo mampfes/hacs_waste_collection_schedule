@@ -11,26 +11,21 @@ PDF reads cleanly, this is all a source needs.
 from typing import ClassVar, final
 
 from waste_collection_schedule import config_params
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import PdfTextParser
 from waste_collection_schedule.preprocessors import TextCalendarGrid
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 _API_URL = "https://my.redbridge.gov.uk/RecycleRefuse/GetFile"
 
 # The service names the PDF prints, keyed by their leading word.
 _TYPE_MAP = {
-    "REFUSE": GENERAL_WASTE,
-    "RECYCLING": RECYCLABLES,
-    "GARDEN": GARDEN_WASTE,
-    "FOOD": FOOD_WASTE,
+    "REFUSE": wt.GENERAL_WASTE,
+    "RECYCLING": wt.RECYCLABLES,
+    "GARDEN": wt.GARDEN_WASTE,
+    "FOOD": wt.FOOD_WASTE,
 }
 
 

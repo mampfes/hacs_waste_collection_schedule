@@ -20,22 +20,17 @@ from typing import ClassVar, final
 from urllib.parse import urlencode
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.awv-ot.de/tourenauskunft/auskunftbatix.php"
 _ICS_URL = "https://www.awv-ot.de/tourenauskunft/ics/ics.php"
 
 _TYPE_VALUE_MAP = {
-    "hausmuelltonne": GENERAL_WASTE,
+    "hausmuelltonne": wt.GENERAL_WASTE,
 }
 
 # Every summary reads "Leerung <bin>"; the group is the bin, trimmed.
@@ -73,7 +68,12 @@ class Source(BaseSource):
     # ("Biotonne", "Papiertonne", "Gelbe Tonne") resolve through the shared
     # vocabulary, so the auto-derived set would miss them. Declare the full
     # emittable vocabulary explicitly.
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Bethenhausen Caasen 15A": {

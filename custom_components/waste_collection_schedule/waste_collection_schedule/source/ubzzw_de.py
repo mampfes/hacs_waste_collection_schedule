@@ -22,17 +22,11 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = (
     "https://leerungen.ubzzw.com/WasteManagementZweibruecken/WasteManagementServlet"
@@ -85,10 +79,10 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=lambda label: re.sub(r"\s+\d.*$", "", label).strip(),
         type_value_map={
-            "restabfalltonne": GENERAL_WASTE,
-            "biotonne": ORGANIC,
-            "papiertonne": PAPER,
-            "gelbe tonne / gelber sack": RECYCLABLES,
-            "problemstoff-sammlung": HAZARDOUS,
+            "restabfalltonne": wt.GENERAL_WASTE,
+            "biotonne": wt.ORGANIC,
+            "papiertonne": wt.PAPER,
+            "gelbe tonne / gelber sack": wt.RECYCLABLES,
+            "problemstoff-sammlung": wt.HAZARDOUS,
         },
     )

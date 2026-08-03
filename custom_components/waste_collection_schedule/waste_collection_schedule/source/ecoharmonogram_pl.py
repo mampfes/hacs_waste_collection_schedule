@@ -1,6 +1,7 @@
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -18,15 +19,6 @@ from waste_collection_schedule.service.EcoHarmonogramPL import (
     EcoharmonogramRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Ecoharmonogram.pl serves ~16 Polish municipalities/operators (see REGIONS
 # below), each free to phrase its bin categories differently, so the label
@@ -59,42 +51,42 @@ def _strip_frequency_suffix(label: str) -> str:
 
 
 TYPE_VALUE_MAP = {
-    "zmieszane": GENERAL_WASTE,
-    "odpady zmieszane": GENERAL_WASTE,
-    "odpady komunalne zmieszane": GENERAL_WASTE,
-    "zmieszane odpady komunalne": GENERAL_WASTE,
-    "tylko odpady zmieszane": GENERAL_WASTE,
-    "niesegregowane (zmieszane) odpady komunalne": GENERAL_WASTE,
-    "odpady resztkowe": GENERAL_WASTE,
-    "resztkowe": GENERAL_WASTE,
-    "popiół": GENERAL_WASTE,
-    "bio": ORGANIC,
-    "bioodpady": ORGANIC,
-    "odpady bio": ORGANIC,
-    "odpady biodegradowalne": ORGANIC,
-    "biodegradowalne": ORGANIC,
-    "odpady ulegające biodegradacji - bio": ORGANIC,
-    "papier": PAPER,
-    "makulatura": PAPER,
-    "szkło": GLASS,
-    "szkło opakowaniowe": GLASS,
-    "metale i tworzywa": RECYCLABLES,
-    "metale i tworzywa sztuczne": RECYCLABLES,
-    "tworzywa sztuczne i metale": RECYCLABLES,
-    "plastik": RECYCLABLES,
-    "plastik, metal": RECYCLABLES,
-    "odpady segregowane": RECYCLABLES,
-    "szkło, papier, tworzywa sztuczne, opakowania wielomateriałowe, metal": RECYCLABLES,
-    "odpady wielkogabarytowe": BULKY_WASTE,
+    "zmieszane": wt.GENERAL_WASTE,
+    "odpady zmieszane": wt.GENERAL_WASTE,
+    "odpady komunalne zmieszane": wt.GENERAL_WASTE,
+    "zmieszane odpady komunalne": wt.GENERAL_WASTE,
+    "tylko odpady zmieszane": wt.GENERAL_WASTE,
+    "niesegregowane (zmieszane) odpady komunalne": wt.GENERAL_WASTE,
+    "odpady resztkowe": wt.GENERAL_WASTE,
+    "resztkowe": wt.GENERAL_WASTE,
+    "popiół": wt.GENERAL_WASTE,
+    "bio": wt.ORGANIC,
+    "bioodpady": wt.ORGANIC,
+    "odpady bio": wt.ORGANIC,
+    "odpady biodegradowalne": wt.ORGANIC,
+    "biodegradowalne": wt.ORGANIC,
+    "odpady ulegające biodegradacji - bio": wt.ORGANIC,
+    "papier": wt.PAPER,
+    "makulatura": wt.PAPER,
+    "szkło": wt.GLASS,
+    "szkło opakowaniowe": wt.GLASS,
+    "metale i tworzywa": wt.RECYCLABLES,
+    "metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "tworzywa sztuczne i metale": wt.RECYCLABLES,
+    "plastik": wt.RECYCLABLES,
+    "plastik, metal": wt.RECYCLABLES,
+    "odpady segregowane": wt.RECYCLABLES,
+    "szkło, papier, tworzywa sztuczne, opakowania wielomateriałowe, metal": wt.RECYCLABLES,
+    "odpady wielkogabarytowe": wt.BULKY_WASTE,
     # The provider's own spelling (missing an "a"); mapped verbatim since the
     # key must match the label it actually sends.
-    "odpady wielkogabrytowe": BULKY_WASTE,
-    "wielkogabaryty": BULKY_WASTE,
-    "gabaryty": BULKY_WASTE,
-    "choinki": GARDEN_WASTE,
-    "drzewka świąteczne": GARDEN_WASTE,
-    "odpady zielone": GARDEN_WASTE,
-    "zielone": GARDEN_WASTE,
+    "odpady wielkogabrytowe": wt.BULKY_WASTE,
+    "wielkogabaryty": wt.BULKY_WASTE,
+    "gabaryty": wt.BULKY_WASTE,
+    "choinki": wt.GARDEN_WASTE,
+    "drzewka świąteczne": wt.GARDEN_WASTE,
+    "odpady zielone": wt.GARDEN_WASTE,
+    "zielone": wt.GARDEN_WASTE,
 }
 
 # Apps/deployments Ecoharmonogram.pl runs under a `customApp` value (the
@@ -286,13 +278,13 @@ class Source(BaseSource):
     # the canonical types below, plus provider-specific labels preserved
     # verbatim when genuinely unmappable.
     WASTE_TYPES: ClassVar[list] = [
-        BULKY_WASTE,
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        GLASS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     retrieve = EcoharmonogramRetriever()

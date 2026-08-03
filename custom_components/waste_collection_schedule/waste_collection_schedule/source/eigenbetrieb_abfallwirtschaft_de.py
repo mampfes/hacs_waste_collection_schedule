@@ -17,24 +17,19 @@ using the same map.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city_id, location_id
 from waste_collection_schedule.preprocessors import RowRelabel
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.eigenbetrieb-abfallwirtschaft.de"
 
 _TYPE_VALUE_MAP = {
-    "Restmüll": GENERAL_WASTE,
-    "Biotonne": ORGANIC,
-    "Papiercontainer": PAPER,
-    "Gelbe(r) Sack/Tonne": RECYCLABLES,
+    "Restmüll": wt.GENERAL_WASTE,
+    "Biotonne": wt.ORGANIC,
+    "Papiercontainer": wt.PAPER,
+    "Gelbe(r) Sack/Tonne": wt.RECYCLABLES,
 }
 
 

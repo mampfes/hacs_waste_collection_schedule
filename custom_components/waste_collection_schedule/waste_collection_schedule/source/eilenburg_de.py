@@ -11,20 +11,20 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsIndexRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
 # The feed labels each pickup "<service> - EB <zone>", e.g.
 # "Restabfallentsorgung - EB Berg" or "Entsorgung gelber Sack - EB 1", which the
 # shared vocabulary does not match. Reduce the label to its core waste term for
 # the type_value_map.
 _TYPE_VALUE_MAP = {
-    "restabfall": GENERAL_WASTE,
-    "gelber sack": RECYCLABLES,
-    "papier": PAPER,
+    "restabfall": wt.GENERAL_WASTE,
+    "gelber sack": wt.RECYCLABLES,
+    "papier": wt.PAPER,
 }
 
 

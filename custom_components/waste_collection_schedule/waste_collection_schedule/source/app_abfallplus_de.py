@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import field_terms
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select, text_field
 from waste_collection_schedule.regions import Region, region
@@ -11,14 +12,6 @@ from waste_collection_schedule.service.AppAbfallplusDe import (
     discover_choices,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Declarative source over the "Apps by Abfall+" platform. The whole live wizard
 # (token, Bundesland -> Landkreis -> Kommune -> Bezirk -> Straße -> Hausnummer
@@ -48,12 +41,12 @@ class Source(BaseSource):
     # The platform's provider labels are open-ended; these are the canonical
     # types the shared vocabulary resolves. Anything else is preserved verbatim.
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
-        GARDEN_WASTE,
-        HAZARDOUS,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
     ]
 
     TEST_CASES: ClassVar[dict] = {

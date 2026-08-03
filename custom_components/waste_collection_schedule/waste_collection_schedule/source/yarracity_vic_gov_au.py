@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -15,12 +16,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # City of Yarra publishes its collection zones on one MapServer with two
 # layers: layer 1 (waste) carries the property's collection weekday and the
@@ -51,10 +46,10 @@ LAYERS = [
 WEEKS_AHEAD = 52
 
 _TYPE_MAP = {
-    "Rubbish": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Glass": GLASS,
-    "FOGO": ORGANIC,
+    "Rubbish": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Glass": wt.GLASS,
+    "FOGO": wt.ORGANIC,
 }
 
 

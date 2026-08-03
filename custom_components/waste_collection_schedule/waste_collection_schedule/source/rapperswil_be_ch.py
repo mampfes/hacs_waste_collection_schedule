@@ -14,10 +14,10 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _BASE_URL = "https://www.rapperswil-be.ch"
 _API_URL = f"{_BASE_URL}/de/abfallwirtschaft/abfallkalender/"
@@ -63,8 +63,8 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Hauskehricht": GENERAL_WASTE,
-            "Grüngut": ORGANIC,
-            "Papier und Karton": PAPER,
+            "Hauskehricht": wt.GENERAL_WASTE,
+            "Grüngut": wt.ORGANIC,
+            "Papier und Karton": wt.PAPER,
         }
     )

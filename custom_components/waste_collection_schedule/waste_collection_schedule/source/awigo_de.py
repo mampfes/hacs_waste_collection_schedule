@@ -17,6 +17,7 @@ import re
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, municipality, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -24,13 +25,6 @@ from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.preprocessors import RowRelabel
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.awigo.de/index.php"
 _WASTE_TYPE_KEYS = ("rest", "paper", "yellow", "brown", "mobile")
@@ -175,10 +169,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restmülltonne": GENERAL_WASTE,
-            "Glass": GLASS,
-            "Bio-Tonne": ORGANIC,
-            "Papiermülltonne": PAPER,
-            "Gelbe Tonne/Gelben Sack": RECYCLABLES,
+            "Restmülltonne": wt.GENERAL_WASTE,
+            "Glass": wt.GLASS,
+            "Bio-Tonne": wt.ORGANIC,
+            "Papiermülltonne": wt.PAPER,
+            "Gelbe Tonne/Gelben Sack": wt.RECYCLABLES,
         }
     )

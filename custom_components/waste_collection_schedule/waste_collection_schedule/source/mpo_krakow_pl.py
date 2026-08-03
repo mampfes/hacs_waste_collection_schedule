@@ -11,19 +11,12 @@ diary: a weekday, the date, then the rounds collected that day, one per line).
 from typing import ClassVar, final
 
 from waste_collection_schedule import config_params
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import PdfTextParser
 from waste_collection_schedule.preprocessors import TextDatedBlocks
 from waste_collection_schedule.service.KiedyWywoz import SchedulePdfRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _TOKEN = "OkkxhC6b9etJBAq7WTHJ0LhIglO18sip"
 
@@ -71,13 +64,13 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Zmieszane": GENERAL_WASTE,
-            "Szkło": GLASS,
-            "Papier": PAPER,
-            "Tworzywa sztuczne": RECYCLABLES,
-            "Bio": ORGANIC,
-            "Zielone": GARDEN_WASTE,
-            "Choinki": GARDEN_WASTE,
+            "Zmieszane": wt.GENERAL_WASTE,
+            "Szkło": wt.GLASS,
+            "Papier": wt.PAPER,
+            "Tworzywa sztuczne": wt.RECYCLABLES,
+            "Bio": wt.ORGANIC,
+            "Zielone": wt.GARDEN_WASTE,
+            "Choinki": wt.GARDEN_WASTE,
         }
     )
 

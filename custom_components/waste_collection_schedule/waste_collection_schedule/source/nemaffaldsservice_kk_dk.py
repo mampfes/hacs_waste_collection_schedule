@@ -20,22 +20,12 @@ from typing import ClassVar, final
 from urllib.parse import parse_qs, urlparse
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    ELECTRONICS,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://nemaffaldsservice.kk.dk"
 _ADDRESS_LOOKUP_URL = f"{_BASE_URL}/WasteHome/AddressByTerm/"
@@ -137,18 +127,18 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restaffald": GENERAL_WASTE,
-            "Madaffald": ORGANIC,
-            "Bioposer": ORGANIC,
-            "Papir": PAPER,
-            "Pap": PAPER,
-            "Glas": GLASS,
-            "Metal": RECYCLABLES,
-            "Plast": RECYCLABLES,
-            "Elektronik": ELECTRONICS,
-            "Farligt affald": HAZARDOUS,
-            "Tekstil": RECYCLABLES,
-            "Storskrald": BULKY_WASTE,
-            "Haveaffald": GARDEN_WASTE,
+            "Restaffald": wt.GENERAL_WASTE,
+            "Madaffald": wt.ORGANIC,
+            "Bioposer": wt.ORGANIC,
+            "Papir": wt.PAPER,
+            "Pap": wt.PAPER,
+            "Glas": wt.GLASS,
+            "Metal": wt.RECYCLABLES,
+            "Plast": wt.RECYCLABLES,
+            "Elektronik": wt.ELECTRONICS,
+            "Farligt affald": wt.HAZARDOUS,
+            "Tekstil": wt.RECYCLABLES,
+            "Storskrald": wt.BULKY_WASTE,
+            "Haveaffald": wt.GARDEN_WASTE,
         }
     )

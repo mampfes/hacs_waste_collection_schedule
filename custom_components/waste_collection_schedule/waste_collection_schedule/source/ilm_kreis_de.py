@@ -11,18 +11,11 @@ the public ``URL``) and the German-to-canonical waste-type map, so there is no
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    ELECTRONICS,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://aik.ilm-kreis.de"
 
@@ -35,12 +28,12 @@ class Source(BaseSource):
     COUNTRY = "de"
 
     WASTE_TYPES: ClassVar[list] = [
-        ELECTRONICS,
-        GENERAL_WASTE,
-        HAZARDOUS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.ELECTRONICS,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -66,7 +59,7 @@ class Source(BaseSource):
     # explicit map.
     transform = ICSTransformer(
         type_value_map={
-            "Leichtverpackung": RECYCLABLES,
-            "Papier/Pappe": PAPER,
+            "Leichtverpackung": wt.RECYCLABLES,
+            "Papier/Pappe": wt.PAPER,
         }
     )

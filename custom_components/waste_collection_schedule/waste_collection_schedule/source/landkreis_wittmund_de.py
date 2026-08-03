@@ -11,17 +11,11 @@ with ``refid_page_url``, so this source is a plain composition of shared steps.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.landkreis-wittmund.de"
 _API_URL = (
@@ -44,11 +38,11 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "de"
     WASTE_TYPES: ClassVar[list] = [
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -75,6 +69,6 @@ class Source(BaseSource):
     # "restabfall" form), so it needs an explicit map.
     transform = ICSTransformer(
         type_value_map={
-            "Restabfalltonne": GENERAL_WASTE,
+            "Restabfalltonne": wt.GENERAL_WASTE,
         }
     )

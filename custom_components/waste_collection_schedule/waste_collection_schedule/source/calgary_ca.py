@@ -3,12 +3,12 @@ from collections.abc import Iterable, Mapping
 from typing import ClassVar, Literal, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import Schedule
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Demonstrates: a recurring schedule published as rules rather than dates, where
 # the cadence is "collect on ISO-even / ISO-odd numbered weeks". A describe()
@@ -22,7 +22,7 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCL
 
 API_URL = "https://data.calgary.ca/resource/jq4t-b745.json"
 
-TYPE_MAP = {"Green": ORGANIC, "Black": GENERAL_WASTE, "Blue": RECYCLABLES}
+TYPE_MAP = {"Green": wt.ORGANIC, "Black": wt.GENERAL_WASTE, "Blue": wt.RECYCLABLES}
 
 _parse_window = date_parsers.auto
 

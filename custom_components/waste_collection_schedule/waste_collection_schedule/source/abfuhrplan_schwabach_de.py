@@ -9,6 +9,7 @@ deployment also strips commas out of a street name, which the platform's
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
 from waste_collection_schedule.parsers import IcsParser
@@ -17,12 +18,6 @@ from waste_collection_schedule.service.AbfuhrplanDe import (
     prepare_arg,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Trailing slash is part of the provider's own URL structure; the getical
 # endpoint below is requested with a doubled slash to match, matching the
@@ -55,12 +50,12 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Restmüllcontainer": GENERAL_WASTE,
-            "Papiertonne": PAPER,
-            "Gelber Sack": RECYCLABLES,
-            "Biotonne": ORGANIC,
-            "Biocontainer": ORGANIC,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Restmüllcontainer": wt.GENERAL_WASTE,
+            "Papiertonne": wt.PAPER,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Biotonne": wt.ORGANIC,
+            "Biocontainer": wt.ORGANIC,
         }
     )
 

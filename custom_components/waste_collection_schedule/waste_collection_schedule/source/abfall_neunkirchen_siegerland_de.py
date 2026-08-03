@@ -11,18 +11,11 @@ manual request params and no ICON_MAP.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.neunkirchen-siegerland.de"
 
@@ -73,13 +66,13 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Biotonne": ORGANIC,
-            "Papiertonne / Papiercontainer": PAPER,
-            "Restmülltonne": GENERAL_WASTE,
-            "Spartonne Restmüll": GENERAL_WASTE,
-            "Container Restmüll": GENERAL_WASTE,
-            "Gelbe Tonne": RECYCLABLES,
-            "Astschnittsammlung": GARDEN_WASTE,
-            "Schadstoffsammlung": HAZARDOUS,
+            "Biotonne": wt.ORGANIC,
+            "Papiertonne / Papiercontainer": wt.PAPER,
+            "Restmülltonne": wt.GENERAL_WASTE,
+            "Spartonne Restmüll": wt.GENERAL_WASTE,
+            "Container Restmüll": wt.GENERAL_WASTE,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Astschnittsammlung": wt.GARDEN_WASTE,
+            "Schadstoffsammlung": wt.HAZARDOUS,
         }
     )

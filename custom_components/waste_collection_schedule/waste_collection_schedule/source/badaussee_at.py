@@ -1,6 +1,7 @@
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.RiSKommunalAT import (
@@ -8,12 +9,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalMultiIcsRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Demonstrates: a RiSKommunal municipality with one fixed calendar (Gelber
 # Sack) plus three independently zoned calendars (Restmüll/Biomüll/Altpapier),
@@ -70,7 +65,12 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Bad Aussee, Austria."
     URL = _BASE_URL
     COUNTRY = "at"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Zone 1": {

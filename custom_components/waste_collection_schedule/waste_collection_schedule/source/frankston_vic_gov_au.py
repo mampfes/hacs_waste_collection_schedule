@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,12 +12,6 @@ from waste_collection_schedule.service.Pozi import (
     geocode_earth,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    RECYCLABLES,
-)
 
 # Demonstrates: a Pozi GeoJSON zone lookup by address, geocoded first via
 # geocode.earth (Frankston's Pozi widget has no address lookup of its own).
@@ -90,10 +85,10 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        GLASS,
-        RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {

@@ -2,18 +2,13 @@ from datetime import date, datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import geocoded_params
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Jacksonville has no FeatureServer to query: the ArcGIS World GeocodeServer
 # resolves the address to a point and a bespoke custhelp.com XML endpoint is
@@ -44,12 +39,12 @@ COLLECTIONS = (
 )
 
 _TYPE_MAP = {
-    "Garbage": GENERAL_WASTE,
-    "Yard Waste": GARDEN_WASTE,
-    "Recycling": RECYCLABLES,
-    "Bulk Waste": BULKY_WASTE,
-    "Tires": BULKY_WASTE,
-    "Appliances": BULKY_WASTE,
+    "Garbage": wt.GENERAL_WASTE,
+    "Yard Waste": wt.GARDEN_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Bulk Waste": wt.BULKY_WASTE,
+    "Tires": wt.BULKY_WASTE,
+    "Appliances": wt.BULKY_WASTE,
 }
 
 

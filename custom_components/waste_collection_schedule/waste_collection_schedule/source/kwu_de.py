@@ -12,18 +12,13 @@ from datetime import date
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 _BASE_URL = "https://kalender.kwu-entsorgung.de"
@@ -112,7 +107,12 @@ class Source(BaseSource):
     URL = "https://www.kwu-entsorgung.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},

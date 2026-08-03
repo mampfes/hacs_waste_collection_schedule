@@ -12,18 +12,11 @@ waste-type map, and a small label cleaner: the raw summary is
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.retrievers import PollingIcsRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 
 def _clean_bin_label(label: str) -> str:
@@ -61,12 +54,12 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Green Wheelie": GENERAL_WASTE,
-            "Brown Caddy": FOOD_WASTE,
-            "Brown Wheelie": ORGANIC,
-            "Blue Lidded Wheelie": PAPER,
-            "White Lidded Wheelie": GLASS,
-            "Recycling Box": RECYCLABLES,
+            "Green Wheelie": wt.GENERAL_WASTE,
+            "Brown Caddy": wt.FOOD_WASTE,
+            "Brown Wheelie": wt.ORGANIC,
+            "Blue Lidded Wheelie": wt.PAPER,
+            "White Lidded Wheelie": wt.GLASS,
+            "Recycling Box": wt.RECYCLABLES,
         },
         clean=_clean_bin_label,
     )

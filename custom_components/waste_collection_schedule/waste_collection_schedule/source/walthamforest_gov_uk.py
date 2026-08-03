@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,13 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 HOSTNAME = "portal.walthamforest.gov.uk"
 INITIAL_URL = (
@@ -78,10 +72,10 @@ class Source(BaseSource):
         parse_date=date_parsers.next_weekday("%A %d %B"),
         skip_unparseable_dates=True,
         type_value_map={
-            "Domestic Waste Collection Service": GENERAL_WASTE,
-            "Food Waste Collection Service": FOOD_WASTE,
-            "Organic Collection Service": ORGANIC,
-            "Recycling Collection Service": RECYCLABLES,
-            "Garden Waste Collection Service": GARDEN_WASTE,
+            "Domestic Waste Collection Service": wt.GENERAL_WASTE,
+            "Food Waste Collection Service": wt.FOOD_WASTE,
+            "Organic Collection Service": wt.ORGANIC,
+            "Recycling Collection Service": wt.RECYCLABLES,
+            "Garden Waste Collection Service": wt.GARDEN_WASTE,
         },
     )

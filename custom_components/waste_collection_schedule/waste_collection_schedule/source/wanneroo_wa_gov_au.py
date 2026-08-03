@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -12,11 +13,6 @@ from waste_collection_schedule.service.IntraMaps import (
     IntraMapsPanelParser,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # The council embeds IntraMaps' own bin-lookup widget rather than publishing a
 # static Integration API config, so there is no MapsClientConfig to declare:
@@ -45,9 +41,9 @@ INTRAMAPS_CONFIG = IntegrationWidgetConfig(
 # NEXT Week"), so the label _describe derives from that phrase (mirroring the
 # legacy source's own keyword rules) is the map's key.
 _TYPE_MAP = {
-    "General Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Garden Organics": GARDEN_WASTE,
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden Organics": wt.GARDEN_WASTE,
 }
 
 _THIS_NEXT_WEEK_RE = re.compile(

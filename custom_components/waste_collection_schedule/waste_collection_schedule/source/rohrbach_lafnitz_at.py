@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalMultiIcsParser,
     RiSKommunalMultiIcsRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import BULKY_WASTE, GARDEN_WASTE
 
 # Demonstrates: a RiSKommunal municipality that publishes one ICS feed *per
 # waste type* rather than one combined calendar. Each feed's own ICS SUMMARY is
@@ -50,6 +50,6 @@ class Source(BaseSource):
     # explicit entry.
     transform = ICSTransformer(
         type_value_map={
-            "Sperrmüll & Heckenschnitt": [BULKY_WASTE, GARDEN_WASTE],
+            "Sperrmüll & Heckenschnitt": [wt.BULKY_WASTE, wt.GARDEN_WASTE],
         },
     )

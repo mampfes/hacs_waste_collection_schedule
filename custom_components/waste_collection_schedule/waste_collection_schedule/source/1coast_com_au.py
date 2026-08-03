@@ -25,6 +25,7 @@ candidate match.
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
@@ -44,14 +45,6 @@ from waste_collection_schedule.retrievers import (
     reuse_prepared,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SEARCH_URL = "https://1coast.com.au/ajax.php"
 _COLLECTION_URL = (
@@ -164,13 +157,13 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Trash": GENERAL_WASTE,
-            "Glass": GLASS,
-            "Bio": ORGANIC,
-            "Paper": PAPER,
-            "Recycle": RECYCLABLES,
-            "240L Yellow Lid Recycle Bin": RECYCLABLES,
-            "140L Red Lid General Waste Bin": GENERAL_WASTE,
-            "240L Green Lid Garden Vegetation Bin": GARDEN_WASTE,
+            "Trash": wt.GENERAL_WASTE,
+            "Glass": wt.GLASS,
+            "Bio": wt.ORGANIC,
+            "Paper": wt.PAPER,
+            "Recycle": wt.RECYCLABLES,
+            "240L Yellow Lid Recycle Bin": wt.RECYCLABLES,
+            "140L Red Lid General Waste Bin": wt.GENERAL_WASTE,
+            "240L Green Lid Garden Vegetation Bin": wt.GARDEN_WASTE,
         }
     )

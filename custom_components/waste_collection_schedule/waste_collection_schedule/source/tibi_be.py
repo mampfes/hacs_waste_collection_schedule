@@ -1,10 +1,10 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
 
 # Demonstrates: a downloadable open-data CSV consumed end-to-end by the pipeline.
 # parsers.CsvParser turns the semicolon-delimited export into dict rows (one row
@@ -31,8 +31,8 @@ DATASET_URL = (
 #              same day. Mapping it to a list yields one Collection per type on
 #              that date, so both streams are represented faithfully.
 _TYPE_MAP = {
-    "PMC": RECYCLABLES,
-    "V / PC": [GLASS, PAPER],
+    "PMC": wt.RECYCLABLES,
+    "V / PC": [wt.GLASS, wt.PAPER],
 }
 
 

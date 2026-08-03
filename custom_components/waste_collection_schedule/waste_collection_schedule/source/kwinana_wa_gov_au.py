@@ -3,6 +3,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -12,11 +13,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Demonstrates: a stateful-session service (IntraMapsRetriever + IntraMapsPanelParser)
 # plus the reusable RecurrenceExpander preprocessor. The only source-specific code
@@ -38,9 +34,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # IntraMaps column name -> canonical waste type. One map: selects the collection
 # fields (others ignored) and types them.
 _TYPE_MAP = {
-    "Rubbish_Collection_Day": GENERAL_WASTE,
-    "Recycle_Collection": RECYCLABLES,
-    "Garden Organics Collection": GARDEN_WASTE,
+    "Rubbish_Collection_Day": wt.GENERAL_WASTE,
+    "Recycle_Collection": wt.RECYCLABLES,
+    "Garden Organics Collection": wt.GARDEN_WASTE,
 }
 
 

@@ -2,14 +2,10 @@ import datetime
 from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import api_key, uprn
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Demonstrates: the config_params.api_key() PARAM on the BaseSource pipeline.
 #
@@ -83,9 +79,9 @@ class Source(BaseSource):
     }
 
     _TYPE_MAP: ClassVar[dict] = {
-        "Black": GENERAL_WASTE,
-        "Green": RECYCLABLES,
-        "Brown": GARDEN_WASTE,
+        "Black": wt.GENERAL_WASTE,
+        "Green": wt.RECYCLABLES,
+        "Brown": wt.GARDEN_WASTE,
     }
 
     retrieve = retrievers.HttpGetRetriever(

@@ -11,16 +11,11 @@ the waste-type map.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.abfall-havelland.de/ics.php"
 
@@ -55,9 +50,9 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=label_cleaner(strip_suffixes=[" - Abholtermin"]),
         type_value_map={
-            "mülltonne": GENERAL_WASTE,
-            "bio-tonne": ORGANIC,
-            "papier u. pappe": PAPER,
-            "gelbe tonne": RECYCLABLES,
+            "mülltonne": wt.GENERAL_WASTE,
+            "bio-tonne": wt.ORGANIC,
+            "papier u. pappe": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
         },
     )

@@ -11,18 +11,11 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://portal.gfa-lueneburg.de:8443/WasteManagementLueneburg/WasteManagementServlet"
 
@@ -111,12 +104,12 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restabfallbehaelter": GENERAL_WASTE,
-            "Restmuell": GENERAL_WASTE,
-            "Papiertonne": PAPER,
-            "Gelber Sack": RECYCLABLES,
-            "Gruenabfall": GARDEN_WASTE,
-            "Biotonne": ORGANIC,
-            "Sperrmuell Altmetall": BULKY_WASTE,
+            "Restabfallbehaelter": wt.GENERAL_WASTE,
+            "Restmuell": wt.GENERAL_WASTE,
+            "Papiertonne": wt.PAPER,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Gruenabfall": wt.GARDEN_WASTE,
+            "Biotonne": wt.ORGANIC,
+            "Sperrmuell Altmetall": wt.BULKY_WASTE,
         }
     )

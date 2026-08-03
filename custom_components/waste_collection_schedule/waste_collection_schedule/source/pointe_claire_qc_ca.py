@@ -18,18 +18,12 @@ is mapped to a canonical type.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 _SECTOR_URL_MAP: dict[str, str] = {
     "A": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-a.ics",
@@ -78,12 +72,12 @@ class Source(BaseSource):
     parse = parsers.IcsParser(regex=r"^(.*?)\s*-\s*Sector [AB]$")
     transform = ICSTransformer(
         type_value_map={
-            "Household Waste": GENERAL_WASTE,
-            "Recyclables": RECYCLABLES,
-            "Organic Waste": ORGANIC,
-            "Bulky Items": BULKY_WASTE,
-            "Mattress/Box-Spring Collection": BULKY_WASTE,
-            "Christmas Tree Collection": GARDEN_WASTE,
-            "Leaf Collection": GARDEN_WASTE,
+            "Household Waste": wt.GENERAL_WASTE,
+            "Recyclables": wt.RECYCLABLES,
+            "Organic Waste": wt.ORGANIC,
+            "Bulky Items": wt.BULKY_WASTE,
+            "Mattress/Box-Spring Collection": wt.BULKY_WASTE,
+            "Christmas Tree Collection": wt.GARDEN_WASTE,
+            "Leaf Collection": wt.GARDEN_WASTE,
         }
     )

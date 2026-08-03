@@ -12,21 +12,13 @@ import re
 from typing import ClassVar, NamedTuple, final
 
 from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html"
 
@@ -125,13 +117,13 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Bioabfall": ORGANIC,
-            "Gelber Sack": RECYCLABLES,
-            "Glasbox": GLASS,
-            "Heckenschnitt": GARDEN_WASTE,
-            "Papier": PAPER,
-            "Problemmüll": HAZARDOUS,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Bioabfall": wt.ORGANIC,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Glasbox": wt.GLASS,
+            "Heckenschnitt": wt.GARDEN_WASTE,
+            "Papier": wt.PAPER,
+            "Problemmüll": wt.HAZARDOUS,
         }
     )
 

@@ -12,6 +12,7 @@ ICSTransformer.
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -20,7 +21,6 @@ from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.preprocessors import Compose, RowFilter, RowRelabel
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 _ICS_BASE = (
     "https://raw.githubusercontent.com/robtesch/hacs_waste_collection_schedule/"
@@ -153,7 +153,7 @@ class Source(BaseSource):
     )
 
     transform = ICSTransformer(
-        type_value_map={"General Waste": GENERAL_WASTE, "Recycling": RECYCLABLES}
+        type_value_map={"General Waste": wt.GENERAL_WASTE, "Recycling": wt.RECYCLABLES}
     )
 
     def __init__(

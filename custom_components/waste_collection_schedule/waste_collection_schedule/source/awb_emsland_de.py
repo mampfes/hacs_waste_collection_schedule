@@ -18,6 +18,7 @@ carries (the same fallback the legacy source used when it found no
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -27,12 +28,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://portal.awb-emsland.de/WasteManagementEmsland/WasteManagementServlet"
 
@@ -104,9 +99,9 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restabfallbehaelter": GENERAL_WASTE,
-            "Papierbehaelter": PAPER,
-            "Wertstoffbehaelter": RECYCLABLES,
-            "Bioabfallbehaelter": ORGANIC,
+            "Restabfallbehaelter": wt.GENERAL_WASTE,
+            "Papierbehaelter": wt.PAPER,
+            "Wertstoffbehaelter": wt.RECYCLABLES,
+            "Bioabfallbehaelter": wt.ORGANIC,
         }
     )

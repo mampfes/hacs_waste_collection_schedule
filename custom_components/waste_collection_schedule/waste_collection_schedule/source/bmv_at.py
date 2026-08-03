@@ -13,16 +13,11 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet"
 
@@ -46,7 +41,12 @@ class Source(BaseSource):
     DESCRIPTION = "Source for BMV, Austria"
     URL = "https://www.bmv.at"
     COUNTRY = "at"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Allersdorf": {"ort": "ALLERSDORF", "strasse": "HAUSNUMMER", "hausnummer": 9},

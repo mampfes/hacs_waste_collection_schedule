@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -8,12 +9,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.felixdorf.gv.at"
 VALID_ZONES = ["Rayon 1", "Rayon 2"]
@@ -28,10 +23,10 @@ class Source(BaseSource):
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
 
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -73,11 +68,11 @@ class Source(BaseSource):
     # Gelber Sack are classified by the shared vocabulary.
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll 1.100-Liter-Container": GENERAL_WASTE,
-            "Restmüll 120 Liter und 240 Liter": GENERAL_WASTE,
-            "Papier 1.100-Liter-Container": PAPER,
-            "Papier 120 Liter und 240 Liter": PAPER,
-            "Windeltonne": GENERAL_WASTE,
+            "Restmüll 1.100-Liter-Container": wt.GENERAL_WASTE,
+            "Restmüll 120 Liter und 240 Liter": wt.GENERAL_WASTE,
+            "Papier 1.100-Liter-Container": wt.PAPER,
+            "Papier 120 Liter und 240 Liter": wt.PAPER,
+            "Windeltonne": wt.GENERAL_WASTE,
         },
     )
 

@@ -1,6 +1,7 @@
 import datetime
 from typing import Any, ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import (
@@ -13,17 +14,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import HtmlCalendarGrid
 from waste_collection_schedule.retrievers import LookupChainRetriever
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-    preserved,
-    resolve,
-)
 
 # Composes: LookupChainRetriever (NÅRAB's calendar lives on a separate service,
 # narabtomningskalender.se, reached in two GET steps: an address autocomplete
@@ -78,26 +68,26 @@ _COLLECTION_LABELS = {
 # through to preserved(), keeping their descriptive label rather than collapsing
 # to one canonical type. A Swedish speaker should sanity-check these.
 _CODE_TYPES = {
-    "KK": GENERAL_WASTE,
-    "HAS": GENERAL_WASTE,
-    "HAO": GENERAL_WASTE,
-    "HAX": GENERAL_WASTE,
-    "MAT": ORGANIC,
-    "ORG": ORGANIC,
-    "WELL": PAPER,
-    "TIDN": PAPER,
-    "PAPP": PAPER,
-    "B1": RECYCLABLES,
-    "PLF": RECYCLABLES,
-    "MET": RECYCLABLES,
-    "MPL": RECYCLABLES,
-    "HPL": RECYCLABLES,
-    "FG": GLASS,
-    "OFG": GLASS,
-    "TRG": GARDEN_WASTE,
-    "BATT": HAZARDOUS,
-    "OLJA": HAZARDOUS,
-    "FA": HAZARDOUS,
+    "KK": wt.GENERAL_WASTE,
+    "HAS": wt.GENERAL_WASTE,
+    "HAO": wt.GENERAL_WASTE,
+    "HAX": wt.GENERAL_WASTE,
+    "MAT": wt.ORGANIC,
+    "ORG": wt.ORGANIC,
+    "WELL": wt.PAPER,
+    "TIDN": wt.PAPER,
+    "PAPP": wt.PAPER,
+    "B1": wt.RECYCLABLES,
+    "PLF": wt.RECYCLABLES,
+    "MET": wt.RECYCLABLES,
+    "MPL": wt.RECYCLABLES,
+    "HPL": wt.RECYCLABLES,
+    "FG": wt.GLASS,
+    "OFG": wt.GLASS,
+    "TRG": wt.GARDEN_WASTE,
+    "BATT": wt.HAZARDOUS,
+    "OLJA": wt.HAZARDOUS,
+    "FA": wt.HAZARDOUS,
 }
 
 
@@ -171,13 +161,13 @@ class Source(BaseSource):
     # classify() maps each collection code to a canonical type via _CODE_TYPES;
     # mixed/ambiguous codes stay as preserved: labels (see the map's note).
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
-        GLASS,
-        GARDEN_WASTE,
-        HAZARDOUS,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -224,5 +214,7 @@ class Source(BaseSource):
         if label is None:
             return None
 
-        waste_type = _CODE_TYPES.get(base_code) or resolve(label) or preserved(label)
+        waste_type = (
+            _CODE_TYPES.get(base_code) or wt.resolve(label) or wt.preserved(label)
+        )
         return Collection(date=collection_date, waste_type=waste_type)

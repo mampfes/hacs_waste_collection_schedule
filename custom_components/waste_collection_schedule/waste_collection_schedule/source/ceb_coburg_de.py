@@ -16,12 +16,12 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsLookupRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
 API_URL = "https://abfuhrkalender.ceb-coburg.de/"
 
@@ -29,9 +29,9 @@ API_URL = "https://abfuhrkalender.ceb-coburg.de/"
 # reading "Restmüll (Schwarze Tonne)" matches "schwarz"); the confusingly
 # named bin colour is preserved exactly as before: the green bin -> paper.
 _TYPE_VALUE_MAP = {
-    "schwarz": GENERAL_WASTE,
-    "grün": PAPER,
-    "gelb": RECYCLABLES,
+    "schwarz": wt.GENERAL_WASTE,
+    "grün": wt.PAPER,
+    "gelb": wt.RECYCLABLES,
 }
 
 

@@ -1,16 +1,10 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-    WasteType,
-)
 
 # Demonstrates: parsers.XmlParser on a real, namespaced SOAP-style XML feed,
 # transformed declaratively with JsonTransformer callable keys.
@@ -27,11 +21,11 @@ from waste_collection_schedule.waste_types import (
 
 _NS = "{http://webservices.whitespacews.com/}"
 
-_SERVICE_MAP: dict[str, WasteType] = {
-    "Refuse Collection Service": GENERAL_WASTE,
-    "Recycle Collection Service": RECYCLABLES,
-    "Garden Collection Service": GARDEN_WASTE,
-    "Food Waste Collection Service": FOOD_WASTE,
+_SERVICE_MAP: dict[str, wt.WasteType] = {
+    "Refuse Collection Service": wt.GENERAL_WASTE,
+    "Recycle Collection Service": wt.RECYCLABLES,
+    "Garden Collection Service": wt.GARDEN_WASTE,
+    "Food Waste Collection Service": wt.FOOD_WASTE,
 }
 
 
@@ -78,7 +72,12 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
     )
 
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
     def __init__(self, uprn: str | int, postcode: str):
         super().__init__(uprn=str(uprn).zfill(12), postcode=postcode)

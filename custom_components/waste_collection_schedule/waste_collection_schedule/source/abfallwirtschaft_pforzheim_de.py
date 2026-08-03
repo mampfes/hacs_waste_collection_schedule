@@ -18,16 +18,11 @@ Jahresübersicht.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://onlineservices.abfallwirtschaft-pforzheim.de/WasteManagementPforzheim/WasteManagementServlet"
 
@@ -102,10 +97,10 @@ class Source(BaseSource):
         # every variant still resolves to its canonical type.
         clean=lambda label: label.split()[0] if label.split() else label,
         type_value_map={
-            "Restmuell": GENERAL_WASTE,
-            "Biobehaelter": ORGANIC,
-            "Papierbehaelter": PAPER,
-            "Gelbe": RECYCLABLES,
-            "Grossmuellbehaelter": GENERAL_WASTE,
+            "Restmuell": wt.GENERAL_WASTE,
+            "Biobehaelter": wt.ORGANIC,
+            "Papierbehaelter": wt.PAPER,
+            "Gelbe": wt.RECYCLABLES,
+            "Grossmuellbehaelter": wt.GENERAL_WASTE,
         },
     )

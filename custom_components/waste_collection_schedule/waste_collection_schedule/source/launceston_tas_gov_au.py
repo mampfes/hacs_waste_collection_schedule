@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,13 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-    WasteType,
-)
 
 # Demonstrates: the ArcGis service contributing two independent pipeline stages —
 # ArcGisFeatureRetriever (raw /query Response) and ArcGisFeatureParser (Response
@@ -28,11 +22,11 @@ from waste_collection_schedule.waste_types import (
 
 # feature field -> (canonical waste type, cadence). Single source of truth: the
 # transformer map is derived from it, and _describe reads the cadence from it.
-_SERVICES: dict[str, tuple[WasteType, str]] = {
-    "Garbagedate": (GENERAL_WASTE, "weekly"),
-    "Recycledate": (RECYCLABLES, "fortnightly"),
-    "Fogodate": (ORGANIC, "fortnightly"),
-    "Hardwastedate": (BULKY_WASTE, "once"),
+_SERVICES: dict[str, tuple[wt.WasteType, str]] = {
+    "Garbagedate": (wt.GENERAL_WASTE, "weekly"),
+    "Recycledate": (wt.RECYCLABLES, "fortnightly"),
+    "Fogodate": (wt.ORGANIC, "fortnightly"),
+    "Hardwastedate": (wt.BULKY_WASTE, "once"),
 }
 
 # cadence -> (step, count) for the recurring projection.

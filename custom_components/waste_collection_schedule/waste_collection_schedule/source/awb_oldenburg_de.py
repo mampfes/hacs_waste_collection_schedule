@@ -20,18 +20,13 @@ from datetime import date
 from typing import ClassVar, NamedTuple, final
 
 from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.oldenburg.de"
 _API_URL = (
@@ -112,7 +107,12 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
@@ -131,8 +131,8 @@ class Source(BaseSource):
     parse = IcsParser(regex=r"(.*)\:\s*\!")
     transform = ICSTransformer(
         type_value_map={
-            "altpapier": PAPER,
-            "gelber sack/tonne": RECYCLABLES,
-            "sommerbiotonne": ORGANIC,
+            "altpapier": wt.PAPER,
+            "gelber sack/tonne": wt.RECYCLABLES,
+            "sommerbiotonne": wt.ORGANIC,
         }
     )

@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 _BASE_URL = "https://www.obdach.gv.at"
 
@@ -38,8 +38,8 @@ class Source(BaseSource):
     # RECYCLABLES/PAPER meanings either).
     transform = ICSTransformer(
         type_value_map={
-            "Gelber Sack/Tonne": RECYCLABLES,
-            "Restmüll Abfuhrbereich 1": GENERAL_WASTE,
-            "Restmüll Abfuhrbereich 2": GENERAL_WASTE,
+            "Gelber Sack/Tonne": wt.RECYCLABLES,
+            "Restmüll Abfuhrbereich 1": wt.GENERAL_WASTE,
+            "Restmüll Abfuhrbereich 2": wt.GENERAL_WASTE,
         },
     )

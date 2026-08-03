@@ -1,19 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.st.margarethen.salzburg.at"
 
@@ -49,11 +42,11 @@ class Source(BaseSource):
     # vocabulary verbatim; all six are mapped explicitly.
     transform = ICSTransformer(
         type_value_map={
-            "Abholung BIO-Tonne": ORGANIC,
-            "Abholung Gelber Sack": RECYCLABLES,
-            "Abholung Hausmüll": GENERAL_WASTE,
-            "Abholung Altpapier": PAPER,
-            "Abholung Altglas": GLASS,
-            "Sperrmüllabfuhr": BULKY_WASTE,
+            "Abholung BIO-Tonne": wt.ORGANIC,
+            "Abholung Gelber Sack": wt.RECYCLABLES,
+            "Abholung Hausmüll": wt.GENERAL_WASTE,
+            "Abholung Altpapier": wt.PAPER,
+            "Abholung Altglas": wt.GLASS,
+            "Sperrmüllabfuhr": wt.BULKY_WASTE,
         },
     )

@@ -15,6 +15,7 @@ this source covers are dropped by the conversion.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     district,
@@ -30,13 +31,6 @@ from waste_collection_schedule.service.CTrace import (
     resolve_service,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # All waste-type ids: the provider returns every collection when none are
 # filtered out, matching the legacy default of "0|1|2|...|299".
@@ -51,11 +45,11 @@ class Source(BaseSource):
     COUNTRY = "de"
 
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        GLASS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {

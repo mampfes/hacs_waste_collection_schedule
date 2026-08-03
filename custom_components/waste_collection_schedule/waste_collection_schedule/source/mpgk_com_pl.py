@@ -17,18 +17,11 @@ data either way.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.retrievers import HttpPostRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.mpgk.com.pl/mod/harmonogram/ics"
 
@@ -57,12 +50,12 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Odpady komunalne": GENERAL_WASTE,
-            "Odpady papier, makulatura zbierane w pojemnikach 120 l do 1100 l": PAPER,
-            "Odpady szklane zbierane w pojemnikach 120 l do 1100 l": GLASS,
-            "Odpady wielkogabarytowe dla zabudowy wielorodzinnej": BULKY_WASTE,
+            "Odpady komunalne": wt.GENERAL_WASTE,
+            "Odpady papier, makulatura zbierane w pojemnikach 120 l do 1100 l": wt.PAPER,
+            "Odpady szklane zbierane w pojemnikach 120 l do 1100 l": wt.GLASS,
+            "Odpady wielkogabarytowe dla zabudowy wielorodzinnej": wt.BULKY_WASTE,
             "Odpady z tworzyw sztucznych i metalu zbierane w pojemnikach"
-            " 120 l do 1100 l": RECYCLABLES,
-            "Odpady B I O zbierane w pojemnikach": ORGANIC,
+            " 120 l do 1100 l": wt.RECYCLABLES,
+            "Odpady B I O zbierane w pojemnikach": wt.ORGANIC,
         }
     )

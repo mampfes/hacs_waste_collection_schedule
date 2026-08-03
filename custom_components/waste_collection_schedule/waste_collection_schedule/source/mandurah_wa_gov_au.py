@@ -3,6 +3,7 @@ from datetime import timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -17,7 +18,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Weekly general waste (a bare weekday name) plus fortnightly recycling (an
 # explicit "next date"), with a Christmas Day collection shifted to Boxing Day.
@@ -36,8 +36,8 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 
 # IntraMaps column name -> canonical waste type.
 _TYPE_MAP = {
-    "Refuse Day": GENERAL_WASTE,
-    "Next Recycle Day is ": RECYCLABLES,
+    "Refuse Day": wt.GENERAL_WASTE,
+    "Next Recycle Day is ": wt.RECYCLABLES,
 }
 
 # The recycling value is free text such as "next Friday - 17 Jul 2026" or

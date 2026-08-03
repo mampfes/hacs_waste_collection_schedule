@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     dropdown,
@@ -15,7 +16,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 # Demonstrates: scraping a town-wide collection weekday out of static HTML,
 # resolving the chosen town with ArgumentLookup, then projecting the result into
@@ -163,7 +163,7 @@ class Source(BaseSource):
         ArgumentLookup(_town_weekdays, argument="town"),
         RecurrenceExpander(_describe),
     )
-    transform = ICSTransformer(type_value_map={"general waste": GENERAL_WASTE})
+    transform = ICSTransformer(type_value_map={"general waste": wt.GENERAL_WASTE})
 
     def __init__(self, town: str, collection_day: str | None = None):
         super().__init__(town=town, collection_day=collection_day)

@@ -14,17 +14,12 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import location_id
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _ICAL_URL = (
     "https://stadtplan.dresden.de/project/cardo3Apps/IDU_DDStadtplan/abfall/ical.ashx"
@@ -84,9 +79,9 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "bio-tonne": ORGANIC,
-            "blaue tonne": PAPER,
-            "gelbe tonne": RECYCLABLES,
-            "restabfall": GENERAL_WASTE,
+            "bio-tonne": wt.ORGANIC,
+            "blaue tonne": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
+            "restabfall": wt.GENERAL_WASTE,
         }
     )

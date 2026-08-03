@@ -1,6 +1,7 @@
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -11,12 +12,6 @@ from waste_collection_schedule.service.AchieveForms import (
     lookup_context,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "my.cheshirewestandchester.gov.uk"
 INITIAL_URL = (
@@ -34,10 +29,10 @@ SCHEDULE_LOOKUP_ID = "6101d23110243"
 # the provider's serviceTypes lookup maps each UPRN's own labels back onto
 # these generic categories; only a recognised generic category is kept.
 GENERIC_SERVICE_TYPES = {
-    "Domestic": GENERAL_WASTE,
-    "Food": FOOD_WASTE,
-    "Recycling": RECYCLABLES,
-    "Garden": GARDEN_WASTE,
+    "Domestic": wt.GENERAL_WASTE,
+    "Food": wt.FOOD_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden": wt.GARDEN_WASTE,
 }
 
 

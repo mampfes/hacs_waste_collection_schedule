@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import coords
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -12,12 +13,6 @@ from waste_collection_schedule.service.ArcGis import (
     coords_point,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # My Local Services (used by ~45 South Australian councils) takes a lat/lon
 # straight from the map picker: there is no address to geocode, so the shared
@@ -80,10 +75,10 @@ def _describe(record: tuple, source):
 
 
 _TYPE_MAP = {
-    "General Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Green Waste": GARDEN_WASTE,
-    "FOGO (Organics)": ORGANIC,
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Green Waste": wt.GARDEN_WASTE,
+    "FOGO (Organics)": wt.ORGANIC,
 }
 
 # List from https://www.localcouncils.sa.gov.au/my-local-services-app#accordion__target-1426969-2

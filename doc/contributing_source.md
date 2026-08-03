@@ -47,11 +47,11 @@ A flat JSON API, typed by a label-to-waste-type map:
 from typing import final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 
 @final
@@ -75,7 +75,7 @@ class Source(BaseSource):
     transform = JsonTransformer(
         date_key="date",
         type_key="binType",
-        type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
+        type_value_map={"refuse": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES},
     )
 ```
 
@@ -280,6 +280,14 @@ Do not carry a private weekday or month dict in your source. Use these shared, m
 
 Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The eleven canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
 
+**Import the module, not the names:**
+
+```python
+from waste_collection_schedule import waste_types as wt
+```
+
+then write `wt.GENERAL_WASTE`. A source typically uses three to six types, and importing them by name costs one line each once `ruff` wraps the statement, which came to 1,284 lines across the sources for no benefit: the namespace form is one line however many types a source uses. `test_pipeline_sources_import_waste_types_as_a_module` enforces it.
+
 A transformer turns each record's label into a `WasteType` in this order:
 
 1. The source's `type_value_map`, if the label is listed.
@@ -326,13 +334,13 @@ Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle
 ```python
 from typing import final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 
 @final
@@ -352,7 +360,7 @@ class Source(BaseSource):
     )
     parse = RiSKommunalParser()
     transform = ICSTransformer(
-        type_value_map={"Restabfall 14-tägig": GENERAL_WASTE},
+        type_value_map={"Restabfall 14-tägig": wt.GENERAL_WASTE},
     )
 ```
 

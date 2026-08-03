@@ -2,6 +2,7 @@ import datetime
 import logging
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -16,13 +17,6 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.parsers import HtmlMonthRows
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Composes: LookupChainRetriever (city -> street -> number -> report
 # descriptor, the last step handing back the rendered table's address) and
@@ -38,11 +32,11 @@ _API_URL = "https://zys-harmonogram.smok.net.pl/{commune}/{year}"
 # The Polish column headers map onto canonical waste types. The provider's
 # fractions are: mixed municipal waste, paper, metals & plastics, glass, bio.
 _TYPE_MAP = {
-    "zmieszane odpady komunalne": GENERAL_WASTE,
-    "papier": PAPER,
-    "metale i tworzywa sztuczne": RECYCLABLES,
-    "szkło": GLASS,
-    "bioodpady": ORGANIC,
+    "zmieszane odpady komunalne": wt.GENERAL_WASTE,
+    "papier": wt.PAPER,
+    "metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "szkło": wt.GLASS,
+    "bioodpady": wt.ORGANIC,
 }
 
 

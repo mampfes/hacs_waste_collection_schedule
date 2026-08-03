@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -9,7 +10,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 # ArcGis single spatial query -> one feature with PICKUP_DAY, from which a single
 # weekly trash schedule is projected. Acquisition + parse are the shared ArcGis
@@ -18,7 +18,7 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE
 FEATURE_URL = "https://gis.cityofchesapeake.net/mapping/rest/services/WasteManagement/Trash_Collection_Areas/MapServer/0"
 
 _TYPE_MAP = {
-    "Trash": GENERAL_WASTE,
+    "Trash": wt.GENERAL_WASTE,
 }
 
 

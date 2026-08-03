@@ -3,6 +3,7 @@ from typing import Any, ClassVar, final
 
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -12,14 +13,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.service import ArcGis, NewEdgeServices
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # CWD (North Texas) publishes pickup days/frequency per service across SIX ArcGIS
 # FeatureServer layers, queried with a single spatial point each. The geocode
@@ -51,12 +44,12 @@ LAYERS = [
 ]
 
 _TYPE_MAP = {
-    "HHW": HAZARDOUS,
-    "Recycling": RECYCLABLES,
-    "Trash": GENERAL_WASTE,
-    "Bulk Waste": BULKY_WASTE,
-    "Yard Waste": GARDEN_WASTE,
-    "Compost": ORGANIC,
+    "HHW": wt.HAZARDOUS,
+    "Recycling": wt.RECYCLABLES,
+    "Trash": wt.GENERAL_WASTE,
+    "Bulk Waste": wt.BULKY_WASTE,
+    "Yard Waste": wt.GARDEN_WASTE,
+    "Compost": wt.ORGANIC,
 }
 
 WEEKDAY_MAP = {

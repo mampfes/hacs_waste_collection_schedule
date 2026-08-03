@@ -15,6 +15,7 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     district,
@@ -29,15 +30,6 @@ from waste_collection_schedule.service.HausmuellInfo import (
     Lookup,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 API_URL = "https://{}.hausmuell.info/"
 
@@ -263,28 +255,28 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_clean_label,
         type_value_map={
-            "hausmüll": GENERAL_WASTE,
-            "restabfall": GENERAL_WASTE,
-            "restmüll": GENERAL_WASTE,
-            "glass": GLASS,
-            "biomüll": ORGANIC,
-            "biomüll mit reinigung": ORGANIC,
-            "bioabfall mit reinigung": ORGANIC,
-            "bioabfall": ORGANIC,
-            "papier": PAPER,
-            "papier, pappe, karton": PAPER,
-            "papier, pappe & kart.": PAPER,
-            "pappe, papier & kart.": PAPER,
-            "altpapier": PAPER,
-            "gelbe tonne": RECYCLABLES,
-            "gelber sack": RECYCLABLES,
-            "gelber sack / gelbe tonne": RECYCLABLES,
-            "leichtverpackungen": RECYCLABLES,
-            "leichtstoffverpackungen": RECYCLABLES,
-            "grünschnitt": GARDEN_WASTE,
-            "schadstoffe": HAZARDOUS,
-            "schadstoffmobil": HAZARDOUS,
-            "problemmüll": HAZARDOUS,
+            "hausmüll": wt.GENERAL_WASTE,
+            "restabfall": wt.GENERAL_WASTE,
+            "restmüll": wt.GENERAL_WASTE,
+            "glass": wt.GLASS,
+            "biomüll": wt.ORGANIC,
+            "biomüll mit reinigung": wt.ORGANIC,
+            "bioabfall mit reinigung": wt.ORGANIC,
+            "bioabfall": wt.ORGANIC,
+            "papier": wt.PAPER,
+            "papier, pappe, karton": wt.PAPER,
+            "papier, pappe & kart.": wt.PAPER,
+            "pappe, papier & kart.": wt.PAPER,
+            "altpapier": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
+            "gelber sack": wt.RECYCLABLES,
+            "gelber sack / gelbe tonne": wt.RECYCLABLES,
+            "leichtverpackungen": wt.RECYCLABLES,
+            "leichtstoffverpackungen": wt.RECYCLABLES,
+            "grünschnitt": wt.GARDEN_WASTE,
+            "schadstoffe": wt.HAZARDOUS,
+            "schadstoffmobil": wt.HAZARDOUS,
+            "problemmüll": wt.HAZARDOUS,
         },
     )
 

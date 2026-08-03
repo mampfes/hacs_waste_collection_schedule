@@ -13,6 +13,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -22,13 +23,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-    WasteType,
-)
 
 # Live-verified (2026-07): the standard AchieveForms handshake
 # (init_session -> authapi/isauthenticated, using the landing page's resolved
@@ -60,11 +54,11 @@ class Source(BaseSource):
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
 
-    WASTE_TYPES: ClassVar[list[WasteType]] = [
-        FOOD_WASTE,
-        RECYCLABLES,
-        GENERAL_WASTE,
-        GARDEN_WASTE,
+    WASTE_TYPES: ClassVar[list[wt.WasteType]] = [
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -105,14 +99,14 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "blue food caddy": FOOD_WASTE,
-            "black & green recycling boxes": RECYCLABLES,
-            "black and green recycling boxes": RECYCLABLES,
-            "green recycling box": RECYCLABLES,
-            "black recycling box": RECYCLABLES,
-            "garden waste": GARDEN_WASTE,
-            "domestic refuse": GENERAL_WASTE,
-            "black bin": GENERAL_WASTE,
-            "rubbish": GENERAL_WASTE,
+            "blue food caddy": wt.FOOD_WASTE,
+            "black & green recycling boxes": wt.RECYCLABLES,
+            "black and green recycling boxes": wt.RECYCLABLES,
+            "green recycling box": wt.RECYCLABLES,
+            "black recycling box": wt.RECYCLABLES,
+            "garden waste": wt.GARDEN_WASTE,
+            "domestic refuse": wt.GENERAL_WASTE,
+            "black bin": wt.GENERAL_WASTE,
+            "rubbish": wt.GENERAL_WASTE,
         },
     )

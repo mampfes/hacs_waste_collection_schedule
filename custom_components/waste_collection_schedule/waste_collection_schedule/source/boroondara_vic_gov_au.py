@@ -4,13 +4,13 @@ from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import ArcGisZoneParser
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Boroondara has no FeatureServer to query: the collection zones ship as a
 # GeoJSON bundle embedded in the council's own JS (main-v2.min.js), so the
@@ -40,9 +40,9 @@ FOGO = "FOGO"
 GENERAL = "General Waste"
 
 _TYPE_MAP = {
-    RECYCLING: RECYCLABLES,
-    FOGO: ORGANIC,
-    GENERAL: GENERAL_WASTE,
+    RECYCLING: wt.RECYCLABLES,
+    FOGO: wt.ORGANIC,
+    GENERAL: wt.GENERAL_WASTE,
 }
 
 # Number of collections to project for each stream (matches the legacy default).

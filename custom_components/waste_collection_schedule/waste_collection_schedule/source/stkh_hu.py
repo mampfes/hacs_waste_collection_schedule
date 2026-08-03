@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.parsers import PdfTextParser
 from waste_collection_schedule.preprocessors import TextGroupedDates
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, RECYCLABLES
 
 # Demonstrates: a text-PDF calendar read by parsers.PdfTextParser and fanned out
 # by preprocessors.TextGroupedDates. STKH (Sopron és Térsége, Hungary) publishes
@@ -25,8 +25,8 @@ from waste_collection_schedule.waste_types import GARDEN_WASTE, RECYCLABLES
 
 # Hungarian table row labels, exactly as printed in the PDF text layer.
 _TYPE_VALUE_MAP = {
-    "szelektív": RECYCLABLES,
-    "zöldhulladék": GARDEN_WASTE,
+    "szelektív": wt.RECYCLABLES,
+    "zöldhulladék": wt.GARDEN_WASTE,
 }
 
 

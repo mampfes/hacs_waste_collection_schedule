@@ -9,11 +9,11 @@ module only supplies the URL template and the waste-type map.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 _ICS_URL = "https://report.peterborough.gov.uk/waste/{post_code}:{uprn}/calendar.ics"
 
@@ -44,8 +44,8 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Empty Bin 240L Black": GENERAL_WASTE,
-            "Empty Bin 240L Green": RECYCLABLES,
-            "Empty Bin 240L Brown": ORGANIC,
+            "Empty Bin 240L Black": wt.GENERAL_WASTE,
+            "Empty Bin 240L Green": wt.RECYCLABLES,
+            "Empty Bin 240L Brown": wt.ORGANIC,
         }
     )

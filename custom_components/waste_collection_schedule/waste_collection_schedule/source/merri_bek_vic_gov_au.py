@@ -2,18 +2,13 @@ from typing import Any, ClassVar, final
 from urllib.parse import urlencode
 
 from waste_collection_schedule import parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.date_parsers import for_format
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # Merri-bek's own schedule API is not an ArcGIS endpoint: an ArcGIS FeatureServer
 # lookup resolves the address to a point plus a handful of rate/zone codes,
@@ -33,10 +28,10 @@ ALL_FOGO_DAYS = "allFogoDays"
 ALL_GLASS_DAYS = "allGlassDays"
 
 _TYPE_MAP = {
-    ALL_BIN_DAYS: GENERAL_WASTE,
-    ALL_RECYCLE_DAYS: RECYCLABLES,
-    ALL_FOGO_DAYS: ORGANIC,
-    ALL_GLASS_DAYS: GLASS,
+    ALL_BIN_DAYS: wt.GENERAL_WASTE,
+    ALL_RECYCLE_DAYS: wt.RECYCLABLES,
+    ALL_FOGO_DAYS: wt.ORGANIC,
+    ALL_GLASS_DAYS: wt.GLASS,
 }
 
 

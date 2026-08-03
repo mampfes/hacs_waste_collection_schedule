@@ -12,6 +12,7 @@ after both).
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -21,12 +22,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://athos-onlinedienste.rv.de/WasteManagementRavensburgPrivat/WasteManagementServlet"
 
@@ -94,9 +89,9 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "restmuelltonne": GENERAL_WASTE,
-            "biotonne": ORGANIC,
-            "papiertonne": PAPER,
-            "gelbe tonne": RECYCLABLES,
+            "restmuelltonne": wt.GENERAL_WASTE,
+            "biotonne": wt.ORGANIC,
+            "papiertonne": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
         }
     )

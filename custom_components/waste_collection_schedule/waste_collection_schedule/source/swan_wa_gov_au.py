@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Simplest IntraMaps shape: every collection is fortnightly with an explicit
 # "next date" value, keyed by column (IntraMapsRetriever + IntraMapsPanelParser
@@ -33,9 +33,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # IntraMaps column name -> canonical waste type. One map: selects the
 # collection fields (others ignored) and types them.
 _TYPE_MAP = {
-    "Next_General_Waste_Collection": GENERAL_WASTE,
-    "Next_Recycling_Collection": RECYCLABLES,
-    "Next_FOGO_Collection": ORGANIC,
+    "Next_General_Waste_Collection": wt.GENERAL_WASTE,
+    "Next_Recycling_Collection": wt.RECYCLABLES,
+    "Next_FOGO_Collection": wt.ORGANIC,
 }
 
 # Values are free text such as "Friday, 17 July 2026"; pull out just the date

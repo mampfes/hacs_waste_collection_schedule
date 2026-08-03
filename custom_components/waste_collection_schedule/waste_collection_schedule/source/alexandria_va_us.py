@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,11 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     epoch_ms_to_date,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # City of Alexandria alx311Info MapServer, three independent zone layers:
 # layer 3 = Refuse Day Zone (DAYSERVED, weekly; every serviced address has
@@ -42,9 +38,9 @@ _FIELDS = {
 }
 
 _TYPE_MAP = {
-    "Trash": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Leaf Collection": GARDEN_WASTE,
+    "Trash": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Leaf Collection": wt.GARDEN_WASTE,
 }
 
 # Number of weekly collections to project (matches the legacy WEEKS_AHEAD).

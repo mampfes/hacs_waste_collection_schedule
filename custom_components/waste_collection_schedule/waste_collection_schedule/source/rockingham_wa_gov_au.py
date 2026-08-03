@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -13,13 +14,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # Suburb + street name + street number (the suburb is a fixed dropdown; the
 # combined "street_number street_name SUBURB" string is what IntraMaps expects
@@ -66,11 +60,11 @@ _RECYCLE = "Recycle (Yellow Lid)"
 _WASTE = "Waste (Red Lid)"
 
 _TYPE_MAP = {
-    _WASTE: GENERAL_WASTE,
-    _RECYCLE: RECYCLABLES,
-    _FOGO: ORGANIC,
-    _VERGE_GREEN_WASTE: GARDEN_WASTE,
-    _VERGE_GENERAL: BULKY_WASTE,
+    _WASTE: wt.GENERAL_WASTE,
+    _RECYCLE: wt.RECYCLABLES,
+    _FOGO: wt.ORGANIC,
+    _VERGE_GREEN_WASTE: wt.GARDEN_WASTE,
+    _VERGE_GENERAL: wt.BULKY_WASTE,
 }
 
 _VERGE_COLUMNS = {_VERGE_GREEN_WASTE, _VERGE_GENERAL}

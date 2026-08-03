@@ -20,19 +20,13 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import field_terms
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import EachResponse, IcsParser
 from waste_collection_schedule.retrievers import FanOutRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _LEVEL_URL = (
     "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
@@ -146,11 +140,11 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -172,9 +166,9 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "altpapier": PAPER,
-            "hausmüll 14-täglich": GENERAL_WASTE,
-            "hausmüll 4-wöchentlich": GENERAL_WASTE,
+            "altpapier": wt.PAPER,
+            "hausmüll 14-täglich": wt.GENERAL_WASTE,
+            "hausmüll 4-wöchentlich": wt.GENERAL_WASTE,
         }
     )
 

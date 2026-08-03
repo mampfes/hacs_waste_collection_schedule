@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,11 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "your.burnley.gov.uk"
 INITIAL_URL = (
@@ -67,9 +63,9 @@ class Source(BaseSource):
         type_key=lambda r: r["display"].split(" - ")[0],
         parse_date=date_parsers.next_weekday("%A %d %B"),
         type_value_map={
-            "refuse": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
-            "garden": GARDEN_WASTE,
+            "refuse": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "garden": wt.GARDEN_WASTE,
         },
     )
 

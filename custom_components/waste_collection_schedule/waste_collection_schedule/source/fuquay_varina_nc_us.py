@@ -2,6 +2,7 @@ import re
 from datetime import date, datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.ArcGis import (
@@ -9,7 +10,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Fuquay-Varina's Solid_Waste_Information FeatureServer keys one feature per
 # address and reports each stream's *next* pickup date as free text (e.g. "The
@@ -27,8 +27,8 @@ _FIELDS = {
 }
 
 _TYPE_MAP = {
-    "Garbage": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
+    "Garbage": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
 }
 
 _MONTHS = {

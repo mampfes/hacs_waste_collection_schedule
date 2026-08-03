@@ -4,15 +4,11 @@ from urllib.parse import urlencode
 
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.transformers import HtmlTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # Demonstrates: the OCAPI "myarea" two-step flow (address lookup -> geolocation
 # id -> waste services) via TwoStepRetriever, and HtmlParser(from_json_key=...)
@@ -26,9 +22,9 @@ WASTE_URL = f"{BASE}/ocapi/Public/myarea/wasteservices"
 _DATE_RE = re.compile(r"(\d{1,2}/\d{1,2}/\d{4})")
 
 _TYPE_MAP = {
-    "Rubbish Collection": GENERAL_WASTE,
-    "Recycling Collection": RECYCLABLES,
-    "New weekly FOGO collection": ORGANIC,
+    "Rubbish Collection": wt.GENERAL_WASTE,
+    "Recycling Collection": wt.RECYCLABLES,
+    "New weekly FOGO collection": wt.ORGANIC,
 }
 
 
@@ -70,7 +66,7 @@ class Source(BaseSource):
     URL = "https://www.yarraranges.vic.gov.au"
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
 
     TEST_CASES: ClassVar[dict] = {
         "Petstock Lilydale": {

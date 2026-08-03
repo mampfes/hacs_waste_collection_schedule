@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -12,7 +13,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # The shire moved its map off the self-hosted maps.sjshire.wa.gov.au IntraMaps
 # server onto TechnologyOne's SaaS platform (ser.spatial.t1cloud.com). The old
@@ -38,8 +38,8 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 )
 
 _TYPE_MAP = {
-    "WasteCollectionDay": GENERAL_WASTE,
-    "RecycleDay": RECYCLABLES,
+    "WasteCollectionDay": wt.GENERAL_WASTE,
+    "RecycleDay": wt.RECYCLABLES,
 }
 
 # RecycleDay reads "<day> this/next week", but the "this week" variant arrives

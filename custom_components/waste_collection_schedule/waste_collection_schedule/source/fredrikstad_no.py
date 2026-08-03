@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     feature_query,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    RECYCLABLES,
-)
 
 # Fredrikstad kommune's MinRenovasjon MapServer splits the flow across two
 # unrelated layers: layer 0 resolves a street address to an "AvtLnr" (renovation
@@ -46,11 +41,11 @@ WASTE_TYPE_FALLBACK: dict[int, str] = {
 # shared vocabulary's supported languages, so without this an unrecognised label
 # is preserved verbatim (still correct, just without a canonical icon/colour).
 _TYPE_MAP = {
-    "Restavfall": GENERAL_WASTE,
-    "Papir og plast": RECYCLABLES,
-    "Glass og metall": RECYCLABLES,
-    "Farlig avfall": HAZARDOUS,
-    "Matavfall": FOOD_WASTE,
+    "Restavfall": wt.GENERAL_WASTE,
+    "Papir og plast": wt.RECYCLABLES,
+    "Glass og metall": wt.RECYCLABLES,
+    "Farlig avfall": wt.HAZARDOUS,
+    "Matavfall": wt.FOOD_WASTE,
 }
 
 

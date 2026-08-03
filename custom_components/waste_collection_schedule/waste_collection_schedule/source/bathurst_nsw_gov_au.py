@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     street_address,
@@ -14,7 +15,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Address + suburb lookup (IntraMapsRetriever's optional suburb disambiguates
 # multiple search matches). Two columns are weekly (a bare weekday name);
@@ -31,9 +31,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 
 # IntraMaps column name -> canonical waste type.
 _TYPE_MAP = {
-    "Garbage": GENERAL_WASTE,
-    "Organic": ORGANIC,
-    "Recycling": RECYCLABLES,
+    "Garbage": wt.GENERAL_WASTE,
+    "Organic": wt.ORGANIC,
+    "Recycling": wt.RECYCLABLES,
 }
 
 # Columns whose value is a bare weekday name (weekly); every other mapped

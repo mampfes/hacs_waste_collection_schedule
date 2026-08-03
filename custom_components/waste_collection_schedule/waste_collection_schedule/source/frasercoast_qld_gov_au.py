@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # "Bin Day" is a bare weekday name (weekly general waste); "Recycling Day" is
 # fortnightly with an explicit "Next: <date>" marker. The only source-specific
@@ -30,8 +30,8 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 
 # IntraMaps column name -> canonical waste type.
 _TYPE_MAP = {
-    "Bin Day": GENERAL_WASTE,
-    "Recycling Day": RECYCLABLES,
+    "Bin Day": wt.GENERAL_WASTE,
+    "Recycling Day": wt.RECYCLABLES,
 }
 
 # The recycling value is free text such as "Thursday Week A; Next: 23 Jul

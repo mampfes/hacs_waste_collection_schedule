@@ -2,6 +2,7 @@ import logging
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.field_terms import POSTCODE
@@ -10,11 +11,6 @@ from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
 # + WhitespaceParser). A RowTransformer maps the council's open-ended type labels
@@ -23,9 +19,9 @@ from waste_collection_schedule.waste_types import (
 _LOGGER = logging.getLogger(__name__)
 
 _TYPE_MAP = {
-    "Domestic Waste": GENERAL_WASTE,
-    "Glass Cans and Plastic Recycling": RECYCLABLES,
-    "Garden Waste": GARDEN_WASTE,
+    "Domestic Waste": wt.GENERAL_WASTE,
+    "Glass Cans and Plastic Recycling": wt.RECYCLABLES,
+    "Garden Waste": wt.GARDEN_WASTE,
 }
 
 
@@ -38,7 +34,7 @@ class Source(BaseSource):
     URL = "https://www.allerdale.gov.uk"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
     API_URL = "https://abc-wrp.whitespacews.com/"
 
     TEST_CASES: ClassVar[dict] = {

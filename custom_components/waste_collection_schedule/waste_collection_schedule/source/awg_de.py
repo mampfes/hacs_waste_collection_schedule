@@ -28,6 +28,7 @@ the live servlet and all three recorded cassettes:
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -37,7 +38,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _API_URL = (
     "https://wastemanagement.awg.de/WasteManagementDonauwald/WasteManagementServlet"
@@ -59,7 +59,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for ZAW Donau-Wald."
     URL = "https://www.awg.de/"
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Achslach Aign 1 ": {"city": "Achslach", "street": "Aign", "hnr": "1"},
@@ -104,9 +104,9 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restmuelltonne": GENERAL_WASTE,
-            "Restmüllcontainer": GENERAL_WASTE,
-            "Papiercontainer": PAPER,
+            "Restmuelltonne": wt.GENERAL_WASTE,
+            "Restmüllcontainer": wt.GENERAL_WASTE,
+            "Papiercontainer": wt.PAPER,
         }
     )
 

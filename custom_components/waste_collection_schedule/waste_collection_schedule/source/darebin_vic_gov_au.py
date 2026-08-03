@@ -2,17 +2,12 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    OTHER,
-    RECYCLABLES,
-)
 
 # Attribute query in two steps (address LIKE -> OBJECTID -> full record), then a
 # mix of recurring schedules: weekly rubbish, fortnightly green/recycling from
@@ -26,10 +21,10 @@ _SIX_WEEKLY = datetime.timedelta(weeks=6)
 _from_ms = date_parsers.from_epoch(unit="ms")
 
 _TYPE_MAP = {
-    "Rubbish": GENERAL_WASTE,
-    "Green Waste": GARDEN_WASTE,
-    "Recycling": RECYCLABLES,
-    "Street Sweeping": OTHER,
+    "Rubbish": wt.GENERAL_WASTE,
+    "Green Waste": wt.GARDEN_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Street Sweeping": wt.OTHER,
 }
 
 

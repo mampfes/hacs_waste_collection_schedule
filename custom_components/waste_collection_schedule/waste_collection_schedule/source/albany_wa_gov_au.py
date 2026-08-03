@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,7 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Albany publishes its collection zones as four separate ArcGIS layers
 # (General/Recycling x Zone A/B). The point-in-polygon query against each layer
@@ -22,8 +22,8 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 # fortnightly dates without the source hand-rolling retrieve()/parse().
 
 _TYPE_MAP = {
-    "General Waste & FOGO": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
+    "General Waste & FOGO": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
 }
 
 # Each layer: the FeatureServer URL plus a (waste_type, anchor) label. The label

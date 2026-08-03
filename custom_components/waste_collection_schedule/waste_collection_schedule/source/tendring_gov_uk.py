@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "tendring-self.achieveservice.com"
 LOOKUP_COLLECTIONS = "6347acbadc425"
@@ -74,10 +69,10 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "residual waste": GENERAL_WASTE,
-            "green recycling box": RECYCLABLES,
-            "red recycling box": RECYCLABLES,
-            "food waste": FOOD_WASTE,
-            "garden waste": GARDEN_WASTE,
+            "residual waste": wt.GENERAL_WASTE,
+            "green recycling box": wt.RECYCLABLES,
+            "red recycling box": wt.RECYCLABLES,
+            "food waste": wt.FOOD_WASTE,
+            "garden waste": wt.GARDEN_WASTE,
         },
     )

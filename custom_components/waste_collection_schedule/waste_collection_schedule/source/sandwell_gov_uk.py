@@ -2,6 +2,7 @@ from datetime import date
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "my.sandwell.gov.uk"
 INITIAL_URL = (
@@ -92,9 +87,9 @@ class Source(BaseSource):
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         type_value_map={
-            "household waste (grey)": GENERAL_WASTE,
-            "recycling (blue)": RECYCLABLES,
-            "food waste (brown)": FOOD_WASTE,
-            "garden waste (green)": GARDEN_WASTE,
+            "household waste (grey)": wt.GENERAL_WASTE,
+            "recycling (blue)": wt.RECYCLABLES,
+            "food waste (brown)": wt.FOOD_WASTE,
+            "garden waste (green)": wt.GARDEN_WASTE,
         },
     )

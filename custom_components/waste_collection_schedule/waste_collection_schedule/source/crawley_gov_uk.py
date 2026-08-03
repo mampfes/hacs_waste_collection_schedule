@@ -6,6 +6,7 @@ from datetime import date, datetime
 from typing import Any, ClassVar, final
 
 from dateutil.parser import parse as _parse_dayfirst_date
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field, uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -15,11 +16,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 BASE_URL = "https://my.crawley.gov.uk"
 INITIAL_URL = f"{BASE_URL}/en/service/check_my_bin_collection"
@@ -108,9 +104,9 @@ class Source(BaseSource):
     transform = RowTransformer(
         parse_date=_parse_dayfirst,
         type_value_map={
-            "rubbish": GENERAL_WASTE,
-            "recycle": RECYCLABLES,
-            "green": GARDEN_WASTE,
+            "rubbish": wt.GENERAL_WASTE,
+            "recycle": wt.RECYCLABLES,
+            "green": wt.GARDEN_WASTE,
         },
     )
 

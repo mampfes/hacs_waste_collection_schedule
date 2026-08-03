@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
@@ -11,12 +12,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "my.hounslow.gov.uk"
 TOKEN_LOOKUP_ID = "655f4290810cf"
@@ -92,9 +87,9 @@ class Source(BaseSource):
         date_key="jobDate",
         type_key=lambda r: r.get("jobType") or r.get("jobName") or "Unknown",
         type_value_map={
-            "residual": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
-            "food": FOOD_WASTE,
-            "garden": GARDEN_WASTE,
+            "residual": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "food": wt.FOOD_WASTE,
+            "garden": wt.GARDEN_WASTE,
         },
     )

@@ -2,17 +2,11 @@ from datetime import datetime, timezone
 from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # Demonstrates: date_parsers.from_epoch for a JSON API that returns collection
 # dates as Unix milliseconds, plus a dropdown whose human-readable options the
@@ -43,11 +37,11 @@ CITIES = {
 _NAME_TO_ID = {name: city_id for city_id, name in CITIES.items()}
 
 _TYPE_MAP = {
-    "bac_bleu": RECYCLABLES,
-    "bac_brun": ORGANIC,
-    "bac_noir": GENERAL_WASTE,
-    "encombrants": BULKY_WASTE,
-    "residus_verts": GARDEN_WASTE,
+    "bac_bleu": wt.RECYCLABLES,
+    "bac_brun": wt.ORGANIC,
+    "bac_noir": wt.GENERAL_WASTE,
+    "encombrants": wt.BULKY_WASTE,
+    "residus_verts": wt.GARDEN_WASTE,
 }
 
 

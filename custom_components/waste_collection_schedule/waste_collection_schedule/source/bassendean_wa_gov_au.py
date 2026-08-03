@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,11 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # ArcGis single spatial query -> one feature carrying a ServiceDay, from which
 # three recurring schedules are projected: FOGO weekly, and General Waste and
@@ -25,9 +21,9 @@ from waste_collection_schedule.waste_types import (
 FEATURE_URL = "https://services-ap1.arcgis.com/551UnqKK1GZeDKxQ/arcgis/rest/services/address_lookup_for_bin_days_dissolved/FeatureServer/0"
 
 _TYPE_MAP = {
-    "FOGO": ORGANIC,
-    "General Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
+    "FOGO": wt.ORGANIC,
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
 }
 
 # Base dates for fortnightly schedules, extracted from the ArcGIS Arcade

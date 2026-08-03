@@ -11,16 +11,11 @@ and no ICON_MAP.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.lk-mecklenburgische-seenplatte.de"
 
@@ -31,7 +26,12 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Landkreis Mecklenburgische Seenplatte waste collection."
     URL = _BASE_URL
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Atelierstraße (Neubrandenburg)": {
@@ -56,7 +56,7 @@ class Source(BaseSource):
     # observed variant needs an explicit map.
     transform = ICSTransformer(
         type_value_map={
-            "Restmülltonne 14-täglichen Rhythmus": GENERAL_WASTE,
-            "Restmülltonne 28-täglichen Rhythmus": GENERAL_WASTE,
+            "Restmülltonne 14-täglichen Rhythmus": wt.GENERAL_WASTE,
+            "Restmülltonne 28-täglichen Rhythmus": wt.GENERAL_WASTE,
         }
     )

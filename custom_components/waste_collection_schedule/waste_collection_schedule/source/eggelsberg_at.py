@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -8,12 +9,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.eggelsberg.at"
 VALID_ZONES = ["A", "B"]
@@ -27,10 +22,10 @@ class Source(BaseSource):
     COUNTRY = "at"
 
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -72,9 +67,9 @@ class Source(BaseSource):
     # Altpapier and Gelber Sack resolve unmapped.
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall 2-wöchentlich": GENERAL_WASTE,
-            "Restabfall 4-wöchentlich": GENERAL_WASTE,
-            "Restabfall 6-wöchentlich": GENERAL_WASTE,
+            "Restabfall 2-wöchentlich": wt.GENERAL_WASTE,
+            "Restabfall 4-wöchentlich": wt.GENERAL_WASTE,
+            "Restabfall 6-wöchentlich": wt.GENERAL_WASTE,
         },
     )
 

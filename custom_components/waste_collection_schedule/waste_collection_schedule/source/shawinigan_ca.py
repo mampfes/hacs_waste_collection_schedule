@@ -3,6 +3,7 @@ import logging
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -15,12 +16,6 @@ from waste_collection_schedule.preprocessors import (
 from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # Shawinigan publishes each collection type as its own ArcGIS MapServer layer.
 # A point-in-polygon query against each layer returns a feature whose SCHEDULE /
@@ -63,11 +58,11 @@ LAYERS = [
 ]
 
 _TYPE_MAP = {
-    "RECYCLAGE": RECYCLABLES,
-    "ORDURES": GENERAL_WASTE,
-    "SAPIN": GARDEN_WASTE,
-    "FEUILLES": GARDEN_WASTE,
-    "COMPOST": ORGANIC,
+    "RECYCLAGE": wt.RECYCLABLES,
+    "ORDURES": wt.GENERAL_WASTE,
+    "SAPIN": wt.GARDEN_WASTE,
+    "FEUILLES": wt.GARDEN_WASTE,
+    "COMPOST": wt.ORGANIC,
 }
 
 # Window length used by the legacy weekly/bi-weekly/irregular projection.

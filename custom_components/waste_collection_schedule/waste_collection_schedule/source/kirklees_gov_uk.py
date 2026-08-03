@@ -14,6 +14,7 @@ from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, text_field, uprn
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -29,11 +30,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Live-verified (2026-07): the standard AchieveForms handshake
 # (init_session -> authapi/isauthenticated, using the un-prefixed service path
@@ -245,10 +241,10 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "grey wheelie bin": GENERAL_WASTE,
-            "green wheelie bin": RECYCLABLES,
-            "brown wheelie bin": GARDEN_WASTE,
-            "blue wheelie bin": RECYCLABLES,
+            "grey wheelie bin": wt.GENERAL_WASTE,
+            "green wheelie bin": wt.RECYCLABLES,
+            "brown wheelie bin": wt.GARDEN_WASTE,
+            "blue wheelie bin": wt.RECYCLABLES,
         },
     )
 

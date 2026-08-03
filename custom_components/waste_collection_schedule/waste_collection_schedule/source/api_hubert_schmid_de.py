@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -8,7 +9,6 @@ from waste_collection_schedule.config_params import (
     street,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
 
 # Demonstrates: http_post retriever + DateListParser for a single-stream feed.
 # Notable: the API returns a flat date array with no bin type field, so
@@ -47,7 +47,7 @@ class Source(BaseSource):
 
     retrieve = retrievers.http_post
     parse = parsers.DateListParser("cal", label=BLAUE_TONNE, drop_values=(SENTINEL,))
-    transform = RowTransformer(type_value_map={BLAUE_TONNE: RECYCLABLES})
+    transform = RowTransformer(type_value_map={BLAUE_TONNE: wt.RECYCLABLES})
 
     def __init__(
         self,
