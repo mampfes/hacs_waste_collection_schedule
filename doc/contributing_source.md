@@ -426,7 +426,7 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | a `retrieve` / `parse` method that only injects params or calls `.json()` | a configured retriever + a declared `parse =` parser |
 | a `retrieve()` override that reissues a shared service's request by hand | split the service into a `Retriever` + `Parser` and declare them (see [Migrating a source built on a shared service](#migrating-a-source-built-on-a-shared-service)) |
 | a pass-through `classify()` over already-resolved records | yield `(date, key)` and use a transformer |
-| `EXTRA_INFO` dict list on a new source | `REGIONS = [region(title, **params), ...]` |
+| `EXTRA_INFO` on a pipeline source (gated) | `REGIONS = [region(title, **params), ...]` |
 | `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` | typed `PARAMS` (labels) + `HOWTO` |
 | a private weekday/month name dict | `recurrence.weekday()` / `recurrence.month()` |
 | hand-rolled ArcGIS geocode + query | `ArcGisFeatureRetriever` / `ArcGisMultiFeatureRetriever` + the matching parser; route any custom lookup through `ArcGisFeatureParser` |
@@ -501,7 +501,7 @@ On a pipeline source the metadata lives on the class:
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
 | `SOURCE_CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
 | `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. See `mulhouse_alsace_fr.py`. |
-| `EXTRA_INFO` | list or callable | Legacy form of `REGIONS` (dicts with `title`, `url`, `country`, `default_params`). Still supported and adapted into `Region`s internally; prefer `REGIONS` for new sources. |
+| `EXTRA_INFO` | list or callable | **Legacy sources only. A pipeline source must not declare it**, and `test_pipeline_sources_do_not_use_extra_info` rejects one that does. It is the older dict form of `REGIONS` (`title`, `url`, `country`, `default_params`), whose params are not validated against `PARAMS`; `regions.from_extra_info()` adapts it into `Region`s at a single boundary purely so the rest of the toolchain works in `Region` terms only. The adapter is a bridge for the legacy sources still using it, and is deleted with the last of them (see [`legacy_deprecation_plan.md`](legacy_deprecation_plan.md)). |
 
 `WASTE_TYPES` is derived automatically from the transformer, so you do not declare it unless you use `classify()` (then list the types your source can produce).
 
