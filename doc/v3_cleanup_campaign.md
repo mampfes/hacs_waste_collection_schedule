@@ -169,8 +169,19 @@ zero exceptions, and the two rules that made the other 101 sources resist writte
 down (`ConfigParam.defaults` being independent of `required`, and coercion
 belonging on the `ConfigParam`).
 
-The follow-up is worth reading alongside it, because it shows point 4 cutting the
-other way. Rather than live with the first of those two rules, the next change
+The third in the sequence found the same failure in the config fields rather than
+the constructor: the `ADDRESS` term carried labels in five languages while 47
+sources hand-wrote "Street Address" in English, and one source had found
+`term=ADDRESS`. A concept nobody knows about is a concept nobody uses, so
+`test_pipeline_sources_bind_standard_field_terms` now rejects a `text_field`
+whose label duplicates a term's. It also turned up `DISTRICT` and `COUNTY` both
+labelled "District" in English while their German labels (`Ortsteil` against
+`Landkreis`) meant opposite ends of the hierarchy: a coin flip dressed as a
+choice. Look for that shape. A vocabulary with two entries for one word, or one
+entry nothing references, will be got wrong.
+
+The second follow-up is worth reading alongside all of this, because it shows
+point 4 cutting the other way. Rather than live with the first of those two rules, the next change
 removed it: `apply_defaults` now fills every optional field with `None`, so the
 documented trap became a documented guarantee and 33 more sources lost their
 `__init__`. When a trap turns out to be fixable, fix it and correct the note; a

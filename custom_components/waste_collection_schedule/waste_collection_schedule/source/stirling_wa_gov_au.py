@@ -2,7 +2,11 @@ from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import alternatives, coords, text_field
+from waste_collection_schedule.config_params import (
+    alternatives,
+    coords,
+    street_address,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
 from waste_collection_schedule.transformers import KeyValueTransformer
@@ -86,7 +90,7 @@ class Source(BaseSource):
 
     PARAMS = (
         alternatives(
-            [text_field("address", label="Street Address")],
+            [street_address()],
             [coords(lat="lat", lon="lon")],
         ),
     )

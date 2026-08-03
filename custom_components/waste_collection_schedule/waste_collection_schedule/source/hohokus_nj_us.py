@@ -4,7 +4,9 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule import parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.config_params import (
+    dropdown,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import (
     ArgumentLookup,

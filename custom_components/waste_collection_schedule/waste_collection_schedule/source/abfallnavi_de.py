@@ -1,7 +1,9 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    text_field,
+)
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallnaviDe import (
     AbfallnaviParser,

@@ -5,7 +5,7 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import ArcGisZoneParser
@@ -106,7 +106,7 @@ class Source(BaseSource):
         "1 Kew Boulevard Kew": {"address": "1 Kew Boulevard, Kew"},
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": "Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey Hills').",
@@ -116,6 +116,3 @@ class Source(BaseSource):
     parse = ArcGisZoneParser(extract=_zones, address=_geocode_address)
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

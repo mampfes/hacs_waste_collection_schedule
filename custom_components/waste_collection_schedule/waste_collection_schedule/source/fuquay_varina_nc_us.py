@@ -3,7 +3,7 @@ from datetime import date, datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureParser,
     ArcGisFeatureRetriever,
@@ -93,7 +93,7 @@ class Source(BaseSource):
         "Test_002": {"street_address": "123 E Vance St"},
     }
 
-    PARAMS = (text_field("street_address", "Street Address"),)
+    PARAMS = (street_address("street_address"),)
 
     retrieve = ArcGisFeatureRetriever(
         FEATURE_URL,
@@ -102,9 +102,6 @@ class Source(BaseSource):
     )
     parse = ArcGisFeatureParser()
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, street_address: str):
-        super().__init__(street_address=street_address.strip())
 
     def preprocess(self, records, source: "Source | None" = None):
         """Turn each matched feature's free-text pickup fields into (date, key) rows.

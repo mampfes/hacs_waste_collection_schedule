@@ -4,7 +4,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import lookups, parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street
 from waste_collection_schedule.preprocessors import (
     ArgumentLookup,
     Compose,
@@ -79,7 +79,7 @@ class Source(BaseSource):
         "Friday street (Ames Street)": {"street": "Ames Street"},
     }
 
-    PARAMS = (text_field("street", label="Street Name"),)
+    PARAMS = (street(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (

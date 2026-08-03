@@ -3,7 +3,10 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    text_field,
+)
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -45,7 +48,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = (text_field("city", "City"), text_field("area", "Area"))
+    PARAMS = (city(), text_field("area", "Area"))
 
     retrieve = HttpGetRetriever(url=_ics_url)
     # min_events=1: a valid place returns a feed with events; an unknown

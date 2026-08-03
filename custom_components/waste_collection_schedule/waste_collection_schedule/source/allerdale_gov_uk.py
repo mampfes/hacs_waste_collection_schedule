@@ -4,6 +4,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.field_terms import POSTCODE
 from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceParser,
     WhitespaceRetriever,
@@ -47,7 +48,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("address_postcode", "Postcode"),
+        text_field("address_postcode", term=POSTCODE),
         text_field("address_name_number", "House name/number", optional=True),
     )
 

@@ -3,7 +3,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
     IntraMapsPanelParser,
@@ -77,7 +77,7 @@ class Source(BaseSource):
         "Tavistock Street Torquay": {"address": "77 Tavistock Street Torquay"},
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (

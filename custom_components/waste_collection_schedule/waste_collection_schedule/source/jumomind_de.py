@@ -318,21 +318,3 @@ class Source(BaseSource):
     )
     parse = JumomindParser()
     transform = RowTransformer()
-
-    def __init__(
-        self,
-        service_id: str,
-        city: str | None = None,
-        street: str | None = None,
-        city_id=None,
-        area_id=None,
-        house_number=None,
-    ):
-        super().__init__(
-            service_id=service_id,
-            city=city,
-            street=street,
-            city_id=city_id,
-            area_id=area_id,
-            house_number=(str(house_number) if house_number is not None else None),
-        )

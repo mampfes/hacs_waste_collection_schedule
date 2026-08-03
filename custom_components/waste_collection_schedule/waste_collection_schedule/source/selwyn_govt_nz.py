@@ -3,7 +3,7 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
     Compose,
     Deduplicate,
@@ -122,7 +122,7 @@ class Source(BaseSource):
         "156 Leeston Road Springston": {"address": "156 Leeston Road Springston"},
     }
 
-    PARAMS = (text_field("address", "Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -146,6 +146,3 @@ class Source(BaseSource):
         Deduplicate(),
     )
     transform = RowTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

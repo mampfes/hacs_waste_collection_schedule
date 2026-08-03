@@ -2620,6 +2620,56 @@ class TestConfigParamValidation:
             "street": "Hay St",
         }
 
+    def test_coercion_comes_from_the_concept(self):
+        """A term's coerce reaches params without the source asking for it."""
+        from waste_collection_schedule.config_params import (
+            apply_coercions,
+            house_number,
+            street_address,
+            uprn,
+        )
+
+        params = [uprn(), street_address(), house_number()]
+        prepared = apply_coercions(
+            params,
+            # YAML types an unquoted UPRN as an int, and a pasted address keeps
+            # its whitespace.
+            {"uprn": 100012345678, "address": "  1 High St  ", "house_number": 4},
+        )
+        assert prepared == {
+            "uprn": "100012345678",
+            "address": "1 High St",
+            "house_number": "4",
+        }
+
+    def test_coercion_skips_none(self):
+        """An unset optional field stays None rather than becoming "None"."""
+        from waste_collection_schedule.config_params import (
+            apply_coercions,
+            apply_defaults,
+            house_number,
+        )
+
+        params = [house_number(optional=True)]
+        prepared = apply_coercions(params, apply_defaults(params, {}))
+        assert prepared == {"house_number": None}
+
+    def test_text_field_coerce_is_the_escape_hatch(self):
+        """A provider-specific normalisation can live on the one field."""
+        from waste_collection_schedule.config_params import apply_coercions, text_field
+
+        params = [text_field("ref", "Reference", coerce=lambda v: str(v).zfill(12))]
+        assert apply_coercions(params, {"ref": 42}) == {"ref": "000000000042"}
+
+    def test_district_and_county_are_distinguishable_in_english(self):
+        """They are opposite ends of one hierarchy, so the labels must differ."""
+        from waste_collection_schedule.field_terms import COUNTY, DISTRICT
+
+        assert DISTRICT.labels["en"] != COUNTY.labels["en"]
+        # and each still means what its other languages say it means
+        assert DISTRICT.labels["de"] == "Ortsteil"
+        assert COUNTY.labels["de"] == "Landkreis"
+
     def test_apply_defaults_does_not_invent_required_fields(self):
         """A required field stays absent, so validate() can still catch it."""
         from waste_collection_schedule.config_params import apply_defaults, city
@@ -4550,6 +4600,98 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 # on the ConfigParam, declare the default in PARAMS) and then the __init__ goes
 # too, but that is a behavioural change and not this gate's business.
 # --------------------------------------------------------------------------- #
+
+
+# --------------------------------------------------------------------------- #
+# Hand-rolled standard field gate
+#
+# A config field is a standard *concept*: only the wire name varies per source.
+# field_terms.py holds each concept once with its label and help in every
+# supported language, so a source that writes text_field("city", "City") throws
+# that away and ships an English-only label. It also loses whatever normalisation
+# the concept declares (a UPRN is text, an address is stripped).
+#
+# This went unnoticed for a long time: the ADDRESS term had translations in five
+# languages while 47 sources hand-wrote "Street Address" in English, and exactly
+# one source had found `term=ADDRESS`. So the rule is enforced rather than
+# documented: if a text_field's label matches a standard term's label, bind the
+# term (or use its factory) instead.
+#
+# text_field remains right for a genuinely provider-specific field
+# (`black_rhythm`, `predict`, an opaque token). Those have no matching term and
+# so never trip this.
+# --------------------------------------------------------------------------- #
+
+
+def _hand_rolled_standard_fields(stem: str) -> list[str]:
+    """Labels in this source that duplicate a standard FieldTerm's label."""
+    import ast
+    import re
+    from pathlib import Path
+
+    from waste_collection_schedule import field_terms
+
+    def norm(text: str | None) -> str:
+        return re.sub(r"[^a-z0-9]+", "", (text or "").lower())
+
+    terms = {
+        norm(term.labels["en"]): name
+        for name, term in vars(field_terms).items()
+        if isinstance(term, field_terms.FieldTerm)
+    }
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    offenders = []
+    for node in ast.walk(tree):
+        if not (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "text_field"
+        ):
+            continue
+        if any(kw.arg == "term" for kw in node.keywords):
+            continue  # already bound to the concept
+        label: str | None = None
+        positional = [a for a in node.args if isinstance(a, ast.Constant)]
+        if len(positional) > 1 and isinstance(positional[1].value, str):
+            label = positional[1].value
+        for kw in node.keywords:
+            if (
+                kw.arg == "label"
+                and isinstance(kw.value, ast.Constant)
+                and isinstance(kw.value.value, str)
+            ):
+                label = kw.value.value
+        if not label:
+            continue
+        hit = terms.get(norm(label))
+        if hit:
+            offenders.append(f"{label!r} duplicates field_terms.{hit}")
+    return offenders
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_bind_standard_field_terms(stem: str) -> None:
+    """A text_field must not re-label a concept field_terms already defines."""
+    offenders = _hand_rolled_standard_fields(stem)
+    assert not offenders, (
+        f"{stem} hand-writes a standard field: {'; '.join(offenders)}. Bind the "
+        "concept instead, with its factory (city(), street(), house_number(), "
+        "street_address(), ...) or text_field(name, term=TERM), so the label and "
+        "help come from field_terms in every supported language and the concept's "
+        "normalisation applies. Keep text_field with a plain label only for a "
+        "genuinely provider-specific field."
+    )
 
 
 def _redundant_init_reason(stem: str, cls: type) -> str | None:

@@ -272,6 +272,3 @@ class Source(BaseSource):
         return entries
 
     transform = ICSTransformer()
-
-    def __init__(self, city: str, street: str, house_number: "str | int"):
-        super().__init__(city=city, street=street, house_number=str(house_number))

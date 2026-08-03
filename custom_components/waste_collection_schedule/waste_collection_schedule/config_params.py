@@ -7,8 +7,8 @@ Sources declare PARAMS as a list of param types. The framework reads
 these to build the config flow GUI automatically.
 """
 
-from collections.abc import Sequence
-from dataclasses import dataclass, field
+from collections.abc import Callable, Sequence
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 from waste_collection_schedule.exceptions import (
@@ -16,6 +16,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
 )
 from waste_collection_schedule.field_terms import (
+    ADDRESS,
     API_KEY,
     AREA_ID,
     CITY,
@@ -71,6 +72,13 @@ class ConfigParam:
     # native type through apply_defaults into Source.__init__.
     defaults: dict[str, Any] = field(default_factory=dict)
 
+    # How to normalise a supplied value, per field ({field_name: callable}).
+    # Applied after defaults and before validation, and only to a value that is
+    # not None, so an unset optional field stays None rather than becoming the
+    # string "None". Populated automatically from the FieldTerm's `coerce` (a
+    # UPRN is text whoever asks for it), or explicitly for a one-off.
+    coercions: dict[str, Any] = field(default_factory=dict)
+
     # Mutually-exclusive input groups, each a tuple of field names. When set
     # (see ``alternatives``), validation requires exactly one group to be fully
     # provided rather than every field.
@@ -111,12 +119,15 @@ def _compose(
     fields: dict[str, str] = {}
     labels: dict[str, dict[str, str]] = {}
     descriptions: dict[str, dict[str, str]] = {}
+    coercions: dict[str, Any] = {}
     for term, wire in bindings:
         fields[wire] = term.labels["en"]
         for lang, label in term.labels.items():
             labels.setdefault(lang, {})[wire] = label
         for lang, help_text in term.descriptions.items():
             descriptions.setdefault(lang, {})[wire] = help_text
+        if term.coerce is not None:
+            coercions[wire] = term.coerce
     return ConfigParam(
         fields=fields,
         widget=widget,
@@ -124,6 +135,7 @@ def _compose(
         descriptions=descriptions,
         required=(not optional) and not groups,
         defaults=defaults or {},
+        coercions=coercions,
         groups=groups,
     )
 
@@ -179,6 +191,26 @@ def apply_defaults(params: Sequence[ConfigParam], values: dict) -> dict:
                 # the same field omitted in YAML.
                 if prepared.get(field_name) in (None, ""):
                     prepared[field_name] = None
+    return prepared
+
+
+def apply_coercions(params: Sequence[ConfigParam], values: dict) -> dict:
+    """Return ``values`` with each field normalised by its declared coercion.
+
+    Runs after ``apply_defaults`` so a declared default is normalised the same way
+    a user-supplied value is, and before ``validate`` so validation and every
+    later stage see one canonical form.
+
+    A None value is left alone: an unset optional field must stay None rather
+    than become the string ``"None"``, which is what a naive ``str()`` over the
+    whole dict would produce (and what one provider was briefly asked for, see
+    ``abfall_lro_de``).
+    """
+    prepared = dict(values)
+    for param in params:
+        for field_name, coerce in param.coercions.items():
+            if prepared.get(field_name) is not None:
+                prepared[field_name] = coerce(prepared[field_name])
     return prepared
 
 
@@ -280,6 +312,19 @@ def street(field: str = "street", *, optional: bool = False) -> ConfigParam:
 def house_number(field: str = "house_number", *, optional: bool = False) -> ConfigParam:
     """House number (standard field; bind to a wire name)."""
     return _compose("text", (HOUSE_NUMBER, field), optional=optional)
+
+
+def street_address(field: str = "address", *, optional: bool = False) -> ConfigParam:
+    """A whole address on one line, as a single free-text field.
+
+    For a provider whose lookup takes the address as one string ("15 Melville
+    Street, Albany WA 6330"), rather than the separate street/number/postcode
+    inputs that ``address()`` renders. Use this instead of
+    ``text_field("address", "Street Address")``: the label and help come from the
+    standard ADDRESS term in every supported language, and the value is stripped
+    on the way in, which an exact-match lookup usually depends on.
+    """
+    return _compose("text", (ADDRESS, field), optional=optional)
 
 
 def location_id(field: str = "location_id", *, optional: bool = False) -> ConfigParam:
@@ -465,12 +510,13 @@ def text_field(
     default: str | None = None,
     optional: bool = False,
     term: "FieldTerm | None" = None,
+    coerce: "Callable[[Any], Any] | None" = None,
 ) -> ConfigParam:
     """Free text entry — the escape hatch for a field with no standard concept.
 
-    Prefer a standard field factory (``municipality()``, ``street()``, …) so the
-    label is localised for free. When a genuinely novel field still maps to a
-    known concept, pass ``term=`` to get the multilingual label/help; otherwise
+    Prefer a standard field factory (``municipality()``, ``street_address()``, …)
+    so the label is localised for free. When a genuinely novel field still maps to
+    a known concept, pass ``term=`` to get the multilingual label/help; otherwise
     a plain ``label`` is English-only.
 
     Required by default. Two ways to relax that:
@@ -480,14 +526,24 @@ def text_field(
     - ``optional=True`` makes the field optional with no default, for a
       refinement the source can do without (e.g. an extra street or route
       filter alongside a required city).
+
+    ``coerce=`` normalises the value on the way in, for a provider-specific form
+    a standard concept cannot describe (zero-padding a reference to a fixed
+    width, upper-casing a code). It is applied to a non-None value only. If the
+    normalisation is a property of the *concept* rather than of this provider,
+    put it on the ``FieldTerm`` instead so every source binding that term gets
+    it.
     """
     if term is not None:
-        return _compose(
+        param = _compose(
             "text",
             (term, field_name),
             optional=optional or default is not None,
             defaults={field_name: default} if default is not None else None,
         )
+        if coerce is None:
+            return param
+        return replace(param, coercions={**param.coercions, field_name: coerce})
     display = _title(field_name, label)
     return ConfigParam(
         fields={field_name: display},
@@ -496,6 +552,7 @@ def text_field(
             "en": {field_name: display},
         },
         defaults={field_name: default} if default is not None else {},
+        coercions={field_name: coerce} if coerce is not None else {},
         required=default is None and not optional,
     )
 

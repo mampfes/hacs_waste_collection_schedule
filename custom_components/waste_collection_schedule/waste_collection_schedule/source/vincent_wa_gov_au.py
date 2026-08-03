@@ -4,7 +4,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.Pozi import PoziWfsParser, PoziWfsRetriever
 from waste_collection_schedule.transformers import RowTransformer
@@ -98,7 +98,7 @@ class Source(BaseSource):
         ),
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     retrieve = PoziWfsRetriever(
         WFS_BASE_URL, WFS_MAP_PATH, WFS_TYPENAME, address="address"

@@ -216,7 +216,9 @@ Use `IcsEventsParser` with `classify()` only when the source must *inspect* thos
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.
 
-Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `cascading_select(*levels)`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `integer(name, label=..., optional=True, default=...)`, `boolean(name, label=..., default=...)`, `raw_object(name, label=..., optional=True)`, `alternatives(*groups)`.
+Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `street_address()`, `city()`, `street()`, `house_number()`, `district()`, `municipality()`, `location_id()`, `customer_number()`, `dropdown()`, `dependent_select()`, `cascading_select(*levels)`, `multi_value_lookup()`, `text_field(name, label, default=..., coerce=...)`, `api_key(name, label, default=...)`, `integer(name, label=..., optional=True, default=...)`, `boolean(name, label=..., default=...)`, `raw_object(name, label=..., optional=True)`, `alternatives(*groups)`.
+
+`address()` renders the separate street / number / postcode inputs; `street_address()` is the single free-text line for a provider whose lookup takes the whole address as one string. `district()` is an `Ortsteil` (part of one municipality); a `Landkreis` (which contains municipalities) is `COUNTY`, and the two are deliberately labelled "District" and "County" so they cannot be confused.
 
 `integer()`, `boolean()` and `raw_object()` are for an opaque, advanced field with no standard concept behind it (a day-count offset, a `verify_ssl` toggle, a free-form dict of extra request params or headers): the label is English-only. `integer()` and `boolean()` render as HA's `NumberSelector` / `BooleanSelector`; `raw_object()` renders as the free-form object/YAML editor (`ObjectSelector`) and reaches `__init__` as a plain `dict`. See `source/ics.py`'s generic engine (`raw_object("params")`, `raw_object("headers")`) for a worked example.
 
@@ -224,7 +226,7 @@ A param is required by default. Three ways to relax that:
 
 - **Optional with a default.** `text_field(..., default=...)` (and the `api_key(...)` wrapper for provider keys) makes a field optional and pre-fills it, e.g. an embedded public API key. The default is applied before validation, so the user need not supply one but can override it.
 - **Optional, no default.** `text_field(..., optional=True)` / `dropdown(..., optional=True)` makes a field optional with no pre-filled value, for a refinement the source can do without (e.g. an extra street or route filter alongside a required city). Prefer this over `dataclasses.replace(..., required=False)`.
-- **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
+- **Alternative input.** `alternatives([uprn()], [postcode(), house_number()])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
 
 Declare every default here rather than in an `__init__` signature. **Every field declared in `PARAMS` is a key in `self.params`**, whether the user supplied it or not: `apply_defaults` fills a defaulted field with its default, and any other field of a non-required param with `None`. So `self.params["street"]` is safe to read on an optional field and is `None` when unset, and a signature default of `None` adds nothing.
 
@@ -245,9 +247,15 @@ PARAMS = [
 ]
 ```
 
-Available factories: `municipality`, `city`, `district`, `street`, `house_number`, `postcode`, `address`, `coords`, `uprn`, `location_id`, `area_id`, `city_id`, `service_id`, `customer_number`, `api_key`, `waste_types`, plus `state`/`county` for German Bundesland/Landkreis cascades. `cascading_select`/`dependent_select` levels accept a `FieldTerm` (`("f_id_kommune", field_terms.MUNICIPALITY)`) for the same multilingual labels.
+Available factories: `municipality`, `city`, `district`, `street`, `house_number`, `postcode`, `address`, `street_address`, `coords`, `uprn`, `location_id`, `area_id`, `city_id`, `service_id`, `customer_number`, `api_key`, `waste_types`, plus `state`/`county` for German Bundesland/Landkreis cascades. `cascading_select`/`dependent_select` levels accept a `FieldTerm` (`("f_id_kommune", field_terms.MUNICIPALITY)`) for the same multilingual labels.
 
-`text_field("name", "Label")` is the escape hatch for a field with no standard concept (a provider-specific opaque id); its label is English-only unless you pass `term=field_terms.SOME_TERM`. To add a concept, add a `FieldTerm` to `field_terms.py` (all languages) and a thin factory in `config_params.py`; don't reach for a per-source `PARAM_TRANSLATIONS` block. Legacy sources still use `default_translations.py` (field-name keyed) and `PARAM_TRANSLATIONS`; the pipeline runs off `field_terms.py`.
+`text_field("name", "Label")` is the escape hatch for a field with **no standard concept** (a provider-specific opaque id, a bin rhythm, a toggle); its label is English-only unless you pass `term=field_terms.SOME_TERM`.
+
+**Do not hand-write a label a term already defines.** `text_field("city", "City")` throws away a label that exists in five languages and loses the concept's normalisation, so `test_pipeline_sources_bind_standard_field_terms` rejects any `text_field` whose label matches a standard term's. Use the factory (`city()`, `street_address()`, …), or `text_field(name, term=TERM)` when the wire name is odd but the concept is standard. This rule is enforced because it was invisible for a long time: the `ADDRESS` term had all five languages while 47 sources hand-wrote "Street Address" in English, and exactly one had found `term=ADDRESS`.
+
+To add a concept, add a `FieldTerm` to `field_terms.py` (all languages) and a thin factory in `config_params.py`; don't reach for a per-source `PARAM_TRANSLATIONS` block. Legacy sources still use `default_translations.py` (field-name keyed) and `PARAM_TRANSLATIONS`; the pipeline runs off `field_terms.py`.
+
+**Normalisation belongs to the concept.** A `FieldTerm` may declare `coerce=`, applied to a non-None value after defaults and before validation, so every source binding that term gets it: `UPRN`, `HOUSE_NUMBER` and `ADDRESS` carry `as_text` (a stripped string), because YAML types an unquoted UPRN or house number as an int and a pasted address keeps its whitespace. That is why a source does not write `str(uprn).strip()` in an `__init__`: 27 of them did before it moved to the term. For a normalisation that really is specific to one provider (zero-padding a reference, upper-casing a code), pass `coerce=` to `text_field`; if you find yourself repeating it across providers, it belongs on the term.
 
 ### Date parsers (`waste_collection_schedule.date_parsers`)
 
@@ -404,7 +412,8 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | `ICON_MAP` / `mdi:*` strings | the icon comes from the canonical `WasteType`; declare none |
 | `self._x = x` in `__init__` that is read back unchanged | read `self.params["x"]` at point of use, then delete the `__init__` |
 | an `__init__` that only forwards its arguments to `super()` | delete it; `BaseSource.__init__` applies the `PARAMS` defaults, validates, and stores them |
-| `str(uprn)` / `address.strip()` in `__init__` | declare the coercion on the `ConfigParam` so every source on the platform gets it |
+| `str(uprn)` / `address.strip()` in `__init__` | nothing: `UPRN`/`HOUSE_NUMBER`/`ADDRESS` already coerce. For a one-off, `text_field(..., coerce=...)` |
+| `text_field("city", "City")` and other hand-written standard labels | the concept's factory (`city()`, `street_address()`, `district()`, …) or `text_field(name, term=TERM)` |
 | a default in the `__init__` signature (`ort: str \| None = None`) | `text_field(..., default=None)` / `optional=True`, so `PARAMS` is the single source of truth |
 | a `retrieve` / `parse` method that only injects params or calls `.json()` | a configured retriever + a declared `parse =` parser |
 | a `retrieve()` override that reissues a shared service's request by hand | split the service into a `Retriever` + `Parser` and declare them (see [Migrating a source built on a shared service](#migrating-a-source-built-on-a-shared-service)) |

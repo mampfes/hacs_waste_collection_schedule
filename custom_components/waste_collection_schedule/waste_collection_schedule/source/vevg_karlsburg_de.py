@@ -21,7 +21,10 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    location_id,
+    text_field,
+)
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -83,7 +86,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("ort", "Location ID"),
+        location_id(field="ort"),
         text_field("kreis", "District code"),
     )
 

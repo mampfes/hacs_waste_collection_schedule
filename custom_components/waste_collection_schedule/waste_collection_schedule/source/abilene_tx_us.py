@@ -4,7 +4,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureParser,
@@ -129,7 +129,7 @@ class Source(BaseSource):
         "City Hall area (Tue/Fri trash)": {"address": "555 Walnut St, Abilene, TX"},
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -145,6 +145,3 @@ class Source(BaseSource):
     parse = ArcGisMultiFeatureParser()
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

@@ -5,7 +5,10 @@ from typing import Any, ClassVar, Literal, final
 import holidays
 from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    district,
+    municipality,
+)
 from waste_collection_schedule.preprocessors import (
     Compose,
     Disambiguate,
@@ -230,8 +233,8 @@ class Source(BaseSource):
     )
 
     PARAMS = (
-        text_field("commune", label="Municipality"),
-        text_field("quartier", label="District", optional=True),
+        municipality(field="commune"),
+        district(field="quartier", optional=True),
     )
 
     HOWTO: ClassVar[dict] = {

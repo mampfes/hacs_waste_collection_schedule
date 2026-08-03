@@ -26,7 +26,7 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -135,7 +135,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = (text_field("address", "Address"),)
+    PARAMS = (street_address(),)
 
     retrieve = FallbackRetriever(
         Branch("ics", follow_link(r"ics$")),

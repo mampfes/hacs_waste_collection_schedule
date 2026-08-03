@@ -42,6 +42,7 @@ from waste_collection_schedule import date_parsers, parsers, preprocessors, retr
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import (
     ConfigParam,
+    apply_coercions,
     apply_defaults,
     validate,
 )
@@ -196,7 +197,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         a key in ``self.params`` (its default, or None for an unset optional
         field), so a signature default of None adds nothing.
         """
-        prepared = apply_defaults(self.PARAMS, dict(kwargs))
+        prepared = apply_coercions(self.PARAMS, apply_defaults(self.PARAMS, kwargs))
         validate(self.PARAMS, prepared)
         self.params: dict[str, Any] = prepared
         self._session: Any = None

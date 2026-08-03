@@ -14,7 +14,7 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
     Compose,
     Deduplicate,
@@ -85,7 +85,7 @@ class Source(BaseSource):
         "Test_004": {"address": "2714 S Marvine St"},
     }
 
-    PARAMS = (text_field("address", label="Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": "Use your address as shown on the phila.gov trash/recycling "

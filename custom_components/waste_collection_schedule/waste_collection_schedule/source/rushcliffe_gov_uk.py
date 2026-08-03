@@ -1,7 +1,10 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.config_params import (
+    postcode,
+    street_address,
+)
 from waste_collection_schedule.service.FirmstepSelfService import (
     RushcliffeAddressRetriever,
     RushcliffePanelParser,
@@ -42,7 +45,7 @@ class Source(BaseSource):
         }
     }
 
-    PARAMS = (postcode(), text_field("address", "Address"))
+    PARAMS = (postcode(), street_address())
 
     retrieve = RushcliffeAddressRetriever(
         form_url=FORM_URL,

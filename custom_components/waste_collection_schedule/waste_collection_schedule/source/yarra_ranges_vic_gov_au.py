@@ -5,7 +5,7 @@ from urllib.parse import urlencode
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.transformers import HtmlTransformer
 from waste_collection_schedule.waste_types import (
@@ -81,7 +81,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = (text_field("street_address", label="Street Address"),)
+    PARAMS = (street_address("street_address"),)
 
     HOWTO: ClassVar[dict] = {
         "en": "Enter your full street address as it appears on the council's "

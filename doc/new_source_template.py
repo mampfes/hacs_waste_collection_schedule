@@ -54,10 +54,15 @@ class Source(BaseSource):
         "example": {"uprn": "100012345678"},
     }
 
-    # >>> The config-flow inputs. Factories: uprn(), postcode(), address(),
-    # coords(), municipality(), dropdown(), dependent_select(), text_field(),
-    # api_key(), alternatives(...). Use optional=True / default=... / alternatives
-    # rather than dataclasses.replace.
+    # >>> The config-flow inputs. Pick the factory for the concept and bind your
+    # wire name to it (street(field="strasse")), so the label, the help text and
+    # any normalisation come from field_terms.py in all five languages:
+    # uprn(), postcode(), address(), street_address(), city(), street(),
+    # house_number(), district(), municipality(), location_id(),
+    # customer_number(), coords(), dropdown(), dependent_select(), alternatives().
+    # text_field() is only for a field with no standard concept, and writing a
+    # label a term already defines is a test failure, not a style preference.
+    # Use optional=True / default=... rather than dataclasses.replace.
     PARAMS = (uprn(),)
 
     # >>> Per-language guidance shown in the config form (en/de/fr/it).

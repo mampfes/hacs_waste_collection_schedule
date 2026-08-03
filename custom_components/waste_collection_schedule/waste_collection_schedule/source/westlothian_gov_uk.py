@@ -215,6 +215,3 @@ class Source(BaseSource):
             "blue": PAPER,
         }
     )
-
-    def __init__(self, postcode: str, uprn: "str | int"):
-        super().__init__(postcode=postcode, uprn=str(uprn))

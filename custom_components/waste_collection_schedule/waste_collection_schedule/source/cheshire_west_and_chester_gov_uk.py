@@ -123,6 +123,3 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
         type_value_map=GENERIC_SERVICE_TYPES,
     )
-
-    def __init__(self, uprn: str | int):
-        super().__init__(uprn=str(uprn))
