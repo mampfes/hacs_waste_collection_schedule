@@ -95,7 +95,7 @@ ruff format <file>
 
 There are two source styles. The full guide is `doc/contributing_source.md`.
 
-1. **`BaseSource` pipeline (preferred for new sources).** The source declares which reusable steps to use: `retrieve` (raw fetch) then `parse` (structure) then `preprocess` (records) then `transform` (one `Collection` per record). Metadata, `PARAMS` and the steps are class attributes; usually the only source-specific code is `__init__` (which calls `super().__init__(**kwargs)`). No `fetch()`, no per-source `ICON_MAP`, no manual date parsing. Use `classify()` instead of a transformer for irregular providers. See the converted examples (`kwinana_wa_gov_au.py`, `koppl_at.py`, `reading_gov_uk.py`).
+1. **`BaseSource` pipeline (preferred for new sources).** The source declares which reusable steps to use: `retrieve` (raw fetch) then `parse` (structure) then `preprocess` (records) then `transform` (one `Collection` per record). Metadata, `PARAMS` and the steps are class attributes; usually there is no source-specific code at all. No `__init__` (`BaseSource.__init__` takes the `PARAMS` fields as kwargs, applies their defaults, validates, and stores them on `self.params`), no `fetch()`, no per-source `ICON_MAP`, no manual date parsing. Use `classify()` instead of a transformer for irregular providers. See the converted examples (`kwinana_wa_gov_au.py`, `koppl_at.py`, `reading_gov_uk.py`).
 2. **Legacy module-level contract (still fully supported).** Module-level `TITLE`/`URL`/... plus a `Source` class with a hand-written `fetch() -> list[Collection]` returning `Collection(date, t, icon=...)`. Around 600 sources use this. A bug fix to one does not need converting.
 
 Both styles need this metadata (on the class for pipeline sources, at module level for legacy):
@@ -108,7 +108,7 @@ Both styles need this metadata (on the class for pipeline sources, at module lev
 | `COUNTRY` | `str` | **Lowercase code** from `update_docu_links.py`'s `COUNTRYCODES` list. UK = `"uk"` (NOT `"gb"`); Canada = `"ca"` (lowercase). An invalid value silently orphans the source out of README/info/sources.json. |
 | `TEST_CASES` | `dict` | Maps test-case name to constructor kwargs. Must not be empty. |
 
-Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`). Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
+Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`), but no `__init__`. Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
 
 **Cassette rule (enforced).** Every pipeline source ships a recorded cassette under `tests/fixtures/<module>/`, so CI replays it offline instead of calling live providers. Record with `python tests/record_fixtures.py <module>` and commit the JSON. `tests/test_new_architecture.py::test_pipeline_sources_ship_a_cassette` enforces it. A shared-service source keeps one cassette per distinct response shape.
 

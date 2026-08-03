@@ -4477,6 +4477,151 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Redundant __init__ gate
+#
+# A pipeline source that declares PARAMS needs no __init__. BaseSource.__init__
+# already applies the declared defaults, validates against PARAMS, and stores the
+# result on self.params. An override that only forwards its arguments to super()
+# under the same names restates that contract in a second place, where it can
+# drift from PARAMS, and it is the reason the three consumers of the constructor
+# signature (test_source_has_necessary_parameters, test_params_fields_match_init
+# and update_docu_links) each carry a PARAMS fallback.
+#
+# This gate is deliberately narrow: it fires only when the override provably does
+# nothing. An __init__ that coerces a value, supplies a default PARAMS does not
+# declare, or does any other work is left alone, because deleting it would change
+# behaviour. Both of those are better fixed at the source (declare the coercion
+# on the ConfigParam, declare the default in PARAMS) and then the __init__ goes
+# too, but that is a behavioural change and not this gate's business.
+# --------------------------------------------------------------------------- #
+
+
+def _redundant_init_reason(stem: str, cls: type) -> str | None:
+    """Return a reason if this source's __init__ is a pure passthrough.
+
+    None means the override earns its place (or there is no override).
+    """
+    import ast
+    from pathlib import Path
+
+    from waste_collection_schedule.base_source import BaseSource
+
+    # getattr rather than cls.__init__, which mypy rejects as unsound on a type.
+    if getattr(cls, "__init__", None) is BaseSource.__init__:
+        return None  # already inherits: nothing to answer for
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    node = next(
+        (
+            n
+            for n in ast.walk(tree)
+            if isinstance(n, ast.ClassDef) and n.name == "Source"
+        ),
+        None,
+    )
+    if node is None:
+        return None
+    init = next(
+        (
+            b
+            for b in node.body
+            if isinstance(b, ast.FunctionDef) and b.name == "__init__"
+        ),
+        None,
+    )
+    if init is None:
+        return None
+
+    args = init.args
+    if args.posonlyargs or args.vararg or args.kwonlyargs:
+        return None  # an unusual signature is doing something on purpose
+
+    body = [
+        statement
+        for statement in init.body
+        if not (
+            isinstance(statement, ast.Expr)
+            and isinstance(statement.value, ast.Constant)
+            and isinstance(statement.value.value, str)
+        )
+    ]
+    if len(body) != 1:
+        return None  # real work beyond the super() call
+    statement = body[0]
+    if not (
+        isinstance(statement, ast.Expr)
+        and isinstance(statement.value, ast.Call)
+        and isinstance(statement.value.func, ast.Attribute)
+        and statement.value.func.attr == "__init__"
+        and isinstance(statement.value.func.value, ast.Call)
+    ):
+        return None
+    call = statement.value
+    if call.args:
+        return None  # positional forwarding is not the shape this gate matches
+
+    named = [a.arg for a in args.args if a.arg != "self"]
+    passed = {
+        kw.arg: ast.unparse(kw.value) for kw in call.keywords if kw.arg is not None
+    }
+    starred = [kw for kw in call.keywords if kw.arg is None]
+
+    if args.kwarg and starred and not named:
+        if ast.unparse(starred[0].value) == args.kwarg:
+            return "it forwards **kwargs to super() unchanged"
+        return None
+    if starred or set(passed) != set(named) or not all(passed[k] == k for k in named):
+        return None  # renames or coerces something on the way through
+
+    fields: set[str] = set()
+    declared_defaults: dict[str, object] = {}
+    for param in getattr(cls, "PARAMS", ()) or ():
+        fields.update(param.fields.keys())
+        declared_defaults.update(param.defaults)
+    if set(named) != fields:
+        return None  # signature and PARAMS disagree; not a safe deletion
+
+    # A default the PARAMS does not declare is load-bearing: ConfigParam.defaults
+    # is independent of `required`, so without it an omitted optional field is
+    # absent from self.params rather than present as None.
+    signature_defaults = dict(
+        zip(named[len(named) - len(args.defaults) :], args.defaults, strict=True)
+    )
+    for field_name, default_node in signature_defaults.items():
+        if field_name not in declared_defaults:
+            return None
+        if repr(declared_defaults[field_name]) != ast.unparse(default_node):
+            return None
+
+    return "it forwards every argument to super() under the same name"
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem,cls", _NEW_STYLE_SOURCES, ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_dont_redeclare_init(stem: str, cls: type) -> None:
+    """A pipeline source must not restate what BaseSource.__init__ already does."""
+    reason = _redundant_init_reason(stem, cls)
+    assert reason is None, (
+        f"{stem} declares an __init__ that can be deleted outright, because "
+        f"{reason}. BaseSource.__init__ already applies the PARAMS defaults, "
+        "validates, and stores the values on self.params, so delete the override "
+        "and let it be inherited. Keep an __init__ only when it does real work; "
+        "put argument coercion on the ConfigParam and declare defaults in PARAMS "
+        "rather than in the signature."
+    )
+
+
+# --------------------------------------------------------------------------- #
 # Step-override ratchet
 #
 # Overriding retrieve/parse/preprocess/transform on a source puts provider

@@ -8,8 +8,8 @@ that do not apply. The full reference is ``doc/contributing_source.md``; the
 ``source-implementer`` agent (or ``/new-source``) can generate this for you.
 
 The pipeline is four swappable steps: retrieve, parse, preprocess, transform.
-For most sources the only source-specific code is ``__init__``; everything else
-is declarative class attributes.
+For most sources there is no source-specific code at all: the whole source is
+declarative class attributes, and there is no ``__init__``.
 """
 
 from typing import ClassVar, TypedDict, final
@@ -17,6 +17,7 @@ from typing import ClassVar, TypedDict, final
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn  # >>> pick your params
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import (  # >>> map only what you emit
     GENERAL_WASTE,
@@ -64,6 +65,14 @@ class Source(BaseSource):
         "en": "Find your UPRN at https://www.findmyaddress.co.uk/",
     }
 
+    # >>> Shape the request here, not in an __init__. params= takes a callable
+    # receiving the PARAMS fields by name; end it with **_ to ignore the rest.
+    # Declare no `retrieve` at all for a zero-config GET against API_URL.
+    retrieve = HttpGetRetriever(
+        url="https://api.example.com/collections",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+
     # >>> Parse the response. JsonParser("key", "subkey") drills into nested
     # data; HtmlParser/IcsParser/PdfTextParser/XmlParser/CsvParser also exist.
     # shape= validates the response and raises ResponseShapeError on a mismatch.
@@ -82,12 +91,12 @@ class Source(BaseSource):
         },
     )
 
-    def __init__(self, uprn: str | None = None):
-        # super().__init__ validates kwargs against PARAMS and stores them.
-        super().__init__(uprn=uprn)
-        # >>> If the request needs params/headers built from the inputs, set
-        # self._params / self._headers here (read by the default retriever).
-        self._params = {"uprn": uprn}
+    # >>> No __init__. BaseSource.__init__ accepts the PARAMS fields as keyword
+    # arguments, applies their declared defaults, validates them, and stores the
+    # result on self.params, which every step can read. An __init__ that only
+    # forwards its arguments to super() is rejected by
+    # test_pipeline_sources_dont_redeclare_init. Add one only to do real work,
+    # and declare defaults in PARAMS rather than in its signature.
 
     # >>> Most sources need none of the below. Add only what applies:
     #

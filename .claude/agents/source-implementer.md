@@ -31,7 +31,7 @@ For **adding a location to a shared config**:
 
 ## The pipeline platform
 
-A `BaseSource` runs four typed, swappable steps: `retrieve` (fetch raw data), `parse` (turn it into structured data), `preprocess` (normalise into one record per collection), `transform` (map each record's date and label onto a canonical `WasteType`). `BaseSource` provides the orchestration; you assign the steps from reusable components. For most providers the only source-specific code is `__init__`, which calls `super().__init__(**kwargs)` and sets `self._params` / `self._headers`.
+A `BaseSource` runs four typed, swappable steps: `retrieve` (fetch raw data), `parse` (turn it into structured data), `preprocess` (normalise into one record per collection), `transform` (map each record's date and label onto a canonical `WasteType`). `BaseSource` provides the orchestration; you assign the steps from reusable components. For most providers there is no source-specific code at all: the whole source is class attributes, with no `__init__`.
 
 Before writing any retriever or parser, check whether the provider runs on a platform that already ships reusable components in `waste_collection_schedule.service`: ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService (UK), IntraMaps, Abfallnavi / regio iT DE, Sitepark IES DE, Pozi (AU), WhatBinDay (AU), Sepan (PL), Junker app (IT), A Region (CH), Ecoharmonogram (PL), Cloud9 apps (UK). Also check the shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace). If your provider is covered, add it there instead. See `doc/contributing_source.md`'s "Reusable service platforms" table for the full, current list and the components each one exposes.
 
@@ -60,6 +60,7 @@ A flat JSON API, typed by a label-to-waste-type map:
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
@@ -69,7 +70,6 @@ class Source(BaseSource):
     DESCRIPTION = "Source for <Provider Name>, <Country>."
     URL = "<provider website>"
     COUNTRY = "<lowercase code from COUNTRYCODES>"
-    API_URL = "https://api.example.com/collections"
 
     TEST_CASES = {
         "<descriptive name 1>": {"uprn": "<known-good value>"},
@@ -87,24 +87,26 @@ class Source(BaseSource):
     # are notified and assigned on bug reports for this source.
     # SOURCE_CODEOWNERS = ["@contributor-github-handle"]
 
+    retrieve = HttpGetRetriever(
+        url="https://api.example.com/collections",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
     parse = parsers.JsonParser("collections")
     transform = JsonTransformer(
         date_key="date",
         type_key="binType",
         type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
     )
-
-    def __init__(self, uprn: str):
-        super().__init__(uprn=uprn)
-        self._params = {"uprn": uprn}
 ```
 
-No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / `self._headers` in `__init__` to shape the request. For a service-platform source, assign the platform's retriever and parser instead (see `koppl_at.py`). For alternative-input sources (UPRN or postcode plus house), declare a single `alternatives([uprn()], [postcode(), text_field("house")])` param: validation then requires exactly one group, so no hand-rolled cross-field check is needed (see `reading_gov_uk.py`). A two-call source (lookup then schedule) can use `retrievers.TwoStepRetriever` rather than overriding `retrieve` by hand.
+Note there is no `__init__`: `BaseSource.__init__` already accepts the `PARAMS` fields as keyword arguments, applies their declared defaults, validates them, and stores the result on `self.params`. Shape the request on the retriever, as above; declaring no `retrieve` at all gives the zero-config GET against `API_URL`. For a service-platform source, assign the platform's retriever and parser instead (see `koppl_at.py`). For alternative-input sources (UPRN or postcode plus house), declare a single `alternatives([uprn()], [postcode(), text_field("house")])` param: validation then requires exactly one group, so no hand-rolled cross-field check is needed (see `reading_gov_uk.py`). A two-call source (lookup then schedule) can use `retrievers.TwoStepRetriever` rather than overriding `retrieve` by hand.
 
 ### Rules
 
 - Subclass `BaseSource`. No module-level `fetch()`, no `ICON_MAP`, no `WASTE_TYPES` (unless you use `classify()`, in which case list the types it can produce).
-- `__init__` must call `super().__init__(**kwargs)`. That validates the arguments against `PARAMS` and stores them on `self.params`.
+- **Do not write an `__init__`.** `BaseSource.__init__` accepts the `PARAMS` fields as keyword arguments, applies their declared defaults, validates them, and stores the result on `self.params`. `test_pipeline_sources_dont_redeclare_init` fails any source whose `__init__` only forwards its arguments to `super()`. Add one only to do real work, and if you do, it must still call `super().__init__(**kwargs)`.
+- Declare defaults in `PARAMS` (`text_field(..., default=...)`), never in an `__init__` signature. `ConfigParam.defaults` is independent of `required`, so a merely `optional=True` field is absent from `self.params` when omitted rather than present as `None`: read it with `self.params.get("x")`, or give it an explicit `default=None` if the key must exist.
+- Put argument coercion (`str(uprn)`, `address.strip()`) on the `ConfigParam`, not in an `__init__`, so every source on the platform gets it.
 - Use the canonical `WasteType` values, never raw icons or `"mdi:..."` strings. Do not declare a per-source icon map; the icon comes from the type.
 - **Do not add a new `WasteType` yourself.** The catalogue is deliberately small. If the provider returns a genuinely new category that fits none of the eleven and is general enough that other sources would use it, pick the nearest sensible type and flag the gap in the **Open questions for the contributor** section of your report. The contributor then opens an issue proposing the addition (name, MDI icon, two or three example providers); only after maintainer agreement does the catalogue gain it.
 - If the contributor (or a user) "just prefers" a different MDI icon for a waste type, they should use the per-user icon override in their YAML configuration (the `customise`-style override), not change the canonical default. Don't pick a non-canonical type to satisfy a stated preference.
@@ -116,7 +118,7 @@ No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / 
 - No `if __name__ == "__main__":` blocks. No standalone-script boilerplate.
 - No hardcoded dates or schedules. Fetch live from the provider.
 - No dummy parameters (e.g. `_`) just to satisfy the config GUI.
-- Type hints on the `__init__` signature are expected by the test suite's static checks (pyright covers pipeline sources).
+- Type-hint any function or method you do write; pyright covers pipeline sources.
 - **Do not reintroduce old-style habits inside the pipeline** (full list in `doc/contributing_source.md` "Anti-patterns"). No `datetime.strptime` (use `date_parsers.for_format(...)` / `from_epoch(...)` or `self.parse_date`); no `requests.get` / `curl_cffi.Session` in a source (use the default `http_get`, a configured retriever, or a named `Legacy*` one, all via `source.session`); no hand-built `BeautifulSoup` (use `HtmlParser`); no `self._x = x` stash that is read back unchanged (read `self.params["x"]`); prefer `REGIONS` over `EXTRA_INFO`; prefer a configured retriever over a `retrieve` method that only injects params; when migrating a source built on a shared service, split the service into a retriever + parser rather than overriding `retrieve` to reissue its request (migration is a re-implementation, not a wrapper); for ArcGIS use the declarative `ArcGis*` retrievers/parsers, not a hand-rolled geocode+query.
 
 ## Documentation page
@@ -129,7 +131,7 @@ Only a **legacy** module-level source still needs a hand-written `doc/source/<mo
 
 1. Confirm the recommendation is complete (module name, country code, parameters, data feed details, at least one test case). If anything's missing, ask the user.
 2. Check for a reusable service platform or shared YAML / EXTRA_INFO platform that already covers the provider before writing new retrieval code.
-3. Write the source `.py` file as a `BaseSource` subclass using the pipeline template. Declare the retrieve / parse / preprocess / transform steps from reusable components, set `self._params` / `self._headers` in `__init__`, and use a transformer (or `classify()`) rather than a hand-written `fetch()`.
+3. Write the source `.py` file as a `BaseSource` subclass using the pipeline template. Declare the retrieve / parse / preprocess / transform steps from reusable components, shape the request on the retriever rather than in an `__init__`, and use a transformer (or `classify()`) rather than a hand-written `fetch()`.
 4. Encourage the contributor to add their GitHub handle to `SOURCE_CODEOWNERS` (a class attribute on a pipeline source, a module-level variable on a legacy source). Explain that this means they will be automatically notified and assigned on bug reports for their source. If they decline or are not present, leave the commented-out placeholder.
 5. Lint/format:
    ```bash

@@ -12,9 +12,11 @@ A source is a composition of typed, callable pipeline steps:
 BaseSource is generic over the parser output type and the transformer input
 type. Wiring an incompatible parser + transformer is a static (mypy) error.
 
-Sources declare which standard steps to use. For most sources, the only
-source-specific code is ``__init__`` (validating and storing constructor args
-via ``super().__init__(**kwargs)``). Everything else is declarative::
+Sources declare which standard steps to use. For most sources there is no
+source-specific code at all, and in particular no ``__init__``: this class's
+``__init__`` already accepts the declared ``PARAMS`` as keyword arguments,
+applies their defaults, validates them, and stores the result on ``self.params``.
+Everything is declarative::
 
     class Source(BaseSource):
         TITLE = "Example Council"
@@ -183,8 +185,16 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         """Validate constructor args against PARAMS and store them.
 
         Validation happens up front so that retrievers and transformers can
-        assume clean params. Sources may override __init__ for custom
-        validation but should call ``super().__init__(**kwargs)``.
+        assume clean params.
+
+        This accepts the fields declared in PARAMS as keyword arguments, so a
+        source does not need its own __init__ and should not write one that only
+        forwards its arguments here (``test_pipeline_sources_dont_redeclare_init``
+        enforces that). Override it only to do real work, and still call
+        ``super().__init__(**kwargs)``. Declare defaults on the ConfigParam
+        rather than in an override's signature: ``defaults`` is independent of
+        ``required``, so a field that is only ``optional=True`` is absent from
+        ``self.params`` when omitted rather than present as None.
         """
         prepared = apply_defaults(self.PARAMS, dict(kwargs))
         validate(self.PARAMS, prepared)

@@ -4,7 +4,7 @@
 
 There are two ways to write a source:
 
-1. **The `BaseSource` pipeline (recommended for new sources).** You declare which standard, reusable steps to use (retrieve, parse, preprocess, transform). For most providers the only source-specific code is `__init__`. This is the platform described in this guide.
+1. **The `BaseSource` pipeline (recommended for new sources).** You declare which standard, reusable steps to use (retrieve, parse, preprocess, transform). For most providers there is no source-specific code at all: the whole source is class attributes. This is the platform described in this guide.
 2. **The legacy module-level contract.** A module that defines `TITLE`, `URL`, `TEST_CASES` and a `Source` class with a hand-written `fetch()`. Around 600 existing sources use this style and it remains fully supported. See [Legacy module-level sources](#legacy-module-level-sources) at the end.
 
 Both styles produce the same `Collection` data and live in the same folder. New contributions should prefer the pipeline because it removes most of the boilerplate (no `fetch()`, no per-source icon map, no manual date parsing) and reuses tested components.
@@ -49,6 +49,7 @@ from typing import final
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
@@ -59,7 +60,6 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Example Council."
     URL = "https://example.com"
     COUNTRY = "uk"
-    API_URL = "https://api.example.com/collections"
 
     TEST_CASES = {
         "Test 1": {"uprn": "100012345678"},
@@ -67,24 +67,24 @@ class Source(BaseSource):
 
     PARAMS = [uprn()]
 
+    retrieve = HttpGetRetriever(
+        url="https://api.example.com/collections",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
     parse = parsers.JsonParser("collections")
     transform = JsonTransformer(
         date_key="date",
         type_key="binType",
         type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
     )
-
-    def __init__(self, uprn: str):
-        super().__init__(uprn=uprn)
-        self._params = {"uprn": uprn}
 ```
 
 Notes:
 
 - Decorate the class with `@typing.final`. A `Source` is only ever instantiated by the framework, never subclassed, so marking it final lets the type checker (pyright) verify it fully and correctly implements the `BaseSource` contract; without it, override and signature mismatches in the source can go unreported.
-- No `retrieve` is declared, so the default zero-config GET is used. It reads `API_URL`, `self._params`, `self._headers` and `TIMEOUT` from the source. Set `self._params` / `self._headers` in `__init__` to shape the request.
+- **There is no `__init__`.** `BaseSource.__init__` takes the declared `PARAMS` as keyword arguments, applies their defaults, validates them, and stores the result on `self.params`. Restating that in the source adds a second place for the argument list to drift from `PARAMS`, so `test_pipeline_sources_dont_redeclare_init` rejects an `__init__` that only forwards its arguments to `super()`. Write one only when it does real work.
+- The request is shaped on the retriever. `HttpGetRetriever(params=...)` takes a callable receiving the params by name (end it with `**_` so it ignores the ones it does not use). Declaring no `retrieve` at all gives the zero-config GET, which reads `API_URL`, `self._params`, `self._headers` and `TIMEOUT` from the source; prefer the configured retriever, since setting `self._params` needs an `__init__`.
 - No icons. The icon comes from the canonical `WasteType`, not from a per-source map.
-- `__init__` must call `super().__init__(**kwargs)`. That validates the arguments against `PARAMS` and stores them on `self.params`.
 
 ## Building blocks
 
@@ -223,6 +223,8 @@ A param is required by default. Three ways to relax that:
 - **Optional with a default.** `text_field(..., default=...)` (and the `api_key(...)` wrapper for provider keys) makes a field optional and pre-fills it, e.g. an embedded public API key. The default is applied before validation, so the user need not supply one but can override it.
 - **Optional, no default.** `text_field(..., optional=True)` / `dropdown(..., optional=True)` makes a field optional with no pre-filled value, for a refinement the source can do without (e.g. an extra street or route filter alongside a required city). Prefer this over `dataclasses.replace(..., required=False)`.
 - **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
+
+Declare every default here rather than in an `__init__` signature, because the two are not equivalent. `ConfigParam.defaults` is independent of `required`: `apply_defaults` fills only the fields that declare a default, so a field that is merely `optional=True` is **absent** from `self.params` when the user omits it, where an `__init__` default of `None` would have made it present and `None`. Read an optional field with `self.params.get("x")`, and if the pipeline needs the key to exist, give it an explicit `default=None`.
 
 `dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.
 
@@ -396,7 +398,10 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | `requests.get(...)` / `curl_cffi.Session(...)` in a source | the default `http_get`, a configured `HttpGetRetriever`, or a named `Legacy*` retriever; all use `source.session` |
 | `BeautifulSoup(...)` built by hand | `parse = parsers.HtmlParser(selector, ...)` |
 | `ICON_MAP` / `mdi:*` strings | the icon comes from the canonical `WasteType`; declare none |
-| `self._x = x` in `__init__` that is read back unchanged | read `self.params["x"]` at point of use (keep the `__init__` signature) |
+| `self._x = x` in `__init__` that is read back unchanged | read `self.params["x"]` at point of use, then delete the `__init__` |
+| an `__init__` that only forwards its arguments to `super()` | delete it; `BaseSource.__init__` applies the `PARAMS` defaults, validates, and stores them |
+| `str(uprn)` / `address.strip()` in `__init__` | declare the coercion on the `ConfigParam` so every source on the platform gets it |
+| a default in the `__init__` signature (`ort: str \| None = None`) | `text_field(..., default=None)` / `optional=True`, so `PARAMS` is the single source of truth |
 | a `retrieve` / `parse` method that only injects params or calls `.json()` | a configured retriever + a declared `parse =` parser |
 | a `retrieve()` override that reissues a shared service's request by hand | split the service into a `Retriever` + `Parser` and declare them (see [Migrating a source built on a shared service](#migrating-a-source-built-on-a-shared-service)) |
 | a pass-through `classify()` over already-resolved records | yield `(date, key)` and use a transformer |
