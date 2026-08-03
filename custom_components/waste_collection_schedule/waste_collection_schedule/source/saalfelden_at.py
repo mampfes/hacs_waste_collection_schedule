@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.service.RiSKommunalAT import (
@@ -7,12 +8,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.saalfelden.at"
 
@@ -24,7 +19,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Achenweg 1": {"strasse": "Achenweg", "hausnummer": 1},
@@ -71,7 +66,7 @@ class Source(BaseSource):
     # plural ("Christbäume"/"Weihnachtsbäume").
     transform = ICSTransformer(
         type_value_map={
-            "Christbaum": GARDEN_WASTE,
-            "Weihnachtsbaum": GARDEN_WASTE,
+            "Christbaum": wt.GARDEN_WASTE,
+            "Weihnachtsbaum": wt.GARDEN_WASTE,
         },
     )

@@ -17,16 +17,11 @@ source's "Harthweg 7" TEST_CASE exactly).
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://info.zke-sb.de/WasteManagementSaarbruecken/WasteManagementServlet"
 
@@ -93,9 +88,9 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=lambda label: label.split(":")[0].strip(),
         type_value_map={
-            "restmuell": GENERAL_WASTE,
-            "biomuell": ORGANIC,
-            "papiertonne": PAPER,
-            "gelbe tonne": RECYCLABLES,
+            "restmuell": wt.GENERAL_WASTE,
+            "biomuell": wt.ORGANIC,
+            "papiertonne": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
         },
     )

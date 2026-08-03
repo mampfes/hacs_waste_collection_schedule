@@ -2,6 +2,7 @@ from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -16,7 +17,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Selwyn's ArcGIS layer is queried with an address-prefix `where` clause, so a
 # short fragment can come back holding several distinct properties' rows.
@@ -36,9 +36,9 @@ RECYCLING = "Recycling"
 ORGANICS = "Organics"
 
 _TYPE_MAP = {
-    RUBBISH: GENERAL_WASTE,
-    RECYCLING: RECYCLABLES,
-    ORGANICS: ORGANIC,
+    RUBBISH: wt.GENERAL_WASTE,
+    RECYCLING: wt.RECYCLABLES,
+    ORGANICS: wt.ORGANIC,
 }
 
 # Number of weeks of collections to generate (matches the legacy default).

@@ -2,33 +2,25 @@
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.Sepan import SepanReportParser, SepanRetriever
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Waste-type names as rendered by this deployment's report table (matches the
 # wording used by the alba_com_pl deployment of the same underlying
 # "SEPAN"/ICHI System platform). Not in Polish shared-vocabulary aliases
 # (Polish isn't a resolve() language), so every label is mapped explicitly.
 TYPE_VALUE_MAP = {
-    "Zmieszane odpady komunalne": GENERAL_WASTE,
-    "Metale i tworzywa sztuczne": RECYCLABLES,
-    "Papier": PAPER,
-    "Szkło": GLASS,
-    "Bioodpady": ORGANIC,
-    "Bioodpady - Drzewka świąteczne": GARDEN_WASTE,
-    "Odpady wystawkowe": BULKY_WASTE,
+    "Zmieszane odpady komunalne": wt.GENERAL_WASTE,
+    "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "Papier": wt.PAPER,
+    "Szkło": wt.GLASS,
+    "Bioodpady": wt.ORGANIC,
+    "Bioodpady - Drzewka świąteczne": wt.GARDEN_WASTE,
+    "Odpady wystawkowe": wt.BULKY_WASTE,
 }
 
 API_BASE = "https://harmonogram.ichisystem.eu/hemar"

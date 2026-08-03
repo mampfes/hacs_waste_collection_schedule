@@ -15,19 +15,12 @@ from typing import ClassVar, final
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsLookupRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://abfallwirtschaft.landkreis-kusel.de"
 
@@ -108,12 +101,12 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "LVP-Abfälle": RECYCLABLES,
-            "Glas": GLASS,
-            "Bioabfall": ORGANIC,
-            "Papier": PAPER,
-            "Umweltmobil": BULKY_WASTE,
+            "Restmüll": wt.GENERAL_WASTE,
+            "LVP-Abfälle": wt.RECYCLABLES,
+            "Glas": wt.GLASS,
+            "Bioabfall": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Umweltmobil": wt.BULKY_WASTE,
         },
         # The feed's SUMMARY is e.g. "LVP-Abfälle (Gelbe Säcke) ()"; only the
         # first word identifies the waste type (matches the legacy source's

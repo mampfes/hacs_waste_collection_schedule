@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.preprocessors import (
@@ -17,11 +18,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "contact.lincoln.gov.uk"
 INITIAL_URL = (
@@ -109,9 +105,9 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "refuse": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
-            "garden": GARDEN_WASTE,
+            "refuse": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "garden": wt.GARDEN_WASTE,
         },
     )
 

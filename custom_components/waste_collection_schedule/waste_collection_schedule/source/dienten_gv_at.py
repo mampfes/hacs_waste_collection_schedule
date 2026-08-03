@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import PAPER
 
 _BASE_URL = "https://www.dienten.gv.at"
 
@@ -43,7 +43,7 @@ class Source(BaseSource):
     # is classified by the shared vocabulary.
     transform = ICSTransformer(
         type_value_map={
-            "Papier Gewerbe": PAPER,
-            "Karton Gewerbe": PAPER,
+            "Papier Gewerbe": wt.PAPER,
+            "Karton Gewerbe": wt.PAPER,
         },
     )

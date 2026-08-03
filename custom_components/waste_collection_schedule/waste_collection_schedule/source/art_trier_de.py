@@ -13,11 +13,11 @@ from typing import ClassVar, final
 from urllib.parse import quote
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, postcode
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,9 +79,9 @@ class Source(BaseSource):
     )
     transform = ICSTransformer(
         type_value_map={
-            "Altpapier": PAPER,
-            "Restmüll": GENERAL_WASTE,
-            "Gelber Sack": RECYCLABLES,
+            "Altpapier": wt.PAPER,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Gelber Sack": wt.RECYCLABLES,
         }
     )
 

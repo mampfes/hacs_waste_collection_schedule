@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 HOSTNAME = "my.portsmouth.gov.uk"
 INITIAL_URL = (
@@ -71,7 +71,7 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "refuse bin": GENERAL_WASTE,
-            "recycling bin": RECYCLABLES,
+            "refuse bin": wt.GENERAL_WASTE,
+            "recycling bin": wt.RECYCLABLES,
         },
     )

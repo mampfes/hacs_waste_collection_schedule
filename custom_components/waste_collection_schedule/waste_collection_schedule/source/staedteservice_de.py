@@ -17,6 +17,7 @@ import json
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     dropdown,
@@ -30,14 +31,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://portal.staedteservice.de/api/ZeigeAbfallkalender"
 _STREETS_URL = "https://portal.staedteservice.de/api/Strassen"
@@ -118,12 +111,12 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        GLASS,
-        HAZARDOUS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -161,7 +154,7 @@ class Source(BaseSource):
         unwrap=_ics_from_envelope,
     )
 
-    transform = ICSTransformer(type_value_map={"blaue tonne": RECYCLABLES})
+    transform = ICSTransformer(type_value_map={"blaue tonne": wt.RECYCLABLES})
 
     def __init__(
         self,

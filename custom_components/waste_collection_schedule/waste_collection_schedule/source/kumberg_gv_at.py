@@ -15,16 +15,10 @@ bin name so the shared vocabulary can resolve it.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsIndexRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 API_URL = "https://www.kumberg.gv.at/kalender/"
 
@@ -51,10 +45,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Bio": ORGANIC,
-            "Papier": PAPER,
-            "Gelber Sack": RECYCLABLES,
-            "Sperrmüll": BULKY_WASTE,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Bio": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Sperrmüll": wt.BULKY_WASTE,
         },
     )

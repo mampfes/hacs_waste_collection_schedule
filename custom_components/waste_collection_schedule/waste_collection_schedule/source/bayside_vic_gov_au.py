@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Three collection columns share one value shape family: either
 # "Fortnightly/Weekly on Thursday, Next: 23 Jul 2026" (an explicit next
@@ -35,9 +35,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # "Street Sweeping" are also present in the response but are not collection
 # fields, so they are left out of this map (and therefore ignored).
 _TYPE_MAP = {
-    "Recycling": RECYCLABLES,
-    "Domestic Waste": GENERAL_WASTE,
-    "Garden Waste": ORGANIC,  # displayed to residents as "Food & Green Waste"
+    "Recycling": wt.RECYCLABLES,
+    "Domestic Waste": wt.GENERAL_WASTE,
+    "Garden Waste": wt.ORGANIC,  # displayed to residents as "Food & Green Waste"
 }
 
 _NEXT_DATE_RE = re.compile(r"Next:\s*(\d{1,2}\s+\w+\s+\d{4})")

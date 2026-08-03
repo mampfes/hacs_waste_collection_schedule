@@ -27,16 +27,11 @@ production.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = (
     "https://ebbweb.stadt.bamberg.de/WasteManagementBamberg/WasteManagementServlet"
@@ -101,9 +96,9 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=lambda label: label.split()[0],
         type_value_map={
-            "restmuell": GENERAL_WASTE,
-            "biomuell": ORGANIC,
-            "papier": PAPER,
-            "gelber": RECYCLABLES,
+            "restmuell": wt.GENERAL_WASTE,
+            "biomuell": wt.ORGANIC,
+            "papier": wt.PAPER,
+            "gelber": wt.RECYCLABLES,
         },
     )

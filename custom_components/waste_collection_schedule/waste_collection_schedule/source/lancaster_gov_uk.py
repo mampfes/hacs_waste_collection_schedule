@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     house_number,
@@ -11,12 +12,6 @@ from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Demonstrates: a fully declarative service-backed source. The Whitespace WRP
 # platform's 4-step scrape lives in its service module as WhitespaceRetriever +
@@ -24,12 +19,12 @@ from waste_collection_schedule.waste_types import (
 # council's open-ended type labels onto canonical WasteTypes via a RowTransformer.
 
 _TYPE_MAP = {
-    "Domestic Waste": GENERAL_WASTE,
-    "Garden Waste": GARDEN_WASTE,
-    "Recycling Red": RECYCLABLES,
-    "Recycling Yellow": RECYCLABLES,
-    "Recycling": RECYCLABLES,
-    "Food Waste": FOOD_WASTE,
+    "Domestic Waste": wt.GENERAL_WASTE,
+    "Garden Waste": wt.GARDEN_WASTE,
+    "Recycling Red": wt.RECYCLABLES,
+    "Recycling Yellow": wt.RECYCLABLES,
+    "Recycling": wt.RECYCLABLES,
+    "Food Waste": wt.FOOD_WASTE,
 }
 _SUFFIXES = (
     " Collection Service",
@@ -57,7 +52,12 @@ class Source(BaseSource):
     URL = "https://lancaster.gov.uk"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
     API_URL = "https://lcc-wrp.whitespacews.com"
 
     TEST_CASES: ClassVar[dict] = {

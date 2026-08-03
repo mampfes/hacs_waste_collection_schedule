@@ -11,19 +11,11 @@ and no ICON_MAP.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    ELECTRONICS,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.muehlenkreis.de"
 
@@ -35,13 +27,13 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "de"
     WASTE_TYPES: ClassVar[list] = [
-        BULKY_WASTE,
-        ELECTRONICS,
-        GENERAL_WASTE,
-        HAZARDOUS,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.ELECTRONICS,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -72,11 +64,11 @@ class Source(BaseSource):
     # so each needs an explicit map.
     transform = ICSTransformer(
         type_value_map={
-            "Biotonne 2-wöchentlich": ORGANIC,
-            "Gelbe Tonne 4-wöchentlich": RECYCLABLES,
-            "Papiertonne 4-wöchentlich": PAPER,
-            "Restmüll 4-wöchentlich": GENERAL_WASTE,
-            "Schadstoffsammlung": HAZARDOUS,
-            "Sperrmüllabfuhr": BULKY_WASTE,
+            "Biotonne 2-wöchentlich": wt.ORGANIC,
+            "Gelbe Tonne 4-wöchentlich": wt.RECYCLABLES,
+            "Papiertonne 4-wöchentlich": wt.PAPER,
+            "Restmüll 4-wöchentlich": wt.GENERAL_WASTE,
+            "Schadstoffsammlung": wt.HAZARDOUS,
+            "Sperrmüllabfuhr": wt.BULKY_WASTE,
         }
     )

@@ -10,12 +10,12 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import ORGANIC, PAPER, RECYCLABLES
 
 _HOST_URI = "https://nu.neu-ulm.de"
 _CALENDAR_PAGE = (
@@ -50,7 +50,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Neu-Ulm."
     URL = "https://nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender"
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = [ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.ORGANIC, wt.PAPER, wt.RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Bezirk 1": {"region": "Bezirk 1"},
@@ -69,8 +69,8 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Gelber Sack": RECYCLABLES,
-            "Grüngut": ORGANIC,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Grüngut": wt.ORGANIC,
         },
         clean=lambda label: label.replace("Abfuhr ", "").strip(),
     )

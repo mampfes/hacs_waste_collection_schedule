@@ -3,6 +3,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE
 
 # Abilene publishes trash and yard-waste collection as two separate ArcGIS
 # layers. A point-in-polygon query against each layer returns:
@@ -39,8 +39,8 @@ LAYERS = [
 ]
 
 _TYPE_MAP = {
-    "Trash": GENERAL_WASTE,
-    "Yard Waste": GARDEN_WASTE,
+    "Trash": wt.GENERAL_WASTE,
+    "Yard Waste": wt.GARDEN_WASTE,
 }
 
 # Number of weekly trash collections to project (matches the legacy WEEKS_AHEAD).

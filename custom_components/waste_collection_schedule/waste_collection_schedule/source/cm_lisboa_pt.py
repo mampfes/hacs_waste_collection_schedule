@@ -1,6 +1,7 @@
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,7 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
 # Lisboa's Amb_Reciclagem FeatureServer keys each collection area by name
 # (NOME) and carries three fields of Portuguese weekday abbreviations, one
@@ -44,9 +44,9 @@ _FIELDS = {
 }
 
 _TYPE_MAP = {
-    "Indiferenciado": GENERAL_WASTE,
-    "Papel e Cartão": PAPER,
-    "Embalagens": RECYCLABLES,
+    "Indiferenciado": wt.GENERAL_WASTE,
+    "Papel e Cartão": wt.PAPER,
+    "Embalagens": wt.RECYCLABLES,
 }
 
 # Number of weekly collections to project (matches the legacy default).

@@ -7,6 +7,7 @@ the ``/getical`` form POST -- is the shared ``AbfuhrplanRetriever``.
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.parsers import IcsParser
@@ -15,12 +16,6 @@ from waste_collection_schedule.service.AbfuhrplanDe import (
     prepare_arg,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.abfuhrplan-landkreis-neumarkt.de"
 
@@ -47,10 +42,10 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Papiertonne": PAPER,
-            "Gelber Sack": RECYCLABLES,
-            "Biotonne": ORGANIC,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Papiertonne": wt.PAPER,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Biotonne": wt.ORGANIC,
         }
     )
 

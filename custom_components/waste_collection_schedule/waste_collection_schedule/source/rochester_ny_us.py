@@ -3,6 +3,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisMultiFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Rochester publishes trash and recycling as two separate ArcGIS layers on one
 # MapServer. A point-in-polygon query against each layer returns the collection
@@ -30,8 +30,8 @@ RECYCLING_URL = f"{BASE_URL}/9"
 DAY_FIELDS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 _TYPE_MAP = {
-    "Trash": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
+    "Trash": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
 }
 
 MONTHS = {

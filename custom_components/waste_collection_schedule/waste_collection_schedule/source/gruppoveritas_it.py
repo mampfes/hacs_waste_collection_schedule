@@ -18,6 +18,7 @@ import re
 from collections.abc import Iterable
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import integer, text_field
 from waste_collection_schedule.parsers import PdfTableParser
@@ -33,13 +34,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-)
 
 DEFAULT_PDF_URL = (
     "https://www.gruppoveritas.it/sites/default/files/documenti/calendari/"
@@ -207,11 +201,11 @@ class Source(BaseSource):
     # covers plastic and metal packaging.
     transform = ICSTransformer(
         type_value_map={
-            "S": GENERAL_WASTE,
-            "UO": ORGANIC,
-            "VR": GARDEN_WASTE,
-            "C": PAPER,
-            "VPL": GLASS,
+            "S": wt.GENERAL_WASTE,
+            "UO": wt.ORGANIC,
+            "VR": wt.GARDEN_WASTE,
+            "C": wt.PAPER,
+            "VPL": wt.GLASS,
         }
     )
 

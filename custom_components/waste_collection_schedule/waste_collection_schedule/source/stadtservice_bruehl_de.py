@@ -14,19 +14,13 @@ from datetime import date
 from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _DISTRICT_URL = "https://services.stadtservice-bruehl.de/abfallkalender/"
 _CALENDAR_URL = (
@@ -72,11 +66,11 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -112,5 +106,5 @@ class Source(BaseSource):
     parse = IcsParser(regex=r"(.*?) \- ", split_at=", ")
     transform = ICSTransformer(
         clean=_clean_type,
-        type_value_map={"Straßenlaub": GARDEN_WASTE},
+        type_value_map={"Straßenlaub": wt.GARDEN_WASTE},
     )

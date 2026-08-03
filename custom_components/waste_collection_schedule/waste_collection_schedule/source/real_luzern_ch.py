@@ -13,16 +13,11 @@ from urllib.parse import urlencode
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
 
@@ -96,11 +91,11 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Kehricht": GENERAL_WASTE,
-            "Grüngut": ORGANIC,
-            "Papier": PAPER,
-            "Karton": PAPER,
-            "Altmetall": RECYCLABLES,
+            "Kehricht": wt.GENERAL_WASTE,
+            "Grüngut": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Karton": wt.PAPER,
+            "Altmetall": wt.RECYCLABLES,
         },
         clean=label_cleaner(remap=_OLD_WASTE_NAME),
     )

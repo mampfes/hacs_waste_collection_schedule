@@ -4623,6 +4623,49 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 # --------------------------------------------------------------------------- #
 
 
+def _named_waste_type_imports(stem: str) -> list[str]:
+    """Names this source imports individually from waste_types."""
+    import ast
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    return [
+        alias.name
+        for node in tree.body
+        if isinstance(node, ast.ImportFrom)
+        and (node.module or "").endswith("waste_types")
+        for alias in node.names
+    ]
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_import_waste_types_as_a_module(stem: str) -> None:
+    """Import the waste_types module, not the individual type names.
+
+    A source uses three to six types, and importing them by name costs a line
+    each once ruff wraps the statement: 1,284 lines across the sources, against
+    250 for the namespace form, which is one line however many types are used.
+    """
+    named = _named_waste_type_imports(stem)
+    assert not named, (
+        f"{stem} imports {named} from waste_types by name. Use "
+        "`from waste_collection_schedule import waste_types as wt` and write "
+        "`wt.GENERAL_WASTE`, so the import stays one line however many types "
+        "the source uses."
+    )
+
+
 def _hand_rolled_standard_fields(stem: str) -> list[str]:
     """Labels in this source that duplicate a standard FieldTerm's label."""
     import ast

@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     street,
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.StuttgartDe import (
     StuttgartRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Declarative source on the Stuttgart components. The single HTML form is fetched
 # to discover the waste-type checkboxes, echoed back in a POST, and the resulting
@@ -31,7 +26,12 @@ class Source(BaseSource):
     COUNTRY = "de"
     # The transformer resolves open-ended German labels via the shared vocabulary;
     # these are the canonical types observed from the live provider.
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC, PAPER]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+    ]
     # Address lookup: an empty result means the street/number didn't resolve.
     RAISE_ON_EMPTY = True
 

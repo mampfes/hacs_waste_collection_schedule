@@ -1,6 +1,7 @@
 from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -13,12 +14,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Demonstrates: alternative-input PARAMS via config_params.alternatives() —
 # the user provides a UPRN, OR a postcode + house name/number. validate()
@@ -97,10 +92,10 @@ class Source(BaseSource):
     }
 
     _TYPE_MAP: ClassVar[dict] = {
-        "Domestic Waste Collection Service": GENERAL_WASTE,
-        "Recycling Collection Service": RECYCLABLES,
-        "Food Waste Collection Service": FOOD_WASTE,
-        "Garden Waste Collection Service": GARDEN_WASTE,
+        "Domestic Waste Collection Service": wt.GENERAL_WASTE,
+        "Recycling Collection Service": wt.RECYCLABLES,
+        "Food Waste Collection Service": wt.FOOD_WASTE,
+        "Garden Waste Collection Service": wt.GARDEN_WASTE,
     }
 
     parse = parsers.JsonParser("collections", shape=list[_Collection])

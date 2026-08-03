@@ -21,18 +21,11 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _URL = "https://abfallkalender.regioit.de/kalender-bav/downloadfile.jsp"
 
@@ -88,13 +81,13 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "restmülltonne 2-wöchentlich": GENERAL_WASTE,
-            "restmülltonne 4-wöchentlich": GENERAL_WASTE,
-            "restmülltonne 6-wöchentlich": GENERAL_WASTE,
-            "gelber sack / tonne": RECYCLABLES,
-            "papiertonne": PAPER,
-            "biotonne": ORGANIC,
-            "schadstoffmobil": HAZARDOUS,
-            "weihnachtsbaum": GARDEN_WASTE,
+            "restmülltonne 2-wöchentlich": wt.GENERAL_WASTE,
+            "restmülltonne 4-wöchentlich": wt.GENERAL_WASTE,
+            "restmülltonne 6-wöchentlich": wt.GENERAL_WASTE,
+            "gelber sack / tonne": wt.RECYCLABLES,
+            "papiertonne": wt.PAPER,
+            "biotonne": wt.ORGANIC,
+            "schadstoffmobil": wt.HAZARDOUS,
+            "weihnachtsbaum": wt.GARDEN_WASTE,
         }
     )

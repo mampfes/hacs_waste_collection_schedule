@@ -12,18 +12,13 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _ICS_URL = "https://st-magdeburg.server.smart-village.app/waste_calendar/export"
 _STREET_LIST_URL = "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
@@ -94,10 +89,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall": GENERAL_WASTE,
-            "Altpapier": PAPER,
-            "Gelbe Tonne": RECYCLABLES,
-            "Bioabfall": ORGANIC,
+            "Restabfall": wt.GENERAL_WASTE,
+            "Altpapier": wt.PAPER,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Bioabfall": wt.ORGANIC,
         },
         clean=lambda label: (
             "Gelbe Tonne"

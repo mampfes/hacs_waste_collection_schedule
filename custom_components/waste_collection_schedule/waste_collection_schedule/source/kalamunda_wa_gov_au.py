@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence, response_shape
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -13,7 +14,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Kalamunda's IntraMaps response keys each collection column TWICE: once as a
 # "header" field whose name and value both just repeat the column's own label
@@ -57,9 +57,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # field for a given collection share the same column, so this alone can't
 # tell them apart; that's what _describe's name/value check is for.
 _TYPE_MAP = {
-    "General_Next_Date": GENERAL_WASTE,
-    "Recycle_Next_Date": RECYCLABLES,
-    "Next FOGO Collection": ORGANIC,
+    "General_Next_Date": wt.GENERAL_WASTE,
+    "Recycle_Next_Date": wt.RECYCLABLES,
+    "Next FOGO Collection": wt.ORGANIC,
 }
 
 # Values are free text such as "22 July 2026, Wednesday" or "Every Wednesday";

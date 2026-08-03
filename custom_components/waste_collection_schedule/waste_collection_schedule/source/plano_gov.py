@@ -2,6 +2,7 @@ import datetime
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import (
@@ -15,11 +16,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # City of Plano ArcGIS "ServicedAddresses" layer, one feature per address
 # (looked up by its OBJECTID). Trash is a recurring weekday (DAY_2017),
@@ -36,9 +32,9 @@ FEATURE_URL = (
 OUT_FIELDS = "DAY_2017,BLKY_CURR,BLKY_NEXT1,BLKY_NEXT2,REC_CURR,REC_NEXT1,REC_NEXT2"
 
 _TYPE_MAP = {
-    "TRASH": GENERAL_WASTE,
-    "RECYCLE": RECYCLABLES,
-    "BULKY": BULKY_WASTE,
+    "TRASH": wt.GENERAL_WASTE,
+    "RECYCLE": wt.RECYCLABLES,
+    "BULKY": wt.BULKY_WASTE,
 }
 
 # Default number of weekly trash collections to project when daysToGenerate

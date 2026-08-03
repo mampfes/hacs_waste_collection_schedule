@@ -16,17 +16,11 @@ transformer's ``clean`` the second.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
 from waste_collection_schedule.service.BwWasteCalendar import WasteCalendarRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://awg-wuppertal.de"
 _API_URL = f"{_BASE_URL}/privatkunden/abfallkalender.html"
@@ -57,10 +51,10 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_leading_type,
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Gelb": RECYCLABLES,
-            "Bio": ORGANIC,
-            "Papier": PAPER,
-            "Sperrmüll": BULKY_WASTE,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Gelb": wt.RECYCLABLES,
+            "Bio": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Sperrmüll": wt.BULKY_WASTE,
         },
     )

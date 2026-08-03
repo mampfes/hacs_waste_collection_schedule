@@ -58,11 +58,11 @@ A flat JSON API, typed by a label-to-waste-type map:
 
 ```python
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 
 class Source(BaseSource):
@@ -95,7 +95,7 @@ class Source(BaseSource):
     transform = JsonTransformer(
         date_key="date",
         type_key="binType",
-        type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
+        type_value_map={"refuse": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES},
     )
 ```
 

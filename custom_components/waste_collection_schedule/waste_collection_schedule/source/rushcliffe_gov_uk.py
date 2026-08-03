@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     postcode,
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.FirmstepSelfService import (
     RushcliffePanelParser,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    PAPER,
-)
 
 FORM_URL = "https://selfservice.rushcliffe.gov.uk/renderform.aspx?t=1242&k=86BDCD8DE8D868B9E23D10842A7A4FE0F1023CCA"
 ADDRESS_LOOKUP_URL = "https://selfservice.rushcliffe.gov.uk/core/addresslookup"
@@ -57,9 +52,9 @@ class Source(BaseSource):
     parse = RushcliffePanelParser()
     transform = RowTransformer(
         type_value_map={
-            "grey": GENERAL_WASTE,
-            "garden waste": GARDEN_WASTE,
-            "blue": PAPER,
-            "glass": GLASS,
+            "grey": wt.GENERAL_WASTE,
+            "garden waste": wt.GARDEN_WASTE,
+            "blue": wt.PAPER,
+            "glass": wt.GLASS,
         },
     )

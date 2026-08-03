@@ -3,6 +3,7 @@ from collections.abc import Iterable
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field, uprn
 from waste_collection_schedule.preprocessors import (
@@ -18,13 +19,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    PAPER,
-    RECYCLABLES,
-)
 
 HOSTNAME = "highland-self.achieveservice.com"
 INITIAL_URL = f"https://{HOSTNAME}/en/service/Check_your_household_bin_collection_days"
@@ -127,12 +121,12 @@ class Source(BaseSource):
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map={
-            "refuse": GENERAL_WASTE,
-            "recycle": RECYCLABLES,
-            "garden": GARDEN_WASTE,
-            "food": FOOD_WASTE,
-            "containers": RECYCLABLES,
-            "fibres": PAPER,
+            "refuse": wt.GENERAL_WASTE,
+            "recycle": wt.RECYCLABLES,
+            "garden": wt.GARDEN_WASTE,
+            "food": wt.FOOD_WASTE,
+            "containers": wt.RECYCLABLES,
+            "fibres": wt.PAPER,
         },
     )
 

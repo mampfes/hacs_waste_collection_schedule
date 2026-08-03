@@ -17,6 +17,7 @@ can hide in the grid.
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.retrievers import PdfLinkRetriever
 from waste_collection_schedule.service.PdfTextCalendar import (
@@ -26,7 +27,6 @@ from waste_collection_schedule.service.PdfTextCalendar import (
     LabelRule,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import HAZARDOUS, RECYCLABLES
 
 _DATA_URL = "https://www.berdorf.lu/service-citoyens/dechets"
 
@@ -75,7 +75,7 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "PMC": RECYCLABLES,
-            _SDK: HAZARDOUS,
+            "PMC": wt.RECYCLABLES,
+            _SDK: wt.HAZARDOUS,
         }
     )

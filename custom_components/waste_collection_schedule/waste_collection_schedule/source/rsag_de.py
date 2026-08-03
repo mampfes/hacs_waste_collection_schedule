@@ -16,19 +16,13 @@ term the legacy substring-matching ICON_MAP effectively grouped it under
 import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_BASE = "https://www.rsag.de/api"
 
@@ -111,7 +105,12 @@ class Source(BaseSource):
     URL = "https://www.rsag.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Königswinter, Winzerstraße": {
@@ -153,5 +152,5 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         clean=_clean_type,
-        type_value_map={"Wertstoff": RECYCLABLES, "Weihnachtsbaum": GARDEN_WASTE},
+        type_value_map={"Wertstoff": wt.RECYCLABLES, "Weihnachtsbaum": wt.GARDEN_WASTE},
     )

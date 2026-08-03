@@ -4,6 +4,7 @@ from functools import lru_cache
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -15,7 +16,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 # City of Red Bank, TN "trash day" ArcGIS FeatureServer: layer 1 holds parcels
 # (STNUM/STNAME, one polygon per address), layers 2-6 are the Monday..Friday
@@ -38,7 +38,7 @@ WKID = 102100  # Web Mercator, the service's native spatial reference
 # How far ahead to project the recurring weekly schedule.
 HORIZON_DAYS = 365
 
-_TYPE_MAP = {"Trash": GENERAL_WASTE}
+_TYPE_MAP = {"Trash": wt.GENERAL_WASTE}
 
 # Street-type suffixes dropped before matching so 'Ave' vs 'Avenue' etc. don't
 # cause a miss (the parcel layer stores the bare street name in STNAME).

@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -9,11 +10,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 # ArcGis attribute query (a LIKE clause on the street address — no geocode) ->
 # one feature carrying the service weekday (New_Day). Three weekly schedules
@@ -24,9 +20,9 @@ from waste_collection_schedule.waste_types import (
 FEATURE_URL = "https://services.arcgis.com/eKu0BIfy09ymzWZF/arcgis/rest/services/Day_change_TrashCollection/FeatureServer/0"
 
 _TYPE_MAP = {
-    "Garbage": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Compostables": ORGANIC,
+    "Garbage": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Compostables": wt.ORGANIC,
 }
 
 _WEEKDAYS = {

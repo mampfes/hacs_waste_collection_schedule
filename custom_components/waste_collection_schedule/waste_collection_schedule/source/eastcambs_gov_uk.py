@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
@@ -13,12 +14,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Live-verified (2026-07): the standard AchieveForms handshake
 # (init_session -> authapi/isauthenticated) authenticates East Cambridgeshire's
@@ -118,17 +113,17 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         clean=_clean_bin_type,
         type_value_map={
-            "recycling bin": RECYCLABLES,
-            "outdoor food caddy": FOOD_WASTE,
-            "indoor food caddy": FOOD_WASTE,
-            "rubbish bin": GENERAL_WASTE,
-            "garden waste bin": GARDEN_WASTE,
-            "brown bags": GENERAL_WASTE,
-            "purple bags": RECYCLABLES,
-            "clear bags": RECYCLABLES,
-            "black bag": GENERAL_WASTE,
+            "recycling bin": wt.RECYCLABLES,
+            "outdoor food caddy": wt.FOOD_WASTE,
+            "indoor food caddy": wt.FOOD_WASTE,
+            "rubbish bin": wt.GENERAL_WASTE,
+            "garden waste bin": wt.GARDEN_WASTE,
+            "brown bags": wt.GENERAL_WASTE,
+            "purple bags": wt.RECYCLABLES,
+            "clear bags": wt.RECYCLABLES,
+            "black bag": wt.GENERAL_WASTE,
             # East Cambridgeshire's blue bin is general recycling, not the
             # paper-only round the shared "blue bin" alias resolves to.
-            "blue bin": RECYCLABLES,
+            "blue bin": wt.RECYCLABLES,
         },
     )

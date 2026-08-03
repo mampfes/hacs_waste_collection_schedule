@@ -13,16 +13,11 @@ plain Recycling, unlike Bromley's Glass).
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.retrievers import PollingIcsRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GENERAL_WASTE,
-    PAPER,
-    RECYCLABLES,
-)
 
 
 @final
@@ -49,10 +44,10 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "Non-Recyclable Refuse": GENERAL_WASTE,
-            "Food Waste": FOOD_WASTE,
-            "Paper & Card": PAPER,
-            "Mixed Recycling (Cans, Plastics & Glass)": RECYCLABLES,
+            "Non-Recyclable Refuse": wt.GENERAL_WASTE,
+            "Food Waste": wt.FOOD_WASTE,
+            "Paper & Card": wt.PAPER,
+            "Mixed Recycling (Cans, Plastics & Glass)": wt.RECYCLABLES,
         },
         clean=label_cleaner(strip_suffixes=[" collection"]),
     )

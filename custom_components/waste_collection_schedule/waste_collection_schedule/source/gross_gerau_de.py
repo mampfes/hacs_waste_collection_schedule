@@ -11,16 +11,11 @@ override, no manual request params and no ICON_MAP.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.gross-gerau.de"
 
@@ -33,10 +28,10 @@ class Source(BaseSource):
     COUNTRY = "de"
 
     WASTE_TYPES: ClassVar[list] = [
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -60,7 +55,7 @@ class Source(BaseSource):
     # match an alias exactly, so they need an explicit map.
     transform = ICSTransformer(
         type_value_map={
-            "Gelbe Tonne - Gelber Sack": RECYCLABLES,
-            "Papiertonne 1100 Liter": PAPER,
+            "Gelbe Tonne - Gelber Sack": wt.RECYCLABLES,
+            "Papiertonne 1100 Liter": wt.PAPER,
         }
     )

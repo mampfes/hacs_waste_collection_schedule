@@ -22,17 +22,12 @@ from urllib.parse import urlencode
 from bs4 import BeautifulSoup, Tag
 from bs4.element import NavigableString
 from waste_collection_schedule import retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 API_URL = "https://www.abfall-lro.de/de/abfuhrtermine/"
 GUESTROW_URL = "https://www.abfall-lro.de/de/abfuhrtermine/guestrow.php"
@@ -42,10 +37,10 @@ ICAL_URL = "https://www.abfall-lro.de/default-wGlobal/wGlobal/abfuhrtermine/ical
 # (2W)"); the legacy source classified by the first word only
 # (``d[1].split()[0]``), which is the bin colour, not the waste stream name.
 _TYPE_VALUE_MAP = {
-    "Schwarze": GENERAL_WASTE,
-    "Grüne": ORGANIC,
-    "Blaue": PAPER,
-    "Gelbe": RECYCLABLES,
+    "Schwarze": wt.GENERAL_WASTE,
+    "Grüne": wt.ORGANIC,
+    "Blaue": wt.PAPER,
+    "Gelbe": wt.RECYCLABLES,
 }
 
 

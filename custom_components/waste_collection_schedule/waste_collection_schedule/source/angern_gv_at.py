@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE, PAPER
 
 _BASE_URL = "https://www.angern.at"
 
@@ -40,13 +40,13 @@ class Source(BaseSource):
     # explicit entries because the suffix breaks the exact-match resolution.
     transform = ICSTransformer(
         type_value_map={
-            "Grünschnitt Ollersdorf": GARDEN_WASTE,
-            "Grünschnitt Angern, Mannersdorf": GARDEN_WASTE,
-            "Restmülltonne Angern": GENERAL_WASTE,
-            "Restmülltonne Mannersdorf, Stillfried": GENERAL_WASTE,
-            "Restmülltonne Grub, Ollersdorf": GENERAL_WASTE,
-            "Altpapiertonne Angern": PAPER,
-            "Altpapiertonne Mannersdorf, Stillfried": PAPER,
-            "Altpapiertonne Grub, Ollersdorf": PAPER,
+            "Grünschnitt Ollersdorf": wt.GARDEN_WASTE,
+            "Grünschnitt Angern, Mannersdorf": wt.GARDEN_WASTE,
+            "Restmülltonne Angern": wt.GENERAL_WASTE,
+            "Restmülltonne Mannersdorf, Stillfried": wt.GENERAL_WASTE,
+            "Restmülltonne Grub, Ollersdorf": wt.GENERAL_WASTE,
+            "Altpapiertonne Angern": wt.PAPER,
+            "Altpapiertonne Mannersdorf, Stillfried": wt.PAPER,
+            "Altpapiertonne Grub, Ollersdorf": wt.PAPER,
         },
     )

@@ -1,6 +1,7 @@
 from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -10,12 +11,6 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
 from waste_collection_schedule.transformers import KeyValueTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-)
 
 
 class _Field(TypedDict):
@@ -110,9 +105,9 @@ class Source(BaseSource):
         date_key="date",
         type_key="type",
         type_value_map={
-            "red": GENERAL_WASTE,
-            "green": ORGANIC,
-            "greenverge": GARDEN_WASTE,
-            "yellow": RECYCLABLES,
+            "red": wt.GENERAL_WASTE,
+            "green": wt.ORGANIC,
+            "greenverge": wt.GARDEN_WASTE,
+            "yellow": wt.RECYCLABLES,
         },
     )

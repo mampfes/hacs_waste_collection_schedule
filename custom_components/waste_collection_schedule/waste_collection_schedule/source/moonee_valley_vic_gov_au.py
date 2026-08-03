@@ -2,6 +2,7 @@ import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,7 +11,6 @@ from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Attribute query (address LIKE) -> one feature with a collection weekday and two
 # epoch-ms start dates. General waste is weekly; recycling and FOGO are
@@ -20,9 +20,9 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCL
 FEATURE_URL = "https://services8.arcgis.com/Qhxu8dzT7BHYuJZL/arcgis/rest/services/BinCollection_add/FeatureServer/0"
 
 _TYPE_MAP = {
-    "General Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "FOGO": ORGANIC,
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "FOGO": wt.ORGANIC,
 }
 
 

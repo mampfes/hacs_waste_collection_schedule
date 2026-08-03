@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -16,12 +17,6 @@ from waste_collection_schedule.service.InsertITDe import (
     InsertItRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-)
 
 # Declarative source on the Insert IT components. The per-region configuration
 # travels with each provider entry (the app path, the ICS regex, and an optional
@@ -96,10 +91,10 @@ class Source(BaseSource):
     # vocabulary; the canonical types the providers actually emit (verified by
     # cassette replay) are declared here. Unrecognised labels stay preserved.
     WASTE_TYPES: ClassVar[list] = [
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
     ]
 
     TEST_CASES: ClassVar[dict] = {

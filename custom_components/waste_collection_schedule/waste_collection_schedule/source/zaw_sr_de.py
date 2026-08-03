@@ -28,6 +28,7 @@ instead of picked up dynamically.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -37,12 +38,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = "https://straubing.zaw-sr.de/WasteManagementStraubing/WasteManagementServlet"
 
@@ -119,16 +114,16 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=lambda label: label.split()[0],
         type_value_map={
-            "restmuell": GENERAL_WASTE,
-            "restmüll": GENERAL_WASTE,
-            "restmülltonne": GENERAL_WASTE,
-            "bio": ORGANIC,
-            "biotonne": ORGANIC,
-            "bioabfall": ORGANIC,
-            "papier": PAPER,
-            "papiertonne": PAPER,
-            "gelbe": RECYCLABLES,
-            "gelber": RECYCLABLES,
-            "wertstofftonne": RECYCLABLES,
+            "restmuell": wt.GENERAL_WASTE,
+            "restmüll": wt.GENERAL_WASTE,
+            "restmülltonne": wt.GENERAL_WASTE,
+            "bio": wt.ORGANIC,
+            "biotonne": wt.ORGANIC,
+            "bioabfall": wt.ORGANIC,
+            "papier": wt.PAPER,
+            "papiertonne": wt.PAPER,
+            "gelbe": wt.RECYCLABLES,
+            "gelber": wt.RECYCLABLES,
+            "wertstofftonne": wt.RECYCLABLES,
         },
     )

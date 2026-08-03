@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     street,
@@ -12,12 +13,6 @@ from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
 # + WhitespaceParser). A RowTransformer maps the council's open-ended type labels
@@ -25,10 +20,10 @@ from waste_collection_schedule.waste_types import (
 # existing configurations continue to work.
 
 _TYPE_MAP = {
-    "Domestic Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
-    "Garden Waste": GARDEN_WASTE,
-    "Food Waste": FOOD_WASTE,
+    "Domestic Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden Waste": wt.GARDEN_WASTE,
+    "Food Waste": wt.FOOD_WASTE,
 }
 
 
@@ -41,7 +36,12 @@ class Source(BaseSource):
     URL = "https://waverley.gov.uk"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
     API_URL = "https://wav-wrp.whitespacews.com/"
 
     TEST_CASES: ClassVar[dict] = {

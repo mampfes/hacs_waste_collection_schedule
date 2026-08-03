@@ -17,17 +17,12 @@ Parsing is the plain ``IcsParser`` with the same ``split_at`` the legacy
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, municipality
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.ICS import IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://reso-gmbh.abfallkalender.services/php/Kalender-2-ICS.php"
 
@@ -87,9 +82,9 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "restmüll": GENERAL_WASTE,
-            "biotonne": ORGANIC,
-            "papiertonne": PAPER,
-            "gelber-sack": RECYCLABLES,
+            "restmüll": wt.GENERAL_WASTE,
+            "biotonne": wt.ORGANIC,
+            "papiertonne": wt.PAPER,
+            "gelber-sack": wt.RECYCLABLES,
         }
     )

@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -12,7 +13,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GLASS, RECYCLABLES
 
 # Waipa publishes several explicit dates per field rather than a cadence
 # (e.g. "Will be collected on 15-Jul-2026, and then ... on 29-Jul-2026"), so
@@ -35,8 +35,8 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # Internal schedule keys -> canonical waste type (decoupled from the verbose
 # IntraMaps column text so the transformer's map stays short and stable).
 _TYPE_MAP = {
-    "recycling": RECYCLABLES,
-    "glass": GLASS,
+    "recycling": wt.RECYCLABLES,
+    "glass": wt.GLASS,
 }
 
 _RECYCLING_COLUMN_RE = re.compile(r"Mixed Recycling", re.IGNORECASE)

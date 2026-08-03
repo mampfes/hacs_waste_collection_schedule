@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.FirmstepSelfService import (
@@ -8,12 +9,6 @@ from waste_collection_schedule.service.FirmstepSelfService import (
     FirmstepAddressFormRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 FORM_URL = (
     "https://selfserve.derbyshiredales.gov.uk/"
@@ -62,9 +57,9 @@ class Source(BaseSource):
     preprocess = DerbyshireDalesRowClassifier()
     transform = RowTransformer(
         type_value_map={
-            "domestic waste": GENERAL_WASTE,
-            "recycling waste": RECYCLABLES,
-            "food waste": FOOD_WASTE,
-            "garden waste": GARDEN_WASTE,
+            "domestic waste": wt.GENERAL_WASTE,
+            "recycling waste": wt.RECYCLABLES,
+            "food waste": wt.FOOD_WASTE,
+            "garden waste": wt.GARDEN_WASTE,
         },
     )

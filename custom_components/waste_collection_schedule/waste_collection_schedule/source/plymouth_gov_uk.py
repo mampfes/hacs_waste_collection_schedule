@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,7 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 HOSTNAME = "plymouth-self.achieveservice.com"
 INITIAL_URL = (
@@ -64,7 +64,7 @@ class Source(BaseSource):
         type_key="Round_Type",
         parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
         type_value_map={
-            "DO": GENERAL_WASTE,
-            "RE": RECYCLABLES,
+            "DO": wt.GENERAL_WASTE,
+            "RE": wt.RECYCLABLES,
         },
     )

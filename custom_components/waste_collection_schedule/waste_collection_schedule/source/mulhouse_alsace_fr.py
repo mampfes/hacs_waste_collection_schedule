@@ -4,6 +4,7 @@ from typing import Any, ClassVar, Literal, final
 
 import holidays
 from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     district,
@@ -19,12 +20,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Demonstrates: a recurrence source whose holiday calendar comes from the
 # holidays library (France, Alsace-Moselle subdivision "6AE") instead of
@@ -41,10 +36,10 @@ API_URL = (
 
 # (frequency field, day field, label, waste type)
 WASTE_FIELDS = (
-    ("freq_omr", "jour_omr", "Ordures ménagères", GENERAL_WASTE),
-    ("freq_recyc", "jour_recyc", "Tri sélectif", RECYCLABLES),
-    ("freq_bio_d", "jour_bio", "Bio-déchets", FOOD_WASTE),
-    ("freq_vert", "jour_vert", "Déchets verts", GARDEN_WASTE),
+    ("freq_omr", "jour_omr", "Ordures ménagères", wt.GENERAL_WASTE),
+    ("freq_recyc", "jour_recyc", "Tri sélectif", wt.RECYCLABLES),
+    ("freq_bio_d", "jour_bio", "Bio-déchets", wt.FOOD_WASTE),
+    ("freq_vert", "jour_vert", "Déchets verts", wt.GARDEN_WASTE),
 )
 _TYPE_MAP = {label: waste_type for _f, _d, label, waste_type in WASTE_FIELDS}
 

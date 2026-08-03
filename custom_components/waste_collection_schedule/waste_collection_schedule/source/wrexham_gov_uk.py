@@ -2,6 +2,7 @@ from typing import ClassVar, final
 
 from bs4 import Tag
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.parsers import HtmlParser
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import HtmlTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "myaccount.wrexham.gov.uk"
 INITIAL_URL = (
@@ -86,9 +81,9 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         # A single <li> can name a combined round ("Recycling / food").
         type_value_map={
-            "recycling / food": [RECYCLABLES, FOOD_WASTE],
-            "garden waste": GARDEN_WASTE,
-            "general waste": GENERAL_WASTE,
+            "recycling / food": [wt.RECYCLABLES, wt.FOOD_WASTE],
+            "garden waste": wt.GARDEN_WASTE,
+            "general waste": wt.GENERAL_WASTE,
         },
     )
 

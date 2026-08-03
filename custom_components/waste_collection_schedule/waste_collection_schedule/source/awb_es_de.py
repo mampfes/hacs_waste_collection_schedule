@@ -33,17 +33,12 @@ from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, dropdown, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.preprocessors import RowFilter
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SEARCH_URL = "https://www.awb-es.de/statics/abfallplus/search.json.php"
 _CALENDAR_URL = "https://www.awb-es.de/abfuhr/abfuhrtermine/__Abfuhrtermine.html"
@@ -164,10 +159,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "biotonne": ORGANIC,
-            "gelbe/r sack/tonne": RECYCLABLES,
-            "papiersammlung (vereine)": PAPER,
-            "restmüll 2-wöchentlich": GENERAL_WASTE,
-            "restmüll 4-wöchentlich": GENERAL_WASTE,
+            "biotonne": wt.ORGANIC,
+            "gelbe/r sack/tonne": wt.RECYCLABLES,
+            "papiersammlung (vereine)": wt.PAPER,
+            "restmüll 2-wöchentlich": wt.GENERAL_WASTE,
+            "restmüll 4-wöchentlich": wt.GENERAL_WASTE,
         }
     )

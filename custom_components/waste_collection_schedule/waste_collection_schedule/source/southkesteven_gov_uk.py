@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.FirmstepSelfService import (
@@ -8,12 +9,6 @@ from waste_collection_schedule.service.FirmstepSelfService import (
     SouthKestevenRowClassifier,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 FORM_URL = (
     "https://selfservice.southkesteven.gov.uk/"
@@ -65,9 +60,9 @@ class Source(BaseSource):
     preprocess = SouthKestevenRowClassifier()
     transform = RowTransformer(
         type_value_map={
-            "black": GENERAL_WASTE,
-            "gray": RECYCLABLES,
-            "green": ORGANIC,
-            "purple": PAPER,
+            "black": wt.GENERAL_WASTE,
+            "gray": wt.RECYCLABLES,
+            "green": wt.ORGANIC,
+            "purple": wt.PAPER,
         },
     )

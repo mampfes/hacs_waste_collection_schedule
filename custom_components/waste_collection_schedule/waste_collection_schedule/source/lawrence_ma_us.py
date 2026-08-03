@@ -3,6 +3,7 @@ from collections.abc import Iterable
 from typing import ClassVar, final
 
 from waste_collection_schedule import lookups, parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
 from waste_collection_schedule.preprocessors import (
@@ -12,7 +13,6 @@ from waste_collection_schedule.preprocessors import (
     Schedule,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Demonstrates: a weekday-list scrape resolved by preprocessors.ArgumentLookup
 # and projected into a recurring weekly schedule.
@@ -104,5 +104,5 @@ class Source(BaseSource):
     )
 
     transform = ICSTransformer(
-        type_value_map={"trash": GENERAL_WASTE, "recycling": RECYCLABLES},
+        type_value_map={"trash": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES},
     )

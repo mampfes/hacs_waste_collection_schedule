@@ -1,6 +1,7 @@
 import re
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.service.RiSKommunalAT import (
@@ -8,14 +9,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.hartbeigraz.at"
 _MENUONR = "225225009"
@@ -42,12 +35,12 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
-        BULKY_WASTE,
-        GARDEN_WASTE,
-        GENERAL_WASTE,
-        ORGANIC,
-        PAPER,
-        RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -101,8 +94,8 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_clean,
         type_value_map={
-            "Grün- und Strauchschnittsammlung": GARDEN_WASTE,
-            "Strauchschnittabholung": GARDEN_WASTE,
-            "Leichtverpackung": RECYCLABLES,
+            "Grün- und Strauchschnittsammlung": wt.GARDEN_WASTE,
+            "Strauchschnittabholung": wt.GARDEN_WASTE,
+            "Leichtverpackung": wt.RECYCLABLES,
         },
     )

@@ -15,14 +15,11 @@ declarative class attributes, and there is no ``__init__``.
 from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn  # >>> pick your params
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import (  # >>> map only what you emit
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 
 class _Collection(TypedDict):
@@ -91,8 +88,8 @@ class Source(BaseSource):
         type_key="type",
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map={
-            "refuse": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
+            "refuse": wt.GENERAL_WASTE,  # >>> map only what you emit
+            "recycling": wt.RECYCLABLES,
         },
     )
 

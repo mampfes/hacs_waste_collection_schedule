@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.uk_cloud9_apps import (
@@ -7,12 +8,6 @@ from waste_collection_schedule.service.uk_cloud9_apps import (
     Cloud9Retriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 
 @final
@@ -42,9 +37,9 @@ class Source(BaseSource):
     parse = Cloud9Parser()
     transform = RowTransformer(
         type_value_map={
-            "Black refuse bin": GENERAL_WASTE,
-            "Blue-lid recycling bin": RECYCLABLES,
-            "Food caddy": FOOD_WASTE,
-            "Green garden waste bin": GARDEN_WASTE,
+            "Black refuse bin": wt.GENERAL_WASTE,
+            "Blue-lid recycling bin": wt.RECYCLABLES,
+            "Food caddy": wt.FOOD_WASTE,
+            "Green garden waste bin": wt.GARDEN_WASTE,
         },
     )

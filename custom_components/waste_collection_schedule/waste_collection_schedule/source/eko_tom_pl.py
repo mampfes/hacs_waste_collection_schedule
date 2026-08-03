@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -10,14 +11,6 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.preprocessors import HtmlGroupedDates
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Demonstrates: HTML scraping where the waste type is encoded in the *container's*
 # CSS class, not in each dated <li>. parsers.HtmlParser selects the per-type
@@ -35,12 +28,12 @@ _BASE_URL = (
 
 # The discriminating c-trace CSS class on each container -> canonical waste type.
 TYPE_MAP = {
-    "rest": GENERAL_WASTE,
-    "glas": GLASS,
-    "plastik": RECYCLABLES,
-    "bio": ORGANIC,
-    "papier": PAPER,
-    "sperr": BULKY_WASTE,
+    "rest": wt.GENERAL_WASTE,
+    "glas": wt.GLASS,
+    "plastik": wt.RECYCLABLES,
+    "bio": wt.ORGANIC,
+    "papier": wt.PAPER,
+    "sperr": wt.BULKY_WASTE,
 }
 
 

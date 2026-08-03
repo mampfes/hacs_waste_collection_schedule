@@ -14,6 +14,7 @@ import re
 from collections.abc import Iterable
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import integer
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -21,13 +22,6 @@ from waste_collection_schedule.parsers import PdfTableParser
 from waste_collection_schedule.preprocessors import PdfMonthColumns
 from waste_collection_schedule.retrievers import PdfLinkRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SCHEDULE_URL = (
     "https://www.gemuenden-wohra.de/seite/461536/abfallentsorgung-abfuhrtermine.html"
@@ -102,11 +96,11 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Bioabfall": ORGANIC,
-            "Restmüll": GENERAL_WASTE,
-            "Altpapier": PAPER,
-            "Gelbe Tonne": RECYCLABLES,
-            "Sonderabfall": HAZARDOUS,
+            "Bioabfall": wt.ORGANIC,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Altpapier": wt.PAPER,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Sonderabfall": wt.HAZARDOUS,
         }
     )
 

@@ -14,6 +14,7 @@ shared transformer's.
 import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import alternatives, location_id, street
@@ -25,7 +26,6 @@ from waste_collection_schedule.parsers import ArgumentGuard, IcsParser
 from waste_collection_schedule.preprocessors import SplitLabels
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, GLASS, RECYCLABLES
 
 _BASE_URL = "https://wellington.govt.nz"
 _STREET_LOOKUP_URL = (
@@ -45,9 +45,9 @@ _PICTURE_MAP = {
 # below doesn't have to reimplement label -> WasteType resolution.
 _TYPE_TRANSFORM = ICSTransformer(
     type_value_map={
-        "rubbish collection": GENERAL_WASTE,
-        "glass crate": GLASS,
-        "wheelie bin or recycling bags": RECYCLABLES,
+        "rubbish collection": wt.GENERAL_WASTE,
+        "glass crate": wt.GLASS,
+        "wheelie bin or recycling bags": wt.RECYCLABLES,
     }
 )
 
@@ -99,7 +99,7 @@ class Source(BaseSource):
         alternatives([location_id(field="streetId")], [street(field="streetName")]),
     )
 
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, GLASS, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.GLASS, wt.RECYCLABLES]
 
     retrieve = LookupChainRetriever(
         steps=(_resolve_street,),

@@ -21,6 +21,7 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.exceptions import (
@@ -28,14 +29,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _ORTSTEILE_URL = "https://abfall.frankenberg.de/module/abfallkalender/get_ortsteile.php"
 _STRASSEN_URL = "https://abfall.frankenberg.de/module/abfallkalender/get_strassen.php"
@@ -150,9 +143,9 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
-        HAZARDOUS,
-        ORGANIC,
-        RECYCLABLES,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -179,10 +172,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Trash": GENERAL_WASTE,
-            "Glass": GLASS,
-            "Bio": ORGANIC,
-            "Paper": PAPER,
-            "Recycle": RECYCLABLES,
+            "Trash": wt.GENERAL_WASTE,
+            "Glass": wt.GLASS,
+            "Bio": wt.ORGANIC,
+            "Paper": wt.PAPER,
+            "Recycle": wt.RECYCLABLES,
         }
     )

@@ -16,6 +16,7 @@ hardcoded.
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.PdfImageCalendar import (
@@ -24,7 +25,6 @@ from waste_collection_schedule.service.PdfImageCalendar import (
     PdfImageRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import PAPER, RECYCLABLES
 
 # Cell labels (mapped to canonical waste types by the transformer below).
 PAPER_LABEL = "Papel/Cartao"
@@ -91,7 +91,7 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            PAPER_LABEL: PAPER,
-            PACKAGING_LABEL: RECYCLABLES,
+            PAPER_LABEL: wt.PAPER,
+            PACKAGING_LABEL: wt.RECYCLABLES,
         }
     )

@@ -1,6 +1,7 @@
 import datetime
 from typing import Any, ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -11,11 +12,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "spelthorne-self.achieveservice.com"
 BASE_URL = f"https://{HOSTNAME}"
@@ -107,8 +103,8 @@ class Source(BaseSource):
     )
     transform = RowTransformer(
         type_value_map={
-            "garden waste": GARDEN_WASTE,
-            "refuse": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
+            "garden waste": wt.GARDEN_WASTE,
+            "refuse": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
         },
     )

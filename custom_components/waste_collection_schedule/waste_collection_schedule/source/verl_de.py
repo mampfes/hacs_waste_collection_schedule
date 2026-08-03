@@ -11,20 +11,13 @@ query string and POSTs the district selection to it.
 import re
 from typing import ClassVar, NamedTuple, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _CALENDAR_URL = (
     "https://www.verl.de/service/abfallentsorgung/umwelt-und-abfallkalender.html"
@@ -119,14 +112,14 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "restmülltonne": GENERAL_WASTE,
-            "restmülltonne/mögliche zusatzleerung": GENERAL_WASTE,
-            "komposttonne": ORGANIC,
-            "papiertonne": PAPER,
-            "gelbe tonne": RECYCLABLES,
-            "gartenabfallannahme": GARDEN_WASTE,
-            "wertstoffhof": RECYCLABLES,
-            "giftmobil": HAZARDOUS,
+            "restmülltonne": wt.GENERAL_WASTE,
+            "restmülltonne/mögliche zusatzleerung": wt.GENERAL_WASTE,
+            "komposttonne": wt.ORGANIC,
+            "papiertonne": wt.PAPER,
+            "gelbe tonne": wt.RECYCLABLES,
+            "gartenabfallannahme": wt.GARDEN_WASTE,
+            "wertstoffhof": wt.RECYCLABLES,
+            "giftmobil": wt.HAZARDOUS,
         }
     )
 

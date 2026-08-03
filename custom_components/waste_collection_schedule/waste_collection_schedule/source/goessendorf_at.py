@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import BULKY_WASTE, GENERAL_WASTE, PAPER
 
 _BASE_URL = "https://www.goessendorf.com"
 
@@ -33,11 +33,11 @@ class Source(BaseSource):
     # aliases, so each needs an explicit entry.
     transform = ICSTransformer(
         type_value_map={
-            "Altpapier P1": PAPER,
-            "Altpapier P2": PAPER,
-            "Sperrmüll S1": BULKY_WASTE,
-            "Sperrmüll S2": BULKY_WASTE,
-            "Restmüll R1": GENERAL_WASTE,
-            "Restmüll R2": GENERAL_WASTE,
+            "Altpapier P1": wt.PAPER,
+            "Altpapier P2": wt.PAPER,
+            "Sperrmüll S1": wt.BULKY_WASTE,
+            "Sperrmüll S2": wt.BULKY_WASTE,
+            "Restmüll R1": wt.GENERAL_WASTE,
+            "Restmüll R2": wt.GENERAL_WASTE,
         },
     )

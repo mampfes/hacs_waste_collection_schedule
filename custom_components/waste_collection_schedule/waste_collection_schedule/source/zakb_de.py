@@ -11,6 +11,7 @@ instead of the accumulated form (``"reset": True``).
 
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     house_number,
@@ -21,13 +22,6 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 API_URL = "https://www.zakb.de/online-service/abfallkalender/"
 
@@ -123,13 +117,13 @@ class Source(BaseSource):
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={
-            "restabfallbehaelter": GENERAL_WASTE,
-            "restabfallcontainer": GENERAL_WASTE,
-            "bioabfallbehaelter": ORGANIC,
-            "papierbehaelter": PAPER,
-            "papiercontainer": PAPER,
-            "gelber sack": RECYCLABLES,
-            "gruensperrmuell": GARDEN_WASTE,
+            "restabfallbehaelter": wt.GENERAL_WASTE,
+            "restabfallcontainer": wt.GENERAL_WASTE,
+            "bioabfallbehaelter": wt.ORGANIC,
+            "papierbehaelter": wt.PAPER,
+            "papiercontainer": wt.PAPER,
+            "gelber sack": wt.RECYCLABLES,
+            "gruensperrmuell": wt.GARDEN_WASTE,
         }
     )
 

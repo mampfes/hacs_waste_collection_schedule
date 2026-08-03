@@ -2,6 +2,7 @@ from typing import ClassVar, final
 
 from dateutil.parser import parse as _dateutil_parse
 from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -17,7 +18,6 @@ from waste_collection_schedule.service.IntraMaps import (
     nominatim_reproject,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # The only Integration API council of the three that needs a geocode step
 # first: its single search form takes reprojected map coordinates rather than
@@ -39,9 +39,9 @@ INTRAMAPS_CONFIG = IntegrationClientConfig(
 WASTE_FORM_ID = "0e72c05c-0181-428a-b4e0-e2be69cf69dc"
 
 _TYPE_MAP = {
-    "FOGO": ORGANIC,
-    "General Waste": GENERAL_WASTE,
-    "Recycling": RECYCLABLES,
+    "FOGO": wt.ORGANIC,
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
 }
 
 # Column carrying an explicit next-collection date -> the round it belongs to.

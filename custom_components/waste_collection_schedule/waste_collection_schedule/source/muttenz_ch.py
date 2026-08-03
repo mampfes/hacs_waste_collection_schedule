@@ -2,15 +2,9 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    HAZARDOUS,
-    PAPER,
-    RECYCLABLES,
-    WasteType,
-)
 
 # Demonstrates: parsers.AttributeJsonParser, for a JSON payload embedded inside
 # an HTML data-attribute.
@@ -29,15 +23,15 @@ from waste_collection_schedule.waste_types import (
 # ``require_keys`` selects between. Dates are dd.mm.yyyy (Swiss German), which
 # dateutil parses, so no custom locale handling is needed.
 
-_TYPE_MAP: dict[str, WasteType] = {
-    "Papiersammlung": PAPER,
-    "Kunststoffsammlung": RECYCLABLES,
+_TYPE_MAP: dict[str, wt.WasteType] = {
+    "Papiersammlung": wt.PAPER,
+    "Kunststoffsammlung": wt.RECYCLABLES,
     # "Altmetallabuhr" is the provider's own spelling (a missing "f"); match it
     # verbatim so scrap-metal collections are not silently dropped.
-    "Altmetallabuhr": RECYCLABLES,
-    "Grünabfuhr": GARDEN_WASTE,
-    "Häckseltag": GARDEN_WASTE,
-    "Sonderabfallsammlung": HAZARDOUS,
+    "Altmetallabuhr": wt.RECYCLABLES,
+    "Grünabfuhr": wt.GARDEN_WASTE,
+    "Häckseltag": wt.GARDEN_WASTE,
+    "Sonderabfallsammlung": wt.HAZARDOUS,
 }
 
 
@@ -73,7 +67,12 @@ class Source(BaseSource):
     # "Papiersammlung" would resolve on its own; the map is kept explicit so the
     # produced WASTE_TYPES are pinned and a renamed label is mapped, not silently
     # preserved verbatim.
-    WASTE_TYPES: ClassVar[list] = [PAPER, RECYCLABLES, GARDEN_WASTE, HAZARDOUS]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
+    ]
 
     parse = parsers.AttributeJsonParser(
         "[data-entities]",

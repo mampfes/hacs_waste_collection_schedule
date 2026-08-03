@@ -1,20 +1,13 @@
 import datetime
 from typing import Any, ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.parsers import JsonParser
 from waste_collection_schedule.preprocessors import FlattenGroups
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    RECYCLABLES,
-    WasteType,
-    preserved,
-)
 
 # Berliner Stadtreinigungsbetriebe (BSR) publishes a per-address collection
 # schedule behind an OData endpoint keyed by a "schedule_id" (AddrKey). The
@@ -34,12 +27,12 @@ FILTERTEMPLATE_PICKUPS = (
 # the verbatim text BSR uses; it is shown unchanged when another company runs
 # the round, so the codes map straight to a type here rather than going through
 # the shared resolver.
-_CATEGORIES: dict[str, tuple[WasteType, str]] = {
-    "BI": (ORGANIC, "Biogut"),
-    "HM": (GENERAL_WASTE, "Hausmüll"),
-    "LT": (GARDEN_WASTE, "Laubtonne"),
-    "WS": (RECYCLABLES, "Wertstoffe"),
-    "WB": (GARDEN_WASTE, "Weihnachtsbaum"),
+_CATEGORIES: dict[str, tuple[wt.WasteType, str]] = {
+    "BI": (wt.ORGANIC, "Biogut"),
+    "HM": (wt.GENERAL_WASTE, "Hausmüll"),
+    "LT": (wt.GARDEN_WASTE, "Laubtonne"),
+    "WS": (wt.RECYCLABLES, "Wertstoffe"),
+    "WB": (wt.GARDEN_WASTE, "Weihnachtsbaum"),
 }
 
 
@@ -67,7 +60,12 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     # classify() may preserve an unknown company-suffixed label, so the produced
     # set is open-ended beyond the four canonical types the codes resolve to.
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC, GARDEN_WASTE]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Hufeland_45a": {"schedule_id": "04901100010300413840045A"},
@@ -95,5 +93,7 @@ class Source(BaseSource):
         if company and company != "BSR":
             # Another company runs this round: keep the verbatim, company-tagged
             # label rather than collapsing it onto the canonical type.
-            return Collection(date=date, waste_type=preserved(f"{label} ({company})"))
-        return Collection(date=date, waste_type=waste_type or preserved(label))
+            return Collection(
+                date=date, waste_type=wt.preserved(f"{label} ({company})")
+            )
+        return Collection(date=date, waste_type=waste_type or wt.preserved(label))

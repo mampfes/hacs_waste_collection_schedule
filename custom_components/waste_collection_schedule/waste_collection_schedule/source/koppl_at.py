@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 # Demonstrates: the RiSKommunal platform contributing TWO independent pipeline
 # stages — RiSKommunalRetriever (raw HTML calendar pages, fetched lazily) and
@@ -49,7 +49,7 @@ class Source(BaseSource):
     # Sperrmüll, Problemstoff, ...) is classified by the shared vocabulary.
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall 14-tägig": GENERAL_WASTE,
-            "Restabfall monatlich": GENERAL_WASTE,
+            "Restabfall 14-tägig": wt.GENERAL_WASTE,
+            "Restabfall monatlich": wt.GENERAL_WASTE,
         },
     )

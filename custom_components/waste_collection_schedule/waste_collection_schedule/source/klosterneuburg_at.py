@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.service.RiSKommunalAT import (
@@ -7,7 +8,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _BASE_URL = "https://www.klosterneuburg.at"
 _SELECTION_URL = (
@@ -22,7 +22,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
     URL = _SELECTION_URL
     COUNTRY = "at"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Kierlinger Straße 10": {
@@ -56,6 +56,6 @@ class Source(BaseSource):
     # are); Restmüll, Biomüll, Gelber Sack and Sperrmüll all resolve unmapped.
     transform = ICSTransformer(
         type_value_map={
-            "Papiermüll": PAPER,
+            "Papiermüll": wt.PAPER,
         },
     )

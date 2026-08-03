@@ -18,18 +18,11 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.abfallwirtschaft-vechta.de"
 _STADT_SUCHE_URL = f"{_BASE_URL}/CALENDER/inc.suche_stadt.php"
@@ -144,16 +137,16 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall": GENERAL_WASTE,
-            "Glass": GLASS,
-            "Glas": GLASS,
-            "Bioabfall": ORGANIC,
-            "Altpapier": PAPER,
-            "Altpapier Siemer": PAPER,
-            "Altpapier Pamo": PAPER,
-            "Gelbe Tonne": RECYCLABLES,
-            "Altkleider": RECYCLABLES,
-            "Altkleider (Außer Langförden)": RECYCLABLES,
-            "Mobile Schadstoff.": HAZARDOUS,
+            "Restabfall": wt.GENERAL_WASTE,
+            "Glass": wt.GLASS,
+            "Glas": wt.GLASS,
+            "Bioabfall": wt.ORGANIC,
+            "Altpapier": wt.PAPER,
+            "Altpapier Siemer": wt.PAPER,
+            "Altpapier Pamo": wt.PAPER,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Altkleider": wt.RECYCLABLES,
+            "Altkleider (Außer Langförden)": wt.RECYCLABLES,
+            "Mobile Schadstoff.": wt.HAZARDOUS,
         }
     )

@@ -13,19 +13,12 @@ rounds). ``ICSTransformer`` does the rest.
 import datetime
 from typing import TYPE_CHECKING, ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    ELECTRONICS,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 if TYPE_CHECKING:
     from waste_collection_schedule.retrievers import Response
@@ -90,13 +83,13 @@ class Source(BaseSource):
     parse = _CleanedIcsParser(split_at="/")
     transform = ICSTransformer(
         type_value_map={
-            "Restmüll (Grau)": GENERAL_WASTE,
-            "Bioabfall (Braun)": ORGANIC,
-            "Verpackungen (Gelb)": RECYCLABLES,
-            "Altpapier (Blau)": PAPER,
-            "Papiermobil": PAPER,
-            "Grünschnitt": GARDEN_WASTE,
-            "Elektrokleingeräte-Sammlung": ELECTRONICS,
+            "Restmüll (Grau)": wt.GENERAL_WASTE,
+            "Bioabfall (Braun)": wt.ORGANIC,
+            "Verpackungen (Gelb)": wt.RECYCLABLES,
+            "Altpapier (Blau)": wt.PAPER,
+            "Papiermobil": wt.PAPER,
+            "Grünschnitt": wt.GARDEN_WASTE,
+            "Elektrokleingeräte-Sammlung": wt.ELECTRONICS,
         }
     )
 

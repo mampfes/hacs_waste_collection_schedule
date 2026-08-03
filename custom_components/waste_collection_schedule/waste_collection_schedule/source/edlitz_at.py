@@ -1,17 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _BASE_URL = "https://www.edlitz.at"
 
@@ -43,9 +38,9 @@ class Source(BaseSource):
     # tested; kept for parity in case they appear on other dates.
     transform = ICSTransformer(
         type_value_map={
-            "Biomüllabfuhr": ORGANIC,
-            "Papier Tonne": PAPER,
-            "Grüne Tonne": RECYCLABLES,
-            "Restmüll mit Panoramastraße": GENERAL_WASTE,
+            "Biomüllabfuhr": wt.ORGANIC,
+            "Papier Tonne": wt.PAPER,
+            "Grüne Tonne": wt.RECYCLABLES,
+            "Restmüll mit Panoramastraße": wt.GENERAL_WASTE,
         },
     )

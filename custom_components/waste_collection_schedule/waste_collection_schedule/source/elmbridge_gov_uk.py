@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.service.AchieveForms import (
@@ -10,12 +11,6 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import RowTransformer, label_cleaner
-from waste_collection_schedule.waste_types import (
-    ELECTRONICS,
-    FOOD_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 HOSTNAME = "elmbridge-self.achieveservice.com"
 INITIAL_URL = f"https://{HOSTNAME}/service/Your_bin_collection_days"
@@ -69,9 +64,9 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         clean=label_cleaner(strip_suffixes=[" Collection Service"]),
         type_value_map={
-            "Domestic Waste": GENERAL_WASTE,
-            "Domestic Recycling": RECYCLABLES,
-            "Food Waste": FOOD_WASTE,
-            "Textiles and Small WEEE": ELECTRONICS,
+            "Domestic Waste": wt.GENERAL_WASTE,
+            "Domestic Recycling": wt.RECYCLABLES,
+            "Food Waste": wt.FOOD_WASTE,
+            "Textiles and Small WEEE": wt.ELECTRONICS,
         },
     )

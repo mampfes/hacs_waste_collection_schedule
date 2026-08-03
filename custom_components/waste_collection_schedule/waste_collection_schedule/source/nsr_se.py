@@ -9,6 +9,7 @@ from typing import ClassVar, final
 from urllib.parse import urlencode
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
@@ -19,15 +20,6 @@ from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    FOOD_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    HAZARDOUS,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://nsr.se/api/wastecalendar"
 
@@ -127,17 +119,17 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "KÄRL 1": GENERAL_WASTE,
-            "KÄRL 2": RECYCLABLES,
-            "Trädgårdsavfall": GARDEN_WASTE,
-            "Restavfall": GENERAL_WASTE,
-            "Matavfall": FOOD_WASTE,
-            "Pappersförpackningar": PAPER,
-            "Tidningar": PAPER,
-            "Ofärgat glas": GLASS,
-            "Färgat glas": GLASS,
-            "Plastförpackningar": RECYCLABLES,
-            "Metallförpackningar": RECYCLABLES,
-            "Miljöfarligt avfall": HAZARDOUS,
+            "KÄRL 1": wt.GENERAL_WASTE,
+            "KÄRL 2": wt.RECYCLABLES,
+            "Trädgårdsavfall": wt.GARDEN_WASTE,
+            "Restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Pappersförpackningar": wt.PAPER,
+            "Tidningar": wt.PAPER,
+            "Ofärgat glas": wt.GLASS,
+            "Färgat glas": wt.GLASS,
+            "Plastförpackningar": wt.RECYCLABLES,
+            "Metallförpackningar": wt.RECYCLABLES,
+            "Miljöfarligt avfall": wt.HAZARDOUS,
         }
     )

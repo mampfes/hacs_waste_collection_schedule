@@ -1,6 +1,7 @@
 import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.service.Sepan import (
@@ -8,15 +9,6 @@ from waste_collection_schedule.service.Sepan import (
     SepanRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import (
-    BULKY_WASTE,
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    GLASS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Waste-type names by report-table column position. This deployment's report
 # tables don't reliably expose parseable header text (unlike the alba_com_pl /
@@ -37,13 +29,13 @@ NAME_MAP = {
 # Not in Polish shared-vocabulary aliases (Polish isn't a resolve() language),
 # so every label is mapped explicitly.
 TYPE_VALUE_MAP = {
-    "Zmieszane odpady komunalne": GENERAL_WASTE,
-    "Papier": PAPER,
-    "Metale i tworzywa sztuczne": RECYCLABLES,
-    "Szkło": GLASS,
-    "Bioodpady": ORGANIC,
-    "Drzewka świąteczne": GARDEN_WASTE,
-    "Odpady wystawkowe": BULKY_WASTE,
+    "Zmieszane odpady komunalne": wt.GENERAL_WASTE,
+    "Papier": wt.PAPER,
+    "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "Szkło": wt.GLASS,
+    "Bioodpady": wt.ORGANIC,
+    "Drzewka świąteczne": wt.GARDEN_WASTE,
+    "Odpady wystawkowe": wt.BULKY_WASTE,
 }
 
 

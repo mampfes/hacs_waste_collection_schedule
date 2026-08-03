@@ -24,6 +24,7 @@ import json
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
@@ -32,7 +33,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 HOME_URL = "https://www.kaev.de/"
 LOOKUP_URL = (
@@ -82,7 +82,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Kommunaler Abfallverband Niederlausitz waste collection."
     URL = "https://www.kaev.de/"
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Luckau / OT Zieckau": {"abf_suche": "Luckau / OT Zieckau"},

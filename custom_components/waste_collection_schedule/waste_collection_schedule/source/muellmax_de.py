@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -11,14 +12,6 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.MuellmaxDe import MuellmaxRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    HAZARDOUS,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Demonstrates: a fully declarative source over a stateful platform wizard. The
 # Müllmax multi-step form walk lives in the service module as MuellmaxRetriever,
@@ -111,12 +104,12 @@ _PROVIDERS = [
 # waste term so the map below resolves it; unrecognised labels pass through
 # unchanged (resolved by the vocabulary or preserved verbatim).
 _TYPE_VALUE_MAP = {
-    "restmüll": GENERAL_WASTE,
-    "bioabfall": ORGANIC,
-    "altpapier": PAPER,
-    "wertstoff": RECYCLABLES,
-    "grünabfall": GARDEN_WASTE,
-    "schadstoff": HAZARDOUS,
+    "restmüll": wt.GENERAL_WASTE,
+    "bioabfall": wt.ORGANIC,
+    "altpapier": wt.PAPER,
+    "wertstoff": wt.RECYCLABLES,
+    "grünabfall": wt.GARDEN_WASTE,
+    "schadstoff": wt.HAZARDOUS,
 }
 
 

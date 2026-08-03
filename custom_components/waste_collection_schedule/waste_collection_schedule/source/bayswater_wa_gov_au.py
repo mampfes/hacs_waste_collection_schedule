@@ -2,6 +2,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -11,7 +12,6 @@ from waste_collection_schedule.service.IntraMaps import (
     MapsClientConfig,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Two value-text cadences on one council: FOGO is a bare "Every Friday"
 # (weekly); General Waste and Recycling are "Friday - 24 July 2026"
@@ -30,9 +30,9 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 # IntraMaps column name -> canonical waste type. One map: selects the
 # collection fields (others ignored) and types them.
 _TYPE_MAP = {
-    "FOGO_Green_Lid": ORGANIC,
-    "General_Waste_Red_Lid": GENERAL_WASTE,
-    "Recycling_Yellow_Lid": RECYCLABLES,
+    "FOGO_Green_Lid": wt.ORGANIC,
+    "General_Waste_Red_Lid": wt.GENERAL_WASTE,
+    "Recycling_Yellow_Lid": wt.RECYCLABLES,
 }
 
 # Values are free text such as "Friday - 24 July 2026"; pull out just the

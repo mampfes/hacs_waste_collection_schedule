@@ -12,6 +12,7 @@ and where the calendar lives.
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -21,12 +22,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 DOMAIN = "https://www.awista-kommunal.de"
 BASE_URL = f"{DOMAIN}/abfallkalender"
@@ -101,9 +96,9 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_clean_label,
         type_value_map={
-            "Restmüll": GENERAL_WASTE,
-            "Bioabfall": ORGANIC,
-            "Papier": PAPER,
-            "Wertstofftonne": RECYCLABLES,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Bioabfall": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Wertstofftonne": wt.RECYCLABLES,
         },
     )

@@ -1,6 +1,7 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
@@ -10,11 +11,6 @@ from waste_collection_schedule.service.IntraMaps import (
     IntegrationPanelParser,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    RECYCLABLES,
-)
 
 # Two-step Integration API flow (apikey search -> mapkey/dbkey -> details
 # form). Waste day is a bare weekday name (weekly); Garden/Recycling carry an
@@ -39,9 +35,9 @@ _FORTNIGHTLY_COLUMNS = {"garden_day", "recycle_day"}
 _SINGLE_COLUMN = "street_sweep"
 
 _TYPE_MAP = {
-    _WEEKLY_COLUMN: GENERAL_WASTE,
-    "garden_day": GARDEN_WASTE,
-    "recycle_day": RECYCLABLES,
+    _WEEKLY_COLUMN: wt.GENERAL_WASTE,
+    "garden_day": wt.GARDEN_WASTE,
+    "recycle_day": wt.RECYCLABLES,
 }
 
 _SWEEP_DATE_FORMAT = date_parsers.for_format("%d %B %Y")

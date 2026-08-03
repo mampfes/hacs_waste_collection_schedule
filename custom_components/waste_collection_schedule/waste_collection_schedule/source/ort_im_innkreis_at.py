@@ -1,12 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 _BASE_URL = "https://www.ort-im-innkreis.at"
 
@@ -33,7 +33,7 @@ class Source(BaseSource):
     # Sperrmüll, Problemstoff) is classified by the shared vocabulary.
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall 2-wöchentlich": GENERAL_WASTE,
-            "Restabfall 4-wöchentlich": GENERAL_WASTE,
+            "Restabfall 2-wöchentlich": wt.GENERAL_WASTE,
+            "Restabfall 4-wöchentlich": wt.GENERAL_WASTE,
         },
     )

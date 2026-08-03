@@ -12,6 +12,7 @@ best-effort, and it re-resolves the ids rather than reusing this year's.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -23,13 +24,6 @@ from waste_collection_schedule.field_terms import STATE
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    ELECTRONICS,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _API_URL = "https://lobbe.app/wp-admin/admin-ajax.php"
 _TYPES = {"gelber", "biobfall", "restabfall", "altpapier", "additional_types"}
@@ -232,10 +226,10 @@ class Source(BaseSource):
 
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall": GENERAL_WASTE,
-            "Bioabfall": ORGANIC,
-            "Altpapier": PAPER,
-            "Gelber Sack / Wertstofftonne": RECYCLABLES,
-            "Elektroschrott": ELECTRONICS,
+            "Restabfall": wt.GENERAL_WASTE,
+            "Bioabfall": wt.ORGANIC,
+            "Altpapier": wt.PAPER,
+            "Gelber Sack / Wertstofftonne": wt.RECYCLABLES,
+            "Elektroschrott": wt.ELECTRONICS,
         }
     )

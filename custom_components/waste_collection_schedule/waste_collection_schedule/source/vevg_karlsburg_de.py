@@ -20,6 +20,7 @@ import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     location_id,
@@ -27,12 +28,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    HAZARDOUS,
-    PAPER,
-    RECYCLABLES,
-)
 
 # Endpoint for UHGW (Stadt Greifswald streets, kreis="H")
 _ICAL_UHGW_URL = "https://vevg-karlsburg.de/abfallkalender/ical_uhgw_get_utf8.php"
@@ -142,10 +137,10 @@ class Source(BaseSource):
     transform = ICSTransformer(
         clean=_clean_label,
         type_value_map={
-            "restmülltonne": GENERAL_WASTE,
-            "gelben säcke": RECYCLABLES,
-            "papiertonne": PAPER,
-            "mobile schadstoffsammlung": HAZARDOUS,
+            "restmülltonne": wt.GENERAL_WASTE,
+            "gelben säcke": wt.RECYCLABLES,
+            "papiertonne": wt.PAPER,
+            "mobile schadstoffsammlung": wt.HAZARDOUS,
         },
     )
 

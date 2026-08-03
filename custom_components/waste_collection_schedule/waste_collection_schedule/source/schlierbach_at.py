@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -8,7 +9,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 _BASE_URL = "https://www.schlierbach.at"
 VALID_ZONES = ["1", "Wohnhausanlagen"]
@@ -21,7 +21,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
-    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Gemeinde Alle (no zone)": {},
@@ -60,8 +60,8 @@ class Source(BaseSource):
     # Gelbe Tonne resolve unmapped.
     transform = ICSTransformer(
         type_value_map={
-            "Restabfall 2-wöchentlich": GENERAL_WASTE,
-            "Restabfall 4-wöchentlich": GENERAL_WASTE,
+            "Restabfall 2-wöchentlich": wt.GENERAL_WASTE,
+            "Restabfall 4-wöchentlich": wt.GENERAL_WASTE,
         },
     )
 

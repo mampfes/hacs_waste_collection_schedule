@@ -31,17 +31,12 @@ from urllib.parse import parse_qs, urlparse
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _COLLECTION_PAGE_URL = "https://www.westlothian.gov.uk/bin-collections"
 
@@ -209,9 +204,9 @@ class Source(BaseSource):
     # corrects that rather than preserving the mistake.
     transform = ICSTransformer(
         type_value_map={
-            "grey": GENERAL_WASTE,
-            "brown": ORGANIC,
-            "green": RECYCLABLES,
-            "blue": PAPER,
+            "grey": wt.GENERAL_WASTE,
+            "brown": wt.ORGANIC,
+            "green": wt.RECYCLABLES,
+            "blue": wt.PAPER,
         }
     )

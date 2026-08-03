@@ -22,6 +22,7 @@ from datetime import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -31,13 +32,6 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import (
-    GARDEN_WASTE,
-    GENERAL_WASTE,
-    ORGANIC,
-    PAPER,
-    RECYCLABLES,
-)
 
 _SERVLET = (
     "https://lkv.landkreis-verden.de/WasteManagementVerden/WasteManagementServlet"
@@ -144,10 +138,10 @@ class Source(BaseSource):
         # reason. Mirror that here so every variant still resolves.
         clean=lambda label: label.split()[0] if label.split() else label,
         type_value_map={
-            "Gelber": RECYCLABLES,
-            "Restabfallbehaelter": GENERAL_WASTE,
-            "Papierbehaelter": PAPER,
-            "Kompostbehaelter": ORGANIC,
-            "Weihnachtsbaum": GARDEN_WASTE,
+            "Gelber": wt.RECYCLABLES,
+            "Restabfallbehaelter": wt.GENERAL_WASTE,
+            "Papierbehaelter": wt.PAPER,
+            "Kompostbehaelter": wt.ORGANIC,
+            "Weihnachtsbaum": wt.GARDEN_WASTE,
         },
     )

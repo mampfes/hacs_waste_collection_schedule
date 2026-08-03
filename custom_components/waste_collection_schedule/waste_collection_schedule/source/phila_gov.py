@@ -13,6 +13,7 @@ from datetime import date
 from typing import Any, ClassVar, final
 
 from waste_collection_schedule import recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import (
@@ -28,7 +29,6 @@ from waste_collection_schedule.service.PhilaGov import (
     HolidayCascadeShift,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
 
@@ -104,5 +104,5 @@ class Source(BaseSource):
     )
 
     transform = ICSTransformer(
-        type_value_map={"general": GENERAL_WASTE, "recycling": RECYCLABLES}
+        type_value_map={"general": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES}
     )
