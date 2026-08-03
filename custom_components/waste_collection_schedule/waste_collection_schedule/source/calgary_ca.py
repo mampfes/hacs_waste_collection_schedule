@@ -4,7 +4,7 @@ from typing import ClassVar, Literal, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import Schedule
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -83,7 +83,7 @@ class Source(BaseSource):
         "42 AUBURN SHORES WY SE": {"street_address": "42 AUBURN SHORES WY SE"},
     }
 
-    PARAMS = (text_field("street_address", "Street Address"),)
+    PARAMS = (street_address("street_address"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (

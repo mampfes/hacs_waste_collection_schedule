@@ -2,7 +2,10 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.config_params import (
+    house_number,
+    postcode,
+)
 from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceParser,
     WhitespaceRetriever,
@@ -61,7 +64,7 @@ class Source(BaseSource):
         "1 Queen Street Lancaster, LA1 1RS": {"house_number": 1, "postcode": "LA1 1RS"}
     }
 
-    PARAMS = (postcode(), text_field("house_number", optional=True))
+    PARAMS = (postcode(), house_number(optional=True))
 
     HOWTO: ClassVar[dict] = {
         "en": "Provide your postcode and house name or number as shown on the "

@@ -13,8 +13,13 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    street,
+    text_field,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.field_terms import STATE
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -188,9 +193,9 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("state", label="State"),
-        text_field("city", label="City"),
-        text_field("street", label="Street"),
+        text_field("state", term=STATE),
+        city(),
+        street(),
     )
 
     REGIONS = _extra_info

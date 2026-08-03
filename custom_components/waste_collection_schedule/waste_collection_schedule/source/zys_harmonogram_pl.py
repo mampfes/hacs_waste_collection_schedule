@@ -3,7 +3,12 @@ import logging
 from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    house_number,
+    street,
+    text_field,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -137,9 +142,9 @@ class Source(BaseSource):
 
     PARAMS = (
         text_field("commune_name", label="Commune"),
-        text_field("city", label="City"),
-        text_field("street_name", label="Street"),
-        text_field("street_number", label="House Number"),
+        city(),
+        street(field="street_name"),
+        house_number(field="street_number"),
     )
 
     HOWTO: ClassVar[dict] = {

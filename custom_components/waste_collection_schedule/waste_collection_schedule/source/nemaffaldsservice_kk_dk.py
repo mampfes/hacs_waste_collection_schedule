@@ -21,7 +21,7 @@ from urllib.parse import parse_qs, urlparse
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -113,12 +113,7 @@ class Source(BaseSource):
         "Rådhuspladsen 1": {"address": "Rådhuspladsen 1"},
     }
 
-    PARAMS = (
-        text_field(
-            "address",
-            "Address",
-        ),
-    )
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -157,6 +152,3 @@ class Source(BaseSource):
             "Haveaffald": GARDEN_WASTE,
         }
     )
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

@@ -19,6 +19,7 @@ from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.field_terms import CITY
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -128,11 +129,7 @@ class Source(BaseSource):
     PARAMS = (
         street(field="street"),
         house_number(field="house_number"),
-        text_field(
-            "city",
-            "City",
-            default="bad-oeynhausen",
-        ),
+        text_field("city", term=CITY, default="bad-oeynhausen"),
     )
 
     HOWTO: ClassVar[dict] = {

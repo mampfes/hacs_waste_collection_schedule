@@ -212,7 +212,7 @@ class Source(BaseSource):
     PARAMS = (
         text_field("subdomain", "Subdomain"),
         district(field="ort", optional=True),
-        text_field("ortsteil", "District", optional=True),
+        district(field="ortsteil", optional=True),
         street(field="strasse", optional=True),
         house_number(field="hausnummer", optional=True),
     )

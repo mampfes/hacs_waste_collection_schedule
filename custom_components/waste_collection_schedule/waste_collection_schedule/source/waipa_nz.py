@@ -3,7 +3,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.recurrence import WEEKLY
 from waste_collection_schedule.service.IntraMaps import (
@@ -78,7 +78,7 @@ class Source(BaseSource):
         "1 Acacia Avenue": {"address": "1 Acacia Avenue"},  # Wednesday
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
     parse = IntraMapsPanelParser()

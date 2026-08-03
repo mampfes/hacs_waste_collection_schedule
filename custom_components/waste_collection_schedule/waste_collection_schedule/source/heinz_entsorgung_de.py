@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Heinz-Entsorgung (Landkreis Freising)"
 DESCRIPTION = "Source for Heinz-Entsorgung (Landkreis Freising) waste collection."

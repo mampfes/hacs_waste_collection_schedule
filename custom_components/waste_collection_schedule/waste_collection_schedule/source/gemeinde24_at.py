@@ -3,7 +3,9 @@ from typing import Any, ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import dependent_select
+from waste_collection_schedule.config_params import (
+    dependent_select,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,

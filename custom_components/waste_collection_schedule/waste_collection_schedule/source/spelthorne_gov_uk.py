@@ -112,6 +112,3 @@ class Source(BaseSource):
             "recycling": RECYCLABLES,
         },
     )
-
-    def __init__(self, uprn: str | int):
-        super().__init__(uprn=str(uprn).strip())

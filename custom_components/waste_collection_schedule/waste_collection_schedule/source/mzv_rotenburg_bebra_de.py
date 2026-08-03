@@ -5,7 +5,10 @@ from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    text_field,
+)
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
     ELECTRONICS,
@@ -73,7 +76,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("city", "City"),
+        city(),
         text_field("yellow_route", "Gelbe Tonne Route", optional=True),
         text_field("paper_route", "Papier Route", optional=True),
     )

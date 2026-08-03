@@ -10,7 +10,7 @@ from urllib.parse import urlencode
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -103,7 +103,7 @@ class Source(BaseSource):
         ),
     )
 
-    PARAMS = (text_field("address", label="Street Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (

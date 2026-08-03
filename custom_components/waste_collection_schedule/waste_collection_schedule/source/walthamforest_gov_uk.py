@@ -85,6 +85,3 @@ class Source(BaseSource):
             "Garden Waste Collection Service": GARDEN_WASTE,
         },
     )
-
-    def __init__(self, uprn: str | int):
-        super().__init__(uprn=str(uprn))

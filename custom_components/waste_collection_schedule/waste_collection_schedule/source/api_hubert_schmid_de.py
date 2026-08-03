@@ -2,7 +2,11 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    district,
+    street,
+)
 from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import RECYCLABLES
 
@@ -36,9 +40,9 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("city", "City"),
-        text_field("ortsteil", "District", optional=True),
-        text_field("strasse", "Street", optional=True),
+        city(),
+        district(field="ortsteil", optional=True),
+        street(field="strasse", optional=True),
     )
 
     retrieve = retrievers.http_post

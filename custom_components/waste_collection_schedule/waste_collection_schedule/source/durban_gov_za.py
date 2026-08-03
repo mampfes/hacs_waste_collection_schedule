@@ -15,6 +15,7 @@ from typing import ClassVar, final
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.field_terms import REGION
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.preprocessors import Compose, RowFilter, RowRelabel
 from waste_collection_schedule.retrievers import TwoStepRetriever
@@ -126,7 +127,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("region", "Region"),
+        text_field("region", term=REGION),
         text_field("area", "Collection Area"),
         text_field(
             "recycling_in_even_week",

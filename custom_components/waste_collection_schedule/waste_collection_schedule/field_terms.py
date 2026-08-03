@@ -22,11 +22,23 @@ factory in ``config_params``. To add a language: add it here and to
 The non-English label/help strings are AI-drafted and welcome a native review.
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from typing import Any
 
 from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
 
 _LANGS = ("en", "de", "fr", "it", "nl")
+
+
+def as_text(value: object) -> str:
+    """Normalise a user-entered scalar to a stripped string.
+
+    YAML types a bare ``4`` as an int and a UPRN as a large int, while every
+    provider wants the digits as text, so the concepts that are always textual
+    declare this as their ``coerce``.
+    """
+    return str(value).strip()
 
 
 @dataclass(frozen=True)
@@ -41,6 +53,14 @@ class FieldTerm:
     key: str
     labels: dict[str, str]
     descriptions: dict[str, str] = field(default_factory=dict)
+    coerce: "Callable[[Any], Any] | None" = None
+    """How to normalise a supplied value, if this concept has one right form.
+
+    Normalisation belongs to the concept rather than to each source: a UPRN is
+    digits as text whoever asks for it, so ``uprn()`` carries ``as_text`` and no
+    source needs to remember ``str(uprn).strip()``. Applied to a non-None value
+    only, so an unset optional field stays None instead of becoming ``"None"``.
+    """
 
 
 def _term(
@@ -52,12 +72,14 @@ def _term(
     nl: str,
     *,
     desc: tuple[str, str, str, str, str] | None = None,
+    coerce: "Callable[[Any], Any] | None" = None,
 ) -> FieldTerm:
     """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl)``."""
     return FieldTerm(
         key=key,
         labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl},
         descriptions=dict(zip(_LANGS, desc, strict=True)) if desc else {},
+        coerce=coerce,
     )
 
 
@@ -136,6 +158,9 @@ HOUSE_NUMBER = _term(
         "Il vostro numero civico.",
         "Uw huisnummer.",
     ),
+    # YAML types a bare `4` as an int, and a house number is text everywhere it
+    # is sent (it may be "4a"), so normalise rather than leave each source to.
+    coerce=as_text,
 )
 POSTCODE = _term(
     "postcode",
@@ -166,14 +191,22 @@ ADDRESS = _term(
         "Il vostro indirizzo completo.",
         "Uw volledige adres.",
     ),
+    # A pasted address routinely carries leading or trailing whitespace, which
+    # breaks an exact-match lookup for a reason the user cannot see.
+    coerce=as_text,
 )
 REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio")
 # Administrative levels above the municipality (used by German platforms whose
 # cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
 # German "Land"/"Landkreis" where there is no close equivalent; review welcome.
 STATE = _term("state", "Federal State", "Bundesland", "Land", "Land", "Deelstaat")
+# COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
+# English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
+# DISTRICT (Ortsteil) is a part of one. Both said "District" in English until
+# 2026-08, which made the choice a coin flip for anyone reading only that label,
+# and the German UI then said Landkreis where Ortsteil was meant.
 COUNTY = _term(
-    "county", "District", "Landkreis", "Arrondissement", "Circondario", "Landkreis"
+    "county", "County", "Landkreis", "Arrondissement", "Circondario", "Landkreis"
 )
 
 # --- Coordinates -------------------------------------------------------------
@@ -223,6 +256,10 @@ UPRN = _term(
         "Uw Unique Property Reference Number (UPRN). Vind het op "
         "https://www.findmyaddress.co.uk/",
     ),
+    # A UPRN is a run of digits, but YAML types an unquoted one as an int and
+    # every provider wants it as text. This was the single most repeated
+    # coercion in the sources before it moved here.
+    coerce=as_text,
 )
 LOCATION_ID = _term(
     "location_id",

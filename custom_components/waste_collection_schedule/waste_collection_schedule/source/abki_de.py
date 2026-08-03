@@ -144,6 +144,3 @@ class Source(BaseSource):
         clean=_strip_size,
         type_value_map={"gelbe tonne / gelber sack": RECYCLABLES},
     )
-
-    def __init__(self, street: str, number: "str | int"):
-        super().__init__(street=street, number=str(number))

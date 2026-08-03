@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 
 from waste_collection_schedule import parsers, preprocessors
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.date_parsers import for_format
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.retrievers import TwoStepRetriever
@@ -93,7 +93,7 @@ class Source(BaseSource):
         "Tuesday": {"address": "10 Gaffney Street Coburg North 3058"},
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     retrieve = TwoStepRetriever(
         lookup_url=_lookup_url,
@@ -109,6 +109,3 @@ class Source(BaseSource):
         parse_date=for_format("%d-%m-%Y"),
         type_value_map=_TYPE_MAP,
     )
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

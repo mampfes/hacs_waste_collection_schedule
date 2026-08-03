@@ -1,7 +1,10 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    street,
+    text_field,
+)
 from waste_collection_schedule.service.StuttgartDe import (
     StuttgartParser,
     StuttgartRetriever,
@@ -37,7 +40,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("street", "Straße"),
+        street(),
         text_field("streetnr", "Hausnummer"),
     )
 

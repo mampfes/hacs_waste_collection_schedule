@@ -3,7 +3,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import geocoded_params
@@ -90,7 +90,7 @@ class Source(BaseSource):
         "Mandarin": {"address": "11743 Heather Grove Ln, Jacksonville, FL"},
     }
 
-    PARAMS = (text_field("address", "Street Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": "Use the same address you would enter on the MyJax hauler lookup page.",
@@ -105,6 +105,3 @@ class Source(BaseSource):
     parse = parsers.XmlParser()
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str):
-        super().__init__(address=address.strip())

@@ -3,7 +3,10 @@ from typing import Any, ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    customer_number,
+    street_address,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -184,8 +187,8 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("address", "Address for collection"),
-        text_field("kundNr", "Customer number", optional=True),
+        street_address(),
+        customer_number(field="kundNr", optional=True),
     )
 
     HOWTO: ClassVar[dict] = {

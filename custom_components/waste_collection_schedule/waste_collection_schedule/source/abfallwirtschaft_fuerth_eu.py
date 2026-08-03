@@ -14,7 +14,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import location_id
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -39,7 +39,7 @@ class Source(BaseSource):
         "Carlo-Schmid-Strasse 27": {"id": 96975001},
     }
 
-    PARAMS = (text_field("id", "Location ID"),)
+    PARAMS = (location_id(field="id"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (

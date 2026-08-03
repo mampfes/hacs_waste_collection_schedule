@@ -2,7 +2,11 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    house_number,
+    street,
+)
 from waste_collection_schedule.preprocessors import HtmlGroupedDates
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -58,9 +62,9 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("city", "City"),
-        text_field("street", "Street"),
-        text_field("nr", "House Number"),
+        city(),
+        street(),
+        house_number(field="nr"),
     )
 
     retrieve = HttpGetRetriever(

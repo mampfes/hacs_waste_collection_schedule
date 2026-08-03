@@ -4,7 +4,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
     postcode,
-    text_field,
+    street_address,
     uprn,
 )
 from waste_collection_schedule.service.uk_cloud9_apps import (
@@ -42,7 +42,7 @@ class Source(BaseSource):
 
     PARAMS = (
         alternatives([uprn()], [postcode()]),
-        text_field("address", "Address", optional=True),
+        street_address(optional=True),
     )
 
     HOWTO: ClassVar[dict] = {
