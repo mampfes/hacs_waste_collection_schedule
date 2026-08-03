@@ -1,15 +1,13 @@
 """Zweckverband Abfallwirtschaft Region Hannover (aha-region.de).
 
-Demonstrates: a genuinely bespoke multi-step retrieve. Getting to the ICS
-feed needs, in order: a GET to resolve the street name into a "strasse" id
-from a rendered ``<select>``, a POST submitting that id plus the house number
-that returns an overview page, and (because some addresses are served by more
-than one loading point / "Ladeort") either a single hidden loading-point value
-or a ``<select>`` the caller must disambiguate via the optional ``ladeort``
-argument, before a final POST requests the ICAL export. Four sequential,
-state-threading requests with a data-dependent branch is not a shape any
-configured retriever expresses, hence a source-defined ``retrieve`` method
-(the default ``parse = IcsParser()`` handles the single ICS response).
+The ICAL export sits behind two lookups. First a GET renders the street
+``<select>`` for the chosen municipality, which turns the street name into a
+"strasse" id. Then a POST of that id plus the house number returns the address
+overview, which carries the loading point ("Ladeort") the calendar is keyed
+to: usually a single hidden value, but an address served by more than one
+loading point renders a ``<select>`` the caller has to disambiguate with the
+optional ``ladeort`` argument. With both resolved, the shared
+``LookupChainRetriever`` POSTs the same form once more for the ICAL export.
 
 Every observed label ("Restabfall", "Bioabfall", "Papier",
 "Leichtverpackungen") already resolves against the standard German
@@ -33,6 +31,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -50,6 +49,101 @@ def _clean_label(label: str) -> str:
 
 def _normalize(value: str) -> str:
     return value.lower().replace(" ", "")
+
+
+def _address_args(
+    strassen_id: str, gemeinde: str, strasse: str, hnr: str, zusatz: str
+) -> dict:
+    """The resolved address, as the form fields every POST here starts from."""
+    return {
+        "gemeinde": gemeinde,
+        "jsaus": "",
+        "von": strasse.upper()[0],
+        "strasse": strassen_id,
+        "hausnr": hnr,
+        "hausnraddon": zusatz,
+    }
+
+
+def _resolve_street(source: BaseSource, keys: tuple) -> str:
+    """Street name -> "strasse" id, from the municipality's rendered select."""
+    gemeinde = source.params["gemeinde"]
+    strasse = source.params["strasse"]
+
+    response = source.session.get(
+        _API_URL, params={"gemeinde": gemeinde, "von": strasse.upper()[0]}
+    )
+    response.raise_for_status()
+
+    strasse_select = BeautifulSoup(response.text, "html.parser").find(
+        "select", {"id": "strasse"}
+    )
+    if not isinstance(strasse_select, Tag):
+        raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
+    options = strasse_select.find_all("option")
+    for option in options:
+        if _normalize(option.text) == _normalize(strasse):
+            return str(option["value"])
+
+    raise SourceArgumentNotFoundWithSuggestions(
+        "strasse", strasse, [option.text for option in options]
+    )
+
+
+def _resolve_ladeort(source: BaseSource, keys: tuple) -> str:
+    """Submit the address and read back the loading point the calendar keys off.
+
+    One loading point comes back as a hidden input and is used as-is. Several
+    come back as a ``<select>``, which only the user can decide between, so the
+    optional ``ladeort`` argument picks one and its absence is reported with
+    the list to choose from.
+    """
+    ladeort_wanted = source.params.get("ladeort")
+    response = source.session.post(
+        _API_URL,
+        data={
+            **_address_args(
+                keys[0],
+                source.params["gemeinde"],
+                source.params["strasse"],
+                source.params["hnr"],
+                source.params["zusatz"],
+            ),
+            "anzeigen": "Suchen",
+        },
+    )
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    ladeort_single = soup.find("input", {"name": "ladeort", "class": "form-control"})
+
+    if not ladeort_single:
+        ladeort_select = soup.find("select", {"name": "ladeort"})
+        if not isinstance(ladeort_select, Tag):
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", source.params["strasse"], []
+            )
+        ladeort_options = ladeort_select.find_all("option")
+        if not ladeort_wanted:
+            raise SourceArgumentRequiredWithSuggestions(
+                "ladeort",
+                "Ladeort required for this address",
+                [option.text for option in ladeort_options],
+            )
+        for option in ladeort_options:
+            if _normalize(option.text) == _normalize(ladeort_wanted):
+                ladeort_single = option
+                break
+        if not ladeort_single:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ladeort",
+                ladeort_wanted,
+                [option.text for option in ladeort_options],
+            )
+
+    if not isinstance(ladeort_single, Tag):
+        raise SourceArgumentNotFoundWithSuggestions("ladeort", ladeort_wanted, [])
+    return ladeort_single["value"]  # type: ignore[return-value]
 
 
 @final
@@ -99,6 +193,18 @@ class Source(BaseSource):
         text_field("ladeort", "Loading point", optional=True),
     )
 
+    retrieve = LookupChainRetriever(
+        steps=(_resolve_street, _resolve_ladeort),
+        url=_API_URL,
+        method="POST",
+        data=lambda strassen_id, ladeort_value, gemeinde, strasse, hnr, zusatz, **_: {
+            **_address_args(strassen_id, gemeinde, strasse, hnr, zusatz),
+            "ladeort": ladeort_value,
+            "ical": "ICAL Jahresübersicht",
+        },
+        encoding="utf-8",
+        raise_for_status=True,
+    )
     parse = IcsParser()
     transform = ICSTransformer(clean=_clean_label)
 
@@ -117,83 +223,3 @@ class Source(BaseSource):
             zusatz=str(zusatz),
             ladeort=ladeort,
         )
-
-    def retrieve(self, source):
-        session = source.session
-        gemeinde = source.params["gemeinde"]
-        strasse = source.params["strasse"]
-        hnr = source.params["hnr"]
-        zusatz = source.params["zusatz"]
-        ladeort_wanted = source.params.get("ladeort")
-
-        r = session.get(
-            _API_URL, params={"gemeinde": gemeinde, "von": strasse.upper()[0]}
-        )
-        r.raise_for_status()
-
-        strasse_select = BeautifulSoup(r.text, "html.parser").find(
-            "select", {"id": "strasse"}
-        )
-        if not isinstance(strasse_select, Tag):
-            raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
-        selects = strasse_select.find_all("option")
-        strassen_id = None
-        for select in selects:
-            if _normalize(select.text) == _normalize(strasse):
-                strassen_id = select["value"]
-                break
-
-        if not strassen_id:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", strasse, [select.text for select in selects]
-            )
-
-        args = {
-            "gemeinde": gemeinde,
-            "jsaus": "",
-            "von": strasse.upper()[0],
-            "strasse": strassen_id,
-            "hausnr": hnr,
-            "hausnraddon": zusatz,
-            "anzeigen": "Suchen",
-        }
-
-        r = session.post(_API_URL, data=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        ladeort_single = soup.find(
-            "input", {"name": "ladeort", "class": "form-control"}
-        )
-
-        if not ladeort_single:
-            ladeort_select = soup.find("select", {"name": "ladeort"})
-            if not isinstance(ladeort_select, Tag):
-                raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
-            ladeort_options = ladeort_select.find_all("option")
-            if not ladeort_wanted:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "ladeort",
-                    "Ladeort required for this address",
-                    [option.text for option in ladeort_options],
-                )
-            for option in ladeort_options:
-                if _normalize(option.text) == _normalize(ladeort_wanted):
-                    ladeort_single = option
-                    break
-            if not ladeort_single:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "ladeort",
-                    ladeort_wanted,
-                    [option.text for option in ladeort_options],
-                )
-
-        if not isinstance(ladeort_single, Tag):
-            raise SourceArgumentNotFoundWithSuggestions("ladeort", ladeort_wanted, [])
-        del args["anzeigen"]
-        args["ladeort"] = ladeort_single["value"]
-        args["ical"] = "ICAL Jahresübersicht"
-
-        r = session.post(_API_URL, data=args)
-        r.raise_for_status()
-        r.encoding = "utf-8"
-        return r

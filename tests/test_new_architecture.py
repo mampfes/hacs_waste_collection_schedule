@@ -4496,15 +4496,10 @@ _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "1coast_com_au",
-    "abfallwirtschaft_germersheim_de",
-    "aha_region_de",
     "aw_harburg_de",
-    "awb_oldenburg_de",
     "awg_wuppertal_de",
     "awigo_de",
     "awm_muenchen_de",
-    "awr_de",
-    "awsh_de",
     "bielefeld_de",
     "data_umweltprofis_at",
     "erlangen_hoechstadt_de",
@@ -4518,7 +4513,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "okc_gov",
     "phila_gov",
     "regioentsorgung_de",
-    "rsag_de",
     "shawinigan_ca",
     "wellington_govt_nz",
     "zva_sek_de",
