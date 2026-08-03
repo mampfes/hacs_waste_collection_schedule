@@ -66,6 +66,3 @@ class Source(BaseSource):
             "Odpady B I O zbierane w pojemnikach": ORGANIC,
         }
     )
-
-    def __init__(self, street: str, number: str | int):
-        super().__init__(street=street, number=number)

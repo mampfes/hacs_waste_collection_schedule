@@ -106,6 +106,3 @@ class Source(BaseSource):
     )
     parse = parsers.IcsParser()
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
-
-    def __init__(self, street: str, house_number: int):
-        super().__init__(street=street, house_number=house_number)

@@ -120,6 +120,3 @@ class Source(BaseSource):
             "Sperrmuell Altmetall": BULKY_WASTE,
         }
     )
-
-    def __init__(self, city: str, street: str, house_number: int | str):
-        super().__init__(city=city, street=street, house_number=house_number)

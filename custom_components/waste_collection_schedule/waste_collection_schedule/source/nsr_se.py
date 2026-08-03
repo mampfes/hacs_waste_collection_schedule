@@ -141,6 +141,3 @@ class Source(BaseSource):
             "Miljöfarligt avfall": HAZARDOUS,
         }
     )
-
-    def __init__(self, address: str):
-        super().__init__(address=address)

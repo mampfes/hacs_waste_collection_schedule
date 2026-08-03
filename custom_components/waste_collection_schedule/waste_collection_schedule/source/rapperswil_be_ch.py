@@ -68,6 +68,3 @@ class Source(BaseSource):
             "Papier und Karton": PAPER,
         }
     )
-
-    def __init__(self):
-        super().__init__()

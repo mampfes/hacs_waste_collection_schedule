@@ -145,19 +145,3 @@ class Source(BaseSource):
         hint="check the PDF calendar for valid collection areas",
     )
     transform = ICSTransformer()
-
-    def __init__(
-        self,
-        municipal: str,
-        restabfall: int,
-        altpapier: int,
-        gelber_sack: int,
-        bioabfall: int,
-    ):
-        super().__init__(
-            municipal=municipal,
-            restabfall=restabfall,
-            altpapier=altpapier,
-            gelber_sack=gelber_sack,
-            bioabfall=bioabfall,
-        )

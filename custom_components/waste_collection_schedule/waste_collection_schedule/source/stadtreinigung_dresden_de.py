@@ -90,6 +90,3 @@ class Source(BaseSource):
             "restabfall": GENERAL_WASTE,
         }
     )
-
-    def __init__(self, standort: int):
-        super().__init__(standort=standort)

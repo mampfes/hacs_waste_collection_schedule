@@ -182,6 +182,3 @@ class Source(BaseSource):
             "Gelbe Tonne/Gelben Sack": RECYCLABLES,
         }
     )
-
-    def __init__(self, ort: str, strasse: str, hnr: "str | int"):
-        super().__init__(ort=ort, strasse=strasse, hnr=hnr)

@@ -68,6 +68,3 @@ class Source(BaseSource):
             "garden waste": GARDEN_WASTE,
         },
     )
-
-    def __init__(self, address_id: str):
-        super().__init__(address_id=address_id)

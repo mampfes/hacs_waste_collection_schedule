@@ -49,6 +49,3 @@ class Source(BaseSource):
             "Empty Bin 240L Brown": ORGANIC,
         }
     )
-
-    def __init__(self, post_code: str, uprn: str):
-        super().__init__(post_code=post_code, uprn=uprn)

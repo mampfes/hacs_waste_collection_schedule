@@ -87,6 +87,3 @@ class Source(BaseSource):
             "Leaf Collection": GARDEN_WASTE,
         }
     )
-
-    def __init__(self, sector: str):
-        super().__init__(sector=sector)

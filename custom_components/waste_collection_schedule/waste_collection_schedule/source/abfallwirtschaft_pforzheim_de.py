@@ -109,8 +109,3 @@ class Source(BaseSource):
             "Grossmuellbehaelter": GENERAL_WASTE,
         },
     )
-
-    def __init__(self, street: str, house_number: int, address_suffix: str = ""):
-        super().__init__(
-            street=street, house_number=house_number, address_suffix=address_suffix
-        )

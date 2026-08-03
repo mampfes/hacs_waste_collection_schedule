@@ -138,6 +138,3 @@ class Source(BaseSource):
     )
     parse = IcsParser()
     transform = ICSTransformer()
-
-    def __init__(self, city: str, street: str, number: "str | int"):
-        super().__init__(city=city, street=street, number=number)

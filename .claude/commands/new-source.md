@@ -41,7 +41,7 @@ A **PDF-only** provider is otherwise a normal new source, not a blocker: the pip
 
 If the recommendation is **a new source**: confirm with the user that the approach (ICS YAML / Python source / etc.) matches their understanding. Then continue to Step 2.
 
-New Python sources are written on the `BaseSource` pipeline platform (declare retrieve, parse, preprocess and transform from reusable components; the only source-specific code is usually `__init__`). The authoritative guide is `doc/contributing_source.md`, and `doc/new_source_template.py` is an annotated skeleton to copy from. The legacy module-level `fetch()` style is reserved for editing the roughly 600 existing legacy sources, not for new work.
+New Python sources are written on the `BaseSource` pipeline platform (declare retrieve, parse, preprocess and transform from reusable components; usually there is no source-specific code at all, and no `__init__`). The authoritative guide is `doc/contributing_source.md`, and `doc/new_source_template.py` is an annotated skeleton to copy from. The legacy module-level `fetch()` style is reserved for editing the roughly 600 existing legacy sources, not for new work.
 
 ## Step 2: implement
 
@@ -58,7 +58,7 @@ prompt: |
 
   Write a BaseSource pipeline source (see doc/contributing_source.md): declare
   the retrieve / parse / preprocess / transform steps from reusable components,
-  set self._params and self._headers in __init__, no ICON_MAP, no fetch().
+  shape the request on the retriever, no __init__, no ICON_MAP, no fetch().
   Follow your standard step-by-step: write the source, lint, run
   tests/test_source_components.py, run test_sources.py live. Iterate until the
   test cases return non-empty collections.

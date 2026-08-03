@@ -78,6 +78,3 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d.%m.%Y"),
     )
     transform = ICSTransformer(type_value_map=TYPE_MAP)
-
-    def __init__(self, street: str, city: str, nr: str):
-        super().__init__(city=city, street=street, nr=nr)

@@ -122,6 +122,3 @@ class Source(BaseSource):
     parse = PoziGeoJsonParser()
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer()
-
-    def __init__(self, address: str):
-        super().__init__(address=address)

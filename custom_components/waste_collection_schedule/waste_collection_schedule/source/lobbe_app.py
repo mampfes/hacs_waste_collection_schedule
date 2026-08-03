@@ -234,6 +234,3 @@ class Source(BaseSource):
             "Elektroschrott": ELECTRONICS,
         }
     )
-
-    def __init__(self, state: str, city: str, street: str):
-        super().__init__(state=state, city=city, street=street)

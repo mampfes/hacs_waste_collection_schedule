@@ -71,6 +71,3 @@ class Source(BaseSource):
             "purple": PAPER,
         },
     )
-
-    def __init__(self, address_id: str):
-        super().__init__(address_id=address_id)

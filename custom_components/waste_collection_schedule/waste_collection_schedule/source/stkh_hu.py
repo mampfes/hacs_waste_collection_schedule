@@ -70,6 +70,3 @@ class Source(BaseSource):
     )
 
     transform = ICSTransformer(type_value_map=_TYPE_VALUE_MAP)
-
-    def __init__(self, url: str):
-        super().__init__(url=url)

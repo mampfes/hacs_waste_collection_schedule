@@ -113,6 +113,3 @@ class Source(BaseSource):
     parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer(clean=lambda title: title.removesuffix(", "))
-
-    def __init__(self, abf_suche: str):
-        super().__init__(abf_suche=abf_suche)

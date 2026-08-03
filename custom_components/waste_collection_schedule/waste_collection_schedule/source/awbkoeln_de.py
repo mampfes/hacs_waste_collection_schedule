@@ -62,6 +62,3 @@ class Source(BaseSource):
         type_key="type",
         type_value_map=_TYPE_VALUE_MAP,
     )
-
-    def __init__(self, street_code, building_number):
-        super().__init__(street_code=street_code, building_number=building_number)

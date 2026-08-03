@@ -111,6 +111,3 @@ class Source(BaseSource):
     preprocess = Compose(PanelFieldSet(), RecurrenceExpander(_describe))
 
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str):
-        super().__init__(address=address)

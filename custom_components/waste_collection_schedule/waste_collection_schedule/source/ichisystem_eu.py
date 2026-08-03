@@ -84,6 +84,3 @@ class Source(BaseSource):
     )
     parse = SepanReportParser()
     transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
-
-    def __init__(self, city: str, street: str, house_number: str):
-        super().__init__(city=city, street=street, house_number=house_number)

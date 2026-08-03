@@ -93,6 +93,3 @@ class Source(BaseSource):
             "gelber-sack": RECYCLABLES,
         }
     )
-
-    def __init__(self, ort: str, ortsteil: str):
-        super().__init__(ort=ort, ortsteil=ortsteil)

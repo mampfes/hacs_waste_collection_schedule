@@ -56,6 +56,3 @@ class Source(BaseSource):
     # Sperrmüll, Altglas, Problemstoff) resolves against the shared vocabulary
     # unmapped; no type_value_map needed.
     transform = ICSTransformer()
-
-    def __init__(self, strasse: str, hausnummer: str):
-        super().__init__(strasse=strasse, hausnummer=hausnummer)

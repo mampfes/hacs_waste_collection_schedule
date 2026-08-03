@@ -155,6 +155,3 @@ class Source(BaseSource):
         clean=_clean_type,
         type_value_map={"Wertstoff": RECYCLABLES, "Weihnachtsbaum": GARDEN_WASTE},
     )
-
-    def __init__(self, city: str, street: str):
-        super().__init__(city=city, street=street)

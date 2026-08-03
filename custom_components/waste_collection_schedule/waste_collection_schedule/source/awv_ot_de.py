@@ -115,6 +115,3 @@ class Source(BaseSource):
     parse = IcsFeedsParser(parsers.IcsParser(regex=_SUMMARY_RE))
 
     transform = ICSTransformer(type_value_map=_TYPE_VALUE_MAP)
-
-    def __init__(self, city: str, street: str, hnr: str):
-        super().__init__(city=city, street=street, hnr=hnr)

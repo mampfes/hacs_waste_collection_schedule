@@ -174,6 +174,3 @@ class Source(BaseSource):
             "240L Green Lid Garden Vegetation Bin": GARDEN_WASTE,
         }
     )
-
-    def __init__(self, address: str):
-        super().__init__(address=address)
