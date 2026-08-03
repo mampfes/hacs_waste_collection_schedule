@@ -116,6 +116,3 @@ class Source(BaseSource):
         },
         clean=_clean_first_segment,
     )
-
-    def __init__(self, street: str, hnr: str | int, ladeort: int | None = None):
-        super().__init__(street=street, hnr=hnr, ladeort=ladeort)

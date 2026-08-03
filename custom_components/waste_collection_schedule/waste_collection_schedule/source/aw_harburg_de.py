@@ -178,9 +178,6 @@ class Source(BaseSource):
         }
     )
 
-    def __init__(self, level_1: str, level_2: str, level_3: "str | None" = None):
-        super().__init__(level_1=level_1, level_2=level_2, level_3=level_3)
-
     @classmethod
     def get_choices(cls, field: str, selections: dict) -> list[str]:
         """Options for one cascade level given the levels chosen so far.

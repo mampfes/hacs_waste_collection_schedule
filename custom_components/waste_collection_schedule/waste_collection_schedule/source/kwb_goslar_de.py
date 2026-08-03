@@ -89,12 +89,3 @@ class Source(BaseSource):
             "Mobile Schadstoffsammlung": HAZARDOUS,
         }
     )
-
-    def __init__(
-        self,
-        strasse: str | None = None,
-        ort: str | None = None,
-        pois: str | None = None,
-    ):
-        # validate() enforces the strasse-or-pois alternative via PARAMS.
-        super().__init__(strasse=strasse, ort=ort, pois=pois)

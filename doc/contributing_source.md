@@ -113,6 +113,8 @@ There is one preferred way to shape a request, depending on where the values com
 - **Static or simple values** known at construction time: set `self._params` / `self._headers` in `__init__` and let the default `http_get` use them (the minimal example above).
 - **Values computed from user input**: pass a callable to a configured retriever, resolved against `source.params`: `HttpGetRetriever(url=API_URL, params=lambda uprn, **_: {"uprn": uprn})`.
 
+  Such a callable is invoked as `callable(**source.params)`, and every field declared in `PARAMS` is a key in that dict. So **a parameter default on the callable never fires** for a declared field: write `lambda street=None, **_` if you like the documentation it provides, but handle the unset case in the body (`street or ""`), because the value arrives as `None` rather than not arriving. Passing `None` straight into a query string serialises it as the text `None`, which is how `abfall_lro_de` briefly asked a provider for `black=None`. The offline cassettes catch that class of mistake, which is a good reason to record one before trusting a request-shaping change.
+
 Override `retrieve` as a method only for a genuinely irregular flow a configured retriever cannot express (e.g. two independent fetches), not merely to inject params. It may return one response or a lazy iterable of responses (for pagination, the parser controls how many pages are pulled); always go through `source.session`:
 
 ```python
@@ -224,7 +226,9 @@ A param is required by default. Three ways to relax that:
 - **Optional, no default.** `text_field(..., optional=True)` / `dropdown(..., optional=True)` makes a field optional with no pre-filled value, for a refinement the source can do without (e.g. an extra street or route filter alongside a required city). Prefer this over `dataclasses.replace(..., required=False)`.
 - **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
 
-Declare every default here rather than in an `__init__` signature, because the two are not equivalent. `ConfigParam.defaults` is independent of `required`: `apply_defaults` fills only the fields that declare a default, so a field that is merely `optional=True` is **absent** from `self.params` when the user omits it, where an `__init__` default of `None` would have made it present and `None`. Read an optional field with `self.params.get("x")`, and if the pipeline needs the key to exist, give it an explicit `default=None`.
+Declare every default here rather than in an `__init__` signature. **Every field declared in `PARAMS` is a key in `self.params`**, whether the user supplied it or not: `apply_defaults` fills a defaulted field with its default, and any other field of a non-required param with `None`. So `self.params["street"]` is safe to read on an optional field and is `None` when unset, and a signature default of `None` adds nothing.
+
+Two consequences worth knowing. An empty string counts as unset, so a field the user leaves blank is replaced by its default (or `None`). And a `None` value therefore means "declared but not configured", never "not a field of this source", so a component receiving `**source.params` sees a stable set of keys across every user of it.
 
 `dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.
 

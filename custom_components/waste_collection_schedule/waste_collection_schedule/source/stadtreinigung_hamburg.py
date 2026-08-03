@@ -68,6 +68,3 @@ class Source(BaseSource):
     )
     parse = parsers.IcsParser()
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
-
-    def __init__(self, hnId, asId=None):
-        super().__init__(hnId=hnId, asId=asId)

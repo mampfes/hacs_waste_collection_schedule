@@ -154,12 +154,31 @@ def _term_label_maps(
 
 
 def apply_defaults(params: Sequence[ConfigParam], values: dict) -> dict:
-    """Return ``values`` with any missing/empty defaulted field filled in."""
+    """Return ``values`` with every declared field present.
+
+    A field with a declared default gets that default when missing or empty. A
+    field of a non-required param gets ``None``, so that every field declared in
+    PARAMS is a key in the result whether or not the user supplied it. Without
+    that, an omitted optional field was absent from ``source.params`` while an
+    omitted defaulted one was present, so a source could only be sure of reading
+    it with ``.get()`` and could not tell "not configured" apart from "not a
+    field of this source". It also meant an ``__init__`` written as
+    ``ort: str | None = None`` was doing real work, since deleting it changed the
+    key from present-and-None to absent.
+    """
     prepared = dict(values)
     for param in params:
         for field_name, default in param.defaults.items():
             if prepared.get(field_name) in (None, ""):
                 prepared[field_name] = default
+        if not param.required:
+            for field_name in param.fields:
+                # An empty string counts as unset here for the same reason it does
+                # above: the config flow submits "" for an optional text box the
+                # user never filled in, and that must not read differently from
+                # the same field omitted in YAML.
+                if prepared.get(field_name) in (None, ""):
+                    prepared[field_name] = None
     return prepared
 
 

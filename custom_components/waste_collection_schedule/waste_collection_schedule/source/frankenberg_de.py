@@ -186,6 +186,3 @@ class Source(BaseSource):
             "Recycle": RECYCLABLES,
         }
     )
-
-    def __init__(self, district: str, street: "str | None" = None):
-        super().__init__(district=district, street=street)

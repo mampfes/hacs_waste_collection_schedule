@@ -258,6 +258,3 @@ class Source(BaseSource):
         HolidayShift(_adjust),
     )
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, commune: str, quartier: str | None = None):
-        super().__init__(commune=commune, quartier=quartier)

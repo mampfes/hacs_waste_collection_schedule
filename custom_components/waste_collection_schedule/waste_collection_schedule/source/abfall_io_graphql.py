@@ -163,6 +163,3 @@ class Source(BaseSource):
             )
             for s in _PROVIDERS
         ]
-
-    def __init__(self, key, idHouseNumber, wasteTypes=None):
-        super().__init__(key=key, idHouseNumber=idHouseNumber, wasteTypes=wasteTypes)

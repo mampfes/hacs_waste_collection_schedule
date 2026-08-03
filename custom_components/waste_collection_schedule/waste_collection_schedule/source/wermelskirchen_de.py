@@ -98,6 +98,3 @@ class Source(BaseSource):
             "weihnachtsbaum": GARDEN_WASTE,
         }
     )
-
-    def __init__(self, street: str, house_number: "str | int | None" = None):
-        super().__init__(street=street, house_number=house_number)

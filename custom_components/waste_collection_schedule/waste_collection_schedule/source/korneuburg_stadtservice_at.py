@@ -195,15 +195,3 @@ class Source(BaseSource):
     )
     parse = EachResponse(IcsParser())
     transform = ICSTransformer()
-
-    def __init__(
-        self,
-        street_name: str,
-        street_number: "str | int",
-        teilgebiet: "str | int | None" = None,
-    ):
-        super().__init__(
-            street_name=street_name,
-            street_number=street_number,
-            teilgebiet=teilgebiet,
-        )

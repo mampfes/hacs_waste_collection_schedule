@@ -128,8 +128,8 @@ def _extract_letters(lookup, source) -> str:
 
 def _schedule_url(
     letters,
-    black_rhythm="",
-    green_rhythm="",
+    black_rhythm=None,
+    green_rhythm=None,
     black_seasonal=False,
     green_seasonal=False,
     **_,
@@ -137,8 +137,10 @@ def _schedule_url(
     args = {
         "letters": letters,
         "year": datetime.now().year,
-        "black": black_rhythm,
-        "green": green_rhythm,
+        # An unset optional field arrives as None; this provider wants the
+        # parameter present but empty, so coerce rather than pass "None" through.
+        "black": black_rhythm or "",
+        "green": green_rhythm or "",
         "yellow": "y",
         "blue": "y",
     }

@@ -135,26 +135,6 @@ class Source(BaseSource):
     parse = AppAbfallplusParser()
     transform = JsonTransformer(date_key="date", type_key="category")
 
-    def __init__(
-        self,
-        app_id: str,
-        strasse: str | None = None,
-        hnr: str | int | None = None,
-        bezirk: str | None = None,
-        city: str | None = None,
-        bundesland: str | None = None,
-        landkreis: str | None = None,
-    ):
-        super().__init__(
-            app_id=app_id,
-            strasse=strasse,
-            hnr=hnr,
-            bezirk=bezirk,
-            city=city,
-            bundesland=bundesland,
-            landkreis=landkreis,
-        )
-
     @staticmethod
     def REGIONS() -> list[Region]:
         regions: list[Region] = []

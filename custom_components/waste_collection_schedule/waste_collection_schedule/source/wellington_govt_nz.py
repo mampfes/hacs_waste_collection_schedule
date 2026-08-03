@@ -133,6 +133,3 @@ class Source(BaseSource):
         if picture is not None and isinstance(collection, Collection):
             collection.set_picture(picture)
         return collection
-
-    def __init__(self, streetId: "str | None" = None, streetName: "str | None" = None):
-        super().__init__(streetId=streetId, streetName=streetName)

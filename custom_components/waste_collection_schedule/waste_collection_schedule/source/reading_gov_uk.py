@@ -120,9 +120,3 @@ class Source(BaseSource):
         schedule_url=lambda key, **_: f"{SEARCH_URLS['COLLECTION']}/{key}",
         direct_key=lambda source: source.params.get("uprn"),
     )
-
-    def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        # validate() enforces the UPRN-or-(postcode+house) alternative via PARAMS.
-        super().__init__(
-            uprn=uprn, postcode=postcode, housenameornumber=housenameornumber
-        )

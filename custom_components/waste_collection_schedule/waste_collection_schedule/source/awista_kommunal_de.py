@@ -107,11 +107,3 @@ class Source(BaseSource):
             "Wertstofftonne": RECYCLABLES,
         },
     )
-
-    def __init__(
-        self,
-        street: "str | None" = None,
-        house_number: "str | None" = None,
-        uuid: "str | None" = None,
-    ):
-        super().__init__(street=street, house_number=house_number, uuid=uuid)

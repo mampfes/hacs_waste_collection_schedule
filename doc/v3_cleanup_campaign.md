@@ -141,6 +141,41 @@ Never add a name to an allowlist. If a source seems to need its own step, the
 component is missing a capability: that is the finding, and it belongs in the
 component.
 
+## Definition of done, per platform improvement
+
+The campaign keeps turning up a better way to write something, not just a source
+in the wrong shape. When it does, cleaning the existing sources is only part of
+the job, because the next contributor writes from the documentation rather than
+from the cleaned sources. A platform improvement is done when all four hold:
+
+1. The existing sources are converted, or the ones that cannot be are listed
+   with the reason they resisted.
+2. **Every instruction that taught the old way is corrected**: the reference
+   (`doc/contributing_source.md`), the skeleton people copy
+   (`doc/new_source_template.py`), the agent (`.claude/agents/source-implementer.md`),
+   the command (`.claude/commands/new-source.md`), `CLAUDE.md`, and the relevant
+   docstring in the library. Grep for the old form; do not work from memory.
+   Worked examples matter most, since they are what gets copied.
+3. A test gate rejects the old way, so the correction does not rely on anyone
+   remembering it. Prefer a gate with no exceptions: make it narrow enough to be
+   provably safe rather than broad with an allowlist.
+4. Anything non-obvious that was learned on the way is written down, especially a
+   trap that made some sources unsafe to convert. That is the part nobody can
+   rediscover from the diff.
+
+`test_pipeline_sources_dont_redeclare_init` and the commit that added it are the
+worked example: 97 sources cleaned, six instruction sites corrected, one gate at
+zero exceptions, and the two rules that made the other 101 sources resist written
+down (`ConfigParam.defaults` being independent of `required`, and coercion
+belonging on the `ConfigParam`).
+
+The follow-up is worth reading alongside it, because it shows point 4 cutting the
+other way. Rather than live with the first of those two rules, the next change
+removed it: `apply_defaults` now fills every optional field with `None`, so the
+documented trap became a documented guarantee and 33 more sources lost their
+`__init__`. When a trap turns out to be fixable, fix it and correct the note; a
+faithfully documented trap is still a trap.
+
 ## Running it
 
 Work in the devcontainer, which matches the CI minimum lane. Verify with the

@@ -70,6 +70,3 @@ class Source(BaseSource):
             "Papier/Pappe": PAPER,
         }
     )
-
-    def __init__(self, strasse: str, ort: str | None = None):
-        super().__init__(strasse=strasse, ort=ort)

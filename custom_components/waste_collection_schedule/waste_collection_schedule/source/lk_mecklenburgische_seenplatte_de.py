@@ -60,6 +60,3 @@ class Source(BaseSource):
             "Restmülltonne 28-täglichen Rhythmus": GENERAL_WASTE,
         }
     )
-
-    def __init__(self, strasse: str, ort: str | None = None):
-        super().__init__(strasse=strasse, ort=ort)

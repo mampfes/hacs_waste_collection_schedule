@@ -76,6 +76,3 @@ class Source(BaseSource):
         clean=_clean_collection_type,
         skip_unparseable_dates=True,
     )
-
-    def __init__(self, postcode: str, house_number: int | str | None = None):
-        super().__init__(postcode=postcode, house_number=house_number)

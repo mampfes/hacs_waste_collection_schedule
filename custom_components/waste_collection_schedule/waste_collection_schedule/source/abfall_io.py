@@ -333,24 +333,6 @@ class Source(BaseSource):
     parse = AbfallIoParser()
     transform = ICSTransformer()
 
-    def __init__(
-        self,
-        key: str,
-        f_id_kommune: int | str,
-        f_id_strasse: int | str,
-        f_id_bezirk: int | str | None = None,
-        f_id_strasse_hnr: int | str | None = None,
-        f_abfallarten: list[int] | None = None,
-    ):
-        super().__init__(
-            key=key,
-            f_id_kommune=f_id_kommune,
-            f_id_strasse=f_id_strasse,
-            f_id_bezirk=f_id_bezirk,
-            f_id_strasse_hnr=f_id_strasse_hnr,
-            f_abfallarten=f_abfallarten,
-        )
-
     @staticmethod
     def REGIONS() -> list[Region]:
         return [

@@ -2596,6 +2596,62 @@ class TestConfigParamValidation:
         assert apply_defaults(params, {"key": ""}) == {"key": "EMBEDDED"}
         assert apply_defaults(params, {"key": "mine"}) == {"key": "mine"}
 
+    def test_apply_defaults_fills_optional_fields_with_none(self):
+        """Every declared field is a key, so an unset optional one reads as None."""
+        from waste_collection_schedule.config_params import (
+            apply_defaults,
+            city,
+            street,
+        )
+
+        params = [city(), street(optional=True)]
+        assert apply_defaults(params, {"city": "Perth"}) == {
+            "city": "Perth",
+            "street": None,
+        }
+        # An empty string counts as unset for an optional field too.
+        assert apply_defaults(params, {"city": "Perth", "street": ""}) == {
+            "city": "Perth",
+            "street": None,
+        }
+        # A supplied value survives.
+        assert apply_defaults(params, {"city": "Perth", "street": "Hay St"}) == {
+            "city": "Perth",
+            "street": "Hay St",
+        }
+
+    def test_apply_defaults_does_not_invent_required_fields(self):
+        """A required field stays absent, so validate() can still catch it."""
+        from waste_collection_schedule.config_params import apply_defaults, city
+
+        assert apply_defaults([city()], {}) == {}
+
+    def test_apply_defaults_fills_alternatives_groups_with_none(self):
+        """An alternatives param is non-required, so every member becomes a key.
+
+        validate() still rejects a filled-in None, because None is not a provided
+        value for the purpose of choosing a group.
+        """
+        from waste_collection_schedule.config_params import (
+            alternatives,
+            apply_defaults,
+            postcode,
+            uprn,
+            validate,
+        )
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentExceptionMultiple,
+        )
+
+        params = [alternatives([uprn()], [postcode()])]
+        prepared = apply_defaults(params, {"uprn": "100012345678"})
+        assert prepared["uprn"] == "100012345678"
+        assert prepared["postcode"] is None
+        validate(params, prepared)  # exactly one group provided
+
+        with pytest.raises(SourceArgumentExceptionMultiple):
+            validate(params, apply_defaults(params, {}))
+
     def test_validate_required_raises_when_missing(self):
         from waste_collection_schedule.config_params import uprn, validate
         from waste_collection_schedule.exceptions import SourceArgumentRequired
@@ -4586,16 +4642,23 @@ def _redundant_init_reason(stem: str, cls: type) -> str | None:
     if set(named) != fields:
         return None  # signature and PARAMS disagree; not a safe deletion
 
-    # A default the PARAMS does not declare is load-bearing: ConfigParam.defaults
-    # is independent of `required`, so without it an omitted optional field is
-    # absent from self.params rather than present as None.
+    # A signature default is redundant when PARAMS declares the same value, or
+    # when it is None on a field of a non-required param, since apply_defaults
+    # fills every optional field with None. Any other default is load-bearing:
+    # `street: str = ""` is not the None that apply_defaults would supply.
+    optional_fields: set[str] = set()
+    for param in getattr(cls, "PARAMS", ()) or ():
+        if not getattr(param, "required", True):
+            optional_fields.update(param.fields)
     signature_defaults = dict(
         zip(named[len(named) - len(args.defaults) :], args.defaults, strict=True)
     )
     for field_name, default_node in signature_defaults.items():
-        if field_name not in declared_defaults:
-            return None
-        if repr(declared_defaults[field_name]) != ast.unparse(default_node):
+        rendered = ast.unparse(default_node)
+        if field_name in declared_defaults:
+            if repr(declared_defaults[field_name]) != rendered:
+                return None
+        elif not (rendered == "None" and field_name in optional_fields):
             return None
 
     return "it forwards every argument to super() under the same name"

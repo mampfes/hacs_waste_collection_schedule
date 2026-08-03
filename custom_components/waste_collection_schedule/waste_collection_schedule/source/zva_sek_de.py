@@ -204,6 +204,3 @@ class Source(BaseSource):
             "schadstoffsammlung (achtung: nur selbstanlieferung)": HAZARDOUS,
         }
     )
-
-    def __init__(self, bezirk: str, ortsteil: str, strasse: "str | None" = None):
-        super().__init__(bezirk=bezirk, ortsteil=ortsteil, strasse=strasse)
