@@ -830,6 +830,123 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
         return rows
 
 
+class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
+    """A month-grid calendar whose day cells carry marked-up collection markers.
+
+    The HTML sibling of
+    :class:`~waste_collection_schedule.preprocessors.TextCalendarGrid`. A
+    council that renders its year as twelve little month tables puts the month
+    in a header cell spanning the week, the day number in each day cell, and one
+    marker element per collection inside that cell, the round identified by the
+    marker's own class::
+
+        <td>17<span class="MAT"></span><span class="TIDN"></span></td>
+
+    Each marker becomes one ``(date, marker)`` row::
+
+        parse = parsers.HtmlCalendarGrid(
+            table="#mainKalender table",
+            header='td[colspan="7"]',
+        )
+
+    The month header is read with :func:`recurrence.month`, so a month named in
+    any supported language resolves. A cell whose leading text is not a day
+    number is skipped, which is how the weekday strip and the blank cells either
+    side of the month fall away without having to be described.
+
+    Markers nested inside the day cell would otherwise be read as part of the
+    day number, so they are stripped before the number is taken. Repeated
+    ``(date, marker)`` rows are dropped: a grid that renders the same collection
+    in two places (a week view beside a month view) would otherwise double it.
+
+    Args:
+        table: CSS selector for each month's table.
+        header: CSS selector, within the table, for the cell naming the month.
+            Its text may carry other words; the first thing that reads as a
+            month name and the first four-digit number are used.
+        marker: CSS selector, within a day cell, for the collection markers
+            (default ``"span"``).
+        attribute: the marker attribute identifying the round (default
+            ``"class"``). Where it holds several values, the first is used.
+    """
+
+    def __init__(
+        self,
+        *,
+        table: str,
+        header: str,
+        marker: str = "span",
+        attribute: str = "class",
+    ):
+        self.table = table
+        self.header = header
+        self.marker = marker
+        self.attribute = attribute
+
+    def _month_and_year(self, text: str) -> "tuple[int, int] | None":
+        from waste_collection_schedule import recurrence
+
+        year = re.search(r"\d{4}", text)
+        if year is None:
+            return None
+        for word in re.findall(r"[^\W\d_]+", text, flags=re.UNICODE):
+            month = recurrence.month(word)
+            if month is not None:
+                return month, int(year.group(0))
+        return None
+
+    def _marker_name(self, element: Tag) -> "str | None":
+        value = element.get(self.attribute)
+        if isinstance(value, list):
+            return str(value[0]) if value else None
+        return str(value) if value else None
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        rows: list[tuple[datetime.date, str]] = []
+        seen: set[tuple[datetime.date, str]] = set()
+
+        for month_table in soup.select(self.table):
+            header = month_table.select_one(self.header)
+            if header is None:
+                continue
+            resolved = self._month_and_year(header.get_text(strip=True))
+            if resolved is None:
+                continue
+            month, year = resolved
+
+            for day_cell in month_table.find_all("td"):
+                # The markers sit inside the cell, so their own text would run
+                # into the day number if it were read with them still in place.
+                without_markers = BeautifulSoup(
+                    day_cell.decode_contents(), "html.parser"
+                )
+                for element in without_markers.select(self.marker):
+                    element.decompose()
+                stripped = without_markers.get_text(strip=True)
+                day_text = stripped.split()[0] if stripped else ""
+                if not day_text.isdigit():
+                    continue
+
+                try:
+                    collection_date = datetime.date(year, month, int(day_text))
+                except ValueError:
+                    continue
+
+                for element in day_cell.select(self.marker):
+                    name = self._marker_name(element)
+                    if name is None:
+                        continue
+                    row = (collection_date, name)
+                    if row in seen:
+                        continue
+                    seen.add(row)
+                    rows.append(row)
+        return rows
+
+
 class HtmlTextParser(Parser[str]):
     """Parse response as HTML and return its visible text.
 

@@ -4501,7 +4501,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "fredrikstad_no",
     "fuquay_varina_nc_us",
     "ics",
-    "narab_se",
     "nemaffaldsservice_kk_dk",
     "regioentsorgung_de",
     "shawinigan_ca",

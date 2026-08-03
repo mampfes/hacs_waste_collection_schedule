@@ -85,15 +85,15 @@ def _recording(sink: list):
 
         return wrapper
 
-    _cffi.Session.request = wrap(cffi_request)
-    _requests_sessions.Session.request = wrap(plain_request)
-    _requests_sessions.Session.send = wrap_send(plain_send)
+    _cffi.Session.request = wrap(cffi_request)  # type: ignore[method-assign]
+    _requests_sessions.Session.request = wrap(plain_request)  # type: ignore[method-assign]
+    _requests_sessions.Session.send = wrap_send(plain_send)  # type: ignore[method-assign]
     try:
         yield
     finally:
-        _cffi.Session.request = cffi_request
-        _requests_sessions.Session.request = plain_request
-        _requests_sessions.Session.send = plain_send
+        _cffi.Session.request = cffi_request  # type: ignore[method-assign]
+        _requests_sessions.Session.request = plain_request  # type: ignore[method-assign]
+        _requests_sessions.Session.send = plain_send  # type: ignore[method-assign]
 
 
 def main(wanted: "list[str]") -> int:
