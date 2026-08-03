@@ -111,6 +111,3 @@ class Source(BaseSource):
         type_value_map=_TYPE_MAP,
         parse_date=parse_date,
     )
-
-    def __init__(self, street_address: str):
-        super().__init__(street_address=street_address)

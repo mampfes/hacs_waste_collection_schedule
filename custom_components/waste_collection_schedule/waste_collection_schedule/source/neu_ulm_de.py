@@ -74,6 +74,3 @@ class Source(BaseSource):
         },
         clean=lambda label: label.replace("Abfuhr ", "").strip(),
     )
-
-    def __init__(self, region: str):
-        super().__init__(region=region)

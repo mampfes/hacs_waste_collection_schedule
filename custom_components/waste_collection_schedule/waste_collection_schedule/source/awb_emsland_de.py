@@ -110,17 +110,3 @@ class Source(BaseSource):
             "Bioabfallbehaelter": ORGANIC,
         }
     )
-
-    def __init__(
-        self,
-        city: str,
-        street: str,
-        house_number: int | str,
-        address_suffix: str = "",
-    ):
-        super().__init__(
-            city=city,
-            street=street,
-            house_number=house_number,
-            address_suffix=address_suffix,
-        )

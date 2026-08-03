@@ -163,6 +163,3 @@ class Source(BaseSource):
             "Schadstoffsammlung": HAZARDOUS,
         }
     )
-
-    def __init__(self, street: str, house_number: str, city: str = "bad-oeynhausen"):
-        super().__init__(street=street, house_number=house_number, city=city)

@@ -48,6 +48,3 @@ class Source(BaseSource):
             "Green garden waste bin": GARDEN_WASTE,
         },
     )
-
-    def __init__(self, uprn):
-        super().__init__(uprn=uprn)

@@ -120,6 +120,3 @@ class Source(BaseSource):
         # own ``d[1].split(" ")[0]``).
         clean=lambda label: label.split(" ")[0],
     )
-
-    def __init__(self, ortsgemeinde: str):
-        super().__init__(ortsgemeinde=ortsgemeinde)

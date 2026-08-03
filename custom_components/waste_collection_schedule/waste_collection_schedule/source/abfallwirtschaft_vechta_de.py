@@ -157,6 +157,3 @@ class Source(BaseSource):
             "Mobile Schadstoff.": HAZARDOUS,
         }
     )
-
-    def __init__(self, stadt: str, strasse: str):
-        super().__init__(stadt=stadt, strasse=strasse)

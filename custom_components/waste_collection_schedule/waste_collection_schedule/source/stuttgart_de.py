@@ -44,6 +44,3 @@ class Source(BaseSource):
     retrieve = StuttgartRetriever()
     parse = StuttgartParser()
     transform = RowTransformer()
-
-    def __init__(self, street, streetnr):
-        super().__init__(street=street, streetnr=streetnr)

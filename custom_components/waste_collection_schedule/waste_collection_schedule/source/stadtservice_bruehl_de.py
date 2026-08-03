@@ -114,6 +114,3 @@ class Source(BaseSource):
         clean=_clean_type,
         type_value_map={"Straßenlaub": GARDEN_WASTE},
     )
-
-    def __init__(self, strasse: str, hnr: str):
-        super().__init__(strasse=strasse, hnr=hnr)

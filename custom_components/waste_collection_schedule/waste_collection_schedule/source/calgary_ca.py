@@ -99,6 +99,3 @@ class Source(BaseSource):
     parse = parsers.JsonParser(shape=list[ScheduleRecord])
     preprocess = preprocessors.RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=TYPE_MAP)
-
-    def __init__(self, street_address: str):
-        super().__init__(street_address=street_address)

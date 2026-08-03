@@ -95,17 +95,3 @@ class Source(BaseSource):
     )
     parse = parsers.IcsParser()
     transform = ICSTransformer()
-
-    def __init__(
-        self,
-        city: str,
-        street: str,
-        house_number: int,
-        address_suffix: str = "",
-    ):
-        super().__init__(
-            city=city,
-            street=street,
-            house_number=house_number,
-            address_suffix=address_suffix,
-        )

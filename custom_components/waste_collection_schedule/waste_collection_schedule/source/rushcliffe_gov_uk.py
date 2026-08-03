@@ -60,6 +60,3 @@ class Source(BaseSource):
             "glass": GLASS,
         },
     )
-
-    def __init__(self, postcode: str, address: str):
-        super().__init__(postcode=postcode, address=address)

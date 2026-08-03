@@ -132,6 +132,3 @@ class Source(BaseSource):
             "wertstofftonne": RECYCLABLES,
         },
     )
-
-    def __init__(self, city: str, street: str, hnr: str, addition: str = ""):
-        super().__init__(city=city, street=street, hnr=hnr, addition=addition)

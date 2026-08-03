@@ -64,6 +64,3 @@ class Source(BaseSource):
             "Sperrmüll": BULKY_WASTE,
         },
     )
-
-    def __init__(self, street: str):
-        super().__init__(street=street)

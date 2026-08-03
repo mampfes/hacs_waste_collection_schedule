@@ -114,6 +114,3 @@ class Source(BaseSource):
     parse = IcsFeedsParser(parsers.IcsParser())
 
     transform = ICSTransformer()
-
-    def __init__(self, district: str):
-        super().__init__(district=district)

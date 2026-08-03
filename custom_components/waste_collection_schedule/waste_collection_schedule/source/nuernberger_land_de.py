@@ -54,6 +54,3 @@ class Source(BaseSource):
             "Giftmobil": HAZARDOUS,
         }
     )
-
-    def __init__(self, id: int):
-        super().__init__(id=id)

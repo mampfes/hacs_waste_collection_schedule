@@ -89,6 +89,3 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map=_TYPE_MAP,
     )
-
-    def __init__(self, commune: str):
-        super().__init__(commune=commune)

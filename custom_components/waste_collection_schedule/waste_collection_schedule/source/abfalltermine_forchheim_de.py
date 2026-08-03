@@ -53,6 +53,3 @@ class Source(BaseSource):
     # ResponseShapeError rather than silently returning nothing.
     parse = parsers.IcsParser(min_events=1)
     transform = ICSTransformer()
-
-    def __init__(self, city: str, area: str):
-        super().__init__(city=city, area=area)

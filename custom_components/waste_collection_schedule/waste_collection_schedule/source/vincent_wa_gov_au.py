@@ -106,6 +106,3 @@ class Source(BaseSource):
     parse = PoziWfsParser()
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer()
-
-    def __init__(self, address: str):
-        super().__init__(address=address)

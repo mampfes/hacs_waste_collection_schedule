@@ -100,6 +100,3 @@ class Source(BaseSource):
             field: waste_type for field, (waste_type, _) in _SERVICES.items()
         }
     )
-
-    def __init__(self, address: str):
-        super().__init__(address=address)

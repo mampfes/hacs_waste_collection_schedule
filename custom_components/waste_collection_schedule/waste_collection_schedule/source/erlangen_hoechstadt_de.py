@@ -58,6 +58,3 @@ class Source(BaseSource):
         return entries
 
     transform = ICSTransformer()
-
-    def __init__(self, city: str, street: str):
-        super().__init__(city=city, street=street)

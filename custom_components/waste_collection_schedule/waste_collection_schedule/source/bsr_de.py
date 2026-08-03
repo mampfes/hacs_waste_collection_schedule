@@ -83,9 +83,6 @@ class Source(BaseSource):
     # date in ``serviceDate_actual``, so dropping the grouping key loses nothing.
     preprocess = FlattenGroups()
 
-    def __init__(self, schedule_id: str) -> None:
-        super().__init__(schedule_id=schedule_id)
-
     def classify(self, record: dict[str, Any]) -> Collection | None:
         date = datetime.datetime.strptime(
             record["serviceDate_actual"], "%d.%m.%Y"

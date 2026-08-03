@@ -62,6 +62,3 @@ class Source(BaseSource):
         },
         clean=label_cleaner(strip_suffixes=[" collection"]),
     )
-
-    def __init__(self, property: str):
-        super().__init__(property=property)

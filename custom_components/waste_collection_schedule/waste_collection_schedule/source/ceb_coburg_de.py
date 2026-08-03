@@ -91,6 +91,3 @@ class Source(BaseSource):
 
     # The two feeds overlap around the year boundary, repeating collections.
     parse = IcsFeedsParser(parsers.IcsParser(), dedupe=True)
-
-    def __init__(self, street: str):
-        super().__init__(street=street)

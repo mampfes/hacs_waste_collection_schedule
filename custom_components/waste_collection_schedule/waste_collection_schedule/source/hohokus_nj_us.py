@@ -159,6 +159,3 @@ class Source(BaseSource):
     transform = ICSTransformer(
         type_value_map={GENERAL: GENERAL_WASTE, YARD: GARDEN_WASTE},
     )
-
-    def __init__(self, district: str):
-        super().__init__(district=district)

@@ -88,8 +88,3 @@ class Source(BaseSource):
     )
     parse = SepanPositionalReportParser(name_map=NAME_MAP)
     transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
-
-    def __init__(self, city: str, street_name: str, street_number: str):
-        super().__init__(
-            city=city, street_name=street_name, street_number=street_number
-        )

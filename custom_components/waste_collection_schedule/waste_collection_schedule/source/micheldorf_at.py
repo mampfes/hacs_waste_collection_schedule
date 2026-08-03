@@ -67,6 +67,3 @@ class Source(BaseSource):
             "Restabfall 6-wöchentlich": GENERAL_WASTE,
         },
     )
-
-    def __init__(self, strasse: str, hausnummer: str):
-        super().__init__(strasse=strasse, hausnummer=hausnummer)

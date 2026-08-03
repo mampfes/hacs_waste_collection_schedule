@@ -94,6 +94,3 @@ class Source(BaseSource):
     parse = ArcGisFeatureParser()
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, property_location: str):
-        super().__init__(property_location=property_location)

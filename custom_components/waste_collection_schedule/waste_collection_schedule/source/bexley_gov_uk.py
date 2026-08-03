@@ -70,6 +70,3 @@ class Source(BaseSource):
         },
         clean=_clean_bin_label,
     )
-
-    def __init__(self, uprn: str):
-        super().__init__(uprn=uprn)

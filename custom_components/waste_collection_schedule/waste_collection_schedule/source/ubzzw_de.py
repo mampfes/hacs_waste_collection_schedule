@@ -92,6 +92,3 @@ class Source(BaseSource):
             "problemstoff-sammlung": HAZARDOUS,
         },
     )
-
-    def __init__(self, street: str, house_number: str):
-        super().__init__(street=street, house_number=house_number)

@@ -105,6 +105,3 @@ class Source(BaseSource):
             else label.removeprefix(_PREFIX)
         ),
     )
-
-    def __init__(self, street: str):
-        super().__init__(street=street)

@@ -40,6 +40,3 @@ class Source(BaseSource):
     retrieve = CollectionDatesRetriever(base_url=BASE_URL)
     parse = IcsParser()
     transform = ICSTransformer(clean=clean_waste_type)
-
-    def __init__(self, city: str, street: str):
-        super().__init__(city=city, street=street)

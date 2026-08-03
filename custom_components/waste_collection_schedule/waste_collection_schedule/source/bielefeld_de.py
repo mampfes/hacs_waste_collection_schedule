@@ -106,8 +106,3 @@ class Source(BaseSource):
     def preprocess(self, records, source=None):
         """Drop the calendar's own "Die neue ICal..." announcement VEVENT."""
         return (r for r in records if "Die neue ICal" not in r[1])
-
-    def __init__(self, street: str, house_number: int, address_suffix: str = ""):
-        super().__init__(
-            street=street, house_number=house_number, address_suffix=address_suffix
-        )

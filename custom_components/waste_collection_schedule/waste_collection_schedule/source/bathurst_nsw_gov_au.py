@@ -107,6 +107,3 @@ class Source(BaseSource):
     preprocess = RecurrenceExpander(_describe)
 
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def __init__(self, address: str, suburb: str):
-        super().__init__(address=address, suburb=suburb)

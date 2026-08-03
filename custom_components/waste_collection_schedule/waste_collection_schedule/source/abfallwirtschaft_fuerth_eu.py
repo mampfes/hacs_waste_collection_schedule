@@ -59,6 +59,3 @@ class Source(BaseSource):
             "Altpapier": PAPER,
         }
     )
-
-    def __init__(self, id: int):
-        super().__init__(id=id)

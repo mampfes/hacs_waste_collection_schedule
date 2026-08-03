@@ -95,6 +95,3 @@ class Source(BaseSource):
             PACKAGING_LABEL: RECYCLABLES,
         }
     )
-
-    def __init__(self, calendar_url: str):
-        super().__init__(calendar_url=calendar_url)
