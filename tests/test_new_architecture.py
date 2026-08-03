@@ -4623,6 +4623,71 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 # --------------------------------------------------------------------------- #
 
 
+# --------------------------------------------------------------------------- #
+# EXTRA_INFO is legacy-only
+#
+# A source is one structure applied to one or more regions, and REGIONS (a typed
+# list[Region]) is how a v3 source declares them. EXTRA_INFO is the older
+# free-form dict list: its params are not validated against PARAMS, and it is
+# adapted into Regions by regions.from_extra_info() at a single boundary purely
+# so the rest of the toolchain works in Region terms only.
+#
+# That adapter exists for the 54 legacy sources still using it. It is a bridge,
+# not a second supported format, and it is deleted along with the last legacy
+# source (see doc/legacy_deprecation_plan.md). No pipeline source may use it, and
+# none does today, so this gate is preventive rather than a debt register.
+# --------------------------------------------------------------------------- #
+
+
+def _declares_extra_info(stem: str) -> bool:
+    """True if this source actually declares EXTRA_INFO, not merely mentions it.
+
+    Checked with ast rather than a text search, because several sources name
+    EXTRA_INFO in a docstring while explaining that REGIONS replaced it.
+    """
+    import ast
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and any(
+            isinstance(t, ast.Name) and t.id == "EXTRA_INFO" for t in node.targets
+        ):
+            return True
+        if (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == "EXTRA_INFO"
+        ):
+            return True
+        if isinstance(node, ast.FunctionDef) and node.name == "EXTRA_INFO":
+            return True
+    return False
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_do_not_use_extra_info(stem: str) -> None:
+    """EXTRA_INFO is read from legacy sources only; a v3 source declares REGIONS."""
+    assert not _declares_extra_info(stem), (
+        f"{stem} declares EXTRA_INFO, which is the legacy form and is read from "
+        "legacy sources only. Declare REGIONS instead: a list of "
+        "regions.region(title, url=..., **params) entries, whose params are "
+        "validated against PARAMS rather than being free-form. EXTRA_INFO support "
+        "is retired with the last legacy source (doc/legacy_deprecation_plan.md)."
+    )
+
+
 def _named_waste_type_imports(stem: str) -> list[str]:
     """Names this source imports individually from waste_types."""
     import ast
