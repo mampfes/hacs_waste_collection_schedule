@@ -6,10 +6,10 @@ each publishing one or more calendar years that must be queried individually
 -- either by a named collection zone, or by resolving a city/street/house
 number cascade -- and unioned into the full schedule. A year for which the
 configured zone/address isn't found is skipped (the site republishes with
-gaps around a boundary year) rather than failing the whole fetch. No
-configured retriever expresses "resolve then fetch, once per published year,
-via one of two alternative lookup paths", hence a source-defined
-retrieve()/parse() pair. ``alternatives()`` now enforces that exactly one of
+gaps around a boundary year) rather than failing the whole fetch: that is a
+FanOutRetriever whose ``prepare`` lists the published calendars and whose
+fetch returns ``None`` for a year this household is not in.
+``alternatives()`` now enforces that exactly one of
 the zone path or the city/street/house-number path is supplied, replacing the
 legacy code's crash (a bare ``None in ...`` TypeError) when neither was.
 """
@@ -27,8 +27,9 @@ from waste_collection_schedule.config_params import (
     text_field,
 )
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.parsers import EachResponse, IcsParser
 from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import FanOutRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -153,6 +154,51 @@ def _fetch_by_address(
     return r
 
 
+def _published_calendars(source) -> tuple:
+    """The customer's published calendar years, listed once."""
+    customer = source.params["customer"]
+    base_url = f"https://services.infeo.at/awm/api/{customer}/wastecalendar"
+
+    years_resp = source.session.get(
+        f"{base_url}/calendars", params={"showUnpublishedCalendars": "false"}
+    )
+    if years_resp.status_code == 500:
+        raise SourceArgumentNotFound("customer", customer)
+    years_resp.raise_for_status()
+
+    calendar_years = years_resp.json()
+    if not calendar_years:
+        raise SourceArgumentNotFound(
+            "customer", customer, "no calendars are published for this customer."
+        )
+    return base_url, calendar_years
+
+
+def _calendar_years(source, context: tuple) -> list:
+    return context[1]
+
+
+def _fetch_calendar(source, calendar_year, context: tuple):
+    """One year's ICS, or None when this household is not in that year."""
+    base_url, _ = context
+    session = source.session
+    calendar_id = calendar_year["id"]
+    calendar_name = calendar_year["name"]
+
+    zone = source.params.get("zone")
+    if zone is not None:
+        return _fetch_by_zone(session, base_url, calendar_id, calendar_name, zone)
+    return _fetch_by_address(
+        session,
+        base_url,
+        calendar_id,
+        calendar_name,
+        source.params.get("city"),
+        source.params.get("street"),
+        source.params.get("housenumber"),
+    )
+
+
 @final
 class Source(BaseSource):
     TITLE = "infeo"
@@ -223,57 +269,13 @@ class Source(BaseSource):
         ),
     )
 
-    def retrieve(self, source):
-        session = source.session
-        customer = source.params["customer"]
-        zone = source.params.get("zone")
-        city_name = source.params.get("city")
-        street_name = source.params.get("street")
-        housenumber = source.params.get("housenumber")
+    retrieve = FanOutRetriever(
+        prepare=_published_calendars,
+        targets=_calendar_years,
+        fetch=_fetch_calendar,
+    )
 
-        base_url = f"https://services.infeo.at/awm/api/{customer}/wastecalendar"
-
-        years_resp = session.get(
-            f"{base_url}/calendars", params={"showUnpublishedCalendars": "false"}
-        )
-        if years_resp.status_code == 500:
-            raise SourceArgumentNotFound("customer", customer)
-        years_resp.raise_for_status()
-
-        calendar_years = years_resp.json()
-        if not calendar_years:
-            raise SourceArgumentNotFound(
-                "customer", customer, "no calendars are published for this customer."
-            )
-
-        responses = []
-        for calendar_year in calendar_years:
-            calendar_id = calendar_year["id"]
-            calendar_name = calendar_year["name"]
-            if zone is not None:
-                ical = _fetch_by_zone(
-                    session, base_url, calendar_id, calendar_name, zone
-                )
-            else:
-                ical = _fetch_by_address(
-                    session,
-                    base_url,
-                    calendar_id,
-                    calendar_name,
-                    city_name,
-                    street_name,
-                    housenumber,
-                )
-            if ical is not None:
-                responses.append(ical)
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        entries = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries
+    parse = EachResponse(IcsParser())
 
     transform = ICSTransformer()
 

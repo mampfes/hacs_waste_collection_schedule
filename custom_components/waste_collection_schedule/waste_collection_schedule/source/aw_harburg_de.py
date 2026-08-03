@@ -5,11 +5,11 @@ district -> an optional street/house-number range), expressed as
 ``cascading_select``. The site itself resolves each level's id from the prior
 level's id via an ajax endpoint, and the final id selects a
 "Abfuhrbezirk" search whose result page lists one iCal link per active waste
-type (more than one may appear during a year transition). No configured
-retriever expresses "walk an ajax cascade, then fetch N iCal links from the
-result page", hence a source-defined ``retrieve``/``parse`` pair;
-``get_choices`` reuses the very same cascade-walking helpers so the config
-flow's dropdowns are resolved the same way as the live fetch.
+type (more than one may appear during a year transition). That is a
+FanOutRetriever: the cascade is its ``prepare``, the iCal links on the result
+page are its targets. ``get_choices`` reuses the very same cascade-walking
+helpers so the config flow's dropdowns are resolved the same way as the live
+fetch.
 
 "Gelbe Tonne", "Biotonne" and "Grünabfall" already resolve against the
 standard German aliases. "Altpapier" and the two "Hausmüll ..." cadence
@@ -23,7 +23,8 @@ from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.parsers import EachResponse, IcsParser
+from waste_collection_schedule.retrievers import FanOutRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -89,6 +90,52 @@ def _match_id(options: dict[str, str], name: str, field: str) -> str:
         if _normalize_name(opt_name) == normalized:
             return opt_id
     raise SourceArgumentNotFoundWithSuggestions(field, name, sorted(options))
+
+
+def _search_page(source):
+    """Walk the ajax cascade, then GET the Abfuhrbezirk result page."""
+    session = source.session
+    level_1 = source.params["level_1"]
+    level_2 = source.params["level_2"]
+    level_3 = source.params.get("level_3")
+
+    level1_options = _level_options(_initial_html(session), 1)
+    id1 = _match_id(level1_options, level_1, "level_1")
+
+    level2_options = _level_options(_child_html(session, id1, 1), 2)
+    id2 = _match_id(level2_options, level_2, "level_2")
+
+    selected_id = id2
+    if level_3 is not None:
+        level3_options = _level_options(_child_html(session, id2, 2), 3)
+        selected_id = _match_id(level3_options, level_3, "level_3")
+
+    r = session.get(
+        _SEARCH_URL,
+        params={"selected_ebene": selected_id, "owner": 20100},
+        headers=_HEADERS,
+    )
+    r.raise_for_status()
+
+    if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "level_3" if level_3 is not None else "level_2",
+            level_3 if level_3 is not None else level_2,
+            [],
+        )
+    return r
+
+
+def _ical_links(source, page) -> list:
+    """One iCal link per active waste type, as listed on the result page."""
+    soup = BeautifulSoup(page.text, "html.parser")
+    return [link.get("href") for link in soup.find_all("a") if " als iCal" in link.text]
+
+
+def _fetch_ical(source, url, context):
+    r = source.session.get(url, headers=_HEADERS)
+    r.raise_for_status()
+    return r
 
 
 @final
@@ -168,56 +215,11 @@ class Source(BaseSource):
             return sorted(level3_options)
         return []
 
-    def retrieve(self, source):
-        session = source.session
-        level_1 = source.params["level_1"]
-        level_2 = source.params["level_2"]
-        level_3 = source.params.get("level_3")
+    retrieve = FanOutRetriever(
+        prepare=_search_page,
+        targets=_ical_links,
+        fetch=_fetch_ical,
+    )
 
-        level1_options = _level_options(_initial_html(session), 1)
-        id1 = _match_id(level1_options, level_1, "level_1")
-
-        level2_options = _level_options(_child_html(session, id1, 1), 2)
-        id2 = _match_id(level2_options, level_2, "level_2")
-
-        selected_id = id2
-        if level_3 is not None:
-            level3_options = _level_options(_child_html(session, id2, 2), 3)
-            selected_id = _match_id(level3_options, level_3, "level_3")
-
-        r = session.get(
-            _SEARCH_URL,
-            params={"selected_ebene": selected_id, "owner": 20100},
-            headers=_HEADERS,
-        )
-        r.raise_for_status()
-
-        if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "level_3" if level_3 is not None else "level_2",
-                level_3 if level_3 is not None else level_2,
-                [],
-            )
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        ical_urls = [
-            link.get("href") for link in soup.find_all("a") if " als iCal" in link.text
-        ]
-
-        responses = []
-        for url in ical_urls:
-            resp = session.get(url, headers=_HEADERS)
-            resp.raise_for_status()
-            responses.append(resp)
-        return responses
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        entries = []
-        for response in raw:
-            try:
-                entries.extend(ics_parser(response, source))
-            except ValueError:
-                # During a year transition the next year's ical may be empty.
-                pass
-        return entries
+    # During a year transition the next year's ical may be published but empty.
+    parse = EachResponse(IcsParser(), skip_failures=True)

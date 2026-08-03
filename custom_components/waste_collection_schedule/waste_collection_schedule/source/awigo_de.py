@@ -8,9 +8,9 @@ mobile) are enabled in a single pass: the API returns an events-free ICS
 (headers only) when just one type is requested, so at least two must be
 enabled together, and each ICS event already carries its own waste-type name
 (issue #4562). The final getICSfile call itself returns a follow-up download
-URL as plain text (not the ICS body), which must be fetched separately. No
-configured retriever expresses this four-step resolve-then-download shape,
-hence a source-defined retrieve()/parse() pair.
+URL as plain text (not the ICS body), which must be fetched separately: that is
+a LookupChainRetriever whose last step resolves the download address and hands
+it straight back as the schedule URL.
 """
 
 import re
@@ -21,6 +21,8 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, municipality, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.preprocessors import RowRelabel
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
@@ -55,6 +57,80 @@ def _options(html: str) -> list:
     return BeautifulSoup(html, "html.parser").find_all("option")
 
 
+def _args(method: str, **ids: object) -> dict:
+    """The wizard's parameters for one step, in the order the endpoint sees them.
+
+    Every request restates the whole state, because the wizard keeps none. All
+    waste types are enabled on every call: a single-type request answers with an
+    events-free ICS, so at least two must be asked for together (issue #4562).
+    """
+    args: dict = {"legacy_eID": "awigoCalendar", "calendar[method]": method}
+    for waste_type in _WASTE_TYPE_KEYS:
+        args[f"calendar[{waste_type}]"] = 1
+    for name in ("cityID", "streetID", "locationID"):
+        if name in ids:
+            args[f"calendar[{name}]"] = ids[name]
+    return args
+
+
+def _pick(options: list, wanted: str, argument: str, matches) -> str:
+    """The option whose text the caller accepts, or a not-found with the list."""
+    found = next((o.get("value") for o in options if matches(o.text)), None)
+    if found is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            argument, wanted, [o.text for o in options]
+        )
+    return found
+
+
+def _resolve_city(source, keys: tuple) -> str:
+    ort = source.params["ort"]
+    options = _options(_post(source.session, _args("getCities")).text)
+    return _pick(options, ort, "ort", lambda text: _compare_cities(ort, text))
+
+
+def _resolve_street(source, keys: tuple) -> str:
+    (city_id,) = keys
+    strasse = source.params["strasse"]
+    options = _options(_post(source.session, _args("getStreets", cityID=city_id)).text)
+    return _pick(
+        options,
+        strasse,
+        "strasse",
+        lambda text: text.lower().strip() == strasse.lower().strip(),
+    )
+
+
+def _resolve_number(source, keys: tuple) -> str:
+    city_id, street_id = keys
+    hnr = str(source.params["hnr"]).lower().strip().replace(" ", "")
+    options = _options(
+        _post(
+            source.session, _args("getNumbers", cityID=city_id, streetID=street_id)
+        ).text
+    )
+    return _pick(
+        options,
+        source.params["hnr"],
+        "hnr",
+        lambda text: text.lower().strip().replace(" ", "") == hnr,
+    )
+
+
+def _resolve_download_url(source, keys: tuple) -> str:
+    """The last step: getICSfile answers with the download address, not the ICS."""
+    city_id, street_id, location_id = keys
+    return _post(
+        source.session,
+        _args(
+            "getICSfile",
+            cityID=city_id,
+            streetID=street_id,
+            locationID=location_id,
+        ),
+    ).text.strip()
+
+
 @final
 class Source(BaseSource):
     TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
@@ -80,85 +156,22 @@ class Source(BaseSource):
         house_number(field="hnr"),
     )
 
-    def retrieve(self, source):
-        session = source.session
-        ort = source.params["ort"]
-        strasse = source.params["strasse"]
-        hnr = str(source.params["hnr"]).lower().strip().replace(" ", "")
+    retrieve = LookupChainRetriever(
+        steps=(
+            _resolve_city,
+            _resolve_street,
+            _resolve_number,
+            _resolve_download_url,
+        ),
+        # The last step already resolved the download address.
+        url=lambda *keys, **_: keys[-1],
+        encoding="utf-8",
+    )
 
-        # Enable every waste type in one pass: a single-type request returns
-        # an events-free ICS, so at least two must be requested together. Each
-        # ICS event carries its own waste-type name, so nothing is lost by
-        # doing so. See GitHub issue #4562.
-        args: dict = {
-            "legacy_eID": "awigoCalendar",
-            "calendar[method]": "getCities",
-        }
-        for wt in _WASTE_TYPE_KEYS:
-            args[f"calendar[{wt}]"] = 1
+    parse = IcsParser()
 
-        r = _post(session, args)
-        options = _options(r.text)
-        city_id = next(
-            (o.get("value") for o in options if _compare_cities(ort, o.text)),
-            None,
-        )
-        if city_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "ort", ort, [o.text for o in options]
-            )
-        args["calendar[cityID]"] = city_id
-
-        args["calendar[method]"] = "getStreets"
-        r = _post(session, args)
-        options = _options(r.text)
-        street_id = next(
-            (
-                o.get("value")
-                for o in options
-                if o.text.lower().strip() == strasse.lower().strip()
-            ),
-            None,
-        )
-        if street_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", strasse, [o.text for o in options]
-            )
-        args["calendar[streetID]"] = street_id
-
-        args["calendar[method]"] = "getNumbers"
-        r = _post(session, args)
-        options = _options(r.text)
-        location_id = next(
-            (
-                o.get("value")
-                for o in options
-                if o.text.lower().strip().replace(" ", "") == hnr
-            ),
-            None,
-        )
-        if location_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "hnr", source.params["hnr"], [o.text for o in options]
-            )
-        args["calendar[locationID]"] = location_id
-
-        args["calendar[method]"] = "getICSfile"
-        r = _post(session, args)
-        ics_response = session.get(r.text.strip())
-        ics_response.encoding = "utf-8"
-        return [ics_response]
-
-    def parse(self, raw, source):
-        ics_parser = IcsParser()
-        entries = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries
-
-    def preprocess(self, entries, source):
-        for date_, name in entries:
-            yield (date_, name.replace("wird abgeholt.", "").strip())
+    # Every SUMMARY is the round's name with the same sentence glued on.
+    preprocess = RowRelabel(strip=r"wird abgeholt\.")
 
     transform = ICSTransformer(
         type_value_map={
