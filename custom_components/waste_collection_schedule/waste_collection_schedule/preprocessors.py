@@ -173,6 +173,43 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
             yield collection_date, key
 
 
+class SplitLabels(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Fan a row whose label names several rounds out into one row per round.
+
+    For the provider that publishes a combined collection as one entry with the
+    rounds joined in the text: "Rubbish Collection & Glass crate", "Papier /
+    Bio". The transformer maps one label to one waste type, so the join has to
+    be undone before it, and mapping every observed combination in the
+    ``type_value_map`` does not scale (the combinations are the powerset of the
+    rounds)::
+
+        preprocess = preprocessors.SplitLabels(r"&")
+
+    The ICS platform has its own version of this in
+    :class:`~waste_collection_schedule.parsers.IcsParser`'s ``split_at``, which
+    also title-cases each part. Reach for this one when the case must survive
+    (the label is looked up somewhere case-sensitive), or when the rows come
+    from anything other than an ICS feed.
+
+    Empty parts are dropped, so a trailing or doubled separator costs nothing.
+
+    Args:
+        separator: regex the label is split on.
+    """
+
+    def __init__(self, separator: str):
+        self._separator = re.compile(separator)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        for collection_date, label in records:
+            for part in self._separator.split(str(label)):
+                stripped = part.strip()
+                if stripped:
+                    yield collection_date, stripped
+
+
 class RoundAreaSelector(Preprocessor[Any, "tuple[datetime.date, str]"]):
     """Keep the rows for this household's collection area, one area per round.
 
@@ -929,6 +966,122 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
                 collection_date = _date_from_groups(match.groupdict(), year)
                 if collection_date is not None:
                     yield collection_date, label.group(1)
+
+    def _document_year(self, text: str) -> int:
+        if self._year_re is not None:
+            match = self._year_re.search(text)
+            if match:
+                return int(match.group(1))
+        return datetime.date.today().year
+
+
+def _month_number(value: "str | None") -> "int | None":
+    """A month written as a number or as a name in any supported language."""
+    text = str(value or "").strip()
+    if text.isdigit():
+        number = int(text)
+        return number if 1 <= number <= 12 else None
+    return recurrence.month(text)
+
+
+class TextDatedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Expand a plain-text "a date, then its rounds" schedule into rows.
+
+    The mirror image of :class:`TextGroupedDates`. There, a round's label
+    introduces the run of dates it is collected on; here a date heads a block
+    and the rounds collected that day are listed beneath it, one per line. That
+    is what a per-address schedule printed as a diary looks like, and what a PDF
+    generator emits when it renders one day at a time::
+
+        parse = parsers.PdfTextParser(min_chars=100)
+        preprocess = preprocessors.TextDatedBlocks(
+            block_pattern=(
+                r"\\w+\\n(?P<day>\\d+)\\s(?P<month>\\w+)\\n"
+                r"(?P<labels>[\\w\\s\\-]+?)(?=\\n\\w+\\n\\d+\\s\\w+|$)"
+            ),
+            year_pattern=r"Data generowania:\\s(\\d{4})-\\d{2}-\\d{2}",
+            normalise=str.capitalize,
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Such a schedule is nearly always printed without the year, and runs over a
+    year boundary if it is long enough. Blocks come out in the document's own
+    (chronological) order, so a month earlier than the one before it is the
+    calendar turning over: ``roll_year`` reads it that way, which is what keeps
+    a December-to-January listing on the right side of New Year.
+
+    A block whose month does not resolve, and a block naming a day that month
+    does not have, are skipped rather than failing the fetch.
+
+    Args:
+        block_pattern: regex found repeatedly across the document, one match per
+            dated block. It must carry the named groups ``day``, ``month`` and
+            ``labels``, and may carry ``year`` for a document that dates each
+            block in full. ``month`` may be a number or a month name in any
+            supported language (:func:`recurrence.month` resolves it, including
+            the inflected forms a date reads in, e.g. Polish "lipca").
+        label_separator: regex splitting the ``labels`` group into the
+            individual round names (default: a newline or a comma).
+        normalise: optional ``callable(str) -> str`` applied to each label after
+            it is stripped. The transformer matches its ``type_value_map``
+            case-insensitively, so this is only needed where the label's case
+            survives into the output, i.e. for a round the shared vocabulary
+            does not resolve and whose text is therefore preserved verbatim.
+        year_pattern: a regex searched against the whole document, its first
+            group the four-digit year the schedule starts in. Falls back to the
+            current year when unset or unmatched.
+        roll_year: whether a month earlier than the previous block's advances
+            the year (default True). Turn it off for a document that cannot span
+            a year boundary, or one whose blocks are not in date order.
+    """
+
+    def __init__(
+        self,
+        *,
+        block_pattern: str,
+        label_separator: str = r"[\n,]",
+        normalise: "Callable[[str], str] | None" = None,
+        year_pattern: "str | None" = None,
+        roll_year: bool = True,
+    ):
+        self._block_re = re.compile(block_pattern)
+        missing = {"day", "month", "labels"} - set(self._block_re.groupindex)
+        if missing:
+            raise ValueError(
+                f"block_pattern is missing the named group(s) {sorted(missing)}"
+            )
+        self._label_re = re.compile(label_separator)
+        self._normalise = normalise
+        self._year_re = re.compile(year_pattern) if year_pattern else None
+        self._roll_year = roll_year
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text = str(records)
+        year = self._document_year(text)
+        previous: int | None = None
+
+        for block in self._block_re.finditer(text):
+            groups = block.groupdict()
+            month = _month_number(groups.get("month"))
+            if month is None:
+                continue
+            if self._roll_year and previous is not None and previous > month:
+                year += 1
+            previous = month
+            try:
+                collection_date = datetime.date(
+                    int(groups.get("year") or year), month, int(groups["day"])
+                )
+            except ValueError:
+                continue
+            for raw in self._label_re.split(groups.get("labels") or ""):
+                label = raw.strip()
+                if self._normalise is not None:
+                    label = self._normalise(label)
+                if label:
+                    yield collection_date, label
 
     def _document_year(self, text: str) -> int:
         if self._year_re is not None:

@@ -1,23 +1,22 @@
 """Abfallwirtschaft Germersheim, Germany.
 
-Demonstrates: a form whose ICS export needs a CSRF-style token and download
-key scraped from a first GET, together with the *current* set of waste-type
-checkboxes it renders (so the POST asks for every type actually offered
-rather than a hardcoded list) -- then that state is POSTed back to the same
-URL to get the ICS. No configured retriever expresses "GET, scrape two hidden
-fields and a dynamic checkbox list, then POST all of it back", hence a
-source-defined retrieve() (the parse step, converting the returned ICS, is
-the plain shared IcsParser).
+The ICS export is a form that will only answer a POST carrying the CSRF token
+and download key it just rendered, plus the set of waste-type checkboxes it
+currently offers (so the request asks for every type actually available rather
+than a hardcoded list). Reading those three off the form is the one lookup
+step; the shared ``LookupChainRetriever`` then POSTs them back to the same URL
+and hands the ICS to the shared ``IcsParser``.
 """
 
 import re
-from typing import ClassVar, final
+from typing import ClassVar, NamedTuple, final
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -32,6 +31,64 @@ from waste_collection_schedule.waste_types import (
 _API_URL = "https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html"
 
 _CHECKBOX_LABEL_RE = re.compile(r"id_form_icsabfallart_[0-9][0-9]?")
+
+
+class _ExportForm(NamedTuple):
+    """What the rendered export form hands the download POST.
+
+    All three come off the same page, so they resolve as one lookup step: a
+    second step would mean a second identical GET.
+    """
+
+    ics_download: str
+    request_token: str
+    waste_types: list[str]
+
+
+def _search_params(city_name: str, street_name: str, waste_types: list) -> dict:
+    """The address query string, shared by the form GET and the download POST.
+
+    ``waste_types`` is empty on the GET (the form renders the available types)
+    and holds the scraped labels on the POST.
+    """
+    params: dict = {"icsortschaft": city_name, "icsabfallart[]": waste_types}
+    if street_name:
+        params["icsstrasse"] = street_name
+    return params
+
+
+def _read_export_form(source: BaseSource, keys: tuple) -> _ExportForm:
+    """GET the form and read its download key, CSRF token and waste types."""
+    city_name = source.params["city"]
+    response = source.session.get(
+        _API_URL,
+        params=_search_params(city_name, source.params.get("street") or "", []),
+    )
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    ics_download_tag = soup.find("input", {"type": "hidden", "name": "ICS_DOWNLOAD"})
+    request_token_tag = soup.find("input", {"type": "hidden", "name": "REQUEST_TOKEN"})
+    checkbox_container = soup.find("div", {"class": "ctlg_form_field checkbox"})
+    if (
+        not isinstance(ics_download_tag, Tag)
+        or not isinstance(request_token_tag, Tag)
+        or not isinstance(checkbox_container, Tag)
+    ):
+        raise SourceArgumentNotFound(
+            "city", city_name, "could not find the ICS export form."
+        )
+
+    return _ExportForm(
+        ics_download_tag.get("value"),  # type: ignore[arg-type]
+        request_token_tag.get("value"),  # type: ignore[arg-type]
+        [
+            label.text
+            for label in checkbox_container.find_all(
+                "label", {"for": _CHECKBOX_LABEL_RE}
+            )
+        ],
+    )
 
 
 @final
@@ -53,50 +110,18 @@ class Source(BaseSource):
         street(field="street", optional=True),
     )
 
-    def retrieve(self, source):
-        session = source.session
-        params: dict = {
-            "icsortschaft": self.params["city"],
-            "icsabfallart[]": [],
-        }
-        street_name = self.params.get("street") or ""
-        if street_name:
-            params["icsstrasse"] = street_name
-
-        r = session.get(_API_URL, params=params)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        ics_download_tag = soup.find(
-            "input", {"type": "hidden", "name": "ICS_DOWNLOAD"}
-        )
-        request_token_tag = soup.find(
-            "input", {"type": "hidden", "name": "REQUEST_TOKEN"}
-        )
-        checkbox_container = soup.find("div", {"class": "ctlg_form_field checkbox"})
-        if (
-            not isinstance(ics_download_tag, Tag)
-            or not isinstance(request_token_tag, Tag)
-            or not isinstance(checkbox_container, Tag)
-        ):
-            raise SourceArgumentNotFound(
-                "city", self.params["city"], "could not find the ICS export form."
-            )
-        ics_download = ics_download_tag.get("value")
-        request_token = request_token_tag.get("value")
-
-        waste_type_labels = checkbox_container.find_all(
-            "label", {"for": _CHECKBOX_LABEL_RE}
-        )
-        for waste_type in waste_type_labels:
-            params["icsabfallart[]"].append(waste_type.text)
-
-        return session.post(
-            _API_URL,
-            params=params,
-            data={"ICS_DOWNLOAD": ics_download, "REQUEST_TOKEN": request_token},
-        )
-
+    retrieve = LookupChainRetriever(
+        steps=(_read_export_form,),
+        url=_API_URL,
+        method="POST",
+        params=lambda form, city, street="", **_: _search_params(
+            city, street or "", form.waste_types
+        ),
+        data=lambda form, **_: {
+            "ICS_DOWNLOAD": form.ics_download,
+            "REQUEST_TOKEN": form.request_token,
+        },
+    )
     parse = IcsParser()
     transform = ICSTransformer(
         type_value_map={

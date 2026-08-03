@@ -1,10 +1,10 @@
 """RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft (rsag.de).
 
-Demonstrates: a JSON id-lookup cascade (city -> street) feeding a final ICS
-download whose path also carries every known waste-type id and a rolling
-12-month window. No configured retriever expresses "resolve two ids from two
-JSON lookups, then build a months window and download an ICS calendar with
-all three baked into the URL", hence a source-defined ``retrieve()``.
+A JSON id cascade feeding an ICS download: the city id narrows the street
+list, the street id addresses the calendar, and the calendar path also carries
+every waste-type id and the months wanted. Each level needs the one above it,
+so the shared ``LookupChainRetriever`` runs the three lookups in order and
+builds the download URL from all three.
 
 The waste-type labels returned (e.g. "Restmülltonne 4-wö.",
 "Bio-Container Regelabfuhr für Wohnanlagen") don't match the canonical
@@ -20,6 +20,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -56,6 +57,51 @@ def _clean_type(label: str) -> str:
     if "weihnachtsbaum" in lower:
         return "Weihnachtsbaum"
     return label
+
+
+def _pick_id(entries: list[dict], wanted: str, id_key: str, argument: str) -> int:
+    """Return the id of the entry whose ``name`` matches ``wanted``."""
+    names = []
+    for entry in entries:
+        names.append(entry["name"])
+        if _normalise(entry["name"]) == _normalise(wanted):
+            return entry[id_key]
+    raise SourceArgumentNotFoundWithSuggestions(argument, wanted, names)
+
+
+def _resolve_city(source: BaseSource, keys: tuple) -> int:
+    """City name -> city id."""
+    response = source.session.get(f"{_API_BASE}/city/all")
+    response.raise_for_status()
+    return _pick_id(response.json(), source.params["city"], "city_id", "city")
+
+
+def _resolve_street(source: BaseSource, keys: tuple) -> int:
+    """Street name -> street id, within the resolved city."""
+    response = source.session.get(f"{_API_BASE}/street/filter/{keys[0]}")
+    response.raise_for_status()
+    return _pick_id(response.json(), source.params["street"], "street_id", "street")
+
+
+def _resolve_waste_types(source: BaseSource, keys: tuple) -> str:
+    """Every waste-type id, comma-joined for the calendar path.
+
+    Not a lookup against a user argument: the download URL has to name the
+    types wanted, and the source asks for all of them.
+    """
+    response = source.session.get(f"{_API_BASE}/wastetype/all")
+    response.raise_for_status()
+    return ",".join(str(entry["wastetype_id"]) for entry in response.json())
+
+
+def _months_window() -> str:
+    """The rolling 12-month window the calendar path takes, as ``YYYY-MM`` values."""
+    today = datetime.date.today()
+    months = []
+    for i in range(12):
+        month = today.replace(day=1) + datetime.timedelta(days=32 * i)
+        months.append(month.replace(day=1).strftime("%Y-%m"))
+    return ",".join(months)
 
 
 @final
@@ -96,6 +142,14 @@ class Source(BaseSource):
         street(field="street"),
     )
 
+    retrieve = LookupChainRetriever(
+        steps=(_resolve_city, _resolve_street, _resolve_waste_types),
+        url=lambda city_id, street_id, waste_type_ids, **_: (
+            f"{_API_BASE}/pickup/filter/{street_id}/{waste_type_ids}"
+            f"/{_months_window()}/ics"
+        ),
+        raise_for_status=True,
+    )
     parse = IcsParser()
     transform = ICSTransformer(
         clean=_clean_type,
@@ -104,62 +158,3 @@ class Source(BaseSource):
 
     def __init__(self, city: str, street: str):
         super().__init__(city=city, street=street)
-
-    def retrieve(self, source):
-        session = source.session
-        city_value = self.params["city"]
-        street_value = self.params["street"]
-
-        # 1. Resolve city -> city_id
-        r = session.get(f"{_API_BASE}/city/all")
-        r.raise_for_status()
-        cities = r.json()
-
-        city_id = None
-        city_names = []
-        for c in cities:
-            city_names.append(c["name"])
-            if _normalise(c["name"]) == _normalise(city_value):
-                city_id = c["city_id"]
-                break
-        if city_id is None:
-            raise SourceArgumentNotFoundWithSuggestions("city", city_value, city_names)
-
-        # 2. Resolve street -> street_id
-        r = session.get(f"{_API_BASE}/street/filter/{city_id}")
-        r.raise_for_status()
-        streets = r.json()
-
-        street_id = None
-        street_names = []
-        for s in streets:
-            street_names.append(s["name"])
-            if _normalise(s["name"]) == _normalise(street_value):
-                street_id = s["street_id"]
-                break
-        if street_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", street_value, street_names
-            )
-
-        # 3. Fetch all waste type IDs (use all by default)
-        r = session.get(f"{_API_BASE}/wastetype/all")
-        r.raise_for_status()
-        waste_type_ids = ",".join(str(w["wastetype_id"]) for w in r.json())
-
-        # 4. Fetch active months — request a rolling 12-month window
-        today = datetime.date.today()
-        months = []
-        for i in range(12):
-            month = today.replace(day=1) + datetime.timedelta(days=32 * i)
-            month = month.replace(day=1)
-            months.append(month.strftime("%Y-%m"))
-        months_param = ",".join(months)
-
-        # 5. Fetch ICS calendar
-        ics_url = (
-            f"{_API_BASE}/pickup/filter/{street_id}/{waste_type_ids}/{months_param}/ics"
-        )
-        r = session.get(ics_url)
-        r.raise_for_status()
-        return r
