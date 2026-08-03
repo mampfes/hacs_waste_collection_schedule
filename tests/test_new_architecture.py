@@ -4443,7 +4443,6 @@ SOURCES_AWAITING_CASSETTE = {
     "fredrikstad_no",
     "fuquay_varina_nc_us",
     "goessendorf_at",
-    "nemaffaldsservice_kk_dk",
     "nuernberger_land_de",
     "obdach_at",
     "plano_gov",
@@ -4501,7 +4500,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "fredrikstad_no",
     "fuquay_varina_nc_us",
     "ics",
-    "nemaffaldsservice_kk_dk",
     "regioentsorgung_de",
     "shawinigan_ca",
 }
