@@ -1,17 +1,17 @@
 """1Coast - Central Coast (1coast.com.au), Australia.
 
-Demonstrates: a source whose data has two independent shapes depending on
-provider state. Getting to the schedule needs an address search (which may
-return one exact match, several candidates to disambiguate, or none), then a
-GET of the address's collection page. That page always carries a short
-"legend" preview (a handful of upcoming collections rendered as HTML,
-labelled by full bin name) and a link to a fuller ICS calendar -- but the
-linked ICS file 404s in practice about as often as it works (the provider's
-own comment: "ics url is sometimes broken"), so the HTML preview is the
-usable fallback rather than a rare edge case. No configured retriever
-expresses "resolve an address, fetch a page, then conditionally prefer a
-second feed over data already on that page", hence a source-defined
-retrieve()/parse() pair.
+Composes: :class:`~waste_collection_schedule.retrievers.LookupChainRetriever`
+(resolve the address, then GET its collection page) as the ``prepare`` step of
+a :class:`~waste_collection_schedule.retrievers.FallbackRetriever`, read by
+:class:`~waste_collection_schedule.parsers.FirstNonEmptyBranch`.
+
+The collection page always carries a short "legend" preview (a handful of
+upcoming collections rendered as HTML, labelled by full bin name) and a link to
+a fuller ICS calendar, but the linked ICS file 404s in practice about as often
+as it works (the provider\'s own comment: "ics url is sometimes broken"). So the
+ICS is one branch and the preview already in hand is the other, reached with
+:func:`~waste_collection_schedule.retrievers.reuse_prepared` rather than a
+second request.
 
 Also fixes a latent bug surfaced by converting this source: the legacy
 ``_set_address_id`` returned the sole candidate's id when the search found
@@ -22,17 +22,27 @@ the match directly, as the loop below it already does for an exact multi-
 candidate match.
 """
 
-from datetime import date, datetime
-from typing import ClassVar, final
+from typing import Any, ClassVar, final
 
-from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.parsers import (
+    FirstNonEmptyBranch,
+    HtmlLabelledDates,
+    IcsParser,
+)
+from waste_collection_schedule.retrievers import (
+    Branch,
+    FallbackRetriever,
+    LookupChainRetriever,
+    follow_link,
+    reuse_prepared,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -76,66 +86,33 @@ def _resolve_address(session, address: str) -> "tuple[str, str, dict]":
     raise SourceArgAmbiguousWithSuggestions("address", address, address_names)
 
 
-def _is_ics_link(tag) -> bool:
-    return (
-        isinstance(tag, Tag)
-        and tag.name == "a"
-        and bool(tag.attrs.get("href"))
-        and str(tag.attrs["href"]).endswith("ics")
-    )
+def _resolve_address_step(source, keys: tuple) -> "tuple[str, str, dict]":
+    """The LookupChainRetriever step: the address, as the page GET needs it."""
+    return _resolve_address(source.session, source.params["address"])
 
 
-def _fallback_entries(soup: BeautifulSoup) -> "list[tuple[date, str]]":
-    """The short HTML "legend" preview, used when the ICS link 404s.
+def _collection_page_params(resolved: tuple, **params: Any) -> dict:
+    """The collection page\'s query string.
 
-    Iterates each collection block and pairs its bin name with its own
-    "Next Collection" date, skipping entries with a blank name (a provider
-    quirk that previously crashed the index-based pairing, see #6860).
+    The formatted address is sent as a bare *key* with an empty value, which is
+    the provider\'s own convention, not a mistake here.
     """
-    entries: list[tuple[date, str]] = []
-    for collection in soup.find_all(
-        "div", {"class": "booking-list--collection-details"}
-    ):
-        bin_name_tag = collection.find("span", class_="booking-list--legend-wrapper")
-        if bin_name_tag is None:
-            continue
-        bin_name = bin_name_tag.get_text(strip=True)
-        if not bin_name:
-            continue
-        label = collection.find("span", string="Next Collection")
-        if label is None:
-            continue
-        sibling = label.find_next_sibling("span")
-        if sibling is None:
-            continue
-        next_collection = sibling.get_text(strip=True)
-        # remove the day of the week
-        collection_date = next_collection.split(", ", 1)[1]
-        entries.append(
-            (datetime.strptime(collection_date, "%d-%b-%Y").date(), bin_name)
-        )
-    return entries
+    address_id, address_formatted, collection = resolved
+    return {
+        "a": "unauth-address-search",
+        "address": address_id,
+        address_formatted: "",
+        "collection[frequency]": collection["frequency"],
+        "collection[day]": collection["day"],
+    }
 
 
-def _ics_entries(text: str) -> "list[tuple[date, str]]":
-    """Convert the ICS response, tolerating several VCALENDAR blocks concatenated
-    into one response (an observed provider quirk), and dropping duplicates."""
-    ics = ICS()
-    if text.count("BEGIN:VCALENDAR") == 1:
-        collections = ics.convert(text)
-    else:
-        collections = []
-        for calendar in text.split("BEGIN:VCALENDAR")[1:]:
-            collections += ics.convert("BEGIN:VCALENDAR" + calendar)
-
-    entries: list = []
-    seen: set = set()
-    for entry in collections:
-        if entry in seen:
-            continue
-        seen.add(entry)
-        entries.append(entry)
-    return entries
+_collection_page = LookupChainRetriever(
+    steps=(_resolve_address_step,),
+    url=_COLLECTION_URL,
+    params=_collection_page_params,
+    raise_for_status=True,
+)
 
 
 @final
@@ -160,40 +137,30 @@ class Source(BaseSource):
 
     PARAMS = (text_field("address", "Address"),)
 
-    def retrieve(self, source):
-        session = source.session
-        address = self.params["address"]
+    retrieve = FallbackRetriever(
+        Branch("ics", follow_link(r"ics$")),
+        Branch("page", reuse_prepared),
+        prepare=_collection_page,
+    )
 
-        address_id, address_formatted, collection_params = _resolve_address(
-            session, address
-        )
-
-        args = {
-            "a": "unauth-address-search",
-            "address": address_id,
-            address_formatted: "",
-            "collection[frequency]": collection_params["frequency"],
-            "collection[day]": collection_params["day"],
+    parse = FirstNonEmptyBranch(
+        {
+            # The provider sometimes glues several VCALENDAR blocks into one
+            # response; concatenated reads all of them and drops the repeats
+            # across the seam.
+            "ics": IcsParser(concatenated=True),
+            # The legend preview: one card per round, each with its own name and
+            # its own "Next Collection" caption. The pattern drops the weekday
+            # the date is prefixed with ("Fri, 17-Jul-2026").
+            "page": HtmlLabelledDates(
+                "div.booking-list--collection-details",
+                label="span.booking-list--legend-wrapper",
+                date_after="Next Collection",
+                date_pattern=r", (.+)$",
+                parse_date=date_parsers.for_format("%d-%b-%Y"),
+            ),
         }
-        page = session.get(_COLLECTION_URL, params=args)
-        page.raise_for_status()
-
-        soup = BeautifulSoup(page.text, "html.parser")
-        ics_link = soup.find(_is_ics_link)
-        ics_url = ics_link.get("href") if isinstance(ics_link, Tag) else None
-        if not ics_url:
-            raise SourceArgumentNotFound(
-                "address", address, "could not find a collection calendar link."
-            )
-
-        ics_response = session.get(ics_url)
-        return page, ics_response
-
-    def parse(self, raw, source):
-        page_response, ics_response = raw
-        if ics_response.status_code == 404:  # the ICS link is sometimes broken
-            return _fallback_entries(BeautifulSoup(page_response.text, "html.parser"))
-        return _ics_entries(ics_response.text)
+    )
 
     transform = ICSTransformer(
         type_value_map={

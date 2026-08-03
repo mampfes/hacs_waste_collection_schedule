@@ -6,10 +6,16 @@ from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import FirstNonEmptyBranch, LabelledSections
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import (
+    Branch,
+    FallbackRetriever,
+    HttpGetRetriever,
+)
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisFeatureParser,
-    ArcGisFeatureRetriever,
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -32,8 +38,10 @@ from waste_collection_schedule.waste_types import (
 #   support (Schedule(..., anchor=True)).
 #
 # ``recordID`` is preferred when set and falls back to the official OBJECTIDs
-# automatically if it errors or returns nothing, so a source-defined
-# retrieve()/parse() expresses the two shapes and the fallback between them.
+# automatically if it errors or returns nothing. That is a FallbackRetriever of
+# two Branches read by a FirstNonEmptyBranch parser: each feed brings its own
+# parser, and the official layers are only queried when the unofficial feed did
+# not answer.
 
 # Unofficial community API (single recordID covers trash, recycling and bulky).
 UNOFFICIAL_URL = "https://okc.schizo.dev/trash"
@@ -53,6 +61,26 @@ _TYPE_MAP = {
     "TRASH": GENERAL_WASTE,
     "RECYCLE": RECYCLABLES,
     "BULKY": BULKY_WASTE,
+}
+
+# The unofficial feed answers with one object per round, keyed by field name.
+# Its labels are tagged so _describe can tell a feed section from a set of
+# ArcGIS layer attributes: the two branches produce the same (label, payload)
+# shape but say entirely different things inside the payload.
+_UNOFFICIAL_SECTIONS = {
+    "trash": ("unofficial", "TRASH"),
+    "recycling": ("unofficial", "RECYCLE"),
+    "bulkyWaste": ("unofficial", "BULKY"),
+}
+
+# Where each round states its next collection, in the order the feed prefers.
+# Trash publishes a single "next" object; recycling and bulky publish a list of
+# upcoming pickups. All three fall back to the free-text rule they report, which
+# is a weekday for trash and recycling and an ordinal for bulky.
+_UNOFFICIAL_DATES = {
+    "TRASH": ("next", "day"),
+    "RECYCLE": ("pickups", "day"),
+    "BULKY": ("pickups", "schedule"),
 }
 
 _ORDINAL_RE = re.compile(
@@ -104,15 +132,61 @@ def _next_from_pickups(pickups, today: datetime.date) -> "datetime.date | None":
     return None
 
 
+def _unofficial_date(
+    waste_type: str, section: dict, today: datetime.date
+) -> "datetime.date | None":
+    """The next collection a feed section states, explicit dates first."""
+    explicit, rule_field = _UNOFFICIAL_DATES[waste_type]
+
+    if explicit == "next":
+        raw = (section.get("next") or {}).get("date")
+        if raw:
+            try:
+                parsed = datetime.datetime.strptime(str(raw), "%Y-%m-%d").date()
+            except ValueError:
+                parsed = None
+            if parsed is not None and parsed >= today:
+                return parsed
+    else:
+        from_pickups = _next_from_pickups(section.get(explicit), today)
+        if from_pickups is not None:
+            return from_pickups
+
+    rule = section.get(rule_field)
+    return _resolve_pickup_date(str(rule), today) if rule else None
+
+
+def _has_record_id(**params: Any) -> bool:
+    return bool(str(params.get("recordID") or "").strip())
+
+
+def _has_object_ids(**params: Any) -> bool:
+    return any(
+        str(params.get(argument) or "").strip() for _, argument in WASTE_LAYERS.values()
+    )
+
+
+def _object_id_where(label: Any, **params: Any) -> "str | None":
+    """This layer's attribute filter, or None when its OBJECTID is not set."""
+    object_id = str(params.get(WASTE_LAYERS[label][1]) or "").strip()
+    return f"OBJECTID={object_id}" if object_id else None
+
+
 def _describe(record: tuple, source: Any):
-    waste_type, payload = record
+    label, payload = record
     today = datetime.date.today()
 
-    # Unofficial feed: an explicit next date, no reconstruction required.
-    if isinstance(payload, datetime.date):
-        yield Schedule(waste_type, payload, count=1)
+    # Unofficial feed: explicit upcoming dates, no reconstruction required.
+    if isinstance(label, tuple):
+        waste_type = label[1]
+        if not isinstance(payload, dict):
+            return
+        pickup_date = _unofficial_date(waste_type, payload, today)
+        if pickup_date is not None:
+            yield Schedule(waste_type, pickup_date, count=1)
         return
 
+    waste_type = label
     attrs = payload
     if waste_type == "RECYCLE":
         raw_reference = source.params.get("recycle_reference_date")
@@ -195,6 +269,40 @@ class Source(BaseSource):
         ),
     }
 
+    retrieve = FallbackRetriever(
+        Branch(
+            "unofficial",
+            HttpGetRetriever(
+                UNOFFICIAL_URL, params=lambda **p: {"recordID": p["recordID"]}
+            ),
+            when=_has_record_id,
+        ),
+        Branch(
+            "official",
+            ArcGisMultiFeatureRetriever(
+                [(label, url) for label, (url, _) in WASTE_LAYERS.items()],
+                address=None,
+                where=_object_id_where,
+            ),
+            when=_has_object_ids,
+        ),
+    )
+
+    parse = FirstNonEmptyBranch(
+        {
+            "unofficial": LabelledSections(
+                _UNOFFICIAL_SECTIONS,
+                argument="recordID",
+                hint="no schedule found for this recordID in the unofficial source.",
+            ),
+            "official": ArcGisMultiFeatureParser(
+                first_per_layer=True,
+                argument=lambda label: WASTE_LAYERS[label][1],
+                hint="no zone found with this OBJECTID in the OKC Open Data Portal.",
+            ),
+        }
+    )
+
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
@@ -237,137 +345,3 @@ class Source(BaseSource):
             bulkyObjectID=bulky,
             recycle_reference_date=reference,
         )
-
-    def _retrieve_unofficial(
-        self, source: "Source", record_id: str
-    ) -> "list[tuple[str, datetime.date]]":
-        """Fetch the unofficial okc.schizo.dev feed as ``[(waste_type, date)]``.
-
-        The endpoint returns explicit upcoming dates for trash, recycling and
-        bulky waste keyed by a single recordID, so no weekday/biweekly
-        reconstruction is needed; the reported weekday is used only when a
-        section omits explicit dates.
-        """
-        response = source.session.get(UNOFFICIAL_URL, params={"recordID": record_id})
-        response.raise_for_status()
-
-        try:
-            data = response.json()
-        except ValueError as exc:
-            raise SourceArgumentNotFound(
-                "recordID",
-                record_id,
-                "the unofficial source did not return valid JSON for this recordID.",
-            ) from exc
-
-        if not isinstance(data, dict):
-            raise SourceArgumentNotFound(
-                "recordID",
-                record_id,
-                "no schedule found for this recordID in the unofficial source.",
-            )
-
-        today = datetime.date.today()
-        entries: list[tuple[str, datetime.date]] = []
-
-        # Trash: single "next" pickup, optionally falling back to the weekday.
-        trash = data.get("trash")
-        if isinstance(trash, dict):
-            trash_date: datetime.date | None = None
-            raw_next = (trash.get("next") or {}).get("date")
-            if raw_next:
-                try:
-                    parsed = datetime.datetime.strptime(
-                        str(raw_next), "%Y-%m-%d"
-                    ).date()
-                    if parsed >= today:
-                        trash_date = parsed
-                except ValueError:
-                    trash_date = None
-            if trash_date is None and trash.get("day"):
-                trash_date = _resolve_pickup_date(str(trash["day"]), today)
-            if trash_date is not None:
-                entries.append(("TRASH", trash_date))
-
-        # Recycling: list of upcoming biweekly pickups.
-        recycling = data.get("recycling")
-        if isinstance(recycling, dict):
-            recycle_date = _next_from_pickups(recycling.get("pickups"), today)
-            if recycle_date is None and recycling.get("day"):
-                recycle_date = _resolve_pickup_date(str(recycling["day"]), today)
-            if recycle_date is not None:
-                entries.append(("RECYCLE", recycle_date))
-
-        # Bulky waste: list of upcoming monthly pickups.
-        bulky = data.get("bulkyWaste")
-        if isinstance(bulky, dict):
-            bulky_date = _next_from_pickups(bulky.get("pickups"), today)
-            if bulky_date is None and bulky.get("schedule"):
-                bulky_date = _resolve_pickup_date(str(bulky["schedule"]), today)
-            if bulky_date is not None:
-                entries.append(("BULKY", bulky_date))
-
-        return entries
-
-    def _retrieve_official(self, source: "Source", object_ids: dict) -> dict:
-        responses = {}
-        for waste_type, object_id in object_ids.items():
-            if not object_id:
-                continue
-            url, argument = WASTE_LAYERS[waste_type]
-            retriever = ArcGisFeatureRetriever(url, where=f"OBJECTID={object_id}")
-            responses[waste_type] = (retriever(source), argument, object_id)
-        return responses
-
-    def retrieve(self, source: "Source"):
-        record_id = str(source.params.get("recordID") or "").strip()
-        object_ids = {
-            "TRASH": source.params.get("trashObjectID") or "",
-            "RECYCLE": source.params.get("recycleObjectID") or "",
-            "BULKY": source.params.get("bulkyObjectID") or "",
-        }
-        has_official = any(object_ids.values())
-
-        if record_id:
-            # Prefer the unofficial feed; fall back to the official OBJECTIDs
-            # automatically if it errors or yields nothing and any are set.
-            try:
-                entries = self._retrieve_unofficial(source, record_id)
-            except Exception:
-                if not has_official:
-                    raise
-                entries = None
-            if entries:
-                return {"kind": "unofficial", "entries": entries}
-            if not has_official:
-                return {"kind": "unofficial", "entries": entries or []}
-
-        return {
-            "kind": "official",
-            "responses": self._retrieve_official(source, object_ids),
-        }
-
-    def parse(self, raw, source: "Source | None" = None):
-        if raw["kind"] == "unofficial":
-            entries = raw["entries"]
-            if not entries:
-                record_id = str(source.params.get("recordID") if source else "") or ""
-                raise SourceArgumentNotFound(
-                    "recordID",
-                    record_id,
-                    "no upcoming collections found for this recordID in the "
-                    "unofficial source.",
-                )
-            return list(entries)
-
-        records = []
-        for waste_type, (response, argument, object_id) in raw["responses"].items():
-            features = ArcGisFeatureParser()(response, source)
-            if not features:
-                raise SourceArgumentNotFound(
-                    argument,
-                    object_id,
-                    "no zone found with this OBJECTID in the OKC Open Data Portal.",
-                )
-            records.append((waste_type, features[0]))
-        return records

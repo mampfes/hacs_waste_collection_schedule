@@ -17,14 +17,16 @@ Configurable parsers (pass arguments to the constructor):
 """
 
 import datetime
+import logging
 import re
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
     NamedTuple,
     Protocol,
     TypeVar,
+    cast,
 )
 
 from bs4 import BeautifulSoup, Tag
@@ -45,6 +47,8 @@ if TYPE_CHECKING:
     type Response = "requests.Response | _cffi_requests.Response"
 else:
     Response = object
+
+_LOGGER = logging.getLogger(__name__)
 
 T = TypeVar("T", covariant=True)
 
@@ -114,6 +118,167 @@ class EachResponse(Parser["list[Any]"]):
         records: list[Any] = []
         for item in responses:  # type: ignore[union-attr]
             records.extend(self.parser(item, source))
+        return records
+
+
+class FirstNonEmptyBranch(Parser["list[Any]"]):
+    """Parse a fallback retriever's branches, keeping the first that has records.
+
+    The consumer half of
+    :class:`~waste_collection_schedule.retrievers.FallbackRetriever`. Where
+    :class:`EachResponse` maps one parser over every response and concatenates
+    the lot, this maps a *different* parser over each branch — the branches are
+    alternative feeds for the same schedule, not parts of one — and stops at the
+    first that yielded anything::
+
+        retrieve = retrievers.FallbackRetriever(
+            retrievers.Branch("ics", retrievers.follow_link(r"\\.ics$")),
+            retrievers.Branch("page", retrievers.reuse_prepared),
+            prepare=_collection_page,
+        )
+        parse = parsers.FirstNonEmptyBranch(
+            {"ics": parsers.IcsParser(), "page": parsers.HtmlLabelledDates(...)}
+        )
+
+    Branches are pulled one at a time, so the second feed is only requested when
+    the first produced nothing — which is the point of having a fallback rather
+    than fetching both.
+
+    A branch has not worked out when its fetch raised, when its parser raised,
+    or when it parsed to no records: the three ways a provider says "not here"
+    (an outage, an error page where a calendar was expected, and a 200 carrying
+    nothing). Earlier failures are logged and dropped. The last branch attempted
+    has the last word, so its error surfaces to the user, and its empty result
+    reaches ``RAISE_ON_EMPTY``, rather than the user being told about a feed
+    they did not configure.
+
+    Args:
+        branches: ``{branch label: parser}``. The order tried is the
+            retriever's, not this mapping's. A branch whose label is missing
+            here is a configuration error and raises.
+    """
+
+    def __init__(self, branches: "Mapping[Any, Parser]"):
+        self.branches = dict(branches)
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[Any]":
+        records: list[Any] = []
+        error: Exception | None = None
+        attempted = False
+        for attempt in cast("Iterable[Any]", response):
+            attempted = True
+            records, error = [], attempt.error
+            if error is None:
+                if attempt.label not in self.branches:
+                    raise ValueError(
+                        f"FirstNonEmptyBranch has no parser for branch "
+                        f"{attempt.label!r} (known: {sorted(map(str, self.branches))})"
+                    )
+                try:
+                    records = list(self.branches[attempt.label](attempt.raw, source))
+                except Exception as failure:
+                    error = failure
+            if records:
+                return records
+            _LOGGER.debug(
+                "FirstNonEmptyBranch: branch %r yielded nothing (%s)",
+                attempt.label,
+                error or "no records",
+            )
+        if not attempted:
+            raise ValueError("FirstNonEmptyBranch: no branch was applicable")
+        if error is not None:
+            raise error
+        return records
+
+
+class LabelledSections(Parser["list[tuple[Any, Any]]"]):
+    """Split a JSON object into ``(label, section)`` records, one per named field.
+
+    For an API that answers with one object per collection round, keyed by field
+    name, rather than with a list of events::
+
+        {"trash": {...}, "recycling": {...}, "bulkyWaste": {...}}
+
+    Each named field becomes one record carrying the round's label and that
+    round's whole object. That is the same ``(label, payload)`` shape
+    :class:`~waste_collection_schedule.service.ArcGis.ArcGisMultiFeatureParser`
+    produces for a layer per round, so one preprocessor and one transformer read
+    both. Reach for it when the round's dates sit inside a nested structure a
+    flat parser cannot express, and pair it with
+    :class:`~waste_collection_schedule.preprocessors.RecurrenceExpander`, whose
+    ``describe`` callable is where reading a base date and cadence out of a
+    provider's own layout belongs. When each field simply holds an array of
+    dates, :class:`KeyedDateListsParser` is the simpler fit.
+
+    Records come out in ``sections`` order. A field the payload omits, or whose
+    value is null, contributes nothing, and a payload that is not an object at
+    all yields no records rather than raising, so a fallback branch can take
+    over.
+
+    Args:
+        sections: ``{json field: label}``, or an iterable of field names used as
+            their own labels.
+        keys: optional path drilled into before the sections are read, exactly
+            as :class:`JsonParser` does.
+        argument: the ``source.params`` field the payload was fetched by, blamed
+            when none of the sections were present. An index keyed by a
+            user-supplied id that came back with nothing in it is a wrong id,
+            not an empty schedule, and saying so names the field the HA UI
+            should highlight. This is the same pair
+            :class:`~waste_collection_schedule.service.ArcGis.ArcGisMultiFeatureParser`
+            takes, and it composes with
+            :class:`FirstNonEmptyBranch` the same way: the raise only reaches
+            the user if this was the last branch tried, so an earlier feed
+            still falls through to a later one. Leave unset to return no
+            records instead.
+        hint: guidance shown with that error.
+    """
+
+    def __init__(
+        self,
+        sections: "Mapping[str, Any] | Iterable[str]",
+        *keys: str,
+        argument: "str | None" = None,
+        hint: str = "",
+    ):
+        self.sections: dict[str, Any] = (
+            dict(sections)
+            if isinstance(sections, Mapping)
+            else {name: name for name in sections}
+        )
+        self.keys = keys
+        self.argument = argument
+        self.hint = hint
+
+    def _blame(self, source: "BaseSource | None") -> None:
+        argument = str(self.argument)
+        value = source.params.get(argument) if source is not None else None
+        raise SourceArgumentNotFound(argument, value, self.hint)
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[Any, Any]]":
+        response.raise_for_status()
+        data = response.json()
+        try:
+            for key in self.keys:
+                data = data[key]
+        except (KeyError, IndexError, TypeError):
+            data = None
+        if not isinstance(data, dict):
+            if self.argument is not None:
+                self._blame(source)
+            return []
+        records = [
+            (label, data[field])
+            for field, label in self.sections.items()
+            if data.get(field) is not None
+        ]
+        if not records and self.argument is not None:
+            self._blame(source)
         return records
 
 
@@ -428,6 +593,109 @@ class HtmlParser(Parser[list[Tag]]):
         return soup.select(self.selector)[self.skip :]
 
 
+class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
+    """One ``(date, label)`` row per block of a card-style collection page.
+
+    For the "your next collections" preview a council renders as a row of cards
+    rather than as a table: each block carries its own round name and its own
+    date, so there is no column structure for :class:`HtmlParser` plus
+    ``HtmlTransformer`` to walk, and no single element holding the date for
+    :class:`HtmlTextParser`. This selects each block, reads the two halves out
+    of it, and yields the ordinary ``(date, label)`` row the shared row
+    transformers already consume::
+
+        parse = parsers.HtmlLabelledDates(
+            "div.collection-details",
+            label="span.legend-wrapper",
+            date_after="Next Collection",
+            date_pattern=r"(\\d{1,2}-\\w{3}-\\d{4})",
+        )
+        transform = RowTransformer(
+            parse_date=date_parsers.for_format("%d-%b-%Y"), type_value_map={...}
+        )
+
+    A block missing either half is skipped rather than failing the fetch: a
+    provider that renders a blank placeholder card should not take the whole
+    schedule down with it (see #6860).
+
+    Args:
+        block: CSS selector for each collection block.
+        label: CSS selector, within the block, for the round's name.
+        date: CSS selector, within the block, for the element holding the date.
+        date_after: alternative to ``date`` for a page that captions the date
+            instead of classing it: the caption's exact text, whose next
+            sibling element holds the date. Blocks commonly caption several
+            fields ("Frequency", "Next Collection") with the same class, which
+            is exactly when a selector cannot tell them apart.
+        date_pattern: regex searched in the date text; group 1 (or the whole
+            match, when the pattern has no group) is the date. Use it to drop
+            the weekday a provider prefixes ("Fri, 17-Jul-2026"). Text that does
+            not match is skipped.
+        parse_date: optional ``callable(str) -> datetime.date`` (see
+            :mod:`~waste_collection_schedule.date_parsers`) turning the matched
+            text into a real date here, rather than leaving that to a
+            ``RowTransformer(parse_date=...)`` downstream. Set it when this
+            parser is one branch of a
+            :class:`FirstNonEmptyBranch` whose other branch already yields
+            dates: the branches must agree on their record shape, because one
+            transformer reads them both. Text the callable rejects is skipped,
+            on the same reasoning as a block missing a half.
+    """
+
+    def __init__(
+        self,
+        block: str,
+        *,
+        label: str,
+        date: "str | None" = None,
+        date_after: "str | None" = None,
+        date_pattern: "str | None" = None,
+        parse_date: "Callable[[str], datetime.date] | None" = None,
+    ):
+        if (date is None) == (date_after is None):
+            raise ValueError("HtmlLabelledDates needs exactly one of date/date_after")
+        self.block = block
+        self.label = label
+        self.date = date
+        self.date_after = date_after
+        self.date_pattern = re.compile(date_pattern) if date_pattern else None
+        self.parse_date = parse_date
+
+    def _date_text(self, element: Tag) -> "str | None":
+        if self.date is not None:
+            found = element.select_one(self.date)
+            return found.get_text(strip=True) if found is not None else None
+        caption = element.find(string=self.date_after)
+        holder = caption.parent if caption is not None else None
+        sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
+        return sibling.get_text(strip=True) if isinstance(sibling, Tag) else None
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[Any, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        rows: list[tuple[Any, str]] = []
+        for element in soup.select(self.block):
+            named = element.select_one(self.label)
+            name = named.get_text(strip=True) if named is not None else ""
+            text = self._date_text(element) if name else None
+            if not name or not text:
+                continue
+            if self.date_pattern is not None:
+                match = self.date_pattern.search(text)
+                if match is None:
+                    continue
+                text = match.group(1) if match.groups() else match.group(0)
+            if self.parse_date is None:
+                rows.append((text, name))
+                continue
+            try:
+                rows.append((self.parse_date(text), name))
+            except (ValueError, TypeError):
+                continue
+        return rows
+
+
 class HtmlTextParser(Parser[str]):
     """Parse response as HTML and return its visible text.
 
@@ -610,6 +878,12 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
 
     All four default to ``ICS()``'s own defaults, so existing callers that
     only pass ``min_events`` are unaffected.
+
+    Set ``concatenated`` for a provider that glues several VCALENDAR blocks into
+    one response (an observed quirk: the calendar library reads only the first,
+    silently losing the rest). Each block is then converted separately and
+    duplicate ``(date, summary)`` events are dropped, since a provider stitching
+    calendars together tends to repeat events across the seam.
     """
 
     def __init__(
@@ -619,25 +893,39 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
         regex: "str | None" = None,
         split_at: "str | None" = None,
         title_template: str = "{{date.summary}}",
+        concatenated: bool = False,
     ):
         self.min_events = min_events
         self.offset = offset
         self.regex = regex
         self.split_at = split_at
         self.title_template = title_template
+        self.concatenated = concatenated
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[tuple[datetime.date, str]]:
         from waste_collection_schedule.service.ICS import ICS
 
-        events = ICS(
+        ics = ICS(
             offset=self.offset,
             regex=self.regex,
             split_at=self.split_at,
             title_template=self.title_template,
-        ).convert(response.text)
-        _expect_min_events(events, self.min_events, response.text, source)
+        )
+        text = response.text
+        if self.concatenated and text.count("BEGIN:VCALENDAR") > 1:
+            events = []
+            seen: set = set()
+            for block in text.split("BEGIN:VCALENDAR")[1:]:
+                for event in ics.convert("BEGIN:VCALENDAR" + block):
+                    if event in seen:
+                        continue
+                    seen.add(event)
+                    events.append(event)
+        else:
+            events = ics.convert(text)
+        _expect_min_events(events, self.min_events, text, source)
         return events
 
 
