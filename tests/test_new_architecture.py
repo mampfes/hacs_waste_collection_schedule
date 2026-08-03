@@ -4495,7 +4495,6 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
-    "1coast_com_au",
     "aw_harburg_de",
     "awigo_de",
     "awm_muenchen_de",
@@ -4508,7 +4507,6 @@ SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "infeo_at",
     "narab_se",
     "nemaffaldsservice_kk_dk",
-    "okc_gov",
     "regioentsorgung_de",
     "shawinigan_ca",
     "zva_sek_de",

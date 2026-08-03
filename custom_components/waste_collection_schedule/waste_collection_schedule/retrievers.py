@@ -35,10 +35,11 @@ from __future__ import annotations
 
 import datetime
 import json
+import logging
 import re
 import time
-from collections.abc import Callable, Mapping, Sequence
-from typing import TYPE_CHECKING, Any, Protocol, TypeVar, cast
+from collections.abc import Callable, Iterator, Mapping, Sequence
+from typing import TYPE_CHECKING, Any, NamedTuple, Protocol, TypeVar, cast
 from urllib.parse import urljoin
 from weakref import WeakKeyDictionary
 
@@ -49,6 +50,8 @@ if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
 
     from waste_collection_schedule.base_source import BaseSource
+
+_LOGGER = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
@@ -554,6 +557,174 @@ class FirstMatchRetriever(_BaseRetriever):
         if last_response is not None:
             return last_response
         raise cast("Exception", last_error)
+
+
+class Branch(NamedTuple):
+    """One alternative feed for :class:`FallbackRetriever`.
+
+    Args:
+        label: names the branch. :class:`~waste_collection_schedule.parsers.FirstNonEmptyBranch`
+            reads it to pick the parser for whatever this branch came back with,
+            so the two sides agree on the branch's shape without the retriever
+            knowing how it is parsed.
+        fetch: issues this branch's request(s). Called as ``fetch(source)``, or
+            as ``fetch(source, context)`` when the retriever has a ``prepare``
+            step. With no ``prepare``, any ordinary retriever instance is a
+            valid ``fetch`` unchanged.
+        when: optional ``callable(**source.params) -> bool``. A branch the user
+            has not configured (they supplied the other feed's arguments) is
+            skipped without a request, rather than being asked a question it
+            has no key for.
+    """
+
+    label: Any
+    fetch: Callable[..., Any]
+    when: Callable[..., bool] | None = None
+
+
+class Attempt(NamedTuple):
+    """What one :class:`Branch` came back with: its raw data, or its error."""
+
+    label: Any
+    raw: Any = None
+    error: Exception | None = None
+
+
+def reuse_prepared(source: BaseSource, context: Any) -> Any:
+    """Branch fetch that re-reads what ``prepare`` already fetched, issuing nothing.
+
+    For the case where the fallback is not a second request at all but a second
+    reading of the page the first branch was found on: the page carries a short
+    preview of the schedule *and* a link to the full feed, so when the feed is
+    unavailable the preview already in hand is the fallback.
+    """
+    return context
+
+
+def follow_link(
+    pattern: str,
+    *,
+    selector: str = "a",
+    attribute: str = "href",
+    timeout: int = 30,
+) -> Callable[..., Response]:
+    """Branch fetch: GET the first link on the prepared page whose href matches.
+
+    The "the page tells you where the real feed is" step, for a provider that
+    mints the calendar's URL per address or per week and links to it from the
+    address's page. The link is resolved against the page's own URL, so a
+    relative href works. Nothing matching the pattern raises, which a
+    :class:`FallbackRetriever` treats as this branch not working out::
+
+        retrieve = retrievers.FallbackRetriever(
+            retrievers.Branch("ics", retrievers.follow_link(r"\\.ics$")),
+            retrievers.Branch("page", retrievers.reuse_prepared),
+            prepare=_collection_page,
+        )
+
+    Args:
+        pattern: regex searched against the attribute's value.
+        selector: CSS selector for the candidate elements (default ``"a"``).
+        attribute: the attribute holding the URL (default ``"href"``).
+        timeout: request timeout in seconds.
+    """
+    compiled = re.compile(pattern)
+
+    def fetch(source: BaseSource, context: Any) -> Response:
+        soup = BeautifulSoup(context.text, "html.parser")
+        for tag in soup.select(selector):
+            value = tag.get(attribute)
+            if isinstance(value, str) and compiled.search(value):
+                return source.session.get(
+                    urljoin(getattr(context, "url", "") or "", value), timeout=timeout
+                )
+        raise LookupError(
+            f"no {selector}[{attribute}] matching {pattern!r} on the retrieved page"
+        )
+
+    return fetch
+
+
+class FallbackRetriever(_BaseRetriever):
+    """Try alternative feeds in order, stopping at the first that has the schedule.
+
+    :class:`FirstMatchRetriever` chooses between interchangeable *requests*: one
+    URL template, one parser, one ``accept`` test on the raw response. This
+    chooses between whole *feeds* — an unofficial community API and the
+    council's official map server, or a downloadable calendar and the preview
+    already rendered on the page that links to it. They answer in different
+    shapes, so each branch brings its own parser, and whether a branch worked
+    out is only knowable once it has been parsed.
+
+    That makes the decision span retrieve and parse, so retrieve hands over a
+    *lazy* stream of :class:`Attempt`s and
+    :class:`~waste_collection_schedule.parsers.FirstNonEmptyBranch` drives it —
+    the same arrangement a paginating parser already uses to control how much of
+    a lazy retriever it consumes. A later branch is never requested when an
+    earlier one answered::
+
+        retrieve = retrievers.FallbackRetriever(
+            retrievers.Branch("community", _COMMUNITY_FEED, when=_has_record_id),
+            retrievers.Branch("official", _OFFICIAL_LAYERS, when=_has_object_ids),
+        )
+        parse = parsers.FirstNonEmptyBranch(
+            {"community": parsers.LabelledSections(...), "official": ArcGisMultiFeatureParser()}
+        )
+
+    A branch that raises is reported as a failed attempt rather than aborting
+    the fetch, so an outage on the preferred feed falls through to the next one.
+    The last branch attempted has the last word: if no branch produced records,
+    its error (or its empty result) is what the source sees, so the user hears
+    about the feed that was actually meant to serve them.
+
+    Args:
+        *branches: the :class:`Branch`es to try, in order. At least one is
+            required; an empty list is a configuration error and raises.
+        prepare: optional ``callable(source) -> context``, run once before any
+            branch. This is where shared state is fetched exactly once — a
+            resolved address, or the page both branches read — instead of each
+            branch repeating it. When given, each branch's ``fetch`` is called
+            as ``fetch(source, context)``; without it, as ``fetch(source)``.
+    """
+
+    def __init__(
+        self,
+        *branches: Branch,
+        prepare: Callable[[BaseSource], Any] | None = None,
+    ):
+        if not branches:
+            raise ValueError("FallbackRetriever was given no branches to try")
+        self.branches = branches
+        self.prepare = prepare
+
+    def _fetch(self, branch: Branch, source: BaseSource, context: Any) -> Any:
+        if self.prepare is not None:
+            return branch.fetch(source, context)
+        return branch.fetch(source)
+
+    def _attempts(self, source: BaseSource, context: Any) -> Iterator[Attempt]:
+        for branch in self.branches:
+            if branch.when is not None and not branch.when(**source.params):
+                continue
+            try:
+                raw = self._fetch(branch, source, context)
+            # A branch that cannot be reached has not answered; the next branch
+            # is the whole point of the list.
+            except Exception as error:
+                _LOGGER.debug(
+                    "FallbackRetriever: branch %r did not answer: %s",
+                    branch.label,
+                    error,
+                )
+                yield Attempt(branch.label, None, error)
+                continue
+            yield Attempt(branch.label, raw, None)
+
+    def __call__(self, source: BaseSource) -> Iterator[Attempt]:  # type: ignore[override]
+        # prepare runs eagerly (it is this retriever's own request); the
+        # branches are pulled by the parser, one at a time.
+        context = self.prepare(source) if self.prepare is not None else None
+        return self._attempts(source, context)
 
 
 #: Default pattern for the JS chunks a Next.js page loads. Group 1 is the

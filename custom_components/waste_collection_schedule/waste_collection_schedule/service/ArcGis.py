@@ -737,6 +737,9 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
             or a callable resolved as ``where(label, **source.params)`` when
             each layer needs its own. Pass ``address=None`` with it (and no
             ``point``) for layers keyed purely by attribute, with no geometry.
+            The callable may return ``None`` to leave that layer unqueried, for
+            a source whose layers each hang off their own optional parameter and
+            where an unfiltered query would return the entire layer.
         count_only: query each layer with ``returnCountOnly``, for a scan that
             only asks *whether* the point falls in a layer. Pair with
             ``ArcGisMultiFeatureParser(count_only=True)``.
@@ -760,7 +763,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         *,
         point: Callable[..., dict[str, Any]] | None = None,
         geocode_fields: str | None = None,
-        where: str | Callable[..., str] | None = None,
+        where: str | Callable[..., str | None] | None = None,
         count_only: bool = False,
         first_match: bool = False,
         argument: str | None = None,
@@ -811,13 +814,20 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         # the whole fetch — matching the per-layer try/except councils relied on.
         results: list[tuple[Any, Response]] = []
         last_error: requests.RequestException | None = None
+        queried = 0
         failures = 0
         for label, url, fields in self.layers:
+            where = self._where_for(label, source.params)
+            # A per-layer where callable says "this layer has no key" with None;
+            # querying it unfiltered would hand back the whole layer.
+            if where is None and callable(self.where):
+                continue
+            queried += 1
             try:
                 response = feature_query(
                     url,
                     geometry=location,
-                    where=self._where_for(label, source.params),
+                    where=where,
                     out_fields=fields,
                     in_sr=self.in_sr,
                     count_only=self.count_only,
@@ -837,9 +847,9 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         # Tolerating one bad layer is fine, but if EVERY layer failed the
         # provider is down or has moved: surface that instead of returning a
         # silently-empty schedule that reads to the user as "no collections".
-        if self.layers and failures == len(self.layers):
+        if queried and failures == queried:
             raise ArcGisError(
-                f"all {len(self.layers)} ArcGIS layers failed to load"
+                f"all {queried} ArcGIS layers failed to load"
             ) from last_error
         if self.first_match:
             # Every layer answered and none contained the point.
@@ -867,11 +877,36 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
             retriever run with ``count_only=True``. Yields ``(label,
             {"count": n})`` for each layer that counted anything, so the label
             (the zone, the weekday) is the record.
+        argument: the ``source.params`` field a layer is keyed by, blamed when
+            that layer matched nothing: a ``str`` when every layer hangs off the
+            same field, or ``callable(label) -> str`` when each layer has its
+            own. A layer queried by a user-supplied id that matched nothing is a
+            wrong id, not an empty schedule, and saying so names the field the
+            HA UI should highlight. Leave unset (the default) for a spatial
+            scan, where a layer not containing the point is simply not that
+            user's zone.
+        hint: guidance shown with that error.
     """
 
-    def __init__(self, *, first_per_layer: bool = False, count_only: bool = False):
+    def __init__(
+        self,
+        *,
+        first_per_layer: bool = False,
+        count_only: bool = False,
+        argument: str | Callable[[Any], str] | None = None,
+        hint: str = "",
+    ):
         self.first_per_layer = first_per_layer
         self.count_only = count_only
+        self.argument = argument
+        self.hint = hint
+
+    def _blame(self, label: Any, source: BaseSource | None) -> None:
+        argument = str(
+            self.argument(label) if callable(self.argument) else self.argument
+        )
+        value = source.params.get(argument) if source is not None else None
+        raise SourceArgumentNotFound(argument, value, self.hint)
 
     def __call__(
         self,
@@ -888,11 +923,15 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
                 )
                 if counted["count"]:
                     records.append((label, {"count": counted["count"]}))
+                elif self.argument is not None:
+                    self._blame(label, source)
                 continue
             data = response_shape.validate(
                 response.json(), FeatureEnvelope, source_name=name
             )
             features = data["features"]
+            if not features and self.argument is not None:
+                self._blame(label, source)
             if self.first_per_layer:
                 features = features[:1]
             for feature in features:
