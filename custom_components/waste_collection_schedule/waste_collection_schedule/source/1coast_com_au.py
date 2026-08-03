@@ -8,7 +8,7 @@ a :class:`~waste_collection_schedule.retrievers.FallbackRetriever`, read by
 The collection page always carries a short "legend" preview (a handful of
 upcoming collections rendered as HTML, labelled by full bin name) and a link to
 a fuller ICS calendar, but the linked ICS file 404s in practice about as often
-as it works (the provider\'s own comment: "ics url is sometimes broken"). So the
+as it works (the provider's own comment: "ics url is sometimes broken"). So the
 ICS is one branch and the preview already in hand is the other, reached with
 :func:`~waste_collection_schedule.retrievers.reuse_prepared` rather than a
 second request.
@@ -92,10 +92,10 @@ def _resolve_address_step(source, keys: tuple) -> "tuple[str, str, dict]":
 
 
 def _collection_page_params(resolved: tuple, **params: Any) -> dict:
-    """The collection page\'s query string.
+    """The collection page's query string.
 
     The formatted address is sent as a bare *key* with an empty value, which is
-    the provider\'s own convention, not a mistake here.
+    the provider's own convention, not a mistake here.
     """
     address_id, address_formatted, collection = resolved
     return {

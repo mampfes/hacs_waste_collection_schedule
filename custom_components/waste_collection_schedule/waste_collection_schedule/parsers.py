@@ -106,10 +106,21 @@ class EachResponse(Parser["list[Any]"]):
     then applies to *each* response individually, which is usually what you
     want: a year that came back empty is caught rather than masked by a healthy
     neighbouring year.
+
+    Args:
+        parser: the inner parser, applied to each response.
+        skip_failures: keep going when one response does not parse, instead of
+            failing the whole fetch. For a provider publishing one file per
+            year, where next year's file is empty or absent for a while after
+            the turnover and the current year's is perfectly good. Off by
+            default, because a response that will not parse is normally the
+            provider changing shape, which should be heard about rather than
+            silently half-swallowed.
     """
 
-    def __init__(self, parser: Parser):
+    def __init__(self, parser: Parser, *, skip_failures: bool = False):
         self.parser = parser
+        self.skip_failures = skip_failures
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -117,7 +128,14 @@ class EachResponse(Parser["list[Any]"]):
         responses = [response] if hasattr(response, "status_code") else response  # type: ignore[list-item]
         records: list[Any] = []
         for item in responses:  # type: ignore[union-attr]
-            records.extend(self.parser(item, source))
+            try:
+                records.extend(self.parser(item, source))
+            except Exception as error:
+                if not self.skip_failures:
+                    raise
+                _LOGGER.debug(
+                    "EachResponse: skipping a response that failed: %s", error
+                )
         return records
 
 
@@ -693,6 +711,239 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
                 rows.append((self.parse_date(text), name))
             except (ValueError, TypeError):
                 continue
+        return rows
+
+
+class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a month per row and a collection round per column.
+
+    The HTML sibling of
+    :class:`~waste_collection_schedule.preprocessors.PdfMonthColumns`. A council
+    that publishes its year as one table puts the month in the first column and
+    gives each round a column of its own, whose cell lists the days it is
+    collected that month::
+
+        | Miesiąc      | Zmieszane  | Papier | Bio      |
+        | lipiec 2026  | 3, 17, 31  | 10     | 7, 14, 21|
+
+    Each day number becomes one ``(date, round name)`` row, the round's name
+    taken from its column header::
+
+        parse = parsers.HtmlMonthRows(require=("miesiąc", "papier"))
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    The month cell is read with :func:`recurrence.month`, so a month named in
+    any supported language resolves, including the inflected forms a date reads
+    in. A month cell that names no month is skipped, which is what drops a
+    totals or footnote row without having to describe it.
+
+    Args:
+        require: header texts (lowercased, matched exactly) that the wanted
+            table must all carry. A page usually holds several tables, and the
+            schedule is the one whose headers name the rounds. Unset takes the
+            first table on the page.
+        month_column: index of the month column (default 0). The columns after
+            it are the rounds, in order.
+        header_row: which row of the ``<thead>`` carries the round names
+            (default -1, the last). A two-row header, grouping columns above
+            and naming them below, is common.
+        separator: regex the day list in a cell is split on (default a comma).
+        year: fallback when the month cell names no year (default the current
+            year at fetch time).
+    """
+
+    def __init__(
+        self,
+        *,
+        require: "Iterable[str] | None" = None,
+        month_column: int = 0,
+        header_row: int = -1,
+        separator: str = ",",
+        year: "int | None" = None,
+    ):
+        self.require = frozenset(require) if require is not None else None
+        self.month_column = month_column
+        self.header_row = header_row
+        self.separator = re.compile(separator)
+        self.year = year
+
+    def _table(self, soup: BeautifulSoup) -> "Tag | None":
+        for candidate in soup.find_all("table"):
+            if self.require is None:
+                return candidate
+            headers = {
+                th.get_text(strip=True).lower() for th in candidate.find_all("th")
+            }
+            if self.require <= headers:
+                return candidate
+        return None
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        from waste_collection_schedule import recurrence
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = self._table(soup)
+        if table is None:
+            return []
+
+        head = table.find("thead")
+        body = table.find("tbody")
+        if not isinstance(head, Tag) or not isinstance(body, Tag):
+            return []
+
+        header_rows = head.find_all("tr")
+        if not header_rows:
+            return []
+        cells = header_rows[self.header_row].find_all(["th", "td"])
+        rounds = [c.get_text(strip=True) for c in cells[self.month_column + 1 :]]
+
+        default_year = self.year or datetime.date.today().year
+        rows: list[tuple[datetime.date, str]] = []
+        for row in body.find_all("tr"):
+            values = [c.get_text(strip=True) for c in row.find_all(["td", "th"])]
+            if len(values) < 2:
+                continue
+
+            parts = values[self.month_column].split()
+            if not parts:
+                continue
+            month = recurrence.month(parts[0])
+            if month is None:
+                continue
+            year = (
+                int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else default_year
+            )
+
+            for index, name in enumerate(rounds):
+                column = self.month_column + 1 + index
+                if column >= len(values):
+                    continue
+                for day in self.separator.split(values[column].replace(" ", "")):
+                    if not day.isdigit():
+                        continue
+                    try:
+                        rows.append((datetime.date(year, month, int(day)), name))
+                    except ValueError:
+                        continue
+        return rows
+
+
+class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
+    """A month-grid calendar whose day cells carry marked-up collection markers.
+
+    The HTML sibling of
+    :class:`~waste_collection_schedule.preprocessors.TextCalendarGrid`. A
+    council that renders its year as twelve little month tables puts the month
+    in a header cell spanning the week, the day number in each day cell, and one
+    marker element per collection inside that cell, the round identified by the
+    marker's own class::
+
+        <td>17<span class="MAT"></span><span class="TIDN"></span></td>
+
+    Each marker becomes one ``(date, marker)`` row::
+
+        parse = parsers.HtmlCalendarGrid(
+            table="#mainKalender table",
+            header='td[colspan="7"]',
+        )
+
+    The month header is read with :func:`recurrence.month`, so a month named in
+    any supported language resolves. A cell whose leading text is not a day
+    number is skipped, which is how the weekday strip and the blank cells either
+    side of the month fall away without having to be described.
+
+    Markers nested inside the day cell would otherwise be read as part of the
+    day number, so they are stripped before the number is taken. Repeated
+    ``(date, marker)`` rows are dropped: a grid that renders the same collection
+    in two places (a week view beside a month view) would otherwise double it.
+
+    Args:
+        table: CSS selector for each month's table.
+        header: CSS selector, within the table, for the cell naming the month.
+            Its text may carry other words; the first thing that reads as a
+            month name and the first four-digit number are used.
+        marker: CSS selector, within a day cell, for the collection markers
+            (default ``"span"``).
+        attribute: the marker attribute identifying the round (default
+            ``"class"``). Where it holds several values, the first is used.
+    """
+
+    def __init__(
+        self,
+        *,
+        table: str,
+        header: str,
+        marker: str = "span",
+        attribute: str = "class",
+    ):
+        self.table = table
+        self.header = header
+        self.marker = marker
+        self.attribute = attribute
+
+    def _month_and_year(self, text: str) -> "tuple[int, int] | None":
+        from waste_collection_schedule import recurrence
+
+        year = re.search(r"\d{4}", text)
+        if year is None:
+            return None
+        for word in re.findall(r"[^\W\d_]+", text, flags=re.UNICODE):
+            month = recurrence.month(word)
+            if month is not None:
+                return month, int(year.group(0))
+        return None
+
+    def _marker_name(self, element: Tag) -> "str | None":
+        value = element.get(self.attribute)
+        if isinstance(value, list):
+            return str(value[0]) if value else None
+        return str(value) if value else None
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        rows: list[tuple[datetime.date, str]] = []
+        seen: set[tuple[datetime.date, str]] = set()
+
+        for month_table in soup.select(self.table):
+            header = month_table.select_one(self.header)
+            if header is None:
+                continue
+            resolved = self._month_and_year(header.get_text(strip=True))
+            if resolved is None:
+                continue
+            month, year = resolved
+
+            for day_cell in month_table.find_all("td"):
+                # The markers sit inside the cell, so their own text would run
+                # into the day number if it were read with them still in place.
+                without_markers = BeautifulSoup(
+                    day_cell.decode_contents(), "html.parser"
+                )
+                for element in without_markers.select(self.marker):
+                    element.decompose()
+                stripped = without_markers.get_text(strip=True)
+                day_text = stripped.split()[0] if stripped else ""
+                if not day_text.isdigit():
+                    continue
+
+                try:
+                    collection_date = datetime.date(year, month, int(day_text))
+                except ValueError:
+                    continue
+
+                for element in day_cell.select(self.marker):
+                    name = self._marker_name(element)
+                    if name is None:
+                        continue
+                    row = (collection_date, name)
+                    if row in seen:
+                        continue
+                    seen.add(row)
+                    rows.append(row)
         return rows
 
 

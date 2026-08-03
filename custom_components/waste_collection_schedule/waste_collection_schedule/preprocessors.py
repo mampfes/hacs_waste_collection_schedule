@@ -149,20 +149,35 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
 
                 preprocess = RowRelabel(vocabulary=_TYPE_VALUE_MAP)
                 transform = ICSTransformer(type_value_map=_TYPE_VALUE_MAP)
+        strip: regex removed from the key wherever it matches, applied before
+            ``rename`` and ``vocabulary``. For the boilerplate a provider glues
+            onto every ICS SUMMARY ("Restmüll wird abgeholt." -> "Restmüll", a
+            container size in brackets), where ``vocabulary`` cannot help
+            because the noise is not a trailing word and the round's own name
+            may be several words::
+
+                preprocess = RowRelabel(strip=r"\\s*wird abgeholt\\.\\s*$")
+
+            The key is stripped of surrounding whitespace afterwards, so a
+            pattern that does not have to account for the space before it.
     """
 
     def __init__(
         self,
         rename: "Mapping[str, str] | None" = None,
         vocabulary: "Iterable[str] | None" = None,
+        strip: "str | None" = None,
     ):
         self._rename = dict(rename or {})
         self._vocabulary = None if vocabulary is None else frozenset(vocabulary)
+        self._strip = re.compile(strip) if strip else None
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[tuple[datetime.date, str]]:
         for collection_date, key in records:
+            if self._strip is not None:
+                key = self._strip.sub("", key).strip()
             renamed = self._rename.get(key)
             if renamed is not None:
                 key = renamed

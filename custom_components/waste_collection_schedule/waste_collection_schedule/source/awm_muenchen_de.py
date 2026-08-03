@@ -6,22 +6,20 @@ need a location id per waste-stream (when an address has more than one
 container location) and/or a collection-cycle string per waste-stream (when a
 stream can be emptied on more than one schedule) -- each a separate POST only
 required when the previous response's HTML contains that stream's <select>.
-None of this branching, nor the "one response can carry several
-`a.downloadics` links to fetch and merge", fits a configured retriever, so it
-stays a source-defined ``retrieve``/``parse`` pair.
+That branching, and the "one response can carry several `a.downloadics` links
+to fetch and merge", is
+:class:`~waste_collection_schedule.service.AwmMuenchen.CollectionCalendarRetriever`,
+so this source is a declarative composition of it with ``EachResponse``.
 """
 
-import re
-import urllib.parse
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
+from waste_collection_schedule.service.AwmMuenchen import (
+    DOMAIN,
+    CollectionCalendarRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -31,52 +29,16 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-_DOMAIN = "https://www.awm-muenchen.de"
-_HEADERS = {"Origin": _DOMAIN}  # the backend checks Origin on every POST.
-
-_FORM_NAME = "abfuhrkalender"
-_FIELD = "tx_awmabfuhrkalender_abfuhrkalender"
-
-_LOCATION_ID_RE = r"\d+"
-_CYCLE_STRING_RE = r"(?:\d{3}|\d\/\d);[A-Z]"
-
-# (location-id param, stellplatz key, cycle-string param, leerungszyklus key)
-_STREAMS = (
-    ("r_location_id", "restmuell", "r_collection_cycle_string", "R"),
-    ("b_location_id", "bio", "b_collection_cycle_string", "B"),
-    ("p_location_id", "papier", "p_collection_cycle_string", "P"),
-)
-
 
 def _clean_label(label: str) -> str:
     return label.split(",")[0].replace("Achtung:", "").strip()
-
-
-def _form_info(html_text: str, form_name: str) -> "tuple[str, dict]":
-    """Return the form's action URL and its hidden input fields."""
-    soup = BeautifulSoup(html_text, "html.parser")
-    form = soup.find("form", id=form_name)
-    if not isinstance(form, Tag):
-        raise SourceArgumentNotFoundWithSuggestions("street", form_name, [])
-    action = form.get("action")
-    action_url = f"{_DOMAIN}{urllib.parse.unquote(str(action))}"
-    hidden = {}
-    for tag in form.find_all("input"):
-        if isinstance(tag, Tag) and str(tag.get("type", "")).lower() == "hidden":
-            hidden[tag.get("name")] = tag.get("value", "")
-    return action_url, hidden
-
-
-def _options(soup: BeautifulSoup, attr_name: str, attr_value: str) -> list:
-    select = soup.find("select", {attr_name: attr_value})
-    return select.find_all("option") if isinstance(select, Tag) else []
 
 
 @final
 class Source(BaseSource):
     TITLE = "AWM München"
     DESCRIPTION = "Source for AWM München."
-    URL = _DOMAIN
+    URL = DOMAIN
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
 
@@ -181,115 +143,7 @@ class Source(BaseSource):
             p_collection_cycle_string=p_collection_cycle_string,
         )
 
-    def _fetch_links(self, session, links: list) -> list:
-        responses = []
-        for link in links:
-            href = link.get("href")
-            r = session.get(f"{_DOMAIN}{urllib.parse.unquote(href)}", headers=_HEADERS)
-            r.raise_for_status()
-            responses.append(r)
-        return responses
+    retrieve = CollectionCalendarRetriever()
 
-    def _apply_choice(
-        self,
-        args: dict,
-        field: str,
-        value: str,
-        options: list,
-        param_name: str,
-        pattern: str,
-    ) -> None:
-        if not value:
-            if options:
-                raise SourceArgumentRequiredWithSuggestions(
-                    param_name,
-                    "multiple choices returned from AWM service.",
-                    [f"'{o.get('value')}' for {o.text}" for o in options],
-                )
-            return
-        match = re.findall(pattern, value)
-        if match:
-            args[field] = match[0]
-
-    def retrieve(self, source):
-        session = self.session
-        p = self.params
-
-        r = session.get(f"{_DOMAIN}/entsorgen/abfuhrkalender", headers=_HEADERS)
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        action_url, args = _form_info(r.text, _FORM_NAME)
-        args[f"{_FIELD}[strasse]"] = p["street"]
-        args[f"{_FIELD}[hausnummer]"] = p["house_number"]
-        args[f"{_FIELD}[section]"] = "address"
-        args[f"{_FIELD}[submitAbfuhrkalender]"] = "true"
-
-        r = session.post(action_url, data=args, headers=_HEADERS)
-        r.raise_for_status()
-        page_soup = BeautifulSoup(r.text, "html.parser")
-
-        links = page_soup.find_all("a", {"class": "downloadics"})
-        if links:
-            return self._fetch_links(session, links)
-
-        action_url, args = _form_info(r.text, _FORM_NAME)
-
-        location_options = {
-            key: _options(page_soup, "id", f"{_FIELD}[stellplatz][{key}]")
-            for _loc, key, _cyc, _leer in _STREAMS
-        }
-        if any(location_options.values()):
-            for loc_param, key, _cyc, _leer in _STREAMS:
-                self._apply_choice(
-                    args,
-                    f"{_FIELD}[stellplatz][{key}]",
-                    p[loc_param],
-                    location_options[key],
-                    loc_param,
-                    _LOCATION_ID_RE,
-                )
-
-            r = session.post(action_url, data=args, headers=_HEADERS)
-            r.raise_for_status()
-            page_soup = BeautifulSoup(r.text, "html.parser")
-
-            links = page_soup.find_all("a", {"class": "downloadics"})
-            if links:
-                return self._fetch_links(session, links)
-
-            action_url, args = _form_info(r.text, _FORM_NAME)
-
-        cycle_options = {
-            leer: _options(page_soup, "name", f"{_FIELD}[leerungszyklus][{leer}]")
-            for _loc, _key, _cyc, leer in _STREAMS
-        }
-        if any(cycle_options.values()):
-            for _loc, _key, cyc_param, leer in _STREAMS:
-                self._apply_choice(
-                    args,
-                    f"{_FIELD}[leerungszyklus][{leer}]",
-                    p[cyc_param],
-                    cycle_options[leer],
-                    cyc_param,
-                    _CYCLE_STRING_RE,
-                )
-
-            r = session.post(action_url, data=args, headers=_HEADERS)
-            r.raise_for_status()
-            page_soup = BeautifulSoup(r.text, "html.parser")
-
-            links = page_soup.find_all("a", {"class": "downloadics"})
-            if links:
-                return self._fetch_links(session, links)
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "house_number", f"{p['street']} {p['house_number']}", []
-        )
-
-    def parse(self, raw, source=None):
-        ics_parser = parsers.IcsParser()
-        entries: list = []
-        for response in raw:
-            entries.extend(ics_parser(response, source))
-        return entries
+    # One response per waste stream's ICS download link.
+    parse = parsers.EachResponse(parsers.IcsParser())

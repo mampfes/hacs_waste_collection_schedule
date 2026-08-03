@@ -13,6 +13,7 @@ With no module names it dumps every cassette in the tree.
 """
 
 import calendar  # noqa: F401 - import stdlib calendar before the package path
+import contextlib
 import os
 import sys
 
@@ -49,7 +50,15 @@ def main(wanted: "list[str]") -> int:
             print(f"{module_name}::{case_slug}: NO MATCHING TEST_CASE")
             continue
         try:
-            with cassette.replaying(path):
+            # A source may print its own warnings ("unresolved waste type ...")
+            # while fetching. Those land mid-line in this dump and move about
+            # between runs, which reads as a diff when nothing changed.
+            with (
+                open(os.devnull, "w") as quiet,
+                contextlib.redirect_stdout(quiet),
+                contextlib.redirect_stderr(quiet),
+                cassette.replaying(path),
+            ):
                 results = cls(**args).fetch()
         except Exception as error:
             print(f"{module_name}::{case_slug}: RAISED {type(error).__name__}: {error}")

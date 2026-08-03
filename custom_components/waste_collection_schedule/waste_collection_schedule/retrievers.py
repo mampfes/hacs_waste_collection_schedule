@@ -402,7 +402,11 @@ class FanOutRetriever(_BaseRetriever):
         fetch: optional ``callable(source, target, context) -> Response``,
             issuing the request for one target through ``source.session``.
             Defaults to a plain GET of the target as a URL; pass one when the
-            requests need cookies or headers carried over from ``prepare``.
+            requests need cookies or headers carried over from ``prepare``. It
+            may return ``None`` for a target that has nothing for this
+            household, which is dropped rather than reaching the parser: a
+            platform publishing one calendar per year tends to have gaps around
+            a boundary year, and a missing year is not a failed fetch.
     """
 
     def __init__(
@@ -410,7 +414,7 @@ class FanOutRetriever(_BaseRetriever):
         *,
         targets: Callable[[BaseSource, Any], Sequence[Any]],
         prepare: Callable[[BaseSource], Any] | None = None,
-        fetch: Callable[[BaseSource, Any, Any], Response] | None = None,
+        fetch: Callable[[BaseSource, Any, Any], Response | None] | None = None,
     ):
         self.targets = targets
         self.prepare = prepare
@@ -418,14 +422,15 @@ class FanOutRetriever(_BaseRetriever):
 
     def __call__(self, source: BaseSource) -> list[Response]:
         context = self.prepare(source) if self.prepare is not None else None
-        return [
+        responses = (
             (
                 self.fetch(source, target, context)
                 if self.fetch is not None
                 else source.session.get(target)
             )
             for target in self.targets(source, context)
-        ]
+        )
+        return [response for response in responses if response is not None]
 
 
 class FirstMatchRetriever(_BaseRetriever):
