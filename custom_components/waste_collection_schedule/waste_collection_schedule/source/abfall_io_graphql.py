@@ -1,9 +1,9 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import regions
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import api_key, text_field, waste_types
-from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLParser,
     AbfallIoGraphQLRetriever,
@@ -14,60 +14,6 @@ from waste_collection_schedule.transformers import JsonTransformer
 # Retriever + AbfallIoGraphQLParser). The transformer turns each appointment into a
 # Collection, resolving the waste-type name through the shared multilingual
 # vocabulary. The provider registry lives here, in the source that owns it.
-
-_PROVIDERS = [
-    {
-        "title": "Landkreis Märkisch-Oderland",
-        "url": "https://www.maerkisch-oderland.de/",
-        "service_id": "efb75cbd1f08fae1d4e47ae72a85c655",
-    },
-    {
-        "title": "Holding Graz",
-        "url": "https://www.holding-graz.at/",
-        "service_id": "1c230a689579b6d3ddb9ceb5a56c6072",
-        "country": "at",
-    },
-    {
-        "title": "Landkreis Reutlingen",
-        "url": "https://www.kreis-reutlingen.de/",
-        "service_id": "15f69fab91c4cae50d9dbb5bcfd383f0",
-    },
-    {
-        "title": "Entsorgungsbetriebe Essen",
-        "url": "https://www.ebe-essen.de/",
-        "service_id": "51be67f3758f1fb57b420efe065c0663",
-    },
-    {
-        "title": "KELL Kommunalentsorgung Landkreis Leipzig GmbH",
-        "url": "https://kell-gmbh.de/",
-        "service_id": "0d7a92192ba3ae914c028ac37d73e222",
-    },
-    {
-        "title": "Wirtschaftsbetriebe Duisburg (WBD)",
-        "url": "https://www.wb-duisburg.de/",
-        "service_id": "80acad6c77fe9342ebafad29a8c58bf6",
-    },
-    {
-        "title": "Landkreis Göttingen",
-        "url": "https://www.landkreisgoettingen.de/",
-        "service_id": "4b5702d771c82b611c386ebbc7629026",
-    },
-    {
-        "title": "Abfallwirtschaft Landkreis Böblingen",
-        "url": "https://www.awb-bb.de/",
-        "service_id": "76bdaac8568082d77e7a90cb41129f9b",
-    },
-    {
-        "title": "ASG Nordsachsen",
-        "url": "https://www.asg-nordsachsen.de/",
-        "service_id": "2085afd95285e645e15ee9623d0c5172",
-    },
-    {
-        "title": "Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis",
-        "url": "https://www.lrasbk.de/",
-        "service_id": "30628292bdd8b43db86a48f7e0d85f85",
-    },
-]
 
 
 @final
@@ -146,14 +92,6 @@ class Source(BaseSource):
         date_key="date", type_key=lambda r: r["wasteType"]["name"]
     )
 
-    @staticmethod
-    def REGIONS() -> list[Region]:
-        return [
-            region(
-                s["title"],
-                url=s["url"],
-                country=s.get("country"),
-                key=s["service_id"],
-            )
-            for s in _PROVIDERS
-        ]
+    REGIONS = regions.from_yaml(
+        "abfall_io_graphql", country="country", key="service_id"
+    )
