@@ -4478,17 +4478,11 @@ SOURCE_LOCAL_STEP_EXCEPTIONS = {
 }
 
 
-def _source_local_step_classes(stem: str) -> list[str]:
+def source_local_step_classes(text: str) -> list[str]:
     """Names of Retriever/Parser subclasses defined in a source module itself."""
     import ast
-    from pathlib import Path
 
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     return [
         node.name
         for node in tree.body
@@ -4510,7 +4504,7 @@ def _source_local_step_classes(stem: str) -> list[str]:
 )
 def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
     """Pipeline sources must compose shared components, not define their own."""
-    local = _source_local_step_classes(stem)
+    local = source_local_step_classes(source_text(stem))
     if stem in SOURCE_LOCAL_STEP_EXCEPTIONS:
         return
     assert not local, (
@@ -4624,6 +4618,91 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# The legacy translation dicts are legacy-only
+#
+# A v3 source's config-field labels and help come from field_terms.py, bound
+# through PARAMS, in all five supported languages at once. PARAM_TRANSLATIONS,
+# PARAM_DESCRIPTIONS and HOW_TO_GET_ARGUMENTS_DESCRIPTION are the older per-source
+# dicts, which a legacy source needs because it has no PARAMS to hang labels on.
+#
+# 312 legacy sources declare one. No pipeline source does, and none should: a
+# hand-written label is English-only unless the author remembers four more
+# languages, which is the failure the field_terms vocabulary exists to prevent
+# (see the orphaned ADDRESS term, #7118). Preventive, so it sits at zero
+# exceptions; the dicts and default_translations.py go with the last legacy
+# source (doc/legacy_deprecation_plan.md).
+# --------------------------------------------------------------------------- #
+
+
+def source_text(stem: str) -> str:
+    """The text of one source module.
+
+    The gate predicates below take text rather than a module name so the same
+    checks can run over the worked examples in the documentation, which are not
+    files on the source path. See tests/test_doc_examples.py.
+    """
+    from pathlib import Path
+
+    return (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    ).read_text(encoding="utf-8")
+
+
+_LEGACY_TRANSLATION_ATTRS = (
+    "PARAM_TRANSLATIONS",
+    "PARAM_DESCRIPTIONS",
+    "HOW_TO_GET_ARGUMENTS_DESCRIPTION",
+)
+
+
+def declares_legacy_translations(text: str) -> list[str]:
+    """Which legacy translation attributes this source declares, if any.
+
+    ast rather than a text search, for the same reason the EXTRA_INFO gate below
+    uses it: several sources name these in prose while explaining what replaced
+    them.
+    """
+    import ast
+
+    tree = ast.parse(text)
+    found = set()
+    for node in ast.walk(tree):
+        name = None
+        if isinstance(node, ast.Assign) and node.targets:
+            target = node.targets[0]
+            name = target.id if isinstance(target, ast.Name) else None
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            name = node.target.id
+        elif isinstance(node, ast.FunctionDef):
+            name = node.name
+        if name in _LEGACY_TRANSLATION_ATTRS:
+            found.add(name)
+    return sorted(found)
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_do_not_use_legacy_translations(stem: str) -> None:
+    """Labels come from field_terms via PARAMS, not a per-source dict."""
+    found = declares_legacy_translations(source_text(stem))
+    assert not found, (
+        f"{stem} declares {found}, which is the legacy path for config-field "
+        "labels and is read from legacy sources only. A v3 source gets its labels "
+        "and help from field_terms.py in all five languages by binding the concept "
+        "in PARAMS (city(), street_address(), or text_field(name, term=TERM)); use "
+        "HOWTO for per-language guidance. If the concept is genuinely new, add a "
+        "FieldTerm rather than a per-source dict."
+    )
+
+
+# --------------------------------------------------------------------------- #
 # EXTRA_INFO is legacy-only
 #
 # A source is one structure applied to one or more regions, and REGIONS (a typed
@@ -4639,21 +4718,15 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
 # --------------------------------------------------------------------------- #
 
 
-def _declares_extra_info(stem: str) -> bool:
+def declares_extra_info(text: str) -> bool:
     """True if this source actually declares EXTRA_INFO, not merely mentions it.
 
     Checked with ast rather than a text search, because several sources name
     EXTRA_INFO in a docstring while explaining that REGIONS replaced it.
     """
     import ast
-    from pathlib import Path
 
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign) and any(
             isinstance(t, ast.Name) and t.id == "EXTRA_INFO" for t in node.targets
@@ -4679,7 +4752,7 @@ def _declares_extra_info(stem: str) -> bool:
 )
 def test_pipeline_sources_do_not_use_extra_info(stem: str) -> None:
     """EXTRA_INFO is read from legacy sources only; a v3 source declares REGIONS."""
-    assert not _declares_extra_info(stem), (
+    assert not declares_extra_info(source_text(stem)), (
         f"{stem} declares EXTRA_INFO, which is the legacy form and is read from "
         "legacy sources only. Declare REGIONS instead: a list of "
         "regions.region(title, url=..., **params) entries, whose params are "
@@ -4688,17 +4761,11 @@ def test_pipeline_sources_do_not_use_extra_info(stem: str) -> None:
     )
 
 
-def _named_waste_type_imports(stem: str) -> list[str]:
+def named_waste_type_imports(text: str) -> list[str]:
     """Names this source imports individually from waste_types."""
     import ast
-    from pathlib import Path
 
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     return [
         alias.name
         for node in tree.body
@@ -4722,7 +4789,7 @@ def test_pipeline_sources_import_waste_types_as_a_module(stem: str) -> None:
     each once ruff wraps the statement: 1,284 lines across the sources, against
     250 for the namespace form, which is one line however many types are used.
     """
-    named = _named_waste_type_imports(stem)
+    named = named_waste_type_imports(source_text(stem))
     assert not named, (
         f"{stem} imports {named} from waste_types by name. Use "
         "`from waste_collection_schedule import waste_types as wt` and write "
@@ -4731,11 +4798,10 @@ def test_pipeline_sources_import_waste_types_as_a_module(stem: str) -> None:
     )
 
 
-def _hand_rolled_standard_fields(stem: str) -> list[str]:
+def hand_rolled_standard_fields(text: str) -> list[str]:
     """Labels in this source that duplicate a standard FieldTerm's label."""
     import ast
     import re
-    from pathlib import Path
 
     from waste_collection_schedule import field_terms
 
@@ -4747,12 +4813,7 @@ def _hand_rolled_standard_fields(stem: str) -> list[str]:
         for name, term in vars(field_terms).items()
         if isinstance(term, field_terms.FieldTerm)
     }
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     offenders = []
     for node in ast.walk(tree):
         if not (
@@ -4791,7 +4852,7 @@ def _hand_rolled_standard_fields(stem: str) -> list[str]:
 )
 def test_pipeline_sources_bind_standard_field_terms(stem: str) -> None:
     """A text_field must not re-label a concept field_terms already defines."""
-    offenders = _hand_rolled_standard_fields(stem)
+    offenders = hand_rolled_standard_fields(source_text(stem))
     assert not offenders, (
         f"{stem} hand-writes a standard field: {'; '.join(offenders)}. Bind the "
         "concept instead, with its factory (city(), street(), house_number(), "
@@ -4802,13 +4863,12 @@ def test_pipeline_sources_bind_standard_field_terms(stem: str) -> None:
     )
 
 
-def _redundant_init_reason(stem: str, cls: type) -> str | None:
+def _redundant_init_reason(text: str, cls: type) -> str | None:
     """Return a reason if this source's __init__ is a pure passthrough.
 
     None means the override earns its place (or there is no override).
     """
     import ast
-    from pathlib import Path
 
     from waste_collection_schedule.base_source import BaseSource
 
@@ -4816,12 +4876,7 @@ def _redundant_init_reason(stem: str, cls: type) -> str | None:
     if getattr(cls, "__init__", None) is BaseSource.__init__:
         return None  # already inherits: nothing to answer for
 
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     node = next(
         (
             n
@@ -4923,7 +4978,7 @@ def _redundant_init_reason(stem: str, cls: type) -> str | None:
 )
 def test_pipeline_sources_dont_redeclare_init(stem: str, cls: type) -> None:
     """A pipeline source must not restate what BaseSource.__init__ already does."""
-    reason = _redundant_init_reason(stem, cls)
+    reason = _redundant_init_reason(source_text(stem), cls)
     assert reason is None, (
         f"{stem} declares an __init__ that can be deleted outright, because "
         f"{reason}. BaseSource.__init__ already applies the PARAMS defaults, "
@@ -5036,17 +5091,11 @@ REGISTRY_READ_AT_RUNTIME = {
 }
 
 
-def _hand_rolled_registry(stem: str) -> str | None:
+def hand_rolled_registry(text: str) -> str | None:
     """A module-level list/tuple of mappings big enough to be a provider registry."""
     import ast
-    from pathlib import Path
 
-    path = (
-        Path(__file__).resolve().parent.parent
-        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
-        / f"{stem}.py"
-    )
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+    tree = ast.parse(text)
     # ast.walk, not tree.body: a registry declared on the class rather than at
     # module level is the same problem and must not slip past.
     for node in ast.walk(tree):
@@ -5085,7 +5134,7 @@ def test_pipeline_sources_keep_registries_as_data(stem: str) -> None:
     """A provider registry belongs in doc/regions/<source>.yaml, not in the module."""
     if stem in REGISTRY_READ_AT_RUNTIME:
         return
-    found = _hand_rolled_registry(stem)
+    found = hand_rolled_registry(source_text(stem))
     assert found is None, (
         f"{stem} declares a provider registry in Python: {found}. Move it to "
         f"doc/regions/{stem}.yaml and declare "
