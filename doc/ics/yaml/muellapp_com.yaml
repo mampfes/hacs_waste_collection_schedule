@@ -11,7 +11,7 @@ howto:
 test_cases:
   Leoben:
     url: https://app.muellapp.com/ical/241061?area_filter=174334%2C174336%2C174348%2C187236%2C187237%2C187238%2C187239&reminder
-extra_info:
+regions:
   - title: Afritz am See
     url: https://muellapp.com
     country: at

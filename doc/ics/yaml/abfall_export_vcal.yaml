@@ -2,7 +2,7 @@
 title: Abfall Export (vCal)
 url: https://example.com
 country: de
-extra_info:
+regions:
   - title: Stadt Löhne
     url: https://www.loehne.de
     country: de

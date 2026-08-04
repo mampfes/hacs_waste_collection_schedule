@@ -28,7 +28,7 @@ test_cases:
   St. Ingbert, Ackergasse, St. Ingbert-Mitte:
     url: webcal://st-ingbert.mein-abfallkalender.online/ical.ics?sid=8109&cd=inline&ft=6&fu=webcal_other&fp=next_30&wids=157,155,156,154,158&uid=167241&pwid=b3e6c5c670&cid=25
 
-extra_info:
+regions:
   - title: Eppstein
     url: https://www.eppstein.de/
   - title: St. Ingbert

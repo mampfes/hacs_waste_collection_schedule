@@ -10,6 +10,7 @@ to the hand-written files, because the prose around the structure varies.
 import calendar  # noqa: F401 — stdlib calendar must be imported FIRST
 import importlib
 import os
+import pathlib
 import sys
 
 import pytest
@@ -149,3 +150,65 @@ def test_render_alternatives_source_renders_per_group():
     # Canonical 2-space mapping indentation in every config block.
     assert "\n  sources:\n" in doc
     assert "\n    sources:\n" not in doc
+
+
+# --------------------------------------------------------------------------- #
+# ICS yaml `regions:` key
+#
+# One ICS definition may cover several providers, listed under `regions:`. That
+# key was called `extra_info:` until 2026-08, which named it after the deprecated
+# Python EXTRA_INFO attribute it has nothing to do with: this key has always fed
+# ics.REGIONS, the current path, while EXTRA_INFO is the legacy form adapted by
+# regions.from_extra_info(). The old spelling is still read so an in-flight
+# contribution keeps working, but nothing in the tree should use it.
+# --------------------------------------------------------------------------- #
+
+_ICS_YAML_DIR = pathlib.Path(__file__).resolve().parent.parent / "doc" / "ics" / "yaml"
+
+
+def _ics_yaml_files():
+    return sorted(_ICS_YAML_DIR.glob("*.yaml"))
+
+
+@pytest.mark.parametrize("path", _ics_yaml_files(), ids=lambda p: p.stem)
+def test_ics_yaml_uses_the_regions_key(path):
+    """No yaml may use the old `extra_info:` spelling."""
+    import yaml
+
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    assert "extra_info" not in data, (
+        f"{path.name} uses the old `extra_info:` key. Rename it to `regions:`. "
+        "The old name came from the deprecated Python EXTRA_INFO attribute, "
+        "which is a different mechanism for legacy Python sources."
+    )
+
+
+def test_ics_loader_reads_both_spellings():
+    """The old spelling still works, so a pending contribution is not broken."""
+    from waste_collection_schedule.source import ics
+
+    definition = {
+        "title": "Example",
+        "url": "https://example.com",
+        "howto": {"en": "..."},
+        "extra_info": [{"title": "Second Provider"}],
+    }
+    old = ics._regions_from_definition(definition)
+    definition["regions"] = definition.pop("extra_info")
+    new = ics._regions_from_definition(definition)
+    expected = ["Example", "Second Provider"]  # the file's own region, then its own
+    assert [r.title for r in old] == [r.title for r in new] == expected
+
+
+def test_ics_regions_key_wins_when_both_are_present():
+    from waste_collection_schedule.source import ics
+
+    definition = {
+        "title": "Example",
+        "url": "https://example.com",
+        "howto": {"en": "..."},
+        "regions": [{"title": "New"}],
+        "extra_info": [{"title": "Old"}],
+    }
+    titles = [r.title for r in ics._regions_from_definition(definition)]
+    assert titles == ["Example", "New"], "the `regions:` key must win over the old one"

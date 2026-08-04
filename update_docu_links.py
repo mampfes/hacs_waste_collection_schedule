@@ -319,7 +319,9 @@ class Section:
         return f"<!--End of {self._section} section-->"
 
 
-class ExtraInfoDict(TypedDict):
+class IcsRegionDict(TypedDict):
+    """One further provider covered by an ICS yaml definition."""
+
     title: NotRequired[str]
     url: NotRequired[str]
     country: NotRequired[str]
@@ -334,7 +336,11 @@ class IcsSourceData(TypedDict):
     country: NotRequired[str]
     default_params: NotRequired[dict[str, Any]]
     test_cases: dict[str, dict[str, Any]]
-    extra_info: NotRequired[list[ExtraInfoDict]]
+    # The providers one definition covers, beyond the file's own title/url. Named
+    # ``extra_info`` until 2026-08, after the unrelated deprecated Python
+    # attribute; that spelling is still read by ics.py but should not be written.
+    regions: NotRequired[list[IcsRegionDict]]
+    extra_info: NotRequired[list[IcsRegionDict]]
     codeowners: NotRequired[list]
 
 

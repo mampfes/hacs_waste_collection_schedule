@@ -20,7 +20,7 @@ howto:
 test_cases:
   Thannhausen:
     url: https://graphql.sta.io/feed/c/i/5d9d1c1a5ff20a142ec8edc9/appointments.ics
-extra_info:
+regions:
   - title: Thannhausen
     url: https://www.thannhausen.at
     country: at

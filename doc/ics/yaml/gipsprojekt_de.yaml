@@ -19,7 +19,7 @@ description: |
   | ------ | --- |
   | Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
   | Stadtwerke Aschaffenburg | <https://www.stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk/> |
-extra_info:
+regions:
   - title: Stadtwerke Speyer
     url: https://www.stadtwerke-speyer.de/muellkalender
     country: de
