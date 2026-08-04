@@ -64,18 +64,18 @@ class Source(BaseSource):
     PARAMS = (
         street(field="street"),
         house_number(field="house_number"),
-        text_field("r_location_id", "Residual waste location ID", optional=True),
-        text_field("b_location_id", "Organic waste location ID", optional=True),
-        text_field("p_location_id", "Paper location ID", optional=True),
+        text_field("r_location_id", "Residual waste location ID", default=""),
+        text_field("b_location_id", "Organic waste location ID", default=""),
+        text_field("p_location_id", "Paper location ID", default=""),
         text_field(
             "r_collection_cycle_string",
             "Residual waste emptying cycle",
-            optional=True,
+            default="",
         ),
         text_field(
-            "b_collection_cycle_string", "Organic waste emptying cycle", optional=True
+            "b_collection_cycle_string", "Organic waste emptying cycle", default=""
         ),
-        text_field("p_collection_cycle_string", "Paper emptying cycle", optional=True),
+        text_field("p_collection_cycle_string", "Paper emptying cycle", default=""),
     )
 
     HOWTO: ClassVar[dict] = {
@@ -115,29 +115,6 @@ class Source(BaseSource):
             "Wertstofftonne": wt.RECYCLABLES,
         },
     )
-
-    def __init__(
-        self,
-        street: str,
-        house_number: str,
-        r_location_id: str = "",
-        b_location_id: str = "",
-        p_location_id: str = "",
-        r_collection_cycle_string: str = "",
-        b_collection_cycle_string: str = "",
-        p_collection_cycle_string: str = "",
-    ):
-        super().__init__(
-            street=street,
-            house_number=house_number,
-            r_location_id=r_location_id,
-            b_location_id=b_location_id,
-            p_location_id=p_location_id,
-            r_collection_cycle_string=r_collection_cycle_string,
-            b_collection_cycle_string=b_collection_cycle_string,
-            p_collection_cycle_string=p_collection_cycle_string,
-        )
-
     retrieve = CollectionCalendarRetriever()
 
     # One response per waste stream's ICS download link.

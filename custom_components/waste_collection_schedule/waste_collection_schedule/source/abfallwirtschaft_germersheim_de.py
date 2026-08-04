@@ -14,8 +14,9 @@ from typing import ClassVar, NamedTuple, final
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.config_params import city, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.field_terms import STREET
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -99,7 +100,7 @@ class Source(BaseSource):
 
     PARAMS = (
         city(field="city"),
-        street(field="street", optional=True),
+        text_field("street", term=STREET, default=""),
     )
 
     retrieve = LookupChainRetriever(
@@ -126,6 +127,3 @@ class Source(BaseSource):
             "Problemmüll": wt.HAZARDOUS,
         }
     )
-
-    def __init__(self, city: str, street: str = ""):
-        super().__init__(city=city, street=street)

@@ -3,7 +3,8 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import city, house_number, street
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.field_terms import CITY, HOUSE_NUMBER, STREET
 from waste_collection_schedule.service.Sepan import SepanReportParser, SepanRetriever
 from waste_collection_schedule.transformers import RowTransformer
 
@@ -64,9 +65,9 @@ class Source(BaseSource):
     # own "argument required, here are your options" lookup); optional here
     # preserves that instead of failing config validation up front.
     PARAMS = (
-        city("city", optional=True),
-        street("street", optional=True),
-        house_number("number", optional=True),
+        text_field("city", term=CITY, default=""),
+        text_field("street", term=STREET, default=""),
+        text_field("number", term=HOUSE_NUMBER, default=""),
     )
 
     HOWTO: ClassVar[dict] = {
@@ -83,6 +84,3 @@ class Source(BaseSource):
     )
     parse = SepanReportParser()
     transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
-
-    def __init__(self, city: str = "", street: str = "", number: str = ""):
-        super().__init__(city=city, street=street, number=number)

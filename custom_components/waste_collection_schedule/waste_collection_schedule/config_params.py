@@ -364,11 +364,15 @@ def dropdown(
     options: list[str],
     label: str | None = None,
     optional: bool = False,
+    default: str | None = None,
 ) -> ConfigParam:
     """Select from a fixed list of options.
 
     Required by default; pass ``optional=True`` for a selection the source can
-    do without (e.g. a manual override that otherwise auto-resolves).
+    do without (e.g. a manual override that otherwise auto-resolves), or
+    ``default=`` for one that has a sensible pre-filled choice. A default makes
+    the field optional, as it does everywhere else, and belongs here rather than
+    in an ``__init__`` signature so ``PARAMS`` stays the single source of truth.
     """
     display = _title(field_name, label)
     return ConfigParam(
@@ -377,7 +381,8 @@ def dropdown(
         labels={
             "en": {field_name: display},
         },
-        required=not optional,
+        defaults={field_name: default} if default is not None else {},
+        required=default is None and not optional,
         options=list(options),
     )
 
