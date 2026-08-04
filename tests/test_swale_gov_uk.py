@@ -69,8 +69,9 @@ RESULTS = """
 
 def fetch_with(responses: list[Response]) -> tuple[list, Session]:
     session = Session(responses)
-    with patch.object(swale_gov_uk.requests, "Session", return_value=session), patch.object(
-        swale_gov_uk, "sleep"
+    with (
+        patch.object(swale_gov_uk.requests, "Session", return_value=session),
+        patch.object(swale_gov_uk, "sleep"),
     ):
         entries = swale_gov_uk.Source("[redacted]", "AA1 1AA").fetch()
     return entries, session
@@ -121,14 +122,20 @@ def test_fetch_rejects_cloudflare_challenge() -> None:
 
 
 def test_fetch_rejects_postcode_validation() -> None:
-    validation = Response("<html><div class='sq-form-error'>Invalid postcode</div></html>")
+    validation = Response(
+        "<html><div class='sq-form-error'>Invalid postcode</div></html>"
+    )
 
-    with pytest.raises(ValueError, match="postcode submission returned a validation error"):
+    with pytest.raises(
+        ValueError, match="postcode submission returned a validation error"
+    ):
         fetch_with([Response(INITIAL_FORM), validation])
 
 
 def test_fetch_rejects_uprn_validation() -> None:
-    validation = Response("<html><div class='sq-form-error'>Invalid address</div></html>")
+    validation = Response(
+        "<html><div class='sq-form-error'>Invalid address</div></html>"
+    )
 
     with pytest.raises(ValueError, match="UPRN submission returned a validation error"):
         fetch_with([Response(INITIAL_FORM), Response(UPRN_FORM), validation])
@@ -148,4 +155,6 @@ def test_fetch_rejects_missing_postcode_control() -> None:
 
 def test_fetch_rejects_returned_form() -> None:
     with pytest.raises(ValueError, match="input form instead of results"):
-        fetch_with([Response(INITIAL_FORM), Response(UPRN_FORM), Response(INITIAL_FORM)])
+        fetch_with(
+            [Response(INITIAL_FORM), Response(UPRN_FORM), Response(INITIAL_FORM)]
+        )
