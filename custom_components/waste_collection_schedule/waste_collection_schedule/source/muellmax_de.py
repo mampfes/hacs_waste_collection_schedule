@@ -1,6 +1,6 @@
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import parsers, regions
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -9,7 +9,6 @@ from waste_collection_schedule.config_params import (
     service_id,
     street,
 )
-from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.MuellmaxDe import MuellmaxRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -19,83 +18,6 @@ from waste_collection_schedule.transformers import ICSTransformer
 # ordinary IcsParser + ICSTransformer, with the German bin names resolved by the
 # shared multilingual vocabulary. One structure covers every Müllmax
 # municipality via a callable REGIONS over its own provider registry.
-
-
-# The provider registry for this one structure: each entry becomes a Region
-# (a discoverable listing with its Müllmax service id pre-filled). New providers
-# are added here, in the source that owns them.
-_PROVIDERS = [
-    # AWISTA Düsseldorf ("Dus") removed: the provider switched its backend and the
-    # Müllmax form no longer works (upstream #6707, issue #3500).
-    # RSAG Rhein-Sieg-Kreis ("Rsa") is covered by the dedicated `rsag_de` source
-    # (same Müllmax backend, friendlier city/street config) — see #6553. Entry
-    # removed to avoid two listings for the same provider.
-    {
-        "title": "USB Bochum",
-        "url": "https://www.usb-bochum.de/",
-        "service_id": "Usb",
-    },
-    {
-        "title": "Abfallwirtschaftsbetriebe Münster",
-        "url": "https://www.stadt-muenster.de",
-        "service_id": "Awm",
-    },
-    {
-        "title": "Entsorgungsbetrieb Stadt Mainz",
-        "url": "https://eb-mainz.de/",
-        "service_id": "Ebm",
-    },
-    {
-        "title": "EVS Entsorgungsverband Saar",
-        "url": "https://www.evs.de/",
-        "service_id": "Evs",
-    },
-    {
-        "title": "Landkreis Gießen",
-        "url": "https://www.lkgi.de/",
-        "service_id": "Lkg",
-    },
-    {
-        "title": "Stadt Hamm",
-        "url": "https://www.hamm.de/",
-        "service_id": "Ash",
-    },
-    {
-        "title": "Stadt Darmstadt",
-        "url": "darmstadt.de",
-        "service_id": "Ead",
-    },
-    {
-        "title": "TBR Remscheid",
-        "url": "https://www.tbr-info.de/",
-        "service_id": "Tbr",
-    },
-    {
-        "title": "Stadtbildpflege Kaiserslautern",
-        "url": "https://www.stadtbildpflege-kl.de/",
-        "service_id": "Ask",
-    },
-    {
-        "title": "Stadt Hanau",
-        "url": "https://www.hanau.de/",
-        "service_id": "His",
-    },
-    {
-        "title": "Stadt Maintal",
-        "url": "https://www.maintal.de/",
-        "service_id": "Mai",
-    },
-    {
-        "title": "Stadt Haltern am See",
-        "url": "https://www.haltern-am-see.de/",
-        "service_id": "Hal",
-    },
-    {
-        "title": "Kreisstadt Friedberg",
-        "url": "https://www.friedberg-hessen.de/",
-        "service_id": "Efb",
-    },
-]
 
 
 # Müllmax providers prefix each bin label with a provider code and often a bin
@@ -161,9 +83,4 @@ class Source(BaseSource):
     parse = parsers.IcsParser(min_events=1)
     transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
-    @staticmethod
-    def REGIONS() -> list[Region]:
-        return [
-            region(s["title"], url=s["url"], service=s["service_id"])
-            for s in _PROVIDERS
-        ]
+    REGIONS = regions.from_yaml("muellmax_de", service="service_id")

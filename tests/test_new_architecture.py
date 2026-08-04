@@ -5009,3 +5009,175 @@ def test_no_new_source_local_step_overrides(stem: str) -> None:
         "so every provider on that platform gets it. Extend the component instead "
         "of adding a bespoke step here."
     )
+
+
+# --------------------------------------------------------------------------- #
+# Registry-as-data gate
+#
+# A platform covering dozens of providers keeps that registry as data, in
+# doc/regions/<source>.yaml, read by regions.from_yaml(). Kept as a Python
+# literal it means a code change to add a provider, and every source that had one
+# also hand-rolled its own comprehension turning dicts into Regions: the same five
+# lines, five times, five spellings.
+#
+# Only a build-time registry can move. from_yaml() reads doc/, which a HACS
+# install does not ship, so it yields [] at runtime; that is safe for REGIONS
+# (which drives the generated listings the config flow then reads from JSON) and
+# unsafe for anything the source needs while fetching. The two allowlisted
+# sources are exactly that case, and splitting them is tracked separately.
+# --------------------------------------------------------------------------- #
+
+REGISTRY_READ_AT_RUNTIME = {
+    # _PROVIDERS carries `path` and `regex` per municipality and is resolved
+    # through _BY_MUNICIPALITY while fetching, so it cannot live under doc/.
+    "insert_it_de",
+    # _PROVIDERS is resolved by hpid at fetch time, and carries a `disabled` flag.
+    "cmcitymedia_de",
+}
+
+
+def _hand_rolled_registry(stem: str) -> str | None:
+    """A module-level list/tuple of mappings big enough to be a provider registry."""
+    import ast
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parent.parent
+        / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
+        / f"{stem}.py"
+    )
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    # ast.walk, not tree.body: a registry declared on the class rather than at
+    # module level is the same problem and must not slip past.
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign) or not isinstance(
+            node.targets[0], ast.Name
+        ):
+            continue
+        value = node.value
+        if not isinstance(value, (ast.List, ast.Tuple)):
+            continue
+        mappings = [e for e in value.elts if isinstance(e, ast.Dict)]
+        # A registry is many mappings that all carry a title or a url: a handful
+        # of inline region() calls, or a list of plain strings, is not one.
+        if len(mappings) < 8:
+            continue
+        if not all(
+            any(
+                isinstance(k, ast.Constant) and k.value in ("title", "url")
+                for k in m.keys
+            )
+            for m in mappings
+        ):
+            continue
+        return f"{node.targets[0].id} ({len(mappings)} entries)"
+    return None
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_keep_registries_as_data(stem: str) -> None:
+    """A provider registry belongs in doc/regions/<source>.yaml, not in the module."""
+    if stem in REGISTRY_READ_AT_RUNTIME:
+        return
+    found = _hand_rolled_registry(stem)
+    assert found is None, (
+        f"{stem} declares a provider registry in Python: {found}. Move it to "
+        f"doc/regions/{stem}.yaml and declare "
+        '`REGIONS = regions.from_yaml("<name>", <param>="<key>")`, so adding a '
+        "provider is a change to one data file and the dict-to-Region conversion "
+        "is not written again. If the source reads the registry while fetching, it "
+        "cannot move: say so in REGISTRY_READ_AT_RUNTIME with the reason."
+    )
+
+
+class TestRegionsFromYaml:
+    """regions.from_yaml(): the shared loader for a provider registry as data."""
+
+    @staticmethod
+    def _registry(tmp_path, monkeypatch, name, body):
+        """Point the loader at a temporary registry file."""
+        from waste_collection_schedule import regions as regions_mod
+
+        path = tmp_path / f"{name}.yaml"
+        path.write_text(body, encoding="utf-8")
+        monkeypatch.setattr(
+            regions_mod, "_registry_path", lambda n: tmp_path / f"{n}.yaml"
+        )
+        return regions_mod
+
+    def test_maps_keys_to_params(self, tmp_path, monkeypatch):
+        mod = self._registry(
+            tmp_path,
+            monkeypatch,
+            "plat",
+            "- title: Council A\n  url: https://a.example\n  service_id: aaa\n",
+        )
+        got = mod.from_yaml("plat", key="service_id")()
+        assert len(got) == 1
+        assert got[0].title == "Council A"
+        assert got[0].url == "https://a.example"
+        assert got[0].params == {"key": "aaa"}
+
+    def test_missing_file_yields_nothing(self, tmp_path, monkeypatch):
+        """A HACS install ships no doc/ tree, so this must not raise."""
+        mod = self._registry(tmp_path, monkeypatch, "plat", "- title: A\n  url: u\n")
+        assert mod.from_yaml("absent")() == []
+
+    def test_expand_fans_one_entry_into_many(self, tmp_path, monkeypatch):
+        mod = self._registry(
+            tmp_path,
+            monkeypatch,
+            "plat",
+            "- service_id: s1\n  url: https://x.example\n  cities:\n"
+            "    - Alpha\n    - Beta\n",
+        )
+        got = mod.from_yaml("plat", expand="cities", service_id="service_id")()
+        assert [r.title for r in got] == ["Alpha", "Beta"]
+        # every fanned-out Region keeps the entry's shared values
+        assert {r.url for r in got} == {"https://x.example"}
+        assert all(r.params == {"service_id": "s1"} for r in got)
+
+    def test_title_suffix_labels_a_group_once(self, tmp_path, monkeypatch):
+        """The app name is written once in the data, not per municipality."""
+        mod = self._registry(
+            tmp_path,
+            monkeypatch,
+            "plat",
+            "- service_id: s1\n  url: u\n  comment: MyMuell App\n  cities:\n"
+            "    - Alpha\n    - Beta\n",
+        )
+        got = mod.from_yaml(
+            "plat", expand="cities", title_suffix="comment", service_id="service_id"
+        )()
+        assert [r.title for r in got] == ["Alpha (MyMuell App)", "Beta (MyMuell App)"]
+
+    def test_title_suffix_omitted_when_absent(self, tmp_path, monkeypatch):
+        mod = self._registry(
+            tmp_path,
+            monkeypatch,
+            "plat",
+            "- service_id: s1\n  url: u\n  cities:\n    - Alpha\n",
+        )
+        got = mod.from_yaml("plat", expand="cities", title_suffix="comment")()
+        assert [r.title for r in got] == ["Alpha"]
+
+    def test_country_is_read_only_when_named(self, tmp_path, monkeypatch):
+        mod = self._registry(
+            tmp_path,
+            monkeypatch,
+            "plat",
+            "- title: A\n  url: u\n  country: at\n",
+        )
+        assert mod.from_yaml("plat")()[0].country is None
+        assert mod.from_yaml("plat", country="country")()[0].country == "at"
+
+    def test_absent_param_key_is_skipped_not_none(self, tmp_path, monkeypatch):
+        """A missing optional key must not become a None param."""
+        mod = self._registry(tmp_path, monkeypatch, "plat", "- title: A\n  url: u\n")
+        assert mod.from_yaml("plat", key="service_id")()[0].params == {}

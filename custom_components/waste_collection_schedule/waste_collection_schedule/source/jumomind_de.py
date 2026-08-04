@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from waste_collection_schedule import regions
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -11,7 +12,6 @@ from waste_collection_schedule.config_params import (
     service_id,
     street,
 )
-from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.Jumomind import (
     JumomindParser,
     JumomindRetriever,
@@ -23,164 +23,6 @@ from waste_collection_schedule.transformers import RowTransformer
 # standard German labels via the shared multilingual vocabulary
 # (waste_types.resolve), and anything it doesn't recognise is preserved verbatim
 # rather than collapsed to OTHER.
-
-
-# The provider registry for this one structure: each entry becomes one or more
-# Regions (a discoverable listing with its Jumomind service id pre-filled). New
-# providers are added here, in the source that owns them. ``comment`` is an
-# optional listing suffix (e.g. the white-label app the provider runs under).
-_PROVIDERS = [
-    {
-        "service_id": "zaw",
-        "url": "https://www.zaw-online.de",
-        "cities": ["Darmstadt-Dieburg (ZAW)"],
-    },
-    {
-        "service_id": "aoe",
-        "url": "https://www.lra-aoe.de",
-        "cities": ["Altötting (LK)"],
-    },
-    {
-        "service_id": "lka",
-        "url": "https://mkw-grossefehn.de",
-        "cities": ["Aurich (MKW)"],
-    },
-    {
-        "service_id": "hom",
-        "url": "https://www.bad-homburg.de",
-        "cities": ["Bad Homburg vdH"],
-    },
-    {
-        "service_id": "bdg",
-        "url": "https://www.kreiswerke-barnim.de/",
-        "cities": ["Barnim"],
-    },
-    {
-        "service_id": "hat",
-        "url": "https://www.hattersheim.de",
-        "cities": ["Hattersheim am Main"],
-    },
-    {"service_id": "ingol", "url": "https://www.in-kb.de", "cities": ["Ingolstadt"]},
-    {
-        "service_id": "lue",
-        "url": "https://www.luebbecke.de",
-        "comment": "Jumomind",
-        "cities": ["Lübbecke"],
-    },
-    {"service_id": "sbm", "url": "https://www.minden.de/", "cities": ["Minden"]},
-    {
-        "service_id": "ksr",
-        "url": "https://www.zbh-ksr.de",
-        "cities": ["Recklinghausen"],
-    },
-    {
-        "service_id": "rhe",
-        "url": "https://www.rh-entsorgung.de/",
-        "comment": "Jumomind",
-        "cities": ["Rhein-Hunsrück"],
-    },
-    {
-        "service_id": "udg",
-        "url": "https://www.udg-uckermark.de/",
-        "cities": ["Uckermark"],
-    },
-    {
-        "service_id": "mymuell",
-        "url": "https://www.mymuell.de/",
-        "comment": "MyMuell App",
-        "cities": [
-            "Bad Arolsen",
-            "Beverungen",
-            "Darmstadt",
-            "Esens",
-            "Flensburg",
-            "Gelnhausen",
-            "Glashütten",
-            "Grävenwiesbach",
-            "Großkrotzenburg",
-            "Hainburg",
-            "Holtgast",
-            "Kamp-Lintfort",
-            "Kirchdorf",
-            "Landkreis Aschaffenburg",
-            "Landkreis Biberach",
-            "Landkreis Eichstätt",
-            "Landkreis Friesland",
-            "Landkreis Leer",
-            "Landkreis Mettmann",
-            "Landkreis Paderborn",
-            "Landkreis Wittmund",
-            "Main-Kinzig-Kreis",
-            "Mühlheim am Main",
-            "Nenndorf",
-            "Neumünster",
-            "Salzgitter",
-            "Schmitten im Taunus",
-            "Schöneck",
-            "Seligenstadt",
-            "Senden",
-            "Ulm",
-            "Usingen",
-            "Volkmarsen",
-            "Vöhringen",
-            "Wegberg",
-            "Westerholt",
-            "Wilhelmshaven",
-        ],
-    },
-    {
-        "service_id": "esn",
-        "url": "https://www.neustadt.eu/",
-        "cities": ["Neustadt an der Weinstraße"],
-    },
-    {"service_id": "zac", "url": "https://www.zacelle.de/", "cities": ["Celle"]},
-    {
-        "service_id": "ben",
-        "url": "https://awb.grafschaft-bentheim.de/",
-        "cities": ["Landkreis Grafschaft"],
-    },
-    {
-        "service_id": "enwi",
-        "url": "https://www.enwi-hz.de/",
-        "cities": ["Landkreis Harz"],
-    },
-    {
-        "service_id": "hox",
-        "url": "https://abfallservice.kreis-hoexter.de/",
-        "cities": ["Höxter"],
-    },
-    {"service_id": "kbl", "url": "https://www.kbl-langen.de/", "cities": ["Langen"]},
-    {
-        "service_id": "ros",
-        "url": "https://www.rosbach-hessen.de/",
-        "cities": ["Rosbach Vor Der Höhe"],
-    },
-    {
-        "service_id": "mkk",
-        "url": "https://abfall-mkk.de/",
-        "cities": ["Main-Kinzig-Kreis"],
-    },
-    {
-        "service_id": "wol",
-        "url": "https://www.alw-wf.de",
-        "cities": ["ALW Wolfenbüttel"],
-    },
-]
-
-
-def _regions() -> list[Region]:
-    regions: list[Region] = []
-    for provider in _PROVIDERS:
-        comment = f" ({provider['comment']})" if "comment" in provider else ""
-        for city_name in provider["cities"]:
-            regions.append(
-                region(
-                    f"{city_name}{comment}",
-                    url=provider["url"],
-                    service_id=provider["service_id"],
-                )
-            )
-    return regions
 
 
 # Not @final: rh_entsorgung_de subclasses this for the RHE municipality.
@@ -204,7 +46,9 @@ class Source(BaseSource):
 
     # One structure (the Jumomind mmapp API) covering many municipalities; the
     # full list is derived from the source's own provider registry at load time.
-    REGIONS = _regions
+    REGIONS = regions.from_yaml(
+        "jumomind_de", expand="cities", title_suffix="comment", service_id="service_id"
+    )
 
     TEST_CASES: ClassVar[dict] = {
         # DEPRECATED

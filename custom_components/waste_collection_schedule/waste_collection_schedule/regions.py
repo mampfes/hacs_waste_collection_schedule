@@ -17,7 +17,9 @@ This is the typed successor to the legacy ``EXTRA_INFO`` dict list: ``params``
 is validated against the source's ``PARAMS`` rather than being free-form.
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 
@@ -76,6 +78,96 @@ def region(
         howto=howto,
         source_owners=source_owners,
     )
+
+
+REGISTRY_DIR = "doc/regions"
+
+
+def _registry_path(name: str) -> Path:
+    """Where a source's region registry lives, relative to the repo root.
+
+    A seam: the repo root is four levels above this module, which is awkward to
+    arrange in a test, so tests replace this rather than the path arithmetic.
+    """
+    return Path(__file__).resolve().parents[3] / REGISTRY_DIR / f"{name}.yaml"
+
+
+def from_yaml(
+    name: str,
+    *,
+    expand: str | None = None,
+    title: str = "title",
+    title_suffix: str | None = None,
+    url: str = "url",
+    country: str | None = None,
+    **param_fields: str,
+) -> "Callable[[], list[Region]]":
+    """Load a source's regions from ``doc/regions/<name>.yaml``.
+
+    For a platform covering dozens of providers, the registry is data, so keeping
+    it as a Python literal means a code change to add a provider and a bespoke
+    comprehension in every source that has one. This returns the callable form of
+    ``REGIONS``, so the file is read lazily at doc-generation time::
+
+        REGIONS = regions.from_yaml("abfall_io", key="service_id")
+
+    reading a list of mappings::
+
+        - title: Abfallwirtschaft Landkreis Harburg
+          url: https://www.landkreis-harburg.de
+          service_id: e0dd0aae0e2b0a0a1d1e5cf6c6b5a24d
+
+    ``title``, ``url`` and ``country`` name the keys holding the listing metadata.
+    Every other keyword maps a PARAMS field to the key holding its value, so
+    ``key="service_id"`` means "the ``key`` param comes from the ``service_id``
+    key". ``expand`` names a list-valued key that fans one entry out into a Region
+    per element, for a provider serving several municipalities under one id; the
+    element becomes each Region's title. ``title_suffix`` names a key whose value
+    is then appended in parentheses, so a group of municipalities reached through
+    one branded app is labelled once in the data rather than repeated per member.
+
+    **Build-time only.** A HACS install ships ``custom_components/`` and not the
+    repo's ``doc/`` tree, so a missing directory yields ``[]`` rather than an
+    error, exactly as the ICS YAML listing does. That is safe because ``REGIONS``
+    drives the generated README / ``sources.json`` listings, which the config flow
+    then reads from JSON. A registry the source needs at *runtime* must not live
+    here.
+    """
+
+    def load() -> list[Region]:
+        path = _registry_path(name)
+        if not path.is_file():
+            return []
+
+        import yaml
+
+        with open(path, encoding="utf-8") as stream:
+            entries = yaml.safe_load(stream) or []
+
+        out: list[Region] = []
+        for entry in entries:
+            params = {
+                field: entry[key] for field, key in param_fields.items() if key in entry
+            }
+            shared = {
+                "url": entry.get(url),
+                "country": entry.get(country) if country else None,
+            }
+            suffix = ""
+            if title_suffix and entry.get(title_suffix):
+                suffix = f" ({entry[title_suffix]})"
+            if expand:
+                for element in entry.get(expand, []):
+                    out.append(
+                        Region(title=f"{element}{suffix}", params=params, **shared)
+                    )
+            else:
+                out.append(
+                    Region(title=f"{entry[title]}{suffix}", params=params, **shared)
+                )
+        return out
+
+    return load
 
 
 def from_extra_info(entries: Any) -> list[Region]:

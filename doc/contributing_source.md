@@ -500,7 +500,26 @@ On a pipeline source the metadata lives on the class:
 | `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
 | `SOURCE_CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
-| `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. See `mulhouse_alsace_fr.py`. |
+| `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. Inline for a handful (see `mulhouse_alsace_fr.py`); `regions.from_yaml(...)` for a registry (see below, and `abfall_io.py`). |
+
+**A provider registry is data, not code.** A platform covering dozens of providers keeps them in `doc/regions/<source>.yaml`, loaded by `regions.from_yaml()`, so adding a provider is a change to one data file:
+
+```python
+REGIONS = regions.from_yaml("abfall_io", key="service_id")
+```
+
+```yaml
+# doc/regions/abfall_io.yaml
+- title: EGST Steinfurt
+  url: https://www.egst.de/
+  service_id: e21758b9c711463552fb9c70ac7d4273
+```
+
+`title`, `url` and `country` name the keys holding the listing metadata; every other keyword maps a `PARAMS` field to the key holding its value, so `key="service_id"` means "the `key` param comes from the `service_id` key". `expand="cities"` fans one entry out into a Region per element, for a provider serving several municipalities under one id, and `title_suffix="comment"` then appends that key's value in parentheses so a branded group is labelled once in the data rather than per member (see `jumomind_de.py`).
+
+`test_pipeline_sources_keep_registries_as_data` rejects a registry left in Python, so the dict-to-Region comprehension is not written a sixth time.
+
+**Only a build-time registry can move.** `from_yaml()` reads `doc/`, which a HACS install does not ship, so it yields `[]` at runtime. That is safe for `REGIONS`, which drives the generated listings that the config flow then reads back from JSON. A registry the source needs *while fetching* must stay in Python: `insert_it_de` and `cmcitymedia_de` are the two, and they are named in the gate's allowlist with the reason.
 | `EXTRA_INFO` | list or callable | **Legacy sources only. A pipeline source must not declare it**, and `test_pipeline_sources_do_not_use_extra_info` rejects one that does. It is the older dict form of `REGIONS` (`title`, `url`, `country`, `default_params`), whose params are not validated against `PARAMS`; `regions.from_extra_info()` adapts it into `Region`s at a single boundary purely so the rest of the toolchain works in `Region` terms only. The adapter is a bridge for the legacy sources still using it, and is deleted with the last of them (see [`legacy_deprecation_plan.md`](legacy_deprecation_plan.md)). |
 
 `WASTE_TYPES` is derived automatically from the transformer, so you do not declare it unless you use `classify()` (then list the types your source can produce).
