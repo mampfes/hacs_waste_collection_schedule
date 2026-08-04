@@ -10,12 +10,16 @@ waste_collection_schedule:
     - name: was_wolfsburg_de
       args:
         street: STREET
+        number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
 *(string) (required)*
+
+**number**  
+*(integer) (required)*
 
 ## Example
 
@@ -25,10 +29,12 @@ waste_collection_schedule:
     - name: was_wolfsburg_de
       args:
         street: Bahnhofspassage
+        number: 1
 ```
 
 ## How to get the source arguments
 
 | Argument | Description |
 | ----------- | ----------- |
-| street | Full street name as shown in the `Restabfall/Bioabfall/Altpapier` web page. (can be left out if you ONLY want to fetch `Gelber Sack`) |
+| street | Full street name as shown in the WAS web app. |
+| number | House number as shown in the WAS web app. |
