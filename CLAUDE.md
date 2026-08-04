@@ -110,7 +110,18 @@ Both styles need this metadata (on the class for pipeline sources, at module lev
 
 Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`), but no `__init__`. Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
 
-**Cassette rule (enforced).** Every pipeline source ships a recorded cassette under `tests/fixtures/<module>/`, so CI replays it offline instead of calling live providers. Record with `python tests/record_fixtures.py <module>` and commit the JSON. `tests/test_new_architecture.py::test_pipeline_sources_ship_a_cassette` enforces it. A shared-service source keeps one cassette per distinct response shape.
+**Cassette rule (enforced).** Every pipeline source ships a recorded cassette under `tests/fixtures/<module>/`, **one per `TEST_CASES` entry**, named by slugging the case key (`"Amagerbrogade 10"` → `amagerbrogade_10.json`). CI replays them offline instead of calling live providers. Record with `python tests/record_fixtures.py <module>` and commit the JSON.
+
+`TEST_CASES` and the cassettes are two halves of one test: the case declares the *inputs*, the cassette holds the *recorded provider responses* for those inputs, and the slug is the only link between them. Four gates in `tests/test_new_architecture.py` keep them in step:
+
+| gate | what it catches |
+|---|---|
+| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`) |
+| `test_every_test_case_ships_a_cassette` | a *case* with no recording, in a source that has others (backlog: `CASES_AWAITING_CASSETTE`) |
+| `test_the_cassette_backlog_is_not_stale` / `..._source_cassette_backlog_is_not_stale` | a backlog entry that has since been recorded |
+| `test_no_cassettes_without_a_source` | recordings left behind by a deleted source |
+
+Both backlogs are debt registers, not exemptions: record the case and delete its line. Note an *empty* fixture directory is untracked local debris (git cannot store an empty directory) and does not count as a recording, which is what let the per-source backlog go stale. A shared-service source keeps one cassette per distinct response shape.
 
 **Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails on any source that declares its own `Retriever` or `Parser` subclass, with a narrow allowlist for genuinely single-consumer cases. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
 
