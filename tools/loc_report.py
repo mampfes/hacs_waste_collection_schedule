@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import ast
 import io
+import re
 import subprocess
 import sys
 import token as token_module
@@ -197,10 +198,60 @@ def classify(source: str) -> Counts:
     return counts
 
 
-# A pipeline source declares its steps on a BaseSource subclass; a legacy one
-# is a plain class with a hand-written fetch(). The text is the signal, so this
-# works on any ref without importing anything.
-PIPELINE_MARKER = "class Source(BaseSource)"
+# A pipeline source declares its steps on a BaseSource subclass; a legacy one is
+# a plain class with a hand-written fetch(). Read from the text so any ref can be
+# measured without importing, but follow the base class rather than matching
+# ``class Source(BaseSource)`` literally: a handful of sources subclass *another
+# source*, and three of those reach BaseSource that way (offenbach_de via
+# insert_it_de, rh_entsorgung_de via jumomind_de, stadt_kerpen_de via abfall_io).
+# Matching the literal text counted those as legacy and understated the
+# migration. Seven others also subclass another source but inherit from a legacy
+# parent, so following the chain keeps excluding them, correctly.
+_CLASS_SOURCE_RE = re.compile(r"^class Source\(\s*([A-Za-z_][\w.]*)", re.MULTILINE)
+
+
+def _source_base(text: str) -> str | None:
+    """The base class name of this module's ``Source``, or None if it has none."""
+    match = _CLASS_SOURCE_RE.search(text)
+    return match.group(1) if match else None
+
+
+def _base_module(text: str, base: str) -> str | None:
+    """The source module a base class name was imported from, if it was.
+
+    Handles both the absolute and the relative import spellings the sources use::
+
+        from waste_collection_schedule.source.jumomind_de import Source as JumomindSource
+        from .edpevent_se import Source as EdpEventSource
+    """
+    pattern = (
+        r"from\s+(?:waste_collection_schedule\.source\.|\.)([a-z0-9_]+)\s+import\s+"
+        r"(?:\(\s*)?Source\s+as\s+" + re.escape(base)
+    )
+    match = re.search(pattern, text)
+    return match.group(1) if match else None
+
+
+def is_pipeline_source(text: str, sources: dict[str, str]) -> bool:
+    """Does this module's ``Source`` reach ``BaseSource`` through its bases?
+
+    ``sources`` maps module stem to file text, so a base that is another source
+    can be followed. A base imported from anywhere else (a ``service`` module,
+    say) is not followed: ``RiSKommunalSource`` is a plain class, so a source
+    subclassing it is legacy.
+    """
+    seen: set[str] = set()
+    while True:
+        base = _source_base(text)
+        if base is None:
+            return False
+        if base == "BaseSource":
+            return True
+        stem = _base_module(text, base)
+        if stem is None or stem in seen or stem not in sources:
+            return False
+        seen.add(stem)
+        text = sources[stem]
 
 
 def _is_source(path: str) -> bool:
@@ -212,12 +263,23 @@ def report_migrated(before_ref: str, after_ref: str) -> None:
     before_reader, after_reader = BlobReader(before_ref), BlobReader(after_ref)
     try:
         before_paths = {p for p in _list_python_files(before_ref) if _is_source(p)}
+        after_paths = [p for p in _list_python_files(after_ref) if _is_source(p)]
+
+        # Read every source on the "after" ref first: resolving whether a source
+        # is on the pipeline may have to follow its base class into another
+        # module, so the whole set has to be in hand before deciding any of them.
+        after_texts: dict[str, str] = {}
+        for path in after_paths:
+            text = after_reader.read(path)
+            if text is not None:
+                after_texts[path] = text
+        by_stem = {Path(p).stem: t for p, t in after_texts.items()}
+
         rows: list[tuple[str, Counts, Counts]] = []
-        for path in _list_python_files(after_ref):
-            if not _is_source(path) or path not in before_paths:
+        for path, after_source in after_texts.items():
+            if path not in before_paths:
                 continue
-            after_source = after_reader.read(path)
-            if after_source is None or PIPELINE_MARKER not in after_source:
+            if not is_pipeline_source(after_source, by_stem):
                 continue
             before_source = before_reader.read(path)
             if before_source is None:
