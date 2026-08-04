@@ -90,9 +90,7 @@ class Source:
 
     @staticmethod
     def _submit_control(form) -> tuple[str, str]:
-        control = form.find(
-            "input", {"type": "submit", "name": True, "value": True}
-        )
+        control = form.find("input", {"type": "submit", "name": True, "value": True})
         if not control:
             raise ValueError("Swale lookup form is missing its submit control.")
         return control["name"], control["value"]
@@ -155,7 +153,9 @@ class Source:
         self._raise_for_unexpected_page(soup, "postcode")
         form = self._lookup_form(soup)
         if not form:
-            raise ValueError("Swale postcode submission did not return an address form.")
+            raise ValueError(
+                "Swale postcode submission did not return an address form."
+            )
 
         payload = self._hidden_data(soup)
         payload[self._field_name(form, "address", "select")] = self._uprn
