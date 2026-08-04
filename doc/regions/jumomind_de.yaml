@@ -1,132 +1,133 @@
+---
 # Provider registry for the jumomind_de platform.
 #
 # Each entry becomes its own listing in README.md / sources.json, with its
 # params pre-filled, via regions.from_yaml() in source/jumomind_de.py. Adding a
 # provider is a change to this file alone.
-- service_id: zaw
-  url: https://www.zaw-online.de
-  cities:
-    - Darmstadt-Dieburg (ZAW)
-- service_id: aoe
-  url: https://www.lra-aoe.de
-  cities:
-    - Altötting (LK)
-- service_id: lka
-  url: https://mkw-grossefehn.de
-  cities:
-    - Aurich (MKW)
-- service_id: hom
-  url: https://www.bad-homburg.de
-  cities:
-    - Bad Homburg vdH
-- service_id: bdg
-  url: https://www.kreiswerke-barnim.de/
-  cities:
-    - Barnim
-- service_id: hat
-  url: https://www.hattersheim.de
-  cities:
-    - Hattersheim am Main
-- service_id: ingol
-  url: https://www.in-kb.de
-  cities:
-    - Ingolstadt
-- service_id: lue
-  url: https://www.luebbecke.de
-  comment: Jumomind
-  cities:
-    - Lübbecke
-- service_id: sbm
-  url: https://www.minden.de/
-  cities:
-    - Minden
-- service_id: ksr
-  url: https://www.zbh-ksr.de
-  cities:
-    - Recklinghausen
-- service_id: rhe
-  url: https://www.rh-entsorgung.de/
-  comment: Jumomind
-  cities:
-    - Rhein-Hunsrück
-- service_id: udg
-  url: https://www.udg-uckermark.de/
-  cities:
-    - Uckermark
-- service_id: mymuell
-  url: https://www.mymuell.de/
-  comment: MyMuell App
-  cities:
-    - Bad Arolsen
-    - Beverungen
-    - Darmstadt
-    - Esens
-    - Flensburg
-    - Gelnhausen
-    - Glashütten
-    - Grävenwiesbach
-    - Großkrotzenburg
-    - Hainburg
-    - Holtgast
-    - Kamp-Lintfort
-    - Kirchdorf
-    - Landkreis Aschaffenburg
-    - Landkreis Biberach
-    - Landkreis Eichstätt
-    - Landkreis Friesland
-    - Landkreis Leer
-    - Landkreis Mettmann
-    - Landkreis Paderborn
-    - Landkreis Wittmund
-    - Main-Kinzig-Kreis
-    - Mühlheim am Main
-    - Nenndorf
-    - Neumünster
-    - Salzgitter
-    - Schmitten im Taunus
-    - Schöneck
-    - Seligenstadt
-    - Senden
-    - Ulm
-    - Usingen
-    - Volkmarsen
-    - Vöhringen
-    - Wegberg
-    - Westerholt
-    - Wilhelmshaven
-- service_id: esn
-  url: https://www.neustadt.eu/
-  cities:
-    - Neustadt an der Weinstraße
-- service_id: zac
-  url: https://www.zacelle.de/
-  cities:
-    - Celle
-- service_id: ben
-  url: https://awb.grafschaft-bentheim.de/
-  cities:
-    - Landkreis Grafschaft
-- service_id: enwi
-  url: https://www.enwi-hz.de/
-  cities:
-    - Landkreis Harz
-- service_id: hox
-  url: https://abfallservice.kreis-hoexter.de/
-  cities:
-    - Höxter
-- service_id: kbl
-  url: https://www.kbl-langen.de/
-  cities:
-    - Langen
-- service_id: ros
-  url: https://www.rosbach-hessen.de/
-  cities:
-    - Rosbach Vor Der Höhe
-- service_id: mkk
-  url: https://abfall-mkk.de/
-  cities:
-    - Main-Kinzig-Kreis
-- service_id: wol
-  url: https://www.alw-wf.de
-  cities:
-    - ALW Wolfenbüttel
+  - service_id: zaw
+    url: https://www.zaw-online.de
+    cities:
+      - Darmstadt-Dieburg (ZAW)
+  - service_id: aoe
+    url: https://www.lra-aoe.de
+    cities:
+      - Altötting (LK)
+  - service_id: lka
+    url: https://mkw-grossefehn.de
+    cities:
+      - Aurich (MKW)
+  - service_id: hom
+    url: https://www.bad-homburg.de
+    cities:
+      - Bad Homburg vdH
+  - service_id: bdg
+    url: https://www.kreiswerke-barnim.de/
+    cities:
+      - Barnim
+  - service_id: hat
+    url: https://www.hattersheim.de
+    cities:
+      - Hattersheim am Main
+  - service_id: ingol
+    url: https://www.in-kb.de
+    cities:
+      - Ingolstadt
+  - service_id: lue
+    url: https://www.luebbecke.de
+    comment: Jumomind
+    cities:
+      - Lübbecke
+  - service_id: sbm
+    url: https://www.minden.de/
+    cities:
+      - Minden
+  - service_id: ksr
+    url: https://www.zbh-ksr.de
+    cities:
+      - Recklinghausen
+  - service_id: rhe
+    url: https://www.rh-entsorgung.de/
+    comment: Jumomind
+    cities:
+      - Rhein-Hunsrück
+  - service_id: udg
+    url: https://www.udg-uckermark.de/
+    cities:
+      - Uckermark
+  - service_id: mymuell
+    url: https://www.mymuell.de/
+    comment: MyMuell App
+    cities:
+      - Bad Arolsen
+      - Beverungen
+      - Darmstadt
+      - Esens
+      - Flensburg
+      - Gelnhausen
+      - Glashütten
+      - Grävenwiesbach
+      - Großkrotzenburg
+      - Hainburg
+      - Holtgast
+      - Kamp-Lintfort
+      - Kirchdorf
+      - Landkreis Aschaffenburg
+      - Landkreis Biberach
+      - Landkreis Eichstätt
+      - Landkreis Friesland
+      - Landkreis Leer
+      - Landkreis Mettmann
+      - Landkreis Paderborn
+      - Landkreis Wittmund
+      - Main-Kinzig-Kreis
+      - Mühlheim am Main
+      - Nenndorf
+      - Neumünster
+      - Salzgitter
+      - Schmitten im Taunus
+      - Schöneck
+      - Seligenstadt
+      - Senden
+      - Ulm
+      - Usingen
+      - Volkmarsen
+      - Vöhringen
+      - Wegberg
+      - Westerholt
+      - Wilhelmshaven
+  - service_id: esn
+    url: https://www.neustadt.eu/
+    cities:
+      - Neustadt an der Weinstraße
+  - service_id: zac
+    url: https://www.zacelle.de/
+    cities:
+      - Celle
+  - service_id: ben
+    url: https://awb.grafschaft-bentheim.de/
+    cities:
+      - Landkreis Grafschaft
+  - service_id: enwi
+    url: https://www.enwi-hz.de/
+    cities:
+      - Landkreis Harz
+  - service_id: hox
+    url: https://abfallservice.kreis-hoexter.de/
+    cities:
+      - Höxter
+  - service_id: kbl
+    url: https://www.kbl-langen.de/
+    cities:
+      - Langen
+  - service_id: ros
+    url: https://www.rosbach-hessen.de/
+    cities:
+      - Rosbach Vor Der Höhe
+  - service_id: mkk
+    url: https://abfall-mkk.de/
+    cities:
+      - Main-Kinzig-Kreis
+  - service_id: wol
+    url: https://www.alw-wf.de
+    cities:
+      - ALW Wolfenbüttel
