@@ -1,6 +1,8 @@
 import logging
+import re
 from datetime import date, datetime, timedelta
 from time import sleep
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -12,7 +14,7 @@ TITLE = "Swale Borough Council"
 DESCRIPTION = "Source for swale.gov.uk services for Swale, UK."
 URL = "https://swale.gov.uk"
 API_URL = (
-    "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
+    "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day"
 )
 ICON_MAP = {
     "Refuse": Icons.GENERAL_WASTE,
@@ -56,36 +58,117 @@ class Source:
             dt = dt.replace(year=dt.year + 1)
         return dt
 
+    @staticmethod
+    def _lookup_form(soup: BeautifulSoup):
+        """Return the council lookup form without depending on its numeric ID."""
+        for form in soup.find_all("form"):
+            if form.find("input", {"name": re.compile(r"^SQ_FORM_\d+_PAGE$")}):
+                return form
+        return None
+
+    @staticmethod
+    def _field_name(form, label_text: str, fallback_tag: str | None = None) -> str:
+        label = next(
+            (
+                item
+                for item in form.find_all("label")
+                if label_text in item.get_text(" ", strip=True).lower()
+            ),
+            None,
+        )
+        if label and (field_id := label.get("for")):
+            field = form.find(id=field_id)
+            if field and field.get("name"):
+                return field["name"]
+
+        if fallback_tag:
+            for field in form.find_all(fallback_tag, {"name": True}):
+                if field.get("type") not in {"hidden", "submit"}:
+                    return field["name"]
+
+        raise ValueError(f"Swale lookup form is missing its {label_text} control.")
+
+    @staticmethod
+    def _submit_control(form) -> tuple[str, str]:
+        control = form.find(
+            "input", {"type": "submit", "name": True, "value": True}
+        )
+        if not control:
+            raise ValueError("Swale lookup form is missing its submit control.")
+        return control["name"], control["value"]
+
+    @staticmethod
+    def _hidden_data(soup: BeautifulSoup) -> dict[str, str]:
+        # Squiz currently places its token outside the form, so collect page state.
+        return {
+            field["name"]: field.get("value", "")
+            for field in soup.select('input[type="hidden"][name]')
+        }
+
+    @staticmethod
+    def _raise_for_unexpected_page(soup: BeautifulSoup, stage: str) -> None:
+        title = soup.title.get_text(" ", strip=True).lower() if soup.title else ""
+        content = soup.get_text(" ", strip=True).lower()
+        if "just a moment" in title or "challenges.cloudflare.com" in content:
+            raise ValueError("Swale lookup was blocked by a Cloudflare challenge.")
+
+        errors = soup.select(
+            ".sq-form-error, .sq-form-error-message, .validation-error, "
+            ".alert-danger, [role='alert']"
+        )
+        if errors:
+            raise ValueError(f"Swale {stage} submission returned a validation error.")
+
+    @staticmethod
+    def _submit(session, response, form, payload: dict[str, str]):
+        method = form.get("method", "get").lower()
+        request = getattr(session, method, None)
+        if request is None:
+            raise ValueError(f"Swale lookup form uses unsupported method {method!r}.")
+
+        action = urljoin(response.url, form.get("action") or response.url)
+        if method == "get":
+            return request(action, params=payload)
+        return request(action, data=payload)
+
     def fetch(self) -> list[Collection]:
         s = requests.Session(impersonate="chrome")
 
-        # mimic postcode search
-        payload: dict = {
-            "SQ_FORM_535662_PAGE": "1",
-            "form_email_535662_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q535679:q1": self._postcode,
-            "form_email_535662_submit": "Choose Your Address &#10140;",
-        }
-        r = s.post(
-            "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            data=payload,
-        )
+        # Load the form first so its token, cookies, and current field names are used.
+        r = s.get(API_URL)
+        r.raise_for_status()
+        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "initial")
+        form = self._lookup_form(soup)
+        if not form:
+            raise ValueError("Swale lookup page did not contain an input form.")
+
+        payload = self._hidden_data(soup)
+        payload[self._field_name(form, "postcode", "input")] = self._postcode
+        submit_name, submit_value = self._submit_control(form)
+        payload[submit_name] = submit_value
+        r = self._submit(s, r, form, payload)
         r.raise_for_status()
         sleep(5)
 
-        # mimic address selection
-        payload = {
-            "SQ_FORM_535662_PAGE": "2",
-            "form_email_535662_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q535685:q1": self._uprn,
-            "form_email_535662_submit": "Get Bin Days &#10140;",
-        }
-        r = s.post(
-            "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            data=payload,
-        )
+        soup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "postcode")
+        form = self._lookup_form(soup)
+        if not form:
+            raise ValueError("Swale postcode submission did not return an address form.")
+
+        payload = self._hidden_data(soup)
+        payload[self._field_name(form, "address", "select")] = self._uprn
+        submit_name, submit_value = self._submit_control(form)
+        payload[submit_name] = submit_value
+        r = self._submit(s, r, form, payload)
         r.raise_for_status()
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "UPRN")
+        if self._lookup_form(soup):
+            raise ValueError(
+                "Swale UPRN submission returned an input form instead of results."
+            )
         temp_list: list = []
 
         # Get details of next collection
