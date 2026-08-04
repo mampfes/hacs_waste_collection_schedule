@@ -57,7 +57,7 @@ class Source:
                 .find_next("mark")
                 .next_sibling.strip()
             )
-            next_collection = datetime.strptime(date_string, "%m/%d/%Y").date()
+            next_collection = datetime.strptime(date_string, "%d/%m/%Y").date()
 
             entries.append(
                 Collection(
