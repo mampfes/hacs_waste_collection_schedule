@@ -176,7 +176,8 @@ If a PR diff touches any of the above, revert with `git checkout upstream/master
 - `custom_components/waste_collection_schedule/waste_collection_schedule/source/*.py` (source modules).
 - `doc/source/<id>.md`: for **legacy** sources, **must be created manually** (the update script reads but does not create these). For **pipeline** (`BaseSource`) sources, `doc_generator.py` renders this from the class metadata during the post-merge generation run, so do not hand-write it.
 - `doc/source/ics.md`, `doc/source/static.md` — manually maintained (blacklisted from generation, except for an auto-patched service-table section in each).
-- `doc/ics/yaml/*.yaml` — ICS provider definitions. Each file generates the matching `doc/ics/<name>.md`. When adding a provider, update BOTH the `extra_info` list (for the README/sources.json listing) AND the table inside the `howto.en` string (for the generated `.md`).
+- `doc/ics/yaml/*.yaml`: ICS provider definitions. Each file generates the matching `doc/ics/<name>.md`. One definition may cover several providers: list the others under `regions:` (each becomes its own README / `sources.json` listing, via `ics.REGIONS`). This key was called `extra_info:` until 2026-08, which confusingly named it after the deprecated Python `EXTRA_INFO` attribute it has nothing to do with; `ics.py` still reads the old spelling, but write `regions:`.
+  Some providers also list their per-provider **service endpoints** inside `howto`, which is a different thing from the `regions:` URL and is not generated from it: `regions[].url` is the provider's own website (for the listing), while the howto list gives the URL the user pastes as the `url` parameter. Both need maintaining where both apply.
 - `CHANGELOG.md`, `manifest.json` — manually maintained (release-time only).
 
 ---

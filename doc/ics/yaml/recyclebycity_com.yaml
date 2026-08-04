@@ -16,7 +16,7 @@ test_cases:
   Chicago:
     url: webcal://www.recyclebycity.com/chicago/schedule/e757bdb2b5a35ed18704e444714a93a3/subscribe
 
-extra_info:
+regions:
   - title: City of Flagstaff, AZ
     url: https://www.flagstaff.az.gov
   - title: City of Chicago, IL

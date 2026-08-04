@@ -40,6 +40,35 @@ codeowners:  # Optional — list of @handles who maintain this provider
 | howto | Dictionary[String, String] | Adictionary of `language`: A multi-line string in markdown format which describes the steps to configure the ICS source. |
 | test_cases | Dict | A dictionary with test-cases. The key of an entry represents the name of the test-case which will be displayed during testing. The item contains a dictionary of the source arguments. |
 | codeowners | List of Strings | [Optional] List of GitHub handles (e.g. `["@your-user"]`) who maintain this ICS provider. Each entry must start with `@`. Used by `update_docu_links.py` to generate `.github/source_owners.json`, which routes source-related bug reports to the right maintainer. If you add a new ICS YAML, consider adding your handle here so you are automatically notified of issues. |
+| default_params | Dict | [Optional] Source arguments pre-filled for this provider, so the user does not have to supply them. |
+| regions | List of Dicts | [Optional] Further providers this one definition covers. Each entry takes `title`, and optionally `url`, `country` and `default_params`, defaulting to the file's own values. Every entry becomes its own listing in README.md / `sources.json`, discoverable on its own name, all pointing at this file's generated `doc/ics/<name>.md`. |
+
+### More than one provider in one definition
+
+Many ICS providers run the same software under different subdomains, so one yaml
+covers all of them. List the others under `regions:`:
+
+```yaml
+title: Abfall App
+url: https://www.abfall-app.net
+regions:
+  - title: Landkreis Stendal
+    url: https://www.landkreis-stendal.de/
+  - title: Rhein-Pfalz-Kreis
+    url: https://www.rhein-pfalz-kreis.de/
+```
+
+Two things to know about it:
+
+- `regions[].url` is that provider's **own website**, used so a user searching for
+  their council's URL finds the listing. It is not the URL they configure. If your
+  provider needs a per-provider **endpoint** (a subdomain to paste as the `url`
+  parameter), that goes in the `howto` text, and it is separate information: it is
+  not generated from `regions:` and both need keeping current.
+- The key was called `extra_info:` until 2026-08. That name came from the
+  deprecated Python `EXTRA_INFO` attribute, which is a different mechanism for
+  legacy Python sources and unrelated to this file. The old spelling is still
+  read, so nothing breaks, but write `regions:`.
 
 Example:
 

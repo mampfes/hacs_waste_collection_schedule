@@ -11,7 +11,7 @@ howto:
     - Use this link as the `url` parameter.
     - Replace the year in the URL with `{%Y}` (`...timeperiod=20240101-20241231` -> `...timeperiod={%Y}0101-{%Y}1231`).
 country: de
-extra_info:
+regions:
   - title: Abfallwirtschaft Landkreis Böblingen
     url: https://www.awb-bb.de/
     country: de

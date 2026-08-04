@@ -7,7 +7,7 @@ howto:
     - Click on `Kalender Bo/Download` and copy the URL below `Adresse zum Abonnieren`.
     - Use this link as the `url` parameter.
 country: at
-extra_info:
+regions:
   - title: Vorarlberg
     url: https://abfallv.zerowaste.io
     country: at

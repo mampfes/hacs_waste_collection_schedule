@@ -16,7 +16,7 @@ howto:
     - Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>
     - Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>
     - Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>
-extra_info:
+regions:
   - title: Landkreis Stendal
     url: https://www.landkreis-stendal.de/
     country: de

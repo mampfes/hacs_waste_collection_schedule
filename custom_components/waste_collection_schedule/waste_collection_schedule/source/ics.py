@@ -259,7 +259,7 @@ def _load_ics_yaml_regions() -> "list[Region]":
     Mirrors, region for region, the listing expansion the now doc-generation-
     only update_docu_links.py:browse_ics_yaml() used to perform directly: one
     Region per YAML file, plus one additional Region per each of that file's
-    optional "extra_info" entries, so folding this into ics.REGIONS changes
+    optional ``regions:`` entries, so folding this into ics.REGIONS changes
     nothing about the generated output.
     """
     yaml_dir = Path(__file__).resolve().parents[4] / "doc" / "ics" / "yaml"
@@ -272,41 +272,55 @@ def _load_ics_yaml_regions() -> "list[Region]":
     for f in yaml_dir.glob("*.yaml"):
         with open(f, encoding="utf-8") as stream:
             data = _yaml.safe_load(stream)
+        regions.extend(_regions_from_definition(data, stem=f.stem))
+    return regions
 
-        howto_raw = data["howto"]
-        howto = {"en": howto_raw} if isinstance(howto_raw, str) else howto_raw
 
-        country = data.get("country", f.stem.split("_")[-1])
-        params = data.get("default_params", {})
-        doc_filename = f"/doc/ics/{f.stem}.md"
-        source_owners = _normalize_ics_codeowners(data.get("codeowners", []))
+def _regions_from_definition(data: dict, stem: str = "") -> "list[Region]":
+    """The Regions one ICS yaml definition covers: the file itself, then its own.
 
-        regions.append(
+    ``regions:`` lists the further providers a single definition covers, each
+    becoming its own discoverable listing pointing at this file's generated page.
+
+    That key was called ``extra_info:`` until 2026-08, which named it after the
+    deprecated Python ``EXTRA_INFO`` attribute it has nothing to do with: this key
+    has always fed ``ics.REGIONS``, the current path, while ``EXTRA_INFO`` is the
+    legacy form that ``regions.from_extra_info()`` adapts for legacy Python
+    sources. The old spelling is still read so an in-flight contribution keeps
+    working; ``regions:`` wins if somehow both are present.
+    """
+    howto_raw = data["howto"]
+    howto = {"en": howto_raw} if isinstance(howto_raw, str) else howto_raw
+
+    country = data.get("country", stem.split("_")[-1] if stem else None)
+    params = data.get("default_params", {})
+    doc_filename = f"/doc/ics/{stem}.md" if stem else None
+    source_owners = _normalize_ics_codeowners(data.get("codeowners", []))
+
+    out = [
+        Region(
+            title=data["title"],
+            params=params,
+            url=data["url"],
+            country=country,
+            doc_filename=doc_filename,
+            howto=howto,
+            source_owners=source_owners,
+        )
+    ]
+    for entry in data.get("regions", data.get("extra_info", [])):
+        out.append(
             Region(
-                title=data["title"],
+                title=entry.get("title", data["title"]),
                 params=params,
-                url=data["url"],
-                country=country,
+                url=entry.get("url", data["url"]),
+                country=entry.get("country", country),
                 doc_filename=doc_filename,
                 howto=howto,
                 source_owners=source_owners,
             )
         )
-
-        for e in data.get("extra_info", []):
-            regions.append(
-                Region(
-                    title=e.get("title", data["title"]),
-                    params=params,
-                    url=e.get("url", data["url"]),
-                    country=e.get("country", country),
-                    doc_filename=doc_filename,
-                    howto=howto,
-                    source_owners=source_owners,
-                )
-            )
-
-    return regions
+    return out
 
 
 @final
