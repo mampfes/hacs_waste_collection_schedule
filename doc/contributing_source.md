@@ -578,15 +578,35 @@ the recording date). Commit those. `tests/test_offline_fixtures.py` then replays
 them with the clock frozen to the recording date, so the run is deterministic.
 Re-record when a provider changes its response.
 
-**Minimum fixture coverage (required).** A new or migrated source must ship a
-recorded cassette covering its `TEST_CASES`, so the gating CI exercises it
-offline. A source built on a **shared service** additionally keeps one cassette
-per distinct response shape that service produces (for example an address-lookup
-step plus a schedule step, or a provider variant with a different payload), so
-the whole platform stays covered as sources are added. If a `TEST_CASES` entry
-genuinely cannot be recorded (the provider rate-limits or gates automated
-access from CI), mark it live-only and say so in the PR rather than dropping the
-coverage silently.
+**Minimum fixture coverage (enforced).** One cassette **per `TEST_CASES` entry**,
+named by slugging the case key, so `"Amagerbrogade 10"` becomes
+`amagerbrogade_10.json`. That slug is the only link between a case and its
+recording, which is why the correspondence is gated rather than trusted:
+
+| gate | what it catches |
+|---|---|
+| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`) |
+| `test_every_test_case_ships_a_cassette` | a *case* with no recording, in a source that has others (backlog: `CASES_AWAITING_CASSETTE`) |
+| `test_the_cassette_backlog_is_not_stale` / `..._source_cassette_backlog_is_not_stale` | a backlog entry that has since been recorded |
+| `test_no_cassettes_without_a_source` | recordings left behind by a deleted source |
+
+Both backlogs are debt registers, not exemptions. Record the case, delete its
+line. Before the per-case gate existed, `test_pipeline_sources_ship_a_cassette`
+only asked for *one* recording per source, so a source with eleven cases and one
+cassette passed: `abfall_io_graphql` had seven of eleven unrecorded.
+
+A source built on a **shared service** additionally keeps one cassette per
+distinct response shape that service produces (for example an address-lookup step
+plus a schedule step, or a provider variant with a different payload), so the
+whole platform stays covered as sources are added. If a `TEST_CASES` entry
+genuinely cannot be recorded (the provider rate-limits or gates automated access
+from CI), add it to `CASES_AWAITING_CASSETTE` with the reason in the PR rather
+than dropping the coverage silently.
+
+An **empty** `tests/fixtures/<module>/` directory is not a recording: git cannot
+store an empty directory, so one on your machine is local debris from an
+interrupted run. That is what let the per-source backlog go stale, since an empty
+directory reads as a recorded source until you list it.
 
 For JSON sources, also declare the response shape and pass it to the parser
 (`parse = parsers.JsonParser(shape=MyResponse)`). A `TypedDict`/`list[...]`

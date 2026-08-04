@@ -5230,3 +5230,183 @@ class TestRegionsFromYaml:
         """A missing optional key must not become a None param."""
         mod = self._registry(tmp_path, monkeypatch, "plat", "- title: A\n  url: u\n")
         assert mod.from_yaml("plat", key="service_id")()[0].params == {}
+
+
+# --------------------------------------------------------------------------- #
+# Per-case cassette gate
+#
+# test_pipeline_sources_ship_a_cassette checks per *source*: the directory exists
+# and holds at least one recording. So a source with eleven TEST_CASES and one
+# cassette passes, and ten declared inputs go unexercised. abfall_io_graphql had
+# seven of eleven unrecorded, ics five of nine, app_abfallplus_de four of ten.
+#
+# The two halves of a test live apart (inputs in the source module, recordings
+# under tests/fixtures/) and only one of them was checked, so the divergence was
+# invisible. Co-locating them was considered and rejected: tests/fixtures is
+# 220 MB against a 31 MB shipped custom_components/, and hacs.json has no exclude
+# mechanism, so every HACS user would download an eightfold larger integration.
+# Enforcing the correspondence is the cheaper half of that idea and the stronger
+# one, since adjacency only makes a gap visible to whoever looks.
+#
+# The names below are a backlog, recorded as it stood when the gate went in, not
+# an exemption. Record one with:
+#
+#     python tests/record_fixtures.py <module>
+#
+# and delete its line. Do not add to this list to make a new case pass. A source
+# with no recording at all belongs in SOURCES_AWAITING_CASSETTE instead.
+# --------------------------------------------------------------------------- #
+
+CASES_AWAITING_CASSETTE = {
+    "1coast_com_au::56_everglades_cr_woy_woy_central_coast_2256",
+    "a_region_ch::wolfhalden",
+    "abfall_io_graphql::asg_nordsachsen_delitzsch_beerendorf",
+    "abfall_io_graphql::entsorgungsbetriebe_essen",
+    "abfall_io_graphql::kell_kommunalentsorgung_landkreis_leipzig_gmbh_gro_p_sna",
+    "abfall_io_graphql::landkreis_b_blingen_b_blingen_dagersheim",
+    "abfall_io_graphql::landkreis_g_ttingen_scheden",
+    "abfall_io_graphql::schwarzwald_baar_kreis_k_nigsfeld",
+    "abfall_io_graphql::wirtschaftsbetriebe_duisburg_wbd_buchholz_altenbrucher_damm_8",
+    "abfallnavi_de::nds_norderstedt_friedrichsgaber_weg_house_number_range_as_street",
+    "abfallnavi_de::solingen_katternberger_stra_e_95_street_split_by_district",
+    "aha_region_de::hannover_voltastr_vahrenwald_25",
+    "api_hubert_schmid_de::albatsried_seeg",
+    "api_hubert_schmid_de::nesselwang_attlesee",
+    "app_abfallplus_de::de_k4systems_abfallappnf_ahrenvi_l_alle_stra_en",
+    "app_abfallplus_de::de_k4systems_abfallappwug_bergen_hauptstr_1",
+    "app_abfallplus_de::de_k4systems_bonnorange_auf_dem_h_gel",
+    "app_abfallplus_de::de_k4systems_leipziglk_brandis_brandis",
+    "awb_emsland_de::andervenne_am_gallenberg",
+    "c_trace_de::roth",
+    "cheshire_west_and_chester_gov_uk::knutsford_no_results",
+    "ecoharmonogram_pl::ukrainian_language",
+    "ics::abfall_zollernalbkreis_ebingen",
+    "ics::esslingen_bahnhof",
+    "ics::m_nchen_bahnstr_11",
+    "ics::test_file",
+    "ics::utf_8_sig_utf_8_with_bom",
+    "jumomind_de::mymuell_senden_birkenweg",
+    "junker_app::san_giovanni_teatino_zona_a",
+    "junker_app::scalea",
+    "junker_app::unione_dei_comuni_di_valmalenco_boroneddu",
+    "nemaffaldsservice_kk_dk::r_dhuspladsen_1",
+    "oberndorf_schwanenstadt_at::bergstra_e_5",
+    "wellington_govt_nz::chelsea_st",
+}
+
+
+def _unrecorded_cases(stem: str, cls: type) -> list[str]:
+    """TEST_CASES of a source that has recordings, but not for these cases."""
+    import re
+    from pathlib import Path
+
+    fixture_dir = Path(__file__).resolve().parent / "fixtures" / stem
+    if not fixture_dir.is_dir():
+        return []  # no recordings at all: SOURCES_AWAITING_CASSETTE's business
+    recorded = {
+        path.stem
+        for path in fixture_dir.glob("*.json")
+        if not path.name.startswith("_")
+    }
+    if not recorded:
+        return []
+    cases = {
+        re.sub(r"[^a-z0-9]+", "_", key.lower()).strip("_")
+        for key in (getattr(cls, "TEST_CASES", {}) or {})
+    }
+    return sorted(cases - recorded)
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem,cls", _NEW_STYLE_SOURCES, ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_every_test_case_ships_a_cassette(stem: str, cls: type) -> None:
+    """Every declared TEST_CASE must be exercised offline, not just one per source."""
+    missing = [
+        case
+        for case in _unrecorded_cases(stem, cls)
+        if f"{stem}::{case}" not in CASES_AWAITING_CASSETTE
+    ]
+    assert not missing, (
+        f"{stem} declares test case(s) {missing} with no cassette, while other "
+        f"cases of the same source are recorded. Record them with "
+        f"`python tests/record_fixtures.py {stem}` and commit the JSON, so the "
+        "input is actually exercised rather than only declared."
+    )
+
+
+def test_the_cassette_backlog_is_not_stale() -> None:
+    """A case that has since been recorded must leave the backlog, or the list rots.
+
+    SOURCES_AWAITING_CASSETTE went stale in a way that took real digging to see: 14
+    of its 18 entries had an empty fixture directory, which reads as a recorded
+    source at a glance. This keeps the per-case list honest instead.
+    """
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    stale = []
+    for entry in sorted(CASES_AWAITING_CASSETTE):
+        stem, case = entry.split("::", 1)
+        if (fixtures / stem / f"{case}.json").is_file():
+            stale.append(entry)
+    assert not stale, (
+        f"{stale} now have cassettes. Delete them from CASES_AWAITING_CASSETTE so "
+        "the backlog reflects what is actually outstanding."
+    )
+
+
+def test_no_cassettes_without_a_source() -> None:
+    """A recorded cassette must belong to a source that still exists.
+
+    Keyed off directories that actually hold a recording, not any directory: an
+    empty fixture directory is untracked local debris (git cannot store one), so
+    matching on those would fail locally and pass in CI.
+    """
+    import importlib
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    orphans = []
+    for directory in sorted(p for p in fixtures.iterdir() if p.is_dir()):
+        if not any(directory.glob("*.json")):
+            continue
+        try:
+            importlib.import_module(
+                f"waste_collection_schedule.source.{directory.name}"
+            )
+        except ModuleNotFoundError:
+            orphans.append(directory.name)
+        except Exception:
+            pass  # imports for another reason; other tests cover that
+    assert not orphans, (
+        f"{orphans} have recorded cassettes but no source module. Delete the "
+        "fixture directory along with the source, or the recordings outlive what "
+        "they were recording."
+    )
+
+
+def test_the_source_cassette_backlog_is_not_stale() -> None:
+    """A source that has since been recorded must leave SOURCES_AWAITING_CASSETTE.
+
+    The per-source list had gone stale in a way that is easy to misread: 14 of its
+    18 entries had an *empty* fixture directory, which looks like a recorded source
+    until you list it. Checking for an actual recording rather than a directory is
+    the difference.
+    """
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    recorded = sorted(
+        stem
+        for stem in SOURCES_AWAITING_CASSETTE
+        if any((fixtures / stem).glob("*.json"))
+    )
+    assert not recorded, (
+        f"{recorded} now ship a cassette. Delete them from "
+        "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
+    )
