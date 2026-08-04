@@ -253,7 +253,9 @@ Available factories: `municipality`, `city`, `district`, `street`, `house_number
 
 **Do not hand-write a label a term already defines.** `text_field("city", "City")` throws away a label that exists in five languages and loses the concept's normalisation, so `test_pipeline_sources_bind_standard_field_terms` rejects any `text_field` whose label matches a standard term's. Use the factory (`city()`, `street_address()`, …), or `text_field(name, term=TERM)` when the wire name is odd but the concept is standard. This rule is enforced because it was invisible for a long time: the `ADDRESS` term had all five languages while 47 sources hand-wrote "Street Address" in English, and exactly one had found `term=ADDRESS`.
 
-To add a concept, add a `FieldTerm` to `field_terms.py` (all languages) and a thin factory in `config_params.py`; don't reach for a per-source `PARAM_TRANSLATIONS` block. Legacy sources still use `default_translations.py` (field-name keyed) and `PARAM_TRANSLATIONS`; the pipeline runs off `field_terms.py`.
+To add a concept, add a `FieldTerm` to `field_terms.py` (all languages) and a thin factory in `config_params.py`. **Never reach for a per-source `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` block**: those are read from legacy sources only, which need them because they have no `PARAMS` to hang labels on, and `test_pipeline_sources_do_not_use_legacy_translations` rejects a pipeline source that declares one. They and `default_translations.py` (field-name keyed) go with the last legacy source; the pipeline runs off `field_terms.py`.
+
+**Declare a default in `PARAMS`, never in a signature.** `text_field(..., default=...)`, `api_key(..., default=...)` and `dropdown(..., default=...)` all take one, and `text_field(name, term=TERM, default=...)` keeps the localised label while adding a default to a standard concept. A default makes the field optional and is applied before validation, so `PARAMS` stays the one place the form, the docs and the runtime all read.
 
 **Normalisation belongs to the concept.** A `FieldTerm` may declare `coerce=`, applied to a non-None value after defaults and before validation, so every source binding that term gets it: `UPRN`, `HOUSE_NUMBER` and `ADDRESS` carry `as_text` (a stripped string), because YAML types an unquoted UPRN or house number as an int and a pasted address keeps its whitespace. That is why a source does not write `str(uprn).strip()` in an `__init__`: 27 of them did before it moved to the term. For a normalisation that really is specific to one provider (zero-padding a reference, upper-casing a code), pass `coerce=` to `text_field`; if you find yourself repeating it across providers, it belongs on the term.
 
@@ -387,8 +389,8 @@ Then the pipeline retriever delegates to the raw entry point and returns the res
 ```python
 class SiteparkIESRetriever(RetrieverFunc):
     def __call__(self, source):
-        client = SiteparkIES(self._base_url, refid=self._refid, ...)
-        pois = client.get_pois(strasse=source.params.get(self._strasse), ...)
+        client = SiteparkIES(self._base_url, refid=self._refid)
+        pois = client.get_pois(strasse=source.params.get(self._strasse))
         return client.fetch_ics_response(pois)   # raw response; IcsParser converts it
 ```
 

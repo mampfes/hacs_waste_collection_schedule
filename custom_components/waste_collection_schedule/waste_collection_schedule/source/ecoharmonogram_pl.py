@@ -5,12 +5,11 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
-    district,
     dropdown,
     house_number,
-    street,
     text_field,
 )
+from waste_collection_schedule.field_terms import DISTRICT, STREET
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.EcoHarmonogramPL import (
     SUPPORTED_APPS,
@@ -255,22 +254,18 @@ class Source(BaseSource):
 
     PARAMS = (
         city("town"),
-        street("street", optional=True),
+        text_field("street", term=STREET, default=""),
         house_number("house_number"),
-        district("district", optional=True),
-        text_field(
-            "additional_sides_matcher", "Additional Sides Matcher", optional=True
-        ),
-        text_field("community", "Community", optional=True),
+        text_field("district", term=DISTRICT, default=""),
+        text_field("additional_sides_matcher", "Additional Sides Matcher", default=""),
+        text_field("community", "Community", default=""),
         dropdown("app", [a for a in SUPPORTED_APPS if a], label="App", optional=True),
-        dropdown(
-            "language", list(SUPPORTED_LANGUAGES), label="Language", optional=True
-        ),
-        text_field("g1", "Group 1", optional=True),
-        text_field("g2", "Group 2", optional=True),
-        text_field("g3", "Group 3", optional=True),
-        text_field("g4", "Group 4", optional=True),
-        text_field("g5", "Group 5", optional=True),
+        dropdown("language", list(SUPPORTED_LANGUAGES), label="Language", default="pl"),
+        text_field("g1", "Group 1", default=""),
+        text_field("g2", "Group 2", default=""),
+        text_field("g3", "Group 3", default=""),
+        text_field("g4", "Group 4", default=""),
+        text_field("g5", "Group 5", default=""),
     )
 
     # The transformer resolves a per-provider, frequency-suffixed Polish label
@@ -292,35 +287,3 @@ class Source(BaseSource):
     transform = RowTransformer(
         type_value_map=TYPE_VALUE_MAP, clean=_strip_frequency_suffix
     )
-
-    def __init__(
-        self,
-        town: str,
-        app: "str | None" = None,
-        language: str = "pl",
-        district: str = "",
-        street: str = "",
-        house_number: str = "",
-        additional_sides_matcher: str = "",
-        community: str = "",
-        g1: str = "",
-        g2: str = "",
-        g3: str = "",
-        g4: str = "",
-        g5: str = "",
-    ):
-        super().__init__(
-            town=town,
-            app=app,
-            language=language,
-            district=district,
-            street=street,
-            house_number=house_number,
-            additional_sides_matcher=additional_sides_matcher,
-            community=community,
-            g1=g1,
-            g2=g2,
-            g3=g3,
-            g4=g4,
-            g5=g5,
-        )

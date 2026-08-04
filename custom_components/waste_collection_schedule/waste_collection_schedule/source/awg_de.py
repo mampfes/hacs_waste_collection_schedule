@@ -81,7 +81,7 @@ class Source(BaseSource):
         city(field="city"),
         street(field="street"),
         house_number(field="hnr"),
-        text_field("addition", "Address addition", optional=True),
+        text_field("addition", "Address addition", default=""),
     )
 
     retrieve = AthosWasteManagementRetriever(
@@ -109,12 +109,3 @@ class Source(BaseSource):
             "Papiercontainer": wt.PAPER,
         }
     )
-
-    def __init__(
-        self,
-        city: str,
-        street: str,
-        hnr: "str | int",
-        addition: str = "",
-    ):
-        super().__init__(city=city, street=street, hnr=hnr, addition=addition)
