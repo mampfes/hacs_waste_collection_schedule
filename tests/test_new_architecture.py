@@ -729,6 +729,122 @@ class TestParsers:
             )
 
 
+class TestByBodyPrefix:
+    """Picking the parser from the document the provider actually returned.
+
+    Stands in for ``data_umweltprofis_at``, which has no cassette (#7095): it
+    serves a deprecated iCalendar export and its XML replacement from one
+    source, and the body is what says which.
+    """
+
+    def _mock_response(self, text):
+        resp = MagicMock()
+        resp.text = text
+        return resp
+
+    def test_a_matching_prefix_selects_its_parser(self):
+        from waste_collection_schedule.parsers import ByBodyPrefix
+
+        parser = ByBodyPrefix(
+            {"BEGIN:VCALENDAR": lambda r, s=None: ["ics"]},
+            default=lambda r, s=None: ["xml"],
+        )
+        assert parser(self._mock_response("BEGIN:VCALENDAR\r\nEND:VCALENDAR")) == [
+            "ics"
+        ]
+
+    def test_an_unmatched_body_falls_through_to_the_default(self):
+        from waste_collection_schedule.parsers import ByBodyPrefix
+
+        parser = ByBodyPrefix(
+            {"BEGIN:VCALENDAR": lambda r, s=None: ["ics"]},
+            default=lambda r, s=None: ["xml"],
+        )
+        body = '<?xml version="1.0"?><Appointments/>'
+        assert parser(self._mock_response(body)) == ["xml"]
+
+    def test_leading_whitespace_does_not_hide_the_prefix(self):
+        from waste_collection_schedule.parsers import ByBodyPrefix
+
+        parser = ByBodyPrefix(
+            {"BEGIN:VCALENDAR": lambda r, s=None: ["ics"]},
+            default=lambda r, s=None: ["xml"],
+        )
+        assert parser(self._mock_response("\r\n  BEGIN:VCALENDAR\r\n")) == ["ics"]
+
+    def test_the_first_matching_prefix_wins(self):
+        from waste_collection_schedule.parsers import ByBodyPrefix
+
+        parser = ByBodyPrefix(
+            {"BE": lambda r, s=None: ["first"], "BEGIN": lambda r, s=None: ["second"]},
+            default=lambda r, s=None: ["xml"],
+        )
+        assert parser(self._mock_response("BEGIN:VCALENDAR")) == ["first"]
+
+    def test_the_source_is_handed_to_the_chosen_parser(self):
+        from waste_collection_schedule.parsers import ByBodyPrefix
+
+        seen = {}
+
+        def inner(response, source=None):
+            seen["source"] = source
+            return []
+
+        source = MagicMock()
+        ByBodyPrefix({"X": inner}, default=inner)(self._mock_response("X"), source)
+        assert seen["source"] is source
+
+
+class TestXmlDateListParser:
+    """The flat XML appointment export, walked into (date, label) pairs.
+
+    Also stands in for ``data_umweltprofis_at``'s uncassetted XML branch.
+    """
+
+    _FEED = (
+        '<?xml version="1.0" encoding="utf-8"?>'
+        "<Appointments>"
+        "<AppointmentEntry>"
+        "<Datum>2026-02-10T00:00:00</Datum><WasteType>Restmüll</WasteType>"
+        "</AppointmentEntry>"
+        "<AppointmentEntry>"
+        "<Datum>2026-02-17</Datum><WasteType>Biotonne</WasteType>"
+        "</AppointmentEntry>"
+        "</Appointments>"
+    )
+
+    def _mock_response(self, text):
+        resp = MagicMock()
+        resp.text = text
+        return resp
+
+    def test_entries_become_date_label_tuples(self):
+        from waste_collection_schedule.parsers import XmlDateListParser
+
+        parser = XmlDateListParser("AppointmentEntry", "Datum", "WasteType")
+        assert parser(self._mock_response(self._FEED)) == [
+            (datetime.date(2026, 2, 10), "Restmüll"),
+            (datetime.date(2026, 2, 17), "Biotonne"),
+        ]
+
+    def test_a_feed_with_no_entries_yields_nothing(self):
+        from waste_collection_schedule.parsers import XmlDateListParser
+
+        parser = XmlDateListParser("AppointmentEntry", "Datum", "WasteType")
+        assert parser(self._mock_response("<Appointments/>")) == []
+
+    def test_a_missing_child_element_raises_rather_than_skipping(self):
+        from waste_collection_schedule.parsers import XmlDateListParser
+
+        body = (
+            "<Appointments><AppointmentEntry><Datum>2026-02-10</Datum>"
+            "</AppointmentEntry></Appointments>"
+        )
+        parser = XmlDateListParser("AppointmentEntry", "Datum", "WasteType")
+        with pytest.raises(IndexError):
+            parser(self._mock_response(body))
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 
@@ -4770,6 +4886,669 @@ class TestIcsSessionRetrieverFeedFromLastStep:
 
         with pytest.raises(ValueError):
             IcsSessionRetriever()
+
+
+class TestIcsConfiguredRetriever:
+    """The ICS platform's own retriever, driven entirely by the user's PARAMS.
+
+    This is what the generic ``ics`` source and the ~178 doc/ics/yaml providers
+    reach through, and only 4 of ``ics``'s 9 TEST_CASES are recorded, so the
+    branches below are asserted directly rather than left to replay.
+    """
+
+    def _source(self, **params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def _response(self, text="BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n", content=None):
+        resp = MagicMock()
+        resp.text = text
+        resp.content = content if content is not None else text.encode()
+        return resp
+
+    def test_a_plain_get_sends_the_default_browser_user_agent(self):
+        from waste_collection_schedule.service.ICS import (
+            ICS_FEED_HEADERS,
+            IcsConfiguredRetriever,
+        )
+
+        source = self._source(url="https://example.com/feed.ics")
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = self._response("CAL")
+            assert IcsConfiguredRetriever()(source) == ["CAL"]
+
+        assert http.get.call_args.args == ("https://example.com/feed.ics",)
+        assert http.get.call_args.kwargs["headers"] == ICS_FEED_HEADERS
+        assert http.get.call_args.kwargs["verify"] is True
+        assert http.get.call_args.kwargs["params"] is None
+
+    def test_configured_headers_merge_over_the_default_key_by_key(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/feed.ics",
+            headers={"Referer": "https://example.com/", "user-agent": "mine"},
+        )
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        assert http.get.call_args.kwargs["headers"] == {
+            "user-agent": "mine",
+            "Referer": "https://example.com/",
+        }
+
+    def test_list_valued_params_are_flattened_into_repeated_keys(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/feed.ics",
+            params={"types[]": ["restmuell", "biomuell"], "city": "2,3,4"},
+        )
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        # curl_cffi would otherwise send the list as a Python repr.
+        assert http.get.call_args.kwargs["params"] == [
+            ("types[]", "restmuell"),
+            ("types[]", "biomuell"),
+            ("city", "2,3,4"),
+        ]
+
+    def test_a_post_sends_the_params_as_form_data(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/ics.php",
+            method="POST",
+            params={"street": 8},
+        )
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.post.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        http.get.assert_not_called()
+        assert http.post.call_args.kwargs["data"] == [("street", 8)]
+
+    def test_an_unknown_method_is_reported_against_the_method_argument(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics", method="PUT")
+        with (
+            patch("waste_collection_schedule.service.ICS.requests"),
+            pytest.raises(SourceArgumentNotFoundWithSuggestions),
+        ):
+            IcsConfiguredRetriever()(source)
+
+    def test_webcal_is_rewritten_to_https(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="webcal://example.com/feed.ics")
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        assert http.get.call_args.args == ("https://example.com/feed.ics",)
+
+    def test_a_utf8_bom_switches_the_response_encoding(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics")
+        response = self._response(content=b"\xef\xbb\xbfBEGIN:VCALENDAR")
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = response
+            IcsConfiguredRetriever()(source)
+
+        assert response.encoding == "UTF-8-SIG"
+
+    def test_a_body_without_a_bom_is_read_as_utf8(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics")
+        response = self._response()
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = response
+            IcsConfiguredRetriever()(source)
+
+        assert response.encoding == "utf-8"
+
+    def test_a_year_wildcard_in_the_url_is_filled_in(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/{%Y}/feed.ics")
+        with (
+            freeze_time("2026-07-01"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.return_value = self._response()
+            assert len(IcsConfiguredRetriever()(source)) == 1
+
+        assert http.get.call_args.args == ("https://example.com/2026/feed.ics",)
+
+    def test_a_year_field_is_written_into_the_request_params(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/feed.ics",
+            year_field="year",
+            params={"city": "2"},
+        )
+        with (
+            freeze_time("2026-07-01"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        assert http.get.call_args.kwargs["params"] == [("city", "2"), ("year", "2026")]
+
+    def test_a_year_field_without_params_names_both_arguments(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentExceptionMultiple,
+        )
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics", year_field="year")
+        with (
+            freeze_time("2026-07-01"),
+            patch("waste_collection_schedule.service.ICS.requests"),
+            pytest.raises(SourceArgumentExceptionMultiple),
+        ):
+            IcsConfiguredRetriever()(source)
+
+    def test_in_december_next_years_calendar_is_fetched_too(self):
+        """The branch replay cannot observe for eleven months of the year."""
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/feed.ics",
+            year_field="jahr",
+            params={"city": "2"},
+        )
+        with (
+            freeze_time("2026-12-15"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.side_effect = [self._response("THIS"), self._response("NEXT")]
+            assert IcsConfiguredRetriever()(source) == ["THIS", "NEXT"]
+
+        assert [call.kwargs["params"] for call in http.get.call_args_list] == [
+            [("city", "2"), ("jahr", "2026")],
+            [("city", "2"), ("jahr", "2027")],
+        ]
+
+    def test_in_december_a_failed_next_year_is_swallowed(self):
+        """A provider that has not published next year must not break this one."""
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/{%Y}/feed.ics")
+        with (
+            freeze_time("2026-12-15"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.side_effect = [self._response("THIS"), OSError("404")]
+            assert IcsConfiguredRetriever()(source) == ["THIS"]
+
+    def test_outside_december_only_the_current_year_is_fetched(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/{%Y}/feed.ics")
+        with (
+            freeze_time("2026-11-30"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.return_value = self._response("THIS")
+            assert IcsConfiguredRetriever()(source) == ["THIS"]
+
+        assert http.get.call_count == 1
+
+    def test_verify_ssl_and_impersonate_reach_the_transport(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(
+            url="https://example.com/feed.ics",
+            verify_ssl=False,
+            impersonate="chrome124",
+        )
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        assert http.get.call_args.kwargs["verify"] is False
+        assert http.get.call_args.kwargs["impersonate"] == "chrome124"
+
+    def test_a_file_is_read_from_disk_instead_of_fetched(self, tmp_path):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        feed = tmp_path / "cal.ics"
+        feed.write_text("BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n", encoding="utf-8")
+
+        source = self._source(file=str(feed))
+        with patch("waste_collection_schedule.service.ICS.requests") as http:
+            assert IcsConfiguredRetriever()(source) == [
+                "BEGIN:VCALENDAR\nEND:VCALENDAR\n"
+            ]
+        http.get.assert_not_called()
+
+    def test_a_missing_file_is_reported_against_the_file_argument(self, tmp_path):
+        from waste_collection_schedule.exceptions import SourceArgumentException
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(file=str(tmp_path / "absent.ics"))
+        with pytest.raises(SourceArgumentException):
+            IcsConfiguredRetriever()(source)
+
+    def test_the_deprecated_version_param_warns_and_is_otherwise_ignored(self, caplog):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics", version=1)
+        with (
+            caplog.at_level("WARNING"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.return_value = self._response("CAL")
+            assert IcsConfiguredRetriever()(source) == ["CAL"]
+
+        assert "'version' parameter is deprecated" in caplog.text
+
+    def test_no_version_param_means_no_warning(self, caplog):
+        from waste_collection_schedule.service.ICS import IcsConfiguredRetriever
+
+        source = self._source(url="https://example.com/feed.ics")
+        with (
+            caplog.at_level("WARNING"),
+            patch("waste_collection_schedule.service.ICS.requests") as http,
+        ):
+            http.get.return_value = self._response()
+            IcsConfiguredRetriever()(source)
+
+        assert "deprecated" not in caplog.text
+
+
+class TestIcsConfiguredParser:
+    """The matching converter: ICS options read off the user's own params."""
+
+    def _feed(self, summary="Rubbish / Recycling", date="20260710"):
+        return (
+            "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//EN\r\n"
+            "BEGIN:VEVENT\r\n"
+            f"UID:{summary}-{date}\r\n"
+            f"DTSTART;VALUE=DATE:{date}\r\n"
+            f"SUMMARY:{summary}\r\n"
+            "LOCATION:Kerbside\r\n"
+            "END:VEVENT\r\nEND:VCALENDAR\r\n"
+        )
+
+    def _source(self, **params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_every_feed_body_is_converted_and_merged(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source()
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()(
+                [
+                    self._feed("Rubbish", "20260710"),
+                    self._feed("Recycling", "20260717"),
+                ],
+                source,
+            )
+
+        assert [(e.date, e.title) for e in events] == [
+            (datetime.date(2026, 7, 10), "Rubbish"),
+            (datetime.date(2026, 7, 17), "Recycling"),
+        ]
+
+    def test_location_survives_onto_the_record(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Rubbish")], self._source())
+
+        assert events[0].location == "Kerbside"
+
+    def test_split_at_from_the_user_params_splits_one_event_in_two(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source(split_at=" / ")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed()], source)
+
+        assert [e.title for e in events] == ["Rubbish", "Recycling"]
+
+    def test_a_string_offset_is_coerced_and_shifts_the_date(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        # The config flow's number widget can hand back a str; the year-field
+        # arithmetic and ICS both want a plain int.
+        source = self._source(offset="1")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Rubbish")], source)
+
+        assert events[0].date == datetime.date(2026, 7, 11)
+
+    def test_an_empty_offset_is_treated_as_unset(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source(offset="")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Rubbish")], source)
+
+        assert events[0].date == datetime.date(2026, 7, 10)
+
+    def test_a_regex_trims_the_wording_around_the_bin_name(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source(regex=r"^Collection: (.*)$")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Collection: Rubbish")], source)
+
+        assert events[0].title == "Rubbish"
+
+    def test_a_title_template_can_read_another_field(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source(title_template="{{date.location}}")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Rubbish")], source)
+
+        assert events[0].title == "Kerbside"
+
+    def test_an_empty_title_template_falls_back_to_the_summary(self):
+        from waste_collection_schedule.service.ICS import IcsConfiguredParser
+
+        source = self._source(title_template="")
+        with freeze_time("2026-07-01"):
+            events = IcsConfiguredParser()([self._feed("Rubbish")], source)
+
+        assert events[0].title == "Rubbish"
+
+
+class TestSelectOptionResolution:
+    """Reading a form's own ``<select>`` and matching a config value to it.
+
+    Stands in for ``regioentsorgung_de``, which has no cassette (#7051): its
+    servlet only accepts a value it has just offered.
+    """
+
+    _PAGE = """
+    <form>
+      <select name="Ort">
+        <option value="1">Würselen</option>
+        <option value="2">  Bad   Münstereifel </option>
+        <option value=""></option>
+      </select>
+      <select name="Hausnummer">
+        <option value="200"></option>
+        <option value="10">10</option>
+      </select>
+    </form>
+    """
+
+    def test_options_are_read_per_select_in_document_order(self):
+        from waste_collection_schedule.service.ICS import select_options
+
+        # Surrounding whitespace is trimmed but runs *inside* the label are
+        # kept, which is why resolve_select_option collapses them when matching
+        # rather than the scraper doing it.
+        assert select_options(self._PAGE, "Ort") == ["Würselen", "Bad   Münstereifel"]
+
+    def test_an_option_with_no_text_falls_back_to_its_value(self):
+        from waste_collection_schedule.service.ICS import select_options
+
+        assert select_options(self._PAGE, "Hausnummer") == ["200", "10"]
+
+    def test_an_unknown_select_has_no_options(self):
+        from waste_collection_schedule.service.ICS import select_options
+
+        assert select_options(self._PAGE, "Strasse") == []
+
+    def test_an_exact_value_is_returned_unchanged(self):
+        from waste_collection_schedule.service.ICS import resolve_select_option
+
+        assert resolve_select_option("city", "Würselen", ["Würselen"]) == "Würselen"
+
+    def test_case_and_repeated_whitespace_are_ignored_when_matching(self):
+        from waste_collection_schedule.service.ICS import resolve_select_option
+
+        options = ["Bad Münstereifel"]
+        resolved = resolve_select_option("city", "bad   MÜNSTEREIFEL", options)
+        # The provider's own spelling is what gets submitted back.
+        assert resolved == "Bad Münstereifel"
+
+    def test_a_miss_names_the_config_argument_and_lists_the_options(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.ICS import resolve_select_option
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            resolve_select_option("city", "Aachen", ["Würselen", "Alsdorf"])
+        assert "Würselen" in str(raised.value)
+
+    def test_an_empty_option_list_blames_the_earlier_choices(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.ICS import resolve_select_option
+
+        with pytest.raises(SourceArgumentNotFound) as raised:
+            resolve_select_option("house_number", "200", [])
+        assert "other address arguments" in str(raised.value)
+
+
+class TestIcsSessionRetrieverSelectSteps:
+    """The cascading-form hook and the per-step encoding it needs."""
+
+    _PAGE = (
+        '<select name="Ort"><option value="1">Würselen</option></select>'
+        '<select name="Strasse"><option value="7">Merzbrück</option></select>'
+    )
+
+    def _source(self, **params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def _page(self, text):
+        response = MagicMock()
+        response.text = text
+        response.encoding = "sentinel"
+        return response
+
+    def test_a_select_resolves_the_param_to_the_forms_own_spelling(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="würselen")
+        page, download = self._page(self._PAGE), self._page("BEGIN:VCALENDAR")
+        source.session.request.side_effect = [page, download]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/servlet", "select": {"Ort": "city"}},
+                {
+                    "url": "https://example.com/servlet",
+                    "method": "POST",
+                    "data": lambda city, **_: {"Ort": city},
+                },
+            ],
+            lookahead_month=None,
+        )
+        assert retriever(source) == [download]
+        # The second POST carries the option, not what the user typed.
+        assert source.session.request.call_args.kwargs["data"] == {"Ort": "Würselen"}
+
+    def test_several_selects_on_one_step_are_all_resolved(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="würselen", street="merzbrück")
+        page = self._page(self._PAGE)
+        source.session.request.return_value = page
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {
+                    "url": "https://example.com/servlet",
+                    "select": {"Ort": "city", "Strasse": "street"},
+                }
+            ],
+            lookahead_month=None,
+        )
+        retriever(source)
+        # Resolution writes back into the running context, not source.params.
+        assert source.params == {"city": "würselen", "street": "merzbrück"}
+
+    def test_a_non_string_param_is_matched_as_text(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(house_number=200)
+        page = self._page(
+            '<select name="Hausnummer"><option value="200">200</option></select>'
+        )
+        download = self._page("BEGIN:VCALENDAR")
+        source.session.request.side_effect = [page, download]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {
+                    "url": "https://example.com/servlet",
+                    "select": {"Hausnummer": "house_number"},
+                },
+                {
+                    "url": "https://example.com/servlet",
+                    "method": "POST",
+                    "data": lambda house_number, **_: {"Hausnummer": house_number},
+                },
+            ],
+            lookahead_month=None,
+        )
+        retriever(source)
+        assert source.session.request.call_args.kwargs["data"] == {"Hausnummer": "200"}
+
+    def test_a_value_the_form_does_not_offer_raises_before_the_next_step(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="Aachen")
+        source.session.request.return_value = self._page(self._PAGE)
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/servlet", "select": {"Ort": "city"}},
+                {"url": "https://example.com/servlet", "method": "POST"},
+            ],
+            lookahead_month=None,
+        )
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+            retriever(source)
+        assert source.session.request.call_count == 1
+
+    def test_a_step_encoding_is_forced_before_its_text_is_read(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="Würselen")
+        page, download = self._page(self._PAGE), self._page("BEGIN:VCALENDAR")
+        source.session.request.side_effect = [page, download]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {
+                    "url": "https://example.com/servlet",
+                    "encoding": "utf-8",
+                    "select": {"Ort": "city"},
+                },
+                {"url": "https://example.com/servlet", "method": "POST"},
+            ],
+            lookahead_month=None,
+        )
+        retriever(source)
+        assert page.encoding == "utf-8"
+
+    def test_a_step_without_an_encoding_key_is_left_alone(self):
+        """The constructor's `encoding` is the calendar's, not every step's."""
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="Würselen")
+        page, download = self._page(self._PAGE), self._page("BEGIN:VCALENDAR")
+        source.session.request.side_effect = [page, download]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/servlet", "select": {"Ort": "city"}},
+                {"url": "https://example.com/servlet", "method": "POST"},
+            ],
+            encoding="latin-1",
+            lookahead_month=None,
+        )
+        retriever(source)
+        assert page.encoding == "sentinel"
+        # ...while the feed response still gets the constructor's encoding.
+        assert download.encoding == "latin-1"
+
+    def test_the_whole_chain_reruns_for_the_lookahead_year(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="Würselen")
+        source.session.request.side_effect = [
+            self._page(self._PAGE),
+            self._page("BEGIN:VCALENDAR 2026"),
+            self._page(self._PAGE),
+            self._page("BEGIN:VCALENDAR 2027"),
+        ]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/servlet", "select": {"Ort": "city"}},
+                {
+                    "url": "https://example.com/servlet",
+                    "method": "POST",
+                    "data": lambda year, **_: {"Zeitraum": f"Jahresübersicht {year}"},
+                },
+            ],
+        )
+        with freeze_time("2026-12-15"):
+            feeds = retriever(source)
+
+        assert [feed.text for feed in feeds] == [
+            "BEGIN:VCALENDAR 2026",
+            "BEGIN:VCALENDAR 2027",
+        ]
+        assert [
+            call.kwargs["data"]
+            for call in source.session.request.call_args_list
+            if call.kwargs.get("data")
+        ] == [
+            {"Zeitraum": "Jahresübersicht 2026"},
+            {"Zeitraum": "Jahresübersicht 2027"},
+        ]
+
+    def test_a_failed_lookahead_year_leaves_the_current_one_intact(self):
+        from waste_collection_schedule.service.ICS import IcsSessionRetriever
+
+        source = self._source(city="Würselen")
+        this_year = self._page("BEGIN:VCALENDAR 2026")
+        source.session.request.side_effect = [
+            self._page(self._PAGE),
+            this_year,
+            OSError("not published yet"),
+        ]
+
+        retriever = IcsSessionRetriever(
+            steps=[
+                {"url": "https://example.com/servlet", "select": {"Ort": "city"}},
+                {"url": "https://example.com/servlet", "method": "POST"},
+            ],
+        )
+        with freeze_time("2026-12-15"):
+            assert retriever(source) == [this_year]
 
 
 class TestWestLothianJsonFallback:
