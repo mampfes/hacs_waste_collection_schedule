@@ -1,6 +1,20 @@
 # v3 cleanup campaign: remove source-local pipeline steps
 
-Working document for the migration. Delete it when the count reaches zero.
+**The count reached zero on 2026-08-06.** 263 of 263 pipeline sources are fully
+declarative and `SOURCES_WITH_LEGACY_STEP_OVERRIDES` is an empty set.
+
+This file said to delete it at zero. Do not delete it yet, and do not keep it as
+it stands. Most of it is scaffolding that has served its purpose, but four
+things in it are hard-won and recoverable from nowhere else: the substitute
+rules for migrating a source with no cassette, the "definition of done, per
+platform improvement", the parallel-agent lessons, and the "watch for" list.
+Those belong in `doc/contributing_source.md`, which is where the next
+contributor actually looks. Rehome them, then delete this file. That is the last
+task of the campaign, and it is the one point 4 of its own definition of done
+demands.
+
+Everything below is kept for that rehoming pass and for the archaeology of how
+the count moved from 113 to zero. The numbers in it were current when written.
 
 ## What this is
 
