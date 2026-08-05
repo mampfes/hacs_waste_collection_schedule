@@ -359,6 +359,59 @@ class HtmlGroupedDates(Preprocessor[list[Tag], "tuple[datetime.date, str]"]):
                     yield self._parse_date(match.group(1 if match.groups() else 0)), key
 
 
+class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Expand a record whose fields each hold one round's date into rows.
+
+    The record-level sibling of
+    :class:`~waste_collection_schedule.parsers.KeyedDateListsParser`, for the
+    provider that answers with one record per property and a field per round
+    carrying that round's date: an ArcGIS feature with
+    ``garbage_next_pickup_date`` and ``recycling_next_pickup_date``, a JSON
+    object with a key per bin. Nothing inside the record says which round a
+    field belongs to, so the field name is what names it::
+
+        parse = ArcGisFeatureParser()
+        preprocess = preprocessors.DateFields(
+            fields={"garbage_next_pickup_date": "Garbage"},
+            parse_date=_parse_date_from_text,
+        )
+        transform = ICSTransformer(type_value_map={"Garbage": GENERAL_WASTE})
+
+    Rows come out grouped by record, in ``fields`` order. A field the record
+    omits, and one whose value ``parse_date`` cannot read, contribute nothing,
+    which is how such a provider spells "no collection scheduled for this
+    round".
+
+    Args:
+        fields: ``{field name: round label}``. The label is what the
+            transformer's ``type_value_map`` maps, so use the provider's own
+            wording for the round rather than the field's spelling.
+        parse_date: ``callable(value) -> date | None`` reading one field's
+            date. Returning ``None`` drops that field's row, which is what lets
+            a provider that states the date in a sentence ("The next garbage
+            pickup date for this address is Monday, January 06") report the
+            sentences it did not write.
+    """
+
+    def __init__(
+        self,
+        *,
+        fields: Mapping[str, str],
+        parse_date: "Callable[[Any], datetime.date | None]",
+    ):
+        self._fields = dict(fields)
+        self._parse_date = parse_date
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        for record in records:
+            for field_name, key in self._fields.items():
+                collection_date = self._parse_date(record.get(field_name, ""))
+                if collection_date is not None:
+                    yield collection_date, key
+
+
 class ArgumentLookup(Preprocessor[Any, Any]):
     """Resolve a config argument against a table read out of the response.
 

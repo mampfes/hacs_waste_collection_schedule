@@ -10,7 +10,12 @@ Provides:
   - ArcGisMultiFeatureRetriever / ArcGisMultiFeatureParser: the same for a
     source whose layers are split (one per bin type / zone)
   - ArcGisTwoStepFeatureRetriever: a two-step attribute query (locate a record's
-    id via one ``where`` clause, then fetch the full record by that id)
+    id via one ``where`` clause, then fetch the full record by that id, on the
+    same layer or on a second one)
+  - coded_values() / ArcGisCodedValueParser: decode a field whose features carry
+    an integer code, using the layer's own coded-value domain as the vocabulary
+  - holiday_impacts() / ArcGisHolidayShift: shift or cancel collections against
+    a holidays layer's ``IMPACT*`` columns
   - coords_point(): use a lat/lon already in ``source.params`` as the query
     point instead of geocoding an address
   - parcel_centroid(): use the council's own parcel layer as the geocoder,
@@ -38,19 +43,20 @@ from __future__ import annotations
 
 import json
 import logging
-from collections.abc import Callable
-from datetime import date
+from collections.abc import Callable, Iterable
+from datetime import date, timedelta
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import requests
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import date_parsers, response_shape
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.preprocessors import HolidayShift, Preprocessor
 from waste_collection_schedule.retrievers import Response, RetrieverFunc
 
 
@@ -83,6 +89,12 @@ GEOCODE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServ
 def epoch_ms_to_date(epoch_ms: int | float) -> date:
     """Convert an ArcGIS epoch-millisecond timestamp to a Python date."""
     return date.fromtimestamp(epoch_ms / 1000)
+
+
+#: The same conversion as a shared date parser, for the component options below
+#: that take one. Unlike :func:`epoch_ms_to_date` it reads the timestamp in UTC,
+#: so the calendar date does not depend on the host's timezone.
+EPOCH_MS = date_parsers.from_epoch(unit="ms")
 
 
 class ArcGisError(Exception):
@@ -391,8 +403,11 @@ class ArcGisFeatureRetriever(RetrieverFunc):
     * ``where``   — run an attribute query (a SQL clause; a string, or a callable
       resolved against ``**source.params``).
 
-    Pair with :class:`ArcGisFeatureParser`. Multi-layer sources keep their own
-    ``retrieve`` and call :func:`feature_query` per layer.
+    Pair with :class:`ArcGisFeatureParser`. A source whose services are split
+    across several layers declares :class:`ArcGisMultiFeatureRetriever` instead;
+    one whose lookup and schedule are two different layers uses
+    :class:`ArcGisTwoStepFeatureRetriever` with its ``lookup_url``. Neither needs
+    a ``retrieve`` of its own.
 
     Args:
         feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
@@ -640,6 +655,120 @@ class ArcGisFeatureParser(Parser[list[dict[str, Any]]]):
         return features
 
 
+def coded_values(
+    layer_url: str,
+    field: str,
+    *,
+    source: BaseSource | None = None,
+    timeout: int = 20,
+) -> dict[Any, str]:
+    """The ``{code: label}`` map of one field's coded-value domain on a layer.
+
+    An ArcGIS layer stores a categorical field as an integer and publishes the
+    labels for those integers in its own field metadata, as a ``codedValue``
+    domain. That metadata lives at the layer URL itself rather than at
+    ``/query``, so this is the one ArcGIS request :func:`feature_query` cannot
+    make, and it is the layer -- not the source -- that should be naming a
+    provider's waste types.
+
+    Returns an empty map when the layer has no such field, or when the field
+    carries no coded-value domain, so a provider that stops publishing one
+    degrades to whatever fallback the caller has rather than failing the fetch.
+
+    Args:
+        layer_url: full MapServer/FeatureServer layer URL.
+        field: the coded field whose domain is wanted.
+        source: the source, so the request reuses its session. Falls back to a
+            plain ``requests.get`` when there is none.
+        timeout: request timeout in seconds.
+    """
+    get = source.session.get if source is not None else requests.get
+    response = get(layer_url, params={"f": "json"}, timeout=timeout)
+    response.raise_for_status()
+    values: dict[Any, str] = {}
+    for candidate in response.json().get("fields", []):
+        if candidate["name"] == field:
+            domain = candidate.get("domain") or {}
+            if domain.get("type") == "codedValue":
+                values = {cv["code"]: cv["name"] for cv in domain["codedValues"]}
+            break
+    return values
+
+
+class ArcGisCodedValueParser(Parser[list[dict[str, Any]]]):
+    """Extract feature attributes, decoding one coded field to its label.
+
+    :class:`ArcGisFeatureParser` plus the layer's own vocabulary: the features
+    carry an integer in ``field``, :func:`coded_values` reads what that integer
+    means off the layer's metadata, and the label is written onto each
+    attributes dict under ``into`` for an ordinary transformer to map::
+
+        parse = ArcGis.ArcGisCodedValueParser(
+            f"{BASE_URL}/1", "AvfallId", into="AvfallNavn"
+        )
+        transform = JsonTransformer(
+            date_key=lambda attrs: ArcGis.epoch_ms_to_date(attrs["Dato"]),
+            type_key="AvfallNavn",
+            type_value_map=_TYPE_MAP,
+        )
+
+    The domain is fetched once per fetch, and only after the features have
+    parsed, so a query that matched nothing still costs the one extra request
+    the layer metadata needs but no more.
+
+    Args:
+        layer_url: the layer whose metadata carries the domain, which for the
+            usual case is the layer the features came from.
+        field: the coded field on each feature.
+        into: attributes key the decoded label is written to. Keep it distinct
+            from ``field`` so the raw code survives for anything else to read.
+        fallback: ``{code: label}`` consulted for a code the layer's domain does
+            not name. For the provider whose domain is published incompletely,
+            or in the wrong language, and whose real labels are only known from
+            a resident's bug report: it is the source's data, not the layer's,
+            so it stays declared in the source.
+        unknown: format string naming a code neither the domain nor
+            ``fallback`` covers, so an unrecognised stream still reaches the
+            calendar under a label rather than being dropped.
+        argument: forwarded to :class:`ArcGisFeatureParser`, to report a query
+            that matched nothing as a bad value for that config field.
+        timeout: request timeout in seconds for the metadata request.
+    """
+
+    def __init__(
+        self,
+        layer_url: str,
+        field: str,
+        *,
+        into: str,
+        fallback: dict[Any, str] | None = None,
+        unknown: str = "{code}",
+        argument: str | None = None,
+        timeout: int = 20,
+    ):
+        self.layer_url = layer_url
+        self.field = field
+        self.into = into
+        self.fallback = fallback or {}
+        self.unknown = unknown
+        self.timeout = timeout
+        self._features = ArcGisFeatureParser(argument=argument)
+
+    def __call__(
+        self, response: Response, source: BaseSource | None = None
+    ) -> list[dict[str, Any]]:
+        features = self._features(response, source)
+        domain = coded_values(
+            self.layer_url, self.field, source=source, timeout=self.timeout
+        )
+        for attrs in features:
+            code = attrs[self.field]
+            attrs[self.into] = domain.get(code) or self.fallback.get(
+                code, self.unknown.format(code=code)
+            )
+        return features
+
+
 class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
     """Resolve a record id via one attribute query, then fetch the full record.
 
@@ -651,7 +780,8 @@ class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
     raises a clear argument error instead of an ``IndexError``.
 
     Args:
-        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
+        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``)
+            the schedule is read from.
         lookup_where: SQL where clause for the lookup (string or a callable
             resolved against ``**source.params``).
         schedule_where: ``callable(key, **source.params) -> str`` building the
@@ -661,6 +791,11 @@ class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
         id_field: feature field pulled from the first match (default ``OBJECTID``).
         lookup_fields: ``outFields`` for the lookup query.
         out_fields: ``outFields`` for the final schedule query.
+        lookup_url: the layer the *lookup* query runs against, for a MapServer
+            that splits the two halves across layers: an address index keyed by
+            the provider's own account or agreement number, and a dated schedule
+            keyed by that number. Defaults to ``feature_url``, which is the
+            single-layer case above.
         timeout: request timeout in seconds.
     """
 
@@ -674,9 +809,11 @@ class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
         id_field: str = "OBJECTID",
         lookup_fields: str = "*",
         out_fields: str = "*",
+        lookup_url: str | None = None,
         timeout: int = 20,
     ):
         self.feature_url = feature_url
+        self.lookup_url = lookup_url or feature_url
         self.lookup_where = lookup_where
         self.schedule_where = schedule_where
         self.argument = argument
@@ -692,7 +829,7 @@ class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
             else self.lookup_where
         )
         lookup = feature_query(
-            self.feature_url,
+            self.lookup_url,
             where=where,
             out_fields=self.lookup_fields,
             timeout=self.timeout,
@@ -937,6 +1074,156 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
             for feature in features:
                 records.append((label, feature.get("attributes", {})))
         return records
+
+
+def holiday_impacts(
+    feature_url: str,
+    *,
+    where: str = "1=1",
+    date_field: str = "HOLIDAYDATE",
+    prefix: str = "IMPACT",
+    parse_date: date_parsers.DateParser = EPOCH_MS,
+    timeout: int = 20,
+) -> dict[str, dict[date, date | None]]:
+    """Reduce a holidays layer to ``{impact field: {holiday: adjusted or None}}``.
+
+    Esri's municipal-services layout gives public holidays a layer of their own:
+    one feature per holiday, its date in ``HOLIDAYDATE``, and one ``IMPACT*``
+    column per collection stream saying what that stream does that week. The
+    column's value comes from the coded domain the template ships
+    (``piHolidayImpact``):
+
+      ``"None"``       -> no change (skipped)
+      ``"OneDayFrwd"`` -> +1 day
+      ``"TwoDayFrwd"`` -> +2 days
+      ``"Shift Forw"`` -> +1 day  (synonym)
+      ``"OneDayBack"`` -> -1 day
+      ``"Shift Back"`` -> -1 day  (synonym)
+      ``"Cancel"``     -> collection cancelled (mapped to ``None``)
+      anything else (Next Sat, Prev Sat, ...) -> logged and skipped
+
+    Every ``IMPACT*`` column present on a feature is read, so a council adding a
+    collection stream needs no change here. Pair with
+    :class:`ArcGisHolidayShift`, which is what applies the result to a row.
+
+    Args:
+        feature_url: full layer URL of the holidays layer.
+        where: SQL clause narrowing the holidays (default: every feature).
+        date_field: feature field holding the holiday's own date.
+        prefix: the per-stream impact columns' shared name prefix.
+        parse_date: how ``date_field`` is read (default: an epoch-ms timestamp).
+        timeout: request timeout in seconds.
+    """
+    result: dict[str, dict[date, date | None]] = {}
+    response = feature_query(feature_url, where=where, out_fields="*", timeout=timeout)
+    response.raise_for_status()
+    for feature in response.json().get("features", []):
+        attrs = feature.get("attributes", {})
+        holiday_ms = attrs.get(date_field)
+        if not holiday_ms:
+            continue
+        holiday_date = parse_date(holiday_ms)
+        # Iterate over every IMPACT* field — robust to new collection types.
+        for field in [k for k in attrs if k.startswith(prefix)]:
+            val = (attrs.get(field) or "").strip()
+            val_lower = val.lower()
+            if not val_lower or val_lower == "none":
+                continue
+            adjusted: date | None
+            if val_lower == "twodayfrwd":
+                adjusted = holiday_date + timedelta(days=2)
+            elif "frwd" in val_lower or "forward" in val_lower or "forw" in val_lower:
+                adjusted = holiday_date + timedelta(days=1)
+            elif "back" in val_lower:
+                adjusted = holiday_date - timedelta(days=1)
+            elif val_lower == "cancel":
+                adjusted = None
+            else:
+                _LOGGER.debug(
+                    "Unhandled holiday impact code %r for %s on %s",
+                    val,
+                    field,
+                    holiday_date,
+                )
+                continue
+            result.setdefault(field, {})[holiday_date] = adjusted
+    return result
+
+
+class ArcGisHolidayShift(Preprocessor[Any, "tuple[date, str]"]):
+    """Shift or cancel ``(date, key)`` rows against an ArcGIS holidays layer.
+
+    The preprocess-stage companion to :func:`holiday_impacts`: it fetches the
+    holidays layer once per fetch, reduces it, and applies the result through
+    the shared
+    :class:`~waste_collection_schedule.preprocessors.HolidayShift`, so a council
+    whose collections move around public holidays needs no ``retrieve`` of its
+    own to load them::
+
+        preprocess = Compose(
+            RecurrenceExpander(_describe),
+            ArcGis.ArcGisHolidayShift(HOLIDAYS_URL, impact_field=_impact_field),
+        )
+
+    A row whose date is not a holiday passes through unchanged, one whose
+    holiday moves the collection comes out on the adjusted date, and one whose
+    holiday cancels it is dropped.
+
+    Args:
+        impact_field: which ``IMPACT*`` column governs a row: a ``str`` where
+            one column covers every stream, or ``callable(key, source) -> str |
+            None`` where each of the council's data layers names its own. They
+            publish that per feature (in a ``HOLIDAYFIELD`` attribute), so the
+            key-to-column mapping is only known once the features have been
+            read, and a source that reads it there records it for this callable
+            to return. A column this layer does not publish, and a ``None``,
+            both leave the row unchanged.
+        feature_url / where / date_field / prefix / parse_date / timeout: passed
+            to :func:`holiday_impacts`.
+    """
+
+    def __init__(
+        self,
+        feature_url: str,
+        *,
+        impact_field: str | Callable[..., str | None],
+        where: str = "1=1",
+        date_field: str = "HOLIDAYDATE",
+        prefix: str = "IMPACT",
+        parse_date: date_parsers.DateParser = EPOCH_MS,
+        timeout: int = 20,
+    ):
+        self.feature_url = feature_url
+        self.impact_field = impact_field
+        self.where = where
+        self.date_field = date_field
+        self.prefix = prefix
+        self.parse_date = parse_date
+        self.timeout = timeout
+
+    def __call__(
+        self, records: Any, source: BaseSource | None = None
+    ) -> Iterable[tuple[date, str]]:
+        holidays = holiday_impacts(
+            self.feature_url,
+            where=self.where,
+            date_field=self.date_field,
+            prefix=self.prefix,
+            parse_date=self.parse_date,
+            timeout=self.timeout,
+        )
+
+        def adjust(
+            collection_date: date, key: str, src: BaseSource | None
+        ) -> date | None:
+            field = (
+                self.impact_field(key, src)
+                if callable(self.impact_field)
+                else self.impact_field
+            )
+            return holidays.get(field or "", {}).get(collection_date, collection_date)
+
+        return HolidayShift(adjust)(records, source)
 
 
 def point_in_polygon(x: float, y: float, ring: list) -> bool:

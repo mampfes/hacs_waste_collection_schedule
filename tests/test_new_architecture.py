@@ -789,6 +789,283 @@ class TestArcGisComponents:
         resp.json.return_value = {"features": []}
         assert ArcGis.ArcGisFeatureParser()(resp) == []
 
+    # --- two-step lookup across two layers (fredrikstad_no) ---------------- #
+
+    @staticmethod
+    def _two_step_urls(**kwargs):
+        """Run a two-step retriever over stubs; return the URLs it queried."""
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "Kanelveien 4"}
+        urls = []
+
+        def fake_get(url, params=None, timeout=None):
+            urls.append(url)
+            resp = MagicMock()
+            resp.raise_for_status.return_value = None
+            resp.json.return_value = {"features": [{"attributes": {"AvtLnr": 4711}}]}
+            return resp
+
+        retriever = ArcGis.ArcGisTwoStepFeatureRetriever(
+            "https://x/MapServer/1",
+            lookup_where="UPPER(Adresse) = 'KANELVEIEN 4'",
+            schedule_where=lambda key, **_: f"AvtLnr = {key}",
+            id_field="AvtLnr",
+            **kwargs,
+        )
+        with patch.object(ArcGis.requests, "get", side_effect=fake_get):
+            retriever(source)
+        return urls
+
+    def test_two_step_retriever_looks_up_on_the_same_layer_by_default(self):
+        # The default must leave every existing single-layer provider unchanged.
+        assert self._two_step_urls() == [
+            "https://x/MapServer/1/query",
+            "https://x/MapServer/1/query",
+        ]
+
+    def test_two_step_retriever_can_look_up_on_a_second_layer(self):
+        # A MapServer that splits the address index (layer 0) from the dated
+        # schedule (layer 1) queries each on its own layer.
+        assert self._two_step_urls(lookup_url="https://x/MapServer/0") == [
+            "https://x/MapServer/0/query",
+            "https://x/MapServer/1/query",
+        ]
+
+    # --- coded-value domains (fredrikstad_no) ------------------------------ #
+
+    @staticmethod
+    def _fields_response(fields):
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.return_value = {"fields": fields}
+        return resp
+
+    def test_coded_values_reads_a_fields_coded_value_domain(self):
+        from waste_collection_schedule.service import ArcGis
+
+        metadata = self._fields_response(
+            [
+                {"name": "Dato", "domain": None},
+                {
+                    "name": "AvfallId",
+                    "domain": {
+                        "type": "codedValue",
+                        "codedValues": [
+                            {"code": 1, "name": "Restavfall"},
+                            {"code": 16, "name": "Matavfall"},
+                        ],
+                    },
+                },
+            ]
+        )
+        with patch.object(ArcGis.requests, "get", return_value=metadata) as get:
+            values = ArcGis.coded_values("https://x/MapServer/1", "AvfallId")
+
+        assert values == {1: "Restavfall", 16: "Matavfall"}
+        # The domain lives on the layer itself, not on /query.
+        assert get.call_args.args[0] == "https://x/MapServer/1"
+        assert get.call_args.kwargs["params"] == {"f": "json"}
+
+    def test_coded_values_is_empty_without_a_coded_domain(self):
+        from waste_collection_schedule.service import ArcGis
+
+        cases = [
+            [{"name": "AvfallId", "domain": None}],
+            [{"name": "AvfallId", "domain": {"type": "range"}}],
+            [{"name": "SomethingElse", "domain": {"type": "codedValue"}}],
+            [],
+        ]
+        for fields in cases:
+            with patch.object(
+                ArcGis.requests, "get", return_value=self._fields_response(fields)
+            ):
+                assert ArcGis.coded_values("https://x/MapServer/1", "AvfallId") == {}
+
+    def test_coded_value_parser_decodes_falls_back_and_names_the_unknown(self):
+        from waste_collection_schedule.service import ArcGis
+
+        features = MagicMock()
+        features.raise_for_status.return_value = None
+        features.json.return_value = {
+            "features": [
+                {"attributes": {"Dato": 1, "AvfallId": 1}},
+                {"attributes": {"Dato": 2, "AvfallId": 4}},
+                {"attributes": {"Dato": 3, "AvfallId": 99}},
+            ]
+        }
+        metadata = self._fields_response(
+            [
+                {
+                    "name": "AvfallId",
+                    "domain": {
+                        "type": "codedValue",
+                        "codedValues": [{"code": 1, "name": "Restavfall"}],
+                    },
+                }
+            ]
+        )
+        parser = ArcGis.ArcGisCodedValueParser(
+            "https://x/MapServer/1",
+            "AvfallId",
+            into="AvfallNavn",
+            fallback={4: "Glass og metall"},
+            unknown="Avfall {code}",
+        )
+        with patch.object(ArcGis.requests, "get", return_value=metadata):
+            records = parser(features)
+
+        assert [r["AvfallNavn"] for r in records] == [
+            "Restavfall",  # the layer's own domain
+            "Glass og metall",  # the source's fallback for a code it omits
+            "Avfall 99",  # neither: named rather than dropped
+        ]
+        # The raw code survives alongside the decoded label.
+        assert [r["AvfallId"] for r in records] == [1, 4, 99]
+
+    # --- holidays layer (shawinigan_ca) ------------------------------------ #
+
+    @staticmethod
+    def _holiday_response(attributes):
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.return_value = {
+            "features": [{"attributes": attrs} for attrs in attributes]
+        }
+        return resp
+
+    def test_holiday_impacts_reduces_each_impact_column(self):
+        from waste_collection_schedule.service import ArcGis
+
+        # 2026-07-01 00:00 UTC, the date every impact below is measured from.
+        holiday = datetime.date(2026, 7, 1)
+        layer = self._holiday_response(
+            [
+                {
+                    "HOLIDAYDATE": 1782864000000,
+                    "IMPACTGARB": "OneDayFrwd",
+                    "IMPACTCOMP": "TwoDayFrwd",
+                    "IMPACTSHIFT": "Shift Forw",
+                    "IMPACTBACK": "OneDayBack",
+                    "IMPACTRECY": "Cancel",
+                    "IMPACTNONE": "None",
+                    "IMPACTBLANK": "  ",
+                    "IMPACTODD": "Next Sat",
+                    "NOTANIMPACT": "Cancel",
+                },
+                # A feature with no date at all contributes nothing.
+                {"HOLIDAYDATE": None, "IMPACTGARB": "Cancel"},
+            ]
+        )
+        with patch.object(ArcGis.requests, "get", return_value=layer):
+            impacts = ArcGis.holiday_impacts("https://x/MapServer/6")
+
+        assert impacts == {
+            "IMPACTGARB": {holiday: holiday + datetime.timedelta(days=1)},
+            "IMPACTCOMP": {holiday: holiday + datetime.timedelta(days=2)},
+            "IMPACTSHIFT": {holiday: holiday + datetime.timedelta(days=1)},
+            "IMPACTBACK": {holiday: holiday - datetime.timedelta(days=1)},
+            "IMPACTRECY": {holiday: None},
+        }
+
+    def test_arcgis_holiday_shift_moves_cancels_and_passes_rows_through(self):
+        from waste_collection_schedule.service import ArcGis
+
+        holiday = datetime.date(2026, 7, 1)
+        layer = self._holiday_response(
+            [
+                {
+                    "HOLIDAYDATE": 1782864000000,
+                    "IMPACTGARB": "OneDayFrwd",
+                    "IMPACTRECY": "Cancel",
+                }
+            ]
+        )
+        rows = [
+            (holiday, "ORDURES"),  # moved by IMPACTGARB
+            (holiday, "RECYCLAGE"),  # cancelled by IMPACTRECY
+            (holiday, "COMPOST"),  # no column recorded: unchanged
+            (datetime.date(2026, 7, 8), "ORDURES"),  # not a holiday: unchanged
+        ]
+        shift = ArcGis.ArcGisHolidayShift(
+            "https://x/MapServer/6",
+            impact_field=lambda key, _source: {
+                "ORDURES": "IMPACTGARB",
+                "RECYCLAGE": "IMPACTRECY",
+            }.get(key),
+        )
+        with patch.object(ArcGis.requests, "get", return_value=layer) as get:
+            assert list(shift(rows)) == [
+                (datetime.date(2026, 7, 2), "ORDURES"),
+                (holiday, "COMPOST"),
+                (datetime.date(2026, 7, 8), "ORDURES"),
+            ]
+        # One request for the whole row stream, not one per row.
+        assert get.call_count == 1
+
+    def test_arcgis_holiday_shift_accepts_one_column_for_every_row(self):
+        from waste_collection_schedule.service import ArcGis
+
+        holiday = datetime.date(2026, 7, 1)
+        layer = self._holiday_response(
+            [{"HOLIDAYDATE": 1782864000000, "IMPACTGARB": "OneDayBack"}]
+        )
+        shift = ArcGis.ArcGisHolidayShift(
+            "https://x/MapServer/6", impact_field="IMPACTGARB"
+        )
+        with patch.object(ArcGis.requests, "get", return_value=layer):
+            assert list(shift([(holiday, "ORDURES"), (holiday, "COMPOST")])) == [
+                (datetime.date(2026, 6, 30), "ORDURES"),
+                (datetime.date(2026, 6, 30), "COMPOST"),
+            ]
+
+
+class TestPreprocessors:
+    """Shared preprocessors, tested directly on synthetic records."""
+
+    def test_date_fields_expands_one_record_per_field(self):
+        from waste_collection_schedule import preprocessors
+
+        preprocess = preprocessors.DateFields(
+            fields={
+                "garbage_next_pickup_date": "Garbage",
+                "recycling_next_pickup_date": "Recycling",
+            },
+            parse_date=lambda value: (
+                datetime.date.fromisoformat(value) if value else None
+            ),
+        )
+        records = [
+            {
+                "garbage_next_pickup_date": "2026-01-06",
+                "recycling_next_pickup_date": "2026-01-08",
+            }
+        ]
+        # Rows come out in `fields` order, labelled by the round not the field.
+        assert list(preprocess(records)) == [
+            (datetime.date(2026, 1, 6), "Garbage"),
+            (datetime.date(2026, 1, 8), "Recycling"),
+        ]
+
+    def test_date_fields_drops_a_missing_or_unreadable_field(self):
+        from waste_collection_schedule import preprocessors
+
+        seen = []
+
+        def parse_date(value):
+            seen.append(value)
+            return datetime.date(2026, 1, 6) if value == "good" else None
+
+        preprocess = preprocessors.DateFields(
+            fields={"a": "Garbage", "b": "Recycling", "c": "Garden"},
+            parse_date=parse_date,
+        )
+        # "b" holds text with no date in it; "c" is not in the record at all.
+        records = [{"a": "good", "b": "no pickup scheduled"}]
+        assert list(preprocess(records)) == [(datetime.date(2026, 1, 6), "Garbage")]
+        assert seen == ["good", "no pickup scheduled", ""]
+
 
 class TestPipelineContext:
     """Parser/preprocessor receive the source; source exposes a lazy session."""
@@ -5077,11 +5354,8 @@ _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
     "data_umweltprofis_at",
     "erlangen_hoechstadt_de",
-    "fredrikstad_no",
-    "fuquay_varina_nc_us",
     "ics",
     "regioentsorgung_de",
-    "shawinigan_ca",
 }
 
 
