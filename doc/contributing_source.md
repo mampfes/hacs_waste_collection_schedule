@@ -617,6 +617,27 @@ store an empty directory, so one on your machine is local debris from an
 interrupted run. That is what let the per-source backlog go stale, since an empty
 directory reads as a recorded source until you list it.
 
+**What a cassette pins.** A recorded interaction stores the request body: every
+payload slot at once (`json`, `data`, `params`, `files`), canonically rendered so
+key order cannot matter and so `data={"a": 1}`, `data="a=1"` and the prepared
+`b"a=1"` all compare equal. Replay fails, printing recorded against sent, if a
+source sends something the recording did not. That is what makes a refactor
+verifiable offline: change how a request is built and the replay tells you.
+
+Cassettes recorded before this (#7102) have no `body` field and are matched on
+method and URL alone, which pins nothing about the payload. They are left that
+way on purpose, because several sources cannot be re-recorded from outside their
+region at all. `FALLBACK_BUDGET` in `tests/test_offline_fixtures.py` counts how
+many requests are still matched that loosely, and only ever ratchets down: if you
+re-record a source, lower it. To see which case a source is in, replay it against
+the mutation plugin, which alters every outgoing request:
+
+```bash
+python -m pytest tests/test_offline_fixtures.py -k <module> -p tests.mutate_requests
+```
+
+A replay that still passes there checked nothing about what it sent.
+
 For JSON sources, also declare the response shape and pass it to the parser
 (`parse = parsers.JsonParser(shape=MyResponse)`). A `TypedDict`/`list[...]`
 shape is type-checked by pyright, validates the fixtures, and at runtime logs

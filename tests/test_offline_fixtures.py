@@ -38,6 +38,49 @@ from waste_collection_schedule.collection import Collection
 _FIXTURES = discover_fixtures()
 _CHOICE_FIXTURES = discover_choice_fixtures()
 
+# --------------------------------------------------------------------------
+# The #7102 debt: how much of what a source sends is actually pinned.
+#
+# A recorded interaction now stores the request body, and replay refuses a
+# request that does not match it. Cassettes recorded before that have no body
+# field and are matched on method and URL alone, which pins nothing about the
+# payload: a refactor can change what is sent and still replay green, and where
+# several requests share a URL the fallback pairs them by position, so a changed
+# body can be handed the response recorded for a different request.
+#
+# They are left that way deliberately. The fix is additive because seven
+# pipeline sources cannot be recorded from this location at all (#7051, #7052,
+# #7055, #7056, #7095), and a fix that forced a re-record would strand them.
+#
+# Two gates hold the remainder, because one number cannot do both jobs.
+# --------------------------------------------------------------------------
+
+# 1. The ratchet. Every recorded interaction with no stored body is a request
+#    that cannot be pinned, whatever happens at replay time. It is a static
+#    property of the committed fixtures, so it is exactly reproducible, and
+#    re-recording a source is the only thing that moves it. Lower it every time
+#    you re-record: that is how the debt gets paid off.
+UNPINNED_INTERACTIONS = 2531
+
+# 2. The ceiling. How many requests a full replay may serve off the loose
+#    method+url fallback rather than the exact key. This catches what the
+#    static count cannot: a cassette that does carry bodies but still falls
+#    back, which is what a request-building regression looks like.
+#
+#    Unlike the ratchet this figure is not exactly reproducible. Measured
+#    repeatedly over the full tree it lands between 338 and 341, because two
+#    sources do not issue identical requests twice: app_abfallplus_de puts a
+#    fresh uuid4 in its POST body (AppAbfallplusDe._client), and lobbe_app
+#    varies by one on three cassettes. Nine cassettes are involved, so the
+#    ceiling carries a margin of that order and no more. Never raise it for any
+#    other reason: a refactor that unpins a source adds far more than nine.
+FALLBACK_BUDGET = 350
+
+# Cassettes this run replayed to completion. The ceiling is only meaningful over
+# a full pass, so a filtered run (``-k``) or one with a failing replay skips it
+# rather than reporting a number that means nothing.
+_COMPLETED: set[str] = set()
+
 
 def _resolve_case(module_name: str, case_slug: str):
     """Map a cassette back to its (Source class, TEST_CASE args)."""
@@ -67,6 +110,7 @@ def test_offline_replay(module_name, case_slug, path):
         assert isinstance(r, Collection)
         assert isinstance(r.date, datetime.date)
         assert r.waste_type is not None
+    _COMPLETED.add(os.path.abspath(path))
 
 
 @pytest.mark.parametrize(
@@ -102,6 +146,7 @@ def test_offline_choices(module_name, path):
     assert isinstance(children, list) and children
     if meta.get("child_value"):
         assert meta["child_value"] in children
+    _COMPLETED.add(os.path.abspath(path))
 
 
 def _replay_cascading_choices(cls, meta, path):
@@ -133,3 +178,75 @@ def _replay_cascading_choices(cls, meta, path):
                 any_resolved = True
             selections[field] = expected[field]
     assert any_resolved, "no cascade level resolved any options"
+    _COMPLETED.add(os.path.abspath(path))
+
+
+def test_the_unpinned_interaction_count_only_goes_down():
+    """Every recorded interaction that stores no request body is #7102 debt.
+
+    Static, so it costs nothing and is exactly reproducible: it reads the
+    committed cassettes and counts. Re-recording a source is the only thing
+    that moves it, which is what makes it a ratchet.
+    """
+    paths = [p for _, _, p in _FIXTURES] + [p for _, p in _CHOICE_FIXTURES]
+    unpinned: dict[str, int] = {}
+    for path in paths:
+        with open(path, encoding="utf-8") as fh:
+            interactions = json.load(fh).get("interactions", [])
+        missing = sum(1 for it in interactions if "body" not in it)
+        if missing:
+            unpinned[path] = missing
+    total = sum(unpinned.values())
+
+    assert total <= UNPINNED_INTERACTIONS, (
+        f"{total} recorded interactions store no request body, up from "
+        f"{UNPINNED_INTERACTIONS}. A cassette that does not store what was sent "
+        f"cannot tell a refactor from a behaviour change (#7102). Re-record "
+        f"with `python tests/record_fixtures.py <module>` rather than raising "
+        f"this number."
+    )
+    assert total == UNPINNED_INTERACTIONS, (
+        f"Only {total} recorded interactions now store no request body, down "
+        f"from {UNPINNED_INTERACTIONS}. Lower UNPINNED_INTERACTIONS to {total}: "
+        f"it is a debt register that ratchets down, and slack in it lets the "
+        f"debt grow back unnoticed."
+    )
+
+
+def test_the_replay_fallback_budget_is_not_exceeded():
+    """No more requests may go unpinned at replay time than already do (#7102).
+
+    Runs after the replays above and reads the per-cassette counters
+    ``cassette.replaying`` leaves behind. Nothing here replays anything itself,
+    so the gate costs no extra time.
+    """
+    paths = [os.path.abspath(p) for _, _, p in _FIXTURES]
+    paths += [os.path.abspath(p) for _, p in _CHOICE_FIXTURES]
+    if not _COMPLETED.issuperset(paths):
+        pytest.skip(
+            f"{len(_COMPLETED & set(paths))} of {len(paths)} cassettes replayed "
+            "to completion in this run; the fallback ceiling only means anything "
+            "over a full pass"
+        )
+
+    per_cassette = {p: cassette.REPLAY_FALLBACKS.get(p, 0) for p in paths}
+    total = sum(per_cassette.values())
+    served = sum(cassette.REPLAY_MATCHES.get(p, 0) for p in paths)
+    using = {p: n for p, n in per_cassette.items() if n}
+    worst = sorted(((n, p) for p, n in using.items()), reverse=True)[:10]
+    detail = "\n".join(f"    {n:>4}  {os.path.relpath(p)}" for n, p in worst)
+    summary = (
+        f"{total} of {served} replayed requests matched on the loose "
+        f"method+url fallback, across {len(using)} of {len(paths)} cassettes."
+    )
+    print(f"\ncassette fallback debt: {summary}")
+
+    assert total <= FALLBACK_BUDGET, (
+        f"{summary}\nThat is above the ceiling of {FALLBACK_BUDGET}. A fallback "
+        f"match is a request the cassette does not pin: its body is not "
+        f"compared, so a refactor can change what is sent and still replay "
+        f"green. Do not raise the ceiling. Re-record the cassette "
+        f"(`python tests/record_fixtures.py <module>`) so it carries request "
+        f"bodies, or fix whatever stopped the exact key matching.\n"
+        f"  worst offenders:\n{detail}"
+    )

@@ -1,13 +1,19 @@
 """Dump every request a cassette replay issues, for before/after refactor diffs.
 
-Replay does not prove a refactor left the outgoing requests alone. The cassette
-key hashes only the first of ``json``/``data``/``params``, and when the key
-misses, ``cassette.py`` falls back to matching on method and URL alone. So a
-refactor that changes a request body or its query string still replays green,
-having checked nothing about what was sent (#7102).
+Replay proves a refactor left the outgoing requests alone only for a cassette
+recorded since #7102. Before that a recorded interaction stored no request body,
+and when the exact key missed, ``cassette.py`` fell back to matching on method
+and URL alone, so a refactor that changed a request body or its query string
+still replayed green having checked nothing about what was sent. Those cassettes
+are still loose on purpose, because the fix is additive and a re-record is not
+possible for every source; ``FALLBACK_BUDGET`` in ``test_offline_fixtures.py``
+tracks how many requests are still unpinned.
 
-Until the harness pins them, this is how a migration that touches request
-building is checked: dump the requests before and after and diff them.
+So for a source whose cassette predates the fix, this is still how a migration
+that touches request building is checked: dump the requests before and after and
+diff them. (``python -m pytest tests/test_offline_fixtures.py -k <module> -p
+tests.mutate_requests`` says which case you are in: if it passes, the cassette
+pins nothing and you need this script.)
 
     python tests/dump_requests.py awigo_de > before.txt
     ... refactor ...
