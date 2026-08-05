@@ -2159,6 +2159,74 @@ class TestAthosWasteManagementRetriever:
         assert final.encoding == "utf-8"
 
 
+class TestAthosNoticeFilter:
+    """The Athos platform's preprocess half: drop the calendar's notice events.
+
+    bielefeld_de is the deployment that needs it and cannot be recorded
+    (anwendungen.bielefeld.de is unreachable, #7051), so these are the only
+    executable evidence for that behaviour: they exercise the component with
+    synthetic records instead of a cassette.
+    """
+
+    def test_drops_the_notice_event_and_keeps_the_collections(self):
+        import datetime
+
+        from waste_collection_schedule.retrievers import AthosNoticeFilter
+
+        records = [
+            (datetime.date(2026, 8, 12), "Restabfallbehaelter"),
+            (datetime.date(2026, 8, 16), "Die neue ICal-Datei steht bereit"),
+            (datetime.date(2026, 8, 17), "Bioabfallbehaelter"),
+        ]
+
+        kept = list(AthosNoticeFilter()(records))
+
+        assert kept == [records[0], records[2]]
+
+    def test_keeps_every_record_when_no_notice_is_present(self):
+        import datetime
+
+        from waste_collection_schedule.retrievers import AthosNoticeFilter
+
+        records = [
+            (datetime.date(2026, 8, 12), "Papierbehaelter"),
+            (datetime.date(2026, 8, 26), "Wertstofftonne"),
+        ]
+
+        assert list(AthosNoticeFilter()(records)) == records
+
+    def test_matches_the_title_of_an_ics_event_record(self):
+        """Index 1 is the title of an IcsEvent as well as of a (date, summary)
+        tuple, so the filter works with either ICS parser."""
+        import datetime
+
+        from waste_collection_schedule.retrievers import AthosNoticeFilter
+        from waste_collection_schedule.service.ICS import IcsEvent
+
+        collection = IcsEvent(
+            datetime.date(2026, 8, 12), "Restabfallbehaelter", "Eckendorfer Str. 57", ""
+        )
+        notice = IcsEvent(
+            datetime.date(2026, 8, 16), "Die neue ICal-Datei steht bereit", "", ""
+        )
+
+        assert list(AthosNoticeFilter()([collection, notice])) == [collection]
+
+    def test_marker_is_configurable_for_another_deployment_wording(self):
+        import datetime
+
+        from waste_collection_schedule.retrievers import AthosNoticeFilter
+
+        records = [
+            (datetime.date(2026, 8, 12), "Restabfallbehaelter"),
+            (datetime.date(2026, 8, 16), "Hinweis zum Kalender"),
+        ]
+
+        kept = list(AthosNoticeFilter(marker="Hinweis")(records))
+
+        assert kept == [records[0]]
+
+
 class TestPollingIcsRetriever:
     """GET a property page, poll an async job, then GET the finished .ics."""
 
@@ -5007,7 +5075,6 @@ def test_pipeline_sources_dont_redeclare_init(stem: str, cls: type) -> None:
 _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 
 SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
-    "bielefeld_de",
     "data_umweltprofis_at",
     "erlangen_hoechstadt_de",
     "fredrikstad_no",

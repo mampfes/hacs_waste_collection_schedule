@@ -176,6 +176,7 @@ The default preprocessor wraps a single dict into a one-item list and passes exi
 | `RecurrenceExpander(describe)` | Project a recurring schedule (a weekday plus a cadence) into concrete dates. `describe(record, source)` yields `Schedule` objects. |
 | `Compose(*stages)` | Chain preprocessors. |
 | `HolidayShift(adjust)` | Shift dates that fall on holidays. |
+| `retrievers.AthosNoticeFilter(marker=...)` | The Athos platform's preprocess half (see `AthosWasteManagementRetriever`): drop the announcement VEVENT a deployment's ICS export carries beside its collections. |
 
 `Schedule(key, start, step=WEEKLY, count=1, anchor=False)` describes one recurring series. Use it with `RecurrenceExpander` so the date arithmetic stays in core rather than in your source. For a *seasonal* schedule, set `not_before` / `until` to bound a window (the cadence is then phase-aligned and clipped to that window). For an *A-week / B-week* cadence keyed to the ISO week number, set `step=WEEKLY` and `iso_week_parity="even"` / `"odd"`; the parity is recomputed per date, so it stays correct across 53-week ISO years where naive fortnightly stepping would drift (see `calgary_ca.py`).
 

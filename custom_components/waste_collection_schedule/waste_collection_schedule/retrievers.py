@@ -38,7 +38,7 @@ import json
 import logging
 import re
 import time
-from collections.abc import Callable, Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from typing import TYPE_CHECKING, Any, NamedTuple, Protocol, TypeVar, cast
 from urllib.parse import urljoin
 from weakref import WeakKeyDictionary
@@ -1265,6 +1265,46 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             self._apply_encoding(response)
 
         return response
+
+
+class AthosNoticeFilter:
+    """Drop the notice events an Athos calendar carries beside its collections.
+
+    The servlet's ICS export can contain an announcement VEVENT rather than a
+    collection: bielefeld_de's calendar carries one summarised "Die neue
+    ICal...", which the transformer would otherwise publish as a waste type of
+    its own. This is the preprocess half of the Athos platform, so declare it
+    alongside :class:`AthosWasteManagementRetriever` on a deployment whose
+    export carries one::
+
+        retrieve = AthosWasteManagementRetriever(...)
+        parse = parsers.IcsParser()
+        preprocess = retrievers.AthosNoticeFilter()
+        transform = ICSTransformer(type_value_map={...})
+
+    Opt-in, and deliberately narrow: only one of the ~15 deployments here is
+    known to emit a notice, so a source that does not declare this keeps the
+    default preprocessor and is unaffected. ``marker`` is the substring that
+    identifies the notice, defaulting to that deployment's wording, so a
+    deployment wording its own notice differently passes its own marker rather
+    than needing new code.
+
+    Records are matched at index 1, which is the title in both record shapes an
+    ICS parser yields: the ``(date, summary)`` tuple of ``parsers.IcsParser``
+    and the ``IcsEvent(date, title, ...)`` of ``parsers.IcsEventsParser``.
+
+    Satisfies the ``preprocessors.Preprocessor`` protocol structurally; it is
+    not imported here, so this module keeps depending on nothing downstream of
+    retrieve.
+    """
+
+    def __init__(self, marker: str = "Die neue ICal"):
+        self.marker = marker
+
+    def __call__(
+        self, records: Iterable[Any], source: BaseSource | None = None
+    ) -> Iterator[Any]:
+        return (r for r in records if self.marker not in r[1])
 
 
 class YearlyRetriever(_BaseRetriever):

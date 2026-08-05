@@ -23,7 +23,10 @@ from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
-from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.retrievers import (
+    AthosNoticeFilter,
+    AthosWasteManagementRetriever,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 
 _SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"
@@ -89,6 +92,9 @@ class Source(BaseSource):
         ],
     )
     parse = parsers.IcsParser()
+    # This calendar carries a "Die neue ICal..." announcement VEVENT beside the
+    # collections; the Athos platform drops it.
+    preprocess = AthosNoticeFilter()
     transform = ICSTransformer(
         type_value_map={
             "Restabfallbehaelter": wt.GENERAL_WASTE,
@@ -97,7 +103,3 @@ class Source(BaseSource):
             "Wertstofftonne": wt.RECYCLABLES,
         }
     )
-
-    def preprocess(self, records, source=None):
-        """Drop the calendar's own "Die neue ICal..." announcement VEVENT."""
-        return (r for r in records if "Die neue ICal" not in r[1])
