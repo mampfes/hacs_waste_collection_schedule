@@ -378,3 +378,17 @@ most cases and is trivial when it does not.
 - **Cassette churn.** A diff that rewrites recorded fixtures is a behaviour
   change wearing a refactor's clothes. Recorded requests should be untouched,
   and `git status --short tests/fixtures/` is the check.
+- **A falsy value standing in for a missing one.** Pipeline membership was
+  tested as `if not getattr(cls, "PARAMS", None)` in two gates. A zero-parameter
+  source declares `PARAMS = ()`, which is falsy, so "has no params" and "is not
+  on the pipeline" collapsed into one answer and 21 of the 266 pipeline sources
+  sat outside the entire v3 gate suite. Fourteen of them were violating the
+  waste-types gate, including `koppl_at`, which is issue #6935's own first
+  example and a reference conversion in `CLAUDE.md`. The proxy also hid a fifth
+  `ALL_TYPES` source nobody had counted. Membership is `issubclass(cls,
+  BaseSource)`; `tools/loc_report.py` already got this right, and the tests were
+  simply left behind. Look for the same shape wherever an empty collection, a
+  zero, or an empty string is the legitimate value of an attribute whose
+  *presence* is what is being tested. `config_flow._is_new_style_source` still
+  carries this exact bug, which is tracked separately because fixing it changes
+  runtime behaviour.

@@ -62,6 +62,13 @@ class Source(BaseSource):
     # Use optional=True / default=... rather than dataclasses.replace.
     PARAMS = (uprn(),)
 
+    # >>> The canonical types this source actually produces, derived by replaying
+    # your recorded cassette. Declare it: the auto-derivation reads only the
+    # type_value_map below, so it misses everything the shared vocabulary
+    # resolves, and a transformer with no map at all falls back to the whole
+    # ALL_TYPES catalogue. tests/test_declared_waste_types.py rejects both.
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
+
     # >>> Per-language guidance shown in the config form (en/de/fr/it).
     HOWTO: ClassVar[dict] = {
         "en": "Find your UPRN at https://www.findmyaddress.co.uk/",

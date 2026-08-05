@@ -20,6 +20,16 @@ class Source(BaseSource):
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
 
+    # The vocabulary this feed actually produces, derived by replaying the
+    # recorded cassette. Declared explicitly because most of these labels are
+    # resolved by the shared vocabulary rather than listed in type_value_map,
+    # so the auto-derived set would be incomplete.
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
+
     TEST_CASES: ClassVar[dict] = {
         "Kronstorf": {},
     }

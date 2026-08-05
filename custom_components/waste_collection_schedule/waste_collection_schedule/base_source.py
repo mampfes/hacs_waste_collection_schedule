@@ -83,11 +83,16 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     REGIONS: "ClassVar[tuple[Region, ...] | Callable[[], list[Region]]]" = ()
 
     # --- Waste types this source produces ---
-    # Auto-derived from transform.waste_types when not explicitly declared.
-    # A transformer with an explicit type_value_map yields that subset; one that
-    # relies solely on the shared multilingual resolver could produce any
-    # canonical type, so it derives ALL_TYPES. Explicit declaration takes
-    # precedence (e.g. classify()-based sources).
+    # DECLARE THIS. It drives the config-flow waste-type dropdown, so it has to
+    # be the set the source really emits, derived by replaying its cassette.
+    #
+    # The auto-derivation below is a fallback, and it is wrong in two ways that
+    # tests/test_declared_waste_types.py exists to catch. It reads only a
+    # transformer's explicit type_value_map, so every type the shared
+    # multilingual resolver classifies for free is missing from the derived set;
+    # and a transformer with no map at all cannot be narrowed, so it derives the
+    # whole ALL_TYPES catalogue, which declares nothing. Explicit declaration
+    # takes precedence, and a classify()-based source has no derivation at all.
     WASTE_TYPES: ClassVar[list[WasteType]] = []
 
     def __init_subclass__(cls, **kwargs):

@@ -19,8 +19,8 @@ asserts that every returned ``waste_type.id`` is one the source declares,
 ignoring ``preserved:`` ids (an intentionally kept unknown label). It also flags
 the ``ALL_TYPES`` fallback as a non-declaration.
 
-Only new-style pipeline sources (those with ``PARAMS``) are gated; legacy
-``fetch()`` sources have no canonical vocabulary to check. Generic-engine
+Only new-style pipeline sources (those subclassing ``BaseSource``) are gated;
+legacy ``fetch()`` sources have no canonical vocabulary to check. Generic-engine
 modules (``ics`` and friends in ``BLACK_LIST``) are exempt: they pass provider
 titles straight through and have no fixed vocabulary to declare.
 
@@ -47,6 +47,7 @@ from importlib import import_module
 
 import cassette
 from fixtures_support import discover_fixtures, slug
+from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.waste_types import ALL_TYPES
 
 from update_docu_links import BLACK_LIST
@@ -109,13 +110,17 @@ def _source_class(module_name: str):
 def _is_gated(module_name: str, cls) -> bool:
     """True if the module is a gateable new-style pipeline source.
 
-    Legacy ``fetch()`` sources (no ``PARAMS``) have no canonical vocabulary to
-    declare, and generic-engine modules pass arbitrary titles through; neither
-    is subject to this gate.
+    Pipeline membership is ``issubclass(cls, BaseSource)`` and nothing else. It
+    used to be read off ``PARAMS`` truthiness, which silently excluded every
+    zero-parameter pipeline source (``PARAMS = ()`` is falsy): 21 of 266
+    sources, all of them fixed-URL ICS calendars, were outside this gate
+    entirely. Legacy ``fetch()`` sources do not subclass ``BaseSource`` and have
+    no canonical vocabulary to declare; generic-engine modules pass arbitrary
+    titles through. Neither is subject to this gate.
     """
     if cls is None:
         return False
-    if not getattr(cls, "PARAMS", None):
+    if not (isinstance(cls, type) and issubclass(cls, BaseSource)):
         return False
     if module_name in _GENERIC_ENGINE_SOURCES:
         return False
@@ -202,6 +207,12 @@ def test_returned_waste_types_are_declared(module_name, case_slug, path):
 # Seeded with the four DE/AT providers from #7028 that could not be recorded
 # from the maintainer's location: bare ``ICSTransformer()`` sources with no
 # cassette, still on the fallback pending a record-and-declare (#6935).
+#
+# There was a fifth. ``jochberg_gv_at`` is a bare ``ICSTransformer()`` too, and
+# it does have a cassette, but ``PARAMS = ()`` made it invisible to ``_is_gated``
+# for as long as gating was read off ``PARAMS`` truthiness, so it was never
+# counted. It is now declared from its cassette (``general_waste`` alone) rather
+# than added here: a source with a recording has no business on this list.
 # ---------------------------------------------------------------------------
 _STATIC_ALL_TYPES_ALLOWLIST: set[str] = {
     "awn_de",
