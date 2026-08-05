@@ -4816,11 +4816,7 @@ class TestWestLothianJsonFallback:
 # Prefer extending the shared component instead.
 # --------------------------------------------------------------------------- #
 
-SOURCE_LOCAL_STEP_EXCEPTIONS = {
-    # regioentsorgung's form-state handling has no second consumer yet; revisit
-    # if another provider on the same platform needs it.
-    "regioentsorgung_de",
-}
+SOURCE_LOCAL_STEP_EXCEPTIONS: set[str] = set()
 
 
 def source_local_step_classes(text: str) -> list[str]:
@@ -5351,12 +5347,7 @@ def test_pipeline_sources_dont_redeclare_init(stem: str, cls: type) -> None:
 
 _STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 
-SOURCES_WITH_LEGACY_STEP_OVERRIDES = {
-    "data_umweltprofis_at",
-    "erlangen_hoechstadt_de",
-    "ics",
-    "regioentsorgung_de",
-}
+SOURCES_WITH_LEGACY_STEP_OVERRIDES: set[str] = set()
 
 
 def _overridden_steps(stem: str) -> list[str]:

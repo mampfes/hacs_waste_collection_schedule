@@ -1,29 +1,31 @@
 """Umweltprofis (umweltprofis.at).
 
 Demonstrates: a single provider exposing two unrelated static GET feeds under
-one source -- a deprecated personal ICS export (``url``) and its replacement,
-a personal XML export (``xmlurl``) -- selected via ``alternatives()`` so the
-config flow accepts exactly one. ``retrieve`` fetches whichever URL was
-given; ``parse`` sniffs the body (an ICS export starts with
-``BEGIN:VCALENDAR``, everything else here is the XML export) and hands off to
-the matching parser: the plain ``ICS()`` service class (after undoing a
-provider quirk in the ``REFRESH-INTERVAL`` property no ICS library accepts as
-written) for the ICS branch, or a small XML walk for the other. Both branches
-produce the same ``(date, summary)`` shape ``ICSTransformer`` expects. No
-``type_value_map``: the legacy source never mapped a type either, and the
-shared multilingual resolver already recognises most of this provider's
-labels, so nothing is lost by not hand-mapping the rest.
+one source -- a deprecated personal ICS export (``url``) and its replacement, a
+personal XML export (``xmlurl``) -- selected via ``alternatives()`` so the
+config flow accepts exactly one. ``HttpGetRetriever`` fetches whichever URL was
+given, and ``ByBodyPrefix`` picks the parser from the body that came back:
+``IcsFeedsParser`` for the iCalendar export, ``XmlDateListParser`` for the
+other. Both produce the same ``(date, summary)`` shape ``ICSTransformer``
+expects.
+
+The ICS branch undoes a provider quirk first, through ``IcsFeedsParser``'s
+``unwrap`` hook: this provider spaces out the ``REFRESH-INTERVAL`` property so
+that no ICS library accepts it as written.
+
+No ``type_value_map``: the legacy source never mapped a type either, and the
+shared multilingual resolver already recognises most of this provider's labels,
+so nothing is lost by not hand-mapping the rest.
 """
 
-import datetime
 from typing import ClassVar, final
-from xml.dom.minidom import parseString
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import alternatives, text_field
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 
 _REFRESH_INTERVAL_FIX = ("REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE=")
@@ -38,20 +40,11 @@ def _resolve_url(
     return resolved
 
 
-def _element_text(element) -> str:
-    return "".join(
-        node.nodeValue for node in element.childNodes if node.nodeType == node.TEXT_NODE
-    )
-
-
-def _parse_xml(text: str) -> list[tuple[datetime.date, str]]:
-    doc = parseString(text)  # nosec B318
-    entries = []
-    for appointment in doc.getElementsByTagName("AppointmentEntry"):
-        date_str = _element_text(appointment.getElementsByTagName("Datum")[0])
-        waste_type = _element_text(appointment.getElementsByTagName("WasteType")[0])
-        entries.append((datetime.datetime.fromisoformat(date_str).date(), waste_type))
-    return entries
+def _repair_refresh_interval(text: str) -> str:
+    """Rejoin the ``REFRESH-INTERVAL`` property this provider spaces out."""
+    for broken, fixed in (_REFRESH_INTERVAL_FIX,):
+        text = text.replace(broken, fixed)
+    return text
 
 
 @final
@@ -98,12 +91,13 @@ class Source(BaseSource):
 
     retrieve = HttpGetRetriever(url=_resolve_url)
 
-    def parse(self, response, source=None):
-        text = response.text
-        if text.lstrip().startswith("BEGIN:VCALENDAR"):
-            for broken, fixed in (_REFRESH_INTERVAL_FIX,):
-                text = text.replace(broken, fixed)
-            return ICS().convert(text)
-        return _parse_xml(text)
+    parse = parsers.ByBodyPrefix(
+        {
+            "BEGIN:VCALENDAR": IcsFeedsParser(
+                parsers.IcsParser(), unwrap=_repair_refresh_interval
+            )
+        },
+        default=parsers.XmlDateListParser("AppointmentEntry", "Datum", "WasteType"),
+    )
 
     transform = ICSTransformer()

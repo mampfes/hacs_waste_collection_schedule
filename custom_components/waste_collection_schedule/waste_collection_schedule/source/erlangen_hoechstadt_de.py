@@ -1,20 +1,38 @@
 """Landkreis Erlangen-Höchstadt.
 
-Demonstrates: the "year-window, single feed per year" shape. The provider's
-ICS endpoint takes the year as a query parameter, so a ``retrieve`` override
-fetches the current year (and, in December, the following year too, since the
-provider publishes it early) and merges the results.
+Demonstrates: the "year-window, single feed per year" shape, which turned out to
+need no source code at all. The provider's ICS endpoint takes the year as a
+query parameter, and ``IcsSessionRetriever`` already fetches one feed per
+calendar year the schedule can span: the current year and, in December, the
+following one too, since the provider publishes it early. There are no
+preparatory requests to make here, so ``steps`` stays empty and the retriever
+reduces to that per-year GET, with ``IcsFeedsParser`` merging the years.
+
+``require_lookahead=True`` keeps the year-end contract the hand-written
+``retrieve`` had: a provider that answers for the current year but errors on the
+following one is a provider that has changed something, and is worth surfacing
+rather than half-swallowing. An *empty* following year is a different thing and
+still passes through, leaving the current year's collections intact.
 """
 
-import datetime
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_URL = "https://www.erlangen-hoechstadt.de/komx/surface/dfxabfallics/GetAbfallIcs"
+
+
+def _feed_params(year: int, city: str, street: str, **_: object) -> "dict[str, object]":
+    return {
+        "ort": city.upper(),
+        "strasse": street,
+        "abfallart": "Alle",
+        "jahr": year,
+    }
 
 
 @final
@@ -33,28 +51,13 @@ class Source(BaseSource):
 
     PARAMS = (city(), street())
 
-    def retrieve(self, source):
-        today = datetime.date.today()
-        years = [today.year, today.year + 1] if today.month == 12 else [today.year]
+    retrieve = IcsSessionRetriever(
+        feed_url=_API_URL,
+        feed_params=_feed_params,
+        encoding="utf-8",
+        require_lookahead=True,
+    )
 
-        texts: list[str] = []
-        for year in years:
-            payload = {
-                "ort": self.params["city"].upper(),
-                "strasse": self.params["street"],
-                "abfallart": "Alle",
-                "jahr": year,
-            }
-            r = self.session.get(_API_URL, params=payload)
-            r.raise_for_status()
-            r.encoding = "utf-8"
-            texts.append(r.text)
-        return texts
-
-    def parse(self, response, source=None):
-        entries: list = []
-        for text in response:
-            entries.extend(ICS(split_at=" / ").convert(text))
-        return entries
+    parse = IcsFeedsParser(parsers.IcsParser(split_at=" / "))
 
     transform = ICSTransformer()
