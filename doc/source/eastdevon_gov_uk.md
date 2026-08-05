@@ -2,6 +2,8 @@
 
 Support for schedules provided by [East Devon District Council](https://eastdevon.gov.uk/), serving East Devon, UK.
 
+Data is retrieved from East Devon's Cloud9 citizen mobile API (same backend as the official East Devon app).
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -30,10 +32,10 @@ waste_collection_schedule:
 
 ## How to find your UPRN
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by looking at the url of you collection schedule on the East Devon District Council website. The set of numbers at the end of the url are your uprn.
+An easy way to discover your Unique Property Reference Number (UPRN) is by looking at the url of your collection schedule on the East Devon District Council website. The set of numbers at the end of the url are your uprn.
 
 For example: 
 eastdevon.gov.uk/recycling-and-waste/recycling-and-waste-information/when-is-my-bin-collected/?UPRN=`010000246114`_
 
-Alternatively, you can go to  to [Find My Address](https://www.findmyaddress.co.uk/) and search for
+Alternatively, you can go to [Find My Address](https://www.findmyaddress.co.uk/) and search for
 your address.
