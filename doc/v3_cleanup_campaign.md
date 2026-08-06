@@ -70,20 +70,115 @@ them. One agent did this across all 674 recordings for an unconditional change
 to the ICS repair path, and that diff, not the passing test count, is what made
 the change reviewable.
 
-### Where the safety property does not hold: POST bodies
+### Where the safety property does not hold: what a cassette pins
 
-Replay proves less than it looks for a source that POSTs. `tests/cassette.py`
-matches on an exact key (method, url and a body hash) and then falls back to
-matching on method and url alone, and a recorded interaction does not store the
-request body. So when a refactor changes a POST body, the key misses, the
-fallback matches anyway, and the test goes green having checked nothing about
-what was sent. There are 859 POST interactions across 92 sources.
+Replay proves less than it looks, and not only for a source that POSTs.
+`tests/cassette.py` matches on an exact key (method, url and a body hash) and
+then falls back to matching on method and url alone. A recorded interaction did
+not store the request body, so when a refactor changed what was sent, the key
+missed, the fallback matched anyway, and the test went green having checked
+nothing.
 
-This is tracked as #7102 and should be fixed in the harness. Until it is, a
-migration that touches how a request is built must compare the outgoing bodies
-by hand, by instrumenting the session layer, and say so in the PR. An agent
-doing the Athos wizard did this unprompted and hash-matched three POST bodies
-field-for-field; that is the standard, not a bonus.
+The measured exposure on `5ddeff3f`, over 682 cassettes and 2,535 recorded
+interactions:
+
+| | interactions | sources |
+|---|---|---|
+| POST | 870 | 93 |
+| any payload hashed into the key but not stored (POST bodies and GET query strings alike) | 1,768 | 202 |
+
+The second row is the real figure. A GET is not safer than a POST here: its
+`params` go into the hash, and the first fallback candidate is the bare url,
+which ignores them entirely. A run of the real gate with a plugin adding one
+junk field to every outgoing request passed 679 of 682 replays with 1,634
+deliberately altered requests, and 108 of 108 GET-only sources passed with a
+changed `params`.
+
+Two details worth knowing:
+
+- **`_body_hash` returns on the first of `json`, `data`, `params` that is
+  present.** A source sending `params=` beside a `json=` body had its params in
+  neither the key nor anywhere else, so changing them was invisible even in
+  principle.
+- **The fallback takes the first *unused* match, so requests sharing a URL are
+  paired positionally.** This is worse than "a change is not noticed": a changed
+  body can be handed the response recorded for a *different* request. `awg_de`
+  POSTs three times to one servlet URL and replays entirely that way.
+
+#### What is fixed, and what is not
+
+A recorded interaction now stores a `body`: every payload slot at once (`json`,
+`data`, `params`, `files`), canonically rendered so key order cannot matter and
+so `data={"a": 1}`, `data="a=1"` and a prepared `b"a=1"` all render the same.
+Replay compares it and fails loudly, printing recorded against sent.
+
+The change is **additive**, and that limit matters more than the fix. A cassette
+with no `body` field keeps replaying exactly as it did, because seven pipeline
+sources cannot be recorded from this location at all (see the table below) and a
+fix that forced a re-record would strand them permanently. So **nothing already
+committed gained anything**: of the 2,476 requests a full replay serves, 341
+still match on the loose fallback, across 120 of the 682 cassettes, and 31
+cassettes pin nothing whatsoever.
+
+Two gates in `tests/test_offline_fixtures.py` hold that remainder, and it takes
+two because one number cannot do both jobs:
+
+- `UNPINNED_INTERACTIONS` counts recorded interactions with no stored body. It
+  is a static property of the committed fixtures, so it is exact, and only a
+  re-record moves it. **That is the ratchet: lower it every time you re-record.**
+- `FALLBACK_BUDGET` caps how many requests a full replay serves off the
+  fallback. It catches what the static count cannot, a cassette that carries
+  bodies but still falls back, which is what a request-building regression looks
+  like.
+
+Do not tighten `FALLBACK_BUDGET` to the last unit. Measured repeatedly over the
+full tree it lands between 338 and 341, because two sources do not issue
+identical requests twice: `app_abfallplus_de` puts a fresh `uuid4` in its POST
+body, and `lobbe_app` varies by one on three cassettes. The ceiling carries a
+margin of that order and no more.
+
+Re-record opportunistically: when you touch a source with a cassette,
+`python tests/record_fixtures.py <module>` gives it request bodies and lets you
+lower `UNPINNED_INTERACTIONS`.
+
+**Re-recording is not universally safe, and this is the trap to know about.** A
+source that puts a value in its request that changes from run to run cannot be
+pinned. Once its cassette stores a body, replay compares that body, and the
+recorded random value will never be sent again. `app_abfallplus_de` is exactly
+this: `AppAbfallplusDe._client` is a fresh `uuid4` that goes into the POST body.
+Its cassettes replay today only because nothing is compared. Re-record one and
+it stops replaying at all. That is a true finding about the source rather than
+about the harness, and the fix belongs in the source, deriving the value
+deterministically (the clock is safe, because replay freezes it), not in
+loosening the matcher. Check for a nonce, a uuid or a wall-clock stamp in the
+request before re-recording, and if there is one, leave the cassette alone and
+say so.
+
+Until a source's cassette carries bodies, a migration that touches how a request
+is built must still compare the outgoing requests by hand:
+
+```bash
+python tests/dump_requests.py <module> > before.txt
+... refactor ...
+python tests/dump_requests.py <module> > after.txt
+diff before.txt after.txt
+```
+
+An agent doing the Athos wizard did this unprompted and hash-matched three POST
+bodies field-for-field; that is the standard, not a bonus.
+
+To check whether a cassette pins anything at all, run the gate against
+`tests/mutate_requests.py`, which alters every outgoing request:
+
+```bash
+python -m pytest tests/test_offline_fixtures.py -q -p tests.mutate_requests
+```
+
+Anything still passing there checked nothing about what it sent. The run today
+is 5 failed, 678 passed: three `awg_de` cases whose hand-built query string
+breaks the URL-folding candidate, and the two `bassendean_wa_gov_au` cases,
+which are the only ones re-recorded so far and so the only ones that notice. As
+fixtures are re-recorded that pass count is what should fall.
 
 ## Sources with no cassette
 
@@ -378,3 +473,17 @@ most cases and is trivial when it does not.
 - **Cassette churn.** A diff that rewrites recorded fixtures is a behaviour
   change wearing a refactor's clothes. Recorded requests should be untouched,
   and `git status --short tests/fixtures/` is the check.
+- **A falsy value standing in for a missing one.** Pipeline membership was
+  tested as `if not getattr(cls, "PARAMS", None)` in two gates. A zero-parameter
+  source declares `PARAMS = ()`, which is falsy, so "has no params" and "is not
+  on the pipeline" collapsed into one answer and 21 of the 266 pipeline sources
+  sat outside the entire v3 gate suite. Fourteen of them were violating the
+  waste-types gate, including `koppl_at`, which is issue #6935's own first
+  example and a reference conversion in `CLAUDE.md`. The proxy also hid a fifth
+  `ALL_TYPES` source nobody had counted. Membership is `issubclass(cls,
+  BaseSource)`; `tools/loc_report.py` already got this right, and the tests were
+  simply left behind. Look for the same shape wherever an empty collection, a
+  zero, or an empty string is the legitimate value of an attribute whose
+  *presence* is what is being tested. `config_flow._is_new_style_source` still
+  carries this exact bug, which is tracked separately because fixing it changes
+  runtime behaviour.

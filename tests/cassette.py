@@ -18,6 +18,23 @@ recorded twice.
 
 Cassettes are matched by method + URL (+ a body hash for POSTs), consumed in
 order so repeated identical requests replay correctly.
+
+A recorded interaction also stores the request body, canonically rendered (see
+``_body``), and replay rejects a request whose body differs from the recorded
+one. Cassettes recorded before that field existed have no ``body`` key and are
+matched exactly as they were, so nothing has to be re-recorded; the two gates in
+``tests/test_offline_fixtures.py`` (``UNPINNED_INTERACTIONS`` and
+``FALLBACK_BUDGET``) are what stop that unpinned remainder growing while
+fixtures are refreshed.
+
+One consequence is worth knowing before re-recording anything. A source that
+puts a value in its request that changes from run to run cannot be pinned: the
+recorded body holds the value from recording day and will never be sent again,
+so the cassette stops replaying. A clock-derived value is safe, because replay
+freezes the clock to the recording date, but a nonce or a uuid is not
+(``AppAbfallplusDe`` sends a fresh ``uuid4`` in its POST body). That is a defect
+in the source, not in this matcher: make the value deterministic rather than
+loosening the comparison.
 """
 
 from __future__ import annotations
@@ -26,14 +43,28 @@ import base64
 import contextlib
 import hashlib
 import json
+import os
 import threading
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import parse_qsl, urlencode
 
 import curl_cffi.requests as _cffi
 import requests
 import requests.sessions as _requests_sessions
 from freezegun import freeze_time
+
+# How many requests each replayed cassette served off the loose method+url
+# fallback rather than the exact key, keyed by absolute cassette path. A
+# fallback match is a request the cassette did not really pin, so the total is a
+# debt figure the gate in tests/test_offline_fixtures.py holds to a budget.
+# Keyed by path (rather than a running total) because more than one test module
+# replays the same cassettes in a run, and a per-path count is the same whoever
+# produced it, so re-replaying a cassette overwrites rather than double-counts.
+REPLAY_FALLBACKS: dict[str, int] = {}
+
+# How many requests each replayed cassette served in total, same keying, so the
+# fallback figure can be reported as a share rather than a bare count.
+REPLAY_MATCHES: dict[str, int] = {}
 
 
 def _body_hash(kwargs: dict) -> str:
@@ -49,6 +80,129 @@ def _body_hash(kwargs: dict) -> str:
 
 def _key(method: str, url: str, kwargs: dict) -> str:
     return f"{method.upper()} {url} {_body_hash(kwargs)}"
+
+
+def _decode(raw: bytes) -> str:
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return "base64:" + base64.b64encode(raw).decode("ascii")
+
+
+def _canonical(value: Any) -> Any:
+    """``value`` with every mapping key-sorted, so key order cannot matter.
+
+    Sequences keep their order, because for a payload a list is a list. Anything
+    that is not JSON-representable (a file handle, a generator) falls back to
+    ``repr``, which is stable enough to compare within one process and is not
+    something a source should be sending anyway.
+    """
+    if isinstance(value, dict):
+        return {
+            str(k): _canonical(v)
+            for k, v in sorted(value.items(), key=lambda kv: str(kv[0]))
+        }
+    if isinstance(value, (list, tuple)):
+        return [_canonical(v) for v in value]
+    if isinstance(value, bytes):
+        return _decode(value)
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    return repr(value)
+
+
+def _form_pairs(text: str) -> list[list[str]] | None:
+    """``text`` as sorted key/value pairs if it is a query string, else None."""
+    stripped = text.strip()
+    if not stripped or "\n" in stripped or "\r" in stripped:
+        return None
+    try:
+        pairs = parse_qsl(stripped, keep_blank_values=True, strict_parsing=True)
+    except ValueError:
+        return None
+    return sorted([k, v] for k, v in pairs)
+
+
+def _normalise_multipart(text: str) -> str:
+    """A multipart body with its random boundary replaced by a fixed token.
+
+    ``requests`` invents a fresh boundary for every multipart request, so the
+    same logical body is never byte-identical twice. Left alone, such a body
+    could never match its own recording.
+    """
+    if not text.startswith("--"):
+        return text
+    boundary = text[2:].split("\n", 1)[0].strip()
+    if not boundary:
+        return text
+    return text.replace(boundary, "MULTIPART-BOUNDARY")
+
+
+def _payload(value: Any) -> Any:
+    """An already-encoded or about-to-be-encoded payload, canonically rendered.
+
+    The same HTTP request can be written several ways: ``data={"a": 1}``,
+    ``data="a=1"``, or a ``PreparedRequest`` whose ``body`` is ``b"a=1"``. All
+    three must render identically, or a refactor that only changes how a body is
+    built would read as a behaviour change.
+    """
+    if isinstance(value, bytes):
+        value = _decode(value)
+    if isinstance(value, str):
+        stripped = value.strip()
+        if stripped[:1] in ("{", "["):
+            try:
+                return _canonical(json.loads(stripped))
+            except ValueError:
+                pass
+        pairs = _form_pairs(value)
+        return _normalise_multipart(value) if pairs is None else pairs
+    if isinstance(value, dict):
+        items: Any = value.items()
+    elif isinstance(value, (list, tuple)):
+        try:
+            items = [(k, v) for k, v in value]
+        except (TypeError, ValueError):
+            return _canonical(value)
+    else:
+        return _canonical(value)
+    out: list[list[str]] = []
+    for k, v in items:
+        if isinstance(v, (list, tuple)):
+            out.extend([str(k), str(x)] for x in v)
+        else:
+            out.append([str(k), str(v)])
+    return sorted(out)
+
+
+def _render(parts: dict[str, Any]) -> str:
+    return json.dumps(
+        parts, sort_keys=True, ensure_ascii=False, separators=(",", ":"), default=repr
+    )
+
+
+def _body(kwargs: dict, with_params: bool = True) -> str:
+    """Everything the request carries beyond method and URL, as one string.
+
+    Unlike ``_body_hash``, which returns on the first of ``json``/``data``/
+    ``params`` it finds, this covers every payload slot at once. That is the
+    half of #7102 the hash could not see: a source sending ``json=`` alongside
+    ``params=`` had its params in neither the key nor anywhere else, so
+    changing them was invisible.
+
+    ``with_params=False`` drops the ``params`` slot, for the one match path that
+    compares params inside the URL instead (see ``_url_with_params``).
+    """
+    parts: dict[str, Any] = {}
+    if kwargs.get("json") is not None:
+        parts["body"] = _canonical(kwargs["json"])
+    if kwargs.get("data") is not None:
+        parts["data" if "body" in parts else "body"] = _payload(kwargs["data"])
+    if kwargs.get("files") is not None:
+        parts["files"] = _canonical(kwargs["files"])
+    if with_params and kwargs.get("params") is not None:
+        parts["params"] = _payload(kwargs["params"])
+    return _render(parts) if parts else ""
 
 
 def _url_with_params(url: str, kwargs: dict) -> str:
@@ -145,11 +299,17 @@ def _capture(resp: Any, method: str, url: str, kwargs: dict) -> dict:
     # id was simply absent. Kept as a separate field so cassettes recorded
     # before this still load, with the request URL as the fallback.
     final_url = str(getattr(resp, "url", "") or "") or url
+    # The body the request actually carried. Recorded because the key holds only
+    # a hash of it, and only of one payload slot, so replay could not tell a
+    # changed body from an unchanged one and matched it anyway (#7102). Always
+    # written, empty string included, so that a missing key means "recorded
+    # before this existed" rather than "carried nothing".
     return {
         "key": _key(method, url, kwargs),
         "method": method.upper(),
         "url": url,
         "final_url": final_url,
+        "body": _body(kwargs),
         "status": resp.status_code,
         "encoding": getattr(resp, "encoding", None),
         "headers": headers,
@@ -173,6 +333,18 @@ def _prepared_key(request: Any) -> str:
     return f"{request.method.upper()} {request.url} {body_hash}"
 
 
+def _prepared_body(request: Any) -> str:
+    """The ``body`` field for a ``PreparedRequest``.
+
+    Rendered into the same ``body`` slot the ``request()`` path uses, so a
+    ``json=``/``data=`` call and the prepared request it becomes render the same
+    string. Params are already in ``request.url`` here, so there is no params
+    slot to render.
+    """
+    body = getattr(request, "body", None)
+    return _render({"body": _payload(body)}) if body is not None else ""
+
+
 def _capture_prepared(resp: Any, request: Any) -> dict:
     try:
         headers = dict(resp.headers)
@@ -182,6 +354,7 @@ def _capture_prepared(resp: Any, request: Any) -> dict:
         "key": _prepared_key(request),
         "method": request.method.upper(),
         "url": request.url,
+        "body": _prepared_body(request),
         "status": resp.status_code,
         "encoding": getattr(resp, "encoding", None),
         "headers": headers,
@@ -264,15 +437,47 @@ def replaying(path: str):
         cassette = json.load(fh)
     interactions = cassette["interactions"]
     used = [False] * len(interactions)
+    fallbacks = 0
+    matches = 0
 
-    def _find(key: str, method: str, url: str, full_url: str | None = None) -> dict:
+    def _body_ok(recorded: dict, sent: tuple[str, ...], rejected: list[str]) -> bool:
+        """Whether ``recorded``'s body permits it to serve this request.
+
+        A cassette recorded before bodies were stored has no ``body`` key, and
+        must keep replaying exactly as it did, so an absent field waives the
+        check. Present, it has to match one of the renderings of what was sent.
+        """
+        body = recorded.get("body")
+        if body is None or body in sent:
+            return True
+        rejected.append(body)
+        return False
+
+    def _find(
+        key: str,
+        method: str,
+        url: str,
+        full_url: str | None = None,
+        body: str = "",
+        body_sans_params: str | None = None,
+    ) -> dict:
+        nonlocal fallbacks, matches
+        matches += 1
+        rejected: list[str] = []
         for i, it in enumerate(interactions):
-            if not used[i] and it["key"] == key:
+            if not used[i] and it["key"] == key and _body_ok(it, (body,), rejected):
                 used[i] = True
                 return it
         # Fall back to method+url (body may not reproduce byte-for-byte), then
         # to the url with any params folded in (recorded as a hand-built query).
-        for candidate in (url, full_url):
+        # The second candidate compares params inside the URL, so the body it
+        # accepts is the one with the params slot dropped.
+        folded = body if body_sans_params is None else body_sans_params
+        candidates: tuple[tuple[str | None, tuple[str, ...]], ...] = (
+            (url, (body,)),
+            (full_url, (body, folded)),
+        )
+        for candidate, sent in candidates:
             if candidate is None:
                 continue
             for i, it in enumerate(interactions):
@@ -280,25 +485,45 @@ def replaying(path: str):
                     not used[i]
                     and it["method"] == method.upper()
                     and it["url"] == candidate
+                    and _body_ok(it, sent, rejected)
                 ):
                     used[i] = True
+                    fallbacks += 1
                     return it
+        if rejected:
+            raise AssertionError(
+                f"recorded request body does not match what was sent for "
+                f"{method.upper()} {url}\n"
+                f"  recorded: {' | '.join(dict.fromkeys(rejected))}\n"
+                f"  sent:     {body}"
+            )
         raise AssertionError(f"no recorded interaction for {method.upper()} {url}")
 
-    def lookup(method: str, url: str, kwargs: dict) -> CassetteResponse:
-        return CassetteResponse(
-            _find(_key(method, url, kwargs), method, url, _url_with_params(url, kwargs))
+    def _find_by_kwargs(method: str, url: str, kwargs: dict) -> dict:
+        return _find(
+            _key(method, url, kwargs),
+            method,
+            url,
+            _url_with_params(url, kwargs),
+            _body(kwargs),
+            _body(kwargs, with_params=False),
         )
+
+    def lookup(method: str, url: str, kwargs: dict) -> CassetteResponse:
+        return CassetteResponse(_find_by_kwargs(method, url, kwargs))
 
     def lookup_prepared(request: Any) -> requests.Response:
         return _requests_response(
-            _find(_prepared_key(request), request.method, request.url)
+            _find(
+                _prepared_key(request),
+                request.method,
+                request.url,
+                body=_prepared_body(request),
+            )
         )
 
     def lookup_request_real(method: str, url: str, kwargs: dict) -> requests.Response:
-        return _requests_response(
-            _find(_key(method, url, kwargs), method, url, _url_with_params(url, kwargs))
-        )
+        return _requests_response(_find_by_kwargs(method, url, kwargs))
 
     orig_cffi_request = _cffi.Session.request
     orig_request = _requests_sessions.Session.request
@@ -327,3 +552,5 @@ def replaying(path: str):
         _cffi.Session.request = orig_cffi_request  # type: ignore[method-assign]
         _requests_sessions.Session.request = orig_request  # type: ignore[method-assign]
         _requests_sessions.Session.send = orig_send  # type: ignore[method-assign]
+        REPLAY_FALLBACKS[os.path.abspath(path)] = fallbacks
+        REPLAY_MATCHES[os.path.abspath(path)] = matches

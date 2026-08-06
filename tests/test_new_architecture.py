@@ -4309,8 +4309,15 @@ class TestSourceShellDedicatedCalendars:
 
 
 def _discover_new_style_sources():
-    """Find all new-style source modules (those with PARAMS)."""
+    """Find all new-style source modules (those subclassing ``BaseSource``).
+
+    Membership is the base class, never ``PARAMS`` truthiness. A zero-parameter
+    pipeline source declares ``PARAMS = ()``, which is falsy, so the old test
+    hid 21 of the 266 pipeline sources from every gate in this section.
+    """
     from pathlib import Path
+
+    from waste_collection_schedule.base_source import BaseSource
 
     source_dir = Path(__file__).resolve().parent.parent / (
         "custom_components/waste_collection_schedule/waste_collection_schedule/source"
@@ -4330,7 +4337,7 @@ def _discover_new_style_sources():
         source_cls = getattr(module, "Source", None)
         if source_cls is None:
             continue
-        if not getattr(source_cls, "PARAMS", None):
+        if not (isinstance(source_cls, type) and issubclass(source_cls, BaseSource)):
             continue
         sources.append((py_file.stem, source_cls))
     return sources

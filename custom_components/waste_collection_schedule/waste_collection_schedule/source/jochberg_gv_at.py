@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import HttpGetRetriever
@@ -27,6 +28,14 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+
+    # The vocabulary this feed actually produces, derived by replaying the
+    # recorded cassette. Declared explicitly because a bare ICSTransformer()
+    # otherwise falls back to the whole ALL_TYPES catalogue, which declares
+    # nothing.
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Jochberg": {},

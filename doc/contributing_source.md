@@ -525,7 +525,15 @@ REGIONS = regions.from_yaml("abfall_io", key="service_id")
 **Only a build-time registry can move.** `from_yaml()` reads `doc/`, which a HACS install does not ship, so it yields `[]` at runtime. That is safe for `REGIONS`, which drives the generated listings that the config flow then reads back from JSON. A registry the source needs *while fetching* must stay in Python: `insert_it_de` and `cmcitymedia_de` are the two, and they are named in the gate's allowlist with the reason.
 | `EXTRA_INFO` | list or callable | **Legacy sources only. A pipeline source must not declare it**, and `test_pipeline_sources_do_not_use_extra_info` rejects one that does. It is the older dict form of `REGIONS` (`title`, `url`, `country`, `default_params`), whose params are not validated against `PARAMS`; `regions.from_extra_info()` adapts it into `Region`s at a single boundary purely so the rest of the toolchain works in `Region` terms only. The adapter is a bridge for the legacy sources still using it, and is deleted with the last of them (see [`legacy_deprecation_plan.md`](legacy_deprecation_plan.md)). |
 
-`WASTE_TYPES` is derived automatically from the transformer, so you do not declare it unless you use `classify()` (then list the types your source can produce).
+**`WASTE_TYPES`: declare what your source actually produces.** The auto-derivation is a starting point, not an answer. It reads only a transformer's explicit `type_value_map`, so it misses every type the shared vocabulary resolves for you, and a bare transformer with no map falls back to the whole `ALL_TYPES` catalogue, which declares nothing at all. Both shapes are wrong in the config-flow dropdown that reads this list.
+
+Derive the real set by replaying your recorded cassette, then declare it:
+
+```python
+WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC]
+```
+
+`tests/test_declared_waste_types.py` replays every cassette and fails a source that returns a canonical type it did not declare, or that declares the whole catalogue. A `classify()`-based source has no derivation at all, so it must always declare.
 
 ## Auto-generated files
 
@@ -608,6 +616,27 @@ An **empty** `tests/fixtures/<module>/` directory is not a recording: git cannot
 store an empty directory, so one on your machine is local debris from an
 interrupted run. That is what let the per-source backlog go stale, since an empty
 directory reads as a recorded source until you list it.
+
+**What a cassette pins.** A recorded interaction stores the request body: every
+payload slot at once (`json`, `data`, `params`, `files`), canonically rendered so
+key order cannot matter and so `data={"a": 1}`, `data="a=1"` and the prepared
+`b"a=1"` all compare equal. Replay fails, printing recorded against sent, if a
+source sends something the recording did not. That is what makes a refactor
+verifiable offline: change how a request is built and the replay tells you.
+
+Cassettes recorded before this (#7102) have no `body` field and are matched on
+method and URL alone, which pins nothing about the payload. They are left that
+way on purpose, because several sources cannot be re-recorded from outside their
+region at all. `FALLBACK_BUDGET` in `tests/test_offline_fixtures.py` counts how
+many requests are still matched that loosely, and only ever ratchets down: if you
+re-record a source, lower it. To see which case a source is in, replay it against
+the mutation plugin, which alters every outgoing request:
+
+```bash
+python -m pytest tests/test_offline_fixtures.py -k <module> -p tests.mutate_requests
+```
+
+A replay that still passes there checked nothing about what it sent.
 
 For JSON sources, also declare the response shape and pass it to the parser
 (`parse = parsers.JsonParser(shape=MyResponse)`). A `TypedDict`/`list[...]`

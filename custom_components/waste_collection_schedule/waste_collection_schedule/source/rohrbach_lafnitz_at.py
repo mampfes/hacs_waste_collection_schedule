@@ -34,6 +34,18 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
 
+    # The vocabulary this feed actually produces, derived by replaying the
+    # recorded cassette. Declared explicitly because most of these labels are
+    # resolved by the shared vocabulary rather than listed in type_value_map,
+    # so the auto-derived set would be incomplete.
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+    ]
+
     TEST_CASES: ClassVar[dict] = {
         "All waste types": {},
     }

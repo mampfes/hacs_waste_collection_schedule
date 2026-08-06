@@ -108,7 +108,11 @@ Both styles need this metadata (on the class for pipeline sources, at module lev
 | `COUNTRY` | `str` | **Lowercase code** from `update_docu_links.py`'s `COUNTRYCODES` list. UK = `"uk"` (NOT `"gb"`); Canada = `"ca"` (lowercase). An invalid value silently orphans the source out of README/info/sources.json. |
 | `TEST_CASES` | `dict` | Maps test-case name to constructor kwargs. Must not be empty. |
 
-Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`), but no `__init__`. Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
+Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), `WASTE_TYPES`, the step attributes, and a `transformer` (or `classify()`), but no `__init__`. Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
+
+**Declare `WASTE_TYPES` explicitly**, as the canonical types the source actually produces, derived by replaying its cassette. `BaseSource.__init_subclass__` will auto-derive it, but only from a transformer's explicit `type_value_map`, so it misses everything the shared vocabulary resolves; a bare transformer with no map falls back to the whole `ALL_TYPES` catalogue, which declares nothing. `tests/test_declared_waste_types.py` replays every cassette and rejects both shapes. The list feeds the config-flow waste-type dropdown and nothing else.
+
+**Pipeline membership is `issubclass(Source, BaseSource)`, never `PARAMS` truthiness.** A zero-parameter pipeline source declares `PARAMS = ()`, which is falsy; testing that instead hid 21 of the 266 pipeline sources from the whole v3 gate suite. Write the base-class check in any new tool or gate.
 
 **Cassette rule (enforced).** Every pipeline source ships a recorded cassette under `tests/fixtures/<module>/`, **one per `TEST_CASES` entry**, named by slugging the case key (`"Amagerbrogade 10"` → `amagerbrogade_10.json`). CI replays them offline instead of calling live providers. Record with `python tests/record_fixtures.py <module>` and commit the JSON.
 
@@ -122,6 +126,8 @@ Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the 
 | `test_no_cassettes_without_a_source` | recordings left behind by a deleted source |
 
 Both backlogs are debt registers, not exemptions: record the case and delete its line. Note an *empty* fixture directory is untracked local debris (git cannot store an empty directory) and does not count as a recording, which is what let the per-source backlog go stale. A shared-service source keeps one cassette per distinct response shape.
+
+**What a cassette pins.** A recording stores the request body (every payload slot at once: `json`, `data`, `params`, `files`, canonically rendered), and replay fails if a source sends something the recording did not. Cassettes recorded before #7102 have no `body` field and are still matched on method and URL alone, pinning nothing about the payload; that is deliberate, because several sources cannot be re-recorded from outside their region. `FALLBACK_BUDGET` in `tests/test_offline_fixtures.py` counts how many requests are still matched that loosely and only ratchets down, so lower it whenever you re-record a source. `python -m pytest tests/test_offline_fixtures.py -k <module> -p tests.mutate_requests` alters every outgoing request and says which case a source is in: a replay that still passes checked nothing about what it sent.
 
 **Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails on any source that declares its own `Retriever` or `Parser` subclass, with a narrow allowlist for genuinely single-consumer cases. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
 
