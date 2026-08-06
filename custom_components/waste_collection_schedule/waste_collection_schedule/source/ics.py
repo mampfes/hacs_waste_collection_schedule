@@ -14,14 +14,9 @@ arbitrary numeric/boolean/dict fields (``offset``, ``verify_ssl``, extra POST
 ``params``, extra ``headers``) needs no config-flow UI compromise.
 """
 
-import datetime
-import logging
-import re
-from os import getcwd
 from pathlib import Path
 from typing import Any, ClassVar, final
 
-from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -32,13 +27,12 @@ from waste_collection_schedule.config_params import (
     raw_object,
     text_field,
 )
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
-)
 from waste_collection_schedule.regions import Region
-from waste_collection_schedule.service.ICS import ICS, IcsEvent
+from waste_collection_schedule.service.ICS import (
+    IcsConfiguredParser,
+    IcsConfiguredRetriever,
+    IcsEvent,
+)
 
 # Kept as module-level constants (rather than moved onto the class) so that
 # test_source_components.py's "hasattr(module, name) counts even when falsy"
@@ -134,91 +128,6 @@ TEST_CASES = {
         "url": "https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/entsorgungstermine-2023-digital/altstadt-2023.ics?cid=2ui7",
     },
 }
-
-
-HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-_LOGGER = logging.getLogger(__name__)
-
-
-def _coerce_int(value: Any) -> "int | None":
-    """Coerce a PARAMS-supplied value to int, tolerating None/empty/str/float.
-
-    NumberSelector/YAML/UI callers may hand back a str, float or int; the ICS
-    service and the year-field arithmetic below both want a plain int.
-    """
-    if value is None or value == "":
-        return None
-    return int(value)
-
-
-def _flatten_params(params: "dict | None") -> "list[tuple[str, Any]] | None":
-    """Flatten a params dict to (key, value) pairs, repeating list-valued keys.
-
-    curl_cffi stringifies list-valued params as Python repr instead of
-    repeating the key like ``requests`` does; flatten explicitly so multi-value
-    fields like ``types[]`` still round-trip as repeated query/form keys.
-    """
-    if not params:
-        return None
-    return [
-        (k, item)
-        for k, v in params.items()
-        for item in (v if isinstance(v, list) else [v])
-    ]
-
-
-def _fetch_url(
-    url: str,
-    params: "dict | None",
-    method: str,
-    headers: dict,
-    verify_ssl: bool,
-    impersonate: Any,
-) -> str:
-    # impersonate is free-text (any curl_cffi-supported browser string, e.g.
-    # "chrome124"); curl_cffi's own type is a closed Literal, which a
-    # user-configured value can never statically satisfy, hence Any here.
-    flat_params = _flatten_params(params)
-
-    if method == "GET":
-        r = requests.get(
-            url,
-            params=flat_params,
-            headers=headers,
-            verify=verify_ssl,
-            impersonate=impersonate,
-        )
-    elif method == "POST":
-        r = requests.post(
-            url,
-            data=flat_params,
-            headers=headers,
-            verify=verify_ssl,
-            impersonate=impersonate,
-        )
-    else:
-        raise SourceArgumentNotFoundWithSuggestions("method", method, ["GET", "POST"])
-
-    r.raise_for_status()
-
-    if r.content.startswith(b"\xef\xbb\xbf"):
-        r.encoding = "UTF-8-SIG"
-    else:
-        r.encoding = "utf-8"
-
-    return r.text
-
-
-def _fetch_file(file: str) -> str:
-    try:
-        path = Path(file)
-        with path.open() as f:
-            return f.read()
-    except FileNotFoundError as e:
-        _LOGGER.error(f"Working directory: '{getcwd()}'")
-        raise SourceArgumentException(
-            "file", f"File '{path.resolve()}' not found"
-        ) from e
 
 
 def _normalize_ics_codeowners(owners: Any) -> "list[str]":
@@ -368,105 +277,11 @@ class Source(BaseSource):
         ),
     )
 
-    def retrieve(self, source: "Source") -> "list[str]":
-        params = self.params
-        if params.get("version") is not None:
-            _LOGGER.warning(
-                "The 'version' parameter is deprecated and has no effect anymore."
-            )
-
-        url = params.get("url")
-        file = params.get("file")
-        year_field = params.get("year_field")
-        method = params.get("method") or "GET"
-        verify_ssl = params.get("verify_ssl")
-        if verify_ssl is None:
-            verify_ssl = True
-        impersonate = params.get("impersonate")
-        request_params = params.get("params")
-
-        headers = dict(HEADERS)
-        headers.update(params.get("headers") or {})
-
-        if url is not None:
-            url = re.sub("^webcal", "https", url)
-
-            if "{%Y}" in url or year_field is not None:
-                # url contains wildcard or params contains year field
-                now = datetime.datetime.now()
-
-                this_year_params = dict(request_params) if request_params else None
-                url_this_year = url.replace("{%Y}", str(now.year))
-                if year_field is not None:
-                    if request_params is None:
-                        raise SourceArgumentExceptionMultiple(
-                            ("params", "year_field"),
-                            "year_field specified without params",
-                        )
-                    this_year_params = dict(request_params)
-                    this_year_params[year_field] = str(now.year)
-
-                texts = [
-                    _fetch_url(
-                        url_this_year,
-                        this_year_params,
-                        method,
-                        headers,
-                        verify_ssl,
-                        impersonate,
-                    )
-                ]
-
-                if now.month == 12:
-                    # also get data for next year if we are already in december
-                    url_next_year = url.replace("{%Y}", str(now.year + 1))
-                    next_year_params = dict(request_params) if request_params else None
-                    # year_field implies request_params (checked above for
-                    # url_this_year; request_params is never reassigned in
-                    # between), so next_year_params is never None here -- the
-                    # `is not None` guard just keeps that provable locally
-                    # instead of relying on the earlier raise.
-                    if year_field is not None and next_year_params is not None:
-                        next_year_params[year_field] = str(now.year + 1)
-
-                    try:
-                        texts.append(
-                            _fetch_url(
-                                url_next_year,
-                                next_year_params,
-                                method,
-                                headers,
-                                verify_ssl,
-                                impersonate,
-                            )
-                        )
-                    except Exception:
-                        # ignore if fetch for next year fails
-                        pass
-
-                return texts
-
-            return [
-                _fetch_url(
-                    url, request_params, method, headers, verify_ssl, impersonate
-                )
-            ]
-
-        # alternatives() above guarantees exactly one of url/file is set.
-        assert file is not None
-        return [_fetch_file(file)]
-
-    def parse(self, raw: "list[str]", source: "Source") -> "list[IcsEvent]":
-        ics = ICS(
-            offset=_coerce_int(self.params.get("offset")),
-            split_at=self.params.get("split_at"),
-            regex=self.params.get("regex"),
-            title_template=self.params.get("title_template") or "{{date.summary}}",
-        )
-        events: list[IcsEvent] = []
-        for text in raw:
-            events.extend(ics.convert_events(text))
-        return events
+    # The platform's own retriever and converter: every request and conversion
+    # detail comes from the PARAMS above rather than from this module, so the
+    # ~178 YAML providers folded in here reach them through service/ICS.py.
+    retrieve = IcsConfiguredRetriever()
+    parse = IcsConfiguredParser()
 
     def classify(self, record: IcsEvent) -> Collection:
         return Collection(

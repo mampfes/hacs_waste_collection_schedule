@@ -4,27 +4,24 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisFeatureParser,
+    ArcGisCodedValueParser,
+    ArcGisTwoStepFeatureRetriever,
     epoch_ms_to_date,
-    feature_query,
 )
-from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.transformers import JsonTransformer
 
 # Fredrikstad kommune's MinRenovasjon MapServer splits the flow across two
 # unrelated layers: layer 0 resolves a street address to an "AvtLnr" (renovation
 # agreement number) via an attribute query; layer 1 holds the actual dated pickup
-# events, queried by that AvtLnr. That is two different feature_url values, so
-# the shared ArcGisTwoStepFeatureRetriever (one feature_url for both steps) does
-# not fit; retrieve() queries each layer directly via feature_query and adds a
-# third request for layer 1's field metadata, whose AvfallId coded-value domain
-# supplies the Norwegian waste-type names. parse() decodes that domain and pairs
-# it with the schedule features; a plain ICSTransformer types the (date, label)
-# rows it yields.
+# events, queried by that AvtLnr. That is the shared two-step retriever with its
+# lookup pointed at a second layer (lookup_url). Layer 1 stores the waste type as
+# an integer whose Norwegian names come from the layer's own AvfallId coded-value
+# domain, which ArcGisCodedValueParser decodes onto each feature.
 
 BASE_URL = "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer"
 SCHEDULE_DAYS = 365
+_TIMEOUT = 30
 
 # Static fallback mapping for when the ArcGIS coded value domain does not
 # return proper Norwegian waste type names. Values confirmed by a Fredrikstad
@@ -49,6 +46,21 @@ _TYPE_MAP = {
 }
 
 
+def _lookup_where(**params) -> str:
+    address = params["address"]
+    return f"UPPER(Adresse) = '{address.upper()}' AND AvtStatus = 0"
+
+
+def _schedule_where(avt_lnr, **params) -> str:
+    today = date.today()
+    end_date = today + timedelta(days=SCHEDULE_DAYS)
+    return (
+        f"AvtLnr = {avt_lnr} "
+        f"AND Dato >= date '{today.isoformat()}' "
+        f"AND Dato <= date '{end_date.isoformat()}'"
+    )
+
+
 @final
 class Source(BaseSource):
     TITLE = "Fredrikstad kommune"
@@ -63,61 +75,27 @@ class Source(BaseSource):
 
     PARAMS = (street_address(),)
 
-    transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def retrieve(self, source: "Source"):
-        address = self.params["address"]
-        lookup = feature_query(
-            f"{BASE_URL}/0",
-            where=f"UPPER(Adresse) = '{address.upper()}' AND AvtStatus = 0",
-            out_fields="AvtLnr",
-            timeout=self.TIMEOUT,
-        )
-        matches = ArcGisFeatureParser()(lookup, source)
-        if not matches:
-            raise SourceArgumentNotFound("address", address)
-        avt_lnr = matches[0]["AvtLnr"]
-
-        today = date.today()
-        end_date = today + timedelta(days=SCHEDULE_DAYS)
-        schedule = feature_query(
-            f"{BASE_URL}/1",
-            where=(
-                f"AvtLnr = {avt_lnr} "
-                f"AND Dato >= date '{today.isoformat()}' "
-                f"AND Dato <= date '{end_date.isoformat()}'"
-            ),
-            out_fields="Dato,AvfallId",
-            timeout=self.TIMEOUT,
-        )
-        # The coded-value domain for AvfallId, fetched from the layer's field
-        # metadata rather than /query, so it must go through source.session
-        # directly (feature_query always targets /query).
-        domain = source.session.get(
-            f"{BASE_URL}/1", params={"f": "json"}, timeout=self.TIMEOUT
-        )
-        return schedule, domain
-
-    def parse(self, raw, source: "Source | None" = None) -> list[tuple[date, str]]:
-        schedule_response, domain_response = raw
-        features = ArcGisFeatureParser()(schedule_response, source)
-
-        domain_response.raise_for_status()
-        waste_types: dict[int, str] = {}
-        for field in domain_response.json().get("fields", []):
-            if field["name"] == "AvfallId":
-                domain = field.get("domain") or {}
-                if domain.get("type") == "codedValue":
-                    waste_types = {
-                        cv["code"]: cv["name"] for cv in domain["codedValues"]
-                    }
-                break
-
-        records: list[tuple[date, str]] = []
-        for attrs in features:
-            avfall_id = attrs["AvfallId"]
-            waste_name = waste_types.get(avfall_id) or WASTE_TYPE_FALLBACK.get(
-                avfall_id, f"Avfall {avfall_id}"
-            )
-            records.append((epoch_ms_to_date(attrs["Dato"]), waste_name))
-        return records
+    retrieve = ArcGisTwoStepFeatureRetriever(
+        f"{BASE_URL}/1",
+        lookup_url=f"{BASE_URL}/0",
+        lookup_where=_lookup_where,
+        schedule_where=_schedule_where,
+        argument="address",
+        id_field="AvtLnr",
+        lookup_fields="AvtLnr",
+        out_fields="Dato,AvfallId",
+        timeout=_TIMEOUT,
+    )
+    parse = ArcGisCodedValueParser(
+        f"{BASE_URL}/1",
+        "AvfallId",
+        into="AvfallNavn",
+        fallback=WASTE_TYPE_FALLBACK,
+        unknown="Avfall {code}",
+        timeout=_TIMEOUT,
+    )
+    transform = JsonTransformer(
+        date_key=lambda attrs: epoch_ms_to_date(attrs["Dato"]),
+        type_key="AvfallNavn",
+        type_value_map=_TYPE_MAP,
+    )

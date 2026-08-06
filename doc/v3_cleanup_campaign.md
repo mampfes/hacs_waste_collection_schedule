@@ -1,6 +1,20 @@
 # v3 cleanup campaign: remove source-local pipeline steps
 
-Working document for the migration. Delete it when the count reaches zero.
+**The count reached zero on 2026-08-06.** 263 of 263 pipeline sources are fully
+declarative and `SOURCES_WITH_LEGACY_STEP_OVERRIDES` is an empty set.
+
+This file said to delete it at zero. Do not delete it yet, and do not keep it as
+it stands. Most of it is scaffolding that has served its purpose, but four
+things in it are hard-won and recoverable from nowhere else: the substitute
+rules for migrating a source with no cassette, the "definition of done, per
+platform improvement", the parallel-agent lessons, and the "watch for" list.
+Those belong in `doc/contributing_source.md`, which is where the next
+contributor actually looks. Rehome them, then delete this file. That is the last
+task of the campaign, and it is the one point 4 of its own definition of done
+demands.
+
+Everything below is kept for that rehoming pass and for the archaeology of how
+the count moved from 113 to zero. The numbers in it were current when written.
 
 ## What this is
 
@@ -20,8 +34,14 @@ Start from the current numbers, never from this file:
 python tools/arch_coverage.py --debt
 ```
 
-At the time of writing, on `release/3.0.0`: 202/959 migrated, 263 on the
-pipeline, 61 carrying their own steps. The campaign opened at 113.
+At the time of writing, on `release/3.0.0`: 255/959 migrated, 263 on the
+pipeline, 8 carrying their own steps. The campaign opened at 113.
+
+Those last 8 are the whole remaining backlog, and they are not a random tail.
+Seven of them are the sources that cannot be recorded (the table below), so they
+were skipped by every batch that leaned on replay, and the eighth is `ics`
+itself, which is the platform rather than a provider on it. Read "Migrating
+without a cassette" before starting any of the seven.
 
 ## Why it is safe
 
@@ -36,6 +56,13 @@ The recorded requests and the parsed output must be identical before and after.
 If replay changes, the refactor changed behaviour and is wrong. That is the
 whole safety property, and it is why this campaign is mechanical rather than
 risky.
+
+Check *which* cases replay before leaning on that. A source's cassette directory
+holding a recording does not mean all of its `TEST_CASES` are recorded, and until
+#7135 nothing checked the difference: `abfall_io_graphql` had seven of eleven
+cases unrecorded, `ics` five of nine. `CASES_AWAITING_CASSETTE` in
+`tests/test_new_architecture.py` is the list. A `-k <module>` run that only
+exercises two of ten cases proves the refactor safe for two of ten cases.
 
 For a change to a widely shared component, the per-source replay is not enough
 on its own. Dump every collection from every cassette before and after and diff
@@ -60,10 +87,13 @@ field-for-field; that is the standard, not a bonus.
 
 ## Sources with no cassette
 
-Eight sources in the backlog have none, and cannot be verified by replay. Do
+Seven sources in the backlog have none, and cannot be verified by replay. Do
 not assume the reason: probe first, because the grouping has been wrong before.
 `berdorf_lu` and `kumberg_gv_at` were both listed as unreachable, both recorded
-cleanly on the first attempt, and are now migrated.
+cleanly on the first attempt, and are now migrated. `nemaffaldsservice_kk_dk` was
+listed as recording but not replaying deterministically, and now ships two
+cassettes and is migrated. Three of the ten entries this table has carried were
+wrong about the reason.
 
 ```bash
 python tests/record_fixtures.py <module>   # needs the live provider to be up
@@ -74,18 +104,22 @@ behaviour rather than the refactor's, then migrate normally.
 
 If it does not record, the reason decides what happens next:
 
-| Reason | Sources | Where it is tracked |
+All seven were re-probed on 2026-08-05 and all seven still fail, with the failure
+each one gives:
+
+| Failure seen | Sources | Where it is tracked |
 |---|---|---|
-| Unreachable from AU | `bielefeld_de`, `erlangen_hoechstadt_de`, `regioentsorgung_de` | #7051 |
-| Unreachable from AU | `fuquay_varina_nc_us` | #7052 |
-| Unreachable from AU | `fredrikstad_no` | #7055 |
-| Unreachable from AU | `shawinigan_ca` | #7056 |
-| Stale test data, not a geo-block | `data_umweltprofis_at` | #7095 |
-| Records, but does not replay deterministically | `nemaffaldsservice_kk_dk` | #7046 |
+| Cannot connect to host (curl 7), connect timeout on `regioentsorgung.de` | `bielefeld_de`, `erlangen_hoechstadt_de`, `regioentsorgung_de` | #7051 |
+| 403 Forbidden from `gis1.fuquay-varina.org`, not a network block | `fuquay_varina_nc_us` | #7052 |
+| DNS does not resolve `arcgis.fredrikstad.kommune.no` | `fredrikstad_no` | #7055 |
+| Connect timeout to `geoweb.shawinigan.ca` | `shawinigan_ca` | #7056 |
+| Stale test data, not a geo-block: the recorded `url` key returns no collections, and the `Rohrbach` case passes no `url` at all | `data_umweltprofis_at` | #7095 |
 
 Add any new finding to the matching issue rather than starting a new one, and
 say which failure you saw. "Connect timeout to `<host>`" is useful to a
-contributor in-region; "could not record" is not.
+contributor in-region; "could not record" is not. Note the failure mode can
+change without the source becoming recordable: `fuquay_varina_nc_us` used to time
+out and now returns 403, which is the same geo-block wearing different clothes.
 
 ### Migrating without a cassette
 
@@ -108,6 +142,26 @@ because there is no replay to lean on:
 
 Never fabricate a cassette by hand. A recording that was not recorded is worse
 than none: it will replay green forever while proving nothing.
+
+## The last one: `ics`
+
+`ics` is the eighth and it is not like the other seven. It is the generic,
+user-configurable ICS source rather than a provider, so its `retrieve` is the ICS
+platform's own retriever, driven entirely by `PARAMS` (`url` or `file`, `method`,
+`year_field`, `params`, `headers`, `verify_ssl`, `impersonate`), and its `parse`
+already just composes `ICS`. Nothing about it is provider-specific, which is
+precisely the argument for moving it: the ~178 YAML providers it folds in, and
+every future one, should reach that retriever through the shared component rather
+than through this one module.
+
+Two things make it the last one rather than the easiest:
+
+- It replays only 4 of its 9 `TEST_CASES` (`CASES_AWAITING_CASSETTE` lists the
+  other five), so the safety property is weaker here than the module's cassette
+  count suggests.
+- The December branch in `retrieve` fetches next year as well and swallows the
+  failure, so it is dead most of the year and its behaviour cannot be observed by
+  replay at all outside December. Move it, do not rewrite it.
 
 ## Order of work
 

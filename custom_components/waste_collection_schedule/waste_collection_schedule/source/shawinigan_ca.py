@@ -6,34 +6,31 @@ from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import (
     Compose,
-    HolidayShift,
     RecurrenceExpander,
     Schedule,
 )
-from waste_collection_schedule.service import ArcGis
-from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisHolidayShift,
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 
 # Shawinigan publishes each collection type as its own ArcGIS MapServer layer.
 # A point-in-polygon query against each layer returns a feature whose SCHEDULE /
 # SCHEDULETYPE / NAME fields encode the cadence (weekly, bi-weekly with the
 # ISO-week parity baked into the SCHEDULE digit, or an explicit list of dates).
-# Geocoding happens once in retrieve(); each layer's raw /query Response is paired
-# with its metadata so parse() can pull the matched feature and _describe() can
-# project concrete dates via the shared RecurrenceExpander.
+# The shared multi-layer retriever geocodes once and queries every layer; the
+# matching parser hands each layer's first matched feature to _describe(), which
+# projects concrete dates via the shared RecurrenceExpander.
 #
-# Public holidays shift or cancel collections. retrieve() also fetches the
-# holidays layer (6) and builds a {impact_field: {holiday_date: adjusted_or_None}}
-# map, stashed on the source. The pipeline is therefore a Compose of two stages:
-# RecurrenceExpander projects each layer's cadence into (date, key) rows, then
-# HolidayShift looks up each row's holiday adjustment via _adjust(): the row's
-# waste-type key is mapped back to that layer's HOLIDAYFIELD (recorded while
-# describing), and the matching holiday map shifts the date forward/back or
-# cancels the collection (None). This reproduces the legacy
-# `layer_holidays.get(d, d)` + skip-if-None behaviour.
+# Public holidays shift or cancel collections, and the city publishes them as
+# layer 6 with one IMPACT* column per stream. ArcGisHolidayShift loads that layer
+# and applies it: the row's waste-type key is mapped back to that layer's
+# HOLIDAYFIELD (recorded while describing) by _impact_field(), and the matching
+# holiday shifts the date forward/back or cancels the collection.
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,14 +44,14 @@ DEFAULT_HOLIDAY_FIELD = "IMPACTGARB"
 _iso = date_parsers.for_format("%Y-%m-%d")
 _from_ms = date_parsers.from_epoch(unit="ms")
 
-# Each layer: the MapServer layer id and the waste-type string it emits (the
-# legacy t= value, keyed into _TYPE_MAP).
+# Each layer: the waste-type string it emits (the legacy t= value, keyed into
+# _TYPE_MAP) and the MapServer layer holding it.
 LAYERS = [
-    {"id": 0, "waste_type": "RECYCLAGE"},  # Blue bin
-    {"id": 1, "waste_type": "ORDURES"},  # Grey bin
-    {"id": 2, "waste_type": "SAPIN"},  # Christmas tree
-    {"id": 3, "waste_type": "FEUILLES"},  # Leaf pickup
-    {"id": 4, "waste_type": "COMPOST"},  # Green bin
+    ("RECYCLAGE", f"{MAPSERVER_BASE}/0"),  # Blue bin
+    ("ORDURES", f"{MAPSERVER_BASE}/1"),  # Grey bin
+    ("SAPIN", f"{MAPSERVER_BASE}/2"),  # Christmas tree
+    ("FEUILLES", f"{MAPSERVER_BASE}/3"),  # Leaf pickup
+    ("COMPOST", f"{MAPSERVER_BASE}/4"),  # Green bin
 ]
 
 _TYPE_MAP = {
@@ -146,13 +143,13 @@ def _describe(record, source):
     branches as one-off Schedules (one per concrete date) since neither follows a
     plain fixed-step cadence.
 
-    The record also carries the layer's HOLIDAYFIELD; that is recorded against
-    the waste-type key (each layer's type is distinct) so HolidayShift's adjuster
-    can find the matching holiday map for the rows this descriptor produces.
+    The matched feature also carries the layer's HOLIDAYFIELD; that is recorded
+    against the waste-type key (each layer's type is distinct) so
+    ArcGisHolidayShift can find the matching holiday map for the rows this
+    descriptor produces.
     """
-    attrs = record["attrs"]
-    waste_type = record["waste_type"]
-    holiday_field = record["holiday_field"]
+    waste_type, attrs = record
+    holiday_field = attrs.get("HOLIDAYFIELD") or DEFAULT_HOLIDAY_FIELD
 
     schedule_str = attrs.get("SCHEDULE", "")
     schedule_type = (attrs.get("SCHEDULETYPE") or "").lower()
@@ -209,20 +206,16 @@ def _describe(record, source):
         )
 
 
-def _adjust(collection_date, key, source):
-    """Shift or cancel a projected date if it lands on a public holiday.
+def _impact_field(key, source):
+    """The holidays layer's IMPACT* column governing this row's collection.
 
-    Looks up the holiday map for the layer that produced ``key`` (resolved via
-    the HOLIDAYFIELD recorded during describe), then mirrors the legacy
-    ``layer_holidays.get(d, d)``: an unaffected date passes through unchanged, a
-    shifted holiday returns its adjusted date, and a cancelled holiday returns
-    ``None`` (HolidayShift drops the row).
+    Each data layer names its own column in the matched feature's HOLIDAYFIELD,
+    which _describe() records against the waste-type key (each layer's type is
+    distinct). An unrecorded key leaves the row unadjusted.
     """
     if source is None:
-        return collection_date
-    field = source._field_for_key.get(key)
-    layer_holidays = source._holidays.get(field, {})
-    return layer_holidays.get(collection_date, collection_date)
+        return None
+    return source._field_for_key.get(key)
 
 
 @final
@@ -246,126 +239,19 @@ class Source(BaseSource):
         ),
     }
 
-    preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
+    retrieve = ArcGisMultiFeatureRetriever(LAYERS, address="address")
+    parse = ArcGisMultiFeatureParser(first_per_layer=True)
+    preprocess = Compose(
+        RecurrenceExpander(_describe),
+        ArcGisHolidayShift(
+            f"{MAPSERVER_BASE}/{HOLIDAYS_LAYER}",
+            impact_field=_impact_field,
+            parse_date=_from_ms,
+        ),
+    )
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())
-        # Populated in retrieve(): {impact_field: {holiday_date: adjusted_or_None}}.
-        self._holidays: dict[str, dict[datetime.date, datetime.date | None]] = {}
         # Populated in _describe(): {waste_type_key: holiday_field}.
         self._field_for_key: dict[str, str] = {}
-
-    def retrieve(self, source):
-        """Geocode once, query each data layer, and load the holiday map.
-
-        Returns a list pairing each data layer's metadata with its raw /query
-        Response. The holidays layer (6) is fetched here too and reduced to a
-        {field: {holiday_date: adjusted_or_None}} map stashed on the source, so
-        HolidayShift's adjuster can apply it after the cadence is projected.
-        """
-        address = self.params["address"]
-        try:
-            location = ArcGis.geocode(address, timeout=20)
-        except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", address) from e
-
-        self._holidays = self._fetch_holidays()
-
-        results = []
-        for layer in LAYERS:
-            response = ArcGis.feature_query(
-                f"{MAPSERVER_BASE}/{layer['id']}",
-                geometry=location,
-                out_fields="*",
-                timeout=20,
-            )
-            results.append((layer, response))
-        return results
-
-    def parse(self, raw, source):
-        """Pull the first matched feature's attributes per layer.
-
-        Yields a record per matched layer carrying the waste-type key, the
-        feature attributes and the layer's HOLIDAYFIELD (default "IMPACTGARB").
-        Layers whose query matched no feature are skipped.
-        """
-        from waste_collection_schedule import response_shape
-
-        name = response_shape.source_name(source)
-        for layer, response in raw:
-            response.raise_for_status()
-            data = response.json()
-            response_shape.expect(
-                isinstance(data, dict) and "features" in data,
-                source_name=name,
-                detail="ArcGIS response has no 'features'",
-                raw=data,
-            )
-            features = data["features"]
-            if not features:
-                continue
-            attrs = dict(features[0].get("attributes", {}))
-            yield {
-                "waste_type": layer["waste_type"],
-                "attrs": attrs,
-                "holiday_field": attrs.get("HOLIDAYFIELD") or DEFAULT_HOLIDAY_FIELD,
-            }
-
-    def _fetch_holidays(self):
-        """Fetch the holidays layer and group adjustments by impact field.
-
-        Returns {impact_field: {holiday_date: adjusted_date_or_None}}. Each
-        feature's IMPACT* fields carry a coded value from the API domain
-        ``piHolidayImpact``:
-
-          "None"       -> no change (skip)
-          "OneDayFrwd" -> +1 day
-          "TwoDayFrwd" -> +2 days
-          "Shift Forw" -> +1 day  (synonym)
-          "OneDayBack" -> -1 day
-          "Shift Back" -> -1 day  (synonym)
-          "Cancel"     -> collection cancelled (mapped to None)
-          Others (Next Sat, Prev Sat, ...) -> logged and skipped
-        """
-        result: dict[str, dict[datetime.date, datetime.date | None]] = {}
-        response = ArcGis.feature_query(
-            f"{MAPSERVER_BASE}/{HOLIDAYS_LAYER}",
-            where="1=1",
-            out_fields="*",
-            timeout=20,
-        )
-        response.raise_for_status()
-        for feature in response.json().get("features", []):
-            attrs = feature.get("attributes", {})
-            holiday_ms = attrs.get("HOLIDAYDATE")
-            if not holiday_ms:
-                continue
-            holiday_date = _from_ms(holiday_ms)
-            # Iterate over every IMPACT* field — robust to new collection types.
-            for field in [k for k in attrs if k.startswith("IMPACT")]:
-                val = (attrs.get(field) or "").strip()
-                val_lower = val.lower()
-                if not val_lower or val_lower == "none":
-                    continue
-                adjusted: datetime.date | None
-                if val_lower == "twodayfrwd":
-                    adjusted = holiday_date + datetime.timedelta(days=2)
-                elif (
-                    "frwd" in val_lower or "forward" in val_lower or "forw" in val_lower
-                ):
-                    adjusted = holiday_date + datetime.timedelta(days=1)
-                elif "back" in val_lower:
-                    adjusted = holiday_date - datetime.timedelta(days=1)
-                elif val_lower == "cancel":
-                    adjusted = None
-                else:
-                    _LOGGER.debug(
-                        "Unhandled holiday impact code %r for %s on %s",
-                        val,
-                        field,
-                        holiday_date,
-                    )
-                    continue
-                result.setdefault(field, {})[holiday_date] = adjusted
-        return result

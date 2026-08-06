@@ -5,6 +5,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import DateFields
 from waste_collection_schedule.service.ArcGis import (
     ArcGisFeatureParser,
     ArcGisFeatureRetriever,
@@ -15,8 +16,8 @@ from waste_collection_schedule.transformers import ICSTransformer
 # address and reports each stream's *next* pickup date as free text (e.g. "The
 # next garbage pickup date for this address is Monday, January 06") rather
 # than a recurring cadence, so there is nothing for RecurrenceExpander to
-# project: preprocess yields the one resolved (date, key) row per stream
-# directly, and a plain ICSTransformer types it.
+# project: DateFields reads the one resolved date out of each stream's field,
+# and a plain ICSTransformer types it.
 
 FEATURE_URL = "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0"
 
@@ -101,18 +102,5 @@ class Source(BaseSource):
         out_fields="garbage_next_pickup_date,recycling_next_pickup_date",
     )
     parse = ArcGisFeatureParser()
+    preprocess = DateFields(fields=_FIELDS, parse_date=_parse_date_from_text)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
-
-    def preprocess(self, records, source: "Source | None" = None):
-        """Turn each matched feature's free-text pickup fields into (date, key) rows.
-
-        Overridden as a method (rather than a shared preprocessor instance)
-        because there is no recurring cadence here to hand to
-        ``RecurrenceExpander``: each field is already a single resolved "next
-        pickup" date, so this is the whole provider-specific projection.
-        """
-        for attrs in records:
-            for field, key in _FIELDS.items():
-                pickup_date = _parse_date_from_text(attrs.get(field, ""))
-                if pickup_date is not None:
-                    yield pickup_date, key

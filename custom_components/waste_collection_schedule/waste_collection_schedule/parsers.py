@@ -212,6 +212,112 @@ class FirstNonEmptyBranch(Parser["list[Any]"]):
         return records
 
 
+class ByBodyPrefix(Parser["list[Any]"]):
+    """Choose the parser by what the response body starts with.
+
+    For the provider that answers *one* configured endpoint with more than one
+    document format, so which parser applies is a property of the response
+    rather than of the source's configuration. The usual case is a provider that
+    replaced a deprecated calendar export with a differently-shaped one and
+    still serves both, each behind its own URL, under one source::
+
+        parse = parsers.ByBodyPrefix(
+            {"BEGIN:VCALENDAR": IcsFeedsParser(parsers.IcsParser())},
+            default=parsers.XmlDateListParser("Entry", "Date", "Type"),
+        )
+
+    Where :class:`FirstNonEmptyBranch` picks between branches a *retriever*
+    fetched, this picks between formats one response could be in: nothing is
+    fetched twice and no branch is attempted speculatively.
+
+    Prefixes are tested in the order given, against the body with leading
+    whitespace stripped, and the first that matches wins. Reach for it only for
+    a document type whose opening bytes genuinely identify it
+    (``BEGIN:VCALENDAR`` for iCalendar, ``%PDF-`` for PDF); for anything subtler
+    the provider is telling you the format some other way.
+
+    Args:
+        branches: ``{body prefix: parser}``, tested in order.
+        default: the parser used when no prefix matched.
+    """
+
+    def __init__(self, branches: "Mapping[str, Parser]", default: Parser):
+        self.branches = dict(branches)
+        self.default = default
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[Any]":
+        text = response.text.lstrip()
+        for prefix, parser in self.branches.items():
+            if text.startswith(prefix):
+                return list(parser(response, source))
+        return list(self.default(response, source))
+
+
+class XmlDateListParser(Parser["list[tuple[datetime.date, str]]"]):
+    """Walk a flat XML appointment list into (date, waste type) pairs.
+
+    The XML counterpart of :class:`DateListParser`, for the small provider
+    exports shaped as a flat list of appointment elements, each carrying its own
+    date and waste type in child elements and nothing else::
+
+        <AppointmentEntry>
+          <Datum>2026-02-10T00:00:00</Datum>
+          <WasteType>Restmüll</WasteType>
+        </AppointmentEntry>
+
+    Pairs with
+    :class:`~waste_collection_schedule.transformers.ICSTransformer`, which takes
+    exactly these ``(date, label)`` tuples and resolves the label through the
+    shared multilingual vocabulary::
+
+        parse = parsers.XmlDateListParser("AppointmentEntry", "Datum", "WasteType")
+        transform = ICSTransformer()
+
+    Dates are read with ``datetime.fromisoformat``, so an ISO 8601 date or
+    date-time both work and any time part is discarded. An element missing
+    either child is a changed feed rather than a missing collection, and raises.
+
+    Args:
+        item: tag name of each appointment element.
+        date_tag: child element holding the date.
+        type_tag: child element holding the waste type.
+    """
+
+    def __init__(self, item: str, date_tag: str, type_tag: str):
+        self.item = item
+        self.date_tag = date_tag
+        self.type_tag = type_tag
+
+    @staticmethod
+    def _element_text(element: Any) -> str:
+        return "".join(
+            node.nodeValue
+            for node in element.childNodes
+            if node.nodeType == node.TEXT_NODE
+        )
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        from xml.dom.minidom import parseString
+
+        doc = parseString(response.text)  # nosec B318
+        entries = []
+        for appointment in doc.getElementsByTagName(self.item):
+            date_str = self._element_text(
+                appointment.getElementsByTagName(self.date_tag)[0]
+            )
+            waste_type = self._element_text(
+                appointment.getElementsByTagName(self.type_tag)[0]
+            )
+            entries.append(
+                (datetime.datetime.fromisoformat(date_str).date(), waste_type)
+            )
+        return entries
+
+
 class LabelledSections(Parser["list[tuple[Any, Any]]"]):
     """Split a JSON object into ``(label, section)`` records, one per named field.
 

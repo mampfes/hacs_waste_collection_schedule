@@ -2,14 +2,20 @@ import datetime
 import logging
 import re
 import unicodedata
+from html.parser import HTMLParser
+from os import getcwd
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, NamedTuple
 from urllib.parse import urljoin
 
 import jinja2
 from bs4 import BeautifulSoup, Tag
+from curl_cffi import requests
 from icalevents import icalevents
 
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -32,9 +38,13 @@ if TYPE_CHECKING:
 
 #: One preparatory request in an :class:`IcsSessionRetriever` chain. Keys:
 #: ``url`` (required), ``method`` (default ``"GET"``), ``params`` / ``data`` /
-#: ``json`` / ``headers``, ``extract`` (``callable(response, context) -> dict``
-#: merged into the running context) and ``cookies`` (``callable(**context) ->
-#: dict`` merged into the running cookie jar, evaluated after ``extract``).
+#: ``json`` / ``headers``, ``encoding`` (forced on this step's response before
+#: anything reads its text; ``None``, the default, leaves the transport's own
+#: detection alone), ``select`` (``{<select> name: config parameter}``, resolved
+#: against this step's own response, see :func:`resolve_select_option`),
+#: ``extract`` (``callable(response, context) -> dict`` merged into the running
+#: context) and ``cookies`` (``callable(**context) -> dict`` merged into the
+#: running cookie jar, evaluated after ``extract``).
 type IcsSessionStep = "dict[str, Any]"
 
 _LOGGER = logging.getLogger(__name__)
@@ -638,6 +648,255 @@ def _calendar_years(lookahead_month: "int | None") -> list[int]:
     return years
 
 
+#: Default request headers for the configured (user-driven) ICS feed request.
+#: Several providers 403 a bare client, so the generic engine has always sent a
+#: browser user-agent; ``headers`` in the user's own configuration is merged on
+#: top of this, key by key.
+ICS_FEED_HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+
+
+def _coerce_int(value: Any) -> "int | None":
+    """Coerce a PARAMS-supplied value to int, tolerating None/empty/str/float.
+
+    NumberSelector/YAML/UI callers may hand back a str, float or int; the ICS
+    service and the year-field arithmetic below both want a plain int.
+    """
+    if value is None or value == "":
+        return None
+    return int(value)
+
+
+def _flatten_params(params: "dict | None") -> "list[tuple[str, Any]] | None":
+    """Flatten a params dict to (key, value) pairs, repeating list-valued keys.
+
+    curl_cffi stringifies list-valued params as Python repr instead of
+    repeating the key like ``requests`` does; flatten explicitly so multi-value
+    fields like ``types[]`` still round-trip as repeated query/form keys.
+    """
+    if not params:
+        return None
+    return [
+        (k, item)
+        for k, v in params.items()
+        for item in (v if isinstance(v, list) else [v])
+    ]
+
+
+def _fetch_url(
+    url: str,
+    params: "dict | None",
+    method: str,
+    headers: dict,
+    verify_ssl: bool,
+    impersonate: Any,
+) -> str:
+    # impersonate is free-text (any curl_cffi-supported browser string, e.g.
+    # "chrome124"); curl_cffi's own type is a closed Literal, which a
+    # user-configured value can never statically satisfy, hence Any here.
+    flat_params = _flatten_params(params)
+
+    if method == "GET":
+        r = requests.get(
+            url,
+            params=flat_params,
+            headers=headers,
+            verify=verify_ssl,
+            impersonate=impersonate,
+        )
+    elif method == "POST":
+        r = requests.post(
+            url,
+            data=flat_params,
+            headers=headers,
+            verify=verify_ssl,
+            impersonate=impersonate,
+        )
+    else:
+        raise SourceArgumentNotFoundWithSuggestions("method", method, ["GET", "POST"])
+
+    r.raise_for_status()
+
+    if r.content.startswith(b"\xef\xbb\xbf"):
+        r.encoding = "UTF-8-SIG"
+    else:
+        r.encoding = "utf-8"
+
+    return r.text
+
+
+def _fetch_file(file: str) -> str:
+    try:
+        path = Path(file)
+        with path.open() as f:
+            return f.read()
+    except FileNotFoundError as e:
+        _LOGGER.error(f"Working directory: '{getcwd()}'")
+        raise SourceArgumentException(
+            "file", f"File '{path.resolve()}' not found"
+        ) from e
+
+
+class IcsConfiguredRetriever(RetrieverFunc):
+    """Fetch the ICS feed the *user's own configuration* names.
+
+    The ICS platform's own retriever, and the one shape on this platform where
+    nothing is fixed by a provider module: the endpoint, the HTTP method, the
+    query/form arguments, the headers and the TLS handling all come out of the
+    source's ``PARAMS``. It is what the generic ``ics`` source and, through it,
+    the ~178 ``doc/ics/yaml/*.yaml`` providers use, so a fix here reaches every
+    one of them instead of one module.
+
+    It reads these params off ``source.params``, all optional unless noted:
+
+    * ``url`` / ``file`` — exactly one of them (declare them as an
+      ``alternatives()`` pair). ``webcal://`` is rewritten to ``https://``. A
+      ``{%Y}`` placeholder anywhere in the URL is replaced with the year.
+    * ``method`` — ``"GET"`` (default) or ``"POST"``; anything else raises
+      ``SourceArgumentNotFoundWithSuggestions``.
+    * ``params`` — query arguments for a GET, form fields for a POST. A
+      list-valued entry is sent as a repeated key rather than a Python repr.
+    * ``year_field`` — the ``params`` key carrying the year, for a provider
+      that takes it as a field rather than in the URL. Requires ``params``.
+    * ``headers`` — merged over :data:`ICS_FEED_HEADERS`, key by key.
+    * ``verify_ssl`` — default ``True``.
+    * ``impersonate`` — a ``curl_cffi`` browser target (e.g. ``"chrome"``) for
+      a provider behind TLS fingerprinting.
+    * ``version`` — deprecated and ignored; setting it logs a warning, so an
+      existing YAML config carrying it keeps working.
+
+    Where the URL or ``year_field`` makes the feed year-specific, this fetches
+    the current year and, in December, next year as well, best effort: a
+    provider that has not published the following calendar yet must not break
+    the current one. Note that branch cannot be observed by cassette replay for
+    eleven months of the year.
+
+    Returns the feed bodies as a list of ``str`` (not responses), because the
+    ``file`` branch has no response to return. Pair it with
+    :class:`IcsConfiguredParser`, which takes exactly that::
+
+        retrieve = IcsConfiguredRetriever()
+        parse = IcsConfiguredParser()
+    """
+
+    def __call__(self, source: "BaseSource") -> "list[str]":
+        params = source.params
+        if params.get("version") is not None:
+            _LOGGER.warning(
+                "The 'version' parameter is deprecated and has no effect anymore."
+            )
+
+        url = params.get("url")
+        file = params.get("file")
+        year_field = params.get("year_field")
+        method = params.get("method") or "GET"
+        verify_ssl = params.get("verify_ssl")
+        if verify_ssl is None:
+            verify_ssl = True
+        impersonate = params.get("impersonate")
+        request_params = params.get("params")
+
+        headers = dict(ICS_FEED_HEADERS)
+        headers.update(params.get("headers") or {})
+
+        if url is not None:
+            url = re.sub("^webcal", "https", url)
+
+            if "{%Y}" in url or year_field is not None:
+                # url contains wildcard or params contains year field
+                now = datetime.datetime.now()
+
+                this_year_params = dict(request_params) if request_params else None
+                url_this_year = url.replace("{%Y}", str(now.year))
+                if year_field is not None:
+                    if request_params is None:
+                        raise SourceArgumentExceptionMultiple(
+                            ("params", "year_field"),
+                            "year_field specified without params",
+                        )
+                    this_year_params = dict(request_params)
+                    this_year_params[year_field] = str(now.year)
+
+                texts = [
+                    _fetch_url(
+                        url_this_year,
+                        this_year_params,
+                        method,
+                        headers,
+                        verify_ssl,
+                        impersonate,
+                    )
+                ]
+
+                if now.month == 12:
+                    # also get data for next year if we are already in december
+                    url_next_year = url.replace("{%Y}", str(now.year + 1))
+                    next_year_params = dict(request_params) if request_params else None
+                    # year_field implies request_params (checked above for
+                    # url_this_year; request_params is never reassigned in
+                    # between), so next_year_params is never None here -- the
+                    # `is not None` guard just keeps that provable locally
+                    # instead of relying on the earlier raise.
+                    if year_field is not None and next_year_params is not None:
+                        next_year_params[year_field] = str(now.year + 1)
+
+                    try:
+                        texts.append(
+                            _fetch_url(
+                                url_next_year,
+                                next_year_params,
+                                method,
+                                headers,
+                                verify_ssl,
+                                impersonate,
+                            )
+                        )
+                    except Exception:
+                        # ignore if fetch for next year fails
+                        pass
+
+                return texts
+
+            return [
+                _fetch_url(
+                    url, request_params, method, headers, verify_ssl, impersonate
+                )
+            ]
+
+        # alternatives() above guarantees exactly one of url/file is set.
+        assert file is not None
+        return [_fetch_file(file)]
+
+
+class IcsConfiguredParser:
+    """Convert the configured feed bodies, with the *user's own* ICS options.
+
+    The matching ``parse`` for :class:`IcsConfiguredRetriever`: it takes the
+    list of feed bodies that retriever returns and converts each one, merging
+    the events. Where :class:`~waste_collection_schedule.parsers.IcsEventsParser`
+    is configured by the source module, this one is configured by whoever set
+    the source up, reading ``offset``, ``split_at``, ``regex`` and
+    ``title_template`` off ``source.params`` at fetch time.
+
+    Yields :class:`IcsEvent` records, so LOCATION and DESCRIPTION survive to the
+    calendar entry.
+    """
+
+    def __call__(
+        self, raw: "list[str]", source: "BaseSource | None" = None
+    ) -> "list[IcsEvent]":
+        params = source.params if source is not None else {}
+        ics = ICS(
+            offset=_coerce_int(params.get("offset")),
+            split_at=params.get("split_at"),
+            regex=params.get("regex"),
+            title_template=params.get("title_template") or "{{date.summary}}",
+        )
+        events: list[IcsEvent] = []
+        for text in raw:
+            events.extend(ics.convert_events(text))
+        return events
+
+
 class IcsYearRetriever(RetrieverFunc):
     """GET one ICS feed per calendar year the schedule can span.
 
@@ -787,6 +1046,107 @@ class IcsYearRetriever(RetrieverFunc):
         return _resolve_arg(mapping, source, **extra)
 
 
+class _FormStateParser(HTMLParser):
+    """Scrape every ``<select><option>`` pair keyed by the select's ``name``."""
+
+    def __init__(self):
+        super().__init__()
+        self.select_options: dict[str, list[tuple[str, str]]] = {}
+        self._current_select: str | None = None
+        self._current_option_value: str | None = None
+        self._current_option_text: list[str] = []
+
+    def _finalize_option(self):
+        if self._current_select is None or self._current_option_value is None:
+            return
+        text = " ".join(part.strip() for part in self._current_option_text).strip()
+        self.select_options[self._current_select].append(
+            (self._current_option_value or "", text)
+        )
+        self._current_option_value = None
+        self._current_option_text = []
+
+    def finalize(self):
+        self._finalize_option()
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == "select" and "name" in attributes:
+            name = attributes["name"]
+            if name is None:
+                return
+            self._finalize_option()
+            self._current_select = name
+            self.select_options.setdefault(self._current_select, [])
+        elif tag == "option" and self._current_select is not None:
+            self._finalize_option()
+            self._current_option_value = attributes.get("value", "")
+            self._current_option_text = []
+
+    def handle_data(self, data):
+        if self._current_option_value is not None:
+            self._current_option_text.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "option":
+            self._finalize_option()
+        elif tag == "select":
+            self._finalize_option()
+            self._current_select = None
+
+    def get_options(self, field_name: str) -> list[str]:
+        return [
+            text or value
+            for value, text in self.select_options.get(field_name, [])
+            if (text or value)
+        ]
+
+
+def select_options(html: str, field_name: str) -> "list[str]":
+    """The option labels of one ``<select>`` on a page, in document order.
+
+    For the cascading form wizard whose every step answers with a fresh
+    ``<select>`` of the values that are valid *given the previous choices* (a
+    city, then its streets, then that street's house numbers), so the value the
+    next request may submit can only be read off the response in hand. Falls
+    back to an option's ``value`` attribute where it carries no text, and skips
+    an option that has neither.
+    """
+    parser = _FormStateParser()
+    parser.feed(html)
+    parser.finalize()
+    parser.close()
+    return parser.get_options(field_name)
+
+
+def _normalize(value: object) -> str:
+    return " ".join(str(value).split()).casefold()
+
+
+def resolve_select_option(field_name: str, value: str, options: "list[str]") -> str:
+    """Match a configured value to one of a form's own options, or explain.
+
+    An exact match wins; failing that the comparison ignores case and collapses
+    runs of whitespace, because a user typing an address rarely reproduces a
+    provider's own capitalisation and spacing. A miss raises against
+    ``field_name`` (the *config parameter's* name, not the form field's) so the
+    HA UI blames the field the user filled in, listing the options that do work.
+    An empty option list means an earlier choice in the cascade cannot be
+    combined with this one at all, which is what the second message says.
+    """
+    if value in options:
+        return value
+    normalized_options = {_normalize(option): option for option in options}
+    normalized_value = _normalize(value)
+    if normalized_value in normalized_options:
+        return normalized_options[normalized_value]
+    if options:
+        raise SourceArgumentNotFoundWithSuggestions(field_name, value, options)
+    raise SourceArgumentNotFound(
+        field_name, value, "please check the other address arguments and try again."
+    )
+
+
 class IcsSessionRetriever(RetrieverFunc):
     """Establish the server's idea of "your address", then GET the ICS feed.
 
@@ -803,6 +1163,20 @@ class IcsSessionRetriever(RetrieverFunc):
     * **Chained id lookups.** The feed needs ids the site only hands out one
       request at a time (city id, then street id), threaded forward through the
       query and a growing cookie jar.
+
+    * **Cascading form selects.** The site will not accept a known-good address
+      submitted outright: each step answers with a fresh ``<select>`` of the
+      values valid *given the previous choices*, and the next request may only
+      submit one of those. A step's ``select`` names which of them to read::
+
+          {"url": API, "select": {"Ort": "city"}}
+
+      That scrapes ``<select name="Ort">`` off this step's own response, matches
+      the ``city`` parameter against its options (ignoring case and repeated
+      whitespace, see :func:`resolve_select_option`), and replaces ``city`` in
+      the context with the provider's own spelling, so a later step's ``data``
+      submits the value the form will accept. A value the form does not offer
+      raises against the config parameter, listing the ones it does.
 
     Each entry in ``steps`` runs in order and may contribute to a running
     ``context`` (the source's params, plus ``year``, ``variant``, and every key
@@ -849,7 +1223,10 @@ class IcsSessionRetriever(RetrieverFunc):
         timeout: per-request timeout in seconds (default 30).
         encoding: response encoding forced on the feed response before its text
             is read; ``None`` (default) leaves the transport's own detection
-            alone.
+            alone. A *step* whose own response is read (by ``select`` or
+            ``extract``) declares its own ``encoding`` key, because a provider
+            that mis-declares the charset of its HTML pages does not necessarily
+            mis-declare it on the calendar download.
         lookahead_month: from this month (1-12) onwards, also run for year + 1.
             Default 12: in December, next year's calendar is fetched too.
             ``None`` for a provider whose feed is a rolling window rather than
@@ -940,7 +1317,17 @@ class IcsSessionRetriever(RetrieverFunc):
                 timeout=self.timeout,
             )
             response.raise_for_status()
+            # Only when the step names one: the constructor's `encoding` is the
+            # calendar's, and a provider can mis-declare one without the other.
+            if step.get("encoding") is not None:
+                response.encoding = step["encoding"]
             last = response
+            for field_name, argument in step.get("select", {}).items():
+                context[argument] = resolve_select_option(
+                    argument,
+                    str(context[argument]),
+                    select_options(response.text, field_name),
+                )
             if "extract" in step:
                 context.update(step["extract"](response, context))
             if "cookies" in step:
