@@ -64,7 +64,13 @@ _LOGGER = logging.getLogger(__name__)
 T = TypeVar("T")
 
 # A type_value_map value is either a single canonical type or, for a combined
-# round (one label, several types on the same day), a list of them.
+# round (one label, several types on the same day), a list of them. It may also
+# be ``None``, which drops the record: the source is stating that it knows this
+# label and that it is not a collection event. A provider's calendar is rarely
+# only collections (a recycling centre's opening days, a legal-advice slot, a
+# wine tavern's season), and without this the only way to keep such an entry out
+# of a user's bin schedule was to leave it unresolved, which is indistinguishable
+# from a genuinely new waste type nobody has curated yet (#7144).
 TypeMapValue = WasteType | list[WasteType]
 
 
@@ -73,14 +79,14 @@ class BaseTransformer(ABC, Generic[T]):
 
     def __init__(
         self,
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
     ):
-        self._type_value_map: dict[str, TypeMapValue] = (
+        self._type_value_map: dict[str, TypeMapValue | None] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
             if type_value_map
             else {}
@@ -139,6 +145,8 @@ class BaseTransformer(ABC, Generic[T]):
         seen: set[str] = set()
         unique: list[WasteType] = []
         for value in self._type_value_map.values():
+            if value is None:
+                continue  # a dropped label produces no type
             for wt in value if isinstance(value, list) else [value]:
                 if wt.id not in seen:
                     seen.add(wt.id)
@@ -153,10 +161,17 @@ class BaseTransformer(ABC, Generic[T]):
 
         Resolution order:
           1. the source's ``type_value_map`` (an explicit override), which may
-             map a single label to a list of types for a combined round,
+             map a single label to a list of types for a combined round, or to
+             ``None`` to drop the record as "known, and not a collection",
           2. the shared multilingual vocabulary (``waste_types.resolve``),
           3. ``waste_types.preserved`` — keep the original label verbatim rather
              than collapsing unknown labels to OTHER.
+
+        Step 3 is a last resort, not a resting place. It logs a warning and
+        ``tests/test_unresolved_labels.py`` fails on any source whose cassette
+        reaches it, because the warning for a wine tavern reads exactly like the
+        warning for a genuinely new waste type and so nobody ever acted on
+        either (#7144). Resolve it at step 1 or step 2.
         """
         label = self._clean(raw_type) if self._clean else raw_type
         key = label.strip().lower()
@@ -261,7 +276,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         # Element from parsers.XmlParser whose key reads el.findtext(...).
         date_key: "str | Callable[[Any], Any]",
         type_key: "str | Callable[[Any], Any]",
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
@@ -316,7 +331,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         self,
         date_key: str,
         type_key: str,
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         parse_date: date_parsers.DateParser | None = None,
         name_field: str = "name",
         value_field: str = "value",
@@ -388,7 +403,7 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
 
     def __init__(
         self,
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         clean: Callable[[str], str] | None = None,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
@@ -436,7 +451,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
 
     def __init__(
         self,
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
@@ -492,7 +507,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         self,
         date_getter: Callable[[Tag], Any],
         type_getter: Callable[[Tag], Any],
-        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        type_value_map: "Mapping[str, TypeMapValue | None] | None" = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         location_getter: Callable[[Tag], Any] | None = None,

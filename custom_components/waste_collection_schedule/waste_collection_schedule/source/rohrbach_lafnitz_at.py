@@ -33,6 +33,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Rohrbach an der Lafnitz, Austria."
     URL = _BASE_URL
     COUNTRY = "at"
+    RAISE_ON_EMPTY = True
 
     # The vocabulary this feed actually produces, derived by replaying the
     # recorded cassette. Declared explicitly because most of these labels are

@@ -20,6 +20,7 @@ JavaScript array, and offers helpers for the ICS feed.
 from __future__ import annotations
 
 import ast
+import json
 import re
 from collections.abc import Iterable, Iterator
 from datetime import date, datetime, timedelta
@@ -55,6 +56,10 @@ ICS_PATH = "/system/web/CalendarService.ashx"
 _DATE_RE = re.compile(r"(\d{2}\.\d{2}\.\d{4})")
 _LIST_DIV_ID = "ctl00_ctl00_ctl00_cph_col_a_cph_content_cph_content_list_style"
 
+# ASP.NET serialises the grid rendering's dates as "/Date(1785967200000)/".
+_GRID_DATE_RE = re.compile(r"-?\d+")
+_GRID_EPOCH = datetime(1970, 1, 1)
+
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
@@ -89,10 +94,19 @@ class RiSKommunalSource:
         strasse: str | None = None,
         hausnummer: str | int | None = None,
         zone: str | None = None,
+        zones: Iterable[str] | None = None,
     ):
         self._strasse = str(strasse).strip() if strasse is not None else None
         self._hausnummer = str(hausnummer).strip() if hausnummer is not None else None
         self._zone = str(zone).strip() if zone is not None else None
+        # Every zone this install publishes, when the source knows them. The
+        # third table column ("Kalendertyp") names the calendar a row belongs
+        # to, and a RiSKommunal install puts its non-waste calendars in that
+        # same column: Felixdorf files four "Rechtsberatung" (legal advice)
+        # slots under Kalendertyp="Rechtsberatung", beside Rayon 1 and Rayon 2.
+        # So "no zone chosen" must mean "all the zones this source declares",
+        # not "every row on the page", or the non-waste calendars come too.
+        self._zones = {z.strip() for z in zones} if zones else None
 
     # ------------------------------------------------------------------ #
     # Public fetch (HTML path)
@@ -132,6 +146,7 @@ class RiSKommunalSource:
         )
         r.raise_for_status()
         r.encoding = r.apparent_encoding or "utf-8"
+        self._last_html = r.text
         return BeautifulSoup(r.text, "html.parser")
 
     def _end_date(self) -> date:
@@ -152,6 +167,11 @@ class RiSKommunalSource:
             list_mode = rows is None
             if list_mode:
                 rows = self._parse_list(soup)
+            if not rows:
+                # Third rendering: the JavaScript month grid, one page only.
+                rows = self._parse_grid(getattr(self, "_last_html", ""))
+                if rows:
+                    list_mode = True
 
             if not rows:
                 break
@@ -216,10 +236,14 @@ class RiSKommunalSource:
             collection_date = datetime.strptime(m.group(1), "%d.%m.%Y").date()
 
             # Optional zone filter (third column, e.g. Eggelsberg).
-            if self._zone is not None and len(tds) >= 3:
+            if len(tds) >= 3:
                 row_zone = tds[2].get_text(strip=True)
-                if row_zone not in ("Gemeinde Alle", self._zone):
-                    continue
+                if self._zone is not None:
+                    if row_zone not in ("Gemeinde Alle", self._zone):
+                        continue
+                elif self._zones is not None:
+                    if row_zone not in self._zones and row_zone != "Gemeinde Alle":
+                        continue
 
             anchor = tds[1].find("a")
             raw = (
@@ -233,6 +257,64 @@ class RiSKommunalSource:
 
             out.append((collection_date, waste_type))
 
+        return out
+
+    def _parse_grid(self, html: str) -> list[tuple[date, str]]:
+        """Parse the JavaScript month-grid rendering.
+
+        A third rendering, alongside the table and the list. Asking an install
+        for one calendar with ``typids`` can switch it from the server-rendered
+        table to a Syncfusion scheduler widget, whose whole appointment set is
+        embedded in the page as ``ej.isJSON([...])``. There is no table and no
+        ``list_style`` div on such a page, so both other parsers return nothing
+        and the source reports an empty schedule.
+
+        The embedded array is the *filtered* calendar, which is the point: it is
+        the only rendering Berndorf offers that carries one address's waste
+        rounds without the municipality's Heurigen (wine tavern) notices.
+
+        Each entry's ``Subject`` is HTML, ``<span class='fa fa-trash'
+        title='...'></span><span title='...'> label</span>``, and ``StartTime``
+        is ASP.NET's ``/Date(millis)/``. Returns ``[]`` when the page carries no
+        such widget, so the caller can fall back.
+        """
+        match = re.search(r"ej\.isJSON\(", html)
+        if match is None:
+            return []
+        start = html.find("[", match.end() - 1)
+        if start < 0:
+            return []
+        depth = 0
+        end = -1
+        for idx in range(start, len(html)):
+            if html[idx] == "[":
+                depth += 1
+            elif html[idx] == "]":
+                depth -= 1
+                if depth == 0:
+                    end = idx + 1
+                    break
+        if end < 0:
+            return []
+        try:
+            appointments = json.loads(html[start:end])
+        except ValueError:
+            return []
+
+        out: list[tuple[date, str]] = []
+        for appointment in appointments:
+            if not isinstance(appointment, dict):
+                continue
+            stamp = _GRID_DATE_RE.search(str(appointment.get("StartTime") or ""))
+            subject = appointment.get("Subject")
+            if stamp is None or not subject:
+                continue
+            # A local-midnight all-day event is stored as a UTC instant, so
+            # divide rather than convert: the recorded value is the local day.
+            collection_date = _GRID_EPOCH + timedelta(milliseconds=int(stamp.group()))
+            label = BeautifulSoup(str(subject), "html.parser").get_text(" ", strip=True)
+            if label:
+                out.append((collection_date.date(), label))
         return out
 
     def _parse_list(self, soup: BeautifulSoup) -> list[tuple[date, str]]:
@@ -273,9 +355,24 @@ class RiSKommunalSource:
 
     @staticmethod
     def _list_item_type(li) -> str:
-        span = li.find("span")
-        if span is not None and span.get_text(strip=True):
-            return re.sub(r"^\((.*)\)$", r"\1", span.get_text(strip=True)).strip()
+        """The waste type of one ``<li>`` in the list rendering.
+
+        A list item is ``<a>title</a>`` followed by one or more parenthesised
+        ``<span>`` annotations. The **last** span is the calendar category,
+        which is the label that matches a source's ``type_value_map``; an
+        earlier span, where an install emits one, is free text describing that
+        occurrence ("Sperrmüll S1: 8 - 13 Uhr; Es ist keine Voranmeldung mehr
+        notwendig!"), which changes per event and classifies nothing.
+
+        Reading the first span instead is what made ``goessendorf_at`` emit
+        opening hours as waste types. Of the three installs that render as a
+        list, only Gössendorf carries more than one span per item, so taking
+        the last is identical to taking the first everywhere it already worked.
+        """
+        spans = [s for s in li.find_all("span") if s.get_text(strip=True)]
+        if spans:
+            text = spans[-1].get_text(strip=True)
+            return re.sub(r"^\((.*)\)$", r"\1", text).strip()
         anchor = li.find("a")
         if anchor is not None:
             return anchor.get_text(strip=True)
@@ -597,9 +694,21 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
     configured with ``zone`` read from ``source.params`` when ``zone_param`` is
     set.
 
+    Three renderings are auto-detected, in order: the server-rendered table,
+    the ``list_style`` list, and the JavaScript month grid (see
+    :meth:`RiSKommunalSource._parse_grid`). The grid is only consulted when the
+    other two find nothing, which is exactly the page that used to yield an
+    empty schedule, so adding it changes no source that already worked.
+
     Args:
         zone_param: ``source.params`` field name holding an optional zone
             filter (third table column).
+        zones: Every zone this install publishes in that third column. Without
+            it, leaving the zone unset means "keep every row", which also keeps
+            the install's non-waste calendars (Felixdorf files legal-advice
+            slots under their own Kalendertyp). With it, an unset zone means
+            "all the declared zones" and nothing else. ``None`` (the default)
+            preserves the current behaviour exactly.
         paginate_list: If ``True``, keep paging through the list-style
             (``list_style``) rendering instead of stopping after the first
             page. Some installs (e.g. Hart bei Graz) paginate even in list
@@ -621,10 +730,12 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
     def __init__(
         self,
         zone_param: str | None = None,
+        zones: Iterable[str] | None = None,
         paginate_list: bool = False,
         lookahead_days: int | None = None,
     ):
         self.zone_param = zone_param
+        self.zones = list(zones) if zones else None
         self.paginate_list = paginate_list
         self.lookahead_days = lookahead_days
 
@@ -634,7 +745,7 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
         zone = None
         if source is not None and self.zone_param:
             zone = source.params.get(self.zone_param)
-        extractor = RiSKommunalSource(zone=zone)
+        extractor = RiSKommunalSource(zone=zone, zones=self.zones)
         end_date = (
             date.today() + timedelta(days=self.lookahead_days)
             if self.lookahead_days is not None
@@ -653,6 +764,12 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
                 list_mode = rows is None
                 if list_mode:
                     rows = extractor._parse_list(soup)
+            grid_mode = False
+            if not rows:
+                # Third rendering: the JavaScript month grid. It carries the
+                # whole filtered calendar in one page, so stop after it.
+                rows = extractor._parse_grid(html)
+                grid_mode = bool(rows)
             if not rows:
                 break
 
@@ -670,7 +787,7 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
                 seen.add(key)
                 yield collection_date, waste_type
 
-            if list_mode and not self.paginate_list:
+            if grid_mode or (list_mode and not self.paginate_list):
                 break
             # Stop once the page has run past the requested look-ahead
             # window (mirrors the legacy per-page early exit).

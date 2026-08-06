@@ -70,6 +70,10 @@ class Source(RiSKommunalSource):
     SELECTION_URL = "https://mils-tirol.at/Service/Dienstleistungen/Abfallkalender"
     LOOKAHEAD_DAYS = 365
     MAX_PAGES = 30
+    # An address that does not resolve should say so, not show an empty
+    # calendar. This source was reported as returning nothing (#7144); it does
+    # not, but it was the one RiSKommunal source that could have failed quietly.
+    RAISE_ON_EMPTY = True
     QUERY_PARAMS: ClassVar = {
         "sprache": "1",
         "menuonr": "226285523",

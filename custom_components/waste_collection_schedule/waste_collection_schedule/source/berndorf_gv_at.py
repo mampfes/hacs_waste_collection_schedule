@@ -2,6 +2,7 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
     RiSKommunalRetriever,
@@ -9,6 +10,9 @@ from waste_collection_schedule.service.RiSKommunalAT import (
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://www.berndorf.gv.at"
+_SELECTION_URL = (
+    "https://www.berndorf.gv.at/Buergerservice/Aktuelles/Muellabfuhrtermine"
+)
 
 # Berndorf's calendar labels every collection with an "Abfuhrtermine Berndorf "
 # site-name prefix (e.g. "Abfuhrtermine Berndorf Restmüll"), which is not a
@@ -46,17 +50,46 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
-        "Berndorf": {},
+        "Albertstraße 1": {"strasse": "Albertstraße", "hausnummer": "1"},
+        "Alleegasse 2": {"strasse": "Alleegasse", "hausnummer": "2"},
+        "Mühlgasse 1": {"strasse": "Mühlgasse", "hausnummer": "1"},
     }
 
-    PARAMS = ()
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://www.berndorf.gv.at/Buergerservice/Aktuelles/"
+            "Muellabfuhrtermine, pick your street and house number from the "
+            "dropdowns, and use the same values for 'strasse' and 'hausnummer'."
+        ),
+        "de": (
+            "Öffnen Sie https://www.berndorf.gv.at/Buergerservice/Aktuelles/"
+            "Muellabfuhrtermine, wählen Sie Ihre Straße und Hausnummer aus den "
+            "Dropdown-Menüs, und verwenden Sie dieselben Werte für 'strasse' "
+            "und 'hausnummer'."
+        ),
+    }
+
+    # Berndorf has four collection zones and a wine-tavern calendar, and asking
+    # for none of them returned all five merged: every user saw all four zones'
+    # rounds plus fifteen Heurigen opening seasons. There is no query parameter
+    # that filters the table rendering, because the town's waste calendar is
+    # address-based: the street and house number resolve to the zone's
+    # ``typids``, and asking for one switches the install to its JavaScript
+    # month grid, which the shared parser now reads as a third rendering.
     retrieve = RiSKommunalRetriever(
         base_url=_BASE_URL,
         query_params={
             "sprache": "1",
             "menuonr": "226080602",
         },
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=_SELECTION_URL,
     )
     parse = RiSKommunalParser()
 
@@ -65,9 +98,7 @@ class Source(BaseSource):
     # alongside residual waste) need an explicit entry; every other cleaned
     # label (Restmüll, Biotonne, Bioabfall, Biomüll, Altpapier, Papier, Gelber
     # Sack, Gelbe Tonne, Sperrmüll, Altglas, Problemstoff, Grünschnitt) is
-    # classified by the shared vocabulary. The calendar also carries a handful
-    # of unrelated local-business notices ("Heuriger - ..."), preserved
-    # verbatim with no icon, matching the legacy unmapped-label behaviour.
+    # classified by the shared vocabulary.
     transform = ICSTransformer(
         clean=_clean,
         type_value_map={

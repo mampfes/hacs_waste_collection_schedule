@@ -28,6 +28,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
 
     # The vocabulary this feed actually produces, derived by replaying the
     # recorded cassette. Declared explicitly because a bare ICSTransformer()
