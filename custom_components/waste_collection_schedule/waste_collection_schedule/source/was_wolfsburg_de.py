@@ -1,4 +1,3 @@
-import re
 from datetime import datetime
 
 import requests
@@ -38,21 +37,16 @@ class Source:
             raise ValueError("Number must be set")
 
     def fetch(self) -> list[Collection]:
-        # get token
-        js = requests.get("https://abfuhrtermine.waswob.de/js/main.js")
-        token = re.search(r"token=([^\"\n\`]*)", js.text)
-        if token is None:
-            raise ValueError("Token not found")
-
         entries = []
         r = requests.get(
-            "https://apiabfuhrtermine.waswob.de/api/download-json",
-            {
+            "https://abfuhrtermine.waswob.de/php/abfuhr_api.php",
+            params={
+                "action": "termine",
                 "strasse": self._street,
                 "hausnummer": self._number,
-                "token": token.group(1),
             },
         )
+        r.raise_for_status()
         answer = r.json()
 
         for name, icon in ICON_MAP.items():
