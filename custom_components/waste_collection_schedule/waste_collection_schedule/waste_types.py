@@ -338,6 +338,48 @@ ELECTRONICS = WasteType(
     },
 )
 
+TEXTILES = WasteType(
+    id="textiles",
+    icon="mdi:hanger",
+    color="#EC407A",
+    names={
+        "en": "Textiles",
+        "de": "Altkleider",
+        # "Abiti usati" (used clothing), deliberately not "Tessili". Italian
+        # providers use "tessili sanitari" for nappies and hygiene absorbents,
+        # which is residual waste, and naming this type "Tessili" would invite
+        # someone to alias that in. Do not add "tessili" or "tessili sanitari"
+        # here (#7097).
+        "it": "Abiti usati",
+        "fr": "Textiles",
+        "nl": "Textiel",
+    },
+    aliases={
+        "en": [
+            "textile",
+            "textile collection",
+            "clothing",
+            "clothes",
+            "used clothing",
+        ],
+        # Altkleider is strictly a subset of Wertstoffe (RECYCLABLES), and some
+        # providers collect it on the recycling round. Precedence: when a label
+        # names clothing or textiles specifically, it is TEXTILES; RECYCLABLES
+        # is for a label that names the mixed stream. A provider that really
+        # collects both together maps the label in its own type_value_map.
+        "de": [
+            "alttextilien",
+            "altkleidersammlung",
+            "kleidersammlung",
+            "textilien",
+            "textilsammlung",
+        ],
+        "fr": ["vieux vêtements", "vêtements", "textiles usagés"],
+        "it": ["abiti", "indumenti", "indumenti usati", "abbigliamento"],
+        "nl": ["kleding", "oude kleding", "textielinzameling"],
+    },
+)
+
 OTHER = WasteType(
     id="other",
     icon="mdi:calendar",
@@ -362,6 +404,7 @@ ALL_TYPES = [
     BULKY_WASTE,
     HAZARDOUS,
     ELECTRONICS,
+    TEXTILES,
     OTHER,
 ]
 

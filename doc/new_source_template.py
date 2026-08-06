@@ -65,8 +65,9 @@ class Source(BaseSource):
     # >>> The canonical types this source actually produces, derived by replaying
     # your recorded cassette. Declare it: the auto-derivation reads only the
     # type_value_map below, so it misses everything the shared vocabulary
-    # resolves, and a transformer with no map at all falls back to the whole
-    # ALL_TYPES catalogue. tests/test_declared_waste_types.py rejects both.
+    # resolves, and tests/test_declared_waste_types.py rejects that. The one
+    # source that may leave it out is a bare transformer with no map at all,
+    # where there is nothing to enumerate and empty is the honest answer.
     WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
     # >>> Per-language guidance shown in the config form (en/de/fr/it).

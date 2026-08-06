@@ -145,8 +145,14 @@ class Source(BaseSource):
             "Altpapier Siemer": wt.PAPER,
             "Altpapier Pamo": wt.PAPER,
             "Gelbe Tonne": wt.RECYCLABLES,
-            "Altkleider": wt.RECYCLABLES,
-            "Altkleider (Außer Langförden)": wt.RECYCLABLES,
+            # One clothing round, three spellings across two districts. The two
+            # Langförden variants were RECYCLABLES (defensible: Altkleider is a
+            # subset of Wertstoffe) while Vörden's spelling was in no map at all
+            # and came out as preserved:Altkleider Vö. All three are TEXTILES
+            # now (#7097).
+            "Altkleider": wt.TEXTILES,
+            "Altkleider (Außer Langförden)": wt.TEXTILES,
+            "Altkleider Vö": wt.TEXTILES,
             "Mobile Schadstoff.": wt.HAZARDOUS,
         }
     )

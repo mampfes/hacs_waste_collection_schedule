@@ -49,7 +49,7 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.regions import Region
 from waste_collection_schedule.transformers import BaseTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES, WasteType
+from waste_collection_schedule.waste_types import WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -86,13 +86,16 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # DECLARE THIS. It drives the config-flow waste-type dropdown, so it has to
     # be the set the source really emits, derived by replaying its cassette.
     #
-    # The auto-derivation below is a fallback, and it is wrong in two ways that
-    # tests/test_declared_waste_types.py exists to catch. It reads only a
-    # transformer's explicit type_value_map, so every type the shared
-    # multilingual resolver classifies for free is missing from the derived set;
-    # and a transformer with no map at all cannot be narrowed, so it derives the
-    # whole ALL_TYPES catalogue, which declares nothing. Explicit declaration
-    # takes precedence, and a classify()-based source has no derivation at all.
+    # The auto-derivation below is a starting point, not an answer: it reads
+    # only a transformer's explicit type_value_map, so every type the shared
+    # multilingual resolver classifies for free is missing from the derived set.
+    # tests/test_declared_waste_types.py replays the cassettes and catches that.
+    #
+    # A transformer with no map at all derives an EMPTY list, and that is the
+    # honest answer. It used to derive the whole ALL_TYPES catalogue instead,
+    # which claimed every canonical type and so declared nothing (#7028).
+    # Explicit declaration takes precedence, and a classify()-based source has
+    # no derivation at all.
     WASTE_TYPES: ClassVar[list[WasteType]] = []
 
     def __init_subclass__(cls, **kwargs):
@@ -101,7 +104,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         if "WASTE_TYPES" not in cls.__dict__ and "transform" in cls.__dict__:
             transform = cls.__dict__["transform"]
             if transform is not None:
-                cls.WASTE_TYPES = transform.waste_types or list(ALL_TYPES)
+                cls.WASTE_TYPES = transform.waste_types
 
     # --- Pipeline config ---
     API_URL: str = ""

@@ -32,8 +32,8 @@ class Source(BaseSource):
 
     # The vocabulary this feed actually produces, derived by replaying the
     # recorded cassette. Declared explicitly because a bare ICSTransformer()
-    # otherwise falls back to the whole ALL_TYPES catalogue, which declares
-    # nothing.
+    # carries no type_value_map, so the auto-derivation has nothing to read and
+    # would otherwise leave this empty.
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
     ]

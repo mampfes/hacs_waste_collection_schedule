@@ -18,8 +18,9 @@ class Source(JumomindSource):
     URL = "https://www.rh-entsorgung.de"
     COUNTRY = "de"
 
-    # Canonical types observed from the live Jumomind "rhe" service; overrides the
-    # inherited ALL_TYPES fallback with the specific vocabulary this service emits.
+    # Canonical types observed from the live Jumomind "rhe" service. Declared
+    # rather than derived: this transformer carries no type_value_map, so there
+    # is nothing for the auto-derivation to read.
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
         wt.RECYCLABLES,
