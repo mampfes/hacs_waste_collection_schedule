@@ -23,7 +23,7 @@
 Skip this section only for a fix to an existing legacy `fetch()` source.
 
 - [ ] **Cassette recorded.** `python tests/record_fixtures.py <module>`, with the resulting `tests/fixtures/<module>/*.json` committed so CI replays this source offline. One per distinct response shape for a shared-service source. If the provider genuinely cannot be recorded (geo-block, per-request challenge, credentials), say which and why in the summary.
-- [ ] **Composes shared components.** No `Retriever`/`Parser` subclass defined in the source module, and no `retrieve` / `parse` / `preprocess` / `transform` override on the `Source` class.
+- [ ] **Composes shared components.** No `Retriever`/`Parser` subclass defined in the source module, no `retrieve` / `parse` / `preprocess` / `transform` override on the `Source` class, and no module-level function issuing the provider's HTTP (`source.session.get/post` inside a `prepare=` / `fetch=` / `steps=` callback is a retriever written as a function).
 - [ ] **Anything the platform was missing was added to the shared component** under `waste_collection_schedule/service/`, so every provider on that platform gets it, rather than being written inside this source.
 
 A source that still needs its own step is not migrated: it has moved provider behaviour somewhere the next provider on that platform cannot reach. If you cannot avoid one, do not add it quietly. Explain in the summary what the component is missing.
@@ -32,6 +32,7 @@ A source that still needs its own step is not migrated: it has moved provider be
 Enforced in CI by tests/test_new_architecture.py:
   test_pipeline_sources_ship_a_cassette
   test_pipeline_sources_reuse_shared_components
+  test_pipeline_sources_do_not_hand_roll_retrieval
   test_no_new_source_local_step_overrides
 Their allowlists are debt registers for sources converted before these rules
 existed, with a target of zero. They are not a place to add new work.

@@ -89,7 +89,7 @@ There are 2 ways to add support for a new service provider:
 A new or migrated source on the 3.0.0 pipeline must:
 
 1. **Ship a recorded cassette.** Run `python tests/record_fixtures.py <module>` once the source works live, and commit `tests/fixtures/<module>/*.json`. CI replays these offline, so it never depends on a council's website being up.
-2. **Compose shared components.** Build on the components in `waste_collection_schedule/service/`. Do not define a `Retriever`/`Parser` in your source module, and do not override `retrieve`, `parse`, `preprocess` or `transform`. If the platform is missing something your provider needs, add it to the shared component so every provider on that platform gets it.
+2. **Compose shared components.** Build on the components in `waste_collection_schedule/service/`. Do not define a `Retriever`/`Parser` in your source module, do not override `retrieve`, `parse`, `preprocess` or `transform`, and do not call `source.session.get`/`post` from a module-level function handed to a component: that is a retriever whichever way it is spelled. If the platform is missing something your provider needs, add it to the shared component so every provider on that platform gets it.
 
 Both are checked by CI in `tests/test_new_architecture.py`. See `doc/contributing_source.md` for the detail.
 

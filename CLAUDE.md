@@ -129,7 +129,16 @@ Both backlogs are debt registers, not exemptions: record the case and delete its
 
 **What a cassette pins.** A recording stores the request body (every payload slot at once: `json`, `data`, `params`, `files`, canonically rendered), and replay fails if a source sends something the recording did not. Cassettes recorded before #7102 have no `body` field and are still matched on method and URL alone, pinning nothing about the payload; that is deliberate, because several sources cannot be re-recorded from outside their region. `FALLBACK_BUDGET` in `tests/test_offline_fixtures.py` counts how many requests are still matched that loosely and only ratchets down, so lower it whenever you re-record a source. `python -m pytest tests/test_offline_fixtures.py -k <module> -p tests.mutate_requests` alters every outgoing request and says which case a source is in: a replay that still passes checked nothing about what it sent.
 
-**Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails on any source that declares its own `Retriever` or `Parser` subclass, with a narrow allowlist for genuinely single-consumer cases. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
+**Reuse rule (enforced).** A pipeline source composes shared components; it does not define its own. Provider behaviour belongs in a reusable component under `waste_collection_schedule/service/` (or the shared retrievers/parsers modules), so the next provider on that platform gets it for free. This applies to conversions as much as to new sources: when porting a fix out of a legacy source, decide which layer the behaviour belongs to rather than copying it into the source module.
+
+Two gates in `tests/test_new_architecture.py` enforce it, because the rule is about where behaviour lives, not how it is spelled:
+
+| gate | what it catches | backlog |
+|---|---|---|
+| `test_pipeline_sources_reuse_shared_components` | a `Retriever`/`Parser` **subclass** declared in the source module | `SOURCE_LOCAL_STEP_EXCEPTIONS` (narrow allowlist) |
+| `test_pipeline_sources_do_not_hand_roll_retrieval` | a module-level **function** in the source module that issues the provider's HTTP, however it reaches a component (`YearlyRetriever(prepare=...)`, `LookupChainRetriever(steps=...)`, …) | `SOURCES_HAND_ROLLING_RETRIEVAL` (debt register, staleness-checked) |
+
+The second gate exists because the first read as comprehensive while missing a whole form of the thing it checks (#7139). `frankenberg_de` and `zva_sek_de` run one vendor module, both hand-rolled its dropdown decoder as plain functions, and the two copies drifted into four readings of one reply format with two bugs between them (#7100). Declaring retrieval with `def` rather than `class` does not make it reusable. When writing a gate, match on the property you care about, not on a proxy that usually correlates with it.
 
 Optional:
 

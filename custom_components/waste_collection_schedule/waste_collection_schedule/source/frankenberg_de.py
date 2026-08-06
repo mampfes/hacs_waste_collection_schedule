@@ -10,11 +10,10 @@ once, not once per year), the calendar POST is its ``fetch``, and
 when the site's dropdown ids drift between polls. ``parsers.EachResponse``
 folds the one-or-two generated calendars into one record list.
 
-The id lookups themselves stay here rather than moving to a shared component:
+Reading those dropdown replies is the vendor's job, not this provider's:
 zva-sek.de runs the same vendor module under the same ``get_ortsteile.php`` /
-``get_strassen.php`` / ``generate_ical.php`` paths, but the two read the reply
-differently, and this one has a quirk (see ``_resolve_street``) that a shared
-decoder would silently normalise away.
+``get_strassen.php`` / ``generate_ical.php`` paths, so the decoder lives in
+``service/Abfallkalender.py`` and both sources call it.
 """
 
 from datetime import datetime
@@ -25,9 +24,9 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.service import Abfallkalender as abfallkalender
 from waste_collection_schedule.transformers import ICSTransformer
 
 _ORTSTEILE_URL = "https://abfall.frankenberg.de/module/abfallkalender/get_ortsteile.php"
@@ -51,49 +50,23 @@ def _normalize_street(value: str) -> str:
 def _resolve_district(session, district_name: str) -> str:
     r = session.get(_ORTSTEILE_URL, params={"bez_id": 1})
     r.raise_for_status()
-    # f.ak_ortsteil.options[0].text = 'Bitte wählen';f.ak_ortsteil.length = 2;f.ak_ortsteil.options[1].value = '1-1';
-    result = r.text.split(";")[1:-2]  # drop 'Bitte wählen' and the trailing index
-
-    names = []
-    for i in range(0, len(result), 3):
-        id_ = result[i + 1].split("'")[1]
-        name = result[i + 2].split("'")[1]
-        names.append(name)
-        if _normalize(name) == _normalize(district_name):
-            return id_
-
-    raise SourceArgumentNotFoundWithSuggestions("district", district_name, names)
+    return abfallkalender.resolve(
+        r.text, district_name, argument="district", normalise=_normalize
+    )
 
 
-def _resolve_street(
-    session, district_id: str, street_name: "str | None"
-) -> "str | None":
-    # The street endpoint writes its ids quoted (``... .value = '167';``) and
-    # this splits on " = ", so the id keeps its quotes and is POSTed as
-    # ``ak_strasse="'167'"``. The servlet accepts that, and the recorded
-    # calendars were generated with it, so it is preserved verbatim here rather
-    # than "tidied" as part of a refactor.
+def _resolve_street(session, district_id: str, street_name: "str | None") -> str:
     r = session.get(_STRASSEN_URL, params={"ot_id": district_id.split("-")[0]})
     r.raise_for_status()
-    result = r.text.split(";")[1:-2]
-
-    names = []
-    for i in range(0, len(result), 3):
-        id_ = result[i + 1].split(" = ")[1]
-        name = result[i + 2].split("'")[1]
-        names.append(name)
-        if street_name is not None and _normalize_street(name) == _normalize_street(
-            street_name
-        ):
-            return id_
-
     if street_name is None:
         raise SourceArgumentRequiredWithSuggestions(
             argument="street",
             reason="street is required for this district",
-            suggestions=names,
+            suggestions=abfallkalender.labels(r.text),
         )
-    raise SourceArgumentNotFoundWithSuggestions("street", street_name, names)
+    return abfallkalender.resolve(
+        r.text, street_name, argument="street", normalise=_normalize_street
+    )
 
 
 def _resolve_ids(source) -> "tuple[str, str | None]":

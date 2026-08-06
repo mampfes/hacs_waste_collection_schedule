@@ -7,6 +7,10 @@ an ICS-generating servlet. That cascade is the ``prepare`` of a
 YearlyRetriever, which already fetches the current year and, from November,
 next year too on a best-effort basis, which is exactly what this provider
 needs near year-end.
+
+The two JS-assignment endpoints are the shared "abfallkalender" vendor module,
+which frankenberg_de runs as well, so reading their replies is
+``service/Abfallkalender.py``'s job rather than this source's.
 """
 
 import re
@@ -21,6 +25,7 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 from waste_collection_schedule.parsers import EachResponse, IcsParser
 from waste_collection_schedule.preprocessors import RowRelabel
 from waste_collection_schedule.retrievers import YearlyRetriever
+from waste_collection_schedule.service import Abfallkalender as abfallkalender
 from waste_collection_schedule.transformers import ICSTransformer
 
 _SERVLET = "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
@@ -28,32 +33,6 @@ _MAIN_URL = "https://www.zva-sek.de/online-dienste/abfallkalender-{year}/{file}"
 _API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
 
 _SUFFIX_RE = re.compile(r"[ ]*am [0-9]+\.[0-9]+\.[0-9]+[ ]*")
-
-
-def _js_options(text: str) -> list[str]:
-    """Read the option labels out of a "f.x.options[n].text = '...'" reply."""
-    return [
-        part.split(" = ")[1][1:-1]
-        for part in text.split(";")[2:-1]
-        if "length" not in part
-    ]
-
-
-def _resolve_js_id(text: str, value: str) -> "str | None":
-    """Find the id preceding the option whose label matches ``value``.
-
-    Each endpoint replies with alternating ``...text = '...'`` / ``...value =
-    '...'`` lines; the id for a given label is the *previous* line's value.
-    """
-    last_id = None
-    for part in text.split(";")[2:-1]:
-        if "length" in part:
-            continue
-        label = part.split(" = ")[1][1:-1]
-        if label.lower() == value.lower():
-            return last_id
-        last_id = label
-    return None
 
 
 def _resolve_ids(source) -> tuple:
@@ -90,11 +69,7 @@ def _resolve_ids(source) -> tuple:
         _API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
     )
     r.raise_for_status()
-    ortsteil_id = _resolve_js_id(r.text, ortsteil)
-    if not ortsteil_id:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "ortsteil", ortsteil, _js_options(r.text)
-        )
+    ortsteil_id = abfallkalender.resolve(r.text, ortsteil, argument="ortsteil")
 
     street_id = None
     if strasse is not None:
@@ -103,11 +78,7 @@ def _resolve_ids(source) -> tuple:
             params={"ot_id": ortsteil_id.split("-")[0]},
         )
         r.raise_for_status()
-        street_id = _resolve_js_id(r.text, strasse)
-        if not street_id:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", strasse, _js_options(r.text)
-            )
+        street_id = abfallkalender.resolve(r.text, strasse, argument="strasse")
 
     return bezirk_id, ortsteil_id, street_id
 

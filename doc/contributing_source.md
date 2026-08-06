@@ -340,6 +340,7 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | c-trace (DE) | `CTraceCalendarRetriever`, `SERVICE_MAP`, `resolve_service` + `parsers.IcsParser` | The multi-tenant c-trace.de calendar; one operator per `SERVICE_MAP` row. A first GET without redirects mints a cookieless ASP.NET session id from the `Location` header, which the ICS download URL then carries. Adding an operator is a `SERVICE_MAP` row, not a new source. |
 | bw wastecalendar (DE) | `WasteCalendarRetriever` + `parsers.IcsParser` | The `bw_wastecalendar` TYPO3 plugin a council embeds in its own site: a street autocomplete, the `demand` form's argument hash, then one "als iCal" feed per waste type. Adding a council is its page URL. |
 | kiedywywoz.pl (PL) | `SchedulePdfRetriever`, `index` + `parsers.PdfTextParser` | The address index behind several Polish municipalities' schedule PDFs. A per-municipality token POSTed to one URL walks street then building, then the PDF. Adding a municipality is a token. |
+| abfallkalender module (DE) | `Abfallkalender.options` / `labels` / `resolve` | The `/module/abfallkalender/` vendor application (`get_ortsteile.php`, `get_strassen.php`, `generate_ical.php`) that frankenberg_de and zva-sek.de both run. Its dropdown endpoints reply with the JavaScript that would fill a `<select>`, not with data; these read it. The HTTP flow is still per-source, so a third provider is the point at which to write the retriever. |
 | api.phila.gov (US) | `AddressPropertiesParser`, `HolidayCascadeShift`, `observed_holidays` | Philadelphia's AIS address index (which weekdays a property's rounds run, no dates) plus the city's *observed* holiday calendar, which the collections cascade off. |
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.
@@ -447,14 +448,27 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | hand-rolled ArcGIS geocode + query | `ArcGisFeatureRetriever` / `ArcGisMultiFeatureRetriever` + the matching parser; route any custom lookup through `ArcGisFeatureParser` |
 | dead module-level `TITLE = ...` re-aliased as `TITLE = TITLE` in the class | put the literal metadata on the class only |
 | a `Retriever` or `Parser` subclass defined inside a source module | put it in the shared component under `waste_collection_schedule/service/` and declare it, so the next provider on that platform reuses it |
+| a module-level function in a source module that calls `source.session.get/post` (a `prepare=` / `fetch=` / `steps=` callback) | the same thing packaged as a function; put the request flow in the component too, and configure it from the source |
 
 ### The reuse gate
 
-The last row is enforced. `tests/test_new_architecture.py::test_pipeline_sources_reuse_shared_components` fails if a pipeline source defines its own `Retriever` or `Parser` subclass.
+The last two rows are enforced, by one gate each.
+
+`test_pipeline_sources_reuse_shared_components` fails if a pipeline source defines its own `Retriever` or `Parser` subclass.
 
 The reasoning is about the second provider, not the first. A step written inside `some_council.py` works fine for that council and is invisible to the next one on the same platform, so the same logic gets written again, slightly differently, and the two drift. Putting it in the service module means the fix lands once for everyone. That is also why porting a fix from a legacy source is not a copy-paste job: ask which layer the behaviour belongs to before writing it down.
 
 There is an allowlist, `SOURCE_LOCAL_STEP_EXCEPTIONS`, for behaviour that genuinely has one consumer. It currently holds a single entry. Adding to it is an architectural decision that needs a stated reason, not a way to make the test pass.
+
+`test_pipeline_sources_do_not_hand_roll_retrieval` fails if a module-level function in a source module issues the provider's HTTP.
+
+That gate is the same rule reaching the same behaviour written as a function instead of a class, and it exists because the first one read as comprehensive while missing a whole form of what it checks (#7139). `frankenberg_de` and `zva_sek_de` run one vendor module. Both wrote its dropdown decoder as module-level functions handed to `YearlyRetriever(prepare=...)`, so neither ever tripped a gate, and the two copies drifted into four readings of one reply format with two bugs between them (#7100). Its backlog, `SOURCES_HAND_ROLLING_RETRIEVAL`, is a debt register with a staleness check, not an exemption list.
+
+You clear an entry by giving the platform a component that expresses the provider's flow, then configuring that component from the source. Relocating the function does not clear it: a function cut out of `some_council.py` and pasted into `service/` is still one provider's request written once for one caller, so it has changed address rather than layer. If the component you end up with has exactly one possible caller, you have moved the problem.
+
+For many of the entries that is a design change rather than a tidy-up, and it should be planned as one. `LookupChainRetriever`, `YearlyRetriever` and `FanOutRetriever` all document handing the request to a source-supplied callback, on the stated grounds that these lookups vary too much to template, so most of the listed sources are doing exactly what their component told them to. Clearing those means deciding what the platform's flow actually is and building the component that says it, with a cassette on every affected provider. The contradiction between the reuse rule and those docstrings is the finding the register exists to hold; the length of the list is the argument for the next component, not an indictment of the contributors on it.
+
+Read the register when you are about to write one of these, and read it for clusters. A cluster spanning two or more sources is a platform with a proven second consumer, and it is worth much more than a cluster of four functions inside one file, which is usually one provider's flow.
 
 ## Empty results and exceptions
 

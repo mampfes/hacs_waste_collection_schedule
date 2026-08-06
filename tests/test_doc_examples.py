@@ -39,6 +39,7 @@ from test_new_architecture import (
     hand_rolled_registry,
     hand_rolled_standard_fields,
     named_waste_type_imports,
+    source_local_retrieval_functions,
     source_local_step_classes,
 )
 
@@ -131,6 +132,21 @@ def test_examples_do_not_define_their_own_pipeline_steps(label, code):
     assert not local, (
         f"{label} defines its own step class(es) {local}. An example must compose "
         "shared components, since it is what gets copied."
+    )
+
+
+@pytest.mark.parametrize("label,code", _EXAMPLES, ids=[e[0] for e in _EXAMPLES])
+def test_examples_do_not_hand_roll_retrieval(label, code):
+    """The function-shaped half of the same rule (#7139).
+
+    An example that reaches for ``source.session`` in a module-level helper
+    teaches a Retriever written as a function, which is what let the same vendor
+    decoder be hand-rolled twice and drift.
+    """
+    offenders = source_local_retrieval_functions(code)
+    assert not offenders, (
+        f"{label} issues HTTP from module-level function(s) {offenders}. An "
+        "example must compose a shared retriever, since it is what gets copied."
     )
 
 
