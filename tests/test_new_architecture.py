@@ -3175,6 +3175,34 @@ class TestConfigParamValidation:
             "street": "Hay St",
         }
 
+    def test_apply_defaults_keeps_a_declared_empty_string(self):
+        """A declared default survives the None-filling pass, even when it is "".
+
+        The two passes disagreed about what ``""`` means. The None-filling pass
+        reads it as "the config flow submitted an empty text box", which is
+        right for a field with no default and wrong for one that was handed
+        ``""`` on purpose a moment earlier. ``text_field(..., default="")`` was
+        therefore unreachable, and 15 sources meaning "send an empty field" sent
+        no field at all, because ``requests`` drops a None form value (#7138).
+        """
+        from waste_collection_schedule.config_params import (
+            apply_defaults,
+            house_number,
+            text_field,
+        )
+
+        params = [
+            text_field("address_suffix", "Address suffix", default=""),
+            house_number(optional=True),
+        ]
+        prepared = apply_defaults(params, {})
+        assert prepared["address_suffix"] == ""
+        # A field with no declared default still reads as None.
+        assert prepared["house_number"] is None
+        # An empty submission reads as the default, not as None.
+        assert apply_defaults(params, {"address_suffix": ""})["address_suffix"] == ""
+        assert apply_defaults(params, {"address_suffix": "a"})["address_suffix"] == "a"
+
     def test_coercion_comes_from_the_concept(self):
         """A term's coerce reaches params without the source asking for it."""
         from waste_collection_schedule.config_params import (
@@ -6206,6 +6234,47 @@ def test_pipeline_sources_dont_redeclare_init(stem: str, cls: type) -> None:
         "put argument coercion on the ConfigParam and declare defaults in PARAMS "
         "rather than in the signature."
     )
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem,cls", _NEW_STYLE_SOURCES, ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_keep_their_declared_defaults(stem: str, cls: type) -> None:
+    """What PARAMS declares as a default is what the source is given.
+
+    A default that ``apply_defaults`` then overwrites is worse than no default:
+    the declaration reads as deliberate and the source is handed something else.
+    That is exactly what happened to ``default=""`` on an optional field, and
+    because these values are interpolated into outgoing requests it changed what
+    15 sources sent to their provider without changing anything a test looked at
+    (#7138).
+
+    Asserted over the real PARAMS of every pipeline source rather than over a
+    hand-written example, so it holds for any param factory and any default
+    type, and has no allowlist to add a source to.
+    """
+    from waste_collection_schedule.config_params import apply_defaults
+
+    params = getattr(cls, "PARAMS", ()) or ()
+    declared: dict[str, object] = {}
+    for param in params:
+        declared.update(param.defaults)
+    if not declared:
+        return
+
+    prepared = apply_defaults(params, {})
+    for field_name, default in declared.items():
+        got = prepared.get(field_name)
+        assert got == default and type(got) is type(default), (
+            f"{stem}: PARAMS declares {field_name}={default!r} but "
+            f"apply_defaults produces {got!r}. A declared default must reach the "
+            "source unchanged, whatever its value: fix apply_defaults rather "
+            "than the declaration."
+        )
 
 
 # --------------------------------------------------------------------------- #
