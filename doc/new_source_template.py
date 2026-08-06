@@ -109,9 +109,14 @@ class Source(BaseSource):
 
     # >>> Most sources need none of the below. Add only what applies:
     #
-    # def retrieve(self, source):
-    #     # full control over the request(s); return a response or an iterable
-    #     return source.session.get(self.API_URL, params=self._params)
+    # Note there is no `retrieve` here, and there must not be. A step method on
+    # the Source class is rejected by test_no_new_source_local_step_overrides,
+    # and moving the same code into a module-level function handed to a
+    # component (YearlyRetriever(prepare=...), LookupChainRetriever(steps=...))
+    # is rejected by test_pipeline_sources_do_not_hand_roll_retrieval: calling
+    # source.session.get yourself is a retriever, whichever way it is spelled.
+    # If no configured retriever expresses the provider's flow, the platform is
+    # missing a capability; add it under waste_collection_schedule/service/.
     #
     # def preprocess(self, records, source=None):
     #     # reshape parsed output into the records the transformer expects

@@ -3,6 +3,16 @@
 **The count reached zero on 2026-08-06.** 263 of 263 pipeline sources are fully
 declarative and `SOURCES_WITH_LEGACY_STEP_OVERRIDES` is an empty set.
 
+**And then it turned out the count was measuring the wrong thing.** #7139 found
+that "fully declarative" meant "no step *method* and no step *class*", so 28 of
+those 263 sources still issue the provider's HTTP from a module-level function
+handed to a component. `tools/arch_coverage.py` now reports that as its own
+line, and `SOURCES_HAND_ROLLING_RETRIEVAL` in `tests/test_new_architecture.py`
+is the register. Zero on the old measure still stands; it just means less than
+it read as. Whoever picks this up next should decide whether the second number
+is the campaign's business or a successor's, because clearing it means new
+components rather than moved code.
+
 This file said to delete it at zero. Do not delete it yet, and do not keep it as
 it stands. Most of it is scaffolding that has served its purpose, but four
 things in it are hard-won and recoverable from nowhere else: the substitute
@@ -181,11 +191,12 @@ To check whether a cassette pins anything at all, run the gate against
 python -m pytest tests/test_offline_fixtures.py -q -p tests.mutate_requests
 ```
 
-Anything still passing there checked nothing about what it sent. The run today
-is 5 failed, 678 passed: three `awg_de` cases whose hand-built query string
-breaks the URL-folding candidate, and the two `bassendean_wa_gov_au` cases,
-which are the only ones re-recorded so far and so the only ones that notice. As
-fixtures are re-recorded that pass count is what should fall.
+Anything still passing there checked nothing about what it sent. A failure here
+is the good outcome: it means the cassette noticed. The run on 2026-08-06 is 20
+failed, 667 passed, 1 skipped, up from 5 failed when the gate went in, because
+every re-recorded fixture joins the failing side. The `frankenberg_de` pair is
+the newest addition, re-recorded with #7100. As fixtures are re-recorded that
+pass count is what should keep falling.
 
 ## Sources with no cassette
 
@@ -283,7 +294,11 @@ agents each solve separately.
 ## Definition of done, per source
 
 1. No `retrieve` / `parse` / `preprocess` / `transform` on the `Source` class,
-   and no `Retriever`/`Parser` subclass in the source module.
+   no `Retriever`/`Parser` subclass in the source module, and no module-level
+   function issuing the provider's HTTP. That last one was invisible to every
+   gate until #7139: a `prepare=` / `fetch=` / `steps=` callback calling
+   `source.session.get` is a retriever, and `def` rather than `class` does not
+   make it reusable.
 2. Whatever the source needed now exists in the shared component, with a
    sensible default so existing providers on that platform are unaffected.
 3. `pytest tests/test_offline_fixtures.py -k <module>` passes, and every other
@@ -422,8 +437,9 @@ most cases and is trivial when it does not.
 > `REGIONS`, `TEST_CASES`, and a composition of shared steps.
 >
 > Rules:
-> 1. No `Retriever`/`Parser` subclass in the source module, and no step method
->    on the `Source` class. Do not add the source to any gate allowlist.
+> 1. No `Retriever`/`Parser` subclass in the source module, no step method on
+>    the `Source` class, and no module-level function calling
+>    `source.session.get/post`. Do not add the source to any gate allowlist.
 > 2. Anything the platform lacks goes into `waste_collection_schedule/service/`
 >    (or the shared retrievers/parsers/preprocessors/transformers), with a
 >    default that leaves existing providers unchanged.
@@ -480,6 +496,26 @@ most cases and is trivial when it does not.
 - **Cassette churn.** A diff that rewrites recorded fixtures is a behaviour
   change wearing a refactor's clothes. Recorded requests should be untouched,
   and `git status --short tests/fixtures/` is the check.
+
+  The exception is a change that *is* meant to alter a request, and it needs
+  showing rather than asserting, because a re-recorded fixture is an unreadable
+  diff of base64. Fixing `frankenberg_de`'s quoted street id
+  (`ak_strasse="'51'"` to `ak_strasse=51`, #7100) changed the outgoing POST, so
+  its two cassettes had to be re-recorded. What made that reviewable was the
+  evidence either side of it: `tests/dump_requests.py` before and after, showing
+  one field changed and nothing else; and the `DTSTART`/`SUMMARY` sets pulled
+  out of the old and new recordings and compared, identical at 101 events each.
+  Do both, and put the numbers in the PR.
+- **A gate matching on packaging rather than on behaviour.** The reuse gate
+  looked for a `Retriever`/`Parser` *subclass*, so the same behaviour written as
+  a module-level function and handed to a component (`prepare=`, `fetch=`,
+  `steps=`) was invisible to it. Two sources on one vendor module kept
+  hand-rolled decoders through two migrations that way and drifted into four
+  readings of one reply format (#7139, #7100). This was the third gate in a week
+  that read as comprehensive while missing a whole form of the thing it checks,
+  after the empty-fixture-directory cassette check and the `PARAMS`-truthiness
+  membership test below. Match on the property you care about, not on a proxy
+  that usually correlates with it.
 - **A falsy value standing in for a missing one.** Pipeline membership was
   tested as `if not getattr(cls, "PARAMS", None)` in two gates. A zero-parameter
   source declares `PARAMS = ()`, which is falsy, so "has no params" and "is not

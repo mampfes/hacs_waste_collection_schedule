@@ -5680,6 +5680,86 @@ class TestIcsSessionRetrieverSelectSteps:
             assert retriever(source) == [this_year]
 
 
+class TestAbfallkalenderDecoder:
+    """The shared reader for the abfallkalender vendor module (#7100).
+
+    frankenberg_de and zva_sek_de run one vendor module and each hand-rolled its
+    dropdown decoder, so the two drifted into four readings of one reply format.
+    These are the readings that differed.
+    """
+
+    # The vendor's real shape, from a recorded get_strassen.php reply: a
+    # placeholder text with no id in front of it, a `length` line before every
+    # option, and a trailing `selectedIndex`.
+    _REPLY = (
+        "f.ak_strasse.options[0].text = 'Bitte wählen';"
+        "f.ak_strasse.length = 2;"
+        "f.ak_strasse.options[1].value = '51'; "
+        "f.ak_strasse.options[1].text = 'Futterhof';"
+        "f.ak_strasse.length = 3;"
+        "f.ak_strasse.options[2].value = '52'; "
+        "f.ak_strasse.options[2].text = 'Bürger's Gasse';"
+        "f.ak_strasse.selectedIndex = 0;"
+    )
+
+    def test_ids_are_unquoted(self):
+        """frankenberg_de kept the vendor's quotes and POSTed ak_strasse="'51'"."""
+        from waste_collection_schedule.service.Abfallkalender import resolve
+
+        assert resolve(self._REPLY, "Futterhof", argument="street") == "51"
+
+    def test_a_label_containing_an_apostrophe_survives(self):
+        """split("'")[1] truncates it; split(" = ", 1)[1][1:-1] does not."""
+        from waste_collection_schedule.service.Abfallkalender import labels
+
+        assert labels(self._REPLY) == ["Futterhof", "Bürger's Gasse"]
+
+    def test_suggestions_are_labels_not_ids(self):
+        """zva_sek_de's list interleaved the ids, which the user cannot type."""
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.Abfallkalender import resolve
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as excinfo:
+            resolve(self._REPLY, "Nowhere", argument="street")
+        assert excinfo.value.suggestions == ["Futterhof", "Bürger's Gasse"]
+
+    def test_the_placeholder_option_is_not_an_option(self):
+        """`options[0].text = 'Bitte wählen'` has no id, so it is not a choice."""
+        from waste_collection_schedule.service.Abfallkalender import options
+
+        assert options(self._REPLY) == [("51", "Futterhof"), ("52", "Bürger's Gasse")]
+
+    def test_reading_survives_the_length_line_going_away(self):
+        """Counting in threes assumes the vendor repeats it; scanning does not."""
+        from waste_collection_schedule.service.Abfallkalender import options
+
+        without_length = ";".join(
+            part for part in self._REPLY.split(";") if ".length" not in part
+        )
+        assert options(without_length) == options(self._REPLY)
+
+    def test_matching_is_case_insensitive_by_default(self):
+        from waste_collection_schedule.service.Abfallkalender import resolve
+
+        assert resolve(self._REPLY, "futterHOF", argument="street") == "51"
+
+    def test_a_provider_may_pass_its_own_folding(self):
+        """frankenberg_de folds "str."/"straße" together before comparing."""
+        from waste_collection_schedule.service.Abfallkalender import resolve
+
+        assert (
+            resolve(
+                self._REPLY,
+                " FUTTER HOF ",
+                argument="street",
+                normalise=lambda v: v.lower().replace(" ", ""),
+            )
+            == "51"
+        )
+
+
 class TestWestLothianJsonFallback:
     """The bin list West Lothian embeds when its own ICS generation fails."""
 
@@ -5744,6 +5824,65 @@ def source_local_step_classes(text: str) -> list[str]:
     ]
 
 
+# The verbs a session exposes. ``request`` included: a source reaching for the
+# generic form is doing the same thing more manually.
+_HTTP_VERBS = frozenset(
+    {"get", "post", "put", "patch", "delete", "head", "options", "request"}
+)
+
+
+def _is_http_client(receiver: str) -> bool:
+    """Whether ``<receiver>.get(...)`` is an HTTP call rather than a mapping read.
+
+    ``.get`` is overwhelmingly a dict read, so the receiver decides. Matching
+    on the last segment covers ``session``, ``source.session``, ``self.session``
+    and a local alias like ``cffi_requests``, without matching ``payload.get``.
+    """
+    name = receiver.rsplit(".", 1)[-1]
+    return name in ("session", "httpx") or name.endswith(("_session", "requests"))
+
+
+def source_local_retrieval_functions(text: str) -> list[str]:
+    """Module-level functions in a source module that issue HTTP themselves.
+
+    The packaging-independent counterpart to ``source_local_step_classes``.
+    Retrieval written as a plain function and handed to a component
+    (``YearlyRetriever(prepare=...)``, ``LookupChainRetriever(steps=...)``) is a
+    Retriever in everything but its declaration, and the class-shaped check
+    above cannot see it. That blind spot is how ``frankenberg_de`` and
+    ``zva_sek_de`` both kept a hand-rolled decoder for the same vendor module
+    through two migrations, and drifted into four readings of one reply format
+    (#7139, #7100).
+
+    Matching on *issuing a request* rather than on the keyword argument the
+    function is passed to is deliberate. A keyword-name list
+    (``prepare=``/``fetch=``/...) is a proxy: it needs re-deriving every time a
+    component grows a callback, and a sweep of the tree found module-level
+    functions reaching components under more than forty different argument
+    names, most of them legitimate per-provider configuration (``clean=``,
+    ``where=``, ``date_getter=``). Issuing the provider's HTTP is the property
+    the reuse rule is actually about, it needs no allowlist, and it does not go
+    out of date.
+    """
+    import ast
+
+    tree = ast.parse(text)
+    found = []
+    for node in tree.body:
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        for sub in ast.walk(node):
+            if (
+                isinstance(sub, ast.Call)
+                and isinstance(sub.func, ast.Attribute)
+                and sub.func.attr in _HTTP_VERBS
+                and _is_http_client(ast.unparse(sub.func.value))
+            ):
+                found.append(node.name)
+                break
+    return found
+
+
 @pytest.mark.skipif(
     len(_NEW_STYLE_SOURCES) == 0,
     reason="No new-style sources discoverable (likely missing dependencies)",
@@ -5761,6 +5900,174 @@ def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
         "belongs in a reusable component under waste_collection_schedule/service/ "
         "so other providers on the same platform can use it. If this really is a "
         "one-off, add it to SOURCE_LOCAL_STEP_EXCEPTIONS with a reason."
+    )
+
+
+# --------------------------------------------------------------------------- #
+# The hand-rolled-retrieval debt register.
+#
+# Every module-level function in a pipeline source that issues the provider's
+# HTTP itself, as the tree stood when the gate went in. Each one is a Retriever
+# written as a function: the next provider on the same platform cannot reach it,
+# which is exactly what the reuse rule above exists to prevent.
+#
+# It is a backlog, not an exemption list, and it is the same shape as
+# CASES_AWAITING_CASSETTE and LABELS_AWAITING_VOCABULARY.
+# ``test_the_hand_rolled_retrieval_backlog_is_not_stale`` fails if a listed
+# function no longer issues HTTP, or has gone, so the list cannot rot into a
+# permanent excuse.
+#
+# HOW AN ENTRY IS CLEARED, because this is the part that gets misread:
+#
+#   You clear an entry by giving the platform a component that expresses the
+#   provider's flow, and then configuring that component from the source. You
+#   do NOT clear it by relocating the function. A function cut out of
+#   frankenberg_de.py and pasted into service/ is still one provider's request
+#   written once for one caller; it has changed address, not layer, and the
+#   next provider on that platform still cannot use it. If the component you
+#   end up with has exactly one possible caller, you have moved the problem.
+#
+#   For a good number of these entries that is a design change rather than a
+#   tidy-up, and it should be planned as one. LookupChainRetriever,
+#   YearlyRetriever and FanOutRetriever all *document* handing the request to a
+#   source-supplied callback, on the stated grounds that "these lookups vary
+#   too much to template". So most of the sources below are doing exactly what
+#   their component's docstring told them to. Clearing those means deciding
+#   what the platform's flow actually is and building the component that says
+#   it, which is design work, needs a cassette on every affected provider, and
+#   is not a refactor you should expect to finish in an afternoon.
+#
+# So: 28 sources on this list are not 28 careless sources. Each entry is a
+# claim to judge, not a verdict, and the length of the list is the argument for
+# the next component rather than an indictment of the last 28 contributors.
+# That contradiction between the reuse rule and the component docstrings is the
+# finding this register exists to hold, and it is why the gate is a register
+# rather than an outright ban.
+#
+# Do NOT add to this list to make a new source pass. It was seeded once,
+# empirically, and only shrinks.
+#
+# Where to start: read it for clusters. A cluster spanning two or more sources
+# is a platform with a proven second consumer, and it is worth far more than a
+# cluster of four functions inside one file, which is usually one provider's
+# flow and risks a component nobody else can call. frankenberg_de and
+# zva_sek_de are the worked example and the only two-source cluster here. They
+# run one vendor module, both hand-rolled its dropdown decoder, and the two
+# copies drifted into four readings of one reply format with two bugs between
+# them (#7100). The decoder is now service/Abfallkalender.py; their HTTP
+# conversation is not, so both are still listed, and an AbfallkalenderRetriever
+# covering both cascades is what clears those five entries.
+# --------------------------------------------------------------------------- #
+
+SOURCES_HAND_ROLLING_RETRIEVAL = {
+    "1coast_com_au::_resolve_address",
+    "abfallkalender_prezero_network::_download_ical",
+    "abfallkalender_prezero_network::_resolve_street_id",
+    "abfallwirtschaft_germersheim_de::_read_export_form",
+    "abki_de::_calendar_for_year",
+    "abki_de::_resolve_ids",
+    "aha_region_de::_resolve_ladeort",
+    "aha_region_de::_resolve_street",
+    "aw_harburg_de::_child_html",
+    "aw_harburg_de::_fetch_ical",
+    "aw_harburg_de::_initial_html",
+    "aw_harburg_de::_search_page",
+    "awb_es_de::_download_feed",
+    "awb_es_de::_ics_urls",
+    "awb_es_de::_suggestions",
+    "awb_oldenburg_de::_find_export_link",
+    "awb_oldenburg_de::_read_form",
+    "awigo_de::_post",
+    "frankenberg_de::_calendar_for_year",
+    "frankenberg_de::_resolve_district",
+    "frankenberg_de::_resolve_street",
+    "gemeinde24_at::_gemeinden",
+    "gemeinde24_at::_streets",
+    "infeo_at::_fetch_by_address",
+    "infeo_at::_fetch_by_zone",
+    "infeo_at::_published_calendars",
+    "korneuburg_stadtservice_at::_fetch_ical",
+    "korneuburg_stadtservice_at::_region_ical_urls",
+    "korneuburg_stadtservice_at::_resolve_teilgebiet",
+    "kwu_de::_options",
+    "kwu_de::_resolve_ics_url",
+    "magdeburg_de::_street_suggestions",
+    "mulhouse_alsace_fr::_list_communes",
+    "mzv_rotenburg_bebra_de::_possible_cities",
+    "narab_se::_resolve_address",
+    "nemaffaldsservice_kk_dk::_resolve_address",
+    "nemaffaldsservice_kk_dk::_resolve_customer_id",
+    "nemaffaldsservice_kk_dk::_resolve_token",
+    "rsag_de::_resolve_city",
+    "rsag_de::_resolve_street",
+    "rsag_de::_resolve_waste_types",
+    "stadtreinigung_giessen_de::_load_streets_for_letter",
+    "stadtreinigung_leipzig_de::_resolve_position",
+    "stadtservice_bruehl_de::_resolve_district",
+    "staedteservice_de::_calendar_for_year",
+    "staedteservice_de::_lookup_street",
+    "verl_de::_read_calendar_page",
+    "wellington_govt_nz::_resolve_street",
+    "zva_sek_de::_calendar_for_year",
+    "zva_sek_de::_resolve_ids",
+    "zys_harmonogram_pl::_lookup",
+    "zys_harmonogram_pl::_resolve_report_url",
+}
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_pipeline_sources_do_not_hand_roll_retrieval(stem: str) -> None:
+    """A source module must not issue the provider's HTTP itself.
+
+    The companion to test_pipeline_sources_reuse_shared_components, catching the
+    same violation packaged as a function instead of a class.
+    """
+    offenders = [
+        name
+        for name in source_local_retrieval_functions(source_text(stem))
+        if f"{stem}::{name}" not in SOURCES_HAND_ROLLING_RETRIEVAL
+    ]
+    assert not offenders, (
+        f"{stem} issues HTTP from module-level function(s) {offenders}. That is a "
+        "Retriever written as a function: declaring it with `def` rather than "
+        "`class` does not make it reusable, and the next provider on the same "
+        "platform cannot reach it. Compose a shared retriever, or put the "
+        "provider's request flow in a component under "
+        "waste_collection_schedule/service/ and configure it from here."
+    )
+
+
+def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
+    """A function that has been moved out must leave the backlog, or the list rots.
+
+    Catches both halves: an entry whose function no longer issues HTTP (it moved
+    into a component, which is the win) and an entry naming a function that is
+    no longer there at all (renamed, or the source was deleted).
+    """
+    by_stem: dict[str, set[str]] = {}
+    for entry in SOURCES_HAND_ROLLING_RETRIEVAL:
+        stem, name = entry.split("::", 1)
+        by_stem.setdefault(stem, set()).add(name)
+
+    stale: list[str] = []
+    for stem, names in sorted(by_stem.items()):
+        try:
+            current = set(source_local_retrieval_functions(source_text(stem)))
+        except FileNotFoundError:
+            stale.extend(f"{stem}::{name}" for name in sorted(names))
+            continue
+        stale.extend(f"{stem}::{name}" for name in sorted(names - current))
+
+    assert not stale, (
+        f"{sorted(stale)} no longer issue HTTP from the source module. Delete "
+        "them from SOURCES_HAND_ROLLING_RETRIEVAL so the backlog reflects what "
+        "is actually outstanding."
     )
 
 

@@ -10,8 +10,15 @@ defines its own ``retrieve`` / ``parse`` / ``preprocess`` / ``transform`` has
 put provider behaviour where the next provider on that platform cannot reach
 it, so it is reported separately as debt rather than counted as done.
 
+A step method is not the only way to keep provider behaviour in a source
+module, and until #7139 this report had the same blind spot the reuse gate did:
+retrieval written as a module-level function and handed to a component
+(``YearlyRetriever(prepare=...)``) counted as fully declarative. That is
+reported as a second, separate debt line rather than folded into the headline,
+so the "migrated" number keeps meaning what it has always meant.
+
 Pass ``--list`` to print the legacy modules still to migrate, and ``--debt`` to
-print the pipeline sources still carrying their own steps.
+print the pipeline sources still carrying their own steps or their own HTTP.
 """
 
 import ast
@@ -24,6 +31,9 @@ SOURCE_DIR = (
 )
 MARKER = "class Source(BaseSource)"
 STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
+HTTP_VERBS = frozenset(
+    {"get", "post", "put", "patch", "delete", "head", "options", "request"}
+)
 
 
 def _overridden_steps(text: str) -> list[str]:
@@ -47,6 +57,35 @@ def _overridden_steps(text: str) -> list[str]:
             if isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef))
             and member.name in STEP_METHODS
         ]
+    return found
+
+
+def _http_functions(text: str) -> list[str]:
+    """Module-level functions in this module that issue the provider's HTTP.
+
+    Mirrors ``source_local_retrieval_functions`` in tests/test_new_architecture.py;
+    kept in step by hand because tools/ must not import the test suite.
+    """
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return []
+    found: list[str] = []
+    for node in tree.body:
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        for sub in ast.walk(node):
+            if (
+                isinstance(sub, ast.Call)
+                and isinstance(sub.func, ast.Attribute)
+                and sub.func.attr in HTTP_VERBS
+            ):
+                name = ast.unparse(sub.func.value).rsplit(".", 1)[-1]
+                if name in ("session", "httpx") or name.endswith(
+                    ("_session", "requests")
+                ):
+                    found.append(node.name)
+                    break
     return found
 
 
@@ -88,10 +127,25 @@ def main(argv: list[str]) -> int:
     )
     print(f"Legacy fetch() sources:                    {len(legacy)}")
 
+    hand_rolled = [
+        (path.stem, funcs)
+        for path in sorted(SOURCE_DIR.glob("*.py"))
+        if path.name != "__init__.py"
+        and MARKER in (text := path.read_text(encoding="utf-8"))
+        and (funcs := _http_functions(text))
+    ]
+    print(
+        f"  still issuing their own HTTP:            {len(hand_rolled)} "
+        "(#7139, target zero)"
+    )
+
     if "--debt" in argv:
         print("\nPipeline sources still defining their own steps:")
         for name, steps in debt:
             print(f"  {name}: {', '.join(steps)}")
+        print("\nPipeline sources issuing HTTP from a module-level function:")
+        for name, funcs in hand_rolled:
+            print(f"  {name}: {', '.join(funcs)}")
     if "--list" in argv:
         print("\nLegacy (module-level fetch) sources still to migrate:")
         for name in legacy:

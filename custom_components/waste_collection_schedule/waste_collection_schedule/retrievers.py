@@ -253,6 +253,14 @@ class LookupChainRetriever(_BaseRetriever):
     form data, the next a GET with query params, each with its own matching and
     normalisation rules.
 
+    Where the step goes matters. Written as a function in the source module it
+    is a retriever that the next provider on the same platform cannot reach, and
+    ``def`` rather than ``class`` does not change that:
+    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates it and
+    ``SOURCES_HAND_ROLLING_RETRIEVAL`` is the backlog (#7139). Put a step for a
+    platform more than one provider runs in that platform's module under
+    ``service/`` and pass it from there.
+
     A key is whatever the next request needs, not necessarily an id. A level
     that yields several values at once returns them together (verl_de reads a
     middleware key and a page id off one page, as a NamedTuple, because a
@@ -389,6 +397,11 @@ class FanOutRetriever(_BaseRetriever):
             targets=lambda source, area: _feed_urls(source, area),
         )
         parse = parsers.EachResponse(parsers.IcsParser())
+
+    As with :class:`YearlyRetriever`, ``prepare`` and ``fetch`` are retrieval:
+    for a platform with more than one provider they belong in its ``service/``
+    module rather than in the source
+    (``test_pipeline_sources_do_not_hand_roll_retrieval``, #7139).
 
     Args:
         targets: ``callable(source, context) -> Sequence`` listing what to
@@ -1328,6 +1341,12 @@ class YearlyRetriever(_BaseRetriever):
             refresh_on_failure=True,
         )
         parse = parsers.EachResponse(parsers.IcsParser())
+
+    ``prepare`` and ``fetch`` are retrieval, wherever they are written. Defining
+    them in the source module puts the provider's HTTP conversation where the
+    next provider on the same platform cannot reuse it, which is what
+    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates (#7139): for a
+    platform with more than one provider they belong in its ``service/`` module.
 
     Args:
         fetch: ``callable(source, year, context) -> Response``; issues the
