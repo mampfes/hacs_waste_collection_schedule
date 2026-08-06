@@ -166,10 +166,14 @@ class Source(BaseSource):
             "strasse": "Am Lohner Hof / Isernhagen Fb",
             "hnr": "10",
         },
+        # This address serves two Ladeorte, so aha cannot resolve it from the
+        # street and house number alone. The case exists to cover that branch,
+        # and it needs the ladeort to be recordable at all.
         "Hannover, Voltastr. / Vahrenwald, 25": {
             "gemeinde": "Hannover",
             "strasse": "Voltastr. / Vahrenwald",
             "hnr": "25",
+            "ladeort": "Voltastr. 25, Hannover / Vahrenwald",
         },
         "Hannover, Melanchthonstr., 10A": {
             "gemeinde": "Hannover",

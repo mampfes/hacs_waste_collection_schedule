@@ -51,7 +51,10 @@ ICON_MAP = {
     "vetro e lattine": Icons.GLASS,
     "sfalci e potature": Icons.GARDEN,
     "verde": Icons.GARDEN,
-    "tessili sanitari": Icons.TEXTILE,
+    # Sanitary textiles are nappies and hygiene absorbents, which is residual
+    # waste, not clothing recycling. Sits directly above "pannolini" for the
+    # same stream.
+    "tessili sanitari": Icons.GENERAL_WASTE,
     "pannolini": Icons.GENERAL_WASTE,
 }
 
