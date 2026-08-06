@@ -154,6 +154,13 @@ loosening the matcher. Check for a nonce, a uuid or a wall-clock stamp in the
 request before re-recording, and if there is one, leave the cassette alone and
 say so.
 
+`ecoharmonogram_pl` is the second one found, so this is a shape rather than a
+one-off: `EcoHarmonogramPL` puts `hex(randrange(...))` in every POST as
+`clientId`, and its 14 cassettes (88 interactions) cannot be pinned until the
+source derives that value deterministically. Both were found the same way, by
+diffing two `tests/dump_requests.py` runs of the *same* code and noticing a
+field that moved on its own. Do that before crediting any diff to your change.
+
 Until a source's cassette carries bodies, a migration that touches how a request
 is built must still compare the outgoing requests by hand:
 

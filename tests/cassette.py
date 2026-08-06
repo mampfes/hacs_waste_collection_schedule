@@ -32,9 +32,10 @@ puts a value in its request that changes from run to run cannot be pinned: the
 recorded body holds the value from recording day and will never be sent again,
 so the cassette stops replaying. A clock-derived value is safe, because replay
 freezes the clock to the recording date, but a nonce or a uuid is not
-(``AppAbfallplusDe`` sends a fresh ``uuid4`` in its POST body). That is a defect
-in the source, not in this matcher: make the value deterministic rather than
-loosening the comparison.
+(``AppAbfallplusDe`` sends a fresh ``uuid4`` in its POST body, and
+``EcoHarmonogramPL`` a fresh ``randrange`` hex as ``clientId``). That is a
+defect in the source, not in this matcher: make the value deterministic rather
+than loosening the comparison.
 """
 
 from __future__ import annotations

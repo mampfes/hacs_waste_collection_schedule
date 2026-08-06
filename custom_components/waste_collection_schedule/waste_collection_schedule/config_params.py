@@ -177,6 +177,14 @@ def apply_defaults(params: Sequence[ConfigParam], values: dict) -> dict:
     field of this source". It also meant an ``__init__`` written as
     ``ort: str | None = None`` was doing real work, since deleting it changed the
     key from present-and-None to absent.
+
+    A field with a declared default never takes the ``None``, whatever that
+    default is. Otherwise ``text_field("address_suffix", default="")`` is
+    unreachable: the default is applied and then immediately overwritten,
+    because the ``None``-filling pass reads ``""`` as unset. That mattered
+    beyond the declaration being decorative, since these fields are
+    interpolated into outgoing requests, and ``requests`` drops a ``None`` form
+    value entirely where ``""`` is sent as an empty field (#7138).
     """
     prepared = dict(values)
     for param in params:
@@ -185,6 +193,10 @@ def apply_defaults(params: Sequence[ConfigParam], values: dict) -> dict:
                 prepared[field_name] = default
         if not param.required:
             for field_name in param.fields:
+                # A declared default is a deliberate value, including "". Only a
+                # field with no default falls through to None.
+                if field_name in param.defaults:
+                    continue
                 # An empty string counts as unset here for the same reason it does
                 # above: the config flow submits "" for an optional text box the
                 # user never filled in, and that must not read differently from
