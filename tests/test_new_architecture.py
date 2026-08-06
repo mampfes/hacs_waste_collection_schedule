@@ -3569,6 +3569,23 @@ class TestBaseSourcePipeline:
 
         assert TestSource.WASTE_TYPES == [GLASS, PAPER, RECYCLABLES]
 
+    def test_waste_types_derived_empty_for_a_bare_transformer(self):
+        """A transformer with no map derives an empty list, not the catalogue.
+
+        It used to derive ``list(ALL_TYPES)``, so a source that typed purely
+        through the shared vocabulary silently claimed all eleven canonical
+        types. Claiming everything declares nothing, and the only consumer
+        (the config-flow waste-type dropdown) then offered eleven types for a
+        provider that collects two. Empty is the honest answer (#7028).
+        """
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import ICSTransformer
+
+        class TestSource(BaseSource):
+            transform = ICSTransformer()
+
+        assert TestSource.WASTE_TYPES == []
+
     def test_waste_types_explicit_overrides_transformer(self):
         """Explicit WASTE_TYPES declaration takes precedence over transformer derivation."""
         from waste_collection_schedule.base_source import BaseSource
@@ -4470,11 +4487,32 @@ class TestNewStyleSourceMetadata:
         assert getattr(cls, "URL", ""), f"{name}: missing URL"
 
     def test_has_waste_types(self, source_info):
+        """A source declares the canonical types it emits, or nothing at all.
+
+        Empty is allowed for one shape only: a bare pass-through transformer,
+        one with no ``type_value_map``. Everything such a source emits comes
+        from the shared multilingual vocabulary (or is preserved verbatim), and
+        neither can be enumerated statically, so there is nothing to derive.
+        Until #7028 the derivation filled that gap with the whole ``ALL_TYPES``
+        catalogue, which claimed all eleven canonical types and so declared
+        nothing. An empty list says the same thing honestly, and the config
+        flow already handles it (it only widens a dropdown offer).
+
+        Anything else must declare. A ``classify()``-based source has no
+        derivation at all, and a transformer with a map derives from that map,
+        so an empty list there is an oversight rather than a statement.
+        """
         name, cls = source_info
         if name in _GENERIC_ENGINE_SOURCES:
             pytest.skip(f"{name}: generic engine, arbitrary passthrough titles")
         wt = getattr(cls, "WASTE_TYPES", [])
-        assert len(wt) > 0, f"{name}: WASTE_TYPES is empty"
+        if wt:
+            return
+        transform = getattr(cls, "transform", None)
+        assert transform is not None and not getattr(transform, "waste_types", None), (
+            f"{name}: WASTE_TYPES is empty and the source is not a bare "
+            f"pass-through transformer — declare the types it produces"
+        )
 
     def test_waste_types_are_valid(self, source_info):
         from waste_collection_schedule.waste_types import WasteType

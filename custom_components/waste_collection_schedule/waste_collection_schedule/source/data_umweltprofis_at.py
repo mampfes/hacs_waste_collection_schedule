@@ -100,4 +100,11 @@ class Source(BaseSource):
         default=parsers.XmlDateListParser("AppointmentEntry", "Datum", "WasteType"),
     )
 
+    # No WASTE_TYPES. A bare pass-through transformer has no
+    # type_value_map, so every label this feed sends is classified by the
+    # shared multilingual vocabulary, which cannot be enumerated
+    # statically; and with no cassette yet (#7095) the produced set
+    # cannot be derived by replay either. An empty declaration is the
+    # honest one, and it only narrows a config-flow dropdown offer
+    # (#7028). Declare the real vocabulary once this source is recorded.
     transform = ICSTransformer()

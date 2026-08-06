@@ -25,6 +25,10 @@ Releases are listed in reverse chronological order.
 
 - migrated 261 source and shared-platform modules to the pipeline, including the ICS, AbfallIO, Jumomind, Müllmax and Abfallnavi/regio iT platforms (which each cover many more provider listings). Their waste-type labels are now canonical and language-aware. Full list in #6562. (#6562)
 
+### Other
+
+- a pipeline source that classifies purely through the shared waste-type vocabulary no longer claims all eleven canonical types. The `ALL_TYPES` fallback behind `WASTE_TYPES` is gone, so such a source declares nothing rather than everything. The list only widens the waste-type dropdown offered during setup, so the sole visible effect is a shorter, more accurate list for `awn_de`, `data_umweltprofis_at`, `erlangen_hoechstadt_de` and `regioentsorgung_de`. Existing sensors are unaffected. (#7028, #6935)
+
 ## [2.32.0] - 2026-08-02
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:

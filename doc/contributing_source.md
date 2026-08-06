@@ -540,7 +540,7 @@ REGIONS = regions.from_yaml("abfall_io", key="service_id")
 **Only a build-time registry can move.** `from_yaml()` reads `doc/`, which a HACS install does not ship, so it yields `[]` at runtime. That is safe for `REGIONS`, which drives the generated listings that the config flow then reads back from JSON. A registry the source needs *while fetching* must stay in Python: `insert_it_de` and `cmcitymedia_de` are the two, and they are named in the gate's allowlist with the reason.
 | `EXTRA_INFO` | list or callable | **Legacy sources only. A pipeline source must not declare it**, and `test_pipeline_sources_do_not_use_extra_info` rejects one that does. It is the older dict form of `REGIONS` (`title`, `url`, `country`, `default_params`), whose params are not validated against `PARAMS`; `regions.from_extra_info()` adapts it into `Region`s at a single boundary purely so the rest of the toolchain works in `Region` terms only. The adapter is a bridge for the legacy sources still using it, and is deleted with the last of them (see [`legacy_deprecation_plan.md`](legacy_deprecation_plan.md)). |
 
-**`WASTE_TYPES`: declare what your source actually produces.** The auto-derivation is a starting point, not an answer. It reads only a transformer's explicit `type_value_map`, so it misses every type the shared vocabulary resolves for you, and a bare transformer with no map falls back to the whole `ALL_TYPES` catalogue, which declares nothing at all. Both shapes are wrong in the config-flow dropdown that reads this list.
+**`WASTE_TYPES`: declare what your source actually produces.** The auto-derivation is a starting point, not an answer. It reads only a transformer's explicit `type_value_map`, so it misses every type the shared vocabulary resolves for you, and the config-flow dropdown that reads this list is then wrong.
 
 Derive the real set by replaying your recorded cassette, then declare it:
 
@@ -549,6 +549,8 @@ WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC]
 ```
 
 `tests/test_declared_waste_types.py` replays every cassette and fails a source that returns a canonical type it did not declare, or that declares the whole catalogue. A `classify()`-based source has no derivation at all, so it must always declare.
+
+**An empty list is allowed, for one shape only:** a bare transformer with no `type_value_map`, where everything is classified by the shared vocabulary and there is nothing to enumerate statically. Such a source used to derive the whole `ALL_TYPES` catalogue, claiming all the canonical types and so declaring nothing; that fallback is gone (#7028) and empty is now the honest answer. Declare the real set anyway the moment you have a cassette to derive it from.
 
 ## Auto-generated files
 
