@@ -17,6 +17,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Marktgemeinde Edlitz, AT"
     URL = "https://edlitz.at"
     COUNTRY = "at"
+    RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
         "TestSource": {},
@@ -24,7 +25,19 @@ class Source(BaseSource):
 
     PARAMS = ()
 
-    retrieve = RiSKommunalRetriever(base_url=_BASE_URL)
+    # Edlitz's municipal calendar happens to hold nothing but the waste rounds
+    # today, so the unfiltered request returned the right answer by luck.
+    # These are the ids its own Abfuhrtermine page uses, so the day the
+    # municipality adds an event the source keeps reading the waste calendar.
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "bdatum": "31.12.9999",
+            "detailonr": "217108623",
+            "menuonr": "218770302",
+            "typids": "217108623",
+        },
+    )
     parse = RiSKommunalParser()
 
     # Gelber Sack and Restmüll auto-resolve via the shared vocabulary.

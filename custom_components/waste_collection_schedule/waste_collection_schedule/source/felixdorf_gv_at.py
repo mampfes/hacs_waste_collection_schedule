@@ -21,6 +21,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
@@ -57,15 +58,19 @@ class Source(BaseSource):
             "menuonr": "219384069",
         },
     )
-    parse = RiSKommunalParser(zone_param="zone")
+    # Felixdorf's third calendar column names the calendar a row belongs to,
+    # and the municipality files its legal-advice slots there under
+    # Kalendertyp="Rechtsberatung", beside Rayon 1 and Rayon 2. Leaving the
+    # zone blank used to mean "keep every row", so the "all zones" setting
+    # published four Rechtsberatung appointments as waste collections. Naming
+    # the zones makes blank mean "both Rayons" instead.
+    parse = RiSKommunalParser(zone_param="zone", zones=VALID_ZONES)
 
     # Restmüll/Papier are labelled with the container size (e.g. "Restmüll
     # 1.100-Liter-Container"), which does not match the shared vocabulary
     # verbatim. Windeltonne (nappy bin) has no canonical equivalent and is
-    # mapped explicitly. "Rechtsberatung" (a legal-advice slot, not a waste
-    # collection) legitimately has none and is preserved verbatim, matching
-    # the legacy behaviour of an unmapped label with no icon. Biotonne and
-    # Gelber Sack are classified by the shared vocabulary.
+    # mapped explicitly. Biotonne and Gelber Sack are classified by the shared
+    # vocabulary.
     transform = ICSTransformer(
         type_value_map={
             "Restmüll 1.100-Liter-Container": wt.GENERAL_WASTE,

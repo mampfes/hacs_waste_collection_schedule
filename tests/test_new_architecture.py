@@ -1323,6 +1323,100 @@ class TestRiSKommunalComponents:
         assert "2026-07-12" in days  # "Gemeinde Alle" always kept
         assert "2026-07-11" not in days  # Zone B filtered out
 
+    def test_parser_unset_zone_keeps_only_the_declared_zones(self):
+        """An unset zone means every declared zone, not every row (#7144).
+
+        The third column names the calendar a row belongs to, and an install
+        files its non-waste calendars there too: Felixdorf's legal-advice slots
+        sit under Kalendertyp="Rechtsberatung" beside Rayon 1 and Rayon 2. So
+        "no zone chosen" had been publishing legal advice as a bin collection.
+        """
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        page = (
+            '<table class="ris_table">'
+            "<tr><td>10.07.2026</td><td><a>Restmüll</a></td><td>Zone A</td></tr>"
+            "<tr><td>11.07.2026</td><td><a>Restmüll</a></td><td>Zone B</td></tr>"
+            "<tr><td>12.07.2026</td><td><a>Rechtsberatung</a></td>"
+            "<td>Rechtsberatung</td></tr>"
+            "</table>"
+        )
+        source = MagicMock()
+        source.params = {"zone": None}
+
+        undeclared = R.RiSKommunalParser(zone_param="zone")
+        assert len(list(undeclared([page, self._EMPTY], source))) == 3
+
+        declared = R.RiSKommunalParser(zone_param="zone", zones=["Zone A", "Zone B"])
+        rows = list(declared([page, self._EMPTY], source))
+        assert [t for _, t in rows] == ["Restmüll", "Restmüll"]
+
+    def test_parser_reads_the_javascript_grid_rendering(self):
+        """A third rendering, reached only when table and list find nothing.
+
+        Asking an install for one calendar with ``typids`` can switch it from
+        the server-rendered table to a Syncfusion scheduler whose appointments
+        are embedded as ``ej.isJSON([...])``. Berndorf publishes its per-address
+        waste rounds only that way, so before this the source fell back to the
+        unfiltered table and merged four zones with fifteen wine taverns.
+        """
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        # 1785967200000 ms == 2026-08-05; 1786053600000 ms == 2026-08-06.
+        page = (
+            "<html><script>ej.isJSON(["
+            '{"Subject":"<span class=\'fa fa-trash\'></span>'
+            '<span> Abfuhrtermine Berndorf Biotonne</span>",'
+            '"StartTime":"/Date(1785967200000)/"},'
+            '{"Subject":"<span> Abfuhrtermine Berndorf Restmüll</span>",'
+            '"StartTime":"/Date(1786053600000)/"}'
+            "])</script></html>"
+        )
+        source = MagicMock()
+        source.params = {}
+        rows = list(R.RiSKommunalParser()([page, self._PAGE0], source))
+
+        assert rows == [
+            (datetime.date(2026, 8, 5), "Abfuhrtermine Berndorf Biotonne"),
+            (datetime.date(2026, 8, 6), "Abfuhrtermine Berndorf Restmüll"),
+        ]
+
+    def test_grid_is_only_consulted_when_the_others_find_nothing(self):
+        """So adding it cannot change a source that already worked."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        page = self._PAGE0 + (
+            '<script>ej.isJSON([{"Subject":"<span>Ignored</span>",'
+            '"StartTime":"/Date(1785967200000)/"}])</script>'
+        )
+        source = MagicMock()
+        source.params = {}
+        rows = list(R.RiSKommunalParser()([page, self._EMPTY], source))
+        assert [t for _, t in rows] == ["Restmüll", "Bioabfall"]
+
+    def test_list_item_type_reads_the_last_span_not_the_first(self):
+        """The category is the last annotation; an earlier one is free text.
+
+        Gössendorf renders ``<a>Sperrmüll S1</a><span> (Sperrmüll S1: 8 - 13
+        Uhr; ...)</span><span> (Sperrmüll S1)</span>``, so reading the first
+        span made the opening hours the waste type. Items with a single span,
+        which is every other list install, are unaffected.
+        """
+        from bs4 import BeautifulSoup
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        two = BeautifulSoup(
+            "<li><a>Sperrmüll S1</a><span> (Sperrmüll S1: 8 - 13 Uhr)</span>"
+            "<span> (Sperrmüll S1)</span></li>",
+            "html.parser",
+        ).find("li")
+        one = BeautifulSoup(
+            "<li><a>Biomüll</a><span> (Biomüll)</span></li>", "html.parser"
+        ).find("li")
+
+        assert R.RiSKommunalSource._list_item_type(two) == "Sperrmüll S1"
+        assert R.RiSKommunalSource._list_item_type(one) == "Biomüll"
+
     def test_retriever_lookahead_days_sets_vdatum_and_bdatum(self):
         """lookahead_days adds a dynamically computed vdatum/bdatum window."""
         from waste_collection_schedule.service import RiSKommunalAT as R
@@ -5669,9 +5763,7 @@ SOURCES_AWAITING_CASSETTE = {
     "erlangen_hoechstadt_de",
     "fredrikstad_no",
     "fuquay_varina_nc_us",
-    "goessendorf_at",
     "nuernberger_land_de",
-    "obdach_at",
     "plano_gov",
     "regioentsorgung_de",
     "sepan_remondis_pl",

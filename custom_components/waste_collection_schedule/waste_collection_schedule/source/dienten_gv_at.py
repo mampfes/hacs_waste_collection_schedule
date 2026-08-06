@@ -49,12 +49,21 @@ class Source(BaseSource):
     )
     parse = RiSKommunalParser()
 
-    # Only the commercial-collection labels (Gewerbe suffix) need an explicit
-    # entry; every other label (Restmüll, Biotonne, Gelbe Tonne, Gelber Sack)
-    # is classified by the shared vocabulary.
+    # The household/trade suffixes are Dienten's own naming, so they belong
+    # here rather than in the shared vocabulary: "Altpapier Haushalt" is the
+    # household counterpart of the "Gewerbe" rounds already listed. Every other
+    # label (Restmüll, Biotonne, Gelbe Tonne, Gelber Sack) is classified by the
+    # shared vocabulary.
+    #
+    # "Recyclinghof" is the recycling centre's opening days, 22 of the 85
+    # entries this source published, and not a collection. It is dropped for
+    # the reason set out in angern_gv_at: a depot being open is not a bin going
+    # out, and mapping it to RECYCLABLES would claim that it was.
     transform = ICSTransformer(
         type_value_map={
             "Papier Gewerbe": wt.PAPER,
             "Karton Gewerbe": wt.PAPER,
+            "Altpapier Haushalt": wt.PAPER,
+            "Recyclinghof": None,
         },
     )

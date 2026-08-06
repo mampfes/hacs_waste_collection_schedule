@@ -37,23 +37,42 @@ class Source(BaseSource):
 
     PARAMS = ()
 
-    retrieve = RiSKommunalRetriever(base_url=_BASE_URL)
+    # Angern runs two calendars on one install, and asking for neither returns
+    # both merged: the waste calendar (typids=224965250) and the wine taverns'
+    # opening seasons (typids=224966905). That is how ten Heurigen,
+    # Buschenschänke and Weingüter came to appear in Home Assistant as bin
+    # collections. These ids are the ones the municipality's own Abfuhrtermine
+    # page links to.
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "bdatum": "31.12.9999",
+            "detailonr": "224965250",
+            "menuonr": "226137057",
+            "typids": "224965250",
+        },
+    )
     parse = RiSKommunalParser()
 
-    # The calendar has no menuonr filter, so it also carries non-waste
-    # municipal news items (Weingut/Buschenschank/Heurigen/Winzerwochen wine
-    # events) which never matched the legacy ICON_MAP either; they are left
-    # unmapped and preserved verbatim, as is "Recyclinghof" (a recycling
-    # depot opening day, not a kerbside collection, so it does not equate to
-    # the shared RECYCLABLES type) and "Bauschutt und Grünschnitt Stillfried"
-    # (a combined rubble/green-waste day with no single canonical match).
     # Biotonne and Gelber Sack are classified by the shared vocabulary; the
     # location-suffixed Restmülltonne/Altpapiertonne/Grünschnitt labels need
     # explicit entries because the suffix breaks the exact-match resolution.
+    #
+    # Two entries are judgements rather than translations. "Bauschutt und
+    # Grünschnitt Stillfried" is a dated container day at Stillfried taking
+    # rubble and green cuttings: it is a collection, and Grünschnitt is the
+    # half with a canonical home, so it joins Angern's other Grünschnitt
+    # rounds as GARDEN_WASTE. "Recyclinghof" is the opposite case, the
+    # recycling centre's ordinary opening days rather than a round, so mapping
+    # its 14 entries to RECYCLABLES would raise a recycling reminder on days
+    # when no bin goes out. It is dropped instead, which states that the label
+    # is known and is not a collection rather than leaving it unresolved.
     transform = ICSTransformer(
         type_value_map={
             "Grünschnitt Ollersdorf": wt.GARDEN_WASTE,
             "Grünschnitt Angern, Mannersdorf": wt.GARDEN_WASTE,
+            "Bauschutt und Grünschnitt Stillfried": wt.GARDEN_WASTE,
+            "Recyclinghof": None,
             "Restmülltonne Angern": wt.GENERAL_WASTE,
             "Restmülltonne Mannersdorf, Stillfried": wt.GENERAL_WASTE,
             "Restmülltonne Grub, Ollersdorf": wt.GENERAL_WASTE,

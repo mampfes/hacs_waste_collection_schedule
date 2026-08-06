@@ -299,6 +299,18 @@ A transformer turns each record's label into a `WasteType` in this order:
 
 The label is **never** silently collapsed to `OTHER`. An unknown label is preserved so the user still sees a meaningful name. Only list a label in `type_value_map` when the shared vocabulary cannot resolve it (for example a frequency-suffixed residual-waste label), or when you want to force a particular canonical type.
 
+**Step 3 is a last resort, not a resting place, and `tests/test_unresolved_labels.py` enforces that.** It replays every cassette and fails on any `preserved:` type a source produces. Reaching step 3 used to log a warning and nothing else, so a wine tavern and a genuinely new waste type announced themselves in identical words, and three Austrian sources shipped Heurigen opening seasons as bin collections for months (#7144). Resolve every label your cassette produces, by one of three routes:
+
+| the label is | do this |
+|---|---|
+| one any provider in that language might send (`Silofolien`, `Leicht- und Metallverpackungen`) | add an alias to `waste_types.py`, so the next source on that language's providers gets it free |
+| this provider's own naming (`Altpapier Haushalt`, `Restmüll Abfuhrbereich 1`) | map it in the source's `type_value_map` |
+| not a collection event at all (`Recyclinghof`, a recycling centre's opening days) | map it to `None`, which drops the record and states that you know what the label is |
+
+Prefer the first wherever the label generalises: a map entry helps one source, an alias helps all of them. `LABELS_AWAITING_VOCABULARY` in that test is the backlog as it stood when the gate went in; it only shrinks, and nothing may be added to it.
+
+Mapping to `None` is a declared loss, which is the opposite of an unresolved label. Draw the line at whether the entry is a collection: a dated, limited-window drop-off (a container day, a hazardous-waste round) is one, and a permanent facility's ordinary opening hours is not.
+
 If a provider returns a genuinely new category that fits none of the eleven types and is general enough that other sources would use it, open an issue first to propose the addition (name, MDI icon, two or three example providers). The catalogue is deliberately small. Do not extend it inside a source PR.
 
 The displayed label is the `WasteType`'s name in the Home Assistant UI language (the integration sets it at startup; standalone use falls back to English). So a French instance shows `Ordures ménagères`, a German one `Restmüll`. One consequence when **converting a legacy source**: its bin-type labels change from the author's hard-coded strings to the canonical names (e.g. `Garbage` to `General Waste`). Config arguments are unchanged, but anyone filtering by the old label (`types:`, per-type customisation, templates) must update. Call this out in the PR / release notes; users can re-map via the integration's alias/customise options.
@@ -478,7 +490,10 @@ changed. They call for opposite responses:
 - **An unknown waste-type label is preserved, not dropped.** A label that is not
   in `type_value_map` and does not resolve against the shared vocabulary is kept
   verbatim (a warning is logged), never silently collapsed to `OTHER`, so no
-  collection is lost.
+  collection is lost. Preserving is the safe fallback at runtime, not an
+  acceptable end state: `tests/test_unresolved_labels.py` fails on any source
+  whose cassette reaches it, because a warning that reads the same for a wine
+  tavern as for a new waste type is a warning nobody acts on (#7144).
 - **A changed provider response is loud.** When the response no longer has the
   expected shape, raise rather than return partial data: declare a response
   shape (`parsers.JsonParser(shape=...)`) or a minimum count (`min_events`,

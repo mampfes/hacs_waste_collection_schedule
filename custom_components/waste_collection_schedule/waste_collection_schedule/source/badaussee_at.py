@@ -65,6 +65,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Bad Aussee, Austria."
     URL = _BASE_URL
     COUNTRY = "at"
+    RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
         wt.ORGANIC,

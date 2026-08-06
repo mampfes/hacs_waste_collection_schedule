@@ -21,6 +21,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {

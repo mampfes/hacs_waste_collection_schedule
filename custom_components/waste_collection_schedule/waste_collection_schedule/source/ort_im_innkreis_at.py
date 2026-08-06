@@ -36,7 +36,19 @@ class Source(BaseSource):
 
     PARAMS = ()
 
-    retrieve = RiSKommunalRetriever(base_url=_BASE_URL)
+    # Ort im Innkreis publishes only waste rounds on its calendar today, so the
+    # unfiltered request was right by accident. Its Abfuhrtermine page selects
+    # four waste calendars explicitly, which is what this now asks for, so a
+    # municipal event added later cannot leak in.
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "bdatum": "31.12.9999",
+            "sprache": "1",
+            "menuonr": "225603223",
+            "typids": "227719961,227719962,227719963,227869194",
+        },
+    )
     parse = RiSKommunalParser()
 
     # Only the frequency-suffixed residual-waste labels need an explicit

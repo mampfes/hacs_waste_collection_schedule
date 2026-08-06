@@ -22,6 +22,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
     URL = _SELECTION_URL
     COUNTRY = "at"
+    RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
     TEST_CASES: ClassVar[dict] = {
