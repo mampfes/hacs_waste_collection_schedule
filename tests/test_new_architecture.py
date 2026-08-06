@@ -6935,7 +6935,6 @@ CASES_AWAITING_CASSETTE = {
     "abfall_io_graphql::wirtschaftsbetriebe_duisburg_wbd_buchholz_altenbrucher_damm_8",
     "abfallnavi_de::nds_norderstedt_friedrichsgaber_weg_house_number_range_as_street",
     "abfallnavi_de::solingen_katternberger_stra_e_95_street_split_by_district",
-    "aha_region_de::hannover_voltastr_vahrenwald_25",
     "api_hubert_schmid_de::albatsried_seeg",
     "api_hubert_schmid_de::nesselwang_attlesee",
     "app_abfallplus_de::de_k4systems_abfallappnf_ahrenvi_l_alle_stra_en",
