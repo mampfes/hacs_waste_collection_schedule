@@ -93,7 +93,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     #
     # A transformer with no map at all derives an EMPTY list, and that is the
     # honest answer. It used to derive the whole ALL_TYPES catalogue instead,
-    # which claimed all eleven canonical types and so declared nothing (#7028).
+    # which claimed every canonical type and so declared nothing (#7028).
     # Explicit declaration takes precedence, and a classify()-based source has
     # no derivation at all.
     WASTE_TYPES: ClassVar[list[WasteType]] = []

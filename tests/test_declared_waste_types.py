@@ -13,7 +13,7 @@ set, and only a replay can see it.
 There used to be a second gap: a transformer with no map at all derived the
 whole ``ALL_TYPES`` catalogue, so it "declared" everything, which is no
 declaration. That fallback is gone (#7028) and such a source now derives an
-empty list, which is the honest answer. Declaring all eleven types is therefore
+empty list, which is the honest answer. Declaring the whole catalogue is therefore
 a deliberate act, and still wrong, so it is still flagged.
 
 This module replays every recorded cassette (offline, deterministic — the same
@@ -200,8 +200,8 @@ def test_returned_waste_types_are_declared(module_name, case_slug, path):
 # recording any more: an empty declaration is the honest one for a source whose
 # whole vocabulary comes from the shared resolver.
 #
-# What remains gated is a hand-written declaration of all eleven canonical
-# types, which is now a deliberate act and still says nothing.
+# What remains gated is a hand-written declaration of the whole catalogue,
+# which is now a deliberate act and still says nothing.
 # ---------------------------------------------------------------------------
 
 

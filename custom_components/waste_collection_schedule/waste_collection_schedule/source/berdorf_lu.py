@@ -8,9 +8,9 @@ Jan-Jun, page 1 Jul-Dec) with no month headers, which is exactly what
 ``PdfTextCalendar.DayGridCalendarParser`` reads: the month advances when the day
 number resets. Each grid cell names its waste types in free text
 (German/French), so the commune's vocabulary is passed in as ``LabelRule``s and
-matched to labels that ``ICSTransformer`` maps onto canonical WasteTypes; labels
-with no canonical equivalent (a textile round, the mixed organic-and-inert
-round) are preserved verbatim. An ``ExtraDatesRule`` backfills SuperDrecksKëscht
+matched to labels that ``ICSTransformer`` maps onto canonical WasteTypes; the
+one label with no canonical equivalent (the mixed organic-and-inert round) is
+preserved verbatim. An ``ExtraDatesRule`` backfills SuperDrecksKëscht
 (hazardous) dates listed in the info-text, which the coloured calendar overlay
 can hide in the grid.
 """
@@ -59,6 +59,9 @@ class Source(BaseSource):
         wt.GLASS,
         wt.BULKY_WASTE,
         wt.HAZARDOUS,
+        # "Altkleidersammlung" was preserved verbatim until the vocabulary
+        # gained a textile type (#7097); the shared resolver classifies it now.
+        wt.TEXTILES,
     ]
 
     TEST_CASES: ClassVar[dict] = {

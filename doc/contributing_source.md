@@ -281,7 +281,7 @@ Do not carry a private weekday or month dict in your source. Use these shared, m
 
 ## Waste types and icons
 
-Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The eleven canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
+Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The twelve canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS`, `TEXTILES` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
 
 **Import the module, not the names:**
 
@@ -309,9 +309,11 @@ The label is **never** silently collapsed to `OTHER`. An unknown label is preser
 
 Prefer the first wherever the label generalises: a map entry helps one source, an alias helps all of them. `LABELS_AWAITING_VOCABULARY` in that test is the backlog as it stood when the gate went in; it only shrinks, and nothing may be added to it.
 
+**Two rules the `TEXTILES` entry needed, and the shape they share.** German `Altkleider` is strictly a subset of `Wertstoffe`, so both `TEXTILES` and `RECYCLABLES` are defensible for a clothing round and one provider had picked each. The precedence is: a label that names clothing or textiles specifically is `TEXTILES`; `RECYCLABLES` is for a label naming the mixed stream. Italian is worse, because the obvious name is a false friend: `tessili sanitari` means nappies and hygiene absorbents, which is residual waste, so the type is named `Abiti usati` rather than `Tessili` and neither `tessili` nor `tessili sanitari` is an alias. Both rules exist because a word looked like it meant one thing in one language, and a vocabulary entry that reads as a coin flip will be got wrong. Write the rule down in the entry when you add one (#7097).
+
 Mapping to `None` is a declared loss, which is the opposite of an unresolved label. Draw the line at whether the entry is a collection: a dated, limited-window drop-off (a container day, a hazardous-waste round) is one, and a permanent facility's ordinary opening hours is not.
 
-If a provider returns a genuinely new category that fits none of the eleven types and is general enough that other sources would use it, open an issue first to propose the addition (name, MDI icon, two or three example providers). The catalogue is deliberately small. Do not extend it inside a source PR.
+If a provider returns a genuinely new category that fits none of the canonical types and is general enough that other sources would use it, open an issue first to propose the addition (name, MDI icon, two or three example providers). The catalogue is deliberately small. Do not extend it inside a source PR.
 
 The displayed label is the `WasteType`'s name in the Home Assistant UI language (the integration sets it at startup; standalone use falls back to English). So a French instance shows `Ordures ménagères`, a German one `Restmüll`. One consequence when **converting a legacy source**: its bin-type labels change from the author's hard-coded strings to the canonical names (e.g. `Garbage` to `General Waste`). Config arguments are unchanged, but anyone filtering by the old label (`types:`, per-type customisation, templates) must update. Call this out in the PR / release notes; users can re-map via the integration's alias/customise options.
 

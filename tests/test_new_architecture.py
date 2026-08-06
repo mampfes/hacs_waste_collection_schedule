@@ -104,11 +104,54 @@ class TestWasteTypeResolution:
             "Weiße Ware": "electronics",
             "Grünschnitt": "garden_waste",
             "Déchets verts": "garden_waste",  # fr alias
+            "Altkleider": "textiles",  # de name
+            "Altkleidersammlung": "textiles",  # de alias
+            "Abiti usati": "textiles",  # it name
+            "Textiel": "textiles",  # nl name
         }
         for label, expected_id in cases.items():
             resolved = wt.resolve(label)
             assert resolved is not None, f"{label!r} should resolve"
             assert resolved.id == expected_id, f"{label!r} -> {resolved.id}"
+
+    def test_textiles_never_claims_the_italian_false_friend(self):
+        """``tessili sanitari`` is residual waste, not a textile round (#7097).
+
+        It reads like "textiles" and means nappies and hygiene absorbents, so
+        the type is named ``Abiti usati`` rather than ``Tessili`` precisely to
+        stop someone aliasing it in later. ``apricaspa_it:54`` already maps it
+        to the legacy textile icon with ``pannolini`` (nappies) on the next
+        line, which is the mistake this guards against repeating in the shared
+        vocabulary, where it would reach every Italian provider at once.
+        """
+        from waste_collection_schedule import waste_types as wt
+
+        assert wt.TEXTILES.names["it"] == "Abiti usati"
+        for label in ("tessili", "tessili sanitari", "pannolini"):
+            resolved = wt.resolve(label)
+            assert resolved is not wt.TEXTILES, (
+                f"{label!r} must not resolve to TEXTILES: it is hygiene "
+                f"absorbent waste, which is residual"
+            )
+
+    def test_textiles_does_not_swallow_a_combined_round(self):
+        """A round bundling textiles with WEEE or batteries is not TEXTILES.
+
+        Those labels name two streams on one day and belong to the combined-
+        round work in #7030, not to this type's aliases. Resolving them here
+        would silently drop the other half.
+        """
+        from waste_collection_schedule import waste_types as wt
+
+        for label in (
+            "Textiles and Small WEEE",
+            "BATTERIES-SMALL ELECTRICALS-TEXTILES",
+            "Electricals and textiles",
+            "Textiles/Batteries/Electricals",
+        ):
+            assert wt.resolve(label) is not wt.TEXTILES, (
+                f"{label!r} is a combined round (#7030), not a textile round"
+            )
 
     def test_resolve_is_case_and_whitespace_insensitive(self):
         from waste_collection_schedule import waste_types as wt
@@ -3573,10 +3616,10 @@ class TestBaseSourcePipeline:
         """A transformer with no map derives an empty list, not the catalogue.
 
         It used to derive ``list(ALL_TYPES)``, so a source that typed purely
-        through the shared vocabulary silently claimed all eleven canonical
-        types. Claiming everything declares nothing, and the only consumer
-        (the config-flow waste-type dropdown) then offered eleven types for a
-        provider that collects two. Empty is the honest answer (#7028).
+        through the shared vocabulary silently claimed every canonical type.
+        Claiming everything declares nothing, and the only consumer (the
+        config-flow waste-type dropdown) then offered the whole catalogue for
+        a provider that collects two. Empty is the honest answer (#7028).
         """
         from waste_collection_schedule.base_source import BaseSource
         from waste_collection_schedule.transformers import ICSTransformer
@@ -4494,8 +4537,7 @@ class TestNewStyleSourceMetadata:
         from the shared multilingual vocabulary (or is preserved verbatim), and
         neither can be enumerated statically, so there is nothing to derive.
         Until #7028 the derivation filled that gap with the whole ``ALL_TYPES``
-        catalogue, which claimed all eleven canonical types and so declared
-        nothing. An empty list says the same thing honestly, and the config
+        catalogue, which claimed every canonical type and so declared nothing. An empty list says the same thing honestly, and the config
         flow already handles it (it only widens a dropdown offer).
 
         Anything else must declare. A ``classify()``-based source has no

@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [Unreleased]
+
+### Added
+
+- `TEXTILES`, a canonical waste type for clothing and textile rounds (`mdi:hanger`), with names and aliases in en, de, fr, it and nl. The legacy icon catalogue has had the concept since #2813 and 23 sources emit a textile label, so the pipeline was dropping a category it already had rather than lacking one. (#7097)
+
+### Changed
+
+- ⚠️ **two sources now label their clothing round `Textiles`** (`Altkleider` in German, `Abiti usati` in Italian, and so on). If you filter or template on the exact label, update it. (#7097)
+  - `abfallwirtschaft_vechta_de`: `Recycling` becomes `Textiles` for the `Altkleider` and `Altkleider (Außer Langförden)` rounds, and the Vörden district's third spelling, `Altkleider Vö`, which was passing through verbatim, becomes `Textiles` too. One round that gave three different answers across two districts now gives one.
+  - `berdorf_lu`: `Altkleidersammlung`, which was passing through verbatim, becomes `Textiles`.
+  - Combined rounds that bundle textiles with electricals or batteries (`elmbridge_gov_uk`, `tandridge_gov_uk`, `jointwastesolutions_org`) are unchanged; they are tracked separately in #7030.
+
+### Other
+
+- a pipeline source that classifies purely through the shared waste-type vocabulary no longer claims every canonical type. The `ALL_TYPES` fallback behind `WASTE_TYPES` is gone, so such a source declares nothing rather than everything. The list only widens the waste-type dropdown offered during setup, so the sole visible effect is a shorter, more accurate list for `awn_de`, `data_umweltprofis_at`, `erlangen_hoechstadt_de` and `regioentsorgung_de`. Existing sensors are unaffected. (#7028, #6935)
+
 ## [3.0.0-alpha.1] - 2026-07-18
 
 > ⚠️ **Breaking: waste-type labels have changed.** This pre-release migrates a large set of
@@ -24,10 +41,6 @@ Releases are listed in reverse chronological order.
 ### Changed
 
 - migrated 261 source and shared-platform modules to the pipeline, including the ICS, AbfallIO, Jumomind, Müllmax and Abfallnavi/regio iT platforms (which each cover many more provider listings). Their waste-type labels are now canonical and language-aware. Full list in #6562. (#6562)
-
-### Other
-
-- a pipeline source that classifies purely through the shared waste-type vocabulary no longer claims all eleven canonical types. The `ALL_TYPES` fallback behind `WASTE_TYPES` is gone, so such a source declares nothing rather than everything. The list only widens the waste-type dropdown offered during setup, so the sole visible effect is a shorter, more accurate list for `awn_de`, `data_umweltprofis_at`, `erlangen_hoechstadt_de` and `regioentsorgung_de`. Existing sensors are unaffected. (#7028, #6935)
 
 ## [2.32.0] - 2026-08-02
 
