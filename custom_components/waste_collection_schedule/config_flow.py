@@ -39,6 +39,7 @@ from homeassistant.helpers.selector import (
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
 
+from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import ConfigParam
 from waste_collection_schedule.exceptions import (
@@ -183,8 +184,17 @@ SUPPORTED_ARG_TYPES = {
 
 
 def _is_new_style_source(source_cls) -> bool:
-    """Check if a source uses the new PARAMS-based architecture."""
-    return bool(getattr(source_cls, "PARAMS", None))
+    """Check if a source uses the new pipeline architecture.
+
+    Membership is decided by the base class, not by whether PARAMS happens to be
+    non-empty. A pipeline source that takes no arguments declares ``PARAMS = ()``,
+    which is falsy, so a truthiness test sent it down the legacy
+    ``__init__``-introspection path; having no ``__init__`` of its own, it
+    inherited ``BaseSource.__init__(self, **kwargs)`` and the form rendered a
+    single bogus text field called ``kwargs`` (#7142). The right form for those
+    sources has no argument fields at all.
+    """
+    return isinstance(source_cls, type) and issubclass(source_cls, BaseSource)
 
 
 def _build_schema_from_params(

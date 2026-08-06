@@ -464,8 +464,12 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # (self, **kwargs), so introspection yields ["kwargs"] rather than the real
     # fields (e.g. the generic ics engine). For a pipeline source the
     # authoritative param list is PARAMS, so use its field names instead, so the
-    # listing/translation keys match the source's actual parameters.
-    if params == ["kwargs"] and getattr(source_cls, "PARAMS", None):
+    # listing/translation keys match the source's actual parameters. Decide that
+    # on the base class, not on PARAMS truthiness: a zero-argument pipeline
+    # source declares PARAMS = (), and testing truthiness left it with the
+    # literal ["kwargs"], which is how a "Kwargs" label reached the generated
+    # translations for 20 sources (#7142). Its real param list is empty.
+    if params == ["kwargs"] and _is_base_source(source_cls):
         params = [field for p in source_cls.PARAMS for field in p.fields]
     # New-style (BaseSource) sources carry per-field labels/descriptions on
     # their typed PARAMS instead of PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS dicts.
