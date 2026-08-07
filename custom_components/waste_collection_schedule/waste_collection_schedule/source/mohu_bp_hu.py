@@ -71,7 +71,7 @@ class Source:
         )
         r.raise_for_status()
         soup = BeautifulSoup(
-            json.loads(r.text)["ajax/publicPlaces"], features="html.parser"
+            json.loads(r.text)[".publicPlaces"], features="html.parser"
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
@@ -99,7 +99,7 @@ class Source:
                 "street", self._street, available_streets
             ) from e
         soup = BeautifulSoup(
-            json.loads(r.text)["ajax/houseNumbers"], features="html.parser"
+            json.loads(r.text)[".houseNumbers"], features="html.parser"
         )
 
         if (
@@ -128,7 +128,7 @@ class Source:
         )
         r.raise_for_status()
         soup = BeautifulSoup(
-            json.loads(r.text)["ajax/calSearchResults"], features="html.parser"
+            json.loads(r.text)[".results"], features="html.parser"
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
