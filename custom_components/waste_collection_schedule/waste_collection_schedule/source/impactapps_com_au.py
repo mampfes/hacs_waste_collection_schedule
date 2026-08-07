@@ -225,7 +225,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
         "website": "https://www.burwood.nsw.gov.au",
     },
     {
-        "name": "Campbeltown City Council",
+        "name": "Campbelltown City Council",
         "url": "https://campbelltown.waste-info.com.au",
         "website": "https://www.campbelltown.nsw.gov.au",
     },
@@ -345,7 +345,7 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
         "website": "https://www.hrcc.vic.gov.au",
     },
     {
-        "name": "Murrindindi Shire Counci",
+        "name": "Murrindindi Shire Council",
         "url": "https://murrindindi.waste-info.com.au",
         "website": "https://www.murrindindi.vic.gov.au",
     },
@@ -357,6 +357,17 @@ SERVICE_MAP = [  # supported calendars can be found at https://calendars.impacta
 ]
 
 SERVICE_MAP_LOOKUP = {council["name"]: council for council in SERVICE_MAP}
+
+# Misspelled SERVICE_MAP names that shipped previously, mapped to the corrected
+# name. EXTRA_INFO() publishes each council's name as its `service` default_param,
+# so the config flow stored the misspelling verbatim in existing config entries.
+# Without this, correcting SERVICE_MAP would drop those users through to the
+# "assume the service is a council name" branch below and build a nonsense host
+# ("https://Murrindindi Shire Counci.waste-info.com.au").
+LEGACY_SERVICE_NAMES = {
+    "Murrindindi Shire Counci": "Murrindindi Shire Council",
+    "Campbeltown City Council": "Campbelltown City Council",
+}
 
 
 def EXTRA_INFO():
@@ -500,6 +511,7 @@ class Source:
         street_name: str | None = None,
         street_number: str | None = None,
     ):
+        service = LEGACY_SERVICE_NAMES.get(service, service)
         if service in SERVICE_MAP_LOOKUP:
             api_url = SERVICE_MAP_LOOKUP[service]["url"]
         else:
