@@ -28,9 +28,10 @@ TEST_CASES = {
 }
 _LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
-    "green-lidded (rubbish) bin": Icons.GENERAL_WASTE,
-    "blue-lidded (recycling) bin": Icons.RECYCLING,
-    "brown-lidded (garden waste) bin": Icons.GARDEN,
+    "Recycling (blue-lidded bin)": Icons.RECYCLING,
+    "Household waste (green-lidded bin)": Icons.GENERAL_WASTE,
+    "Garden waste (brown-lidded bin)": Icons.GARDEN,
+    "Food waste caddy": Icons.BIO_KITCHEN,
 }
 
 PARAM_TRANSLATIONS = {
@@ -105,51 +106,49 @@ class Source:
                 f"No bin collection calendar link found for '{self._street}'"
             )
 
-        # use collction day to get schedule
+        # fetch collection schedule page
         r = s.get(schedule, headers=HEADERS, timeout=30)
         soup = BeautifulSoup(r.content, "html.parser")
         entries: list[Collection] = []
 
-        # Schedule page contains month widgets with <div class="editor"> text and <br> separators.
-        for editor in soup.select("div.widget--content div.widget-content div.editor"):
-            current_date_part: str | None = None
-            current_types_parts: list[str] = []
+        # Schedule page contains one `<table>` per month.
+        # Columns: "Day and date", waste-type headers...
+        # Rows: date cell, then "Yes"/"No" per waste type.
+        for table in soup.find_all("table"):
+            thead = table.find("thead")
+            if not thead:
+                continue
+            headers = [
+                th.get_text(separator="\n").split("\n")[0].strip()
+                for th in thead.find_all("th")
+            ]
+            if not headers or headers[0] != "Day and date":
+                continue
+            waste_types = headers[1:]
 
-            def flush(date_part: str | None, types_parts: list[str]) -> None:
-                if date_part is None:
-                    return
-
+            tbody = table.find("tbody")
+            if not tbody:
+                continue
+            for row in tbody.find_all("tr"):
+                cells = row.find_all("td")
+                if len(cells) < 2:
+                    continue
+                date_text = _normalize_space(cells[0].get_text())
                 try:
-                    waste_date = self.append_year(date_part)
-                    types_part = _normalize_space(" ".join(types_parts))
-                    for waste_type in (
-                        t.strip()
-                        for t in re.split(r"\s+and\s+", types_part)
-                        if t.strip()
-                    ):
+                    waste_date = self.append_year(date_text)
+                except Exception as e:
+                    _LOGGER.warning(f"Error parsing date '{date_text}': {e}")
+                    continue
+                for i, waste_type in enumerate(waste_types):
+                    if i + 1 >= len(cells):
+                        break
+                    if _normalize_space(cells[i + 1].get_text()).lower() == "yes":
                         entries.append(
                             Collection(
                                 date=waste_date,
                                 t=waste_type,
-                                icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                                icon=ICON_MAP.get(waste_type, Icons.GENERAL_WASTE),
                             )
                         )
-                except Exception as e:
-                    _LOGGER.warning(f"Error processing item '{date_part}': {e}")
-
-            for raw_line in editor.get_text("\n", strip=True).splitlines():
-                line = _normalize_space(raw_line)
-                if not line:
-                    continue
-
-                if ":" in line:
-                    flush(current_date_part, current_types_parts)
-                    date_part, types_part = (p.strip() for p in line.split(":", 1))
-                    current_date_part = date_part
-                    current_types_parts = [types_part] if types_part else []
-                elif current_date_part is not None:
-                    current_types_parts.append(line)
-
-            flush(current_date_part, current_types_parts)
 
         return entries
