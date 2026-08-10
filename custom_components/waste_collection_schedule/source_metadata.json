@@ -5466,10 +5466,10 @@
   },
   "eastdevon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdevon_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details, or from the UPRN query parameter on the East Devon bin collection page."
+    },
+    "urls": {}
   },
   "eastdunbarton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdunbarton_gov_uk.md",
