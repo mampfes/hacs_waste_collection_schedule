@@ -109,7 +109,11 @@ class ICS:
             dtstart: datetime.date | None = None
 
             if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
+                # icalevents normalises event times to UTC. Reducing straight to
+                # a date loses a day for timezones ahead of UTC: a DTSTART of
+                # midnight Australia/Brisbane arrives as 14:00Z on the previous
+                # day. Convert back to local time before taking the date.
+                dtstart = e.start.astimezone().date()
             elif isinstance(e.start, datetime.date):
                 dtstart = e.start
 
@@ -192,7 +196,11 @@ class ICS:
             dtstart: datetime.date | None = None
 
             if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
+                # icalevents normalises event times to UTC. Reducing straight to
+                # a date loses a day for timezones ahead of UTC: a DTSTART of
+                # midnight Australia/Brisbane arrives as 14:00Z on the previous
+                # day. Convert back to local time before taking the date.
+                dtstart = e.start.astimezone().date()
             elif isinstance(e.start, datetime.date):
                 dtstart = e.start
 
