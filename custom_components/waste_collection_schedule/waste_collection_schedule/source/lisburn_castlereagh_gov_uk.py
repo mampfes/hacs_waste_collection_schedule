@@ -119,11 +119,12 @@ class Source:
             collection_date = datetime.strptime(collection["date"], "%Y-%m-%d").date()
 
             for bin in collection["collections"].values():
+                bin_type = bin["name"]
                 entries.append(
                     Collection(
                         date=collection_date,
-                        t=NICE_NAMES.get(bin["name"]),
-                        icon=ICON_MAP.get(bin["name"]),
+                        t=NICE_NAMES.get(bin_type, bin_type),
+                        icon=ICON_MAP.get(bin_type),
                     )
                 )
 
