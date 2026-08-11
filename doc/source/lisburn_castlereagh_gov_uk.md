@@ -21,7 +21,7 @@ waste_collection_schedule:
     sources:
         - name: lisburn_castlereagh_gov_uk
           args:
-            post_code: "BT28 1AG"
+            postcode: "BT28 1AG"
             house_number: "19A"
 ```
 
@@ -43,7 +43,7 @@ waste_collection_schedule:
     sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: "DYYSm8Ls8XxGi3Nq"
+        property_id: "RTTKBJY77wmTr5wP"
 ```
 
 ## How to get the property_id argument
