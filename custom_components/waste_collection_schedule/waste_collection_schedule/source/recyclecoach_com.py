@@ -2,11 +2,12 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Recycle Coach"
 DESCRIPTION = "Source loader for recyclecoach.com"
