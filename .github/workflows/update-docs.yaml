@@ -3,7 +3,7 @@ name: Update Documentation
 
 on:
   push:
-    branches: [master]
+    branches: [master, release/**]
 
 permissions:
   contents: write

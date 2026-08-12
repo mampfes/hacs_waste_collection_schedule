@@ -948,6 +948,91 @@ class TestArcGisComponents:
         resp.json.return_value = {"features": []}
         assert ArcGis.ArcGisFeatureParser()(resp) == []
 
+    @staticmethod
+    def _feature_response(*attributes):
+        response = MagicMock()
+        response.raise_for_status.return_value = None
+        response.json.return_value = {
+            "features": [{"attributes": attrs} for attrs in attributes]
+        }
+        return response
+
+    def test_multi_retriever_default_skips_one_failed_layer(self):
+        """Optional layers retain the existing tolerant default."""
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {}
+        good = self._feature_response({"round": "glass"})
+        retriever = ArcGis.ArcGisMultiFeatureRetriever(
+            [("waste", "https://x/MapServer/1"), ("glass", "https://x/MapServer/0")],
+            address=None,
+            where="1=1",
+        )
+
+        with patch.object(
+            ArcGis,
+            "feature_query",
+            side_effect=[ArcGis.requests.ConnectionError("offline"), good],
+        ):
+            assert retriever(source) == [("glass", good)]
+
+    def test_multi_retriever_required_layer_failure_aborts(self):
+        """A required layer must never become a plausible partial schedule."""
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {}
+        retriever = ArcGis.ArcGisMultiFeatureRetriever(
+            [("waste", "https://x/MapServer/1"), ("glass", "https://x/MapServer/0")],
+            address=None,
+            where="1=1",
+            require_all=True,
+        )
+
+        with (
+            patch.object(
+                ArcGis,
+                "feature_query",
+                side_effect=ArcGis.requests.ConnectionError("offline"),
+            ),
+            pytest.raises(ArcGis.requests.ConnectionError, match="offline"),
+        ):
+            retriever(source)
+
+    @pytest.mark.parametrize("empty_index", [0, 1])
+    def test_multi_parser_required_empty_layer_blames_address(self, empty_index):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "1 Test Street"}
+        responses = [
+            ("waste", self._feature_response({"round": "waste"})),
+            ("glass", self._feature_response({"round": "glass"})),
+        ]
+        responses[empty_index] = (responses[empty_index][0], self._feature_response())
+        parser = ArcGis.ArcGisMultiFeatureParser(
+            argument="address",
+            hint="the address must be in the service area.",
+        )
+
+        with pytest.raises(SourceArgumentNotFound):
+            parser(responses, source)
+
+    def test_multi_parser_can_keep_only_the_first_feature_per_layer(self):
+        from waste_collection_schedule.service import ArcGis
+
+        responses = [
+            ("waste", self._feature_response({"id": 1}, {"id": 2})),
+            ("glass", self._feature_response({"id": 3}, {"id": 4})),
+        ]
+
+        assert ArcGis.ArcGisMultiFeatureParser(first_per_layer=True)(responses) == [
+            ("waste", {"id": 1}),
+            ("glass", {"id": 3}),
+        ]
+
     # --- two-step lookup across two layers (fredrikstad_no) ---------------- #
 
     @staticmethod
@@ -1178,6 +1263,193 @@ class TestArcGisComponents:
                 (datetime.date(2026, 6, 30), "ORDURES"),
                 (datetime.date(2026, 6, 30), "COMPOST"),
             ]
+
+
+class TestYarraCitySource:
+    """City of Yarra must fail closed when provider data is incomplete."""
+
+    def test_pipeline_requires_both_layers_and_one_feature_per_layer(self):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        assert yarra.Source.retrieve.layers == [
+            (
+                yarra.WASTE_LAYER,
+                f"{yarra.MAP_SERVER_URL}/1",
+                "collection_day,recycling_anchor_date",
+            ),
+            (
+                yarra.GLASS_LAYER,
+                f"{yarra.MAP_SERVER_URL}/0",
+                "anchor_date,frequency_days",
+            ),
+        ]
+        assert yarra.Source.retrieve.require_all is True
+        assert yarra.Source.parse.first_per_layer is True
+        assert yarra.Source.parse.argument == "address"
+
+    @pytest.mark.parametrize(
+        "attributes,field",
+        [
+            ({"recycling_anchor_date": "2026-08-12"}, "collection_day"),
+            (
+                {
+                    "collection_day": "Notaday",
+                    "recycling_anchor_date": "2026-08-12",
+                },
+                "collection_day",
+            ),
+            ({"collection_day": "Wednesday"}, "recycling_anchor_date"),
+            (
+                {
+                    "collection_day": "Wednesday",
+                    "recycling_anchor_date": "not-a-date",
+                },
+                "recycling_anchor_date",
+            ),
+        ],
+    )
+    def test_invalid_waste_layer_fields_raise(self, attributes, field):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        with pytest.raises(ValueError, match=field):
+            list(yarra._describe((yarra.WASTE_LAYER, attributes), None))
+
+    @pytest.mark.parametrize(
+        "attributes,field",
+        [
+            ({"frequency_days": 28}, "anchor_date"),
+            ({"anchor_date": True, "frequency_days": 28}, "anchor_date"),
+            ({"anchor_date": "not-a-date", "frequency_days": 28}, "anchor_date"),
+            (
+                {"anchor_date": "2026-08-12garbage", "frequency_days": 28},
+                "anchor_date",
+            ),
+            ({"anchor_date": "2026-08-12"}, "frequency_days"),
+            (
+                {"anchor_date": "2026-08-12", "frequency_days": "unknown"},
+                "frequency_days",
+            ),
+            ({"anchor_date": "2026-08-12", "frequency_days": 28.5}, "frequency_days"),
+            ({"anchor_date": "2026-08-12", "frequency_days": True}, "frequency_days"),
+            ({"anchor_date": "2026-08-12", "frequency_days": 0}, "frequency_days"),
+        ],
+    )
+    def test_invalid_glass_layer_fields_raise(self, attributes, field):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        with pytest.raises(ValueError, match=field):
+            list(yarra._describe((yarra.GLASS_LAYER, attributes), None))
+
+    def test_unknown_layer_label_raises(self):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        with pytest.raises(ValueError, match="unexpected layer label"):
+            list(yarra._describe(("unknown", {}), None))
+
+    @pytest.mark.parametrize(
+        "today,scheduled_date,collection_day,next_by_key",
+        [
+            (
+                "2025-12-26",
+                datetime.date(2025, 12, 25),
+                "Thursday",
+                {
+                    "Rubbish": datetime.date(2026, 1, 1),
+                    "FOGO": datetime.date(2026, 1, 1),
+                    "Recycling": datetime.date(2026, 1, 8),
+                    "Glass": datetime.date(2026, 1, 22),
+                },
+            ),
+            (
+                "2025-12-27",
+                datetime.date(2025, 12, 26),
+                "Friday",
+                {
+                    "Rubbish": datetime.date(2026, 1, 2),
+                    "FOGO": datetime.date(2026, 1, 2),
+                    "Recycling": datetime.date(2026, 1, 9),
+                    "Glass": datetime.date(2026, 1, 23),
+                },
+            ),
+            (
+                "2026-12-26",
+                datetime.date(2026, 12, 25),
+                "Friday",
+                {
+                    "Rubbish": datetime.date(2027, 1, 1),
+                    "FOGO": datetime.date(2027, 1, 1),
+                    "Recycling": datetime.date(2027, 1, 8),
+                    "Glass": datetime.date(2027, 1, 22),
+                },
+            ),
+            (
+                "2027-03-27",
+                datetime.date(2027, 3, 26),
+                "Friday",
+                {
+                    "Rubbish": datetime.date(2027, 4, 2),
+                    "FOGO": datetime.date(2027, 4, 2),
+                    "Recycling": datetime.date(2027, 4, 9),
+                    "Glass": datetime.date(2027, 4, 23),
+                },
+            ),
+        ],
+    )
+    def test_day_after_holiday_keeps_collection_shifted_to_today(
+        self, today, scheduled_date, collection_day, next_by_key
+    ):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        records = [
+            (
+                yarra.WASTE_LAYER,
+                {
+                    "collection_day": collection_day,
+                    "recycling_anchor_date": scheduled_date.isoformat(),
+                },
+            ),
+            (
+                yarra.GLASS_LAYER,
+                {"anchor_date": scheduled_date.isoformat(), "frequency_days": 28},
+            ),
+        ]
+        with freeze_time(today):
+            rows = list(yarra.Source.preprocess(records))
+
+        expected_counts = {
+            "Rubbish": 52,
+            "FOGO": 52,
+            "Recycling": 26,
+            "Glass": 13,
+        }
+        today_date = datetime.date.fromisoformat(today)
+        for key, count in expected_counts.items():
+            dates = sorted(date for date, row_key in rows if row_key == key)
+            assert len(dates) == count
+            assert dates[:2] == [today_date, next_by_key[key]]
+            assert scheduled_date not in dates
+
+    def test_day_after_holiday_does_not_invent_an_off_phase_collection(self):
+        from waste_collection_schedule.source import yarracity_vic_gov_au as yarra
+
+        records = [
+            (
+                yarra.WASTE_LAYER,
+                {
+                    "collection_day": "Thursday",
+                    "recycling_anchor_date": "2026-12-24",
+                },
+            ),
+            (
+                yarra.GLASS_LAYER,
+                {"anchor_date": "2026-12-24", "frequency_days": 28},
+            ),
+        ]
+        with freeze_time("2026-12-26"):
+            rows = list(yarra.Source.preprocess(records))
+
+        assert len(rows) == 143
+        assert datetime.date(2026, 12, 26) not in {date for date, _ in rows}
 
 
 class TestPreprocessors:

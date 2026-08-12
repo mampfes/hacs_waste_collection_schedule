@@ -886,6 +886,10 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
             anything. A failing layer then aborts the scan rather than being
             skipped, because an ordered scan that skipped a layer could report
             a later layer's answer as if it were the first.
+        require_all: abort when any queried layer fails. The default keeps the
+            tolerant behaviour used by councils where each layer is optional;
+            enable this when every queried layer is required for a complete
+            schedule.
         argument: with ``first_match``, the ``source.params`` field to blame
             when no layer matched. Leave unset to return no responses.
     """
@@ -903,6 +907,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         where: str | Callable[..., str | None] | None = None,
         count_only: bool = False,
         first_match: bool = False,
+        require_all: bool = False,
         argument: str | None = None,
     ):
         # Normalise to (label, url, out_fields) triples.
@@ -924,6 +929,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         self.where = where
         self.count_only = count_only
         self.first_match = first_match
+        self.require_all = require_all
         self.argument = argument
 
     def _where_for(self, label: Any, params: dict[str, Any]) -> str | None:
@@ -972,7 +978,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
                 )
                 response.raise_for_status()
             except requests.RequestException as err:
-                if self.first_match:
+                if self.first_match or self.require_all:
                     raise
                 _LOGGER.debug("ArcGIS layer %s failed, skipping: %s", url, err)
                 last_error = err

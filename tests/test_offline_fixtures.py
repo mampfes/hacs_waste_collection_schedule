@@ -13,6 +13,8 @@ import datetime
 import json
 import os
 import sys
+from collections import Counter
+from itertools import pairwise
 
 import dateutil.parser  # noqa: F401
 import pytest
@@ -31,6 +33,7 @@ import cassette
 from fixtures_support import (
     discover_choice_fixtures,
     discover_fixtures,
+    fixture_path,
     slug,
 )
 from waste_collection_schedule.collection import Collection
@@ -111,6 +114,63 @@ def test_offline_replay(module_name, case_slug, path):
         assert isinstance(r.date, datetime.date)
         assert r.waste_type is not None
     _COMPLETED.add(os.path.abspath(path))
+
+
+@pytest.mark.parametrize(
+    "case_name,first_dates",
+    [
+        (
+            "Fitzroy Town Hall",
+            {
+                "general_waste": datetime.date(2026, 8, 5),
+                "organic": datetime.date(2026, 8, 5),
+                "recyclables": datetime.date(2026, 8, 12),
+                "glass": datetime.date(2026, 8, 12),
+            },
+        ),
+        (
+            "Richmond Town Hall",
+            {
+                "general_waste": datetime.date(2026, 8, 4),
+                "organic": datetime.date(2026, 8, 4),
+                "recyclables": datetime.date(2026, 8, 11),
+                "glass": datetime.date(2026, 8, 11),
+            },
+        ),
+    ],
+)
+def test_yarra_replay_preserves_types_dates_and_cadence(case_name, first_dates):
+    """Yarra cassettes pin the schedule contract, not merely a non-empty result."""
+    module = import_module("waste_collection_schedule.source.yarracity_vic_gov_au")
+    path = fixture_path("yarracity_vic_gov_au", case_name)
+
+    with cassette.replaying(path):
+        results = module.Source(**module.Source.TEST_CASES[case_name]).fetch()
+
+    expected_counts = {
+        "general_waste": 52,
+        "organic": 52,
+        "recyclables": 26,
+        "glass": 13,
+    }
+    assert len(results) == 143
+    assert Counter(result.waste_type.id for result in results) == expected_counts
+
+    expected_cadence = {
+        "general_waste": datetime.timedelta(days=7),
+        "organic": datetime.timedelta(days=7),
+        "recyclables": datetime.timedelta(days=14),
+        "glass": datetime.timedelta(days=28),
+    }
+    for waste_type, first_date in first_dates.items():
+        dates = sorted(
+            result.date for result in results if result.waste_type.id == waste_type
+        )
+        assert dates[0] == first_date
+        assert all(
+            later - earlier == expected_cadence[waste_type]
+            for earlier, later in pairwise(dates)
+        )
 
 
 @pytest.mark.parametrize(

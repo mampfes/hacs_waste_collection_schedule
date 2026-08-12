@@ -212,3 +212,23 @@ def test_ics_regions_key_wins_when_both_are_present():
     }
     titles = [r.title for r in ics._regions_from_definition(definition)]
     assert titles == ["Example", "New"], "the `regions:` key must win over the old one"
+
+
+def test_update_docs_workflow_runs_for_release_branches():
+    """A release branch must regenerate runtime source-discovery catalogues."""
+    import yaml
+
+    workflow_path = (
+        pathlib.Path(__file__).resolve().parent.parent
+        / ".github"
+        / "workflows"
+        / "update-docs.yaml"
+    )
+    workflow = yaml.load(
+        workflow_path.read_text(encoding="utf-8"),
+        Loader=yaml.BaseLoader,
+    )
+
+    branches = workflow["on"]["push"]["branches"]
+    assert "master" in branches
+    assert "release/**" in branches

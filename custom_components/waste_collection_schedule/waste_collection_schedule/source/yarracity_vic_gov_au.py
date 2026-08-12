@@ -22,9 +22,9 @@ from waste_collection_schedule.transformers import ICSTransformer
 # anchor date that fixes its fortnightly recycling phase, layer 0 (glass)
 # carries an independent anchor plus the glass cycle length in days. Both are
 # point-in-polygon lookups from a single geocode, which is exactly what the
-# shared multi-layer ArcGIS retriever does, so the only source-specific code
-# is _describe() (reading those fields) and _adjust() (the council's own
-# public-holiday rule).
+# shared multi-layer ArcGIS retriever does. The source-specific code validates
+# those required fields, projects their recurrences, and applies the council's
+# own public-holiday rule.
 
 MAP_SERVER_URL = (
     "https://yccgis-prd.esriaustraliaonline.com.au/arcgis/rest/services/"
@@ -37,8 +37,8 @@ WASTE_LAYER = "waste"
 # (label, feature_url, out_fields) per layer; the label is carried through to
 # each parsed record so _describe() knows which fields it is looking at.
 LAYERS = [
-    (GLASS_LAYER, f"{MAP_SERVER_URL}/0", "anchor_date,frequency_days"),
     (WASTE_LAYER, f"{MAP_SERVER_URL}/1", "collection_day,recycling_anchor_date"),
+    (GLASS_LAYER, f"{MAP_SERVER_URL}/0", "anchor_date,frequency_days"),
 ]
 
 # How many weekly collections to project; the fortnightly and glass cycles
@@ -61,10 +61,94 @@ def _geocode_address(address: str) -> str:
 def _to_date(value: object) -> datetime.date | None:
     """Read an ArcGIS date field, which these layers publish as an ISO string."""
     if isinstance(value, str) and value:
-        return datetime.date.fromisoformat(value[:10])
-    if isinstance(value, (int, float)):
-        return datetime.date.fromtimestamp(value / 1000)
+        return datetime.date.fromisoformat(value)
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return datetime.datetime.fromtimestamp(value / 1000, tz=datetime.UTC).date()
     return None
+
+
+def _required_date(attrs: dict, field: str, layer: str) -> datetime.date:
+    """Read a required provider date, failing instead of hiding a bin stream."""
+    value = attrs.get(field)
+    try:
+        parsed = _to_date(value)
+    except (OSError, OverflowError, ValueError) as err:
+        raise ValueError(
+            f"City of Yarra {layer} layer returned invalid {field}: {value!r}"
+        ) from err
+    if parsed is None:
+        raise ValueError(f"City of Yarra {layer} layer did not return required {field}")
+    return parsed
+
+
+def _required_frequency(attrs: dict) -> int:
+    """Read the required positive glass cadence published by the provider."""
+    value = attrs.get("frequency_days")
+    try:
+        if isinstance(value, bool) or (
+            isinstance(value, float) and not value.is_integer()
+        ):
+            raise ValueError
+        frequency = int(value)
+    except (TypeError, ValueError) as err:
+        raise ValueError(
+            f"City of Yarra glass layer returned invalid frequency_days: {value!r}"
+        ) from err
+    if frequency <= 0:
+        raise ValueError(
+            f"City of Yarra glass layer returned invalid frequency_days: {value!r}"
+        )
+    return frequency
+
+
+def _is_delayed_collection_day(collection_date: datetime.date) -> bool:
+    """Whether Yarra moves this scheduled collection forward by one day.
+
+    Good Friday affects that Friday alone. Christmas delays cascade through
+    the remaining weekday rounds: when Christmas is on a Monday, for example,
+    every Monday-to-Friday round moves one day; when it is on a Thursday, both
+    Thursday and Friday move. A weekend Christmas does not affect a weekday
+    round.
+    """
+    if collection_date == recurrence.good_friday(collection_date.year):
+        return True
+
+    christmas = datetime.date(collection_date.year, 12, 25)
+    if christmas.weekday() > 4:
+        return False
+    last_weekday = christmas + datetime.timedelta(days=4 - christmas.weekday())
+    return christmas <= collection_date <= last_weekday
+
+
+def _anchored_schedule(
+    key: str,
+    anchor: datetime.date,
+    step: datetime.timedelta,
+    count: int,
+) -> Schedule:
+    """Build a projection that retains yesterday when it shifts onto today.
+
+    The shared recurrence expander normally starts on or after today. On the
+    day after Good Friday or Christmas that would discard yesterday before the
+    holiday stage can move it to today. Add that one in-phase occurrence back,
+    reducing the ordinary projection by one so the published horizon stays the
+    requested ``count``.
+    """
+    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    shifted_today = (
+        yesterday >= anchor
+        and _is_delayed_collection_day(yesterday)
+        and (yesterday - anchor) % step == datetime.timedelta(0)
+    )
+    extra = (yesterday,) if shifted_today else ()
+    return Schedule(
+        key,
+        anchor,
+        step,
+        count - len(extra),
+        anchor=True,
+        extra=extra,
+    )
 
 
 def _describe(record, source):
@@ -78,49 +162,50 @@ def _describe(record, source):
     label, attrs = record
 
     if label == WASTE_LAYER:
-        weekday = recurrence.weekday(attrs.get("collection_day") or "")
-        if weekday is not None:
-            # Rubbish and FOGO both run weekly on the property's collection
-            # day, today's collection included when that day is today.
-            start = recurrence.most_recent_weekday(weekday)
-            yield Schedule(
-                "Rubbish", start, recurrence.WEEKLY, WEEKS_AHEAD, anchor=True
+        collection_day = attrs.get("collection_day")
+        weekday = recurrence.weekday(collection_day or "")
+        if weekday is None:
+            raise ValueError(
+                "City of Yarra waste layer returned invalid collection_day: "
+                f"{collection_day!r}"
             )
-            yield Schedule("FOGO", start, recurrence.WEEKLY, WEEKS_AHEAD, anchor=True)
+
+        # Rubbish and FOGO both run weekly on the property's collection day,
+        # today's collection included when that day is today.
+        start = recurrence.most_recent_weekday(weekday)
+        yield _anchored_schedule("Rubbish", start, recurrence.WEEKLY, WEEKS_AHEAD)
+        yield _anchored_schedule("FOGO", start, recurrence.WEEKLY, WEEKS_AHEAD)
 
         # Recycling alternates fortnightly between zones; the layer's anchor
         # date fixes this property's phase.
-        recycling_anchor = _to_date(attrs.get("recycling_anchor_date"))
-        if recycling_anchor is not None:
-            yield Schedule(
-                "Recycling",
-                recycling_anchor,
-                recurrence.FORTNIGHTLY,
-                WEEKS_AHEAD // 2,
-                anchor=True,
-            )
+        recycling_anchor = _required_date(attrs, "recycling_anchor_date", WASTE_LAYER)
+        yield _anchored_schedule(
+            "Recycling",
+            recycling_anchor,
+            recurrence.FORTNIGHTLY,
+            WEEKS_AHEAD // 2,
+        )
         return
+
+    if label != GLASS_LAYER:
+        raise ValueError(f"City of Yarra returned unexpected layer label: {label!r}")
 
     # Glass runs on its own cycle (currently every 28 days) with an
     # independent per-polygon anchor and cycle length.
-    glass_anchor = _to_date(attrs.get("anchor_date"))
-    frequency = attrs.get("frequency_days")
-    if glass_anchor is not None and frequency:
-        yield Schedule(
-            "Glass",
-            glass_anchor,
-            datetime.timedelta(days=int(frequency)),
-            WEEKS_AHEAD // 4,
-            anchor=True,
-        )
+    glass_anchor = _required_date(attrs, "anchor_date", GLASS_LAYER)
+    frequency = _required_frequency(attrs)
+    yield _anchored_schedule(
+        "Glass",
+        glass_anchor,
+        datetime.timedelta(days=frequency),
+        WEEKS_AHEAD // 4,
+    )
 
 
 def _adjust(collection_date: datetime.date, key: str, source) -> datetime.date:
     """Council rule: collections run on every public holiday except Good
     Friday and Christmas Day, when they happen one day later."""
-    if collection_date == recurrence.good_friday(collection_date.year) or (
-        collection_date.month == 12 and collection_date.day == 25
-    ):
+    if _is_delayed_collection_day(collection_date):
         return collection_date + datetime.timedelta(days=1)
     return collection_date
 
@@ -151,7 +236,15 @@ class Source(BaseSource):
     # Declarative pipeline: geocode once, spatially query both layers, tag each
     # response with its label, then project each match into concrete dates and
     # defer the two days the council does not collect on.
-    retrieve = ArcGisMultiFeatureRetriever(LAYERS, address=_geocode_address)
-    parse = ArcGisMultiFeatureParser()
+    retrieve = ArcGisMultiFeatureRetriever(
+        LAYERS,
+        address=_geocode_address,
+        require_all=True,
+    )
+    parse = ArcGisMultiFeatureParser(
+        first_per_layer=True,
+        argument="address",
+        hint="the address must be within the City of Yarra.",
+    )
     preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
