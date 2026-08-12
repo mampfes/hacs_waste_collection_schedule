@@ -482,7 +482,7 @@ TEST_CASES = {
     "Bloomington, IL, USA": {
         "district_id": "BLO",
         "project_id": 621,
-        "zone_id": "zone-z11030",
+        "zone_id": "zone-z11214",
     },
     "Carleton Place, ON, Canada": {
         "street": "175 Bridge St",
