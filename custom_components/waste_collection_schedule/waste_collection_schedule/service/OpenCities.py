@@ -21,6 +21,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Any, Literal
+from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
@@ -232,10 +233,15 @@ class OpenCitiesClient:
 
     def _search(self, address: str) -> list[dict[str, Any]]:
         path = "searchfuzzy" if self._cfg.search_fuzzy else "search"
-        params: dict[str, Any] = {"keywords": address}
+        # Pre-encode the address with urllib.parse.quote() so spaces are sent
+        # as %20 (not '+'); requests' own param encoding would render spaces
+        # as '+', which the OpenCities API backend rejects. The search URL is
+        # therefore built manually to avoid double-encoding.
+        query = [f"keywords={quote(address, safe='')}"]
         if self._cfg.max_results is not None:
-            params["maxresults"] = self._cfg.max_results
-        response = self._get(f"{self._cfg.domain}/api/v1/myarea/{path}", params)
+            query.append(f"maxresults={self._cfg.max_results}")
+        url = f"{self._cfg.domain}/api/v1/myarea/{path}?{'&'.join(query)}"
+        response = self._get(url)
 
         fmt = self._cfg.search_response_format
         if fmt == "xml":
