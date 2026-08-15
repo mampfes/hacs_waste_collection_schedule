@@ -10,7 +10,7 @@ URL = "https://vatjanst.partille.se"
 SOURCE_CODEOWNERS = ["@sadjad1"]
 
 TEST_CASES = {
-    "Partille kommunhus": {"street_address": "Gamla Kronvägen 34, Partille"},
+    "Tiondevägen 6": {"street_address": "Tiondevägen 6, Partille"},
 }
 
 SEARCH_URL = "https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/SearchAdress"
