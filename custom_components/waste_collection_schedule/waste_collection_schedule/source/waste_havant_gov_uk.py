@@ -17,8 +17,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Residual 240L": Icons.GENERAL_WASTE,
-    "Recycling 240L": Icons.RECYCLING,
+    "Residual": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 EVENTS_REGEX = re.compile(
