@@ -2597,6 +2597,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lodi](/doc/source/junker_app.md) / junker.app
 - [Lodè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Loreto Aprutino - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Lu e Cuccaro Monferrato - AMAG Ambiente](/doc/source/junker_app.md) / junker.app
 - [Lucca - Sistema Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Macerata Campania - DHI](/doc/source/junker_app.md) / junker.app
 - [Macherio](/doc/source/cem_ambiente_it.md) / cemambiente.it
