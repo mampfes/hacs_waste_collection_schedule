@@ -1,10 +1,10 @@
 import datetime
 import io
 import re
-import unicodedata
 import urllib.parse
 import urllib.request
 
+import pypdf
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gmina Bochnia"
@@ -16,6 +16,7 @@ SOURCE_CODEOWNERS = ["@Sairento-92"]
 TEST_CASES = {
     "Baczkow": {"town": "Baczków"},
     "Proszowki": {"town": "Proszówki"},
+    "Lapczyca": {"town": "Łapczyca"},
 }
 
 ICON_MAP = {
@@ -38,6 +39,8 @@ PARAM_TRANSLATIONS = {
         "town": "Town / Village",
     },
 }
+
+PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
 
 TOWNS_PDF_MAP = {
     "baczkow": "Baczkow.pdf",
@@ -73,57 +76,9 @@ TOWNS_PDF_MAP = {
     "zawada": "Zawada.pdf",
 }
 
-BACZKOW_2026_DATES = [
-    (datetime.date(2026, 1, 9), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 2, 4), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 2, 27), "Gabaryty i niebezpieczne", Icons.BULKY),
-    (datetime.date(2026, 3, 4), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 4, 3), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 4, 17), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 5, 2), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 5, 15), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 5, 29), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 6, 12), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 6, 26), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 7, 10), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 7, 24), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 8, 7), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 8, 21), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 9, 4), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 9, 18), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 10, 2), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (
-        datetime.date(2026, 10, 16),
-        "Odpady zmieszane i segregowane",
-        Icons.GENERAL_WASTE,
-    ),
-    (
-        datetime.date(2026, 10, 30),
-        "Odpady zmieszane i segregowane",
-        Icons.GENERAL_WASTE,
-    ),
-    (datetime.date(2026, 11, 4), "Gabaryty i niebezpieczne", Icons.BULKY),
-    (
-        datetime.date(2026, 11, 26),
-        "Odpady zmieszane i segregowane",
-        Icons.GENERAL_WASTE,
-    ),
-    (
-        datetime.date(2026, 12, 28),
-        "Odpady zmieszane i segregowane",
-        Icons.GENERAL_WASTE,
-    ),
-]
-
 
 def normalize(text: str) -> str:
-    return (
-        unicodedata.normalize("NFKD", text)
-        .encode("ASCII", "ignore")
-        .decode("utf-8")
-        .lower()
-        .strip()
-    )
+    return text.translate(PL_TRANS).lower().strip()
 
 
 class Source:
@@ -132,43 +87,78 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         norm_town = normalize(self._town)
-        pdf_file = TOWNS_PDF_MAP.get(norm_town, "Baczkow.pdf")
+        pdf_file = TOWNS_PDF_MAP.get(norm_town)
+        if not pdf_file:
+            pdf_file = f"{norm_town.capitalize()}.pdf"
 
-        try:
-            import pypdf
+        url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            pdf_bytes = resp.read()
 
-            url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                pdf_bytes = resp.read()
+        reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
+        text = reader.pages[0].extract_text()
 
-            reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
-            text = reader.pages[0].extract_text()
+        # 1. Year
+        year_match = re.search(r"\b(202\d)\b", text)
+        year = int(year_match.group(1)) if year_match else datetime.date.today().year
 
-            bulky_dates = []
-            bulky_matches = re.findall(r"(\d{2})\.(\d{2})\.(\d{4})", text)
-            for d_str, m_str, y_str in bulky_matches:
-                bulky_dates.append(datetime.date(int(y_str), int(m_str), int(d_str)))
+        entries: list[Collection] = []
 
-            entries = []
-            for b_date in bulky_dates:
-                entries.append(
-                    Collection(
-                        date=b_date,
-                        t="Gabaryty i niebezpieczne",
-                        icon=Icons.BULKY,
-                    )
+        # 2. Bulky / hazardous dates (e.g. (27.02.2026))
+        for d_str, m_str, y_str in re.findall(r"(\d{1,2})\.(\d{1,2})\.(\d{4})", text):
+            entries.append(
+                Collection(
+                    date=datetime.date(int(y_str), int(m_str), int(d_str)),
+                    t="Gabaryty i niebezpieczne",
+                    icon=Icons.BULKY,
                 )
+            )
 
-            if norm_town in ["baczkow", "damienice", "krzyzanowice"]:
-                for d, t, icon in BACZKOW_2026_DATES:
-                    if t != "Gabaryty i niebezpieczne":
-                        entries.append(Collection(date=d, t=t, icon=icon))
-                return entries
-        except Exception:
-            pass
+        # 3. Monthly collection dates table
+        table_match = re.search(
+            r"zmieszane\s+(?:202\d)?\s*(.*?)\s*Odpady wielkogabarytowe",
+            text,
+            re.DOTALL | re.IGNORECASE,
+        )
+        table_text = table_match.group(1) if table_match else text
 
-        entries = []
-        for d, t, icon in BACZKOW_2026_DATES:
-            entries.append(Collection(date=d, t=t, icon=icon))
+        zmieszane_part = table_text.split("Worek:")[0].strip().replace("\n", " ")
+        raw_tokens = [t.strip() for t in zmieszane_part.split() if t.strip()]
+
+        month_days: list[list[int]] = []
+        cur_month: list[int] = []
+
+        for tok in raw_tokens:
+            nums = [
+                int(n) for n in re.findall(r"\b(\d{1,2})\b", tok) if 1 <= int(n) <= 31
+            ]
+            if not nums:
+                continue
+
+            cur_month.extend(nums)
+            if tok.endswith(","):
+                continue
+            month_days.append(cur_month)
+            cur_month = []
+            if len(month_days) == 12:
+                break
+
+        if cur_month and len(month_days) < 12:
+            month_days.append(cur_month)
+
+        for m_idx, days in enumerate(month_days):
+            month = m_idx + 1
+            for d in days:
+                try:
+                    entries.append(
+                        Collection(
+                            date=datetime.date(year, month, d),
+                            t="Odpady zmieszane i segregowane",
+                            icon=Icons.GENERAL_WASTE,
+                        )
+                    )
+                except ValueError:
+                    pass
+
         return entries
