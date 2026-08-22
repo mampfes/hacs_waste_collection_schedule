@@ -92,11 +92,27 @@ BACZKOW_2026_DATES = [
     (datetime.date(2026, 9, 4), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
     (datetime.date(2026, 9, 18), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
     (datetime.date(2026, 10, 2), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 10, 16), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 10, 30), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
+    (
+        datetime.date(2026, 10, 16),
+        "Odpady zmieszane i segregowane",
+        Icons.GENERAL_WASTE,
+    ),
+    (
+        datetime.date(2026, 10, 30),
+        "Odpady zmieszane i segregowane",
+        Icons.GENERAL_WASTE,
+    ),
     (datetime.date(2026, 11, 4), "Gabaryty i niebezpieczne", Icons.BULKY),
-    (datetime.date(2026, 11, 26), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
-    (datetime.date(2026, 12, 28), "Odpady zmieszane i segregowane", Icons.GENERAL_WASTE),
+    (
+        datetime.date(2026, 11, 26),
+        "Odpady zmieszane i segregowane",
+        Icons.GENERAL_WASTE,
+    ),
+    (
+        datetime.date(2026, 12, 28),
+        "Odpady zmieszane i segregowane",
+        Icons.GENERAL_WASTE,
+    ),
 ]
 
 
