@@ -50,7 +50,6 @@ SERVLET = "https://www5.bonn.de/WasteManagementBonnOrange/WasteManagementServlet
 
 # Part of the form is delivered as a JavaScript string instead of plain markup.
 TEXT_REGEX = re.compile(r"var\s*text\s*=\s*'(.*?)'\s*;", re.DOTALL)
-OPTION_REGEX = re.compile(r'<OPTION VALUE="([^"]+)"', re.IGNORECASE)
 
 
 class HiddenInputParser(HTMLParser):
@@ -78,11 +77,39 @@ def _hidden_args(text: str) -> dict[str, str]:
     return parser.args
 
 
+class StreetOptionParser(HTMLParser):
+    """Collects the options of the street drop-down only.
+
+    The page contains several selects (e.g. the first-letter chooser), so
+    grabbing every option would mix unrelated values into the suggestions.
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._streets: list[str] = []
+        self._in_street_select = False
+
+    @property
+    def streets(self) -> list[str]:
+        return self._streets
+
+    def handle_starttag(self, tag, attrs):
+        d = dict(attrs)
+        if tag == "select":
+            self._in_street_select = d.get("name") == "Strasse"
+        elif tag == "option" and self._in_street_select and d.get("value"):
+            # Street name and type are separated by a non-breaking space.
+            self._streets.append(html.unescape(d["value"]).replace("\xa0", " "))
+
+    def handle_endtag(self, tag):
+        if tag == "select":
+            self._in_street_select = False
+
+
 def _streets(text: str) -> list[str]:
-    # The drop-down separates street name and type with a non-breaking space.
-    return [
-        html.unescape(o).replace("\xa0", " ") for o in OPTION_REGEX.findall(text) if o
-    ]
+    parser = StreetOptionParser()
+    parser.feed(text)
+    return parser.streets
 
 
 class Source:
