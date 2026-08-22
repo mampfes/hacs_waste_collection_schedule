@@ -34,8 +34,8 @@ class MockSession:
 # parser regression, so provide the same minimal module surface as the source.
 curl_cffi = types.ModuleType("curl_cffi")
 curl_requests = types.ModuleType("curl_cffi.requests")
-curl_requests.Session = MockSession
-curl_cffi.requests = curl_requests
+curl_requests.Session = MockSession  # type: ignore[attr-defined]
+curl_cffi.requests = curl_requests  # type: ignore[attr-defined]
 sys.modules["curl_cffi"] = curl_cffi
 sys.modules["curl_cffi.requests"] = curl_requests
 
