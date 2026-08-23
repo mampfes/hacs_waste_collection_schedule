@@ -6,7 +6,7 @@ Waste collection schedules provided by [Collectes et écocentres](https://mirabe
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: mirabel_ca
       args:
         zone: ZONE
