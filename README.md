@@ -913,6 +913,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Markham, ON](/doc/ics/recollect.md) / markham.ca
 - [Medicine Hat (AB)](/doc/source/recyclecoach_com.md) / medicinehat.ca
 - [Milton (ON)](/doc/source/recyclecoach_com.md) / milton.ca
+- [Mirabel (QC)](/doc/source/mirabel_ca.md) / mirabel.ca/collectes
 - [Mississauga (ON)](/doc/source/recyclecoach_com.md) / mississauga.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [MRC de Roussillon (QC)](/doc/source/info_collectes_ca.md) / info-collectes.ca

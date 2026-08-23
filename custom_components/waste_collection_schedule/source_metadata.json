@@ -1396,6 +1396,14 @@
     },
     "urls": {}
   },
+  "mirabel_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mirabel_ca.md",
+    "howto": {
+      "en": "You can find your collection zone number using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+      "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte"
+    },
+    "urls": {}
+  },
   "montreal_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
     "howto": {
