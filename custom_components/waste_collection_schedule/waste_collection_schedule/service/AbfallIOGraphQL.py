@@ -50,4 +50,9 @@ SERVICE_MAP = [
         "url": "https://www.lrasbk.de/",
         "service_id": "30628292bdd8b43db86a48f7e0d85f85",
     },
+    {
+        "title": "ASO Abfall-Service Osterholz",
+        "url": "https://www.aso-ohz.de/",
+        "service_id": "8b016df0116d1d5094fa339bebea0c65",
+    },
 ]

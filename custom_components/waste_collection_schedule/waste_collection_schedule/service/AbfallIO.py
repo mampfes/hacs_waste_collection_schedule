@@ -13,11 +13,6 @@ SERVICE_MAP = [
         "service_id": "9583a2fa1df97ed95363382c73b41b1b",
     },
     {
-        "title": "ASO Abfall-Service Osterholz",
-        "url": "https://www.aso-ohz.de/",
-        "service_id": "040b38fe83f026f161f30f282b2748c0",
-    },
-    {
         "title": "Landkreis Bayreuth",
         "url": "https://www.landkreis-bayreuth.de/",
         "service_id": "951da001077dc651a3bf437bc829964e",
