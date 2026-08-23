@@ -77,39 +77,40 @@ def _hidden_args(text: str) -> dict[str, str]:
     return parser.args
 
 
-class StreetOptionParser(HTMLParser):
-    """Collects the options of the street drop-down only.
+class SelectOptionParser(HTMLParser):
+    """Collects the options of one named drop-down.
 
     The page contains several selects (e.g. the first-letter chooser), so
     grabbing every option would mix unrelated values into the suggestions.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, name: str) -> None:
         super().__init__()
-        self._streets: list[str] = []
-        self._in_street_select = False
+        self._name = name
+        self._options: list[str] = []
+        self._in_select = False
 
     @property
-    def streets(self) -> list[str]:
-        return self._streets
+    def options(self) -> list[str]:
+        return self._options
 
     def handle_starttag(self, tag, attrs):
         d = dict(attrs)
         if tag == "select":
-            self._in_street_select = d.get("name") == "Strasse"
-        elif tag == "option" and self._in_street_select and d.get("value"):
-            # Street name and type are separated by a non-breaking space.
-            self._streets.append(html.unescape(d["value"]).replace("\xa0", " "))
+            self._in_select = d.get("name") == self._name
+        elif tag == "option" and self._in_select and d.get("value"):
+            # Values carry non-breaking spaces: street name and type, number ranges.
+            self._options.append(html.unescape(d["value"]).replace("\xa0", " "))
 
     def handle_endtag(self, tag):
         if tag == "select":
-            self._in_street_select = False
+            self._in_select = False
 
 
-def _streets(text: str) -> list[str]:
-    parser = StreetOptionParser()
+def _options(text: str, name: str) -> list[str]:
+    parser = SelectOptionParser(name)
     parser.feed(text)
-    return parser.streets
+    return parser.options
 
 
 class Source:
@@ -139,7 +140,7 @@ class Source:
         r.raise_for_status()
         r.encoding = "utf-8"
 
-        streets = _streets(r.text)
+        streets = _options(r.text, "Strasse")
         if streets and self._street not in streets:
             raise SourceArgumentNotFoundWithSuggestions("street", self._street, streets)
 
@@ -151,6 +152,14 @@ class Source:
         r.raise_for_status()
         r.encoding = "utf-8"
 
+        # An address the portal does not serve comes back with a drop-down of
+        # the house numbers that are actually registered for this street.
+        house_numbers = _options(r.text, "Hausnummernwahl")
+        if house_numbers:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number", self._house_number, house_numbers
+            )
+
         # The result page switches ApplicationName to the collection-date model,
         # which the iCal download depends on.
         args.update(_hidden_args(r.text))
@@ -161,9 +170,11 @@ class Source:
         r.raise_for_status()
         r.encoding = "utf-8"
 
-        if "BEGIN:VCALENDAR" not in r.text:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number", self._house_number, []
+        if not r.text.lstrip().startswith("BEGIN:VCALENDAR"):
+            raise ValueError(
+                "Expected an iCalendar file from the bonnorange portal but got "
+                f"{r.headers.get('Content-Type', 'an unknown content type')}, "
+                "the portal may be unavailable or may have changed."
             )
 
         entries = []
