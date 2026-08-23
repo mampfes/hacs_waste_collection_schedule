@@ -127,9 +127,7 @@ class Source:
             verify=self._verify,
         )
         r.raise_for_status()
-        soup = BeautifulSoup(
-            json.loads(r.text)[".results"], features="html.parser"
-        )
+        soup = BeautifulSoup(json.loads(r.text)[".results"], features="html.parser")
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
             raise SourceArgumentNotFoundWithSuggestions(
