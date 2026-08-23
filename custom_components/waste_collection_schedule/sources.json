@@ -5078,6 +5078,14 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "City of Kamloops, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Kingston, ON",
       "module": "ics",
       "default_params": {
@@ -14370,6 +14378,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_export_vcal"
+    },
+    {
+      "title": "Stadt L\u00f6hne",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*?): L\u00f6hne"
+      },
+      "id": "ics_loehne_de"
     },
     {
       "title": "Stadt Mainhausen",

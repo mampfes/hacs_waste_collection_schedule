@@ -878,6 +878,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
 - [City of Hamilton (ON)](/doc/source/recyclecoach_com.md) / hamilton.ca
+- [City of Kamloops, BC](/doc/ics/recollect.md) / kamloops.ca
 - [City of Kingston, ON](/doc/ics/recollect.md) / cityofkingston.ca
 - [City of Lethbridge](/doc/ics/recollect.md) / lethbridge.ca
 - [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
@@ -2130,6 +2131,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
 - [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
+- [Stadt Löhne](/doc/ics/loehne_de.md) / loehne.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de

@@ -59,6 +59,7 @@ known to work with:
 |Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|
 |City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|
 |City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|
+|City of Kamloops, BC|Canada|[kamloops.ca](https://www.kamloops.ca/city-services/recycling-garbage-organics/residential-collection-schedule)|
 
 and probably a lot more.
 
@@ -241,4 +242,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect-us.global.ssl.fastly.net/api/places/60B07F16-912F-11E2-91C6-912BB3DE4739/services/202/events.en.ics
+```
+### 100 Sunset Crt, Kamloops, BC, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect.a.ssl.fastly.net/api/places/CA6C8A4C-A85B-11E7-960A-90E7FC0D224B/services/671/events.en.ics
 ```
