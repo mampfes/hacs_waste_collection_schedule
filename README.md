@@ -1344,7 +1344,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Asche](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ASG Nordsachsen](/doc/source/abfall_io_graphql.md) / asg-nordsachsen.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
-- [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
+- [ASO Abfall-Service Osterholz](/doc/source/abfall_io_graphql.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
 - [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [ATHOS GmbH](/doc/source/app_abfallplus_de.md) / Abfall+ App: athosmobil

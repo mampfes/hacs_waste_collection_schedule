@@ -8376,11 +8376,11 @@
     },
     {
       "title": "ASO Abfall-Service Osterholz",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "040b38fe83f026f161f30f282b2748c0"
+        "key": "8b016df0116d1d5094fa339bebea0c65"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "ASR Stadt Chemnitz",
