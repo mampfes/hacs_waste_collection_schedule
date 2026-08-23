@@ -135,9 +135,9 @@ class Source:
                 ) from e
 
             payload = r.json()
-            if "errors" in payload:
-                raise RuntimeError(f"GraphQL errors: {payload['errors']}")
-
+            graphql_errors = payload.get("errors")
+            if graphql_errors:
+                raise RuntimeError(f"GraphQL errors: {graphql_errors}")
             events = payload.get("data", {}).get("events", {}).get("nodes") or []
             for event in events:
                 event_type = event.get("type")
