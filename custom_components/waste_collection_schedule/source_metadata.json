@@ -556,7 +556,7 @@
   "ics_moretonbay_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moretonbay_qld_gov_au.md",
     "howto": {
-      "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.\n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n\nThe link is one of ten per-run calendars on the council's CDN, named\n`waste-calendar-<day>-week<N>.ics`, where `<day>` is your collection weekday\n(`monday`-`friday`) and `<N>` is your recycling fortnight (`1` or `2`). Both\nare property-specific, so use the link generated for your own address rather\nthan copying the example below.\n\nOlder `webcal://www.moretonbay.qld.gov.au/bincal?externalId=...` links are no\nlonger issued by the council, and that host rejects the integration's HTTP\nclient with `HTTP Error 403`. Replace any such link with the one the Bin Days\npage gives you now.\n"
     },
     "urls": {}
   },
