@@ -59,7 +59,7 @@ API_URL = "https://mviv2.mirabel.ca/graphql"
 ICON_MAP = {
     "dechets": Icons.GENERAL_WASTE,
     "recyclage": Icons.RECYCLING,
-    "composte": Icons.ORGANIC,
+    "composte": Icons.ORGANIC,  # codespell:ignore composte
     "encombrants": Icons.BULKY,
 }
 
@@ -105,11 +105,11 @@ ZONES: dict[str, Zone] = {name: {"id": zid} for name, zid in _ZONE_INFO.items()}
 
 
 class Source:
-    def __init__(self, zone: ZONE_LITERALS):
+    def __init__(self, zone: ZONE_LITERALS):  # type: ignore
         zone = str(zone)
         if zone not in ZONES:
-            raise ValueError(
-                f"Unknown zone: '{zone}'. Must be one of: {', '.join(ZONES.keys())}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "zone", zone, suggestions=ZONES.keys()
             )
         self._id = ZONES[zone]["id"]
 
