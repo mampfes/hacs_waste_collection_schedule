@@ -3,6 +3,7 @@ from typing import Literal, TypedDict
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 
 class Zone(TypedDict):
@@ -64,8 +65,8 @@ ICON_MAP = {
 
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your collection zone number using the webpage ; https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
-    "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante :  https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+    "en": "You can find your collection zone number using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+    "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
 }
 
 PARAM_DESCRIPTIONS = {
@@ -130,14 +131,14 @@ class Source:
                 r.raise_for_status()
             except requests.HTTPError as e:
                 raise RuntimeError(
-                    f"Failed to fetch collections for zone '{self._id}'{e}"
+                    f"Failed to fetch collections for zone '{self._id}': {e}"
                 ) from e
 
             payload = r.json()
             if "errors" in payload:
                 raise RuntimeError(f"GraphQL errors: {payload['errors']}")
 
-            events = payload.get("data", {}).get("events", {}).get("nodes")
+            events = payload.get("data", {}).get("events", {}).get("nodes") or []
             for event in events:
                 event_type = event.get("type")
                 entries.append(
