@@ -17396,6 +17396,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Lu e Cuccaro Monferrato",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Lucca - Sistema Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
