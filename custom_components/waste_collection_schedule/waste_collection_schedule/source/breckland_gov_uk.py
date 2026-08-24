@@ -20,6 +20,7 @@ ICON_MAP = {
     "Refuse Collection Service": Icons.GENERAL_WASTE,
     "Recycling Collection Service": Icons.RECYCLING,
     "Garden Waste Service": Icons.GARDEN,
+    "Food Waste Collection Service": Icons.BIO_KITCHEN,
 }
 
 _LOGGER = logging.getLogger(__name__)
