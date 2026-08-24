@@ -192,6 +192,14 @@
     },
     {
       "title": "Campbelltown City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Campbelltown City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
+      "title": "Campbelltown City Council",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
@@ -201,14 +209,6 @@
       "module": "campbelltown_nsw_gov_au",
       "default_params": {},
       "id": "campbelltown_nsw_gov_au"
-    },
-    {
-      "title": "Campbeltown City Council",
-      "module": "impactapps_com_au",
-      "default_params": {
-        "service": "Campbeltown City Council"
-      },
-      "id": "impactapps_com_au"
     },
     {
       "title": "Cardinia Shire Council",
@@ -1018,10 +1018,10 @@
       "id": "moyne_vic_gov_au"
     },
     {
-      "title": "Murrindindi Shire Counci",
+      "title": "Murrindindi Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
-        "service": "Murrindindi Shire Counci"
+        "service": "Murrindindi Shire Council"
       },
       "id": "impactapps_com_au"
     },
