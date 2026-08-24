@@ -334,6 +334,7 @@ SERVICE_PROVIDERS = {
     "Torre de' Passeri",
     "Scalea",
     "San Giovanni Teatino",
+    "Lu e Cuccaro Monferrato",
 }
 
 # MUNICIPALITIES that are known to be supported but do not offer a calendar:
