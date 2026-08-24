@@ -329,6 +329,7 @@ SERVICE_PROVIDERS = {
     "Torre de' Passeri",
     "Scalea",
     "San Giovanni Teatino",
+    "Lu e Cuccaro Monferrato",
 }
 
 
