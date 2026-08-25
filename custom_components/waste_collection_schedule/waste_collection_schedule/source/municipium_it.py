@@ -124,7 +124,12 @@ class Source:
         comuni = r.json()
 
         wanted = self._municipality.strip().casefold()
-        matches = [c for c in comuni if c["name"].casefold() == wanted]
+        matches = [
+            c
+            for c in comuni
+            if c["name"].casefold() == wanted
+            or f"{c['name']} ({c.get('province_initials')})".casefold() == wanted
+        ]
         if not matches:
             names = [c["name"] for c in comuni]
             suggestions = get_close_matches(self._municipality, names, n=5, cutoff=0.4)
