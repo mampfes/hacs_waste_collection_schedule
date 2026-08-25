@@ -28,7 +28,7 @@ ICON_MAP = {
 BIN_NAMES = {
     "WasteBin": "Waste Bin",
     "RecycleBin": "Recycle Bin",
-    "GreenBin": "GO Bin",
+    "GreenBin": "Garden Organics (GO)",
     "GlassBin": "Glass Bin",
 }
 
