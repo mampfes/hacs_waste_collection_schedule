@@ -44,41 +44,40 @@ returns collections for `38 Kildean Road, Kildean, Stirling, FK8 1TB` with the w
 The integration populates the built-in Home Assistant calendar with one event per waste type. If you use [TrashCard](https://github.com/idaho/hassio-trash-card), the following patterns match the waste type names exactly (`pattern_exact: true`, to avoid e.g. `recycle` matching `Non-recyclable`) and colour the chips like the corresponding Stirling bin lids (grey, brown, green, blue, purple):
 
 ```yaml
- type: custom:trash-card
- entities:
-   - calendar.stirling_council
- event_grouping: true
- next_days: 6
- with_label: true
- pattern:
-   - type: waste
-     pattern: "Non-recyclable Waste"
-     pattern_exact: true
-     icon: mdi:trash-can
-     color: grey
-     label: General waste
-   - type: organic
-     pattern: "Food and Garden"
-     pattern_exact: true
-     icon: mdi:leaf
-     color: brown
-     label: Food & garden
-   - type: paper
-     pattern: "Paper & Cardboard"
-     pattern_exact: true
-     icon: mdi:package-variant
-     color: green
-     label: Paper & card
-   - type: recycle
-     pattern: "Plastic, cans and cartons"
-     pattern_exact: true
-     icon: mdi:recycle-variant
-     color: blue
-     label: Cans & plastics
-   - type: custom
-     pattern: "Glass"
-     pattern_exact: true
-     icon: mdi:bottle-soda
-     color: purple
-     label: Glass
-```
+type: custom:trash-card
+entities:
+  - calendar.stirling_council
+event_grouping: true
+next_days: 6
+with_label: true
+pattern:
+  - type: waste
+    pattern: "Non-recyclable Waste"
+    pattern_exact: true
+    icon: mdi:trash-can
+    color: grey
+    label: General waste
+  - type: organic
+    pattern: "Food and Garden"
+    pattern_exact: true
+    icon: mdi:leaf
+    color: brown
+    label: Food & garden
+  - type: paper
+    pattern: "Paper & Cardboard"
+    pattern_exact: true
+    icon: mdi:package-variant
+    color: green
+    label: Paper & card
+  - type: recycle
+    pattern: "Plastic, cans and cartons"
+    pattern_exact: true
+    icon: mdi:recycle-variant
+    color: blue
+    label: Cans & plastics
+  - type: custom
+    pattern: "Glass"
+    pattern_exact: true
+    icon: mdi:bottle-soda
+    color: purple
+    label: Glass```
