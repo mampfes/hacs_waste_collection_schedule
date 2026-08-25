@@ -20,6 +20,10 @@ SOURCE_CODEOWNERS = ["@fedfus"]
 # Central directory of every municipality on the platform.
 CLOUD_URL = "https://cloud.municipiumapp.it"
 
+# Network timeout (seconds) for every outbound request, so an unresponsive
+# endpoint cannot occupy a Home Assistant executor worker indefinitely.
+TIMEOUT = 30
+
 TEST_CASES = {
     "Serrastretta (CZ) - Zona 2 Migliuso": {
         "municipality": "Serrastretta",
@@ -35,17 +39,11 @@ TEST_CASES = {
 }
 
 # Municipalities on the platform that expose a waste calendar, as (name,
-# province). This is only used to advertise coverage in the docs; it does not
-# limit which comuni work. The full list must be produced with a throttled scan
-# of the /municipalities directory (the platform WAF rate-limits bulk requests),
-# via tools/municipium_scan.py before opening the PR. The few below are the ones
-# verified end-to-end during development.
+# province). This only advertises coverage in the docs; it does NOT limit which
+# comuni work, because the source resolves the comune against the platform
+# directory at runtime. More comuni can be added here as they are verified.
 COMUNI = [
     ("Serrastretta", "CZ"),
-    ("Acate", "RG"),
-    ("Affi", "VR"),
-    ("Acquanegra Cremonese", "CR"),
-    ("Adrara San Rocco", "BG"),
 ]
 
 
@@ -79,10 +77,10 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "(area), the error message will list the available zone names; pass the one "
     "that matches your address as 'area'. A partial name (e.g. 'Zona 2') is "
     "enough, or you can pass the numeric calendar id.",
-    "it": "Inserisci il nome del tuo comune cosi come appare nell'app Municipium. "
-    "Se il comune ha piu di una zona di raccolta (area), il messaggio di errore "
-    "elenchera i nomi delle zone disponibili; indica come 'area' quella che "
-    "corrisponde al tuo indirizzo. E sufficiente un nome parziale (es. 'Zona 2'), "
+    "it": "Inserisci il nome del tuo comune così come appare nell'app Municipium. "
+    "Se il comune ha più di una zona di raccolta (area), il messaggio di errore "
+    "elencherà i nomi delle zone disponibili; indica come 'area' quella che "
+    "corrisponde al tuo indirizzo. È sufficiente un nome parziale (es. 'Zona 2'), "
     "oppure puoi passare l'id numerico del calendario.",
 }
 
@@ -95,7 +93,7 @@ PARAM_DESCRIPTIONS = {
     "it": {
         "municipality": "Il comune, ad esempio 'Serrastretta'.",
         "area": "Il nome della zona di raccolta (o una parte), oppure l'id "
-        "numerico del calendario. Serve solo se il comune ha piu di una zona.",
+        "numerico del calendario. Serve solo se il comune ha più di una zona.",
     },
 }
 
@@ -119,7 +117,7 @@ class Source:
         self._area = area
 
     def _find_municipality(self, session: requests.Session) -> dict:
-        r = session.get(f"{CLOUD_URL}/api/v2/municipalities")
+        r = session.get(f"{CLOUD_URL}/api/v2/municipalities", timeout=TIMEOUT)
         r.raise_for_status()
         comuni = r.json()
 
@@ -144,13 +142,18 @@ class Source:
             )
 
         muni_id = matches[0]["id"]
-        r = session.get(f"{CLOUD_URL}/api/v2/municipalities/show_mobile/{muni_id}")
+        r = session.get(
+            f"{CLOUD_URL}/api/v2/municipalities/show_mobile/{muni_id}",
+            timeout=TIMEOUT,
+        )
         r.raise_for_status()
         return r.json()
 
     def _pick_calendar(self, calendars: "list[dict]") -> dict:
         if not calendars:
             raise SourceArgumentNotFoundWithSuggestions("area", self._area, [])
+
+        names = [c["name"] for c in calendars]
 
         # Explicit calendar id.
         if isinstance(self._area, int) or (
@@ -159,14 +162,10 @@ class Source:
             wanted_id = int(self._area)
             found = next((c for c in calendars if c["id"] == wanted_id), None)
             if found is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "area",
-                    self._area,
-                    [f"{c['name']} (id {c['id']})" for c in calendars],
-                )
+                # Suggest the zone names: they are valid `area` inputs (an
+                # id label like "Name (id 123)" would be rejected on re-entry).
+                raise SourceArgumentNotFoundWithSuggestions("area", self._area, names)
             return found
-
-        names = [c["name"] for c in calendars]
 
         if self._area is None:
             if len(calendars) == 1:
@@ -203,7 +202,7 @@ class Source:
             )
         api = f"https://{subdomain}/api/v2"
 
-        r = session.get(f"{api}/calendars")
+        r = session.get(f"{api}/calendars", timeout=TIMEOUT)
         r.raise_for_status()
         calendar = self._pick_calendar(r.json())
 
@@ -223,6 +222,7 @@ class Source:
         r = session.get(
             f"{api}/calendars/{calendar['id']}",
             params={"start": start, "end": end},
+            timeout=TIMEOUT,
         )
         r.raise_for_status()
 

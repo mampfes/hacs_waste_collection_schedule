@@ -39,9 +39,7 @@ If the municipality has several zones and `area` is omitted (or doesn't match), 
 
 ## Supported municipalities
 
-Any Italian municipality on the Municipium platform that has published a waste calendar is supported — the source resolves the comune against the platform's own directory at runtime, so it is not limited to a fixed list. Examples verified during development: Serrastretta (CZ), Acate (RG), Affi (VR), Acquanegra Cremonese (CR), Adrara San Rocco (BG).
-
-The `EXTRA_INFO` coverage list in the source can be regenerated with `tools/municipium_scan.py` (it runs slowly because the platform rate-limits bulk requests).
+Any Italian municipality on the Municipium platform that has published a waste calendar is supported — the source resolves the comune against the platform's own directory at runtime, so it is not limited to a fixed list. The `EXTRA_INFO` list in the source (currently Serrastretta, CZ) only advertises verified coverage in the README and can be extended as more comuni are confirmed.
 
 ## Bin types returned
 
