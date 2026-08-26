@@ -22,7 +22,7 @@ from collections import Counter
 from PIL import Image, ImageChops
 
 # ------------------------------ const.py
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 # exact RGB values read off the calendar's own legend
 PALETTE = {
@@ -368,7 +368,12 @@ def imagens_do_pdf(pdf_bytes):
         else:
             raw = pdf_bytes[m.end() : pdf_bytes.find(b"endstream", m.end())]
         try:
-            yield Image.open(io.BytesIO(_wrap_png(raw, w, h))).convert("RGB")
+            img = Image.open(io.BytesIO(_wrap_png(raw, w, h)))
+            # the PNG we just built is colour type 2, so it decodes straight to
+            # RGB. Calling convert("RGB") anyway would hand back a full copy of
+            # a 25 megapixel image, which on a 2 GB Home Assistant box is the
+            # difference between working and being OOM-killed.
+            yield img if img.mode == "RGB" else img.convert("RGB")
         except Exception:
             continue
 
@@ -563,10 +568,19 @@ def ler_calendario(pdf_bytes, year):
     """
     im, melhor = None, -1
     for cand in imagens_do_pdf(pdf_bytes):
-        cores = cand.getcolors(1 << 20) or []
+        # score on a subsample: the fill colours are flat, so nearest-neighbour
+        # keeps them exact, and this avoids walking 25 million pixels per
+        # candidate just to decide which image is the calendar
+        amostra_im = cand.resize(
+            (cand.width // 8 or 1, cand.height // 8 or 1), Image.NEAREST
+        )
+        cores = amostra_im.getcolors(1 << 16) or []
         score = sum(n for n, c in cores if classificar(c))
+        del amostra_im, cores
         if score > melhor:
             im, melhor = cand, score
+        else:
+            del cand
     if im is None:
         raise CalendarioError("could not find the calendar image in the PDF")
 
