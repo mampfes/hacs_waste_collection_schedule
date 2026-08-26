@@ -98,6 +98,10 @@ class Source:
         for event in events:
             collection_date = date.fromisoformat(event["day"])
             for flag in event.get("flags", []):
+                # Skip non-pickup flags (e.g. holiday notices) so they don't
+                # surface as bogus collection types.
+                if flag.get("event_type") != "pickup":
+                    continue
                 waste_type = flag.get("subject") or flag.get("name")
                 if not waste_type:
                     continue

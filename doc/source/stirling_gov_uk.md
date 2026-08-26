@@ -80,4 +80,5 @@ pattern:
     pattern_exact: true
     icon: mdi:bottle-soda
     color: purple
-    label: Glass```
+    label: Glass
+```
