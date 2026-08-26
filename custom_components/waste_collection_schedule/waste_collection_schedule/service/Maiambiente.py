@@ -22,7 +22,7 @@ from collections import Counter
 from PIL import Image, ImageChops
 
 # ------------------------------ const.py
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
 # exact RGB values read off the calendar's own legend
 PALETTE = {
@@ -375,13 +375,25 @@ def imagens_do_pdf(pdf_bytes):
             continue
 
 
+# A content stream in these calendars is a few kilobytes. Anything bigger is an
+# embedded bitmap, and decompressing one here used to be catastrophic: the
+# 6000x4161 image inflates to about 75 MB, the "text in parentheses" regex then
+# matches millions of times inside that binary noise, and each match becomes a
+# Python object. On a 960 KB PDF this function peaked at 1.2 GB and took 20
+# seconds, which is what was getting Home Assistant killed by the OOM killer.
+LIMITE_STREAM = 2 << 20  # 2 MiB
+
+
 def texto_do_pdf(pdf_bytes):
     """Text of the content streams - enough for the PNG name and the circuits."""
     out = []
     for m in re.finditer(rb"stream\r?\n", pdf_bytes):
         fim = pdf_bytes.find(b"endstream", m.end())
         try:
-            data = zlib.decompress(pdf_bytes[m.end() : fim])
+            descompressor = zlib.decompressobj()
+            data = descompressor.decompress(pdf_bytes[m.end() : fim], LIMITE_STREAM)
+            if descompressor.unconsumed_tail:
+                continue  # too big to be a content stream: this is an image
         except Exception:
             continue
         if b"Tj" not in data and b"TJ" not in data:
