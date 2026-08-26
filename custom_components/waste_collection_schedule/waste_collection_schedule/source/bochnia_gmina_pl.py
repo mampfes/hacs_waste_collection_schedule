@@ -98,7 +98,9 @@ class Source:
             pdf_bytes = resp.read()
 
         reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
-        text = reader.pages[0].extract_text()
+        text = reader.pages[0].extract_text() or ""
+         if not text:
+             raise ValueError("No text could be extracted from the PDF.")
 
         # 1. Year
         year_match = re.search(r"\b(202\d)\b", text)
