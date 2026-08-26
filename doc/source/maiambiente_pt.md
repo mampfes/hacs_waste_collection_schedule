@@ -29,22 +29,22 @@ waste_collection_schedule:
   sources:
     - name: maiambiente_pt
       args:
-        rua: "Rua Sol (Milheirós)"
-        numero: "20"
+        rua: "Rua Engenheiro Duarte Pacheco (Cidade Da Maia (Maia))"
+        numero: "Biblioteca da Maia"
 ```
 
 ## How to get the source arguments
 
 Search for your street at <https://servicos.maiambiente.pt/cal2026/> and use the
-exact street name shown in the suggestion list — it includes the parish in
-brackets, e.g. `Rua Sol (Milheirós)`. Then pick your house number and use it
-exactly as listed.
+exact street name shown in the suggestion list. It includes the parish in
+brackets, for example `Rua Engenheiro Duarte Pacheco (Cidade Da Maia (Maia))`.
+Then pick your house number and use it exactly as listed.
 
 Two things catch people out:
 
 - The street search ignores Portuguese prepositions. Searching for
-  `Monte das Cruzes` returns nothing; `Monte Cruzes` returns
-  `Rua Monte Cruzes (Milheirós)`.
+  `Vieira de Carvalho` returns nothing; `Vieira Carvalho` returns
+  `Praca Doutor Jose Vieira Carvalho (Cidade Da Maia (Maia))`.
 - House numbers are not always plain numbers. Some are compound (`76, 1`,
   `118, Rc`) and some are building names (`Biblioteca da Maia`). Use whatever
   the list shows, verbatim.
@@ -68,8 +68,8 @@ have no food or garden waste collection at all.
 
 - No login is required.
 - Maiambiente publishes the calendar as a PDF whose body is a bitmap. The
-  source reads it *geometrically* — the month block, weekday row and week
-  column give the date, the fill colour gives the waste stream — so no OCR is
+  source reads it *geometrically*: the month block, weekday row and week
+  column give the date, the fill colour gives the waste stream, so no OCR is
   involved and no OCR dependency is added. The decoding needs `Pillow`, which
   Home Assistant Core already ships as a base requirement.
 - The calendar belongs to the collection *circuit*, not to the address, and it
@@ -79,7 +79,7 @@ have no food or garden waste collection at all.
   year's internal id is not necessarily valid in the next. Once the current
   calendar nears its end, the next year's is picked up automatically, which
   covers the December-to-January transition.
-- A single day can carry two streams (holiday compensation) — both are
+- A single day can carry two streams (holiday compensation), and both are
   returned.
 - The server rejects bursts of requests with HTTP 403, so requests are spaced
   out by 1.5 s.

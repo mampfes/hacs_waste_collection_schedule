@@ -22,7 +22,7 @@ from collections import Counter
 from PIL import Image, ImageChops
 
 # ------------------------------ const.py
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 # exact RGB values read off the calendar's own legend
 PALETTE = {
@@ -313,9 +313,6 @@ MONTH_GRID = [[10, 7, 4, 1], [11, 8, 5, 2], [12, 9, 6, 3]]
 
 _IMG_RE = re.compile(rb"/Subtype\s*/Image(?:.{0,600}?)>>\s*stream\r?\n", re.S)
 
-# colour -> stream memo, filled on demand by classificar()
-_COLOUR_CACHE: dict = {}
-
 
 class CalendarioError(Exception):
     """The PDF is not in the expected shape."""
@@ -414,28 +411,46 @@ def assinatura(pdf_bytes):
 
 
 # ------------------------------------------------------------ reading the grid
-def classificar(cor):
-    """Name of the stream whose colour is within TOL (L1 distance), or None."""
-    v = _COLOUR_CACHE.get(cor)
-    if v is None:
-        melhor, d = None, TOL
-        for nome, c in PALETTE.items():
-            dd = abs(cor[0] - c[0]) + abs(cor[1] - c[1]) + abs(cor[2] - c[2])
-            if dd < d:
-                melhor, d = nome, dd
-        v = _COLOUR_CACHE[cor] = melhor
-    return v
+def _bandas(im):
+    """Split into R, G and B once, so colour tests can reuse the bands.
+
+    Everything here is a distance test against a handful of flat colours. Doing
+    it as ImageChops.difference(im, Image.new("RGB", size, colour)) allocates
+    two more full RGB images per colour, which for seven palette entries is
+    where this parser used to spend most of its memory.
+    """
+    return im.split()
 
 
-def _mascara(im):
-    """An 'L' image at 255 wherever the pixel is a palette colour."""
-    w, h = im.size
-    acc = Image.new("L", (w, h), 0)
-    for c in PALETTE.values():
-        r, g, b = ImageChops.difference(im, Image.new("RGB", (w, h), c)).split()
-        s = ImageChops.add(ImageChops.add(r, g), b)  # L1, saturates at 255
-        acc = ImageChops.lighter(acc, s.point(lambda v: 255 if v < TOL else 0))
-    return acc
+def _proximo_de(bandas, cor, tol):
+    """'L' image at 255 where the pixel is within `tol` (L1) of `cor`."""
+    dist = None
+    for banda, alvo in zip(bandas, cor, strict=True):
+        # a 256-entry lookup table costs nothing and keeps the work in C
+        d = banda.point([abs(v - alvo) for v in range(256)])
+        dist = d if dist is None else ImageChops.add(dist, d)  # saturates at 255
+    return dist.point([255 if v < tol else 0 for v in range(256)])
+
+
+# stream name for each label value; index 0 means "no stream here"
+FLUXO_POR_ROTULO = [None, *PALETTE]
+
+
+def _rotulos(im, bandas=None):
+    """Label every pixel with its stream index, 0 where there is none.
+
+    The whole classification happens once, one colour at a time, into a single
+    byte per pixel. That matters twice over: the RGB image and its bands can be
+    dropped immediately afterwards, and every later step reads a map a third of
+    the size instead of re-deriving colours pixel by pixel.
+    """
+    bandas = bandas or _bandas(im)
+    rot = Image.new("L", im.size, 0)
+    for i, cor in enumerate(PALETTE.values(), start=1):
+        m = _proximo_de(bandas, cor, TOL)
+        rot.paste(i, mask=m)
+        del m  # let each colour's mask go before building the next one
+    return rot
 
 
 def _componentes(mask, margem_esq):
@@ -515,7 +530,7 @@ def _mediana(v):
     return v[len(v) // 2]
 
 
-def _barras_dos_meses(im):
+def _barras_dos_meses(im, bandas=None):
     """Bounding boxes of the 12 dark-green bars carrying the month names.
 
     They anchor the grid: they say which band (block row) and which group
@@ -523,9 +538,8 @@ def _barras_dos_meses(im):
     present. That keeps the alignment intact for circuits that do not collect
     on some weekday.
     """
-    w, h = im.size
-    r, g, b = ImageChops.difference(im, Image.new("RGB", (w, h), TEAL)).split()
-    mask = ImageChops.add(ImageChops.add(r, g), b).point(lambda v: 255 if v < 40 else 0)
+    h = im.size[1]
+    mask = _proximo_de(bandas or _bandas(im), TEAL, 40)
     barras = []
     for x0, y0, x1, y1 in _componentes(mask, 0):
         bw, bh = x1 - x0 + 1, y1 - y0 + 1
@@ -566,38 +580,54 @@ def ler_calendario(pdf_bytes, year):
     Raises CalendarioError when the grid stops being recognisable - the signal
     that Maiambiente has changed the calendar's design.
     """
-    im, melhor = None, -1
-    for cand in imagens_do_pdf(pdf_bytes):
-        # score on a subsample: the fill colours are flat, so nearest-neighbour
-        # keeps them exact, and this avoids walking 25 million pixels per
-        # candidate just to decide which image is the calendar
-        amostra_im = cand.resize(
-            (cand.width // 8 or 1, cand.height // 8 or 1), Image.NEAREST
-        )
-        cores = amostra_im.getcolors(1 << 16) or []
-        score = sum(n for n, c in cores if classificar(c))
-        del amostra_im, cores
-        if score > melhor:
-            im, melhor = cand, score
-        else:
-            del cand
+    # Pick the calendar by STRUCTURE, smallest image first.
+    #
+    # A Maiambiente PDF carries more than one bitmap, and the biggest is not the
+    # calendar: the ones seen so far pair a 6000x4161 decorative image with the
+    # 2303x1547 calendar. Choosing by "most palette-coloured pixels" meant
+    # decompressing 25 megapixels (71 MB of RGB) only to throw it away, which on
+    # a 2 GB Home Assistant box is enough to get the whole process OOM-killed.
+    #
+    # Image.open is lazy, so listing candidates costs only their headers. Trying
+    # them in ascending pixel order means the calendar is normally decoded first
+    # and the large image never is. Finding the 12 month bars is the test: it is
+    # what the rest of the parsing is anchored on, so an image that passes it is
+    # by definition the calendar.
+    candidatas = sorted(imagens_do_pdf(pdf_bytes), key=lambda c: c.size[0] * c.size[1])
+    im = barras = bandas = None
+    for cand in candidatas:
+        b = _bandas(cand)
+        try:
+            barras = _barras_dos_meses(cand, b)
+        except (CalendarioError, OSError):
+            del b
+            continue
+        im, bandas = cand, b
+        break
+    del candidatas
     if im is None:
         raise CalendarioError("could not find the calendar image in the PDF")
 
     w, h = im.size
+    # Classify once, then let the RGB image and its bands go. From here on the
+    # only picture data alive is one byte per pixel instead of four images.
+    rot = _rotulos(im, bandas)
+    del bandas, im
+
     margem = int(w * 0.05)  # the legend column, on the left
+    mascara = rot.point([0] + [255] * 255)
     circulos = []
-    for x0, y0, x1, y1 in _componentes(_mascara(im), margem):
+    for x0, y0, x1, y1 in _componentes(mascara, margem):
         ww, hh = x1 - x0 + 1, y1 - y0 + 1
         if ww < 25 or hh < 25 or abs(ww - hh) > 10:
             continue
         circulos.append(((x0 + x1) / 2.0, (y0 + y1) / 2.0))
+    del mascara
     if len(circulos) < 100:
         raise CalendarioError(
             f"only detected {len(circulos)} circles - has the format changed?"
         )
 
-    barras = _barras_dos_meses(im)
     altura_barra = _mediana([b[3] - b[1] + 1 for b in barras.values()])
     # the bar spans 7 day rows with an equal margin above and below
     passo_barra = altura_barra * 0.1435
@@ -624,13 +654,10 @@ def ler_calendario(pdf_bytes, year):
         if not (rad <= cx < w - rad and rad <= cy < h - rad):
             return []
         cnt = Counter()
-        for n, cor in (
-            im.crop((cx - rad, cy - rad, cx + rad + 1, cy + rad + 1)).getcolors(1 << 16)
-            or []
-        ):
-            f = classificar(cor)
-            if f:
-                cnt[f] += n
+        janela = rot.crop((cx - rad, cy - rad, cx + rad + 1, cy + rad + 1))
+        for n, valor in janela.getcolors() or []:
+            if valor:
+                cnt[FLUXO_POR_ROTULO[valor]] += n
         tot = sum(cnt.values())
         if tot < area * 0.25:  # blank cell: no collection
             return []

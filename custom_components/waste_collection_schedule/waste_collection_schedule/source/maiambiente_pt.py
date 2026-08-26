@@ -41,11 +41,12 @@ ICON_MAP = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Search for your street at https://servicos.maiambiente.pt/cal2026/ and "
-        "use the exact street name from the suggestion list - it includes the "
-        "parish in brackets, e.g. `Rua Sol (Milheirós)`. Then use your house "
-        "number exactly as listed; some are compound (`76, 1`, `118, Rc`) and "
+        "use the exact street name from the suggestion list; it includes the "
+        "parish in brackets, for example `Rua Engenheiro Duarte Pacheco "
+        "(Cidade Da Maia (Maia))`. Then use your house number exactly as "
+        "listed; some are compound (`76, 1`, `118, Rc`) and "
         "some are building names. Note the site's search ignores Portuguese "
-        "prepositions: search for `Monte Cruzes`, not `Monte das Cruzes`."
+        "prepositions: search for `Vieira Carvalho`, not `Vieira de Carvalho`."
     ),
 }
 
