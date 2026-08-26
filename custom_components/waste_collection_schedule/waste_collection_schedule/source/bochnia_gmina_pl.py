@@ -86,11 +86,12 @@ class Source:
         self._town = town
 
     def fetch(self) -> list[Collection]:
+        from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+
         norm_town = normalize(self._town)
         pdf_file = TOWNS_PDF_MAP.get(norm_town)
         if not pdf_file:
-            pdf_file = f"{norm_town.capitalize()}.pdf"
-
+            raise SourceArgumentNotFoundWithSuggestions("town", self._town, sorted(TOWNS_PDF_MAP))
         url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=15) as resp:
