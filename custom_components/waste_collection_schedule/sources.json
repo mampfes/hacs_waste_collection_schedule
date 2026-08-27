@@ -21079,6 +21079,12 @@
       "id": "kositeast_sk"
     },
     {
+      "title": "KOSIT WEST",
+      "module": "kositwest_sk",
+      "default_params": {},
+      "id": "kositwest_sk"
+    },
+    {
       "title": "Odvoz Odpadu",
       "module": "ics",
       "default_params": {},

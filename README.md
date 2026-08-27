@@ -3194,6 +3194,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
 - [KOSIT EAST](/doc/source/kositeast_sk.md) / kositeast.sk
+- [KOSIT WEST](/doc/source/kositwest_sk.md) / kositwest.sk/sluzby/zber-komunalneho-odpadu-a-triedenych-zloziek-z-obci-a-samosprav/harmonogramy-zberu-odpadu-v-obciach
 - [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
 - [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
