@@ -2,6 +2,7 @@ import io
 import logging
 import re
 from datetime import date
+from typing import ClassVar
 
 import requests
 from bs4 import BeautifulSoup
@@ -76,15 +77,19 @@ _N_MONTH_COLS = 6
 # ---------------------------------------------------------------------------
 
 
-def _nearest_color(color: tuple) -> str | None:
+def _nearest_color(
+    color: tuple,
+    color_map: dict[tuple, str] = COLOR_MAP,
+    tolerance: float = _COLOR_TOLERANCE,
+) -> str | None:
     """Return the nearest waste-type name for *color*, or None if too far away."""
     best_name, best_dist = None, float("inf")
-    for known, name in COLOR_MAP.items():
+    for known, name in color_map.items():
         dist = sum((a - b) ** 2 for a, b in zip(color, known, strict=False)) ** 0.5
         if dist < best_dist:
             best_dist = dist
             best_name = name
-    return best_name if best_dist <= _COLOR_TOLERANCE else None
+    return best_name if best_dist <= tolerance else None
 
 
 def _cluster_values(values: list[float], n: int) -> list[float]:
@@ -121,7 +126,7 @@ def _nearest_cluster_idx(value: float, centres: list[float]) -> int:
 
 
 def _extract_year(page: LTPage) -> int | None:
-    """Scan *page* for a 'ROK YYYY' header and return the year, or None."""
+    """Scan *page* for a four-digit schedule year and return it, or None."""
     for element in page:
         if isinstance(element, LTTextContainer):
             for text_line in element:
@@ -138,6 +143,14 @@ def _extract_year(page: LTPage) -> int | None:
 
 
 class Source:
+    _MAX_RECT_WIDTH = 0.026
+    _N_MONTH_COLS = 6
+    _N_MONTH_ROWS = 2
+    _MATCH_HORIZONTAL_OVERLAP = False
+    _COLOR_MAP: ClassVar[dict[tuple, str]] = COLOR_MAP
+    _COLOR_TOLERANCE = _COLOR_TOLERANCE
+    _IGNORED_COLORS: ClassVar[set[tuple]] = set()
+
     def __init__(self, town: str):
         self._town = town
 
@@ -165,7 +178,7 @@ class Source:
         # is published for a new year, so we raise instead.
         year: int | None = None
         for page in pages:
-            year = _extract_year(page)
+            year = self._extract_year(page)
             if year is not None:
                 break
 
@@ -185,6 +198,10 @@ class Source:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _extract_year(page: LTPage) -> int | None:
+        return _extract_year(page)
 
     def _download_pdf(self) -> io.BytesIO:
         schedule_url = (
@@ -226,7 +243,7 @@ class Source:
         # Equivalent to roughly 8-19 pt wide and 4-13 pt tall on a standard
         # A4 PDF, but will scale correctly with any page size.
         min_w = page_w * 0.011
-        max_w = page_w * 0.026
+        max_w = page_w * self._MAX_RECT_WIDTH
         min_h = page_h * 0.005
         max_h = page_h * 0.016
 
@@ -250,7 +267,8 @@ class Source:
                         color = tuple(round(c, 3) for c in color)
                     else:
                         color = (0.0, 0.0, 0.0)
-                    rects.append({"bbox": element.bbox, "color": color})
+                    if color not in self._IGNORED_COLORS:
+                        rects.append({"bbox": element.bbox, "color": color})
 
         if not rects:
             _LOGGER.warning(
@@ -265,16 +283,14 @@ class Source:
         x_ctrs = [(r["bbox"][0] + r["bbox"][2]) / 2 for r in rects]
         y_ctrs = [(r["bbox"][1] + r["bbox"][3]) / 2 for r in rects]
 
-        x_clusters = _cluster_values(x_ctrs, n=_N_MONTH_COLS)
-        y_clusters = _cluster_values(
-            y_ctrs, n=2
-        )  # top-half cluster / bottom-half cluster
+        x_clusters = _cluster_values(x_ctrs, n=self._N_MONTH_COLS)
+        y_clusters = _cluster_values(y_ctrs, n=self._N_MONTH_ROWS)
 
-        if len(x_clusters) != _N_MONTH_COLS:
+        if len(x_clusters) != self._N_MONTH_COLS:
             _LOGGER.warning(
                 "Expected %d x-clusters (month columns) for '%s', found %d. "
                 "Month assignments may be incorrect.",
-                _N_MONTH_COLS,
+                self._N_MONTH_COLS,
                 self._town,
                 len(x_clusters),
             )
@@ -282,10 +298,6 @@ class Source:
         # y_clusters is sorted ascending (pdfminer: y=0 at bottom of page).
         #   y_clusters[0] ~= centre of bottom-half rects (Jul-Dec)
         #   y_clusters[1] ~= centre of top-half rects    (Jan-Jun)
-        y_split = (
-            (y_clusters[0] + y_clusters[1]) / 2 if len(y_clusters) >= 2 else page_h / 2
-        )
-
         # --- Map each rect to a date + waste type ---
 
         collections: list[Collection] = []
@@ -296,8 +308,8 @@ class Source:
             rcy = (ry0 + ry1) / 2
 
             col = _nearest_cluster_idx(rcx, x_clusters)
-            is_top_half = rcy > y_split
-            month = col + 1 + (0 if is_top_half else _N_MONTH_COLS)
+            row = _nearest_cluster_idx(rcy, y_clusters)
+            month = (self._N_MONTH_ROWS - 1 - row) * self._N_MONTH_COLS + col + 1
 
             if not 1 <= month <= 12:
                 continue
@@ -309,9 +321,12 @@ class Source:
                 lx0, ly0, lx1, ly1 = line["bbox"]
                 if max(ry0, ly0) >= min(ry1, ly1):  # no vertical overlap
                     continue
-                lcx = (lx0 + lx1) / 2
-                if _nearest_cluster_idx(lcx, x_clusters) != col:  # wrong column
+                if self._MATCH_HORIZONTAL_OVERLAP and max(rx0, lx0) >= min(rx1, lx1):
                     continue
+                if not self._MATCH_HORIZONTAL_OVERLAP:
+                    lcx = (lx0 + lx1) / 2
+                    if _nearest_cluster_idx(lcx, x_clusters) != col:
+                        continue
 
                 # UPDATED REGEX: Added uppercase slovak characters and general uppercase support
                 m = re.search(
@@ -325,7 +340,9 @@ class Source:
             if day is None:
                 continue
 
-            waste_type = _nearest_color(r_item["color"])
+            waste_type = _nearest_color(
+                r_item["color"], self._COLOR_MAP, self._COLOR_TOLERANCE
+            )
             if waste_type is None:
                 _LOGGER.warning(
                     "Unrecognised colour %s for '%s'; skipping entry.",
