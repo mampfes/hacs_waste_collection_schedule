@@ -52,7 +52,7 @@ class Source:
 
                 try:
                     # Mon, 29 Apr 2024
-                    date = datetime.strptime(dd.text, "%a, %d %b %Y").date()
+                    date = datetime.strptime(dd.text.strip(), "%a, %d %b %Y").date()
                 except ValueError:
                     continue
 
