@@ -4,6 +4,7 @@ from difflib import get_close_matches
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -137,7 +138,7 @@ class Source:
         if len(matches) > 1:
             # Same comune name in several provinces: disambiguate by province.
             labels = [f"{c['name']} ({c.get('province_initials')})" for c in matches]
-            raise SourceArgumentNotFoundWithSuggestions(
+            raise SourceArgAmbiguousWithSuggestions(
                 "municipality", self._municipality, labels
             )
 
@@ -181,6 +182,10 @@ class Source:
             subs = [c for c in calendars if wanted in c["name"].casefold()]
             if len(subs) == 1:
                 found = subs[0]
+            elif len(subs) > 1:
+                raise SourceArgAmbiguousWithSuggestions(
+                    "area", self._area, [c["name"] for c in subs]
+                )
         if found is None:
             suggestions = get_close_matches(str(self._area), names, n=5, cutoff=0.3)
             raise SourceArgumentNotFoundWithSuggestions(
