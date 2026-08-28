@@ -1,32 +1,41 @@
-# SkyCMS (PL)
+# Gmina Trzebnica
 
-Support for waste collection schedules provided by SkyCMS-powered municipal apps in Poland.
+Support for schedules provided by [Gmina Trzebnica](https://trzebnica.pl), Poland.
 
-This source uses the SkyCMS API (same as the "Gmina Trzebnica" and other municipal waste apps). You need to find your region ID from the API.
+The data is taken from the API of the "Gmina Trzebnica" municipal app (SkyCMS). You need the region ID of your street or village.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: skycms_pl
+    - name: gmina_trzebnica_pl
       args:
         region_id: REGION_ID
 ```
+
+### Configuration Variables
+
+**region_id**
+*(integer) (required)*
+
+The ID of your waste collection region, see the tables below.
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: skycms_pl
+    - name: gmina_trzebnica_pl
       args:
         region_id: 8
 ```
 
-## How to get your region ID
+## How to get the source argument
 
-Install the municipal waste collection app for your area (e.g., "Gmina Trzebnica" from Google Play) and look up the region ID in the app's waste calendar section. Alternatively, you can query the API directly:
+Look up your street or village in the tables below and use the matching region ID.
+
+Alternatively, install the "Gmina Trzebnica" app (Google Play / App Store) and look up the region in the app's waste calendar section, or query the region list of the API directly:
 
 ```bash
 curl -H "x-skycms-key: a90a376c6b19307acf1334b1a3937235" \
@@ -39,7 +48,9 @@ curl -H "x-skycms-key: a90a376c6b19307acf1334b1a3937235" \
      "https://api.skycms.com.pl/api/v1/rest/garbage/regions"
 ```
 
-## Supported municipalities
+If you configure an unknown region ID, the integration lists all valid IDs in the error message.
+
+## Supported regions
 
 ### Trzebnica city zones
 
@@ -84,3 +95,7 @@ curl -H "x-skycms-key: a90a376c6b19307acf1334b1a3937235" \
 | 99 | Wielkogabarytowe: Koniowo, Ujeździec Mały, Ujeździec Wielki |
 
 Additional regions may be added to the API in the future.
+
+## Note
+
+Other Polish municipalities that use the SkyCMS platform have their own API key and their own region IDs, so they are not covered by this source. Gmina Miękinia is available as a separate source (`gmina_miekinia_pl`).
