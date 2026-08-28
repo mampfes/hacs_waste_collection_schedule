@@ -44,6 +44,7 @@ TEST_CASES = {
 # comuni work, because the source resolves the comune against the platform
 # directory at runtime. More comuni can be added here as they are verified.
 COMUNI = [
+    ("Acate", "RG"),
     ("Serrastretta", "CZ"),
 ]
 
