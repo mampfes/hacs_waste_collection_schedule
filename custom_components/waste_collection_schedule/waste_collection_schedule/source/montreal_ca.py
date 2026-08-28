@@ -101,6 +101,11 @@ FOOD_INCLUDED_IN_GREEN_PATTERN = re.compile(
     r"included in the collection of organic waste", re.IGNORECASE
 )
 
+# Biweekly seasons are written as "every two weeks", "every second week" or
+# "once every two weeks". The substring "week" also matches the weekly branch
+# below, so these lines have to be recognised and excluded from it explicitly.
+BIWEEKLY_PATTERN = re.compile(r"every\s+(?:two|second|other|2)\s+weeks?", re.IGNORECASE)
+
 LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Download on your computer a &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.',
@@ -240,6 +245,7 @@ class Source:
             month_stop = 12
             day_start = 1
             day_stop = 31
+            within_dates = False
             # There could be seasonal schedules, every week, every other week or specific dates
             if re.match(r".*[fF]rom (.*) to (.*)", line):
                 date_range = re.match(r".*[fF]rom (.*) to (.*)", line)
@@ -251,10 +257,9 @@ class Source:
                     if re.search(rf"{month}", date_range_stop, re.IGNORECASE):
                         month_stop = month_id
                 if re.search(r"\d+", date_range_start):
-                    day_start = int(re.match(r".*(\d+).*", date_range_start).group(1))
+                    day_start = int(re.search(r"(\d+)", date_range_start).group(1))
                 if re.search(r"\d+", date_range_stop):
                     day_stop = int(re.search(r"\d+(?!.*\d+)", date_range_stop).group(0))
-                within_dates = False
             elif re.match(r"(.*\d+.*){1,}", line):
                 # Multiple dates ?
                 dates_defined = True
@@ -267,7 +272,9 @@ class Source:
                     continue
                 if dates_defined and month not in months_found:
                     continue
-                if re.search("(every )?week(ly)?", line):
+                if re.search(
+                    "(every )?week(ly)?", line
+                ) and not BIWEEKLY_PATTERN.search(line):
                     for day in range(1, 32):
                         try:
                             if (
@@ -278,7 +285,7 @@ class Source:
                                 within_dates = True
                             if (
                                 within_dates
-                                and day_stop >= day
+                                and day > day_stop
                                 and month_stop == month_id
                             ):
                                 within_dates = False
@@ -299,15 +306,14 @@ class Source:
                 line = line.replace("*", "")
 
                 try:
-                    days_in_month = re.search(
-                        rf"\b{month}(.*){MONTH_PATTERN}", line, re.IGNORECASE
+                    days_in_month_match = re.search(
+                        rf"\b{month}\b(.*?)(?={MONTH_PATTERN}|$)",
+                        line,
+                        re.IGNORECASE | re.MULTILINE,
                     )
-                    if not days_in_month:
-                        days_in_month = re.search(
-                            rf"(?:\s*{month} {year})(.*)", line, re.IGNORECASE
-                        ).group(1)
-                    else:
-                        days_in_month = days_in_month.group(1)
+                    if not days_in_month_match:
+                        continue
+                    days_in_month = days_in_month_match.group(1)
 
                     days_in_month = re.split(r", | and ", days_in_month)
                     days_in_month = [
