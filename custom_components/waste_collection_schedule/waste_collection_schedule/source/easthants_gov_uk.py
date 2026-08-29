@@ -94,6 +94,13 @@ TEST_CASES = {
         "calendar_number": 16,
         "garden_calendar_number": 1,
     },
+    "Calendar 1 without garden waste": {
+        "calendar_number": 1,
+    },
+    "Calendar 20 with garden waste G10": {
+        "calendar_number": 20,
+        "garden_calendar_number": 10,
+    },
 }
 
 
