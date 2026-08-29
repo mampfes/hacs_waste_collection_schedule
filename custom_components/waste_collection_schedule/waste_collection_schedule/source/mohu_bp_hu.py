@@ -48,6 +48,15 @@ ICON_MAP = {
 }
 
 
+def _get_partial_html(data: dict, *keys: str) -> str:
+    """Return the first matching OctoberCMS partial HTML payload."""
+    for key in keys:
+        value = data.get(key)
+        if value is not None:
+            return value
+    raise KeyError(keys[0])
+
+
 class Source:
     def __init__(self, district, street, house_number, verify=True):
         self._district = district
@@ -70,8 +79,10 @@ class Source:
             verify=self._verify,
         )
         r.raise_for_status()
+        data = json.loads(r.text)
         soup = BeautifulSoup(
-            json.loads(r.text)[".publicPlaces"], features="html.parser"
+            _get_partial_html(data, ".publicPlaces", "ajax/publicPlaces"),
+            features="html.parser",
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
@@ -98,8 +109,10 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street", self._street, available_streets
             ) from e
+        data = json.loads(r.text)
         soup = BeautifulSoup(
-            json.loads(r.text)[".houseNumbers"], features="html.parser"
+            _get_partial_html(data, ".houseNumbers", "ajax/houseNumbers"),
+            features="html.parser",
         )
 
         if (
@@ -127,7 +140,11 @@ class Source:
             verify=self._verify,
         )
         r.raise_for_status()
-        soup = BeautifulSoup(json.loads(r.text)[".results"], features="html.parser")
+        data = json.loads(r.text)
+        soup = BeautifulSoup(
+            _get_partial_html(data, ".results", "ajax/calSearchResults"),
+            features="html.parser",
+        )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
             raise SourceArgumentNotFoundWithSuggestions(
