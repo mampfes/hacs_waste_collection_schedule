@@ -1,9 +1,10 @@
 import datetime
-import urllib
+import json
 from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Ipswich City Council"
 DESCRIPTION = "Source for Ipswich City Council rubbish collection."
@@ -18,6 +19,7 @@ ICON_MAP = {
     "Waste Bin": Icons.GENERAL_WASTE,
     "Recycle Bin": Icons.RECYCLING,
     "FOGO Bin": Icons.BIO_KITCHEN,
+    "GO Bin": Icons.BIO_KITCHEN,
 }
 
 
@@ -81,10 +83,14 @@ class IpswichGovAuParser(HTMLParser):
         if self._load_date:
             self._load_date = False
 
-            items = data.strip().split("-")
-            self._loaded_date = datetime.date(
-                int(items[0]), int(items[1]), int(items[2])
-            )
+            value = data.strip()
+
+            try:
+                self._loaded_date = datetime.datetime.strptime(value, "%Y-%m-%d").date()
+            except ValueError:
+                self._loaded_date = datetime.datetime.strptime(
+                    value, "%A+%d+%b+%Y"
+                ).date()
 
         if self._load_bin:
             self._load_bin = False
@@ -100,17 +106,98 @@ class Source:
         self._suburb = suburb
 
     def fetch(self):
+        geocode_params = {
+            "SingleLine": f"{self._street}, {self._suburb}, QLD Australia",
+            "outSR": '{"wkid":4326}',
+            "maxLocations": 1,
+            "outFields": "*",
+            "f": "json",
+        }
 
-        address = urllib.parse.quote_plus(f"{self._street}, {self._suburb}")
+        geocode_response = requests.get(
+            "https://geocode.arcgis.com/arcgis/rest/services/"
+            "World/GeocodeServer/findAddressCandidates",
+            params=geocode_params,
+            timeout=20,
+        )
+        geocode_response.raise_for_status()
+
+        candidates = geocode_response.json().get("candidates", [])
+        if not candidates:
+            raise SourceArgumentNotFound(
+                "street",
+                f"{self._street}, {self._suburb}",
+                "please check the spelling of the street and suburb and try again.",
+            )
+
+        candidate = candidates[0]
+        attributes = candidate.get("attributes", {})
+        postcode = attributes.get("Postal")
+
+        if not postcode:
+            raise SourceArgumentNotFound(
+                "street",
+                f"{self._street}, {self._suburb}",
+                "the address could not be resolved to a postcode, "
+                "please check the spelling and try again.",
+            )
+
+        street_number, _, street_name = self._street.partition(" ")
+
+        route = (
+            " ".join(
+                part
+                for part in (
+                    attributes.get("StPreDir"),
+                    attributes.get("StPreType"),
+                    attributes.get("StName"),
+                    attributes.get("StType"),
+                    attributes.get("StDir"),
+                )
+                if part
+            )
+            or street_name
+        )
+
+        locality = attributes.get("Nbrhd") or self._suburb
+        state = attributes.get("Region") or "Queensland"
+
+        address_data = {
+            "address": {
+                "street_number": street_number,
+                "route": route,
+                "locality": locality,
+                "administrative_area_level_1": state,
+                "postal_code": postcode,
+                "part": "",
+                "subpremise": "",
+                "formatted_address": (
+                    f"{self._street}, {locality} {state} {postcode}, Australia"
+                ),
+            },
+            "geometry": {
+                "location": {
+                    "lat": candidate["location"]["y"],
+                    "lng": candidate["location"]["x"],
+                }
+            },
+        }
+
         params = {
             "apiKey": "b8dbca0c-ad9c-4f8a-8b9c-080fd435c5e7",
             "agendaResultLimit": "3",
             "dateFormat": "yyyy-MM-dd",
             "displayFormat": "agenda",
-            "address": f"{address}+QLD%2C+Australia",
+            "address": json.dumps(address_data, separators=(",", ":")),
         }
 
-        r = requests.get("https://console.whatbinday.com/api/search", params=params)
-        p = IpswichGovAuParser()
-        p.feed(r.text)
-        return p.entries
+        response = requests.post(
+            "https://console.whatbinday.com/api/search",
+            data=params,
+            timeout=20,
+        )
+        response.raise_for_status()
+
+        parser = IpswichGovAuParser()
+        parser.feed(response.text)
+        return parser.entries
