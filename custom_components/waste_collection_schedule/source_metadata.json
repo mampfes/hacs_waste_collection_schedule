@@ -200,6 +200,13 @@
     "howto": {},
     "urls": {}
   },
+  "greatershepparton_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greatershepparton_com_au.md",
+    "howto": {
+      "en": "Enter your full street address, e.g. '161 Welsford Street, Shepparton'. Use full street-type words (Street, Road, Square) rather than abbreviations (St, Rd, Sq) - the council's address lookup only matches on the full word."
+    },
+    "urls": {}
+  },
   "hobartcity_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobartcity_com_au.md",
     "howto": {},

@@ -341,6 +341,12 @@
       "id": "geelongaustralia_com_au"
     },
     {
+      "title": "City of Greater Shepparton",
+      "module": "greatershepparton_com_au",
+      "default_params": {},
+      "id": "greatershepparton_com_au"
+    },
+    {
       "title": "City of Hobart ",
       "module": "hobartcity_com_au",
       "default_params": {},
