@@ -306,8 +306,13 @@ class Source:
                 line = line.replace("*", "")
 
                 try:
+                    # Capture only up to the next month name (non-greedy),
+                    # otherwise a month inherits the day numbers of every
+                    # later month on the same line. An explicit year right
+                    # after the month name is skipped so it is not mistaken
+                    # for a day number.
                     days_in_month_match = re.search(
-                        rf"\b{month}\b(.*?)(?={MONTH_PATTERN}|$)",
+                        rf"\b{month}\b(?:\s+{year})?(.*?)(?={MONTH_PATTERN}|$)",
                         line,
                         re.IGNORECASE | re.MULTILINE,
                     )
