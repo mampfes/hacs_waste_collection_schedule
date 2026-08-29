@@ -17069,6 +17069,29 @@
           "ssl_verify": "Verify the HTTPS certificate."
         }
       },
+      "args_stkh_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Settlement"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Name of the settlement as listed on stkh.hu"
+        }
+      },
+      "reconfigure_stkh_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Settlement"
+        },
+        "data_description": {
+          "municipality": "Name of the settlement as listed on stkh.hu"
+        }
+      },
       "args_eth_erd_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -2335,6 +2335,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
 - [Siókom Nonprofit Kft.](/doc/source/siokom_hu.md) / siokom.hu
+- [STKH Sopron és Térsége Nonprofit Kft.](/doc/source/stkh_hu.md) / stkh.hu
 - [ÉTH (Érd, Diósd, Ráckeresztúr, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 

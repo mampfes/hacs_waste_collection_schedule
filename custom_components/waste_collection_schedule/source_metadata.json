@@ -3580,6 +3580,13 @@
     },
     "urls": {}
   },
+  "stkh_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stkh_hu.md",
+    "howto": {
+      "en": "Open https://stkh.hu and look for your settlement in the waste calendar list on the home page. Use the settlement name exactly as it is shown there, for example 'Újkér'. Accents, spaces and capitalisation are ignored when matching."
+    },
+    "urls": {}
+  },
   "eth_erd_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eth_erd_hu.md",
     "howto": {},
