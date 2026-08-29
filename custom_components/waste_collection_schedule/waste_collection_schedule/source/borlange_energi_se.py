@@ -10,12 +10,27 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Borlänge Energi"
 DESCRIPTION = "Waste collection schedule for Borlänge, Sweden"
-URL = "https://www.borlange-energi.se/appresource/4.534bcbed17430db9cdb1e5c2/12.3a9c9b4b19a7bbdffe85a22/getcontainerdata"
+URL = "https://www.borlange-energi.se/avfall-och-atervinning/sophamtning"
 COUNTRY = "se"
 TEST_CASES = {
     "Mats Knuts Väg": {"pickup_address": "Mats Knuts Väg 100"},
     "Rorsmans Väg 7": {"pickup_address": "Rorsmans Väg 7"},
 }
+
+WASTE_PAGE_URL = "https://www.borlange-energi.se/avfall-och-atervinning/sophamtning"
+
+# The "När kommer sopbilen?" widget on the waste page is a Sitevision app
+# (applicationId "se.soleil.garbageTruckFetcher"). Its data comes from
+# https://www.borlange-energi.se/appresource/<page_id>/<portlet_id>/getcontainerdata
+# Both <page_id> and <portlet_id> are Sitevision-internal ids that are
+# reassigned whenever the page or the widget placement is rebuilt (this is
+# what happened in GitHub issue #7249, where the previously hardcoded
+# <portlet_id> started 404ing). To avoid hardcoding values that silently
+# rot again, both ids are resolved from the live waste page on every fetch.
+PORTLET_ID_PATTERN = re.compile(
+    r"applicationId:'se\.soleil\.garbageTruckFetcher\|[^']*'.*?portletId:'([^']+)'"
+)
+PAGE_ID_PATTERN = re.compile(r"/webapp-resource/([^/\"']+)/")
 
 DEFAULT_ICON = "mdi:trash-can"
 MONTHS = {
@@ -76,11 +91,42 @@ def parse_swedish_date(text: str) -> datetime:
     year = datetime.now().year
     date = datetime(year, month, day)
 
-    # Falls Datum bereits vorbei ist → nächstes Jahr
+    # If the date has already passed this year, use next year
     if date.date() < datetime.now().date():
         date = datetime(year + 1, month, day)
 
     return date
+
+
+def _resolve_endpoint(session: requests.Session) -> str:
+    """Resolve the current getcontainerdata endpoint from the live waste page.
+
+    Sitevision assigns a page id and a portlet id to the waste collection
+    widget, both of which are reassigned whenever the page or the widget
+    placement is rebuilt. Instead of hardcoding a URL that silently starts
+    404ing the next time that happens, the current ids are discovered fresh
+    on every fetch.
+    """
+    r = session.get(WASTE_PAGE_URL, timeout=30)
+    r.raise_for_status()
+    html = r.text
+
+    portlet_match = PORTLET_ID_PATTERN.search(html)
+    page_match = PAGE_ID_PATTERN.search(html)
+
+    if not portlet_match or not page_match:
+        raise ValueError(
+            "Could not locate the waste collection widget on the Borlänge "
+            "Energi website; the page layout may have changed"
+        )
+
+    portlet_id = portlet_match.group(1)
+    page_id = page_match.group(1)
+
+    return (
+        f"https://www.borlange-energi.se/appresource/{page_id}/"
+        f"{portlet_id}/getcontainerdata"
+    )
 
 
 class Source:
@@ -93,9 +139,12 @@ class Source:
         self._pickup_address = pickup_address
 
     def fetch(self):
-        params = {"svAjaxReqParam": "ajax", "pickupAddress": self._pickup_address}
+        session = requests.Session()
+        endpoint = _resolve_endpoint(session)
 
-        r = requests.get(URL, params=params, timeout=30)
+        params = {"pickupAddress": self._pickup_address}
+
+        r = session.get(endpoint, params=params, timeout=30)
         r.raise_for_status()
 
         data = r.json()
