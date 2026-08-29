@@ -142,7 +142,7 @@ class Source:
                         Collection(
                             date=waste_date,
                             t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
+                            icon=ICON_MAP.get(waste_type, Icons.GENERAL_WASTE),
                         )
                     )
 
