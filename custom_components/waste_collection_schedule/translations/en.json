@@ -18692,6 +18692,29 @@
         },
         "data_description": {}
       },
+      "args_codc_govt_nz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'"
+        }
+      },
+      "reconfigure_codc_govt_nz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'"
+        }
+      },
       "args_ccc_govt_nz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

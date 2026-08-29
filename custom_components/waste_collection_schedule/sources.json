@@ -19708,6 +19708,12 @@
       "id": "aucklandcouncil_govt_nz"
     },
     {
+      "title": "Central Otago District Council",
+      "module": "codc_govt_nz",
+      "default_params": {},
+      "id": "codc_govt_nz"
+    },
+    {
       "title": "Christchurch City Council",
       "module": "ccc_govt_nz",
       "default_params": {},

@@ -3956,6 +3956,13 @@
     "howto": {},
     "urls": {}
   },
+  "codc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/codc_govt_nz.md",
+    "howto": {
+      "en": "Use the CODC Bin App (https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The address argument should match how the app displays your address alongside your next collection details."
+    },
+    "urls": {}
+  },
   "ccc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_govt_nz.md",
     "howto": {},
