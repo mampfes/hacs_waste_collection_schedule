@@ -24928,6 +24928,33 @@
           "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
+      "args_easthants_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar_number": "Calendar number",
+          "garden_calendar_number": "Garden waste calendar number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "calendar_number": "The bin calendar number assigned to your address, shown on your existing calendar or on the council's bin calendar map.",
+          "garden_calendar_number": "Optional garden waste calendar number (the numeric part of G1-G10) for subscribed households."
+        }
+      },
+      "reconfigure_easthants_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar_number": "Calendar number",
+          "garden_calendar_number": "Garden waste calendar number"
+        },
+        "data_description": {
+          "calendar_number": "The bin calendar number assigned to your address, shown on your existing calendar or on the council's bin calendar map.",
+          "garden_calendar_number": "Optional garden waste calendar number (the numeric part of G1-G10) for subscribed households."
+        }
+      },
       "args_eastherts_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

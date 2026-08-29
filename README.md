@@ -3604,6 +3604,7 @@ If you already have enough information for your municipality/region, you are ver
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
 - [East Dunbartonshire Council](/doc/source/eastdunbarton_gov_uk.md) / eastdunbarton.gov.uk
+- [East Hampshire District Council](/doc/source/easthants_gov_uk.md) / easthants.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
 - [East Lindsey District Council](/doc/source/e_lindsey_gov_uk.md) / e-lindsey.gov.uk
 - [East Lothian](/doc/source/eastlothian_gov_uk.md) / eastlothian.gov.uk
