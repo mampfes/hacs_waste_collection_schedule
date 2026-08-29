@@ -14302,6 +14302,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Geilenkirchen",
+      "module": "geilenkirchen_de",
+      "default_params": {},
+      "id": "geilenkirchen_de"
+    },
+    {
       "title": "Stadt Gem\u00fcnden (Wohra)",
       "module": "gemuenden_wohra_de",
       "default_params": {},
