@@ -17,7 +17,8 @@ TEST_CASES = {
 
 # Stirling Council uses Routeware's ReCollect platform (area "StirlingUK").
 # The address lookup and collection events are provided by the ReCollect API.
-API_URL = "https://api.eu.recollect.net/api/areas/StirlingUK/services/waste"
+API_BASE = "https://api.eu.recollect.net/api"
+AREA_URL = f"{API_BASE}/areas/StirlingUK/services/waste"
 
 # Waste types returned by Stirling's ReCollect service (flag name -> icon).
 ICON_MAP = {
@@ -52,7 +53,7 @@ class Source:
     def _resolve_place_id(self) -> str:
         """Resolve the configured address to a ReCollect place ID."""
         response = requests.get(
-            f"{API_URL}/address-suggest",
+            f"{AREA_URL}/address-suggest",
             params={"q": self._address, "locale": "en-GB"},
             timeout=30,
         )
@@ -82,7 +83,7 @@ class Source:
         place_id = self._resolve_place_id()
 
         response = requests.get(
-            f"https://api.eu.recollect.net/api/places/{place_id}/services/waste/events",
+            f"{API_BASE}/places/{place_id}/services/waste/events",
             params={
                 "hide": "reminder_only",
                 "after": (date.today() - timedelta(days=30)).isoformat(),
@@ -94,7 +95,7 @@ class Source:
         response.raise_for_status()
         events = response.json().get("events", [])
 
-        entries = []
+        entries: list[Collection] = []
         for event in events:
             collection_date = date.fromisoformat(event["day"])
             for flag in event.get("flags", []):
