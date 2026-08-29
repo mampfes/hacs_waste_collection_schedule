@@ -30,5 +30,3 @@ waste_collection_schedule:
 ## How to get the source argument
 
 Use the [CODC Bin App](https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The `address` argument should match how the app displays your address alongside your next collection details.
-
----

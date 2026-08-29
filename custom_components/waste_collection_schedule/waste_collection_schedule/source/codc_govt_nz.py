@@ -12,6 +12,23 @@ URL = "https://www.codc.govt.nz/"
 TEST_CASES = {
     "Alexandra": {"address": "5 Campbell Street Alexandra"},
 }
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Use the CODC Bin App (https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The address argument should match how the app displays your address alongside your next collection details.",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "address": "Address",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "address": "Full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'",
+    }
+}
+
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
@@ -55,7 +72,7 @@ class Source:
             "postcode": "",
         }
 
-        r = requests.get(API_URL, params=params, headers=HEADERS)
+        r = requests.get(API_URL, params=params, headers=HEADERS, timeout=30)
         if r.status_code == 400:
             raise SourceArgumentNotFound(
                 argument="address",
