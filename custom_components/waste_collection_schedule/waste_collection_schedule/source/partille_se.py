@@ -38,7 +38,11 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        r = requests.post(SEARCH_URL, {"searchText": self._street_address})
+        r = requests.post(
+            SEARCH_URL,
+            {"searchText": self._street_address},
+            timeout=30,
+        )
         r.raise_for_status()
 
         address_data = r.json()
@@ -50,7 +54,7 @@ class Source:
         if address is None:
             raise SourceArgumentNotFound("street_address", self._street_address)
 
-        r = requests.get(SCHEDULE_URL, params={"address": address})
+        r = requests.get(SCHEDULE_URL, params={"address": address}, timeout=30)
         r.raise_for_status()
 
         data = r.json()
