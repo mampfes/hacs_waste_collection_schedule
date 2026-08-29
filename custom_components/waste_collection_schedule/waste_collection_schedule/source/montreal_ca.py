@@ -321,7 +321,12 @@ class Source:
                         continue
                     days_in_month = days_in_month_match.group(1)
 
-                    days_in_month = re.split(r", | and ", days_in_month)
+                    # Treat an Oxford comma as one separator. Splitting on
+                    # ", " first leaves "and 29" as a token in "1, 15, and
+                    # 29", and the day is then dropped as non-numeric.
+                    days_in_month = re.split(
+                        r",\s*and\s+|,\s*|\s+and\s+", days_in_month
+                    )
                     days_in_month = [
                         part.lstrip().split(" ")[0] for part in days_in_month
                     ]
