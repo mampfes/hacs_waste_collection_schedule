@@ -5935,6 +5935,14 @@
   ],
   "France": [
     {
+      "title": "Aigrefeuille-sur-Maine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Aigrefeuille-sur-Maine"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Aingeray",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6171,6 +6179,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Boussay",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Boussay"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Bouvron",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6291,12 +6307,42 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Ch\u00e2teau-Th\u00e9baud",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Ch\u00e2teau-Th\u00e9baud"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 897
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Clisson",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Clisson"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Clisson S\u00e8vre et Maine Agglo",
+      "module": "clissonsevremaine_fr",
+      "default_params": {},
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Clisson, rue Saint-Antoine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Clisson, rue Saint-Antoine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Coeur d'Yvelines",
@@ -6479,6 +6525,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Gorges",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Gorges"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Goupilli\u00e8res",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6555,12 +6609,36 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "G\u00e9tign\u00e9 - zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "G\u00e9tign\u00e9 - zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "G\u00e9tign\u00e9 - zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "G\u00e9tign\u00e9 - zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Habsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Habsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Haute-Goulaine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Haute-Goulaine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Heimsbrunn",
@@ -6625,6 +6703,30 @@
         "commune": "La Br\u00e8de"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "La Haye-Fouassi\u00e8re - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Haye-Fouassi\u00e8re - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Haye-Fouassi\u00e8re - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Haye-Fouassi\u00e8re - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Planche",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Planche"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "La Queue-en-Brie",
@@ -6769,6 +6871,30 @@
       "id": "mamirolle_info"
     },
     {
+      "title": "Maisdon-sur-S\u00e8vre - zone 1",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 1"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Maisdon-sur-S\u00e8vre - zone 2",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 2"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Maisdon-sur-S\u00e8vre - zone 3",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 3"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Manoncourt-en-Wo\u00ebvre",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6831,6 +6957,14 @@
         "commune": "Minorville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Monni\u00e8res",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Monni\u00e8res"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Montfort-l'Amaury",
@@ -7068,6 +7202,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Remouill\u00e9",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Remouill\u00e9"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Richwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7138,12 +7280,44 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Saint-Hilaire-de-Clisson - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Hilaire-de-Clisson - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Saint-Hilaire-de-Clisson - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Hilaire-de-Clisson - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Saint-Louis-de-Montferrand",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Saint-Louis-de-Montferrand"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Lumine-de-Clisson - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Lumine-de-Clisson - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Saint-Lumine-de-Clisson - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Lumine-de-Clisson - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Saint-Morillon",
@@ -7272,6 +7446,14 @@
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "St-Fiacre-sur-Maine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "St-Fiacre-sur-Maine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Staffelfelden",
@@ -7412,6 +7594,14 @@
         "commune": "Vicq"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Vieillevigne",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Vieillevigne"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Villenave-d'Ornon",

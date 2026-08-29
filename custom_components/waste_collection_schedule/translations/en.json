@@ -7387,6 +7387,29 @@
         },
         "data_description": {}
       },
+      "args_clissonsevremaine_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Your municipality, exactly as listed in the drop-down menu on the collection calendar page, e.g. 'Maisdon-sur-Sèvre - zone 1'."
+        }
+      },
+      "reconfigure_clissonsevremaine_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "Your municipality, exactly as listed in the drop-down menu on the collection calendar page, e.g. 'Maisdon-sur-Sèvre - zone 1'."
+        }
+      },
       "args_terrestouloises_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

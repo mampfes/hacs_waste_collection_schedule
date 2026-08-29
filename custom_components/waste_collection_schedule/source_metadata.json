@@ -1691,6 +1691,14 @@
     "howto": {},
     "urls": {}
   },
+  "clissonsevremaine_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/clissonsevremaine_fr.md",
+    "howto": {
+      "en": "Open https://environnement.clissonsevremaine.fr/dechets/collecte-des-dechets/calendrier-des-collectes and pick your municipality in the drop-down menu. Use the wording shown there. Some municipalities are split into several collection zones; the maps at the end of the downloadable PDF calendars tell you which zone your street belongs to.",
+      "fr": "Ouvrez https://environnement.clissonsevremaine.fr/dechets/collecte-des-dechets/calendrier-des-collectes et choisissez votre commune dans la liste déroulante. Reprenez le libellé affiché. Certaines communes sont découpées en plusieurs zones de collecte ; les cartes situées à la fin des calendriers PDF téléchargeables indiquent la zone de votre rue."
+    },
+    "urls": {}
+  },
   "terrestouloises_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/terrestouloises_com.md",
     "howto": {},
