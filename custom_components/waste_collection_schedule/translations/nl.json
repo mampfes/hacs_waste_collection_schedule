@@ -23823,7 +23823,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "calendar_number": "Calendar Number",
-          "garden_calendar_number": "Garden Calendar Number"
+          "garden_calendar_number": "Garden Calendar Number",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -23835,7 +23836,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "calendar_number": "Calendar Number",
-          "garden_calendar_number": "Garden Calendar Number"
+          "garden_calendar_number": "Garden Calendar Number",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },

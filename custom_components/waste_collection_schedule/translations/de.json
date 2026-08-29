@@ -24339,7 +24339,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "calendar_number": "Calendar Number",
-          "garden_calendar_number": "Garden Calendar Number"
+          "garden_calendar_number": "Garden Calendar Number",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -24351,7 +24352,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "calendar_number": "Calendar Number",
-          "garden_calendar_number": "Garden Calendar Number"
+          "garden_calendar_number": "Garden Calendar Number",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },

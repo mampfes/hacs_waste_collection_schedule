@@ -5586,7 +5586,7 @@
   "easthants_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/easthants_gov_uk.md",
     "howto": {
-      "en": "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address, then enter the displayed calendar number. If you subscribe to garden waste, also enter the numeric part of your G1-G10 garden calendar number."
+      "en": "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN. Alternatively, enter the displayed calendar numbers manually."
     },
     "urls": {}
   },
