@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -44,14 +44,33 @@ ICON_MAP = {
 def parse_swedish_date(text: str) -> datetime:
     """Extract date from Swedish text.
 
-    Handles formats like 'Nästa tömning sker torsdag den 15 januari'.
+    Handles formats like 'Nästa tömning sker torsdag den 15 januari', as well
+    as the relative wording the API uses on the day of a collection ('Tömning
+    idag') and the day before it ('Tömning imorgon'). Both the joined and
+    separated spellings are accepted.
     """
-    match = re.search(r"(\d{1,2})\s+([a-zåäö]+)", text.lower())
+    lowered = text.lower()
+
+    # Expected API values on and just before a collection day, not malformed
+    # data, so they must not raise. Anchored on word boundaries so weekday
+    # names ending in "dag" are unaffected.
+    midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    if re.search(r"\bi\s?dag\b", lowered):
+        return midnight
+    if re.search(r"\bi\s?morgon\b", lowered):
+        return midnight + timedelta(days=1)
+
+    match = re.search(r"(\d{1,2})\s+([a-zåäö]+)", lowered)
     if not match:
         raise ValueError(f"Unrecognized date format: {text}")
 
     day = int(match.group(1))
     month_name = match.group(2)
+    if month_name not in MONTHS:
+        # The regex only requires a number followed by a word, so input such as
+        # "om 3 dagar" reaches here. Raise ValueError like the branch above
+        # instead of letting a KeyError escape.
+        raise ValueError(f"Unrecognized month name in date: {text}")
     month = MONTHS[month_name]
 
     year = datetime.now().year
