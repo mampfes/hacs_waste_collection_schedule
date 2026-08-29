@@ -3556,6 +3556,13 @@
     "howto": {},
     "urls": {}
   },
+  "siokom_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siokom_hu.md",
+    "howto": {
+      "en": "Open https://www.siokom.hu/jaratterv/ and copy the settlement or district name exactly as listed (e.g. 'Balatonvilágos', 'Siófok Cs-v', 'Zamárdi Kőhegy'). Use the short name, not the neighbourhood description under Siófok rows. There is no street selector."
+    },
+    "urls": {}
+  },
   "eth_erd_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eth_erd_hu.md",
     "howto": {},

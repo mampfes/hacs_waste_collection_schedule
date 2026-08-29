@@ -16983,6 +16983,33 @@
         },
         "data_description": {}
       },
+      "args_siokom_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Settlement / district",
+          "ssl_verify": "Verify SSL certificate"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area": "Settlement or district name as shown on siokom.hu/jaratterv/ (e.g. Balatonvilágos, Siófok Cs-v).",
+          "ssl_verify": "Verify the HTTPS certificate."
+        }
+      },
+      "reconfigure_siokom_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Settlement / district",
+          "ssl_verify": "Verify SSL certificate"
+        },
+        "data_description": {
+          "area": "Settlement or district name as shown on siokom.hu/jaratterv/ (e.g. Balatonvilágos, Siófok Cs-v).",
+          "ssl_verify": "Verify the HTTPS certificate."
+        }
+      },
       "args_eth_erd_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
