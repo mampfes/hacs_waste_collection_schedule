@@ -2,9 +2,9 @@ import datetime
 import io
 import re
 import urllib.parse
-import urllib.request
 
 import pypdf
+import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -46,42 +46,51 @@ PARAM_TRANSLATIONS = {
 PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
 
 TOWNS_PDF_MAP = {
-    "baczkow": "Baczkow.pdf",
-    "bessow": "Bessow.pdf",
-    "bogucice": "Bogucice.pdf",
-    "brzeznica": "Brzeznica.pdf",
-    "buczyna": "Buczyna.pdf",
-    "cerekiew": "Cerekiew.pdf",
-    "chelm": "Chelm.pdf",
-    "cikowice": "Cikowice.pdf",
-    "damienice": "Damienice.pdf",
-    "dabrowica": "Dabrowica.pdf",
-    "gawlow": "Gawlow.pdf",
-    "gierczyce": "Gierczyce.pdf",
-    "gorzkow": "Gorzkow.pdf",
-    "grabina": "Grabina.pdf",
-    "krzyzanowice": "Krzyzanowice.pdf",
-    "lapczyca": "Lapczyca.pdf",
-    "majkowice": "Majkowice.pdf",
-    "moszczenica": "Moszczenica.pdf",
-    "nieprzesnia": "Nieprzesnia.pdf",
-    "nieszkowice male": "Nieszkowice male.pdf",
-    "nieszkowice wielkie": "Nieszkowice wielkie.pdf",
-    "ostrow szlachecki": "Ostrow szlachecki.pdf",
-    "pogwizdow": "Pogwizdow.pdf",
-    "proszowki": "Proszowki.pdf",
-    "siedlec": "Siedlec.pdf",
-    "slomka": "Slomka.pdf",
-    "stanislawice": "Stanislawice.pdf",
-    "stradomka": "Stradomka.pdf",
-    "wola nieszkowska": "Wola nieszkowska.pdf",
-    "zatoka": "Zatoka.pdf",
-    "zawada": "Zawada.pdf",
+    "Baczków": "Baczkow.pdf",
+    "Bessów": "Bessow.pdf",
+    "Bogucice": "Bogucice.pdf",
+    "Brzeźnica": "Brzeznica.pdf",
+    "Buczyna": "Buczyna.pdf",
+    "Cerekiew": "Cerekiew.pdf",
+    "Chełm": "Chelm.pdf",
+    "Cikowice": "Cikowice.pdf",
+    "Damienice": "Damienice.pdf",
+    "Dąbrowica": "Dabrowica.pdf",
+    "Gawłów": "Gawlow.pdf",
+    "Gierczyce": "Gierczyce.pdf",
+    "Gorzków": "Gorzkow.pdf",
+    "Grabina": "Grabina.pdf",
+    "Krzyżanowice": "Krzyzanowice.pdf",
+    "Łapczyca": "Lapczyca.pdf",
+    "Majkowice": "Majkowice.pdf",
+    "Moszczenica": "Moszczenica.pdf",
+    "Nieprześnia": "Nieprzesnia.pdf",
+    "Nieszkowice Małe": "Nieszkowice male.pdf",
+    "Nieszkowice Wielkie": "Nieszkowice wielkie.pdf",
+    "Ostrów Szlachecki": "Ostrow szlachecki.pdf",
+    "Pogwizdów": "Pogwizdow.pdf",
+    "Proszówki": "Proszowki.pdf",
+    "Siedlec": "Siedlec.pdf",
+    "Słomka": "Slomka.pdf",
+    "Stanisławice": "Stanislawice.pdf",
+    "Stradomka": "Stradomka.pdf",
+    "Wola Nieszkowska": "Wola nieszkowska.pdf",
+    "Zatoka": "Zatoka.pdf",
+    "Zawada": "Zawada.pdf",
 }
+
+MIXED_WASTE = "Odpady zmieszane i segregowane"
+BULKY_WASTE = "Gabaryty i niebezpieczne"
+
+# heading that introduces the bulky / hazardous waste dates in the PDF
+BULKY_HEADING = "Odpady wielkogabarytowe"
 
 
 def normalize(text: str) -> str:
     return text.translate(PL_TRANS).lower().strip()
+
+
+TOWNS_BY_NORMALIZED_NAME = {normalize(name): name for name in TOWNS_PDF_MAP}
 
 
 class Source:
@@ -89,44 +98,46 @@ class Source:
         self._town = town
 
     def fetch(self) -> list[Collection]:
-        norm_town = normalize(self._town)
-        pdf_file = TOWNS_PDF_MAP.get(norm_town)
-        if not pdf_file:
+        town = TOWNS_BY_NORMALIZED_NAME.get(normalize(self._town))
+        if town is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "town", self._town, sorted(TOWNS_PDF_MAP.keys())
             )
 
+        pdf_file = TOWNS_PDF_MAP[town]
         url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            pdf_bytes = resp.read()
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
 
-        reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
+        reader = pypdf.PdfReader(io.BytesIO(r.content))
         text = reader.pages[0].extract_text() or ""
-        if not text:
+        if not text.strip():
             raise ValueError(
                 f"No text could be extracted from PDF for town '{self._town}'."
             )
 
-        # 1. Year
-        year_match = re.search(r"\b(202\d)\b", text)
+        # 1. Year of the schedule
+        year_match = re.search(r"\b(20\d{2})\b", text)
         year = int(year_match.group(1)) if year_match else datetime.date.today().year
 
         entries: list[Collection] = []
 
-        # 2. Bulky / hazardous dates (e.g. (27.02.2026))
-        for d_str, m_str, y_str in re.findall(r"(\d{1,2})\.(\d{1,2})\.(\d{4})", text):
-            entries.append(
-                Collection(
-                    date=datetime.date(int(y_str), int(m_str), int(d_str)),
-                    t="Gabaryty i niebezpieczne",
-                    icon=Icons.BULKY,
-                )
-            )
+        # 2. Bulky / hazardous dates (e.g. "LUTY (27.02.2026)"), listed below the
+        #    bulky waste heading.
+        heading_pos = text.find(BULKY_HEADING)
+        bulky_text = text[heading_pos:] if heading_pos != -1 else text
+        for d_str, m_str, y_str in re.findall(
+            r"(\d{1,2})\.(\d{1,2})\.(\d{4})", bulky_text
+        ):
+            try:
+                date = datetime.date(int(y_str), int(m_str), int(d_str))
+            except ValueError:
+                continue
+            entries.append(Collection(date=date, t=BULKY_WASTE, icon=Icons.BULKY))
 
         # 3. Monthly collection dates table
         table_match = re.search(
-            r"zmieszane\s+(?:202\d)?\s*(.*?)\s*Odpady wielkogabarytowe",
+            r"zmieszane\s+(?:20\d{2})?\s*(.*?)\s*" + re.escape(BULKY_HEADING),
             text,
             re.DOTALL | re.IGNORECASE,
         )
@@ -160,14 +171,11 @@ class Source:
             month = m_idx + 1
             for d in days:
                 try:
-                    entries.append(
-                        Collection(
-                            date=datetime.date(year, month, d),
-                            t="Odpady zmieszane i segregowane",
-                            icon=Icons.GENERAL_WASTE,
-                        )
-                    )
+                    date = datetime.date(year, month, d)
                 except ValueError:
-                    pass
+                    continue
+                entries.append(
+                    Collection(date=date, t=MIXED_WASTE, icon=Icons.GENERAL_WASTE)
+                )
 
         return entries
