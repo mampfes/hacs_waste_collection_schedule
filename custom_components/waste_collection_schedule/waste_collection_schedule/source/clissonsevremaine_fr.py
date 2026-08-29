@@ -158,7 +158,7 @@ class Source:
 
         select = soup.find("select", attrs={"name": CATEGORY_ARG})
         if select is None:
-            raise Exception("Could not find the municipality selector on the page")
+            raise RuntimeError("Could not find the municipality selector on the page")
 
         return {
             option.get_text(strip=True): value
@@ -248,7 +248,7 @@ class Source:
             )
 
         if not entries:
-            raise Exception(
+            raise RuntimeError(
                 f"No collection found for {self._commune}, "
                 "the website layout may have changed"
             )
