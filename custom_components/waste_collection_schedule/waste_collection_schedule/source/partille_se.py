@@ -9,6 +9,20 @@ DESCRIPTION = "Source for Partille kommun waste collection."
 URL = "https://vatjanst.partille.se"
 SOURCE_CODEOWNERS = ["@sadjad1"]
 
+COUNTRY = "se"
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street_address": "Street address",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street_address": "Street address including house number, e.g. 'Tiondevägen 6, Partille'",
+    },
+}
+
 TEST_CASES = {
     "Tiondevägen 6": {"street_address": "Tiondevägen 6, Partille"},
 }
