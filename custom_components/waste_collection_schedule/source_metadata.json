@@ -4218,6 +4218,13 @@
     "howto": {},
     "urls": {}
   },
+  "bochnia_gmina_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bochnia_gmina_pl.md",
+    "howto": {
+      "en": "Enter the name of the town in Gmina Bochnia (e.g. Baczków, Damienice, Proszówki, Łapczyca, etc.)."
+    },
+    "urls": {}
+  },
   "pronatura_bydgoszcz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",
     "howto": {},

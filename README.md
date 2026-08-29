@@ -3069,15 +3069,28 @@ If you already have enough information for your municipality/region, you are ver
 - [ABRUKO PLUS](/doc/source/sims_pl.md) / sisms.pl
 - [ALBA Swarzędz](/doc/source/alba_com_pl.md) / alba.com.pl
 - [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
+- [Baczków](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Bessów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Bogucice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Brzeźnica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Buczyna](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
+- [Cerekiew](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Chełm](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Cikowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Czysty Region](/doc/source/czystyregion_pl.md) / czystyregion.pl
+- [Damienice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Dąbrowica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
+- [Gawłów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gdynia](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
+- [Gierczyce](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Bartniczka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Bochnia](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gmina Brzeg Dolny](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Brzeziny](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Cedry Wielkie](/doc/source/sims_pl.md) / sisms.pl
@@ -3173,8 +3186,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
 - [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
 - [GOAP Poznań](/doc/source/goap_poznan_pl.md) / goap.poznan.pl
+- [Gorzków](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Grabina](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Hemar (ichisystem.eu)](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kiedy Odpady (kiedyodpady.pl)](/doc/source/kiedyodpady_pl.md) / kiedyodpady.pl
 - [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
@@ -3186,6 +3201,8 @@ If you already have enough information for your municipality/region, you are ver
 - [KOMA](/doc/source/koma_pl.md) / koma.pl
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
+- [Krzyżanowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Majkowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto i Gmina Łasin](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Inowrocław](/doc/source/sims_pl.md) / sisms.pl
@@ -3193,26 +3210,41 @@ If you already have enough information for your municipality/region, you are ver
 - [Miasto Rejowiec Fabryczny](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
+- [Moszczenica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
+- [Nieprześnia](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Nieszkowice Małe](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Nieszkowice Wielkie](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Ostrów Szlachecki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Pabianice](/doc/source/kiedyodpady_pl.md) / pabianice.kiedyodpady.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
 - [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
+- [Pogwizdów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
+- [Proszówki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
 - [Rybnik](/doc/source/rybnik_pl.md) / rybnik.eu
+- [Siedlec](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [SmiecioPlan](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Sopot](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
+- [Stanisławice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Stradomka](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
 - [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
+- [Słomka](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
 - [Wieliczka Kiedy Odpady (Deprecated)](/doc/source/wieliczka_kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
+- [Wola Nieszkowska](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
+- [Zatoka](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Zawada](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
+- [Łapczyca](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Łódź](/doc/source/lodz_pl.md) / kartalodzianina.pl
 </details>
 

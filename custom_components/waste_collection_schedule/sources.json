@@ -20197,10 +20197,74 @@
       "id": "moje_odpady_pl"
     },
     {
+      "title": "Baczk\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Baczk\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Bess\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Bess\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Bogucice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Bogucice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Brze\u017anica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Brze\u017anica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Buczyna",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Buczyna"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Bydgoszcz Pronatura",
       "module": "pronatura_bydgoszcz_pl",
       "default_params": {},
       "id": "pronatura_bydgoszcz_pl"
+    },
+    {
+      "title": "Cerekiew",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Cerekiew"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Che\u0142m",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Che\u0142m"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Cikowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Cikowice"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Czerwonak, Murowana Go\u015blina, Oborniki",
@@ -20215,6 +20279,22 @@
       "id": "czystyregion_pl"
     },
     {
+      "title": "Damienice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Damienice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "D\u0105browica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "D\u0105browica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Ecoharmonogram",
       "module": "ecoharmonogram_pl",
       "default_params": {},
@@ -20225,6 +20305,14 @@
       "module": "ecoszczecin_pl",
       "default_params": {},
       "id": "ecoszczecin_pl"
+    },
+    {
+      "title": "Gaw\u0142\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gaw\u0142\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Gda\u0144sk",
@@ -20243,6 +20331,14 @@
       "id": "smiecioplan_pl"
     },
     {
+      "title": "Gierczyce",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gierczyce"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Gmina Bardo",
       "module": "sims_pl",
       "default_params": {
@@ -20257,6 +20353,12 @@
         "owner": "Gmina Bartniczka"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Bochnia",
+      "module": "bochnia_gmina_pl",
+      "default_params": {},
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Gmina Brzeg Dolny",
@@ -21009,6 +21111,14 @@
       "id": "goap_poznan_pl"
     },
     {
+      "title": "Gorzk\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gorzk\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Gospodarka Odpadami - Pelplin",
       "module": "sims_pl",
       "default_params": {
@@ -21023,6 +21133,14 @@
         "owner": "Gospodarka Odpadami - Starogard Gda\u0144ski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Grabina",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Grabina"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Hemar (ichisystem.eu)",
@@ -21099,6 +21217,22 @@
       "id": "sepan_remondis_pl"
     },
     {
+      "title": "Krzy\u017canowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Krzy\u017canowice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Majkowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Majkowice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Miasto i Gmina Morawica",
       "module": "sims_pl",
       "default_params": {
@@ -21155,6 +21289,14 @@
       "id": "sims_pl"
     },
     {
+      "title": "Moszczenica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Moszczenica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "MPGK Katowice",
       "module": "mpgk_com_pl",
       "default_params": {},
@@ -21165,6 +21307,38 @@
       "module": "mpo_krakow_pl",
       "default_params": {},
       "id": "mpo_krakow_pl"
+    },
+    {
+      "title": "Nieprze\u015bnia",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieprze\u015bnia"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Nieszkowice Ma\u0142e",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieszkowice Ma\u0142e"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Nieszkowice Wielkie",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieszkowice Wielkie"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Ostr\u00f3w Szlachecki",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Ostr\u00f3w Szlachecki"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Pabianice",
@@ -21191,6 +21365,14 @@
       "id": "ichisystem_eu"
     },
     {
+      "title": "Pogwizd\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Pogwizd\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Polkowice",
       "module": "sims_pl",
       "default_params": {
@@ -21211,6 +21393,14 @@
       "id": "prezero_bielsko_pl"
     },
     {
+      "title": "Prosz\u00f3wki",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Prosz\u00f3wki"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
       "module": "sims_pl",
       "default_params": {
@@ -21223,6 +21413,14 @@
       "module": "rybnik_pl",
       "default_params": {},
       "id": "rybnik_pl"
+    },
+    {
+      "title": "Siedlec",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Siedlec"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "SISMS.pl / BLISKO",
@@ -21245,6 +21443,22 @@
       "id": "smiecioplan_pl"
     },
     {
+      "title": "Stanis\u0142awice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Stanis\u0142awice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Stradomka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Stradomka"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Strzelce Kraje\u0144skie",
       "module": "sims_pl",
       "default_params": {
@@ -21259,6 +21473,14 @@
         "city": "szczecin"
       },
       "id": "smiecioplan_pl"
+    },
+    {
+      "title": "S\u0142omka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "S\u0142omka"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Warsaw",
@@ -21281,10 +21503,34 @@
       "id": "wieliczka_kiedyodpady_pl"
     },
     {
+      "title": "Wola Nieszkowska",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Wola Nieszkowska"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Wroc\u0142aw",
       "module": "ekosystem_wroc_pl",
       "default_params": {},
       "id": "ekosystem_wroc_pl"
+    },
+    {
+      "title": "Zatoka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Zatoka"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Zawada",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Zawada"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "ZGPD-7",
@@ -21293,6 +21539,14 @@
         "owner": "ZGPD-7"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "\u0141apczyca",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "\u0141apczyca"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "\u0141\u00f3d\u017a",

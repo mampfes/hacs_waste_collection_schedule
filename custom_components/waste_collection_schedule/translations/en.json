@@ -19786,6 +19786,29 @@
         },
         "data_description": {}
       },
+      "args_bochnia_gmina_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "town": "Town / Village"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "town": "Name of the village/town in Gmina Bochnia"
+        }
+      },
+      "reconfigure_bochnia_gmina_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "town": "Town / Village"
+        },
+        "data_description": {
+          "town": "Name of the village/town in Gmina Bochnia"
+        }
+      },
       "args_pronatura_bydgoszcz_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
