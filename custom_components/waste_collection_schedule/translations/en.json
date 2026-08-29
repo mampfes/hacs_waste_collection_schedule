@@ -16904,6 +16904,37 @@
         },
         "data_description": {}
       },
+      "args_deponia_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Settlement",
+          "ssl_verify": "Verify SSL certificate",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Settlement name as shown on deponia.hu/telepuleskereso.",
+          "ssl_verify": "Verify the HTTPS certificate. Set to false only if your environment cannot validate deponia.hu.",
+          "street": "Street name as shown after selecting the settlement. Required only for towns that publish street-level calendars."
+        }
+      },
+      "reconfigure_deponia_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Settlement",
+          "ssl_verify": "Verify SSL certificate",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Settlement name as shown on deponia.hu/telepuleskereso.",
+          "ssl_verify": "Verify the HTTPS certificate. Set to false only if your environment cannot validate deponia.hu.",
+          "street": "Street name as shown after selecting the settlement. Required only for towns that publish street-level calendars."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

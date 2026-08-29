@@ -15648,6 +15648,12 @@
   ],
   "Hungary": [
     {
+      "title": "Dep\u00f3nia Nonprofit Kft.",
+      "module": "deponia_hu",
+      "default_params": {},
+      "id": "deponia_hu"
+    },
+    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},

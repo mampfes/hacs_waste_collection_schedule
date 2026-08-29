@@ -3539,6 +3539,13 @@
     },
     "urls": {}
   },
+  "deponia_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/deponia_hu.md",
+    "howto": {
+      "en": "Open https://deponia.hu/telepuleskereso and pick your settlement. If a street dropdown appears, copy the street name exactly as listed (including house-number ranges such as 'Ady Endre utca 1-20.'). Smaller settlements have a single calendar and do not need a street."
+    },
+    "urls": {}
+  },
   "fkf_bo_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
     "howto": {},
