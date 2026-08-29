@@ -161,9 +161,9 @@ class Source:
             raise Exception("Could not find the municipality selector on the page")
 
         return {
-            option.get_text(strip=True): option["value"]
+            option.get_text(strip=True): value
             for option in select.find_all("option")
-            if option.get("value")
+            if isinstance(value := option.get("value"), str) and value
         }
 
     def _parse_month(
@@ -186,7 +186,10 @@ class Source:
         # The legend maps a CSS colour prefix to a human readable waste type.
         legend: dict[str, str] = {}
         for span in soup.select("#month-legend span[class*=_catheader_text]"):
-            for css_class in span.get("class", []):
+            span_classes = span.get("class") or []
+            if not isinstance(span_classes, list):
+                span_classes = [span_classes]
+            for css_class in span_classes:
                 if css_class.endswith("_catheader_text"):
                     label = COLLECTION_PREFIX.sub("", span.get_text(strip=True))
                     legend[css_class.removesuffix("_catheader_text")] = (
@@ -195,7 +198,7 @@ class Source:
 
         entries: list[Collection] = []
         for day_cell in soup.select("td.day.hasEvents"):
-            classes = day_cell.get("class", [])
+            classes = day_cell.get("class") or []
             if "not-current-month" in classes:
                 continue
             day = int(day_cell.get_text(strip=True))
