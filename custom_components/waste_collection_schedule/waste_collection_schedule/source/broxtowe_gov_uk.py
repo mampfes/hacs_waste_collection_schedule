@@ -30,7 +30,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
+API_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&amp;k=9D2EF214E144EE796430597FB475C3892C43C528"
 ADDRESS_LOOKUP_URL = "https://selfservice.broxtowe.gov.uk/core/addresslookup"
 SUBMIT_URL = "https://selfservice.broxtowe.gov.uk/RenderForm"
 
@@ -80,6 +80,7 @@ class Source:
                 "FF5683lbltxt": address_label,
                 "FF5683-text": self._postcode,
             },
+            timeout=30,
         )
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
@@ -87,13 +88,13 @@ class Source:
         table = soup.find("table", class_="bartec")
 
         if table is None or isinstance(table, NavigableString):
-            raise Exception("could not get valid data from ashford.gov.uk")
+            raise Exception("could not get valid data from broxtowe.gov.uk")
 
         entries = []
         trs = table.find_all("tr")
 
         if not trs or len(trs) < 2:
-            raise Exception("could not get valid data from ashford.gov.uk")
+            raise Exception("could not get valid data from broxtowe.gov.uk")
 
         for row in trs[1:]:
             bint_type = row.find("td")
