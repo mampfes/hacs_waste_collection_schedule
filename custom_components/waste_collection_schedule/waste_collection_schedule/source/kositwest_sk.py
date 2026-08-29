@@ -18,6 +18,8 @@ URL = (
 )
 COUNTRY = "sk"
 
+SOURCE_CODEOWNERS = ["@mynameisdominik"]
+
 TEST_CASES = {
     "Vieska": {"town": "Vieska"},
     "Sap": {"town": "Sap"},
@@ -72,6 +74,8 @@ class Source(KositEastSource):
         pdf_link: str | None = None
         for anchor in soup.find_all("a", href=True):
             href = anchor["href"]
+            if not isinstance(href, str):
+                continue
             if anchor.get_text(
                 strip=True
             ).lower() == self._town.strip().lower() and href.lower().endswith(".pdf"):
