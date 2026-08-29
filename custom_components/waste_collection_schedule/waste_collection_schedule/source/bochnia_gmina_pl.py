@@ -6,6 +6,9 @@ import urllib.request
 
 import pypdf
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Gmina Bochnia"
 DESCRIPTION = "Source for Gmina Bochnia waste collection schedule (Poland)"
@@ -86,12 +89,13 @@ class Source:
         self._town = town
 
     def fetch(self) -> list[Collection]:
-        from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
         norm_town = normalize(self._town)
         pdf_file = TOWNS_PDF_MAP.get(norm_town)
         if not pdf_file:
-            raise SourceArgumentNotFoundWithSuggestions("town", self._town, sorted(TOWNS_PDF_MAP))
+            raise SourceArgumentNotFoundWithSuggestions(
+                "town", self._town, sorted(TOWNS_PDF_MAP.keys())
+            )
+
         url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=15) as resp:
@@ -99,8 +103,10 @@ class Source:
 
         reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
         text = reader.pages[0].extract_text() or ""
-         if not text:
-             raise ValueError("No text could be extracted from the PDF.")
+        if not text:
+            raise ValueError(
+                f"No text could be extracted from PDF for town '{self._town}'."
+            )
 
         # 1. Year
         year_match = re.search(r"\b(202\d)\b", text)
