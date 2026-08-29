@@ -30,7 +30,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&amp;k=9D2EF214E144EE796430597FB475C3892C43C528"
+API_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
 ADDRESS_LOOKUP_URL = "https://selfservice.broxtowe.gov.uk/core/addresslookup"
 SUBMIT_URL = "https://selfservice.broxtowe.gov.uk/RenderForm"
 
