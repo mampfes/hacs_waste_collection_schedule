@@ -41,10 +41,6 @@ ICON_MAP = {
     "Vegyes": Icons.GENERAL_WASTE,
 }
 
-# Add your GitHub handle here to be notified and assigned on bug reports for
-# this source:
-# SOURCE_CODEOWNERS = ["@your-github-handle"]
-
 HOMEPAGE_URL = "https://stkh.hu/"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36"
