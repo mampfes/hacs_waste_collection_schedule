@@ -19909,6 +19909,29 @@
         },
         "data_description": {}
       },
+      "args_gmina_trzebnica_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region_id": "Region ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "region_id": "Waste collection region ID of the Gmina Trzebnica SkyCMS app"
+        }
+      },
+      "reconfigure_gmina_trzebnica_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region_id": "Region ID"
+        },
+        "data_description": {
+          "region_id": "Waste collection region ID of the Gmina Trzebnica SkyCMS app"
+        }
+      },
       "args_gmina_zgierz_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

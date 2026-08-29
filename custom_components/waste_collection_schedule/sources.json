@@ -20617,6 +20617,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Trzebnica",
+      "module": "gmina_trzebnica_pl",
+      "default_params": {},
+      "id": "gmina_trzebnica_pl"
+    },
+    {
       "title": "Gmina Ulan-Majorat",
       "module": "sims_pl",
       "default_params": {

@@ -4231,6 +4231,13 @@
     "howto": {},
     "urls": {}
   },
+  "gmina_trzebnica_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_trzebnica_pl.md",
+    "howto": {
+      "en": "Install the 'Gmina Trzebnica' app and look up your waste collection region. The region ID can be found in the app's waste calendar section, or in the region list linked from the documentation of this source."
+    },
+    "urls": {}
+  },
   "gmina_zgierz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
     "howto": {},

@@ -3122,6 +3122,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Słupca](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Słupno](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Topólka](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Trzebnica](/doc/source/gmina_trzebnica_pl.md) / trzebnica.pl
 - [Gmina Ulan-Majorat](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Wieluń](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Wierzchlas](/doc/source/sims_pl.md) / sisms.pl
