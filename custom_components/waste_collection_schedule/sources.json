@@ -21697,6 +21697,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Partille kommun",
+      "module": "partille_se",
+      "default_params": {},
+      "id": "partille_se"
+    },
+    {
       "title": "Pireva",
       "module": "pireva_se",
       "default_params": {},
