@@ -126,7 +126,7 @@ def _nearest_cluster_idx(value: float, centres: list[float]) -> int:
 
 
 def _extract_year(page: LTPage) -> int | None:
-    """Scan *page* for a four-digit schedule year and return it, or None."""
+    """Scan *page* for a 'ROK YYYY' header and return the year, or None."""
     for element in page:
         if isinstance(element, LTTextContainer):
             for text_line in element:
@@ -295,10 +295,21 @@ class Source:
                 len(x_clusters),
             )
 
-        # y_clusters is sorted ascending (pdfminer: y=0 at bottom of page).
-        #   y_clusters[0] ~= centre of bottom-half rects (Jul-Dec)
-        #   y_clusters[1] ~= centre of top-half rects    (Jan-Jun)
+        if len(y_clusters) != self._N_MONTH_ROWS:
+            _LOGGER.warning(
+                "Expected %d y-clusters (month rows) for '%s', found %d. "
+                "Month assignments may be incorrect.",
+                self._N_MONTH_ROWS,
+                self._town,
+                len(y_clusters),
+            )
+
         # --- Map each rect to a date + waste type ---
+        # y_clusters is sorted ascending (pdfminer: y=0 at bottom of page), so
+        # the last cluster is the topmost row of months and the first cluster
+        # the bottom row. For KOSIT EAST that means:
+        #   y_clusters[1] -> months 1-6  (Jan-Jun)
+        #   y_clusters[0] -> months 7-12 (Jul-Dec)
 
         collections: list[Collection] = []
 

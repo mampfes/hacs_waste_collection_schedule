@@ -16,6 +16,16 @@ waste_collection_schedule:
 
 - **town**: Town name as displayed on the kositwest.sk website.
 
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: kositwest_sk
+      args:
+        town: Michal na Ostrove
+```
+
 ## HOW TO GET ARGUMENTS
 
 Find your town on the [KOSIT WEST website](https://kositwest.sk/sluzby/zber-komunalneho-odpadu-a-triedenych-zloziek-z-obci-a-samosprav/harmonogramy-zberu-odpadu-v-obciach/) and enter it exactly as it appears in the link.
