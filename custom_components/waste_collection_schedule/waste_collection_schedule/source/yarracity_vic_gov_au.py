@@ -72,9 +72,14 @@ _WEEKDAYS = {
 
 def _attr(attributes: dict, name: str):
     # Joined ArcGIS layers qualify attribute names ("<join>.<field>");
-    # match a bare field name against either scheme.
+    # match a bare field name against either scheme. An exact match wins so
+    # the result never depends on attribute ordering. The required "."
+    # separator keeps e.g. "recycling_anchor_date" from matching "anchor_date".
+    if name in attributes:
+        return attributes[name]
+    suffix = "." + name
     for key, value in attributes.items():
-        if key == name or key.endswith("." + name):
+        if key.endswith(suffix):
             return value
     raise KeyError(name)
 
