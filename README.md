@@ -2329,6 +2329,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Italy</summary>
 
 - [A&T 2000 Spa](/doc/source/junker_app.md) / junker.app
+- [Acate (RG)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Aci Sant'Antonio](/doc/source/junker_app.md) / junker.app
 - [Acinque Spa](/doc/source/junker_app.md) / junker.app
 - [AET Ambiente Energia Territorio S.p.A.](/doc/source/junker_app.md) / junker.app
@@ -2656,6 +2657,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
 - [Mulazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Municipium](/doc/source/municipium_it.md) / municipiumapp.it
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
 - [NET SpA - Udine](/doc/source/junker_app.md) / junker.app
 - [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
@@ -2753,6 +2755,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app
+- [Serrastretta (CZ)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Serravalle Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto San Giovanni - Impresa Sangalli](/doc/source/junker_app.md) / junker.app

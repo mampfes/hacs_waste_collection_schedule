@@ -15702,6 +15702,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Acate (RG)",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
+    },
+    {
       "title": "Aci Sant'Antonio",
       "module": "junker_app",
       "default_params": {},
@@ -17750,6 +17756,12 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Municipium",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
+    },
+    {
       "title": "Muraca Srl",
       "module": "junker_app",
       "default_params": {},
@@ -18366,6 +18378,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Serrastretta (CZ)",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
     },
     {
       "title": "Serravalle Pistoiese",

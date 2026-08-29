@@ -186,7 +186,7 @@
   "gosnells_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md",
     "howto": {
-      "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page."
+      "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/City-Services/Waste-and-Recycling/Find-your-waste-collection-dates) website and search for your collection schedule. Use your address as it is displayed on the search results page."
     },
     "urls": {}
   },
@@ -3583,6 +3583,14 @@
   "junker_app": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
     "howto": {},
+    "urls": {}
+  },
+  "municipium_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/municipium_it.md",
+    "howto": {
+      "en": "Enter the name of your municipality (comune) as it appears in the Municipium app. If the municipality has more than one collection zone (area), the error message will list the available zone names; pass the one that matches your address as 'area'. A partial name (e.g. 'Zona 2') is enough, or you can pass the numeric calendar id.",
+      "it": "Inserisci il nome del tuo comune così come appare nell'app Municipium. Se il comune ha più di una zona di raccolta (area), il messaggio di errore elencherà i nomi delle zone disponibili; indica come 'area' quella che corrisponde al tuo indirizzo. È sufficiente un nome parziale (es. 'Zona 2'), oppure puoi passare l'id numerico del calendario."
+    },
     "urls": {}
   },
   "aliaserviziambientali_it": {

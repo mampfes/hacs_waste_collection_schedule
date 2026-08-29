@@ -16736,6 +16736,28 @@
         },
         "data_description": {}
       },
+      "args_municipium_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Gebiet",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_municipium_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Gebiet",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {}
+      },
       "args_aliaserviziambientali_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -21211,8 +21233,8 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "community": "Gemeindename genau wie auf der Entsorgungsplan-Seite der KVA Thurgau aufgeführt (z. B. 'Kreuzlingen').",
-          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch.",
-          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
+          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch (auf der Startseite unter 'Wir für Sie' → 'Entsorgung').",
+          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch (auf der Startseite unter 'Für Private' → 'Entsorgungspläne') — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -21226,8 +21248,8 @@
         },
         "data_description": {
           "community": "Gemeindename genau wie auf der Entsorgungsplan-Seite der KVA Thurgau aufgeführt (z. B. 'Kreuzlingen').",
-          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch.",
-          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
+          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch (auf der Startseite unter 'Wir für Sie' → 'Entsorgung').",
+          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch (auf der Startseite unter 'Für Private' → 'Entsorgungspläne') — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
         }
       },
       "args_alchenstorf_ch": {
