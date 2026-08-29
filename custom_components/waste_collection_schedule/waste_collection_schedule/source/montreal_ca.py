@@ -2,7 +2,7 @@ import logging
 import re
 from datetime import datetime
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 # Currently, Montreal does not offer an iCal/Webcal subscription method.
@@ -13,6 +13,7 @@ from waste_collection_schedule import Collection, Icons  # type: ignore[attr-def
 TITLE = "Montreal (QC)"
 DESCRIPTION = "Source script for montreal.ca/info-collectes"
 URL = "https://montreal.ca/info-collectes"
+COUNTRY = "ca"
 TEST_CASES = {
     "Lasalle": {"sector": "LSL4"},
     "Mercier-Hochelaga": {
@@ -373,7 +374,7 @@ class Source:
         if source_type == "Green" and self._green_features is not None:
             features = self._green_features
         else:
-            r = requests.get(url, timeout=60)
+            r = requests.get(url, timeout=60, impersonate="chrome")
             r.raise_for_status()
 
             schedule = r.json()
