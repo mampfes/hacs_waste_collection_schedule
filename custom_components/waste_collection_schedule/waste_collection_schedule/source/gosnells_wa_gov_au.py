@@ -112,9 +112,8 @@ def _parse_date(next_service: str, note: str, today: date) -> date | None:
     """Return the start date of a service's next collection."""
     match = _PRECISE_RE.search(next_service)
     if match:
-        day, month, year = (int(g) for g in match.groups())
         try:
-            return date(year, month, day)
+            return date(int(match.group(3)), int(match.group(2)), int(match.group(1)))
         except ValueError:
             return None
 

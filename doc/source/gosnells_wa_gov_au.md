@@ -17,6 +17,8 @@ waste_collection_schedule:
 **address**
 *(string) (required)*
 
+Your street address as it appears on the City of Gosnells website, e.g. `15 Mackay Crescent GOSNELLS 6110`.
+
 ## Example
 
 ```yaml
