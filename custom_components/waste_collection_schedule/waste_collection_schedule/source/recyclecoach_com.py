@@ -350,6 +350,12 @@ EXTRA_INFO = [
         "country": "us",
         "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
     },
+    {
+        "title": "Bloomington (IL)",
+        "url": "https://www.bloomingtonil.gov/",
+        "country": "us",
+        "default_params": {"project_id": "621", "district_id": "BLO"},
+    },
 ]
 
 TEST_CASES = {
@@ -472,6 +478,11 @@ TEST_CASES = {
         "city": "Peoria",
         "state": "Illinois",
     },
+    "Bloomington, IL, USA (with district_id, project_id & zone_id)": {
+        "district_id": "BLO",
+        "project_id": "621",
+        "zone_id": "zone-z11025",
+    },
     "Carleton Place, ON, Canada": {
         "street": "175 Bridge St",
         "city": "Carleton Place",
@@ -533,7 +544,6 @@ class Source:
 
     def _lookup_zones_with_geo(self):
         geo_address_urls = [
-            f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
             f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
         ]
@@ -572,7 +582,6 @@ class Source:
             )
 
         zone_finder_urls = [
-            f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
             f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
         ]
@@ -597,7 +606,6 @@ class Source:
 
     def _lookup_zones(self):
         zone_lookup_urls = [
-            f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
             f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
         ]
@@ -650,13 +658,11 @@ class Source:
             self._lookup_zones()
 
         collection_urls = [
-            f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
             f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
         ]
 
         schedule_urls = [  # Some regions use different one of these should work
-            f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
             f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
         ]
