@@ -15,6 +15,24 @@ TEST_CASES = {
     "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia."
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "Street number and street name, e.g. 50 Brisbane Road.",
+        "suburb": "Suburb name, e.g. Redbank.",
+    }
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street",
+        "suburb": "Suburb",
+    }
+}
+
 APP_PACKAGE = "com.socketsoftware.whatbinday.ipswich"
 CONFIG_URL = "https://api.whatbinday.com/V3/Device/{}/Config"
 
@@ -55,7 +73,8 @@ class Source:
         config_payload = config_response.json()
         if not config_payload.get("success"):
             raise RuntimeError(
-                f"Device configuration failed: {config_payload.get('info', '')}"
+                "Device configuration failed: "
+                f"{config_payload.get('info') or 'Unknown error'}"
             )
 
         search_url = config_payload["data"]["config"]["googleAddressSearchURL"]
