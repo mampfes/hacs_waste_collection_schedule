@@ -1169,8 +1169,8 @@ class WasteCollectionOptionsFlow(OptionsFlow):
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)
 
-    def get_types_of_sensors_and_customizations(self):
-        fetched_types = []
+    def get_types_of_sensors_and_customizations(self) -> list[str]:
+        fetched_types: list[str] = []
 
         coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
             self._entry.entry_id
@@ -1189,7 +1189,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             elif collection_types:
                 fetched_types.append(collection_types)
 
-        return sorted(set(fetched_types))
+        return sorted({t for t in fetched_types if t})
 
     async def async_step_customize(self, user_input: dict[str, Any] | None = None):
         if self._customize_select is None or self._customize_select_idx >= len(
