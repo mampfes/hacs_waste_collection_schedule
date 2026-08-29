@@ -429,7 +429,9 @@
   },
   "ipswich_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_qld_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia."
+    },
     "urls": {}
   },
   "kempsey_nsw_gov_au": {

@@ -1800,7 +1800,9 @@
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Street number and street name, e.g. 50 Brisbane Road.",
+          "suburb": "Suburb name, e.g. Redbank."
         }
       },
       "reconfigure_ipswich_qld_gov_au": {
@@ -1811,7 +1813,10 @@
           "street": "Street",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Street number and street name, e.g. 50 Brisbane Road.",
+          "suburb": "Suburb name, e.g. Redbank."
+        }
       },
       "args_kempsey_nsw_gov_au": {
         "title": "Configure Source",
