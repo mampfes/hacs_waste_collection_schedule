@@ -25966,6 +25966,15 @@
       "id": "baton_rouge_la_us"
     },
     {
+      "title": "Bloomington (IL)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BLO",
+        "project_id": "621"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Chesapeake, VA",
       "module": "chesapeake_va_us",
       "default_params": {},
