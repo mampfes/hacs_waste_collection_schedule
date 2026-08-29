@@ -2,12 +2,11 @@ import json
 from datetime import datetime
 
 import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Recycle Coach"
 DESCRIPTION = "Source loader for recyclecoach.com"
@@ -479,10 +478,10 @@ TEST_CASES = {
         "city": "Peoria",
         "state": "Illinois",
     },
-    "Bloomington, IL, USA": {
+    "Bloomington, IL, USA (with district_id, project_id & zone_id)": {
         "district_id": "BLO",
-        "project_id": 621,
-        "zone_id": "zone-z11214",
+        "project_id": "621",
+        "zone_id": "zone-z11025",
     },
     "Carleton Place, ON, Canada": {
         "street": "175 Bridge St",

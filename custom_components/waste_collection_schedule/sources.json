@@ -192,6 +192,14 @@
     },
     {
       "title": "Campbelltown City Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Campbelltown City Council"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
+      "title": "Campbelltown City Council",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
@@ -201,14 +209,6 @@
       "module": "campbelltown_nsw_gov_au",
       "default_params": {},
       "id": "campbelltown_nsw_gov_au"
-    },
-    {
-      "title": "Campbeltown City Council",
-      "module": "impactapps_com_au",
-      "default_params": {
-        "service": "Campbeltown City Council"
-      },
-      "id": "impactapps_com_au"
     },
     {
       "title": "Cardinia Shire Council",
@@ -1018,10 +1018,10 @@
       "id": "moyne_vic_gov_au"
     },
     {
-      "title": "Murrindindi Shire Counci",
+      "title": "Murrindindi Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
-        "service": "Murrindindi Shire Counci"
+        "service": "Murrindindi Shire Council"
       },
       "id": "impactapps_com_au"
     },
@@ -5078,6 +5078,14 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "City of Kamloops, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Kingston, ON",
       "module": "ics",
       "default_params": {
@@ -5360,6 +5368,12 @@
         "project_id": "3169"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Mirabel (QC)",
+      "module": "mirabel_ca",
+      "default_params": {},
+      "id": "mirabel_ca"
     },
     {
       "title": "Mississauga (ON)",
@@ -5921,6 +5935,14 @@
   ],
   "France": [
     {
+      "title": "Aigrefeuille-sur-Maine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Aigrefeuille-sur-Maine"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Aingeray",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6157,6 +6179,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Boussay",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Boussay"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Bouvron",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6277,12 +6307,42 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Ch\u00e2teau-Th\u00e9baud",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Ch\u00e2teau-Th\u00e9baud"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 897
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Clisson",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Clisson"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Clisson S\u00e8vre et Maine Agglo",
+      "module": "clissonsevremaine_fr",
+      "default_params": {},
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Clisson, rue Saint-Antoine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Clisson, rue Saint-Antoine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Coeur d'Yvelines",
@@ -6465,6 +6525,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Gorges",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Gorges"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Goupilli\u00e8res",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6541,12 +6609,36 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "G\u00e9tign\u00e9 - zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "G\u00e9tign\u00e9 - zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "G\u00e9tign\u00e9 - zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "G\u00e9tign\u00e9 - zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Habsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Habsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Haute-Goulaine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Haute-Goulaine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Heimsbrunn",
@@ -6611,6 +6703,30 @@
         "commune": "La Br\u00e8de"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "La Haye-Fouassi\u00e8re - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Haye-Fouassi\u00e8re - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Haye-Fouassi\u00e8re - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Haye-Fouassi\u00e8re - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Planche",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "La Planche"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "La Queue-en-Brie",
@@ -6755,6 +6871,30 @@
       "id": "mamirolle_info"
     },
     {
+      "title": "Maisdon-sur-S\u00e8vre - zone 1",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 1"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Maisdon-sur-S\u00e8vre - zone 2",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 2"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Maisdon-sur-S\u00e8vre - zone 3",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Maisdon-sur-S\u00e8vre - zone 3"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Manoncourt-en-Wo\u00ebvre",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6817,6 +6957,14 @@
         "commune": "Minorville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Monni\u00e8res",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Monni\u00e8res"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Montfort-l'Amaury",
@@ -7054,6 +7202,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Remouill\u00e9",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Remouill\u00e9"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Richwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7124,12 +7280,44 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Saint-Hilaire-de-Clisson - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Hilaire-de-Clisson - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Saint-Hilaire-de-Clisson - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Hilaire-de-Clisson - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
       "title": "Saint-Louis-de-Montferrand",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Saint-Louis-de-Montferrand"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Lumine-de-Clisson - Zone A",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Lumine-de-Clisson - Zone A"
+      },
+      "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Saint-Lumine-de-Clisson - Zone B",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Saint-Lumine-de-Clisson - Zone B"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Saint-Morillon",
@@ -7258,6 +7446,14 @@
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "St-Fiacre-sur-Maine",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "St-Fiacre-sur-Maine"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Staffelfelden",
@@ -7398,6 +7594,14 @@
         "commune": "Vicq"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Vieillevigne",
+      "module": "clissonsevremaine_fr",
+      "default_params": {
+        "commune": "Vieillevigne"
+      },
+      "id": "clissonsevremaine_fr"
     },
     {
       "title": "Villenave-d'Ornon",
@@ -8376,11 +8580,11 @@
     },
     {
       "title": "ASO Abfall-Service Osterholz",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "040b38fe83f026f161f30f282b2748c0"
+        "key": "8b016df0116d1d5094fa339bebea0c65"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "ASR Stadt Chemnitz",
@@ -14288,6 +14492,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Geilenkirchen",
+      "module": "geilenkirchen_de",
+      "default_params": {},
+      "id": "geilenkirchen_de"
+    },
+    {
       "title": "Stadt Gem\u00fcnden (Wohra)",
       "module": "gemuenden_wohra_de",
       "default_params": {},
@@ -14364,6 +14574,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_export_vcal"
+    },
+    {
+      "title": "Stadt L\u00f6hne",
+      "module": "ics",
+      "default_params": {
+        "regex": "(.*?): L\u00f6hne"
+      },
+      "id": "ics_loehne_de"
     },
     {
       "title": "Stadt Mainhausen",
@@ -15620,6 +15838,12 @@
   ],
   "Hungary": [
     {
+      "title": "Dep\u00f3nia Nonprofit Kft.",
+      "module": "deponia_hu",
+      "default_params": {},
+      "id": "deponia_hu"
+    },
+    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
@@ -15636,6 +15860,18 @@
       "module": "mohu_bp_hu",
       "default_params": {},
       "id": "mohu_bp_hu"
+    },
+    {
+      "title": "Si\u00f3kom Nonprofit Kft.",
+      "module": "siokom_hu",
+      "default_params": {},
+      "id": "siokom_hu"
+    },
+    {
+      "title": "STKH Sopron \u00e9s T\u00e9rs\u00e9ge Nonprofit Kft.",
+      "module": "stkh_hu",
+      "default_params": {},
+      "id": "stkh_hu"
     },
     {
       "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, R\u00e1ckereszt\u00far, S\u00f3sk\u00fat, T\u00e1rnok)",
@@ -15672,6 +15908,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Acate (RG)",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
     },
     {
       "title": "Aci Sant'Antonio",
@@ -17374,6 +17616,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Lu e Cuccaro Monferrato",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Lucca - Sistema Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -17714,6 +17962,12 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Municipium",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
     },
     {
       "title": "Muraca Srl",
@@ -18332,6 +18586,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Serrastretta (CZ)",
+      "module": "municipium_it",
+      "default_params": {},
+      "id": "municipium_it"
     },
     {
       "title": "Serravalle Pistoiese",
@@ -19674,6 +19934,12 @@
       "id": "aucklandcouncil_govt_nz"
     },
     {
+      "title": "Central Otago District Council",
+      "module": "codc_govt_nz",
+      "default_params": {},
+      "id": "codc_govt_nz"
+    },
+    {
       "title": "Christchurch City Council",
       "module": "ccc_govt_nz",
       "default_params": {},
@@ -19931,10 +20197,74 @@
       "id": "moje_odpady_pl"
     },
     {
+      "title": "Baczk\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Baczk\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Bess\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Bess\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Bogucice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Bogucice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Brze\u017anica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Brze\u017anica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Buczyna",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Buczyna"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Bydgoszcz Pronatura",
       "module": "pronatura_bydgoszcz_pl",
       "default_params": {},
       "id": "pronatura_bydgoszcz_pl"
+    },
+    {
+      "title": "Cerekiew",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Cerekiew"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Che\u0142m",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Che\u0142m"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Cikowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Cikowice"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Czerwonak, Murowana Go\u015blina, Oborniki",
@@ -19949,6 +20279,22 @@
       "id": "czystyregion_pl"
     },
     {
+      "title": "Damienice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Damienice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "D\u0105browica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "D\u0105browica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Ecoharmonogram",
       "module": "ecoharmonogram_pl",
       "default_params": {},
@@ -19959,6 +20305,14 @@
       "module": "ecoszczecin_pl",
       "default_params": {},
       "id": "ecoszczecin_pl"
+    },
+    {
+      "title": "Gaw\u0142\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gaw\u0142\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Gda\u0144sk",
@@ -19977,6 +20331,14 @@
       "id": "smiecioplan_pl"
     },
     {
+      "title": "Gierczyce",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gierczyce"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Gmina Bardo",
       "module": "sims_pl",
       "default_params": {
@@ -19991,6 +20353,12 @@
         "owner": "Gmina Bartniczka"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Bochnia",
+      "module": "bochnia_gmina_pl",
+      "default_params": {},
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Gmina Brzeg Dolny",
@@ -20559,6 +20927,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Trzebnica",
+      "module": "gmina_trzebnica_pl",
+      "default_params": {},
+      "id": "gmina_trzebnica_pl"
+    },
+    {
       "title": "Gmina Ulan-Majorat",
       "module": "sims_pl",
       "default_params": {
@@ -20737,6 +21111,14 @@
       "id": "goap_poznan_pl"
     },
     {
+      "title": "Gorzk\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Gorzk\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Gospodarka Odpadami - Pelplin",
       "module": "sims_pl",
       "default_params": {
@@ -20751,6 +21133,14 @@
         "owner": "Gospodarka Odpadami - Starogard Gda\u0144ski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Grabina",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Grabina"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Hemar (ichisystem.eu)",
@@ -20827,6 +21217,22 @@
       "id": "sepan_remondis_pl"
     },
     {
+      "title": "Krzy\u017canowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Krzy\u017canowice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Majkowice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Majkowice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Miasto i Gmina Morawica",
       "module": "sims_pl",
       "default_params": {
@@ -20883,6 +21289,14 @@
       "id": "sims_pl"
     },
     {
+      "title": "Moszczenica",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Moszczenica"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "MPGK Katowice",
       "module": "mpgk_com_pl",
       "default_params": {},
@@ -20893,6 +21307,38 @@
       "module": "mpo_krakow_pl",
       "default_params": {},
       "id": "mpo_krakow_pl"
+    },
+    {
+      "title": "Nieprze\u015bnia",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieprze\u015bnia"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Nieszkowice Ma\u0142e",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieszkowice Ma\u0142e"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Nieszkowice Wielkie",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Nieszkowice Wielkie"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Ostr\u00f3w Szlachecki",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Ostr\u00f3w Szlachecki"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Pabianice",
@@ -20919,6 +21365,14 @@
       "id": "ichisystem_eu"
     },
     {
+      "title": "Pogwizd\u00f3w",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Pogwizd\u00f3w"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Polkowice",
       "module": "sims_pl",
       "default_params": {
@@ -20939,6 +21393,14 @@
       "id": "prezero_bielsko_pl"
     },
     {
+      "title": "Prosz\u00f3wki",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Prosz\u00f3wki"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
       "module": "sims_pl",
       "default_params": {
@@ -20951,6 +21413,14 @@
       "module": "rybnik_pl",
       "default_params": {},
       "id": "rybnik_pl"
+    },
+    {
+      "title": "Siedlec",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Siedlec"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "SISMS.pl / BLISKO",
@@ -20973,6 +21443,22 @@
       "id": "smiecioplan_pl"
     },
     {
+      "title": "Stanis\u0142awice",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Stanis\u0142awice"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Stradomka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Stradomka"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Strzelce Kraje\u0144skie",
       "module": "sims_pl",
       "default_params": {
@@ -20987,6 +21473,14 @@
         "city": "szczecin"
       },
       "id": "smiecioplan_pl"
+    },
+    {
+      "title": "S\u0142omka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "S\u0142omka"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "Warsaw",
@@ -21009,10 +21503,34 @@
       "id": "wieliczka_kiedyodpady_pl"
     },
     {
+      "title": "Wola Nieszkowska",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Wola Nieszkowska"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
       "title": "Wroc\u0142aw",
       "module": "ekosystem_wroc_pl",
       "default_params": {},
       "id": "ekosystem_wroc_pl"
+    },
+    {
+      "title": "Zatoka",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Zatoka"
+      },
+      "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Zawada",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "Zawada"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "ZGPD-7",
@@ -21021,6 +21539,14 @@
         "owner": "ZGPD-7"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "\u0141apczyca",
+      "module": "bochnia_gmina_pl",
+      "default_params": {
+        "town": "\u0141apczyca"
+      },
+      "id": "bochnia_gmina_pl"
     },
     {
       "title": "\u0141\u00f3d\u017a",
@@ -21049,6 +21575,12 @@
       "module": "kositeast_sk",
       "default_params": {},
       "id": "kositeast_sk"
+    },
+    {
+      "title": "KOSIT WEST",
+      "module": "kositwest_sk",
+      "default_params": {},
+      "id": "kositwest_sk"
     },
     {
       "title": "Odvoz Odpadu",
@@ -21423,6 +21955,12 @@
         "service_provider": "orust-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Partille kommun",
+      "module": "partille_se",
+      "default_params": {},
+      "id": "partille_se"
     },
     {
       "title": "Pireva",
@@ -23747,6 +24285,12 @@
       "id": "eastdunbarton_gov_uk"
     },
     {
+      "title": "East Hampshire District Council",
+      "module": "easthants_gov_uk",
+      "default_params": {},
+      "id": "easthants_gov_uk"
+    },
+    {
       "title": "East Herts Council",
       "module": "eastherts_gov_uk",
       "default_params": {},
@@ -24955,6 +25499,12 @@
       "id": "stevenage_gov_uk"
     },
     {
+      "title": "Stirling Council",
+      "module": "stirling_gov_uk",
+      "default_params": {},
+      "id": "stirling_gov_uk"
+    },
+    {
       "title": "Stirling Council, UK",
       "module": "ics",
       "default_params": {
@@ -25408,15 +25958,6 @@
       "module": "baton_rouge_la_us",
       "default_params": {},
       "id": "baton_rouge_la_us"
-    },
-    {
-      "title": "Bloomington (IL)",
-      "module": "recyclecoach_com",
-      "default_params": {
-        "district_id": "BLO",
-        "project_id": "621"
-      },
-      "id": "recyclecoach_com"
     },
     {
       "title": "Chesapeake, VA",
