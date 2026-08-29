@@ -1,6 +1,6 @@
 # STKH Sopron és Térsége Nonprofit Kft.
 
-Support for waste collection schedules provided by [STKH Sopron és Térsége Nonprofit Kft.](https://stkh.hu), the public waste management service of Sopron and its surroundings (Győr-Moson-Sopron and Vas counties), Hungary.
+Support for waste collection schedules provided by [STKH Sopron és Térsége Nonprofit Kft.](https://stkh.hu), the public waste management service of Sopron and its surroundings (Győr-Moson-Sopron and Vas counties), Hungary. <!-- codespell:ignore vas -->
 
 ## Configuration via configuration.yaml
 
