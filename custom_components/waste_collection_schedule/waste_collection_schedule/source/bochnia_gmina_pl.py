@@ -79,6 +79,10 @@ TOWNS_PDF_MAP = {
     "Zawada": "Zawada.pdf",
 }
 
+EXTRA_INFO = [
+    {"title": town, "default_params": {"town": town}} for town in TOWNS_PDF_MAP
+]
+
 MIXED_WASTE = "Odpady zmieszane i segregowane"
 BULKY_WASTE = "Gabaryty i niebezpieczne"
 
