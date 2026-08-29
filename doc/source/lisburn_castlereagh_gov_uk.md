@@ -21,16 +21,16 @@ waste_collection_schedule:
     sources:
         - name: lisburn_castlereagh_gov_uk
           args:
-            post_code: "BT28 1AG"
+            postcode: "BT28 1AG"
             house_number: "19A"
 ```
 
 ### Configuration Variables
 
 **property_id**  
-*(string) (required if post_code not provided)*
+*(string) (required if postcode not provided)*
 
-**post_code**  
+**postcode**  
 *(string) (required if property_id not provided)*
 
 **house_number**  
@@ -43,7 +43,7 @@ waste_collection_schedule:
     sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: "DYYSm8Ls8XxGi3Nq"
+        property_id: "RTTKBJY77wmTr5wP"
 ```
 
 ## How to get the property_id argument
@@ -51,6 +51,6 @@ waste_collection_schedule:
 The property_id can be found in the URL when looking up your
 bin collection days at [Lisburn and Castlereagh bin collection days](https://lisburn.isl-fusion.com).
 
-## Why property_id over post_code and house_number?
+## Why property_id over postcode and house_number?
 
 The code has to do a search by post code and house number then look up the bin collection time using property ID
