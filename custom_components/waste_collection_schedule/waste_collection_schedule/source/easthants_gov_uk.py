@@ -20,6 +20,7 @@ TITLE = "East Hampshire District Council"
 DESCRIPTION = "Waste collection schedules for East Hampshire District Council."
 URL = "https://www.easthants.gov.uk"
 COUNTRY = "uk"
+SOURCE_CODEOWNERS = ["@alexcroox"]
 
 _SCHEDULE_URL = f"{URL}/bin-collections/find-your-bin-calendar"
 _MONTHS = {
