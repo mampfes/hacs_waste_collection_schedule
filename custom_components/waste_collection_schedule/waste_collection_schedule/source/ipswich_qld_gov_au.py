@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Ipswich City Council"
 DESCRIPTION = "Source for Ipswich City Council rubbish collection."
@@ -123,14 +124,23 @@ class Source:
 
         candidates = geocode_response.json().get("candidates", [])
         if not candidates:
-            return []
+            raise SourceArgumentNotFound(
+                "street",
+                f"{self._street}, {self._suburb}",
+                "please check the spelling of the street and suburb and try again.",
+            )
 
         candidate = candidates[0]
         attributes = candidate.get("attributes", {})
         postcode = attributes.get("Postal")
 
         if not postcode:
-            return []
+            raise SourceArgumentNotFound(
+                "street",
+                f"{self._street}, {self._suburb}",
+                "the address could not be resolved to a postcode, "
+                "please check the spelling and try again.",
+            )
 
         street_number, _, street_name = self._street.partition(" ")
 
