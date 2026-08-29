@@ -8,9 +8,9 @@ Support for bin collection schedules provided by the [City of Edinburgh Council]
 waste_collection_schedule:
   sources:
     - name: edinburgh_gov_uk
-args:
-  postcode: "EH10 4AY"
-  paon: "1 Morningside Road"  # optional
+      args:
+        postcode: "EH10 4AY"
+        paon: "1 Morningside Road" # optional
 ```
 
 ## Configuration variables
