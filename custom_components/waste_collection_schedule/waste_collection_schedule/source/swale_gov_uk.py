@@ -110,10 +110,16 @@ class Source:
         if "just a moment" in title or "challenges.cloudflare.com" in content:
             raise ValueError("Swale lookup was blocked by a Cloudflare challenge.")
 
-        errors = soup.select(
-            ".sq-form-error, .sq-form-error-message, .validation-error, "
-            ".alert-danger, [role='alert']"
-        )
+        # Only treat an error container as an error if it actually carries text:
+        # empty aria-live regions are always present on the results page.
+        errors = [
+            error
+            for error in soup.select(
+                ".sq-form-error, .sq-form-error-message, .validation-error, "
+                ".alert-danger, [role='alert']"
+            )
+            if error.get_text(" ", strip=True)
+        ]
         if errors:
             raise ValueError(f"Swale {stage} submission returned a validation error.")
 
@@ -163,7 +169,7 @@ class Source:
         payload[submit_name] = submit_value
         r = self._submit(s, r, form, payload)
         r.raise_for_status()
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        soup = BeautifulSoup(r.content, "html.parser")
         self._raise_for_unexpected_page(soup, "UPRN")
         if self._lookup_form(soup):
             raise ValueError(

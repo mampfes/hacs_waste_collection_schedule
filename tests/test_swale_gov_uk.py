@@ -52,7 +52,7 @@ UPRN_FORM = """
   <input type="hidden" name="SQ_FORM_999_PAGE" value="2">
   <input type="hidden" name="state" value="second-state">
   <label for="address">Choose your address</label>
-  <select id="address" name="q999:q2"><option value="[redacted]">Address</option></select>
+  <select id="address" name="q999:q2"><option value="100062375927">Address</option></select>
   <input type="submit" name="submit_999" value="Get Bin Days">
 </form></html>
 """
@@ -73,7 +73,7 @@ def fetch_with(responses: list[Response]) -> tuple[list, Session]:
         patch.object(swale_gov_uk.requests, "Session", return_value=session),
         patch.object(swale_gov_uk, "sleep"),
     ):
-        entries = swale_gov_uk.Source("[redacted]", "AA1 1AA").fetch()
+        entries = swale_gov_uk.Source("100062375927", "AA1 1AA").fetch()
     return entries, session
 
 
@@ -107,7 +107,7 @@ def test_fetch_preserves_dynamic_form_state_and_parses_results() -> None:
                 "token": "token-two",
                 "SQ_FORM_999_PAGE": "2",
                 "state": "second-state",
-                "q999:q2": "[redacted]",
+                "q999:q2": "100062375927",
                 "submit_999": "Get Bin Days",
             },
         ),
