@@ -3804,6 +3804,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
 - [Staffordshire Moorlands District Council](/doc/source/staffsmoorlands_gov_uk.md) / staffsmoorlands.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
+- [Stirling Council](/doc/source/stirling_gov_uk.md) / stirling.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
 - [Stockton-on-Tees Borough Council](/doc/source/stockton_gov_uk.md) / stockton.gov.uk

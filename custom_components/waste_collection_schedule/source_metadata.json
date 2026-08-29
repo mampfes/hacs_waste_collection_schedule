@@ -6713,6 +6713,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "stirling_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_gov_uk.md",
+    "howto": {
+      "en": "Visit https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/ and type your address into the search to see the exact wording, then use the same here. House number and street (e.g. '38 Kildean Road'), property name (e.g. 'Merlo'), or a single-dwelling postcode work."
+    },
+    "urls": {}
+  },
   "stockport_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockport_gov_uk.md",
     "howto": {},
