@@ -56,6 +56,14 @@ ANJ1_GREEN = " Collection days in 2026 :   \n  - Spring : from April 1 to May 27
 # phrased "every second week" and the list ends at a line break.
 RPP_GREEN = " Collection days in 2026  : \n - Spring : from April 8 to May 27, every week on Wednesday\n -  Summer, every second week : June 3 and 17; July 1, 15 and 29; August 12 and 26; September 9 and 23\n - Autumn : from September 30 to November 25, every week on Wednesday\n\nDeposit place: See instructions for Waste collection \nHours :  Take out containers between 5 a.m. and 8 a.m. the day of collection \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes \n - Plastic bags are PROHIBITED"
 
+# Lasalle sector LSL4: biweekly summer dates written with an Oxford comma,
+# and a leading day carrying an ordinal suffix.
+LSL4_GREEN = "Collection day(s) in 2026 :  Every Wednesday from April 15, 2026 to December 2, 2026.\n* Exception: During the months of July and August, collections take place once every two weeks :\n - July 1st, 15, and 29;\n - August 12 and 26. \nHours : Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes \nPlastic bags are not accepted."
+
+# Villeray sector VSMPE-2a: an ordinal appearing inside a sentence that
+# denies a collection on that date.
+VSMPE2A_WASTE = "Collection day(s) :  Thursday\nHours :  Take out containers between 8 p.m. the evening before and 7 a.m. the day of collection\n\n\n  Important  - Starting September 24, household garbage will be collected every other week in your area. This means there will be a collection on September 24, but there will be no collection on October 1st, and so on.\n\n\n\n  No changes are planned for the collection of recyclable materials, food scraps, bulky items, or construction, renovation and demolition debris.\n\nFor more information, please visit montreal.ca\n\n"
+
 # Mercier-Hochelaga sector MHM-42-S: plain per-month date lists, no seasons.
 MHM_GREEN = "Collection day(s) 2026 :  the following tuesdays :\n - April 21 and 28;\n - May 5, 12, 19 and 26 ; \n - June 2, 9 and 23;\n - July 7 and 21;\n - August 4, 18 and 25;\n - September 1, 8, 15, 22 and 29; \n - October 6, 13, 20 and 27;\n - November 3, 10 and 17. \nHours : Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection. \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes \nPlastic bags are not accepted."
 
@@ -145,3 +153,32 @@ def test_plain_date_lists_are_unaffected():
     parsed = parse(MHM_GREEN)
     assert parsed
     assert all(d.weekday() == 1 for d in parsed)
+
+
+def test_oxford_comma_keeps_the_final_date():
+    """The 29 in "July 1st, 15, and 29" must survive.
+
+    Splitting on ", " before " and " leaves "and 29" as a token, whose
+    first word is "and" -- not numeric, so the date was dropped.
+    """
+    parsed = parse(LSL4_GREEN)
+    assert date(2026, 7, 29) in parsed
+    assert {date(2026, 7, 15), date(2026, 8, 12), date(2026, 8, 26)} <= parsed
+
+
+def test_ordinal_day_numbers_are_deliberately_not_parsed():
+    """ "July 1st" is a real collection, but parsing ordinals is unsafe.
+
+    The same token shape appears in prose denying a collection -- see
+    test_a_denied_date_is_not_emitted -- and in "1st and 3rd Wednesday of
+    the month", where it is an ordinal week rather than a day. Telling
+    those apart needs more than tokenising, so the day is knowingly left
+    on the floor rather than risk inventing collections.
+    """
+    assert date(2026, 7, 1) not in parse(LSL4_GREEN)
+
+
+def test_a_denied_date_is_not_emitted():
+    """ "no collection on October 1st" must not produce a collection."""
+    assert date(2026, 10, 1) not in parse(VSMPE2A_WASTE)
+    assert date(2026, 9, 24) in parse(VSMPE2A_WASTE)
