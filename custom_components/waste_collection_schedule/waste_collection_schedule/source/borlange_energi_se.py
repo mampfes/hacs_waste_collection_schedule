@@ -32,7 +32,7 @@ PORTLET_ID_PATTERN = re.compile(
 )
 PAGE_ID_PATTERN = re.compile(r"/webapp-resource/([^/\"']+)/")
 
-DEFAULT_ICON = "mdi:trash-can"
+DEFAULT_ICON = Icons.GENERAL_WASTE
 MONTHS = {
     "januari": 1,
     "februari": 2,
@@ -52,7 +52,7 @@ ICON_MAP = {
     "Matavfall": Icons.BIO_KITCHEN,
     "Restavfall": Icons.GENERAL_WASTE,
     "Pappersförpackningar": Icons.PAPER,
-    "Plastförpackningar": Icons.GLASS,
+    "Plastförpackningar": Icons.PLASTIC_PACKAGING,
 }
 
 
