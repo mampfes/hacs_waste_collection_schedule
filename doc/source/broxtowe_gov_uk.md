@@ -42,10 +42,9 @@ Use your postcode as postcode argument
 
 An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
 
-### Get Your UPRN analysing browser traffic
+### Get Your UPRN by analysing browser traffic
 
-- Fill out your postcode at https://selfservice.broxtowe.gov.uk/renderform.aspx?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528 and press `Search`.
+- Fill out your postcode at https://selfservice.broxtowe.gov.uk/renderform?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528 and press `Find address`.
 - Open your browser developer tools (in most browser `F12` or `right click -> inspect`) and open the `network` tab.
-- Select your address.
-- Your network tab should receive a new request, open it.
-- Select `request`. You should now see the argument `ctl00$ContentPlaceHolder1$FF5683DDL` containing your UPRN with a U as prefix (example: `ctl00$ContentPlaceHolder1$FF5683DDL: U100031343805` means your UPRN is `100031343805`).
+- Open the `core/addresslookup` request and inspect its JSON response.
+- Find your address. Its `Key` value contains your UPRN with a `U` prefix (for example, `U100031343805` means your UPRN is `100031343805`).
