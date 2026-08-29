@@ -50,7 +50,6 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-# Add your own handle here if you're picking this source up:
 SOURCE_CODEOWNERS = ["@RedPandaDoge"]
 
 ADDRESS_API_URL = "https://greatershepparton.com.au/external/gis-api/address"
@@ -73,12 +72,10 @@ _WEEKDAYS = [
     "Sunday",
 ]
 
-# Every one of the council's 20 zones (Monday A .. Friday D) follows the same
-# collection cadence per bin colour - only the per-zone reference dates differ,
+# Every one of the council's 20 zones (Monday A .. Friday D) uses the same
+# collection cadence per bin colour; only the per-zone reference dates differ,
 # and those are fetched live from ZONE_SCHEDULES_URL on every call (see
-# _extract_reference_dates below). This mapping is stable rostering structure,
-# not schedule data, the same way every other source in this repo encodes its
-# own day-of-week/interval rules in Python while only dates come from upstream.
+# _extract_reference_dates below).
 _BIN_INTERVAL_DAYS = {
     "General Waste": 14,
     "Recycling": 14,
@@ -107,15 +104,10 @@ _REFERENCE_DATE_VAR = {
 # NOTE ON SCOPE: bin-zone-schedules also encodes a temporary Christmas/New
 # Year collection-day shift for some zones (wrapped in a "ChangingSchedule"
 # conditional in the source JS). Which days-of-week are affected depends on
-# which weekday the holidays fall on that particular year, so it isn't stable
-# rostering structure like the cadence table above - modelling it correctly
-# would mean parsing the JS's actual conditional/control-flow structure
-# rather than just extracting date literals, which no source in this project
-# does (see CLAUDE.md "no hardcoded dates or schedules" combined with the
-# project's existing precedent of only ever extracting JS *data*, e.g.
-# boroondara_vic_gov_au.py). This source therefore does not model that
-# temporary window; collection dates may be off by up to a day for the
-# ~2 weeks spanning Christmas/New Year.
+# which weekday the holidays fall on in a given year, and modelling it would
+# require interpreting the JS control flow rather than just its date literals.
+# This source therefore does not model that temporary window; collection dates
+# may be off by up to a day for the ~2 weeks spanning Christmas/New Year.
 
 
 def _normalise(text: str) -> str:
@@ -153,7 +145,7 @@ def _geocode(street_address: str) -> tuple[float, float]:
     elif len(candidates) == 1:
         match = candidates[0]
     else:
-        suggestions = [c["eziAddress"] for c in candidates]
+        suggestions = [c["eziAddress"] for c in (matches or candidates)]
         raise SourceArgAmbiguousWithSuggestions(
             "street_address", street_address, suggestions
         )
