@@ -132,20 +132,26 @@ class Source:
 
         0. Town-qualified, the way this source suggests it. The only form that
            separates two streets of the same name in different towns.
-        1. The label exactly as the council writes it.
-        2. The label without the council's district suffix, which is how a
+        1. Town-qualified but without the district suffix, e.g.
+           "ASH ROAD (BENFLEET)" for "ASH ROAD - HADLEIGH" in Benfleet. The
+           bracketed town is what the parameter description tells people to add,
+           so it has to win over an un-qualified match on a different town.
+        2. The label exactly as the council writes it.
+        3. The label without the council's district suffix, which is how a
            resident names the street: "GIFFORD ROAD", not
            "GIFFORD ROAD - SOUTH BENFLEET".
 
         The ordering matters. "Ash Road" is both the full name of a street in
         Canvey Island and the un-suffixed form of "ASH ROAD - HADLEIGH" in
-        Benfleet; tier 1 settles it on the one actually called Ash Road rather
+        Benfleet; tier 2 settles it on the one actually called Ash Road rather
         than declaring the borough ambiguous.
         """
+        bare_label = street_label.split(" - ")[0]
         return [
             _normalise(Source._display(town, street_label)),
+            _normalise(Source._display(town, bare_label)),
             _normalise(street_label),
-            _normalise(street_label.split(" - ")[0]),
+            _normalise(bare_label),
         ]
 
     @staticmethod
@@ -189,7 +195,7 @@ class Source:
         matches = []
         for term in terms:
             wanted = _normalise(term)
-            for tier in range(3):
+            for tier in range(len(self._match_tiers("", ""))):
                 matches = [
                     c
                     for c in candidates
