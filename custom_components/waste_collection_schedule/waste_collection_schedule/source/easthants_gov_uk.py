@@ -12,6 +12,7 @@ from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -23,6 +24,8 @@ COUNTRY = "uk"
 SOURCE_CODEOWNERS = ["@alexcroox"]
 
 _SCHEDULE_URL = f"{URL}/bin-collections/find-your-bin-calendar"
+_ADDRESS_URL = "https://maps.easthants.gov.uk/easthampshire.aspx"
+_HEADERS = {"User-Agent": "waste-collection-schedule/easthants_gov_uk"}
 _MONTHS = {
     "JAN": 1,
     "FEB": 2,
@@ -46,36 +49,44 @@ _GARDEN_CALENDAR_LINK_RE = re.compile(r"^G(\d+)\b", re.IGNORECASE)
 # calendars use RGB, while the garden calendars use CMYK.
 _RUBBISH_COLOUR = (0.248, 0.646, 0.209)
 _RECYCLING_COLOUR = (0.391, 0.389, 0.387)
+_HARD_TO_REACH_RECYCLING_COLOUR = (0.438, 0.437, 0.434)
+_GLASS_COLOUR = (0.0, 0.46, 0.748)
 _GARDEN_COLOUR = (0.6, 0.71, 1.0, 0.3)
 _SUSPENDED_COLOUR = (0.31, 0.98, 0.0, 0.0)
 _COLOUR_TOLERANCE = 0.02
 
 _TYPE_MAP = {
-    "rubbish": "Rubbish",
-    "recycling": "Recycling and glass",
-    "garden": "Garden waste",
+    "rubbish": ("Rubbish",),
+    "recycling": ("Recycling",),
+    "glass": ("Glass",),
+    "garden": ("Garden waste",),
 }
 ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling and glass": Icons.RECYCLING,
+    "Recycling": Icons.RECYCLING,
+    "Glass": Icons.GLASS,
     "Garden waste": Icons.GARDEN,
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
+        "uprn": (
+            "The property's Unique Property Reference Number (UPRN). When set, "
+            "the council automatically supplies its bin and garden calendars."
+        ),
         "calendar_number": (
-            "The bin calendar number assigned to your address, shown on your "
-            "existing calendar or on the council's bin calendar map."
+            "Optional manual bin calendar number, used when no UPRN is provided."
         ),
         "garden_calendar_number": (
-            "Optional garden waste calendar number (the numeric part of G1-G10) "
-            "for subscribed households."
+            "Optional manual garden waste calendar number (the numeric part of "
+            "G1-G10), used when no UPRN is provided."
         ),
     },
 }
 
 PARAM_TRANSLATIONS = {
     "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
         "calendar_number": "Calendar number",
         "garden_calendar_number": "Garden waste calendar number",
     },
@@ -84,13 +95,14 @@ PARAM_TRANSLATIONS = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. "
-        "Use the map near the bottom of the page to find your address, then enter "
-        "the displayed calendar number. If you subscribe to garden waste, also "
-        "enter the numeric part of your G1-G10 garden calendar number."
+        "Use the map near the bottom of the page to find your address and its "
+        "Unique Property Ref, then enter that as the UPRN. Alternatively, enter "
+        "the displayed calendar numbers manually."
     ),
 }
 
 TEST_CASES = {
+    "UPRN lookup": {"uprn": 1710041123},
     "Calendar 16 with garden waste G1": {
         "calendar_number": 16,
         "garden_calendar_number": 1,
@@ -110,7 +122,7 @@ def _colour_matches(
 ) -> bool:
     return bool(
         actual
-        and len(actual) >= len(expected)
+        and len(actual) == len(expected)
         and all(
             abs(actual[index] - expected[index]) <= _COLOUR_TOLERANCE
             for index in range(len(expected))
@@ -137,6 +149,44 @@ def _calendar_links(html: str) -> tuple[dict[int, str], dict[int, str]]:
             )
 
     return links, garden_links
+
+
+def _secure_calendar_url(href: str) -> str:
+    url = urljoin(_ADDRESS_URL, href)
+    if url.startswith("http://maps.easthants.gov.uk/"):
+        return "https://" + url.removeprefix("http://")
+    return url
+
+
+def _uprn_calendar_urls(html: str, uprn: str) -> dict[str, str]:
+    soup = BeautifulSoup(html, "html.parser")
+    panel = soup.find(
+        "div", attrs={"aria-label": re.compile("waste and recycling", re.IGNORECASE)}
+    )
+    if panel is None:
+        raise SourceArgumentNotFound(
+            "uprn", uprn, "no East Hampshire address was found."
+        )
+
+    urls: dict[str, str] = {}
+    for heading in panel.find_all("h4"):
+        section = heading.find_parent("div", class_="atPanelContent")
+        if section is None or (link := section.find("a", href=True)) is None:
+            continue
+
+        title = heading.get_text(" ", strip=True).casefold()
+        if "garden" in title:
+            urls["garden"] = _secure_calendar_url(str(link["href"]))
+        elif "bin calendar" in title:
+            urls["bins"] = _secure_calendar_url(str(link["href"]))
+
+    if "bins" not in urls:
+        raise SourceArgumentNotFound(
+            "uprn",
+            uprn,
+            "the council did not provide a bin calendar for this property.",
+        )
+    return urls
 
 
 def _collection_rectangles(page, reader: PdfReader) -> list[tuple]:
@@ -171,8 +221,12 @@ def _collection_rectangles(page, reader: PdfReader) -> list[tuple]:
         elif operator == b"re" and len(operands) == 4:
             if _colour_matches(fill_colour, _RUBBISH_COLOUR):
                 type_key = "rubbish"
-            elif _colour_matches(fill_colour, _RECYCLING_COLOUR):
+            elif _colour_matches(fill_colour, _RECYCLING_COLOUR) or _colour_matches(
+                fill_colour, _HARD_TO_REACH_RECYCLING_COLOUR
+            ):
                 type_key = "recycling"
+            elif _colour_matches(fill_colour, _GLASS_COLOUR):
+                type_key = "glass"
             elif _colour_matches(fill_colour, _GARDEN_COLOUR):
                 type_key = "garden"
             elif _colour_matches(fill_colour, _SUSPENDED_COLOUR):
@@ -216,6 +270,12 @@ def _type_at_position(
     return None
 
 
+def _waste_types(type_key: str, separate_glass: bool) -> tuple[str, ...]:
+    if type_key == "recycling" and not separate_glass:
+        return (*_TYPE_MAP[type_key], "Glass")
+    return _TYPE_MAP[type_key]
+
+
 def _normalise_heading_year(
     printed_year: int, month: int, previous: tuple[int, int] | None
 ) -> int:
@@ -239,6 +299,7 @@ def _normalise_heading_year(
 
 def _parse_page(page, reader: PdfReader) -> list[Collection]:
     rectangles = _collection_rectangles(page, reader)
+    separate_glass = any(type_key == "glass" for *_, type_key in rectangles)
     fragments: list[tuple[str, float, float]] = []
 
     def collect_text(text, _cm, tm, _font, _font_size):
@@ -278,9 +339,9 @@ def _parse_page(page, reader: PdfReader) -> list[Collection]:
         if type_key == "suspended":
             continue
 
-        waste_type = _TYPE_MAP[type_key]
-        collections.append(
+        collections.extend(
             Collection(collection_date, waste_type, icon=ICON_MAP[waste_type])
+            for waste_type in _waste_types(type_key, separate_glass)
         )
 
     if unmatched_dates:
@@ -313,10 +374,25 @@ def _validate_calendar_number(argument: str, value: int) -> int:
     return calendar_number
 
 
+def _validate_uprn(value: str | int) -> str:
+    uprn = str(value).strip()
+    if not uprn.isdigit():
+        raise SourceArgumentNotFound("uprn", value)
+    return uprn
+
+
 class Source:
-    def __init__(self, calendar_number: int, garden_calendar_number: int | None = None):
-        self._calendar_number = _validate_calendar_number(
-            "calendar_number", calendar_number
+    def __init__(
+        self,
+        uprn: str | int | None = None,
+        calendar_number: int | None = None,
+        garden_calendar_number: int | None = None,
+    ):
+        self._uprn = None if uprn is None else _validate_uprn(uprn)
+        self._calendar_number = (
+            None
+            if calendar_number is None
+            else _validate_calendar_number("calendar_number", calendar_number)
         )
         self._garden_calendar_number = (
             None
@@ -325,6 +401,10 @@ class Source:
                 "garden_calendar_number", garden_calendar_number
             )
         )
+        if self._uprn is None and self._calendar_number is None:
+            raise SourceArgumentRequired(
+                "uprn", "provide a UPRN or a manual calendar number."
+            )
 
     @staticmethod
     def _fetch_calendar(
@@ -342,38 +422,60 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
-        page_response = session.get(_SCHEDULE_URL, timeout=30)
-        page_response.raise_for_status()
+        session.headers.update(_HEADERS)
 
-        links, garden_links = _calendar_links(page_response.text)
-        if self._calendar_number not in links:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "calendar_number", self._calendar_number, sorted(links)
+        if self._uprn is not None:
+            address_response = session.get(
+                _ADDRESS_URL,
+                params={"action": "SetAddress", "UniqueId": self._uprn},
+                timeout=30,
             )
+            address_response.raise_for_status()
+            urls = _uprn_calendar_urls(address_response.text, self._uprn)
+            collections = self._fetch_calendar(
+                session, urls["bins"], f"for UPRN {self._uprn}"
+            )
+            if "garden" in urls:
+                collections.extend(
+                    self._fetch_calendar(
+                        session, urls["garden"], f"garden for UPRN {self._uprn}"
+                    )
+                )
+            source_name = f"UPRN {self._uprn}"
+        else:
+            page_response = session.get(_SCHEDULE_URL, timeout=30)
+            page_response.raise_for_status()
 
-        collections = self._fetch_calendar(
-            session, links[self._calendar_number], str(self._calendar_number)
-        )
-
-        if self._garden_calendar_number is not None:
-            if self._garden_calendar_number not in garden_links:
+            links, garden_links = _calendar_links(page_response.text)
+            if self._calendar_number not in links:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "garden_calendar_number",
-                    self._garden_calendar_number,
-                    sorted(garden_links),
+                    "calendar_number", self._calendar_number, sorted(links)
                 )
-            collections.extend(
-                self._fetch_calendar(
-                    session,
-                    garden_links[self._garden_calendar_number],
-                    f"G{self._garden_calendar_number}",
-                )
+
+            collections = self._fetch_calendar(
+                session, links[self._calendar_number], str(self._calendar_number)
             )
+
+            if self._garden_calendar_number is not None:
+                if self._garden_calendar_number not in garden_links:
+                    raise SourceArgumentNotFoundWithSuggestions(
+                        "garden_calendar_number",
+                        self._garden_calendar_number,
+                        sorted(garden_links),
+                    )
+                collections.extend(
+                    self._fetch_calendar(
+                        session,
+                        garden_links[self._garden_calendar_number],
+                        f"G{self._garden_calendar_number}",
+                    )
+                )
+            source_name = f"calendar {self._calendar_number}"
 
         collections.sort(key=lambda item: (item.date, item.type))
         _LOGGER.debug(
-            "Found %d collections for East Hampshire calendar %d",
+            "Found %d collections for East Hampshire %s",
             len(collections),
-            self._calendar_number,
+            source_name,
         )
         return collections
