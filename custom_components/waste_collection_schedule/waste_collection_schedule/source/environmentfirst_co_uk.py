@@ -43,7 +43,7 @@ class Source:
 
         if self._uprn:
             # GET request returns schedule for matching uprn
-            r = s.get(f"https://www.environmentfirst.co.uk/house.php?uprn={self._uprn}")
+            r = s.get(f"https://environmentfirst.co.uk/house.php?uprn={self._uprn}")
             responseContent = r.text
 
         elif self._post_code and self._number:
@@ -54,7 +54,7 @@ class Source:
                 "street": "",
                 "postcode": self._post_code,
             }
-            r = s.post("https://www.environmentfirst.co.uk/results.php", data=payload)
+            r = s.post("https://environmentfirst.co.uk/results.php", data=payload)
             responseContent = r.text
 
         elif self._post_code and self._name:
@@ -65,7 +65,7 @@ class Source:
                 "street": "",
                 "postcode": self._post_code,
             }
-            r = s.post("https://www.environmentfirst.co.uk/results.php", data=payload)
+            r = s.post("https://environmentfirst.co.uk/results.php", data=payload)
             responseContent = r.text
 
             # Loop through postcode address list to find house name and uprn
@@ -77,7 +77,7 @@ class Source:
                         self._uprn = str.split(item.get("href"), "=")[1]
 
             # GET request returns schedule for matching uprn
-            r = s.get(f"https://www.environmentfirst.co.uk/house.php?uprn={self._uprn}")
+            r = s.get(f"https://environmentfirst.co.uk/house.php?uprn={self._uprn}")
             responseContent = r.text
 
         else:
