@@ -31,4 +31,4 @@ waste_collection_schedule:
         address: "123 Coming St, Charleston, SC 29403"
 ```
 
-The source looks up the address in the city's live garbage and trash collection-area map and returns its weekly collection day. Temporary holiday or emergency delays announced by the city are not represented in the route layer.
+The source looks up the address in the city's live garbage and trash/yard-waste collection-area maps. Garbage and trash/yard-waste are collected on independent routes and can fall on different weekdays for the same address, so the source queries both layers and returns two separate weekly streams, `Garbage` and `Trash & Yard Waste`, each on its own collection day. An address that falls inside only one of the two route layers still returns that single stream. Temporary holiday or emergency delays announced by the city are not represented in the route layers.

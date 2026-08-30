@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 The source uses Charleston County's live curbside recycling route map. It is intended for eligible single-family residences; businesses, schools, apartments, and condominiums use separate county schedules.
 
-The county publishes the next exact collection date for each biweekly route. The source returns that official date rather than predicting holiday adjustments.
+The county publishes the next exact collection date for each biweekly route. The source uses that official date as an anchor and projects the following biweekly occurrences forward, rather than predicting holiday adjustments to the published date itself.

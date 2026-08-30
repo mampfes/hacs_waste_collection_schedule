@@ -5,6 +5,7 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
     geocode,
+    get_next_n_dates,
     query_feature_layer,
 )
 
@@ -36,6 +37,10 @@ PARAM_TRANSLATIONS = {
 
 FEATURE_URL = "https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0"
 DATE_FORMAT = "%B %d"
+
+# The county publishes only the next exact pickup date; recycling then
+# recurs on a fixed biweekly cadence, so project that many further pickups.
+PICKUPS_AHEAD = 13
 
 
 def _parse_next_pickup(value: str) -> date:
@@ -82,8 +87,11 @@ class Source:
 
         return [
             Collection(
-                date=next_pickup,
+                date=pickup,
                 t="Recycling",
                 icon=Icons.RECYCLING,
+            )
+            for pickup in get_next_n_dates(
+                next_pickup, PICKUPS_AHEAD, timedelta(weeks=2)
             )
         ]
