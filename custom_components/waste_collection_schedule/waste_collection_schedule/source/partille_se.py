@@ -9,8 +9,22 @@ DESCRIPTION = "Source for Partille kommun waste collection."
 URL = "https://vatjanst.partille.se"
 SOURCE_CODEOWNERS = ["@sadjad1"]
 
+COUNTRY = "se"
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street_address": "Street address",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street_address": "Street address including house number, e.g. 'Tiondevägen 6, Partille'",
+    },
+}
+
 TEST_CASES = {
-    "Partille kommunhus": {"street_address": "Gamla Kronvägen 34, Partille"},
+    "Tiondevägen 6": {"street_address": "Tiondevägen 6, Partille"},
 }
 
 SEARCH_URL = "https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/SearchAdress"
@@ -24,7 +38,11 @@ class Source:
         self._street_address = street_address
 
     def fetch(self):
-        r = requests.post(SEARCH_URL, {"searchText": self._street_address})
+        r = requests.post(
+            SEARCH_URL,
+            {"searchText": self._street_address},
+            timeout=30,
+        )
         r.raise_for_status()
 
         address_data = r.json()
@@ -36,7 +54,7 @@ class Source:
         if address is None:
             raise SourceArgumentNotFound("street_address", self._street_address)
 
-        r = requests.get(SCHEDULE_URL, params={"address": address})
+        r = requests.get(SCHEDULE_URL, params={"address": address}, timeout=30)
         r.raise_for_status()
 
         data = r.json()
