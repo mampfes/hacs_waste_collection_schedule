@@ -61,16 +61,11 @@ class Source:
         self._add_events = add_events
 
     def fetch(self):
-        url = "https://api.fostplus.be/recyclecms/app/v1"
+        url = "https://api.fostplus.be/recyclecms/public/v1"
         headers = {
-            "x-secret": "Op2tDi2pBmh1wzeC5TaN2U3knZan7ATcfOQgxh4vqC0mDKmnPP2qzoQusmInpglfIkxx8SZrasBqi5zgMSvyHggK9j6xCQNQ8xwPFY2o03GCcQfcXVOyKsvGWLze7iwcfcgk2Ujpl0dmrt3hSJMCDqzAlvTrsvAEiaSzC9hKRwhijQAFHuFIhJssnHtDSB76vnFQeTCCvwVB27DjSVpDmq8fWQKEmjEncdLqIsRnfxLcOjGIVwX5V0LBntVbeiBvcjyKF2nQ08rIxqHHGXNJ6SbnAmTgsPTg7k6Ejqa7dVfTmGtEPdftezDbuEc8DdK66KDecqnxwOOPSJIN0zaJ6k2Ye2tgMSxxf16gxAmaOUqHS0i7dtG5PgPSINti3qlDdw6DTKEPni7X0rxM",
             "x-consumer": "recycleapp.be",
             "User-Agent": "",
-            "Authorization": "",
         }
-        r = requests.get(f"{url}/access-token", headers=headers)
-        r.raise_for_status()
-        headers["Authorization"] = r.json()["accessToken"]
 
         params = {"q": self._postcode}
         r = requests.get(f"{url}/zipcodes", params=params, headers=headers)

@@ -1,0 +1,31 @@
+---
+title: Stadt Löhne
+url: https://www.loehne.de/
+country: de
+howto:
+  en: |
+    - Go to <https://www.loehne.de/Leben-Entdecken/Stadtinfos/Abfall-/Abfallkalender/> and select your street.
+    - Copy the link of `Export in Kalenderanwendung`
+    - Use this link as the `url` parameter.
+    - Replace the year in the `url` with `{%Y}`.
+      This will be replaced by the current year.
+    - you might want to keep the regex as it removes the city name from the title.
+  de: |
+    - Öffne <https://www.loehne.de/Leben-Entdecken/Stadtinfos/Abfall-/Abfallkalender/> und wähle deine Straße aus.
+    - Kopiere den Link von `Export in Kalenderanwendung`
+    - Verwende diesen Link als `url` Parameter.
+    - Ersetze die Jahreszahl in der `url` durch `{%Y}`.
+      Diese wird durch das aktuelle Jahr ersetzt.
+    - Die `regex` sollte beibehalten werden, da sie den Städtenamen aus dem Titel entfernt.
+default_params:
+  regex: '(.*?): Löhne'
+test_cases:
+  Ackerweg:
+    url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.1.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
+    regex: '(.*?): Löhne'
+  Bahnhofstraße:
+    url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.110.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
+    regex: '(.*?): Löhne'
+  Königstraße:
+    url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.419.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
+    regex: '(.*?): Löhne'

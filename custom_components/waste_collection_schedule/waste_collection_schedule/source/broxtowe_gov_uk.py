@@ -2,9 +2,13 @@ import datetime
 import logging
 
 import requests
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, NavigableString
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.service.FirmstepSelfService import (
+    get_hidden_form_inputs,
+    lookup_addresses,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,24 +30,9 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://selfservice.broxtowe.gov.uk/renderform.aspx?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
-
-
-POSTCODE_ARGS = {
-    "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_5683|ctl00$ContentPlaceHolder1$FF5683BTN",
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF5683BTN",
-    "__ASYNCPOST": "true",
-}
-
-UPRN_ARGS = {
-    "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_5683|ctl00$ContentPlaceHolder1$FF5683DDL",
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF5683DDL",
-    "__ASYNCPOST": "true",
-}
-
-SUBMIT_ARGS = {
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$btnSubmit",
-}
+API_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
+ADDRESS_LOOKUP_URL = "https://selfservice.broxtowe.gov.uk/core/addresslookup"
+SUBMIT_URL = "https://selfservice.broxtowe.gov.uk/RenderForm"
 
 
 class Source:
@@ -53,84 +42,59 @@ class Source:
             self._uprn = self._uprn[1:].strip()
 
         self._postcode: str = str(postcode)
-        self._uprn_args = UPRN_ARGS.copy()
-        self._postcode_args = POSTCODE_ARGS.copy()
-        self._submit_args = SUBMIT_ARGS.copy()
-        self._uprn_args["ctl00$ContentPlaceHolder1$FF5683DDL"] = f"U{self._uprn}"
-        self._postcode_args["ctl00$ContentPlaceHolder1$FF5683TB"] = f"{self._postcode}"
-
-    def __get_hidden_fiels(
-        self, response: requests.Response, to_update: dict[str, str]
-    ):
-        response.raise_for_status()
-        r_list = response.text.split("|")
-
-        if r_list[1] == "error":
-            raise Exception("could not get valid data from ashford.gov.uk")
-
-        indexes = [
-            index for index, value in enumerate(r_list) if value == "hiddenField"
-        ]
-
-        for index in indexes:
-            key = r_list[index + 1]
-            value = r_list[index + 2]
-            to_update[key] = value
 
     def fetch(self):
         s = requests.Session()
         headers = {"User-Agent": "Mozilla/5.0"}
         s.headers.update(headers)
 
-        r = s.get(API_URL)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        for key in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]:
-            search = soup.find(id=key)
-            if not search or not isinstance(search, Tag):
-                continue
-
-            self._postcode_args[key] = search.attrs["value"]
-
-        r = s.post(API_URL, data=self._postcode_args)
-        r.raise_for_status()
-
-        if "No addresses were found for the post code you entered." in r.text:
+        form_inputs = get_hidden_form_inputs(s, API_URL)
+        addresses = lookup_addresses(s, ADDRESS_LOOKUP_URL, self._postcode)
+        if not addresses:
             raise SourceArgumentException(
                 "postcode", "No addresses were found for the post code you entered."
             )
 
-        self.__get_hidden_fiels(r, self._uprn_args)
-
-        r = s.post(API_URL, data=self._uprn_args)
-        r.raise_for_status()
-
-        self.__get_hidden_fiels(r, self._submit_args)
-
-        self._submit_args["ctl00$ContentPlaceHolder1$btnSubmit"] = (
-            "ctl00$ContentPlaceHolder1$btnSubmit"
+        address = next(
+            (
+                (key, value)
+                for key, value in addresses.items()
+                if key.strip().upper().removeprefix("U") == self._uprn
+            ),
+            None,
         )
-        r = s.post(API_URL, data=self._submit_args)
-        r.raise_for_status()
-
-        if "No collection calendars are available for the selected property." in r.text:
-            raise Exception(
-                f"No collection calendars are available for the selected property. Make sure your address returns entries on the council website ({API_URL})."
+        if address is None:
+            raise SourceArgumentException(
+                "uprn",
+                "No address was found for the UPRN and postcode you entered.",
             )
 
+        address_key, address_label = address
+        r = s.post(
+            SUBMIT_URL,
+            data={
+                **form_inputs,
+                "Trigger": "submit",
+                "TriggerCtl": "",
+                "FF5683": address_key,
+                "FF5683lbltxt": address_label,
+                "FF5683-text": self._postcode,
+            },
+            timeout=30,
+        )
+        r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
         table = soup.find("table", class_="bartec")
 
         if table is None or isinstance(table, NavigableString):
-            raise Exception("could not get valid data from ashford.gov.uk")
+            raise Exception("could not get valid data from broxtowe.gov.uk")
 
         entries = []
         trs = table.find_all("tr")
 
         if not trs or len(trs) < 2:
-            raise Exception("could not get valid data from ashford.gov.uk")
+            raise Exception("could not get valid data from broxtowe.gov.uk")
 
         for row in trs[1:]:
             bint_type = row.find("td")

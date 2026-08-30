@@ -1,6 +1,6 @@
 # Abfallwirtschaft Stadt Schweinfurt
 
-Support for schedules provided by [Schweinfurt](https://www.schweinfurt.de/leben-freizeit/umwelt/abfallwirtschaft/4427.Aktuelle-Abfuhrtermine-und-Muellkalender.html), Germany.
+Support for schedules provided by [Schweinfurt](https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html), Germany.
 
 ## Configuration via configuration.yaml
 
@@ -45,7 +45,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Go to your calendar at [Schweinfurt - Abfallkalender](https://www.schweinfurt.de/leben-freizeit/umwelt/abfallwirtschaft/4427.Aktuelle-Abfuhrtermine-und-Muellkalender.html)
+1. Go to your calendar at [Schweinfurt - Abfallkalender](https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html)
 2. Enter your street and housenumber
 3. Copy the exact values from the textboxes street in the source configuration.
 

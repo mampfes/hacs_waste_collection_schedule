@@ -70,6 +70,20 @@ _WEEKDAYS = {
 }
 
 
+def _attr(attributes: dict, name: str):
+    # Joined ArcGIS layers qualify attribute names ("<join>.<field>");
+    # match a bare field name against either scheme. An exact match wins so
+    # the result never depends on attribute ordering. The required "."
+    # separator keeps e.g. "recycling_anchor_date" from matching "anchor_date".
+    if name in attributes:
+        return attributes[name]
+    suffix = "." + name
+    for key, value in attributes.items():
+        if key.endswith(suffix):
+            return value
+    raise KeyError(name)
+
+
 def _holiday_shift(d: date) -> date:
     # Council rule: collections run on all public holidays except Good Friday
     # and Christmas Day, when the collection happens one day later.
@@ -89,15 +103,21 @@ class Source:
             raise SourceArgumentNotFound("address", self._address) from e
 
         try:
+            # 2026-08: the council rebuilt the glass layer as a joined layer
+            # whose attributes carry fully-qualified names (e.g.
+            # "internal.gdo.Glass_Collection_Zones.anchor_date"), and a
+            # bare-name out_fields now fails with HTTP 400. Fetch all fields
+            # and resolve names via _attr so either scheme works on either
+            # layer.
             waste = query_feature_layer(
                 WASTE_LAYER_URL,
                 geometry=location,
-                out_fields="collection_day,recycling_anchor_date",
+                out_fields="*",
             )[0]
             glass = query_feature_layer(
                 GLASS_LAYER_URL,
                 geometry=location,
-                out_fields="anchor_date,frequency_days",
+                out_fields="*",
             )[0]
         except ArcGisError as e:
             raise SourceArgumentNotFound(
@@ -106,7 +126,7 @@ class Source:
                 "the address must be within the City of Yarra.",
             ) from e
 
-        day_name = waste["collection_day"]
+        day_name = _attr(waste, "collection_day")
         if day_name not in _WEEKDAYS:
             raise ValueError(f"Unexpected collection day: {day_name!r}")
 
@@ -123,7 +143,7 @@ class Source:
         # Recycling alternates fortnightly between zones; the layer's anchor
         # date fixes this property's phase. DateOnly fields are ISO strings.
         for d in get_next_n_dates(
-            date.fromisoformat(waste["recycling_anchor_date"]),
+            date.fromisoformat(_attr(waste, "recycling_anchor_date")),
             WEEKS_AHEAD // 2,
             timedelta(days=14),
         ):
@@ -134,9 +154,9 @@ class Source:
         # Glass runs on its own cycle (currently every 28 days) with an
         # independent per-polygon anchor.
         for d in get_next_n_dates(
-            date.fromisoformat(glass["anchor_date"]),
+            date.fromisoformat(_attr(glass, "anchor_date")),
             WEEKS_AHEAD // 4,
-            timedelta(days=int(glass["frequency_days"])),
+            timedelta(days=int(_attr(glass, "frequency_days"))),
         ):
             entries.append(Collection(_holiday_shift(d), "Glass", ICON_MAP["Glass"]))
 

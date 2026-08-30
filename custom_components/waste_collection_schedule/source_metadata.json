@@ -186,7 +186,7 @@
   "gosnells_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosnells_wa_gov_au.md",
     "howto": {
-      "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/Your_property/Rubbish_and_recycling/Find_your_waste_collection_dates) website and search for your collection schedule. Use your address as it is displayed on the search results page."
+      "en": "Use the [City of Gosnells](https://www.gosnells.wa.gov.au/City-Services/Waste-and-Recycling/Find-your-waste-collection-dates) website and search for your collection schedule. Use your address as it is displayed on the search results page."
     },
     "urls": {}
   },
@@ -198,6 +198,13 @@
   "geelongaustralia_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geelongaustralia_com_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "greatershepparton_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greatershepparton_com_au.md",
+    "howto": {
+      "en": "Enter your full street address, e.g. '161 Welsford Street, Shepparton'. Use full street-type words (Street, Road, Square) rather than abbreviations (St, Rd, Sq) - the council's address lookup only matches on the full word."
+    },
     "urls": {}
   },
   "hobartcity_com_au": {
@@ -429,7 +436,9 @@
   },
   "ipswich_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_qld_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia."
+    },
     "urls": {}
   },
   "kempsey_nsw_gov_au": {
@@ -556,7 +565,7 @@
   "ics_moretonbay_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moretonbay_qld_gov_au.md",
     "howto": {
-      "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.  \n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days> and select your location.\n- Click on `Subscribe to a personalised calendar` to get a webcal link.\n- Use this link as the `url` parameter.\n\nThe link is one of ten per-run calendars on the council's CDN, named\n`waste-calendar-<day>-week<N>.ics`, where `<day>` is your collection weekday\n(`monday`-`friday`) and `<N>` is your recycling fortnight (`1` or `2`). Both\nare property-specific, so use the link generated for your own address rather\nthan copying the example below.\n\nOlder `webcal://www.moretonbay.qld.gov.au/bincal?externalId=...` links are no\nlonger issued by the council, and that host rejects the integration's HTTP\nclient with `HTTP Error 403`. Replace any such link with the one the Bin Days\npage gives you now.\n"
     },
     "urls": {}
   },
@@ -1339,7 +1348,7 @@
   "ics_recollect": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md",
     "howto": {
-      "en": "- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Lowell, MA|USA|[lowellma.gov](https://www.lowellma.gov/195/Solid-Waste-Recycling)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|\n|Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|\n|Stirling Council|UK|[stirling.gov.uk](https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/)|\n|Gatineau, QC|Canada|[gatineau.ca](https://www.gatineau.ca/docs/guichet_municipal/ordures_recyclage_compostage_encombrants/recollect.en-CA.html)|\n|Whitby, ON|Canada|[whitby.ca](https://www.whitby.ca/en/live/waste-calendar.aspx)|\n|Saskatoon, SK|Canada|[saskatoon.ca](https://www.saskatoon.ca/services-residents/waste-recycling/collection-calendar)|\n|Saint-Jean-Sur-Richelieu, QC|Canada|[compo.qc.ca](https://www.compo.qc.ca/collectes/)|\n|City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|\n|Eco360 (Greater Moncton, NB)|Canada|[eco360.ca](https://www.eco360.ca/residential-program)|\n|Rogue Disposal & Recycling (Medford, OR)|USA|[roguedisposal.com](https://roguedisposal.com/resources/recycling-schedule)|\n|Grey Highlands, ON|Canada|[greyhighlands.ca](https://www.greyhighlands.ca/my-home/waste-recycling/collection-schedule/)|\n|Spruce Grove, AB|Canada|[sprucegrove.org](https://www.sprucegrove.org/services/garbage-organics-recycling/sort-with-success/)|\n|City of Beaumont, AB|Canada|[beaumont.ab.ca](https://www.beaumont.ab.ca/1159/Waste-and-Recycling)|\n|Bassetlaw District Council|UK|[bassetlaw.gov.uk](https://www.bassetlaw.gov.uk/bins-recycling-and-waste/bins-for-recycling-and-waste/bin-collection-days/)|\n|Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|\n|City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|\n|Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|\n|Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|\n|City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|\n|City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|\n\nand probably a lot more.\n"
+      "en": "- To get the URL, search your address in the recollect form of your home town.\n- Click \"Get a calendar\", then \"Add to Google Calendar\".\n- The URL shown is your ICS calendar link, for example.\n  ```plain\n  https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606\n  ```\n- You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`\n\nknown to work with:\n|Region|Country|URL|\n|-|-|-|\n|Ottawa, ON|Canada|[ottawa.ca](https://ottawa.ca/en/garbage-and-recycling/recycling/garbage-and-recycling-collection-calendar)|\n|Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|\n|City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|\n|City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|\n|City of Lowell, MA|USA|[lowellma.gov](https://www.lowellma.gov/195/Solid-Waste-Recycling)|\n|City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|\n|City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|\n|City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|\n|City of Austin|USA|[austintexas.gov](https://www.austintexas.gov/myschedule)|\n|Middlesbrough|UK|[middlesbrough.gov.uk](https://my.middlesbrough.gov.uk/login/)|\n|City of McKinney|USA|[mckinneytexas.org](https://www.mckinneytexas.org/503/Residential-Trash-Services/#App)|\n|Waste Connections|USA|[wasteconnections.com](https://www.wasteconnections.com/pickup-schedule/)|\n|Halton County, ON|Canada|[halton.ca](https://www.halton.ca/For-Residents/Recycling-Waste/Recycling-and-Waste-Tools/Online-Waste-Collection-Schedule)|\n|District of Saanish, BC|Canada|[saanich.ca](https://www.saanich.ca/EN/main/community/utilities-garbage/garbage-organics-recycling.html)|\n|Caerphilly, Wales|UK|[caerphilly.gov.uk](https://www.caerphilly.gov.uk/services/household-waste-and-recycling/bin-collection-days)|\n|Recology CleanScapes, WA|USA|[recology.com](https://www.recology.com/recology-king-county/des-moines/collection-calendar/)|\n|City of Lethbridge|Canada|[lethbridge.ca](https://www.lethbridge.ca/waste-recycling/#wastewizard)|\n|City of Regina|Canada|[regina.ca](https://www.regina.ca/home-property/recycling-garbage/)|\n|Hardin Sanitation, Ada County, Idaho|USA|[hardinsanitation.com/ada](https://www.hardinsanitation.com/ada/)|\n|Hardin Sanitation, Treasure Valley, Idaho|USA|[hardinsanitation.com](https://www.hardinsanitation.com/home/)|\n|Hardin Sanitation, City of Eagle, Idaho|USA|[hardinsanitation.com/cityofeagle](https://www.hardinsanitation.com/cityofeagle/)|\n|Richmond, BC|Canada|[richmond.ca](https://www.richmond.ca/services/recycling-garbage/)|\n|Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|\n|Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|\n|Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|\n|Stirling Council|UK|[stirling.gov.uk](https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/)|\n|Gatineau, QC|Canada|[gatineau.ca](https://www.gatineau.ca/docs/guichet_municipal/ordures_recyclage_compostage_encombrants/recollect.en-CA.html)|\n|Whitby, ON|Canada|[whitby.ca](https://www.whitby.ca/en/live/waste-calendar.aspx)|\n|Saskatoon, SK|Canada|[saskatoon.ca](https://www.saskatoon.ca/services-residents/waste-recycling/collection-calendar)|\n|Saint-Jean-Sur-Richelieu, QC|Canada|[compo.qc.ca](https://www.compo.qc.ca/collectes/)|\n|City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|\n|Eco360 (Greater Moncton, NB)|Canada|[eco360.ca](https://www.eco360.ca/residential-program)|\n|Rogue Disposal & Recycling (Medford, OR)|USA|[roguedisposal.com](https://roguedisposal.com/resources/recycling-schedule)|\n|Grey Highlands, ON|Canada|[greyhighlands.ca](https://www.greyhighlands.ca/my-home/waste-recycling/collection-schedule/)|\n|Spruce Grove, AB|Canada|[sprucegrove.org](https://www.sprucegrove.org/services/garbage-organics-recycling/sort-with-success/)|\n|City of Beaumont, AB|Canada|[beaumont.ab.ca](https://www.beaumont.ab.ca/1159/Waste-and-Recycling)|\n|Bassetlaw District Council|UK|[bassetlaw.gov.uk](https://www.bassetlaw.gov.uk/bins-recycling-and-waste/bins-for-recycling-and-waste/bin-collection-days/)|\n|Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|\n|City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|\n|Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|\n|Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|\n|City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|\n|City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|\n|City of Kamloops, BC|Canada|[kamloops.ca](https://www.kamloops.ca/city-services/recycling-garbage-organics/residential-collection-schedule)|\n\nand probably a lot more.\n"
     },
     "urls": {}
   },
@@ -1393,6 +1402,14 @@
     "howto": {
       "en": "- Visit <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n",
       "fr": "- Visitez <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n"
+    },
+    "urls": {}
+  },
+  "mirabel_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mirabel_ca.md",
+    "howto": {
+      "en": "You can find your collection zone number using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+      "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte"
     },
     "urls": {}
   },
@@ -1679,6 +1696,14 @@
   "rosknroll_fi": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rosknroll_fi.md",
     "howto": {},
+    "urls": {}
+  },
+  "clissonsevremaine_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/clissonsevremaine_fr.md",
+    "howto": {
+      "en": "Open https://environnement.clissonsevremaine.fr/dechets/collecte-des-dechets/calendrier-des-collectes and pick your municipality in the drop-down menu. Use the wording shown there. Some municipalities are split into several collection zones; the maps at the end of the downloadable PDF calendars tell you which zone your street belongs to.",
+      "fr": "Ouvrez https://environnement.clissonsevremaine.fr/dechets/collecte-des-dechets/calendrier-des-collectes et choisissez votre commune dans la liste déroulante. Reprenez le libellé affiché. Certaines communes sont découpées en plusieurs zones de collecte ; les cartes situées à la fin des calendriers PDF téléchargeables indiquent la zone de votre rue."
+    },
     "urls": {}
   },
   "terrestouloises_com": {
@@ -3187,6 +3212,16 @@
     "howto": {},
     "urls": {}
   },
+  "geilenkirchen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geilenkirchen_de.md",
+    "howto": {
+      "de": "Besuchen Sie den Abfallkalender unter https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ und nutzen Sie dort die Straßensuche, um die genaue Schreibweise Ihrer Straße zu finden (Straßen werden mit 'strasse' statt 'straße' geschrieben). Verwenden Sie diesen genauen Namen als 'street'-Parameter. Wird der eingegebene Name nicht gefunden oder trifft auf mehrere Straßen zu, listet die Fehlermeldung die passendsten Treffer auf.",
+      "en": "Visit the collection calendar at https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ and use the street search box there to find the exact spelling of your street (streets are spelled with 'strasse', not 'straße'). Use that exact name as the 'street' argument. If the name you enter cannot be found, or matches more than one street, the resulting error message lists the closest matches."
+    },
+    "urls": {
+      "url_www_geilenkirchen_de_rathaus_online_dienstleistungen_und_andere_angebote_abfallkalender": "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/"
+    }
+  },
   "gemuenden_wohra_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemuenden_wohra_de.md",
     "howto": {},
@@ -3209,6 +3244,14 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/koblenz_de.md",
     "howto": {
       "en": "- Go to <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.  \n- Right-click on your municipality and copy link address.\n- Use this link as the `url` parameter.\n- Replace the year in the url by {%Y}.\n"
+    },
+    "urls": {}
+  },
+  "ics_loehne_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/loehne_de.md",
+    "howto": {
+      "de": "- Öffne <https://www.loehne.de/Leben-Entdecken/Stadtinfos/Abfall-/Abfallkalender/> und wähle deine Straße aus.\n- Kopiere den Link von `Export in Kalenderanwendung`\n- Verwende diesen Link als `url` Parameter.\n- Ersetze die Jahreszahl in der `url` durch `{%Y}`.\n  Diese wird durch das aktuelle Jahr ersetzt.\n- Die `regex` sollte beibehalten werden, da sie den Städtenamen aus dem Titel entfernt.\n",
+      "en": "- Go to <https://www.loehne.de/Leben-Entdecken/Stadtinfos/Abfall-/Abfallkalender/> and select your street.\n- Copy the link of `Export in Kalenderanwendung`\n- Use this link as the `url` parameter.\n- Replace the year in the `url` with `{%Y}`.\n  This will be replaced by the current year.\n- you might want to keep the regex as it removes the city name from the title.\n"
     },
     "urls": {}
   },
@@ -3513,6 +3556,13 @@
     },
     "urls": {}
   },
+  "deponia_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/deponia_hu.md",
+    "howto": {
+      "en": "Open https://deponia.hu/telepuleskereso and pick your settlement. If a street dropdown appears, copy the street name exactly as listed (including house-number ranges such as 'Ady Endre utca 1-20.'). Smaller settlements have a single calendar and do not need a street."
+    },
+    "urls": {}
+  },
   "fkf_bo_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
     "howto": {},
@@ -3528,6 +3578,20 @@
   "mohu_bp_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mohu_bp_hu.md",
     "howto": {},
+    "urls": {}
+  },
+  "siokom_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siokom_hu.md",
+    "howto": {
+      "en": "Open https://www.siokom.hu/jaratterv/ and copy the settlement or district name exactly as listed (e.g. 'Balatonvilágos', 'Siófok Cs-v', 'Zamárdi Kőhegy'). Use the short name, not the neighbourhood description under Siófok rows. There is no street selector."
+    },
+    "urls": {}
+  },
+  "stkh_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stkh_hu.md",
+    "howto": {
+      "en": "Open https://stkh.hu and look for your settlement in the waste calendar list on the home page. Use the settlement name exactly as it is shown there, for example 'Újkér'. Accents, spaces and capitalisation are ignored when matching."
+    },
     "urls": {}
   },
   "eth_erd_hu": {
@@ -3557,6 +3621,14 @@
   "junker_app": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
     "howto": {},
+    "urls": {}
+  },
+  "municipium_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/municipium_it.md",
+    "howto": {
+      "en": "Enter the name of your municipality (comune) as it appears in the Municipium app. If the municipality has more than one collection zone (area), the error message will list the available zone names; pass the one that matches your address as 'area'. A partial name (e.g. 'Zona 2') is enough, or you can pass the numeric calendar id.",
+      "it": "Inserisci il nome del tuo comune così come appare nell'app Municipium. Se il comune ha più di una zona di raccolta (area), il messaggio di errore elencherà i nomi delle zone disponibili; indica come 'area' quella che corrisponde al tuo indirizzo. È sufficiente un nome parziale (es. 'Zona 2'), oppure puoi passare l'id numerico del calendario."
+    },
     "urls": {}
   },
   "aliaserviziambientali_it": {
@@ -3930,6 +4002,13 @@
     "howto": {},
     "urls": {}
   },
+  "codc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/codc_govt_nz.md",
+    "howto": {
+      "en": "Use the CODC Bin App (https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The address argument should match how the app displays your address alongside your next collection details."
+    },
+    "urls": {}
+  },
   "ccc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_govt_nz.md",
     "howto": {},
@@ -4146,6 +4225,13 @@
     "howto": {},
     "urls": {}
   },
+  "bochnia_gmina_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bochnia_gmina_pl.md",
+    "howto": {
+      "en": "Enter the name of the town in Gmina Bochnia (e.g. Baczków, Damienice, Proszówki, Łapczyca, etc.)."
+    },
+    "urls": {}
+  },
   "pronatura_bydgoszcz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",
     "howto": {},
@@ -4188,6 +4274,13 @@
   "gmina_miekinia_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "gmina_trzebnica_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_trzebnica_pl.md",
+    "howto": {
+      "en": "Install the 'Gmina Trzebnica' app and look up your waste collection region. The region ID can be found in the app's waste calendar section, or in the region list linked from the documentation of this source."
+    },
     "urls": {}
   },
   "gmina_zgierz_pl": {
@@ -4317,6 +4410,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kositeast_sk.md",
     "howto": {
       "en": "Find your town on https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/ and enter it exactly as it appears in the link."
+    },
+    "urls": {}
+  },
+  "kositwest_sk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kositwest_sk.md",
+    "howto": {
+      "en": "Find your town on the KOSIT WEST website and enter it exactly as it appears in the link."
     },
     "urls": {}
   },
@@ -4535,6 +4635,11 @@
   },
   "narab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/narab_se.md",
+    "howto": {},
+    "urls": {}
+  },
+  "partille_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/partille_se.md",
     "howto": {},
     "urls": {}
   },
@@ -5466,15 +5571,22 @@
   },
   "eastdevon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdevon_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details, or from the UPRN query parameter on the East Devon bin collection page."
+    },
+    "urls": {}
   },
   "eastdunbarton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdunbarton_gov_uk.md",
     "howto": {
       "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+    },
+    "urls": {}
+  },
+  "easthants_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/easthants_gov_uk.md",
+    "howto": {
+      "en": "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN. Alternatively, enter the displayed calendar numbers manually."
     },
     "urls": {}
   },
@@ -6635,6 +6747,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "stirling_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_gov_uk.md",
+    "howto": {
+      "en": "Visit https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/ and type your address into the search to see the exact wording, then use the same here. House number and street (e.g. '38 Kildean Road'), property name (e.g. 'Merlo'), or a single-dwelling postcode work."
+    },
+    "urls": {}
+  },
   "stockport_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockport_gov_uk.md",
     "howto": {},
@@ -7031,6 +7150,16 @@
   },
   "baton_rouge_la_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baton_rouge_la_us.md",
+    "howto": {},
+    "urls": {}
+  },
+  "charlestoncounty_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charlestoncounty_org.md",
+    "howto": {},
+    "urls": {}
+  },
+  "charleston_sc_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charleston_sc_gov.md",
     "howto": {},
     "urls": {}
   },

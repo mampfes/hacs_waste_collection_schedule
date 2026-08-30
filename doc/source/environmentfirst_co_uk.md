@@ -1,6 +1,6 @@
 # Environment First
 
-Consolidated support for schedules provided by [Eastbourne Borough Council](https://www.lewes-eastbourne.gov.uk/bins-waste-and-recycling/) and [Lewes District Council](https://www.lewes-eastbourne.gov.uk/bins-waste-and-recycling/).
+Consolidated support for schedules provided by [Eastbourne Borough Council](https://lewes-eastbourne.gov.uk/bins-waste-and-recycling/) and [Lewes District Council](https://lewes-eastbourne.gov.uk/bins-waste-and-recycling/).
 
 ## Configuration via configuration.yaml
 
@@ -73,4 +73,4 @@ waste_collection_schedule:
 
 An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
 
-Otherwise you can inspect the web requests on the [Environment First](https://www.environmentfirst.co.uk/) having searched using your address details. Your UPRN is the collection of digits at the end of the URL, for example: `https://www.environmentfirst.co.uk/house.php?uprn=100060091178`
+Otherwise you can inspect the web requests on the [Environment First](https://environmentfirst.co.uk/) having searched using your address details. Your UPRN is the collection of digits at the end of the URL, for example: `https://environmentfirst.co.uk/house.php?uprn=100060091178`

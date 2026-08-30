@@ -1,51 +1,42 @@
-import json
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "East Devon District Council"
 DESCRIPTION = "Source for East Devon services for East Devon District Council, UK."
 URL = "https://eastdevon.gov.uk/"
+COUNTRY = "uk"
 TEST_CASES = {
     "Test_001": {"uprn": "010000246114"},
     "Test_002": {"uprn": 10000272679},
 }
-ICON_MAP = {
-    "RUBBISH": Icons.GENERAL_WASTE,
-    "RECYCLING AND FOOD WASTE": Icons.BIO_KITCHEN,
-    "GREEN WASTE": Icons.GARDEN,
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details, or from the UPRN query parameter on the East Devon bin collection page."
 }
+PARAM_TRANSLATIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+ICON_MAP = {
+    "refuse": Icons.GENERAL_WASTE,
+    "rubbish": Icons.GENERAL_WASTE,
+    "recycl": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "green": Icons.GARDEN,
+    "garden": Icons.GARDEN,
+}
+SOURCE_CODEOWNERS = ["@SimonRice"]
 
 
 class Source:
-    def __init__(self, uprn):
+    def __init__(self, uprn: str | int):
+        self._client = Cloud9Client("eastdevon", icon_keywords=ICON_MAP)
         self._uprn = str(uprn).zfill(12)
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(
-            "https://eastdevon.gov.uk/addressfinder/",
-            params={"qsource": "UPRN", "qtype": "bins", "term": self._uprn},
-        )
-
-        json_data = json.loads(r.text)[0]["Results"]
-        soup = BeautifulSoup(json_data, "html.parser")
-        bins = soup.findAll("h2")
-        dates = soup.findAll("em")
-
-        entries = []
-        for b, d in zip(bins, dates, strict=False):
-            # check cases where no date is given for a collection
-            if d:
-                bin_type = b.text.replace(" collection", "").replace("Your ", "")
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(d.text, "%A%d %B %Y").date(),
-                        t=bin_type,
-                        icon=ICON_MAP.get(bin_type.upper()),
-                    )
-                )
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch_by_uprn(self._uprn)

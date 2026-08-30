@@ -1169,14 +1169,27 @@ class WasteCollectionOptionsFlow(OptionsFlow):
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)
 
-    def get_types_of_sensors_and_customizations(self):
-        fetched_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
+    def get_types_of_sensors_and_customizations(self) -> list[str]:
+        fetched_types: list[str] = []
+
+        coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
+            self._entry.entry_id
+        )
+
+        if coordinator and isinstance(coordinator, WCSCoordinator):
+            fetched_types.extend(coordinator._aggregator.types)
+
+        fetched_types.extend(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
+
         for c in self._entry.options.get(CONF_SENSORS, []):
-            if CONF_TYPE in c:
-                fetched_types.extend(
-                    c[CONF_TYPE] if isinstance(c[CONF_TYPE], list) else [c[CONF_TYPE]]
-                )
-        return list(set(fetched_types))
+            collection_types = c.get(CONF_COLLECTION_TYPES, [])
+
+            if isinstance(collection_types, list):
+                fetched_types.extend(collection_types)
+            elif collection_types:
+                fetched_types.append(collection_types)
+
+        return sorted({t for t in fetched_types if t})
 
     async def async_step_customize(self, user_input: dict[str, Any] | None = None):
         if self._customize_select is None or self._customize_select_idx >= len(

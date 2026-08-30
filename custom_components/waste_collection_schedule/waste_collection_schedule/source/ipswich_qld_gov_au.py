@@ -1,116 +1,105 @@
-import datetime
-import urllib
-from html.parser import HTMLParser
+from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.WhatBinDay import WhatBinDayService
 
 TITLE = "Ipswich City Council"
 DESCRIPTION = "Source for Ipswich City Council rubbish collection."
 URL = "https://www.ipswich.qld.gov.au"
+COUNTRY = "au"
+SOURCE_CODEOWNERS = ["@CRZTFR"]
 TEST_CASES = {
     "Camira State School": {"street": "184-202 Old Logan Rd", "suburb": "Camira"},
     "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
 }
 
-
-ICON_MAP = {
-    "Waste Bin": Icons.GENERAL_WASTE,
-    "Recycle Bin": Icons.RECYCLING,
-    "FOGO Bin": Icons.BIO_KITCHEN,
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia."
 }
 
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "Street number and street name, e.g. 50 Brisbane Road.",
+        "suburb": "Suburb name, e.g. Redbank.",
+    }
+}
 
-def toDate(dateStr: str):
-    items = dateStr.split("-")
-    return datetime.date(int(items[1]), int(items[2]), int(items[3]))
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street",
+        "suburb": "Suburb",
+    }
+}
 
+APP_PACKAGE = "com.socketsoftware.whatbinday.ipswich"
+CONFIG_URL = "https://api.whatbinday.com/V3/Device/{}/Config"
 
-class IpswichGovAuParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._entries = []
-        self._state = None
-        self._level = 0
-        self._class = ""
-        self._li_level = 0
-        self._li_valid = False
-        self._span_level = 0
-        self._load_date = False
-        self._load_bin = False
-        self._loaded_date = None
+ICON_MAP = {
+    "WasteBin": Icons.GENERAL_WASTE,
+    "RecycleBin": Icons.RECYCLING,
+    "GreenBin": Icons.ORGANIC,
+    "GlassBin": Icons.GLASS,
+}
 
-    @property
-    def entries(self):
-        return self._entries
-
-    def handle_endtag(self, tag):
-
-        if tag == "li":
-            self._li_level -= 1
-            self._loaded_date = None
-
-        if tag == "span":
-            self._span_level -= 1
-
-    def handle_starttag(self, tag, attrs):
-
-        d = dict(attrs)
-        cls = d.get("class", "")
-
-        if tag == "li":
-            self._li_level += 1
-            if self._li_level == 1 and cls == "WBD-result-item":
-                self._li_valid = True
-            else:
-                self._li_valid = False
-                self._loaded_date = None
-
-        if tag == "span":
-            self._span_level += 1
-            if self._li_valid and self._span_level == 1 and cls == "WBD-event-date":
-                self._load_date = True
-
-            if self._li_valid and self._span_level == 3 and cls == "WBD-bin-text":
-                self._load_bin = True
-
-    def handle_data(self, data):
-        if not self._li_valid:
-            return
-
-        if self._load_date:
-            self._load_date = False
-
-            items = data.strip().split("-")
-            self._loaded_date = datetime.date(
-                int(items[0]), int(items[1]), int(items[2])
-            )
-
-        if self._load_bin:
-            self._load_bin = False
-
-            self._entries.append(
-                Collection(self._loaded_date, data, icon=ICON_MAP.get(data))
-            )
+BIN_NAMES = {
+    "WasteBin": "Waste Bin",
+    "RecycleBin": "Recycle Bin",
+    "GreenBin": "Garden Organics (GO)",
+    "GlassBin": "Glass Bin",
+}
 
 
 class Source:
     def __init__(self, street, suburb):
-        self._street = street
-        self._suburb = suburb
+        self._street = " ".join(str(street).split())
+        self._suburb = " ".join(str(suburb).split())
+        self._service = WhatBinDayService(
+            location_key="ipswich_city_council",
+            icon_map=ICON_MAP,
+            bin_names=BIN_NAMES,
+            app_package=APP_PACKAGE,
+        )
 
-    def fetch(self):
+    def _geocode(self) -> dict:
+        device_key = self._service.register_device()
+        config_response = requests.get(
+            CONFIG_URL.format(device_key),
+            headers=self._service.HEADERS,
+            timeout=30,
+        )
+        config_response.raise_for_status()
+        config_payload = config_response.json()
+        if not config_payload.get("success"):
+            raise RuntimeError(
+                "Device configuration failed: "
+                f"{config_payload.get('info') or 'Unknown error'}"
+            )
 
-        address = urllib.parse.quote_plus(f"{self._street}, {self._suburb}")
-        params = {
-            "apiKey": "b8dbca0c-ad9c-4f8a-8b9c-080fd435c5e7",
-            "agendaResultLimit": "3",
-            "dateFormat": "yyyy-MM-dd",
-            "displayFormat": "agenda",
-            "address": f"{address}+QLD%2C+Australia",
-        }
+        search_url = config_payload["data"]["config"]["googleAddressSearchURL"]
+        address = f"{self._street}, {self._suburb} QLD, Australia"
+        geocode_response = requests.get(
+            search_url.replace("%s", quote(address, safe="")),
+            headers=self._service.HEADERS,
+            timeout=30,
+        )
+        geocode_response.raise_for_status()
+        geocode_payload = geocode_response.json()
 
-        r = requests.get("https://console.whatbinday.com/api/search", params=params)
-        p = IpswichGovAuParser()
-        p.feed(r.text)
-        return p.entries
+        for result in geocode_payload.get("results", []):
+            component_types = {
+                component_type
+                for component in result.get("address_components", [])
+                for component_type in component.get("types", [])
+            }
+            if {"street_number", "route", "locality"}.issubset(component_types):
+                return result
+
+        raise SourceArgumentNotFound("street", self._street)
+
+    def fetch(self) -> list[Collection]:
+        entries = self._service.get_collection_schedule(self._geocode())
+        if not entries:
+            raise SourceArgumentNotFound("street", self._street)
+        return entries

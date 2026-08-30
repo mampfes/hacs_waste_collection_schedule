@@ -10,7 +10,9 @@ permissions:
 
 jobs:
   update-docs:
-    if: github.actor != 'github-actions[bot]'
+    if: >
+      github.repository == 'mampfes/hacs_waste_collection_schedule' &&
+      github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
