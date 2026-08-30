@@ -45,9 +45,7 @@ class Source:
 
         for item in data["RhServices"]:
             waste_type = item["WasteType"]
-            next_pickup_date = datetime.fromisoformat(
-                item["NextWastePickup"]
-            ).date()
+            next_pickup_date = datetime.fromisoformat(item["NextWastePickup"]).date()
 
             entries.append(
                 Collection(
