@@ -5,7 +5,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
     geocode,
-    get_next_n_dates,
     query_feature_layer,
 )
 
@@ -61,6 +60,11 @@ def _parse_next_pickup(value: str) -> date:
     return pickup
 
 
+def _next_n_dates(start: date, n: int, delta: timedelta) -> list[date]:
+    """Project ``n`` further dates from ``start`` at a fixed ``delta`` cadence."""
+    return [start + i * delta for i in range(n)]
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address.strip()
@@ -91,7 +95,5 @@ class Source:
                 t="Recycling",
                 icon=Icons.RECYCLING,
             )
-            for pickup in get_next_n_dates(
-                next_pickup, PICKUPS_AHEAD, timedelta(weeks=2)
-            )
+            for pickup in _next_n_dates(next_pickup, PICKUPS_AHEAD, timedelta(weeks=2))
         ]
