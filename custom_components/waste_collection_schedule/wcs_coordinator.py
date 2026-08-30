@@ -156,6 +156,12 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     @callback
     async def _fetch_callback(self, *_):
+        # cancel a still pending delayed fetch before scheduling a new one so
+        # that repeated triggers cannot stack up multiple fetch callbacks
+        if self._fetch_later_unsub:
+            self._fetch_later_unsub()
+            self._fetch_later_unsub = None
+
         self._fetch_later_unsub = async_call_later(
             self._hass,
             randrange(0, 60 * self._random_fetch_time_offset),
