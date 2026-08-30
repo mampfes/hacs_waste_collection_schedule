@@ -7153,6 +7153,16 @@
     "howto": {},
     "urls": {}
   },
+  "charlestoncounty_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charlestoncounty_org.md",
+    "howto": {},
+    "urls": {}
+  },
+  "charleston_sc_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charleston_sc_gov.md",
+    "howto": {},
+    "urls": {}
+  },
   "chesapeake_va_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chesapeake_va_us.md",
     "howto": {},

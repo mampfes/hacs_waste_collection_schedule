@@ -3942,6 +3942,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Baltimore County](/doc/source/baltimore_county_md_us.md) / baltimorecountymd.gov/departments/public-works/solid-waste/collection-schedule
 - [Baton Rouge, LA](/doc/source/baton_rouge_la_us.md) / brla.gov/337/Garbage-Collection
 - [Bloomington (IL)](/doc/source/recyclecoach_com.md) / bloomingtonil.gov
+- [Charleston County, SC](/doc/source/charlestoncounty_org.md) / charlestoncounty.org/departments/environmental-management/recycle.php
+- [Charleston, SC](/doc/source/charleston_sc_gov.md) / charleston-sc.gov/345/Environmental-Services
 - [Chesapeake, VA](/doc/source/chesapeake_va_us.md) / cityofchesapeake.net
 - [City of Apopka, FL](/doc/ics/recollect.md) / apopka.gov/319/Solid-Waste
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov

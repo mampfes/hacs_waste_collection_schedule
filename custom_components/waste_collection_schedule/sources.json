@@ -25975,6 +25975,18 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Charleston County, SC",
+      "module": "charlestoncounty_org",
+      "default_params": {},
+      "id": "charlestoncounty_org"
+    },
+    {
+      "title": "Charleston, SC",
+      "module": "charleston_sc_gov",
+      "default_params": {},
+      "id": "charleston_sc_gov"
+    },
+    {
       "title": "Chesapeake, VA",
       "module": "chesapeake_va_us",
       "default_params": {},
