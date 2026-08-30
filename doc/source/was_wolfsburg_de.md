@@ -34,7 +34,9 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
+Open [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/) and select your address. Use exactly the street name and house number offered there.
+
 | Argument | Description |
 | ----------- | ----------- |
-| street | Full street name as shown in the WAS web app. |
-| number | House number as shown in the WAS web app. |
+| street | Full street name as listed on [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/), e.g. `Bärheide`. |
+| number | House number as listed on [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/), e.g. `1`. |
