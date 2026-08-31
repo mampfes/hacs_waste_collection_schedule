@@ -5,6 +5,7 @@ import requests
 import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
@@ -24,8 +25,10 @@ ICON_MAP = {
 API_URL = "https://bincollection.newham.gov.uk/Details/Index/{property}"
 
 # "Next<nbsp>Tuesday<nbsp>01/09/2026" - the day name is optional, the date is
-# always dd/mm/yyyy.
-NEXT_DATE = re.compile(r"Next\D*(\d{2}/\d{2}/\d{4})")
+# always dd/mm/yyyy. Allow at most one word between "Next" and the date, and
+# never "Previous", so that a card with an empty "Next" cannot match the
+# "Previous" date that follows it.
+NEXT_DATE = re.compile(r"Next\s*(?:(?!Previous)[A-Za-z]+\s*)?(\d{2}/\d{2}/\d{4})")
 
 # The server presents only its leaf certificate, so the chain cannot be verified.
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -40,6 +43,25 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
+
+        # An unknown (but well formed) property ID still returns HTTP 200 with a
+        # fully rendered page; only the address card is left empty. Without this
+        # check every collection card is skipped and fetch() returns [] silently.
+        # Key the lookup on the header text, not on card order: every collection
+        # card carries the "card" class too, so a positional lookup would read a
+        # collection card (and pass) if the page were ever reordered.
+        address = None
+        for card in soup.find_all("div", class_="card"):
+            header = card.find("div", {"class": "card-header"})
+            if header is not None and "address" in header.get_text(strip=True).lower():
+                address = card.find("p", {"class": "card-text"})
+                break
+        if address is None or not address.get_text(strip=True):
+            raise SourceArgumentNotFound(
+                "property",
+                self._property,
+                "this property ID does not exist on bincollection.newham.gov.uk.",
+            )
 
         entries = []
 
