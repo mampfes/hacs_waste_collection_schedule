@@ -47,7 +47,7 @@ It will then query the BSR for the `schedule_id`.
 1. Go to https://www.bsr.de/abfuhrkalender.
 1. Enter your street (Straße) and house number (Hausnummer) in the form at the lower part of the page (you might get a list where you have to select your postal code).
 1. Now you should see a calendar with pickup dates.
-1. Click on the 3 dots in a circle that is directly above the calender on the right.
+1. Click on the "Downloads" button that is directly above the calendar on the right.
 1. A popup opens (you can download either a PDF or a ICS document, but there's no need to do it).
 1. When you hover with your mouse over one of the two links you will see the link at the very bottom of the window.
 1. Part of this link is a 24 digit number - this is your `sched_id`.
