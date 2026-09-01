@@ -64,8 +64,19 @@ _API_KEY_HOLIDAYS = "C2068E03CB6B73D4FEBA"  # holidays endpoint
 
 # Regexes for parsing holiday delay messages, e.g.:
 #   "Due to the Thanksgiving holiday, service on 11/24 will be on a 1 day delay."
-_HOLIDAY_DATE_RE = re.compile(r"\d{1,2}/\d{1,2}(?:/\d{2,4})?")
-_DELAY_RE = re.compile(r"(\d+)(?: day)? delay", re.IGNORECASE)
+#   "Labor Day is on Monday, September 7th. Weekday collections will
+#    experience a delay of one day."
+_HOLIDAY_DATE_RE = re.compile(
+    r"\d{1,2}/\d{1,2}(?:/\d{2,4})?|"
+    r"\b(?:January|February|March|April|May|June|July|August|September|"
+    r"October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s*\d{4})?",
+    re.IGNORECASE,
+)
+_DELAY_RE = re.compile(
+    r"(?:(\d+)(?: day)? delay|"
+    r"delay(?: of| by)?(?: up to)?\s+one(?: day)?)",
+    re.IGNORECASE,
+)
 
 # WM wasteStreamGroupCode values → canonical Icons enum
 ICON_MAP: dict[str, Icons] = {
@@ -156,12 +167,24 @@ def _parse_holiday_message(
     for m in _HOLIDAY_DATE_RE.finditer(message):
         raw = m.group()
         try:
-            if raw.count("/") == 2:
-                dt = datetime.datetime.strptime(raw, "%m/%d/%Y")
+            if "/" in raw:
+                has_year = raw.count("/") == 2
+                if has_year:
+                    dt = datetime.datetime.strptime(raw, "%m/%d/%Y")
+                else:
+                    dt = datetime.datetime.strptime(raw, "%m/%d").replace(
+                        year=today.year
+                    )
             else:
-                dt = datetime.datetime.strptime(raw, "%m/%d").replace(year=today.year)
-                if dt < today:
-                    dt = dt.replace(year=today.year + 1)
+                raw = re.sub(r"(\d)(?:st|nd|rd|th)\b", r"\1", raw)
+                has_year = "," in raw
+                date_format = "%B %d, %Y" if has_year else "%B %d"
+                dt = datetime.datetime.strptime(raw, date_format)
+                if not has_year:
+                    dt = dt.replace(year=today.year)
+
+            if not has_year and dt < today:
+                dt = dt.replace(year=today.year + 1)
         except ValueError:
             continue
         date_spans.append((dt, m.start(), m.end()))
@@ -171,8 +194,20 @@ def _parse_holiday_message(
         next_start = date_spans[i + 1][1] if i + 1 < len(date_spans) else len(message)
         segment = message[end:next_start]
         delay_match = _DELAY_RE.search(segment)
-        offset = int(delay_match.group(1)) if delay_match else 0
-        result[dt] = dt + datetime.timedelta(days=offset)
+        if not delay_match:
+            continue
+
+        offset = int(delay_match.group(1)) if delay_match.group(1) else 1
+
+        if "weekday collections" in segment.lower():
+            collection_date = dt
+            while collection_date.weekday() < 5:
+                result[collection_date] = collection_date + datetime.timedelta(
+                    days=offset
+                )
+                collection_date += datetime.timedelta(days=1)
+        else:
+            result[dt] = dt + datetime.timedelta(days=offset)
 
     return result
 

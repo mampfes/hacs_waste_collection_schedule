@@ -1172,3 +1172,42 @@ END:VCALENDAR
         ("2026-01-04", "Papier"),
         ("2026-01-05", "Restabfall"),
     ]
+
+
+def test_wm_com_parses_service_date_delay() -> None:
+    module = _get_module("wm_com")
+
+    result = module._parse_holiday_message(
+        "Due to the Thanksgiving holiday, your service on 11/24/2026 will be on "
+        "a 1 day delay.",
+    )
+
+    assert result == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
+    }
+
+
+def test_wm_com_parses_weekday_collection_delays() -> None:
+    module = _get_module("wm_com")
+
+    labor_day = module._parse_holiday_message(
+        "Residential: Labor Day is on Monday, September 7th, 2026, and we will be "
+        "closed. Weekday collections will experience a delay of one day. "
+        "Commercial: Labor Day is on Monday, September 7th, 2026, and we will be "
+        "closed. Weekday collections may experience a delay of up to one day.",
+    )
+    assert labor_day == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
+    thanksgiving = module._parse_holiday_message(
+        "Thanksgiving is on Thursday, November 26th, 2026. Weekday collections "
+        "will experience a delay of one day.",
+    )
+    assert thanksgiving == {
+        module.datetime.datetime(2026, 11, 26): module.datetime.datetime(2026, 11, 27),
+        module.datetime.datetime(2026, 11, 27): module.datetime.datetime(2026, 11, 28),
+    }
