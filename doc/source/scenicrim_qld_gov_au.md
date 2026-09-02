@@ -18,7 +18,7 @@ waste_collection_schedule:
 *(string) (mandatory)*
 
 Your address as it appears in the _Street_Address_ column of the
- [csv file](https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv) used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved.
+ [csv file](https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv) used by the website. Case and spacing do not have to match: the register's double spaces and upper-casing are ignored when matching, so `77a long road tamborine mountain qld 4272` finds the same property.
 
 ## Example
 
