@@ -30,7 +30,10 @@ ICAL_URL = f"{API_URL}/ical"
 ICON_MAP = {
     "Hauskehricht": Icons.GENERAL_WASTE,
     "Altpapiersammlung": Icons.PAPER,
-    # Bern collects kitchen and garden organics together in one "Grünabfuhr".
+    # Keys must match the feed's SUMMARY values verbatim. The feed spells this
+    # one without the umlaut ("Gruenabfuhr") even though the website shows
+    # "Grünabfuhr". ORGANIC is the right member because Bern collects kitchen
+    # and garden organics together.
     "Gruenabfuhr": Icons.ORGANIC,
 }
 
@@ -169,9 +172,17 @@ class Source:
             )
 
         if not entries:
+            # Report the argument the user actually configured, so the Home
+            # Assistant UI highlights the right field.
+            if self._key:
+                raise SourceArgumentNotFound(
+                    "key",
+                    self._key,
+                    "No collections returned for this key.",
+                )
             raise SourceArgumentNotFound(
                 "strasse",
-                f"{self._strasse or ''} {self._hnr or ''}".strip() or self._key,
+                f"{self._strasse} {self._hnr}",
                 "No collections returned for this address.",
             )
 
