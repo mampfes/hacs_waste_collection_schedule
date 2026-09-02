@@ -27,11 +27,11 @@ import pytest
 
 sys.path.append(
     str(Path(__file__).parents[1] / "custom_components" / "waste_collection_schedule")
-)
+)  # isort:skip
 
-from waste_collection_schedule import Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.source import newham_gov_uk
+from waste_collection_schedule import Icons  # isort:skip
+from waste_collection_schedule.exceptions import SourceArgumentNotFound  # isort:skip
+from waste_collection_schedule.source import newham_gov_uk  # isort:skip
 
 
 class Response:
