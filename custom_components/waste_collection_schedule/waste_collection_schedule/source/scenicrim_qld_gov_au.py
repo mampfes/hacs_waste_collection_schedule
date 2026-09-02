@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import requests
 from dateutil.rrule import FR, MO, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Scenic Rim Regional Council"
 DESCRIPTION = "Source for scenicrim.qld.gov.au services for Scenic Rim Regional Council"
@@ -59,9 +60,20 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 _LOGGER = logging.getLogger(__name__)
 
 
+def _normalise(text: str) -> str:
+    """Upper-case and collapse whitespace.
+
+    The register mixes single- and double-space sequences ("1 ACACIA STREET
+    BEAUDESERT  QLD 4285"), which previously meant a caller had to reproduce
+    that spacing exactly. Comparing on collapsed whitespace removes that trap
+    without changing which property matches.
+    """
+    return " ".join(text.upper().split())
+
+
 class Source:
     def __init__(self, address: str):
-        self._address: str = address.upper()
+        self._address: str = _normalise(address)
 
     def generate_dates(
         self, weekday: int, date_start: datetime, interval: int, date_end: datetime
@@ -87,11 +99,37 @@ class Source:
             [element.upper() for element in address] for address in address_list
         ]
 
-        # extract service day and recycling code
+        # Extract service day and recycling code. Prefer an exact match on the
+        # register address, falling back to a substring match; the register
+        # contains addresses that are prefixes of others ("1 SMITH ST" is a
+        # substring of "11 SMITH ST"), and the previous loop kept the last
+        # match rather than the best one.
+        service_day = None
+        recycling_code = None
+        substring_match = None
         for item in address_list:
-            if self._address in item[0]:
-                service_day: str = item[-2]
-                recycling_code: str = item[-1].split(" ")[1]
+            if not item or not item[0]:
+                continue
+            register_address = _normalise(item[0])
+            if register_address == self._address:
+                service_day = item[-2]
+                recycling_code = item[-1].split(" ")[1]
+                break
+            if substring_match is None and self._address in register_address:
+                substring_match = item
+        if service_day is None and substring_match is not None:
+            service_day = substring_match[-2]
+            recycling_code = substring_match[-1].split(" ")[1]
+
+        # No match previously left service_day unbound, so an address that is
+        # not in the register raised UnboundLocalError and surfaced as an
+        # opaque HTTP 500 instead of telling the user what to enter.
+        if service_day is None or service_day not in DAYS:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [item[0] for item in address_list[1:] if item and item[0]],
+            )
 
         # set up start/end dates for generate_dates
         now: datetime = datetime.now()
