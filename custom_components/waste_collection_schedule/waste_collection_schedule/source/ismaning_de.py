@@ -18,6 +18,8 @@ DESCRIPTION = (
 URL = "https://ismaning.de/umwelt-energie/abfall/abfallkalender/"
 COUNTRY = "de"
 
+SOURCE_CODEOWNERS = ["@Kufi089"]
+
 AJAX_URL = "https://ismaning.de/wp-admin/admin-ajax.php"
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120 Safari/537.36",
