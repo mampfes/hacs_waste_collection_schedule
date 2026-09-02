@@ -67,7 +67,7 @@ _API_KEY_HOLIDAYS = "C2068E03CB6B73D4FEBA"  # holidays endpoint
 #   "Labor Day is on Monday, September 7th. Weekday collections will
 #    experience a delay of one day."
 _HOLIDAY_DATE_RE = re.compile(
-    r"\d{1,2}/\d{1,2}(?:/\d{2,4})?|"
+    r"\d{1,2}/\d{1,2}(?:/(?:\d{4}|\d{2}))?|"
     r"\b(?:January|February|March|April|May|June|July|August|September|"
     r"October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s*\d{4})?",
     re.IGNORECASE,
@@ -161,7 +161,7 @@ def _parse_holiday_message(
       "Due to the Thanksgiving holiday, your service on 11/24 will be on
        a 1 day delay."
     """
-    today = datetime.datetime.today()
+    today = datetime.date.today()
     date_spans: list[tuple[datetime.datetime, int, int]] = []
 
     for m in _HOLIDAY_DATE_RE.finditer(message):
@@ -170,7 +170,8 @@ def _parse_holiday_message(
             if "/" in raw:
                 has_year = raw.count("/") == 2
                 if has_year:
-                    dt = datetime.datetime.strptime(raw, "%m/%d/%Y")
+                    year_format = "%y" if len(raw.rsplit("/", 1)[1]) == 2 else "%Y"
+                    dt = datetime.datetime.strptime(raw, f"%m/%d/{year_format}")
                 else:
                     dt = datetime.datetime.strptime(raw, "%m/%d").replace(
                         year=today.year
@@ -183,7 +184,7 @@ def _parse_holiday_message(
                 if not has_year:
                     dt = dt.replace(year=today.year)
 
-            if not has_year and dt < today:
+            if not has_year and dt.date() < today:
                 dt = dt.replace(year=today.year + 1)
         except ValueError:
             continue

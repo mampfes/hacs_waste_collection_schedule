@@ -1186,6 +1186,39 @@ def test_wm_com_parses_service_date_delay() -> None:
         module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
     }
 
+    two_digit_year = module._parse_holiday_message(
+        "Due to the Thanksgiving holiday, your service on 11/24/26 will be on "
+        "a 1 day delay.",
+    )
+
+    assert two_digit_year == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
+    }
+
+
+def test_wm_com_keeps_no_year_holiday_on_today() -> None:
+    from datetime import date
+
+    module = _get_module("wm_com")
+
+    class Today(date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 9, 7)
+
+    with patch.object(module.datetime, "date", Today):
+        result = module._parse_holiday_message(
+            "Labor Day is on Monday, September 7th. Weekday collections will "
+            "experience a delay of one day.",
+        )
+
+    assert result == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
 
 def test_wm_com_parses_weekday_collection_delays() -> None:
     module = _get_module("wm_com")
