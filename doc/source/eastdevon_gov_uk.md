@@ -14,13 +14,33 @@ waste_collection_schedule:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
 
+or
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: eastdevon_gov_uk
+      args:
+        postcode: POSTCODE
+        address: ADDRESS
+```
+
 ### Configuration Variables
 
 **uprn**
-*(string) (required)*
+*(string) (optional)*
 
+**postcode**
+*(string) (optional)*
+
+**address**
+*(string) (optional)*
+
+Provide either `uprn`, or `postcode` together with `address`.
 
 ## Examples
+
+Using a UPRN:
 
 ```yaml
 waste_collection_schedule:
@@ -29,6 +49,20 @@ waste_collection_schedule:
       args:
         uprn: "010000246114"
 ```
+
+Using a postcode and address:
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: eastdevon_gov_uk
+      args:
+        postcode: "EX8 2AN"
+        address: "1 Dagmar Road"
+```
+
+If the address does not uniquely identify a property, the integration reports
+the matching addresses so you can copy an exact one.
 
 ## How to find your UPRN
 
