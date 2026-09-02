@@ -11,9 +11,9 @@ waste_collection_schedule:
   sources:
     - name: team_orange_de
       args:
-          ort: ORT
-          strasse: STRASSE
-          hausnummer: HAUSNUMMER
+        ort: ORT
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables

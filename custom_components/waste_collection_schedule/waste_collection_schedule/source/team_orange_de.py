@@ -175,8 +175,29 @@ def resolve_option(field_name, value, options):
 
 
 def _hidden_value(text, name):
-    m = re.search(rf'NAME="{name}"[^>]*VALUE="([^"]*)"', text, re.I)
-    return m.group(1) if m else ""
+    # Tolerate optional whitespace around "=" and either attribute order
+    # (name before value, or value before name), as the servlet HTML may vary.
+    pattern = re.compile(
+        rf'(?:name\s*=\s*["\']?{re.escape(name)}["\']?[^>]*?value\s*=\s*["\']([^"\']*)["\']'
+        rf'|value\s*=\s*["\']([^"\']*)["\'][^>]*?name\s*=\s*["\']?{re.escape(name)}["\']?)',
+        re.I,
+    )
+    m = pattern.search(text)
+    return (m.group(1) or m.group(2)) if m else ""
+
+
+def _session_state(text):
+    """Extract SessionId/ApplicationName, failing fast if either is missing."""
+    sid = _hidden_value(text, "SessionId")
+    app = _hidden_value(text, "ApplicationName")
+    if not sid or not app:
+        raise SourceArgumentNotFound(
+            "SessionId" if not sid else "ApplicationName",
+            "<Antwort des Abfallkalenders>",
+            "Die Antwort des Athos-Servlets enthält keine gültige Sitzung. "
+            "Möglicherweise hat sich die Website von team orange geändert.",
+        )
+    return sid, app
 
 
 class Source:
@@ -215,20 +236,14 @@ class Source:
         ort = resolve_option(
             "ort", self.ort, parse_form_state(r.text).get_options("Ort")
         )
-        sid, app = (
-            _hidden_value(r.text, "SessionId"),
-            _hidden_value(r.text, "ApplicationName"),
-        )
+        sid, app = _session_state(r.text)
 
         # Step 2: pick Ort -> Strasse list
         r = self._post(session, sid, app, "CITYCHANGED", ort, "", "")
         strasse = resolve_option(
             "strasse", self.strasse, parse_form_state(r.text).get_options("Strasse")
         )
-        sid, app = (
-            _hidden_value(r.text, "SessionId"),
-            _hidden_value(r.text, "ApplicationName"),
-        )
+        sid, app = _session_state(r.text)
 
         # Step 3: pick Strasse -> Hausnummer list
         r = self._post(session, sid, app, "STREETCHANGED", ort, strasse, "")
@@ -237,18 +252,12 @@ class Source:
             self.hausnummer,
             parse_form_state(r.text).get_options("Hausnummer"),
         )
-        sid, app = (
-            _hidden_value(r.text, "SessionId"),
-            _hidden_value(r.text, "ApplicationName"),
-        )
+        sid, app = _session_state(r.text)
 
         # Step 4: forward -> Terminliste (offers ical / pdf download)
         r = self._post(session, sid, app, "forward", ort, strasse, hausnummer)
         r.raise_for_status()
-        sid, app = (
-            _hidden_value(r.text, "SessionId"),
-            _hidden_value(r.text, "ApplicationName"),
-        )
+        sid, app = _session_state(r.text)
 
         # Step 5: download the iCal file (per-address, generated on demand)
         data = {
@@ -270,5 +279,5 @@ class Source:
         ]
         # The servlet returns events in varying order across requests; sort for
         # deterministic output (required by the -d double-fetch test).
-        entries.sort(key=lambda c: c.date)
+        entries.sort(key=lambda c: (c.date, c.type))
         return entries
