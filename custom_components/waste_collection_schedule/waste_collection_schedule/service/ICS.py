@@ -30,6 +30,50 @@ def _event_location_description(e: Any) -> tuple[str | None, str | None]:
     return loc, desc
 
 
+def _event_start_date(e: Any) -> datetime.date | None:
+    """Return the calendar date an event starts on.
+
+    icalevents normalises event start times to UTC. Reducing those straight to a
+    date shifts the day for any feed whose DTSTART sits close to midnight in a
+    timezone other than UTC: ``DTSTART;TZID=Australia/Brisbane:20251002T000000``
+    arrives as ``14:00Z`` on the *previous* day, and even
+    ``DTSTART;TZID=Europe/Berlin`` is reported a day early.
+
+    The date the feed intended is the one in the timezone the feed declared, so
+    convert back into that timezone before taking the date. Deliberately not
+    ``astimezone()`` without an argument: the host/Home Assistant timezone is
+    unrelated to the calendar, and using it both fails to fix the bug when the
+    host runs in UTC and breaks all-day events when the host is behind UTC.
+    """
+    start = getattr(e, "start", None)
+
+    if not isinstance(start, datetime.datetime):
+        # Plain date (all-day) - already the value we want.
+        return start if isinstance(start, datetime.date) else None
+
+    if start.tzinfo is None:
+        # Floating time: the wall clock date is authoritative.
+        return start.date()
+
+    # Recover the timezone declared by the original DTSTART property. icalendar
+    # has already resolved TZID to a tzinfo object, which also handles Windows
+    # style zone names such as "AUS Eastern Standard Time" that ZoneInfo would
+    # reject.
+    component = getattr(e, "component", None)
+    dtstart_prop = component.get("DTSTART") if component is not None else None
+    original = getattr(dtstart_prop, "dt", None)
+
+    if isinstance(original, datetime.datetime):
+        if original.tzinfo is not None:
+            return start.astimezone(original.tzinfo).date()
+    elif isinstance(original, datetime.date):
+        # VALUE=DATE all-day event. icalevents still hands back a UTC midnight
+        # datetime, so its UTC date is the literal date from the feed.
+        return start.date()
+
+    return start.date()
+
+
 class ICS:
     def __init__(
         self,
@@ -106,12 +150,7 @@ class ICS:
 
         for e in events:
             # calculate date
-            dtstart: datetime.date | None = None
-
-            if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
-            elif isinstance(e.start, datetime.date):
-                dtstart = e.start
+            dtstart: datetime.date | None = _event_start_date(e)
 
             # Only continue if a start date can be found in the entry
             if dtstart is not None:
@@ -189,12 +228,7 @@ class ICS:
 
         for e in events:
             # calculate date
-            dtstart: datetime.date | None = None
-
-            if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
-            elif isinstance(e.start, datetime.date):
-                dtstart = e.start
+            dtstart: datetime.date | None = _event_start_date(e)
 
             # Only continue if a start date can be found in the entry
             if dtstart is not None:
