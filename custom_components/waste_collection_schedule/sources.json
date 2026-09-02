@@ -26123,6 +26123,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Roseville, CA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of San Antonio",
       "module": "sanantonio_gov",
       "default_params": {},
