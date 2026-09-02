@@ -39,7 +39,9 @@ class Source:
         self._property = str(property).zfill(12)
 
     def fetch(self):
-        r = requests.get(API_URL.format(property=self._property), verify=False)
+        r = requests.get(
+            API_URL.format(property=self._property), verify=False, timeout=30
+        )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
