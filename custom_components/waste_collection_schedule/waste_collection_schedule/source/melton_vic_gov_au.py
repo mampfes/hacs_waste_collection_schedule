@@ -8,10 +8,10 @@ TITLE = "Melton City Council"
 DESCRIPTION = "Source for Melton City Council rubbish collection."
 URL = "https://www.melton.vic.gov.au"
 TEST_CASES = {
-    "Tuesday A": {"street_address": "23 PILBARA AVENUE BURNSIDE 3023"},
-    "Tuesday B": {"street_address": "29 COROWA CRESCENT BURNSIDE 3023"},
-    "Wednesday A": {"street_address": "2 ASPIRE BOULEVARD FRASER RISE 3336"},
-    "Wednesday B": {"street_address": "17 KEYNES CIRCUIT FRASER RISE 3336"},
+    "Melton": {"street_address": "1 HIGH STREET MELTON 3337"},
+    "Melton South": {"street_address": "3 BRIDGE ROAD MELTON SOUTH 3338"},
+    "Fraser Rise": {"street_address": "20 ASPIRE BOULEVARD FRASER RISE 3336"},
+    "Cobblebank": {"street_address": "2-26 FERRIS ROAD COBBLEBANK 3338"},
 }
 
 ICON_MAP = {
@@ -20,12 +20,22 @@ ICON_MAP = {
     "Recycling": Icons.RECYCLING,
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "}
+# Melton sits behind Akamai, which scores the TLS/HTTP fingerprint as well as
+# the headers: plain `requests` is served a 403 "Access Denied" page for every
+# request, including the warm-up. curl_cffi's Chrome impersonation passes.
+# The Accept header is what keeps the search endpoint answering JSON -- without
+# it, content negotiation hands back the legacy XML shape instead.
+HEADERS = {
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "x-requested-with": "XMLHttpRequest",
+}
 
 _CONFIG = OpenCitiesConfig(
     domain="https://www.melton.vic.gov.au",
     argument_name="street_address",
     headers=HEADERS,
+    use_curl_cffi=True,
+    search_response_format="json_then_xml",
     warm_up_url="https://www.melton.vic.gov.au/My-Area",
     icon_keywords=ICON_MAP,
 )
