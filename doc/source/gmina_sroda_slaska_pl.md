@@ -2,9 +2,9 @@
 
 Waste collection for Gmina Środa Śląska.
 
-All data  based on source: [https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/](https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/).
+The [Gmina Środa Śląska schedule page](https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/) is the official source. It currently directs residents to the COM-D schedule service; the collection provider may change in the future.
 
-Support by [github issues](https://github.com/ksciana/waste_collection/issues).
+Support by [GitHub issues](https://github.com/mampfes/hacs_waste_collection_schedule/issues).
 
 ## Configuration via configuration.yaml
 ```yaml
@@ -12,12 +12,14 @@ waste_collection_schedule:
   sources:
     - name: gmina_sroda_slaska_pl
       args:
-        location_id: LOCATION_ID
+        location: LOCATION
 ```
+
+Existing `location_id` configurations cannot be migrated automatically because they identify groups of locations rather than a single COM-D schedule. Replace `location_id` with the location slug for your own locality or district.
 
 ### Configuration Variables
 
-**location_id**  
+**location**
 *(string) (required)*
 
 ## Example
@@ -27,18 +29,9 @@ waste_collection_schedule:
   sources:
     - name: gmina_sroda_slaska_pl
       args:
-        location_id: 3
+        location: szczepanow
 ```
 
 ## How to get the source arguments
 
-Replace `LOCATION_ID` with following `Id`:
-
-| Id | Location | Details |
-| --: | --- | --- |
-| 1 | Środa Śląska 1 |  DLA NIERUCHOMOŚCI JEDNORODZINNYCH: Cmentarna, Czereśniowa, Daszyńskiego, Górna, Gruszkowa, Jabłkowa, Kajakowa, Kilińskiego,Konstytucji 3 Maja,Korczaka, Łąkowa,Mleczarska, Morelowa, Parkowa,Partyzantów, Plac Solny, Plac Wolności, Spokojna, Stawowa,Strzelecka,Śliwkowa, Wąska, Wierzbowa,Winogronowa, Wrocławska, Zaciszna,0Baczyńskiego, Basztowa Al., Białoskornicza, Boya-Żeleńskiego,Brodatgeo H., Chwalimierska, Dojazdowa, Flamandzka, Floriańska, Jana ze Środy, Karnasa,Kopernika, Korwina, Kościuszki, Kościelna,  Księżnej Jadwigi, Księżycowa, Łanowa, Mickiewicza, Ogrodowa,Oławska, Piastów Śląskich, Przyszkolna, Rakoszycka, Różana, Skłodowskiej-Curie, skwer Zesłańców Sybiru, Słoneczna, Słowackiego, Szkolna, Śląska, Willowa, Winnicza,Wiśniowa, Żwirki i Wigury |
-| 2 | Ogrodnica,  Proszków | |
-| 3 | Bukówek, Cesarzowice, Chwalimierz, Ciechów, Ligotka, Michałów,  Pęczków,  Wrocisławice | |
-| 4 | Brodno, Jastrzębce, Kobylniki, Lipnica, Lisiny, Odyniec, Rzeczyca, Słup, Szczepanów, Zakrzów | |
-| 5 | Środa Śląska 2 |  DLA NIERUCHOMOŚCI JEDNORODZINNYCH: Bluszczowa, Bociania, Chabrowa, Dworcowa, Fiołkowa, Goździkowa,Irysowa, Jastrzębia, Konwaliowa, Krucza,Legnicka, Leśna, Makowa, Miłosza, Mostowa, Nasturcjowa, Ogrodnicka,Orla, Reymonta, Rumiankowa, Sokola, Spółdzielcza, Storczykowa,Świdnicka,  św. Andrzeja, trakt św. Jakuba, Targowa, Tulipanowa, Waniliowa, Wiejska, Wrzosowa, Żurawia,01 Maja, Akacjowa, Do Termatu, Dębowa, Działkowa, Hallera, Jarzębinowa,Jaśminowa, Jesionowa, Kasztanowa,Klonowa, Kolejowa, Lipnicka, Lipowa, Malczycka,Miła, Młynarska, Na Polance, Ogrody Zamkowe, Traugutta, Sikorskiego, Spacerowa, Stacyjna, Topolowa, Żytnia |
-| 6 | Gozdawa, Jugowiec Juszczyn, Komorniki, Kryniczno,Kulin, Przedmoście, Święte, Rakoszyce, Wojczyce | |
+Open the COM-D schedule linked from the [Gmina Środa Śląska schedule page](https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/), choose your locality or Środa Śląska district, and copy the last part of its URL. For example, use `szczepanow` for `https://www.com-d.pl/komunalne/harm/sroda-slaska/szczepanow`.
