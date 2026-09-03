@@ -4,7 +4,10 @@ from typing import TypedDict
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+)
 
 TITLE = "City of Cockburn"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for cockburn.wa.gov.au"  # Describe your source
@@ -18,6 +21,9 @@ TEST_CASES = {
         "address": "23 Snowden St, Hammond Park WA 6164",
     },
     "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
+    # A postcode with no state, which is what most people type. Previously
+    # matched nothing and failed as "list index out of range".
+    "Postcode without state": {"address": "23 Snowden Street HAMMOND PARK 6164"},
     "Tuesday int": {"property_no": 6025742},
     "Tuesday str": {"property_no": "6025742"},
 }
@@ -66,6 +72,12 @@ class Source:
                 r"western australia (\d{4})", "WA \\1", address, flags=re.IGNORECASE
             )
             address = re.sub(r" wa (\d{4})", "  WA  \\1", address, flags=re.IGNORECASE)
+            # The search wants the state spelled between suburb and postcode
+            # ("HAMMOND PARK  WA  6164"). A trailing postcode with no state at
+            # all -- which is what most people type -- matched nothing, so put
+            # the state in rather than leaving the postcode to fail.
+            if not re.search(r"\bwa\b", address, flags=re.IGNORECASE):
+                address = re.sub(r"\s+(\d{4})\s*$", "  WA  \\1", address)
             self.address = address
             self.search_method = "address"
 
@@ -80,6 +92,45 @@ class Source:
             start_date = start_date + timedelta(days=(weeks * 7))
             dates.append(start_date)
         return dates
+
+    def _search(self, query: str, search_method: str) -> list[dict]:
+        search_value = re.sub(r"\s+", "+", query.strip())
+        r = requests.get(
+            f"{API_URL}?q={search_value}&search_method={search_method}",
+            headers=HEADERS,
+        )
+        r.raise_for_status()
+        payload = r.json()
+        return payload if isinstance(payload, list) else []
+
+    def _search_address(self) -> list[dict]:
+        """Find the property, retrying without the state and postcode.
+
+        The search is happy with just a street number and name, and stricter
+        about everything after it, so a suburb or postcode the council writes
+        differently is better dropped than sent. Previously a zero-result
+        search went straight into ``r.json()[0]`` and failed as "list index out
+        of range", which told the visitor nothing about what was wrong.
+        """
+        address = self.address or ""
+        attempts = [address]
+        without_state = re.sub(
+            r"\s+wa\s+\d{4}\s*$", "", address, flags=re.IGNORECASE
+        ).strip()
+        if without_state and without_state != address:
+            attempts.append(without_state)
+
+        for attempt in attempts:
+            results = self._search(attempt, "address")
+            if results:
+                return results
+
+        raise SourceArgumentNotFound(
+            "address",
+            address,
+            "Cockburn did not recognise that address. Check the street number "
+            "and name, and write the street type out in full (Street, not St).",
+        )
 
     def extract_date(self, text: str) -> datetime | None:
         # Define the pattern for the date format DD-MMM-YYYY
@@ -101,25 +152,22 @@ class Source:
         # Determine the search method and value based on what's available
 
         if self.address:
-            search_value = re.sub(r"\s+", "+", self.address.strip())
+            results = self._search_address()
+            if len(results) > 1:
+                raise SourceArgAmbiguousWithSuggestions(
+                    "address",
+                    self.address,
+                    [r["Address"] for r in results if r.get("Address")][:10],
+                )
+            data = results[0]
+        else:
+            # Check if property_no is available
+            results = self._search(str(self.property_no), "property_no")
+            if not results:
+                raise SourceArgumentNotFound("property_no", self.property_no)
+            data = results[0]
 
-            full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
-
-        # Check if property_no is available
-        if self.property_no:
-            search_value = self.property_no.strip()
-            full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
-
-        # Build the full URL
-        if full_url is not None:
-            r = requests.get(full_url, headers=HEADERS)
-            r.raise_for_status()  # Raise an exception if the status code is not 200 (OK)
-
-            data = r.json()[0]
-
-            if not data:
-                raise SourceArgumentNotFound("address", self.address)
-
+        if data:
             # Convert the bin day to a date
             date_rubbish = datetime.today()
             while date_rubbish.strftime("%A") != data["BinDay"]:
