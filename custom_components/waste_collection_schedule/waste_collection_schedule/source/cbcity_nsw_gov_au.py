@@ -27,10 +27,56 @@ ICON_MAP = {
 
 CACHE_DURATION = 30 * 24 * 60 * 60  # 30 days
 
+# fullAddress is held as "102 Crinan Street, Hurlstone Park 2193": comma before
+# the suburb, street type spelled out, postcode but no state. Matching on that
+# string verbatim meant a missing comma, an added "NSW" or an abbreviated
+# street type found nothing, so both sides are compared on the form below.
+STREET_TYPES = {
+    "AV": "AVENUE",
+    "AVE": "AVENUE",
+    "BVD": "BOULEVARD",
+    "BLVD": "BOULEVARD",
+    "CCT": "CIRCUIT",
+    "CL": "CLOSE",
+    "CR": "CRESCENT",
+    "CRES": "CRESCENT",
+    "CT": "COURT",
+    "DR": "DRIVE",
+    "ESP": "ESPLANADE",
+    "GDNS": "GARDENS",
+    "GR": "GROVE",
+    "GRV": "GROVE",
+    "HWY": "HIGHWAY",
+    "LN": "LANE",
+    "PDE": "PARADE",
+    "PKWY": "PARKWAY",
+    "PL": "PLACE",
+    "RD": "ROAD",
+    "RSE": "RISE",
+    "SQ": "SQUARE",
+    "ST": "STREET",
+    "TCE": "TERRACE",
+    "WY": "WAY",
+}
+_STATES = {"NSW", "NEW SOUTH WALES"}
+
+
+def _normalise(value: str) -> str:
+    """Compare-ready form: upper case, no commas or slashes, no state."""
+    text = value.upper().replace(",", " ").replace("/", " ")
+    words = [STREET_TYPES.get(word, word) for word in text.split()]
+    return " ".join(word for word in words if word not in _STATES)
+
+
 TEST_CASES = {
     "Tab 1 Zone A": {
         "address": "102 Crinan Street, Hurlstone Park 2193",
     },
+    # The shapes people type: no comma, an added state, an abbreviated
+    # street type. None of them matched before.
+    "No comma": {"address": "102 Crinan Street Hurlstone Park 2193"},
+    "With state": {"address": "102 Crinan Street, Hurlstone Park NSW 2193"},
+    "Abbreviated street type": {"address": "102 Crinan St Hurlstone Park"},
     "Tab 1 Zone B": {
         "address": "1 / 1 Aster Avenue, Punchbowl 2196",
     },
@@ -302,6 +348,7 @@ class Source:
 
     def __init__(self, address: str):
         self._address = address.strip().lower()
+        self._wanted = _normalise(address)
 
     @classmethod
     def _is_cache_valid(cls) -> bool:
@@ -364,10 +411,22 @@ class Source:
         for row in data:
             if row.get("fullAddress", "").lower() == self._address:
                 return row
+
+        # Compare on the normalised form, so a missing comma, an added state
+        # or an abbreviated street type still finds the property.
+        normalised = [(row, _normalise(row.get("fullAddress", ""))) for row in data]
+        exact = [row for row, full in normalised if full == self._wanted]
+        if len(exact) == 1:
+            return exact[0]
+        if exact:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [row["fullAddress"] for row in exact[:10]],
+            )
+
         # Try partial match
-        partial = [
-            row for row in data if self._address in row.get("fullAddress", "").lower()
-        ]
+        partial = [row for row, full in normalised if self._wanted in full]
         if len(partial) == 1:
             return partial[0]
         if partial:
