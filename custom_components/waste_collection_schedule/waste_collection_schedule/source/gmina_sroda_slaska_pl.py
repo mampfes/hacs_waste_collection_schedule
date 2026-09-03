@@ -1,57 +1,90 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Gmina Środa Śląska"
 DESCRIPTION = "Source for Gmina Środa Śląska, Poland"
-URL = "https://waste-collection.sciana.pro"
+URL = "https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/"
+SCHEDULE_URL = "https://www.com-d.pl/komunalne/harm/sroda-slaska"
+COUNTRY = "pl"
 TEST_CASES = {
-    "Ciechów": {"location_id": 3},
+    "Szczepanów": {"location": "szczepanow"},
 }
 
 ICON_MAP = {
-    "Zmieszane komunalne": Icons.GENERAL_WASTE,
-    "Tworzywa sztuczne": Icons.RECYCLING,
-    "Odpady kuchenne ulegające biodegradacji": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Szkło": Icons.GLASS,
-    "Odpady wielkogabarytowe": Icons.BULKY,
+    "1xmc-odpady-szklo": Icons.GLASS,
+    "inne-odpady-rozne": Icons.TEXTILE,
+    "inne-odpady-zbiorki": Icons.BULKY,
+    "inne-odpady-papier": Icons.PAPER,
+    "t-odpady-biodegradowalne": Icons.ORGANIC,
+    "t-odpady-zmieszane": Icons.GENERAL_WASTE,
+    "tp-odpady-metaletworzywa": Icons.RECYCLING,
 }
 
-API_URL = "https://waste-collection.sciana.pro/api/v1/"
-API_URL_JSON = ".json"
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "To get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.",
+TYPE_MAP = {
+    "1xmc-odpady-szklo": "Szkło",
+    "inne-odpady-rozne": "Tekstylia i odzież",
+    "inne-odpady-zbiorki": "Odpady wielkogabarytowe",
+    "inne-odpady-papier": "Papier",
+    "t-odpady-biodegradowalne": "Odpady biodegradowalne",
+    "t-odpady-zmieszane": "Zmieszane odpady komunalne",
+    "tp-odpady-metaletworzywa": "Metale i tworzywa sztuczne",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL.",
+}
+
+PARAM_DESCRIPTIONS = {
     "en": {
-        "location_id": "Unique location id (LOCATION_ID)",
+        "location": "Locality or district URL slug from the COM-D schedule page",
     },
 }
 
 
 class Source:
-    def __init__(self, location_id):
-        self._location_id = location_id
+    def __init__(self, location):
+        self._location = location
 
     def fetch(self):
-        api_response = requests.get(API_URL + str(self._location_id) + API_URL_JSON)
-
         entries = []
+        seen = set()
+        response = requests.get(f"{SCHEDULE_URL}/{self._location}", timeout=30)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
 
-        kinds = api_response.json()["data"]["garbage_kinds"]
+        schedule_table = next(
+            table
+            for table in soup.find_all("table")
+            if table.find("th", string="Frakcja")
+        )
+        category_urls = {
+            link["href"] for link in schedule_table.select('a[href*="/sroda-slaska/"]')
+        }
 
-        for k in kinds:
-            name = k["name"]
-            for d in k["disposals"]:
+        for category_url in category_urls:
+            category = category_url.rsplit("/", 1)[-1]
+            category_response = requests.get(
+                f"https://www.com-d.pl{category_url}", timeout=30
+            )
+            category_response.raise_for_status()
+            category_soup = BeautifulSoup(category_response.text, "html.parser")
+
+            for collection_day in category_soup.select("td.highlighted[data-date]"):
+                collection_date = datetime.datetime.strptime(
+                    collection_day["data-date"], "%Y-%m-%d"
+                ).date()
+                entry = (collection_date, category)
+                if entry in seen:
+                    continue
+                seen.add(entry)
                 entries.append(
                     Collection(
-                        date=datetime.datetime.strptime(d["date"], "%Y-%m-%d").date(),
-                        t=name.capitalize(),
-                        icon=ICON_MAP.get(name),
+                        date=collection_date,
+                        t=TYPE_MAP.get(category, category.capitalize()),
+                        icon=ICON_MAP.get(category),
                     )
                 )
 
