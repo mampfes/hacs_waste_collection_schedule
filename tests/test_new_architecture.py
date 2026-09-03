@@ -3155,6 +3155,44 @@ class TestAwbEsDeCadence:
         assert cadence.required is False
 
 
+class TestMpdcGovtNzCalendarFiltering:
+    """MPDC's town calendars must publish only their two collection events."""
+
+    def test_normalises_known_variants_filters_community_events_and_fans_out(self):
+        from waste_collection_schedule import waste_types as wt
+        from waste_collection_schedule.source.mpdc_govt_nz import Source
+
+        day = datetime.date(2026, 1, 2)
+        rows = [
+            (day, "Rubbish and food scraps collection"),
+            (day, "Recycling, glass, and food scraps collection*"),
+            (day, "Recycling, glass and food scraps collection"),
+            (day, "Hapori Hauora - Morrinsville"),
+            (day, "Rubbish collection changed"),
+        ]
+
+        processed = list(Source.preprocess(rows, None))
+        assert processed == [
+            (day, "Rubbish and food scraps collection"),
+            (day, "Recycling, glass, and food scraps collection"),
+            (day, "Recycling, glass, and food scraps collection"),
+        ]
+
+        transformed = [
+            collection for row in processed for collection in Source.transform(row)
+        ]
+        assert [collection.waste_type for collection in transformed] == [
+            wt.GENERAL_WASTE,
+            wt.FOOD_WASTE,
+            wt.RECYCLABLES,
+            wt.GLASS,
+            wt.FOOD_WASTE,
+            wt.RECYCLABLES,
+            wt.GLASS,
+            wt.FOOD_WASTE,
+        ]
+
+
 class TestConfigParamValidation:
     """Defaults, alternatives, and validate() rules for ConfigParam."""
 
