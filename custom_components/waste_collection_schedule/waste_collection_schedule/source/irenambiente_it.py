@@ -1,7 +1,5 @@
-import logging
-import re
-from datetime import date, datetime, timedelta
-from typing import TypedDict
+from datetime import date, datetime, timedelta, timezone
+from typing import Any
 
 import requests
 from dateutil.rrule import rrulestr
@@ -11,348 +9,309 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-_LOGGER = logging.getLogger(__name__)
-
-
 TITLE = "Iren Ambiente"
-DESCRIPTION = "Source for Iren Ambiente."
-URL = "https://servizi.irenambiente.it/"
+DESCRIPTION = "Source for waste collection in municipalities serviced by Iren Ambiente (Italy - Piedmont, Emilia-Romagna, Liguria)."
+URL = "https://servizi.irenambiente.it"
+COUNTRY = "it"
+
 TEST_CASES = {
-    "Torino Corso Quintino Sella 133": {
-        "city": "Torino",
-        "street": "Corso Quintino Sella",
-        "house_number": 133,
+    "Torino Municipio per adrnr": {
+        "adrnr": "0000085934",
+        "user_type": "UD",
     },
-    "Fiorenzuola D'arda": {
-        "city": "Fiorenzuola D'arda",
-        "street": "VIALE ROMA",
-        "house_number": "11/13",
-    },
-    "Rossa": {"city": "Vignolo", "street": "VIA BLANGERA", "house_number": 18},
-    "Roccavione": {
-        "city": "Roccavione",
-        "street": "FRAZIONE BRIGNOLA",
-        "house_number": 1,
-    },
-    "Colorno ARGINE COPERMIO OVEST 74": {
-        "city": "Colorno",
-        "street": "ARGINE COPERMIO OVEST",
-        "house_number": 74,
-    },
-    "San Secondo Parmense BORGO DELLA ROVACCHIA 12": {
-        "city": "San Secondo Parmense",
-        "street": "BORGO DELLA ROVACCHIA",
-        "house_number": 12,
-    },
-    "Torino Corso Quintino Sella 11 Scala A": {
-        "city": "Torino",
-        "street": "Corso Quintino Sella",
-        "house_number": "11 Scala A",
+    "Torino Centro per indirizzo": {
+        "municipality": "Torino",
+        "street": "Piazza Palazzo di Citta",
+        "house_number": "3",
+        "user_type": "UD",
     },
 }
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Make sure your arguments are exactly spelled as shown in the autocomplete suggestions of the Iren Ambiente website: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html",
-    "it": "Assicurati che i tuoi argomenti siano esattamente come mostrato nei suggerimenti di autocompletamento del sito Iren Ambiente: https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html",
-}
-
-# DTSTART=20240301T000000Z
-DTSTART_REGEX = re.compile(r"DTSTART=\d*T\d*Z?;?")
 
 ICON_MAP = {
+    "WCARTA": Icons.PAPER,
     "Carta": Icons.PAPER,
-    "Cartone": Icons.PAPER,
+    "WINDIFFER": Icons.GENERAL_WASTE,
     "Rifiuto residuo indifferenziato": Icons.GENERAL_WASTE,
+    "WORGANICO": Icons.ORGANIC,
     "Rifiuti Organici": Icons.ORGANIC,
-    "Imballaggi in plastica": Icons.RECYCLING,
+    "WPLAIMBAL": Icons.PLASTIC_PACKAGING,
+    "Imballaggi in plastica": Icons.PLASTIC_PACKAGING,
+    "WVB": Icons.GLASS,
     "Vetro e lattine": Icons.GLASS,
-    "Vetro": Icons.GLASS,
-    "Imballaggi in plastica e barattolame": Icons.RECYCLING,
-    "Alluminio": Icons.RECYCLING,
 }
 
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "adrnr": "Address code (adrnr) as found via Iren Ambiente portal. If omitted, municipality, street, and house_number must be provided.",
+        "municipality": "Name of the municipality (e.g., 'Torino', 'Moncalieri', 'Reggio nell\\'Emilia', 'Piacenza', 'Parma', 'Genova').",
+        "street": "Street name (e.g., 'Via Roma', 'Piazza Castello', 'Piazza Palazzo di Citta').",
+        "house_number": "House number (e.g., '1', '3', '12/A').",
+        "user_type": "User type: 'UD' for domestic/household, 'ND' for non-domestic/business (optional, default: UD).",
+    },
     "it": {
-        "city": "Comune",
-        "street": "Via/Piazza/Corso",
-        "house_number": "N° Civico",
+        "adrnr": "Codice civico (adrnr) ricavabile dal portale. Se omesso, è necessario indicare municipality, street e house_number.",
+        "municipality": "Nome del comune (es. 'Torino', 'Moncalieri', 'Reggio nell\\'Emilia', 'Piacenza', 'Parma', 'Genova').",
+        "street": "Nome della via o piazza (es. 'Via Roma', 'Piazza Castello', 'Piazza Palazzo di Citta').",
+        "house_number": "Numero civico (es. '1', '3', '12/A').",
+        "user_type": "Tipologia utenza: 'UD' per domestica, 'ND' per non domestica (opzionale, predefinito UD).",
     },
 }
 
-API_URL = "https://servizi.irenambiente.it/bin/iam/api-services"
-COLLECTION_ULR = (
-    "https://net.irenambiente.it/restv1/api/cms/calendarioraccoltacivico/{address_id}"
-)
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "it": (
+        "Puoi configurare la sorgente indicando 'municipality', 'street' e 'house_number', "
+        "oppure fornendo direttamente il codice 'adrnr' catturabile tramite gli strumenti sviluppatore (F12) "
+        "dal portale https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html."
+    ),
+    "en": (
+        "You can configure the source by specifying 'municipality', 'street', and 'house_number', "
+        "or directly via 'adrnr' obtained from Developer Tools (F12) on the portal: "
+        "https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html."
+    ),
+}
 
-
-class CityResultEntry(TypedDict):
-    Comune: str
-    Istat: str
-
-
-class StreetResultEntry(TypedDict):
-    Street: str
-    StreetCode: str
-    Istat: str
-
-
-class HnrRestultEntry(TypedDict):
-    Civico: str
-    AdrNr: str
-
-
-class CityResult(TypedDict):
-    data: list[CityResultEntry]
-
-
-class StreetResult(TypedDict):
-    data: list[StreetResultEntry]
-
-
-class HnrResult(TypedDict):
-    data: list[HnrRestultEntry]
-
-
-class Holiday(TypedDict):
-    DataFestivita: str
-    DataConferimento: str
-
-
-class CollectionItem(TypedDict):
-    Materiale: str
-    ICalRRule: str
-    IdFrequenza: str
-    FlagFreq: str
-    FestivitaCalendario: list[Holiday]
-    NonVisibile: bool
+API_BASE_URL = "https://net.irenambiente.it/restv1/api/cms"
+PORTAL_SERVICES_URL = "https://servizi.irenambiente.it/bin/iam/api-services"
 
 
 class Source:
-    def __init__(self, city: str, street: str, house_number: str | int):
-        self._city: str = city
-        self._street: str = street
-        self._house_number: str | int = house_number
+    def __init__(
+        self,
+        adrnr: str | None = None,
+        municipality: str | None = None,
+        street: str | None = None,
+        house_number: str | None = None,
+        user_type: str = "UD",
+    ) -> None:
+        self._adrnr = str(adrnr).strip() if adrnr else None
+        self._municipality = municipality.strip() if municipality else None
+        self._street = street.strip() if street else None
+        self._house_number = str(house_number).strip() if house_number else None
+        self._user_type = user_type.upper().strip() if user_type else "UD"
 
-        self._address_id: str | None = None
+        if not self._adrnr and not (
+            self._municipality and self._street and self._house_number
+        ):
+            raise SourceArgumentNotFound(
+                "adrnr",
+                "",
+                "Specify either 'adrnr' or ('municipality', 'street', and 'house_number').",
+            )
 
-    @staticmethod
-    def get_cities(search: str) -> list[CityResultEntry]:
-        params = {"api": "comuni", "search": search.lower()}
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        result_data: CityResult = r.json()
-        return result_data["data"]
-
-    def _search_city(self) -> str:
-        data = self.get_cities(self._city)
-        if not data:
-            raise SourceArgumentNotFound("city", self._city)
-
-        for city in data:
-            if city["Comune"].lower().replace(" ", "") == self._city.lower().replace(
-                " ", ""
-            ):
-                return city["Istat"]
-        raise SourceArgumentNotFoundWithSuggestions(
-            "city", self._city, [city["Comune"] for city in data]
+    def _resolve_adrnr(self, session: requests.Session) -> str:
+        # 1. Ricerca Comune
+        resp = session.get(f"{API_BASE_URL}/comuni", timeout=30)
+        resp.raise_for_status()
+        comuni: list[dict[str, Any]] = resp.json() or []
+        muni_lower = self._municipality.lower()  # type: ignore[union-attr]
+        comune_match = next(
+            (c for c in comuni if c.get("Comune", "").strip().lower() == muni_lower),
+            None,
         )
 
-    @staticmethod
-    def get_streets(city_id: str, search: str) -> list[StreetResultEntry]:
-        params: dict[str, str | int] = {
-            "api": "vie",
-            "istat": city_id,
-            "search": search.lower(),
-        }
-        if search == "":
-            params["limit"] = 1000
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        result_data: StreetResult = r.json()
+        if not comune_match:
+            suggestions = [
+                c.get("Comune", "")
+                for c in comuni
+                if muni_lower in c.get("Comune", "").lower()
+            ]
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality",
+                self._municipality,
+                suggestions,  # type: ignore[arg-type]
+            )
 
-        return result_data["data"]
+        istat = comune_match.get("Istat")
+        if not istat:
+            raise SourceArgumentNotFound(
+                "municipality",
+                self._municipality,  # type: ignore[arg-type]
+                f"No Istat code found for municipality '{self._municipality}'.",
+            )
 
-    def _search_street(self, city_id: str) -> str:
-        data = self.get_streets(city_id, self._street)
-        if not data:
-            data = self.get_streets(city_id, "")
-
-        for street in data:
-            if street["Street"].lower().replace(
-                " ", ""
-            ) == self._street.lower().replace(" ", ""):
-                return street["StreetCode"]
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street", self._street, [street["Street"] for street in data]
+        # 2. Ricerca Via
+        resp = session.get(
+            f"{API_BASE_URL}/vie/{istat}",
+            params={"search": self._street},
+            timeout=30,
         )
+        resp.raise_for_status()
+        vie: list[dict[str, Any]] = resp.json() or []
+        street_lower = self._street.lower()  # type: ignore[union-attr]
 
-    @staticmethod
-    def get_house_numbers(
-        city_id: str, street_code: str, search: str
-    ) -> list[HnrRestultEntry]:
+        via_match = next(
+            (v for v in vie if v.get("Street", "").strip().lower() == street_lower),
+            None,
+        )
+        if not via_match and vie:
+            via_match = vie[0]
+
+        if not via_match:
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,  # type: ignore[arg-type]
+                f"Street '{self._street}' not found in municipality '{self._municipality}'.",
+            )
+
+        street_code = via_match.get("StreetCode")
+        if not street_code:
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,  # type: ignore[arg-type]
+                f"StreetCode not found for street '{self._street}'.",
+            )
+
+        # 3. Ricerca Civico ed estrazione AdrNr
         params = {
             "api": "civici",
-            "istat": city_id,
+            "istat": istat,
             "streetcode": street_code,
-            # only use the first part of the house number if it contains a slash as this seems to break the search and the API should still return the correct address
-            "search": search.lower().split("/")[0].split()[0],
+            "search": self._house_number,
+            "limit": 20,
         }
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        result_data: HnrResult = r.json()
-        return result_data["data"]
+        resp = session.get(PORTAL_SERVICES_URL, params=params, timeout=30)
+        resp.raise_for_status()
+        civici_data = resp.json() or {}
+        civici: list[dict[str, Any]] = civici_data.get("data", [])
 
-    def search_house_number(self, city_id: str, street_code: str) -> str:
-        data = self.get_house_numbers(city_id, street_code, str(self._house_number))
-        if not data:
-            raise SourceArgumentNotFound("house_number", self._house_number)
-
-        for hnr in data:
-            if hnr["Civico"].lower().replace(" ", "") == str(
-                self._house_number
-            ).lower().replace(" ", ""):
-                return hnr["AdrNr"]
-        raise SourceArgumentNotFoundWithSuggestions(
-            "house_number", self._house_number, [hnr["Civico"] for hnr in data]
+        civico_target = self._house_number.lower()  # type: ignore[union-attr]
+        civico_match = next(
+            (
+                c
+                for c in civici
+                if str(c.get("Civico", "")).strip().lower() == civico_target
+            ),
+            None,
         )
+        if not civico_match and civici:
+            civico_match = civici[0]
 
-    @staticmethod
-    def construct_holiday_map(holidays: list[Holiday]) -> dict[date, date]:
-        holiday_map = {}
-        for holiday in holidays:
-            if holiday["DataFestivita"]:
-                festivity = datetime.strptime(
-                    holiday["DataFestivita"], "%Y-%m-%d"
-                ).date()
-                if holiday["DataConferimento"]:
-                    holiday_map[festivity] = datetime.strptime(
-                        holiday["DataConferimento"], "%Y-%m-%d"
-                    ).date()
-                else:
-                    # Empty replacement means skip this date entirely
-                    holiday_map[festivity] = festivity
-        return holiday_map
+        if not civico_match:
+            raise SourceArgumentNotFound(
+                "house_number",
+                self._house_number,  # type: ignore[arg-type]
+                f"House number '{self._house_number}' not found for street '{self._street}'.",
+            )
 
-    @staticmethod
-    def get_collection_result(address_id: str) -> list[CollectionItem]:
-        r = requests.get(COLLECTION_ULR.format(address_id=address_id))
-        r.raise_for_status()
-        return r.json()
+        adrnr = civico_match.get("AdrNr")
+        if not adrnr:
+            raise SourceArgumentNotFound(
+                "adrnr",
+                "",
+                f"Could not extract AdrNr for house number '{self._house_number}'.",
+            )
 
-    @staticmethod
-    def _fortnightly_dtstart(flag_freq: str, year: int) -> datetime:
-        """Compute DTSTART for fortnightly (2S) schedules.
-
-        Iren aligns odd/even weeks to ISO week numbers.
-        FlagFreq 'N' → dispari (odd ISO weeks); FlagFreq 'P' → pari (even ISO weeks).
-        The first Monday of the year may fall in an even or odd ISO week depending
-        on the year, so we check and shift by one week if needed.
-        """
-        jan1 = datetime(year, 1, 1)
-        first_monday = jan1 + timedelta(days=(7 - jan1.weekday()) % 7)
-        first_monday_is_odd = first_monday.isocalendar()[1] % 2 == 1
-        want_odd = flag_freq == "N"
-        if first_monday_is_odd != want_odd:
-            first_monday += timedelta(weeks=1)
-        return first_monday
-
-    def _get_collections(self) -> list[Collection]:
-        if not self._address_id:
-            raise ValueError("address id not set")
-        data: list[CollectionItem] = self.get_collection_result(self._address_id)
-
-        entries = []
-        already_added: set[tuple[date, str]] = set()
-
-        for item in data:
-            bin_type = item["Materiale"]
-            rulestr = item["ICalRRule"]
-            if item["NonVisibile"]:
-                continue
-
-            if (
-                not rulestr
-                or rulestr.lower().startswith("invalid")
-                or not rulestr.removeprefix("RRULE:").strip()
-                or not rulestr.removeprefix("RDATE:").strip()
-            ):
-                continue
-            start_datetime = None
-            if "DTSTART=" in rulestr:
-                start_string_match = DTSTART_REGEX.search(rulestr)
-                if start_string_match:
-                    start_string = start_string_match.group(0)
-                    start_datetime = datetime.strptime(
-                        start_string.replace("DTSTART=", "").strip(";"),
-                        "%Y%m%dT%H%M%SZ",
-                    )
-                rulestr = DTSTART_REGEX.sub("", rulestr).strip(";")
-
-            # Fix fortnightly schedules: the API returns FREQ=WEEKLY but
-            # IdFrequenza="2S" indicates every 2 weeks.  Inject INTERVAL=2
-            # and compute the correct DTSTART for odd/even week alignment.
-            if (
-                item.get("IdFrequenza") == "2S"
-                and "INTERVAL" not in rulestr
-                and rulestr.startswith("RRULE:")
-            ):
-                rulestr = rulestr.replace("FREQ=WEEKLY", "FREQ=WEEKLY;INTERVAL=2")
-                start_datetime = self._fortnightly_dtstart(
-                    item.get("FlagFreq", "N"), datetime.now().year
-                )
-
-            try:
-                if start_datetime:
-                    rule = rrulestr(rulestr, dtstart=start_datetime)
-                else:
-                    rule = rrulestr(rulestr)
-            except Exception as e:
-                _LOGGER.warning(
-                    f"ERROR: {e}, could not parse collection rule: {rulestr}, for {bin_type}"
-                )
-                continue
-
-            holidays = self.construct_holiday_map(item["FestivitaCalendario"])
-
-            for date_time in rule.between(
-                datetime.now() - timedelta(days=10),
-                datetime.now() + timedelta(days=365),
-            ):
-                date_ = date_time.date()
-                days_moved = {date_}
-                end = False
-                while date_ in holidays:
-                    # Holidays may point to other holidays which may point back to the original date (the day should be completely skipped)
-                    date_ = holidays[date_]
-                    if date_ in days_moved:
-                        end = True
-                        break
-                    days_moved.add(date_)
-
-                if end or (date_, bin_type) in already_added:
-                    continue
-                already_added.add((date_, bin_type))
-                entries.append(
-                    Collection(date=date_, t=bin_type, icon=ICON_MAP.get(bin_type))
-                )
-        return entries
+        return str(adrnr).strip()
 
     def fetch(self) -> list[Collection]:
-        fresh_data = False
-        if not self._address_id:
-            city_id = self._search_city()
-            street_code = self._search_street(city_id)
-            self._address_id = self.search_house_number(city_id, street_code)
-            fresh_data = True
+        session = requests.Session()
+        session.headers.update(
+            {
+                "Accept": "application/json",
+                "User-Agent": "Mozilla/5.0 (HomeAssistant Waste Collection Schedule)",
+                "Referer": "https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html",
+            }
+        )
 
-        try:
-            return self._get_collections()
-        except Exception:
-            if fresh_data:
-                raise
+        adrnr = self._adrnr or self._resolve_adrnr(session)
+        api_url = f"{API_BASE_URL}/calendarioraccoltacivico/{adrnr}"
 
-        city_id = self._search_city()
-        street_code = self._search_street(city_id)
-        self._address_id = self.search_house_number(city_id, street_code)
-        return self._get_collections()
+        response = session.get(api_url, timeout=30)
+        response.raise_for_status()
+
+        data = response.json()
+        if not data or not isinstance(data, list):
+            raise SourceArgumentNotFound(
+                "adrnr",
+                adrnr,
+                f"No calendar entries found for adrnr '{adrnr}'.",
+            )
+
+        entries = [
+            item
+            for item in data
+            if item.get("TipoUtenza", "").upper() == self._user_type
+            and not item.get("NonVisibile", False)
+        ]
+
+        if not entries:
+            entries = [item for item in data if not item.get("NonVisibile", False)]
+
+        today = datetime.now(timezone.utc).date()
+        start_dt = datetime(
+            today.year, today.month, today.day, tzinfo=timezone.utc
+        ) - timedelta(days=14)
+        end_dt = datetime(
+            today.year, today.month, today.day, tzinfo=timezone.utc
+        ) + timedelta(days=120)
+
+        entries_by_date: dict[date, set[str]] = {}
+
+        for item in entries:
+            waste_name = item.get("Materiale") or item.get("IdRifiuto")
+            if not waste_name:
+                continue
+
+            rrule_str = item.get("ICalRRule")
+            if not rrule_str:
+                continue
+
+            dtstart_raw = item.get("DataInizioValidita")
+            if dtstart_raw:
+                try:
+                    dtstart_date = date.fromisoformat(dtstart_raw.split("T")[0])
+                    dtstart = datetime(
+                        dtstart_date.year,
+                        dtstart_date.month,
+                        dtstart_date.day,
+                        tzinfo=timezone.utc,
+                    )
+                except ValueError:
+                    dtstart = start_dt
+            else:
+                dtstart = start_dt
+
+            try:
+                rule = rrulestr(rrule_str, dtstart=dtstart)
+            except (ValueError, TypeError):
+                continue
+
+            occurrences = {dt.date() for dt in rule.between(start_dt, end_dt, inc=True)}
+
+            for holiday_info in item.get("FestivitaCalendario") or []:
+                holiday_date_raw = holiday_info.get("DataFestivita")
+                if not holiday_date_raw:
+                    continue
+
+                try:
+                    holiday_date = date.fromisoformat(holiday_date_raw.strip())
+                except ValueError:
+                    continue
+
+                occurrences.discard(holiday_date)
+
+                replacement_date_raw = holiday_info.get("DataConferimento")
+                if replacement_date_raw:
+                    try:
+                        replacement_date = date.fromisoformat(
+                            replacement_date_raw.strip()
+                        )
+                        if (
+                            today - timedelta(days=14)
+                            <= replacement_date
+                            <= today + timedelta(days=120)
+                        ):
+                            occurrences.add(replacement_date)
+                    except ValueError:
+                        pass
+
+            for d in occurrences:
+                entries_by_date.setdefault(d, set()).add(waste_name)
+
+        collections: list[Collection] = []
+        for d, waste_types in entries_by_date.items():
+            for waste_type in sorted(waste_types):
+                icon = ICON_MAP.get(waste_type)
+                collections.append(Collection(date=d, t=waste_type, icon=icon))
+
+        return collections
