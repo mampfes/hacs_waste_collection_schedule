@@ -49,7 +49,7 @@ ICON_MAP = {
 STREETS_BASE_URL = (
     "https://www.thurrock.gov.uk/household-bin-collection-days/street-names"
 )
-API_URL = "https://www.thurrock.gov.uk/household-bin-collection-days/household-bin-collection-weeks"
+API_URL = "https://www.thurrock.gov.uk/bindays"
 
 # Matches both ASCII hyphen-minus (-) and Unicode en-dash (–) with optional surrounding whitespace.
 DATE_RANGE_RE = re.compile(r"\s*[-–—]\s*")
