@@ -90,7 +90,7 @@ class Source:
         )
         r.raise_for_status()
 
-        collectionsRaw = json.loads(r.json()["dates"])
+        collectionsRaw = r.json()["dates"]
         collections = {
             "General": collectionsRaw["blackBinDay"],
             "Recycling": collectionsRaw["recyclingBinDay"],
