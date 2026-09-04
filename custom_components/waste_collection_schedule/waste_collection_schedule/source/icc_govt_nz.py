@@ -1,6 +1,8 @@
 import datetime
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Invercargill City Council"
 DESCRIPTION = "Source for Invercargill City Council rubbish collection."
@@ -47,9 +49,9 @@ class Source:
         # Disguise the script and use the correct Referer URL
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-            "Referer": "https://www.icc.govt.nz/services/rubbish-recycling/bin-collections"
+            "Referer": "https://www.icc.govt.nz/services/rubbish-recycling/bin-collections",
         }
-        
+
         # Use a GET request with 'params' instead of a POST request with 'data'
         response = requests.get(
             API_URL, params={"address": self._address}, headers=headers, timeout=30
@@ -57,7 +59,7 @@ class Source:
         response.raise_for_status()
 
         if not response.text.strip():
-            return []
+            raise SourceArgumentNotFound("address", self._address)
 
         data = response.json()
         entries = []
@@ -71,7 +73,9 @@ class Source:
                 continue
 
             try:
-                collection_date = datetime.datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S").date()
+                collection_date = datetime.datetime.strptime(
+                    date_str, "%Y-%m-%dT%H:%M:%S"
+                ).date()
             except ValueError:
                 continue
 
@@ -83,6 +87,9 @@ class Source:
                 )
             )
 
+        if not entries:
+            raise SourceArgumentNotFound("address", self._address)
+
         # ---------------------------------------------------------------------
         # Fix for Home Assistant restart on collection day:
         # The ICC API server drops today's collection from 'NextDates' after 07:00 AM.
@@ -90,21 +97,20 @@ class Source:
         # future date), reconstruct today's collection using the alternating week cycle.
         # To revert, simply remove this block down to 'return entries'.
         # ---------------------------------------------------------------------
-        if entries:
-            today = datetime.date.today()
-            first_entry = entries[0]
-            prev_date = first_entry.date - datetime.timedelta(days=7)
-            if prev_date == today and today not in [e.date for e in entries]:
-                prev_week_type = (
-                    "Yellow Week" if first_entry.type == "Red Week" else "Red Week"
-                )
-                entries.insert(
-                    0,
-                    Collection(
-                        date=today,
-                        t=prev_week_type,
-                        icon=ICON_MAP.get(prev_week_type),
-                    ),
-                )
+        today = datetime.date.today()
+        first_entry = entries[0]
+        prev_date = first_entry.date - datetime.timedelta(days=7)
+        if prev_date == today and today not in [e.date for e in entries]:
+            prev_week_type = (
+                "Yellow Week" if first_entry.type == "Red Week" else "Red Week"
+            )
+            entries.insert(
+                0,
+                Collection(
+                    date=today,
+                    t=prev_week_type,
+                    icon=ICON_MAP.get(prev_week_type),
+                ),
+            )
 
         return entries
