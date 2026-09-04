@@ -1,57 +1,48 @@
 # Iren Ambiente
 
-Iren Ambiente provides waste management services across several Italian regions, including Piedmont (Turin and suburban belt), Emilia-Romagna (Reggio Emilia, Parma, Piacenza), and Liguria (Genoa and surrounding areas).
+Support for schedules provided by [Iren Ambiente](https://servizi.irenambiente.it/), serving multiple municipalities in Italy.
 
 ## Configuration via configuration.yaml
 
-### Option 1: By Address (Recommended)
-
 ```yaml
 waste_collection_schedule:
-  sources:
+    sources:
     - name: irenambiente_it
       args:
-        municipality: "Torino"
-        street: "Piazza Palazzo di Citta"
-        house_number: "1"
-        user_type: "UD"
-```
-
-### Option 2: Direct address code (`adrnr`)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: irenambiente_it
-      args:
-        adrnr: "0000085934"
-        user_type: "UD"
+        city: CITY (Comune)
+        street: STREET (Via/Piazza/Corso)
+        house_number: "HOUSE NUMBER (N° civico)"
+        
 ```
 
 ### Configuration Variables
 
-**municipality**  
-*(string) (optional)* Name of the municipality (e.g. `Torino`, `Moncalieri`, `Reggio nell'Emilia`, `Piacenza`, `Parma`, `Genova`). Required if `adrnr` is not set.
+**city**  
+*(String) (required)*
 
 **street**  
-*(string) (optional)* Street name (e.g. `Via Roma`, `Piazza Castello`, `Via Garibaldi`). Required if `adrnr` is not set.
+*(String) (required)*
 
 **house_number**  
-*(string) (optional)* Civic number (e.g. `1`, `10`, `12/A`). Required if `adrnr` is not set.
+*(String|Integer) (required)*
 
-**adrnr**  
-*(string) (optional)* Direct address code identifier. If provided, address lookup is bypassed.
+## Example
 
-**user_type**  
-*(string) (optional, default: "UD")* User category: `UD` for domestic/household users, `ND` for commercial/non-domestic users.
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: irenambiente_it
+      args:
+        city: Torino
+        street: Corso Quintino Sella
+        house_number: "133"
+        
+```
 
-### How to get your `adrnr` (Advanced)
+## How to get the source argument
 
-If you prefer skipping address resolution:
+You can check if your address works by testing the arguments on the Iren Ambiente website: [https://servizi.irenambiente.it/](https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html). The arguments should be written exactly as autocompleted by the website.
 
-1. Open the [Iren Ambiente Collection Calendar](https://servizi.irenambiente.it/comune/calendario-di-raccolta-e-indicazioni-dotazioni.html).
-2. Select your municipality, street, and civic number.
-3. Open browser Developer Tools (`F12`), go to the **Network** tab and locate the request `calendarioraccoltacivico/<adrnr>`.
 
 ## Supported Municipalities
 
@@ -365,7 +356,7 @@ If you prefer skipping address resolution:
 - San Polo D'enza (RE)
 - San Secondo Parmense (PR)
 - Sant'andrea Frius (SU)
-- Santhiã  (VC)
+- Santhià (VC)
 - Sant'ilario D'enza (RE)
 - Santo Stefano Magra (SP)
 - Sarmato (PC)
