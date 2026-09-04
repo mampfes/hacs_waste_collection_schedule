@@ -36,7 +36,7 @@ ICON_MAP = {
     "food waste": Icons.BIO_KITCHEN,
 }
 
-BASE_URL = "https://collectiondates.eastlothian.gov.uk"
+BASE_URL = "https://www.eastlothian.gov.uk"
 SCHEDULE_URL = f"{BASE_URL}/waste-collection-schedule"
 
 
