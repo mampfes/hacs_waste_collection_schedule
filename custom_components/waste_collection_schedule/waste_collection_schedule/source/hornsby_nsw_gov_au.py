@@ -5,12 +5,12 @@ import json
 import logging
 import re
 import urllib.parse
-import urllib.request
 from html.parser import HTMLParser
 from io import BytesIO
 from statistics import median
 from typing import Any
 
+from curl_cffi import requests as curl_cffi_requests
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import (
     LTChar,
@@ -75,22 +75,24 @@ _FORTNIGHTLY_COUNT = 26
 _WEEKLY_COUNT = 26
 
 
+# Hornsby sits behind Akamai, which fingerprints the TLS handshake as well as
+# the headers. urllib announcing a browser User-Agent over a Python handshake
+# was served a 403 for every request; curl_cffi's Chrome impersonation makes
+# the handshake match what the User-Agent claims and passes.
+_HEADERS = {
+    "Accept": "application/json, */*",
+    "Referer": "https://www.hornsby.nsw.gov.au/",
+    "X-Requested-With": "XMLHttpRequest",
+}
+
+
 def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
     """Perform an HTTP GET request and return the response body."""
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-            ),
-            "Accept": "application/json, */*",
-            "Referer": "https://www.hornsby.nsw.gov.au/",
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        method="GET",
+    response = curl_cffi_requests.get(
+        url, headers=_HEADERS, impersonate="chrome", timeout=timeout_s
     )
-    with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-        return resp.read()
+    response.raise_for_status()
+    return response.content
 
 
 def _parse_geolocation_id(response_bytes: bytes) -> str:
