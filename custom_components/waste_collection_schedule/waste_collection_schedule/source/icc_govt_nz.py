@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Invercargill City Council"
@@ -20,8 +20,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Red Week": "mdi:trash-can",
-    "Yellow Week": "mdi:recycle",
+    "Red Week": Icons.GENERAL_WASTE,
+    "Yellow Week": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
