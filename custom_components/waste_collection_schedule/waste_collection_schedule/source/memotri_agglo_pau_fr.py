@@ -1,5 +1,6 @@
 import re
 from datetime import date, timedelta
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -29,6 +30,8 @@ COUNTRY = "fr"
 
 GEOCODER_URL = "https://api-adresse.data.gouv.fr/search/"
 BASE_URL = "https://memotri.agglo-pau.fr"
+# Fallback if the home page's form does not expose an action attribute.
+SEARCH_PATH = "/recherche-adresse/"
 
 TEST_CASES = {
     "Pau - Avenue Larribau": {
@@ -116,8 +119,8 @@ class Source:
             )
         return ban_id, label
 
-    def _get_csrf_token(self, session: curl_requests.Session) -> str:
-        """Get CSRF token from the home page."""
+    def _get_search_form(self, session: curl_requests.Session) -> tuple[str, str]:
+        """Get the address search form's target URL and CSRF token from the home page."""
         r = session.get(BASE_URL + "/", timeout=15)
         if r.status_code == 404:
             raise SourceArgumentException(
@@ -132,7 +135,12 @@ class Source:
                 "address",
                 "Unable to retrieve CSRF token from the website. The site may be temporarily unavailable.",
             )
-        return csrf_input["value"]
+
+        # Read the target from the form holding the token so a future change
+        # of the endpoint does not break this source.
+        form = csrf_input.find_parent("form")
+        action = (form.get("action") or "").strip() if form else ""
+        return urljoin(BASE_URL + "/", action or SEARCH_PATH), csrf_input["value"]
 
     def _parse_schedule(
         self, schedule_text: str
@@ -171,11 +179,11 @@ class Source:
 
         session = curl_requests.Session(impersonate="chrome131")
 
-        csrf_token = self._get_csrf_token(session)
+        search_url, csrf_token = self._get_search_form(session)
 
         # Submit form: select2 value format is 'banId&label'
         r = session.post(
-            BASE_URL + "/",
+            search_url,
             data={
                 "csrfmiddlewaretoken": csrf_token,
                 "select_adresse": f"{ban_id}&{label}",
