@@ -27,9 +27,9 @@ The municipality name as it appears in the localcities.ch URL.
 The numeric ID from the localcities.ch URL.
 
 **zone**
-*(string) (required)*
+*(string) (optional)*
 
-Your collection zone or locality name, as shown on the calendar page.
+Your collection zone or locality name, as shown on the calendar page. Omit it for municipalities without zones.
 
 ## How to find your arguments
 
@@ -61,4 +61,15 @@ waste_collection_schedule:
         municipality: grenchen
         municipality_id: 3533
         zone: "Zone Ost"
+```
+
+### Monthey (no zones)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: localcities_ch
+      args:
+        municipality: monthey
+        municipality_id: 8085
 ```

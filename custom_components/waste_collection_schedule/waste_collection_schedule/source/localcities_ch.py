@@ -51,6 +51,10 @@ TEST_CASES = {
         "municipality": "beinwil-am-see",
         "municipality_id": "5313",
     },
+    "Monthey (zoneless)": {
+        "municipality": "monthey",
+        "municipality_id": "8085",
+    },
 }
 
 EXTRA_INFO = [
@@ -115,6 +119,15 @@ EXTRA_INFO = [
         "default_params": {
             "municipality": "beinwil-am-see",
             "municipality_id": "5313",
+        },
+    },
+    {
+        "title": "Monthey",
+        "url": "https://www.monthey.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "monthey",
+            "municipality_id": "8085",
         },
     },
 ]
