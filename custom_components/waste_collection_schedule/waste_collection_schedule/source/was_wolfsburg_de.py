@@ -49,14 +49,25 @@ class Source:
         r.raise_for_status()
         answer = r.json()
 
-        for name, icon in ICON_MAP.items():
-            for a in answer[0][name]:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(a, "%Y-%m-%d").date(),
-                        t=name,
-                        icon=icon,
+        # As of early September 2026 the API wraps the collection dates in a
+        # "behaelter" (container) dict keyed by container size, instead of
+        # returning a flat list as the top-level element. See
+        # https://github.com/mampfes/hacs_waste_collection_schedule/issues/7076
+        if not isinstance(answer, dict) or not answer:
+            raise ValueError(f"No data found for '{self._street} {self._number}'")
+
+        entry = next(iter(answer.values()))
+        behaelter = entry.get("behaelter", {})
+
+        for container in behaelter.values():
+            for name, icon in ICON_MAP.items():
+                for date_str in container.get(name, {}):
+                    entries.append(
+                        Collection(
+                            date=datetime.strptime(date_str, "%Y-%m-%d").date(),
+                            t=name,
+                            icon=icon,
+                        )
                     )
-                )
 
         return entries
