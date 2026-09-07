@@ -64,7 +64,6 @@ class Source:
         self._session = requests.Session()
         self._session.headers.update(HEADERS)
         self._ics = ICS()
-        self._year = datetime.now(ZoneInfo("Europe/Berlin")).year
 
         self._street = self._resolve_street(street)
         street_type = self._ajax(
@@ -88,6 +87,13 @@ class Source:
                 )
             self._street_nr = street_nr
         # street_type == "1": no house number needed (street_nr is ignored).
+
+    @property
+    def _year(self) -> int:
+        # Recomputed on every access. Home Assistant reuses the same Source
+        # instance across refreshes, so caching the year in __init__ would
+        # keep requesting the previous year's calendar after a year rollover.
+        return datetime.now(ZoneInfo("Europe/Berlin")).year
 
     def fetch(self) -> list[Collection]:
         params = {"street": self._street, "year": self._year}
