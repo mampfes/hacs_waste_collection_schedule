@@ -103,6 +103,10 @@ class Source:
                     date=entry.date,
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type),
+                    # The council states each service's cadence here ("Same day
+                    # each week"), and it is the only place it appears -- the
+                    # widget gives one date per bin.
+                    description=entry.description,
                 )
             )
         return entries
