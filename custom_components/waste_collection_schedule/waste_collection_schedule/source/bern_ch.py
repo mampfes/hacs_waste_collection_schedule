@@ -7,6 +7,7 @@ from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
 )
 from waste_collection_schedule.service.ICS import ICS
 
@@ -95,10 +96,11 @@ class Source:
         self._ics = ICS()
 
         if not self._key and not (self._strasse and self._hnr):
-            raise SourceArgumentNotFound(
-                "strasse",
-                self._strasse,
-                "Either 'key' or both 'strasse' and 'hnr' must be provided.",
+            # Point at the field the user actually left empty.
+            missing = "strasse" if not self._strasse else "hnr"
+            raise SourceArgumentRequired(
+                missing,
+                "Provide 'strasse' and 'hnr', or 'key' instead.",
             )
 
     def _search_key(self, strasse: str, hnr: str, session: requests.Session) -> str:
