@@ -3,6 +3,14 @@ from datetime import date, timedelta
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.service.WasteInfo import (
+    property_matches,
+    same,
+    street_number_suggestions,
+)
 
 TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
@@ -57,11 +65,13 @@ class Source:
         council_api = ""
 
         # Retrieve suburbs and council API
+        all_localities: list[str] = []
         for api in APIS:
             r = requests.get(f"{api}/localities.json", headers=HEADERS)
             data = json.loads(r.text)
+            all_localities += [x["name"] for x in data["localities"]]
             for item in data["localities"]:
-                if item["name"] == self.suburb:
+                if same(item["name"], self.suburb):
                     council_api = api
                     suburb_id = item["id"]
                     break
@@ -69,7 +79,11 @@ class Source:
                 break
 
         if suburb_id == 0:
-            return []
+            # The three councils are searched in turn, so the suggestion list is
+            # every locality across the ones reached, not just the last.
+            raise SourceArgumentNotFoundWithSuggestions(
+                "suburb", self.suburb, all_localities
+            )
 
         # Retrieve the streets in our suburb
         r = requests.get(
@@ -80,12 +94,14 @@ class Source:
 
         # Find the ID for our street
         for item in data["streets"]:
-            if item["name"] == self.street_name:
+            if same(item["name"], self.street_name):
                 street_id = item["id"]
                 break
 
         if street_id == 0:
-            return []
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name", self.street_name, [x["name"] for x in data["streets"]]
+            )
 
         # Retrieve the properties in our street
         r = requests.get(
@@ -96,12 +112,20 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if property_matches(
+                item["name"], self.street_number, self.street_name, self.suburb
+            ):
                 property_id = item["id"]
                 break
 
         if property_id == 0:
-            return []
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number",
+                self.street_number,
+                street_number_suggestions(
+                    (x["name"] for x in data["properties"]), self.street_name
+                ),
+            )
 
         # Retrieve the upcoming collections for our property
         r = requests.get(
