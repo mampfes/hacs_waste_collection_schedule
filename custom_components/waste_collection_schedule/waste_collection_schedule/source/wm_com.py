@@ -184,7 +184,10 @@ def _parse_holiday_message(
                 if not has_year:
                     dt = dt.replace(year=today.year)
 
-            if not has_year and dt.date() < today:
+            # WM keeps holiday notices active through the delayed collection week.
+            # Do not roll a just-passed holiday into next year while its delay can
+            # still affect this week's pickups.
+            if not has_year and dt.date() + datetime.timedelta(days=6) < today:
                 dt = dt.replace(year=today.year + 1)
         except ValueError:
             continue

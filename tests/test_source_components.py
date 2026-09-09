@@ -1220,6 +1220,30 @@ def test_wm_com_keeps_no_year_holiday_on_today() -> None:
     }
 
 
+def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
+    from datetime import date
+
+    module = _get_module("wm_com")
+
+    class DayAfterLaborDay(date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 9, 8)
+
+    with patch.object(module.datetime, "date", DayAfterLaborDay):
+        result = module._parse_holiday_message(
+            "Labor Day is on Monday, September 7th. Weekday collections will "
+            "experience a delay of one day.",
+        )
+
+    assert result == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
+
 def test_wm_com_parses_weekday_collection_delays() -> None:
     module = _get_module("wm_com")
 
