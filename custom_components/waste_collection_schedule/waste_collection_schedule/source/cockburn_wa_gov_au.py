@@ -21,8 +21,7 @@ TEST_CASES = {
         "address": "23 Snowden St, Hammond Park WA 6164",
     },
     "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
-    # A postcode with no state, which is what most people type. Previously
-    # matched nothing and failed as "list index out of range".
+    # A postcode with no state, which is what most people type.
     "Postcode without state": {"address": "23 Snowden Street HAMMOND PARK 6164"},
     "Tuesday int": {"property_no": 6025742},
     "Tuesday str": {"property_no": "6025742"},
@@ -73,9 +72,8 @@ class Source:
             )
             address = re.sub(r" wa (\d{4})", "  WA  \\1", address, flags=re.IGNORECASE)
             # The search wants the state spelled between suburb and postcode
-            # ("HAMMOND PARK  WA  6164"). A trailing postcode with no state at
-            # all -- which is what most people type -- matched nothing, so put
-            # the state in rather than leaving the postcode to fail.
+            # ("HAMMOND PARK WA 6164"); a trailing postcode with no state at
+            # all matches nothing, so put the state in.
             if not re.search(r"\bwa\b", address, flags=re.IGNORECASE):
                 address = re.sub(r"\s+(\d{4})\s*$", "  WA  \\1", address)
             self.address = address
@@ -106,11 +104,9 @@ class Source:
     def _search_address(self) -> list[dict]:
         """Find the property, retrying without the state and postcode.
 
-        The search is happy with just a street number and name, and stricter
-        about everything after it, so a suburb or postcode the council writes
-        differently is better dropped than sent. Previously a zero-result
-        search went straight into ``r.json()[0]`` and failed as "list index out
-        of range", which told the visitor nothing about what was wrong.
+        The search is stricter about what follows the street than about the
+        street itself, and resolves fine without a state and postcode, so a
+        trailing "WA 6164" is better dropped than sent when it matches nothing.
         """
         address = self.address or ""
         attempts = [address]
@@ -149,22 +145,22 @@ class Source:
     def fetch(self) -> list[Collection]:
         entries: list[Collection] = []
 
-        # Determine the search method and value based on what's available
-
-        if self.address:
-            results = self._search_address()
-            if len(results) > 1:
-                raise SourceArgAmbiguousWithSuggestions(
-                    "address",
-                    self.address,
-                    [r["Address"] for r in results if r.get("Address")][:10],
-                )
-            data = results[0]
-        else:
-            # Check if property_no is available
-            results = self._search(str(self.property_no), "property_no")
+        # property_no identifies the property exactly, so prefer it when both
+        # arguments are given, as the source did before.
+        if self.property_no:
+            results = self._search(self.property_no, "property_no")
             if not results:
                 raise SourceArgumentNotFound("property_no", self.property_no)
+            data = results[0]
+        else:
+            results = self._search_address()
+            if len(results) > 1:
+                suggestions = [
+                    match["Address"] for match in results if match.get("Address")
+                ]
+                raise SourceArgAmbiguousWithSuggestions(
+                    "address", self.address, suggestions[:10]
+                )
             data = results[0]
 
         if data:
