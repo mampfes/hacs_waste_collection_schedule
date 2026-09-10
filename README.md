@@ -2215,7 +2215,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sülbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
-- [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
+- [Team Orange (Landkreis Würzburg)](/doc/source/team_orange_de.md) / team-orange.info
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [Thüdinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de

@@ -3405,6 +3405,14 @@
     "howto": {},
     "urls": {}
   },
+  "team_orange_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/team_orange_de.md",
+    "howto": {
+      "de": "Ort, Straße und Hausnummer entnehmen Sie bitte dem Abfallkalender auf https://www.team-orange.info/muellabfuhr/abfallkalender/.",
+      "en": "Please take Ort (municipality), Strasse (street) and Hausnummer (street number) from the calendar at https://www.team-orange.info/muellabfuhr/abfallkalender/."
+    },
+    "urls": {}
+  },
   "ics_tbr_reutlingen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
     "howto": {

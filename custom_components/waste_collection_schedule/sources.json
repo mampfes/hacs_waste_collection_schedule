@@ -15001,11 +15001,9 @@
     },
     {
       "title": "Team Orange (Landkreis W\u00fcrzburg)",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "3701fd1ff111f63996ab46a448669ea3"
-      },
-      "id": "abfall_io"
+      "module": "team_orange_de",
+      "default_params": {},
+      "id": "team_orange_de"
     },
     {
       "title": "Technischer Betriebsdienst Reutlingen",
