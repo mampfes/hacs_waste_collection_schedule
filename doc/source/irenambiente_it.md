@@ -280,7 +280,7 @@ You can check if your address works by testing the arguments on the Iren Ambient
 - Pagno (CN)
 - Palanzano (PR)
 - Palazzolo Vercellese (VC)
-- Parma (PR)
+- Parma (PR) <!-- codespell:ignore -->
 - Pellegrino Parmense (PR)
 - Pertengo (VC)
 - Peveragno (CN)
@@ -382,7 +382,7 @@ You can check if your address works by testing the arguments on the Iren Ambient
 - Terenzo (PR)
 - Testico (SV)
 - Teulada (CA)
-- Tizzano Val Parma (PR)
+- Tizzano Val Parma (PR) <!-- codespell:ignore -->
 - Toano (RE)
 - Torino (TO)
 - Tornaco (NO)
