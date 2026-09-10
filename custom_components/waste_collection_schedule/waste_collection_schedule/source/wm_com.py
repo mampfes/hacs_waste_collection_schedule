@@ -72,9 +72,24 @@ _HOLIDAY_DATE_RE = re.compile(
     r"October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s*\d{4})?",
     re.IGNORECASE,
 )
+# Spelled-out delay lengths WM uses. Anything longer than a few days is always
+# written numerically, so a short table is enough.
+_NUMBER_WORDS = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+}
+
+# Matches both orderings WM uses for the delay length:
+#   "...will be on a 1 day delay"      -> group "before"
+#   "...a delay of up to 2 days"       -> group "after"
+#   "...a delay of one day"            -> group "word"
 _DELAY_RE = re.compile(
-    r"(?:(\d+)(?: day)? delay|"
-    r"delay(?: of| by)?(?: up to)?\s+one(?: day)?)",
+    r"(?:(?P<before>\d+)(?: days?)? delay"
+    r"|delay(?: of| by)?(?: up to)?\s+"
+    r"(?:(?P<after>\d+)|(?P<word>" + "|".join(_NUMBER_WORDS) + r"))\b(?: days?)?)",
     re.IGNORECASE,
 )
 
@@ -152,6 +167,7 @@ def _guest_headers(api_key: str) -> dict[str, str]:
 
 def _parse_holiday_message(
     message: str,
+    today: datetime.date | None = None,
 ) -> dict[datetime.datetime, datetime.datetime]:
     """
     Parse a WM holiday text message into a mapping of
@@ -160,8 +176,12 @@ def _parse_holiday_message(
     WM returns human-readable strings such as:
       "Due to the Thanksgiving holiday, your service on 11/24 will be on
        a 1 day delay."
+
+    ``today`` is the reference date used to resolve messages that omit the
+    year; it defaults to the current date and exists so tests can pin it.
     """
-    today = datetime.date.today()
+    if today is None:
+        today = datetime.date.today()
     date_spans: list[tuple[datetime.datetime, int, int]] = []
 
     for m in _HOLIDAY_DATE_RE.finditer(message):
@@ -201,10 +221,23 @@ def _parse_holiday_message(
         if not delay_match:
             continue
 
-        offset = int(delay_match.group(1)) if delay_match.group(1) else 1
+        digits = delay_match.group("before") or delay_match.group("after")
+        if digits:
+            offset = int(digits)
+        else:
+            offset = _NUMBER_WORDS.get((delay_match.group("word") or "").lower(), 1)
 
         if "weekday collections" in segment.lower():
+            # WM observes a weekend holiday on the adjacent weekday: a Saturday
+            # holiday moves to the Friday before, a Sunday holiday to the Monday
+            # after. Anchor the window there, otherwise a weekend date would
+            # produce no shifts at all even though collections are affected.
             collection_date = dt
+            if collection_date.weekday() == 5:  # Saturday
+                collection_date -= datetime.timedelta(days=1)
+            elif collection_date.weekday() == 6:  # Sunday
+                collection_date += datetime.timedelta(days=1)
+
             while collection_date.weekday() < 5:
                 result[collection_date] = collection_date + datetime.timedelta(
                     days=offset
