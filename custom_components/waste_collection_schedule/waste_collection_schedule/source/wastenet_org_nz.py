@@ -7,6 +7,8 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Gore, Invercargill & Southland"
 DESCRIPTION = "Source for Wastenet.org.nz."
 URL = "https://www.wastenet.org.nz"
+SOURCE_CODEOWNERS = ["@etamtlosz"]
+
 TEST_CASES = {
     "166 Lewis Street, Invercargill": {"address": "166 Lewis Street, Invercargill"},
     "Old Format: 199 Crawford Street INVERCARGILL": {
@@ -16,11 +18,41 @@ TEST_CASES = {
         "address": "156 Tay Street INVERCARGILL"
     },
     "Gore: 1 Anderson Place": {"address": "1 Anderson Place, Gore"},
+    "ICC: 32 Gladstone Terrace, Invercargill": {
+        "address": "32 Gladstone Terrace, Invercargill"
+    },
+    "ICC: 15 King Street, Invercargill": {"address": "15 King Street, Invercargill"},
+    "ICC: 132 Leet Street, Invercargill": {"address": "132 Leet Street, Invercargill"},
+    "ICC: 20 Rodney Street, Invercargill": {
+        "address": "20 Rodney Street, Invercargill"
+    },
+    "ICC: 34 Lothian Crescent, Invercargill": {
+        "address": "34 Lothian Crescent, Invercargill"
+    },
+    "ICC: 69 Chesney Street, Invercargill": {
+        "address": "69 Chesney Street, Invercargill"
+    },
 }
 
 ICON_MAP = {
     "General Waste": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Visit WasteNet (https://www.wastenet.org.nz) and find your property address.",
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "address": "Full street address, e.g. '166 Lewis Street, Invercargill' or '1 Anderson Place, Gore'",
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "address": "Street Address",
+    },
 }
 
 HEADERS = {
@@ -42,7 +74,7 @@ class Source:
 
     def _resolve_address(self, session: requests.Session) -> str:
         """Look up the canonical address from the provider's address list."""
-        r = session.get(ADDRESS_LIST_URL)
+        r = session.get(ADDRESS_LIST_URL, timeout=30)
         r.raise_for_status()
         candidates: list[dict] = r.json()
 
@@ -76,7 +108,11 @@ class Source:
 
         canonical_address = self._resolve_address(session)
 
-        r = session.get(SEARCH_URL, params={"address": canonical_address})
+        r = session.get(
+            SEARCH_URL,
+            params={"address": canonical_address},
+            timeout=30,
+        )
         r.raise_for_status()
 
         data = r.json()
