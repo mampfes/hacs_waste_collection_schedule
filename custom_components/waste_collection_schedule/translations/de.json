@@ -16230,7 +16230,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "number": "Hausnummer wie auf {url_abfuhrtermine_waswob_de} angegeben",
+          "street": "Straßenname wie auf {url_abfuhrtermine_waswob_de} angegeben"
         }
       },
       "reconfigure_was_wolfsburg_de": {
@@ -16241,7 +16243,10 @@
           "number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Hausnummer wie auf {url_abfuhrtermine_waswob_de} angegeben",
+          "street": "Straßenname wie auf {url_abfuhrtermine_waswob_de} angegeben"
+        }
       },
       "args_ics_zah_hildesheim_de": {
         "title": "Quelle konfigurieren",

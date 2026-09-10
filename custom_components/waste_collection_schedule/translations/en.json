@@ -16595,7 +16595,9 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "House number as listed on {url_abfuhrtermine_waswob_de}",
+          "street": "Street name as listed on {url_abfuhrtermine_waswob_de}"
         }
       },
       "reconfigure_was_wolfsburg_de": {
@@ -16606,7 +16608,10 @@
           "number": "Number",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "House number as listed on {url_abfuhrtermine_waswob_de}",
+          "street": "Street name as listed on {url_abfuhrtermine_waswob_de}"
+        }
       },
       "args_ics_zah_hildesheim_de": {
         "title": "Configure Source",
