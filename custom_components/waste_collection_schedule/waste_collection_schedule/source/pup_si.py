@@ -87,27 +87,20 @@ class Source:
             "Biološki odpadki",
         )
     
-        for text_node in content.find_all(string=True):
-            title = text_node.strip()
+        for b_tag in content.find_all("b"):
+            title = b_tag.get_text(strip=True)
     
             if not title.startswith(waste_types):
                 continue
     
-            parent = text_node.parent
-            ul_tag = parent.find_next("ul")
+            ul_tag = b_tag.find_next("ul")
     
             if ul_tag:
                 dates = [
                     li.get_text(strip=True)
                     for li in ul_tag.find_all("li")
                 ]
-    
-                data.append(
-                    {
-                        "title": title,
-                        "dates": dates,
-                    }
-                )
+                data.append({"title": title, "dates": dates})
     
         return data
 
