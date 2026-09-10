@@ -103,9 +103,15 @@ class Source:
                 "Provide 'strasse' and 'hnr', or 'key' instead.",
             )
 
-    def _search_key(self, strasse: str, hnr: str, session: requests.Session) -> str:
+    def _search_key(
+        self, strasse: str, hnr: str, session: requests.Session
+    ) -> tuple[str, list[str]]:
         """Resolve street + house number to the calendar key via the official
-        address search, falling back to the documented MD5 derivation."""
+        address search, falling back to the documented MD5 derivation.
+
+        Returns the key plus the house numbers the search reported for the
+        street, which fetch() offers as suggestions if the key is rejected.
+        """
         try:
             r = session.get(SEARCH_URL, params={"query": strasse}, timeout=30)
             r.raise_for_status()
@@ -113,29 +119,39 @@ class Source:
         except (requests.RequestException, ValueError):
             addresses = []
 
-        for address in addresses:
-            if address.get("number", "").lower() == hnr.lower():
-                return address["key"]
+        # The endpoint is a typeahead: it matches street name prefixes and can
+        # return several streets at once, so keep only the requested street.
+        matches = [
+            a
+            for a in addresses
+            if isinstance(a, dict)
+            and str(a.get("street", "")).lower() == strasse.lower()
+        ]
 
-        if addresses:
-            # The street exists but the house number does not.
-            raise SourceArgumentNotFoundWithSuggestions(
-                "hnr",
-                hnr,
-                sorted({a.get("number", "") for a in addresses}),
-            )
+        for address in matches:
+            if str(address.get("number", "")).lower() == hnr.lower() and address.get(
+                "key"
+            ):
+                return str(address["key"]), []
 
-        # Address search returned nothing (unknown street, or endpoint changed).
-        # Fall back to the key derivation: MD5 of street + number, no separator.
-        return hashlib.md5(f"{strasse}{hnr}".encode()).hexdigest().upper()
+        # The house number is not in the response — but the typeahead caps its
+        # result list at 20 entries, so on longer streets that says nothing
+        # about whether the address exists. Derive the key instead of giving up
+        # here: MD5 of street + number, no separator. fetch() reports the
+        # numbers found below only if the service also rejects that key.
+        key = hashlib.md5(f"{strasse}{hnr}".encode()).hexdigest().upper()
+        return key, sorted({str(a.get("number", "")) for a in matches})
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
         # __init__ guarantees either a key or both strasse and hnr.
+        suggestions: list[str] = []
         if self._key:
             key = self._key
         else:
-            key = self._search_key(str(self._strasse), str(self._hnr), session)
+            key, suggestions = self._search_key(
+                str(self._strasse), str(self._hnr), session
+            )
 
         r = session.get(ICAL_URL, params={"key": key}, timeout=30)
         if r.status_code != 200 or "BEGIN:VCALENDAR" not in r.text:
@@ -143,6 +159,11 @@ class Source:
             if self._key:
                 raise SourceArgumentNotFound(
                     "key", self._key, "The service does not know this key."
+                )
+            if suggestions:
+                # The street is known, so the house number is the wrong part.
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "hnr", str(self._hnr), suggestions
                 )
             raise SourceArgumentNotFound(
                 "strasse",
