@@ -114,6 +114,21 @@ class OpenCitiesConfig:
     "ambiguous" failure.
     """
 
+    strict_single_result: bool = False
+    """
+    Only meaningful with ``strict_address_matching``. By default a lone search
+    result is trusted even under strict matching, on the assumption that one
+    hit means the API was confident. A few deployments' search is loose enough
+    to answer an unrelated query with exactly one wrong hit -- lakemac returns
+    the single result "2 Lake Ridge Lane, MURRAYS BEACH" for the query
+    "2 Wallarah Rd" -- and there strict matching needs to apply to a single
+    result too, so the caller is offered it as a suggestion to confirm rather
+    than silently handed another property's bins. Left off by default because
+    for most councils the lone hit is right and merely formatted differently
+    from what the user typed (a missing state abbreviation or postcode), which
+    would otherwise turn a correct resolution into a hard failure.
+    """
+
     require_date_precise: bool = False
     """
     If True, only wasteservices blocks additionally carrying a
@@ -167,12 +182,12 @@ class OpenCitiesClient:
             self._geolocation_id = self.resolve_geolocation_id(address)
 
         try:
-            return self.fetch_by_geolocation_id(self._geolocation_id)  # type: ignore[arg-type]
+            return self.fetch_by_geolocation_id(self._geolocation_id, address)  # type: ignore[arg-type]
         except SourceArgumentNotFound:
             if not used_cache:
                 raise
             self._geolocation_id = self.resolve_geolocation_id(address)
-            return self.fetch_by_geolocation_id(self._geolocation_id)
+            return self.fetch_by_geolocation_id(self._geolocation_id, address)
 
     def resolve_geolocation_id(self, address: str) -> str:
         if self._cfg.warm_up_before == "search":
@@ -180,11 +195,15 @@ class OpenCitiesClient:
         items = self._search(address)
         return self._select_address(address, items)
 
-    def fetch_by_geolocation_id(self, geolocation_id: str) -> list[Collection]:
-        html = self.get_waste_services_html(geolocation_id)
+    def fetch_by_geolocation_id(
+        self, geolocation_id: str, address: str | None = None
+    ) -> list[Collection]:
+        html = self.get_waste_services_html(geolocation_id, address)
         return self._parse_wasteservices_html(html)
 
-    def get_waste_services_html(self, geolocation_id: str) -> str:
+    def get_waste_services_html(
+        self, geolocation_id: str, address: str | None = None
+    ) -> str:
         """Return the raw wasteservices HTML fragment for a geolocation id.
 
         Exposed alongside :meth:`fetch_by_geolocation_id` for the rare
@@ -205,7 +224,17 @@ class OpenCitiesClient:
         )
         data = response.json()
         if not data.get("success", True) or not data.get("responseContent"):
-            raise SourceArgumentNotFound(self._cfg.argument_name, geolocation_id)
+            # The address resolved, but the council holds no waste service for
+            # that property (vacant land, a commercial lot, a newly titled block
+            # not yet on a run). Report the address the visitor gave rather than
+            # the internal geolocation GUID, which reads as nonsense to them.
+            raise SourceArgumentNotFound(
+                self._cfg.argument_name,
+                address if address is not None else geolocation_id,
+                "The council lists no waste collection service for this "
+                "property. Check the address, or contact the council if it "
+                "should have a collection.",
+            )
         return data["responseContent"]
 
     # ---- internals ------------------------------------------------------
@@ -264,7 +293,9 @@ class OpenCitiesClient:
     def _select_address(self, address: str, items: list[dict[str, Any]]) -> str:
         if not items:
             raise SourceArgumentNotFound(self._cfg.argument_name, address)
-        if len(items) == 1 or not self._cfg.strict_address_matching:
+        if not self._cfg.strict_address_matching:
+            return items[0]["Id"]
+        if len(items) == 1 and not self._cfg.strict_single_result:
             return items[0]["Id"]
 
         normalized = address.lower().replace(" ", "")

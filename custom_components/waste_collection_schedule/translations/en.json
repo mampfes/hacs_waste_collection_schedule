@@ -780,10 +780,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Property location"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "property_location": "Address as held by the council's address register: street number, street name, suburb and postcode, for example '266 Gower Street PRESTON 3072'."
         }
       },
       "reconfigure_darebin_vic_gov_au": {
@@ -791,9 +792,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Property location"
         },
-        "data_description": {}
+        "data_description": {
+          "property_location": "Address as held by the council's address register: street number, street name, suburb and postcode, for example '266 Gower Street PRESTON 3072'."
+        }
       },
       "args_gleneira_vic_gov_au": {
         "title": "Configure Source",
@@ -804,7 +807,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -815,7 +818,7 @@
           "street_address": "Street Address"
         },
         "data_description": {
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
         }
       },
       "args_gosnells_wa_gov_au": {
@@ -12606,6 +12609,33 @@
         },
         "data_description": {}
       },
+      "args_ismaning_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "street_nr": "House number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Name of your street as listed in the Ismaning waste calendar.",
+          "street_nr": "Only needed for streets that are split into house-number ranges; leave empty otherwise."
+        }
+      },
+      "reconfigure_ismaning_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "street_nr": "House number"
+        },
+        "data_description": {
+          "street": "Name of your street as listed in the Ismaning waste calendar.",
+          "street_nr": "Only needed for streets that are split into house-number ranges; leave empty otherwise."
+        }
+      },
       "args_kirchlengern_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -16137,6 +16167,37 @@
           "street": "Street"
         },
         "data_description": {}
+      },
+      "args_team_orange_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "ort": "Municipality",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "Street number",
+          "ort": "Municipality in Landkreis Würzburg",
+          "strasse": "Street"
+        }
+      },
+      "reconfigure_team_orange_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "ort": "Municipality",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "Street number",
+          "ort": "Municipality in Landkreis Würzburg",
+          "strasse": "Street"
+        }
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Configure Source",
@@ -20112,11 +20173,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location": "Location",
+          "location_id": "Location ID (obsolete)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "location_id": "Unique location id (LOCATION_ID)"
+          "location": "Locality or district URL slug from the COM-D schedule page",
+          "location_id": "No longer supported, use 'location' instead"
         }
       },
       "reconfigure_gmina_sroda_slaska_pl": {
@@ -20124,10 +20187,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location": "Location",
+          "location_id": "Location ID (obsolete)"
         },
         "data_description": {
-          "location_id": "Unique location id (LOCATION_ID)"
+          "location": "Locality or district URL slug from the COM-D schedule page",
+          "location_id": "No longer supported, use 'location' instead"
         }
       },
       "args_goap_poznan_pl": {

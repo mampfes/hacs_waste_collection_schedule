@@ -92,7 +92,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Charles Sturt](/doc/source/app_my_local_services_au.md) / charlessturt.sa.gov.au
 - [City of Cockburn](/doc/source/cockburn_wa_gov_au.md) / cockburn.wa.gov.au
 - [City of Darebin](/doc/source/darebin_vic_gov_au.md) / darebin.vic.gov.au
-- [City of Glen Eira](/doc/source/gleneira_vic_gov_au.md) / gleneira.vic.gov.a
+- [City of Glen Eira](/doc/source/gleneira_vic_gov_au.md) / gleneira.vic.gov.au
 - [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
 - [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongcity.vic.gov.au
@@ -1614,6 +1614,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Hasselroth](/doc/source/hasselroth_de.md) / hasselroth.de
 - [Gemeinde Hille](/doc/ics/hille_de.md) / hille.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
+- [Gemeinde Ismaning – Abfallkalender](/doc/source/ismaning_de.md) / ismaning.de/umwelt-energie/abfall/abfallkalender
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Karstädt (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Gemeinde Kirchlengern](/doc/source/kirchlengern_de.md) / kirchlengern.de
@@ -2214,7 +2215,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sülbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
-- [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
+- [Team Orange (Landkreis Würzburg)](/doc/source/team_orange_de.md) / team-orange.info
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [Thüdinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
@@ -3181,7 +3182,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Zgierz](/doc/source/gmina_zgierz_pl.md) / gminazgierz.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
-- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
@@ -3470,6 +3471,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mammern](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Matzingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Monthey](/doc/source/localcities_ch.md) / monthey.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
@@ -3963,6 +3965,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
 - [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
+- [City of Roseville, CA](/doc/ics/recollect.md) / roseville.ca.gov/environmental_utilities/at_your_service/trash_recycling/index.php
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [City of Stamford, CT](/doc/source/stamford_ct_us.md) / stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule

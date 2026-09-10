@@ -60,6 +60,7 @@ known to work with:
 |City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|
 |City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|
 |City of Kamloops, BC|Canada|[kamloops.ca](https://www.kamloops.ca/city-services/recycling-garbage-organics/residential-collection-schedule)|
+|City of Roseville, CA|USA|[roseville.ca.gov](https://www.roseville.ca.gov/environmental_utilities/at_your_service/trash_recycling/index.php)|
 
 and probably a lot more.
 
@@ -252,4 +253,24 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect.a.ssl.fastly.net/api/places/CA6C8A4C-A85B-11E7-960A-90E7FC0D224B/services/671/events.en.ics
+```
+### 2001 San Carlos Ci, Roseville, CA, USA
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect-us.global.ssl.fastly.net/api/places/9830F71C-52CB-11E5-8F53-2B4047A8A7C0/services/302/events.en-US.ics
+```
+### 2001 Borealis Ci, Roseville, CA, USA
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect-us.global.ssl.fastly.net/api/places/9E105164-9E10-11EB-986B-69C776DC127A/services/302/events.en-US.ics
 ```

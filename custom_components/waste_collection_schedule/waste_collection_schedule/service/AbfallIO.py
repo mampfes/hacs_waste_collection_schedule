@@ -127,11 +127,8 @@ SERVICE_MAP = [
         "url": "https://www.azv-rme.de/",
         "service_id": "8303df78b822c30ff2c2f98e405f86e6",
     },
-    {
-        "title": "Team Orange (Landkreis Würzburg)",
-        "url": "https://www.team-orange.info/",
-        "service_id": "3701fd1ff111f63996ab46a448669ea3",
-    },
+    # Team Orange (Landkreis Würzburg) migrated off abfall.io; their service key
+    # now returns 403. Use the dedicated `team_orange_de` source instead. See #6041.
     {
         "title": "Landkreis Cuxhaven",
         "url": "https://www.landkreis-cuxhaven.de/",

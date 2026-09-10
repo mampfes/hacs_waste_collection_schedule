@@ -769,7 +769,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "street_address": "Indirizzo completo comprensivo di quartiere, regione e CAP, senza virgole di separazione."
+          "street_address": "Indirizzo completo, preferibilmente con quartiere, stato e CAP. Sono ammesse le virgole e le abbreviazioni del tipo di strada."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -780,7 +780,7 @@
           "street_address": "Indirizzo completo"
         },
         "data_description": {
-          "street_address": "Indirizzo completo comprensivo di quartiere, regione e CAP, senza virgole di separazione."
+          "street_address": "Indirizzo completo, preferibilmente con quartiere, stato e CAP. Sono ammesse le virgole e le abbreviazioni del tipo di strada."
         }
       },
       "args_gosnells_wa_gov_au": {
@@ -12042,6 +12042,28 @@
         },
         "data_description": {}
       },
+      "args_ismaning_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada",
+          "street_nr": "Street Nr"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ismaning_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada",
+          "street_nr": "Street Nr"
+        },
+        "data_description": {}
+      },
       "args_kirchlengern_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -15450,6 +15472,30 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_team_orange_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "ort": "Ort",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_team_orange_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -19206,6 +19252,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "location": "Posizione",
           "location_id": "ID Posizione"
         },
         "data_description": {
@@ -19217,6 +19264,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "location": "Posizione",
           "location_id": "ID Posizione"
         },
         "data_description": {}

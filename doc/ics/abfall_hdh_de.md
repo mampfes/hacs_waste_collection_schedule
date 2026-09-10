@@ -32,7 +32,7 @@ waste_collection_schedule:
           strasse: ''
           tag: '0'
           uhrzeit: ''
-        url: https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php
+        url: https://mobil.abfallwirtschaft-heidenheim.de/ical.php
         year_field: jahr
 ```
 ### Heidenheim, Heidenheim, Hauptstraße
@@ -56,6 +56,6 @@ waste_collection_schedule:
           tag: '0'
           uhrzeit: ''
         split_at: \+
-        url: https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php
+        url: https://mobil.abfallwirtschaft-heidenheim.de/ical.php
         year_field: jahr
 ```

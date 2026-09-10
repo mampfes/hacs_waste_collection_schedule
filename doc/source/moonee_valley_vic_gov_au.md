@@ -1,6 +1,6 @@
 # City of Moonee Valley
 
-Support for schedules provided by [City of Moonee Valley](https://www.mvcc.vic.gov.au/residents/bins-rubbish-recycling/collection-days/).
+Support for schedules provided by [City of Moonee Valley](https://mvcc.vic.gov.au/live/my-house/waste-and-recycling/waste-and-recycling-calendar/).
 
 ## Configuration via configuration.yaml
 
@@ -29,7 +29,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Moonee Valley Bin Collection page](https://www.mvcc.vic.gov.au/residents/bins-rubbish-recycling/collection-days/) and search for your address. The argument should match the address format shown in the search results.
+Visit the [City of Moonee Valley Bin Collection page](https://mvcc.vic.gov.au/live/my-house/waste-and-recycling/waste-and-recycling-calendar/) and search for your address. The argument should match the address format shown in the search results.
 
 Just run through the next configuration via UI process and you shouldn't need to worry about any of this.
 

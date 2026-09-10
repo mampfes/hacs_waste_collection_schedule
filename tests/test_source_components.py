@@ -1172,3 +1172,176 @@ END:VCALENDAR
         ("2026-01-04", "Papier"),
         ("2026-01-05", "Restabfall"),
     ]
+
+
+def test_wm_com_parses_service_date_delay() -> None:
+    module = _get_module("wm_com")
+
+    result = module._parse_holiday_message(
+        "Due to the Thanksgiving holiday, your service on 11/24/2026 will be on "
+        "a 1 day delay.",
+    )
+
+    assert result == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
+    }
+
+    two_digit_year = module._parse_holiday_message(
+        "Due to the Thanksgiving holiday, your service on 11/24/26 will be on "
+        "a 1 day delay.",
+    )
+
+    assert two_digit_year == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
+    }
+
+
+def test_wm_com_keeps_no_year_holiday_on_today() -> None:
+    from datetime import date as _date
+
+    module = _get_module("wm_com")
+
+    result = module._parse_holiday_message(
+        "Labor Day is on Monday, September 7th. Weekday collections will "
+        "experience a delay of one day.",
+        today=_date(2026, 9, 7),
+    )
+
+    assert result == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
+
+def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
+    from datetime import date as _date
+
+    module = _get_module("wm_com")
+
+    result = module._parse_holiday_message(
+        "Labor Day is on Monday, September 7th. Weekday collections will "
+        "experience a delay of one day.",
+        today=_date(2026, 9, 8),
+    )
+
+    assert result == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
+
+def test_wm_com_rolls_stale_no_year_holiday_into_next_year() -> None:
+    from datetime import date as _date
+
+    module = _get_module("wm_com")
+
+    # Once the delayed collection week has fully passed, a year-less notice
+    # refers to next year's occurrence rather than the one just gone.
+    result = module._parse_holiday_message(
+        "Labor Day is on Monday, September 7th. Weekday collections will "
+        "experience a delay of one day.",
+        today=_date(2026, 9, 20),
+    )
+
+    assert result == {
+        module.datetime.datetime(2027, 9, day): module.datetime.datetime(
+            2027, 9, day + 1
+        )
+        for day in range(7, 11)
+    }
+
+
+def test_wm_com_parses_weekday_collection_delays() -> None:
+    module = _get_module("wm_com")
+
+    labor_day = module._parse_holiday_message(
+        "Residential: Labor Day is on Monday, September 7th, 2026, and we will be "
+        "closed. Weekday collections will experience a delay of one day. "
+        "Commercial: Labor Day is on Monday, September 7th, 2026, and we will be "
+        "closed. Weekday collections may experience a delay of up to one day.",
+    )
+    assert labor_day == {
+        module.datetime.datetime(2026, 9, day): module.datetime.datetime(
+            2026, 9, day + 1
+        )
+        for day in range(7, 12)
+    }
+
+    thanksgiving = module._parse_holiday_message(
+        "Thanksgiving is on Thursday, November 26th, 2026. Weekday collections "
+        "will experience a delay of one day.",
+    )
+    assert thanksgiving == {
+        module.datetime.datetime(2026, 11, 26): module.datetime.datetime(2026, 11, 27),
+        module.datetime.datetime(2026, 11, 27): module.datetime.datetime(2026, 11, 28),
+    }
+
+
+def test_wm_com_anchors_weekend_holiday_to_observed_weekday() -> None:
+    module = _get_module("wm_com")
+
+    # 2026-11-01 is a Sunday, observed on Monday the 2nd: the whole of that
+    # week's weekday collections shift.
+    sunday = module._parse_holiday_message(
+        "The holiday is on Sunday, November 1st, 2026. Weekday collections "
+        "will experience a delay of one day.",
+    )
+    assert sunday == {
+        module.datetime.datetime(2026, 11, day): module.datetime.datetime(
+            2026, 11, day + 1
+        )
+        for day in range(2, 7)
+    }
+
+    # 2026-11-07 is a Saturday, observed on Friday the 6th: only that Friday
+    # is left in the week, so it is the only collection that shifts.
+    saturday = module._parse_holiday_message(
+        "The holiday is on Saturday, November 7th, 2026. Weekday collections "
+        "will experience a delay of one day.",
+    )
+    assert saturday == {
+        module.datetime.datetime(2026, 11, 6): module.datetime.datetime(2026, 11, 7)
+    }
+
+
+def test_wm_com_parses_delay_length_after_the_word_delay() -> None:
+    module = _get_module("wm_com")
+
+    numeric_after = module._parse_holiday_message(
+        "Due to the holiday, your service on 11/24/2026 will be on a delay of 2 days.",
+    )
+    assert numeric_after == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 26)
+    }
+
+    spelled_out = module._parse_holiday_message(
+        "Due to the holiday, your service on 11/24/2026 will experience a "
+        "delay of two days.",
+    )
+    assert spelled_out == numeric_after
+
+    up_to = module._parse_holiday_message(
+        "Due to the holiday, your service on 11/24/2026 may be on a delay of "
+        "up to 3 days.",
+    )
+    assert up_to == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 27)
+    }
+
+    # The original "<n> day delay" ordering must keep working.
+    numeric_before = module._parse_holiday_message(
+        "Due to the holiday, your service on 11/24/2026 will be on a 2 day delay.",
+    )
+    assert numeric_before == numeric_after
+
+    # A notice with no delay length at all still yields no adjustment.
+    assert (
+        module._parse_holiday_message(
+            "Due to the holiday, your service on 11/24/2026 may be affected.",
+        )
+        == {}
+    )

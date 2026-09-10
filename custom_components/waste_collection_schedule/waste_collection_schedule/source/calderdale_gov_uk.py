@@ -46,6 +46,18 @@ class Source:
         response = requests.post(API_URL, data=data)
         response.raise_for_status()
 
+        # Calderdale redirects the finder to a notice page while it is down for
+        # maintenance, and to new.calderdale.gov.uk since the site move. Landing
+        # anywhere but the finder means there is nothing to parse, and saying so
+        # beats blaming a UPRN that is very probably correct.
+        if not response.url.startswith(API_URL):
+            raise ValueError(
+                "Calderdale's collection day finder is not answering at the "
+                f"moment (it redirected to {response.url}). This is the "
+                "council's own service being unavailable, not a problem with "
+                "your address; please try again later."
+            )
+
         # Parse HTML response
         soup = BeautifulSoup(response.text, "html.parser")
 

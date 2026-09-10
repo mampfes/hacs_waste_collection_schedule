@@ -64,6 +64,18 @@ LSL4_GREEN = "Collection day(s) in 2026 :  Every Wednesday from April 15, 2026 t
 # denies a collection on that date.
 VSMPE2A_WASTE = "Collection day(s) :  Thursday\nHours :  Take out containers between 8 p.m. the evening before and 7 a.m. the day of collection\n\n\n  Important  - Starting September 24, household garbage will be collected every other week in your area. This means there will be a collection on September 24, but there will be no collection on October 1st, and so on.\n\n\n\n  No changes are planned for the collection of recyclable materials, food scraps, bulky items, or construction, renovation and demolition debris.\n\nFor more information, please visit montreal.ca\n\n"
 
+# Ahuntsic sector AC-2: an explicit list of collection days, one bulleted
+# line per month, with no "every ... week" phrasing anywhere.
+AC2_GREEN = "Collection day(s) in 2026 :  Thursday\n - April 9, 16, 23 and 30;\n - May 7, 14, 21 and 28;\n - June 4, 11, 18 and 25;\n - July 9 and 23;\n - August 6 and 20;\n - September 3, 10, 17 and 24;\n - October 1, 8, 15, 22 and 29;\n - November 5, 12, 19 and 26.\nHours :  Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection \nContainers accepted :\n - paper bag weighing no more than 25 kg when full.\nPlastic bags are not accepted."
+
+# Saint-Leonard sector SLE-1: the same shape, but written on one line, so
+# the final month's list runs straight into prose containing clock times.
+SLE1_GREEN = "Collection day(s) in 2026 :  Wednesday  - April 22 and 29;  - May 6, 13, 20 and 27;  - June 3, 10, 17 and 24;  - July 8, 15, 22 and 29; - August 5, 12, 19 and 26;  - September 2, 9, 16, 23 and 30;  - October 7, 14, 21  and 28;  - November 4, 11 and 18. Hours :  Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection Containers accepted :  - Reusable rigid containers  - Paper bags - Cardboard boxes\n"
+
+# Montreal-Nord sector MTN-1: an explicit list too, but it contains no
+# hyphen at all, so the date parser would see nothing.
+MTN1_GREEN = "Collection day(s) in 2026 :  Friday April 10, 17 et 24;\nMay 1, 8, 15, 22 et 29; \nJune 5 et 19; \nJuly 3, 17 et 31; \nAugust 7 et 21; \nSeptember 4 et 18; \nOctober 2, 9, 16, 23 et 30; \nNovember 6, 13, 20 et 27. \n\nHours :  Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection"
+
 # Mercier-Hochelaga sector MHM-42-S: plain per-month date lists, no seasons.
 MHM_GREEN = "Collection day(s) 2026 :  the following tuesdays :\n - April 21 and 28;\n - May 5, 12, 19 and 26 ; \n - June 2, 9 and 23;\n - July 7 and 21;\n - August 4, 18 and 25;\n - September 1, 8, 15, 22 and 29; \n - October 6, 13, 20 and 27;\n - November 3, 10 and 17. \nHours : Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection. \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes \nPlastic bags are not accepted."
 
@@ -182,3 +194,50 @@ def test_a_denied_date_is_not_emitted():
     """ "no collection on October 1st" must not produce a collection."""
     assert date(2026, 10, 1) not in parse(VSMPE2A_WASTE)
     assert date(2026, 9, 24) in parse(VSMPE2A_WASTE)
+
+
+def test_explicit_date_list_is_not_expanded_to_the_whole_year():
+    """AC-2 lists its collection days, so only those may be emitted.
+
+    Without "every ... week" or "of the month" the message used to take
+    the whole-year weekday branch, which returned all 53 Thursdays of
+    2026 and ignored the list entirely. January to March and December
+    have no green collection at all.
+    """
+    parsed = parse(AC2_GREEN)
+    expected = (
+        {date(2026, 4, d) for d in (9, 16, 23, 30)}
+        | {date(2026, 5, d) for d in (7, 14, 21, 28)}
+        | {date(2026, 6, d) for d in (4, 11, 18, 25)}
+        | {date(2026, 7, d) for d in (9, 23)}
+        | {date(2026, 8, d) for d in (6, 20)}
+        | {date(2026, 9, d) for d in (3, 10, 17, 24)}
+        | {date(2026, 10, d) for d in (1, 8, 15, 22, 29)}
+        | {date(2026, 11, d) for d in (5, 12, 19, 26)}
+    )
+    assert parsed == expected
+
+
+def test_day_list_stops_where_prose_begins():
+    """SLE-1 continues in prose on the same line as its last month.
+
+    "November 4, 11 and 18. Hours : ... between 7 p.m. ... and 7 a.m."
+    must not contribute a November 7, which is a Saturday and not a
+    collection day.
+    """
+    parsed = parse(SLE1_GREEN)
+    assert {d.day for d in parsed if d.month == 11} == {4, 11, 18}
+    assert date(2026, 11, 7) not in parsed
+
+
+def test_reroute_requires_dates_the_parser_can_reach():
+    """MTN-1 lists days but has no hyphen, so the parser cannot see them.
+
+    Rerouting on the strength of the raw message would hand it to a
+    parser that reads only the hyphen-delimited body, and it would
+    produce nothing at all. Better to leave it on the existing branch
+    than to trade wrong dates for no dates.
+    """
+    parsed = parse(MTN1_GREEN)
+    assert len(parsed) > 40
+    assert all(d.weekday() == 4 for d in parsed)
