@@ -769,7 +769,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "street_address": "Indirizzo completo comprensivo di quartiere, regione e CAP, senza virgole di separazione."
+          "street_address": "Indirizzo completo, preferibilmente con quartiere, stato e CAP. Sono ammesse le virgole e le abbreviazioni del tipo di strada."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -780,7 +780,7 @@
           "street_address": "Indirizzo completo"
         },
         "data_description": {
-          "street_address": "Indirizzo completo comprensivo di quartiere, regione e CAP, senza virgole di separazione."
+          "street_address": "Indirizzo completo, preferibilmente con quartiere, stato e CAP. Sono ammesse le virgole e le abbreviazioni del tipo di strada."
         }
       },
       "args_gosnells_wa_gov_au": {

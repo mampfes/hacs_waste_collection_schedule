@@ -772,7 +772,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street_address": "Vollständige Straßenadresse einschließlich Stadtteil, Bundesland und Postleitzahl ohne Trennzeichen."
+          "street_address": "Vollständige Straßenadresse, idealerweise mit Stadtteil, Bundesstaat und Postleitzahl. Kommas und abgekürzte Straßentypen sind zulässig."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -783,7 +783,7 @@
           "street_address": "Straßenadresse"
         },
         "data_description": {
-          "street_address": "Vollständige Straßenadresse einschließlich Stadtteil, Bundesland und Postleitzahl ohne Trennzeichen."
+          "street_address": "Vollständige Straßenadresse, idealerweise mit Stadtteil, Bundesstaat und Postleitzahl. Kommas und abgekürzte Straßentypen sind zulässig."
         }
       },
       "args_gosnells_wa_gov_au": {

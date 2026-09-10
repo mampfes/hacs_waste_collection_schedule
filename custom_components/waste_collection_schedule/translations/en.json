@@ -780,10 +780,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Property location"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "property_location": "Address as held by the council's address register: street number, street name, suburb and postcode, for example '266 Gower Street PRESTON 3072'."
         }
       },
       "reconfigure_darebin_vic_gov_au": {
@@ -791,9 +792,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Property location"
         },
-        "data_description": {}
+        "data_description": {
+          "property_location": "Address as held by the council's address register: street number, street name, suburb and postcode, for example '266 Gower Street PRESTON 3072'."
+        }
       },
       "args_gleneira_vic_gov_au": {
         "title": "Configure Source",
@@ -804,7 +807,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -815,7 +818,7 @@
           "street_address": "Street Address"
         },
         "data_description": {
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
         }
       },
       "args_gosnells_wa_gov_au": {

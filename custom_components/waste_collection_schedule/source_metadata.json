@@ -179,7 +179,7 @@
   "gleneira_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md",
     "howto": {
-      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 4 Staniland Grove ELSTERNWICK VIC 3185. The arguments should exactly match the full street address after selecting the autocomplete result."
+      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address, for example: 4 Staniland Grove ELSTERNWICK VIC 3185. The address is resolved through the council's own address lookup, so commas, lower case suburbs and abbreviated street types (e.g. \"Hwy\" for \"Highway\") are accepted as well."
     },
     "urls": {}
   },
