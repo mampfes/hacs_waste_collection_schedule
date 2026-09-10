@@ -1,4 +1,3 @@
-from collections.abc import Iterable
 from datetime import datetime
 from typing import Any, NoReturn
 
@@ -73,29 +72,29 @@ class Source:
             raise RuntimeError(f"Unexpected non-JSON response from {API_URL}") from None
 
         # The API answers unknown addresses with an HTTP error status and a JSON
-        # error body, so the payload has to be inspected before the status code.
-        if not isinstance(answer, list) or len(answer) == 0:
+        # error body ({"success": false, "error": "..."}), so the payload has to
+        # be inspected before the status code.
+        if not isinstance(answer, dict) or not answer or answer.get("success") is False:
             self._raise_address_error(r)
 
-        schedule = answer[0]
+        # As of early September 2026 the API wraps the collection dates in a
+        # "behaelter" (container) dict keyed by container size, instead of
+        # returning a flat list as the top-level element. See
+        # https://github.com/mampfes/hacs_waste_collection_schedule/issues/7076
+        entry = next(iter(answer.values()))
+        behaelter = entry.get("behaelter", {})
 
         entries: list[Collection] = []
-        for name, icon in ICON_MAP.items():
-            dates = schedule.get(name)
-            if isinstance(dates, dict):
-                raw_dates: Iterable[str] = dates.keys()
-            elif isinstance(dates, list):
-                raw_dates = dates
-            else:
-                continue
-            for a in raw_dates:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(a, "%Y-%m-%d").date(),
-                        t=name,
-                        icon=icon,
+        for container in behaelter.values():
+            for name, icon in ICON_MAP.items():
+                for date_str in container.get(name, {}):
+                    entries.append(
+                        Collection(
+                            date=datetime.strptime(date_str, "%Y-%m-%d").date(),
+                            t=name,
+                            icon=icon,
+                        )
                     )
-                )
 
         if not entries:
             self._raise_address_error(r)
