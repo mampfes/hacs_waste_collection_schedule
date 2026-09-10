@@ -58,25 +58,24 @@ STREET_TYPES = {
     "TCE": "TERRACE",
     "WY": "WAY",
 }
-_STATES = {"NSW", "NEW SOUTH WALES"}
+_STATE = "NSW"
+_STATE_SPELLED_OUT = "NEW SOUTH WALES"
 
 
 def _normalise(value: str) -> str:
     """Compare-ready form: upper case, no commas or slashes, no state."""
     text = value.upper().replace(",", " ").replace("/", " ")
+    # Collapse the spelled-out state first: the filter below is word by word,
+    # so it can only drop the state once it is a single token.
+    text = " ".join(text.split()).replace(_STATE_SPELLED_OUT, _STATE)
     words = [STREET_TYPES.get(word, word) for word in text.split()]
-    return " ".join(word for word in words if word not in _STATES)
+    return " ".join(word for word in words if word != _STATE)
 
 
 TEST_CASES = {
     "Tab 1 Zone A": {
         "address": "102 Crinan Street, Hurlstone Park 2193",
     },
-    # The shapes people type: no comma, an added state, an abbreviated
-    # street type. None of them matched before.
-    "No comma": {"address": "102 Crinan Street Hurlstone Park 2193"},
-    "With state": {"address": "102 Crinan Street, Hurlstone Park NSW 2193"},
-    "Abbreviated street type": {"address": "102 Crinan St Hurlstone Park"},
     "Tab 1 Zone B": {
         "address": "1 / 1 Aster Avenue, Punchbowl 2196",
     },
@@ -101,6 +100,14 @@ TEST_CASES = {
     "Tab 6": {
         "address": "32 Kitchener Parade, Bankstown 2200",
     },
+    # The shapes people type: no comma, an added state (abbreviated or spelled
+    # out), an abbreviated street type. None of them matched before.
+    "Address without comma": {"address": "102 Crinan Street Hurlstone Park 2193"},
+    "Address with state": {"address": "102 Crinan Street, Hurlstone Park NSW 2193"},
+    "Address with state spelled out": {
+        "address": "102 Crinan Street, Hurlstone Park New South Wales 2193",
+    },
+    "Address with abbreviated street type": {"address": "102 Crinan St Hurlstone Park"},
 }
 
 WEEKDAY_MAP = {name: i for i, name in enumerate(calendar.day_name)}
