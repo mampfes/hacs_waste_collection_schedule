@@ -35,14 +35,14 @@ class Source:
         bin_tab = soup.find("div", {"id": "bincollections"})
         if bin_tab is None:
             # The page answers 200 with no collections panel at all for a UPRN
-            # the council does not hold. Subscripting the empty result set
-            # raised "list index out of range", which tells the visitor
-            # nothing about what to correct.
+            # the council does not hold, so there is nothing to index into.
             raise SourceArgumentNotFound(
                 "uprn",
                 self._uprn,
-                "Folkestone and Hythe returned no bin collections for this "
-                "UPRN. Check it against the council's own address search.",
+                "Folkestone and Hythe returned no bin collections panel for "
+                "this UPRN. Check it against the council's own address "
+                "search; if the UPRN is correct there, the council has "
+                "probably changed its page layout - please open an issue.",
             )
         waste_types = bin_tab.findAll("span", {"class": "bold"})
         schedules = bin_tab.findAll("ul")
