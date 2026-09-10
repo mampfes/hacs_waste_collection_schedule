@@ -2709,6 +2709,14 @@
     },
     "urls": {}
   },
+  "ismaning_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ismaning_de.md",
+    "howto": {
+      "de": "Geben Sie Ihre Straße ein. Wenn die Straße eine Hausnummer benötigt, wird diese im nächsten Schritt als Auswahl abgefragt.",
+      "en": "Enter your street. If the street requires a house number, it is offered as a selection in the next step."
+    },
+    "urls": {}
+  },
   "kirchlengern_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kirchlengern_de.md",
     "howto": {
@@ -4291,7 +4299,7 @@
   "gmina_sroda_slaska_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
     "howto": {
-      "en": "To get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address."
+      "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL."
     },
     "urls": {}
   },

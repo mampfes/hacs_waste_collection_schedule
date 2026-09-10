@@ -10417,6 +10417,12 @@
       "id": "ics_huellhorst_de"
     },
     {
+      "title": "Gemeinde Ismaning \u2013 Abfallkalender",
+      "module": "ismaning_de",
+      "default_params": {},
+      "id": "ismaning_de"
+    },
+    {
       "title": "Gemeinde Kalletal",
       "module": "cmcitymedia_de",
       "default_params": {

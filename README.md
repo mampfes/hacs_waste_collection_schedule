@@ -1614,6 +1614,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Hasselroth](/doc/source/hasselroth_de.md) / hasselroth.de
 - [Gemeinde Hille](/doc/ics/hille_de.md) / hille.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
+- [Gemeinde Ismaning – Abfallkalender](/doc/source/ismaning_de.md) / ismaning.de/umwelt-energie/abfall/abfallkalender
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Karstädt (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Gemeinde Kirchlengern](/doc/source/kirchlengern_de.md) / kirchlengern.de
@@ -3181,7 +3182,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Zgierz](/doc/source/gmina_zgierz_pl.md) / gminazgierz.pl
 - [Gmina Złoty Stok](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Łęczyce](/doc/source/sims_pl.md) / sisms.pl
-- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / waste-collection.sciana.pro
+- [Gmina Środa Śląska](/doc/source/gmina_sroda_slaska_pl.md) / srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl

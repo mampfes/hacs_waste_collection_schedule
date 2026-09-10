@@ -12609,6 +12609,33 @@
         },
         "data_description": {}
       },
+      "args_ismaning_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "street_nr": "House number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Name of your street as listed in the Ismaning waste calendar.",
+          "street_nr": "Only needed for streets that are split into house-number ranges; leave empty otherwise."
+        }
+      },
+      "reconfigure_ismaning_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "street_nr": "House number"
+        },
+        "data_description": {
+          "street": "Name of your street as listed in the Ismaning waste calendar.",
+          "street_nr": "Only needed for streets that are split into house-number ranges; leave empty otherwise."
+        }
+      },
       "args_kirchlengern_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -20115,11 +20142,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location": "Location",
+          "location_id": "Location ID (obsolete)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "location_id": "Unique location id (LOCATION_ID)"
+          "location": "Locality or district URL slug from the COM-D schedule page",
+          "location_id": "No longer supported, use 'location' instead"
         }
       },
       "reconfigure_gmina_sroda_slaska_pl": {
@@ -20127,10 +20156,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location": "Location",
+          "location_id": "Location ID (obsolete)"
         },
         "data_description": {
-          "location_id": "Unique location id (LOCATION_ID)"
+          "location": "Locality or district URL slug from the COM-D schedule page",
+          "location_id": "No longer supported, use 'location' instead"
         }
       },
       "args_goap_poznan_pl": {

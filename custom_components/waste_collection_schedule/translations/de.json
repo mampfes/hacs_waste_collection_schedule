@@ -12244,6 +12244,33 @@
         },
         "data_description": {}
       },
+      "args_ismaning_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "street_nr": "Hausnummer"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Name Ihrer Straße wie im Ismaninger Abfallkalender aufgeführt.",
+          "street_nr": "Nur für Straßen erforderlich, die in Hausnummernbereiche unterteilt sind; ansonsten leer lassen."
+        }
+      },
+      "reconfigure_ismaning_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "street_nr": "Hausnummer"
+        },
+        "data_description": {
+          "street": "Name Ihrer Straße wie im Ismaninger Abfallkalender aufgeführt.",
+          "street_nr": "Nur für Straßen erforderlich, die in Hausnummernbereiche unterteilt sind; ansonsten leer lassen."
+        }
+      },
       "args_kirchlengern_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -19528,10 +19555,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location": "Ort",
+          "location_id": "Orts-ID (veraltet)"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
+          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden"
         }
       },
       "reconfigure_gmina_sroda_slaska_pl": {
@@ -19539,9 +19569,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location": "Ort",
+          "location_id": "Orts-ID (veraltet)"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
+          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden"
+        }
       },
       "args_goap_poznan_pl": {
         "title": "Quelle konfigurieren",
