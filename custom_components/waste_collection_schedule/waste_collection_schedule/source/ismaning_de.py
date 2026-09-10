@@ -36,7 +36,8 @@ ICON_MAP = {
     "Giftmobil-Samstag": Icons.HAZARDOUS,
     "Giftmobil-Fischerhäuser": Icons.HAZARDOUS,
     "Christbaumabholung": Icons.CHRISTMAS_TREE,
-    "Rama-Dama": Icons.BULKY,
+    # Community-wide volunteer litter-picking day, not a bulky waste collection.
+    "Rama-Dama": Icons.EVENT,
 }
 
 TEST_CASES = {
@@ -45,13 +46,38 @@ TEST_CASES = {
 }
 
 PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street",
+        "street_nr": "House number",
+    },
     "de": {
         "street": "Straße",
         "street_nr": "Hausnummer",
     },
 }
 
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "Name of your street as listed in the Ismaning waste calendar.",
+        "street_nr": (
+            "Only needed for streets that are split into house-number ranges; "
+            "leave empty otherwise."
+        ),
+    },
+    "de": {
+        "street": "Name Ihrer Straße wie im Ismaninger Abfallkalender aufgeführt.",
+        "street_nr": (
+            "Nur für Straßen erforderlich, die in Hausnummernbereiche unterteilt "
+            "sind; ansonsten leer lassen."
+        ),
+    },
+}
+
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Enter your street. If the street requires a house number, it is offered "
+        "as a selection in the next step."
+    ),
     "de": (
         "Geben Sie Ihre Straße ein. Wenn die Straße eine Hausnummer benötigt, wird "
         "diese im nächsten Schritt als Auswahl abgefragt."
@@ -65,6 +91,7 @@ class Source:
         self._session.headers.update(HEADERS)
         self._ics = ICS()
 
+        self._street_gebietsnummer: str = ""
         self._street = self._resolve_street(street)
         street_type = self._ajax(
             action="iap_get_first_at_frontend", street=self._street, year=self._year
@@ -105,8 +132,7 @@ class Source:
             raise SourceArgumentNotFound(
                 "street",
                 self._street,
-                "Der Server konnte für diese Auswahl keinen Abfahrtskalender "
-                "erstellen.",
+                "Der Server konnte für diese Auswahl keinen Abfallkalender erstellen.",
             )
 
         response = self._session.get(ics_url, timeout=30)
