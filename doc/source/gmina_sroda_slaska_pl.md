@@ -19,8 +19,10 @@ Existing `location_id` configurations cannot be migrated automatically because t
 
 ### Configuration Variables
 
-**location**
+**location**  
 *(string) (required)*
+
+The URL slug of your locality or Środa Śląska district on the COM-D schedule page, for example `szczepanow`.
 
 ## Example
 
