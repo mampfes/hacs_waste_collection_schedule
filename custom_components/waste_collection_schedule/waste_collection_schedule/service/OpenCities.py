@@ -9,8 +9,9 @@ domain (the widget behind e.g. https://www.logan.qld.gov.au/MyLogan):
 - ``GET <domain>/ocapi/Public/myarea/wasteservices`` — given a
   ``geolocationid``, returns ``{"success": bool, "responseContent": "<html>"}``
   where the HTML is a series of ``<article>``/``div.waste-services-result``
-  blocks, each with an ``<h3>`` (waste type) and a ``.next-service`` element
-  (next collection date).
+  blocks, each with an ``<h3>`` (waste type), a ``.next-service`` element
+  (next collection date) and usually a ``.note`` element (the service's
+  cadence and kerbside instructions in prose).
 
 This module centralises that flow behind :class:`OpenCitiesClient` so
 per-council source files stay a thin ``OpenCitiesConfig`` + ``Source`` shim.
@@ -363,11 +364,22 @@ class OpenCitiesClient:
             if collection_date is None:
                 continue
 
+            # Most deployments state the service's cadence and kerbside
+            # instructions in a "note" div next to the date ("Collected
+            # fortnightly. Place bin on the kerb before the morning of
+            # collection."). The API returns only the ONE next date per
+            # service, so this sentence is the only place the cadence appears
+            # at all -- carry it through as the collection's description
+            # instead of dropping it.
+            note = block.select_one(".note")
+            description = note.get_text(" ", strip=True) if note else None
+
             entries.append(
                 Collection(
                     date=collection_date,
                     t=waste_type,
                     icon=self._resolve_icon(waste_type),
+                    description=description,
                 )
             )
         return entries
