@@ -108,9 +108,10 @@ class Source:
 
         canonical_address = self._resolve_address(session)
 
+        today = datetime.now().date().isoformat()
         r = session.get(
             SEARCH_URL,
-            params={"address": canonical_address},
+            params={"address": canonical_address, "date": today},
             timeout=30,
         )
         r.raise_for_status()
