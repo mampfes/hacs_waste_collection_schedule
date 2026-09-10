@@ -12284,7 +12284,7 @@
           "papiertonne": "1"
         },
         "split_at": "\\+",
-        "url": "https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php",
+        "url": "https://mobil.abfallwirtschaft-heidenheim.de/ical.php",
         "year_field": "jahr"
       },
       "id": "ics_abfall_hdh_de"
