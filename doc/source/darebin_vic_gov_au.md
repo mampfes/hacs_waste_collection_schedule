@@ -30,4 +30,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Darebin Find my bin collection day page](https://darebin.maps.arcgis.com/apps/instant/basic/index.html?appid=51d4de7339f84dd5a6d2790cb2081be2) page and search for your address.  The argument should exactly match the result shown for Address portion of the Property Information.
+Visit the [City of Darebin Find my bin collection day page](https://darebin.maps.arcgis.com/apps/instant/basic/index.html?appid=51d4de7339f84dd5a6d2790cb2081be2) page and search for your address. The safest value is the Address shown in the Property Information panel, for example `266 Gower Street PRESTON 3072`.
+
+Common variations are accepted as well: commas, a trailing `VIC`/`VICTORIA` and abbreviated street types (`St`, `Rd`, `Ave`, ...) are rewritten to the form the council's address register holds, and a missing or slightly wrong suburb/postcode is retried with a shorter prefix. If several properties match, the error message lists the matching addresses so you can copy the right one.

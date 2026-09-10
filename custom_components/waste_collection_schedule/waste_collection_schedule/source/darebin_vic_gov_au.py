@@ -31,6 +31,17 @@ TEST_CASES = {
 API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date3/FeatureServer/0/query"
 _ARG = "property_location"
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "property_location": "Property location",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "property_location": "Address as held by the council's address register: street number, street name, suburb and postcode, for example '266 Gower Street PRESTON 3072'.",
+    }
+}
+
 # EZI_ADDRESS is the Vicmap address string: upper case, no commas, street type
 # spelled out, suburb then postcode ("266 GOWER STREET PRESTON 3072"). The
 # query below is a prefix LIKE against it, so a comma, a "VIC", or an
