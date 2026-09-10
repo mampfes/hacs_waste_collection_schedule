@@ -38,6 +38,19 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "https://www.team-orange.info/muellabfuhr/abfallkalender/.",
 }
 
+PARAM_TRANSLATIONS = {
+    "de": {
+        "ort": "Ort",
+        "strasse": "Straße",
+        "hausnummer": "Hausnummer",
+    },
+    "en": {
+        "ort": "Municipality",
+        "strasse": "Street",
+        "hausnummer": "House number",
+    },
+}
+
 PARAM_DESCRIPTIONS = {
     "de": {
         "ort": "Ort (Gemeinde im Landkreis Würzburg)",
@@ -79,14 +92,6 @@ API_URL = (
 )
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "ort": "Ort",
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
 }
 
 
@@ -191,11 +196,11 @@ def _session_state(text):
     sid = _hidden_value(text, "SessionId")
     app = _hidden_value(text, "ApplicationName")
     if not sid or not app:
-        raise SourceArgumentNotFound(
-            "SessionId" if not sid else "ApplicationName",
-            "<Antwort des Abfallkalenders>",
-            "Die Antwort des Athos-Servlets enthält keine gültige Sitzung. "
-            "Möglicherweise hat sich die Website von team orange geändert.",
+        missing = "SessionId" if not sid else "ApplicationName"
+        raise Exception(
+            f"The athos servlet response did not contain a {missing} token. "
+            "The team orange website has probably changed, please report this "
+            "as a source defect."
         )
     return sid, app
 
@@ -273,10 +278,12 @@ class Source:
         r = session.post(API_URL, data=data)
         r.raise_for_status()
 
-        entries = [
-            Collection(date, type_, icon=_get_icon(type_))
-            for date, type_ in self._ics.convert(r.text)
-        ]
+        entries = []
+        for date, type_ in self._ics.convert(r.text):
+            # The servlet pads waste type names with trailing/duplicated
+            # whitespace, e.g. "Gelbe Tonne " or "Problemmüll  9-12 Uhr ...".
+            type_ = " ".join(type_.split())
+            entries.append(Collection(date, type_, icon=_get_icon(type_)))
         # The servlet returns events in varying order across requests; sort for
         # deterministic output (required by the -d double-fetch test).
         entries.sort(key=lambda c: (c.date, c.type))

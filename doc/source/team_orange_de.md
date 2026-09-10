@@ -43,4 +43,9 @@ waste_collection_schedule:
 
 Go to <https://www.team-orange.info/muellabfuhr/abfallkalender/>, open "Abfallkalender digital erstellen", and pick your address from the dropdowns to get the correct values for Ort, Straße and Hausnummer.
 
-Entries are sorted by date. The provider's street names may use non-breaking spaces; the source normalizes whitespace during address matching, so entering regular spaces in Home Assistant works as expected.
+## Notes
+
+- Entries are sorted by date, then by waste type.
+- The provider's street names use non-breaking spaces; the source normalizes whitespace during address matching, so entering regular spaces in Home Assistant works as expected.
+- Team Orange only publishes dates up to the end of the current calendar year. Expect few or no upcoming collections in late December until the next year's calendar is released.
+- This source replaces the old `abfall_io` entry for Team Orange, which stopped working when the provider left the abfall.io platform (see [#6041](https://github.com/mampfes/hacs_waste_collection_schedule/issues/6041)).
