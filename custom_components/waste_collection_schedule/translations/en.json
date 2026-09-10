@@ -22357,6 +22357,37 @@
         },
         "data_description": {}
       },
+      "args_bern_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House number",
+          "key": "Key (optional)",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hnr": "House number, e.g. '1' or '3a'.",
+          "key": "Optional: key from the iCalendar link, replaces street and house number.",
+          "strasse": "Street name, e.g. 'Bundesplatz'."
+        }
+      },
+      "reconfigure_bern_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hnr": "House number",
+          "key": "Key (optional)",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hnr": "House number, e.g. '1' or '3a'.",
+          "key": "Optional: key from the iCalendar link, replaces street and house number.",
+          "strasse": "Street name, e.g. 'Bundesplatz'."
+        }
+      },
       "args_koeniz_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

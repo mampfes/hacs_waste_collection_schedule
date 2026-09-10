@@ -22504,6 +22504,12 @@
       "id": "kvatg_ch"
     },
     {
+      "title": "Entsorgung + Recycling Stadt Bern",
+      "module": "bern_ch",
+      "default_params": {},
+      "id": "bern_ch"
+    },
+    {
       "title": "Erlen",
       "module": "kvatg_ch",
       "default_params": {

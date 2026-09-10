@@ -21644,6 +21644,37 @@
         },
         "data_description": {}
       },
+      "args_bern_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "key": "Schlüssel (optional)",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hnr": "Hausnummer, z. B. '1' oder '3a'.",
+          "key": "Optional: Schlüssel aus dem iKalender-Link, ersetzt Strasse und Hausnummer.",
+          "strasse": "Strassenname, z. B. 'Bundesplatz'."
+        }
+      },
+      "reconfigure_bern_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hnr": "Hausnummer",
+          "key": "Schlüssel (optional)",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "hnr": "Hausnummer, z. B. '1' oder '3a'.",
+          "key": "Optional: Schlüssel aus dem iKalender-Link, ersetzt Strasse und Hausnummer.",
+          "strasse": "Strassenname, z. B. 'Bundesplatz'."
+        }
+      },
       "args_koeniz_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

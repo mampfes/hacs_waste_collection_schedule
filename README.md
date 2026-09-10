@@ -3411,6 +3411,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ebnat-Kappel](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Egnach](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Entsorgung + Recycling Stadt Bern](/doc/source/bern_ch.md) / bern.ch/themen/umwelt-natur-und-energie/abfall-und-recycling
 - [Erlen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Ermatingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Eschenz](/doc/source/kvatg_ch.md) / kvatg.ch

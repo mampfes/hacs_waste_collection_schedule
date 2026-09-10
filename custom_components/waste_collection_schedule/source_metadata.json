@@ -4839,6 +4839,14 @@
     },
     "urls": {}
   },
+  "bern_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bern_ch.md",
+    "howto": {
+      "de": "Strasse und Hausnummer wie auf https://bernentsorgung.glue.ch/erb/web/index angeben, z. B. Strasse 'Bundesplatz' und Hausnummer '1'. Hausnummern mit Zusatz werden als '3a' angegeben. Alternativ kann der Schlüssel aus dem iKalender-Link (…/ical?key=…) direkt im Feld 'key' eingetragen werden.",
+      "en": "Enter street and house number as shown on https://bernentsorgung.glue.ch/erb/web/index, e.g. street 'Bundesplatz' and house number '1'. House numbers with a suffix are written as '3a'. Alternatively, paste the key from the iCalendar link (…/ical?key=…) directly into the 'key' field."
+    },
+    "urls": {}
+  },
   "koeniz_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koeniz_ch.md",
     "howto": {},
