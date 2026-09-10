@@ -33,10 +33,7 @@ PARAM_TRANSLATIONS = {
     }
 }
 
-BASE_URL = (
-    "https://www.pup-saubermacher.si/"
-    "index.php/domov/urnik-odvoza-odpadkov"
-)
+BASE_URL = "https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov"
 
 
 class Source:
@@ -47,26 +44,26 @@ class Source:
         args = {
             "q": self._place_id,
         }
-    
+
         response = requests.get(BASE_URL, params=args)
         response.encoding = "utf-8"
         response.raise_for_status()
-    
+
         content = BeautifulSoup(response.text, "html.parser")
-    
+
         data = self.parse_to_obj(content)
-    
+
         if not data:
             raise SourceArgumentNotFound("place_id", self._place_id)
-    
+
         entries = []
-    
+
         for item in data:
             type_char = self.get_type(item["title"])
-    
+
             for date_info in item["dates"]:
                 date = self.get_date(date_info)
-    
+
                 if date is not None:
                     entries.append(
                         Collection(
@@ -75,33 +72,30 @@ class Source:
                             ICON_MAP[type_char],
                         )
                     )
-    
+
         return entries
 
     def parse_to_obj(self, content):
         data = []
-    
+
         waste_types = (
             "Mešana embalaža",
             "Mešani komunalni odpadki",
             "Biološki odpadki",
         )
-    
+
         for b_tag in content.find_all("b"):
             title = b_tag.get_text(strip=True)
-    
+
             if not title.startswith(waste_types):
                 continue
-    
+
             ul_tag = b_tag.find_next("ul")
-    
+
             if ul_tag:
-                dates = [
-                    li.get_text(strip=True)
-                    for li in ul_tag.find_all("li")
-                ]
+                dates = [li.get_text(strip=True) for li in ul_tag.find_all("li")]
                 data.append({"title": title, "dates": dates})
-    
+
         return data
 
     def get_type(self, title):
