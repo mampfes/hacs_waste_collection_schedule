@@ -22960,6 +22960,15 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Monthey",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "monthey",
+        "municipality_id": "8085"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "mopage.ch",
       "module": "ics",
       "default_params": {},

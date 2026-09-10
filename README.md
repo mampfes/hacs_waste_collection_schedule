@@ -3470,6 +3470,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mammern](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Matzingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Monthey](/doc/source/localcities_ch.md) / monthey.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
