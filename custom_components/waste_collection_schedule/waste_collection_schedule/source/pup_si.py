@@ -24,6 +24,15 @@ ICON_MAP = {
     "E": Icons.RECYCLING,
 }
 
+# Headings used on the schedule page, mapped to the bin type they announce.
+# The headings carry a suffix describing the bin colour, so they are matched
+# by prefix.
+WASTE_TYPE_PREFIXES = {
+    "Mešana embalaža": "E",
+    "Mešani komunalni odpadki": "M",
+    "Biološki odpadki": "B",
+}
+
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov",
 }
@@ -59,18 +68,14 @@ class Source:
         entries = []
 
         for item in data:
-            type_char = self.get_type(item["title"])
+            type_char = item["type"]
 
             for date_info in item["dates"]:
                 date = self.get_date(date_info)
 
                 if date is not None:
                     entries.append(
-                        Collection(
-                            date,
-                            BIN_TYPES[type_char],
-                            ICON_MAP[type_char],
-                        )
+                        Collection(date, BIN_TYPES[type_char], ICON_MAP[type_char])
                     )
 
         return entries
@@ -78,37 +83,32 @@ class Source:
     def parse_to_obj(self, content):
         data = []
 
-        waste_types = (
-            "Mešana embalaža",
-            "Mešani komunalni odpadki",
-            "Biološki odpadki",
-        )
-
         for b_tag in content.find_all("b"):
-            title = b_tag.get_text(strip=True)
+            type_char = self.get_type(b_tag.get_text(strip=True))
 
-            if not title.startswith(waste_types):
+            if type_char is None:
                 continue
 
             ul_tag = b_tag.find_next("ul")
 
             if ul_tag:
                 dates = [li.get_text(strip=True) for li in ul_tag.find_all("li")]
-                data.append({"title": title, "dates": dates})
+                data.append({"type": type_char, "dates": dates})
 
         return data
 
     def get_type(self, title):
-        if title.startswith("Mešana embalaža"):
-            return "E"
-        if title.startswith("Mešani komunalni odpadki"):
-            return "M"
-        return "B"
+        for prefix, type_char in WASTE_TYPE_PREFIXES.items():
+            if title.startswith(prefix):
+                return type_char
+        return None
 
     def get_date(self, date_info):
-        parsed_date = date_info.split(" ")
+        # List items look like "16.09.2026 sreda"; anything without a leading
+        # date (e.g. an empty or explanatory entry) is skipped.
+        date_str = date_info.split(" ")[0].strip()
 
-        if isinstance(parsed_date, list) and len(parsed_date) == 1:
+        try:
+            return datetime.strptime(date_str, "%d.%m.%Y").date()
+        except ValueError:
             return None
-        date_obj = datetime.strptime(parsed_date[0].strip(), "%d.%m.%Y")
-        return date_obj.date()
