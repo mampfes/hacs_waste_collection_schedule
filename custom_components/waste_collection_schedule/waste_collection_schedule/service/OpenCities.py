@@ -56,6 +56,14 @@ class OpenCitiesConfig:
     argument_name: str = "address"
     """Exact ``Source.__init__`` kwarg name, used in raised exceptions."""
 
+    direct_argument_name: str | None = None
+    """
+    ``Source.__init__`` kwarg holding a geolocation id given instead of an
+    address, for the sources that accept one. Exceptions raised on that path
+    name this argument, so the config flow marks the field the visitor
+    actually filled in rather than the empty address one.
+    """
+
     search_fuzzy: bool = False
     """Use ``/api/v1/myarea/searchfuzzy`` instead of ``/api/v1/myarea/search``."""
 
@@ -228,10 +236,19 @@ class OpenCitiesClient:
             # The address resolved, but the council holds no waste service for
             # that property (vacant land, a commercial lot, a newly titled block
             # not yet on a run). Report the address the visitor gave rather than
-            # the internal geolocation GUID, which reads as nonsense to them.
+            # the internal geolocation GUID, which reads as nonsense to them --
+            # unless the GUID is what they gave, in which case name that
+            # argument so the config flow flags the field they filled in.
+            if address is not None:
+                argument_name, value = self._cfg.argument_name, address
+            else:
+                argument_name = (
+                    self._cfg.direct_argument_name or self._cfg.argument_name
+                )
+                value = geolocation_id
             raise SourceArgumentNotFound(
-                self._cfg.argument_name,
-                address if address is not None else geolocation_id,
+                argument_name,
+                value,
                 "The council lists no waste collection service for this "
                 "property. Check the address, or contact the council if it "
                 "should have a collection.",
