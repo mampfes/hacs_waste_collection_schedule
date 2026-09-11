@@ -2,6 +2,10 @@
 
 Support for schedules provided by [Hobsons Bay City Council](https://www.hobsonsbay.vic.gov.au).
 
+Hobsons Bay moved its bin collection lookup to [Impact Apps](https://impactapps.com.au/), so this source now reads from `hobsons-bay.waste-info.com.au`. The `street_address` argument is unchanged, so existing configurations keep working.
+
+The collection types come from Impact Apps and are named `waste`, `recycle`, `organic`, `glass` and `special`. If you previously used `customize` with the old names (`Rubbish`, `Commingled Recycling`, `Food and Garden`, `Glass`), update them to the new ones.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -17,6 +21,8 @@ waste_collection_schedule:
 **street_address**  
 *(string) (required)*
 
+The street number, street name and suburb, in the form `<number> <street>, <suburb>`. The comma is optional.
+
 ## Example
 
 ```yaml
@@ -29,4 +35,8 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Hobsons Bay City Council: When will my bins be collected?](https://www.hobsonsbay.vic.gov.au/Services/Waste-Recycling/When-will-my-bins-be-collected) page to install the iOS or Android app, then search for your address. The `street_address` argument should exactly match the street address shown in the autocomplete result of the app. If you do not want to install the app, you can also use the [interactive waste collections map](https://hbcc.maps.arcgis.com/apps/webappviewer/index.html?id=4db29582f74b4ba2ab2152fedeefe7b1) to search for a supported address. However, note that it does not always match what the API expects.
+Look up your address on the council's [bin collection calendar](https://www.hobsonsbay.vic.gov.au/Services/Waste-and-recycling/When-will-my-bins-be-collected) and use the street number, street name and suburb exactly as the calendar shows them — for example `20 Merrett Dr Williamstown`, where the street is abbreviated to `Dr` rather than `Drive`.
+
+If the street name or number is not recognised, the error message lists the values the council accepts for that street and suburb.
+
+As an alternative, the [Impact Apps source](impactapps_com_au.md) can be used directly with `service: hobsons-bay` and either a `property_id` or a `suburb`/`street_name`/`street_number` combination.
