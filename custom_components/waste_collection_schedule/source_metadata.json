@@ -4044,7 +4044,9 @@
   },
   "wastenet_org_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastenet_org_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Visit WasteNet (https://www.wastenet.org.nz) and find your property address."
+    },
     "urls": {}
   },
   "hcc_govt_nz": {
