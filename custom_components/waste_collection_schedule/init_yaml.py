@@ -19,6 +19,8 @@ site.addsitedir(str(package_dir))
 from . import const  # type: ignore # isort:skip # noqa: E402
 from waste_collection_schedule import Customize  # type: ignore # isort:skip # noqa: E402
 
+from waste_collection_schedule.colors import validate_color  # noqa: E402
+
 _LOGGER = logging.getLogger(__name__)
 
 CUSTOMIZE_CONFIG = vol.Schema(
@@ -28,6 +30,7 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(const.CONF_SHOW): cv.boolean,
         vol.Optional(const.CONF_ICON): cv.icon,
         vol.Optional(const.CONF_PICTURE): cv.string,
+        vol.Optional(const.CONF_COLOR): validate_color,
         vol.Optional(const.CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(const.CONF_DEDICATED_CALENDAR_TITLE): cv.string,
     }
@@ -131,6 +134,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
                 show=c.get(const.CONF_SHOW, True),
                 icon=c.get(const.CONF_ICON),
                 picture=c.get(const.CONF_PICTURE),
+                color=c.get(const.CONF_COLOR),
                 use_dedicated_calendar=c.get(const.CONF_USE_DEDICATED_CALENDAR, False),
                 dedicated_calendar_title=c.get(
                     const.CONF_DEDICATED_CALENDAR_TITLE, False

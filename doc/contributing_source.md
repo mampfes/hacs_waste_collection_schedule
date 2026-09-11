@@ -691,3 +691,29 @@ pre-commit run --all-files
 ```
 
 `pyright` covers the core library, the service platform modules and pipeline sources. Run it (or the full pre-commit set) before pushing; do not rely on CI to catch type errors.
+
+### Provider display colors
+
+A source can supply its own `#RRGGBB` display color without changing the canonical
+waste type or its global default. Pass `color_key="color"` to a transformer to
+read a response field, or use a callable for a provider-specific mapping:
+
+```python
+transform = JsonTransformer(
+    date_key="date",
+    type_key="type",
+    color_key=lambda row: LOCAL_COLORS.get(row["type"]),
+)
+```
+
+`HtmlTransformer` uses `color_getter`. Sources returning collections directly can
+pass `Collection(date=day, waste_type=wt.ORGANIC, color="#795548")`; the legacy
+`t=` constructor also accepts `color`. Missing or invalid provider colors fall
+back to the canonical type's default. Do not infer a physical bin color from a
+provider's display color.
+
+Generic sensor details expose `type_id`, `color`, and `color_source` on each
+collection. A grouped date retains individual records in `collections`, alongside
+its existing `types` list. There is no single color for a mixed group. YAML
+`customize.color` takes precedence over a provider color; `color_source` is
+`customize`, `source`, or `default`.

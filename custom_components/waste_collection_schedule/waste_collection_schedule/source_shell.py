@@ -7,6 +7,7 @@ from collections.abc import Iterable
 from typing import Protocol, cast
 
 from .collection import Collection, LegacyCollection
+from .colors import validate_color
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -78,12 +79,14 @@ class Customize:
         picture: str | None = None,
         use_dedicated_calendar: bool = False,
         dedicated_calendar_title: str | None = None,
+        color: str | None = None,
     ):
         self._waste_type = waste_type
         self._alias = alias
         self._show = show
         self._icon = icon
         self._picture = picture
+        self._color = validate_color(color) if color is not None else None
         self._use_dedicated_calendar = use_dedicated_calendar
         self._dedicated_calendar_title = dedicated_calendar_title
 
@@ -106,6 +109,10 @@ class Customize:
     @property
     def picture(self):
         return self._picture
+
+    @property
+    def color(self) -> str | None:
+        return self._color
 
     @property
     def use_dedicated_calendar(self):
@@ -169,6 +176,8 @@ def customize_function(entry: Collection, customize: dict[str, Customize]):
             entry.set_icon(c.icon)
         if c.picture is not None:
             entry.set_picture(c.picture)
+        if c.color is not None:
+            entry.set_color(c.color)
     return entry
 
 
