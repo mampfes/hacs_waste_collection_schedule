@@ -215,6 +215,8 @@ class BaseTransformer(ABC, Generic[T]):
         resolved: TypeMapValue | None,
         location: Any = None,
         description: Any = None,
+        *,
+        source_type: str | None = None,
     ) -> Collection | list[Collection] | None:
         """Build the Collection(s) for a resolved type on a given date.
 
@@ -229,6 +231,7 @@ class BaseTransformer(ABC, Generic[T]):
 
         def build(waste_type: WasteType) -> Collection:
             collection = Collection(date=date, waste_type=waste_type)
+            collection.set_source_type(source_type)
             if location is not None:
                 collection.set_location(location)
             if description is not None:
@@ -303,7 +306,9 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
         location, description = self._meta(record)
-        return self._collections(date, resolved, location, description)
+        return self._collections(
+            date, resolved, location, description, source_type=str(raw_type)
+        )
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
@@ -367,7 +372,11 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         # Read metadata from the flattened name/value pairs, not the raw list.
         location, description = self._meta(fields)
         return self._collections(
-            self._parse_date(date_str), resolved, location, description
+            self._parse_date(date_str),
+            resolved,
+            location,
+            description,
+            source_type=raw_type,
         )
 
 
@@ -430,7 +439,9 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
         if self._description_key is not None:
             description = self._get(record, self._description_key)
         resolved = self._resolve_type(summary)
-        return self._collections(date, resolved, location, description)
+        return self._collections(
+            date, resolved, location, description, source_type=summary
+        )
 
 
 class RowTransformer(BaseTransformer[tuple[Any, str]]):
@@ -475,7 +486,11 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         # A row is a tuple, so location_key/description_key must be callables.
         location, description = self._meta(record)
         return self._collections(
-            date, self._resolve_type(str(label)), location, description
+            date,
+            self._resolve_type(str(label)),
+            location,
+            description,
+            source_type=str(label),
         )
 
 
@@ -541,7 +556,9 @@ class HtmlTransformer(BaseTransformer[Tag]):
             date = self._parse_date(str(raw_date))
 
         resolved = self._resolve_type(str(raw_type))
-        return self._collections(date, resolved, location, description)
+        return self._collections(
+            date, resolved, location, description, source_type=str(raw_type)
+        )
 
 
 def label_cleaner(

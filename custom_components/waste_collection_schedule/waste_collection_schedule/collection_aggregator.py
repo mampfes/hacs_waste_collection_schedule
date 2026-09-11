@@ -38,6 +38,15 @@ class CollectionAggregator:
             options.setdefault(entry.waste_type.id, entry.type)
         return options
 
+    @property
+    def type_aliases(self) -> dict[str, set[str]]:
+        """Map observed provider labels to IDs without cross-source guessing."""
+        aliases: dict[str, set[str]] = {}
+        for entry in self._entries:
+            if entry.source_type:
+                aliases.setdefault(entry.source_type, set()).add(entry.waste_type.id)
+        return aliases
+
     @staticmethod
     def _matches_type_filter(entry: Collection, value: str) -> bool:
         """Match stable IDs, localized names, and legacy aliases."""
@@ -46,6 +55,7 @@ class CollectionAggregator:
             entry.waste_type.id,
             entry.type,
             *entry.waste_type.names.values(),
+            *([entry.source_type] if entry.source_type else []),
         }
         if normalized in {
             " ".join(key.strip().casefold().split()) for key in entry_keys

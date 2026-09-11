@@ -205,6 +205,7 @@ def has_combined_sensor(sensors: list[dict[str, Any]]) -> bool:
 def missing_collection_types(
     available_types: Mapping[str, str],
     sensors: list[dict[str, Any]],
+    type_aliases: Mapping[str, set[str]] | None = None,
 ) -> list[tuple[str, str]]:
     """Return stable type IDs and labels not already covered by a sensor.
 
@@ -216,7 +217,13 @@ def missing_collection_types(
         " ".join(label.strip().casefold().split()): type_id
         for type_id, label in available_types.items()
     }
+    normalized_aliases = {
+        " ".join(label.strip().casefold().split()): ids
+        for label, ids in (type_aliases or {}).items()
+    }
     for configured_type in configured_collection_types(sensors):
+        normalized = " ".join(configured_type.strip().casefold().split())
+        configured_ids.update(normalized_aliases.get(normalized, set()))
         if configured_type in available_types:
             configured_ids.add(configured_type)
             continue
@@ -295,6 +302,8 @@ def build_added_collection_type_sensor_options(
     collection_type_id: str,
     display_name: str,
     id_factory: Callable[[], str] | None = None,
+    *,
+    type_aliases: Mapping[str, set[str]] | None = None,
 ) -> dict[str, Any]:
     """Build a new config entry options payload with one per-type sensor added."""
     options = deepcopy(dict(entry.options))
@@ -302,6 +311,7 @@ def build_added_collection_type_sensor_options(
     if not missing_collection_types(
         {collection_type_id: display_name},
         sensors,
+        type_aliases,
     ):
         return options
     sensors.append(

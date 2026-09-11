@@ -150,7 +150,11 @@ def _customize_keys(entry: Collection) -> list[str]:
         return [entry.type]
     # id preferred; de-duplicate in case it equals the display name (e.g. an
     # English preserved label).
-    return list(dict.fromkeys([entry.waste_type.id, entry.type]))
+    return list(
+        dict.fromkeys(
+            key for key in (entry.waste_type.id, entry.type, entry.source_type) if key
+        )
+    )
 
 
 def filter_function(entry: Collection, customize: dict[str, Customize]):

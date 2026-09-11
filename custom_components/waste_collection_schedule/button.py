@@ -56,6 +56,7 @@ async def async_setup_entry(
         for collection_type_id, display_name in missing_collection_types(
             coordinator._aggregator.type_options,
             sensors,
+            coordinator._aggregator.type_aliases,
         ):
             action_id = build_create_ui_sensor_action_unique_id(
                 coordinator.shell.unique_id,
@@ -126,6 +127,7 @@ class CreateWasteSensorButton(ButtonEntity):
         display_name: str,
     ) -> None:
         self._entry = entry
+        self._coordinator = coordinator
         self._collection_type_id = collection_type_id
         self._display_name = display_name
         self._attr_name = f"Create {display_name} sensor"
@@ -142,5 +144,6 @@ class CreateWasteSensorButton(ButtonEntity):
                 self._entry,
                 self._collection_type_id,
                 self._display_name,
+                type_aliases=self._coordinator._aggregator.type_aliases,
             ),
         )

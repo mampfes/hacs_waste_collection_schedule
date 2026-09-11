@@ -187,3 +187,63 @@ def test_render_sensor_preview_localizes_default_state_text():
     )
 
     assert state == "Bio jutro"
+
+
+def test_provider_labels_survive_v3_filters_customization_and_creation_actions():
+    from custom_components.waste_collection_schedule.sensor_config_helpers import (
+        missing_collection_types,
+    )
+    from custom_components.waste_collection_schedule.waste_collection_schedule.source.ecoharmonogram_pl import (
+        Source,
+    )
+    from custom_components.waste_collection_schedule.waste_collection_schedule.source_shell import (
+        Customize,
+        customize_function,
+    )
+
+    pickup_date = datetime.date.today() + datetime.timedelta(days=3)
+    labels = [
+        "ODPADY ZMIESZANE",
+        "BIO (wrzucamy bez worków - luzem)",
+        "ODPADY SEGREGOWANE",
+        "WIELKOGABARYTY",
+    ]
+    entries = [Source.transform((pickup_date, label)) for label in labels]
+    bio = entries[1]
+    original_identity = hash(bio)
+    assert bio.source_type == labels[1]
+    assert hash(Source.transform((pickup_date, "BIO"))) == original_identity
+    customize_function(bio, {labels[1]: Customize(labels[1], alias="BIO")})
+    assert bio.type == "BIO"
+    aggregator = CollectionAggregator([DummyShell(entries)])
+    for label, entry in zip(labels, entries, strict=True):
+        assert aggregator.get_upcoming(include_types=[label]) == [entry]
+        assert entry not in aggregator.get_upcoming(exclude_types=[label])
+    sensors = [{"types": [label]} for label in labels]
+    assert (
+        missing_collection_types(
+            aggregator.type_options, sensors, aggregator.type_aliases
+        )
+        == []
+    )
+
+
+def test_combined_provider_label_matches_each_emitted_type():
+    from custom_components.waste_collection_schedule.waste_collection_schedule.transformers import (
+        JsonTransformer,
+    )
+    from custom_components.waste_collection_schedule.waste_collection_schedule.waste_types import (
+        GLASS,
+        PAPER,
+    )
+
+    pickup_date = datetime.date.today() + datetime.timedelta(days=3)
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={"Local combined round": [PAPER, GLASS]},
+    )
+    entries = transform({"date": pickup_date, "type": "Local combined round"})
+    aggregator = CollectionAggregator([DummyShell(entries)])
+    assert len(aggregator.get_upcoming(include_types=["Local combined round"])) == 2
+    assert aggregator.type_aliases == {"Local combined round": {"paper", "glass"}}

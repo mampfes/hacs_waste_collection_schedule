@@ -480,6 +480,7 @@ def test_button_platform_adds_new_type_actions_after_later_fetch(monkeypatch):
     class Aggregator:
         def __init__(self):
             self.type_options = {}
+            self.type_aliases = {}
 
     class Shell:
         unique_id = "source-1"
