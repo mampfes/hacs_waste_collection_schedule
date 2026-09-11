@@ -2849,11 +2849,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "geolocation_id": "Geolocation ID"
+          "geolocation_id": "Geolocation ID",
+          "street_address": "Street address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "geolocation_id": "Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6)"
+          "geolocation_id": "Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). Only needed if the address search cannot find your property.",
+          "street_address": "Your street address, e.g. 2 Cherry Plum Way, WORRIGEE"
         }
       },
       "reconfigure_shoalhaven_nsw_gov_au": {
@@ -2861,10 +2863,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "geolocation_id": "Geolocation ID"
+          "geolocation_id": "Geolocation ID",
+          "street_address": "Street address"
         },
         "data_description": {
-          "geolocation_id": "Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6)"
+          "geolocation_id": "Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6). Only needed if the address search cannot find your property.",
+          "street_address": "Your street address, e.g. 2 Cherry Plum Way, WORRIGEE"
         }
       },
       "args_stirling_wa_gov_au": {
