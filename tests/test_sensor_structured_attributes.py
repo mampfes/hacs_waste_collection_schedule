@@ -208,11 +208,30 @@ def test_provider_labels_survive_v3_filters_customization_and_creation_actions()
         "ODPADY SEGREGOWANE",
         "WIELKOGABARYTY",
     ]
-    entries = [Source.transform((pickup_date, label)) for label in labels]
+
+    def transform_label(label):
+        raw = {
+            "reports": [
+                {
+                    "scheduleDescription": [{"id": 1, "name": label}],
+                    "schedules": [
+                        {
+                            "scheduleDescriptionId": 1,
+                            "year": pickup_date.year,
+                            "month": pickup_date.month,
+                            "days": str(pickup_date.day),
+                        }
+                    ],
+                }
+            ]
+        }
+        return Source.transform(Source.parse(raw)[0])
+
+    entries = [transform_label(label) for label in labels]
     bio = entries[1]
     original_identity = hash(bio)
     assert bio.source_type == labels[1]
-    assert hash(Source.transform((pickup_date, "BIO"))) == original_identity
+    assert hash(transform_label("BIO")) == original_identity
     customize_function(bio, {labels[1]: Customize(labels[1], alias="BIO")})
     assert bio.type == "BIO"
     aggregator = CollectionAggregator([DummyShell(entries)])
