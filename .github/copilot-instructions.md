@@ -25,7 +25,7 @@ For the human-facing guide, see [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 - Committing generated files (`README.md`, `sources.json`, etc.) — CI handles these post-merge.
 - Silent `[]` returns on HTTP errors (masks failures as "no upcoming collections").
 - Unformatted code — always run `ruff check --fix <path> && ruff format <path>` before committing.
-- Adding a dedicated `tests/test_<source>.py` unit-test file by default. `TEST_CASES` plus a live run of `test_sources.py -s <name> -l` is normal coverage — only add a standalone test file for genuinely non-trivial logic (a tricky date/regex parser) that `TEST_CASES` can't exercise well, and mock any network calls in it. One test file per source doesn't scale across ~600 sources, and these files currently aren't even collected by CI's `pytest.ini`.
+- Adding a dedicated `tests/test_<source>.py` unit-test file. `TEST_CASES` plus a live run of `test_sources.py -s <name> -l` is normal coverage — default to not adding a standalone test file; only do so when absolutely necessary (logic so non-trivial, e.g. a tricky date/regex parser, that `TEST_CASES` genuinely cannot exercise it), and mock any network calls in it. One test file per source doesn't scale across ~600 sources, and these files currently aren't even collected by CI's `pytest.ini`.
 
 ## Useful commands
 
