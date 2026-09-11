@@ -5,6 +5,10 @@ from datetime import date, datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Coventry City Council"
 DESCRIPTION = "Source for waste collection services for Coventry City Council"
@@ -14,6 +18,9 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URLS = {
     "search": "https://www.coventry.gov.uk/directory/search",
     "directory_record": "https://www.coventry.gov.uk",
+    # Where the council moved bin days to. This source cannot read it, so the
+    # only useful thing left to hand the user is the address of the service.
+    "my_account": "https://myaccount.coventry.gov.uk/service/find_my_bin_day",
 }
 TEST_CASES = {
     "Test_001": {
@@ -65,6 +72,18 @@ class Source:
             "search": "Search",
         }
         r = s.get(API_URLS["search"], headers=HEADERS, params=params, timeout=30)
+        if r.status_code == 404:
+            # The council retired the street directory this source searches;
+            # /directory/search now serves its "page not found" page, whose own
+            # navigation links carry the same CSS class the street results did.
+            # Without this check the site menu is offered as a list of streets.
+            raise SourceArgumentException(
+                "street",
+                "Coventry has retired the street directory this lookup uses "
+                f"({API_URLS['search']} now returns 404). Collection days have "
+                f"moved to {API_URLS['my_account']}, which this source does "
+                "not read yet.",
+            )
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
         list_links: list = soup.find_all("a", {"class": "list__link"})
         directory_record: str | None = None
@@ -74,7 +93,14 @@ class Source:
                 break
 
         if directory_record is None:
-            raise RuntimeError(f"Street '{self._street}' not found")
+            # RuntimeError reached the caller as a server error, so an ordinary
+            # misspelling was reported as an outage.
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,
+                "The council's street directory returned no match. Check the "
+                "spelling, and include the street type (Road, Drive).",
+            )
 
         # use directory record to get collection day
         r = s.get(
@@ -89,8 +115,11 @@ class Source:
                 break
 
         if schedule is None:
-            raise RuntimeError(
-                f"No bin collection calendar link found for '{self._street}'"
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,
+                "The council's directory has this street but no bin collection "
+                "calendar for it.",
             )
 
         # Use the collection calendar link to get the current schedule.
