@@ -144,6 +144,7 @@ If a site returns 403 with regular `requests`, switch to `curl_cffi` — it bypa
 - ❌ Dummy parameters (e.g. `_`) just to satisfy the config GUI.
 - ❌ Login-required sources. The project only supports publicly accessible endpoints.
 - ❌ Sources for providers already covered by a shared platform — check `recollect.yaml`, `mein_abfallkalender_online.yaml`, `recyclecoach_com.py`'s `EXTRA_INFO` list, `c_trace_de`, `service/OpenCities.py` (OpenCities/MyArea council CMS widget — `api/v1/myarea/search` + `ocapi/Public/myarea/wasteservices` endpoints), and the other shared platforms first.
+- ❌ A dedicated `tests/test_<source>.py` unit-test file as a default add-on to every source PR. `TEST_CASES` plus a live run of `test_sources.py -s <name> -l` is the normal coverage — that's what reviewers actually check. Add a standalone unit test only when a source has non-trivial logic worth isolating (e.g. a tricky date/regex parser) that `TEST_CASES` can't exercise well on its own, and mock any network calls in it rather than hitting the live API. With ~600 sources, a test file per source doesn't scale, and root `pytest.ini`'s `python_files` allowlist covers only `test_source_components.py` and `test_fetch_retry.py` — files outside that allowlist are never collected by `pytest tests/` or CI. Treat that as reason for restraint, not as an invitation to "fix" it unprompted in an unrelated PR.
 
 ---
 
@@ -185,6 +186,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 9. **Running `update_docu_links.py` in a PR branch**. Don't — CI handles it post-merge.
 10. **Editing translations directly**. The `config.step.args_*` sections are generated. Hand-edit only `options.step.init` (in the outer `translations/*.json`).
 11. **Raw `mdi:*` strings in `ICON_MAP`**. Use the `Icons` enum from `waste_collection_schedule` (catalogue at `waste_collection_schedule/icons.py`). This keeps icons consistent across sources for the same logical waste category — see #2813.
+12. **Adding a `tests/test_<source>.py` file by default**. Not standard coverage — see "What NOT to do" above. `TEST_CASES` + a live `test_sources.py -s <name> -l` run is what reviewers expect.
 
 ---
 
