@@ -38,9 +38,10 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing "
         "your street name and suburb into the 'Street name & Suburb' field. "
-        "Use the autocomplete suggestion (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') "
+        "Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') "
         "as the value for street_and_suburb, and enter just your street number "
-        "for street_number."
+        "for street_number. Abbreviated street types from older configurations "
+        "(e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted."
     )
 }
 
@@ -56,7 +57,8 @@ PARAM_DESCRIPTIONS = {
         "street_number": "Your street number (e.g. 1, 7A, 7/10).",
         "street_and_suburb": (
             "Street name and suburb as shown in the autocomplete list "
-            "(e.g. 'Dawson ST, FAIRFIELD HEIGHTS')."
+            "(e.g. 'Dawson Street, FAIRFIELD HEIGHTS'). Abbreviated street "
+            "types such as 'Dawson ST, FAIRFIELD HEIGHTS' also work."
         ),
     }
 }
