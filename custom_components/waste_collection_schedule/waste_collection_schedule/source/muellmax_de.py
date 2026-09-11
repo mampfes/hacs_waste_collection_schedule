@@ -23,7 +23,17 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    # "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
+    "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
+    "Münster, Patronatsstr. 13 (unique street match)": {
+        "service": "Awm",
+        "mm_frm_str_sel": "Patronatsstr.",
+        "mm_frm_hnr_sel": 13,
+    },
+    "Mainz, Holunderweg 5 (plain number)": {
+        "service": "Ebm",
+        "mm_frm_str_sel": "Holunderweg",
+        "mm_frm_hnr_sel": "5",
+    },
     # "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
     # "giessen": {
     #     "service": "Lkg",
@@ -173,6 +183,9 @@ class Source:
             r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
+        # a unique street match skips the selection page; posting it anyway resets
+        # the session to the start page
+        if self._mm_frm_str_sel is not None and 'name="mm_frm_str_sel"' in r.text:
             # select street
             args = {
                 "mm_ses": mm_ses.value,
@@ -193,11 +206,14 @@ class Source:
                     "mm_frm_hnr_sel", "", op.options
                 )
 
-            # if user provided a plain number, match against dropdown options
-            if ";" not in str(hnr_value):
-                op = SelectOptionParser("mm_frm_hnr_sel")
-                op.feed(r.text)
-                matches = [o for o in op.options if o.split(";")[2] == str(hnr_value)]
+            # match a plain number, or a full value whose postcode/district part is
+            # no longer offered (e.g. "55128;Mainz;5;" became "55128;Bretzenheim;5;")
+            op = SelectOptionParser("mm_frm_hnr_sel")
+            op.feed(r.text)
+            if str(hnr_value) not in op.options:
+                parts = str(hnr_value).split(";")
+                number = parts[2] if len(parts) > 2 else parts[0]
+                matches = [o for o in op.options if o.split(";")[2] == number]
                 if len(matches) == 1:
                     hnr_value = matches[0]
                 elif len(matches) == 0:
@@ -229,6 +245,11 @@ class Source:
 
         mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
         mm_frm_fra.feed(r.text)
+        if not mm_frm_fra.value:
+            raise ValueError(
+                "Müllmax offers no waste types for this address, "
+                "please recheck your arguments"
+            )
 
         # get ics file
         args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_frm_type": "termine"}
