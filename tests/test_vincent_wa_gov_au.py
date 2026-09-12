@@ -69,7 +69,7 @@ def test_label_prefix_is_optional():
         "General Waste Collection Day:",
         # a frequency the source does not generate dates for
         "General Waste Collection Day:16 Sep 2026 - On request (Wednesday)",
-        # an unparseable date
+        # an unparsable date
         "General Waste Collection Day:31 Feb 2026 - Weekly (Wednesday)",
     ],
 )
