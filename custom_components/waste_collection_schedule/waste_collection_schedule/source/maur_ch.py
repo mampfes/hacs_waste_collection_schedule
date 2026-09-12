@@ -7,7 +7,8 @@ from waste_collection_schedule import Collection, Icons
 
 TITLE = "Gemeinde Maur"
 DESCRIPTION = "Source for waste collection in Maur, Canton of Zurich, Switzerland."
-URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"
+# URL contains German word "termine" (dates/schedule) - not a typo
+URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"  # codespell: ignore
 COUNTRY = "ch"
 
 TEST_CASES = {
@@ -24,22 +25,22 @@ ICON_MAP = {
     "Hauptsammelstelle": Icons.RECYCLING,
 }
 
-TERMINE_URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"
+TERMINE_URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"  # codespell: ignore
 
-# German month names for date parsing
+# German month names for date parsing - these are correct German spellings
 GERMAN_MONTHS = {
-    "Januar": 1,
-    "Februar": 2,
+    "Januar": 1,  # codespell: ignore
+    "Februar": 2,  # codespell: ignore
     "März": 3,
     "April": 4,
     "Mai": 5,
-    "Juni": 6,
-    "Juli": 7,
+    "Juni": 6,  # codespell: ignore
+    "Juli": 7,  # codespell: ignore
     "August": 8,
-    "September": 9,
-    "Oktober": 10,
+    "September": 9,  # codespell: ignore
+    "Oktober": 10,  # codespell: ignore
     "November": 11,
-    "Dezember": 12,
+    "Dezember": 12,  # codespell: ignore
 }
 
 
@@ -95,7 +96,7 @@ class Source:
         event_items = soup.select("li.mod-entry.event-item")
 
         if not event_items:
-            raise ValueError(
+            raise Exception(
                 "No waste collection events found. The website structure may have changed."
             )
 
