@@ -52,17 +52,17 @@ class Source:
 
     def _normalize_waste_type(self, waste_type: str) -> str:
         """Normalize waste type names for icon mapping.
-        Maps 'Häckseldienst' to 'Häcksel-Service' and all 'sammelstelle' variants to 'Hauptsammelstelle'.
+        Maps all chipping service variants (Häcksel-Service, Häckseldienst) to 'Häcksel-Service'.
+        Maps all collection point variants to 'Hauptsammelstelle'.
         """
         waste_type_lower = waste_type.lower()
 
-        # Map chipping service variants
-        if "häckseldienst" in waste_type_lower:
+        # Map all chipping service variants to 'Häcksel-Service'
+        if "häcksel" in waste_type_lower:
             return "Häcksel-Service"
 
         # Map all collection point variants to 'Hauptsammelstelle'
-        # (Date/Time already indicates if it's open on Saturday)
-        if "sammelstelle" in waste_type_lower:
+        if "hauptsammelstelle" in waste_type_lower:
             return "Hauptsammelstelle"
 
         return waste_type
