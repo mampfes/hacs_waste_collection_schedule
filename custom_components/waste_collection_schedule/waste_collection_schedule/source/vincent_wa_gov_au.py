@@ -1,10 +1,15 @@
 import re
 from datetime import datetime, timedelta
 
+import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
-from waste_collection_schedule.service.Pozi import PoziWfsError, query_wfs_layer
+from waste_collection_schedule.service.Pozi import (
+    PoziError,
+    PoziWfsError,
+    query_wfs_layer,
+)
 
 TITLE = "City of Vincent"
 DESCRIPTION = "Source for City of Vincent (WA) waste collection."
@@ -35,8 +40,12 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-WFS_BASE_URL = "https://mapping.vincent.wa.gov.au/pozi/qgisserver"
-WFS_MAP_PATH = "C:/Pozi/Waste.qgs"
+# The council's own mapping host still advertises the Waste_Collection layer but
+# serves no features for it. Its Pozi viewer reads the same QGIS project through
+# the tenant's dataset proxy, so look the dataset up there instead of hard-coding
+# an id that changes whenever the council republishes the project.
+DATASETS_API_URL = "https://vincent.pozi.com/api/v1/public/maps/waste/datasets"
+QGIS_PROJECT_DATASET_TYPE = 1
 WFS_TYPENAME = "Waste_Collection"
 
 # Matches: "15 Apr 2026 - Weekly (Wednesday)" or "15 Apr 2026 - Fortnightly (Thursday Week 2)"
@@ -52,6 +61,19 @@ COLLECTION_FIELDS = {
 }
 
 
+def _waste_dataset_url() -> str:
+    """Return the WFS endpoint of the council's waste QGIS project."""
+    r = requests.get(DATASETS_API_URL, timeout=30)
+    r.raise_for_status()
+
+    for group in r.json().get("mapdatasets", []):
+        for dataset in group.get("datasets", []):
+            if dataset.get("type") == QGIS_PROJECT_DATASET_TYPE and dataset.get("url"):
+                return dataset["url"]
+
+    raise PoziError(f"No QGIS project dataset advertised at {DATASETS_API_URL}")
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address.strip()
@@ -62,10 +84,12 @@ class Source:
         except ArcGisGeocodeError as e:
             raise SourceArgumentNotFound("address", self._address) from e
 
+        # not inside the try below: a missing dataset is not a bad address
+        dataset_url = _waste_dataset_url()
+
         try:
             props = query_wfs_layer(
-                WFS_BASE_URL,
-                WFS_MAP_PATH,
+                dataset_url,
                 WFS_TYPENAME,
                 lat=location["y"],
                 lng=location["x"],
