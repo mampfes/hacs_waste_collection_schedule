@@ -321,8 +321,12 @@ def us_federal_holidays(
     *,
     subdiv: str | None = None,
     observed: bool = True,
-) -> set[datetime.date]:
+) -> dict[datetime.date, str]:
     """US federal holiday dates for the given year(s), via the ``holidays`` library.
+
+    Returns a ``{date: holiday_name}`` dict so callers can inspect *which*
+    holiday falls on a given date (useful for holiday-specific adjustment
+    rules such as Thanksgiving's Wednesday shift).
 
     A thin, shared wrapper so sources compute the same calendar rather than
     each hand-rolling "n-th weekday of the month" arithmetic for Martin
@@ -334,8 +338,11 @@ def us_federal_holidays(
     set (e.g. Tennessee's calendar adds Good Friday and drops Columbus Day).
     ``observed`` mirrors the ``holidays`` library's own flag: when True
     (the default) a fixed-date holiday landing on a weekend also yields its
-    shifted weekday as a second entry; pass ``observed=False`` for the raw
-    calendar dates only.
+    shifted weekday as a second entry with the same name; pass
+    ``observed=False`` for the raw calendar dates only.
+
+    The returned dict is safe to use with ``in`` — ``date in holidays``
+    checks keys, just like before.
     """
     year_list = [years] if isinstance(years, int) else list(years)
-    return set(_holidays.US(years=year_list, subdiv=subdiv, observed=observed).keys())
+    return dict(_holidays.US(years=year_list, subdiv=subdiv, observed=observed))

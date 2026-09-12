@@ -136,7 +136,7 @@ def _red_bank_holiday_set(first_year: int, last_year: int) -> frozenset:
     (adds Good Friday, drops Columbus Day, which the city does not observe),
     plus the day after Thanksgiving."""
     years = range(first_year, last_year)
-    days = recurrence.us_federal_holidays(years, subdiv="TN")
+    days = set(recurrence.us_federal_holidays(years, subdiv="TN"))
     for year in years:
         thanksgiving = recurrence.monthly_nth_weekday(
             3, 4, on_or_after=datetime.date(year, 11, 1)
