@@ -31,47 +31,16 @@ def _event_location_description(e: Any) -> tuple[str | None, str | None]:
 
 
 def _event_start_date(e: Any) -> datetime.date | None:
-    """Return the calendar date an event starts on.
+    """Extract the calendar date from an event parsed with strict=True.
 
-    icalevents normalises event start times to UTC. Reducing those straight to a
-    date shifts the day for any feed whose DTSTART sits close to midnight in a
-    timezone other than UTC: ``DTSTART;TZID=Australia/Brisbane:20251002T000000``
-    arrives as ``14:00Z`` on the *previous* day, and even
-    ``DTSTART;TZID=Europe/Berlin`` is reported a day early.
-
-    The date the feed intended is the one in the timezone the feed declared, so
-    convert back into that timezone before taking the date. Deliberately not
-    ``astimezone()`` without an argument: the host/Home Assistant timezone is
-    unrelated to the calendar, and using it both fails to fix the bug when the
-    host runs in UTC and breaks all-day events when the host is behind UTC.
+    Keep the occurrence's wall-clock date. Converting to the original DTSTART
+    tzinfo can shift recurring Windows-TZID events across midnight when the
+    recurrence timezone and the embedded VTIMEZONE have different DST rules.
     """
     start = getattr(e, "start", None)
-
-    if not isinstance(start, datetime.datetime):
-        # Plain date (all-day) - already the value we want.
-        return start if isinstance(start, datetime.date) else None
-
-    if start.tzinfo is None:
-        # Floating time: the wall clock date is authoritative.
+    if isinstance(start, datetime.datetime):
         return start.date()
-
-    # Recover the timezone declared by the original DTSTART property. icalendar
-    # has already resolved TZID to a tzinfo object, which also handles Windows
-    # style zone names such as "AUS Eastern Standard Time" that ZoneInfo would
-    # reject.
-    component = getattr(e, "component", None)
-    dtstart_prop = component.get("DTSTART") if component is not None else None
-    original = getattr(dtstart_prop, "dt", None)
-
-    if isinstance(original, datetime.datetime):
-        if original.tzinfo is not None:
-            return start.astimezone(original.tzinfo).date()
-    elif isinstance(original, datetime.date):
-        # VALUE=DATE all-day event. icalevents still hands back a UTC midnight
-        # datetime, so its UTC date is the literal date from the feed.
-        return start.date()
-
-    return start.date()
+    return start if isinstance(start, datetime.date) else None
 
 
 class ICS:
@@ -130,7 +99,12 @@ class ICS:
 
         # parse ics data
         events: list[Any] = icalevents.events(
-            start=start_date, end=end_date, string_content=ics_data.encode()
+            start=start_date,
+            end=end_date,
+            string_content=ics_data.encode(),
+            # Preserve each event's calendar date/time instead of normalising
+            # all events to a calendar-wide timezone (UTC by default).
+            strict=True,
         )
 
         # Inherit summary for recurrence exceptions that lack one.
@@ -208,7 +182,12 @@ class ICS:
 
         # parse ics data
         events: list[Any] = icalevents.events(
-            start=start_date, end=end_date, string_content=ics_data.encode()
+            start=start_date,
+            end=end_date,
+            string_content=ics_data.encode(),
+            # Preserve each event's calendar date/time instead of normalising
+            # all events to a calendar-wide timezone (UTC by default).
+            strict=True,
         )
 
         # Inherit summary for recurrence exceptions that lack one.

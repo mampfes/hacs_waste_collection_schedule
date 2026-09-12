@@ -1,6 +1,6 @@
 """Regression tests for timezone handling in the shared ICS service.
 
-icalevents normalises event start times to UTC. Reducing those straight to a
+By default icalevents can normalise event start times to UTC. Reducing these to a
 date silently shifts the collection day for feeds whose DTSTART is anchored at
 midnight in a timezone other than UTC. The resulting date must depend only on
 the timezone declared by the feed, never on the timezone the host happens to
@@ -10,6 +10,7 @@ run in.
 import datetime
 import os
 import sys
+import time
 
 import pytest
 
@@ -83,18 +84,25 @@ HOST_TIMEZONES = [
     "Pacific/Auckland",
     "America/Los_Angeles",
 ]
+if not hasattr(time, "tzset"):
+    # Windows cannot select IANA process timezones with time.tzset(). Still
+    # exercise every calendar shape under the native host timezone.
+    HOST_TIMEZONES = [None]
 
 
 @pytest.fixture
 def host_timezone(request, monkeypatch):
     """Pin the process-local timezone for the duration of a test."""
-    import time
-
-    monkeypatch.setenv("TZ", request.param)
-    time.tzset()
-    yield request.param
-    monkeypatch.undo()
-    time.tzset()
+    if request.param is None:
+        yield "native"
+        return
+    try:
+        with monkeypatch.context() as patch:
+            patch.setenv("TZ", request.param)
+            time.tzset()
+            yield request.param
+    finally:
+        time.tzset()
 
 
 @pytest.mark.parametrize("host_timezone", HOST_TIMEZONES, indirect=True)
@@ -144,3 +152,36 @@ def test_all_day_events_keep_their_literal_date() -> None:
     assert entries
     assert all(isinstance(d, datetime.date) for d, _title in entries)
     assert all(d.weekday() == 3 for d, _title in entries)
+
+
+@pytest.mark.parametrize("name", sorted(CALENDARS))
+@pytest.mark.parametrize("method", ["convert", "convert_events"])
+def test_nonrecurring_events_keep_their_literal_date(name, method) -> None:
+    """Single events must keep their date, including embedded Windows zones."""
+    expected = datetime.datetime.now(datetime.timezone.utc).date()
+    expected += datetime.timedelta(days=7)
+    calendar = CALENDARS[name].replace("20251002", expected.strftime("%Y%m%d"))
+    calendar = calendar.replace("RRULE:FREQ=WEEKLY;BYDAY=TH\n", "")
+
+    entries = getattr(ICS(), method)(calendar)
+
+    assert [entry[0] for entry in entries] == [expected]
+
+
+@pytest.mark.parametrize("method", ["convert", "convert_events"])
+def test_calendar_timezone_does_not_override_event_timezone(method) -> None:
+    """An explicit UTC event keeps its date despite the calendar's default zone."""
+    expected = datetime.datetime.now(datetime.timezone.utc).date()
+    expected += datetime.timedelta(days=7)
+    calendar = (
+        _HEAD + "X-WR-TIMEZONE:Pacific/Auckland\n"
+        "BEGIN:VEVENT\n"
+        "UID:wcs-test-explicit-utc\n"
+        f"DTSTART:{expected:%Y%m%d}T233000Z\n"
+        "SUMMARY:General waste\n"
+        "END:VEVENT\n" + _TAIL
+    )
+
+    entries = getattr(ICS(), method)(calendar)
+
+    assert [entry[0] for entry in entries] == [expected]
