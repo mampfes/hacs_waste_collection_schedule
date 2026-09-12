@@ -1,6 +1,6 @@
 """Provider colors survive mapping, customization and HA serialization."""
 
-import calendar  # noqa: F401
+import calendar  # noqa: F401 - import stdlib calendar before the package path
 import json
 import sys
 from datetime import date

@@ -2,7 +2,7 @@
 
 import re
 
-_HEX_COLOR = re.compile(r"#[0-9a-fA-F]{6}\Z")
+_HEX_COLOR = re.compile(r"#[0-9a-fA-F]{6}")
 
 
 def normalize_color(value: object) -> str | None:
