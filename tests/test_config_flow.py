@@ -84,16 +84,17 @@ def test_alternatives_group_members_render_their_widgets() -> None:
         include_title=False,
     )
 
-    region_marker, region_validator = _marker_and_validator(schema, "region")
-    flag_marker, flag_validator = _marker_and_validator(schema, "flag")
+    _region_marker, region_validator = _marker_and_validator(schema, "region")
+    _flag_marker, flag_validator = _marker_and_validator(schema, "flag")
 
     assert isinstance(region_validator, SelectSelector)
     assert isinstance(flag_validator, BooleanSelector)
 
     # Every member of an alternatives group is optional in the form (validate()
-    # enforces that exactly one group is fully provided).
-    assert isinstance(region_marker, vol.Optional)
-    assert isinstance(flag_marker, vol.Optional)
+    # enforces that exactly one group is fully provided). Newer HA/probatio
+    # builds may normalise selector keys to plain strings, so assert the
+    # user-visible behaviour instead of the concrete marker type.
+    assert schema({}) == {}
 
 
 def test_options_flow_gathers_sensor_collection_types() -> None:
