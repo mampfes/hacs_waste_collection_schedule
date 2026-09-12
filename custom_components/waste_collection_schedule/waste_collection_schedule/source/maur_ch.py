@@ -22,8 +22,6 @@ ICON_MAP = {
     "Häcksel-Service": Icons.GARDEN,
     "Häckseldienst": Icons.GARDEN,
     "Hauptsammelstelle": Icons.RECYCLING,
-    "Hauptsammelstelle Werkhof Ebmatingen offener Samstag": Icons.RECYCLING,
-    "Häcksel-Service ab 19. Oktober 2026 - in Ebmatingen, Maur, Uessikon": Icons.GARDEN,
 }
 
 TERMINE_URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"
@@ -53,9 +51,11 @@ class Source:
     def _normalize_waste_type(self, waste_type: str) -> str:
         """Normalize waste type names for icon mapping."""
         # Handle long names by extracting the main type
-        if "Häcksel" in waste_type or "Häckseldienst" in waste_type:
+        waste_type_lower = waste_type.lower()
+        
+        if "häcksel" in waste_type_lower or "häckseldienst" in waste_type_lower:
             return "Häcksel-Service"
-        if "Hauptsammelstelle" in waste_type:
+        if "sammelstelle" in waste_type_lower:
             return "Hauptsammelstelle"
         return waste_type
 
