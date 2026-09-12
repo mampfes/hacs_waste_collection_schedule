@@ -19,6 +19,16 @@ TEST_CASES = {
     "Hecho En Mexico Altona": {"street_address": "48 Pier St, Altona"},
     "Williamstown, no comma": {"street_address": "20 Merrett Dr Williamstown"},
 }
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street_address": "Street address",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street_address": "Street number, street name and suburb as shown on the council's bin collection calendar, for example '399 Queen St, Altona Meadows'. The comma is optional.",
+    }
+}
 
 # Hobsons Bay moved its collection lookup to Impact Apps (waste-info.com.au);
 # the previous Algolia address index rejects the shipped credentials with a 403.
