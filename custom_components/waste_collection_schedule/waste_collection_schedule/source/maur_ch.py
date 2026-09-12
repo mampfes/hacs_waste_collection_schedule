@@ -52,7 +52,7 @@ class Source:
         """Normalize waste type names for icon mapping."""
         # Handle long names by extracting the main type
         waste_type_lower = waste_type.lower()
-        
+
         if "häcksel" in waste_type_lower or "häckseldienst" in waste_type_lower:
             return "Häcksel-Service"
         if "sammelstelle" in waste_type_lower:
