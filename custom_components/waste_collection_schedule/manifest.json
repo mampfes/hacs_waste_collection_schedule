@@ -1,7 +1,9 @@
 {
   "domain": "waste_collection_schedule",
   "name": "Waste Collection Schedule",
-  "codeowners": ["@mampfes"],
+  "codeowners": [
+    "@mampfes"
+  ],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/mampfes/hacs_waste_collection_schedule#readme",
@@ -15,7 +17,8 @@
     "lxml",
     "pycryptodome",
     "pypdf",
-    "curl_cffi>=0.7.0"
+    "curl_cffi>=0.7.0",
+    "Pillow"
   ],
   "version": "2.32.0"
 }
