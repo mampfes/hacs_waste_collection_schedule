@@ -58,5 +58,9 @@ class Source:
         return self._client.fetch_by_address(
             postcode=self._postcode,
             address_string=self._address or "",
-            argument_name="postcode",
+            # The client's suggestions are whole address strings and it reports
+            # the address it was given as the offending value, so they belong to
+            # the address argument: picking one has to refine `address`, not
+            # overwrite the postcode with a full address.
+            argument_name="address",
         )
