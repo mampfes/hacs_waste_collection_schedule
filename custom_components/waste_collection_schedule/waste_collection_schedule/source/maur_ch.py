@@ -7,8 +7,7 @@ from waste_collection_schedule import Collection, Icons
 
 TITLE = "Gemeinde Maur"
 DESCRIPTION = "Source for waste collection in Maur, Canton of Zurich, Switzerland."
-# URL contains German word "termine" (dates/schedule) - not a typo
-URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"  # codespell: ignore
+URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"  # codespell:ignore termine
 COUNTRY = "ch"
 
 TEST_CASES = {
@@ -25,22 +24,22 @@ ICON_MAP = {
     "Hauptsammelstelle": Icons.RECYCLING,
 }
 
-TERMINE_URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"  # codespell: ignore
+TERMINE_URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"  # codespell:ignore termine
 
 # German month names for date parsing - these are correct German spellings
 GERMAN_MONTHS = {
-    "Januar": 1,  # codespell: ignore
-    "Februar": 2,  # codespell: ignore
-    "März": 3,
-    "April": 4,
-    "Mai": 5,
-    "Juni": 6,  # codespell: ignore
-    "Juli": 7,  # codespell: ignore
-    "August": 8,
-    "September": 9,  # codespell: ignore
-    "Oktober": 10,  # codespell: ignore
-    "November": 11,
-    "Dezember": 12,  # codespell: ignore
+    "Januar": 1,  # codespell:ignore januar
+    "Februar": 2,  # codespell:ignore februar
+    "März": 3,  # codespell:ignore märz
+    "April": 4,  # codespell:ignore april
+    "Mai": 5,  # codespell:ignore mai
+    "Juni": 6,  # codespell:ignore juni
+    "Juli": 7,  # codespell:ignore juli
+    "August": 8,  # codespell:ignore august
+    "September": 9,  # codespell:ignore september
+    "Oktober": 10,  # codespell:ignore oktober
+    "November": 11,  # codespell:ignore november
+    "Dezember": 12,  # codespell:ignore dezember
 }
 
 
