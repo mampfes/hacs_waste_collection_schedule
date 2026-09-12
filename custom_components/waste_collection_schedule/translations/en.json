@@ -25219,10 +25219,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "House name or number and street, e.g. 1 Dagmar Road. Use together with postcode instead of a UPRN.",
+          "postcode": "Postcode, e.g. EX8 2AN. Use together with address instead of a UPRN.",
           "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
@@ -25231,9 +25235,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode",
           "uprn": "Unique Property Reference Number (UPRN)"
         },
         "data_description": {
+          "address": "House name or number and street, e.g. 1 Dagmar Road. Use together with postcode instead of a UPRN.",
+          "postcode": "Postcode, e.g. EX8 2AN. Use together with address instead of a UPRN.",
           "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
