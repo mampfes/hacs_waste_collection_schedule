@@ -3,7 +3,7 @@ import os
 import sys
 from datetime import date
 from typing import Any, cast
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
@@ -114,6 +114,50 @@ def test_coordinator_first_refresh_reports_failed_fetch() -> None:
             await coordinator._async_update_data()
 
     asyncio.run(_run())
+
+
+def test_coordinator_starts_timers_only_after_successful_fetch() -> None:
+    from custom_components.waste_collection_schedule import wcs_coordinator
+
+    coordinator = object.__new__(wcs_coordinator.WCSCoordinator)
+    coordinator._shell = cast(Any, type("Shell", (), {"title": "Test source"})())
+    coordinator._async_track_timers = Mock()
+
+    async def _run() -> None:
+        with (
+            patch.object(coordinator, "_fetch_now", AsyncMock(return_value=False)),
+            pytest.raises(wcs_coordinator.UpdateFailed),
+        ):
+            await coordinator._async_update_data()
+        coordinator._async_track_timers.assert_not_called()
+
+        with patch.object(coordinator, "_fetch_now", AsyncMock(return_value=True)):
+            await coordinator._async_update_data()
+        coordinator._async_track_timers.assert_called_once_with()
+
+    asyncio.run(_run())
+
+
+def test_coordinator_shutdown_cancels_custom_timers() -> None:
+    from custom_components.waste_collection_schedule import wcs_coordinator
+
+    coordinator = object.__new__(wcs_coordinator.WCSCoordinator)
+    unsubs = [Mock() for _ in range(4)]
+    (
+        coordinator._fetch_tracker,
+        coordinator._day_switch_tracker,
+        coordinator._midnight_tracker,
+        coordinator._fetch_later_unsub,
+    ) = unsubs
+
+    coordinator._async_unsub_timers()
+
+    for unsub in unsubs:
+        unsub.assert_called_once_with()
+    assert coordinator._fetch_tracker is None
+    assert coordinator._day_switch_tracker is None
+    assert coordinator._midnight_tracker is None
+    assert coordinator._fetch_later_unsub is None
 
 
 def test_yaml_api_retries_all_sources_after_partial_failure() -> None:
