@@ -121,18 +121,29 @@ class A_region_ch:
         for download in downloads:
             # href ::= "/index.php?apid=12731252&amp;apparentid=5011362"
             href = download.get("href")
+            if "download.php" in href:
+                # skip PDF/attachment downloads (e.g. "Abfall-Info" leaflets).
+                # These are not calendar pages, can be several MB in size, and
+                # previously slipped through because the old "PDF" check below
+                # compared bs4 Tag objects (from find_all) against a string,
+                # which never matched. Repeatedly fetching a several-MB PDF on
+                # every poll can also trip the provider's own anti-bot rate
+                # limiting.
+                continue
             if (
                 download.find("div", class_="badgeIcon")
                 or download.find("img", class_="rowImg")
                 or download.find("img", class_="svgIconImg")
             ):
                 titles = download.find_all("div", class_="title")
-                if "PDF" in titles:
-                    continue
                 titles = [title.string for title in titles]
                 if not titles:
                     titles = [download.get_text(strip=True)]
+                if any(title and "PDF" in title for title in titles):
+                    continue
                 for title in titles:
+                    if title is None:
+                        continue
                     # title ::= "Altmetall"
                     waste_types[title] = href
 
