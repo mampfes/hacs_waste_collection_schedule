@@ -1,5 +1,6 @@
 """Sensor platform support for Waste Collection Schedule."""
 
+import datetime
 import logging
 from enum import Enum
 from typing import Any
@@ -11,6 +12,7 @@ from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.template import Template
 
@@ -27,16 +29,24 @@ from .const import (
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
     CONF_LEADTIME,
+    CONF_PRESET_LANGUAGE,
+    CONF_SENSOR_ID,
+    CONF_SENSOR_LEGACY_UNIQUE_ID,
     CONF_SENSORS,
     CONF_SOURCE_INDEX,
     DOMAIN,
     UPDATE_SENSORS_SIGNAL,
 )
+from .sensor_config_helpers import (
+    build_ui_sensor_device_identifier,
+    build_ui_sensor_unique_id,
+)
+from .sensor_template_presets import format_default_state_text
 from .waste_collection_api import WasteCollectionApi
 
 # CollectionBase is the real Collection class; the exported `Collection` is a
 # factory instance (not valid as a type annotation).
-from .waste_collection_schedule import CollectionBase, CollectionGroup, Icons
+from .waste_collection_schedule import CollectionBase, CollectionGroup
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -72,6 +82,115 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
+def render_sensor_preview(
+    aggregator: CollectionAggregator,
+    separator: str,
+    day_switch_time: datetime.time,
+    details_format: DetailsFormat | None,
+    count: int | None,
+    leadtime: int | None,
+    collection_types: list[str] | None,
+    value_template: Template | None,
+    date_template: Template | None,
+    add_days_to: bool,
+    event_index: int | None,
+    preset_language: str | None = None,
+) -> tuple[Any, dict[str, Any], str, str | None]:
+    """Render the current sensor state and attributes for UI preview and entities."""
+    details_format = details_format or DetailsFormat.upcoming
+    include_today = dt_util.now().time() < day_switch_time
+
+    upcoming1 = aggregator.get_upcoming_group_by_day(
+        count=1,
+        include_types=collection_types,
+        include_today=include_today,
+        start_index=event_index,
+    )
+
+    collection = upcoming1[0] if upcoming1 else None
+    value: Any = None
+    icon = "mdi:trash-can"
+    picture = None
+    if collection is not None:
+        if value_template is not None:
+            value = value_template.async_render_with_possible_json_value(
+                collection, None
+            )
+        else:
+            if preset_language is None:
+                value = (
+                    f"{separator.join(collection.types)} in {collection.daysTo} days"
+                )
+            else:
+                value = format_default_state_text(
+                    collection.types,
+                    collection.daysTo,
+                    separator,
+                    preset_language,
+                )
+        icon = collection.icon or icon
+        picture = collection.picture
+
+    def render_date(entry: CollectionBase | CollectionGroup):
+        if date_template is not None:
+            return date_template.async_render_with_possible_json_value(entry, None)
+        return entry.date.isoformat()
+
+    attributes: dict[str, Any] = {}
+    if collection_types is None:
+        available_collection_types = [
+            (display_name, display_name)
+            for display_name in sorted(aggregator.types, key=str.casefold)
+        ]
+    else:
+        available_collection_types = [
+            (type_filter, aggregator.type_options.get(type_filter, type_filter))
+            for type_filter in collection_types
+        ]
+
+    grouped_upcoming = aggregator.get_upcoming_group_by_day(
+        count=count,
+        leadtime=leadtime,
+        include_types=collection_types,
+        include_today=include_today,
+        start_index=event_index,
+    )
+
+    if details_format == DetailsFormat.upcoming:
+        for upcoming_collection in grouped_upcoming:
+            attributes[render_date(upcoming_collection)] = separator.join(
+                upcoming_collection.types
+            )
+    elif details_format == DetailsFormat.appointment_types:
+        for waste_type, display_name in available_collection_types:
+            collections = aggregator.get_upcoming(
+                count=1,
+                include_types=[waste_type],
+                include_today=include_today,
+                start_index=event_index,
+            )
+            attributes[display_name] = (
+                "" if len(collections) == 0 else render_date(collections[0])
+            )
+    elif details_format == DetailsFormat.generic:
+        attributes["types"] = [label for _, label in available_collection_types]
+        attributes["upcoming"] = aggregator.get_upcoming(
+            count=count,
+            leadtime=leadtime,
+            include_types=collection_types,
+            include_today=include_today,
+        )
+        refreshtime = ""
+        if aggregator.refreshtime is not None:
+            refreshtime = aggregator.refreshtime.isoformat(timespec="seconds")
+        attributes["last_update"] = refreshtime
+
+    if add_days_to and collection is not None:
+        attributes["daysTo"] = collection.daysTo
+
+    return value, attributes, icon, picture
+
+
 # Config flow setup
 async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
     coordinator = hass.data[DOMAIN][config.entry_id]
@@ -93,6 +212,8 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
         except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             date_template = None
         details_format = sensor.get(CONF_DETAILS_FORMAT)
+        if details_format is None:
+            details_format = DetailsFormat.upcoming
         if isinstance(details_format, str):
             details_format = DetailsFormat(details_format)
 
@@ -102,6 +223,10 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 api=None,
                 coordinator=coordinator,
                 name=sensor.get(CONF_NAME, coordinator.shell.calendar_title),
+                sensor_id=sensor.get(CONF_SENSOR_ID),
+                preserve_legacy_unique_id=sensor.get(
+                    CONF_SENSOR_LEGACY_UNIQUE_ID, False
+                ),
                 aggregator=aggregator,
                 details_format=details_format,
                 count=sensor.get(CONF_COUNT),
@@ -111,6 +236,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 date_template=date_template,
                 add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
                 event_index=sensor.get(CONF_EVENT_INDEX),
+                preset_language=sensor.get(CONF_PRESET_LANGUAGE),
             )
         )
 
@@ -186,6 +312,8 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             api=api,
             coordinator=None,
             name=sensor_config[CONF_NAME],
+            sensor_id=sensor_config.get(CONF_SENSOR_ID),
+            preserve_legacy_unique_id=False,
             aggregator=aggregator,
             details_format=details_format,
             count=sensor_config.get(CONF_COUNT),
@@ -195,6 +323,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             date_template=date_template,
             add_days_to=sensor_config.get(CONF_ADD_DAYS_TO, False),
             event_index=sensor_config.get(CONF_EVENT_INDEX, 0),
+            preset_language=sensor_config.get(CONF_PRESET_LANGUAGE),
         )
     )
 
@@ -210,6 +339,8 @@ class ScheduleSensor(SensorEntity):
         api: WasteCollectionApi | None,
         coordinator: WCSCoordinator | None,
         name: str,
+        sensor_id: str | None,
+        preserve_legacy_unique_id: bool,
         aggregator: CollectionAggregator,
         details_format: DetailsFormat,
         count: int | None,
@@ -219,6 +350,7 @@ class ScheduleSensor(SensorEntity):
         date_template: Template | None,
         add_days_to: bool,
         event_index: int | None,
+        preset_language: str | None = None,
     ):
         """Initialize the entity."""
         self._api = api
@@ -232,6 +364,8 @@ class ScheduleSensor(SensorEntity):
         self._date_template = date_template
         self._add_days_to = add_days_to
         self._event_index = event_index
+        self._preset_language = preset_language
+        self._sensor_id = sensor_id
 
         self._value: Any = None
 
@@ -239,17 +373,38 @@ class ScheduleSensor(SensorEntity):
         self._attr_name = name
         if self._coordinator:
             shell = self._coordinator.shell
-            self._attr_unique_id = f"{shell.unique_id}_ui_sensor_{name}"
-            self._attr_device_info = self._coordinator.device_info
+            self._attr_unique_id = build_ui_sensor_unique_id(
+                shell.unique_id,
+                name,
+                sensor_id,
+                preserve_legacy_unique_id,
+            )
+            if sensor_id:
+                device_identifier = build_ui_sensor_device_identifier(
+                    shell.unique_id, sensor_id
+                )
+                self._attr_device_info = DeviceInfo(
+                    identifiers={(DOMAIN, device_identifier)},
+                    manufacturer=shell.title,
+                    model="Waste Pickup Sensor",
+                    name=name,
+                    via_device=(DOMAIN, shell.unique_id),
+                )
+            else:
+                self._attr_device_info = self._coordinator.device_info
         else:
             self._attr_unique_id = name
         self._attr_should_poll = False
 
-        async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
-
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""
         await super().async_added_to_hass()
+
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass, UPDATE_SENSORS_SIGNAL, self._update_sensor
+            )
+        )
 
         if self._coordinator:
             self.async_on_remove(
@@ -284,36 +439,6 @@ class ScheduleSensor(SensorEntity):
             refreshtime = self._aggregator.refreshtime.strftime("%x %X")
         self._attr_attribution = f"Last update: {refreshtime}"
 
-    def _set_state(self, upcoming: list[CollectionGroup]):
-        """Set entity state with default format."""
-        if len(upcoming) == 0:
-            self._value = None
-            self._attr_icon = Icons.GENERAL_WASTE
-            self._attr_entity_picture = None
-            return
-
-        collection = upcoming[0]
-        # collection::=CollectionGroup{date=2020-04-01, types=['Type1', 'Type2']}
-
-        if self._value_template is not None:
-            self._value = self._value_template.async_render_with_possible_json_value(
-                collection, None
-            )
-        else:
-            self._value = (
-                f"{self._separator.join(collection.types)} in {collection.daysTo} days"
-            )
-
-        self._attr_icon = collection.icon or Icons.GENERAL_WASTE
-        self._attr_entity_picture = collection.picture
-
-    def _render_date(self, collection: CollectionBase):
-        if self._date_template is not None:
-            return self._date_template.async_render_with_possible_json_value(
-                collection, None
-            )
-        return collection.date.isoformat()
-
     @callback
     def _update_sensor(self):
         """Update the state and the device-state-attributes of the entity.
@@ -322,69 +447,29 @@ class ScheduleSensor(SensorEntity):
         """
         if self._aggregator is None:
             return
-
-        upcoming1 = self._aggregator.get_upcoming_group_by_day(
-            count=1,
-            include_types=self._collection_types,
-            include_today=self._include_today,
-            start_index=self._event_index,
+        (
+            self._value,
+            self._attr_extra_state_attributes,
+            self._attr_icon,
+            self._attr_entity_picture,
+        ) = render_sensor_preview(
+            aggregator=self._aggregator,
+            separator=self._separator,
+            day_switch_time=(
+                self._api._day_switch_time
+                if self._api
+                else self._coordinator.day_switch_time
+            ),
+            details_format=self._details_format,
+            count=self._count,
+            leadtime=self._leadtime,
+            collection_types=self._collection_types,
+            value_template=self._value_template,
+            date_template=self._date_template,
+            add_days_to=self._add_days_to,
+            event_index=self._event_index,
+            preset_language=self._preset_language,
         )
-
-        self._set_state(upcoming1)
-
-        attributes = {}
-
-        collection_types = (
-            sorted(self._aggregator.types)
-            if self._collection_types is None
-            else self._collection_types
-        )
-
-        if self._details_format == DetailsFormat.upcoming:
-            # show upcoming events list in details
-            upcoming = self._aggregator.get_upcoming_group_by_day(
-                count=self._count,
-                leadtime=self._leadtime,
-                include_types=self._collection_types,
-                include_today=self._include_today,
-                start_index=self._event_index,
-            )
-            for collection in upcoming:
-                attributes[self._render_date(collection)] = self._separator.join(
-                    collection.types
-                )
-        elif self._details_format == DetailsFormat.appointment_types:
-            # show list of collections in details
-            for t in collection_types:
-                collections = self._aggregator.get_upcoming(
-                    count=1,
-                    include_types=[t],
-                    include_today=self._include_today,
-                    start_index=self._event_index,
-                )
-                date = (
-                    "" if len(collections) == 0 else self._render_date(collections[0])
-                )
-                attributes[t] = date
-        elif self._details_format == DetailsFormat.generic:
-            # insert generic attributes into details
-            attributes["types"] = collection_types
-            attributes["upcoming"] = self._aggregator.get_upcoming(
-                count=self._count,
-                leadtime=self._leadtime,
-                include_types=self._collection_types,
-                include_today=self._include_today,
-            )
-            refreshtime = ""
-            if self._aggregator.refreshtime is not None:
-                refreshtime = self._aggregator.refreshtime.isoformat(timespec="seconds")
-            attributes["last_update"] = refreshtime
-
-        if len(upcoming1) > 0:
-            if self._add_days_to:
-                attributes["daysTo"] = upcoming1[0].daysTo
-
-        self._attr_extra_state_attributes = attributes
         self._add_refreshtime()
 
         if self.hass is not None:

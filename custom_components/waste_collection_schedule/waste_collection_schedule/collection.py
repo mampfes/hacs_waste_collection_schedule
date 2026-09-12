@@ -55,6 +55,7 @@ class Collection:
         self._date = date
         self._waste_type = waste_type
         self._type_override: str | None = None
+        self._source_type: str | None = None
         self._icon_override: str | None = None
         self._picture: str | None = None
         self._location: str | None = None
@@ -75,6 +76,14 @@ class Collection:
     @property
     def type(self) -> str:
         return self._type_override or display_name(self._waste_type)
+
+    @property
+    def source_type(self) -> str | None:
+        """Original provider label, retained for existing filters and aliases."""
+        return self._source_type
+
+    def set_source_type(self, value: str | None):
+        self._source_type = _clean_optional_str(value)
 
     @property
     def icon(self) -> str:

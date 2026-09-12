@@ -18,8 +18,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from typing import Any, cast  # isort:skip
 
-import voluptuous as vol  # isort:skip
+# Home Assistant selects its validation implementation during startup. Import it
+# before voluptuous so current HA and the minimum supported version share types.
 from homeassistant.const import CONF_NAME  # isort:skip
+import voluptuous as vol  # isort:skip
 from homeassistant.helpers.selector import (  # isort:skip
     BooleanSelector,
     SelectSelector,
