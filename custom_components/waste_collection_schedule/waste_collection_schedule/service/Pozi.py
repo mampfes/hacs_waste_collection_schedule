@@ -85,23 +85,24 @@ def query_geojson_zones(
 
 def query_wfs_layer(
     base_url: str,
-    map_path: str,
     typename: str,
     lat: float,
     lng: float,
     *,
+    map_path: str | None = None,
     timeout: int = 20,
 ) -> dict[str, Any]:
     """Query a Pozi QGIS WFS endpoint with a spatial intersects filter.
 
     Args:
-        base_url: Base URL of the QGIS WFS server
-            (e.g. 'https://mapping.vincent.wa.gov.au/pozi/qgisserver').
-        map_path: Server-side path to the QGIS project file
-            (e.g. 'C:/Pozi/Waste.qgs').
+        base_url: Base URL of the QGIS WFS server, or of a Pozi dataset proxy
+            that already points at a project (e.g.
+            'https://vincent.pozi.com/proxy/v1/maps/waste/datasets/<id>').
         typename: WFS typename / layer name (e.g. 'Waste_Collection').
         lat: Latitude of the point (EPSG:4326).
         lng: Longitude of the point (EPSG:4326).
+        map_path: Server-side path to the QGIS project file, for endpoints that
+            take a MAP parameter (e.g. 'C:/Pozi/Waste.qgs').
         timeout: Request timeout in seconds.
 
     Returns:
@@ -122,7 +123,6 @@ def query_wfs_layer(
     )
 
     params: dict[str, str] = {
-        "MAP": map_path,
         "TYPENAME": typename,
         "LAYERS": typename.replace("_", " "),
         "STYLES": "default",
@@ -133,6 +133,8 @@ def query_wfs_layer(
         "OUTPUTFORMAT": "application/json",
         "FILTER": wfs_filter,
     }
+    if map_path is not None:
+        params["MAP"] = map_path
 
     r = requests.get(base_url, params=params, timeout=timeout)
     r.raise_for_status()
