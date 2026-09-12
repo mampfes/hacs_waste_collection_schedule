@@ -16,10 +16,13 @@ TEST_CASES = {
 
 ICON_MAP = {
     "Grüngut": Icons.ORGANIC,
+    "Grüngut/Christbaum": Icons.ORGANIC,
     "Kehricht": Icons.GENERAL_WASTE,
     "Karton": Icons.PAPER,
+    "Papiersammlung": Icons.PAPER,
     "Sonderabfall": Icons.HAZARDOUS,
     "Häcksel-Service": Icons.GARDEN,
+    "Metall": Icons.RECYCLING,
     "Hauptsammelstelle": Icons.RECYCLING,
 }
 
@@ -49,13 +52,19 @@ class Source:
 
     def _normalize_waste_type(self, waste_type: str) -> str:
         """Normalize waste type names for icon mapping.
-        Maps 'Häckseldienst' to 'Häcksel-Service' to avoid duplication.
+        Maps 'Häckseldienst' to 'Häcksel-Service' and all 'sammelstelle' variants to 'Hauptsammelstelle'.
         """
         waste_type_lower = waste_type.lower()
 
-        # Map 'Häckseldienst' to 'Häcksel-Service' as they are the same service
+        # Map chipping service variants
         if "häckseldienst" in waste_type_lower:
             return "Häcksel-Service"
+
+        # Map all collection point variants to 'Hauptsammelstelle'
+        # (Date/Time already indicates if it's open on Saturday)
+        if "sammelstelle" in waste_type_lower:
+            return "Hauptsammelstelle"
+
         return waste_type
 
     def _parse_german_date(self, date_str: str) -> tuple[int, int, int] | None:
