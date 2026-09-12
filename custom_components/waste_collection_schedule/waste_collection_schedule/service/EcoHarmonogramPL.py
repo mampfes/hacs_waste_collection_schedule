@@ -554,9 +554,15 @@ class EcoharmonogramRetriever(RetrieverFunc):
         return reports
 
 
-class EcoharmonogramParser(Parser["list[tuple[datetime.date, str]]"]):
+class EcoharmonogramRecord(TypedDict):
+    date: datetime.date
+    type: str
+    color: str | None
+
+
+class EcoharmonogramParser(Parser["list[EcoharmonogramRecord]"]):
     """Decode the raw ``reports`` gathered by :class:`EcoharmonogramRetriever`
-    into ``(date, label)`` rows.
+    into dated records, retaining each description's display color.
 
     Applies the one purely-content-based filter left after the retriever's
     resolution (the "additional sides matcher" SUBSTRING match against each
@@ -571,7 +577,7 @@ class EcoharmonogramParser(Parser["list[tuple[datetime.date, str]]"]):
 
     def __call__(
         self, raw: "dict[str, Any]", source: "BaseSource | None" = None
-    ) -> "list[tuple[datetime.date, str]]":
+    ) -> "list[EcoharmonogramRecord]":
         response_shape.expect(
             isinstance(raw, dict) and "reports" in raw,
             source_name=response_shape.source_name(source),
@@ -580,7 +586,7 @@ class EcoharmonogramParser(Parser["list[tuple[datetime.date, str]]"]):
         )
 
         matcher = str(raw.get("additional_sides_matcher") or "").lower()
-        entries: list[tuple[datetime.date, str]] = []
+        entries: list[EcoharmonogramRecord] = []
         seen: set[tuple[datetime.date, str]] = set()
 
         for schedules_response in raw["reports"]:
@@ -616,6 +622,10 @@ class EcoharmonogramParser(Parser["list[tuple[datetime.date, str]]"]):
                     if key in seen:
                         continue
                     seen.add(key)
-                    entries.append(key)
+                    entries.append(
+                        EcoharmonogramRecord(
+                            date=date, type=name, color=description.get("color")
+                        )
+                    )
 
         return entries
