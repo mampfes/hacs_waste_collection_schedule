@@ -2,7 +2,10 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
 
@@ -29,10 +32,10 @@ TEST_CASES = {
         "mm_frm_str_sel": "Patronatsstr.",
         "mm_frm_hnr_sel": 13,
     },
-    "Mainz, Holunderweg 5 (plain number)": {
+    "Mainz, Holunderweg 5 (stale district in value)": {
         "service": "Ebm",
         "mm_frm_str_sel": "Holunderweg",
-        "mm_frm_hnr_sel": "5",
+        "mm_frm_hnr_sel": "55128;Mainz;5;",
     },
     # "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
     # "giessen": {
@@ -246,9 +249,10 @@ class Source:
         mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
         mm_frm_fra.feed(r.text)
         if not mm_frm_fra.value:
-            raise ValueError(
+            raise SourceArgumentExceptionMultiple(
+                ["mm_frm_ort_sel", "mm_frm_str_sel", "mm_frm_hnr_sel"],
                 "Müllmax offers no waste types for this address, "
-                "please recheck your arguments"
+                "please recheck your arguments",
             )
 
         # get ics file
