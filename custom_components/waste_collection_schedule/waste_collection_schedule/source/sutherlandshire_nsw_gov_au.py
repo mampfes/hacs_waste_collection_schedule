@@ -24,6 +24,14 @@ TEST_CASES = {
         "street": "Waratah Street",
         "house_number": "20",
     },
+    # The council's own administration building, and the only Zone 1 case
+    # here: both of the above are Zone 2, so nothing exercised the other
+    # fortnight.
+    "4-20 Eton Street, SUTHERLAND": {
+        "suburb": "SUTHERLAND",
+        "street": "Eton Street",
+        "house_number": "4-20",
+    },
 }
 
 ICON_MAP = {
@@ -77,15 +85,19 @@ _WEEKDAY_MAP = {
     "sunday": 6,
 }
 
-# Reference Monday used to calculate which fortnight is "recycling week".
-# Zone 1 uses this reference directly; Zone 2 is offset by one week.
-_REFERENCE_MONDAY = date(2024, 1, 1)
+# The GIS layer gives a property's zone but nothing about which fortnight is
+# which, so the alternation needs an anchor. This is the Monday of a week the
+# council's own Zone 1 calendar highlights yellow (yellow-lid recycling; green
+# highlight is the green-lid garden week):
+# https://www.sutherlandshire.nsw.gov.au/__data/assets/pdf_file/0020/121934/SSC-Waste-Calendar-2026-27-Zone1-Print.pdf
+_ZONE1_RECYCLING_WEEK = date(2026, 8, 31)
 
-# Known zone offsets in days from _REFERENCE_MONDAY.
-# 0 = recycling on even fortnights, 7 = recycling on odd fortnights.
-_ZONE_OFFSETS: dict[str, int] = {
+# Whole weeks added before taking the parity. Zone 2's recycling week is Zone
+# 1's garden week; the two published calendars are opposite on every one of the
+# 260 collection days they cover.
+_ZONE_WEEK_OFFSETS: dict[str, int] = {
     "1": 0,
-    "2": 7,
+    "2": 1,
 }
 
 _SCHEDULE_WEEKS = 52
@@ -108,16 +120,17 @@ def _generate_collections(
     zone; properties flagged for weekly recycling (some unit blocks) get
     recycling every week on top of the fortnightly garden collection.
     """
-    zone_offset = _ZONE_OFFSETS.get(zone, 0)
+    week_offset = _ZONE_WEEK_OFFSETS.get(zone, 0)
     cur = _next_weekday(start, weekday)
     entries: list[Collection] = []
 
     while cur <= end:
         entries.append(Collection(date=cur, t="Garbage", icon=ICON_MAP["Garbage"]))
 
-        delta_days = (cur - _REFERENCE_MONDAY).days + zone_offset
-        fortnight = (delta_days // 7) % 2
-        if fortnight == 0:
+        # The anchor is a Monday, so flooring the day difference by 7 buckets
+        # each collection into its own Monday-to-Sunday week.
+        week = (cur - _ZONE1_RECYCLING_WEEK).days // 7
+        if (week + week_offset) % 2 == 0:
             waste_type = "Recycling"
         else:
             waste_type = "Garden Waste"
