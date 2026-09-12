@@ -84,16 +84,29 @@ def test_alternatives_group_members_render_their_widgets() -> None:
         include_title=False,
     )
 
-    region_marker, region_validator = _marker_and_validator(schema, "region")
-    flag_marker, flag_validator = _marker_and_validator(schema, "flag")
+    _, region_validator = _marker_and_validator(schema, "region")
+    _, flag_validator = _marker_and_validator(schema, "flag")
 
     assert isinstance(region_validator, SelectSelector)
     assert isinstance(flag_validator, BooleanSelector)
 
     # Every member of an alternatives group is optional in the form (validate()
     # enforces that exactly one group is fully provided).
-    assert isinstance(region_marker, vol.Optional)
-    assert isinstance(flag_marker, vol.Optional)
+    #
+    # Assert that through behaviour rather than `isinstance(marker, vol.Optional)`.
+    # HA 2026.9 replaced voluptuous with probatio, whose
+    # `probatio.compat.install_as_voluptuous()` re-points sys.modules["voluptuous"]
+    # at a shim when `homeassistant` is first imported. This module binds `vol`
+    # before importing homeassistant, so `vol.Optional` here stays the real
+    # voluptuous class while config_flow builds `probatio.markers.Optional`
+    # markers: an isinstance() check then compares two unrelated classes and
+    # fails even though the markers are correct (and probatio markers repr as a
+    # bare string, which made the failure read as if the key were un-wrapped).
+    # Submitting subsets pins the same contract without caring which library
+    # owns the marker type.
+    assert schema({}) == {}
+    assert schema({"region": "A"}) == {"region": "A"}
+    assert schema({"flag": True}) == {"flag": True}
 
 
 def test_options_flow_gathers_sensor_collection_types() -> None:
