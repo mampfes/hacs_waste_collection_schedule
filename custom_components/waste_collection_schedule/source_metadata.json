@@ -501,6 +501,13 @@
     "howto": {},
     "urls": {}
   },
+  "mackay_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mackay_qld_gov_au.md",
+    "howto": {
+      "en": "Enter your street address as used on the council's rubbish and bins page (https://www.mackay.qld.gov.au/residents/services/waste), for example '77 Wood Street Mackay'."
+    },
+    "urls": {}
+  },
   "maitland_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maitland_nsw_gov_au.md",
     "howto": {

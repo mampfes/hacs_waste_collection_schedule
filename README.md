@@ -186,6 +186,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Mackay Regional Council](/doc/source/mackay_qld_gov_au.md) / mackay.qld.gov.au
 - [Maitland City Council](/doc/source/maitland_nsw_gov_au.md) / maitland.nsw.gov.au
 - [Mansfield Shire Council](/doc/source/mansfield_vic_gov_au.md) / mansfield.vic.gov.au
 - [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling

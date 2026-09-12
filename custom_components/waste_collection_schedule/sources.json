@@ -906,6 +906,12 @@
       "id": "mrsc_vic_gov_au"
     },
     {
+      "title": "Mackay Regional Council",
+      "module": "mackay_qld_gov_au",
+      "default_params": {},
+      "id": "mackay_qld_gov_au"
+    },
+    {
       "title": "Maitland City Council",
       "module": "maitland_nsw_gov_au",
       "default_params": {},
