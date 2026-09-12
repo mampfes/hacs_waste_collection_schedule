@@ -10,6 +10,22 @@ TEST_CASES = {
         "strasse": "Gerhart-Hauptmann-Straße",
     },
     "Adlerstraße (Peine-Kernstadt)": {"strasse": "Adlerstraße"},
+    "Adlerstraße with municipality": {
+        "strasse": "Adlerstraße",
+        "ort": "Peine-Kernstadt (mit Telgte)",
+    },
+    "Osterriehe (Broistedt)": {
+        "strasse": "Osterriehe",
+        "ort": "Broistedt",
+    },
+    "Vechelde (Hauptort)": {
+        "strasse": "alle Straßen",
+        "ort": "Vechelde (Hauptort)",
+    },
+    "Wendeburg (Hauptort)": {
+        "strasse": "alle Straßen",
+        "ort": "Wendeburg (Hauptort)",
+    },
 }
 
 API_URL = "https://www.ab-peine.de"
@@ -40,7 +56,12 @@ class Source:
         self._sitepark = SiteparkIES(API_URL)
 
     def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
+        refid = (
+            self._sitepark.resolve_refid(self._ort, API_URL + "/Abfuhrtermine/")
+            if self._ort
+            else None
+        )
+        dates = self._sitepark.fetch(strasse=self._strasse, refid=refid)
         return [
             Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
             for date, waste_type in dates
