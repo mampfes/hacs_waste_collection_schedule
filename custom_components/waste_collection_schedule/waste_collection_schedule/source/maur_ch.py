@@ -20,7 +20,6 @@ ICON_MAP = {
     "Karton": Icons.PAPER,
     "Sonderabfall": Icons.HAZARDOUS,
     "Häcksel-Service": Icons.GARDEN,
-    "Häckseldienst": Icons.GARDEN,
     "Hauptsammelstelle": Icons.RECYCLING,
 }
 
@@ -49,14 +48,14 @@ class Source:
         pass
 
     def _normalize_waste_type(self, waste_type: str) -> str:
-        """Normalize waste type names for icon mapping."""
-        # Handle long names by extracting the main type
+        """Normalize waste type names for icon mapping.
+        Maps 'Häckseldienst' to 'Häcksel-Service' to avoid duplication.
+        """
         waste_type_lower = waste_type.lower()
 
-        if "häcksel" in waste_type_lower or "häckseldienst" in waste_type_lower:
+        # Map 'Häckseldienst' to 'Häcksel-Service' as they are the same service
+        if "häckseldienst" in waste_type_lower:
             return "Häcksel-Service"
-        if "sammelstelle" in waste_type_lower:
-            return "Hauptsammelstelle"
         return waste_type
 
     def _parse_german_date(self, date_str: str) -> tuple[int, int, int] | None:
@@ -128,7 +127,7 @@ class Source:
             entries.append(
                 Collection(
                     date=date_obj,
-                    t=waste_type,
+                    t=normalized_type,
                     icon=ICON_MAP.get(normalized_type),
                 )
             )
