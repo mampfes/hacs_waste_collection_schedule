@@ -5,7 +5,11 @@ import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
-from waste_collection_schedule.service.Pozi import PoziWfsError, query_wfs_layer
+from waste_collection_schedule.service.Pozi import (
+    PoziError,
+    PoziWfsError,
+    query_wfs_layer,
+)
 
 TITLE = "City of Vincent"
 DESCRIPTION = "Source for City of Vincent (WA) waste collection."
@@ -67,7 +71,7 @@ def _waste_dataset_url() -> str:
             if dataset.get("type") == QGIS_PROJECT_DATASET_TYPE and dataset.get("url"):
                 return dataset["url"]
 
-    raise ValueError(f"No QGIS project dataset advertised at {DATASETS_API_URL}")
+    raise PoziError(f"No QGIS project dataset advertised at {DATASETS_API_URL}")
 
 
 class Source:

@@ -13,8 +13,9 @@ Typical workflows:
       2. Receive the properties dict of the matching zone feature.
 
   WFS spatial query (e.g. Vincent):
-      1. Call query_wfs_layer() with the QGIS server URL, map path, layer name,
-         and coordinates.
+      1. Call query_wfs_layer() with the WFS endpoint URL, layer name and
+         coordinates. Pass map_path as well for QGIS servers that expect a MAP
+         parameter; omit it for dataset proxies that already point at a project.
       2. Receive the properties dict of the matching feature.
 """
 
