@@ -738,7 +738,9 @@
   },
   "sunshinecoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Use the street name as the council's bin collection page spells it, e.g. 'Hospital Rd'. A house number and suburb are ignored if you include them. Set `locality` to the suburb when the same street name occurs in more than one suburb; the error message lists the suburbs to choose from."
+    },
     "urls": {}
   },
   "surf_coast_vic_gov_au": {

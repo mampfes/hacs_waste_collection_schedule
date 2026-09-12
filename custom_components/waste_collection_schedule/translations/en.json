@@ -2973,10 +2973,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Suburb",
           "street_name": "Street Name"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "locality": "Suburb, needed only when the street name is not unique.",
+          "street_name": "Street name, e.g. Hospital Rd."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -2984,9 +2987,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Suburb",
           "street_name": "Street Name"
         },
-        "data_description": {}
+        "data_description": {
+          "locality": "Suburb, needed only when the street name is not unique.",
+          "street_name": "Street name, e.g. Hospital Rd."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Configure Source",

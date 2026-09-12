@@ -2772,6 +2772,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Locality",
           "street_name": "Street Name"
         },
         "data_description": {
@@ -2783,6 +2784,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Locality",
           "street_name": "Street Name"
         },
         "data_description": {}
