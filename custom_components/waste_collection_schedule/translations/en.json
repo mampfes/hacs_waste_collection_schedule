@@ -1736,10 +1736,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Street address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Street number, street name and suburb as shown on the council's bin collection calendar, for example '399 Queen St, Altona Meadows'. The comma is optional."
         }
       },
       "reconfigure_hobsonsbay_vic_gov_au": {
@@ -1747,9 +1748,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Street address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Street number, street name and suburb as shown on the council's bin collection calendar, for example '399 Queen St, Altona Meadows'. The comma is optional."
+        }
       },
       "args_hornsby_nsw_gov_au": {
         "title": "Configure Source",
