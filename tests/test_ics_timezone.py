@@ -77,7 +77,7 @@ CALENDARS = {
 }
 
 # Home Assistant containers default to UTC; the others span both sides of UTC.
-HOST_TIMEZONES = [
+HOST_TIMEZONES: list[str | None] = [
     "UTC",
     "Australia/Brisbane",
     "Europe/Berlin",
