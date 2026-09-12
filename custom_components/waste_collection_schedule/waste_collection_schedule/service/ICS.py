@@ -30,6 +30,19 @@ def _event_location_description(e: Any) -> tuple[str | None, str | None]:
     return loc, desc
 
 
+def _event_start_date(e: Any) -> datetime.date | None:
+    """Extract the calendar date from an event parsed with strict=True.
+
+    Keep the occurrence's wall-clock date. Converting to the original DTSTART
+    tzinfo can shift recurring Windows-TZID events across midnight when the
+    recurrence timezone and the embedded VTIMEZONE have different DST rules.
+    """
+    start = getattr(e, "start", None)
+    if isinstance(start, datetime.datetime):
+        return start.date()
+    return start if isinstance(start, datetime.date) else None
+
+
 class ICS:
     def __init__(
         self,
@@ -86,7 +99,12 @@ class ICS:
 
         # parse ics data
         events: list[Any] = icalevents.events(
-            start=start_date, end=end_date, string_content=ics_data.encode()
+            start=start_date,
+            end=end_date,
+            string_content=ics_data.encode(),
+            # Preserve each event's calendar date/time instead of normalising
+            # all events to a calendar-wide timezone (UTC by default).
+            strict=True,
         )
 
         # Inherit summary for recurrence exceptions that lack one.
@@ -106,12 +124,7 @@ class ICS:
 
         for e in events:
             # calculate date
-            dtstart: datetime.date | None = None
-
-            if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
-            elif isinstance(e.start, datetime.date):
-                dtstart = e.start
+            dtstart: datetime.date | None = _event_start_date(e)
 
             # Only continue if a start date can be found in the entry
             if dtstart is not None:
@@ -169,7 +182,12 @@ class ICS:
 
         # parse ics data
         events: list[Any] = icalevents.events(
-            start=start_date, end=end_date, string_content=ics_data.encode()
+            start=start_date,
+            end=end_date,
+            string_content=ics_data.encode(),
+            # Preserve each event's calendar date/time instead of normalising
+            # all events to a calendar-wide timezone (UTC by default).
+            strict=True,
         )
 
         # Inherit summary for recurrence exceptions that lack one.
@@ -189,12 +207,7 @@ class ICS:
 
         for e in events:
             # calculate date
-            dtstart: datetime.date | None = None
-
-            if isinstance(e.start, datetime.datetime):
-                dtstart = e.start.date()
-            elif isinstance(e.start, datetime.date):
-                dtstart = e.start
+            dtstart: datetime.date | None = _event_start_date(e)
 
             # Only continue if a start date can be found in the entry
             if dtstart is not None:
