@@ -95,7 +95,7 @@ class Source:
         event_items = soup.select("li.mod-entry.event-item")
 
         if not event_items:
-            raise Exception(
+            raise ValueError(
                 "No waste collection events found. The website structure may have changed."
             )
 
