@@ -54,7 +54,7 @@ class Source(BaseSource):
             "app_id": "de.k4systems.abfallappfds",
             "city": "Horb am Neckar",
             "strasse": "Marktplatz",
-            "hnr": 1,
+            "hnr": "1%7C%7C1004335001",
         },
         "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
             "app_id": "de.k4systems.abfallappnf",
