@@ -9,6 +9,7 @@ DESCRIPTION = (
     "Source for Central Otago District Council Rubbish & Recycling collection."
 )
 URL = "https://www.codc.govt.nz/"
+COUNTRY = "nz"
 TEST_CASES = {
     "Alexandra": {"address": "5 Campbell Street Alexandra"},
 }

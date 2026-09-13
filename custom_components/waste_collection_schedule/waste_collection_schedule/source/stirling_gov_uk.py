@@ -10,6 +10,7 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Stirling Council"
 DESCRIPTION = "Source for Stirling Council waste collection services."
 URL = "https://www.stirling.gov.uk/"
+COUNTRY = "uk"
 TEST_CASES = {
     "Kildean Road 38": {"address": "38 Kildean Road"},
     "Merlo Buchanan Castle Estate": {"address": "Merlo"},
