@@ -2,14 +2,13 @@ import datetime
 import re
 from typing import ClassVar, final
 
-import requests
 from waste_collection_schedule import recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.Pozi import (
-    PoziError,
+    PoziDatasetProxyUrl,
     PoziWfsParser,
     PoziWfsRetriever,
 )
@@ -25,27 +24,13 @@ from waste_collection_schedule.transformers import RowTransformer
 # The council's own mapping host still advertises the Waste_Collection layer
 # but serves no features for it any more (#7281). Its Pozi viewer reads the
 # same QGIS project through the tenant's dataset proxy instead, so the WFS
-# endpoint is looked up live via DATASETS_API_URL rather than hard-coded: the
-# proxy id changes whenever the council republishes the project. The proxy
-# URL already points at a project, so PoziWfsRetriever is used with no
+# endpoint is looked up live via PoziDatasetProxyUrl rather than hard-coded:
+# the proxy id changes whenever the council republishes the project. The
+# proxy URL already points at a project, so PoziWfsRetriever is used with no
 # map_path (unlike a plain QGIS WFS server, which needs one).
 
 DATASETS_API_URL = "https://vincent.pozi.com/api/v1/public/maps/waste/datasets"
-QGIS_PROJECT_DATASET_TYPE = 1
 WFS_TYPENAME = "Waste_Collection"
-
-
-def _waste_dataset_url(**_) -> str:
-    """Look up the WFS endpoint of the council's current waste QGIS project."""
-    r = requests.get(DATASETS_API_URL, timeout=30)
-    r.raise_for_status()
-
-    for group in r.json().get("mapdatasets", []):
-        for dataset in group.get("datasets", []):
-            if dataset.get("type") == QGIS_PROJECT_DATASET_TYPE and dataset.get("url"):
-                return dataset["url"]
-
-    raise PoziError(f"No QGIS project dataset advertised at {DATASETS_API_URL}")
 
 
 # Matches: "15 Apr 2026 - Weekly (Wednesday)" or "15 Apr 2026 - Fortnightly (Thursday Week 2)"
@@ -127,7 +112,9 @@ class Source(BaseSource):
 
     PARAMS = (street_address(),)
 
-    retrieve = PoziWfsRetriever(_waste_dataset_url, WFS_TYPENAME, address="address")
+    retrieve = PoziWfsRetriever(
+        PoziDatasetProxyUrl(DATASETS_API_URL), WFS_TYPENAME, address="address"
+    )
     parse = PoziWfsParser()
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer()

@@ -250,9 +250,9 @@ class PoziWfsRetriever(RetrieverFunc):
         base_url: Base URL of the QGIS WFS server, or of a Pozi tenant dataset
             proxy that already points at a project (e.g.
             'https://vincent.pozi.com/proxy/v1/maps/waste/datasets/<id>').
-            A callable resolved against ``**source.params`` for a proxy URL
-            that must be looked up live (a tenant republishing the project
-            changes its id) instead of being hard-coded.
+            A ``callable(source) -> str`` for a proxy URL that must be looked
+            up live instead of being hard-coded (a tenant republishing the
+            project changes its id) — see :class:`PoziDatasetProxyUrl`.
         typename: WFS typename / layer name (e.g. 'Waste_Collection').
         map_path: Server-side path to the QGIS project file, for a WFS server
             that takes a MAP parameter directly. Omit it (the default) for a
@@ -263,7 +263,7 @@ class PoziWfsRetriever(RetrieverFunc):
 
     def __init__(
         self,
-        base_url: str | Callable[..., str],
+        base_url: str | Callable[[BaseSource], str],
         typename: str,
         *,
         map_path: str | None = None,
@@ -312,10 +312,44 @@ class PoziWfsRetriever(RetrieverFunc):
         if self.map_path is not None:
             params["MAP"] = self.map_path
 
-        base_url = (
-            self.base_url(**source.params) if callable(self.base_url) else self.base_url
-        )
+        base_url = self.base_url(source) if callable(self.base_url) else self.base_url
         return source.session.get(base_url, params=params, timeout=self.timeout)
+
+
+class PoziDatasetProxyUrl:
+    """Look up a Pozi tenant's dataset-proxy URL for a QGIS project, live.
+
+    Some Pozi tenants stop serving a layer from their own QGIS WFS server but
+    still publish it through their embedded Pozi viewer, which reads the
+    project through the tenant's own dataset-discovery API instead of a fixed
+    WFS endpoint. Pass an instance of this as :class:`PoziWfsRetriever`'s
+    ``base_url`` to resolve it fresh on every request, since the id changes
+    whenever the tenant republishes the project.
+    """
+
+    def __init__(
+        self,
+        datasets_api_url: str,
+        *,
+        dataset_type: int = 1,
+        timeout: int = 20,
+    ):
+        self.datasets_api_url = datasets_api_url
+        self.dataset_type = dataset_type
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> str:
+        r = source.session.get(self.datasets_api_url, timeout=self.timeout)
+        r.raise_for_status()
+
+        for group in r.json().get("mapdatasets", []):
+            for dataset in group.get("datasets", []):
+                if dataset.get("type") == self.dataset_type and dataset.get("url"):
+                    return dataset["url"]
+
+        raise PoziError(
+            f"No QGIS project dataset advertised at {self.datasets_api_url}"
+        )
 
 
 class PoziWfsParser(Parser["list[dict[str, Any]]"]):
