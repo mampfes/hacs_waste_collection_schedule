@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-13",
+  "interactions": [
+    {
+      "key": "GET https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000272679 ",
+      "method": "GET",
+      "url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000272679",
+      "final_url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000272679",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 13 Sep 2026 16:47:42 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "1863",
+        "connection": "keep-alive",
+        "etag": "W/\"747-f4Yap13o+PdPi53soxaeAc2eO8g\""
+      },
+      "content_b64": "eyJ3YXN0ZUNvbGxlY3Rpb25EYXRlcyI6eyJ1cHJuIjoiMDEwMDAwMjcyNjc5IiwiY2FjaGVLZXkiOiIxLjAuMTM2MSIsImNvbnRhaW5lcjFDb2xsZWN0aW9uRGV0YWlscyI6eyJjb250YWluZXJJRCI6MSwiY29udGFpbmVyRGVzY3JpcHRpb24iOiJSZWZ1c2UgQmlucyIsIm9yZGVyIjoxLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMDktMTVUMDA6MDA6MDAiLCJjb2xsZWN0aW9uV2VlayI6bnVsbCwiZGF0ZUNoYW5nZWQiOmZhbHNlLCJkYXRlQ2hhbmdlUmVhc29uIjoiIiwiaW1hZ2UiOiJpbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vcmVmdXNlLWJpbiIsImltYWdlVVJMIjoiaHR0cHM6Ly9zdGF0aWMuY2xvdWQ5dGVjaG5vbG9naWVzLmNvbS9hc3NldHMvaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvZWFzdGRldm9uL3JlZnVzZS1iaW5AM3guNGRjZWE2MjAxODcyLnBuZyJ9LCJjb250YWluZXIyQ29sbGVjdGlvbkRldGFpbHMiOnsiY29udGFpbmVySUQiOjIsImNvbnRhaW5lckRlc2NyaXB0aW9uIjoiUmVjeWNsaW5nIEJveCBhbmQgU2FjayIsIm9yZGVyIjoyLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMDktMTVUMDA6MDA6MDAiLCJjb2xsZWN0aW9uV2VlayI6bnVsbCwiZGF0ZUNoYW5nZWQiOmZhbHNlLCJkYXRlQ2hhbmdlUmVhc29uIjoiIiwiaW1hZ2UiOiJpbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vcmVjeWNsaW5nLWJveC1hbmQtc2FjayIsImltYWdlVVJMIjoiaHR0cHM6Ly9zdGF0aWMuY2xvdWQ5dGVjaG5vbG9naWVzLmNvbS9hc3NldHMvaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvZWFzdGRldm9uL3JlY3ljbGluZy1ib3gtYW5kLXNhY2tAM3guMGE0M2Q1YjJlODM1LnBuZyJ9LCJjb250YWluZXIzQ29sbGVjdGlvbkRldGFpbHMiOnsiY29udGFpbmVySUQiOjMsImNvbnRhaW5lckRlc2NyaXB0aW9uIjoiRm9vZCBDYWRkaWVzIiwib3JkZXIiOjMsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0xNVQwMDowMDowMCIsImNvbGxlY3Rpb25XZWVrIjpudWxsLCJkYXRlQ2hhbmdlZCI6ZmFsc2UsImRhdGVDaGFuZ2VSZWFzb24iOiIiLCJpbWFnZSI6ImltYWdlcy93YXN0ZS1jb2xsZWN0aW9ucy9jb250YWluZXJzL2Vhc3RkZXZvbi9mb29kLWNhZGR5IiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vZm9vZC1jYWRkeUAzeC45YmIzMzdjZTczMjcucG5nIn0sImNvbnRhaW5lcjRDb2xsZWN0aW9uRGV0YWlscyI6eyJjb250YWluZXJJRCI6NCwiY29udGFpbmVyRGVzY3JpcHRpb24iOiJHcmVlbiBXYXN0ZSBCaW5zIiwib3JkZXIiOjQsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0xNlQwMDowMDowMCIsImNvbGxlY3Rpb25XZWVrIjpudWxsLCJkYXRlQ2hhbmdlZCI6ZmFsc2UsImRhdGVDaGFuZ2VSZWFzb24iOiIiLCJpbWFnZSI6ImltYWdlcy93YXN0ZS1jb2xsZWN0aW9ucy9jb250YWluZXJzL2Vhc3RkZXZvbi9nYXJkZW4td2FzdGUtYmluIiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vZ2FyZGVuLXdhc3RlLWJpbkAzeC4yNTQ4ZDg1MTIxNjYucG5nIn0sImNvbnRhaW5lcjVDb2xsZWN0aW9uRGV0YWlscyI6bnVsbCwiY29udGFpbmVyNkNvbGxlY3Rpb25EZXRhaWxzIjpudWxsLCJjb250YWluZXI3Q29sbGVjdGlvbkRldGFpbHMiOm51bGwsImNvbnRhaW5lcjhDb2xsZWN0aW9uRGV0YWlscyI6bnVsbH19"
+    }
+  ]
+}

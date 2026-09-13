@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-09-13",
+  "interactions": [
+    {
+      "key": "GET https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/addresses 1bea71f878",
+      "method": "GET",
+      "url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/addresses",
+      "final_url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/addresses?postcode=EX5+2AB",
+      "body": "{\"params\":[[\"postcode\",\"EX5 2AB\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 13 Sep 2026 16:47:43 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "1094",
+        "connection": "keep-alive",
+        "etag": "W/\"446-RLITk0EqCQuMgkdzxPstNMboIIw\""
+      },
+      "content_b64": "eyJhZGRyZXNzZXMiOlt7InVwcm4iOiIwMTAwMDAyNjc5NjIiLCJ1c3JuIjoiMTIxMDYzNzgiLCJhZGRyZXNzTGluZTEiOiJCbGFja2hvcnNlIEdhcmRlbnMiLCJhZGRyZXNzTGluZTIiOiJCbGFja2hvcnNlIiwidG93biI6IkV4ZXRlciIsInBvc3Rjb2RlIjoiRVg1IDJBQiIsImZ1bGxBZGRyZXNzIjoiQmxhY2tob3JzZSBHYXJkZW5zLCBCbGFja2hvcnNlLCBFeGV0ZXIsIERldm9uIEVYNSAyQUIiLCJtYXBMbmciOi0zLjQ0MjA0OTQxMDI5NTc0LCJtYXBMYXQiOjUwLjczMjE3ODAyNjA1MTR9LHsidXBybiI6IjAxMDAwMDI2ODAwOCIsInVzcm4iOiIxMjEwNjM3OCIsImFkZHJlc3NMaW5lMSI6IlRoZSBPbGQgV2hlZWx3cmlnaHRzIiwiYWRkcmVzc0xpbmUyIjoiQmxhY2tob3JzZSIsInRvd24iOiJFeGV0ZXIiLCJwb3N0Y29kZSI6IkVYNSAyQUIiLCJmdWxsQWRkcmVzcyI6IlRoZSBPbGQgV2hlZWx3cmlnaHRzLCBCbGFja2hvcnNlLCBFeGV0ZXIsIERldm9uIEVYNSAyQUIiLCJtYXBMbmciOi0zLjQ0MTgzMjY1MjM4OTMsIm1hcExhdCI6NTAuNzMyMjExOTE0MjY2Nn0seyJ1cHJuIjoiMDEwMDAwMjY3OTY5IiwidXNybiI6IjEyMTA2Mzc4IiwiYWRkcmVzc0xpbmUxIjoiMSBCbGFja2hvcnNlIENvdHRhZ2VzIiwiYWRkcmVzc0xpbmUyIjoiQmxhY2tob3JzZSIsInRvd24iOiJFeGV0ZXIiLCJwb3N0Y29kZSI6IkVYNSAyQUIiLCJmdWxsQWRkcmVzcyI6IjEgQmxhY2tob3JzZSBDb3R0YWdlcywgQmxhY2tob3JzZSwgRXhldGVyLCBEZXZvbiBFWDUgMkFCIiwibWFwTG5nIjotMy40NDE2OTgwNDY0MjY5MSwibWFwTGF0Ijo1MC43MzIyNzIzMDU0MTA5fSx7InVwcm4iOiIwMTAwMDAyNjc5NzAiLCJ1c3JuIjoiMTIxMDYzNzgiLCJhZGRyZXNzTGluZTEiOiIyIEJsYWNraG9yc2UgQ290dGFnZXMiLCJhZGRyZXNzTGluZTIiOiJCbGFja2hvcnNlIiwidG93biI6IkV4ZXRlciIsInBvc3Rjb2RlIjoiRVg1IDJBQiIsImZ1bGxBZGRyZXNzIjoiMiBCbGFja2hvcnNlIENvdHRhZ2VzLCBCbGFja2hvcnNlLCBFeGV0ZXIsIERldm9uIEVYNSAyQUIiLCJtYXBMbmciOi0zLjQ0MTU5OTE2NzI2OTA2LCJtYXBMYXQiOjUwLjczMjI4MjUyMTY4NTV9XX0="
+    },
+    {
+      "key": "GET https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000267969 ",
+      "method": "GET",
+      "url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000267969",
+      "final_url": "https://apps.cloud9technologies.com/eastdevon/citizenmobile/mobileapi/wastecollections/010000267969",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 13 Sep 2026 16:47:43 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "1481",
+        "connection": "keep-alive",
+        "etag": "W/\"5c9-Nou9IXl7rp9MpkoIxAgbSaDTd5I\""
+      },
+      "content_b64": "eyJ3YXN0ZUNvbGxlY3Rpb25EYXRlcyI6eyJ1cHJuIjoiMDEwMDAwMjY3OTY5IiwiY2FjaGVLZXkiOiIxLjAuMTM2MSIsImNvbnRhaW5lcjFDb2xsZWN0aW9uRGV0YWlscyI6eyJjb250YWluZXJJRCI6MSwiY29udGFpbmVyRGVzY3JpcHRpb24iOiJSZWZ1c2UgQmlucyIsIm9yZGVyIjoxLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDJUMDA6MDA6MDAiLCJjb2xsZWN0aW9uV2VlayI6bnVsbCwiZGF0ZUNoYW5nZWQiOmZhbHNlLCJkYXRlQ2hhbmdlUmVhc29uIjoiIiwiaW1hZ2UiOiJpbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vcmVmdXNlLWJpbiIsImltYWdlVVJMIjoiaHR0cHM6Ly9zdGF0aWMuY2xvdWQ5dGVjaG5vbG9naWVzLmNvbS9hc3NldHMvaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvZWFzdGRldm9uL3JlZnVzZS1iaW5AM3guNGRjZWE2MjAxODcyLnBuZyJ9LCJjb250YWluZXIyQ29sbGVjdGlvbkRldGFpbHMiOnsiY29udGFpbmVySUQiOjIsImNvbnRhaW5lckRlc2NyaXB0aW9uIjoiUmVjeWNsaW5nIEJveCBhbmQgU2FjayIsIm9yZGVyIjoyLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMDktMThUMDA6MDA6MDAiLCJjb2xsZWN0aW9uV2VlayI6bnVsbCwiZGF0ZUNoYW5nZWQiOmZhbHNlLCJkYXRlQ2hhbmdlUmVhc29uIjoiIiwiaW1hZ2UiOiJpbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vcmVjeWNsaW5nLWJveC1hbmQtc2FjayIsImltYWdlVVJMIjoiaHR0cHM6Ly9zdGF0aWMuY2xvdWQ5dGVjaG5vbG9naWVzLmNvbS9hc3NldHMvaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvZWFzdGRldm9uL3JlY3ljbGluZy1ib3gtYW5kLXNhY2tAM3guMGE0M2Q1YjJlODM1LnBuZyJ9LCJjb250YWluZXIzQ29sbGVjdGlvbkRldGFpbHMiOnsiY29udGFpbmVySUQiOjMsImNvbnRhaW5lckRlc2NyaXB0aW9uIjoiRm9vZCBDYWRkaWVzIiwib3JkZXIiOjMsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0xOFQwMDowMDowMCIsImNvbGxlY3Rpb25XZWVrIjpudWxsLCJkYXRlQ2hhbmdlZCI6ZmFsc2UsImRhdGVDaGFuZ2VSZWFzb24iOiIiLCJpbWFnZSI6ImltYWdlcy93YXN0ZS1jb2xsZWN0aW9ucy9jb250YWluZXJzL2Vhc3RkZXZvbi9mb29kLWNhZGR5IiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9lYXN0ZGV2b24vZm9vZC1jYWRkeUAzeC45YmIzMzdjZTczMjcucG5nIn0sImNvbnRhaW5lcjRDb2xsZWN0aW9uRGV0YWlscyI6bnVsbCwiY29udGFpbmVyNUNvbGxlY3Rpb25EZXRhaWxzIjpudWxsLCJjb250YWluZXI2Q29sbGVjdGlvbkRldGFpbHMiOm51bGwsImNvbnRhaW5lcjdDb2xsZWN0aW9uRGV0YWlscyI6bnVsbCwiY29udGFpbmVyOENvbGxlY3Rpb25EZXRhaWxzIjpudWxsfX0="
+    }
+  ]
+}
