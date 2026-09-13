@@ -12366,6 +12366,14 @@
       "id": "landkreis_kusel_de"
     },
     {
+      "title": "Landkreis Landshut",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "04b7561b94f2cbaa171cd85bb6aa56de"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Landkreis Leer (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {

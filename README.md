@@ -1864,6 +1864,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Kronach](/doc/source/awido_de.md) / landkreis-kronach.de
 - [Landkreis Kulmbach](/doc/source/awido_de.md) / landkreis-kulmbach.de
 - [Landkreis Kusel](/doc/source/landkreis_kusel_de.md) / landkreis-kusel.de
+- [Landkreis Landshut](/doc/source/abfall_io.md) / landkreis-landshut.de
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Leipzig](/doc/source/app_abfallplus_de.md) / Abfall+ App: leipziglk
 - [Landkreis Lichtenfels](/doc/source/awido_de.md) / lkr-lif.de
