@@ -1,21 +1,20 @@
 from __future__ import annotations
 
+import re
 from datetime import date, datetime, timedelta
 
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.IntraMaps import (
-    IntegrationClient,
-    IntegrationClientConfig,
     IntraMapsSearchError,
+    MapsClient,
+    MapsClientConfig,
 )
 
 TITLE = "Shire of Serpentine Jarrahdale"
 DESCRIPTION = "Source for www.sjshire.wa.gov.au Waste Collection Services"
 URL = "https://www.sjshire.wa.gov.au"
+COUNTRY = "au"
 
 TEST_CASES = {
     "Monday": {
@@ -33,14 +32,13 @@ ICON_MAP = {
     "Recycling": Icons.RECYCLING,
 }
 
-INTRAMAPS_CONFIG = IntegrationClientConfig(
-    base_url="https://maps.sjshire.wa.gov.au",
-    instance="IntraMaps22B",
-    api_key="58383723-1396-43cc-a5cf-722e786208c6",
+INTRAMAPS_CONFIG = MapsClientConfig(
+    base_url="https://ser.spatial.t1cloud.com",
+    instance="spatial/intramaps",
+    config_id="93074f9e-ef2a-49d5-9866-91422949b9da",
+    project="2e3adc22-b61d-4548-92d1-c1b02f9a30a3",
+    module_id="bd33efd3-682b-478f-9dd1-82bdad11b52d",
 )
-
-SEARCH_FORM = "de2aecaf-1e4d-4d25-8146-b0f0109aa458"
-DETAILS_FORM = "a51626b7-3892-44f4-9fba-b0264486bda5"
 
 WEEKDAYS = {
     "monday": 0,
@@ -53,60 +51,54 @@ WEEKDAYS = {
 }
 
 
+RECYCLE_DAY_PATTERN = re.compile(r"^(\w+)\s*(this|next)\s+week$")
+
+
 class Source:
-    def __init__(self, address, predict=False):
-        self._address = address
+    def __init__(self, address: str, predict: bool = False):
+        self._address = address.strip()
         self._predict = predict
 
-    def fetch(self):
-        client = IntegrationClient(INTRAMAPS_CONFIG)
+    def fetch(self) -> list[Collection]:
+        search_address = re.sub(
+            r"\s+WA\s+\d{4}\s*$",
+            "",
+            self._address,
+            flags=re.IGNORECASE,
+        )
 
         try:
-            all_results = client.search_all(SEARCH_FORM, self._address)
+            with MapsClient(INTRAMAPS_CONFIG) as client:
+                result = client.select_address(search_address)
         except IntraMapsSearchError as e:
             raise SourceArgumentNotFound("address", self._address) from e
 
-        # Find exact address match
-        match = None
-        addresses = []
-        for result in all_results:
-            addr = result.get("Address", "")
-            addresses.append(addr)
-            if self._address.lower().replace(" ", "").replace(
-                ",", ""
-            ) == addr.lower().replace(" ", "").replace(",", ""):
-                match = result
-                break
+        response = result["response"]
+        if not isinstance(response, dict):
+            raise SourceArgumentNotFound("address", self._address)
 
-        if not match:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, addresses
-            )
-
-        mapkey = match["mapkey"]
-        dbkey = match["dbkey"]
-
-        data = client.search(DETAILS_FORM, f"{mapkey},{dbkey}")
-
-        # Rubbish — weekly on a named day
-        day_rubbish = data.get("WasteCollectionDay", "").strip().lower()
-        rubbish_weekday = WEEKDAYS.get(day_rubbish)
-        if rubbish_weekday is not None:
-            today = datetime.now().date()
-            days_ahead = (rubbish_weekday - today.weekday()) % 7
-            rubbish_date = today + timedelta(days=days_ahead)
-        else:
-            rubbish_date = None
-
-        # Recycling — "[day] this/next week" (fortnightly)
-        day_recycling = data.get("RecycleDay", "").strip().lower()
-        recycle_date = self._parse_this_next_week(day_recycling)
+        fields = (
+            response.get("infoPanels", {})
+            .get("info1", {})
+            .get("feature", {})
+            .get("fields", [])
+        )
+        rubbish_date = None
+        recycle_date = None
+        for field in fields:
+            value = field.get("value", {})
+            if not isinstance(value, dict):
+                continue
+            column = value.get("column", "")
+            text = value.get("value", "").strip().lower()
+            if column == "WasteCollectionDay":
+                rubbish_date = self._parse_weekday(text)
+            elif column == "RecycleDay":
+                recycle_date = self._parse_this_next_week(text)
 
         entries = []
-
         if rubbish_date:
-            count = 4 if self._predict else 1
-            for i in range(count):
+            for i in range(4 if self._predict else 1):
                 entries.append(
                     Collection(
                         date=rubbish_date + timedelta(weeks=i),
@@ -114,10 +106,8 @@ class Source:
                         icon=ICON_MAP["Rubbish"],
                     )
                 )
-
         if recycle_date:
-            count = 2 if self._predict else 1
-            for i in range(count):
+            for i in range(2 if self._predict else 1):
                 entries.append(
                     Collection(
                         date=recycle_date + timedelta(weeks=i * 2),
@@ -125,26 +115,26 @@ class Source:
                         icon=ICON_MAP["Recycling"],
                     )
                 )
-
         return entries
 
     @staticmethod
-    def _parse_this_next_week(text: str) -> date | None:
-        """Parse '[day] this/next week' into a date."""
-        parts = text.split()
-        if not parts:
-            return None
-
-        day = parts[0]
-        weekday = WEEKDAYS.get(day)
+    def _parse_weekday(text: str) -> date | None:
+        weekday = WEEKDAYS.get(text)
         if weekday is None:
             return None
-
         today = datetime.now().date()
-        current_week_start = today - timedelta(days=today.weekday())
-        target = current_week_start + timedelta(days=weekday)
+        return today + timedelta(days=(weekday - today.weekday()) % 7)
 
-        if "next" in text:
+    @staticmethod
+    def _parse_this_next_week(text: str) -> date | None:
+        match = RECYCLE_DAY_PATTERN.fullmatch(text)
+        if not match:
+            return None
+        weekday = WEEKDAYS.get(match.group(1))
+        if weekday is None:
+            return None
+        today = datetime.now().date()
+        target = today - timedelta(days=today.weekday()) + timedelta(days=weekday)
+        if match.group(2) == "next":
             target += timedelta(days=7)
-
         return target
