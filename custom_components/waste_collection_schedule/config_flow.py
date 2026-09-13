@@ -1532,16 +1532,29 @@ class WasteCollectionOptionsFlow(OptionsFlow):
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)
 
-    def get_types_of_sensors_and_customizations(self):
-        fetched_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
+    def get_types_of_sensors_and_customizations(self) -> list[str]:
+        fetched_types: list[str] = []
+
+        # The types a source actually produces (from the live coordinator),
+        # so a type with no sensor and no customization yet still shows up
+        # to customize (#7163) — not only what CONF_SENSORS/CONF_CUSTOMIZE
+        # happen to already mention.
+        coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
+            self._entry.entry_id
+        )
+        if coordinator and isinstance(coordinator, WCSCoordinator):
+            fetched_types.extend(coordinator._aggregator.types)
+
+        fetched_types.extend(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
+
         for c in self._entry.options.get(CONF_SENSORS, []):
             # Sensors store their waste types under CONF_COLLECTION_TYPES (see
             # finish()); CONF_TYPE was never present here, so the edit-sensor
             # type list was only ever populated from customisation keys (#6944).
-            if CONF_COLLECTION_TYPES in c:
-                types = c[CONF_COLLECTION_TYPES]
-                fetched_types.extend(types if isinstance(types, list) else [types])
-        return list(set(fetched_types))
+            types = c.get(CONF_COLLECTION_TYPES, [])
+            fetched_types.extend(types if isinstance(types, list) else [types])
+
+        return sorted({t for t in fetched_types if t})
 
     async def async_step_customize(self, user_input: dict[str, Any] | None = None):
         if self._customize_select is None or self._customize_select_idx >= len(
