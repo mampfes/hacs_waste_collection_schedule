@@ -27,7 +27,7 @@ Some districts (e.g. `Staré Město`, `Oldřichovice`, `Lyžbice`) appear on mul
 ## How to find your `district` / `street`
 
 1. Open the SMOLO household-waste page: <https://www.smolo.cz/sluzby/odpadove-hospodarstvi/informace-pro-domacnosti/>.
-2. Find the link named "Třinec – komunální, tříděný a biologický odpad" and open the linked PDF (the source itself follows this same link automatically every time it fetches, so the exact PDF filename doesn't matter and isn't hardcoded).
+2. In the Třinec section, open the current "HARMONOGRAM … (SKO. BIO, SEP)" PDF (the source follows this link automatically on every fetch, so the exact PDF filename does not matter and is not hardcoded).
 3. On page 1 ("HARMONOGRAM SVOZU SMĚSNÉHO KOMUNÁLNÍHO A BIOLOGICKÉHO ODPADU"), find your street under the "LOKALITA" column and note the "ČÁST MĚSTA" (district) value in the same row.
 4. If that district name appears in more than one row, also copy one of the street names from your row into the `street` argument.
 
