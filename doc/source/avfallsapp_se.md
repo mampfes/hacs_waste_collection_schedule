@@ -9,6 +9,7 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `vanersborg`: Vänersborg
 - `upplands-bro`: Upplands-Bro
 - `teknikivast`: Teknik i Väst (Arvika/Eda)
+- `nodra`: Nodra (Norrköping)
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
@@ -40,7 +41,6 @@ Could be possible to add by some minor additions
 `dalavatten`: Dalavatten
 `june`: June
 `nodava`: Nodava
-`nodra`: Nodra
 `rambo`: Rambo
 `sysav`: Sysav
 `vafab`: Vafab
@@ -96,6 +96,17 @@ waste_collection_schedule:
         service_provider: vanersborg
         api_key: <your device ID from the app>
         token: <your bearer token from the app>
+```
+
+Support for Nodra's waste collection schedule in Norrköping.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: avfallsapp_se
+      args:
+        service_provider: nodra
+        api_key: <your device ID from the Nodra app>
 ```
 
 ## How to acquire a valid API_KEY

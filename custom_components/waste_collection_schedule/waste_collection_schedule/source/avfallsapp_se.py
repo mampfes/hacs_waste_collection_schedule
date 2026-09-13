@@ -30,6 +30,10 @@ TEST_CASES = {
         "token": "!secret avfallsapp_se_teknikivast_token",
         "service_provider": "teknikivast",
     },
+    "Nodra - Norrköping": {
+        "api_key": "!secret avfallsapp_se_nodra_api_key",
+        "service_provider": "nodra",
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -63,6 +67,8 @@ _LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
     "Tunna 1": Icons.RECYCLING,
     "Tunna 2": Icons.RECYCLING,
+    "Kärl 1": Icons.RECYCLING,
+    "Kärl 2": Icons.RECYCLING,
     "Hushållsavfall": Icons.GENERAL_WASTE,
     "Färgat glas": Icons.GLASS,
     "Ofärgat glas": Icons.GLASS,
@@ -115,6 +121,14 @@ SERVICE_PROVIDERS = {
         "requires_token": True,
         "app_version": "1.0.1.0",
     },
+    "nodra": {
+        "title": "Nodra (Norrköping)",
+        "url": "https://nodra.se",
+        "api_url": "https://nodra.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": False,
+        "requires_token": False,
+        "app_token": "U2lXIFK6e8mVI1kU8V0F9TDpWXhwx3QwsL2t36rZPc8PPtKXmhker6nze73chWyX",
+    },
 }
 
 EXTRA_INFO = [
@@ -158,6 +172,7 @@ class Source:
         self._requires_token = cfg.get("requires_token", False)
         self._supports_registration = cfg.get("supports_registration", True)
         self._app_version = cfg.get("app_version")
+        self._app_token = cfg.get("app_token")
 
         if self._requires_token and not self._api_key:
             raise SourceArgumentRequired(
@@ -178,6 +193,9 @@ class Source:
 
         if self._app_version:
             headers["X-App-Version"] = self._app_version
+
+        if self._app_token:
+            headers["X-App-Token"] = self._app_token
 
         if self._api_key:
             headers["X-App-Identifier"] = self._api_key
