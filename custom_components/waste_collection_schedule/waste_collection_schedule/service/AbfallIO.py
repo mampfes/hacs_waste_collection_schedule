@@ -204,4 +204,9 @@ SERVICE_MAP = [
         "url": "https://www.landkreis-prignitz.de/",
         "service_id": "b870ecfa6e1f882680758d374ba3fa2d",
     },
+    {
+        "title": "Landkreis Landshut",
+        "url": "https://www.landkreis-landshut.de/",
+        "service_id": "04b7561b94f2cbaa171cd85bb6aa56de",
+    },
 ]
