@@ -1,116 +1,76 @@
-import datetime
-import urllib
-from html.parser import HTMLParser
+import re
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street, text_field
+from waste_collection_schedule.service.WhatBinDay import (
+    TYPE_VALUE_MAP,
+    WhatBinDayParser,
+    WhatBinDayRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Ipswich City Council"
-DESCRIPTION = "Source for Ipswich City Council rubbish collection."
-URL = "https://www.ipswich.qld.gov.au"
-TEST_CASES = {
-    "Camira State School": {"street": "184-202 Old Logan Rd", "suburb": "Camira"},
-    "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
-}
-
-
-ICON_MAP = {
-    "Waste Bin": Icons.GENERAL_WASTE,
-    "Recycle Bin": Icons.RECYCLING,
-    "FOGO Bin": Icons.BIO_KITCHEN,
-}
+# Ipswich's own config has no separate house-number/postcode fields (a single
+# combined "street" text plus "suburb"), which fits neither
+# WhatBinDayRetriever's separate-fields shape (Kingston/Surf Coast) nor its
+# single-free-text-field split_address (Lismore); split_params covers a
+# source whose field shape doesn't fit either.
+_STREET_RE = re.compile(r"^(?P<number>\d+[A-Za-z]?(?:-\d+[A-Za-z]?)?)\s+(?P<name>.+)$")
 
 
-def toDate(dateStr: str):
-    items = dateStr.split("-")
-    return datetime.date(int(items[1]), int(items[2]), int(items[3]))
+def _split_params(params: "dict[str, Any]") -> dict:
+    street = " ".join(str(params["street"]).split())
+    suburb = " ".join(str(params["suburb"]).split())
+    match = _STREET_RE.match(street)
+    street_number = match.group("number") if match else ""
+    street_name = match.group("name") if match else street
+    return {
+        "street_number": street_number,
+        "street_name": street_name,
+        "suburb": suburb,
+        "post_code": "",
+        "state": "QLD",
+    }
 
 
-class IpswichGovAuParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._entries = []
-        self._state = None
-        self._level = 0
-        self._class = ""
-        self._li_level = 0
-        self._li_valid = False
-        self._span_level = 0
-        self._load_date = False
-        self._load_bin = False
-        self._loaded_date = None
+@final
+class Source(BaseSource):
+    TITLE = "Ipswich City Council"
+    DESCRIPTION = "Source for Ipswich City Council rubbish collection."
+    URL = "https://www.ipswich.qld.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@CRZTFR"]
 
-    @property
-    def entries(self):
-        return self._entries
+    TEST_CASES: ClassVar[dict] = {
+        "Camira State School": {"street": "184-202 Old Logan Rd", "suburb": "Camira"},
+        "Random": {"street": "50 Brisbane Road", "suburb": "Redbank"},
+    }
 
-    def handle_endtag(self, tag):
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Use your street number and street name (including the street "
+            "type, e.g. Road, Street, Avenue) for street, and the suburb "
+            "name only for suburb. Do not add QLD or Australia."
+        ),
+    }
 
-        if tag == "li":
-            self._li_level -= 1
-            self._loaded_date = None
+    PARAMS = (
+        street(),
+        text_field("suburb", "Suburb"),
+    )
 
-        if tag == "span":
-            self._span_level -= 1
-
-    def handle_starttag(self, tag, attrs):
-
-        d = dict(attrs)
-        cls = d.get("class", "")
-
-        if tag == "li":
-            self._li_level += 1
-            if self._li_level == 1 and cls == "WBD-result-item":
-                self._li_valid = True
-            else:
-                self._li_valid = False
-                self._loaded_date = None
-
-        if tag == "span":
-            self._span_level += 1
-            if self._li_valid and self._span_level == 1 and cls == "WBD-event-date":
-                self._load_date = True
-
-            if self._li_valid and self._span_level == 3 and cls == "WBD-bin-text":
-                self._load_bin = True
-
-    def handle_data(self, data):
-        if not self._li_valid:
-            return
-
-        if self._load_date:
-            self._load_date = False
-
-            items = data.strip().split("-")
-            self._loaded_date = datetime.date(
-                int(items[0]), int(items[1]), int(items[2])
-            )
-
-        if self._load_bin:
-            self._load_bin = False
-
-            self._entries.append(
-                Collection(self._loaded_date, data, icon=ICON_MAP.get(data))
-            )
-
-
-class Source:
-    def __init__(self, street, suburb):
-        self._street = street
-        self._suburb = suburb
-
-    def fetch(self):
-
-        address = urllib.parse.quote_plus(f"{self._street}, {self._suburb}")
-        params = {
-            "apiKey": "b8dbca0c-ad9c-4f8a-8b9c-080fd435c5e7",
-            "agendaResultLimit": "3",
-            "dateFormat": "yyyy-MM-dd",
-            "displayFormat": "agenda",
-            "address": f"{address}+QLD%2C+Australia",
-        }
-
-        r = requests.get("https://console.whatbinday.com/api/search", params=params)
-        p = IpswichGovAuParser()
-        p.feed(r.text)
-        return p.entries
+    # Ipswich's backend validates the posted address against its own
+    # property/parcel data, which a manually-assembled address_components
+    # blob (Nominatim's geocode=True, or none at all) doesn't match closely
+    # enough: confirmed live, the exact same request succeeds with Google's
+    # own geocode result and fails ("Device Key not valid for location") with
+    # a hand-built one. Needs google_geocode, not geocode.
+    retrieve = WhatBinDayRetriever(
+        location_key="ipswich_city_council",
+        split_params=_split_params,
+        google_geocode=True,
+        app_package="com.socketsoftware.whatbinday.ipswich",
+    )
+    parse = WhatBinDayParser()
+    transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
