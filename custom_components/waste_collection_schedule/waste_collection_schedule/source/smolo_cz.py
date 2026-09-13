@@ -497,7 +497,9 @@ class Source:
                 ["Could not parse the SKO/BIO schedule table from the PDF."],
             )
 
-        year = _parse_year(page1_text) or date.today().year
+        year = _parse_year(page1_text)
+        if year is None:
+            raise ValueError("Could not parse the schedule year from the SKO/BIO PDF.")
         holiday_shifts = _parse_holiday_shifts(prose_lines)
         sparse_bio_weeks = _parse_sparse_bio_weeks(prose_lines)
 
