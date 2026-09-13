@@ -50,7 +50,11 @@ class Source(BaseSource):
         uprn_field="uprn",
         postcode_field="postcode",
         address_field="address",
-        argument_name="postcode",
+        # The client's suggestions are whole address strings and it reports
+        # the address it was given as the offending value, so they belong to
+        # the address argument: picking one has to refine `address`, not
+        # overwrite the postcode with a full address.
+        argument_name="address",
     )
     parse = Cloud9Parser()
     transform = RowTransformer(
