@@ -50,6 +50,12 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
+        "de.k4systems.abfallappfds Horb am Neckar Marktplatz 1": {
+            "app_id": "de.k4systems.abfallappfds",
+            "city": "Horb am Neckar",
+            "strasse": "Marktplatz",
+            "hnr": 1,
+        },
         "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
             "app_id": "de.k4systems.abfallappnf",
             "city": "Ahrenviöl",
