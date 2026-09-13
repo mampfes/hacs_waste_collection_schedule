@@ -6925,6 +6925,7 @@ class TestRegionsFromYaml:
 
 CASES_AWAITING_CASSETTE = {
     "1coast_com_au::56_everglades_cr_woy_woy_central_coast_2256",
+    "a_region_ch::tuebach",
     "a_region_ch::wolfhalden",
     "abfallnavi_de::nds_norderstedt_friedrichsgaber_weg_house_number_range_as_street",
     "abfallnavi_de::solingen_katternberger_stra_e_95_street_split_by_district",
