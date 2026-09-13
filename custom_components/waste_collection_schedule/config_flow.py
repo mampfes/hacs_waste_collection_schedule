@@ -1538,9 +1538,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         # The types a source actually produces (from the live coordinator),
         # so a type with no sensor and no customization yet still shows up
         # to customize (#7163) — not only what CONF_SENSORS/CONF_CUSTOMIZE
-        # happen to already mention.
-        coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
-            self._entry.entry_id
+        # happen to already mention. hass may be unset in a flow built for a
+        # narrower unit test (only exercising the options below), so this
+        # stays best-effort rather than assuming a live HA runtime.
+        hass = getattr(self, "hass", None)
+        coordinator: WCSCoordinator | None = (
+            hass.data.get(DOMAIN, {}).get(self._entry.entry_id) if hass else None
         )
         if coordinator and isinstance(coordinator, WCSCoordinator):
             fetched_types.extend(coordinator._aggregator.types)
