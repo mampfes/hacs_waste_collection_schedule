@@ -4,6 +4,153 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.33.0] - 2026-09-13
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@1mckenna, @aaron-rai, @ahstax, @alexcroox, @BlythMeister, @bossanova808, @ChrisKoh83,
+@clovisd, @compiled-somehow, @danwooller, @Darkslayer3324j, @david81, @dmkjr,
+@etamtlosz, @fedfus, @fjarvis, @guyvdn, @HallyAus, @Hyperion5088, @igprsy, @j4velin,
+@JDickson835, @JeyMuller, @Kufi089, @livioavalle, @loungelizard2018, @maexbower,
+@markedgeca-create, @MaticKonecnik, @Mike2541, @MThomas564, @mynameisdominik,
+@nboivin, @parencik, @phoenixaus, @prapse, @RedPandaDoge, @riccardorossi92,
+@ryanharkins, @sadjad1, @Sairento-92, @sbaerlocher, @SKGitknot, @soasmileynz,
+@stradaconsulting, @stumiles86, @Superfluxus, @supermanchris4, @tengunmit,
+@thfranke, @tothi, @Tymon3310, @Vummmi and @zvitkoczi. 🎉
+Thanks as well to our returning contributors (@bbr111, @CRZTFR, @GigaByte4711,
+@jameswgm87, @jan-tdy, @kanthamohan, @markvp, @mpw96, @nagug, @SimonRice,
+@Smn-hns, @snowyukitty, @tathamoddie, @vchatela) for the fixes and new sources
+below.
+
+### Added Sources
+
+- added Mirabel (QC) (mirabel_ca), CA (thanks @nboivin) (#7167)
+- added Stadt Löhne to generic ICS provider list, DE (thanks @thfranke) (#7134)
+- added City of Kamloops, BC to ReCollect ICS provider, CA (thanks @markedgeca-create) (#7192)
+- added Lu e Cuccaro Monferrato to Junker APP source, IT (thanks @livioavalle) (#7224)
+- added garden waste collection to waste_havant_gov_uk, UK (thanks @MThomas564) (#7136)
+- added Stadt Geilenkirchen (geilenkirchen_de), DE (#7247)
+- added Central Otago District Council (codc_govt_nz), NZ (thanks @soasmileynz) (#7187)
+- added Municipium (municipium_it), IT (thanks @fedfus) (#7213)
+- added East Hampshire District Council (easthants_gov_uk), UK (thanks @alexcroox) (#7244)
+- added Gmina Trzebnica (SkyCMS) (gmina_trzebnica_pl), PL (thanks @Tymon3310) (#7166)
+- added Siókom Nonprofit Kft. (siokom_hu), HU (thanks @tothi) (#7233)
+- added Depónia Nonprofit Kft. (deponia_hu), HU (thanks @tothi) (#7234)
+- added KOSIT WEST (kositwest_sk), SK (thanks @mynameisdominik) (#7241)
+- added Stirling Council (stirling_gov_uk), UK (thanks @nagug) (#7229)
+- added Clisson Sèvre et Maine Agglo (clissonsevremaine_fr), FR (thanks @JeyMuller) (#7128)
+- added Partille kommun (partille_se), SE (thanks @sadjad1) (#7190)
+- added STKH Sopron és Térsége Nonprofit Kft. (stkh_hu), HU (thanks @jan-tdy) (#7206)
+- added Gmina Bochnia (bochnia_gmina_pl), PL (thanks @Sairento-92) (#7214)
+- added support for additional waste types to lisburn_castlereagh_gov_uk, UK (thanks @JDickson835) (#7059)
+- added City of Greater Shepparton (greatershepparton_com_au), AU (thanks @RedPandaDoge) (#7208)
+- added Bloomington, IL to RecycleCoach EXTRA_INFO, US (thanks @1mckenna) (#7175)
+- added UPRN lookup and separate glass collection to easthants_gov_uk, UK (thanks @alexcroox) (#7258)
+- added Charleston, SC (charleston_sc_gov) and Charleston County, SC (charlestoncounty_org), US (thanks @dmkjr) (#7218)
+- added City of Roseville, CA to ReCollect sources, US (thanks @aaron-rai) (#7286)
+- added Monthey (VS) to localcities_ch, CH (thanks @clovisd) (#7322)
+- added Gemeinde Ismaning (ismaning_de), DE (thanks @Kufi089) (#7295)
+- added Entsorgung + Recycling Stadt Bern (bern_ch), CH (thanks @sbaerlocher) (#7290)
+- added the service's own cadence note as the collection description on OpenCities sources (thanks @CRZTFR) (#7325)
+- added street-address lookup to shoalhaven_nsw_gov_au, in addition to the Geolocation ID (thanks @CRZTFR) (#7324)
+- added Mackay Regional Council (mackay_qld_gov_au), AU (thanks @HallyAus) (#7348)
+- added food waste collection to breckland_gov_uk, UK (thanks @danwooller) (#7183)
+- added Gemeinde Maur, Zurich (maur_ch), CH (thanks @Vummmi) (#7354)
+- added Zofingen to localcities_ch, CH (#7362)
+- added Redditch Borough Council to bromsgrove_gov_uk (shared platform), UK (#7364)
+- added Landkreis Landshut to AbfallIO SERVICE_MAP, DE (#7369)
+- added SMOLO a.s. (Třinec) (smolo_cz), CZ (thanks @jan-tdy) (#7367)
+- added Team Orange (team_orange_de), DE (thanks @ChrisKoh83) (#7278)
+
+### Fixed Sources
+
+- fixed eastdevon_gov_uk: migrate to shared Cloud9 API (thanks @SimonRice) (#7151)
+- fixed eastdevon_gov_uk: resolve postcode + address to a UPRN (thanks @CRZTFR) (#7292)
+- fixed abfall_io: migrated ASO Abfall-Service Osterholz to the v3 GraphQL API (#7106)
+- fixed mohu_bp_hu: adapt to new API response format (thanks @maexbower) (#7160)
+- fixed mohu_bp_hu: accept old and new OctoberCMS partial keys (thanks @zvitkoczi) (#7242)
+- fixed was_wolfsburg_de: adapt to new abfuhrtermine.waswob.de API (thanks @prapse) (#7155)
+- fixed was_wolfsburg_de: adapt to the new WAS API (thanks @loungelizard2018) (#7130)
+- fixed was_wolfsburg_de: handle new nested "behaelter" response format (thanks @prapse) (#7307)
+- fixed recycleapp_be: switch to Fostplus /public/v1 endpoint (thanks @guyvdn) (#7157)
+- fixed cem_ambiente_it: add browser-like headers to avoid 403 from CEM Facile API (thanks @riccardorossi92) (#7181)
+- fixed impactapps_com_au: correct two misspelled council names (thanks @CRZTFR) (#7158)
+- fixed hvcgroep_nl: waste icons for Cranendonck, NL (thanks @igprsy) (#7159)
+- fixed eastleigh_gov_uk: strip whitespace before parsing collection dates (thanks @snowyukitty) (#7217)
+- fixed schweinfurt_de: update API_URL to new city website structure (#7246)
+- fixed yarracity_vic_gov_au: handle joined ArcGIS layer attribute names (thanks @tengunmit) (#7194)
+- fixed castlepoint_gov_uk: stop returning the wrong street when a name is not unique (thanks @CRZTFR) (#7236)
+- fixed gosnells_wa_gov_au: migrate to OpenCities MyArea platform (thanks @supermanchris4) (#7239)
+- fixed mansfield_vic_gov_au: adapt to the council's new Drupal-based website (thanks @tathamoddie) (#7201)
+- fixed kvatg_ch: restore Kreuzlingen Kehricht plan URL broken by #7061 (thanks @Smn-hns) (#7088)
+- fixed coventry_gov_uk: table calendar parsing (thanks @CRZTFR) (#7235)
+- fixed coventry_gov_uk, geelongaustralia_com_au: raise argument errors, not RuntimeError/Exception, for unresolvable addresses (thanks @CRZTFR) (#7331)
+- fixed broxtowe_gov_uk: Firmstep workflow (thanks @Superfluxus) (#7211)
+- fixed ipswich_qld_gov_au: migrate to the WhatBinDay V3 app API (thanks @compiled-somehow, @CRZTFR) (#7185, #7226)
+- fixed borlange_energi_se: handle "Tömning idag" / "imorgon" (thanks @Darkslayer3324j) (#7248)
+- fixed borlange_energi_se: resolve appresource endpoint dynamically (#7253)
+- fixed borlange_energi_se: correct icon mappings (#7254)
+- fixed montreal_ca: seasonal ranges drop dates, and biweekly seasons parse as weekly (thanks @stradaconsulting) (#7243)
+- fixed montreal_ca: fetch via curl_cffi, and add COUNTRY (thanks @stradaconsulting) (#7255)
+- fixed montreal_ca: keep the last date in an Oxford-comma day list (thanks @stradaconsulting) (#7256)
+- fixed montreal_ca: do not expand a whole year of weekdays over an explicit date list (thanks @stradaconsulting) (#7274)
+- fixed swale_gov_uk: preserve form state during lookup (thanks @jameswgm87) (#7129)
+- fixed recyclecoach_com: removed a dead api-city.recyclecoach.com endpoint from the request fallback chain (thanks @1mckenna) (#7175)
+- fixed environmentfirst_co_uk: update URLs to remove 'www' prefix (thanks @BlythMeister) (#7259)
+- fixed pendle_gov_uk: Opus4 collection request (viewport size and query parameters) (thanks @Hyperion5088) (#7271)
+- fixed canterbury_gov_uk: use the new Production API instead of the non-functional Beta API (thanks @GigaByte4711) (#7316)
+- fixed thurrock_gov_uk: update API URL (thanks @stumiles86) (#7313)
+- fixed calderdale_gov_uk: say when the council's own finder is down (thanks @CRZTFR) (#7300)
+- fixed melton_vic_gov_au, ballina_nsw_gov_au, hornsby_nsw_gov_au: pass Akamai's bot check with curl_cffi (thanks @CRZTFR) (#7298)
+- fixed eastlothian_gov_uk: update collection URL to www.eastlothian.gov.uk (thanks @fjarvis) (#7315)
+- fixed memotri_agglo_pau_fr: post address search to /recherche-adresse/ (thanks @vchatela) (#7320)
+- fixed abfall_hdh_de (Landkreis Heidenheim): updated calendar URL (thanks @j4velin) (#7335)
+- fixed gleneira_vic_gov_au: resolve the address through the council autocomplete (thanks @CRZTFR) (#7299)
+- fixed darebin_vic_gov_au: resolve the address, and stop crashing on no match (thanks @CRZTFR) (#7301)
+- fixed joondalup_wa_gov_au: report an unresolved address instead of crashing (thanks @CRZTFR) (#7302)
+- fixed cockburn_wa_gov_au: accept a postcode with no state, and stop crashing (thanks @CRZTFR) (#7303)
+- fixed cbcity_nsw_gov_au: match the address on a normalised form (thanks @CRZTFR) (#7304)
+- fixed gmina_sroda_slaska_pl: adapt to the provider's changed site (thanks @parencik) (#7308)
+- fixed wm_com: weekday holiday delay parsing (thanks @Mike2541) (#7289)
+- fixed folkestone_hythe_gov_uk: report an unknown UPRN instead of crashing (thanks @CRZTFR) (#7305)
+- fixed newham_gov_uk: correct day/month date parsing, and pick up previously-skipped food waste collections (thanks @ryanharkins) (#7285)
+- fixed casey_vic_gov_au: the council writes "Previous", so four bins came out as "iousGarbage" (thanks @CRZTFR) (#7329)
+- fixed iapp_itouchvision_com: fetch Buckinghamshire from the council portal (thanks @kanthamohan) (#7323)
+- fixed pup_si: PUP Saubermacher schedule endpoint (thanks @MaticKonecnik) (#7337)
+- fixed fairfieldcity_nsw_gov_au: resolve street against the council autocomplete (thanks @CRZTFR) (#7294)
+- fixed scenicrim_qld_gov_au: raise a proper error for unknown addresses (thanks @CRZTFR) (#7293)
+- fixed sunshinecoast_qld_gov_au: accept the address as the council shows it (thanks @HallyAus) (#7347)
+- fixed arun_gov_uk, southend_gov_uk: attach the address suggestions to the address argument (thanks @CRZTFR) (#7345)
+- fixed republicservices_com: dedupe holidays to avoid double-applying delays (thanks @david81) (#7342)
+- fixed muellmax_de: keep session on unique street match, heal stale house numbers (thanks @HallyAus) (#7343)
+- fixed sutherlandshire_nsw_gov_au: recycling and garden waste were the wrong way round (thanks @CRZTFR) (#7339)
+- fixed a_region_ch: stop fetching PDF leaflets as calendar pages (#7352)
+- fixed ab_peine_de: resolve municipality before querying streets (#7351)
+- fixed vincent_wa_gov_au: query the council's current Pozi dataset proxy (thanks @HallyAus) (#7346)
+- fixed hobsonsbay_vic_gov_au: follow the council to Impact Apps (thanks @HallyAus) (#7344)
+- fixed ics: preserve event-local collection dates (thanks @phoenixaus) (#7173)
+- fixed canadabay_nsw_gov_au, cumberland_nsw_gov_au, innerwest_nsw_gov_au: match the waste-info register, and say when it does not (thanks @CRZTFR) (#7330)
+- fixed southampton_gov_uk: retry with curl_cffi to work around Incapsula WAF (#7357)
+- fixed zaw_sr_de: honor house number suffix (addition) parameter (#7360)
+- fixed kungalv_se: handle month-only NextWastePickup dates (#7363)
+- fixed zakb_de: validate ort/strasse against site's own value list (#7365)
+- fixed sjshire_wa_gov_au: migrate to t1cloud IntraMaps API (#7366)
+- fixed codc_govt_nz, stirling_gov_uk: add missing COUNTRY field so they are listed in README/sources.json (#7370)
+
+### Other
+
+- fixed CHANGELOG.md: restore reverse-chronological section order (thanks @markvp) (#7087)
+- fixed update-docs CI job: only run for this repository, not forks (#7251)
+- fixed wcs_coordinator: cancel coordinator timers on shutdown (thanks @Superfluxus) (#7212)
+- fixed config flow: available collection types in the options flow (thanks @ahstax) (#7163)
+- docs(ics): updated the Moreton Bay test case to the calendar the council now issues (thanks @phoenixaus) (#7178)
+- docs(irenambiente_it): added the list of supported municipalities (thanks @SKGitknot) (#7318)
+- docs(moonee_valley_vic_gov_au): updated links to City of Moonee Valley resources (thanks @bossanova808) (#7297)
+- docs(bsr_de): updated instructions for downloading the calendar (thanks @mpw96) (#7282)
+- docs(eastlothian_gov_uk): fixed a stale collectiondates.eastlothian.gov.uk link (#7359)
+- docs: discourage default per-source tests/test_<source>.py files (#7341)
+- wastenet_org_nz: added ICC test cases, parameter metadata, and codeowners (thanks @etamtlosz) (#7338)
+- test(app_abfallplus_de): added a regression test case for Kreis Freudenstadt (fds) (#7358)
+
 ## [2.32.0] - 2026-08-02
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
