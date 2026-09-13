@@ -20,6 +20,7 @@ TEST_CASES = {
     "Rorschach": {"municipality": "Rorschach", "district": "Unteres Stadtgebiet"},
     "Wolfhalden": {"municipality": "Wolfhalden"},
     "Speicher": {"municipality": "Speicher"},
+    "Tuebach": {"municipality": "Tübach"},
 }
 
 

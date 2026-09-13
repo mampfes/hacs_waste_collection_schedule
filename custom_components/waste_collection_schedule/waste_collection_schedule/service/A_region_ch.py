@@ -164,6 +164,14 @@ class ARegionRetriever(RetrieverFunc):
         soup = BeautifulSoup(r.text, features="html.parser")
         for download in soup.find_all("a", href=True):
             href = download.get("href")
+            if href and "download.php" in href:
+                # Skip PDF/attachment downloads (e.g. "Abfall-Info" leaflets)
+                # outright: they are not calendar pages, can be several MB in
+                # size, and the title-text PDF check below doesn't catch every
+                # leaflet (some don't say "PDF" in their visible title).
+                # Repeatedly fetching a several-MB PDF on every poll can also
+                # trip the provider's own anti-bot rate limiting (#7310).
+                continue
             if (
                 download.find("div", class_="badgeIcon")
                 or download.find("img", class_="rowImg")
