@@ -24,12 +24,13 @@ Two acquisition shapes are covered, one retriever each:
   before the render POST (rushcliffe_gov_uk).
 """
 
+import logging
 import re
 from collections.abc import Iterable
 from datetime import date, datetime
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 from waste_collection_schedule import preprocessors, response_shape
 from waste_collection_schedule.exceptions import (
@@ -41,6 +42,8 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
+
+_LOGGER = logging.getLogger(__name__)
 
 REQUIRED_FORM_FIELDS = {
     "__RequestVerificationToken",
@@ -299,22 +302,43 @@ class SouthKestevenRowClassifier(preprocessors.Preprocessor[Any, "tuple[date, st
 
 
 class RushcliffeAddressRetriever(RetrieverFunc):
-    """Resolve postcode+address to a UPRN via addresslookup, then POST the panel.
+    """Resolve postcode+address (or postcode+UPRN) via addresslookup, POST the panel.
 
     Unlike :class:`FirmstepAddressFormRetriever`, this council's field needs an
-    *exact* address match (not "first result") because a postcode returns many
-    properties, so the caller supplies both a postcode and the full address
-    text to disambiguate.
+    *exact* match (not "first result") because a postcode returns many
+    properties. Two ways to disambiguate the lookup's ``{uprn_key: address}``
+    results (give exactly one):
+
+    * ``address_param`` (default): the caller supplies the full address text,
+      matched fuzzily against each result's address (rushcliffe_gov_uk).
+    * ``uprn_param``: the caller supplies a UPRN directly, matched against each
+      result's key (``U``-prefix and case ignored on both sides, since
+      Firmstep's own key sometimes carries the prefix and a source's
+      historical UPRN values may or may not); the address posted as the
+      companion label is then the API's own text for that key, since the
+      caller never gave one (broxtowe_gov_uk).
 
     Args:
-        form_url: GET URL used to scrape the anti-CSRF token.
+        form_url: GET URL used to scrape the form's hidden fields.
         address_lookup_url: The ``core/addresslookup`` POST URL.
         form_post_url: The ``renderform/Form`` POST URL.
-        static_fields: Literal POST fields already known for this council
-            (``FormGuid``, ``ObjectTemplateID``, ``Trigger``, ``CurrentSectionID``, …).
+        static_fields: POST fields already known for this council
+            (``FormGuid``, ``ObjectTemplateID``, ``Trigger``, ``CurrentSectionID``, …),
+            merged with a freshly-scraped ``__RequestVerificationToken``. Only
+            the token is re-fetched per request; the rest are assumed constant
+            for this form (rushcliffe_gov_uk).
+        refetch_all_fields: some councils regenerate *every* hidden field
+            (including ``FormGuid``) per session rather than keeping them
+            constant, so ``static_fields`` doesn't apply — every hidden field
+            is instead re-scraped fresh on each request, same as
+            :func:`_get_hidden_form_inputs`'s full dict (broxtowe_gov_uk). Set
+            ``static_fields`` to override/supplement specific fields (e.g.
+            ``Trigger``) on top of the scrape either way.
         uprn_field: The form field the resolved UPRN is posted under.
         address_param / postcode_param: The ``source.params`` fields holding
             the user-supplied address text and postcode.
+        uprn_param: The ``source.params`` field holding a user-supplied UPRN,
+            instead of ``address_param``.
     """
 
     def __init__(
@@ -323,19 +347,23 @@ class RushcliffeAddressRetriever(RetrieverFunc):
         form_url: str,
         address_lookup_url: str,
         form_post_url: str,
-        static_fields: "dict[str, Any]",
+        static_fields: "dict[str, Any] | None" = None,
+        refetch_all_fields: bool = False,
         uprn_field: str = "FF3518",
         address_param: str = "address",
         postcode_param: str = "postcode",
+        uprn_param: str | None = None,
         timeout: int = 30,
     ):
         self.form_url = form_url
         self.address_lookup_url = address_lookup_url
         self.form_post_url = form_post_url
-        self.static_fields = static_fields
+        self.static_fields = static_fields or {}
+        self.refetch_all_fields = refetch_all_fields
         self.uprn_field = uprn_field
         self.address_param = address_param
         self.postcode_param = postcode_param
+        self.uprn_param = uprn_param
         self.timeout = timeout
 
     @staticmethod
@@ -344,23 +372,66 @@ class RushcliffeAddressRetriever(RetrieverFunc):
         b = wanted.strip().replace(" ", "").replace(",", "").lower()
         return a == b or a.startswith(b) or b.startswith(a)
 
+    @staticmethod
+    def _normalise_uprn(value: str) -> str:
+        value = value.strip()
+        if value[:1].upper() == "U":
+            value = value[1:].strip()
+        return value.upper()
+
     def __call__(self, source: "BaseSource") -> Any:
         postcode = source.params[self.postcode_param]
-        address = source.params[self.address_param]
 
-        token = _get_verification_token(
-            source.session, self.form_url, timeout=self.timeout
-        )
+        if self.refetch_all_fields:
+            base_fields = _get_hidden_form_inputs(
+                source.session, self.form_url, timeout=self.timeout
+            )
+        else:
+            token = _get_verification_token(
+                source.session, self.form_url, timeout=self.timeout
+            )
+            base_fields = {"__RequestVerificationToken": token}
+        base_fields.update(self.static_fields)
+
         addresses = _lookup_addresses(
             source.session, self.address_lookup_url, postcode, timeout=self.timeout
         )
 
-        uprn = next(
-            (key for key, value in addresses.items() if self._matches(value, address)),
-            None,
-        )
-        if uprn is None:
-            raise SourceArgumentNotFound(self.address_param, address)
+        if self.uprn_param is not None:
+            given = str(source.params[self.uprn_param])
+            if not addresses:
+                raise SourceArgumentException(
+                    self.postcode_param,
+                    "no addresses were found for the postcode you entered.",
+                )
+            wanted = self._normalise_uprn(given)
+            match = next(
+                (
+                    (key, value)
+                    for key, value in addresses.items()
+                    if self._normalise_uprn(key) == wanted
+                ),
+                None,
+            )
+            if match is None:
+                raise SourceArgumentNotFound(
+                    self.uprn_param,
+                    given,
+                    "no address was found for the UPRN and postcode you entered.",
+                )
+            uprn, address = match
+        else:
+            address = source.params[self.address_param]
+            uprn = next(
+                (
+                    key
+                    for key, value in addresses.items()
+                    if self._matches(value, address)
+                ),
+                None,
+            )
+            if uprn is None:
+                raise SourceArgumentNotFound(self.address_param, address)
 
         # Firmstep pairs each field id (e.g. FF3518) with companion fields
         # "<id>lbltxt" (display label) and "<id>-text" (free-text value). The
@@ -370,8 +441,7 @@ class RushcliffeAddressRetriever(RetrieverFunc):
         # mis-named companion was silently ignored and results still returned;
         # this restores the intended "<id>-text" companion.
         payload: dict[str, Any] = {
-            **self.static_fields,
-            "__RequestVerificationToken": token,
+            **base_fields,
             self.uprn_field: uprn,
             f"{self.uprn_field}lbltxt": address,
             f"{self.uprn_field}-text": postcode,
@@ -414,4 +484,63 @@ class RushcliffePanelParser(Parser["list[tuple[date, str]]"]):
             bin_type = before_bin.split("(", 1)[0].strip()
             for d in re.findall(r"\d{2}/\d{2}/\d{4}", line):
                 rows.append((datetime.strptime(d, "%d/%m/%Y").date(), bin_type))
+        return rows
+
+
+class BartecTableParser(Parser["list[tuple[date, str]]"]):
+    """Decode a Bartec-generated results ``<table>`` into ``(date, bin_type)`` rows.
+
+    A handful of Firmstep councils render the final panel as a plain table
+    (class ``bartec`` by default) instead of RushcliffePanelParser's marked-up
+    paragraph: one header row, then one row per bin type, its first cell the
+    type name and every cell after the second a collection date (one per
+    upcoming occurrence, blank cells skipped). Does no I/O, so it runs
+    standalone against a cached HTML fixture.
+
+    Args:
+        table_selector: CSS selector for the results table.
+        date_format: ``strptime`` format each date cell's text is parsed with.
+    """
+
+    def __init__(
+        self,
+        table_selector: str = "table.bartec",
+        date_format: str = "%A, %d %B %Y",
+    ):
+        self.table_selector = table_selector
+        self.date_format = date_format
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> "list[tuple[date, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.select_one(self.table_selector)
+        response_shape.expect(
+            table is not None and not isinstance(table, NavigableString),
+            source_name=response_shape.source_name(source),
+            detail=f"required element {self.table_selector!r} not found",
+            raw=response.text,
+        )
+
+        rows: list[tuple[date, str]] = []
+        trs = table.find_all("tr") if table else []
+        for row in trs[1:]:
+            cells = row.find_all("td")
+            if len(cells) < 2:
+                continue
+            bin_type = cells[0].get_text(strip=True)
+            for cell in cells[2:]:
+                text = cell.get_text(strip=True)
+                if not text:
+                    continue
+                try:
+                    collection_date = datetime.strptime(text, self.date_format).date()
+                except ValueError:
+                    _LOGGER.warning(
+                        "could not parse date %r for collection type %r: skipping",
+                        text,
+                        bin_type,
+                    )
+                    continue
+                rows.append((collection_date, bin_type))
         return rows
