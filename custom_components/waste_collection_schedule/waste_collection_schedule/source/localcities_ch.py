@@ -55,6 +55,10 @@ TEST_CASES = {
         "municipality": "monthey",
         "municipality_id": "8085",
     },
+    "Zofingen": {
+        "municipality": "zofingen",
+        "municipality_id": "5741",
+    },
 }
 
 EXTRA_INFO = [
@@ -128,6 +132,15 @@ EXTRA_INFO = [
         "default_params": {
             "municipality": "monthey",
             "municipality_id": "8085",
+        },
+    },
+    {
+        "title": "Zofingen",
+        "url": "https://www.zofingen.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "zofingen",
+            "municipality_id": "5741",
         },
     },
 ]
@@ -247,7 +260,7 @@ class Source:
                     if not img:
                         continue
 
-                    waste_type = img["alt"]
+                    waste_type = str(img["alt"])
                     zone_text = self._extract_zone_text(item, waste_type)
                     discovered_zones.add(zone_text)
 
@@ -273,10 +286,16 @@ class Source:
             if load_more is None:
                 break
 
-            next_page_str = load_more.get("data-js-results-load-more-next-page", "")
+            next_page_str = load_more.get("data-js-results-load-more-next-page")
+            if next_page_str is None:
+                break
+            if isinstance(next_page_str, list):
+                next_page_str = next_page_str[0] if next_page_str else None
+            if next_page_str is None:
+                break
             try:
                 next_page = int(next_page_str)
-            except ValueError:
+            except (ValueError, TypeError):
                 break
 
             if next_page <= page:
