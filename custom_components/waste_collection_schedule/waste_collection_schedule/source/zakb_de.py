@@ -7,8 +7,18 @@ page, so its hidden inputs are that page's own login-form tokens and must not
 be posted back (``state="none"``); the action field is spelled
 ``submitAction``; and the download step posts a fresh two-field payload
 instead of the accumulated form (``"reset": True``).
+
+The site silently ignores an Ort/Strasse value that doesn't exactly match its
+own internal spelling (e.g. "Wiesenpromenade-West" vs. a visitor's
+"Wiesenpromenade West") instead of rejecting it, which used to fail deep
+inside ICS parsing on the final download. Ort and Strasse are therefore
+submitted in separate steps (rather than one combined step) so each can be
+validated against that response's own ``<select>`` options first, via
+``initial_validate``/``validate``, with close-match suggestions (#7365).
 """
 
+import re
+from difflib import get_close_matches
 from typing import ClassVar, final
 
 from waste_collection_schedule import waste_types as wt
@@ -19,9 +29,38 @@ from waste_collection_schedule.config_params import (
     street,
     text_field,
 )
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
+
+
+def _select_options(html: str, select_id: str) -> list[str]:
+    match = re.search(rf'<select id="{select_id}".*?</select>', html, re.S)
+    if not match:
+        return []
+    return re.findall(r'value="([^"]*)"', match.group(0))
+
+
+def _validate_ort(response, source) -> None:
+    ort = source.params["ort"]
+    options = _select_options(response.text, "Ort")
+    if options and ort not in options:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "ort", ort, get_close_matches(ort, options, n=5, cutoff=0.4) or options
+        )
+
+
+def _validate_strasse(response, source) -> None:
+    strasse = source.params["strasse"]
+    options = _select_options(response.text, "Strasse")
+    if options and strasse not in options:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "strasse",
+            strasse,
+            get_close_matches(strasse, options, n=5, cutoff=0.4) or options,
+        )
+
 
 API_URL = "https://www.zakb.de/online-service/abfallkalender/"
 
@@ -80,6 +119,11 @@ class Source(BaseSource):
             "hnr": 9,
             "hnr_zusatz": "A",
         },
+        "Zwingenberg, Wiesenpromenade-West 41": {
+            "ort": "Zwingenberg",
+            "strasse": "Wiesenpromenade-West",
+            "hnr": 41,
+        },
     }
 
     PARAMS = (
@@ -94,19 +138,28 @@ class Source(BaseSource):
         initial_params={},
         state="none",
         submit_action_field="submitAction",
+        initial_validate=_validate_ort,
         steps=[
             {
+                # Ort alone: the response's own Strasse <select> only lists
+                # this city's streets once it's submitted, which is what
+                # the next step's validate checks the given value against.
                 "submit_action": "CITYCHANGED",
-                "fields": lambda ort, strasse, hnr, hnr_zusatz="", **_: {
+                "fields": lambda ort, **_: {
                     "aos[Ort]": ort,
-                    "aos[Strasse]": strasse,
-                    "aos[Hausnummer]": str(hnr),
-                    "aos[Hausnummerzusatz]": hnr_zusatz or "",
                     **_ALL_BINS,
                     "pageName": "Lageadresse",
                 },
+                "validate": _validate_strasse,
             },
-            {"submit_action": "nextPage"},
+            {
+                "submit_action": "nextPage",
+                "fields": lambda strasse, hnr, hnr_zusatz="", **_: {
+                    "aos[Strasse]": strasse,
+                    "aos[Hausnummer]": str(hnr),
+                    "aos[Hausnummerzusatz]": hnr_zusatz or "",
+                },
+            },
             {
                 "submit_action": "filedownload_ICAL",
                 "reset": True,
