@@ -64,6 +64,12 @@ class Source(BaseSource):
             "street": "Stadtgraben",
             "hnr": "1",
         },
+        "Schwarzach Harpfen 4 A": {
+            "city": "Schwarzach",
+            "street": "Harpfen",
+            "hnr": "4",
+            "addition": "A",
+        },
     }
 
     PARAMS = (
@@ -94,12 +100,21 @@ class Source(BaseSource):
                 },
             },
             {
+                # The Hausnummer SELECT has no separate field for the house
+                # number suffix: houses with a suffix are listed as a single
+                # combined option, e.g. VALUE="4&nbsp;A" (a non-breaking
+                # space separates the number and the suffix). There is no
+                # "Hausnummerzusatz" form field on the live site, so a
+                # standalone one was silently ignored and the plain house
+                # number's schedule was always returned (#7317); fold the
+                # suffix into the Hausnummer value instead.
                 "submit_action": "forward",
                 "fields": lambda city, street, hnr, addition="", **_: {
                     "Ort": city,
                     "Strasse": street,
-                    "Hausnummer": str(hnr),
-                    "Hausnummerzusatz": addition,
+                    "Hausnummer": (
+                        f"{hnr}\xa0{addition.strip()}" if addition.strip() else str(hnr)
+                    ),
                 },
             },
             {
