@@ -2,6 +2,12 @@
 # ZAW-SR uses SELECT dropdowns for Ort/Strasse/Hausnummer and requires an extra
 # STREETCHANGED step between CITYCHANGED and forward, so the standard parse_response_input
 # helper is extended to also capture SELECT field values.
+#
+# The Hausnummer SELECT has no separate field for the house number suffix: houses
+# with a suffix are listed as a single combined option, e.g. VALUE="4&nbsp;A" (a
+# non-breaking space separates the number and the suffix). There is no
+# "Hausnummerzusatz" form field on the live site, so it must be folded into the
+# Hausnummer value instead of being sent as its own field.
 
 import html
 import logging
@@ -37,6 +43,12 @@ TEST_CASES = {
         "city": "Straubing",
         "street": "Stadtgraben",
         "hnr": "1",
+    },
+    "Schwarzach Harpfen 4 A": {
+        "city": "Schwarzach",
+        "street": "Harpfen",
+        "hnr": "4",
+        "addition": "A",
     },
 }
 
@@ -91,7 +103,7 @@ class Source:
         self._city = city
         self._street = street
         self._house_number = str(hnr)
-        self._address_suffix = addition
+        self._address_suffix = addition.strip()
         self._boundary = "WebKitFormBoundary" + "".join(
             random.sample(string.ascii_letters + string.digits, 16)
         )
@@ -128,11 +140,15 @@ class Source:
         return result
 
     def _address(self):
+        # The Hausnummer SELECT combines the number and its suffix into a
+        # single option value, e.g. "4\xa0A" (non-breaking space separator).
+        house_number = self._house_number
+        if self._address_suffix:
+            house_number = f"{self._house_number}\xa0{self._address_suffix}"
         return {
             "Ort": self._city,
             "Strasse": self._street,
-            "Hausnummer": self._house_number,
-            "Hausnummerzusatz": self._address_suffix,
+            "Hausnummer": house_number,
         }
 
     def _headers(self):
