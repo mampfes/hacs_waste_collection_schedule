@@ -7,6 +7,12 @@ TITLE = "Apps by Abfall+"
 DESCRIPTION = "Source for Apps by Abfall+."
 URL = "https://www.abfallplus.de/"
 TEST_CASES = {
+    "de.k4systems.abfallappfds Horb am Neckar Marktplatz 1": {
+        "app_id": "de.k4systems.abfallappfds",
+        "city": "Horb am Neckar",
+        "strasse": "Marktplatz",
+        "hnr": 1,
+    },
     "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
         "app_id": "de.k4systems.abfallappnf",
         "city": "Ahrenviöl",
