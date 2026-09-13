@@ -86,6 +86,11 @@ class Source(BaseSource):
             "f_id_strasse": 333,
             "f_id_strasse_hnr": 333,
         },
+        "Landkreis Landshut, Altfraunhofen, Am Bäckerfeld": {
+            "key": "04b7561b94f2cbaa171cd85bb6aa56de",
+            "f_id_kommune": 3791,
+            "f_id_strasse": 314,
+        },
     }
 
     PARAMS = (
