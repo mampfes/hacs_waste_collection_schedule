@@ -17,8 +17,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Residual 240L": Icons.GENERAL_WASTE,
-    "Recycling 240L": Icons.RECYCLING,
+    "Residual": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 
 EVENTS_REGEX = re.compile(
@@ -77,6 +78,8 @@ class Source:
 
         entries = []
         for event in events_json:
+            if event.get("AppointmentType") != "Job":
+                continue
             date = datetime.datetime.strptime(
                 event["StartTime"], "%Y-%m-%dT%H:%M:%S"
             ).date()
@@ -85,7 +88,7 @@ class Source:
                 Collection(
                     date=date,
                     t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(waste_type, Icons.GENERAL_WASTE),
                 )
             )
 

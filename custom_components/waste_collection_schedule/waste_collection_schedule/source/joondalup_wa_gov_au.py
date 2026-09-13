@@ -5,6 +5,10 @@ import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from requests.utils import requote_uri
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "City of Joondalup"
 DESCRIPTION = "Source for City of Joondalup (WA) waste collection."
@@ -17,6 +21,13 @@ TEST_CASES = {
     },
     "test mapkey": {
         "mapkey": 785,
+    },
+    # The property lookup only matches a spelled-out street type, which is not
+    # what most people write.
+    "abbreviated street type": {
+        "number": "2",
+        "street": "Ashburton Dr",
+        "suburb": "Heathridge",
     },
 }
 HEADERS: dict = {
@@ -32,6 +43,40 @@ DAYS: dict = {
     "SATURDAY": SA,
     "SUNDAY": SU,
 }
+# The property lookup matches the street name as the council spells it, so
+# "Ashburton Dr HEATHRIDGE" returns nothing at all while "Ashburton Drive
+# HEATHRIDGE" returns the whole street.
+STREET_TYPES = {
+    "AV": "Avenue",
+    "AVE": "Avenue",
+    "BVD": "Boulevard",
+    "BLVD": "Boulevard",
+    "CCT": "Circuit",
+    "CH": "Chase",
+    "CL": "Close",
+    "CR": "Crescent",
+    "CRES": "Crescent",
+    "CT": "Court",
+    "DR": "Drive",
+    "DRV": "Drive",
+    "ESP": "Esplanade",
+    "GDNS": "Gardens",
+    "GR": "Grove",
+    "GRV": "Grove",
+    "HWY": "Highway",
+    "LN": "Lane",
+    "LP": "Loop",
+    "PDE": "Parade",
+    "PKWY": "Parkway",
+    "PL": "Place",
+    "RD": "Road",
+    "RSE": "Rise",
+    "SQ": "Square",
+    "ST": "Street",
+    "TCE": "Terrace",
+    "WY": "Way",
+}
+
 ICON_MAP = {
     "Recycling": Icons.RECYCLING,
     "Bulk Put Out": Icons.GARDEN,
@@ -84,6 +129,61 @@ class Source:
             self._suburb = None
             self._mapkey = str(mapkey)
 
+    def _lookup_street(self, session: requests.Session, street: str) -> list:
+        search_term = requote_uri(f"{street} {self._suburb}")
+        r = session.get(
+            f"https://www.joondalup.wa.gov.au/aapi/coj/propertylookup/{search_term}",
+            headers=HEADERS,
+        )
+        r.raise_for_status()
+        return json.loads(r.content) or []
+
+    def _find_mapkey(self, session: requests.Session) -> str:
+        """Resolve number + street + suburb to the council's mapkey.
+
+        Previously a street or number the council did not recognise left the
+        mapkey unset, and the schedule request went on to ask for
+        ``bindatelookup/None`` -- which answered with an empty list and failed
+        as "list index out of range", telling the visitor nothing.
+        """
+        properties = self._lookup_street(session, self._street)
+        if not properties:
+            # The lookup matches the council's own spelling, so retry with the
+            # street type written out in full ("Dr" -> "Drive").
+            words = self._street.split()
+            if words:
+                expanded = STREET_TYPES.get(words[-1].upper().rstrip("."))
+                if expanded:
+                    properties = self._lookup_street(
+                        session, " ".join([*words[:-1], expanded])
+                    )
+
+        if not properties:
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,
+                f"Joondalup does not list a street called '{self._street}' in "
+                f"'{self._suburb}'. Check the street name and suburb, and "
+                "write the street type out in full (Drive, not Dr).",
+            )
+
+        for property in properties:
+            if str(property["house_no"]) == self._number:
+                return str(property["mapkey"])
+
+        raise SourceArgumentNotFoundWithSuggestions(
+            "number",
+            self._number,
+            sorted(
+                {
+                    str(property["house_no"])
+                    for property in properties
+                    if property.get("house_no") is not None
+                },
+                key=lambda n: (len(n), n),
+            ),
+        )
+
     def format_date(self, s: str) -> date:
         dt = datetime.strptime(s, "%A %d/%m/%Y").date()
         return dt
@@ -106,23 +206,21 @@ class Source:
         s = requests.Session()
 
         if self._mapkey is None:
-            # use address details to find the mapkey
-            search_term = requote_uri(f"{self._street} {self._suburb}")
-            r = s.get(
-                f"https://www.joondalup.wa.gov.au/aapi/coj/propertylookup/{search_term}",
-                headers=HEADERS,
-            )
-            properties = json.loads(r.content)
-            for property in properties:
-                if str(property["house_no"]) == self._number:
-                    self._mapkey = property["mapkey"]
+            self._mapkey = self._find_mapkey(s)
 
         # use the mapkey to get the schedule
         r = s.get(
             f"https://www.joondalup.wa.gov.au/aapi/coj/bindatelookup/{self._mapkey}",
             headers=HEADERS,
         )
-        pickups = json.loads(r.content)[0]
+        results = json.loads(r.content)
+        if not results:
+            raise SourceArgumentNotFound(
+                "mapkey",
+                self._mapkey,
+                "Joondalup holds no collection schedule for this property.",
+            )
+        pickups = results[0]
 
         # some waste types just state the collection day and frequency
         # so generate dates for those

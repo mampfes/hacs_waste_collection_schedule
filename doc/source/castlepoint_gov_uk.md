@@ -26,7 +26,26 @@ waste_collection_schedule:
 
 Either `roadID` or `street_name` is required.
 
+A leading house number is accepted and ignored, so `12 Ash Road` resolves the
+same as `Ash Road`.
+
+Some street names occur more than once in the borough — there is a High Street in
+both Benfleet and Canvey Island, on different collection rounds. When that
+happens the configuration fails with the list of matching streets, each qualified
+by its town, and any one of those values can be used verbatim:
+
+```yaml
+street_name: "HIGH STREET (CANVEY ISLAND)"
+```
+
 To find your `roadID`, go to the [Castle Point my street page](https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1), either enter your street name in the search box or select the first letter of your street, click on the street name, and look for the `roadID` in the URL.
+
+## Note for users outside the UK
+
+`apps.castlepoint.gov.uk` sits behind a firewall that only accepts connections
+from UK IP addresses; from anywhere else the connection is dropped without a
+reply. A Home Assistant instance hosted outside the UK (including on a
+non-UK cloud region or VPN exit) will see this source time out.
 
 ## Example
 

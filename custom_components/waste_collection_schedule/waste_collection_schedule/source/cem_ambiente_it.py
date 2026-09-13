@@ -12,6 +12,17 @@ COUNTRY = "it"
 
 API_URL = "https://cemfacile.cemambiente.it"
 
+# The API rejects requests carrying the default python-requests User-Agent
+# (and similarly "bare" requests) with a 403. Sending headers that mimic a
+# regular browser/app request avoids the block.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
+        "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+    ),
+    "Content-Type": "application/json",
+}
+
 EXTRA_INFO = [
     {"title": "Agrate Brianza", "country": "it"},
     {"title": "Aicurzio", "country": "it"},
@@ -157,6 +168,7 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
+        session.headers.update(HEADERS)
 
         r = session.post(f"{API_URL}/public/listComuni", json={})
         r.raise_for_status()

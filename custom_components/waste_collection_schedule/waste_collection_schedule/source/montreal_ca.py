@@ -107,6 +107,31 @@ FOOD_INCLUDED_IN_GREEN_PATTERN = re.compile(
 # below, so these lines have to be recognised and excluded from it explicitly.
 BIWEEKLY_PATTERN = re.compile(r"every\s+(?:two|second|other|2)\s+weeks?", re.IGNORECASE)
 
+# A sector that enumerates collection days across several months has
+# published a schedule, not prose that happens to mention a date. Such a
+# message must not take the whole-year weekday expansion, which would
+# invent a collection on every remaining weekday of the year.
+#
+# Counted over the hyphen-delimited body only, because that is what the
+# date parser actually reads. A message whose dates sit ahead of the first
+# hyphen would otherwise be handed to a parser that cannot see them, and
+# would yield nothing at all.
+EXPLICIT_DATE_LIST_MIN_MONTHS = 4
+MONTH_WITH_DAY_PATTERN = re.compile(
+    rf"\b({'|'.join(MONTHS)})\s+\d{{1,2}}\b", re.IGNORECASE
+)
+
+
+def enumerates_dates_across_months(schedule_message):
+    """Whether the parsed body lists days in several distinct months."""
+    months = {
+        match.group(1).lower()
+        for line in schedule_message.split("-")[1:]
+        for match in MONTH_WITH_DAY_PATTERN.finditer(line)
+    }
+    return len(months) >= EXPLICIT_DATE_LIST_MIN_MONTHS
+
+
 LOGGER = logging.getLogger(__name__)
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Download on your computer a &lt;a href="https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson"&gt;Montreal GeoJSON file&lt;/a&gt;&lt;br/&gt;Visit https://geojson.io/&lt;br/&gt;Click on *Open* and select the Montreal GeoJSON file&lt;br/&gt;Find your sector on the map.',
@@ -211,7 +236,7 @@ class Source:
         # These happens weekly
         if not re.search(
             r"(?:every\s+(?:.*)week|of the month)", schedule_message, re.IGNORECASE
-        ):
+        ) and not enumerates_dates_across_months(schedule_message):
             # Iterate through each month and day, and handle the "out of range" error
             for month in range(1, 13):
                 for day in range(1, 32):
@@ -327,14 +352,26 @@ class Source:
                     days_in_month = re.split(
                         r",\s*and\s+|,\s*|\s+and\s+", days_in_month
                     )
-                    days_in_month = [
-                        part.lstrip().split(" ")[0] for part in days_in_month
-                    ]
-
-                    # Converting the extracted strings to integers
-                    days_numbers = [
-                        int(num) for num in days_in_month if num.isnumeric()
-                    ]
+                    # A day list is a contiguous run of bare numbers.
+                    # A token that carries words after its number is the
+                    # end of the list: on sectors that continue in prose
+                    # on the same line, reading on takes the clock times
+                    # in "between 7 p.m. and 7 a.m." for days of the
+                    # month. Leading non-numeric tokens are skipped
+                    # rather than ending the list, because it can open
+                    # with an ordinal ("July 1st, 15, and 29") that is
+                    # not parsed as a day but must not discard the rest.
+                    days_numbers = []
+                    for part in days_in_month:
+                        token = part.strip()
+                        day_match = re.match(r"(\d{1,2})\b", token)
+                        if not day_match:
+                            if days_numbers:
+                                break
+                            continue
+                        days_numbers.append(int(day_match.group(1)))
+                        if token != day_match.group(1):
+                            break
 
                     for day in days_numbers:
                         date = datetime(year, MONTHS[month], day)

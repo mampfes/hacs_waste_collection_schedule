@@ -84,8 +84,10 @@ SERVICE_MAP = [
         "api_url": "https://afvalkalender.cranendonck.nl",
         "icons": {
             "zak-geel-blik-drank": Icons.RECYCLING,
-            "gft": Icons.ORGANIC,
-            "doos-karton-papier-avond": Icons.PAPER,
+            "appel-gft": Icons.ORGANIC,
+            "doos-karton-papier": Icons.PAPER,
+            "doos-karton-papier-1800": Icons.PAPER,
+            "doos-karton-papier-vr0800-za1330": Icons.PAPER,
             "kliko-grijs-rest": Icons.GENERAL_WASTE,
         },
     },

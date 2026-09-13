@@ -29,4 +29,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Glen Eira](https://www.gleneira.vic.gov.au/our-city/in-your-area) page and search for your address. There are typically no commas and the suburb / state are in capitals. The arguments should exactly match the full street address after selecting the autocomplete result.
+Visit the [City of Glen Eira](https://www.gleneira.vic.gov.au/our-city/in-your-area) page and search for your address, for example `4 Staniland Grove ELSTERNWICK VIC 3185`.
+
+The address is resolved through the council's own address lookup before the collection days are requested, so commas, lower case suburbs and abbreviated street types (e.g. `Hwy` for `Highway`) are accepted as well. If what you enter matches more than one property, the error message lists the addresses to choose from.

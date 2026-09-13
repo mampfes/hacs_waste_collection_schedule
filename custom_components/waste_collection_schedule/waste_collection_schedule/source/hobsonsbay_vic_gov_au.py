@@ -1,104 +1,125 @@
 import logging
-from datetime import datetime
-from urllib.parse import urlencode, urljoin
 
 import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.source.impactapps_com_au import (
+    Source as ImpactAppsSource,  # type: ignore[attr-defined]
+)
 
 TITLE = "Hobsons Bay City Council"
 DESCRIPTION = "Source for Hobsons Bay City Council waste & recycling collection"
 URL = "https://www.hobsonsbay.vic.gov.au"
+COUNTRY = "au"
 TEST_CASES = {
     "Civic Parade Medical Centre": {"street_address": "399 Queen St, Altona Meadows"},
     "Hecho En Mexico Altona": {"street_address": "48 Pier St, Altona"},
+    "Williamstown, no comma": {"street_address": "20 Merrett Dr Williamstown"},
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street_address": "Street address",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street_address": "Street number, street name and suburb as shown on the council's bin collection calendar, for example '399 Queen St, Altona Meadows'. The comma is optional.",
+    }
 }
 
-API_URL = "https://hbcc-seven.vercel.app/api/"
-SEARCH_API_URL = "https://jw7fda7yti-2.algolianet.com/1/indexes/*/queries"
-SEARCH_APPLICATION_ID = "JW7FDA7YTI"
-SEARCH_API_KEY = "7a3b39eba83ef97796c682e6a749be71"
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Commingled Recycling": Icons.RECYCLING,
-    "Food and Garden": Icons.BIO_KITCHEN,
-    "Glass": Icons.GLASS,
-}
+# Hobsons Bay moved its collection lookup to Impact Apps (waste-info.com.au);
+# the previous Algolia address index rejects the shipped credentials with a 403.
+SERVICE = "hobsons-bay"
+API_URL = f"https://{SERVICE}.waste-info.com.au"
+HEADERS = {"user-agent": "Mozilla/5.0"}
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _normalise(value: str) -> str:
+    return " ".join(value.replace(",", " ").split()).casefold()
+
+
+def split_address(street_address: str, suburbs: list[str]) -> tuple[str, str, str]:
+    """Split "<number> <street>[,] <suburb>" into number, street and suburb.
+
+    The suburb is matched against the suburbs the council actually serves, so a
+    multi-word suburb ("Altona Meadows") is not mistaken for part of the street
+    and the comma stays optional.
+    """
+    cleaned = " ".join(street_address.replace(",", " ").split())
+    matches = [s for s in suburbs if _normalise(cleaned).endswith(f" {_normalise(s)}")]
+    if not matches:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_address", street_address, sorted(suburbs)
+        )
+
+    # longest match wins, so "Altona Meadows" is preferred over "Altona"
+    suburb = max(matches, key=len)
+    number, _, street = cleaned[: -len(suburb)].strip().partition(" ")
+    if not number or not street:
+        raise SourceArgumentException(
+            "street_address",
+            f"Could not read a house number and street from '{street_address}'. "
+            "Expected '<number> <street>, <suburb>', e.g. '399 Queen St, Altona Meadows'",
+        )
+    return number, street, suburb
 
 
 class Source:
     def __init__(self, street_address: str):
         self._street_address = street_address
 
-    def fetch(self):
-        _LOGGER.debug(f"Searching for address {self._street_address}")
+    def _get(self, session: requests.Session, path: str, params: dict | None = None):
+        response = session.get(f"{API_URL}/api/v1/{path}", params=params)
+        response.raise_for_status()
+        return response.json()
 
-        search_params = {
-            "x-algolia-api-key": SEARCH_API_KEY,
-            "x-algolia-application-id": SEARCH_APPLICATION_ID,
-        }
-
-        # &query=&tagFilters=
-
-        search_data = {
-            "requests": [
-                {
-                    "indexName": "addresses",
-                    "params": urlencode(
-                        {
-                            "facets": [],
-                            "highlightPostTag": "</ais-highlight-0000000000>",
-                            "highlightPreTag": "<ais-highlight-0000000000>",
-                            "hitsPerPage": 1,  # no point in fetching more without a UI to select
-                            "query": self._street_address,
-                            "tagFilters": "",
-                        }
-                    ),
-                }
-            ]
-        }
-
-        search_response = requests.post(
-            SEARCH_API_URL, params=search_params, json=search_data
+    def _find_id(self, value: str, items: list[dict]) -> int:
+        wanted = _normalise(value)
+        for item in items:
+            if _normalise(item["name"]) == wanted:
+                return item["id"]
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_address", value, [item["name"] for item in items]
         )
 
-        search_response.raise_for_status()
-        match = search_response.json()["results"][0]["hits"][0]
+    def fetch(self) -> list[Collection]:
+        session = requests.Session()
+        session.headers.update(HEADERS)
 
-        _LOGGER.debug(f"Search result: {match}")
+        suburbs = self._get(session, "localities.json")["localities"]
+        number, street, suburb = split_address(
+            self._street_address, [s["name"] for s in suburbs]
+        )
+        _LOGGER.debug(
+            "Resolved %s to %s / %s / %s", self._street_address, number, street, suburb
+        )
 
-        asn = match["Assessment Number"]
+        suburb_id = self._find_id(suburb, suburbs)
+        streets = self._get(session, "streets.json", {"locality": suburb_id})["streets"]
+        street_id = self._find_id(street, streets)
 
-        _LOGGER.info(f"ASN: {asn}")
-
-        addresses_params = {"asn": asn}
-        addresses_endpoint = urljoin(API_URL, "addresses")
-        addresses_response = requests.get(addresses_endpoint, params=addresses_params)
-        addresses_response.raise_for_status()
-        address = addresses_response.json()["rows"][0]
-
-        day = address["day"]
-        area = address["area"]
-
-        _LOGGER.debug(f"Address result: {address}")
-        _LOGGER.info(f"Day: {day}, Area: {area}")
-
-        schedules_params = {"day": day, "area": area}
-        schedules_endpoint = urljoin(API_URL, "schedules")
-        schedules_response = requests.get(schedules_endpoint, params=schedules_params)
-        schedules_response.raise_for_status()
-        schedules = schedules_response.json()["rows"]
-
-        _LOGGER.debug(f"Schedules: {schedules}")
-
-        entries = [
-            Collection(
-                date=datetime.strptime(s["date"], "%d/%m/%Y").date(),
-                t=s["bin_type"],
-                icon=ICON_MAP.get(s["bin_type"], "Rubbish"),
-            )
-            for s in schedules
+        properties = self._get(session, "properties.json", {"street": street_id})[
+            "properties"
         ]
+        property_id = next(
+            (
+                p["id"]
+                for p in properties
+                if _normalise(p["name"].partition(" ")[0]) == _normalise(number)
+            ),
+            None,
+        )
+        if property_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_address",
+                self._street_address,
+                [p["name"] for p in properties],
+            )
 
-        return entries
+        # Impact Apps owns the event parsing, icons and recurring-event expansion
+        return ImpactAppsSource(service=SERVICE, property_id=property_id).fetch()

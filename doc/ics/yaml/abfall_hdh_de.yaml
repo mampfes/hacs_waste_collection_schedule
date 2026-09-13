@@ -13,7 +13,7 @@ howto:
     - Setzen Sie `split_at` auf `\+`, wenn Termine kombinierte Abfallarten enthalten.
     - Setzen Sie Abfallart-Schalter (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) auf `"0"`, um ungewünschte Typen auszublenden.
 default_params:
-  url: https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php
+  url: https://mobil.abfallwirtschaft-heidenheim.de/ical.php
   method: POST
   year_field: jahr
   split_at: \+
@@ -29,7 +29,7 @@ default_params:
 
 test_cases:
   Dischingen Hofen:
-    url: https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php
+    url: https://mobil.abfallwirtschaft-heidenheim.de/ical.php
     method: POST
     year_field: jahr
     params:
@@ -45,7 +45,7 @@ test_cases:
       papier: '1'
       papiertonne: '1'
   Heidenheim, Heidenheim, Hauptstraße:
-    url: https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php
+    url: https://mobil.abfallwirtschaft-heidenheim.de/ical.php
     method: POST
     year_field: jahr
     split_at: \+

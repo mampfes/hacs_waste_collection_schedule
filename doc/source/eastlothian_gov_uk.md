@@ -47,4 +47,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Go to [https://collectiondates.eastlothian.gov.uk/waste-collection-schedule](https://collectiondates.eastlothian.gov.uk/waste-collection-schedule) and enter your postcode. Select your address from the dropdown. Use the **exact address text** shown in the dropdown (commas and extra spaces are fine, they'll be normalised).
+Go to [https://www.eastlothian.gov.uk/waste-collection-schedule](https://www.eastlothian.gov.uk/waste-collection-schedule) and enter your postcode. Select your address from the dropdown. Use the **exact address text** shown in the dropdown (commas and extra spaces are fine, they'll be normalised).
