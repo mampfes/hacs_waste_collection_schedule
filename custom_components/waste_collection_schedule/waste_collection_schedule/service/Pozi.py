@@ -37,6 +37,16 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
+
+class PoziError(Exception):
+    """Base for a Pozi-platform failure that isn't a source argument error.
+
+    E.g. a tenant's dataset-discovery API advertising no QGIS project for a
+    layer a source expects to be there — an operational failure, not a bad
+    address, so it isn't a SourceArgument* exception.
+    """
+
+
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
     from waste_collection_schedule.retrievers import Response
@@ -235,20 +245,34 @@ class PoziWfsRetriever(RetrieverFunc):
     (the shared ArcGIS World GeocodeServer helper), then issues a
     spatial-intersects ``GetFeature`` request against the given WFS layer.
     Returns the raw HTTP Response; pair with :class:`PoziWfsParser`.
+
+    Args:
+        base_url: Base URL of the QGIS WFS server, or of a Pozi tenant dataset
+            proxy that already points at a project (e.g.
+            'https://vincent.pozi.com/proxy/v1/maps/waste/datasets/<id>').
+            A callable resolved against ``**source.params`` for a proxy URL
+            that must be looked up live (a tenant republishing the project
+            changes its id) instead of being hard-coded.
+        typename: WFS typename / layer name (e.g. 'Waste_Collection').
+        map_path: Server-side path to the QGIS project file, for a WFS server
+            that takes a MAP parameter directly. Omit it (the default) for a
+            dataset proxy, which already points at a project and rejects one.
+        address: ``source.params`` field with the address.
+        timeout: Request timeout in seconds.
     """
 
     def __init__(
         self,
-        base_url: str,
-        map_path: str,
+        base_url: str | Callable[..., str],
         typename: str,
         *,
+        map_path: str | None = None,
         address: str = "address",
         timeout: int = 20,
     ):
         self.base_url = base_url
-        self.map_path = map_path
         self.typename = typename
+        self.map_path = map_path
         self.address = address
         self.timeout = timeout
 
@@ -275,7 +299,6 @@ class PoziWfsRetriever(RetrieverFunc):
             "</Filter>"
         )
         params: dict[str, str] = {
-            "MAP": self.map_path,
             "TYPENAME": self.typename,
             "LAYERS": self.typename.replace("_", " "),
             "STYLES": "default",
@@ -286,7 +309,13 @@ class PoziWfsRetriever(RetrieverFunc):
             "OUTPUTFORMAT": "application/json",
             "FILTER": wfs_filter,
         }
-        return source.session.get(self.base_url, params=params, timeout=self.timeout)
+        if self.map_path is not None:
+            params["MAP"] = self.map_path
+
+        base_url = (
+            self.base_url(**source.params) if callable(self.base_url) else self.base_url
+        )
+        return source.session.get(base_url, params=params, timeout=self.timeout)
 
 
 class PoziWfsParser(Parser["list[dict[str, Any]]"]):

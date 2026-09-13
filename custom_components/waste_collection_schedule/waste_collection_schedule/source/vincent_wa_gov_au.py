@@ -2,12 +2,17 @@ import datetime
 import re
 from typing import ClassVar, final
 
+import requests
 from waste_collection_schedule import recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
-from waste_collection_schedule.service.Pozi import PoziWfsParser, PoziWfsRetriever
+from waste_collection_schedule.service.Pozi import (
+    PoziError,
+    PoziWfsParser,
+    PoziWfsRetriever,
+)
 from waste_collection_schedule.transformers import RowTransformer
 
 # Demonstrates: a Pozi WFS spatial-query lookup by address (geocoded via the
@@ -16,10 +21,32 @@ from waste_collection_schedule.transformers import RowTransformer
 # markup and turns the date/frequency/day into Schedule descriptors. Labels
 # ("General Waste", "Recycling", "FOGO") all resolve against the shared
 # multilingual vocabulary, so no type_value_map is needed.
+#
+# The council's own mapping host still advertises the Waste_Collection layer
+# but serves no features for it any more (#7281). Its Pozi viewer reads the
+# same QGIS project through the tenant's dataset proxy instead, so the WFS
+# endpoint is looked up live via DATASETS_API_URL rather than hard-coded: the
+# proxy id changes whenever the council republishes the project. The proxy
+# URL already points at a project, so PoziWfsRetriever is used with no
+# map_path (unlike a plain QGIS WFS server, which needs one).
 
-WFS_BASE_URL = "https://mapping.vincent.wa.gov.au/pozi/qgisserver"
-WFS_MAP_PATH = "C:/Pozi/Waste.qgs"
+DATASETS_API_URL = "https://vincent.pozi.com/api/v1/public/maps/waste/datasets"
+QGIS_PROJECT_DATASET_TYPE = 1
 WFS_TYPENAME = "Waste_Collection"
+
+
+def _waste_dataset_url(**_) -> str:
+    """Look up the WFS endpoint of the council's current waste QGIS project."""
+    r = requests.get(DATASETS_API_URL, timeout=30)
+    r.raise_for_status()
+
+    for group in r.json().get("mapdatasets", []):
+        for dataset in group.get("datasets", []):
+            if dataset.get("type") == QGIS_PROJECT_DATASET_TYPE and dataset.get("url"):
+                return dataset["url"]
+
+    raise PoziError(f"No QGIS project dataset advertised at {DATASETS_API_URL}")
+
 
 # Matches: "15 Apr 2026 - Weekly (Wednesday)" or "15 Apr 2026 - Fortnightly (Thursday Week 2)"
 # or "15 Apr 2026 - 2 x weekly (Wednesday/friday)"
@@ -100,9 +127,7 @@ class Source(BaseSource):
 
     PARAMS = (street_address(),)
 
-    retrieve = PoziWfsRetriever(
-        WFS_BASE_URL, WFS_MAP_PATH, WFS_TYPENAME, address="address"
-    )
+    retrieve = PoziWfsRetriever(_waste_dataset_url, WFS_TYPENAME, address="address")
     parse = PoziWfsParser()
     preprocess = RecurrenceExpander(_describe)
     transform = RowTransformer()
