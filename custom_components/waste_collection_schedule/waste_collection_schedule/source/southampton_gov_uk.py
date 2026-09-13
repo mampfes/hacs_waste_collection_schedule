@@ -1,8 +1,9 @@
 import logging
 import re
+import time
 from datetime import datetime
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Southampton City Council"
@@ -23,6 +24,12 @@ ICON_MAP = {
 }
 REGEX = r"(Food|Glass|Recycling|General Waste|Garden Waste).*?([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4})"
 
+# The council's site sits behind an Incapsula WAF that intermittently serves a
+# JS challenge page instead of the calendar. Retrying a few times (mirroring
+# what a browser refresh does) usually gets through.
+MAX_RETRIES = 4
+RETRY_DELAY_SECONDS = 3
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -31,16 +38,33 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-        s = requests.Session()
-        r = s.get(
-            f"https://www.southampton.gov.uk/whereilive/waste-calendar?UPRN={self._uprn}"
-        )
-        r.raise_for_status()
+        url = f"https://www.southampton.gov.uk/whereilive/waste-calendar?UPRN={self._uprn}"
 
-        # Limit search scope to avoid duplicates
-        calendar_view_only = re.search(
-            r"#calendar1.*?listView", r.text, flags=re.DOTALL
-        )[0]
+        calendar_view_only = None
+        last_status = None
+        for attempt in range(1, MAX_RETRIES + 1):
+            # Use a browser-like TLS fingerprint: the site's Incapsula WAF
+            # intermittently blocks plain requests-library sessions.
+            s = requests.Session(impersonate="chrome")
+            r = s.get(url)
+            last_status = r.status_code
+
+            if r.ok:
+                match = re.search(r"#calendar1.*?listView", r.text, flags=re.DOTALL)
+                if match:
+                    calendar_view_only = match[0]
+                    break
+
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_DELAY_SECONDS)
+
+        if calendar_view_only is None:
+            raise Exception(
+                "Unable to retrieve the waste calendar from southampton.gov.uk "
+                f"after {MAX_RETRIES} attempts (last HTTP status: {last_status}). "
+                "This is usually caused by the council's anti-bot protection "
+                "(Incapsula) blocking the request; please try again later."
+            )
 
         results = re.findall(REGEX, calendar_view_only)
 
