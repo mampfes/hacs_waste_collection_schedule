@@ -78,6 +78,10 @@ class Source(BaseSource):
             "key": "30628292bdd8b43db86a48f7e0d85f85",
             "idHouseNumber": 16437,
         },
+        "ASO Abfall-Service Osterholz, Osterholz-Scharmbeck, Ahrensfelder Damm 4": {
+            "key": "8b016df0116d1d5094fa339bebea0c65",
+            "idHouseNumber": 6644,
+        },
     }
 
     PARAMS = (
