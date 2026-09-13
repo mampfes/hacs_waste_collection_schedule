@@ -20,11 +20,18 @@ The following waste types are supported:
 | Type | Icon | Description |
 |------|------|-------------|
 | Grüngut | 🌱 | Organic waste (garden and kitchen) |
+| Grüngut/Christbaum | 🌱 | Organic waste incl. Christmas trees |
 | Kehricht | 🗑️ | General waste / household trash |
 | Karton | 📦 | Cardboard |
+| Papiersammlung | 📦 | Paper collection |
+| Metall | ♻️ | Metal |
 | Sonderabfall | ⚗️ | Special/hazardous waste |
-| Häcksel-Service / Häcksel Dienst | ✂️ | Chipping service |
+| Häcksel-Service / Häckseldienst | ✂️ | Chipping service |
 | Hauptsammelstelle | ♻️ | Main collection point |
+
+The provider appends dates and district names to the `Häcksel-Service` and
+`Hauptsammelstelle` event titles. These are normalized back to the two canonical
+names above so that the waste types stay stable from year to year.
 
 ## Data Source
 
@@ -32,7 +39,8 @@ The data is scraped from the official municipality website:
 - **Website**: https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html
 - **Waste Management Contact**: abfall@maur.ch / +41 43 366 13 90
 
-The waste collection schedule is published for the current year and includes all collection dates for the entire municipality of Maur.
+The event list on that page is paginated; the source follows the pagination so that
+the full published schedule is returned, not just the first page of upcoming dates.
 
 ## Notes
 
