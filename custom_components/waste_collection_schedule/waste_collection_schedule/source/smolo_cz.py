@@ -395,8 +395,10 @@ class Source:
             href = str(a["href"])
             if ".pdf" not in href.lower():
                 continue
-            text_norm = _normalize(a.get_text(" ", strip=True))
-            if "trinec" in text_norm and "komunal" in text_norm:
+            link_descriptor = _normalize(f"{a.get_text(' ', strip=True)} {href}")
+            if "trinec" in link_descriptor and all(
+                token in link_descriptor for token in ("sko", "bio", "sep")
+            ):
                 return urllib.parse.urljoin(_LANDING_PAGE_URL, href)
 
         raise SourceArgumentNotFoundWithSuggestions(
