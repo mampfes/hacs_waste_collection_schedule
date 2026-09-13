@@ -7087,6 +7087,33 @@
           "city_part": "Select whether waste is collected on even or odd weeks."
         }
       },
+      "args_smolo_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District (část města)",
+          "street": "Street (optional, for disambiguation)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "The town district / part of town ('část města') exactly as it appears in the SMOLO Třinec collection schedule, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'.",
+          "street": "Optional street name used to disambiguate districts that appear on multiple rows of the schedule with different street lists (e.g. 'Staré Město', 'Oldřichovice', 'Lyžbice')."
+        }
+      },
+      "reconfigure_smolo_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District (část města)",
+          "street": "Street (optional, for disambiguation)"
+        },
+        "data_description": {
+          "district": "The town district / part of town ('část města') exactly as it appears in the SMOLO Třinec collection schedule, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'.",
+          "street": "Optional street name used to disambiguate districts that appear on multiple rows of the schedule with different street lists (e.g. 'Staré Město', 'Oldřichovice', 'Lyžbice')."
+        }
+      },
       "args_tsceskybrod_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

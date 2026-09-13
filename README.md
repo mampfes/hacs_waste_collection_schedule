@@ -978,6 +978,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Předměřice nad Labem](/doc/source/predmerice_nad_labem_cz.md) / predmericenl.cz/odpady
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
+- [SMOLO a.s. (Třinec)](/doc/source/smolo_cz.md) / smolo.cz/sluzby/odpadove-hospodarstvi/informace-pro-domacnosti
 - [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
 </details>
 

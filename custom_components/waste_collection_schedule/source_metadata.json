@@ -1620,6 +1620,13 @@
     },
     "urls": {}
   },
+  "smolo_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smolo_cz.md",
+    "howto": {
+      "en": "Open the SMOLO a.s. household-waste page (https://www.smolo.cz/sluzby/odpadove-hospodarstvi/informace-pro-domacnosti/) and look up the current 'Třinec – harmonogram' PDF for the SKO/BIO/SEP schedule. Use the 'ČÁST MĚSTA' (part of town / district) column value as the 'district' argument, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'. If your district appears multiple times in the table with different street lists, also set 'street' to one street name from the 'LOKALITA' column to disambiguate."
+    },
+    "urls": {}
+  },
   "tsceskybrod_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
     "howto": {

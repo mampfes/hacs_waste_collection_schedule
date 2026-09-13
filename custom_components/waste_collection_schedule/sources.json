@@ -5779,6 +5779,12 @@
       "id": "mestorudna_cz"
     },
     {
+      "title": "SMOLO a.s. (T\u0159inec)",
+      "module": "smolo_cz",
+      "default_params": {},
+      "id": "smolo_cz"
+    },
+    {
       "title": "Technick\u00e9 slu\u017eby \u010cesk\u00fd Brod",
       "module": "tsceskybrod_cz",
       "default_params": {},
