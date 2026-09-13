@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-09-13",
+  "interactions": [
+    {
+      "key": "GET https://api.abfall.io 767873288d",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=2085afd95285e645e15ee9623d0c5172",
+      "body": "{\"params\":[[\"key\",\"2085afd95285e645e15ee9623d0c5172\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=buui0ldb48h9cq3f6amo2j78ch; path=/",
+        "last-modified": "Sun, 13 Sep 2026 15:36:23 GMT",
+        "content-type": "application/json",
+        "date": "Sun, 13 Sep 2026 15:36:23 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiJkNTkzNjYwZjI1OWQzZDExMzA3MjExNzc3NTRiZGI5NDVkOTViYjlkNzBjYTU0MDgiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIxIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0FOWkVJR0UiOiJJIiwiUFVCX0pBSFIiOiIzMDAwMSIsIlBVQl9KQUhSX01PTkFURV9NSU5PUiI6IjAiLCJQVUJfVEVNUExBVEUiOiJub3Jkc2FjaHNlbiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNjYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjI2NyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMTAyNSIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiNTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjY3IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIxODk2IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIxNjkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjMzIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIxMDI4IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIzMjEiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9FWFBPUlRfSFRNTF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9FWFBPUlRfVFhUX1RFUk1JTkVfTU9EVVMiOiIwIiwiUFVCX1pVU0FUWl9OQU1FIjoiIiwiUFVCX1pVU0FUWl9DQVBUSU9OIjoiIiwiUFVCX1pVU0FUWl9TRUxFQ1QiOiIiLCJQVUJfRVhQT1JUX0VNQUlMIjoiMCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJBUFBfU1RBTkRPUlRfTUlUX1NUQURUVEVJTEUiOnRydWUsIlBVQl9aRUlUUkFFVU1FIjpbeyJ2YWx1ZSI6IjIwMjUwMTAxLTIwMjUxMjMxIiwiZGlzcGxheSI6IjIwMjUiLCJzZWxlY3RlZCI6ZmFsc2V9LHsidmFsdWUiOiIyMDI2MDEwMS0yMDI2MTIzMSIsImRpc3BsYXkiOiIyMDI2Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUifSwiY3VzdG9tQ3NzIjoiIn0="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql a4d62b4035",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Date, $showInactive: Boolean) {\\n    appointments(idHouseNumber: $idHouseNumber, wasteTypes: $wasteTypes, dateMin: $dateMin, dateMax: $dateMax, showInactive: $showInactive) {\\n        date\\n        wasteType {\\n            name\\n        }\\n    }\\n}\\n\",\"variables\":{\"dateMax\":\"2027-09-13\",\"dateMin\":\"2026-09-13\",\"idHouseNumber\":\"360435\",\"showInactive\":false,\"wasteTypes\":[\"66\",\"267\",\"1025\",\"53\",\"67\",\"1896\",\"169\",\"33\",\"1028\",\"321\"]}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sun, 13 Sep 2026 15:36:23 GMT",
+        "etag": "W/\"431-qh/ES5Nwj1ZkVJfn8ChlhDUJ2Xs\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1073"
+      },
+      "content_b64": "eyJkYXRhIjp7ImFwcG9pbnRtZW50cyI6W3siZGF0ZSI6IjIwMjYtMDktMjIiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3RhYmZhbGwifX0seyJkYXRlIjoiMjAyNi0wOS0yNCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmVyIFNhY2sgLyBHZWxiZSBUb25uZSJ9fSx7ImRhdGUiOiIyMDI2LTEwLTA1Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJQYXBpZXIifX0seyJkYXRlIjoiMjAyNi0xMC0wNiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdGFiZmFsbCJ9fSx7ImRhdGUiOiIyMDI2LTEwLTA4Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZXIgU2FjayAvIEdlbGJlIFRvbm5lIn19LHsiZGF0ZSI6IjIwMjYtMTAtMjAiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3RhYmZhbGwifX0seyJkYXRlIjoiMjAyNi0xMC0yMiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmVyIFNhY2sgLyBHZWxiZSBUb25uZSJ9fSx7ImRhdGUiOiIyMDI2LTExLTAyIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJQYXBpZXIifX0seyJkYXRlIjoiMjAyNi0xMS0wMyIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdGFiZmFsbCJ9fSx7ImRhdGUiOiIyMDI2LTExLTA1Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZXIgU2FjayAvIEdlbGJlIFRvbm5lIn19LHsiZGF0ZSI6IjIwMjYtMTEtMTciLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3RhYmZhbGwifX0seyJkYXRlIjoiMjAyNi0xMS0yMCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmVyIFNhY2sgLyBHZWxiZSBUb25uZSJ9fSx7ImRhdGUiOiIyMDI2LTExLTMwIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJQYXBpZXIifX0seyJkYXRlIjoiMjAyNi0xMi0wMSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdGFiZmFsbCJ9fSx7ImRhdGUiOiIyMDI2LTEyLTAzIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZXIgU2FjayAvIEdlbGJlIFRvbm5lIn19LHsiZGF0ZSI6IjIwMjYtMTItMTUiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3RhYmZhbGwifX0seyJkYXRlIjoiMjAyNi0xMi0xNyIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmVyIFNhY2sgLyBHZWxiZSBUb25uZSJ9fV19fQo="
+    }
+  ]
+}

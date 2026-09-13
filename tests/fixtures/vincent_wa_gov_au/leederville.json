@@ -1,14 +1,16 @@
 {
-  "recorded_at": "2026-07-10",
+  "recorded_at": "2026-09-13",
   "interactions": [
     {
       "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 6927d4763f",
       "method": "GET",
       "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=18+Stamford+St%2C+Leederville+WA&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"18 Stamford St, Leederville WA\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
       "status": 200,
       "encoding": "UTF-8",
       "headers": {
-        "Date": "Fri, 10 Jul 2026 13:55:09 GMT",
+        "Date": "Sun, 13 Sep 2026 15:33:59 GMT",
         "Content-Type": "application/json;charset=UTF-8",
         "Content-Length": "236",
         "Connection": "keep-alive",
@@ -17,29 +19,61 @@
         "ETag": "\"1cf24ccb\"",
         "Content-Encoding": "gzip",
         "Cache-Control": "max-age=300",
-        "X-Cached": "HIT",
+        "X-Cached": "MISS",
         "Vary": "Origin,Accept-Encoding",
         "Strict-Transport-Security": "max-age=63072000"
       },
       "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTggU3RhbWZvcmQgU3RyZWV0LCBMZWVkZXJ2aWxsZSwgUGVydGgsIFdlc3Rlcm4gQXVzdHJhbGlhLCA2MDA3IiwibG9jYXRpb24iOnsieCI6MTE1Ljg0MDA1OTk3MzIyNSwieSI6LTMxLjkzNTAyOTk3NjA0fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxMTUuODM5MDU5OTczMjI1LCJ5bWluIjotMzEuOTM2MDI5OTc2MDQsInhtYXgiOjExNS44NDEwNTk5NzMyMjUsInltYXgiOi0zMS45MzQwMjk5NzYwNH19XX0="
     },
     {
-      "key": "GET https://mapping.vincent.wa.gov.au/pozi/qgisserver 1a2089f813",
+      "key": "GET https://vincent.pozi.com/api/v1/public/maps/waste/datasets ",
       "method": "GET",
-      "url": "https://mapping.vincent.wa.gov.au/pozi/qgisserver",
+      "url": "https://vincent.pozi.com/api/v1/public/maps/waste/datasets",
+      "final_url": "https://vincent.pozi.com/api/v1/public/maps/waste/datasets",
+      "body": "",
       "status": 200,
       "encoding": "utf-8",
       "headers": {
-        "content-type": "application/vnd.geo+json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0, QGIS FCGI server - QGIS version 3.40.14-Bratislava",
-        "x-powered-by": "ASP.NET",
-        "strict-transport-security": "max-age=31536000; includeSubDomains",
-        "access-control-allow-origin": "*",
-        "access-control-allow-methods": "GET,POST,OPTIONS",
-        "date": "Fri, 10 Jul 2026 13:55:09 GMT",
-        "content-length": "1497"
+        "content-type": "application/json",
+        "date": "Sun, 13 Sep 2026 15:33:59 GMT",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-event-id": "01a09b67-6467-7303-b03b-9000acfc9685",
+        "x-envoy-upstream-service-time": "70",
+        "server": "envoy",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 502abcdcf72d6817a760274edcc18c7c.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P6",
+        "x-amz-cf-id": "8gIBVzo_vIb1t48IOExEYMx7-eKOqG_io8W5-1JcTLsaL58C6nfYVA=="
       },
-      "content_b64": "eyJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICJiYm94IjogWyAxMTUuODIzMzczNDgsIC0zMS45NDk3NjExNywgMTE1Ljg4NTEyNDIxLCAtMzEuOTEzNjkwOTVdLAogImZlYXR1cmVzIjogWwogIHsiYmJveCI6WzExNS44Mzk4NDYsLTMxLjkzNTA4OCwxMTUuODQwMjcxLC0zMS45MzQ5NzZdLCJnZW9tZXRyeSI6eyJjb29yZGluYXRlcyI6W1tbMTE1Ljg0MDI3MSwtMzEuOTM1MDMxXSxbMTE1Ljg0MDI3MSwtMzEuOTM1MDg4XSxbMTE1LjgzOTg0NiwtMzEuOTM1MDg3XSxbMTE1LjgzOTg0NiwtMzEuOTM0OTc2XSxbMTE1Ljg0MDI3MSwtMzEuOTM0OTc3XSxbMTE1Ljg0MDI3MSwtMzEuOTM1MDMxXV1dLCJ0eXBlIjoiUG9seWdvbiJ9LCJpZCI6Ildhc3RlX0NvbGxlY3Rpb24uMjM3NiIsInByb3BlcnRpZXMiOnsiQWRkcmVzcyI6IjE4IFN0YW1mb3JkIFN0LCBMZWVkZXJ2aWxsZSIsIkNvbGxlY3Rpb24gQXJlYSI6IjxwIHN0eWxlPVwiY29sb3I6IGJsYWNrOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O21hcmdpbi1ib3R0b206IDEwcHg7XCI+Q29sbGVjdGlvbiBBcmVhIEE8L3A+IiwiRk9HTyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6IGdyZWVuOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPkZPR08gQ29sbGVjdGlvbiBEYXk6PC9wPjxwIHN0eWxlPVwibWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj4xMyBKdWwgMjAyNiAtIFdlZWtseSAoTW9uZGF5KTwvcD4iLCJHZW5lcmFsIFdhc3RlIENvbGxlY3Rpb24gRGF5IjoiPHAgc3R5bGU9XCJjb2xvcjogcmVkOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7XCI+R2VuZXJhbCBXYXN0ZSBDb2xsZWN0aW9uIERheTo8L3A+PHAgc3R5bGU9XCJtYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPjEzIEp1bCAyMDI2IC0gRm9ydG5pZ2h0bHkgKE1vbmRheSBXZWVrIDEpPC9wPiIsIlJlY3ljbGluZyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6ICNiODg2MGI7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+UmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MjAgSnVsIDIwMjYgLSBGb3J0bmlnaHRseSAoTW9uZGF5IFdlZWsgMik8L3A+IiwiVmVyZ2UgVmFsZXQgVmluY2VudCI6IjxwIHN0eWxlPVwiZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDEwcHg7XCI+QnVsayBoYXJkIGFuZCBCdWxrIEdyZWVuIENvbGxlY3Rpb25zOjwvcD48cD48YSBocmVmPVwiaHR0cHM6Ly93d3cud21yYy53YS5nb3YuYXUvdmVyZ2V2YWxldC9cIj5WZXJnZSBWYWxldCBWaW5jZW50PC9hPjwvcD4ifSwidHlwZSI6IkZlYXR1cmUifQogXQp9"
+      "content_b64": "eyJtYXBkYXRhc2V0cyI6W3siZ3JvdXBfbmFtZSI6Ildhc3RlIiwiZGF0YXNldHMiOlt7ImlkIjoiMDE5ZWNmNDYtNjdhYS03NjRlLWI1ZGItODA1Mjk0NjYyNzBkIiwidGl0bGUiOiJRR0lTIFByb2plY3QiLCJ0eXBlIjoxLCJ1cmwiOiJodHRwczovL3ZpbmNlbnQucG96aS5jb20vcHJveHkvdjEvbWFwcy93YXN0ZS9kYXRhc2V0cy8wMTllY2Y0Ni02N2FhLTc2NGUtYjVkYi04MDUyOTQ2NjI3MGQiLCJzaG93X2xlZ2VuZCI6ZmFsc2UsImF0dHJpYnV0aW9ucyI6W119XX0seyJncm91cF9uYW1lIjoiSW1hZ2VyeSIsImRhdGFzZXRzIjpbeyJpZCI6IjAxOWVjZjQ1LWZiYzMtN2I3NC1hMzY0LTE4MDdhMTVhODg1YiIsInRpdGxlIjoiSEVSRSBTYXRlbGxpdGUiLCJ0eXBlIjo0LCJ1cmwiOiJodHRwczovL3ZpbmNlbnQucG96aS5jb20vcHJveHkvdjEvbWFwcy93YXN0ZS9kYXRhc2V0cy8wMTllY2Y0NS1mYmMzLTdiNzQtYTM2NC0xODA3YTE1YTg4NWIve3p9L3t4fS97eX0iLCJzaG93X2xlZ2VuZCI6ZmFsc2UsImF0dHJpYnV0aW9ucyI6W3siaWQiOiIyYWU4ZTY3MS0wZDNmLTRhNzUtYWIyOS1jNDE0MGZhYjkxYmEiLCJ0ZXh0IjoiwqkgSEVSRSIsInVybCI6Imh0dHBzOi8vbGVnYWwuaGVyZS5jb20vZW4tZ2IvdGVybXMvaGVyZS1lbmQtdXNlci10ZXJtcyJ9XX1dfSx7Imdyb3VwX25hbWUiOiJCYXNlbWFwIiwiZGF0YXNldHMiOlt7ImlkIjoiMDE5ZWNmNDctNDlkZS03MDE1LWIwYjktZTM4Zjk3MDU2NDRjIiwidGl0bGUiOiJNYXBUaWxlciBTdHJlZXRzIExhYmVscyIsInR5cGUiOjUsInVybCI6Imh0dHBzOi8vY29uZmlnLnBvemkuY29tL3B1YmxpYy9maWxlcy9tYXB0aWxlci1zdHJlZXRzLWxhYmVsc192Mi5qc29uIiwic2hvd19sZWdlbmQiOmZhbHNlLCJhdHRyaWJ1dGlvbnMiOlt7ImlkIjoiN2I2Zjc0NGYtOGIxZC00YTYxLThlY2YtYjYzMWJiZjExMTA4IiwibG9nb191cmwiOiJodHRwczovL21lZGlhLm1hcHRpbGVyLmNvbS9vbGQvbWVkaWFraXQvbG9nby9tYXB0aWxlci1sb2dvLnBuZyIsInRleHQiOiLCqSBNYXBUaWxlciIsInVybCI6Imh0dHBzOi8vd3d3Lm1hcHRpbGVyLmNvbS9jb3B5cmlnaHQvIn0seyJpZCI6IjU2NDFiNWFmLWZlM2MtNGYxMy05ZmFlLTVlNWUxOWIxMWVhNyIsInRleHQiOiLCqSBPcGVuU3RyZWV0TWFwIGNvbnRyaWJ1dG9ycyIsInVybCI6Imh0dHBzOi8vb3BlbnN0cmVldG1hcC5vcmcvY29weXJpZ2h0In1dfV19XX0K"
+    },
+    {
+      "key": "GET https://vincent.pozi.com/proxy/v1/maps/waste/datasets/019ecf46-67aa-764e-b5db-80529466270d a43e7be72f",
+      "method": "GET",
+      "url": "https://vincent.pozi.com/proxy/v1/maps/waste/datasets/019ecf46-67aa-764e-b5db-80529466270d",
+      "final_url": "https://vincent.pozi.com/proxy/v1/maps/waste/datasets/019ecf46-67aa-764e-b5db-80529466270d?TYPENAME=Waste_Collection&LAYERS=Waste+Collection&STYLES=default&SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&SRSNAME=EPSG%3A4326&OUTPUTFORMAT=application%2Fjson&FILTER=%3CFilter%3E%3CIntersects%3E%3CPropertyName%3Egeom%3C%2FPropertyName%3E%3CPoint+xmlns%3D%22http%3A%2F%2Fwww.opengis.net%2Fgml%22+srsName%3D%22EPSG%3A4326%22%3E%3Cpos+srsDimension%3D%222%22%3E115.840059973225+-31.93502997604%3C%2Fpos%3E%3C%2FPoint%3E%3C%2FIntersects%3E%3C%2FFilter%3E",
+      "body": "{\"params\":[[\"FILTER\",\"<Filter><Intersects><PropertyName>geom</PropertyName><Point xmlns=\\\"http://www.opengis.net/gml\\\" srsName=\\\"EPSG:4326\\\"><pos srsDimension=\\\"2\\\">115.840059973225 -31.93502997604</pos></Point></Intersects></Filter>\"],[\"LAYERS\",\"Waste Collection\"],[\"OUTPUTFORMAT\",\"application/json\"],[\"REQUEST\",\"GetFeature\"],[\"SERVICE\",\"WFS\"],[\"SRSNAME\",\"EPSG:4326\"],[\"STYLES\",\"default\"],[\"TYPENAME\",\"Waste_Collection\"],[\"VERSION\",\"1.1.0\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "date": "Sun, 13 Sep 2026 15:34:01 GMT",
+        "x-envoy-upstream-service-time": "1439",
+        "server": "envoy",
+        "x-event-id": "01a09b67-65ec-79f1-89a1-872d0b9e1ca2",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 502abcdcf72d6817a760274edcc18c7c.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P6",
+        "x-amz-cf-id": "0zuFETZqNF93g8YGn2ZEoMEc_fFo_CXHMKngy3R3tftSsK6FuI9xiQ==",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Origin"
+      },
+      "content_b64": "eyJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICJiYm94IjogWyAxMTUuODIzMzg0MzIsIC0zMS45NDk3NDc2OSwgMTE1Ljg4NTEzNDk2LCAtMzEuOTEzNjc3NDldLAogImZlYXR1cmVzIjogWwogIHsiYmJveCI6WzExNS44Mzk4NTcsLTMxLjkzNTA3NCwxMTUuODQwMjgyLC0zMS45MzQ5NjNdLCJnZW9tZXRyeSI6eyJjb29yZGluYXRlcyI6W1tbMTE1Ljg0MDI4MiwtMzEuOTM1MDE4XSxbMTE1Ljg0MDI4MiwtMzEuOTM1MDc0XSxbMTE1LjgzOTg1NywtMzEuOTM1MDc0XSxbMTE1LjgzOTg1NywtMzEuOTM0OTYzXSxbMTE1Ljg0MDI4MiwtMzEuOTM0OTY0XSxbMTE1Ljg0MDI4MiwtMzEuOTM1MDE4XV1dLCJ0eXBlIjoiUG9seWdvbiJ9LCJpZCI6Ildhc3RlX0NvbGxlY3Rpb24uMjM3NiIsInByb3BlcnRpZXMiOnsiQWRkcmVzcyI6IjE4IFN0YW1mb3JkIFN0LCBMZWVkZXJ2aWxsZSIsIkNvbGxlY3Rpb24gQXJlYSI6IjxwIHN0eWxlPVwiY29sb3I6IGJsYWNrOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O21hcmdpbi1ib3R0b206IDEwcHg7XCI+Q29sbGVjdGlvbiBBcmVhIEE8L3A+IiwiQ29sbGVjdGlvbiBUeXBlIE5vdGljZSI6bnVsbCwiRk9HTyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6IGdyZWVuOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPkZPR08gQ29sbGVjdGlvbiBEYXk6PC9wPjxwIHN0eWxlPVwibWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj4xNCBTZXAgMjAyNiAtIFdlZWtseSAoTW9uZGF5KTwvcD4iLCJHZW5lcmFsIFdhc3RlIENvbGxlY3Rpb24gRGF5IjoiPHAgc3R5bGU9XCJjb2xvcjogcmVkOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7XCI+R2VuZXJhbCBXYXN0ZSBDb2xsZWN0aW9uIERheTo8L3A+PHAgc3R5bGU9XCJtYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPjIxIFNlcCAyMDI2IC0gRm9ydG5pZ2h0bHkgKE1vbmRheSBXZWVrIDEpPC9wPiIsIlJlY3ljbGluZyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6ICNiODg2MGI7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+UmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MTQgU2VwIDIwMjYgLSBGb3J0bmlnaHRseSAoTW9uZGF5IFdlZWsgMik8L3A+IiwiVmVyZ2UgVmFsZXQgVmluY2VudCI6IjxwIHN0eWxlPVwiZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDEwcHg7XCI+QnVsayBoYXJkIGFuZCBCdWxrIEdyZWVuIENvbGxlY3Rpb25zOjwvcD48cD48YSBocmVmPVwiaHR0cHM6Ly93d3cud21yYy53YS5nb3YuYXUvdmVyZ2V2YWxldC9cIj5WZXJnZSBWYWxldCBWaW5jZW50PC9hPjwvcD4ifSwidHlwZSI6IkZlYXR1cmUifQogXQp9"
     }
   ]
 }

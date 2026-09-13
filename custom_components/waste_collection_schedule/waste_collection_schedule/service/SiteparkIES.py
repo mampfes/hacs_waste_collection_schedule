@@ -320,9 +320,14 @@ class SiteparkIESRetriever(RetrieverFunc):
                 return client.fetch_ics_response(given)
         ort = source.params.get(self._ort)
         refid = None
-        if self._refid_page_url is not None:
+        if self._refid_page_url is not None and ort:
+            # Only resolve a refid when an Ort was actually given: an
+            # installation whose Ort is optional (a default district applies
+            # when it's omitted) has no dropdown value to resolve without one,
+            # and should fall through to the static/no-refid lookup below
+            # exactly as it did before refid_page_url was configured.
             refid = client.resolve_refid(
-                ort or "", self._refid_page_url, self._refid_value_prefix
+                ort, self._refid_page_url, self._refid_value_prefix
             )
             # The Ort picked the district; the labels behind that refid do not
             # repeat it, so filtering on it again would drop every candidate.

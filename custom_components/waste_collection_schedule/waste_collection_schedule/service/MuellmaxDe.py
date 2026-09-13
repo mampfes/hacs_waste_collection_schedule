@@ -4,7 +4,10 @@ from typing import TYPE_CHECKING
 
 from bs4 import BeautifulSoup, Tag
 
-from ..exceptions import SourceArgumentNotFoundWithSuggestions
+from ..exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from ..retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
@@ -67,14 +70,25 @@ def _fraction_checkboxes(text: str) -> dict[str, str]:
     return values
 
 
-def _resolve_house_number(given: "str | None", text: str) -> str:
-    """Map a plain house number to the form's full ``id;area;number;`` option."""
+def _resolve_house_number(given: "str | int | None", text: str) -> str:
+    """Map a house number to the form's full ``id;area;number;`` option.
+
+    A plain number is matched against every option's number field. A full
+    value is used verbatim when the form still offers it, but a provider can
+    change an option's area part between fetches (e.g. "55128;Mainz;5;"
+    becoming "55128;Bretzenheim;5;") — when that happens the given value is no
+    longer among ``options`` at all, so fall back to matching its number part
+    the same way a plain number would (#7319).
+    """
     options = _hnr_options(text)
     if given is None:
         raise SourceArgumentNotFoundWithSuggestions("mm_frm_hnr_sel", "", options)
-    if ";" in given:
+    given = str(given)
+    if given in options:
         return given
-    matches = [o for o in options if o.split(";")[2:3] == [given]]
+    parts = given.split(";")
+    number = parts[2] if len(parts) > 2 else parts[0]
+    matches = [o for o in options if o.split(";")[2:3] == [number]]
     if len(matches) == 1:
         return matches[0]
     raise SourceArgumentNotFoundWithSuggestions(
@@ -119,9 +133,17 @@ class MuellmaxRetriever(RetrieverFunc):
             step(
                 {"xxx": 1, "mm_frm_str_name": street, "mm_aus_str_txt_submit": "suchen"}
             )
-            step(
-                {"xxx": 1, "mm_frm_str_sel": street, "mm_aus_str_sel_submit": "weiter"}
-            )
+            # A unique street match skips straight past the selection page;
+            # posting the selection anyway resets the session to the start
+            # page instead of advancing it (#7287).
+            if 'name="mm_frm_str_sel"' in response.text:
+                step(
+                    {
+                        "xxx": 1,
+                        "mm_frm_str_sel": street,
+                        "mm_aus_str_sel_submit": "weiter",
+                    }
+                )
 
         # The form decides whether a house number is needed for this address.
         if "mm_frm_hnr_sel" in response.text:
@@ -133,6 +155,12 @@ class MuellmaxRetriever(RetrieverFunc):
         # Switch the output to an iCalendar file, tick every fraction, download.
         step({"xxx": 1, "mm_ica_auswahl": "iCalendar-Datei"})
         fractions = _fraction_checkboxes(response.text)
+        if not fractions:
+            raise SourceArgumentExceptionMultiple(
+                ["mm_frm_ort_sel", "mm_frm_str_sel", "mm_frm_hnr_sel"],
+                "Müllmax offers no waste types for this address, "
+                "please recheck your arguments",
+            )
         step(
             {
                 "xxx": 1,

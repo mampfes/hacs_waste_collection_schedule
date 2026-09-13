@@ -9,8 +9,9 @@ domain (the widget behind e.g. https://www.logan.qld.gov.au/MyLogan):
 - ``GET <domain>/ocapi/Public/myarea/wasteservices`` — given a
   ``geolocationid``, returns ``{"success": bool, "responseContent": "<html>"}``
   where the HTML is a series of ``<article>``/``div.waste-services-result``
-  blocks, each with an ``<h3>`` (waste type) and a ``.next-service`` element
-  (next collection date).
+  blocks, each with an ``<h3>`` (waste type), a ``.next-service`` element
+  (next collection date) and usually a ``.note`` element (the service's
+  cadence and kerbside instructions in prose).
 
 This module centralises that flow behind :class:`OpenCitiesClient` so
 per-council source files stay a thin ``OpenCitiesConfig`` + ``Source`` shim.
@@ -54,6 +55,14 @@ class OpenCitiesConfig:
 
     argument_name: str = "address"
     """Exact ``Source.__init__`` kwarg name, used in raised exceptions."""
+
+    direct_argument_name: str | None = None
+    """
+    ``Source.__init__`` kwarg holding a geolocation id given instead of an
+    address, for the sources that accept one. Exceptions raised on that path
+    name this argument, so the config flow marks the field the visitor
+    actually filled in rather than the empty address one.
+    """
 
     search_fuzzy: bool = False
     """Use ``/api/v1/myarea/searchfuzzy`` instead of ``/api/v1/myarea/search``."""
@@ -114,6 +123,21 @@ class OpenCitiesConfig:
     "ambiguous" failure.
     """
 
+    strict_single_result: bool = False
+    """
+    Only meaningful with ``strict_address_matching``. By default a lone search
+    result is trusted even under strict matching, on the assumption that one
+    hit means the API was confident. A few deployments' search is loose enough
+    to answer an unrelated query with exactly one wrong hit -- lakemac returns
+    the single result "2 Lake Ridge Lane, MURRAYS BEACH" for the query
+    "2 Wallarah Rd" -- and there strict matching needs to apply to a single
+    result too, so the caller is offered it as a suggestion to confirm rather
+    than silently handed another property's bins. Left off by default because
+    for most councils the lone hit is right and merely formatted differently
+    from what the user typed (a missing state abbreviation or postcode), which
+    would otherwise turn a correct resolution into a hard failure.
+    """
+
     require_date_precise: bool = False
     """
     If True, only wasteservices blocks additionally carrying a
@@ -167,12 +191,12 @@ class OpenCitiesClient:
             self._geolocation_id = self.resolve_geolocation_id(address)
 
         try:
-            return self.fetch_by_geolocation_id(self._geolocation_id)  # type: ignore[arg-type]
+            return self.fetch_by_geolocation_id(self._geolocation_id, address)  # type: ignore[arg-type]
         except SourceArgumentNotFound:
             if not used_cache:
                 raise
             self._geolocation_id = self.resolve_geolocation_id(address)
-            return self.fetch_by_geolocation_id(self._geolocation_id)
+            return self.fetch_by_geolocation_id(self._geolocation_id, address)
 
     def resolve_geolocation_id(self, address: str) -> str:
         if self._cfg.warm_up_before == "search":
@@ -180,11 +204,15 @@ class OpenCitiesClient:
         items = self._search(address)
         return self._select_address(address, items)
 
-    def fetch_by_geolocation_id(self, geolocation_id: str) -> list[Collection]:
-        html = self.get_waste_services_html(geolocation_id)
+    def fetch_by_geolocation_id(
+        self, geolocation_id: str, address: str | None = None
+    ) -> list[Collection]:
+        html = self.get_waste_services_html(geolocation_id, address)
         return self._parse_wasteservices_html(html)
 
-    def get_waste_services_html(self, geolocation_id: str) -> str:
+    def get_waste_services_html(
+        self, geolocation_id: str, address: str | None = None
+    ) -> str:
         """Return the raw wasteservices HTML fragment for a geolocation id.
 
         Exposed alongside :meth:`fetch_by_geolocation_id` for the rare
@@ -205,7 +233,26 @@ class OpenCitiesClient:
         )
         data = response.json()
         if not data.get("success", True) or not data.get("responseContent"):
-            raise SourceArgumentNotFound(self._cfg.argument_name, geolocation_id)
+            # The address resolved, but the council holds no waste service for
+            # that property (vacant land, a commercial lot, a newly titled block
+            # not yet on a run). Report the address the visitor gave rather than
+            # the internal geolocation GUID, which reads as nonsense to them --
+            # unless the GUID is what they gave, in which case name that
+            # argument so the config flow flags the field they filled in.
+            if address is not None:
+                argument_name, value = self._cfg.argument_name, address
+            else:
+                argument_name = (
+                    self._cfg.direct_argument_name or self._cfg.argument_name
+                )
+                value = geolocation_id
+            raise SourceArgumentNotFound(
+                argument_name,
+                value,
+                "The council lists no waste collection service for this "
+                "property. Check the address, or contact the council if it "
+                "should have a collection.",
+            )
         return data["responseContent"]
 
     # ---- internals ------------------------------------------------------
@@ -264,7 +311,9 @@ class OpenCitiesClient:
     def _select_address(self, address: str, items: list[dict[str, Any]]) -> str:
         if not items:
             raise SourceArgumentNotFound(self._cfg.argument_name, address)
-        if len(items) == 1 or not self._cfg.strict_address_matching:
+        if not self._cfg.strict_address_matching:
+            return items[0]["Id"]
+        if len(items) == 1 and not self._cfg.strict_single_result:
             return items[0]["Id"]
 
         normalized = address.lower().replace(" ", "")
@@ -332,11 +381,22 @@ class OpenCitiesClient:
             if collection_date is None:
                 continue
 
+            # Most deployments state the service's cadence and kerbside
+            # instructions in a "note" div next to the date ("Collected
+            # fortnightly. Place bin on the kerb before the morning of
+            # collection."). The API returns only the ONE next date per
+            # service, so this sentence is the only place the cadence appears
+            # at all -- carry it through as the collection's description
+            # instead of dropping it.
+            note = block.select_one(".note")
+            description = note.get_text(" ", strip=True) if note else None
+
             entries.append(
                 Collection(
                     date=collection_date,
                     t=waste_type,
                     icon=self._resolve_icon(waste_type),
+                    description=description,
                 )
             )
         return entries
