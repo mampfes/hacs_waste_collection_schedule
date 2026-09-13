@@ -1,164 +1,67 @@
-import datetime
-import logging
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, NavigableString, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.service.FirmstepSelfService import (
+    BartecTableParser,
+    RushcliffeAddressRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-_LOGGER = logging.getLogger(__name__)
+FORM_URL = "https://selfservice.broxtowe.gov.uk/renderform?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
+ADDRESS_LOOKUP_URL = "https://selfservice.broxtowe.gov.uk/core/addresslookup"
+FORM_POST_URL = "https://selfservice.broxtowe.gov.uk/RenderForm"
 
-
-TITLE = "Broxtowe Borough Council"
-DESCRIPTION = "Source for Broxtowe Borough Council."
-URL = "https://www.broxtowe.gov.uk/"
-TEST_CASES = {
-    "100031343805 NG9 2NL": {"uprn": 100031343805, "postcode": "NG9 2NL"},
-    "100031514955 NG9 4DU": {"uprn": " 100031308988", "postcode": "NG9 4DU"},
-    "U100031514955 NG9 4DU": {"uprn": "U100031308988 ", "postcode": "NG9 4DU"},
+# Unlike rushcliffe_gov_uk, this council's FormGuid (and every other hidden
+# field) is regenerated per session rather than staying constant, so every
+# field is re-scraped fresh on each request; only Trigger/TriggerCtl are
+# overridden on top (the scraped page's own values are empty).
+STATIC_FIELDS = {
+    "Trigger": "submit",
+    "TriggerCtl": "",
 }
 
 
-ICON_MAP = {
-    "BLACK": Icons.GENERAL_WASTE,
-    "GLASS": Icons.GLASS,
-    "GREEN": Icons.ORGANIC,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Broxtowe Borough Council"
+    DESCRIPTION = "Source for Broxtowe Borough Council."
+    URL = "https://www.broxtowe.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "100031343805 NG9 2NL": {"uprn": 100031343805, "postcode": "NG9 2NL"},
+        "100031514955 NG9 4DU": {"uprn": " 100031308988", "postcode": "NG9 4DU"},
+        "U100031514955 NG9 4DU": {"uprn": "U100031308988 ", "postcode": "NG9 4DU"},
+    }
 
-API_URL = "https://selfservice.broxtowe.gov.uk/renderform.aspx?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528"
+    PARAMS = (uprn(), postcode())
 
-
-POSTCODE_ARGS = {
-    "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_5683|ctl00$ContentPlaceHolder1$FF5683BTN",
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF5683BTN",
-    "__ASYNCPOST": "true",
-}
-
-UPRN_ARGS = {
-    "ctl00$ScriptManager1": "ctl00$ContentPlaceHolder1$APUP_5683|ctl00$ContentPlaceHolder1$FF5683DDL",
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$FF5683DDL",
-    "__ASYNCPOST": "true",
-}
-
-SUBMIT_ARGS = {
-    "__EVENTTARGET": "ctl00$ContentPlaceHolder1$btnSubmit",
-}
-
-
-class Source:
-    def __init__(self, uprn: str | int, postcode: str):
-        self._uprn: str = str(uprn).strip()
-        if self._uprn[0].upper() == "U":
-            self._uprn = self._uprn[1:].strip()
-
-        self._postcode: str = str(postcode)
-        self._uprn_args = UPRN_ARGS.copy()
-        self._postcode_args = POSTCODE_ARGS.copy()
-        self._submit_args = SUBMIT_ARGS.copy()
-        self._uprn_args["ctl00$ContentPlaceHolder1$FF5683DDL"] = f"U{self._uprn}"
-        self._postcode_args["ctl00$ContentPlaceHolder1$FF5683TB"] = f"{self._postcode}"
-
-    def __get_hidden_fiels(
-        self, response: requests.Response, to_update: dict[str, str]
-    ):
-        response.raise_for_status()
-        r_list = response.text.split("|")
-
-        if r_list[1] == "error":
-            raise Exception("could not get valid data from ashford.gov.uk")
-
-        indexes = [
-            index for index, value in enumerate(r_list) if value == "hiddenField"
-        ]
-
-        for index in indexes:
-            key = r_list[index + 1]
-            value = r_list[index + 2]
-            to_update[key] = value
-
-    def fetch(self):
-        s = requests.Session()
-        headers = {"User-Agent": "Mozilla/5.0"}
-        s.headers.update(headers)
-
-        r = s.get(API_URL)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        for key in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]:
-            search = soup.find(id=key)
-            if not search or not isinstance(search, Tag):
-                continue
-
-            self._postcode_args[key] = search.attrs["value"]
-
-        r = s.post(API_URL, data=self._postcode_args)
-        r.raise_for_status()
-
-        if "No addresses were found for the post code you entered." in r.text:
-            raise SourceArgumentException(
-                "postcode", "No addresses were found for the post code you entered."
-            )
-
-        self.__get_hidden_fiels(r, self._uprn_args)
-
-        r = s.post(API_URL, data=self._uprn_args)
-        r.raise_for_status()
-
-        self.__get_hidden_fiels(r, self._submit_args)
-
-        self._submit_args["ctl00$ContentPlaceHolder1$btnSubmit"] = (
-            "ctl00$ContentPlaceHolder1$btnSubmit"
-        )
-        r = s.post(API_URL, data=self._submit_args)
-        r.raise_for_status()
-
-        if "No collection calendars are available for the selected property." in r.text:
-            raise Exception(
-                f"No collection calendars are available for the selected property. Make sure your address returns entries on the council website ({API_URL})."
-            )
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        table = soup.find("table", class_="bartec")
-
-        if table is None or isinstance(table, NavigableString):
-            raise Exception("could not get valid data from ashford.gov.uk")
-
-        entries = []
-        trs = table.find_all("tr")
-
-        if not trs or len(trs) < 2:
-            raise Exception("could not get valid data from ashford.gov.uk")
-
-        for row in trs[1:]:
-            bint_type = row.find("td")
-            if not bint_type:
-                continue
-
-            bint_type = bint_type.text
-
-            collections = row.find_all("td")
-            if not collections or len(collections) < 2:
-                continue
-            collections = collections[2:]
-
-            for collection in collections:
-                if collection.text == "":
-                    continue
-                try:
-                    date = datetime.datetime.strptime(
-                        collection.text, "%A, %d %B %Y"
-                    ).date()
-                except ValueError:
-                    _LOGGER.warning(
-                        f"could not parse date {collection.text} for collection type {bint_type}: skipping"
-                    )
-                    continue
-
-                icon = ICON_MAP.get(bint_type.split(" ")[0])  # Collection icon
-
-                entries.append(Collection(date=date, t=bint_type, icon=icon))
-
-        return entries
+    # Resolve postcode+UPRN to a Firmstep address record via the shared
+    # addresslookup retriever (broxtowe supplies a UPRN directly rather than
+    # free-text address, so `uprn_param` selects that matching mode over the
+    # default fuzzy-address one), then decode the Bartec results table.
+    retrieve = RushcliffeAddressRetriever(
+        form_url=FORM_URL,
+        address_lookup_url=ADDRESS_LOOKUP_URL,
+        form_post_url=FORM_POST_URL,
+        static_fields=STATIC_FIELDS,
+        refetch_all_fields=True,
+        uprn_field="FF5683",
+        uprn_param="uprn",
+    )
+    parse = BartecTableParser()
+    # Bartec's own row labels carry a size/container suffix (e.g. "GREEN
+    # 240L", "GLASS BAG"); only the leading colour/material word identifies
+    # the bin.
+    transform = RowTransformer(
+        clean=lambda label: label.split(" ")[0],
+        type_value_map={
+            "black": wt.GENERAL_WASTE,
+            "glass": wt.GLASS,
+            "green": wt.ORGANIC,
+            "brown": wt.GARDEN_WASTE,
+        },
+    )
