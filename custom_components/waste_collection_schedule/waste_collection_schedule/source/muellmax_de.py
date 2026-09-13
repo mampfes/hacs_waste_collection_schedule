@@ -60,6 +60,17 @@ class Source(BaseSource):
     COUNTRY = "de"
 
     TEST_CASES: ClassVar[dict] = {
+        "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
+        "Münster, Patronatsstr. 13 (unique street match)": {
+            "service": "Awm",
+            "mm_frm_str_sel": "Patronatsstr.",
+            "mm_frm_hnr_sel": 13,
+        },
+        "Mainz, Holunderweg 5 (stale district in value)": {
+            "service": "Ebm",
+            "mm_frm_str_sel": "Holunderweg",
+            "mm_frm_hnr_sel": "55128;Mainz;5;",
+        },
         "USB Freiligrathstraße 55": {
             "service": "Usb",
             "mm_frm_str_sel": "Freiligrathstraße",
