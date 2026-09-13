@@ -6926,13 +6926,6 @@ class TestRegionsFromYaml:
 CASES_AWAITING_CASSETTE = {
     "1coast_com_au::56_everglades_cr_woy_woy_central_coast_2256",
     "a_region_ch::wolfhalden",
-    "abfall_io_graphql::asg_nordsachsen_delitzsch_beerendorf",
-    "abfall_io_graphql::entsorgungsbetriebe_essen",
-    "abfall_io_graphql::kell_kommunalentsorgung_landkreis_leipzig_gmbh_gro_p_sna",
-    "abfall_io_graphql::landkreis_b_blingen_b_blingen_dagersheim",
-    "abfall_io_graphql::landkreis_g_ttingen_scheden",
-    "abfall_io_graphql::schwarzwald_baar_kreis_k_nigsfeld",
-    "abfall_io_graphql::wirtschaftsbetriebe_duisburg_wbd_buchholz_altenbrucher_damm_8",
     "abfallnavi_de::nds_norderstedt_friedrichsgaber_weg_house_number_range_as_street",
     "abfallnavi_de::solingen_katternberger_stra_e_95_street_split_by_district",
     "api_hubert_schmid_de::albatsried_seeg",

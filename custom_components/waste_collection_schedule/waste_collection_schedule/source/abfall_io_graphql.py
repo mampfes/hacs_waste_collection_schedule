@@ -26,6 +26,7 @@ class Source(BaseSource):
     # Canonical types observed across the registered providers; the transformer
     # resolves each provider's German labels through the shared vocabulary.
     WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
         wt.HAZARDOUS,
         wt.ORGANIC,
