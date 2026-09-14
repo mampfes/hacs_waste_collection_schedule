@@ -11,6 +11,7 @@ COUNTRY = "de"
 TEST_CASES = {
     "Am Rathaus": {"street": "Am Rathaus"},
     "Am Haspel": {"street": "Am Haspel"},
+    "Oberhörr (Sandhof / Sonnenhof)": {"street": "Oberhörr (Sandhof / Sonnenhof)"},
 }
 SOURCE_CODEOWNERS = ["@SgtSeppel"]
 
@@ -43,6 +44,9 @@ ICON_MAP = {
 }
 
 API_URL = "https://sperrmuell.erlensee.de/"
+
+# "timeframe" option 46 = "6 Monate" (rolling six month window, not year bound)
+TIMEFRAME = 46
 
 
 class Source:
@@ -77,7 +81,7 @@ class Source:
 
         data = [
             ("street", streets[self._street]),
-            ("timeframe", 46),
+            ("timeframe", TIMEFRAME),
             ("download", "ical"),
         ]
         for et in event_ids:
@@ -91,9 +95,15 @@ class Source:
         )
         r.raise_for_status()
 
+        # summaries look like "Restmüll (MT) (Am Rathaus)": only the trailing
+        # street suffix may be removed, the waste type itself can contain "(...)"
+        street_suffix = f" ({self._street})"
+
         entries = []
         for date, waste_type in self._ics.convert(r.text):
-            name = waste_type.split(" (")[0].strip()
+            name = waste_type.strip()
+            if name.endswith(street_suffix):
+                name = name[: -len(street_suffix)].strip()
             entries.append(
                 Collection(date, name, ICON_MAP.get(name, Icons.GENERAL_WASTE))
             )
