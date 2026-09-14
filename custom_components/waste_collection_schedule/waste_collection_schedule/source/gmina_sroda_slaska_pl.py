@@ -1,7 +1,8 @@
 import datetime
+from typing import Literal
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -20,6 +21,8 @@ TEST_CASES = {
     "Szczepanów": {"location": "szczepanow"},
     "Środa Śląska I rejon": {"location": "sroda-slaska-i-rejon"},
     "Ciechów": {"location": "ciechow"},
+    "Ciechów single-family": {"location": "ciechow", "property_type": "single_family"},
+    "Ciechów multifamily": {"location": "ciechow", "property_type": "multi_family"},
 }
 
 ICON_MAP = {
@@ -50,10 +53,12 @@ PARAM_TRANSLATIONS = {
     "en": {
         "location": "Location",
         "location_id": "Location ID (obsolete)",
+        "property_type": "Property type",
     },
     "de": {
         "location": "Ort",
         "location_id": "Orts-ID (veraltet)",
+        "property_type": "Gebäudetyp",
     },
 }
 
@@ -61,10 +66,12 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "location": "Locality or district URL slug from the COM-D schedule page",
         "location_id": "No longer supported, use 'location' instead",
+        "property_type": "all (default), single_family or multi_family; select the dwelling type when the provider publishes separate schedules",
     },
     "de": {
         "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
         "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden",
+        "property_type": "all (Standard), single_family (Einfamilienhaus) oder multi_family (Mehrfamilienhaus)",
     },
 }
 
@@ -92,9 +99,51 @@ def _get_locations(session: requests.Session) -> list[str]:
     )
 
 
+PROPERTY_TYPES = {
+    "single_family": "zabudowa jednorodzinna",
+    "multi_family": "zabudowa wielorodzinna",
+}
+
+
+def _collection_days(soup: BeautifulSoup, property_type: str) -> list[Tag]:
+    """Associate dates with the preceding COM-D frequency/dwelling heading."""
+    if property_type == "all":
+        return list(soup.select("td.highlighted[data-date]"))
+
+    days: list[tuple[str | None, Tag]] = []
+    current_type = None
+    available_types: set[str] = set()
+    # A category page repeats frequency headers and calendars for each schedule.
+    # Read them in document order, resetting at EVERY frequency header, including
+    # unqualified schedules shared by all property types.
+    for element in soup.select("p, td.highlighted[data-date]"):
+        if element.name == "p":
+            text = " ".join(element.get_text(" ", strip=True).split()).casefold()
+            if not text.startswith("częstotliwość"):
+                continue
+            current_type = next(
+                (key for key, label in PROPERTY_TYPES.items() if label in text), None
+            )
+            if current_type is None and "zabudowa" in text:
+                raise ValueError(f"Unrecognized COM-D property type heading: {text}")
+            if current_type is not None:
+                available_types.add(current_type)
+        else:
+            days.append((current_type, element))
+
+    if available_types and property_type not in available_types:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "property_type", property_type, sorted(available_types)
+        )
+    return [day for kind, day in days if kind is None or kind == property_type]
+
+
 class Source:
     def __init__(
-        self, location: str | None = None, location_id: str | int | None = None
+        self,
+        location: str | None = None,
+        location_id: str | int | None = None,
+        property_type: Literal["all", "single_family", "multi_family"] = "all",
     ):
         # location_id was used by the previous provider. Its values grouped several
         # localities together and cannot be mapped to a COM-D location automatically,
@@ -106,7 +155,12 @@ class Source:
                 if location_id is not None
                 else HOW_TO_GET_LOCATION,
             )
+        if property_type not in {"all", *PROPERTY_TYPES}:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "property_type", property_type, ["all", *PROPERTY_TYPES]
+            )
         self._location: str = location
+        self._property_type = property_type
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
@@ -147,7 +201,7 @@ class Source:
             category_response.raise_for_status()
             category_soup = BeautifulSoup(category_response.text, "html.parser")
 
-            for collection_day in category_soup.select("td.highlighted[data-date]"):
+            for collection_day in _collection_days(category_soup, self._property_type):
                 collection_date = datetime.datetime.strptime(
                     collection_day["data-date"], "%Y-%m-%d"
                 ).date()
