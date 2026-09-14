@@ -3,10 +3,18 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = "Bromsgrove City Council"
-DESCRIPTION = "Source for bromsgrove.gov.uk services for Bromsgrove, UK."
+TITLE = "Bromsgrove & Redditch Councils"
+DESCRIPTION = "Source for the shared bin collection lookup used by Bromsgrove District Council and Redditch Borough Council, UK."
 URL = "https://bromsgrove.gov.uk"
+EXTRA_INFO = [
+    {
+        "title": "Redditch Borough Council",
+        "url": "https://www.redditchbc.gov.uk",
+        "default_params": {"council": "redditch"},
+    },
+]
 TEST_CASES = {
     "Shakespeare House": {"uprn": "10094552413", "postcode": "B61 8DA"},
     "The Lodge": {"uprn": 10000218025, "postcode": "B60 2AA"},
@@ -18,9 +26,14 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
 }
 
-API_URLS = {
-    "collection": "https://bincollections.bromsgrove.gov.uk/BinCollections/Details/",
+# Bromsgrove District Council and Redditch Borough Council run a shared waste
+# service and both publish the same "BinCollections" web app, one instance per
+# council domain.
+COUNCIL_DOMAINS = {
+    "bromsgrove": "bincollections.bromsgrove.gov.uk",
+    "redditch": "bincollections.redditchbc.gov.uk",
 }
+
 ICON_MAP = {
     "Grey": Icons.GENERAL_WASTE,
     "Green": Icons.RECYCLING,
@@ -29,9 +42,14 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, uprn: str, postcode: str):
+    def __init__(self, uprn: str, postcode: str, council: str = "bromsgrove"):
         self._uprn = uprn
         self._postcode = "".join(postcode.split()).upper()
+        if council not in COUNCIL_DOMAINS:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "council", council, COUNCIL_DOMAINS.keys()
+            )
+        self._domain = COUNCIL_DOMAINS[council]
 
     def fetch(self):
         entries: list[Collection] = []
@@ -41,7 +59,9 @@ class Source:
 
         form_data = {"UPRN": self._uprn}
 
-        collection_response = session.post(API_URLS["collection"], data=form_data)
+        collection_response = session.post(
+            f"https://{self._domain}/BinCollections/Details/", data=form_data
+        )
 
         # Parse HTML
         soup = BeautifulSoup(collection_response.text, "html.parser")

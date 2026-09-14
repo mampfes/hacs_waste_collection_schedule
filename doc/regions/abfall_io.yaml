@@ -10,9 +10,6 @@
   - title: ALBA Berlin
     url: https://berlin.alba.info/
     service_id: 9583a2fa1df97ed95363382c73b41b1b
-  - title: ASO Abfall-Service Osterholz
-    url: https://www.aso-ohz.de/
-    service_id: 040b38fe83f026f161f30f282b2748c0
   - title: Landkreis Bayreuth
     url: https://www.landkreis-bayreuth.de/
     service_id: 951da001077dc651a3bf437bc829964e
@@ -82,9 +79,8 @@
   - title: Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)
     url: https://www.azv-rme.de/
     service_id: 8303df78b822c30ff2c2f98e405f86e6
-  - title: Team Orange (Landkreis Würzburg)
-    url: https://www.team-orange.info/
-    service_id: 3701fd1ff111f63996ab46a448669ea3
+  # Team Orange (Landkreis Würzburg) migrated off abfall.io; their service key
+  # now returns 403. Use the dedicated `team_orange_de` source instead. See #6041.
   - title: Landkreis Cuxhaven
     url: https://www.landkreis-cuxhaven.de/
     service_id: 49fe8a63a056adbfc43f051f61dd4a44
@@ -130,3 +126,6 @@
   - title: Stadt Wittenberge (Landkreis Prignitz)
     url: https://www.landkreis-prignitz.de/
     service_id: b870ecfa6e1f882680758d374ba3fa2d
+  - title: Landkreis Landshut
+    url: https://www.landkreis-landshut.de/
+    service_id: 04b7561b94f2cbaa171cd85bb6aa56de

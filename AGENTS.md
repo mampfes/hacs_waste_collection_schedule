@@ -108,6 +108,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 - **Suppressing failures silently.** Returning `[]` on an HTTP error masks problems as "no upcoming collections".
 - **Unformatted code.** Run `ruff check --fix` and `ruff format` before committing (see Commands below).
 - **Raw `mdi:*` strings in `ICON_MAP`.** Use the canonical `Icons` enum (`from waste_collection_schedule import Icons`) so icons stay consistent across sources for the same logical waste category. See `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`.
+- **A dedicated `tests/test_<source>.py` unit-test file.** `TEST_CASES` plus a live run of `test_sources.py -s <name> -l` is the normal, expected coverage for a source — don't add a standalone test file just because it seems thorough. Default to not adding one; add it only when absolutely necessary, i.e. logic so non-trivial (a tricky date/regex parser, say) that `TEST_CASES` genuinely cannot exercise it, and even then mock any network calls — don't hit the live API from the test. With ~600 sources, one test file per source doesn't scale, and root `pytest.ini`'s `python_files` allowlist covers only `test_source_components.py` and `test_fetch_retry.py` — anything else in `tests/` is never collected by `pytest tests/` or CI.
 
 ## HOW_TO_GET_ARGUMENTS_DESCRIPTION rules
 

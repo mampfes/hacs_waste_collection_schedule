@@ -6,6 +6,7 @@ import datetime
 import logging
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any, ClassVar
+from urllib.parse import quote
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -108,7 +109,15 @@ class WhatBinDayRetriever(RetrieverFunc):
       one free-text address field (named by ``address_field``) into
       ``street_number``/``street_name``/``suburb``/``post_code``/``state``.
       When given, the four `*_field` args are ignored.
-    * ``state``: literal state used when ``split_address`` is not given (a
+    * ``split_params``: ``callable(source.params) -> AddressParts`` for a
+      source whose own field shape doesn't fit either the separate-fields or
+      single-address-field case above (e.g. Ipswich's combined "street" text
+      plus a separate "suburb" field, with no postcode field at all: neither
+      one field to split nor four to read straight). Takes the *whole*
+      params dict and returns the parts directly; when given, every other
+      field-name arg (including ``split_address``) is ignored.
+    * ``state``: literal state used when neither ``split_address`` nor
+      ``split_params`` is given (a
       source with separate address fields, like Kingston, does not also ask
       the user for their state).
     * ``state_long_name``: the ``administrative_area_level_1`` long name, when
@@ -118,13 +127,28 @@ class WhatBinDayRetriever(RetrieverFunc):
     * ``suburb_case``: a key of :data:`SUBURB_CASES` normalising the suburb to
       the casing this council's dataset stores, so the case-sensitive match on
       the backend succeeds whatever the user typed.
-    * ``geocode``: whether to resolve coordinates via Nominatim.
+    * ``geocode``: whether to resolve coordinates via Nominatim (OpenStreetMap).
+      The council's own manually-assembled address_components (from
+      ``parts``) are still what gets posted alongside the coordinates.
+    * ``google_geocode``: some deployments (Ipswich) validate the posted
+      address itself against their own property/parcel data, which a
+      manually-assembled address_components/formatted_address blob does not
+      match closely enough (confirmed live: the same request succeeds with
+      Google's response and fails with a hand-built one) — Nominatim's is not
+      a substitute here either, only real Google geocoding is. Every
+      deployment's own Google API key is issued per-device at registration
+      (``config.googleAddressSearchURL``), not shared/static, so this queries
+      that URL and posts Google's own ``address_components``/
+      ``formatted_address``/``geometry`` verbatim instead of ``geocode``'s
+      coordinates-only result plus ``_build_address_data``'s local one.
+      Mutually exclusive with ``geocode``.
     * ``location_key``: a literal device-key-store key, or
       ``callable(AddressParts) -> str`` to derive one per address.
     """
 
     API_URLS: ClassVar = {
         "register_device": "https://api.whatbinday.com/V3/Device",
+        "config": "https://api.whatbinday.com/V3/Device/{}/Config",
         "services": "https://api.whatbinday.com/V3/Device/{}/Services",
     }
 
@@ -148,15 +172,19 @@ class WhatBinDayRetriever(RetrieverFunc):
         country: str = "Australia",
         app_package: str = DEFAULT_APP_PACKAGE,
         geocode: bool = False,
+        google_geocode: bool = False,
         suburb_case: str | None = None,
         split_address: Callable[[str], AddressParts] | None = None,
         address_field: str = "address",
+        split_params: Callable[[dict[str, Any]], AddressParts] | None = None,
     ):
         if suburb_case is not None and suburb_case not in SUBURB_CASES:
             raise ValueError(
                 f"unknown suburb_case {suburb_case!r}, expected one of "
                 f"{sorted(SUBURB_CASES)}"
             )
+        if geocode and google_geocode:
+            raise ValueError("geocode and google_geocode are mutually exclusive")
         self.location_key = location_key
         self.street_number_field = street_number_field
         self.street_name_field = street_name_field
@@ -167,13 +195,17 @@ class WhatBinDayRetriever(RetrieverFunc):
         self.country = country
         self.app_package = app_package
         self.geocode = geocode
+        self.google_geocode = google_geocode
         self.suburb_case = suburb_case
         self.split_address = split_address
         self.address_field = address_field
+        self.split_params = split_params
 
     def __call__(self, source: BaseSource) -> list[dict[str, Any]]:
         params = source.params
-        if self.split_address is not None:
+        if self.split_params is not None:
+            parts = self.split_params(params)
+        elif self.split_address is not None:
             parts = self.split_address(params[self.address_field])
         else:
             parts = {
@@ -197,7 +229,10 @@ class WhatBinDayRetriever(RetrieverFunc):
             else self.location_key
         )
         device_key = self._register_device(source, location_key)
-        location_data = self._build_address_data(parts, coordinates)
+        if self.google_geocode:
+            location_data = self._google_geocode(source, device_key, parts)
+        else:
+            location_data = self._build_address_data(parts, coordinates)
         return self._fetch_services(source, device_key, location_data)
 
     def _geocode(self, source: BaseSource, parts: AddressParts) -> dict[str, float]:
@@ -222,6 +257,49 @@ class WhatBinDayRetriever(RetrieverFunc):
         if not results:
             raise SourceArgumentNotFound("street_name", parts["street_name"])
         return {"lat": float(results[0]["lat"]), "lng": float(results[0]["lon"])}
+
+    def _google_geocode(
+        self, source: BaseSource, device_key: str, parts: AddressParts
+    ) -> dict[str, Any]:
+        """Geocode via this device's own Google search URL; use Google's result verbatim.
+
+        Every device is issued its own Google API key embedded in
+        ``googleAddressSearchURL`` (fetched fresh from the Config endpoint,
+        since a cached device key from a prior run never carried it), so
+        this can't be a single shared/static geocoder the way Nominatim is.
+        """
+        r = source.session.get(self.API_URLS["config"].format(device_key), timeout=30)
+        r.raise_for_status()
+        config_data = r.json()
+        response_shape.expect(
+            bool(config_data.get("success")),
+            source_name=response_shape.source_name(source),
+            detail=f"config lookup failed: {config_data.get('info', 'unknown error')}",
+            raw=config_data,
+        )
+        search_url = config_data["data"]["config"]["googleAddressSearchURL"]
+
+        query = (
+            f"{parts['street_number']} {parts['street_name']}, "
+            f"{parts['suburb']} {parts['state']}, {self.country}"
+        )
+        r = source.session.get(
+            search_url.replace("%s", quote(query, safe="")), timeout=30
+        )
+        r.raise_for_status()
+        geocode_data = r.json()
+        results = geocode_data.get("results") or []
+        if not results:
+            raise SourceArgumentNotFound("street_name", parts["street_name"])
+        result = results[0]
+        return {
+            "address_components": result["address_components"],
+            "formatted_address": result["formatted_address"],
+            "geometry": {
+                "location": result["geometry"]["location"],
+                "location_type": "APPROXIMATE",
+            },
+        }
 
     def _register_device(self, source: BaseSource, location_key: str) -> str:
         """Return a cached device key, or register a new one and cache it.

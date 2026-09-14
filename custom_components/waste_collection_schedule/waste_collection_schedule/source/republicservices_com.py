@@ -160,6 +160,24 @@ class Source:
                         "alt_date": item.get("altPickUpDate"),
                     }
                 )
+        # The API has been observed to return duplicate entries for the same holiday
+        # (cause unconfirmed - may be transient). Applying a "one day delay" holiday more
+        # than once would shift affected pickups by an extra day, so dedupe defensively
+        # before adjusting; this is a no-op when the API returns clean data.
+        seen_holidays: set = set()
+        deduped_holidays = []
+        for holiday in holidays:
+            key = (
+                holiday["date"],
+                holiday["service"],
+                holiday["status"],
+                holiday["alt_date"],
+            )
+            if key not in seen_holidays:
+                seen_holidays.add(key)
+                deduped_holidays.append(holiday)
+        holidays = deduped_holidays
+
         # The site applies holidays oldest-first, so a run of holidays in one week can
         # push a pickup forward day by day. Match that ordering.
         holidays.sort(key=lambda holiday: holiday["date"])

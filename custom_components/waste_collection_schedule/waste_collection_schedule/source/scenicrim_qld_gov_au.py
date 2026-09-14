@@ -1,10 +1,12 @@
 import csv
 import logging
 from datetime import datetime, timedelta
+from difflib import get_close_matches
 
 import requests
 from dateutil.rrule import FR, MO, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Scenic Rim Regional Council"
 DESCRIPTION = "Source for scenicrim.qld.gov.au services for Scenic Rim Regional Council"
@@ -38,7 +40,7 @@ START_DATES: dict = {  # taken from https://www.scenicrim.qld.gov.au/downloads/f
 # ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Your address as it appears in the _Street_Address_ column of the csv file used by the website. Addresses contain both single-space and double-space character sequences and these need to be preserved. The csv file can be found at (https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv ",
+    "en": "Your address as it appears in the _Street_Address_ column of the csv file used by the website. Case and spacing do not have to match: the register's double spaces and upper-casing are ignored when matching. The csv file can be found at https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv",
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
@@ -59,9 +61,20 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 _LOGGER = logging.getLogger(__name__)
 
 
+def _normalise(text: str) -> str:
+    """Upper-case and collapse whitespace.
+
+    The register mixes single- and double-space sequences ("1 ACACIA STREET
+    BEAUDESERT  QLD 4285"), which previously meant a caller had to reproduce
+    that spacing exactly. Comparing on collapsed whitespace removes that trap
+    without changing which property matches.
+    """
+    return " ".join(text.upper().split())
+
+
 class Source:
     def __init__(self, address: str):
-        self._address: str = address.upper()
+        self._address: str = _normalise(address)
 
     def generate_dates(
         self, weekday: int, date_start: datetime, interval: int, date_end: datetime
@@ -82,16 +95,53 @@ class Source:
         # get master schedule from website
         csv_file = s.get(API_URL)
         csv_decoded = csv_file.content.decode("utf-8")
-        address_list: list = csv.reader(csv_decoded.splitlines(), delimiter=",")
-        address_list = [
-            [element.upper() for element in address] for address in address_list
+        rows = list(csv.reader(csv_decoded.splitlines(), delimiter=","))
+        # Row 0 is the header; every later row is
+        # [Street_Address, Street, Street_Locality, Service_Day, Recycle_Week].
+        address_list: list = [
+            [element.upper() for element in row] for row in rows[1:] if row and row[0]
         ]
 
-        # extract service day and recycling code
+        # Extract service day and recycling code. Prefer an exact match on the
+        # register address, falling back to a substring match; the register
+        # contains addresses that are prefixes of others ("1 SMITH ST" is a
+        # substring of "11 SMITH ST"), and the previous loop kept the last
+        # match rather than the best one.
+        match = None
+        substring_match = None
         for item in address_list:
-            if self._address in item[0]:
-                service_day: str = item[-2]
-                recycling_code: str = item[-1].split(" ")[1]
+            register_address = _normalise(item[0])
+            if register_address == self._address:
+                match = item
+                break
+            if substring_match is None and self._address in register_address:
+                substring_match = item
+        if match is None:
+            match = substring_match
+
+        # No match previously left service_day unbound, so an address that is
+        # not in the register raised UnboundLocalError and surfaced as an
+        # opaque HTTP 500 instead of telling the user what to enter.
+        if match is None or match[-2] not in DAYS:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                # The register holds ~17k addresses; returning all of them
+                # would build a several-hundred-kilobyte error message, so
+                # only offer the closest candidates.
+                get_close_matches(
+                    self._address,
+                    [item[0] for item in address_list],
+                    n=5,
+                    cutoff=0.4,
+                ),
+            )
+
+        service_day: str = match[-2]
+        # Recycle_Week reads e.g. "Week1 Red"/"Week2 Blue", but some properties
+        # are listed as "Contact Council" instead.
+        recycle_week: list = match[-1].split(" ")
+        recycling_code: str = recycle_week[1] if len(recycle_week) > 1 else ""
 
         # set up start/end dates for generate_dates
         now: datetime = datetime.now()
@@ -100,11 +150,24 @@ class Source:
         # generate general waste dates
         service_days = self.generate_dates(DAYS[service_day], start_date, 1, end_date)
         service_days = [["GENERAL WASTE", day] for day in service_days]
-        # generate recycling dates
-        recycling_days = self.generate_dates(
-            DAYS[service_day], START_DATES[recycling_code], 2, end_date
-        )
-        recycling_days = [["RECYCLING", day] for day in recycling_days]
+        # generate recycling dates; properties whose Recycle_Week is "Contact
+        # Council" are not on the projectable Red/Blue fortnightly cycle, so
+        # report general waste only rather than raising a KeyError.
+        recycling_days: list = []
+        if recycling_code in START_DATES:
+            recycling_days = [
+                ["RECYCLING", day]
+                for day in self.generate_dates(
+                    DAYS[service_day], START_DATES[recycling_code], 2, end_date
+                )
+            ]
+        else:
+            _LOGGER.info(
+                "No recycling week published for '%s' (Recycle_Week is '%s'); "
+                "reporting general waste only",
+                self._address,
+                match[-1],
+            )
         # combine to create collection schedule
         collection_days: list = service_days + recycling_days
 

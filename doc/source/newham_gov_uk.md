@@ -22,7 +22,7 @@ Unique number the London Borough of Newham uses to identify your property.
 
 #### How to find your `PROPERTY_ID`
 
-Searach for your waste collection schedule at (https://bincollection.newham.gov.uk/). Your `PROPERTY_ID` is the set of numbers at the end of the url when your schedule is being displayed.
+Search for your waste collection schedule at <https://bincollection.newham.gov.uk/>. Your `PROPERTY_ID` is the set of numbers at the end of the url when your schedule is being displayed.
 
 For example: https://bincollection.newham.gov.uk/Details/Index/000046029438
 

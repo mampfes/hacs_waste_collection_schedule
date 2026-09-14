@@ -6,6 +6,12 @@ shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
 module only declares the municipality's base URL and the German-to-canonical
 waste-type map, so there is no ``retrieve`` override, no manual request params
 and no ICON_MAP.
+
+Peine-Kernstadt (the implicit default when Ort is omitted) needs no refid, but
+every other municipality does, dynamically, from the "Ort auswählen" dropdown
+on the Abfuhrtermine page: ``refid_page_url`` covers that, and is only
+consulted when the user actually gives an Ort (#7351), so existing
+Peine-Kernstadt configs keep working unchanged.
 """
 
 from typing import ClassVar, final
@@ -40,6 +46,22 @@ class Source(BaseSource):
             "strasse": "Gerhart-Hauptmann-Straße",
         },
         "Adlerstraße (Peine-Kernstadt)": {"strasse": "Adlerstraße"},
+        "Adlerstraße with municipality": {
+            "strasse": "Adlerstraße",
+            "ort": "Peine-Kernstadt (mit Telgte)",
+        },
+        "Osterriehe (Broistedt)": {
+            "strasse": "Osterriehe",
+            "ort": "Broistedt",
+        },
+        "Vechelde (Hauptort)": {
+            "strasse": "alle Straßen",
+            "ort": "Vechelde (Hauptort)",
+        },
+        "Wendeburg (Hauptort)": {
+            "strasse": "alle Straßen",
+            "ort": "Wendeburg (Hauptort)",
+        },
     }
 
     PARAMS = (
@@ -49,7 +71,9 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
-    retrieve = SiteparkIESRetriever(_BASE_URL)
+    retrieve = SiteparkIESRetriever(
+        _BASE_URL, refid_page_url=f"{_BASE_URL}/Abfuhrtermine/"
+    )
     parse = parsers.IcsParser()
     # "Altpapier", "Biotonne" and "Restmülltonne" already auto-resolve against
     # the shared vocabulary; only "Gelbe Säcke" (plural) needs an explicit map,

@@ -18,7 +18,7 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-API_URL = "https://www.schweinfurt.de/leben-freizeit/umwelt/abfallwirtschaft/4427.Aktuelle-Abfuhrtermine-und-Muellkalender.html"
+API_URL = "https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html"
 
 # Titles (or title fragments) that are announcements rather than an actual
 # collection/drop-off event, e.g. "Wertstoffhof geschlossen" (recycling

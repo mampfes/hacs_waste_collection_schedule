@@ -1104,7 +1104,8 @@ class AthosWasteManagementRetriever(_BaseRetriever):
 
     1. GET ``url`` with ``initial_params``. If it 404s and ``fallback_url`` is
        set, retry there instead (a servlet that moved host/path while old
-       deployments still link the previous one).
+       deployments still link the previous one). Run ``initial_validate`` on
+       the response, if set.
     2. Scrape the response's ``<input type=hidden>`` fields into the running
        form state (the wizard's server-side session key/values). See
        ``state`` for the two deployments that seed it differently.
@@ -1112,9 +1113,17 @@ class AthosWasteManagementRetriever(_BaseRetriever):
        into the running state, drop any ``remove`` keys, set the submit-action
        field (``SubmitAction`` by default) to ``submit_action`` (resolved
        against ``source.params`` if callable), then POST the accumulated state
-       back to the servlet URL.
+       back to the servlet URL. Run that step's ``validate``, if set, on the
+       response before moving to the next step.
     4. Return the *last* step's response (the ICS download) unparsed; pair
        with ``parsers.IcsParser()`` / ``parsers.IcsEventsParser()``.
+
+    A step whose ``fields`` only sets *part* of the address (e.g. the Ort
+    alone) lets a later step's ``validate`` inspect that response's own
+    ``<select>`` options before the next step submits the rest: some
+    deployments silently accept an address field that does not exactly match
+    their internal spelling, downstream failing deep inside ICS parsing
+    instead of with a clear argument error (zakb_de, #7365).
 
     The form state accumulates across steps (a later step inherits every
     earlier step's fields unless a step's ``remove`` drops them, or its
@@ -1193,6 +1202,11 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             intermediate, so the chain cannot be built from the default trust
             store (awg_de). Prefer a completed bundle over ``False`` where the
             missing intermediate is known and stable.
+        initial_validate: optional ``callable(response, source)``, run on the
+            response to the initial GET before any step. Raise a
+            ``SourceArgument*`` exception to reject a value the site's own
+            page already lists as invalid (e.g. an Ort ``<select>``) instead
+            of letting a bad value silently fail several requests later.
     """
 
     def __init__(
@@ -1207,6 +1221,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         submit_action_field: str = "SubmitAction",
         state: str = "accumulate",
         verify: bool | str = True,
+        initial_validate: Callable[[Response, BaseSource], None] | None = None,
     ):
         if not steps:
             raise ValueError("AthosWasteManagementRetriever requires at least one step")
@@ -1228,6 +1243,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         self.submit_action_field = submit_action_field
         self.state = state
         self.verify = verify
+        self.initial_validate = initial_validate
 
     def _apply_encoding(self, response: Response) -> Response:
         if self.encoding is not None:
@@ -1248,6 +1264,8 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             )
         initial.raise_for_status()
         self._apply_encoding(initial)
+        if self.initial_validate is not None:
+            self.initial_validate(initial, source)
 
         state: dict[str, Any] = (
             {} if self.state == "none" else _scrape_hidden_inputs(initial.text)
@@ -1276,6 +1294,8 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             )
             response.raise_for_status()
             self._apply_encoding(response)
+            if "validate" in step:
+                step["validate"](response, source)
 
         return response
 

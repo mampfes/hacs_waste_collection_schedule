@@ -26,6 +26,7 @@ class Source(BaseSource):
     # Canonical types observed across the registered providers; the transformer
     # resolves each provider's German labels through the shared vocabulary.
     WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
         wt.HAZARDOUS,
         wt.ORGANIC,
@@ -77,6 +78,10 @@ class Source(BaseSource):
         "Schwarzwald-Baar-Kreis, Königsfeld": {
             "key": "30628292bdd8b43db86a48f7e0d85f85",
             "idHouseNumber": 16437,
+        },
+        "ASO Abfall-Service Osterholz, Osterholz-Scharmbeck, Ahrensfelder Damm 4": {
+            "key": "8b016df0116d1d5094fa339bebea0c65",
+            "idHouseNumber": 6644,
         },
     }
 

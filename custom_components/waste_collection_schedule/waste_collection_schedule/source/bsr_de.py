@@ -67,6 +67,34 @@ class Source(BaseSource):
         wt.GARDEN_WASTE,
     ]
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://www.bsr.de/abfuhrkalender and enter your street "
+            "(Straße) and house number (Hausnummer) in the form (you may need "
+            "to pick your postal code from a list). You'll then see a calendar "
+            'with your pickup dates. Click the "Downloads" button directly '
+            "above the calendar, then hover your mouse over either of the two "
+            "links in the popup (PDF or ICS) and read the link shown at the "
+            "very bottom of your browser window: part of it is a 24-digit "
+            "number - that's your schedule_id. On some browsers you can "
+            "instead right-click a link and copy its address to read the "
+            "number from there."
+        ),
+        "de": (
+            "Gehen Sie zu https://www.bsr.de/abfuhrkalender und geben Sie Ihre "
+            "Straße und Hausnummer in das Formular ein (ggf. müssen Sie Ihre "
+            "Postleitzahl aus einer Liste auswählen). Anschließend sehen Sie "
+            "einen Kalender mit Ihren Abholterminen. Klicken Sie auf die "
+            "Schaltfläche „Downloads“ direkt oberhalb des Kalenders, fahren "
+            "Sie dann mit der Maus über einen der beiden Links im Popup (PDF "
+            "oder ICS) und lesen Sie den Link am unteren Rand Ihres "
+            "Browserfensters ab: Ein Teil davon ist eine 24-stellige Zahl - "
+            "das ist Ihre schedule_id. In manchen Browsern können Sie "
+            "stattdessen mit der rechten Maustaste auf einen Link klicken und "
+            "die Adresse kopieren, um die Nummer daraus abzulesen."
+        ),
+    }
+
     TEST_CASES: ClassVar[dict] = {
         "Hufeland_45a": {"schedule_id": "04901100010300413840045A"},
         "Marktstr_1": {"schedule_id": "049011000105000297900010"},

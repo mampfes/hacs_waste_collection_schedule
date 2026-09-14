@@ -36,9 +36,17 @@ WASTE_LAYER = "waste"
 
 # (label, feature_url, out_fields) per layer; the label is carried through to
 # each parsed record so _describe() knows which fields it is looking at.
+#
+# out_fields is "*" (all fields) rather than the bare names _describe() reads:
+# 2026-08 the council rebuilt the glass layer as a *joined* layer, whose
+# attributes come back with fully-qualified names (e.g.
+# "internal.gdo.Glass_Collection_Zones.anchor_date") and a bare-name
+# out_fields now fails the query outright with HTTP 400. _attr() resolves a
+# bare name against either scheme, so this keeps working whichever layer
+# shape the council has on a given day.
 LAYERS = [
-    (GLASS_LAYER, f"{MAP_SERVER_URL}/0", "anchor_date,frequency_days"),
-    (WASTE_LAYER, f"{MAP_SERVER_URL}/1", "collection_day,recycling_anchor_date"),
+    (GLASS_LAYER, f"{MAP_SERVER_URL}/0", "*"),
+    (WASTE_LAYER, f"{MAP_SERVER_URL}/1", "*"),
 ]
 
 # How many weekly collections to project; the fortnightly and glass cycles
@@ -67,6 +75,26 @@ def _to_date(value: object) -> datetime.date | None:
     return None
 
 
+def _attr(attrs: dict, name: str) -> object:
+    """Look up a field by its bare name, however the layer qualifies it.
+
+    A joined ArcGIS layer prefixes every attribute with its table
+    ("<join>.<field>"); match a bare field name against either scheme. An
+    exact match wins so the result never depends on attribute ordering. The
+    required "." separator keeps e.g. "recycling_anchor_date" from matching
+    "anchor_date". Returns None (like dict.get) rather than raising, to keep
+    _describe()'s existing "if value is not None"/truthiness checks working
+    for a field the queried layer happens not to carry.
+    """
+    if name in attrs:
+        return attrs[name]
+    suffix = "." + name
+    for key, value in attrs.items():
+        if key.endswith(suffix):
+            return value
+    return None
+
+
 def _describe(record, source):
     """Project a layer's matched feature into its Schedule descriptors.
 
@@ -78,7 +106,7 @@ def _describe(record, source):
     label, attrs = record
 
     if label == WASTE_LAYER:
-        weekday = recurrence.weekday(attrs.get("collection_day") or "")
+        weekday = recurrence.weekday(_attr(attrs, "collection_day") or "")
         if weekday is not None:
             # Rubbish and FOGO both run weekly on the property's collection
             # day, today's collection included when that day is today.
@@ -90,7 +118,7 @@ def _describe(record, source):
 
         # Recycling alternates fortnightly between zones; the layer's anchor
         # date fixes this property's phase.
-        recycling_anchor = _to_date(attrs.get("recycling_anchor_date"))
+        recycling_anchor = _to_date(_attr(attrs, "recycling_anchor_date"))
         if recycling_anchor is not None:
             yield Schedule(
                 "Recycling",
@@ -103,8 +131,8 @@ def _describe(record, source):
 
     # Glass runs on its own cycle (currently every 28 days) with an
     # independent per-polygon anchor and cycle length.
-    glass_anchor = _to_date(attrs.get("anchor_date"))
-    frequency = attrs.get("frequency_days")
+    glass_anchor = _to_date(_attr(attrs, "anchor_date"))
+    frequency = _attr(attrs, "frequency_days")
     if glass_anchor is not None and frequency:
         yield Schedule(
             "Glass",

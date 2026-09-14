@@ -85,8 +85,11 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Enter your full property location as it appears on the council site "
-            "(e.g. '309 BUCKLEY STREET ABERFELDIE 3040')."
+            "Visit the City of Moonee Valley waste and recycling calendar "
+            "(https://mvcc.vic.gov.au/live/my-house/waste-and-recycling/"
+            "waste-and-recycling-calendar/), search for your address, and "
+            "enter your full property location exactly as it appears in the "
+            "search results (e.g. '309 BUCKLEY STREET ABERFELDIE 3040')."
         ),
     }
 

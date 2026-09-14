@@ -1,4 +1,5 @@
 import logging
+import re
 from datetime import datetime
 
 import requests
@@ -71,10 +72,16 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-# Collection date property name prefix / postfix
-_PREV_STRING = "Prev"
-_NEXT_STRING = "Next"
-_DATE_STRING = "Date"
+# Collection dates arrive as one property per bin and per direction, e.g.
+# "NextGarbageDate" and "PreviousRecycleDate". The bin name is whatever sits
+# between the two, so new bins need no mapping here -- Glass appeared that way.
+#
+# The council writes the backward-looking prefix as "Previous"; matching a bare
+# "Prev" and stripping it by substring turned "PreviousGarbageDate" into
+# "iousGarbage", which the app then showed as a bin of its own beside the real
+# "Garbage" -- eight bins, four of them nonsense. Anchoring the whole key also
+# keeps a bin whose own name contains "Date" or "Next" intact.
+_COLLECTION_DATE_KEY_RE = re.compile(r"^(?:Next|Prev(?:ious)?)(?P<name>.+)Date$")
 
 
 class Source:
@@ -140,17 +147,11 @@ class Source:
         entries = []
 
         for key, value in search_results["result"][0].items():
-            # properties come through like "NextGarbageDate", "NextRecycleDate" or "PrevGardenDate" etc
-            # extracting waste type name from the middle of "Next{x}Date" to support future waste types without direct mapping
-            if key.endswith(_DATE_STRING) and (
-                key.startswith((_NEXT_STRING, _PREV_STRING))
-            ):
-                name = (
-                    key.replace(_DATE_STRING, "")
-                    .replace(_NEXT_STRING, "")
-                    .replace(_PREV_STRING, "")
-                )
-
+            # properties come through like "NextGarbageDate" and
+            # "PreviousGardenDate"; the bin name is the middle
+            match = _COLLECTION_DATE_KEY_RE.match(key)
+            if match and value:
+                name = match.group("name")
                 date = datetime.strptime(value, "%Y-%m-%d").date()
                 icon = ICON_MAP[name] if name in ICON_MAP else None
                 entries.append(Collection(date=date, t=name, icon=icon))

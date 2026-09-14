@@ -1,4 +1,3 @@
-import json
 import logging
 from datetime import datetime
 
@@ -26,7 +25,7 @@ HEADERS = {
 
 API_URLS = {
     "address_search": "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address",
-    "collection": "https://zbr7r13ke2.execute-api.eu-west-2.amazonaws.com/Beta/get-bin-dates",
+    "collection": "https://n6ljrw455m.execute-api.eu-west-2.amazonaws.com/prod/get-bin-dates",
 }
 
 ICON_MAP = {
@@ -90,7 +89,7 @@ class Source:
         )
         r.raise_for_status()
 
-        collectionsRaw = json.loads(r.json()["dates"])
+        collectionsRaw = r.json()["dates"]
         collections = {
             "General": collectionsRaw["blackBinDay"],
             "Recycling": collectionsRaw["recyclingBinDay"],
