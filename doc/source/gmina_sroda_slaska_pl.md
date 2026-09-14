@@ -24,6 +24,24 @@ Existing `location_id` configurations cannot be migrated automatically because t
 
 The URL slug of your locality or Środa Śląska district on the COM-D schedule page, for example `szczepanow`.
 
+**property_type**
+*(string) (optional, default: `all`)*
+
+- `single_family`: schedules labelled **Zabudowa jednorodzinna**.
+- `multi_family`: schedules labelled **Zabudowa wielorodzinna**.
+- `all`: combine all schedules, preserving the previous behavior.
+
+COM-D can publish both dwelling types on the same fraction page (for example,
+paper). Set this option to your property type to avoid extra collection dates.
+Schedules without a dwelling-type qualification are included for either type.
+If a page explicitly offers dwelling-specific schedules but not the requested
+type, the source reports an error rather than silently using a different one.
+
+Existing configurations keep the combined schedule until you explicitly select a
+property type. In the Home Assistant UI, reconfigure the existing source entry
+to set this argument. This option does not filter waste fractions or date ranges;
+use the integration's customization settings for waste-type exclusions.
+
 ## Example
 
 ```yaml
@@ -32,6 +50,7 @@ waste_collection_schedule:
     - name: gmina_sroda_slaska_pl
       args:
         location: szczepanow
+        property_type: single_family
 ```
 
 ## How to get the source arguments
