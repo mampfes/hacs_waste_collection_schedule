@@ -6,7 +6,8 @@ from waste_collection_schedule.service.OpenCities import (
 
 TITLE = "Woollahra Municipal Council (NSW)"
 DESCRIPTION = "Source for Woollahra Municipal Council rubbish collection."
-URL = "https://www.woollahra.nsw.gov.au/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates"
+URL = "https://www.woollahra.nsw.gov.au/"
+DEEPLINK = f"{URL}Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates"
 TEST_CASES = {
     "13 Paddington Street Paddington": {
         "address": "13 Paddington Street PADDINGTON NSW 2021",
@@ -15,13 +16,12 @@ TEST_CASES = {
         "address": "22 Oxford Street PADDINGTON NSW 2021",
     },
 }
-SOURCE_CODEOWNERS = ["@EthemKD"]
 
 PAGE_LINK = "/$b9015858-988c-48a4-9473-7c193df083e4$/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates"
 
 HEADERS = {
     "accept": "application/json, text/javascript, */*; q=0.01",
-    "referer": URL,
+    "referer": DEEPLINK,
     "x-requested-with": "XMLHttpRequest",
 }
 
@@ -33,11 +33,11 @@ ICON_MAP = {
 }
 
 _CONFIG = OpenCitiesConfig(
-    domain="https://www.woollahra.nsw.gov.au",
+    domain=URL.rstrip("/"),
     page_link=PAGE_LINK,
     headers=HEADERS,
     use_curl_cffi=True,
-    warm_up_url=URL,
+    warm_up_url=DEEPLINK,
     icon_keywords=ICON_MAP,
     # Woollahra mixes a recurring problem-waste promo tile into the same
     # response as real dated collections. It is not a kerbside collection.
