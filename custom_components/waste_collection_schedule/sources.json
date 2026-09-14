@@ -21947,6 +21947,14 @@
       "id": "molndal_se"
     },
     {
+      "title": "Nodra (Norrk\u00f6ping)",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "nodra"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Norrtalje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {},

@@ -3330,6 +3330,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mittsverige Vatten & Avfall](/doc/source/msva_se.md) / msva.se
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
+- [Nodra (Norrköping)](/doc/source/avfallsapp_se.md) / nodra.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [NSR - Nordvästra Skånes Renhållnings AB](/doc/source/nsr_se.md) / nsr.se
