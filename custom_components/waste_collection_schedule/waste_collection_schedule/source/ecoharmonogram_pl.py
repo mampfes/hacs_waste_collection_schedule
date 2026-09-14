@@ -17,7 +17,7 @@ from waste_collection_schedule.service.EcoHarmonogramPL import (
     EcoharmonogramParser,
     EcoharmonogramRetriever,
 )
-from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.transformers import JsonTransformer
 
 # Ecoharmonogram.pl serves ~16 Polish municipalities/operators (see REGIONS
 # below), each free to phrase its bin categories differently, so the label
@@ -284,6 +284,10 @@ class Source(BaseSource):
 
     retrieve = EcoharmonogramRetriever()
     parse = EcoharmonogramParser()
-    transform = RowTransformer(
-        type_value_map=TYPE_VALUE_MAP, clean=_strip_frequency_suffix
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        color_key="color",
+        type_value_map=TYPE_VALUE_MAP,
+        clean=_strip_frequency_suffix,
     )

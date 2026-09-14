@@ -85,6 +85,7 @@ class BaseTransformer(ABC, Generic[T]):
         skip_unparseable_dates: bool = False,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
+        color_key: "str | Callable[[Any], Any] | None" = None,
     ):
         self._type_value_map: dict[str, TypeMapValue | None] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
@@ -106,6 +107,7 @@ class BaseTransformer(ABC, Generic[T]):
         # calendar events; copied to each Collection of a combined round.
         self._location_key = location_key
         self._description_key = description_key
+        self._color_key = color_key
 
     def _to_date(self, value: Any) -> datetime.date | None:
         """Coerce a record's date value to a date: pass a ``date`` through,
@@ -189,12 +191,12 @@ class BaseTransformer(ABC, Generic[T]):
         )
         return preserved(label)
 
-    def _meta(self, record: Any) -> tuple[Any, Any]:
-        """Read optional location/description from a record.
+    def _meta(self, record: Any) -> tuple[Any, Any, Any]:
+        """Read optional location, description and display color from a record.
 
-        Uses ``location_key``/``description_key`` (a field name or a callable,
-        read the same way as ``date_key``/``type_key``). Returns ``(None, None)``
-        when neither is configured, so transformers that carry no metadata are
+        Uses ``location_key``/``description_key``/``color_key`` (a field name or a callable,
+        read the same way as ``date_key``/``type_key``). Returns ``(None, None, None)``
+        when none is configured, so transformers that carry no metadata are
         unaffected.
         """
         location = (
@@ -207,7 +209,10 @@ class BaseTransformer(ABC, Generic[T]):
             if self._description_key is not None
             else None
         )
-        return location, description
+        color = (
+            self._get(record, self._color_key) if self._color_key is not None else None
+        )
+        return location, description, color
 
     @staticmethod
     def _collections(
@@ -215,6 +220,7 @@ class BaseTransformer(ABC, Generic[T]):
         resolved: TypeMapValue | None,
         location: Any = None,
         description: Any = None,
+        color: Any = None,
     ) -> Collection | list[Collection] | None:
         """Build the Collection(s) for a resolved type on a given date.
 
@@ -228,7 +234,7 @@ class BaseTransformer(ABC, Generic[T]):
             return None
 
         def build(waste_type: WasteType) -> Collection:
-            collection = Collection(date=date, waste_type=waste_type)
+            collection = Collection(date=date, waste_type=waste_type, color=color)
             if location is not None:
                 collection.set_location(location)
             if description is not None:
@@ -282,6 +288,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         skip_unparseable_dates: bool = False,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
+        color_key: "str | Callable[[Any], Any] | None" = None,
     ):
         super().__init__(
             type_value_map,
@@ -290,6 +297,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             skip_unparseable_dates,
             location_key,
             description_key,
+            color_key,
         )
         self._date_key = date_key
         self._type_key = type_key
@@ -302,8 +310,8 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             return None
         raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
-        location, description = self._meta(record)
-        return self._collections(date, resolved, location, description)
+        location, description, color = self._meta(record)
+        return self._collections(date, resolved, location, description, color)
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
@@ -338,6 +346,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         clean: Callable[[str], str] | None = None,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
+        color_key: "str | Callable[[Any], Any] | None" = None,
     ):
         super().__init__(
             type_value_map,
@@ -345,6 +354,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
             clean,
             location_key=location_key,
             description_key=description_key,
+            color_key=color_key,
         )
         self._date_key = date_key
         self._type_key = type_key
@@ -365,9 +375,9 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         raw_type = str(fields.get(self._type_key, ""))
         resolved = self._resolve_type(raw_type)
         # Read metadata from the flattened name/value pairs, not the raw list.
-        location, description = self._meta(fields)
+        location, description, color = self._meta(fields)
         return self._collections(
-            self._parse_date(date_str), resolved, location, description
+            self._parse_date(date_str), resolved, location, description, color
         )
 
 
@@ -407,12 +417,14 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
         clean: Callable[[str], str] | None = None,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
+        color_key: "str | Callable[[Any], Any] | None" = None,
     ):
         super().__init__(
             type_value_map,
             clean=clean,
             location_key=location_key,
             description_key=description_key,
+            color_key=color_key,
         )
 
     def __call__(
@@ -429,8 +441,11 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
             location = self._get(record, self._location_key)
         if self._description_key is not None:
             description = self._get(record, self._description_key)
+        color = (
+            self._get(record, self._color_key) if self._color_key is not None else None
+        )
         resolved = self._resolve_type(summary)
-        return self._collections(date, resolved, location, description)
+        return self._collections(date, resolved, location, description, color)
 
 
 class RowTransformer(BaseTransformer[tuple[Any, str]]):
@@ -457,6 +472,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         skip_unparseable_dates: bool = False,
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
+        color_key: "str | Callable[[Any], Any] | None" = None,
     ):
         super().__init__(
             type_value_map,
@@ -465,6 +481,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
             skip_unparseable_dates,
             location_key,
             description_key,
+            color_key,
         )
 
     def __call__(self, record: tuple[Any, str]) -> Collection | list[Collection] | None:
@@ -473,9 +490,9 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         if date is None:
             return None
         # A row is a tuple, so location_key/description_key must be callables.
-        location, description = self._meta(record)
+        location, description, color = self._meta(record)
         return self._collections(
-            date, self._resolve_type(str(label)), location, description
+            date, self._resolve_type(str(label)), location, description, color
         )
 
 
@@ -512,6 +529,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         clean: Callable[[str], str] | None = None,
         location_getter: Callable[[Tag], Any] | None = None,
         description_getter: Callable[[Tag], Any] | None = None,
+        color_getter: Callable[[Tag], Any] | None = None,
     ):
         super().__init__(
             type_value_map,
@@ -519,6 +537,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
             clean,
             location_key=location_getter,
             description_key=description_getter,
+            color_key=color_getter,
         )
         self._date_getter = date_getter
         self._type_getter = type_getter
@@ -527,7 +546,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         try:
             raw_date = self._date_getter(record)
             raw_type = self._type_getter(record)
-            location, description = self._meta(record)
+            location, description, color = self._meta(record)
         except Exception as e:
             _LOGGER.debug("HtmlTransformer: failed to extract fields: %s", e)
             return None
@@ -541,7 +560,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
             date = self._parse_date(str(raw_date))
 
         resolved = self._resolve_type(str(raw_type))
-        return self._collections(date, resolved, location, description)
+        return self._collections(date, resolved, location, description, color)
 
 
 def label_cleaner(

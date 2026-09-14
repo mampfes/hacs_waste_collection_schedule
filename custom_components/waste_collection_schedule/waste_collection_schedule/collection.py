@@ -2,6 +2,7 @@ import datetime
 import logging
 from typing import TYPE_CHECKING, Any, Union, overload
 
+from .colors import normalize_color
 from .waste_types import WasteType, display_name
 
 _LOGGER = logging.getLogger(__name__)
@@ -31,7 +32,13 @@ class Collection:
         # ``Collection(date=..., t=..., icon=...)``. They affect type checking
         # only; the runtime ``__init__`` below is unchanged.
         @overload
-        def __init__(self, date: datetime.date, waste_type: WasteType): ...
+        def __init__(
+            self,
+            date: datetime.date,
+            waste_type: WasteType,
+            *,
+            color: str | None = None,
+        ): ...
 
         @overload
         def __init__(
@@ -42,18 +49,30 @@ class Collection:
             picture: str | None = ...,
             location: str | None = ...,
             description: str | None = ...,
+            *,
+            color: str | None = ...,
         ): ...
 
         def __init__(self, date: datetime.date, *args: Any, **kwargs: Any): ...
 
     else:
 
-        def __init__(self, date: datetime.date, waste_type: WasteType):
-            self._init_impl(date, waste_type)
+        def __init__(
+            self,
+            date: datetime.date,
+            waste_type: WasteType,
+            *,
+            color: str | None = None,
+        ):
+            self._init_impl(date, waste_type, color)
 
-    def _init_impl(self, date: datetime.date, waste_type: WasteType):
+    def _init_impl(
+        self, date: datetime.date, waste_type: WasteType, color: str | None = None
+    ):
         self._date = date
         self._waste_type = waste_type
+        self._source_color = normalize_color(color)
+        self._color_override: str | None = None
         self._type_override: str | None = None
         self._icon_override: str | None = None
         self._picture: str | None = None
@@ -79,6 +98,25 @@ class Collection:
     @property
     def icon(self) -> str:
         return self._icon_override or self._waste_type.icon
+
+    @property
+    def color(self) -> str:
+        """Effective display color: user override, source, then canonical default."""
+        return self._color_override or self._source_color or self._waste_type.color
+
+    @property
+    def color_source(self) -> str:
+        if self._color_override is not None:
+            return "customize"
+        return "source" if self._source_color is not None else "default"
+
+    def set_source_color(self, color: str | None):
+        """Attach a provider's display color without changing the global type."""
+        self._source_color = normalize_color(color)
+
+    def set_color(self, color: str | None):
+        """Set or clear a user customization, preserving the source default."""
+        self._color_override = normalize_color(color)
 
     @property
     def picture(self):
@@ -114,6 +152,9 @@ class Collection:
         d = {
             "date": self._date.isoformat(),
             "type": self.type,
+            "type_id": self.waste_type.id,
+            "color": self.color,
+            "color_source": self.color_source,
             "icon": self.icon,
             "picture": self.picture,
         }
@@ -209,6 +250,8 @@ class LegacyCollection(Collection):
         picture=None,
         location=None,
         description=None,
+        *,
+        color: str | None = None,
     ):
         from .waste_types import OTHER
 
@@ -218,7 +261,7 @@ class LegacyCollection(Collection):
             color=OTHER.color,
             names={"en": t},
         )
-        super().__init__(date=date, waste_type=ad_hoc)
+        super().__init__(date=date, waste_type=ad_hoc, color=color)
         self._picture = picture
         self._location = _clean_optional_str(location)
         self._description = _clean_optional_str(description)
@@ -232,9 +275,11 @@ def _collection_factory(
     location=None,
     description=None,
     waste_type=None,
+    *,
+    color: str | None = None,
 ) -> Collection:
     if waste_type is not None:
-        c = Collection(date=date, waste_type=waste_type)
+        c = Collection(date=date, waste_type=waste_type, color=color)
         if picture is not None:
             c.set_picture(picture)
         if location is not None:
@@ -246,6 +291,7 @@ def _collection_factory(
         return LegacyCollection(
             date=date,
             t=t,
+            color=color,
             icon=icon,
             picture=picture,
             location=location,
@@ -297,6 +343,7 @@ class CollectionGroup:
         self._icon: str | None = None
         self._picture: str | None = None
         self._types: list[str] = []
+        self._collections: list[dict] = []
         self._locations: list[str] = []
         self._descriptions: list[str] = []
 
@@ -309,6 +356,7 @@ class CollectionGroup:
         else:
             x._icon = f"mdi:numeric-{len(group)}-box-multiple"
         x._types = [it.type for it in group]
+        x._collections = [it.as_dict() for it in group]
 
         ordered_locs = [
             it.location.strip()
@@ -368,6 +416,7 @@ class CollectionGroup:
             "icon": self._icon,
             "picture": self._picture,
             "types": self._types,
+            "collections": self._collections,
         }
         if self._locations:
             d["locations"] = self._locations

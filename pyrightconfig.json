@@ -13,6 +13,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/retrievers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/date_parsers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/config_params.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/colors.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/waste_types.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/collection.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/collection_aggregator.py",

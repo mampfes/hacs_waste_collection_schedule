@@ -139,6 +139,7 @@ waste_collection_schedule:
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
+| color | string | optional | YAML only: a quoted `#RRGGBB` display color. Overrides the source color and global default. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
@@ -157,7 +158,7 @@ Matching rules:
 
 - An exact `type` match always takes precedence over a wildcard pattern, so you can override a single type while a pattern covers the rest.
 - Patterns are matched case-sensitively against the type returned by the source (after whitespace is stripped). A key counts as a pattern only if it contains `*`, `?`, or `[...]`.
-- Wildcards apply to `alias`, `show`, `icon`, and `picture`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
+- Wildcards apply to `alias`, `show`, `icon`, `picture`, and `color`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
 
 ## Configuring Sensor(s)
 
