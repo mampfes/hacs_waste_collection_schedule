@@ -13,6 +13,7 @@ TEST_CASES = {
     "council office recycling only": {"uprn": 10034922090},
     "refuse and recycling only": {"uprn": 10013585215},
     "a church vicarage, garden, recycling, refuse": {"uprn": 10034912354},
+    "food, refuse, recycling": {"uprn": 10034926463},
 }
 ICON_MAP = {
     "REFUSE": Icons.GENERAL_WASTE,
