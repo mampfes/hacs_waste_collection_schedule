@@ -10081,6 +10081,12 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Erlensee",
+      "module": "sperrmuell_erlensee_de",
+      "default_params": {},
+      "id": "sperrmuell_erlensee_de"
+    },
+    {
       "title": "Ertinghausen",
       "module": "nerdbridge_de",
       "default_params": {

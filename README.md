@@ -1570,6 +1570,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Erichsburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Erlangen](/doc/ics/mein_abfallkalender_online.md) / erlangen.de
+- [Erlensee](/doc/source/sperrmuell_erlensee_de.md) / sperrmuell.erlensee.de
 - [Ertinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Erzhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Eschborn](/doc/ics/mein_abfallkalender_online.md) / eschborn.de

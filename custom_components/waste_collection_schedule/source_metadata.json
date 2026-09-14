@@ -2654,6 +2654,14 @@
     },
     "urls": {}
   },
+  "sperrmuell_erlensee_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sperrmuell_erlensee_de.md",
+    "howto": {
+      "de": "Öffnen Sie https://sperrmuell.erlensee.de/ und entnehmen Sie den Straßennamen aus der Auswahlliste.",
+      "en": "Go to https://sperrmuell.erlensee.de/ and look up the exact street name in the dropdown."
+    },
+    "urls": {}
+  },
   "ics_esg_soest_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/esg_soest_de.md",
     "howto": {
