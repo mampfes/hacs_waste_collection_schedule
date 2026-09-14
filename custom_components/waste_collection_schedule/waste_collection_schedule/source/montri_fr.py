@@ -6,7 +6,10 @@ from zoneinfo import ZoneInfo
 
 import requests
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Montri"
 DESCRIPTION = (
@@ -27,6 +30,13 @@ TEST_CASES = {
         "postal_code": "88000",
         "city_name": "Épinal",
         "address": "2 place georges clémenceau",
+    },
+    # Address search returns four ids for this label, the first two of which
+    # have no calendar.
+    "30 La Ville Es Nouvelle, Iffendic": {
+        "postal_code": "35750",
+        "city_name": "Iffendic",
+        "address": "30 La Ville Es Nouvelle",
     },
 }
 
@@ -127,6 +137,13 @@ class Source:
         r.raise_for_status()
         return str(r.json()["currentAccessToken"])
 
+    def _fetch_month(
+        self, session: requests.Session, month: int, year: int
+    ) -> requests.Response:
+        return session.get(
+            f"{API_BASE}/v1/calendar/tablemonth/fixed/{month}/{year}", timeout=100
+        )
+
     def fetch(self) -> list[Collection]:
         session = requests.Session()
         session.headers.update(
@@ -169,24 +186,45 @@ class Source:
         r.raise_for_status()
         candidates = r.json()
 
-        match = None
-        for candidate in candidates:
-            if candidate.get("citycode") == city["inseeCode"]:
-                match = candidate
-                break
+        matches = [
+            candidate
+            for candidate in candidates
+            if candidate.get("citycode") == city["inseeCode"]
+        ]
 
-        if match is None:
+        if not matches:
             raise SourceArgumentNotFoundWithSuggestions(
                 "address",
                 self._address,
                 [c["label"] for c in candidates],
             )
 
-        # 4. Re-authenticate, this time bound to the resolved address
-        token = self._sign_in_anonymously(
-            session, city["contractId"], city["inseeCode"], match["id"]
-        )
-        session.headers["Authorization"] = f"Bearer {token}"
+        # 4. Re-authenticate, this time bound to the resolved address.
+        # The search can return several ids for the same label while only some
+        # of them are bound to a calendar, so keep the first one that answers.
+        today = date.today()
+        match = None
+        first_table = None
+        for candidate in matches:
+            token = self._sign_in_anonymously(
+                session, city["contractId"], city["inseeCode"], candidate["id"]
+            )
+            session.headers["Authorization"] = f"Bearer {token}"
+
+            r = self._fetch_month(session, today.month, today.year)
+            if r.status_code == 404:
+                continue
+            r.raise_for_status()
+            match = candidate
+            first_table = r.json()
+            break
+
+        if match is None:
+            raise SourceArgumentException(
+                "address",
+                f"No collection calendar is available for {self._address!r} in "
+                f"{city['cityName']}. Try a neighbouring house number.",
+            )
 
         # 5. Fetch human-readable names for the door-to-door ("pap") waste flows
         r = session.get(f"{API_BASE}/v1/contract/trashflows", timeout=100)
@@ -197,15 +235,15 @@ class Source:
 
         # 6. Fetch a rolling window of monthly calendars
         entries = []
-        today = date.today()
         month = today.month
         year = today.year
-        for _ in range(MONTHS_AHEAD):
-            r = session.get(
-                f"{API_BASE}/v1/calendar/tablemonth/fixed/{month}/{year}", timeout=100
-            )
-            r.raise_for_status()
-            table = r.json()
+        for index in range(MONTHS_AHEAD):
+            if index == 0:
+                table = first_table
+            else:
+                r = self._fetch_month(session, month, year)
+                r.raise_for_status()
+                table = r.json()
 
             for week in table.get("weeks", []):
                 for day in week.values():
