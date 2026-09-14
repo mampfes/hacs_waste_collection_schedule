@@ -203,7 +203,6 @@ class Source:
         # The search can return several ids for the same label while only some
         # of them are bound to a calendar, so keep the first one that answers.
         today = date.today()
-        match = None
         first_table = None
         for candidate in matches:
             token = self._sign_in_anonymously(
@@ -215,11 +214,10 @@ class Source:
             if r.status_code == 404:
                 continue
             r.raise_for_status()
-            match = candidate
             first_table = r.json()
             break
 
-        if match is None:
+        if first_table is None:
             raise SourceArgumentException(
                 "address",
                 f"No collection calendar is available for {self._address!r} in "
