@@ -1218,7 +1218,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 self._options[CONF_CUSTOMIZE][
                     self._customize_select[self._customize_select_idx]
                 ] = user_input
-                self._customize_select_idx += 1
+            self._customize_select_idx += 1
             return await self.async_step_customize()
 
         return self.async_show_form(
