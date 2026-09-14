@@ -60,6 +60,7 @@ class Source(BaseSource):
     URL = "https://www.mpdc.govt.nz/calendar"
     COUNTRY = "nz"
     RAISE_ON_EMPTY = True
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@danielcompton"]
 
     TEST_CASES: ClassVar[dict] = {
         "Matamata": {"area": "Matamata, Waharoa, Walton and Tamihana"},
