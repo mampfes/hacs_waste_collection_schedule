@@ -28,6 +28,8 @@ _spec = importlib.util.spec_from_file_location(
     os.path.join(LIBRARY, "__init__.py"),
     submodule_search_locations=[LIBRARY],
 )
+assert _spec is not None
+assert _spec.loader is not None
 _library = importlib.util.module_from_spec(_spec)
 sys.modules["waste_collection_schedule"] = _library
 _spec.loader.exec_module(_library)
