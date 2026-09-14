@@ -22626,6 +22626,12 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Gemeinde Feuerthalen",
+      "module": "feuerthalen_ch",
+      "default_params": {},
+      "id": "feuerthalen_ch"
+    },
+    {
       "title": "Gemeinde Hochfelden",
       "module": "ics",
       "default_params": {},

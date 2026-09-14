@@ -3427,6 +3427,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Gemeinde Feuerthalen](/doc/source/feuerthalen_ch.md) / feuerthalen.ch/umwelt/entsorgung/abfall.html/275
 - [Gemeinde Hochfelden](/doc/ics/hochfelden_ch.md) / hochfelden.ch
 - [Gemeinde Maur](/doc/source/maur_ch.md) / maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html
 - [Gemeinde Muttenz](/doc/source/muttenz_ch.md) / muttenz.ch
