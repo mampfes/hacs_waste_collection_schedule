@@ -127,6 +127,7 @@ SERVICE_PROVIDERS = {
         "api_url": "https://nodra.avfallsapp.se/wp-json/nova/v1/",
         "supports_registration": False,
         "requires_token": False,
+        # Public client token shipped inside the Nodra app, not a user secret.
         "app_token": "U2lXIFK6e8mVI1kU8V0F9TDpWXhwx3QwsL2t36rZPc8PPtKXmhker6nze73chWyX",
     },
 }

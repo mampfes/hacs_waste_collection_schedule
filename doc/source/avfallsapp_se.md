@@ -100,6 +100,8 @@ waste_collection_schedule:
 
 Support for Nodra's waste collection schedule in Norrköping.
 
+Nodra does not support registering a new device from the integration, so the device ID has to be taken from the mobile app (see [Using the key from the mobile app](#using-the-key-from-the-mobile-app)).
+
 ```yaml
 waste_collection_schedule:
   sources:
