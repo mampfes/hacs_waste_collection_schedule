@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.34.0] - 2026-09-14
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@dstamen, @oh-supra, @segersvard, @SgtSeppel, @tdenolle and @zivagolee. 🎉
+Thanks as well to our returning contributors (@chrisns, @sh00t2kill) for the fixes
+and new sources below.
+
+Note: We are now focusing development on the upcoming v3.0.0 release. New source
+contributions should generally target the `release/3.0.0` branch rather than
+`master`.
+
+### Added Sources
+
+- added Gemeinde Feuerthalen (feuerthalen_ch), CH (thanks @oh-supra) (#7391)
+- added Erlensee (sperrmuell_erlensee_de), DE (thanks @SgtSeppel) (#7388)
+- added City of Orlando, FL to ReCollect ICS provider, US (thanks @dstamen) (#7393)
+- added Nodra (Norrköping) to avfallsapp_se, SE (thanks @segersvard) (#7384)
+
+### Fixed Sources
+
+- fixed muellmax_de: detect and clearly report site's 24h rate limit (#7392)
+- fixed wm_com: handle explicit null values in WM API responses (thanks @zivagolee) (#7385)
+- fixed woollahra_nsw_gov_au: stop fuzzy date parsing inventing a weekly "Recycle problem waste" event (thanks @sh00t2kill) (#7387)
+- fixed montri_fr: skip address ids that expose no calendar (thanks @tdenolle) (#7396)
+- fixed plymouth_gov_uk: rebuild against new AchieveForms lookup chain (#7375)
+- fixed rir_no: retry on transient empty responses from RIR's endpoint (#7374)
+
+### Other
+
+- fixed config flow: options flow looping when a customization is deleted (thanks @chrisns) (#7390)
+- test(redbridge_gov_uk): added coverage for the food waste collection type (thanks @chrisns) (#7389)
+
 ## [2.33.0] - 2026-09-13
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
