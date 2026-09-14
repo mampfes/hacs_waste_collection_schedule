@@ -19661,12 +19661,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "location": "Ort",
-          "location_id": "Orts-ID (veraltet)"
+          "location_id": "Orts-ID (veraltet)",
+          "property_type": "Gebäudetyp"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
-          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden"
+          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden",
+          "property_type": "all (Standard), single_family (Einfamilienhaus) oder multi_family (Mehrfamilienhaus)"
         }
       },
       "reconfigure_gmina_sroda_slaska_pl": {
@@ -19675,11 +19677,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "location": "Ort",
-          "location_id": "Orts-ID (veraltet)"
+          "location_id": "Orts-ID (veraltet)",
+          "property_type": "Gebäudetyp"
         },
         "data_description": {
           "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
-          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden"
+          "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden",
+          "property_type": "all (Standard), single_family (Einfamilienhaus) oder multi_family (Mehrfamilienhaus)"
         }
       },
       "args_goap_poznan_pl": {

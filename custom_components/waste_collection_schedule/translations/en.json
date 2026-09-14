@@ -20269,12 +20269,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
-          "location_id": "Location ID (obsolete)"
+          "location_id": "Location ID (obsolete)",
+          "property_type": "Property type"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "location": "Locality or district URL slug from the COM-D schedule page",
-          "location_id": "No longer supported, use 'location' instead"
+          "location_id": "No longer supported, use 'location' instead",
+          "property_type": "all (default), single_family or multi_family; select the dwelling type when the provider publishes separate schedules"
         }
       },
       "reconfigure_gmina_sroda_slaska_pl": {
@@ -20283,11 +20285,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
-          "location_id": "Location ID (obsolete)"
+          "location_id": "Location ID (obsolete)",
+          "property_type": "Property type"
         },
         "data_description": {
           "location": "Locality or district URL slug from the COM-D schedule page",
-          "location_id": "No longer supported, use 'location' instead"
+          "location_id": "No longer supported, use 'location' instead",
+          "property_type": "all (default), single_family or multi_family; select the dwelling type when the provider publishes separate schedules"
         }
       },
       "args_goap_poznan_pl": {
