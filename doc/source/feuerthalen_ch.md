@@ -33,8 +33,8 @@ published each year on the online counter:
 - **Calendar page**: https://www.feuerthalen.ch/verwaltung/online-schalter.html/384/product/7
 
 Grüngut, Werkhof, Altpapier/Karton and Sonderabfälle dates are read from the coloured day cells
-of the calendar grid. Hauskehricht is collected every Monday; the two yearly holiday-shift
-exceptions (e.g. Easter Monday / Whit Monday moved to the following Wednesday) are parsed from
+of the calendar grid. Hauskehricht is collected every Monday; the yearly holiday-shift
+exceptions (e.g. Ostermontag / Pfingstmontag moved to the following Wednesday) are parsed from
 the calendar's own exception notes, so no dates are hardcoded.
 
 ## Notes

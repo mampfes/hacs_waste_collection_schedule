@@ -1,6 +1,7 @@
 import io
 import re
 from datetime import date, timedelta
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -74,8 +75,10 @@ _WASTE_COLORS: dict[tuple[float, float, float], str] = {
 _COLOR_TOL = 0.015
 
 
-def _colors_close(c1: tuple | None, c2: tuple[float, float, float]) -> bool:
-    if c1 is None or len(c1) != len(c2):
+def _colors_close(c1, c2: tuple[float, float, float]) -> bool:
+    # pdfminer reports non_stroking_color as None, a plain float (DeviceGray)
+    # or a tuple/list depending on the colour space, so guard the type.
+    if not isinstance(c1, (tuple, list)) or len(c1) != len(c2):
         return False
     return all(abs(a - b) < _COLOR_TOL for a, b in zip(c1, c2, strict=True))
 
@@ -224,13 +227,14 @@ def _parse_hauskehricht_shifts(words: list[dict]) -> list[date]:
     return shifts
 
 
-def _parse_hauskehricht(page2_words: list[dict], year: int) -> set[date]:
+def _parse_hauskehricht(pages_words: list[list[dict]], year: int) -> set[date]:
     mondays = _expand_weekly_monday(year)
-    for shift_date in _parse_hauskehricht_shifts(page2_words):
-        offset = shift_date.weekday()  # days after that week's Monday
-        original_monday = shift_date - timedelta(days=offset)
-        mondays.discard(original_monday)
-        mondays.add(shift_date)
+    for page_words in pages_words:
+        for shift_date in _parse_hauskehricht_shifts(page_words):
+            offset = shift_date.weekday()  # days after that week's Monday
+            original_monday = shift_date - timedelta(days=offset)
+            mondays.discard(original_monday)
+            mondays.add(shift_date)
     return mondays
 
 
@@ -251,7 +255,7 @@ class Source:
                 "No waste calendar PDF link found on the Feuerthalen online "
                 "counter page. The website structure may have changed."
             )
-        return str(link["href"])
+        return urljoin(_PRODUCT_URL, str(link["href"]))
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
@@ -280,8 +284,10 @@ class Source:
                 "The website structure may have changed."
             )
 
-        page2_words = _extract_words(pages[1]) if len(pages) > 1 else []
-        hauskehricht_dates = _parse_hauskehricht(page2_words, year)
+        # The exception notes live on page 2 today, but scan every page after
+        # the calendar grid so a future re-layout does not silently drop them.
+        note_pages = [_extract_words(page) for page in pages[1:]]
+        hauskehricht_dates = _parse_hauskehricht(note_pages, year)
 
         events: set[tuple[str, date]] = set(grid_events)
         events.update(("Hauskehricht", d) for d in hauskehricht_dates)
