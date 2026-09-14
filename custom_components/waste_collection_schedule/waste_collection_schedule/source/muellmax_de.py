@@ -59,6 +59,18 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
 
+# Müllmax blocks the session for 24h and serves this HTML page (instead of the
+# expected form/iCal response) once its own query limit has been exceeded, see
+# https://github.com/mampfes/hacs_waste_collection_schedule/issues/7287
+RATE_LIMIT_MARKER = "Abfragelimit wurde überschritten"
+RATE_LIMIT_MESSAGE = (
+    "Müllmax has temporarily blocked this connection because its query limit "
+    "was exceeded (this is not a configuration problem). Access is deactivated "
+    "for 24 hours; please wait and try again later. Müllmax only publishes new "
+    "data once a day, so fetching more than once daily is unnecessary and is "
+    "what typically triggers this block."
+)
+
 PARAM_TRANSLATIONS = {
     "de": {
         "service": "Service",
@@ -147,6 +159,18 @@ class Source:
         self._mm_frm_hnr_sel = mm_frm_hnr_sel
         self._ics = ICS()
 
+    @staticmethod
+    def _check_rate_limit(r):
+        if RATE_LIMIT_MARKER in r.text:
+            raise Exception(RATE_LIMIT_MESSAGE)
+        return r
+
+    def _get(self, session, url):
+        return self._check_rate_limit(session.get(url, headers=HEADERS))
+
+    def _post(self, session, url, args):
+        return self._check_rate_limit(session.post(url, data=args, headers=HEADERS))
+
     def fetch(self):
         mm_ses = InputTextParser(name="mm_ses")
 
@@ -156,12 +180,12 @@ class Source:
             f"{self._service}Start.php"
         )
         session = requests.Session()
-        r = session.get(url, headers=HEADERS)
+        r = self._get(session, url)
         mm_ses.feed(r.text)
 
         # select "Abfuhrtermine", returns ort or an empty street search field
         args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.y": 0}
-        r = session.post(url, data=args, headers=HEADERS)
+        r = self._post(session, url, args)
         mm_ses.feed(r.text)
 
         if self._mm_frm_ort_sel is not None:
@@ -172,7 +196,7 @@ class Source:
                 "mm_frm_ort_sel": self._mm_frm_ort_sel,
                 "mm_aus_ort_submit": "weiter",
             }
-            r = session.post(url, data=args, headers=HEADERS)
+            r = self._post(session, url, args)
             mm_ses.feed(r.text)
 
         if self._mm_frm_str_sel is not None:
@@ -183,7 +207,7 @@ class Source:
                 "mm_frm_str_name": self._mm_frm_str_sel,
                 "mm_aus_str_txt_submit": "suchen",
             }
-            r = session.post(url, data=args, headers=HEADERS)
+            r = self._post(session, url, args)
             mm_ses.feed(r.text)
 
         # a unique street match skips the selection page; posting it anyway resets
@@ -196,7 +220,7 @@ class Source:
                 "mm_frm_str_sel": self._mm_frm_str_sel,
                 "mm_aus_str_sel_submit": "weiter",
             }
-            r = session.post(url, data=args, headers=HEADERS)
+            r = self._post(session, url, args)
             mm_ses.feed(r.text)
 
         # auto-detect if house number selection is required
@@ -234,7 +258,7 @@ class Source:
                 "mm_frm_hnr_sel": hnr_value,
                 "mm_aus_hnr_sel_submit": "weiter",
             }
-            r = session.post(url, data=args, headers=HEADERS)
+            r = self._post(session, url, args)
             mm_ses.feed(r.text)
 
         # select to get ical
@@ -243,7 +267,7 @@ class Source:
             "xxx": 1,
             "mm_ica_auswahl": "iCalendar-Datei",
         }
-        r = session.post(url, data=args, headers=HEADERS)
+        r = self._post(session, url, args)
         mm_ses.feed(r.text)
 
         mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
@@ -259,7 +283,7 @@ class Source:
         args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_frm_type": "termine"}
         args.update(mm_frm_fra.value)
         args.update({"mm_ica_gen": "iCalendar-Datei laden"})
-        r = session.post(url, data=args, headers=HEADERS)
+        r = self._post(session, url, args)
         mm_ses.feed(r.text)
 
         entries = []
