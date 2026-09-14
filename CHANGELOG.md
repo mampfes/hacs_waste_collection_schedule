@@ -4,22 +4,90 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
-## [Unreleased]
+## [3.0.0-beta.1] - 2026-09-14
 
-### Added
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@danielcompton, @GreenDavidA and @Sanjays2402. 🎉
+Thanks as well to our returning contributors (@PrzemyslawKlys, @chrisns, @dmkjr, @alexcroox,
+@1mckenna, @RedPandaDoge, @JDickson835, @Sairento-92, @JeyMuller, @sadjad1, @jameswgm87,
+@stradaconsulting, @Hyperion5088, @BlythMeister, @rahulp7801, @bglowacki, @EthemKD) for the
+fixes and new sources below.
 
-- `TEXTILES`, a canonical waste type for clothing and textile rounds (`mdi:hanger`), with names and aliases in en, de, fr, it and nl. The legacy icon catalogue has had the concept since #2813 and 23 sources emit a textile label, so the pipeline was dropping a category it already had rather than lacking one. (#7097)
+> ⚠️ **Breaking: waste-type labels have changed.** This pre-release promotes the 3.0.0
+> migration from alpha to beta. It carries forward alpha.1's breaking change (hard-coded
+> waste-type strings replaced by canonical, localised `WasteType` labels) and adds one more:
+> `abfallwirtschaft_vechta_de` and `berdorf_lu` now label their clothing round `Textiles`
+> (`Altkleider` in German) instead of passing the source text through verbatim or mislabelling
+> it `Recycling`. If you filter or template on an exact waste-type string, check it still
+> matches. Combined rounds that bundle textiles with electricals or batteries
+> (`elmbridge_gov_uk`, `tandridge_gov_uk`, `jointwastesolutions_org`) are unchanged; tracked
+> separately in #7030.
+>
+> This is still an **opt-in pre-release** for HACS "show beta versions" users. Stable installs
+> are unaffected until 3.0.0 ships. The legacy `fetch()` contract stays fully supported, so any
+> individual source can revert if a problem is found. Please report any label change that
+> breaks your setup on #6561.
+>
+> This release also brings the branch's source coverage in sync with everything added or fixed
+> on `master` through v2.32.0–v2.34.1, ported into the pipeline architecture. See those release
+> sections below for the full per-source list and original contributor credit; new source PRs
+> should now target `release/3.0.0` directly (#7399).
 
-### Changed
+### Removed Sources
 
-- ⚠️ **two sources now label their clothing round `Textiles`** (`Altkleider` in German, `Abiti usati` in Italian, and so on). If you filter or template on the exact label, update it. (#7097)
-  - `abfallwirtschaft_vechta_de`: `Recycling` becomes `Textiles` for the `Altkleider` and `Altkleider (Außer Langförden)` rounds, and the Vörden district's third spelling, `Altkleider Vö`, which was passing through verbatim, becomes `Textiles` too. One round that gave three different answers across two districts now gives one.
-  - `berdorf_lu`: `Altkleidersammlung`, which was passing through verbatim, becomes `Textiles`.
-  - Combined rounds that bundle textiles with electricals or batteries (`elmbridge_gov_uk`, `tandridge_gov_uk`, `jointwastesolutions_org`) are unchanged; they are tracked separately in #7030.
+- removed dillingen_saar_de: backend decommissioned (`service-dillingen-saar.fbo.de` is dead and serves an unrelated certificate); Dillingen/Saar and the wider Saarland are already covered by `muellmax_de` with `service: Evs` (#7058)
+
+### Added Sources
+
+- `TEXTILES`, a canonical waste type for clothing and textile rounds (`mdi:hanger`), with names and aliases in en, de, fr, it and nl. The legacy icon catalogue has had the concept since #2813 and 23 sources emit a textile label, so the pipeline was dropping a category it already had rather than lacking one. (#7097, #7149)
+- added preserved provider display colors on individual collections: a source can pass `color` to `Collection` or configure a transformer with `color_key`, so a provider whose color differs from the canonical waste-type palette (e.g. `ecoharmonogram_pl`) keeps its own color instead of the type default. An explicit YAML `customize.color` still takes precedence. (thanks @PrzemyslawKlys) (#7340)
+- added Matamata-Piako District Council (mpdc_govt_nz), NZ (thanks @danielcompton) (#7311)
+- added City of Beachwood, OH (beachwood_oh_us), US (thanks @GreenDavidA) (#7276)
+- added Charleston, SC (charleston_sc_gov) and Charleston County, SC (charlestoncounty_org), US (thanks @dmkjr) (#7218, #7261)
+- added East Hampshire District Council (easthants_gov_uk), UK, including UPRN lookup and separate glass collection (thanks @alexcroox) (#7244, #7258, #7262)
+- added Bloomington, IL to RecycleCoach, and removed a dead api-city.recyclecoach.com endpoint from the request fallback chain, US (thanks @1mckenna) (#7175, #7264)
+- added City of Greater Shepparton (greatershepparton_com_au), AU (thanks @RedPandaDoge) (#7208, #7265)
+- added support for additional waste types to lisburn_castlereagh_gov_uk, UK (thanks @JDickson835) (#7059, #7266)
+- added Gmina Bochnia (bochnia_gmina_pl), PL (thanks @Sairento-92) (#7214, #7267)
+- added Clisson Sèvre et Maine Agglo (clissonsevremaine_fr), FR (thanks @JeyMuller) (#7128, #7269)
+- added Partille kommun (partille_se), SE (thanks @sadjad1) (#7190, #7270)
+- plus every other source added on `master` in v2.32.0–v2.34.1 (dozens of new providers across DE, US, AU, CH, PL, FR, UK and more) — ported wholesale into the pipeline architecture; see those release sections below for the full per-provider list and contributor credit (#7089, #7372, #7373, #7401)
+
+### Fixed Sources
+
+- fixed eastdevon_gov_uk: migrated to the shared Cloud9 API client, rebuilt for the pipeline architecture (port of #7151, #7292) (#7376)
+- fixed broxtowe_gov_uk: migrated to the shared Firmstep addresslookup flow, rebuilt for the pipeline architecture (port of #7211) (#7377)
+- fixed ipswich_qld_gov_au: migrated to the shared WhatBinDay API, rebuilt for the pipeline architecture (port of #7185, #7226) (#7378)
+- fixed bsr_de: added HOWTO instructions for finding the schedule_id (#7379)
+- fixed moonee_valley_vic_gov_au: updated a dead link in HOWTO (#7380)
+- fixed plymouth_gov_uk: rebuilt against new AchieveForms lookup chain (#7381)
+- fixed rir_no: retry on transient empty responses from RIR's endpoint (#7382)
+- fixed landkreis_helmstedt_de: skip council splash page (thanks @rahulp7801) (#7405)
+- fixed gmina_sroda_slaska_pl: separate COM-D dwelling-type schedules (thanks @bglowacki) (#7410)
+- fixed muellmax_de: detect and clearly report site's 24h rate limit (#7392, #7402)
+- fixed integer config parameters: coerce the NumberSelector's float output to `int` before source construction (thanks @Sanjays2402) (#7000)
+- fixed riskommunal: read the waste calendar, and make an unresolved label loud instead of silent (#7145)
+- fixed westlothian_gov_uk: expand a date-only RRULE UNTIL to a floating date-time (#7048)
+- fixed sjshire_wa_gov_au: migrated to t1cloud IntraMaps session flow (#7050)
+- fixed ics: tolerate broken CREATED/LAST-MODIFIED timestamps (#7049)
+- fixed ics: preserve event-local collection dates (thanks @phoenixaus) (#7173, #7356)
+- fixed swale_gov_uk: preserve form state during lookup, plus validation fixes and tests (thanks @jameswgm87) (#7129, #7263)
+- fixed montreal_ca: seasonal ranges dropping dates and biweekly seasons parsing as weekly; fetch via curl_cffi and add COUNTRY; keep the last date in an Oxford-comma day list; stop expanding a whole year of weekdays over an explicit date list (thanks @stradaconsulting) (#7243, #7255, #7256, #7274, #7268)
+- fixed pendle_gov_uk: Opus4 collection request viewport size and query parameters (thanks @Hyperion5088) (#7271, #7273)
+- fixed environmentfirst_co_uk: updated URLs to remove 'www' prefix (thanks @BlythMeister) (#7259, #7260)
+- plus every other source fix shipped on `master` in v2.32.0–v2.34.1 — ported wholesale into the pipeline architecture; see those release sections below for the full per-source list and contributor credit (#7089, #7372, #7373, #7401)
 
 ### Other
 
-- a pipeline source that classifies purely through the shared waste-type vocabulary no longer claims every canonical type. The `ALL_TYPES` fallback behind `WASTE_TYPES` is gone, so such a source declares nothing rather than everything. The list only widens the waste-type dropdown offered during setup, so the sole visible effect is a shorter, more accurate list for `awn_de`, `data_umweltprofis_at`, `erlangen_hoechstadt_de` and `regioentsorgung_de`. Existing sensors are unaffected. (#7028, #6935)
+- a pipeline source that classifies purely through the shared waste-type vocabulary no longer claims every canonical type. The `ALL_TYPES` fallback behind `WASTE_TYPES` is gone, so such a source declares nothing rather than everything. The list only widens the waste-type dropdown offered during setup, so the sole visible effect is a shorter, more accurate list for `awn_de`, `data_umweltprofis_at`, `erlangen_hoechstadt_de` and `regioentsorgung_de`. Existing sensors are unaffected. (#7028, #6935, #7149, #7150)
+- v3 beta-feedback fixes: `WASTE_TYPES` now render in the UI language, per-type customisation applies to pipeline sources, the reconfigure flow reads the class `TITLE`, sensors auto-create only for fetched types, options-flow state resets per flow instead of sharing a class dict, `alternatives()` group members render their own widgets, options-flow sensor-type gathering no longer calls a dead form, `preserved()` labels are deterministic and verbatim, `RAISE_ON_EMPTY` applies to address/UPRN pipeline sources, pipeline `Collection` identity is locale-independent, pipeline membership is decided by base class rather than truthy `PARAMS`, and the new-style source picker no longer duplicates entries (#6893, #6927, #6929, #6947, #6948, #6949, #6950, #6980, #7019, #7020, #7021, #7022, #7027, #7146)
+- aligned the minimum supported Home Assistant/Python floor, retried config-entry setup after a transient source fetch failure, and handled BOM-prefixed Ecoharmonogram responses (thanks @PrzemyslawKlys) (#6988, #7017, #7023, #6984)
+- refactored woollahra_nsw_gov_au onto the shared OpenCities.py client, no behaviour change intended (thanks @EthemKD) (#7404, #7408)
+- finished the v3 architecture cleanup campaign: moved the remaining source-specific retrieval/parsing logic (ArcGIS, IntraMaps, ICS, AchieveForms, Athos, c-trace, hausmuell.info and more) into shared, reusable pipeline components, declared explicit `WASTE_TYPES` for the rest of the pipeline sources, mapped bmv_at and muellmax_de labels to real waste types, and hardened the cassette-based test suite so every `TEST_CASE` is pinned to a recording. No behaviour change intended. (#7093, #7098, #7101, #7103, #7105, #7107, #7108, #7109, #7110, #7111, #7112, #7115, #7116, #7118, #7119, #7121, #7123, #7124, #7125, #7135, #7141, #7143, #6956, #6958, #6977, #6978, #7045, #7047, #7094)
+- stabilized the config-flow alternatives-group test across current HA/probatio builds, and cleaned up coordinator timers on shutdown (#7353, #7355)
+- test(redbridge_gov_uk): added a food waste TEST_CASE with its cassette (thanks @chrisns) (#7395)
+- devcontainer/tooling: matched the CI minimum lane, installed Node for Claude Code, and added a lines-of-Python-per-layer counter (#7090, #7091, #7113, #7092)
+- docs: tracked the v3 cleanup campaign brief, and clarified that the ICS yaml key is `regions:` (#7096, #7104, #7120, #7122)
 
 ## [3.0.0-alpha.1] - 2026-07-18
 
