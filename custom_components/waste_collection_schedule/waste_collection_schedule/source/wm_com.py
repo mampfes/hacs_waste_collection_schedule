@@ -326,7 +326,7 @@ class Source:
         if resp.status_code == 204 or not resp.content:
             return []
 
-        return resp.json().get("services", [])
+        return resp.json().get("services") or []
 
     def _get_pickup_info(
         self,
@@ -352,17 +352,17 @@ class Source:
         body = resp.json()
         results: list[tuple[str, str, datetime.date]] = []
 
-        waste_streams: dict = body.get("data", {}).get("wasteStreams", {})
+        waste_streams: dict = (body.get("data") or {}).get("wasteStreams") or {}
         for stream_code, stream_data in waste_streams.items():
-            for svc in stream_data.get("services", []):
+            for svc in stream_data.get("services") or []:
                 # Use containerType for the human-readable name if available,
                 # falling back to the stream code itself.
                 name: str = (
                     svc.get("containerType") or stream_code.replace("_", " ").title()
                 )
-                pickup_dates: list[str] = svc.get("pickupScheduleInfo", {}).get(
-                    "pickupDates", []
-                )
+                pickup_dates: list[str] = (svc.get("pickupScheduleInfo") or {}).get(
+                    "pickupDates"
+                ) or []
                 for date_str in pickup_dates:
                     try:
                         date = datetime.datetime.strptime(date_str, "%m-%d-%Y").date()
@@ -398,8 +398,8 @@ class Source:
             return {}
 
         adjustments: dict[datetime.datetime, datetime.datetime] = {}
-        for holiday in resp.json().get("holidayData", []):
-            msg = holiday.get("holidayHours", "")
+        for holiday in resp.json().get("holidayData") or []:
+            msg = holiday.get("holidayHours") or ""
             if msg:
                 adjustments.update(_parse_holiday_message(msg))
         return adjustments
