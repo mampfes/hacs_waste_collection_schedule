@@ -18,6 +18,24 @@ waste_collection_schedule:
 *(string) (required)*
 
 
+## Collection Types
+
+The source returns one collection per service printed on the Redbridge calendar PDF:
+
+| Type | Icon |
+|-|-|
+| `Refuse` | `mdi:trash-can` |
+| `Recycling` | `mdi:recycle` |
+| `Food` | `mdi:food-apple` |
+| `Garden` | `mdi:flower` |
+
+Redbridge added the weekly food waste collection to household rounds, so `Food`
+appears in the calendar of an eligible property. A property keeps only the types
+that Redbridge collects from it, so a calendar does not always contain all four.
+
+Use these names in the `types` option of a sensor. The names are the labels used
+by the PDF, so the garden waste type is `Garden` and not `Garden Waste`.
+
 ## Example using UPRN
 ```yaml
 waste_collection_schedule:
