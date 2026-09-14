@@ -1,5 +1,6 @@
 import datetime
 import json
+import re
 import time
 
 import dateutil.parser
@@ -44,6 +45,14 @@ HEADERS = {
 # Constants
 CLEANUP_ICON = "mdi:delete-sweep"
 DATE_FORMAT_LONG = "%d %B %Y"
+
+# Matches "14/9/2026" and "5 January 2026" as emitted by the waste-services widget.
+DATE_RE = re.compile(
+    r"\d{1,2}/\d{1,2}/\d{2,4}"
+    r"|\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September"
+    r"|October|November|December)\s+\d{4}",
+    re.IGNORECASE,
+)
 
 ICON_MAP = {
     "General Waste": "mdi:trash-can",
@@ -219,8 +228,15 @@ class Source:
         return entries
 
     def _parse_date(self, date_text: str) -> datetime.date | None:
-        """Parse various date formats found in the response."""
+        """Extract an explicit date from a service card, if it has one.
+
+        Informational cards (e.g. "Recycle problem waste") carry no date, only
+        prose - fuzzy parsing would latch onto words like "Saturday" and invent one.
+        """
+        match = DATE_RE.search(date_text)
+        if not match:
+            return None
         try:
-            return dateutil.parser.parse(date_text, dayfirst=True, fuzzy=True).date()
+            return dateutil.parser.parse(match.group(0), dayfirst=True).date()
         except (dateutil.parser.ParserError, OverflowError):
             return None
