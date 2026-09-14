@@ -131,8 +131,11 @@ class Source(BaseSource):
     )
     RAISE_ON_EMPTY = True
 
+    # "?vs=1" skips the council's splash/consent interstitial, which the
+    # lookup page otherwise serves instead of the real listing (confirmed
+    # live: without it the response is a ~4 KB placeholder page).
     retrieve = retrievers.TwoStepRetriever(
-        lookup_url=API_URL,
+        lookup_url=f"{API_URL}?vs=1",
         extract=_pick_calendar_href,
         schedule_url=lambda href, **_: href,
         headers=HEADERS,
