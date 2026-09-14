@@ -51,6 +51,14 @@ _DATE_LINE_RE = re.compile(r"^\d{1,2}/\d{1,2}/\d{4}$")
 _RUBBISH = "Rubbish"
 _RECYCLING = "Recycling"
 
+# The PDF publishes a weekday, not an end date: the schedule is open-ended, so
+# project a rolling year ahead. A fixed 31-December cut-off would thin the
+# sensor out through December and, from the last collection of the year, yield
+# nothing at all — which RAISE_ON_EMPTY would turn into an annual hard failure.
+# Matches the horizon the other recurrence-driven US sources use
+# (red_bank_tn_us, shawinigan_ca, hohokus_nj_us).
+_HORIZON_DAYS = 365
+
 # datetime.date.weekday() convention: Monday is 0.
 _THURSDAY = recurrence.weekday("Thursday")
 
@@ -193,16 +201,16 @@ def _describe(weekday_name: str, source: "BaseSource | None"):
     """Weekly Rubbish + Recycling on the street's published weekday.
 
     From the next occurrence of that weekday on/after today through
-    31 December of the current calendar year.
+    ``_HORIZON_DAYS`` ahead.
     """
     weekday = recurrence.weekday(weekday_name)
     if weekday is None:
         raise ValueError(f"unknown weekday: {weekday_name!r}")
     today = datetime.date.today()
     start = recurrence.next_weekday(weekday, on_or_after=today)
-    year_end = datetime.date(today.year, 12, 31)
+    end = today + datetime.timedelta(days=_HORIZON_DAYS)
     for key in (_RUBBISH, _RECYCLING):
-        yield Schedule(key, start, until=year_end)
+        yield Schedule(key, start, until=end)
 
 
 @lru_cache(maxsize=4)

@@ -240,12 +240,21 @@ class TestConstants:
 
 class TestDescribe:
     @freeze_time("2026-08-30")  # a Sunday
-    def test_yields_rubbish_and_recycling_across_the_rest_of_the_year(self):
+    def test_yields_rubbish_and_recycling_across_the_horizon(self):
         schedules = list(m._describe("Monday", None))
         assert [s.key for s in schedules] == ["Rubbish", "Recycling"]
         for schedule in schedules:
             assert schedule.start == datetime.date(2026, 8, 31)  # next Monday
-            assert schedule.until == datetime.date(2026, 12, 31)
+            assert schedule.until == datetime.date(2027, 8, 30)
+
+    @freeze_time("2026-12-31")  # after the last Monday collection of the year
+    def test_the_horizon_rolls_over_the_new_year(self):
+        # A fixed 31-December cut-off produced start > until here, i.e. no
+        # collections at all — which RAISE_ON_EMPTY turns into a hard failure
+        # every December.
+        for schedule in m._describe("Monday", None):
+            assert schedule.start == datetime.date(2027, 1, 4)
+            assert schedule.until > schedule.start
 
 
 class TestHolidayShift:
