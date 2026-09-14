@@ -47,4 +47,4 @@ The source will return collection schedules for:
 
 ## Notes
 
-This source uses the Woollahra Municipal Council's API and includes retry logic to handle potential bot protection measures. If you encounter access issues, please try again later as the website may temporarily block automated requests.
+This source uses the integration's shared OpenCities/MyArea client for address lookup and waste-service parsing. The client uses a Chrome-compatible request session for Woollahra's bot-protected endpoints and ignores the council's recurring problem-waste promotional tile because it is not a kerbside collection.
