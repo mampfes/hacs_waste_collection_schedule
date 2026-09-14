@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.34.1] - 2026-09-14
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@bglowacki, @EthemKD and @rahulp7801. 🎉
+Thanks as well to our returning contributor @bbr111 for the docs update below.
+
+📢 **Heads up for contributors:** new source PRs should now target the `release/3.0.0`
+branch, not `master` (see #7399). We're preparing to cut a new 3.0.0 release soon and
+would love your help testing it — once it's out, we plan to concentrate future
+development there. Please try it out and report any issues you hit!
+
+### Fixed Sources
+
+- fixed landkreis_helmstedt_de: skip council splash page (thanks @rahulp7801) (#7403)
+- fixed gmina_sroda_slaska_pl: separate COM-D dwelling-type schedules (thanks @bglowacki) (#7407)
+
+### Other
+
+- refactored woollahra_nsw_gov_au onto the shared OpenCities.py service client, no behaviour change intended (thanks @EthemKD) (#7404)
+- docs: point new-source PRs at release/3.0.0 branch (#7399)
+
 ## [2.34.0] - 2026-09-14
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
