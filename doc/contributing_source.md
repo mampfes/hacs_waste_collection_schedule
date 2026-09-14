@@ -274,7 +274,7 @@ For schedules published as a weekday plus a cadence rather than explicit dates:
 - `weekday(name)` / `month(name)`: tolerant lookups returning `int` or `None`.
 - `recurring(start, step, count)`, `recurring_from_anchor(anchor, step, count)`, `next_weekday(weekday)`, `most_recent_weekday(weekday)`.
 - `monthly_nth_weekday(weekday, n)` / `monthly_nth_weekdays(weekday, n, count)`: the Nth weekday of the month (`n=-1` is the last), for "2nd Tuesday of the month" schedules.
-- `us_federal_holidays(years, subdiv=None, observed=True)`: US federal holiday dates (via the `holidays` library), for holiday-shift rules.
+- `us_federal_holidays(years, subdiv=None, observed=True)`: US federal holidays (via the `holidays` library), for holiday-shift rules. Returns a `{date: name}` dict, so `date in holidays` still reads as a membership test while a rule that only applies to one holiday (Thanksgiving, say) can check the name.
 - `WEEKLY`, `FORTNIGHTLY` step constants.
 
 Do not carry a private weekday or month dict in your source. Use these shared, multilingual helpers.
