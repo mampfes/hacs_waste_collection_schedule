@@ -3968,6 +3968,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Lowell, MA](/doc/ics/recollect.md) / lowellma.gov
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
 - [City of Oklahoma City](/doc/source/okc_gov.md) / okc.gov
+- [City of Orlando, FL](/doc/ics/recollect.md) / orlando.gov/Trash-Recycling
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules

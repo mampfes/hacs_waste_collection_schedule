@@ -61,6 +61,7 @@ known to work with:
 |City of Raleigh, NC|USA|[raleighnc.gov](https://raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app)|
 |City of Kamloops, BC|Canada|[kamloops.ca](https://www.kamloops.ca/city-services/recycling-garbage-organics/residential-collection-schedule)|
 |City of Roseville, CA|USA|[roseville.ca.gov](https://www.roseville.ca.gov/environmental_utilities/at_your_service/trash_recycling/index.php)|
+|City of Orlando, FL|USA|[orlando.gov](https://www.orlando.gov/Trash-Recycling)|
 
 and probably a lot more.
 

@@ -26159,6 +26159,14 @@
       "id": "okc_gov"
     },
     {
+      "title": "City of Orlando, FL",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Philadelphia, PA",
       "module": "phila_gov",
       "default_params": {},

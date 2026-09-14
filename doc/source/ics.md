@@ -512,6 +512,7 @@ This source has been successfully tested with the following service providers:
 - [City of Houston, TX](/doc/ics/recollect.md) / houstontx.gov
 - [City of Lowell, MA](/doc/ics/recollect.md) / lowellma.gov
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [City of Orlando, FL](/doc/ics/recollect.md) / orlando.gov/Trash-Recycling
 - [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [City of Roseville, CA](/doc/ics/recollect.md) / roseville.ca.gov/environmental_utilities/at_your_service/trash_recycling/index.php
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
