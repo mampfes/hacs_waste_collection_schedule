@@ -34,6 +34,19 @@ if TYPE_CHECKING:
 # --------------------------------------------------------------------------- #
 
 
+# Müllmax blocks the session for 24h and serves this HTML page (instead of the
+# expected form/iCal response) once its own query limit has been exceeded, see
+# https://github.com/mampfes/hacs_waste_collection_schedule/issues/7287
+_RATE_LIMIT_MARKER = "Abfragelimit wurde überschritten"
+_RATE_LIMIT_MESSAGE = (
+    "Müllmax has temporarily blocked this connection because its query limit "
+    "was exceeded (this is not a configuration problem). Access is deactivated "
+    "for 24 hours; please wait and try again later. Müllmax only publishes new "
+    "data once a day, so fetching more than once daily is unnecessary and is "
+    "what typically triggers this block."
+)
+
+
 def _soup(text: str) -> BeautifulSoup:
     return BeautifulSoup(text, "html.parser")
 
@@ -113,12 +126,21 @@ class MuellmaxRetriever(RetrieverFunc):
         )
         session = source.session
 
+        def _check_rate_limit(response) -> None:
+            if _RATE_LIMIT_MARKER in response.text:
+                raise SourceArgumentExceptionMultiple(
+                    ["mm_frm_ort_sel", "mm_frm_str_sel", "mm_frm_hnr_sel"],
+                    _RATE_LIMIT_MESSAGE,
+                )
+
         response = session.get(url)
+        _check_rate_limit(response)
         token = _session_token(response.text)
 
         def step(data: dict) -> None:
             nonlocal response, token
             response = session.post(url, data={"mm_ses": token, **data})
+            _check_rate_limit(response)
             token = _session_token(response.text) or token
 
         # Select "Abfuhrtermine"; returns either a city selector or a street search.
