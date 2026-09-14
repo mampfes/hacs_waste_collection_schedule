@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: sperrmuell_erlensee_de
       args:
-        street: Am Kreuzweg
+        street: Am Rathaus
 ```
 
 ## How to find the correct street name

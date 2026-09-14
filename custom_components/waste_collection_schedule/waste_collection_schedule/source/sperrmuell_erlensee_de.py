@@ -9,7 +9,7 @@ DESCRIPTION = "Source for waste collection in Erlensee, Hessen."
 URL = "https://sperrmuell.erlensee.de/"
 COUNTRY = "de"
 TEST_CASES = {
-    "Am Kreuzweg": {"street": "Am Kreuzweg"},
+    "Am Rathaus": {"street": "Am Rathaus"},
     "Am Haspel": {"street": "Am Haspel"},
 }
 SOURCE_CODEOWNERS = ["@SgtSeppel"]
