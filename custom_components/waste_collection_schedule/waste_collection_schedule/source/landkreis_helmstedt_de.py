@@ -138,7 +138,7 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        r = requests.get(API_URL, headers=HEADERS)
+        r = requests.get(API_URL, headers=HEADERS, params={"vs": "1"})
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
