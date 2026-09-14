@@ -1,8 +1,7 @@
 # Affaldonline
 
 Support for schedules from Affaldonline, which serves several Danish municipalities.
-
-The layout of the response page may differ. There seems to be a default, but I've stumpled upon at least a few uniques.
+Upgraded to use the newer undocumented API, which most municipalities now use.
 
 ## Configuration via configuration.yaml
 
@@ -20,11 +19,22 @@ waste_collection_schedule:
 **municipality**  
 _(String) (required)_
 
-An affaldonline defined string for the municipality. I.e. "aeroe" for "Ærø". 
-
-A duckduckgo search revealed many of them:
-
-- [DuckDuckGo](https://duckduckgo.com/?t=h_&q=site%3Aaffaldonline.dk%2Fkalender%2F&ia=web)
+The municipality of the app. The following are supported:
+- aeroe 
+- assens
+- favrskov
+- fanoe
+- fredericia
+- ffv
+- holbaek
+- langeland
+- middelfart
+- morsoe
+- nyborg
+- rebild
+- silkeborg
+- vejle
+- viborg
 
 **values**  
 _(String) (required)_
@@ -40,12 +50,14 @@ Go to the Affaldonline site for your municipality:
 - [Favrskov](https://www.affaldonline.dk/kalender/favrskov/)
 - [Fanø](https://www.affaldonline.dk/kalender/fanoe/)
 - [Fredericia](https://www.affaldonline.dk/kalender/fredericia/)
+- [Faaborg (ffv)](https://www.affaldonline.dk/kalender/ffv/)
+- [Holbæk](https://www.affaldonline.dk/kalender/holbaek/)
 - [Langeland](https://www.affaldonline.dk/kalender/langeland/)
 - [Middelfart](https://www.affaldonline.dk/kalender/middelfart/)
+- [Morsø](https://www.affaldonline.dk/kalender/morsoe/)
 - [Nyborg](https://www.affaldonline.dk/kalender/nyborg/)
 - [Rebild](https://www.affaldonline.dk/kalender/rebild/)
 - [Silkeborg](https://www.affaldonline.dk/kalender/silkeborg/)
-- [Sorø](https://www.affaldonline.dk/kalender/soroe/)
 - [Vejle](https://www.affaldonline.dk/kalender/vejle/)
 - [Viborg (Revas)](https://www.affaldonline.dk/kalender/viborg/)
 
