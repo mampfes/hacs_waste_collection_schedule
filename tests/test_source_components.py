@@ -8,6 +8,7 @@ from types import GeneratorType, ModuleType
 from typing import Any
 from unittest.mock import patch
 
+import pytest
 import yaml
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip
@@ -175,6 +176,97 @@ def test_esch_lu_requests_identity_encoding() -> None:
             },
         )
     ]
+
+
+@pytest.mark.parametrize(
+    ("property_type", "paper_dates"),
+    [
+        ("all", ["2026-09-08", "2026-09-26", "2026-10-06"]),
+        ("single_family", ["2026-09-08", "2026-10-06"]),
+        ("multi_family", ["2026-09-08", "2026-09-26", "2026-10-06"]),
+    ],
+)
+def test_comd_property_type_scopes_calendar_sections(property_type, paper_dates):
+    """Reduced COM-D HTML structure: shared dates and an extra multifamily date.
+
+    Live TEST_CASES cannot assert date fidelity across overlapping calendars.
+    The section headings and example dates follow the public Ogrodnica paper page.
+    All HTTP is mocked; these fixtures are not a live-source test.
+    """
+    module = _get_module("gmina_sroda_slaska_pl")
+    from unittest.mock import Mock
+
+    index = Mock(status_code=200)
+    index.text = """<table><tr><th>Frakcja</th></tr><tr><td>
+      <a href="/komunalne/harm/sroda-slaska/example/inne-odpady-papier">Papier</a>
+      <a href="/komunalne/harm/sroda-slaska/example/1xmc-odpady-szklo">Szkło</a>
+      </td></tr></table>"""
+    paper = Mock()
+    paper.text = """
+      <p>Częstotliwość obiorów: <b>Zabudowa wielorodzinna</b></p>
+      <table><tr>
+        <td data-date="2026-09-08" class="passed highlighted day-2">8</td>
+        <td data-date="2026-09-26" class="highlighted day-6">26</td>
+        <td data-date="2026-10-06" class="highlighted day-2">6</td>
+        <td data-date="2026-10-07" class="day-3">7</td>
+      </tr></table>
+      <p>Częstotliwość obiorów: <b>Zabudowa jednorodzinna 1x w m-cu</b></p>
+      <table><tr>
+        <td class="passed highlighted day-2" data-date="2026-09-08">8</td>
+        <td class="highlighted day-2" data-date="2026-10-06">6</td>
+      </tr></table>"""
+    glass = Mock()
+    glass.text = """<p>Częstotliwość obiorów: <b>1x w miesiącu</b></p>
+      <table><tr><td class="highlighted" data-date="2026-09-22">22</td></tr></table>"""
+    with patch.object(module.requests, "Session") as session:
+        session.return_value.get.side_effect = [index, glass, paper]
+        entries = module.Source(location="example", property_type=property_type).fetch()
+    assert (
+        sorted(e.date.isoformat() for e in entries if e.type == "Papier") == paper_dates
+    )
+    assert [(e.date.isoformat(), e.type) for e in entries if e.type == "Szkło"] == [
+        ("2026-09-22", "Szkło")
+    ]
+
+
+@pytest.mark.parametrize("property_type", ["single_family", "multi_family"])
+def test_comd_unqualified_schedule_resets_property_type(property_type):
+    module = _get_module("gmina_sroda_slaska_pl")
+    soup = module.BeautifulSoup(
+        """<p>Częstotliwość odbiorów: <b>Zabudowa jednorodzinna</b></p>
+        <table><tr><td class="highlighted" data-date="2026-10-06">6</td></tr></table>
+        <p>Częstotliwość obiorów: <b>Zabudowa wielorodzinna</b></p>
+        <table><tr><td class="highlighted" data-date="2026-10-24">24</td></tr></table>
+        <p>Częstotliwość obiorów: <b>Termin wspólny</b></p>
+        <table><tr><td class="highlighted" data-date="2026-12-01">1</td></tr></table>""",
+        "html.parser",
+    )
+    dates = [d["data-date"] for d in module._collection_days(soup, property_type)]
+    assert dates == [
+        "2026-10-06" if property_type == "single_family" else "2026-10-24",
+        "2026-12-01",
+    ]
+
+
+def test_comd_property_type_errors_and_legacy_default():
+    module = _get_module("gmina_sroda_slaska_pl")
+    with pytest.raises(module.SourceArgumentNotFoundWithSuggestions):
+        module.Source(location="example", property_type="invalid")
+    assert module.Source(location="example")._property_type == "all"
+    with pytest.raises(module.SourceArgumentRequired):
+        module.Source(location_id="example")
+    soup = module.BeautifulSoup(
+        "<p>Częstotliwość obiorów: <b>Zabudowa wielorodzinna</b></p>",
+        "html.parser",
+    )
+    with pytest.raises(module.SourceArgumentNotFoundWithSuggestions):
+        module._collection_days(soup, "single_family")
+    soup = module.BeautifulSoup(
+        "<p>Częstotliwość obiorów: <b>Zabudowa nieznana</b></p>",
+        "html.parser",
+    )
+    with pytest.raises(ValueError, match="Unrecognized COM-D"):
+        module._collection_days(soup, "single_family")
 
 
 def _param_translation_check(
