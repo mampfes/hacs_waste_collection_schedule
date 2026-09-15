@@ -154,7 +154,7 @@ class Source:
         if self._coordinates is not None:
             return self._coordinates
 
-        params = {
+        params: dict[str, str | int] = {
             "q": self._address,
             "format": "json",
             "countrycodes": "au",
