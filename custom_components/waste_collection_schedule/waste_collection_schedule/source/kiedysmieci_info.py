@@ -3,7 +3,10 @@ from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Kiedy śmieci"
 DESCRIPTION = "Source script for Kiedy śmieci, Poland"
@@ -133,9 +136,10 @@ class Source:
 
         if not entries:
             self._validate_location()
-            raise Exception(
+            raise SourceArgumentExceptionMultiple(
+                ("municipality", "street"),
                 f"No schedule published for {self._location['ulica']}, "
-                f"{self._location['gmina']}"
+                f"{self._location['gmina']}",
             )
 
         return entries
