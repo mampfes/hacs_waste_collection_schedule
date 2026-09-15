@@ -11,7 +11,6 @@ from waste_collection_schedule.service.RiSKommunalAT import (
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://www.ebbs.gv.at"
-VALID_ZONES = ["1", "2"]
 
 # Ebbs's RiSKommunal install does not expose a single combined calendar with a
 # filterable third ("Kalendertyp") column the way Eggelsberg does: querying
@@ -26,6 +25,10 @@ _ZONE_TYPIDS = {
     "1": "217676083,225177200,226278459",
     "2": "217678360,226278459",
 }
+
+# One source of truth for the zones: the dropdown options and the retriever's
+# lookup table are the same set, so adding a zone means editing _ZONE_TYPIDS only.
+VALID_ZONES = sorted(_ZONE_TYPIDS)
 
 
 @final

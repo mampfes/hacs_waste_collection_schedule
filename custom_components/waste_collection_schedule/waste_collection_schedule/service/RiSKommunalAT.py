@@ -651,14 +651,12 @@ class RiSKommunalRetriever(RetrieverFunc):
         return self._pages(session, typids)
 
     def _zone_typids(self, source: BaseSource) -> str:
-        zone = str(source.params.get(self.zone_param) or "").strip()
-        typids = (self.zone_typids or {}).get(zone)
+        field = self.zone_param or "zone"
+        zones = self.zone_typids or {}
+        zone = str(source.params.get(field) or "").strip()
+        typids = zones.get(zone)
         if typids is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                self.zone_param or "zone",
-                zone,
-                sorted((self.zone_typids or {}).keys()),
-            )
+            raise SourceArgumentNotFoundWithSuggestions(field, zone, sorted(zones))
         return typids
 
     def _pages(self, session: requests.Session, typids: str | None) -> Iterator[str]:
