@@ -45,9 +45,14 @@ ICON_MAP = {
 
 # Beside the five streams above, municipalities announce extra pickups under
 # free-text names that vary between them (and contain the occasional typo), so
-# these are matched on a keyword instead of being listed exhaustively. Checked
-# in order, first match wins.
+# these are matched on a keyword instead of being listed exhaustively. Grouped
+# for readability only - the keyword found earliest in the name wins, see
+# _icon_for().
 ICON_KEYWORDS: tuple[tuple[str, Icons], ...] = (
+    # "gabaryt" also covers the "wielkogabaryt-" and "wielogabaryt-" (sic)
+    # prefixes.
+    ("gabaryt", Icons.BULKY),
+    ("meble", Icons.BULKY),
     # Not pickups: the same feed carries payment deadlines, drop-off point
     # (PSZOK) openings and bin-washing rounds. EVENT keeps them from looking
     # like a waste collection.
@@ -67,19 +72,11 @@ ICON_KEYWORDS: tuple[tuple[str, Icons], ...] = (
     ("ubrania", Icons.TEXTILE),
 )
 
-# Some municipalities collect several streams in one round, announced as
-# "odpady wielkogabarytowe, opony, elektrośmieci" or "opony i tekstylia".
-# Those lead with a stream that has no mapping here yet, so labelling them by
-# whichever keyword happens to match first would be misleading - leave them on
-# the default until the missing streams are mapped too.
-BUNDLED_WITH_UNMAPPED = (
-    "wielkogabaryt",
-    "wielogabaryt",
-    "gabaryt",
-    "meble",
-    "rtv i agd",
-    "opony",
-)
+# Streams this source cannot label yet because the icon catalogue has no
+# member for them. They still have to be recognised: a name that leads with
+# one of these ("opony i tekstylia") must not be labelled after the stream it
+# merely mentions second.
+UNMAPPED_STREAMS = ("opony", "popi", "gruz", "budowlan")
 
 # A leading "*" marks a pickup that has to be requested; it is not part of the
 # waste type's name.
@@ -101,20 +98,29 @@ NO_SCHEDULE_MARKER = "brak harmonogramu"
 
 
 def _icon_for(waste_type: str) -> Icons:
-    """Pick an icon for a waste type, falling back to general waste."""
+    """Pick an icon for a waste type, falling back to general waste.
+
+    Some municipalities collect several streams in one round and name them all
+    ("odpady wielkogabarytowe, opony, elektrośmieci"), so the stream named
+    first decides the icon. If that one is a stream this source cannot label,
+    the round stays on the default rather than being named after a stream that
+    is only part of it.
+    """
     name = waste_type.lstrip(ON_REQUEST_MARKER).strip().lower()
 
     if name in ICON_MAP:
         return ICON_MAP[name]
 
-    if any(stream in name for stream in BUNDLED_WITH_UNMAPPED):
+    matches = [(name.find(kw), icon) for kw, icon in ICON_KEYWORDS if kw in name]
+    if not matches:
         return Icons.GENERAL_WASTE
 
-    for keyword, icon in ICON_KEYWORDS:
-        if keyword in name:
-            return icon
+    first, icon = min(matches)
+    unmapped = [name.find(kw) for kw in UNMAPPED_STREAMS if kw in name]
+    if any(pos < first for pos in unmapped):
+        return Icons.GENERAL_WASTE
 
-    return Icons.GENERAL_WASTE
+    return icon
 
 
 class Source:
