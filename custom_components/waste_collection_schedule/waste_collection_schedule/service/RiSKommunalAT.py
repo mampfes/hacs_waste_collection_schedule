@@ -559,6 +559,21 @@ class RiSKommunalSource:
 # for installs that paginate even in list mode (stopping early would silently
 # truncate results). All three default to the prior single behaviour so every
 # existing caller is unaffected.
+#
+# A fourth shape covers installs where the combined calendar has no
+# filterable zone column at all (the zone is folded into the row label
+# instead), but the site does publish one fixed ``typids`` set per zone:
+#
+#   retrieve = RiSKommunalRetriever(..., zone_param="zone", zone_typids={...})
+#   parse    = RiSKommunalParser()
+#
+# This mirrors ``strasse_param``/``hausnummer_param`` (resolve a request-
+# shaping ``typids`` value from config before paging) rather than
+# ``RiSKommunalParser``'s own ``zone_param`` (filter rows already in the
+# response by a zone column). The two zone mechanisms solve different
+# problems and are not interchangeable: use the retriever's when the server
+# never sends the other zones' rows in the first place, and the parser's
+# when it does and they need filtering out client-side.
 # --------------------------------------------------------------------------- #
 
 
@@ -576,6 +591,15 @@ class RiSKommunalRetriever(RetrieverFunc):
             the street / house number, for address-based municipalities.
         selection_url: Page carrying the street dropdown (defaults to the
             calendar page).
+        zone_param / zone_typids: For municipalities whose combined calendar
+            merges every zone into the same two-column table (the zone folded
+            into the row label itself, rather than exposed as a filterable
+            third column — see ``RiSKommunalParser``'s own ``zone_param`` for
+            that other shape) but that *does* publish one fixed ``typids``
+            set per zone. ``zone_param`` names the ``source.params`` field
+            holding the selected zone; ``zone_typids`` maps each valid zone
+            value to its ``typids`` query value. Mutually exclusive with
+            ``strasse_param`` (both resolve the same ``typids`` slot).
         vdatum_today: Add ``vdatum`` = today to each request.
         lookahead_days: If set, add ``vdatum`` = today and ``bdatum`` = today +
             this many days to each request (both recomputed on every fetch),
@@ -595,6 +619,8 @@ class RiSKommunalRetriever(RetrieverFunc):
         strasse_param: str | None = None,
         hausnummer_param: str | None = None,
         selection_url: str | None = None,
+        zone_param: str | None = None,
+        zone_typids: dict[str, str] | None = None,
         vdatum_today: bool = False,
         lookahead_days: int | None = None,
         max_pages: int = 50,
@@ -605,6 +631,8 @@ class RiSKommunalRetriever(RetrieverFunc):
         self.strasse_param = strasse_param
         self.hausnummer_param = hausnummer_param
         self.selection_url = selection_url
+        self.zone_param = zone_param
+        self.zone_typids = dict(zone_typids) if zone_typids else None
         self.vdatum_today = vdatum_today
         self.lookahead_days = lookahead_days
         self.max_pages = max_pages
@@ -618,7 +646,18 @@ class RiSKommunalRetriever(RetrieverFunc):
         typids = None
         if self.strasse_param:
             typids = self._resolve_typids(session, source)
+        elif self.zone_param:
+            typids = self._zone_typids(source)
         return self._pages(session, typids)
+
+    def _zone_typids(self, source: BaseSource) -> str:
+        field = self.zone_param or "zone"
+        zones = self.zone_typids or {}
+        zone = str(source.params.get(field) or "").strip()
+        typids = zones.get(zone)
+        if typids is None:
+            raise SourceArgumentNotFoundWithSuggestions(field, zone, sorted(zones))
+        return typids
 
     def _pages(self, session: requests.Session, typids: str | None) -> Iterator[str]:
         for page in range(self.max_pages):
