@@ -17,22 +17,21 @@ COUNTRY = "au"
 SOURCE_CODEOWNERS = ["@CozyRocket"]
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
-        "Enter your property address as you would type it into the council's own "
-        "'What Is My Bin Day?' search, e.g. '15 Fitzhardinge Street, Wagga Wagga "
-        "NSW'. This is geocoded via OpenStreetMap Nominatim, which works well for "
-        "many addresses but doesn't have house-number-level data for every street "
-        "in the Wagga area -- when that happens the lookup can land on the wrong "
-        "property (or fail outright) even though the street itself is found. If "
-        "that happens, supply the exact 'x' and 'y' MGA Zone 55 (GDA94, "
-        "EPSG:28355) coordinates instead, which is also the more reliable option "
-        "in general: get them once from the council's own tool by inspecting the "
-        "URL it navigates to after a search (it will contain 'x=...&y=...')."
+        "Supply the exact 'x' and 'y' MGA Zone 55 (GDA94, EPSG:28355) "
+        "coordinates for your property: get them once from the council's own "
+        "'What Is My Bin Day?' tool by searching your address there and "
+        "inspecting the URL it navigates to (it will contain 'x=...&y=...'). "
+        "An 'address' on its own is geocoded via OpenStreetMap Nominatim, but "
+        "Nominatim only has street-centreline data for Wagga (not "
+        "house-level data), which is precise enough for the area-wide green "
+        "waste roster but NOT precise enough for the property-specific "
+        "domestic waste/recycling roster -- an address-only lookup will "
+        "reliably fail to find those two. 'address' is still required (it's "
+        "shown on the council's results and used as a fallback if 'x'/'y' "
+        "are omitted), but for complete results always supply 'x' and 'y' too."
     )
 }
 TEST_CASES = {
-    "15 Fitzhardinge Street, Wagga Wagga": {
-        "address": "15 Fitzhardinge Street, Wagga Wagga NSW"
-    },
     "24 Docker Street by coordinates": {
         "address": "24 Docker Street, Wagga Wagga NSW",
         "x": 532385.29,
@@ -142,9 +141,10 @@ _LABELS = {
 class Source:
     def __init__(self, address: str, x: float | None = None, y: float | None = None):
         # `address` should match what the council's own autocomplete would
-        # produce, e.g. "15 Fitzhardinge Street, Wagga Wagga NSW" -- it is
-        # used both for geocoding (unless x/y are given) and is echoed back
-        # by the council page, but is NOT the actual lookup key.
+        # produce, e.g. "24 Docker Street, Wagga Wagga NSW" -- it is echoed
+        # back by the council page and used as a geocoding fallback if x/y
+        # aren't given, but supplying x/y directly is strongly recommended
+        # (see HOW_TO_GET_ARGUMENTS_DESCRIPTION).
         self._address = address
         self._x = x
         self._y = y
@@ -203,10 +203,10 @@ class Source:
                 )
 
         entries: list[Collection] = []
-        found = False
+        labels_found: set[str] = set()
         for match in _SECTION_RE.finditer(html):
-            found = True
             label = _LABELS[match.group("key")]
+            labels_found.add(label)
             freq = match.group("freq").strip()
             date_text = match.group("date").strip()  # e.g. "Thu 17/09/2026"
             date_part = date_text.split(" ", 1)[-1]
@@ -222,13 +222,35 @@ class Source:
                     )
                 )
 
-        if not found:
+        if not labels_found:
             raise SourceArgumentNotFound(
                 "address",
                 self._address,
                 message_addition=(
                     "could not parse bin day results from the page "
                     "(the council may have changed their site layout)."
+                ),
+            )
+
+        missing = set(_LABELS.values()) - labels_found
+        if missing:
+            # This happens reliably when x/y came from geocoding an address
+            # via Nominatim rather than being supplied directly: Nominatim
+            # only has street-centreline data for Wagga, which is precise
+            # enough for the area-wide green waste roster but not for the
+            # property-specific domestic waste/recycling roster, so those
+            # come back empty even though the request itself succeeded.
+            raise SourceArgumentNotFound(
+                "address",
+                self._address,
+                message_addition=(
+                    f"found a schedule for {', '.join(sorted(labels_found))} "
+                    f"but not {', '.join(sorted(missing))} -- this usually "
+                    "means the coordinates aren't precise enough for your "
+                    "exact property. Supply the 'x' and 'y' MGA Zone 55 "
+                    "coordinates from the council's own tool instead of "
+                    "relying on address geocoding (see "
+                    "HOW_TO_GET_ARGUMENTS_DESCRIPTION)."
                 ),
             )
 
