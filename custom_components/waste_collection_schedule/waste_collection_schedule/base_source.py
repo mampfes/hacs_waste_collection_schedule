@@ -117,6 +117,22 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # legitimately have no collections in the current window.
     RAISE_ON_EMPTY: bool = False
 
+    # When True, fetch() collapses entries that share a date and canonical
+    # WasteType.id, folding any distinguishing ``description`` from the
+    # discarded duplicate(s) into the one that's kept (see
+    # ``_merge_same_day_duplicates``). Off by default: a pipeline is free to
+    # emit more than one Collection for the same (date, type) — a custom
+    # ``classify()`` may do this deliberately, and merging it away
+    # unconditionally would silently drop entries no type_value_map is
+    # involved in. Opt in only when a ``type_value_map`` genuinely maps
+    # several *distinct* provider labels (e.g. a bin-size or rhythm variant
+    # the source can't yet filter by) onto one canonical type, and the
+    # provider's own feed can emit them on the same date for some
+    # occurrences — e.g. Neunkirchen Siegerland's "Restmülltonne" and
+    # "Spartonne Restmüll", or Koppl's "Restabfall 14-tägig" and "Restabfall
+    # monatlich", which are the same stream on different cycles.
+    MERGE_SAME_DAY_DUPLICATES: bool = False
+
     # --- Pipeline steps (override to customise) ---
 
     # The pipeline-step attributes below are typed as plain callables rather
@@ -258,10 +274,52 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
             else:
                 entries.extend(result)
 
+        if self.MERGE_SAME_DAY_DUPLICATES:
+            entries = self._merge_same_day_duplicates(entries)
+
         if not entries and self.RAISE_ON_EMPTY:
             self._raise_empty()
 
         return entries
+
+    @staticmethod
+    def _merge_same_day_duplicates(entries: list[Collection]) -> list[Collection]:
+        """Collapse entries that share a date and canonical waste type.
+
+        A ``type_value_map`` legitimately maps several distinct provider
+        labels onto one WasteType (e.g. a bin-size or rhythm variant a source
+        can't yet filter by, such as Neunkirchen Siegerland's "Restmülltonne"
+        and "Spartonne Restmüll", which are the same residual-waste stream on
+        a longer cycle). Some providers' feeds list those variants as
+        separate calendar entries that land on the very same day for some
+        occurrences (the reduced-cycle variant is a subset of the regular
+        one), so after canonicalisation the two collapse to two identical
+        (date, type) rows — a visible duplicate that didn't exist before the
+        labels became indistinguishable.
+
+        Keeps the first entry for each (date, WasteType.id) pair and folds
+        any distinguishing ``description`` from the discarded duplicates into
+        it (deduplicated, order preserved), so the original label survives
+        even though the row doesn't. Does not touch entries whose raw labels
+        never land on the same date (e.g. Neunkirchen's "Container Restmüll",
+        which runs on its own, non-overlapping schedule) — those are kept
+        exactly as produced, including when the same address genuinely has
+        more than one of the underlying variants.
+        """
+        by_key: dict[tuple, Collection] = {}
+        order: list[tuple] = []
+        for entry in entries:
+            key = (entry.date, entry.waste_type.id)
+            kept = by_key.get(key)
+            if kept is None:
+                by_key[key] = entry
+                order.append(key)
+            elif entry.description and entry.description != kept.description:
+                merged = ", ".join(
+                    dict.fromkeys(filter(None, [kept.description, entry.description]))
+                )
+                kept.set_description(merged)
+        return [by_key[key] for key in order]
 
     def _raise_empty(self) -> None:
         """Signal "nothing found" instead of returning an empty schedule.
