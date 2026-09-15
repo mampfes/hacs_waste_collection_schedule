@@ -27,6 +27,15 @@ class Source(BaseSource):
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
 
+    # The feed has no per-household selector, so it lists both residual-waste
+    # rhythms for the whole village at once. "Restabfall monatlich" dates are
+    # an exact subset of "Restabfall 14-tägig" (the same stream on a longer
+    # cycle), so on the days they coincide the two would otherwise show up as
+    # a duplicate "General Waste" entry once both map to the same canonical
+    # type. This merges same-day duplicates and keeps carry_raw_label (below)
+    # from being lossy in the process.
+    MERGE_SAME_DAY_DUPLICATES = True
+
     # The vocabulary this feed actually produces, derived by replaying the
     # recorded cassette. Declared explicitly because most of these labels are
     # resolved by the shared vocabulary rather than listed in type_value_map,
@@ -61,4 +70,5 @@ class Source(BaseSource):
             "Restabfall 14-tägig": wt.GENERAL_WASTE,
             "Restabfall monatlich": wt.GENERAL_WASTE,
         },
+        carry_raw_label=True,
     )

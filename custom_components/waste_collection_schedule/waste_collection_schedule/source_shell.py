@@ -143,7 +143,8 @@ def _customize_keys(entry: Collection) -> list[str]:
 
     Legacy sources are only ever matched by their display string, exactly as
     before. New-style (pipeline) sources are matched by their canonical
-    ``WasteType.id`` first, then by the localised display name as a fallback.
+    ``WasteType.id`` first, then by the localised display name, then by the
+    entry's ``description`` (if any) as a last-resort fallback.
 
     The display-name fallback is what actually fixes per-type customisation for
     pipeline sources (issue #6936): the config flow presents, stores and builds
@@ -152,12 +153,25 @@ def _customize_keys(entry: Collection) -> list[str]:
     customisation apply while keeping the id as the preferred, locale-independent
     key (and the one the library's own tests assert). User-typed fnmatch globs,
     also written against the displayed labels, keep working for the same reason.
+
+    The ``description`` fallback exists because a ``type_value_map`` can map
+    several distinct provider labels onto one canonical WasteType (e.g.
+    Neunkirchen Siegerland's "Restmülltonne"/"Spartonne Restmüll"/"Container
+    Restmüll" all resolve to General Waste) — the source carries the original
+    label into ``description`` in that case, and matching customize keys
+    against it too is what lets a user hide (or rename/re-icon) just the one
+    variant that doesn't apply to their address, by writing a customize entry
+    keyed on that raw label (exactly or via glob), without losing the other
+    variant(s) they do have.
     """
     if isinstance(entry, LegacyCollection):
         return [entry.type]
-    # id preferred; de-duplicate in case it equals the display name (e.g. an
-    # English preserved label).
-    return list(dict.fromkeys([entry.waste_type.id, entry.type]))
+    # id and display name preferred; de-duplicate in case either equals the
+    # description (e.g. an English preserved label, or no description set).
+    keys = [entry.waste_type.id, entry.type]
+    if entry.description:
+        keys.append(entry.description)
+    return list(dict.fromkeys(keys))
 
 
 def filter_function(entry: Collection, customize: dict[str, Customize]):
