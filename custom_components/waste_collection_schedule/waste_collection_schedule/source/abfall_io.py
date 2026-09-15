@@ -35,6 +35,13 @@ TEST_CASES = {
         "f_id_strasse": 763,
         # "f_abfallarten": [31, 17, 19, 218]
     },
+    "Landshut (f_abfallarten as comma separated string)": {
+        "key": "bd0c2d0177a0849a905cded5cb734a6f",
+        "f_id_kommune": 2655,
+        "f_id_bezirk": 2655,
+        "f_id_strasse": 763,
+        "f_abfallarten": "31,17,19,218",
+    },
     "Schoenmackers": {
         "key": "e5543a3e190cb8d91c645660ad60965f",
         "f_id_kommune": 3682,
