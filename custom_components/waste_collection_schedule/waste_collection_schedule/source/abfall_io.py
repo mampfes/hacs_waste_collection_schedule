@@ -103,21 +103,24 @@ class HiddenInputParser(HTMLParser):
 class Source:
     def __init__(
         self,
-        key,
-        f_id_kommune,
-        f_id_strasse,
-        f_id_bezirk=None,
-        f_id_strasse_hnr=None,
-        f_abfallarten=None,
+        key: str,
+        f_id_kommune: str | int,
+        f_id_strasse: str | int,
+        f_id_bezirk: str | int | None = None,
+        f_id_strasse_hnr: str | int | None = None,
+        f_abfallarten: list[str] | str | None = None,
     ):
-        if f_abfallarten is None:
+        if isinstance(f_abfallarten, str):
+            # UI config flow stores this as a comma separated string
+            f_abfallarten = [x.strip() for x in f_abfallarten.split(",") if x.strip()]
+        elif f_abfallarten is None:
             f_abfallarten = []
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk
         self._strasse = f_id_strasse
         self._strasse_hnr = f_id_strasse_hnr
-        self._abfallarten = f_abfallarten  # list of integers
+        self._abfallarten = f_abfallarten  # list of waste type ids
         self._ics = ICS()
 
     def _step(self, waction: str, args: dict) -> dict:

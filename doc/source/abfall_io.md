@@ -42,6 +42,8 @@ waste_collection_schedule:
 **f_abfallarten**  
 *(list of integer) (optional)*
 
+Waste type ids to include. A comma separated string (`"31,17,19,218"`) is accepted as well, which is the form produced by the UI configuration flow.
+
 ## Example
 
 ```yaml
