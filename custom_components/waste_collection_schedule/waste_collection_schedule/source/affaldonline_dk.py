@@ -66,7 +66,7 @@ AFFALDONLINE_MUNICIPALITIES = {
     "ffv": {
         "title": "Faaborg Forsynings Virksomhed",
         "url": "https://www.ffv.dk/",
-        "parser": "pdf",
+        "parser": "default",
         "values": "Marsk Billesvej|18||||5672|Broby|36193544|576846|0",
     },
     "fredericia": {
