@@ -43,6 +43,48 @@ ICON_MAP = {
     "biodegradowalne": Icons.BIO_KITCHEN,
 }
 
+# Beside the five streams above, municipalities announce extra pickups under
+# free-text names that vary between them (and contain the occasional typo), so
+# these are matched on a keyword instead of being listed exhaustively. Checked
+# in order, first match wins.
+ICON_KEYWORDS: tuple[tuple[str, Icons], ...] = (
+    # Not pickups: the same feed carries payment deadlines, drop-off point
+    # (PSZOK) openings and bin-washing rounds. EVENT keeps them from looking
+    # like a waste collection.
+    ("płatnoś", Icons.EVENT),
+    ("opłata", Icons.EVENT),
+    ("pszok", Icons.EVENT),
+    ("punkt selektywnej", Icons.EVENT),
+    ("mycie", Icons.EVENT),
+    ("odbiór odpadów z pojemników", Icons.EVENT),
+    # Electronics. "elekto" is the provider's misspelling of "elektro".
+    ("elektro", Icons.ELECTRONICS),
+    ("elekto", Icons.ELECTRONICS),
+    ("sprzęt agd i rtv", Icons.ELECTRONICS),
+    # Textiles.
+    ("tekstyl", Icons.TEXTILE),
+    ("odzież", Icons.TEXTILE),
+    ("ubrania", Icons.TEXTILE),
+)
+
+# Some municipalities collect several streams in one round, announced as
+# "odpady wielkogabarytowe, opony, elektrośmieci" or "opony i tekstylia".
+# Those lead with a stream that has no mapping here yet, so labelling them by
+# whichever keyword happens to match first would be misleading - leave them on
+# the default until the missing streams are mapped too.
+BUNDLED_WITH_UNMAPPED = (
+    "wielkogabaryt",
+    "wielogabaryt",
+    "gabaryt",
+    "meble",
+    "rtv i agd",
+    "opony",
+)
+
+# A leading "*" marks a pickup that has to be requested; it is not part of the
+# waste type's name.
+ON_REQUEST_MARKER = "*"
+
 # The location cascade, from the widest to the narrowest level:
 # source argument -> query parameter (which doubles as the key of a returned
 # item) -> key holding the list of options in the response.
@@ -56,6 +98,23 @@ LOCATION_LEVELS = (
 # A known location without a published schedule yields a single placeholder
 # entry instead of an empty list.
 NO_SCHEDULE_MARKER = "brak harmonogramu"
+
+
+def _icon_for(waste_type: str) -> Icons:
+    """Pick an icon for a waste type, falling back to general waste."""
+    name = waste_type.lstrip(ON_REQUEST_MARKER).strip().lower()
+
+    if name in ICON_MAP:
+        return ICON_MAP[name]
+
+    if any(stream in name for stream in BUNDLED_WITH_UNMAPPED):
+        return Icons.GENERAL_WASTE
+
+    for keyword, icon in ICON_KEYWORDS:
+        if keyword in name:
+            return icon
+
+    return Icons.GENERAL_WASTE
 
 
 class Source:
@@ -128,7 +187,7 @@ class Source:
                     entry["dataOdbioru"], "%Y-%m-%d"
                 ).date(),
                 t=entry["nazwaTypuSmieci"],
-                icon=ICON_MAP.get(entry["nazwaTypuSmieci"], Icons.GENERAL_WASTE),
+                icon=_icon_for(entry["nazwaTypuSmieci"]),
             )
             for entry in schedule
             if entry.get("dzienTygodnia") != NO_SCHEDULE_MARKER
