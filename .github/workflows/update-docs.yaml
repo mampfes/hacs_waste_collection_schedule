@@ -3,7 +3,8 @@ name: Update Documentation
 
 on:
   push:
-    branches: [master]
+    branches: [master, release/**]
+  workflow_dispatch:
 
 permissions:
   contents: write
