@@ -28,15 +28,20 @@ ICON_MAP = {
     "Dagrenovation": Icons.GENERAL_WASTE,
     # Food / organic
     "Bioaffald": Icons.BIO_KITCHEN,
+    "Haveaffald": Icons.GARDEN,
     # Paper and cardboard, alone or combined with glass/metal
     "Pap": Icons.PAPER,
     "Papir/Pap": Icons.PAPER,
+    "Pap/Papir": Icons.PAPER,
     "PPGM": Icons.RECYCLING,
     "Papir/Pap/Glas": Icons.RECYCLING,
     "Papir/Pap og tekstil": Icons.RECYCLING,
     "Papir/Pap-Metal/Glas": Icons.RECYCLING,
+    "Papir/Pap og Plast/Mad- og drikkekartoner": Icons.RECYCLING,
     "Papir/småt pap og glas/metal": Icons.RECYCLING,
     "Pap/papir og glas/metal": Icons.RECYCLING,
+    # Glass and metal
+    "Glas og metal": Icons.GLASS,
     # Plastic and beverage cartons (MDK = mad-/drikkekartoner)
     "PMDK": Icons.PLASTIC_PACKAGING,
     "Plast/Drikkekarton": Icons.PLASTIC_PACKAGING,
@@ -55,7 +60,7 @@ ICON_MAP = {
     "Tekstilaffald": Icons.TEXTILE,
 }
 
-# Maps abreviations into more readable texts.
+# Maps abbreviations into more readable texts.
 TYPE_MAP = {
     "PMDK": "Plast og Drikkekartoner",
     "PPGM": "Pap/Papir og Glas/Metal",
@@ -194,18 +199,24 @@ class Source:
 
         # Gather the address id from the raw values
         # The address id is the last two values in the raw values string
-        addressIdSplit = values.split("|")
-        if len(addressIdSplit) < 2:
-            raise SourceArgumentException(values, "Provided values is not valid")
-        addressId = "|".join(addressIdSplit[-2:])
+        address_id_split = values.split("|")
+        if len(address_id_split) < 2:
+            raise SourceArgumentException("values", "Provided values is not valid")
+        address_id = "|".join(address_id_split[-2:])
 
-        self._api_url = API_URL.format(values=addressId)
+        self._api_url = API_URL.format(values=address_id)
         self._client_provider = AFFALDONLINE_MUNICIPALITIES.get(municipality, {}).get(
             "client", ""
         )
         if self._client_provider == "":
             raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", municipality, AFFALDONLINE_MUNICIPALITIES.keys()
+                "municipality",
+                municipality,
+                [
+                    key
+                    for key, info in AFFALDONLINE_MUNICIPALITIES.items()
+                    if "client" in info
+                ],
             )
         self._client_provider = str(self._client_provider)
 
@@ -230,17 +241,12 @@ class Source:
 
         for entry in json_content:
             for collection in entry["collections"]:
-                fractionName = str(collection["fraction"]["name"]).strip()
+                fraction_name = str(collection["fraction"]["name"]).strip()
                 entries.append(
                     Collection(
                         date=datetime.strptime(entry["date"], "%Y-%m-%d").date(),
-                        t=str(
-                            TYPE_MAP.get(
-                                fractionName,
-                                fractionName,
-                            )
-                        ),
-                        icon=ICON_MAP.get(fractionName, Icons.GENERAL_WASTE),
+                        t=TYPE_MAP.get(fraction_name, fraction_name),
+                        icon=ICON_MAP.get(fraction_name, Icons.GENERAL_WASTE),
                     )
                 )
 

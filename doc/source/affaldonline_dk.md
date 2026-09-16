@@ -20,7 +20,8 @@ waste_collection_schedule:
 _(String) (required)_
 
 The municipality of the app. The following are supported:
-- aeroe 
+
+- aeroe
 - assens
 - favrskov
 - fanoe
