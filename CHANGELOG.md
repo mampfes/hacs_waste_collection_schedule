@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.2] - 2026-09-16
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@capreolusaux, @CozyRocket, @Plarkass, @rr62wghzwp-blip and @superrob. 🎉
+Thanks as well to our returning contributor @GreenDavidA for the fix below.
+
+### Added Sources
+
+- added Čisto mesto (cistomesto_si), SI (thanks @capreolusaux) (#7430)
+- added Stadt Kufstein (stadt_kufstein_at), AT (thanks @CozyRocket) (#7434)
+- added Rennes Métropole (metropole_rennes_fr), FR (thanks @Plarkass) (#7427)
+- added Gemeinde Ebbs, Tyrol (ebbs_gv_at), AT (thanks @rr62wghzwp-blip) (#7423)
+- added Wagga Wagga City Council (wagga_nsw_gov_au), AU (thanks @CozyRocket) (#7418)
+- added a `carry_raw_label`/`show_original_label` mechanism to preserve a provider's original waste-type label (e.g. bin-size or rhythm variants collapsed onto one canonical `WasteType`) as the Collection's description instead of discarding it; dedup now keys on the canonical type instead of the displayed label, and both options are configurable via the UI and YAML. Wired into abfall_neunkirchen_siegerland_de and koppl_at (#7426)
+
+### Fixed Sources
+
+- fixed abfall_io: accept `f_abfallarten` from the UI config flow (#7441)
+- fixed kiedysmieci_info: moved to the kiedysmieci.info proxy API (#7440)
+- fixed eastleigh_gov_uk: refreshed a stale Cloudflare impersonation fingerprint (#7439)
+- fixed ipswich_qld_gov_au: skip Google's shared/quota-limited key when a post code is given (#7438)
+- fixed affaldonline_dk: rewrote against the provider's new API flow (thanks @superrob) (#7414)
+
+### Other
+
+- added support for recording an expected-exception cassette for pipeline sources, so a source's failure path (e.g. `ArgumentGuard` rejections) can be pinned and replayed offline like a normal fixture (thanks @CozyRocket) (#7431)
+- fixed a flaky voluptuous/probatio import-order race in the test suite (thanks @GreenDavidA) (#7415)
+
 ## [3.0.0-beta.1] - 2026-09-14
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
