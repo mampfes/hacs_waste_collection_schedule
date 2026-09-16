@@ -78,6 +78,14 @@ class Collection:
         self._picture: str | None = None
         self._location: str | None = None
         self._description: str | None = None
+        # True only when _description was filled in by a transformer's
+        # carry_raw_label fallback (transformers.BaseTransformer._collections),
+        # never when the source set its own description (e.g. via
+        # description_key, real ICS DESCRIPTION metadata). Lets a consumer
+        # (SourceShell's "show original label" option) clear just the
+        # auto-carried fallback text without ever touching a source's genuine
+        # per-event description.
+        self._description_is_raw_label_fallback: bool = False
 
     @property
     def date(self) -> datetime.date:
@@ -130,6 +138,23 @@ class Collection:
     def description(self):
         return self._description
 
+    @property
+    def description_is_raw_label_fallback(self) -> bool:
+        """True when ``description`` came from a transformer's carry_raw_label
+        fallback, not from the source's own description_key/metadata."""
+        return self._description_is_raw_label_fallback
+
+    def set_description_from_raw_label(self, description):
+        """Set ``description`` and mark it as a carry_raw_label fallback.
+
+        Used only by ``transformers.BaseTransformer._collections`` — a
+        consumer wanting to hide just the auto-carried label (and never a
+        source's genuine per-event description) checks
+        ``description_is_raw_label_fallback`` before clearing it.
+        """
+        self._description = _clean_optional_str(description)
+        self._description_is_raw_label_fallback = True
+
     def set_type(self, t: str):
         self._type_override = t
 
@@ -147,6 +172,7 @@ class Collection:
 
     def set_description(self, description):
         self._description = _clean_optional_str(description)
+        self._description_is_raw_label_fallback = False
 
     def as_dict(self) -> dict:
         d = {

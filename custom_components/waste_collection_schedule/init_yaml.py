@@ -62,6 +62,15 @@ SOURCE_CONFIG = vol.Schema(
         ),
         vol.Optional(const.CONF_SOURCE_CALENDAR_TITLE): cv.string,
         vol.Optional(const.CONF_DAY_OFFSET, default=const.CONF_DAY_OFFSET_DEFAULT): int,
+        # Omitted (None) rather than defaulted to False: SourceShell.create
+        # then resolves the source's own declared IGNORE_DUPLICATES_DEFAULT,
+        # the same as a config-entry that never touched this option in the
+        # UI. An explicit true/false here always wins over that default.
+        vol.Optional(const.CONF_IGNORE_DUPLICATES): cv.boolean,
+        vol.Optional(
+            const.CONF_SHOW_ORIGINAL_LABEL,
+            default=const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT,
+        ): cv.boolean,
     }
 )
 
@@ -148,6 +157,10 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
             source.get(const.CONF_SOURCE_ARGS, {}),
             source.get(const.CONF_SOURCE_CALENDAR_TITLE),
             source.get(const.CONF_DAY_OFFSET, 0),
+            source.get(const.CONF_IGNORE_DUPLICATES),
+            source.get(
+                const.CONF_SHOW_ORIGINAL_LABEL, const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+            ),
         )
 
     # store api object

@@ -261,13 +261,12 @@ class BaseTransformer(ABC, Generic[T]):
             collection = Collection(date=date, waste_type=waste_type, color=color)
             if location is not None:
                 collection.set_location(location)
-            effective_description = description
-            if effective_description is None and raw_label:
+            if description is not None:
+                collection.set_description(description)
+            elif raw_label:
                 candidate = " ".join(str(raw_label).split())
                 if candidate and candidate != display_name(waste_type):
-                    effective_description = candidate
-            if effective_description is not None:
-                collection.set_description(effective_description)
+                    collection.set_description_from_raw_label(candidate)
             return collection
 
         if isinstance(resolved, list):

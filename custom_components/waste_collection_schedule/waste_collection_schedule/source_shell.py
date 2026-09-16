@@ -212,6 +212,7 @@ class SourceShell:
         unique_id: str,
         day_offset: int,
         ignore_duplicates: bool = False,
+        show_original_label: bool = True,
     ):
         self._source = source
         self._customize = customize
@@ -224,6 +225,7 @@ class SourceShell:
         self._entries: list[Collection] = []
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
+        self._show_original_label = show_original_label
 
     @property
     def refreshtime(self):
@@ -293,6 +295,17 @@ class SourceShell:
             entries = (apply_day_offset(x, self._day_offset) for x in entries)
 
         result = list(entries)
+
+        # Hide a transformer's auto-carried raw label (carry_raw_label) if the
+        # user doesn't want it — but never a source's own genuine description
+        # (real ICS DESCRIPTION metadata via description_key, say), which
+        # never sets description_is_raw_label_fallback in the first place.
+        # Runs before the dedup merge below so a hidden label isn't folded
+        # into anything.
+        if not self._show_original_label:
+            for e in result:
+                if e.description_is_raw_label_fallback:
+                    e.set_description(None)
 
         # Remove duplicate (date, identity) pairs, folding any distinguishing
         # description from a discarded duplicate into the entry that's kept
@@ -368,6 +381,7 @@ class SourceShell:
         calendar_title: str | None = None,
         day_offset: int = 0,
         ignore_duplicates: bool | None = None,
+        show_original_label: bool = True,
     ) -> "SourceShell | None":
         """Build a SourceShell for ``source_name``.
 
@@ -378,6 +392,14 @@ class SourceShell:
         apply the user's stored choice instead, which always wins over the
         source's default (a user who explicitly wants duplicates merged, or
         explicitly doesn't, is not overridden by the source's opinion).
+
+        ``show_original_label`` (default ``True``) controls whether a
+        transformer's carry_raw_label fallback is visible in ``description``.
+        Unlike ``ignore_duplicates`` there is no per-source default to
+        resolve: a source either can produce that fallback or it can't, and
+        when it can, showing it is the sensible default the source author
+        already opted into by setting carry_raw_label — the option only ever
+        needs a plain ``True``/``False`` from the config entry.
         """
         # load source module
         try:
@@ -444,6 +466,7 @@ class SourceShell:
             unique_id=calc_unique_source_id(source_name, source_args),
             day_offset=day_offset,
             ignore_duplicates=ignore_duplicates,
+            show_original_label=show_original_label,
         )
 
         return g

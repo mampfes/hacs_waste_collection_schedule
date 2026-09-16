@@ -87,6 +87,8 @@ class WasteCollectionApi:
         source_args: Any,
         calendar_title: str,
         day_offset: int,
+        ignore_duplicates: bool | None = None,
+        show_original_label: bool = True,
     ):
         new_shell = SourceShell.create(
             source_name=source_name,
@@ -94,6 +96,8 @@ class WasteCollectionApi:
             source_args=source_args,
             calendar_title=calendar_title,
             day_offset=day_offset,
+            ignore_duplicates=ignore_duplicates,
+            show_original_label=show_original_label,
         )
 
         if new_shell:

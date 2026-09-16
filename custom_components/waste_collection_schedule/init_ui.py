@@ -70,6 +70,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # SourceShell.create resolve the source's own declared default
         # instead of always falling back to CONF_IGNORE_DUPLICATES_DEFAULT.
         options.get(const.CONF_IGNORE_DUPLICATES),
+        options.get(
+            const.CONF_SHOW_ORIGINAL_LABEL, const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+        ),
     )
 
     if shell is None:

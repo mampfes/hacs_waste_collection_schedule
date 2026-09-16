@@ -80,6 +80,8 @@ from .const import (
     CONF_SEPARATOR,
     CONF_SEPARATOR_DEFAULT,
     CONF_SHOW,
+    CONF_SHOW_ORIGINAL_LABEL,
+    CONF_SHOW_ORIGINAL_LABEL_DEFAULT,
     CONF_SOURCE_ARGS,
     CONF_SOURCE_CALENDAR_TITLE,
     CONF_SOURCE_NAME,
@@ -1456,6 +1458,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     CONF_IGNORE_DUPLICATES,
                     default=self._entry.options.get(
                         CONF_IGNORE_DUPLICATES, ignore_duplicates_default
+                    ),
+                ): BooleanSelector(),
+                vol.Optional(
+                    CONF_SHOW_ORIGINAL_LABEL,
+                    default=self._entry.options.get(
+                        CONF_SHOW_ORIGINAL_LABEL, CONF_SHOW_ORIGINAL_LABEL_DEFAULT
                     ),
                 ): BooleanSelector(),
                 vol.Optional(
