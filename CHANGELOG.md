@@ -9,6 +9,7 @@ Releases are listed in reverse chronological order.
 ### Added
 
 - `TEXTILES`, a canonical waste type for clothing and textile rounds (`mdi:hanger`), with names and aliases in en, de, fr, it and nl. The legacy icon catalogue has had the concept since #2813 and 23 sources emit a textile label, so the pipeline was dropping a category it already had rather than lacking one. (#7097)
+- new options for a pipeline source whose `type_value_map` collapses several distinct provider labels (a bin-size or rhythm variant, e.g. `abfall_neunkirchen_siegerland_de`'s "Restmülltonne"/"Spartonne Restmüll"/"Container Restmüll") onto one canonical waste type: "Ignore Duplicate Entries per Day" (`ignore_duplicates`, existing since v2.25.0) now also folds the discarded duplicate's description into the surviving entry instead of dropping it, and is settable via YAML as well as the config flow; a new "Show Original Provider Label" option (`show_original_label`, on by default, config-flow only where the source uses it) lets a user hide that carried-over label without ever touching a source's own genuine description. Applied to `abfall_neunkirchen_siegerland_de` and `koppl_at`, the two sources that surfaced the issue; ~24 other sources with the same pattern are not yet opted in. (#7426)
 
 ### Changed
 

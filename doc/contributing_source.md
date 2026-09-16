@@ -213,6 +213,29 @@ transform = ICSTransformer(type_value_map={...})   # LOCATION/DESCRIPTION preser
 
 Use `IcsEventsParser` with `classify()` only when the source must *inspect* those fields (e.g. filter events by route); use plain `IcsParser` when metadata is not needed.
 
+#### Carrying the provider's raw label when `type_value_map` collapses it
+
+A `type_value_map` sometimes maps several genuinely distinct provider labels onto one canonical `WasteType` — not cosmetic synonyms, but a bin-size or rhythm variant the source can't yet filter by (`abfall_neunkirchen_siegerland_de`'s "Restmülltonne"/"Spartonne Restmüll"/"Container Restmüll", `koppl_at`'s "Restabfall 14-tägig"/"Restabfall monatlich" — the same residual-waste stream on different cycles, all resolving to `GENERAL_WASTE`). Two things follow: the distinction is otherwise lost, and where the underlying schedules overlap on some dates, canonicalisation turns two previously-distinguishable entries into a visible duplicate on that day.
+
+Pass `carry_raw_label=True` to the transformer to keep the original label from being discarded:
+
+```python
+transform = ICSTransformer(
+    type_value_map={
+        "Restabfall 14-tägig": wt.GENERAL_WASTE,
+        "Restabfall monatlich": wt.GENERAL_WASTE,
+    },
+    carry_raw_label=True,
+)
+```
+
+When the source hasn't set its own `description` (via `description_key`, above), the raw label becomes the `Collection`'s `description` instead — skipped when it would just repeat the canonical display name. Two things then become available to a user, both opt-in and off by default so this changes nothing for a source that doesn't set it:
+
+- The end-user "Ignore Duplicate Entries per Day" option (`ignore_duplicates`, in the HA config flow or YAML) now also folds the discarded duplicate's description into the entry that survives, instead of dropping it — see `IGNORE_DUPLICATES_DEFAULT` below for preselecting that option for a source you know needs it.
+- A new "Show Original Provider Label" option (`show_original_label`, default on) lets the user hide just this auto-carried label — never a source's own genuine `description_key` value, which is tracked separately (`Collection.description_is_raw_label_fallback`). This option is only shown in the config flow for a source whose transform actually sets `carry_raw_label`; it would otherwise be a checkbox with nothing to show or hide.
+
+`carry_raw_label` does not need `IGNORE_DUPLICATES_DEFAULT` set, and vice versa — Neunkirchen and Koppl set both because their overlapping schedules need dedup *and* the labels are worth keeping, but a source could reasonably want only one.
+
 ### Config params (`waste_collection_schedule.config_params`)
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.
@@ -533,6 +556,7 @@ On a pipeline source the metadata lives on the class:
 | `PARAMS` | list | Typed `ConfigParam` descriptors driving the config flow and validation. |
 | `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
+| `IGNORE_DUPLICATES_DEFAULT` | bool | Optional. Default `False`. The source's own recommendation for the end-user "Ignore Duplicate Entries per Day" option (`ignore_duplicates`) — the value it's preselected with the first time a user opens this source's config-entry options, before they've explicitly chosen either way. A legacy source declares the same name as a plain module-level variable instead (no `BaseSource` class to hang it on). Set `True` when a `type_value_map` collapses labels whose underlying schedules can land on the same day for some occurrences (see "Carrying the provider's raw label", above); leave unset otherwise. Never changes anything on its own — the actual merge happens in `SourceShell`, keyed on the user's stored choice (or this default, until they make one), never inside `fetch()` itself, so a bare `Source().fetch()` call (offline fixtures, `test_sources.py -l`, `dump_collections.py`) always sees the raw, un-merged output. |
 | `SOURCE_CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
 | `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. Inline for a handful (see `mulhouse_alsace_fr.py`); `regions.from_yaml(...)` for a registry (see below, and `abfall_io.py`). |
 
