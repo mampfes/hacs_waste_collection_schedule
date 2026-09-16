@@ -285,7 +285,10 @@ def geocoded_params(
         override_lon_param / override_lat_param: optional ``source.params``
             field names holding a user-supplied literal coordinate pair. When
             both are present (non-None) for a given fetch, geocoding is
-            skipped entirely and these are sent as-is.
+            skipped entirely and these are sent as-is. Supplying only one of
+            the pair raises ``SourceArgumentNotFound`` on the missing one,
+            rather than silently falling back to geocoding and dropping the
+            value that was given.
         extra: further query parameters merged in after the point.
 
     Returns:
@@ -293,16 +296,31 @@ def geocoded_params(
         A geocode miss is reported as a not-found on the address argument.
     """
 
+    def _override_point(params: dict[str, Any]) -> dict[str, Any] | None:
+        if override_lon_param is None or override_lat_param is None:
+            return None
+        override_lon = params.get(override_lon_param)
+        override_lat = params.get(override_lat_param)
+        if override_lon is None and override_lat is None:
+            return None
+        if override_lon is None or override_lat is None:
+            given_param, missing_param = (
+                (override_lat_param, override_lon_param)
+                if override_lon is None
+                else (override_lon_param, override_lat_param)
+            )
+            raise SourceArgumentNotFound(
+                missing_param,
+                None,
+                f"'{given_param}' was given but '{missing_param}' was not -- "
+                "provide both coordinates or neither.",
+            )
+        return {lon_param: override_lon, lat_param: override_lat, **(extra or {})}
+
     def resolve(**params: Any) -> dict[str, Any]:
-        if override_lon_param is not None and override_lat_param is not None:
-            override_lon = params.get(override_lon_param)
-            override_lat = params.get(override_lat_param)
-            if override_lon is not None and override_lat is not None:
-                return {
-                    lon_param: override_lon,
-                    lat_param: override_lat,
-                    **(extra or {}),
-                }
+        override = _override_point(params)
+        if override is not None:
+            return override
         query, field = _resolve_address(address, params)
         try:
             location = geocode(query, out_sr=out_sr)

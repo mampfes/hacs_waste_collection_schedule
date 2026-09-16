@@ -129,7 +129,11 @@ class Source(BaseSource):
         # success or failure, so it does not distinguish the two -- confirmed
         # by fetching an out-of-area address live. The rendered element's own
         # opening tag, quote included, only appears when a service section
-        # actually rendered.
+        # actually rendered. No closing quote: this also matches the longer
+        # "binDay__serviceDetailsWrapper" class, which is fine -- that's the
+        # safe direction to be loose in, since RAISE_ON_EMPTY still catches a
+        # genuinely empty result, whereas a trailing-quote match would break
+        # the day the council adds a second class to the element.
         contains='class="binDay__serviceDetails',
         hint=(
             "the council's site didn't return a bin day schedule for this "
