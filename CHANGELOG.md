@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.34.2] - 2026-09-16
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@CozyRocket, @kjanas and @thebino. 🎉
+Thanks as well to our returning contributor @CRZTFR for the fix below.
+
+📢 **Heads up:** a `3.0.0` beta pre-release is available on the `release/3.0.0` branch,
+migrating a large batch of sources to the new BaseSource pipeline with canonical,
+localised waste-type labels. Enable "Show beta versions" in HACS to opt in — **please test
+it thoroughly** against your own setup and report anything you hit on #6561. New source PRs
+should also target `release/3.0.0` rather than `master` (#7399).
+
+### Fixed Sources
+
+- fixed kiedysmieci_info: move to the kiedysmieci.info proxy API (thanks @kjanas) (#7419)
+- fixed ipswich_qld_gov_au: stop reporting an exhausted Google geocoding quota as an unknown street (thanks @CRZTFR) (#7420)
+- fixed abfall_io: accept f_abfallarten as a comma-separated string from the UI config flow (thanks @thebino) (#7425)
+- fixed eastleigh_gov_uk: refresh stale Cloudflare impersonation fingerprint (thanks @CozyRocket) (#7433)
+- fixed umweltverbaende_at: scope Korneuburg's flat ICS list to the requested municipality (#7436)
+
 ## [2.34.1] - 2026-09-14
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
