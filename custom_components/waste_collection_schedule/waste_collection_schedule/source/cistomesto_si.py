@@ -28,7 +28,7 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "region": "Name of your region (e.g. Majšperk) or its numeric region ID (e.g. 107)",
+        "region": "Name of your region (e.g. Majšperk) or its numeric region ID (e.g. 107). Gorišnica, Hajdina, Juršinci and Markovci are split into two collection areas each, so those need the region ID",
     },
 }
 
@@ -44,15 +44,15 @@ CONFIG_FLOW_TYPES = {
             "Duplek - Zgornji Duplek",
             "Duplek - Zgornji Duplek bloki",
             "Gorišnica 1 (Cunkovci, Zagojiči, Gorišnica, Tibolci, Zamušani, Bresnica) (122)",
-            "Gorišnica 2 (Moškanjci, Gajevci, Mala vas, Formin, Placerovci, Muretinci) (123)",
-            "Hajdina 1 (Slovenija vas, Hajdoše, Skorba, Spodnja Hajdina) (126)",
-            "Hajdina 2 (Zgornja Hajdina, Gerečja vas, Draženci) (127)",
+            "Gorišnica 2 (Moškanjci, Gajevci, Mala vas, Formin, Placerovci, Muretinci) (123)",  # codespell:ignore vas
+            "Hajdina 1 (Slovenija vas, Hajdoše, Skorba, Spodnja Hajdina) (126)",  # codespell:ignore vas
+            "Hajdina 2 (Zgornja Hajdina, Gerečja vas, Draženci) (127)",  # codespell:ignore vas
             "Juršinci 1 (Grlinci, Gradiščak, Zagorci, Sakušak, Bodkovci, Senčak pri Juršincih, Juršinci) (128)",
             "Juršinci 2 (Hlapovci, Mostje, Kukava, Gabrnik, Rotman, Dragovič) (129)",
             "Kidričevo",
             "Kidričevo - Bloki",
             "Majšperk",
-            "Markovci 1 (Nova vas pri Markovcih, Bukovci, Stojnci) (125)",
+            "Markovci 1 (Nova vas pri Markovcih, Bukovci, Stojnci) (125)",  # codespell:ignore vas
             "Markovci 2 (Borovci, Prvenci, Strelci, Sobetinci, Markovci, Zabovci) (124)",
             "Podlehnik",
             "Sveti Andraž",
@@ -94,8 +94,7 @@ class Source:
         self._region = str(region).strip()
         self._user_hash = None
 
-    def _setup_session(self, session: requests.Session) -> str:
-        # 1. Register Guest
+    def _register_guest(self, session: requests.Session) -> str:
         device_id = "".join(random.choices(string.hexdigits.lower(), k=16))
         notification_id = generate_random_string(140)
         payload = {
@@ -116,9 +115,14 @@ class Source:
         user_hash = data.get("data", {}).get("hash")
         if not user_hash:
             raise Exception("No hash returned from registration!")
+        return user_hash
 
-        # 2. Get Regions (with retry for backend replication delay)
+    def _setup_session(self, session: requests.Session) -> str:
+        # 1. + 2. Register a guest user and read the region list. The backend
+        # occasionally hands out a hash that getRegionsList rejects with a 401;
+        # retrying the same hash never recovers, so register again instead.
         for attempt in range(3):
+            user_hash = self._register_guest(session)
             res = session.post(
                 f"{API_URL}?com=region&task=getRegionsList", data={"hash": user_hash}
             )
@@ -130,7 +134,6 @@ class Source:
 
         regions_data = res.json().get("data", [])
 
-        region_id = None
         suggestions = []
         matches = []
         for r in regions_data:
@@ -138,7 +141,11 @@ class Source:
             r_title = str(r.get("title", ""))
             suggestions.append(f"{r_title} ({r_id})")
 
-            if self._region == r_id or self._region.lower() == r_title.lower() or self._region.endswith(f"({r_id})"):
+            if (
+                self._region == r_id
+                or self._region.lower() == r_title.lower()
+                or self._region.endswith(f"({r_id})")
+            ):
                 matches.append(r_id)
 
         if not matches:
