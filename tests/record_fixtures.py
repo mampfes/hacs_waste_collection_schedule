@@ -32,7 +32,17 @@ from importlib import import_module
 
 import cassette
 from fixtures_support import choices_path, error_fixture_path, fixture_path, slug
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+)
+
+# The family a source is expected to raise for bad input. SourceArgumentExceptionMultiple
+# is a sibling of SourceArgumentException rather than a subclass, so it has to be named.
+EXPECTED_ERRORS: tuple[type[Exception], ...] = (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+)
 
 SOURCE_DIR = os.path.join(
     os.path.dirname(__file__),
@@ -48,6 +58,12 @@ def _new_arch_modules() -> list[str]:
         ):
             mods.append(os.path.basename(path)[:-3])
     return mods
+
+
+def _discard(path: str) -> None:
+    """Remove a cassette this run decided not to keep (if one exists)."""
+    if os.path.exists(path):
+        os.remove(path)
 
 
 def record(module_name: str) -> None:
@@ -80,6 +96,10 @@ def record_errors(module_name: str) -> None:
     bad input, per CLAUDE.md) is recorded; any other exception means the case
     doesn't exercise what it claims to, so it is reported and skipped rather
     than silently pinned.
+
+    A case that fails to record leaves nothing behind: any cassette written by
+    this run, and any stale one from an earlier run, is removed, so a case that
+    has stopped raising cannot keep replaying green off an old recording.
     """
     module = import_module(f"waste_collection_schedule.source.{module_name}")
     error_cases = getattr(module.Source, "ERROR_TEST_CASES", {})
@@ -88,18 +108,21 @@ def record_errors(module_name: str) -> None:
         path = error_fixture_path(module_name, case_key)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         try:
-            with cassette.recording(
-                path, today, expect_exception=SourceArgumentException
-            ):
+            with cassette.recording(path, today, expect_exception=EXPECTED_ERRORS):
                 module.Source(**args).fetch()
-        except SourceArgumentException as exc:
+        except EXPECTED_ERRORS as exc:
             print(f"  recorded error case {slug(case_key)} ({type(exc).__name__})")
         except Exception as exc:
+            _discard(path)
             print(
                 f"  ! {case_key}: expected a SourceArgumentException, got "
                 f"{type(exc).__name__}: {exc} -- not recorded"
             )
         else:
+            # recording() treated the clean run as a success and wrote a
+            # cassette with no expected_error; drop it, or the next replay
+            # fails on a file this run said it had not written.
+            _discard(path)
             print(
                 f"  ! {case_key}: fetch() did not raise, not recorded -- is "
                 "this case still expected to fail?"

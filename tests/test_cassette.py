@@ -242,3 +242,60 @@ def test_the_fallback_count_is_recorded(tmp_path):
     with cassette.replaying(path2):
         requests.Session().request("POST", URL, json={"a": 1})
     assert cassette.REPLAY_FALLBACKS[os.path.abspath(path2)] == 0
+
+
+# --------------------------------------------------------------------------
+# Recording a failure path (expect_exception)
+# --------------------------------------------------------------------------
+#
+# A recording was only ever kept for a clean fetch(), so a source whose guard
+# rejects an out-of-area address had no way to pin that path. These assert the
+# three outcomes directly; no HTTP is issued, only the persistence decision is
+# under test.
+
+
+class _Rejected(Exception):
+    """Stand-in for the SourceArgumentException family."""
+
+
+def test_an_expected_exception_is_recorded_and_re_raised(tmp_path):
+    path = os.path.join(tmp_path, "_error_out_of_area.json")
+    with pytest.raises(_Rejected):
+        with cassette.recording(path, "2026-01-01", expect_exception=_Rejected):
+            raise _Rejected("no such address")
+
+    with open(path, encoding="utf-8") as fh:
+        saved = json.load(fh)
+    assert saved["expected_error"] == {
+        "type": "_Rejected",
+        "message": "no such address",
+    }
+    assert saved["interactions"] == []
+
+
+def test_an_unexpected_exception_still_discards_the_recording(tmp_path):
+    """Unchanged behaviour: only the named family is pinned as 'expected'."""
+    path = os.path.join(tmp_path, "_error_out_of_area.json")
+    with pytest.raises(ValueError):
+        with cassette.recording(path, "2026-01-01", expect_exception=_Rejected):
+            raise ValueError("something else broke")
+    assert not os.path.exists(path)
+
+
+def test_a_clean_run_records_no_expected_error(tmp_path):
+    """A case that stops raising must not leave a cassette claiming it raised."""
+    path = os.path.join(tmp_path, "case.json")
+    with cassette.recording(path, "2026-01-01", expect_exception=_Rejected):
+        pass
+    with open(path, encoding="utf-8") as fh:
+        assert "expected_error" not in json.load(fh)
+
+
+def test_the_http_stacks_are_restored_after_an_expected_exception(tmp_path):
+    """The patch is undone on the failure path too, not only the clean one."""
+    original = requests.Session.request
+    path = os.path.join(tmp_path, "_error_out_of_area.json")
+    with pytest.raises(_Rejected):
+        with cassette.recording(path, "2026-01-01", expect_exception=_Rejected):
+            raise _Rejected("no such address")
+    assert requests.Session.request is original

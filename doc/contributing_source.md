@@ -650,6 +650,20 @@ store an empty directory, so one on your machine is local debris from an
 interrupted run. That is what let the per-source backlog go stale, since an empty
 directory reads as a recorded source until you list it.
 
+**Recording a failure path.** A source that rejects some inputs — an
+`ArgumentGuard` turning an out-of-area address into a `SourceArgumentException`
+— can pin that path too, so the rejection is verified offline rather than only
+described. Declare the rejected inputs as `ERROR_TEST_CASES` on the source
+(same shape as `TEST_CASES`) and record with the same command. Each entry lands
+at `tests/fixtures/<module>/_error_<case_slug>.json`, underscore-prefixed so the
+ordinary fetch discovery keeps skipping it, and carries an `expected_error`
+entry holding the exception's type and message.
+`test_offline_replay_expected_error` replays it and asserts the same exception
+type still fires. Only the `SourceArgumentException` family is recorded: any
+other exception means the case is failing for a reason it does not claim, so
+the recorder reports it and writes nothing. `ERROR_TEST_CASES` is optional and
+ungated — a source with no rejectable input needs none.
+
 **What a cassette pins.** A recorded interaction stores the request body: every
 payload slot at once (`json`, `data`, `params`, `files`), canonically rendered so
 key order cannot matter and so `data={"a": 1}`, `data="a=1"` and the prepared
