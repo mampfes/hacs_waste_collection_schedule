@@ -48,6 +48,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
     SourceArgumentSuggestionsExceptionBase,
 )
+from waste_collection_schedule.source_shell import default_ignore_duplicates
 
 from .const import (
     CONF_ADD_DAYS_TO,
@@ -1384,6 +1385,19 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
         uncustomized_types = [x for x in collection_types if x not in customized_types]
 
+        # Pre-fill "Ignore Duplicate Entries per Day" with the source's own
+        # declared opinion (IGNORE_DUPLICATES_DEFAULT) the first time this
+        # entry's options are opened, rather than always False. Once the user
+        # submits this form, their explicit choice is stored in
+        # self._entry.options and wins from then on regardless of what the
+        # source declares.
+        source_name = self._entry.data.get(CONF_SOURCE_NAME)
+        ignore_duplicates_default = (
+            default_ignore_duplicates(source_name)
+            if source_name
+            else CONF_IGNORE_DUPLICATES_DEFAULT
+        )
+
         SCHEMA = vol.Schema(
             {
                 vol.Optional(
@@ -1441,7 +1455,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 vol.Optional(
                     CONF_IGNORE_DUPLICATES,
                     default=self._entry.options.get(
-                        CONF_IGNORE_DUPLICATES, CONF_IGNORE_DUPLICATES_DEFAULT
+                        CONF_IGNORE_DUPLICATES, ignore_duplicates_default
                     ),
                 ): BooleanSelector(),
                 vol.Optional(

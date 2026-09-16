@@ -32,9 +32,11 @@ class Source(BaseSource):
     # an exact subset of "Restabfall 14-tägig" (the same stream on a longer
     # cycle), so on the days they coincide the two would otherwise show up as
     # a duplicate "General Waste" entry once both map to the same canonical
-    # type. This merges same-day duplicates and keeps carry_raw_label (below)
-    # from being lossy in the process.
-    MERGE_SAME_DAY_DUPLICATES = True
+    # type. Preselects the "Ignore Duplicate Entries per Day" option (users
+    # can still turn it off in the integration's options) so that merge
+    # happens by default, folding carry_raw_label's (below) description into
+    # the entry that's kept instead of losing it.
+    IGNORE_DUPLICATES_DEFAULT = True
 
     # The vocabulary this feed actually produces, derived by replaying the
     # recorded cassette. Declared explicitly because most of these labels are

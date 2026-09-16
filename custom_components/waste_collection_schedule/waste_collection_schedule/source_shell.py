@@ -294,16 +294,36 @@ class SourceShell:
 
         result = list(entries)
 
-        # remove duplicate (date, type) pairs, keeping first occurrence
+        # Remove duplicate (date, identity) pairs, folding any distinguishing
+        # description from a discarded duplicate into the entry that's kept
+        # instead of just dropping it.
+        #
+        # Keyed on Collection._identity_key (locale-independent: the
+        # customize alias if one was set, else the canonical WasteType.id),
+        # not the displayed .type — two entries must not compare equal in one
+        # UI language and unequal in another. This also catches a case that
+        # slipping .type in as the key could not: a source's type_value_map
+        # can map several distinct provider labels (e.g. a bin-size or
+        # rhythm variant it can't yet filter by) onto one canonical type, and
+        # where the underlying schedules overlap on some dates, the two
+        # entries for that day would otherwise show up as a visible
+        # duplicate once canonicalisation makes their labels identical (see
+        # abfall_neunkirchen_siegerland_de and koppl_at).
         if self._ignore_duplicates:
-            seen: set[tuple] = set()
-            unique: list[Collection] = []
+            by_key: dict[tuple, Collection] = {}
+            order: list[tuple] = []
             for e in result:
-                key = (e.date, e.type)
-                if key not in seen:
-                    seen.add(key)
-                    unique.append(e)
-            result = unique
+                key = (e.date, e._identity_key)
+                kept = by_key.get(key)
+                if kept is None:
+                    by_key[key] = e
+                    order.append(key)
+                elif e.description and e.description != kept.description:
+                    merged = ", ".join(
+                        dict.fromkeys(filter(None, [kept.description, e.description]))
+                    )
+                    kept.set_description(merged)
+            result = [by_key[key] for key in order]
 
         self._entries = result
         return True
@@ -347,8 +367,18 @@ class SourceShell:
         source_args,
         calendar_title: str | None = None,
         day_offset: int = 0,
-        ignore_duplicates: bool = False,
+        ignore_duplicates: bool | None = None,
     ) -> "SourceShell | None":
+        """Build a SourceShell for ``source_name``.
+
+        ``ignore_duplicates=None`` means "the user hasn't explicitly set this
+        option on this config entry yet" — resolved below to the source's own
+        declared default (``IGNORE_DUPLICATES_DEFAULT``), falling back to
+        ``False`` if it declares none. Pass an explicit ``True``/``False`` to
+        apply the user's stored choice instead, which always wins over the
+        source's default (a user who explicitly wants duplicates merged, or
+        explicitly doesn't, is not overridden by the source's opinion).
+        """
         # load source module
         try:
             source_module: SourceModule = cast(
@@ -398,6 +428,10 @@ class SourceShell:
         url: str = (
             getattr(source_cls, "URL", None) or getattr(source_module, "URL", "") or ""
         )
+        if ignore_duplicates is None:
+            ignore_duplicates = _resolve_ignore_duplicates_default(
+                source_cls, source_module
+            )
 
         # create source shell
         g = SourceShell(
@@ -417,3 +451,35 @@ class SourceShell:
 
 def calc_unique_source_id(source_name: str, source_args) -> str:
     return source_name + str(sorted(source_args.items()))
+
+
+def _resolve_ignore_duplicates_default(source_cls, source_module) -> bool:
+    """A source's declared default for the "Ignore Duplicate Entries per Day"
+    option: ``IGNORE_DUPLICATES_DEFAULT`` on the Source class (pipeline) first,
+    else the same name at module level (legacy), else ``False``. Same
+    class-then-module precedence already used for TITLE/DESCRIPTION/URL.
+    """
+    cls_value = getattr(source_cls, "IGNORE_DUPLICATES_DEFAULT", None)
+    if cls_value is not None:
+        return bool(cls_value)
+    return bool(getattr(source_module, "IGNORE_DUPLICATES_DEFAULT", False))
+
+
+def default_ignore_duplicates(source_name: str) -> bool:
+    """The same resolution as ``SourceShell.create``, from just a source name.
+
+    For the config flow to pre-fill the "Ignore Duplicate Entries per Day"
+    option with the source's own opinion before the user has ever set it
+    explicitly on this config entry. Returns ``False`` (never raises) if the
+    source can't be imported — the config flow shouldn't fail over a
+    pre-filled checkbox value.
+    """
+    try:
+        source_module: SourceModule = cast(
+            SourceModule,
+            importlib.import_module(f"waste_collection_schedule.source.{source_name}"),
+        )
+        source_cls = source_module.Source
+    except Exception:
+        return False
+    return _resolve_ignore_duplicates_default(source_cls, source_module)
