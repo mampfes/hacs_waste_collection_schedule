@@ -41,6 +41,21 @@ def as_text(value: object) -> str:
     return str(value).strip()
 
 
+def as_list(value: object) -> object:
+    """Accept a comma separated string in place of a real list.
+
+    A multi-value filter concept renders as a plain text widget (there is no
+    generic multi-select), so the config-flow UI stores whatever the visitor
+    typed as one string ("31,17,19,218") rather than a real list; YAML config
+    still provides a genuine list. Splitting only the string form means a
+    caller can iterate the result either way without getting one character
+    per iteration from the UI-entered form.
+    """
+    if isinstance(value, str):
+        return [item.strip() for item in value.split(",") if item.strip()]
+    return value
+
+
 @dataclass(frozen=True)
 class FieldTerm:
     """A standard config field: a stable key plus localised label and help.
@@ -325,6 +340,11 @@ WASTE_TYPES = _term(
         "Filtro facoltativo: i tipi di rifiuto da includere.",
         "Optioneel filter: de op te nemen afvalsoorten.",
     ),
+    # Rendered as a plain text field (no generic multi-select), so the
+    # config-flow UI stores what the visitor typed as one comma separated
+    # string rather than a real list; a caller iterating the raw value would
+    # otherwise get one character per iteration for a UI-entered filter.
+    coerce=as_list,
 )
 
 ALL_TERMS = [
