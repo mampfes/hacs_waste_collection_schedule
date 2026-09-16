@@ -488,6 +488,18 @@ def _resolve_ignore_duplicates_default(source_cls, source_module) -> bool:
     return bool(getattr(source_module, "IGNORE_DUPLICATES_DEFAULT", False))
 
 
+def _load_source_class(source_name: str):
+    """Import a source module and return its Source class, or None."""
+    try:
+        source_module: SourceModule = cast(
+            SourceModule,
+            importlib.import_module(f"waste_collection_schedule.source.{source_name}"),
+        )
+        return source_module.Source, source_module
+    except Exception:
+        return None, None
+
+
 def default_ignore_duplicates(source_name: str) -> bool:
     """The same resolution as ``SourceShell.create``, from just a source name.
 
@@ -497,12 +509,23 @@ def default_ignore_duplicates(source_name: str) -> bool:
     source can't be imported — the config flow shouldn't fail over a
     pre-filled checkbox value.
     """
-    try:
-        source_module: SourceModule = cast(
-            SourceModule,
-            importlib.import_module(f"waste_collection_schedule.source.{source_name}"),
-        )
-        source_cls = source_module.Source
-    except Exception:
+    source_cls, source_module = _load_source_class(source_name)
+    if source_cls is None:
         return False
     return _resolve_ignore_duplicates_default(source_cls, source_module)
+
+
+def source_supports_show_original_label(source_name: str) -> bool:
+    """Whether ``source_name``'s transform declares ``carry_raw_label``.
+
+    For the config flow to decide whether the "show original provider
+    label" option is even relevant for this source — most sources never
+    set it, and showing an always-no-op checkbox for them is confusing
+    (#7426). Returns ``False`` (never raises) if the source can't be
+    imported, has no ``transform`` (a ``classify()``-based source), or
+    isn't a pipeline source at all (legacy sources have no transformer
+    concept, so this never applies to them).
+    """
+    source_cls, _ = _load_source_class(source_name)
+    transform = getattr(source_cls, "transform", None)
+    return bool(getattr(transform, "carries_raw_label", False))

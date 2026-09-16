@@ -151,6 +151,17 @@ class BaseTransformer(ABC, Generic[T]):
         return record.get(key)
 
     @property
+    def carries_raw_label(self) -> bool:
+        """Whether this transformer was configured with ``carry_raw_label``.
+
+        Read by the config flow to decide whether the "show original
+        provider label" option is even relevant for a given source — with
+        this off, the option would be a no-op checkbox with nothing to
+        show or hide.
+        """
+        return self._carry_raw_label
+
+    @property
     def waste_types(self) -> list[WasteType]:
         """Return the WasteTypes this transformer can produce, in declaration order.
 

@@ -9,4 +9,9 @@ from .collection import Collection as CollectionBase  # noqa: F401
 from .collection import CollectionGroup  # noqa: F401
 from .collection_aggregator import CollectionAggregator  # noqa: F401
 from .icons import Icons  # noqa: F401
-from .source_shell import Customize, SourceShell, default_ignore_duplicates  # noqa: F401
+from .source_shell import (  # noqa: F401
+    Customize,
+    SourceShell,
+    default_ignore_duplicates,
+    source_supports_show_original_label,
+)
