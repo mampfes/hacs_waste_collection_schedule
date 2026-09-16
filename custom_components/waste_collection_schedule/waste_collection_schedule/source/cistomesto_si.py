@@ -5,7 +5,10 @@ import time
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Čisto mesto"
 DESCRIPTION = "Source for Čisto mesto Ptuj."
@@ -40,13 +43,17 @@ CONFIG_FLOW_TYPES = {
             "Duplek - Ostala naselja bloki",
             "Duplek - Zgornji Duplek",
             "Duplek - Zgornji Duplek bloki",
-            "Gorišnica",
-            "Hajdina",
-            "Juršinci",
+            "Gorišnica 1 (Cunkovci, Zagojiči, Gorišnica, Tibolci, Zamušani, Bresnica) (122)",
+            "Gorišnica 2 (Moškanjci, Gajevci, Mala vas, Formin, Placerovci, Muretinci) (123)",
+            "Hajdina 1 (Slovenija vas, Hajdoše, Skorba, Spodnja Hajdina) (126)",
+            "Hajdina 2 (Zgornja Hajdina, Gerečja vas, Draženci) (127)",
+            "Juršinci 1 (Grlinci, Gradiščak, Zagorci, Sakušak, Bodkovci, Senčak pri Juršincih, Juršinci) (128)",
+            "Juršinci 2 (Hlapovci, Mostje, Kukava, Gabrnik, Rotman, Dragovič) (129)",
             "Kidričevo",
             "Kidričevo - Bloki",
             "Majšperk",
-            "Markovci",
+            "Markovci 1 (Nova vas pri Markovcih, Bukovci, Stojnci) (125)",
+            "Markovci 2 (Borovci, Prvenci, Strelci, Sobetinci, Markovci, Zabovci) (124)",
             "Podlehnik",
             "Sveti Andraž",
             "Trnovska vas",  # codespell:ignore vas
@@ -125,19 +132,26 @@ class Source:
 
         region_id = None
         suggestions = []
+        matches = []
         for r in regions_data:
             r_id = str(r.get("id"))
             r_title = str(r.get("title", ""))
-            suggestions.append(r_title)
+            suggestions.append(f"{r_title} ({r_id})")
 
-            if self._region == r_id or self._region.lower() == r_title.lower():
-                region_id = r_id
-                break
+            if self._region == r_id or self._region.lower() == r_title.lower() or self._region.endswith(f"({r_id})"):
+                matches.append(r_id)
 
-        if not region_id:
+        if not matches:
             raise SourceArgumentNotFoundWithSuggestions(
                 "region", self._region, suggestions
             )
+
+        if len(matches) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "region", self._region, [f"{self._region} ({m})" for m in matches]
+            )
+
+        region_id = matches[0]
 
         # 3. Set Region
         res = session.post(
