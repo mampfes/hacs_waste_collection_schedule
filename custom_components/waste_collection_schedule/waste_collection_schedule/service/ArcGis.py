@@ -241,17 +241,36 @@ def geocoded_params(
     *,
     lon_param: str = "lon",
     lat_param: str = "lat",
+    out_sr: int = 4326,
+    override_lon_param: str | None = None,
+    override_lat_param: str | None = None,
     extra: dict[str, Any] | None = None,
 ) -> Callable[..., dict[str, Any]]:
     """Build a request-params callable that geocodes an address to a point.
 
     For a provider that is not itself on ArcGIS but keys its endpoint by a
-    lat/lon. Geocoding is request-building, so it belongs in the params of the
-    shared HTTP retriever rather than in a source-local ``retrieve``::
+    lat/lon (or a projected easting/northing). Geocoding is request-building,
+    so it belongs in the params of the shared HTTP retriever rather than in a
+    source-local ``retrieve``::
 
         retrieve = retrievers.HttpGetRetriever(
             url=API_URL,
             params=ArcGis.geocoded_params(lon_param="lng"),
+        )
+
+    A provider whose own precision-lookup tool lets a user read an exact point
+    off its URL can offer that as a manual override for the rare address that
+    doesn't geocode precisely enough, by naming the ``source.params`` fields
+    holding it::
+
+        PARAMS = (config_params.street_address(), text_field("x", optional=True,
+                  coerce=float), text_field("y", optional=True, coerce=float))
+        retrieve = retrievers.HttpGetRetriever(
+            url=API_URL,
+            params=ArcGis.geocoded_params(
+                lon_param="x", lat_param="y", out_sr=28355,
+                override_lon_param="x", override_lat_param="y",
+            ),
         )
 
     Args:
@@ -259,6 +278,17 @@ def geocoded_params(
             resolved against ``**source.params`` (use one to append the state or
             country the geocoder needs).
         lon_param / lat_param: the endpoint's query-parameter names for the point.
+        out_sr: output spatial reference WKID for the geocoded point (default
+            4326 = WGS84). Pass a projected CRS's WKID (e.g. 28355 for MGA
+            Zone 55) when the endpoint expects the point in that projection
+            directly rather than in WGS84 lat/lon.
+        override_lon_param / override_lat_param: optional ``source.params``
+            field names holding a user-supplied literal coordinate pair. When
+            both are present (non-None) for a given fetch, geocoding is
+            skipped entirely and these are sent as-is. Supplying only one of
+            the pair raises ``SourceArgumentNotFound`` on the missing one,
+            rather than silently falling back to geocoding and dropping the
+            value that was given.
         extra: further query parameters merged in after the point.
 
     Returns:
@@ -266,10 +296,34 @@ def geocoded_params(
         A geocode miss is reported as a not-found on the address argument.
     """
 
+    def _override_point(params: dict[str, Any]) -> dict[str, Any] | None:
+        if override_lon_param is None or override_lat_param is None:
+            return None
+        override_lon = params.get(override_lon_param)
+        override_lat = params.get(override_lat_param)
+        if override_lon is None and override_lat is None:
+            return None
+        if override_lon is None or override_lat is None:
+            given_param, missing_param = (
+                (override_lat_param, override_lon_param)
+                if override_lon is None
+                else (override_lon_param, override_lat_param)
+            )
+            raise SourceArgumentNotFound(
+                missing_param,
+                None,
+                f"'{given_param}' was given but '{missing_param}' was not -- "
+                "provide both coordinates or neither.",
+            )
+        return {lon_param: override_lon, lat_param: override_lat, **(extra or {})}
+
     def resolve(**params: Any) -> dict[str, Any]:
+        override = _override_point(params)
+        if override is not None:
+            return override
         query, field = _resolve_address(address, params)
         try:
-            location = geocode(query)
+            location = geocode(query, out_sr=out_sr)
         except ArcGisGeocodeError as e:
             raise SourceArgumentNotFound(field, query) from e
         return {lon_param: location["x"], lat_param: location["y"], **(extra or {})}
