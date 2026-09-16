@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.3] - 2026-09-16
+
+This is a renewed call for testers of the BaseSource/pipeline rewrite: if you tried beta.1 or beta.2, please update and let us know what breaks; if you haven't yet, now's a good time to opt in via HACS' "show beta versions" toggle. We're aiming to ship at least one 3.0.0 beta per week from here on, so expect frequent, small updates rather than one big drop. Two things we could really use a hand with: migrating more of the existing legacy sources over to the new BaseSource architecture, and triaging/working through the open issues on this pre-release track. Thanks for testing!
+
+### Other
+
+- fixed CI: extend the `Update Documentation` workflow to run on `release/**` branches and add `workflow_dispatch`, so `sources.json` and `source_metadata.json` are regenerated after source merges on the release branch (#7446)
+
 ## [3.0.0-beta.2] - 2026-09-16
 
 This is a renewed call for testers of the BaseSource/pipeline rewrite: if you tried beta.1, please update and let us know what breaks; if you haven't yet, now's a good time to opt in via HACS' "show beta versions" toggle. We're aiming to ship at least one 3.0.0 beta per week from here on, so expect frequent, small updates rather than one big drop. Two things we could really use a hand with: migrating more of the existing legacy sources over to the new BaseSource architecture, and triaging/working through the open issues on this pre-release track. Thanks for testing!
