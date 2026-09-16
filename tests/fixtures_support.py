@@ -63,3 +63,32 @@ def discover_choice_fixtures() -> list[tuple[str, str]]:
         if os.path.isfile(path):
             found.append((module, path))
     return found
+
+
+# Cassette for one of a source's ERROR_TEST_CASES entries (an input expected to
+# raise, e.g. an ArgumentGuard rejecting an out-of-area address). Prefixed like
+# CHOICES_FILENAME so discover_fixtures() keeps skipping it.
+ERROR_PREFIX = "_error_"
+
+
+def error_fixture_path(source_module: str, case_key: str) -> str:
+    return os.path.join(
+        FIXTURE_DIR, source_module, f"{ERROR_PREFIX}{slug(case_key)}.json"
+    )
+
+
+def discover_error_fixtures() -> list[tuple[str, str, str]]:
+    """Return ``(source_module, case_slug, path)`` for every recorded error case."""
+    found: list[tuple[str, str, str]] = []
+    if not os.path.isdir(FIXTURE_DIR):
+        return found
+    for module in sorted(os.listdir(FIXTURE_DIR)):
+        moddir = os.path.join(FIXTURE_DIR, module)
+        if not os.path.isdir(moddir):
+            continue
+        for fname in sorted(os.listdir(moddir)):
+            if not fname.startswith(ERROR_PREFIX):
+                continue
+            case_slug = fname[len(ERROR_PREFIX) :].rsplit(".", 1)[0]
+            found.append((module, case_slug, os.path.join(moddir, fname)))
+    return found
