@@ -35,6 +35,13 @@ TEST_CASES = {
         "f_id_strasse": 763,
         # "f_abfallarten": [31, 17, 19, 218]
     },
+    "Landshut (f_abfallarten as comma separated string)": {
+        "key": "bd0c2d0177a0849a905cded5cb734a6f",
+        "f_id_kommune": 2655,
+        "f_id_bezirk": 2655,
+        "f_id_strasse": 763,
+        "f_abfallarten": "31,17,19,218",
+    },
     "Schoenmackers": {
         "key": "e5543a3e190cb8d91c645660ad60965f",
         "f_id_kommune": 3682,
@@ -103,21 +110,24 @@ class HiddenInputParser(HTMLParser):
 class Source:
     def __init__(
         self,
-        key,
-        f_id_kommune,
-        f_id_strasse,
-        f_id_bezirk=None,
-        f_id_strasse_hnr=None,
-        f_abfallarten=None,
+        key: str,
+        f_id_kommune: str | int,
+        f_id_strasse: str | int,
+        f_id_bezirk: str | int | None = None,
+        f_id_strasse_hnr: str | int | None = None,
+        f_abfallarten: list[str] | str | None = None,
     ):
-        if f_abfallarten is None:
+        if isinstance(f_abfallarten, str):
+            # UI config flow stores this as a comma separated string
+            f_abfallarten = [x.strip() for x in f_abfallarten.split(",") if x.strip()]
+        elif f_abfallarten is None:
             f_abfallarten = []
         self._key = key
         self._kommune = f_id_kommune
         self._bezirk = f_id_bezirk
         self._strasse = f_id_strasse
         self._strasse_hnr = f_id_strasse_hnr
-        self._abfallarten = f_abfallarten  # list of integers
+        self._abfallarten = f_abfallarten  # list of waste type ids
         self._ics = ICS()
 
     def _step(self, waction: str, args: dict) -> dict:
