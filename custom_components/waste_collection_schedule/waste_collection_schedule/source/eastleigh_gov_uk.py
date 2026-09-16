@@ -31,7 +31,7 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
-        session = requests.Session(impersonate="chrome124")
+        session = requests.Session(impersonate="chrome")
         args = {"uprn": self._uprn}
 
         # get json file
