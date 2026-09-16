@@ -86,48 +86,21 @@ class Source:
 
         The service matches on the address components, not the coordinates:
         a payload carrying 0/0 resolves the same schedule as the rooftop
-        result Google returns. It does require the Ipswich City council area
-        and a post code belonging to the suburb; without either it answers
-        "Device Key not valid for location".
+        result Google returns. It does need the state spelled out in full
+        and a post code belonging to the suburb; with the abbreviated "QLD"
+        in place of "Queensland" it reports that it found no bin services.
         """
         number, _, name = self._street.partition(" ")
         if not name:
             raise SourceArgumentNotFound("street", self._street)
-        return {
-            "address_components": [
-                {"long_name": number, "short_name": number, "types": ["street_number"]},
-                {"long_name": name, "short_name": name, "types": ["route"]},
-                {
-                    "long_name": self._suburb,
-                    "short_name": self._suburb,
-                    "types": ["locality", "political"],
-                },
-                {
-                    "long_name": "Ipswich City",
-                    "short_name": "Ipswich",
-                    "types": ["administrative_area_level_2", "political"],
-                },
-                {
-                    "long_name": "Queensland",
-                    "short_name": "QLD",
-                    "types": ["administrative_area_level_1", "political"],
-                },
-                {
-                    "long_name": "Australia",
-                    "short_name": "AU",
-                    "types": ["country", "political"],
-                },
-                {
-                    "long_name": self._post_code,
-                    "short_name": self._post_code,
-                    "types": ["postal_code"],
-                },
-            ],
-            "formatted_address": (
-                f"{self._street}, {self._suburb} QLD {self._post_code}, Australia"
-            ),
-            "geometry": {"location": {"lat": 0, "lng": 0}},
-        }
+        return self._service.build_address_data(
+            street_number=number,
+            street_name=name,
+            suburb=self._suburb,
+            post_code=self._post_code,
+            state="Queensland",
+            coordinates={"lat": 0, "lng": 0},
+        )
 
     def _geocode(self) -> dict:
         device_key = self._service.register_device()
@@ -160,7 +133,7 @@ class Source:
         # visitor is told to correct an address that was right all along.
         status = geocode_payload.get("status")
         if status not in ("OK", "ZERO_RESULTS"):
-            raise ValueError(
+            raise RuntimeError(
                 "Ipswich City Council's address search is unavailable "
                 f"(Google returned {status}). Supplying post_code skips it."
             )
