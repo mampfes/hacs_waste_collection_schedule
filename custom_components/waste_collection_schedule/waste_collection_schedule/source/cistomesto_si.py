@@ -10,6 +10,7 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Čisto mesto"
 DESCRIPTION = "Source for Čisto mesto Ptuj."
 URL = "https://cistomesto.si"
+COUNTRY = "si"
 TEST_CASES = {
     "Majšperk": {"region": "Majšperk"},
     "Cirkulane": {"region": "Cirkulane"},
@@ -20,17 +21,11 @@ PARAM_TRANSLATIONS = {
     "en": {
         "region": "Region",
     },
-    "sl": {
-        "region": "Regija",
-    },
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "region": "Name of your region (e.g., Majšperk or Ptuj) or ID (e.g., 107)",
-    },
-    "sl": {
-        "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107)",
+        "region": "Name of your region (e.g. Majšperk) or its numeric region ID (e.g. 107)",
     },
 }
 
@@ -54,7 +49,7 @@ CONFIG_FLOW_TYPES = {
             "Markovci",
             "Podlehnik",
             "Sveti Andraž",
-            "Trnovska vas",
+            "Trnovska vas",  # codespell:ignore vas
             "Videm",
             "Vitanje",
             "Zavrč",
@@ -104,7 +99,9 @@ class Source:
             "versionName": "1.0.8",
             "deviceName": "Samsung Galaxy S22",
         }
-        res = session.post(f"{API_URL}?com=userdata&task=registerGuestUser", data=payload)
+        res = session.post(
+            f"{API_URL}?com=userdata&task=registerGuestUser", data=payload
+        )
         res.raise_for_status()
         data = res.json()
         if data.get("error"):
@@ -115,13 +112,15 @@ class Source:
 
         # 2. Get Regions (with retry for backend replication delay)
         for attempt in range(3):
-            res = session.post(f"{API_URL}?com=region&task=getRegionsList", data={"hash": user_hash})
+            res = session.post(
+                f"{API_URL}?com=region&task=getRegionsList", data={"hash": user_hash}
+            )
             if res.status_code == 401 and attempt < 2:
                 time.sleep(1)
                 continue
             res.raise_for_status()
             break
-        
+
         regions_data = res.json().get("data", [])
 
         region_id = None
@@ -136,7 +135,9 @@ class Source:
                 break
 
         if not region_id:
-            raise SourceArgumentNotFoundWithSuggestions("region", self._region, suggestions)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "region", self._region, suggestions
+            )
 
         # 3. Set Region
         res = session.post(
@@ -168,7 +169,9 @@ class Source:
             payload_data.append(("services[]", str(s_id)))
             payload_data.append(("notifications[]", str(s_id)))
 
-        res = session.post(f"{API_URL}?com=service&task=saveServicesToUser", data=payload_data)
+        res = session.post(
+            f"{API_URL}?com=service&task=saveServicesToUser", data=payload_data
+        )
         res.raise_for_status()
 
         return user_hash
@@ -187,7 +190,7 @@ class Source:
         )
         res.raise_for_status()
         data = res.json()
-        
+
         # If hash expired or server returned error, reset and try once more
         if data.get("error"):
             self._user_hash = self._setup_session(session)
