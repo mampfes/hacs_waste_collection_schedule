@@ -1709,6 +1709,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "post_code": "PLZ",
           "street": "Straße",
           "suburb": "Suburb"
         },
@@ -1721,6 +1722,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "post_code": "PLZ",
           "street": "Straße",
           "suburb": "Suburb"
         },

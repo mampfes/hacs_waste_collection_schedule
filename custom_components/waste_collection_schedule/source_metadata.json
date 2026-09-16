@@ -437,7 +437,7 @@
   "ipswich_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_qld_gov_au.md",
     "howto": {
-      "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia."
+      "en": "Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for `street`, and the suburb name only for `suburb`. Do not add QLD or Australia. Adding your `post_code` is optional but recommended: it skips the council app's address search, which is shared between all of its users and is regularly out of quota."
     },
     "urls": {}
   },

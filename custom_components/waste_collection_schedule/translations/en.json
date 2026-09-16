@@ -1825,11 +1825,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "post_code": "Post code",
           "street": "Street",
           "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "post_code": "Optional four-digit post code, e.g. 4301.",
           "street": "Street number and street name, e.g. 50 Brisbane Road.",
           "suburb": "Suburb name, e.g. Redbank."
         }
@@ -1839,10 +1841,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "post_code": "Post code",
           "street": "Street",
           "suburb": "Suburb"
         },
         "data_description": {
+          "post_code": "Optional four-digit post code, e.g. 4301.",
           "street": "Street number and street name, e.g. 50 Brisbane Road.",
           "suburb": "Suburb name, e.g. Redbank."
         }

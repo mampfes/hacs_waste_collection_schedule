@@ -1706,6 +1706,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "post_code": "Code postal",
           "street": "Rue",
           "suburb": "Suburb"
         },
@@ -1718,6 +1719,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "post_code": "Code postal",
           "street": "Rue",
           "suburb": "Suburb"
         },

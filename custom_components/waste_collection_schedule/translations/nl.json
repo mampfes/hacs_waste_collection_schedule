@@ -1700,6 +1700,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "post_code": "Postcode",
           "street": "Street",
           "suburb": "Suburb"
         },
@@ -1712,6 +1713,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "post_code": "Postcode",
           "street": "Street",
           "suburb": "Suburb"
         },

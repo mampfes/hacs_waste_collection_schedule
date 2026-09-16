@@ -1706,6 +1706,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "post_code": "Codice Postale CAP",
           "street": "Strada",
           "suburb": "Suburb"
         },
@@ -1718,6 +1719,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "post_code": "Codice Postale CAP",
           "street": "Strada",
           "suburb": "Suburb"
         },
