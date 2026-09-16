@@ -29239,7 +29239,8 @@
           "day_switch_time": "Orario di raccolta",
           "fetch_interval_days": "Days between fetches",
           "day_offset": "Offset giorni",
-          "ignore_duplicates": "Ignora voci duplicate al giorno"
+          "ignore_duplicates": "Ignora voci duplicate al giorno",
+          "show_original_label": "Mostra etichetta originale del fornitore"
         },
         "data_description": {
           "sensor_select": "Seleziona il sensore che vuoi modificare. (seleziona 'Aggiungi nuovo sensore' per creare un nuovo sensore)",
@@ -29251,7 +29252,8 @@
           "day_switch_time": "Ora del giorno in formato 'HH:MM' entro la quale Home Assistant continuera' a mostrare i valori dei sensori del giorno precedente prima di passare a quelli del giorno corrente.",
           "fetch_interval_days": "Specifies how often Home Assistant fetches waste collection events from this calendar source. The default value is 1 day. With a value of 2, waste collection events are fetched every 2 days.",
           "day_offset": "Offset in giorni da aggiungere alla data di raccolta (può essere negativo). Se non viene inserito alcun valore, viene utilizzato il valore predefinito di 0.",
-          "ignore_duplicates": "Se abilitato, le voci di raccolta duplicate con lo stesso tipo di rifiuto nello stesso giorno vengono rimosse, mantenendo solo una voce per tipo al giorno."
+          "ignore_duplicates": "Se abilitato, le voci di raccolta duplicate con lo stesso tipo di rifiuto nello stesso giorno vengono rimosse, mantenendo solo una voce per tipo al giorno.",
+          "show_original_label": "Se abilitato (impostazione predefinita), alcune fonti mantengono l'etichetta originale del fornitore (ad es. il nome esatto del bidone/contenitore) nella descrizione della raccolta, anche dopo averla mappata su un tipo di rifiuto standard. Disabilita per nascondere quell'etichetta originale."
         }
       },
       "customize": {

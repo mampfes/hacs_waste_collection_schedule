@@ -48,6 +48,10 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
     SourceArgumentSuggestionsExceptionBase,
 )
+from waste_collection_schedule.source_shell import (
+    default_ignore_duplicates,
+    source_supports_show_original_label,
+)
 
 from .const import (
     CONF_ADD_DAYS_TO,
@@ -79,6 +83,8 @@ from .const import (
     CONF_SEPARATOR,
     CONF_SEPARATOR_DEFAULT,
     CONF_SHOW,
+    CONF_SHOW_ORIGINAL_LABEL,
+    CONF_SHOW_ORIGINAL_LABEL_DEFAULT,
     CONF_SOURCE_ARGS,
     CONF_SOURCE_CALENDAR_TITLE,
     CONF_SOURCE_NAME,
@@ -1384,116 +1390,142 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
         uncustomized_types = [x for x in collection_types if x not in customized_types]
 
-        SCHEMA = vol.Schema(
-            {
-                vol.Optional(
-                    CONF_SOURCE_CALENDAR_TITLE,
-                    default=self._entry.options.get(
-                        CONF_SOURCE_CALENDAR_TITLE, calendar_title
-                    ),
-                ): cv.string,
-                vol.Optional(
-                    CONF_SEPARATOR,
-                    default=self._entry.options.get(
-                        CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT
-                    ),
-                ): cv.string,
-                vol.Optional(
-                    CONF_FETCH_TIME,
-                    default=self._entry.options.get(
-                        CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT
-                    ),
-                ): TimeSelector(),
-                vol.Optional(
-                    CONF_FETCH_INTERVAL_DAYS,
-                    default=self._entry.options.get(
-                        CONF_FETCH_INTERVAL_DAYS, CONF_FETCH_INTERVAL_DAYS_DEFAULT
-                    ),
-                ): vol.All(int, vol.Range(min=1)),
-                vol.Optional(
-                    CONF_RANDOM_FETCH_TIME_OFFSET,
-                    default={
-                        "hours": self._entry.options.get(
-                            CONF_RANDOM_FETCH_TIME_OFFSET,
-                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                        )
-                        // 60,
-                        "minutes": self._entry.options.get(
-                            CONF_RANDOM_FETCH_TIME_OFFSET,
-                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                        )
-                        % 60,
-                        "seconds": 0,
-                    },
-                ): DurationSelector(DurationSelectorConfig(enable_day=False)),
-                vol.Optional(
-                    CONF_DAY_SWITCH_TIME,
-                    default=self._entry.options.get(
-                        CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
-                    ),
-                ): TimeSelector(),
-                vol.Optional(
-                    CONF_DAY_OFFSET,
-                    default=self._entry.options.get(
-                        CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
-                    ),
-                ): int,
-                vol.Optional(
-                    CONF_IGNORE_DUPLICATES,
-                    default=self._entry.options.get(
-                        CONF_IGNORE_DUPLICATES, CONF_IGNORE_DUPLICATES_DEFAULT
-                    ),
-                ): BooleanSelector(),
-                vol.Optional(
-                    "sensor_select",
-                ): SelectSelector(
-                    SelectSelectorConfig(
-                        translation_key="sensor_select",
-                        options=[
-                            *[
-                                SelectOptionDict(label=x[CONF_NAME], value=x[CONF_NAME])
-                                for x in self._entry.options.get(CONF_SENSORS, [])
-                            ],
-                            SelectOptionDict(
-                                label="add_new_sensor", value="sensor_select_add_new"
-                            ),
-                        ],
-                        mode=SelectSelectorMode.LIST,
-                        custom_value=False,
-                        multiple=True,
-                    )
-                ),
-                vol.Optional(
-                    "customize_select",
-                ): SelectSelector(
-                    SelectSelectorConfig(
-                        options=[
-                            *[
-                                SelectOptionDict(
-                                    label=key
-                                    + (
-                                        f": {value[CONF_ALIAS]}"
-                                        if CONF_ALIAS in value
-                                        else ""
-                                    ),
-                                    value=key,
-                                )
-                                for key, value in self._entry.options.get(
-                                    CONF_CUSTOMIZE, {}
-                                ).items()
-                            ],
-                            *[
-                                SelectOptionDict(label=x, value=x)
-                                for x in uncustomized_types
-                            ],
-                        ],
-                        mode=SelectSelectorMode.DROPDOWN,
-                        custom_value=True,
-                        multiple=True,
-                    )
-                ),
-            }
+        # Pre-fill "Ignore Duplicate Entries per Day" with the source's own
+        # declared opinion (IGNORE_DUPLICATES_DEFAULT) the first time this
+        # entry's options are opened, rather than always False. Once the user
+        # submits this form, their explicit choice is stored in
+        # self._entry.options and wins from then on regardless of what the
+        # source declares.
+        source_name = self._entry.data.get(CONF_SOURCE_NAME)
+        ignore_duplicates_default = (
+            default_ignore_duplicates(source_name)
+            if source_name
+            else CONF_IGNORE_DUPLICATES_DEFAULT
         )
+        # Only relevant for a source whose transform declares carry_raw_label
+        # (currently a handful) — for every other source it would be a
+        # checkbox with nothing to show or hide, which is confusing rather
+        # than helpful, so it's omitted from the schema entirely.
+        show_original_label_relevant = bool(
+            source_name and source_supports_show_original_label(source_name)
+        )
+
+        SCHEMA_DICT: dict = {
+            vol.Optional(
+                CONF_SOURCE_CALENDAR_TITLE,
+                default=self._entry.options.get(
+                    CONF_SOURCE_CALENDAR_TITLE, calendar_title
+                ),
+            ): cv.string,
+            vol.Optional(
+                CONF_SEPARATOR,
+                default=self._entry.options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT),
+            ): cv.string,
+            vol.Optional(
+                CONF_FETCH_TIME,
+                default=self._entry.options.get(
+                    CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT
+                ),
+            ): TimeSelector(),
+            vol.Optional(
+                CONF_FETCH_INTERVAL_DAYS,
+                default=self._entry.options.get(
+                    CONF_FETCH_INTERVAL_DAYS, CONF_FETCH_INTERVAL_DAYS_DEFAULT
+                ),
+            ): vol.All(int, vol.Range(min=1)),
+            vol.Optional(
+                CONF_RANDOM_FETCH_TIME_OFFSET,
+                default={
+                    "hours": self._entry.options.get(
+                        CONF_RANDOM_FETCH_TIME_OFFSET,
+                        CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                    )
+                    // 60,
+                    "minutes": self._entry.options.get(
+                        CONF_RANDOM_FETCH_TIME_OFFSET,
+                        CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                    )
+                    % 60,
+                    "seconds": 0,
+                },
+            ): DurationSelector(DurationSelectorConfig(enable_day=False)),
+            vol.Optional(
+                CONF_DAY_SWITCH_TIME,
+                default=self._entry.options.get(
+                    CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
+                ),
+            ): TimeSelector(),
+            vol.Optional(
+                CONF_DAY_OFFSET,
+                default=self._entry.options.get(
+                    CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
+                ),
+            ): int,
+            vol.Optional(
+                CONF_IGNORE_DUPLICATES,
+                default=self._entry.options.get(
+                    CONF_IGNORE_DUPLICATES, ignore_duplicates_default
+                ),
+            ): BooleanSelector(),
+            vol.Optional(
+                "sensor_select",
+            ): SelectSelector(
+                SelectSelectorConfig(
+                    translation_key="sensor_select",
+                    options=[
+                        *[
+                            SelectOptionDict(label=x[CONF_NAME], value=x[CONF_NAME])
+                            for x in self._entry.options.get(CONF_SENSORS, [])
+                        ],
+                        SelectOptionDict(
+                            label="add_new_sensor", value="sensor_select_add_new"
+                        ),
+                    ],
+                    mode=SelectSelectorMode.LIST,
+                    custom_value=False,
+                    multiple=True,
+                )
+            ),
+            vol.Optional(
+                "customize_select",
+            ): SelectSelector(
+                SelectSelectorConfig(
+                    options=[
+                        *[
+                            SelectOptionDict(
+                                label=key
+                                + (
+                                    f": {value[CONF_ALIAS]}"
+                                    if CONF_ALIAS in value
+                                    else ""
+                                ),
+                                value=key,
+                            )
+                            for key, value in self._entry.options.get(
+                                CONF_CUSTOMIZE, {}
+                            ).items()
+                        ],
+                        *[
+                            SelectOptionDict(label=x, value=x)
+                            for x in uncustomized_types
+                        ],
+                    ],
+                    mode=SelectSelectorMode.DROPDOWN,
+                    custom_value=True,
+                    multiple=True,
+                )
+            ),
+        }
+        if show_original_label_relevant:
+            SCHEMA_DICT[
+                vol.Optional(
+                    CONF_SHOW_ORIGINAL_LABEL,
+                    default=self._entry.options.get(
+                        CONF_SHOW_ORIGINAL_LABEL, CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+                    ),
+                )
+            ] = BooleanSelector()
+        SCHEMA = vol.Schema(SCHEMA_DICT)
         errors = {}
 
         # If form filled, update options

@@ -143,7 +143,8 @@ def _customize_keys(entry: Collection) -> list[str]:
 
     Legacy sources are only ever matched by their display string, exactly as
     before. New-style (pipeline) sources are matched by their canonical
-    ``WasteType.id`` first, then by the localised display name as a fallback.
+    ``WasteType.id`` first, then by the localised display name, then by the
+    entry's ``description`` (if any) as a last-resort fallback.
 
     The display-name fallback is what actually fixes per-type customisation for
     pipeline sources (issue #6936): the config flow presents, stores and builds
@@ -152,12 +153,25 @@ def _customize_keys(entry: Collection) -> list[str]:
     customisation apply while keeping the id as the preferred, locale-independent
     key (and the one the library's own tests assert). User-typed fnmatch globs,
     also written against the displayed labels, keep working for the same reason.
+
+    The ``description`` fallback exists because a ``type_value_map`` can map
+    several distinct provider labels onto one canonical WasteType (e.g.
+    Neunkirchen Siegerland's "Restmülltonne"/"Spartonne Restmüll"/"Container
+    Restmüll" all resolve to General Waste) — the source carries the original
+    label into ``description`` in that case, and matching customize keys
+    against it too is what lets a user hide (or rename/re-icon) just the one
+    variant that doesn't apply to their address, by writing a customize entry
+    keyed on that raw label (exactly or via glob), without losing the other
+    variant(s) they do have.
     """
     if isinstance(entry, LegacyCollection):
         return [entry.type]
-    # id preferred; de-duplicate in case it equals the display name (e.g. an
-    # English preserved label).
-    return list(dict.fromkeys([entry.waste_type.id, entry.type]))
+    # id and display name preferred; de-duplicate in case either equals the
+    # description (e.g. an English preserved label, or no description set).
+    keys = [entry.waste_type.id, entry.type]
+    if entry.description:
+        keys.append(entry.description)
+    return list(dict.fromkeys(keys))
 
 
 def filter_function(entry: Collection, customize: dict[str, Customize]):
@@ -198,6 +212,7 @@ class SourceShell:
         unique_id: str,
         day_offset: int,
         ignore_duplicates: bool = False,
+        show_original_label: bool = True,
     ):
         self._source = source
         self._customize = customize
@@ -210,6 +225,7 @@ class SourceShell:
         self._entries: list[Collection] = []
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
+        self._show_original_label = show_original_label
 
     @property
     def refreshtime(self):
@@ -280,16 +296,47 @@ class SourceShell:
 
         result = list(entries)
 
-        # remove duplicate (date, type) pairs, keeping first occurrence
-        if self._ignore_duplicates:
-            seen: set[tuple] = set()
-            unique: list[Collection] = []
+        # Hide a transformer's auto-carried raw label (carry_raw_label) if the
+        # user doesn't want it — but never a source's own genuine description
+        # (real ICS DESCRIPTION metadata via description_key, say), which
+        # never sets description_is_raw_label_fallback in the first place.
+        # Runs before the dedup merge below so a hidden label isn't folded
+        # into anything.
+        if not self._show_original_label:
             for e in result:
-                key = (e.date, e.type)
-                if key not in seen:
-                    seen.add(key)
-                    unique.append(e)
-            result = unique
+                if e.description_is_raw_label_fallback:
+                    e.set_description(None)
+
+        # Remove duplicate (date, identity) pairs, folding any distinguishing
+        # description from a discarded duplicate into the entry that's kept
+        # instead of just dropping it.
+        #
+        # Keyed on Collection._identity_key (locale-independent: the
+        # customize alias if one was set, else the canonical WasteType.id),
+        # not the displayed .type — two entries must not compare equal in one
+        # UI language and unequal in another. This also catches a case that
+        # slipping .type in as the key could not: a source's type_value_map
+        # can map several distinct provider labels (e.g. a bin-size or
+        # rhythm variant it can't yet filter by) onto one canonical type, and
+        # where the underlying schedules overlap on some dates, the two
+        # entries for that day would otherwise show up as a visible
+        # duplicate once canonicalisation makes their labels identical (see
+        # abfall_neunkirchen_siegerland_de and koppl_at).
+        if self._ignore_duplicates:
+            by_key: dict[tuple, Collection] = {}
+            order: list[tuple] = []
+            for e in result:
+                key = (e.date, e._identity_key)
+                kept = by_key.get(key)
+                if kept is None:
+                    by_key[key] = e
+                    order.append(key)
+                elif e.description and e.description != kept.description:
+                    merged = ", ".join(
+                        dict.fromkeys(filter(None, [kept.description, e.description]))
+                    )
+                    kept.set_description(merged)
+            result = [by_key[key] for key in order]
 
         self._entries = result
         return True
@@ -333,8 +380,27 @@ class SourceShell:
         source_args,
         calendar_title: str | None = None,
         day_offset: int = 0,
-        ignore_duplicates: bool = False,
+        ignore_duplicates: bool | None = None,
+        show_original_label: bool = True,
     ) -> "SourceShell | None":
+        """Build a SourceShell for ``source_name``.
+
+        ``ignore_duplicates=None`` means "the user hasn't explicitly set this
+        option on this config entry yet" — resolved below to the source's own
+        declared default (``IGNORE_DUPLICATES_DEFAULT``), falling back to
+        ``False`` if it declares none. Pass an explicit ``True``/``False`` to
+        apply the user's stored choice instead, which always wins over the
+        source's default (a user who explicitly wants duplicates merged, or
+        explicitly doesn't, is not overridden by the source's opinion).
+
+        ``show_original_label`` (default ``True``) controls whether a
+        transformer's carry_raw_label fallback is visible in ``description``.
+        Unlike ``ignore_duplicates`` there is no per-source default to
+        resolve: a source either can produce that fallback or it can't, and
+        when it can, showing it is the sensible default the source author
+        already opted into by setting carry_raw_label — the option only ever
+        needs a plain ``True``/``False`` from the config entry.
+        """
         # load source module
         try:
             source_module: SourceModule = cast(
@@ -384,6 +450,10 @@ class SourceShell:
         url: str = (
             getattr(source_cls, "URL", None) or getattr(source_module, "URL", "") or ""
         )
+        if ignore_duplicates is None:
+            ignore_duplicates = _resolve_ignore_duplicates_default(
+                source_cls, source_module
+            )
 
         # create source shell
         g = SourceShell(
@@ -396,6 +466,7 @@ class SourceShell:
             unique_id=calc_unique_source_id(source_name, source_args),
             day_offset=day_offset,
             ignore_duplicates=ignore_duplicates,
+            show_original_label=show_original_label,
         )
 
         return g
@@ -403,3 +474,58 @@ class SourceShell:
 
 def calc_unique_source_id(source_name: str, source_args) -> str:
     return source_name + str(sorted(source_args.items()))
+
+
+def _resolve_ignore_duplicates_default(source_cls, source_module) -> bool:
+    """A source's declared default for the "Ignore Duplicate Entries per Day"
+    option: ``IGNORE_DUPLICATES_DEFAULT`` on the Source class (pipeline) first,
+    else the same name at module level (legacy), else ``False``. Same
+    class-then-module precedence already used for TITLE/DESCRIPTION/URL.
+    """
+    cls_value = getattr(source_cls, "IGNORE_DUPLICATES_DEFAULT", None)
+    if cls_value is not None:
+        return bool(cls_value)
+    return bool(getattr(source_module, "IGNORE_DUPLICATES_DEFAULT", False))
+
+
+def _load_source_class(source_name: str):
+    """Import a source module and return its Source class, or None."""
+    try:
+        source_module: SourceModule = cast(
+            SourceModule,
+            importlib.import_module(f"waste_collection_schedule.source.{source_name}"),
+        )
+        return source_module.Source, source_module
+    except Exception:
+        return None, None
+
+
+def default_ignore_duplicates(source_name: str) -> bool:
+    """The same resolution as ``SourceShell.create``, from just a source name.
+
+    For the config flow to pre-fill the "Ignore Duplicate Entries per Day"
+    option with the source's own opinion before the user has ever set it
+    explicitly on this config entry. Returns ``False`` (never raises) if the
+    source can't be imported — the config flow shouldn't fail over a
+    pre-filled checkbox value.
+    """
+    source_cls, source_module = _load_source_class(source_name)
+    if source_cls is None:
+        return False
+    return _resolve_ignore_duplicates_default(source_cls, source_module)
+
+
+def source_supports_show_original_label(source_name: str) -> bool:
+    """Whether ``source_name``'s transform declares ``carry_raw_label``.
+
+    For the config flow to decide whether the "show original provider
+    label" option is even relevant for this source — most sources never
+    set it, and showing an always-no-op checkbox for them is confusing
+    (#7426). Returns ``False`` (never raises) if the source can't be
+    imported, has no ``transform`` (a ``classify()``-based source), or
+    isn't a pipeline source at all (legacy sources have no transformer
+    concept, so this never applies to them).
+    """
+    source_cls, _ = _load_source_class(source_name)
+    transform = getattr(source_cls, "transform", None)
+    return bool(getattr(transform, "carries_raw_label", False))

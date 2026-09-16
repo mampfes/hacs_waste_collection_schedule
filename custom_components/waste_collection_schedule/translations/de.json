@@ -29374,7 +29374,8 @@
           "day_switch_time": "Tageswechselzeit",
           "fetch_interval_days": "Tage zwischen den Abrufen von Abfuhrterminen",
           "day_offset": "Tagesoffset",
-          "ignore_duplicates": "Ignoriere doppelte Einträge pro Tag"
+          "ignore_duplicates": "Ignoriere doppelte Einträge pro Tag",
+          "show_original_label": "Originalbezeichnung des Anbieters anzeigen"
         },
         "data_description": {
           "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
@@ -29386,7 +29387,8 @@
           "day_switch_time": "Tageszeit in 'HH:MM', zu der Home Assistant den aktuellen Eintrag ignoriert und zum nächsten Eintrag wechselt.",
           "fetch_interval_days": "Legt fest, in welchem Abstand Home Assistant Abfuhrtermine von dieser Kalenderquelle abruft. Der Standardwert ist 1 Tag. Bei einem Wert von 2 werden die Abfuhrtermine alle 2 Tage abgerufen.",
           "day_offset": "Offset in Tagen, der zum Sammeldatum hinzugefügt wird (kann negativ sein). Wenn kein Wert eingegeben wird, wird der Standardwert von 0 verwendet.",
-          "ignore_duplicates": "Wenn aktiviert, werden doppelte Abfuhrtermine mit demselben Abfalltyp am selben Tag entfernt und nur ein Eintrag pro Typ und Tag beibehalten."
+          "ignore_duplicates": "Wenn aktiviert, werden doppelte Abfuhrtermine mit demselben Abfalltyp am selben Tag entfernt und nur ein Eintrag pro Typ und Tag beibehalten.",
+          "show_original_label": "Wenn aktiviert (Standard), behalten manche Quellen die ursprüngliche Bezeichnung des Anbieters (z.B. den genauen Tonnen-/Behälternamen) in der Beschreibung des Termins, auch nachdem sie auf einen einheitlichen Abfalltyp abgebildet wurde. Deaktivieren, um diese Originalbezeichnung auszublenden."
         }
       },
       "customize": {

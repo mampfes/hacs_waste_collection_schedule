@@ -6,6 +6,21 @@ the shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
 module only declares the municipality's base URL, refid and download params plus
 the German-to-canonical waste-type map, so there is no ``retrieve`` override, no
 manual request params and no ICON_MAP.
+
+The feed has no way to select a household's actual bin/container choice, so it
+lists every residual-waste variant for the street at once: "Restmülltonne"
+(bin, ~4-weekly), "Spartonne Restmüll" (reduced bin, same stream on a longer
+cycle — a subset of the "Restmülltonne" dates) and "Container Restmüll" (a
+separate, non-overlapping schedule for shared containers). All three map to
+GENERAL_WASTE; ``carry_raw_label``/``IGNORE_DUPLICATES_DEFAULT`` keep that from
+being lossy: the original label survives in ``description`` (so a user can
+still tell them apart, or hide the one they don't have via ``customize``), and
+— once the "Ignore Duplicate Entries per Day" option is on, which this source
+preselects by default — the two entries that would otherwise land on the
+exact same day (whenever a "Spartonne" date coincides with its underlying
+"Restmülltonne" date) collapse into one instead of showing as a duplicate.
+"Container Restmüll" runs on its own dates, so it is never touched by that
+merge — an address with both a bin and a container keeps both.
 """
 
 from typing import ClassVar, final
@@ -58,6 +73,13 @@ class Source(BaseSource):
 
     RAISE_ON_EMPTY = True
 
+    # Preselects the "Ignore Duplicate Entries per Day" option (users can
+    # still turn it off in the integration's options), which collapses the
+    # same-day overlap between "Restmülltonne" and "Spartonne Restmüll" (see
+    # module docstring); never touches "Container Restmüll", which runs on
+    # its own dates.
+    IGNORE_DUPLICATES_DEFAULT = True
+
     retrieve = SiteparkIESRetriever(
         _BASE_URL,
         refid="3362.1",
@@ -74,5 +96,6 @@ class Source(BaseSource):
             "Gelbe Tonne": wt.RECYCLABLES,
             "Astschnittsammlung": wt.GARDEN_WASTE,
             "Schadstoffsammlung": wt.HAZARDOUS,
-        }
+        },
+        carry_raw_label=True,
     )

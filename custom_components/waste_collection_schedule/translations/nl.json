@@ -29116,7 +29116,8 @@
           "day_switch_time": "Day Switch Time",
           "fetch_interval_days": "Days between fetches",
           "day_offset": "Day Offset",
-          "ignore_duplicates": "Ignore Duplicate Entries per Day"
+          "ignore_duplicates": "Ignore Duplicate Entries per Day",
+          "show_original_label": "Oorspronkelijk label van de aanbieder tonen"
         },
         "data_description": {
           "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
@@ -29128,7 +29129,8 @@
           "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry.",
           "fetch_interval_days": "Specifies how often Home Assistant fetches waste collection events from this calendar source. The default value is 1 day. With a value of 2, waste collection events are fetched every 2 days.",
           "day_offset": "Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used",
-          "ignore_duplicates": "When enabled, duplicate collection entries with the same waste type on the same day are removed, keeping only one entry per type per day."
+          "ignore_duplicates": "When enabled, duplicate collection entries with the same waste type on the same day are removed, keeping only one entry per type per day.",
+          "show_original_label": "Indien ingeschakeld (standaard), behouden sommige bronnen het oorspronkelijke label van de aanbieder (bijv. de exacte naam van de container/bak) in de beschrijving van de inzameling, ook na toewijzing aan een standaard afvaltype. Schakel uit om dat oorspronkelijke label te verbergen."
         }
       },
       "customize": {

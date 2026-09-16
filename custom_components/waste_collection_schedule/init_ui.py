@@ -66,7 +66,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
-        options.get(const.CONF_IGNORE_DUPLICATES, const.CONF_IGNORE_DUPLICATES_DEFAULT),
+        # None (option never explicitly set on this entry) lets
+        # SourceShell.create resolve the source's own declared default
+        # instead of always falling back to CONF_IGNORE_DUPLICATES_DEFAULT.
+        options.get(const.CONF_IGNORE_DUPLICATES),
+        options.get(
+            const.CONF_SHOW_ORIGINAL_LABEL, const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+        ),
     )
 
     if shell is None:

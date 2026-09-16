@@ -117,6 +117,24 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # legitimately have no collections in the current window.
     RAISE_ON_EMPTY: bool = False
 
+    # Declarative default for the user-facing "Ignore Duplicate Entries per
+    # Day" option (SourceShell's ``ignore_duplicates``, set in the HA options
+    # flow). Read by SourceShell.create()/the config flow as the pre-filled
+    # value when the user hasn't explicitly set that option on this config
+    # entry yet — it has no effect here in BaseSource.fetch() itself, and
+    # deliberately so: the option is per config-entry (per address/setup), so
+    # only the SourceShell layer that knows about config entries can honour a
+    # user's explicit override in either direction. A source sets this True
+    # when a ``type_value_map`` genuinely maps several *distinct* provider
+    # labels (e.g. a bin-size or rhythm variant the source can't yet filter
+    # by) onto one canonical type, and the provider's own feed can emit them
+    # on the same date for some occurrences — e.g. Neunkirchen Siegerland's
+    # "Restmülltonne" and "Spartonne Restmüll", or Koppl's "Restabfall
+    # 14-tägig" and "Restabfall monatlich", which are the same stream on
+    # different cycles and would otherwise show up as a same-day duplicate
+    # once canonicalisation makes their labels identical.
+    IGNORE_DUPLICATES_DEFAULT: bool = False
+
     # --- Pipeline steps (override to customise) ---
 
     # The pipeline-step attributes below are typed as plain callables rather

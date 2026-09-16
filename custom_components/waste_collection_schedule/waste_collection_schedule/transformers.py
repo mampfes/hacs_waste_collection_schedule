@@ -57,7 +57,7 @@ from bs4 import Tag
 from . import date_parsers
 from .collection import Collection
 from .service.ICS import IcsEvent
-from .waste_types import WasteType, preserved, resolve
+from .waste_types import WasteType, display_name, preserved, resolve
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -86,6 +86,7 @@ class BaseTransformer(ABC, Generic[T]):
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
+        carry_raw_label: bool = False,
     ):
         self._type_value_map: dict[str, TypeMapValue | None] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
@@ -108,6 +109,17 @@ class BaseTransformer(ABC, Generic[T]):
         self._location_key = location_key
         self._description_key = description_key
         self._color_key = color_key
+        # When True, and the source hasn't supplied its own description, the
+        # provider's raw label becomes the Collection's description instead of
+        # being discarded. Off by default — with no location_key/description_key
+        # configured, a transformer is documented to leave the Collection
+        # byte-identical (test_metadata_absent_leaves_collection_unchanged), so
+        # this is opt-in, not a fallback everyone gets silently. Opt in when a
+        # ``type_value_map`` maps several distinct provider labels (e.g. a
+        # bin-size/rhythm variant) onto one canonical type and you want that
+        # distinction to survive somewhere, typically paired with
+        # ``BaseSource.MERGE_SAME_DAY_DUPLICATES`` on the source.
+        self._carry_raw_label = carry_raw_label
 
     def _to_date(self, value: Any) -> datetime.date | None:
         """Coerce a record's date value to a date: pass a ``date`` through,
@@ -137,6 +149,17 @@ class BaseTransformer(ABC, Generic[T]):
         if callable(key):
             return key(record)
         return record.get(key)
+
+    @property
+    def carries_raw_label(self) -> bool:
+        """Whether this transformer was configured with ``carry_raw_label``.
+
+        Read by the config flow to decide whether the "show original
+        provider label" option is even relevant for a given source — with
+        this off, the option would be a no-op checkbox with nothing to
+        show or hide.
+        """
+        return self._carry_raw_label
 
     @property
     def waste_types(self) -> list[WasteType]:
@@ -221,6 +244,7 @@ class BaseTransformer(ABC, Generic[T]):
         location: Any = None,
         description: Any = None,
         color: Any = None,
+        raw_label: str | None = None,
     ) -> Collection | list[Collection] | None:
         """Build the Collection(s) for a resolved type on a given date.
 
@@ -229,6 +253,17 @@ class BaseTransformer(ABC, Generic[T]):
         one Collection per type for a list-valued mapping (a combined round).
         Any ``location``/``description`` is applied to every emitted Collection
         (``Collection.set_*`` strips whitespace and treats empty as unset).
+
+        ``raw_label`` is the provider's own label for the record (before
+        ``type_value_map``/the shared vocabulary collapsed it to a canonical
+        WasteType). When the source hasn't supplied its own ``description``,
+        it becomes the Collection's description instead of being discarded —
+        so a ``type_value_map`` that maps several distinct provider labels
+        (e.g. "Restmülltonne" and "Spartonne Restmüll", the same
+        residual-waste stream on different cycles) onto one WasteType doesn't
+        silently make them indistinguishable. Skipped when it would just
+        repeat the canonical display name (e.g. a ``preserved()`` fallback,
+        whose display name already *is* the raw label).
         """
         if resolved is None:
             return None
@@ -239,6 +274,10 @@ class BaseTransformer(ABC, Generic[T]):
                 collection.set_location(location)
             if description is not None:
                 collection.set_description(description)
+            elif raw_label:
+                candidate = " ".join(str(raw_label).split())
+                if candidate and candidate != display_name(waste_type):
+                    collection.set_description_from_raw_label(candidate)
             return collection
 
         if isinstance(resolved, list):
@@ -289,6 +328,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
+        carry_raw_label: bool = False,
     ):
         super().__init__(
             type_value_map,
@@ -298,6 +338,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             location_key,
             description_key,
             color_key,
+            carry_raw_label,
         )
         self._date_key = date_key
         self._type_key = type_key
@@ -311,7 +352,14 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
         location, description, color = self._meta(record)
-        return self._collections(date, resolved, location, description, color)
+        return self._collections(
+            date,
+            resolved,
+            location,
+            description,
+            color,
+            raw_label=raw_type if self._carry_raw_label else None,
+        )
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
@@ -347,6 +395,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
+        carry_raw_label: bool = False,
     ):
         super().__init__(
             type_value_map,
@@ -355,6 +404,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
             location_key=location_key,
             description_key=description_key,
             color_key=color_key,
+            carry_raw_label=carry_raw_label,
         )
         self._date_key = date_key
         self._type_key = type_key
@@ -377,7 +427,12 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         # Read metadata from the flattened name/value pairs, not the raw list.
         location, description, color = self._meta(fields)
         return self._collections(
-            self._parse_date(date_str), resolved, location, description, color
+            self._parse_date(date_str),
+            resolved,
+            location,
+            description,
+            color,
+            raw_label=raw_type if self._carry_raw_label else None,
         )
 
 
@@ -418,6 +473,7 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
+        carry_raw_label: bool = False,
     ):
         super().__init__(
             type_value_map,
@@ -425,6 +481,7 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
             location_key=location_key,
             description_key=description_key,
             color_key=color_key,
+            carry_raw_label=carry_raw_label,
         )
 
     def __call__(
@@ -445,7 +502,14 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
             self._get(record, self._color_key) if self._color_key is not None else None
         )
         resolved = self._resolve_type(summary)
-        return self._collections(date, resolved, location, description, color)
+        return self._collections(
+            date,
+            resolved,
+            location,
+            description,
+            color,
+            raw_label=summary if self._carry_raw_label else None,
+        )
 
 
 class RowTransformer(BaseTransformer[tuple[Any, str]]):
@@ -473,6 +537,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         location_key: "str | Callable[[Any], Any] | None" = None,
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
+        carry_raw_label: bool = False,
     ):
         super().__init__(
             type_value_map,
@@ -482,6 +547,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
             location_key,
             description_key,
             color_key,
+            carry_raw_label,
         )
 
     def __call__(self, record: tuple[Any, str]) -> Collection | list[Collection] | None:
@@ -491,8 +557,14 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
             return None
         # A row is a tuple, so location_key/description_key must be callables.
         location, description, color = self._meta(record)
+        raw_label = str(label)
         return self._collections(
-            date, self._resolve_type(str(label)), location, description, color
+            date,
+            self._resolve_type(raw_label),
+            location,
+            description,
+            color,
+            raw_label=raw_label if self._carry_raw_label else None,
         )
 
 
@@ -530,6 +602,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         location_getter: Callable[[Tag], Any] | None = None,
         description_getter: Callable[[Tag], Any] | None = None,
         color_getter: Callable[[Tag], Any] | None = None,
+        carry_raw_label: bool = False,
     ):
         super().__init__(
             type_value_map,
@@ -538,6 +611,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
             location_key=location_getter,
             description_key=description_getter,
             color_key=color_getter,
+            carry_raw_label=carry_raw_label,
         )
         self._date_getter = date_getter
         self._type_getter = type_getter
@@ -560,7 +634,14 @@ class HtmlTransformer(BaseTransformer[Tag]):
             date = self._parse_date(str(raw_date))
 
         resolved = self._resolve_type(str(raw_type))
-        return self._collections(date, resolved, location, description, color)
+        return self._collections(
+            date,
+            resolved,
+            location,
+            description,
+            color,
+            raw_label=str(raw_type) if self._carry_raw_label else None,
+        )
 
 
 def label_cleaner(
