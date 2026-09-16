@@ -9,7 +9,10 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from urllib.parse import quote
 
 from waste_collection_schedule import response_shape
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.waste_types import (
@@ -130,18 +133,24 @@ class WhatBinDayRetriever(RetrieverFunc):
     * ``geocode``: whether to resolve coordinates via Nominatim (OpenStreetMap).
       The council's own manually-assembled address_components (from
       ``parts``) are still what gets posted alongside the coordinates.
-    * ``google_geocode``: some deployments (Ipswich) validate the posted
-      address itself against their own property/parcel data, which a
-      manually-assembled address_components/formatted_address blob does not
-      match closely enough (confirmed live: the same request succeeds with
-      Google's response and fails with a hand-built one) — Nominatim's is not
-      a substitute here either, only real Google geocoding is. Every
-      deployment's own Google API key is issued per-device at registration
-      (``config.googleAddressSearchURL``), not shared/static, so this queries
-      that URL and posts Google's own ``address_components``/
-      ``formatted_address``/``geometry`` verbatim instead of ``geocode``'s
-      coordinates-only result plus ``_build_address_data``'s local one.
-      Mutually exclusive with ``geocode``.
+    * ``google_geocode``: ``bool`` or ``callable(source) -> bool``. Some
+      deployments (Ipswich) validate the posted address itself against their
+      own property/parcel data, which a manually-assembled
+      address_components/formatted_address blob only matches closely enough
+      when it carries a real post code and the state spelled out the same
+      way in both ``long_name``/``short_name`` (confirmed live) — without a
+      post code, the same request needs Google's own geocode result instead
+      (Nominatim is not a substitute here, only real Google geocoding is).
+      Every deployment's own Google API key is issued per-device at
+      registration (``config.googleAddressSearchURL``), not shared/static,
+      so this queries that URL and posts Google's own
+      ``address_components``/``formatted_address``/``geometry`` verbatim
+      instead of ``geocode``'s coordinates-only result plus
+      ``_build_address_data``'s local one. That key is typically shared by
+      every user of the council's own app and can run out of its daily quota
+      — a source with an optional post-code field can pass a callable here
+      to skip Google (and its quota) whenever the visitor supplied one.
+      Mutually exclusive with ``geocode`` when given as a literal ``True``.
     * ``location_key``: a literal device-key-store key, or
       ``callable(AddressParts) -> str`` to derive one per address.
     """
@@ -172,7 +181,7 @@ class WhatBinDayRetriever(RetrieverFunc):
         country: str = "Australia",
         app_package: str = DEFAULT_APP_PACKAGE,
         geocode: bool = False,
-        google_geocode: bool = False,
+        google_geocode: bool | Callable[[BaseSource], bool] = False,
         suburb_case: str | None = None,
         split_address: Callable[[str], AddressParts] | None = None,
         address_field: str = "address",
@@ -183,7 +192,7 @@ class WhatBinDayRetriever(RetrieverFunc):
                 f"unknown suburb_case {suburb_case!r}, expected one of "
                 f"{sorted(SUBURB_CASES)}"
             )
-        if geocode and google_geocode:
+        if geocode and google_geocode is True:
             raise ValueError("geocode and google_geocode are mutually exclusive")
         self.location_key = location_key
         self.street_number_field = street_number_field
@@ -229,7 +238,12 @@ class WhatBinDayRetriever(RetrieverFunc):
             else self.location_key
         )
         device_key = self._register_device(source, location_key)
-        if self.google_geocode:
+        use_google = (
+            self.google_geocode(source)
+            if callable(self.google_geocode)
+            else self.google_geocode
+        )
+        if use_google:
             location_data = self._google_geocode(source, device_key, parts)
         else:
             location_data = self._build_address_data(parts, coordinates)
@@ -288,6 +302,18 @@ class WhatBinDayRetriever(RetrieverFunc):
         )
         r.raise_for_status()
         geocode_data = r.json()
+        # This key is typically shared by every user of the council's own
+        # app, so it is regularly out of its daily quota (Google answers
+        # OVER_QUERY_LIMIT with an empty results list, same shape as a
+        # genuinely unknown street). Read the status so an exhausted key
+        # isn't reported as a bad address the visitor is told to correct.
+        status = geocode_data.get("status")
+        if status not in ("OK", "ZERO_RESULTS"):
+            raise SourceArgumentException(
+                "street_name",
+                f"Google geocoding is temporarily unavailable ({status}). "
+                "This is not a configuration problem; please try again later.",
+            )
         results = geocode_data.get("results") or []
         if not results:
             raise SourceArgumentNotFound("street_name", parts["street_name"])
