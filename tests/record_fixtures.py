@@ -31,7 +31,8 @@ sys.path.insert(
 from importlib import import_module
 
 import cassette
-from fixtures_support import choices_path, fixture_path, slug
+from fixtures_support import choices_path, error_fixture_path, fixture_path, slug
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 SOURCE_DIR = os.path.join(
     os.path.dirname(__file__),
@@ -68,6 +69,41 @@ def record(module_name: str) -> None:
             print(f"  recorded {slug(case_key)} ({len(results)} collections)")
         except Exception as exc:
             print(f"  ! {case_key}: {type(exc).__name__}: {exc}")
+
+
+def record_errors(module_name: str) -> None:
+    """Record a source's ``ERROR_TEST_CASES``: inputs expected to raise.
+
+    Same shape as ``TEST_CASES``, but for arguments an ``ArgumentGuard`` (or
+    similar) is expected to reject -- an out-of-area address, say. Only a
+    ``SourceArgumentException`` (the family a source is expected to raise for
+    bad input, per CLAUDE.md) is recorded; any other exception means the case
+    doesn't exercise what it claims to, so it is reported and skipped rather
+    than silently pinned.
+    """
+    module = import_module(f"waste_collection_schedule.source.{module_name}")
+    error_cases = getattr(module.Source, "ERROR_TEST_CASES", {})
+    today = datetime.date.today().isoformat()
+    for case_key, args in error_cases.items():
+        path = error_fixture_path(module_name, case_key)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        try:
+            with cassette.recording(
+                path, today, expect_exception=SourceArgumentException
+            ):
+                module.Source(**args).fetch()
+        except SourceArgumentException as exc:
+            print(f"  recorded error case {slug(case_key)} ({type(exc).__name__})")
+        except Exception as exc:
+            print(
+                f"  ! {case_key}: expected a SourceArgumentException, got "
+                f"{type(exc).__name__}: {exc} -- not recorded"
+            )
+        else:
+            print(
+                f"  ! {case_key}: fetch() did not raise, not recorded -- is "
+                "this case still expected to fail?"
+            )
 
 
 def record_cascading_choices(module_name: str) -> bool:
@@ -175,3 +211,4 @@ if __name__ == "__main__":
         print(f"== {mod} ==")
         record(mod)
         record_choices(mod)
+        record_errors(mod)

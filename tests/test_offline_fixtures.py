@@ -30,13 +30,16 @@ from importlib import import_module
 import cassette
 from fixtures_support import (
     discover_choice_fixtures,
+    discover_error_fixtures,
     discover_fixtures,
     slug,
 )
+from waste_collection_schedule import exceptions as exceptions_module
 from waste_collection_schedule.collection import Collection
 
 _FIXTURES = discover_fixtures()
 _CHOICE_FIXTURES = discover_choice_fixtures()
+_ERROR_FIXTURES = discover_error_fixtures()
 
 # --------------------------------------------------------------------------
 # The #7102 debt: how much of what a source sends is actually pinned.
@@ -91,6 +94,15 @@ def _resolve_case(module_name: str, case_slug: str):
     return None, None
 
 
+def _resolve_error_case(module_name: str, case_slug: str):
+    """Map an error cassette back to its (Source class, ERROR_TEST_CASES args)."""
+    module = import_module(f"waste_collection_schedule.source.{module_name}")
+    for key, args in getattr(module.Source, "ERROR_TEST_CASES", {}).items():
+        if slug(key) == case_slug:
+            return module.Source, args
+    return None, None
+
+
 @pytest.mark.parametrize(
     "module_name,case_slug,path",
     _FIXTURES,
@@ -110,6 +122,38 @@ def test_offline_replay(module_name, case_slug, path):
         assert isinstance(r, Collection)
         assert isinstance(r.date, datetime.date)
         assert r.waste_type is not None
+    _COMPLETED.add(os.path.abspath(path))
+
+
+@pytest.mark.parametrize(
+    "module_name,case_slug,path",
+    _ERROR_FIXTURES,
+    ids=[f"{m}::{c}" for m, c, _ in _ERROR_FIXTURES],
+)
+def test_offline_replay_expected_error(module_name, case_slug, path):
+    """Replay an ERROR_TEST_CASES cassette and check the same exception recurs.
+
+    Counterpart to ``test_offline_replay`` for the failure path: a recorded
+    input that's expected to raise (an out-of-area address rejected by an
+    ArgumentGuard, say) must keep raising the same exception type offline, not
+    just the success path.
+    """
+    cls, args = _resolve_error_case(module_name, case_slug)
+    assert cls is not None, (
+        f"error cassette {module_name}/{case_slug} has no matching ERROR_TEST_CASES entry"
+    )
+
+    with open(path, encoding="utf-8") as fh:
+        expected = json.load(fh).get("expected_error")
+    assert expected, f"{path} has no recorded expected_error"
+    exc_type = getattr(exceptions_module, expected["type"], None)
+    assert exc_type is not None, (
+        f"{path}: recorded exception type {expected['type']!r} is not in "
+        "waste_collection_schedule.exceptions"
+    )
+
+    with cassette.replaying(path), pytest.raises(exc_type):
+        cls(**args).fetch()
     _COMPLETED.add(os.path.abspath(path))
 
 

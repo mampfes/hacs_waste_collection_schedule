@@ -364,12 +364,26 @@ def _capture_prepared(resp: Any, request: Any) -> dict:
 
 
 @contextlib.contextmanager
-def recording(path: str, today: str, extra: dict | None = None):
+def recording(
+    path: str,
+    today: str,
+    extra: dict | None = None,
+    expect_exception: type[BaseException]
+    | tuple[type[BaseException], ...]
+    | None = None,
+):
     """Patch both stacks to pass through and record interactions to ``path``.
 
     ``extra`` is merged into the saved cassette JSON (e.g. the parent/child
     values a ``get_choices`` replay test asserts against). ``replaying`` ignores
     any keys beyond ``interactions``/``recorded_at``.
+
+    ``expect_exception`` records a *failure* path (e.g. an ``ArgumentGuard``
+    rejecting an out-of-area address): when the wrapped code raises one of
+    these types, the interactions captured up to that point are persisted
+    (with an ``expected_error`` entry recording the exception's type and
+    message) and the exception is then re-raised, rather than being discarded
+    the way an unexpected exception still is.
     """
     interactions: list[dict] = []
     orig_cffi_request = _cffi.Session.request
@@ -413,17 +427,29 @@ def recording(path: str, today: str, extra: dict | None = None):
     _requests_sessions.Session.request = request_wrapper(orig_request)  # type: ignore[method-assign]
     _requests_sessions.Session.send = send_wrapper  # type: ignore[method-assign]
     success = False
+    error_info: dict[str, str] | None = None
     try:
         yield interactions
         success = True
+    except BaseException as exc:
+        if expect_exception is not None and isinstance(exc, expect_exception):
+            success = True
+            error_info = {"type": type(exc).__name__, "message": str(exc)}
+        raise
     finally:
         _cffi.Session.request = orig_cffi_request  # type: ignore[method-assign]
         _requests_sessions.Session.request = orig_request  # type: ignore[method-assign]
         _requests_sessions.Session.send = orig_send  # type: ignore[method-assign]
-        # Only persist a cassette for a clean run, so a failed fetch never
-        # leaves a partial/misleading recording behind.
+        # Only persist a cassette for a clean run (or one that raised an
+        # expected exception), so an unexpected failure never leaves a
+        # partial/misleading recording behind.
         if success:
-            payload = {"recorded_at": today, "interactions": interactions}
+            payload: dict[str, Any] = {
+                "recorded_at": today,
+                "interactions": interactions,
+            }
+            if error_info:
+                payload["expected_error"] = error_info
             if extra:
                 payload.update(extra)
             with open(path, "w", encoding="utf-8", newline="\n") as fh:
