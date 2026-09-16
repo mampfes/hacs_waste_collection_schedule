@@ -1,8 +1,8 @@
-# East Devon District Council
+# Southend-on-Sea City Council
 
-Support for schedules provided by [East Devon District Council](https://eastdevon.gov.uk/).
+Support for schedules provided by [Southend-on-Sea City Council](https://www.southend.gov.uk).
 
-Source for East Devon services for East Devon District Council, UK.
+Source for southend.gov.uk services for Southend-on-Sea City Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -11,7 +11,7 @@ Source for East Devon services for East Devon District Council, UK.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: eastdevon_gov_uk
+    - name: southend_gov_uk
       args:
         address: ADDRESS
         uprn: UPRN
@@ -22,7 +22,7 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: eastdevon_gov_uk
+    - name: southend_gov_uk
       args:
         address: ADDRESS
         postcode: POSTCODE
@@ -48,12 +48,12 @@ Provide one of: `uprn` or `postcode`.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: eastdevon_gov_uk
+    - name: southend_gov_uk
       args:
-        address: 1 Dagmar Road
-        postcode: EX8 2AN
+        address: 38 Thorpedene Gardens, Shoeburyness
+        postcode: SS3 9JD
 ```
 
 ## How to get the source arguments
 
-Provide your UPRN, or your postcode plus an address to match. Find your UPRN at https://www.findmyaddress.co.uk/, or from the UPRN query parameter on the East Devon bin collection page.
+Provide your UPRN, or your postcode plus an address to match. Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address details.

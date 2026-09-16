@@ -1,6 +1,8 @@
 # Ipswich City Council
 
-Support for schedules provided by [Ipswich City Council](https://www.ipswich.qld.gov.au/live/waste-and-recycling/bin-collection-calendar).
+Support for schedules provided by [Ipswich City Council](https://www.ipswich.qld.gov.au).
+
+Source for Ipswich City Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,9 @@ waste_collection_schedule:
   sources:
     - name: ipswich_qld_gov_au
       args:
-        street: STREET_NO_NAME_TYPE
+        street: STREET
         suburb: SUBURB
+        post_code: POST_CODE
 ```
 
 ### Configuration Variables
@@ -21,6 +24,9 @@ waste_collection_schedule:
 **suburb**  
 *(string) (required)*
 
+**post_code**  
+*(string) (optional)*
+
 ## Example
 
 ```yaml
@@ -28,10 +34,11 @@ waste_collection_schedule:
   sources:
     - name: ipswich_qld_gov_au
       args:
-        street: 50 Brisbane Road
-        suburb: Redbank
+        street: 184-202 Old Logan Rd
+        suburb: Camira
+        post_code: '4300'
 ```
 
 ## How to get the source arguments
 
-Visit the [Ipswich City Council bin collection calendar](https://www.ipswich.qld.gov.au/live/waste-and-recycling/bin-collection-calendar) page and search for your address. Use your street number and name (include type such as street, avenue, road) for street and suburb only name in suburb. Including QLD or Australia is not required.
+Use your street number and street name (including the street type, e.g. Road, Street, Avenue) for street, and the suburb name only for suburb. Do not add QLD or Australia. Adding your post code is optional but recommended: it skips the council app's own address search, which is shared between all of its users and is regularly out of quota.

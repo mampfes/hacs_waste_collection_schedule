@@ -50,7 +50,8 @@ waste_collection_schedule:
   sources:
     - name: app_abfallplus_de
       args:
-        app_id: de.k4systems.abfallappnf
-        city: "Ahrenvi\xF6l"
-        strasse: "Alle Stra\xDFen"
+        app_id: de.k4systems.abfallappfds
+        city: Horb am Neckar
+        strasse: Marktplatz
+        hnr: 1%7C%7C1004335001
 ```

@@ -40,4 +40,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).
+Enter your street and house number. This source currently only supports Bad Oeynhausen.

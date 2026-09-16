@@ -10,11 +10,18 @@ Source for Stadtgemeinde Berndorf, Austria.
 waste_collection_schedule:
   sources:
     - name: berndorf_gv_at
+      args:
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-No configuration arguments are required.
+**strasse**  
+*(string) (required)*
+
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -22,4 +29,11 @@ No configuration arguments are required.
 waste_collection_schedule:
   sources:
     - name: berndorf_gv_at
+      args:
+        strasse: "Albertstra\xDFe"
+        hausnummer: '1'
 ```
+
+## How to get the source arguments
+
+Open https://www.berndorf.gv.at/Buergerservice/Aktuelles/Muellabfuhrtermine, pick your street and house number from the dropdowns, and use the same values for 'strasse' and 'hausnummer'.

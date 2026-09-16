@@ -4,6 +4,9 @@
     "abfall_neunkirchen_siegerland_de": [
       "@bbr111"
     ],
+    "affaldonline_dk": [
+      "@superrob"
+    ],
     "alba_com_pl": [
       "@kamilos-dev"
     ],
@@ -22,8 +25,17 @@
     "baumkirchen_gv_at": [
       "@bbr111"
     ],
+    "beachwood_oh_us": [
+      "@GreenDavidA"
+    ],
+    "bern_ch": [
+      "@sbaerlocher"
+    ],
     "berndorf_gv_at": [
       "@bbr111"
+    ],
+    "bochnia_gmina_pl": [
+      "@Sairento-92"
     ],
     "buermoos_at": [
       "@bbr111"
@@ -31,8 +43,32 @@
     "cannock_chase_dc_gov_uk": [
       "@markvp"
     ],
+    "charleston_sc_gov": [
+      "@dmkjr"
+    ],
+    "charlestoncounty_org": [
+      "@dmkjr"
+    ],
+    "clissonsevremaine_fr": [
+      "@JeyMuller"
+    ],
+    "codc_govt_nz": [
+      "@soasmileynz"
+    ],
+    "deponia_hu": [
+      "@tothi"
+    ],
     "durban_gov_za": [
       "@robtesch"
+    ],
+    "eastdevon_gov_uk": [
+      "@SimonRice"
+    ],
+    "easthants_gov_uk": [
+      "@alexcroox"
+    ],
+    "ebbs_gv_at": [
+      "@rr62wghzwp-blip"
     ],
     "elsbethen_at": [
       "@bbr111"
@@ -43,13 +79,31 @@
     "felixdorf_gv_at": [
       "@bbr111"
     ],
+    "fermanaghomagh_gov_uk": [
+      "@bbr111"
+    ],
+    "feuerthalen_ch": [
+      "@oh-supra"
+    ],
+    "geilenkirchen_de": [
+      "@bbr111"
+    ],
     "gemeinde24_at": [
       "@markvp"
+    ],
+    "gmina_trzebnica_pl": [
+      "@Tymon3310"
+    ],
+    "greatershepparton_com_au": [
+      "@RedPandaDoge"
     ],
     "haringey_gov_uk": [
       "@marcjay"
     ],
     "hartbeigraz_at": [
+      "@bbr111"
+    ],
+    "him_as": [
       "@bbr111"
     ],
     "hohokus_nj_us": [
@@ -58,8 +112,14 @@
     "imst_at": [
       "@bbr111"
     ],
+    "ipswich_qld_gov_au": [
+      "@CRZTFR"
+    ],
     "isaac_qld_gov_au": [
       "@markvp"
+    ],
+    "ismaning_de": [
+      "@Kufi089"
     ],
     "jacksonville_fl_us": [
       "@biggiebytes"
@@ -70,11 +130,20 @@
     "kiedyodpady_pl": [
       "@dominik-korsa"
     ],
+    "kirchlengern_de": [
+      "@bbr111"
+    ],
     "kopavogur_is": [
       "@rhubarbgarden"
     ],
+    "kositwest_sk": [
+      "@mynameisdominik"
+    ],
     "kronstorf_at": [
       "@bbr111"
+    ],
+    "kvatg_ch": [
+      "@Smn-hns"
     ],
     "lawrence_ma_us": [
       "@markvp"
@@ -82,11 +151,23 @@
     "leeds_gov_uk": [
       "@markvp"
     ],
+    "metropole_rennes_fr": [
+      "@Plarkass"
+    ],
+    "mils_tirol_at": [
+      "@bbr111"
+    ],
     "moretonbay_qld_gov_au": [
       "@CRZTFR"
     ],
+    "mpdc_govt_nz": [
+      "@danielcompton"
+    ],
     "muehlenkreis_de": [
       "@bbr111"
+    ],
+    "municipium_it": [
+      "@fedfus"
     ],
     "muttenz_ch": [
       "@markvp"
@@ -100,6 +181,15 @@
     "ocarcims_ocfl_net": [
       "@rbusquet"
     ],
+    "partille_se": [
+      "@sadjad1"
+    ],
+    "pernitz_gv_at": [
+      "@bbr111"
+    ],
+    "predmerice_nad_labem_cz": [
+      "@ArzykDev"
+    ],
     "puchbeihallein_gv_at": [
       "@nerdoc"
     ],
@@ -109,20 +199,44 @@
     "schlierbach_at": [
       "@bbr111"
     ],
+    "sesaeste_it": [
+      "@AlexSartori"
+    ],
     "sictomvds_com": [
       "@KingKemar"
+    ],
+    "siokom_hu": [
+      "@tothi"
+    ],
+    "smolo_cz": [
+      "@jan-tdy"
+    ],
+    "sperrmuell_erlensee_de": [
+      "@SgtSeppel"
     ],
     "st_margarethen_salzburg_at": [
       "@bbr111"
     ],
+    "stadt_kufstein_at": [
+      "@CozyRocket"
+    ],
     "steyr_at": [
       "@bbr111"
+    ],
+    "stirling_gov_uk": [
+      "@nagug"
     ],
     "stirling_wa_gov_au": [
       "@markvp"
     ],
     "stkh_hu": [
       "@markvp"
+    ],
+    "suibr_ch": [
+      "@AlpenGlowNW"
+    ],
+    "team_orange_de": [
+      "@ChrisKoh83"
     ],
     "tibi_be": [
       "@markvp"
@@ -133,11 +247,20 @@
     "vogeldisposal_com": [
       "@jcarr"
     ],
+    "wagga_nsw_gov_au": [
+      "@CozyRocket"
+    ],
+    "wastenet_org_nz": [
+      "@etamtlosz"
+    ],
     "westminster_gov_uk": [
       "@parmymansam"
     ],
     "wingecarribee_nsw_gov_au": [
       "@m1ckyb"
+    ],
+    "yarracity_vic_gov_au": [
+      "@yeaaaaaahh"
     ],
     "zys_harmonogram_pl": [
       "@markvp"

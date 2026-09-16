@@ -13,6 +13,7 @@ waste_collection_schedule:
       args:
         city: CITY
         street: STREET
+        restmuell_cadence: RESTMUELL_CADENCE
 ```
 
 ### Configuration Variables
@@ -21,6 +22,9 @@ waste_collection_schedule:
 *(string) (required)*
 
 **street**  
+*(string) (optional)*
+
+**restmuell_cadence**  
 *(string) (optional)*
 
 ## Example

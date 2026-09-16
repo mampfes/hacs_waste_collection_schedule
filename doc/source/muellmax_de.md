@@ -38,7 +38,6 @@ waste_collection_schedule:
   sources:
     - name: muellmax_de
       args:
-        service: Usb
-        mm_frm_str_sel: "Freiligrathstra\xDFe"
-        mm_frm_hnr_sel: 44791;Innenstadt;55;
+        service: Awm
+        mm_frm_str_sel: Achatiusweg
 ```
