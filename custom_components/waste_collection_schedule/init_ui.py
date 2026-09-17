@@ -138,6 +138,7 @@ async def async_remove_config_entry_device(
 ) -> bool:
     return True
 
+
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Reload this instance
     await hass.config_entries.async_reload(entry.entry_id)
