@@ -11,6 +11,7 @@ import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryError
+from homeassistant.helpers import device_registry as dr
 
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
