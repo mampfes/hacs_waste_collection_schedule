@@ -75,6 +75,16 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
+      "cascade_confirm": {
+        "title": "Configure Source",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
       "sensor": {
         "title": "Create Sensor \"{sensor_number}\"",
         "description": "Configure one sensor at a time.",
