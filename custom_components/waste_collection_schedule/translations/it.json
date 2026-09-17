@@ -73,6 +73,16 @@
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
+      "cascade_confirm": {
+        "title": "Configurazione Sorgente",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Nome Calendario"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
       "sensor": {
         "title": "Crea Sensore \"{sensor_number}\"",
         "description": "Configura un sensore alla volta.",

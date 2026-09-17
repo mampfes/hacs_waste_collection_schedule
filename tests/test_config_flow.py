@@ -3,6 +3,7 @@ import calendar  # noqa: F401 — must import stdlib calendar FIRST
 import importlib
 import os
 import sys
+import types
 
 # Ensure the inner library package is importable.
 # IMPORTANT: stdlib calendar must be imported ABOVE before this path is added,
@@ -216,3 +217,232 @@ def test_an_entry_stored_before_the_fix_still_loads() -> None:
     shell = SourceShell.create("koppl_at", {}, {"kwargs": ""})
 
     assert shell is not None
+
+
+# ---------------------------------------------------------------------------
+# cascading_select: one level per view
+#
+# The whole cascade used to live on the single argument form. Only the widest
+# level could be populated up front — every deeper level needs the choices above
+# it — so the rest rendered as free text and the user had to submit an
+# incomplete form, and read the validation error it produced, once per level
+# just to reveal the next dropdown (#7419).
+# ---------------------------------------------------------------------------
+
+
+def _register_cascade_source(name: str, choices, levels=("one", "two", "three")):
+    """Install a throwaway cascading_select source under ``name``.
+
+    ``choices`` is called as ``choices(field, selections)``; raising from it
+    stands in for an unreachable provider.
+    """
+    from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.config_params import cascading_select
+
+    class _Source(BaseSource):
+        TITLE = name
+        PARAMS = (cascading_select(*levels),)
+
+        @classmethod
+        def get_choices(cls, field, selections):
+            return choices(field, selections)
+
+    module = types.ModuleType(f"waste_collection_schedule.source.{name}")
+    module.Source = _Source  # type: ignore[attr-defined]
+    sys.modules[f"waste_collection_schedule.source.{name}"] = module
+    return module
+
+
+def _cascade_flow(source_name: str):
+    """A flow parked on ``source_name``, with async_show_form captured."""
+    flow = WasteCollectionConfigFlow()
+    flow.hass = cast(Any, _StubHass())
+    flow._source = source_name
+    flow._id = source_name
+    flow._extra_info_default_params = {}
+    shown: list[dict] = []
+
+    def _show_form(**kwargs):
+        shown.append(kwargs)
+        return kwargs
+
+    flow.async_show_form = _show_form  # type: ignore[method-assign]
+    return flow, shown
+
+
+def _shown_fields(form: dict) -> list[str]:
+    return [
+        str(getattr(marker, "schema", marker)) for marker in form["data_schema"].schema
+    ]
+
+
+def test_a_cascade_asks_for_one_level_per_view() -> None:
+    picked = {"one": "A", "two": "B", "three": "C"}
+
+    def choices(field, selections):
+        # Mirrors the contract: a level is only offered once everything above it
+        # has been answered.
+        levels = ["one", "two", "three"]
+        for level in levels:
+            if level == field:
+                return [picked[level], "other"]
+            if not selections.get(level):
+                return []
+        return []
+
+    _register_cascade_source("cascade_happy", choices)
+    flow, shown = _cascade_flow("cascade_happy")
+
+    form = asyncio.run(flow.async_step_args())
+    assert _shown_fields(form) == ["one"]
+
+    form = asyncio.run(flow.async_step_args({"one": "A"}))
+    assert _shown_fields(form) == ["two"]
+
+    form = asyncio.run(flow.async_step_args({"two": "B"}))
+    assert _shown_fields(form) == ["three"]
+
+    # Answering the last level hands over to the ordinary argument form. The
+    # settled levels are NOT offered again: re-opening "one" there would let a
+    # user invalidate "two"/"three" underneath it with no way to notice.
+    form = asyncio.run(flow.async_step_args({"three": "C"}))
+    assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
+    assert flow._cascade_selections == picked
+    assert len(shown) == 4
+
+    # ...and they are shown as text instead, so the user still sees what the
+    # entry is about to be created from. That view has its own step, whose
+    # description is the address and nothing else — no "configure your service
+    # provider" blurb, no source HOWTO, both already answered by the cascade.
+    assert form["step_id"] == "cascade_confirm"
+    assert list(form["description_placeholders"]) == ["cascade_summary"]
+    summary = form["description_placeholders"]["cascade_summary"]
+    for level, value in picked.items():
+        # A markdown list item per level: the description is rendered as
+        # markdown, where bare newlines would run the levels into one line.
+        assert f"- **{level.capitalize()}:** {value}" in summary
+    assert len(summary.splitlines()) == len(picked)
+
+
+def test_the_confirmation_step_is_translated() -> None:
+    # It is a fixed step id, so it needs a hand-maintained entry in every
+    # shipped language or the view renders with raw keys.
+    import json
+    from pathlib import Path
+
+    base = Path(__file__).resolve().parent.parent / (
+        "custom_components/waste_collection_schedule/translations"
+    )
+    for lang in ("en", "de", "fr", "it", "nl"):
+        step = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
+        step = step["config"]["step"]["cascade_confirm"]
+        assert step["description"] == "{cascade_summary}"
+        assert step["data"][CONF_SOURCE_CALENDAR_TITLE]
+
+
+def test_settled_cascade_levels_are_merged_back_into_the_submission() -> None:
+    # They are not on the form, so nothing else would carry them into the entry.
+    def choices(field, selections):
+        levels = ["one", "two", "three"]
+        for level in levels:
+            if level == field:
+                return ["A", "B", "C"]
+            if not selections.get(level):
+                return []
+        return []
+
+    _register_cascade_source("cascade_merge", choices)
+    flow, _shown = _cascade_flow("cascade_merge")
+
+    asyncio.run(flow.async_step_args())
+    asyncio.run(flow.async_step_args({"one": "A"}))
+    asyncio.run(flow.async_step_args({"two": "B"}))
+    asyncio.run(flow.async_step_args({"three": "C"}))
+
+    captured: dict = {}
+
+    async def _validate(source, args_input, module):
+        captured.update(args_input)
+        return {}, {}, {}
+
+    flow._WasteCollectionConfigFlow__validate_args_user_input = _validate  # type: ignore[attr-defined]
+    flow.async_step_flow_type = lambda user_input=None: _done()  # type: ignore[method-assign]
+
+    async def _done():
+        return {"type": "done"}
+
+    asyncio.run(flow.async_step_args({CONF_SOURCE_CALENDAR_TITLE: "Bins"}))
+
+    assert captured["one"] == "A"
+    assert captured["two"] == "B"
+    assert captured["three"] == "C"
+
+
+def test_a_cascade_level_with_no_options_is_skipped() -> None:
+    # The cascading_select contract: a level that returns [] does not apply to
+    # the current selection, so the wizard must step over it rather than
+    # showing an empty dropdown.
+    def choices(field, selections):
+        if field == "one":
+            return ["A"]
+        if field == "two":
+            return []  # not applicable
+        return ["C"] if selections.get("one") else []
+
+    _register_cascade_source("cascade_skips", choices)
+    flow, _shown = _cascade_flow("cascade_skips")
+
+    form = asyncio.run(flow.async_step_args())
+    assert _shown_fields(form) == ["one"]
+
+    form = asyncio.run(flow.async_step_args({"one": "A"}))
+    assert _shown_fields(form) == ["three"]
+    assert "two" not in flow._cascade_selections
+
+
+def test_an_unreachable_cascade_falls_back_to_the_plain_form() -> None:
+    # A dead provider must not dead-end the flow: the user still gets the
+    # ordinary form (free text), which is what they had before the wizard.
+    def choices(field, selections):
+        raise RuntimeError("provider down")
+
+    _register_cascade_source("cascade_down", choices)
+    flow, _shown = _cascade_flow("cascade_down")
+
+    form = asyncio.run(flow.async_step_args())
+
+    assert set(_shown_fields(form)) == {
+        CONF_SOURCE_CALENDAR_TITLE,
+        "one",
+        "two",
+        "three",
+    }
+
+
+def test_a_source_without_a_cascade_still_gets_one_form() -> None:
+    schema = _arg_schema("koppl_at")
+
+    assert _field_names(schema) == {CONF_SOURCE_CALENDAR_TITLE}
+
+
+def test_a_cascade_that_breaks_mid_way_keeps_what_was_answered() -> None:
+    # Losing the levels already picked would send the user back to the start of
+    # an address they had half-entered.
+    def choices(field, selections):
+        if field == "one":
+            return ["A"]
+        raise RuntimeError("provider down")
+
+    _register_cascade_source("cascade_half", choices)
+    flow, _shown = _cascade_flow("cascade_half")
+
+    asyncio.run(flow.async_step_args())
+    form = asyncio.run(flow.async_step_args({"one": "A"}))
+
+    assert set(_shown_fields(form)) == {
+        CONF_SOURCE_CALENDAR_TITLE,
+        "one",
+        "two",
+        "three",
+    }
+    assert flow._extra_info_default_params == {"one": "A"}
