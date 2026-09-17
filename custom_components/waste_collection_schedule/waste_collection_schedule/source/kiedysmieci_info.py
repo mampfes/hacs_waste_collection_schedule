@@ -1,39 +1,19 @@
 import datetime
-from typing import Any
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import Collection, Icons, field_terms
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import cascading_select
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+from waste_collection_schedule.service.KiedySmieci import (
+    NO_SCHEDULE_MARKER,
+    KiedySmieciParser,
+    KiedySmieciRetriever,
+    choices,
+    location_params,
+    validate_location,
 )
-
-TITLE = "Kiedy śmieci"
-DESCRIPTION = "Source script for Kiedy śmieci, Poland"
-URL = "https://kiedysmieci.info"
-COUNTRY = "pl"
-TEST_CASES = {
-    "Nadolany, podkarpackie, sanocki, Bukowsko": {
-        "voivodeship": "podkarpackie",
-        "district": "sanocki",
-        "municipality": "Bukowsko",
-        "street": "Nadolany",
-    },
-    "Kędzierz, podkarpackie, dębicki, Dębica": {
-        "voivodeship": "podkarpackie",
-        "district": "dębicki",
-        "municipality": "Dębica",
-        "street": "Kędzierz",
-    },
-    "Parkowa, lubelskie, zamojski, Szczebrzeszyn": {
-        "voivodeship": "lubelskie",
-        "district": "zamojski",
-        "municipality": "Szczebrzeszyn",
-        "street": "Parkowa",
-    },
-}
-
-API_URL = "https://kiedysmieci.info/schedule-proxy.php"
 
 ICON_MAP = {
     "zmieszane": Icons.GENERAL_WASTE,
@@ -82,20 +62,6 @@ UNMAPPED_STREAMS = ("opony", "popi", "gruz", "budowlan")
 # waste type's name.
 ON_REQUEST_MARKER = "*"
 
-# The location cascade, from the widest to the narrowest level:
-# source argument -> query parameter (which doubles as the key of a returned
-# item) -> key holding the list of options in the response.
-LOCATION_LEVELS = (
-    ("voivodeship", "wojewodztwo", "listaWojewodztw"),
-    ("district", "powiat", "listaPowiatow"),
-    ("municipality", "gmina", "listaGmin"),
-    ("street", "ulica", "listaUlic"),
-)
-
-# A known location without a published schedule yields a single placeholder
-# entry instead of an empty list.
-NO_SCHEDULE_MARKER = "brak harmonogramu"
-
 
 def _icon_for(waste_type: str) -> Icons:
     """Pick an icon for a waste type, falling back to general waste.
@@ -123,88 +89,131 @@ def _icon_for(waste_type: str) -> Icons:
     return icon
 
 
-class Source:
-    def __init__(self, voivodeship: str, district: str, municipality: str, street: str):
-        self._location = {
-            "wojewodztwo": voivodeship,
-            "powiat": district,
-            "gmina": municipality,
-            "ulica": street,
-        }
+def _waste_type(name: str) -> wt.WasteType:
+    """The provider's own label, kept verbatim, carrying this source's icon.
 
-    def _get(self, request_type: str, params: dict[str, str]) -> dict[str, Any]:
-        response = requests.get(
-            API_URL, params={"type": request_type} | params, timeout=30
+    ``wt.preserved()`` is the same idea but hands every stream OTHER's icon.
+    The Polish stream names are what carry the distinction here, and there is
+    nothing to resolve them against - waste_types.SUPPORTED_LANGUAGES has no
+    "pl" - so mapping them onto canonical types would replace the label a user
+    reads today ("zmieszane") with an English one. Keeping the ``preserved:``
+    id prefix says exactly that: a verbatim label, not a canonical type.
+    """
+    label = " ".join(str(name).strip().split())
+
+    return wt.WasteType(
+        id=f"preserved:{label}",
+        icon=_icon_for(label),
+        color=wt.OTHER.color,
+        names=dict.fromkeys(wt.SUPPORTED_LANGUAGES, label),
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Kiedy śmieci"
+    DESCRIPTION = "Source script for Kiedy śmieci, Poland"
+    URL = "https://kiedysmieci.info"
+    COUNTRY = "pl"
+
+    # Carried over from doc/source/kiedysmieci_info.md: the generator rebuilds
+    # that page from this class, so the pointer to the provider's own apps has
+    # to live here to survive.
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Setting this source up through the Home Assistant UI needs no "
+            "lookup: the wizard asks for the voivodeship (województwo), "
+            "district (powiat), municipality (gmina) and street or locality "
+            "(ulica) one at a time, and each dropdown lists what the provider "
+            "returns for the levels already chosen. For configuration.yaml, "
+            "the same values can be read off the apps "
+            "([GooglePlay](https://play.google.com/store/apps/details?id=com.fxsystems.KiedySmieci_info), "
+            "[AppStore](https://apps.apple.com/pl/app/kiedy-%C5%9Bmieci/id1539957094?l=pl)) "
+            "or the [website](https://kiedysmieci.info/index.html#harmonogram)."
+        ),
+    }
+    TEST_CASES: ClassVar[dict] = {
+        "Nadolany, podkarpackie, sanocki, Bukowsko": {
+            "voivodeship": "podkarpackie",
+            "district": "sanocki",
+            "municipality": "Bukowsko",
+            "street": "Nadolany",
+        },
+        "Kędzierz, podkarpackie, dębicki, Dębica": {
+            "voivodeship": "podkarpackie",
+            "district": "dębicki",
+            "municipality": "Dębica",
+            "street": "Kędzierz",
+        },
+        "Parkowa, lubelskie, zamojski, Szczebrzeszyn": {
+            "voivodeship": "lubelskie",
+            "district": "zamojski",
+            "municipality": "Szczebrzeszyn",
+            "street": "Parkowa",
+        },
+    }
+
+    # An unknown address is not an error at this API: it answers with a single
+    # "brak harmonogramu" placeholder, which classify() drops. Raising on the
+    # resulting empty schedule is what turns that into a message naming the
+    # argument at fault.
+    RAISE_ON_EMPTY = True
+
+    # The five streams every municipality on this platform collects. The extra
+    # rounds (bulky, electronics, textiles, ...) are free text that varies from
+    # one municipality to the next, so they cannot be enumerated here; they are
+    # preserved verbatim at runtime by the same factory.
+    WASTE_TYPES: ClassVar[list] = [_waste_type(name) for name in ICON_MAP]
+
+    # The four levels are asked one per view in the config flow, each populated
+    # from get_choices() below, so the wizard only ever offers addresses the API
+    # currently serves.
+    #
+    # The two Polish-specific tiers carry a plain label rather than a standard
+    # term. The closest terms are REGION and COUNTY, whose English labels
+    # ("Region", "County") would then disagree with the argument names this
+    # source has always documented and accepted in YAML - a user matching the
+    # form against doc/source/kiedysmieci_info.md would have to guess which
+    # field is which. The lower two tiers need no such compromise.
+    PARAMS = (
+        cascading_select(
+            ("voivodeship", "Voivodeship"),
+            ("district", "District"),
+            ("municipality", field_terms.MUNICIPALITY),
+            ("street", field_terms.STREET),
+        ),
+    )
+
+    retrieve = KiedySmieciRetriever()
+    parse = KiedySmieciParser()
+
+    @classmethod
+    def get_choices(cls, field: str, selections: dict[str, str]) -> list[str]:
+        """Options for one cascade level, given the levels chosen so far.
+
+        Implements the config_params.cascading_select contract.
+        """
+        return choices(field, selections)
+
+    def classify(self, record: dict[str, Any]) -> Collection | None:
+        if record.get("dzienTygodnia") == NO_SCHEDULE_MARKER:
+            return None
+
+        return Collection(
+            date=datetime.datetime.strptime(record["dataOdbioru"], "%Y-%m-%d").date(),
+            waste_type=_waste_type(record["nazwaTypuSmieci"]),
         )
 
-        # Errors are reported in the JSON envelope (with a 4xx/5xx status), so
-        # parse the body before looking at the status code.
-        try:
-            payload = response.json()
-        except ValueError:
-            response.raise_for_status()
-            raise
+    def _raise_empty(self) -> None:
+        """Blame the address rather than the first declared field.
 
-        if not payload.get("ok"):
-            raise Exception(
-                payload.get("message") or "Unexpected response from kiedysmieci.info"
-            )
-
-        return payload.get("data") or {}
-
-    def _validate_location(self) -> None:
-        """Walk the location cascade and report the first argument that is unknown.
-
-        Returns without raising if every level matches, which means the request
-        failed for another reason.
+        BaseSource would point at the widest cascade level; here every level was
+        picked from a list the API itself returned, so the pair that can still
+        be wrong together is the municipality and the street.
         """
-        selection: dict[str, str] = {}
-
-        for argument, param, list_key in LOCATION_LEVELS:
-            try:
-                items = self._get("locations", selection).get(list_key) or []
-            except Exception:
-                # The cascade itself is unreachable, so it cannot tell us
-                # anything - leave the original error to the caller.
-                return
-
-            options = [item[param] for item in items if item.get(param)]
-            value = self._location[param]
-            match = next((o for o in options if o.lower() == value.lower()), None)
-
-            if match is None:
-                raise SourceArgumentNotFoundWithSuggestions(argument, value, options)
-
-            selection[param] = match
-
-    def fetch(self) -> list[Collection]:
-        try:
-            data = self._get("terms", self._location)
-        except Exception:
-            # Turn a generic "not found" from the API into an error pointing at
-            # the argument that is actually wrong.
-            self._validate_location()
-            raise
-
-        schedule = data.get("listaTerminow") or []
-        entries = [
-            Collection(
-                date=datetime.datetime.strptime(
-                    entry["dataOdbioru"], "%Y-%m-%d"
-                ).date(),
-                t=entry["nazwaTypuSmieci"],
-                icon=_icon_for(entry["nazwaTypuSmieci"]),
-            )
-            for entry in schedule
-            if entry.get("dzienTygodnia") != NO_SCHEDULE_MARKER
-        ]
-
-        if not entries:
-            self._validate_location()
-            raise SourceArgumentExceptionMultiple(
-                ("municipality", "street"),
-                f"No schedule published for {self._location['ulica']}, "
-                f"{self._location['gmina']}",
-            )
-
-        return entries
+        location = location_params(self.params)
+        validate_location(location)
+        raise SourceArgumentExceptionMultiple(
+            ("municipality", "street"),
+            f"No schedule published for {location['ulica']}, {location['gmina']}",
+        )
