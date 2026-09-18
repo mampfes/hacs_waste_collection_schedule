@@ -1087,6 +1087,15 @@ def _scrape_hidden_inputs(html: str) -> dict[str, str]:
     return fields
 
 
+def _scrape_input_values(html: str, name: str) -> list[str]:
+    soup = BeautifulSoup(html, "html.parser")
+    return [
+        str(tag["value"])
+        for tag in soup.find_all("input", {"name": name})
+        if tag.get("value")
+    ]
+
+
 class AthosWasteManagementRetriever(_BaseRetriever):
     """Data-driven engine for the Athos "WasteManagementServlet" wizard.
 
@@ -1222,6 +1231,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         state: str = "accumulate",
         verify: bool | str = True,
         initial_validate: Callable[[Response, BaseSource], None] | None = None,
+        iterate_field: str | None = None,
     ):
         if not steps:
             raise ValueError("AthosWasteManagementRetriever requires at least one step")
@@ -1244,60 +1254,118 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         self.state = state
         self.verify = verify
         self.initial_validate = initial_validate
+        self.iterate_field = iterate_field
 
     def _apply_encoding(self, response: Response) -> Response:
         if self.encoding is not None:
             response.encoding = self.encoding
         return response
 
-    def __call__(self, source: BaseSource) -> Response:
-        headers = self._resolve(self.headers, source)
-        url = self._resolve(self.url, source)
-
-        initial = source.session.get(
-            url, params=self.initial_params, headers=headers, verify=self.verify
-        )
-        if initial.status_code == 404 and self.fallback_url is not None:
-            url = self._resolve(self.fallback_url, source)
-            initial = source.session.get(
-                url, params=self.initial_params, headers=headers, verify=self.verify
-            )
-        initial.raise_for_status()
-        self._apply_encoding(initial)
-        if self.initial_validate is not None:
-            self.initial_validate(initial, source)
-
+    def _run_steps(
+        self,
+        source: BaseSource,
+        url: str,
+        headers: HeadersType,
+        initial: Response,
+        *,
+        field_override: tuple[str, str] | None = None,
+    ) -> Response:
         state: dict[str, Any] = (
             {} if self.state == "none" else _scrape_hidden_inputs(initial.text)
         )
 
         response = initial
+
         for index, step in enumerate(self.steps):
-            # index 0 already holds the inputs of the initial GET, so only
-            # the later steps need re-seeding from the page just received.
             if self.state == "rescrape" and index:
                 state = _scrape_hidden_inputs(response.text)
+
             if step.get("reset"):
                 state = {}
+
+            if field_override is not None:
+                state[field_override[0]] = field_override[1]
+
             state.update(step["fields"](**source.params) if "fields" in step else {})
+
             for key in step.get("remove", ()):
                 state.pop(key, None)
+
             state[self.submit_action_field] = self._resolve(
-                step["submit_action"], source
+                step["submit_action"],
+                source,
             )
-            # A fresh copy per POST: state is mutated further by later steps,
-            # and callers (session mocks in tests, request logging, retry
-            # wrappers) may hold onto the `data` they were given rather than
-            # consuming it immediately.
+
             response = source.session.post(
-                url, data=dict(state), headers=headers, verify=self.verify
+                url,
+                data=dict(state),
+                headers=headers,
+                verify=self.verify,
             )
+
             response.raise_for_status()
             self._apply_encoding(response)
+
             if "validate" in step:
                 step["validate"](response, source)
 
         return response
+
+    def __call__(self, source: BaseSource) -> Response | list[Response]:
+        headers = self._resolve(self.headers, source)
+        url = self._resolve(self.url, source)
+
+        initial = source.session.get(
+            url,
+            params=self.initial_params,
+            headers=headers,
+            verify=self.verify,
+        )
+
+        if initial.status_code == 404 and self.fallback_url is not None:
+            url = self._resolve(self.fallback_url, source)
+            initial = source.session.get(
+                url,
+                params=self.initial_params,
+                headers=headers,
+                verify=self.verify,
+            )
+
+        initial.raise_for_status()
+        self._apply_encoding(initial)
+
+        if self.initial_validate is not None:
+            self.initial_validate(initial, source)
+
+        if self.iterate_field is not None:
+            values = _scrape_input_values(
+                initial.text,
+                self.iterate_field,
+            )
+
+            if values:
+                responses = []
+
+                for value in values:
+                    response = self._run_steps(
+                        source,
+                        url,
+                        headers,
+                        initial,
+                        field_override=(self.iterate_field, value),
+                    )
+
+                    if "BEGIN:VCALENDAR" in response.text:
+                        responses.append(response)
+
+                return responses
+
+        return self._run_steps(
+            source,
+            url,
+            headers,
+            initial,
+        )
 
 
 class AthosNoticeFilter:

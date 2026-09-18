@@ -47,7 +47,7 @@ class Source(BaseSource):
         "Andervenne Am Gallenberg": {
             "city": "Andervenne",
             "street": "Am Gallenberg",
-            "house_number": "1",
+            "house_number": "2",
         },
         "Neubörger Aschendorfer Straße 1 A": {
             "city": "Neubörger",
@@ -72,6 +72,7 @@ class Source(BaseSource):
     retrieve = AthosWasteManagementRetriever(
         url=_SERVLET,
         initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        iterate_field="Zeitraum",
         steps=[
             {
                 "submit_action": "CITYCHANGED",
@@ -96,7 +97,7 @@ class Source(BaseSource):
             },
         ],
     )
-    parse = parsers.IcsParser()
+    parse = parsers.EachResponse(parsers.IcsParser())
     transform = ICSTransformer(
         type_value_map={
             "Restabfallbehaelter": wt.GENERAL_WASTE,
