@@ -439,44 +439,16 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
   
    #### Erläuterung
   
-   - `source_index:`
-     **Konstante:** `SOURCE_INDEX`
-     **Standard**: 0
-     **Beschreibung**: wird verwendet, um einen Sensor einer bestimmten Quelle zuzuordnen. Dies ist nur dann erforderlich, wenn mehrere Quellen definiert sind. Die erste definierte Quelle ist `source_index 0`, die zweite `source_index 1` usw. Wenn man einen Sensor haben möchte, der die Daten aus mehreren Quellen kombiniert, dann muss einfach eine Liste der Quellen hinzugefügt werden. Dieser Parameter ist bei Verwendung der GUI-Konfiguration nicht verfügbar, da die Sensoren direkt zu den Quellen hinzugefügt werden.
-   - `name`:
-     **Konstante**: `NAME`
-     **Standard**: der von der Quelle zugeordnete Namen
-     **Beschreibung**: Name des Sensors
-   - `details_format`:
-     **Konstante**: `DETAILS_FORMAT`
-     **Standard**: upcoming
-     **Beschreibung**: gibt das Format an, welches zum Anzeigen von Informationen im HA-Popup-Fenster verwendet wird. Gültige Werte sind: `upcoming`, `appointment_types`, `generic` und `hidden`
-   - `count`:
-     **Konstante**: `COUNT`
-     **Standard**: 1
-     **Beschreibung**: die Anzeige der nächsten [Zahl]-Sammlungen im HA-Popup
-   - `leadtime`:
-     **Konstante**: `LEADTIME`
-     **Standard**: 1
-     **Beschreibung**: die Anzeige von Abholungen, die innerhalb der nächsten `leadtime`-Tage stattfinden
-   - `value_template`:
-     **Konstante**: `VALUE_TEMPLATE`
-     **Beschreibung**: Template, um die Statusinformationen einer Entität zu formatieren.
-   - `date_template`:
-     **Konstante**: `DATE_TEMPLATE`
-     **Beschreibung**: Template, um die Datum-Daten einer Entität im HA-Popup zu formatieren.
-   - `add_days_to`:
-     **Konstante**: `ADD_DAYS_TO`
-     **Standard**: 0
-     **Beschreibung**: die `add_day_to`-Anzahl der Tage bis zur nächsten Sammlung
-   - `event_index`:
-     **Konstante**: `EVENT_INDEX`
-     **Standard**: 0
-     **Beschreibung**: um einem Sensor einen bestimmten Abholdatums-Index zuzuordnen. Das nächste Abholdatum hat den `event_index`-Wert 0. Nützlich, wenn man dedizierte Sensoren für die nächste Abholung, zweite Abholung, dritte Abholung, usw. haben möchte.
-   - `types`:
-     **Konstante**: `TYPES`
-     **Beschreibung**: Filtern nach Abfallarten. Der Sensor zeigt nur Sammlungen an, die dieser Abfallart entsprechen. Man muss den Aliasnamen einsetzen, wenn man für den betreffenden Sensor unter dem Attribut `customize` (`waste-collection-schedule.yaml`) den Parameter `Alias` verwendet hat.
-</br>
+   - `source_index:`</br>**Konstante:** `SOURCE_INDEX`</br>**Standard**: 0</br>**Beschreibung**: wird verwendet, um einen Sensor einer bestimmten Quelle zuzuordnen. Dies ist nur dann erforderlich, wenn mehrere Quellen definiert sind. Die erste definierte Quelle ist `source_index 0`, die zweite `source_index 1` usw. Wenn man einen Sensor haben möchte, der die Daten aus mehreren Quellen kombiniert, dann muss einfach eine Liste der Quellen hinzugefügt werden. Dieser Parameter ist bei Verwendung der GUI-Konfiguration nicht verfügbar, da die Sensoren direkt zu den Quellen hinzugefügt werden.
+   - `name`:</br>**Konstante**: `NAME`</br>**Standard**: der von der Quelle zugeordnete Namen</br>**Beschreibung**: Name des Sensors
+   - `details_format`:</br>**Konstante**: `DETAILS_FORMAT`</br>**Standard**: upcoming</br>**Beschreibung**: gibt das Format an, welches zum Anzeigen von Informationen im HA-Popup-Fenster verwendet wird. Gültige Werte sind: `upcoming`, `appointment_types`, `generic` und `hidden`
+   - `count`:</br>**Konstante**: `COUNT`</br>**Standard**: 1</br>**Beschreibung**: die Anzeige der nächsten [Zahl]-Sammlungen im HA-Popup
+   - `leadtime`:</br>**Konstante**: `LEADTIME`</br>**Standard**: 1</br>**Beschreibung**: die Anzeige von Abholungen, die innerhalb der nächsten `leadtime`-Tage stattfinden
+   - `value_template`:</br>**Konstante**: `VALUE_TEMPLATE`</br>**Beschreibung**: Template, um die Statusinformationen einer Entität zu formatieren.
+   - `date_template`:</br>**Konstante**: `DATE_TEMPLATE`</br>**Beschreibung**: Template, um die Datum-Daten einer Entität im HA-Popup zu formatieren.
+   - `add_days_to`:</br>**Konstante**: `ADD_DAYS_TO`</br>**Standard**: 0</br>**Beschreibung**: die `add_day_to`-Anzahl der Tage bis zur nächsten Sammlung
+   - `event_index`:</br>**Konstante**: `EVENT_INDEX`</br>**Standard**: 0</br>**Beschreibung**: um einem Sensor einen bestimmten Abholdatums-Index zuzuordnen. Das nächste Abholdatum hat den `event_index`-Wert 0. Nützlich, wenn man dedizierte Sensoren für die nächste Abholung, zweite Abholung, dritte Abholung, usw. haben möchte.
+   - `types`:</br>**Konstante**: `TYPES`</br>**Beschreibung**: Filtern nach Abfallarten. Der Sensor zeigt nur Sammlungen an, die dieser Abfallart entsprechen. Man muss den Aliasnamen einsetzen, wenn man für den betreffenden Sensor unter dem Attribut `customize` (`waste-collection-schedule.yaml`) den Parameter `Alias` verwendet hat.
 6. HA → Werkzeuge → Konfiguration prüfen → OK ? → neu starten
 7. Zum Überprüfen kann außer den bereits erwähnten Möglichkeiten nun auch das Standard-Dashboard *Übersicht* verwendet werden. Dort sollte der soeben angelegte Sensor `braune Tonne` unter dem Bereich `Sensor` aufgelistet sein, samt seines Wertes. Wird jetzt in diesem Dashboard auf diesen Abfallart-Sensor geklickt, dann erscheint das entsprechende HA-Popup mit weiteren Informationen über den betreffenden Sensor; unter anderem kann man dort die `Entitäts-ID` des betreffenden Sensors einsehen, kopieren oder aber auch ändern...
 8. Die restlichen Sensor-`.yaml`-Dateien im Ordner `/config/sensoren` mit dem entsprechenden Code füllen.
