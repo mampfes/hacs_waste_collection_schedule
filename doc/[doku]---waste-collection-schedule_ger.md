@@ -2,8 +2,8 @@
 
 ## Beschreibung
 
-Eine HACS-Komponente für Home Assistant, welche die Müllentsorgungspläne des zuständigen Dienstleisters - falls vorhanden - abruft.
-Die Termine für die Abfall-Entsorgung werden entweder aus den Webseiten der entsprechenden Dienstleister gewonnen (und auch täglich aktualisiert), aus den vom Entsorger zur Verfügung gestellten `iCal`-Dateien (`.ics`) abgeleitet, oder aus den vom Nutzer festgelegten Daten und aus den sich regelmäßig wiederholenden Datumsmustern generiert.
+Eine HACS-Komponente für Home Assistant, welche die Müllentsorgungspläne des zuständigen Dienstleisters - falls vorhanden - abruft.</br>
+Die Termine für die Abfall-Entsorgung werden entweder aus den Webseiten der entsprechenden Dienstleister gewonnen (und auch täglich aktualisiert), aus den vom Entsorger (oder Stadtverwaltung) zur Verfügung gestellten `iCal`-Dateien (`.ics`) abgeleitet, oder aus den vom Nutzer festgelegten Daten und aus den sich regelmäßig wiederholenden Datumsmustern generiert.</br>
 Der integrierte lokale Kalender von Home Assistant wird automatisch mit Zeitplänen gefüllt, und es besteht ein hohes Maß an Flexibilität bei der Formatierung und Anzeige von Informationen in den sogenannten Entitätskarten oder PopUps. Das Rahmenwerk kann jederzeit problemlos um zusätzliche Anbieter von Entsorgern oder anderen Diensten erweitert werden, vorausgesetzt, dass diese auch die dafür erforderlichen Daten zur Verfügung stellen.
 
 ## Ziel
@@ -18,11 +18,11 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
 
 ### Kenntnisse
 
-- html-, css- und rudimentäre JavaScript-Kenntnisse
+- `html`-, `css`- und rudimentäre `JavaScript`- und `Jinja`-Kenntnisse
 
   > #### Exkurs: Jinja2-Templates
   >
-  > Dieser kleine Exkurs behandelt rudimentär die Syntax und Semantik der Template-Engine. Da die Template-Engine sehr flexibel ist, kann die Konfiguration der Anwendung hinsichtlich der Trennzeichen und des Verhaltens undefinierter Werte geringfügig vom hier vorgestellten Code abweichen.
+  > Dieser kleine Exkurs behandelt *rudimentär* die Syntax und Semantik der Template-Engine. Da die Template-Engine sehr flexibel ist, kann die Konfiguration der Anwendung hinsichtlich der Trennzeichen und des Verhaltens undefinierter Werte geringfügig vom hier vorgestellten Code abweichen.
   >
   > Ein `Jinja2`-Template ist einfach eine Textdatei. `Jinja2` kann jedes textbasierte Format (`html`, `xml`, `csv`, `LaTeX` und so weiter...) generieren. Ein `Jinja2`-Template benötigt keine bestimmte Erweiterung wie beispielsweise `.html`, `.xml` oder jede andere Erweiterung.
   >
@@ -36,7 +36,7 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
   >
   > Zeilenanweisungen und Kommentare sind zwar ebenfalls möglich, verfügen jedoch nicht über standardmäßige Präfix-Zeichen und können nur dann verwendet werden, wenn dies im System (HA) auch derart festgelegt worden ist.
   >
-  > ***Template-Variablen*** werden durch das an das Template übergebene Dictionary definiert. Man kann mit den Variablen in Templates experimentieren, vorausgesetzt, sie werden von der Anwendung auch übergeben. Variablen können Attribute oder Elemente enthalten, auf die man ebenfalls zugreifen kann.
+  > ***Template-Variablen*** werden durch das an das Template übergebene *Dictionary* definiert. Man kann mit den Variablen in Templates experimentieren, vorausgesetzt, sie werden von der Anwendung auch übergeben. Variablen können Attribute oder Elemente enthalten, auf die man ebenfalls zugreifen kann.
   > Welche Attribute eine Variable hat, hängt stark von der Anwendung ab, die diese Variable bereitstellen soll.
   >
   > Man kann anstelle der *Standard*-Python-`__getitem__`-'subscript'-Syntax [ ] auch einen Punkt (.) verwenden, um Zugriff auf die Attribute einer Variablen zu bekommen.
@@ -48,7 +48,7 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
   > ```
   >
   > **Wichtig**:
-  > die äußeren doppelten geschweiften Klammern `{{` sind nicht Teil der Variablen, sondern der print-Anweisung. Wenn man auf Variablen innerhalb von Tags zugreifen möchte, dann darf man diese nicht in geschweifte Klammern setzen.
+  > die äußeren doppelten geschweiften Klammern `{{` sind nicht Teil der Variablen, sondern der *print-Anweisung*. Wenn man auf Variablen innerhalb von Tags zugreifen möchte, dann darf man diese nicht in geschweifte Klammern setzen.
   > Ein Minus-Zeichen (`-`) trimmt das entsprechende Objekt davor (`{{-`, `{%-`) oder danach (`-}}`, `-%}`).
   >
   > Wenn eine Variable oder ein Attribut nicht existieren, dann erhält man als Resultat davon einen ***undefinierten*** Wert zurück. Was man mit dieser Art von Wert tun kann, hängt gänzlich von der Konfiguration der jeweiligen Anwendung ab :
@@ -68,11 +68,11 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
 
 ## Installation
 
-Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml*** -, und hierbei wiederum jeweils mehrere Möglichkeiten. In dieser Anleitung wird die **Yaml-Variante** mit einer `.ics`-Datei beschrieben, welche als Download(link) vom entsprechenden Entsorgungsdienst zur Verfügung gestellt wird, und dadurch automatisch täglich aktualisiert werden kann.Um *Waste Collection Schedule* zu installieren und anschließend zu konfigurieren, ist Folgendes zu tun :
+Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml*** -, und hierbei wiederum jeweils mehrere Möglichkeiten. In dieser Anleitung wird die **Yaml-Variante** mit einer `.ics`-Datei beschrieben, welche als Download(link) vom entsprechenden Entsorgungsdienst (oder der Stadtverwaltung) zur Verfügung gestellt wird, und dadurch automatisch täglich aktualisiert werden kann. Um *Waste Collection Schedule* zu installieren und anschließend zu konfigurieren, ist Folgendes zu tun :
 
 1. HA → HACS → in die Suchmaske `was` eintragen, und den Eintrag `Waste Collection Schedule` auswählen → herunterladen → Version auswählen, hier: **3.0.0** → Installationsverzeichnis: `/config/custom_components/waste_collection_schedule` → herunterladen
 2. HA → Werkzeuge → gegebenenfalls die Registerkarte `YAML` öffnen → Konfiguration prüfen → OK ? → neu starten
-3. HA→Studio Code Server → `configuration.yaml` → nachfolgende Codezeile an das Ende einfügen :
+3. HA → Studio Code Server → `configuration.yaml` → nachfolgende Codezeile an das Ende einfügen :
   
    ```yaml
    waste_collection_schedule: !include waste-collection-schedules.yaml
@@ -143,7 +143,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
    template: !include_dir_merge_list templates/
    ```
   
-   ![duplikate Key in der configuration.yaml]([wcs]---configuration.yaml.png)
+   ![duplikate Key in der configuration.yaml]([wcs]---configuration_yaml_50.png)</br>
    *Abbildung: duplikate Key in der configuration.yaml*
    </br>
   
@@ -184,7 +184,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
            {{ states.sensor.fortuna_news.attributes.entries[0].title }}
    ```
   
-   ... dann würden (zwei) unterschiedliche Werte des Parameters `name` der `platform`-Einträge `feedparser` zugeordnet - hier sind dies: `CHIEFS News` und `FORTUNA News`. Für jeden dieser Einträge wird jeweils im Verzeichnis `/config/sensoren/` eine separate `.yaml`-Datei angelegt werden:  
+   ... dann würden (zwei) unterschiedliche Werte des Parameters `name` der `platform`-Einträge `feedparser` zugeordnet - hier sind dies: `CHIEFS News` und `FORTUNA News`. Für jeden dieser Einträge wird jeweils im Verzeichnis `/config/sensoren/` eine separate `.yaml`-Datei angelegt :  
    `feedparser-sensor--chiefs.yaml` und  
    `feedparser-sensor--fortuna.yaml`.
    </br>
@@ -252,7 +252,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
    **Achtung:**
    Studio Code Server zeigt hierbei (`sensor: !include_dir_merge_list sensoren/`) den Fehler ***patternWarning*** an - warum auch immer. Der Code ist richtig und funktioniert, keine Sorge...
    </br>
-9. Den folgenden Codeblock an den Anfang - unterhalb der Domäne `logger:` - der `configuration.yaml` platzieren und anschließend speichern :
+10. Den folgenden Codeblock an den Anfang - unterhalb der Domäne `logger:` - der `configuration.yaml` platzieren und anschließend speichern :
   
    ```yaml
    homeassistant:
@@ -293,7 +293,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
    waste_collection_schedule: !include waste-collection-schedules.yaml
    ```
 
-10. HA → Werkzeuge → Konfiguration prüfen → OK ? → neu starten
+11. HA → Werkzeuge → Konfiguration prüfen → OK ? → neu starten
 
 ## Konfiguration
 
@@ -301,7 +301,8 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
 
 Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglich der jeweilge Inhalt kopiert, und anschließend die entsprechenden Werte der Parameter `name` und `types` angepasst werden. Deswegen werden hier nur zwei Sensoren als Beispiel herangezogen: der Haupt-Sensor (nächste EBS-Abfuhr) und die Abfallart-Sensoren (Papiertonne, etc).
 
-**Hinweis**:Die Namen der `.yaml`-Dateien dürfen sowohl die Umlaute `ä`, `ö` und `ü`, als auch `Leerzeichen` enthalten !Ich empfehle hingegen: `a`, `o`, `u` und als Trennung ein oder mehrere `Minus`-Zeichen (`-`, `--` , `---`).
+**Hinweis**:</br>
+Die Namen der `.yaml`-Dateien dürfen sowohl die Umlaute `ä`, `ö` und `ü`, als auch `Leerzeichen` enthalten !Ich empfehle hingegen: `a`, `o`, `u` und als Trennung ein oder mehrere `Minus`-Zeichen (`-`, `--` , `---`).
 
 1. Studio Code Server öffnen → im Verzeichnis `/config/sensoren` die Datei `wcs-sensor--nachste-ebs-abfuhr.yaml` (des Hauptsensors) anlegen, und die nachfolgenden Codezeilen in die leere Datei eintragen → diese Änderungen anschließend speichern :
   
@@ -316,10 +317,10 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
        {% endif %}
    ```
 
-2. Die `.ics`-Kalenderdatei, welche bekanntermaßen vom Entsorgungsbetrieb als Download-Link angeboten wird, nun auch auf den lokalen PC hochladen. Diese Datei wird hier nur für den nachfolgenden Schritt benötigt, und kann danach sofort wieder gelöscht werden.
-   Ist die `.ics`-Datei nun auf den PC hochgeladen worden, dann diese mittels eines gewöhnlichen Texteditors (beispielsweise *Notepad*) öffnen, um danach deren Inhalt einsehen zu können. Die Werte, die hier unter dem Parameter-Namen `SUMMARY` gelistet werden, sind diejenigen, welche den Sensoren-Namen bilden - **nicht** den Namen der `.yaml`-Sensor-Datei ! - und zwar **identisch**, Zeichen für (Leer-)Zeichen, gegebenenfalls auch mit Umlauten !
-3. Den Cursor nun an den Anfang der ersten Zeile setzen → `STRG + F` öffnet die Suchfunktion innerhalb der Datei → `summary` in die Suchmaske eintragen, um das erste Vorkommen anzuzeigen. Den **Wert** dieses Parameters notieren → nun nach dem nächsten Vorkommen suchen → dessen **Wert** notieren..., solange, bis alle Werte notiert sind. Hierbei gilt zu beachten, dass keine Duplikate notiert werden.
-   Letztendlich sind dies hier :
+2. Die `.ics`-Kalenderdatei, welche bekanntermaßen vom Entsorgungsbetrieb (oder der Stadtverwaltung) als Download(-Link) angeboten wird, nun auch auf den lokalen PC hochladen. Diese Datei wird hier nur für den nachfolgenden Schritt benötigt, und kann danach sofort wieder gelöscht werden.</br>
+Ist die `.ics`-Datei nun auf den PC hochgeladen worden, dann diese mittels eines gewöhnlichen Texteditors (beispielsweise *Notepad*) öffnen, um danach deren Inhalt einsehen zu können. Die Werte, die hier unter dem Parameter-Namen `SUMMARY` gelistet werden, sind diejenigen, welche den Sensoren-Namen bilden - **nicht** den Namen der `.yaml`-Sensor-Datei ! - und zwar **identisch**, Zeichen für (Leer-)Zeichen, gegebenenfalls auch mit Umlauten !
+3. Den Cursor nun an den Anfang der ersten Zeile setzen → `STRG + F` öffnet die Suchfunktion innerhalb der Datei → `summary` in die Suchmaske eintragen, um das erste Vorkommen anzuzeigen. Den **Wert** dieses Parameters notieren → nun nach dem nächsten Vorkommen suchen → dessen **Wert** notieren..., solange, bis alle Werte notiert sind. Hierbei gilt zu beachten, dass keine Duplikate notiert werden.</br>
+Letztendlich sind dies bei mir :
   
    | Mülltyp      | Aliasname      |Sensor-Dateiname                   |
    |:-------------|:---------------|:----------------------------------|
@@ -338,7 +339,7 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
   
    Die Namen der `.yaml`-Dateien dürfen sowohl die Umlaute `ä`, `ö` und `ü`, als auch `Leerzeichen` enthalten !
   
-   Wer dies nicht mag, sollte auch auf den Unterstrich (`_`) als Trennzeichen verzichten, und stattdessen das Minuszeichen (`-`) als Trennzeichen verwenden.
+   Wer dies nicht mag, sollte auch auf den Unterstrich (`_`) als Trennzeichen verzichten, und stattdessen das Minuszeichen (`-`) als Trennzeichen verwenden.</br>
    Kleinbuchstaben verwenden!
   
    Die Datei `wcs sensor gelber sack.yaml` sollte demnach nun wie folgt benannt werden :
@@ -360,8 +361,8 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
    ```
   
    Bevor die Sensor-Dateien angelegt und mit Code gefüllt werden, muss zunächst die Datei `waste-collection-schedules.yaml` angepasst werden :
-4. Zuerst wird der Parameter `source:` um das Attribut `customize:` - eine Liste - erweitert, welche mittels nachfolgender Attribute konfiguriert werden kann:
-   `type:`, `alias:`, `show:`, `icon:`, `picture:`, `use_dedicated_calendar:` und `dedicated_calendar_title:`.
+4. Zuerst wird der Parameter `source:` um das Attribut `customize:` - eine Liste - erweitert, welche mittels nachfolgender Attribute konfiguriert werden kann:</br>
+`type:`, `alias:`, `show:`, `icon:`, `picture:`, `use_dedicated_calendar:` und `dedicated_calendar_title:`.
   
    Dazu nun zuerst unterhalb - ***unterhalb***, **nicht** ***Attribut von*** (!) - des Attributs `arg:` das Attribut `customize:` einfügen, und danach dessen Parameter und deren Werte. Die `waste-collection-schedules.yaml` sollte nun nach dem ersten Abfallart- beziehungsweise Mülltyp-Eintrag nachfolgenden Inhalt aufweisen :
   
@@ -418,7 +419,8 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
    | "2020-03-20"      | "{{value.date.strftime('%Y-%m-%d')}}"     |
    | "Fri, 2020-03-20" | "{{value.date.strftime('%a, %Y-%m-%d')}}" |
   
-5. Falls die `.yaml`-Sensor-Dateien (`wcs-sensor--braune-tonne.yaml`, etc.) der jeweiligen Abfall-Arten noch nicht im Ordner `/config/sensoren` erstellt worden sind, dann ist es nun an der Zeit, dies nachzuholen. Zuerst jedoch nur eine der soeben erstellten Dateien mit Inhalt füllen, und zwar diejenige, welche in der Datei `waste-collection-schedules.yaml` innerhalb des neu angelegten Attributs `customize:` soeben aufgelistet beziehungsweise eingetragen worden ist. Der nachfolgende Code ist beispielhaft für eine Abfallart-Sensordatei - hier ist es die Datei `wcs-sensor--braune-tonne.yaml` - und kann als Muster für alle weiteren Abfallart- Sensordateien verwendet werden, wobei dann jeweils nur einige Parameter-Werte angepasst werden müssen :
+5. Falls die `.yaml`-Sensor-Dateien (`wcs-sensor--braune-tonne.yaml`, etc.) der jeweiligen Abfall-Arten noch nicht im Ordner `/config/sensoren` erstellt worden sind, dann ist es nun an der Zeit, dies nachzuholen. Zuerst jedoch nur eine der soeben erstellten Dateien mit Inhalt füllen, und zwar diejenige, welche in der Datei `waste-collection-schedules.yaml` innerhalb des neu angelegten Attributs `customize:` soeben aufgelistet beziehungsweise eingetragen worden ist.</br>
+Der nachfolgende Code ist beispielhaft für eine Abfallart-Sensordatei - hier ist es die Datei `wcs-sensor--braune-tonne.yaml` - und kann als Muster für alle weiteren Abfallart-Sensordateien verwendet werden, wobei dann jeweils nur einige Parameter-Werte angepasst werden müssen :
   
    ```yaml
    - platform: waste_collection_schedule
@@ -450,10 +452,10 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
    - `event_index`:</br>**Konstante**: `EVENT_INDEX`</br>**Standard**: 0</br>**Beschreibung**: um einem Sensor einen bestimmten Abholdatums-Index zuzuordnen. Das nächste Abholdatum hat den `event_index`-Wert 0. Nützlich, wenn man dedizierte Sensoren für die nächste Abholung, zweite Abholung, dritte Abholung, usw. haben möchte.
    - `types`:</br>**Konstante**: `TYPES`</br>**Beschreibung**: Filtern nach Abfallarten. Der Sensor zeigt nur Sammlungen an, die dieser Abfallart entsprechen. Man muss den Aliasnamen einsetzen, wenn man für den betreffenden Sensor unter dem Attribut `customize` (`waste-collection-schedule.yaml`) den Parameter `Alias` verwendet hat.
 6. HA → Werkzeuge → Konfiguration prüfen → OK ? → neu starten
-7. Zum Überprüfen kann außer den bereits erwähnten Möglichkeiten nun auch das Standard-Dashboard *Übersicht* verwendet werden. Dort sollte der soeben angelegte Sensor `braune Tonne` unter dem Bereich `Sensor` aufgelistet sein, samt seines Wertes. Wird jetzt in diesem Dashboard auf diesen Abfallart-Sensor geklickt, dann erscheint das entsprechende HA-Popup mit weiteren Informationen über den betreffenden Sensor; unter anderem kann man dort die `Entitäts-ID` des betreffenden Sensors einsehen, kopieren oder aber auch ändern...
+7. Zum Überprüfen kann außer den bereits erwähnten Möglichkeiten nun auch das Standard-Dashboard *Übersicht* verwendet werden. Dort sollte der soeben angelegte Sensor `braune Tonne` unter dem Bereich `Sensor` aufgelistet sein, samt seines Wertes. Wird jetzt in diesem Dashboard auf diesen Abfallart-Sensor geklickt, dann erscheint das entsprechende HA-PopUp mit weiteren Informationen über den betreffenden Sensor; unter anderem kann man dort die `Entitäts-ID` des betreffenden Sensors einsehen, kopieren oder aber auch ändern...
 8. Die restlichen Sensor-`.yaml`-Dateien im Ordner `/config/sensoren` mit dem entsprechenden Code füllen.
 9. Zur zwischenzeitlichen Überprüfung:
-   HA → Werkzeuge → Konfiguration prüfen → OK ?→ neu starten → HA → Übersicht → unter dem Bereich Sensor sollten nun alle neu angelegten Sensoren zu finden sein. Herzlichen Glückwunsch !
+   HA → Werkzeuge → Konfiguration prüfen → OK ? → neu starten → HA → Übersicht → unter dem Bereich Sensor sollten nun alle neu angelegten Sensoren zu finden sein. Herzlichen Glückwunsch !
 10. Man kann auch mehrere Abfallart-Sensoren zusammenfassen. Beispielsweise könnte man die Abfallarten `Grünabfall 1`, `Grünabfall 2`, `Grünabfall 3`, `Grünabfall 4` und `Tannenbaum` zu einem einzigen Sensor zusammenfassen. Dazu im Ordner `/config/sensoren` eine neue Datei namens `wcs-sensor--grunabfall.yaml` anlegen, und mit nachfolgendem Code-Block füllen :
   
     ```yaml
@@ -476,7 +478,7 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
        - Tannenbaum
     ```
 
-11. Nun wird ein weiterer Sensor angelegt, welcher sowohl die Abfallart, als auch die Anzahl der Tage anzeigt, bis die nächste Müll-Abfuhr erfolgt. Man kann auch 'nur' die Abfallart und das entsprechende Datum des nächsten Abfuhrtermins anzeigen lassen. Dazu jetzt zunächst im Verzeichnis `/config/sensoren` eine neue Datei namens `wcs-sensor--nachste-ebs-abfuhr.yaml` anlegen, und nachfolgenden Code     eintragen :
+11. Nun wird ein weiterer Sensor angelegt, welcher sowohl die Abfallart, als auch die Anzahl der Tage anzeigt, bis die nächste Müll-Abfuhr erfolgt. Man kann auch 'nur' die Abfallart und das entsprechende Datum des nächsten Abfuhrtermins anzeigen lassen. Dazu jetzt zunächst im Verzeichnis `/config/sensoren` eine neue Datei namens `wcs-sensor--nachste-ebs-abfuhr.yaml` anlegen, und nachfolgenden Code eintragen :
   
     ```yaml
     - platform: waste_collection_schedule
@@ -493,8 +495,9 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
 
 ### Templates
 
-Einige Template-Schnipsel wurden bereits jeweils bei den Sensor-`.yaml`-Dateien verwendet. Diese dienten dazu, die Anzeige des jeweiligen Sensors oder Sensorgruppe im Dashboard zu steuern. Dasjenige Template, welches letztendlich die Textausgabe des Popups (beispielsweise: *Heute müssen folgende Abfälle bereitgestellt werden: ...*) steuert, besteht weitgehend aus `Jinja2`-Code, und kann - mit wenigen Einschränkungen - nun nach persönlichen Vorlieben erstellt werden.Wer detaillierte Informationen (mit Code-Beispielen) über das Programmieren mit der `Jinja2`-Engine bekommen möchte, wird vor allem bei [Template Designer Documentation](https://jinja.palletsprojects.com/en/latest/templates/) fündig werden.
-Um ein Template zur Steuerung der Textausgabe zu erstellen - Ziel ist es, dass bereits am **Vortag** des Abfuhr-Termins eine Nachricht erscheint, mit der Information, welche Abfallart zur Abfuhr bereitgestellt werden muss.
+Einige Template-Schnipsel wurden bereits jeweils bei den Sensor-`.yaml`-Dateien verwendet. Diese dienten dazu, die Anzeige des jeweiligen Sensors oder Sensorgruppe im Dashboard zu steuern. Dasjenige Template, welches letztendlich die Textausgabe des Popups (beispielsweise: *Heute müssen folgende Abfälle bereitgestellt werden: ...*) steuert, besteht weitgehend aus `Jinja2`-Code, und kann - mit wenigen Einschränkungen - nun nach persönlichen Vorlieben erstellt werden.</br>
+Wer detaillierte Informationen (mit Code-Beispielen) über das Programmieren mit der `Jinja2`-Engine bekommen möchte, wird vor allem bei [Template Designer Documentation](https://jinja.palletsprojects.com/en/latest/templates/) fündig werden.
+Um ein Template zur Steuerung der Textausgabe zu erstellen - Ziel ist es, dass bereits am **Vortag** des Abfuhr-Termins eine Nachricht erscheint, mit der Information, welche Abfallart zur Abfuhr bereitgestellt werden muss.</br>
 Um dies zu erreichen, ist nun Folgendes zu tun :
 
 1. HA → Studio Code Server → die Datei `wcs-template--erinnerung-ebs-abfuhr.yaml` im Verzeichnis `/config/sensoren` anlegen, und vorab den nachfolgenden Code-Block einfügen :
@@ -509,8 +512,8 @@ Um dies zu erreichen, ist nun Folgendes zu tun :
 
 2. HA → Werkzeuge → in der Menüleiste den Eintrag `Template` auswählen → in den dortigen Editor nun den individuellen Code eingeben. Nachfolgend jetzt ein Beispiel-Code, anhand dessen man üben kann, um letztendlich den eigenen Code anlegen zu können.
   
-   **Tipp:**
-   die exakte `Entitäten-ID` des jeweiligen Sensors kann wie folgt ermittelt werden:
+   **Tipp:**</br>
+   die exakte `Entitäten-ID` des jeweiligen Sensors kann wie folgt ermittelt werden:</br>
    Im Standard-Dashboard *Überblick* auf den betreffenden Sensor klicken, woraufhin das Popup des betreffenden Sensors erscheint. In diesem auf das Zahnrad-Symbol klicken, woraufhin sich der Konfigurations-Dialog des betreffenden Sensors öffnet. Dort kann die `Entitäts-ID` des Sensors festgelegt und auch kopiert werden (durch Klick auf das Dokumenten-Symbol am Rand rechts außen der Sektion *Entitäts-ID*).
   
     ```yaml
@@ -535,10 +538,10 @@ Um dies zu erreichen, ist nun Folgendes zu tun :
    Aus diesen beiden Zuweisungen können jetzt die unterschiedlichsten Textausgaben erzeugt werden :
 
    Bei der ersten Zuweisung wird der Variablen `StatusSensoren` ein sogenanntes *Dictionary* zugewiesen. Es besteht aus `"Schlüssel":Wert`-Paaren, welche mittels Kommata (`,`) voneinander getrennt aufgelistet werden, wobei das letzte `"Schlüssel":Wert`-Paar ebenfalls ein Kommata am Ende als Trennung beinhalten darf. Die gesamten `"Schlüssel":Wert`-Paare sind umfasst von jeweils einer geschweiften Klammer, die den Anfang `{` beziehungsweise das Ende `}` eines *Dictionaries* repräsentieren. Man kann sowohl auf den Schlüssel, als auch auf den Wert des Schlüssels eines `"Schlüssel":Wert`-Paares des *Dictionaries* zugreifen.</br>  
-   Bei der zweiten Zuweisung wird ein sogenannter *Namensraum* gebildet. Ein *Namensraum* ist eine Sammlung aktuell definierter symbolischer Namen zusammen mit Informationen über dasjenige Objekt, auf welches jeder (symbolische) Name verweist. Man kann sich einen *Namensraum* auch als einen Typ *Dictionary* vorstellen, in dem die "Schlüssel" die (symbolischen) Objektnamen und die Werte die Objekte selbst sind. Jedes `"Schlüssel":Wert`-Paar ordnet demnach seinem entsprechenden Objekt einen Namen zu.
-   Im Beispiel-Code wird der Variablen `SensorDeadLine` der *Namensraum* `key` als leere Liste (`[]`) zugewiesen, auf diese nun mittels `SensorDeadLine.key` zugegriffen werden kann. Es ist meines Wissens nach momentan die einzige Möglichkeit, um in Home Assistant (HA) dynamische Listen in Templates zu erzeugen.
-   Dieser *Namensraum* ist lokal und somit auch nur innerhalb dieses Templates gültig. Er bleibt solange bestehen, bis das Template beendet wird.</br>
-   In den nachfolgenden Beispielen sind nun einige mögliche Textausgabe-Muster aufgeführt. Die Textausgabe wird somit nur durch die individuelle Einfallslosigkeit begrenzt...
+   Bei der zweiten Zuweisung wird ein sogenannter *Namensraum* gebildet. Ein *Namensraum* ist eine Sammlung aktuell definierter symbolischer Namen zusammen mit Informationen über dasjenige Objekt, auf welches jeder (symbolische) Name verweist. Man kann sich einen *Namensraum* auch als einen Typ *Dictionary* vorstellen, in dem die "Schlüssel" die (symbolischen) Objektnamen und die Werte die Objekte selbst sind. Jedes `"Schlüssel":Wert`-Paar ordnet demnach seinem entsprechenden Objekt einen Namen zu.</br>
+Im Beispiel-Code wird der Variablen `SensorDeadLine` der *Namensraum* `key` als leere Liste (`[]`) zugewiesen, auf diese nun mittels `SensorDeadLine.key` zugegriffen werden kann. Es ist meines Wissens nach momentan die einzige Möglichkeit, um in Home Assistant (HA) dynamische Listen in Templates zu erzeugen.</br>
+Dieser *Namensraum* ist lokal und somit auch nur innerhalb dieses Templates gültig. Er bleibt solange bestehen, bis das Template beendet wird.</br>
+In den nachfolgenden Beispielen sind nun einige mögliche Textausgabe-Muster aufgeführt. Die Textausgabe wird somit nur durch die individuelle Einfallslosigkeit begrenzt...
   
    Durch das Wörterbuch `StatusSensoren` iterieren :
   
@@ -638,7 +641,7 @@ Um dies zu erreichen, ist nun Folgendes zu tun :
    braune Tonne, blaue Tonne, schwarze Tonne bitte heute bereitstellen !
    ```
   
-   Das ist bereits fast die fertige Textausgabe, welche man ohne schlechtes Gewissen verwenden kann. Es geht aber noch besser :
+   Das ist bereits fast die fertige Textausgabe, welche man ohne schlechtes Gewissen verwenden kann. Es geht aber noch besser :</br>
    der Einsatz der Funktion `loop()` beispielsweise leistet für diese Formatierung sehr gute Unterstützung :
   
    ```yaml
@@ -666,7 +669,7 @@ Um dies zu erreichen, ist nun Folgendes zu tun :
    braune Tonne, blaue Tonne und schwarze Tonne bitte heute bereitstellen !
    ```
 
-3. Damit sollte nun die Basis gelegt sein, um die Textausgaben der Sensorwerte in einer beliebigen Karte einzubinden. Bei dieser großen Anzahl an Kartentypen ist für reichlich Vielfalt gesorgt, um einen Kartentyp zu finden, welcher letztendlich den persönlichen Ansprüchen und Bedürfnissen gerecht werden wird. Zuvor jedoch muss zuerst ein sogenanntes Text-Template als Sensor erstellt, und somit bereitgestellt werden, welches beispielsweise in einem PopUp zum Einsatz kommen kann. Um dieses Text-Template nun als Sensor zu erstellen, ist lediglich der nachfolgende Code-Block an das Ende der Datei     `wcs-template--erinnerung-ebs-abfuhr.yaml` einzufügen :
+3. Damit sollte nun die Basis gelegt sein, um die Textausgaben der Sensorwerte in einer beliebigen Karte einzubinden. Bei dieser großen Anzahl an Kartentypen ist für reichlich Vielfalt gesorgt, um einen Kartentyp zu finden, welcher letztendlich den persönlichen Ansprüchen und Bedürfnissen gerecht werden wird. Zuvor jedoch muss zuerst ein sogenanntes Text-Template als Sensor erstellt, und somit bereitgestellt werden, welches beispielsweise in einem PopUp zum Einsatz kommen kann. Um dieses Text-Template nun als Sensor zu erstellen, ist lediglich der nachfolgende Code-Block an das Ende der Datei `wcs-template--erinnerung-ebs-abfuhr.yaml` einzufügen :
   
    ```yaml
    - name: Text-Erinnerung EBS-Abfuhr
