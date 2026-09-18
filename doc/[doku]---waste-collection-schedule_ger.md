@@ -101,9 +101,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml**
    *Abbildung: Liste der Entitäten, gefiltert nach der Integration Waste Collection Schedule*
    </br>
   
-   **Und** / **oder** :
-  
-   HA → Werkzeuge → Menüeintrag *Zustände* → Entitäten nach dem Namen des Kalenders (hier: ebs) filtern  
+   **Und** / **oder** :</br>HA → Werkzeuge → Menüeintrag *Zustände* → Entitäten nach dem Namen des Kalenders (hier: ebs) filtern  
    ![Liste der Zustände, gefiltert nach dem
    Kalendernamen]([wcs]---ebs-kalender--zustand.png)
    *Abbildung: Liste der Zustände, gefiltert nach dem Kalendernamen (hier: ebs)*
@@ -389,8 +387,8 @@ Letztendlich sind dies bei mir :
   
    Sogenannte `Jinja2`-Templates kommen nun zum Einsatz. Es können 2 Template-Typen verwendet werden:
   
-   - zum einen ein Template zum verarbeiten der Kalender-Werte - auch der Datumswerte - (→Werte- oder Value-Template),
-   - zum anderen ein Template zum Verarbeiten der Datumswerte (→Datum- oder Date-Template).
+   - zum einen ein Template zum verarbeiten der Kalender-Werte - auch der Datumswerte - (→ Werte- oder Value-Template),
+   - zum anderen ein Template zum Verarbeiten der Datumswerte (→ Datum- oder Date-Template).
   
    Wie diese angefertigt und eingesetzt werden, ist nachfolgend beschrieben :
   
