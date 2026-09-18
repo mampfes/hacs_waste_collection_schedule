@@ -73,6 +73,7 @@ class Source(BaseSource):
         url=_SERVLET,
         initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
         iterate_field="Zeitraum",
+        iterate_accept=lambda response: "BEGIN:VCALENDAR" in response.text,
         steps=[
             {
                 "submit_action": "CITYCHANGED",
