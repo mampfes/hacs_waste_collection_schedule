@@ -138,6 +138,8 @@ def create_calendar_entries(
             shell.get_collection_type_name(type) for type in dedicated_types
         }
 
+        base_id = coordinator.config_entry.entry_id if coordinator else shell.unique_id
+
         for type in dedicated_types:
             entities.append(
                 WasteCollectionCalendar(
@@ -146,7 +148,7 @@ def create_calendar_entries(
                     aggregator=aggregator,
                     name=shell.get_calendar_title_for_type(type),
                     include_types={shell.get_collection_type_name(type)},
-                    unique_id=calc_unique_calendar_id(shell, type),
+                    unique_id=f"{base_id}_{type}_calendar",
                 )
             )
 
@@ -158,7 +160,7 @@ def create_calendar_entries(
                     aggregator=aggregator,
                     name=shell.calendar_title,
                     exclude_types=dedicated_calendar_types,
-                    unique_id=calc_unique_calendar_id(shell),
+                    unique_id=f"{base_id}_calendar",
                 )
             )
 

@@ -238,8 +238,8 @@ class ScheduleSensor(SensorEntity):
         # entity attributes
         self._attr_name = name
         if self._coordinator:
-            shell = self._coordinator.shell
-            self._attr_unique_id = f"{shell.unique_id}_ui_sensor_{name}"
+            entry_id = self._coordinator.config_entry.entry_id
+            self._attr_unique_id = f"{entry_id}_ui_sensor_{name}"
             self._attr_device_info = self._coordinator.device_info
         else:
             self._attr_unique_id = name

@@ -992,10 +992,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 CONF_SOURCE_CALENDAR_TITLE
             )
 
-        await self.async_set_unique_id(source + json.dumps(args_input))
         if not is_reconfigure:
             # During reconfigure the existing entry already owns this unique_id;
             # skipping the check prevents HA from aborting and creating a duplicate.
+            await self.async_set_unique_id(source + json.dumps(args_input))
             self._abort_if_unique_id_configured()
 
         # Collection labels are localised to the HA UI language at fetch time;
@@ -1351,7 +1351,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 return self.async_update_reload_and_abort(
                     config_entry,
                     title=title,
-                    unique_id=config_entry.unique_id,
                     data=data,
                     options=merged_options,
                     reason="reconfigure_successful",
