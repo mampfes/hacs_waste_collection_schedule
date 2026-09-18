@@ -4,7 +4,7 @@
 
 Eine HACS-Komponente für Home Assistant, welche die Müllentsorgungspläne des zuständigen Dienstleisters - falls vorhanden - abruft.
 Die Termine für die Abfall-Entsorgung werden entweder aus den Webseiten der entsprechenden Dienstleister gewonnen (und auch täglich aktualisiert), aus den vom Entsorger zur Verfügung gestellten `iCal`-Dateien (`.ics`) abgeleitet, oder aus den vom Nutzer festgelegten Daten und aus den sich regelmäßig wiederholenden Datumsmustern generiert.
-Der integrierte lokale Kalender von Home Assistant wird automatisch mit Zeitplänen gefüllt, und es besteht ein hohes Maß an Flexibilität bei der Formatierung und Anzeige von Informationen in den sogenannten Entitätskarten oder Pop-ups. Das Rahmenwerk kann jederzeit problemlos um zusätzliche Anbieter von Entsorgern oder anderen Diensten erweitert werden, vorausgesetzt, dass diese auch die dafür erforderlichen Daten zur Verfügung stellen.
+Der integrierte lokale Kalender von Home Assistant wird automatisch mit Zeitplänen gefüllt, und es besteht ein hohes Maß an Flexibilität bei der Formatierung und Anzeige von Informationen in den sogenannten Entitätskarten oder PopUps. Das Rahmenwerk kann jederzeit problemlos um zusätzliche Anbieter von Entsorgern oder anderen Diensten erweitert werden, vorausgesetzt, dass diese auch die dafür erforderlichen Daten zur Verfügung stellen.
 
 ## Ziel
 
@@ -24,9 +24,9 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
   >
   > Dieser kleine Exkurs behandelt rudimentär die Syntax und Semantik der Template-Engine. Da die Template-Engine sehr flexibel ist, kann die Konfiguration der Anwendung hinsichtlich der Trennzeichen und des Verhaltens undefinierter Werte geringfügig vom hier vorgestellten Code abweichen.
   >
-  > Ein `Jinja2`-Template ist einfach eine Textdatei. `Jinja2` kann jedes textbasierte Format (html, xml, csv, LaTeX usw.) generieren. Ein `Jinja2`-Template benötigt keine bestimmte Erweiterung wie beispielsweise .html, .xml oder jede andere Erweiterung.
+  > Ein `Jinja2`-Template ist einfach eine Textdatei. `Jinja2` kann jedes textbasierte Format (`html`, `xml`, `csv`, `LaTeX` und so weiter...) generieren. Ein `Jinja2`-Template benötigt keine bestimmte Erweiterung wie beispielsweise `.html`, `.xml` oder jede andere Erweiterung.
   >
-  > Ein Template enthält Variablen und/oder Ausdrücke, die beim Rendern des Templates durch Werte ersetzt werden, und enthält ebenso Tags, welche die Logik des Templates steuern. Die Syntax hierbei ist stark von Django und Python inspiriert.
+  > Ein Template enthält Variablen und/oder Ausdrücke, die beim Rendern des Templates durch Werte ersetzt werden, und enthält ebenso Tags, welche die Logik des Templates steuern. Die Syntax hierbei ist stark von `Django` und `Python` inspiriert.
   >
   > Es gibt verschiedene Arten von Trennzeichen. Die standardmäßigen `Jinja2`-Trennzeichen sind wie folgt konfiguriert:
   >
@@ -51,7 +51,7 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
   > die äußeren doppelten geschweiften Klammern `{{` sind nicht Teil der Variablen, sondern der print-Anweisung. Wenn man auf Variablen innerhalb von Tags zugreifen möchte, dann darf man diese nicht in geschweifte Klammern setzen.
   > Ein Minus-Zeichen (`-`) trimmt das entsprechende Objekt davor (`{{-`, `{%-`) oder danach (`-}}`, `-%}`).
   >
-  > Wenn eine Variable oder ein Attribut nicht existieren, dann erhält man als Resultat davon einen *<u>undefinierten</u>* Wert zurück. Was man mit dieser Art von Wert tun kann, hängt gänzlich von der Konfiguration der jeweiligen Anwendung ab :
+  > Wenn eine Variable oder ein Attribut nicht existieren, dann erhält man als Resultat davon einen ***undefinierten*** Wert zurück. Was man mit dieser Art von Wert tun kann, hängt gänzlich von der Konfiguration der jeweiligen Anwendung ab :
   > das Standard-Verhalten besteht darin, dass nach der Auswertung beim Drucken oder Iterieren einer leeren Zeichenfolge der Vorgang sofort abgebrochen und eine Fehlermeldung generiert wird.
 
 ### Integrationen
@@ -68,7 +68,7 @@ Anzeige des jeweils nächsten Termins der entsprechenden Müllentsorgung (*Bio*-
 
 ## Installation
 
-Zur Einrichtung des Abfallkalenders gibt es zwei Arten - **Gui** und **Yaml** -, und hierbei wiederum jeweils mehrere Möglichkeiten. In dieser Anleitung wird die **Yaml-Variante** mit einer `.ics`-Datei beschrieben, welche als Download(link) vom entsprechenden Entsorgungsdienst zur Verfügung gestellt wird, und dadurch automatisch täglich aktualisiert werden kann.Um *Waste Collection Schedule* zu installieren und anschließend zu konfigurieren, ist Folgendes zu tun :
+Zur Einrichtung des Abfallkalenders gibt es zwei Arten - ***Gui*** und ***Yaml*** -, und hierbei wiederum jeweils mehrere Möglichkeiten. In dieser Anleitung wird die **Yaml-Variante** mit einer `.ics`-Datei beschrieben, welche als Download(link) vom entsprechenden Entsorgungsdienst zur Verfügung gestellt wird, und dadurch automatisch täglich aktualisiert werden kann.Um *Waste Collection Schedule* zu installieren und anschließend zu konfigurieren, ist Folgendes zu tun :
 
 1. HA → HACS → in die Suchmaske `was` eintragen, und den Eintrag `Waste Collection Schedule` auswählen → herunterladen → Version auswählen, hier: **3.0.0** → Installationsverzeichnis: `/config/custom_components/waste_collection_schedule` → herunterladen
 2. HA → Werkzeuge → gegebenenfalls die Registerkarte `YAML` öffnen → Konfiguration prüfen → OK ? → neu starten
@@ -101,7 +101,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - **Gui** und **Yaml** -,
    *Abbildung: Liste der Entitäten, gefiltert nach der Integration Waste Collection Schedule*
    </br>
   
-   **Und/oder** :
+   **Und** / **oder** :
   
    HA → Werkzeuge → Menüeintrag *Zustände* → Entitäten nach dem Namen des Kalenders (hier: ebs) filtern  
    ![Liste der Zustände, gefiltert nach dem
@@ -109,7 +109,7 @@ Zur Einrichtung des Abfallkalenders gibt es zwei Arten - **Gui** und **Yaml** -,
    *Abbildung: Liste der Zustände, gefiltert nach dem Kalendernamen (hier: ebs)*
    </br>
   
-   **Und / oder** :  
+   **Und** / **oder** :  
    HA → Kalender  
    ![Abfuhr-Termine der verschiedenen Abfall-Arten im Kalender des entsprechenden Dienstleisters]([wcs]---kalender.png)
    *Abbildung: Abfuhr-Termine der verschiedenen Abfall-Arten im Kalender des entsprechenden Dienstleisters*
@@ -363,7 +363,7 @@ Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglic
 4. Zuerst wird der Parameter `source:` um das Attribut `customize:` - eine Liste - erweitert, welche mittels nachfolgender Attribute konfiguriert werden kann:
    `type:`, `alias:`, `show:`, `icon:`, `picture:`, `use_dedicated_calendar:` und `dedicated_calendar_title:`.
   
-   Dazu nun zuerst unterhalb - <u>unterhalb</u>, **nicht** <u>Attribut von</u> (!) - des Attributs `arg:` das Attribut `customize:` einfügen, und danach dessen Parameter und deren Werte. Die `waste-collection-schedules.yaml` sollte nun nach dem ersten Abfallart- beziehungsweise Mülltyp-Eintrag nachfolgenden Inhalt aufweisen :
+   Dazu nun zuerst unterhalb - ***unterhalb***, **nicht** ***Attribut von*** (!) - des Attributs `arg:` das Attribut `customize:` einfügen, und danach dessen Parameter und deren Werte. Die `waste-collection-schedules.yaml` sollte nun nach dem ersten Abfallart- beziehungsweise Mülltyp-Eintrag nachfolgenden Inhalt aufweisen :
   
    ```yaml
    sources: # enthält Infos über beziehungsweise für den Kalender
