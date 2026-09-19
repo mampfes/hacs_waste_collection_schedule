@@ -352,10 +352,11 @@ TEST_CASES = {
         "municipal": "Staatz",
         "town": "kautendorf",
     },  # schedules use www.gaul-laa.at
-    # "Mödling": {
-    #     "district": "moedling",
-    #     "municipal": "Wienerwald",
-    # },  # Not supported anymore as they only provide a PDFs now
+    "Mödling": {
+        "district": "moedling",
+        "municipal": "Wienerwald",
+        "town": "Gruberau",
+    },  # gvamoedling.at/muellabfuhrkalender/ (regression test for issue #7476)
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
@@ -394,6 +395,7 @@ ICON_MAP = {
 }
 
 POSSIBLE_COLLECTION_PATHS = (
+    "muellabfuhrkalender/",  # Mödling
     "abholtermine-preview/",  # Hollabrunn
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
