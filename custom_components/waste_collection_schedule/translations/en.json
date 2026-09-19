@@ -29729,7 +29729,9 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The full address of the property.",
+          "postcode": "The postcode for the property."
         }
       },
       "reconfigure_sunderland_gov_uk": {
@@ -29740,7 +29742,10 @@
           "address": "Address",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "The full address of the property.",
+          "postcode": "The postcode for the property."
+        }
       },
       "args_sutton_gov_uk": {
         "title": "Configure Source",
