@@ -200,6 +200,21 @@ def apply_day_offset(entry: Collection, day_offset: int) -> Collection:
     return entry
 
 
+def raw_labels_of(entries: Iterable[Collection]) -> list[str]:
+    """The provider's original labels carried on ``entries`` (#7444).
+
+    Only auto-carried raw labels (``description_is_raw_label_fallback``), never
+    a source's genuine description such as an ICS DESCRIPTION.
+    """
+    return sorted(
+        {
+            e.description.strip()
+            for e in entries
+            if e.description_is_raw_label_fallback and e.description
+        }
+    )
+
+
 class SourceShell:
     def __init__(
         self,
@@ -226,6 +241,12 @@ class SourceShell:
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
         self._show_original_label = show_original_label
+        self._raw_labels: list[str] = []
+
+    @property
+    def raw_labels(self) -> list[str]:
+        """Original provider labels seen in the last fetch (#7444)."""
+        return self._raw_labels
 
     @property
     def refreshtime(self):
@@ -283,6 +304,11 @@ class SourceShell:
                 stripped = e.type.strip()
                 if stripped != e.type:
                     e.set_type(stripped)
+
+        # Remember the raw labels before any of them are hidden below, so the
+        # config flow can offer them in the customize selection (#7444).
+        entries = list(entries)
+        self._raw_labels = raw_labels_of(entries)
 
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
