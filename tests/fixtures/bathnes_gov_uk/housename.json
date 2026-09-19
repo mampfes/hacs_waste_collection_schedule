@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-09-19",
+  "interactions": [
+    {
+      "key": "GET https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/BA1 5SX/150/true ",
+      "method": "GET",
+      "url": "https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/BA1 5SX/150/true",
+      "final_url": "https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/BA1%205SX/150/true",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache,max-age=60",
+        "transfer-encoding": "chunked",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "date": "Sat, 19 Sep 2026 20:16:52 GMT",
+        "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+      },
+      "content_b64": "W3sidXBybiI6MTAwMTIwMDQ2OTE5LjAsInVzcm4iOjQ3OTE0NjYzLjAsImVhc3RpbmciOjM3NDc0OS4wLCJub3J0aGluZyI6MTY2MTM3LjAsImZ1bGxfQWRkcmVzcyI6IlNQUklOR0ZJRUxEIENPVFRBR0UgTEFOU0RPV04gUk9BRCBMQU5TRE9XTiBCQVRIICBCQTEgNVNYIiwic3RyZWV0X05hbWUiOiJMQU5TRE9XTiBST0FEIiwicGF5bWVudF9BZGRyZXNzIjoifFNQUklOR0ZJRUxEIENPVFRBR0V8TEFOU0RPV04gUk9BRHxMQU5TRE9XTnxCQVRIfEJBVEggQU5EIE5PUlRIIEVBU1QgU09NRVJTRVR8QkExIDVTWCIsIndhcmQiOiJMYW5zZG93biIsInBvc3Rjb2RlIjoiQkExIDVTWCIsInRvd24iOiJCQVRIIiwicG9zdGNvZGVfMiI6IkJBMTVTWCIsImxvY2F0aW9uIjpudWxsfSx7InVwcm4iOjEwMDEyMTE3MjI1My4wLCJ1c3JuIjo0NzkxNDY2My4wLCJlYXN0aW5nIjozNzQ3OTkuMCwibm9ydGhpbmciOjE2NjAzOS4wLCJmdWxsX0FkZHJlc3MiOiJTVCBTVEVQSEVOJ1MgQ0hVUkNIIExBTlNET1dOIFJPQUQgTEFOU0RPV04gQkFUSCAgQkExIDVTWCIsInN0cmVldF9OYW1lIjoiTEFOU0RPV04gUk9BRCIsInBheW1lbnRfQWRkcmVzcyI6InxTVCBTVEVQSEVOJ1MgQ0hVUkNIfExBTlNET1dOIFJPQUR8TEFOU0RPV058QkFUSHxCQVRIIEFORCBOT1JUSCBFQVNUIFNPTUVSU0VUfEJBMSA1U1giLCJ3YXJkIjoiTGFuc2Rvd24iLCJwb3N0Y29kZSI6IkJBMSA1U1giLCJ0b3duIjoiQkFUSCIsInBvc3Rjb2RlXzIiOiJCQTE1U1giLCJsb2NhdGlvbiI6bnVsbH1d"
+    },
+    {
+      "key": "GET https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/100121172253 ",
+      "method": "GET",
+      "url": "https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/100121172253",
+      "final_url": "https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/100121172253",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-store",
+        "transfer-encoding": "chunked",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "date": "Sat, 19 Sep 2026 20:16:52 GMT",
+        "strict-transport-security": "max-age=15552000; includeSubDomains; preload"
+      },
+      "content_b64": "W3sibmV4dENvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0yNFQwMDowMDowMCIsIm5leHRDb2xsZWN0aW9uRGF0ZUZvcm1hdHRlZCI6IlRodXJzZGF5LCAyNCBTZXB0ZW1iZXIgMjAyNiIsInByZXZpb3VzQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTA5LTEwVDAwOjAwOjAwIiwicHJldmlvdXNDb2xsZWN0aW9uRGF0ZUZvcm1hdHRlZCI6IlRodXJzZGF5LCAxMCBTZXB0ZW1iZXIgMjAyNiIsImNvbGxlY3Rpb25EYXkiOiJUaHVyc2RheSIsImZlYXR1cmVUeXBlIjoiR2FyZGVuIiwiYXNzaXN0ZWQiOm51bGwsImNyZXciOiJPUkdfT0wxIiwid2VlayI6IkIiLCJhZGp1c3RlZE5leHRDb2xsZWN0aW9uIjoiTiIsImFkanVzdGVkUHJldmlvdXNDb2xsZWN0aW9uIjoiTiIsImZlYXR1cmVzIjpbeyJmZWF0dXJlSUQiOjg2OTYyOSwiZmVhdHVyZU5hbWUiOiIyNDAgR0FSREVOIEJJTiIsImZlYXR1cmVEaXNwbGF5TmFtZSI6IkdhcmRlbiBXYXN0ZSBCaW4gKDI0MEwpIiwiZmVhdHVyZVF1YW50aXR5IjoxLCJjaGlsZCI6Ik4ifV19LHsibmV4dENvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0yNFQwMDowMDowMCIsIm5leHRDb2xsZWN0aW9uRGF0ZUZvcm1hdHRlZCI6IlRodXJzZGF5LCAyNCBTZXB0ZW1iZXIgMjAyNiIsInByZXZpb3VzQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTA5LTE3VDAwOjAwOjAwIiwicHJldmlvdXNDb2xsZWN0aW9uRGF0ZUZvcm1hdHRlZCI6IlRodXJzZGF5LCAxNyBTZXB0ZW1iZXIgMjAyNiIsImNvbGxlY3Rpb25EYXkiOiJUaHVyc2RheSIsImZlYXR1cmVUeXBlIjoiUmVjeWNsaW5nIiwiYXNzaXN0ZWQiOm51bGwsImNyZXciOiJSZWNfTDA3Iiwid2VlayI6IldlZWtseSIsImFkanVzdGVkTmV4dENvbGxlY3Rpb24iOiJOIiwiYWRqdXN0ZWRQcmV2aW91c0NvbGxlY3Rpb24iOiJOIiwiZmVhdHVyZXMiOlt7ImZlYXR1cmVJRCI6NzAzNDY5LCJmZWF0dXJlTmFtZSI6IkJMVUUgQ0FSRCBCQUciLCJmZWF0dXJlRGlzcGxheU5hbWUiOiJCbHVlIFJlY3ljbGluZyBCYWcgZm9yIENhcmRib2FyZCIsImZlYXR1cmVRdWFudGl0eSI6MSwiY2hpbGQiOiJOIn0seyJmZWF0dXJlSUQiOjU0NDAzOSwiZmVhdHVyZU5hbWUiOiJGT09EIFdBU1RFIEJJTiIsImZlYXR1cmVEaXNwbGF5TmFtZSI6IkZvb2QgUmVjeWNsaW5nIENvbGxlY3Rpb24gQmluIiwiZmVhdHVyZVF1YW50aXR5IjoxLCJjaGlsZCI6Ik4ifSx7ImZlYXR1cmVJRCI6NjIzOTk2LCJmZWF0dXJlTmFtZSI6IkdSRUVOIEJPWCIsImZlYXR1cmVEaXNwbGF5TmFtZSI6IkdyZWVuIFJlY3ljbGluZyBCb3giLCJmZWF0dXJlUXVhbnRpdHkiOjEsImNoaWxkIjoiTiJ9XX0seyJuZXh0Q29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTAxVDAwOjAwOjAwIiwibmV4dENvbGxlY3Rpb25EYXRlRm9ybWF0dGVkIjoiVGh1cnNkYXksIDAxIE9jdG9iZXIgMjAyNiIsInByZXZpb3VzQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTA5LTE3VDAwOjAwOjAwIiwicHJldmlvdXNDb2xsZWN0aW9uRGF0ZUZvcm1hdHRlZCI6IlRodXJzZGF5LCAxNyBTZXB0ZW1iZXIgMjAyNiIsImNvbGxlY3Rpb25EYXkiOiJUaHVyc2RheSIsImZlYXR1cmVUeXBlIjoiUmVzaWR1YWwiLCJhc3Npc3RlZCI6bnVsbCwiY3JldyI6IlJlZl9STDYiLCJ3ZWVrIjoiQSIsImFkanVzdGVkTmV4dENvbGxlY3Rpb24iOiJOIiwiYWRqdXN0ZWRQcmV2aW91c0NvbGxlY3Rpb24iOiJOIiwiZmVhdHVyZXMiOlt7ImZlYXR1cmVJRCI6NDU2OTk2LCJmZWF0dXJlTmFtZSI6IjE0MCBCTEFDSyBCSU4iLCJmZWF0dXJlRGlzcGxheU5hbWUiOiJCbGFjayBSdWJiaXNoIEJpbiAoMTQwTCkiLCJmZWF0dXJlUXVhbnRpdHkiOjEsImNoaWxkIjoiTiJ9XX1d"
+    }
+  ]
+}

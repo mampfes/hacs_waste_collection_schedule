@@ -1,127 +1,126 @@
-from collections.abc import Mapping
-from datetime import datetime
-from typing import Any
+from typing import ClassVar, TypedDict, final
 
-import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    text_field,
+    uprn,
+)
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import SplitByFields
+from waste_collection_schedule.retrievers import TwoStepRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Bath & North East Somerset Council"
-DESCRIPTION = (
-    "Source for bathnes.gov.uk services for Bath & North East Somerset Council"
-)
-URL = "https://bathnes.gov.uk"
-TEST_CASES = {
-    "uprn": {"uprn": "10001138699"},
-    "houseNumber": {"postcode": "BA1 2LR", "housenameornumber": 1},
-    "houseName": {"postcode": "BA1 5SX", "housenameornumber": "St Stephen's Church"},
-}
-
-TYPES = {
-    "Residual": {"icon": "mdi:trash-can", "alias": "Rubbish"},
-    "Recycling": {"icon": "mdi:recycle", "alias": "Recycling"},
-    "Garden": {"icon": "mdi:leaf", "alias": "Garden Waste"},
-}
-
-API_BASE_URL = "https://api.bathnes.gov.uk/webapi/api/{}"
-API_COLLECTION_SUMMARY_URL = API_BASE_URL.format(
+_API_URL = "https://api.bathnes.gov.uk/webapi/api/{}"
+_LOOKUP_URL = _API_URL.format("AddressesAPI/v2/search/{postcode}/150/true")
+_SCHEDULE_URL = _API_URL.format(
     "BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{uprn}"
 )
-API_ADDRESSES_SEARCH_URL = API_BASE_URL.format(
-    "AddressesAPI/v2/search/{postcode}/150/true"
-)
-REQUEST_TIMEOUT = 10
 
 
-class Source:
-    def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        self._uprn = self._sanitise_uprn_val(uprn)
-        self._postcode = self._sanitise_search_val(postcode)
-        self._housenameornumber = self._sanitise_search_val(housenameornumber)
+class _Address(TypedDict):
+    payment_Address: str
+    uprn: int | float | str
 
-        if self._uprn is None:
-            self._check_required_args(
-                "Postcode and house name or number are required if UPRN is not provided",
-                ("postcode", self._postcode),
-                ("housenameornumber", self._housenameornumber),
-            )
 
-    def _sanitise_uprn_val(self, val: int | str | None) -> int | None:
-        if val is None:
-            return None
-        message = "UPRN must be a positive integer if provided"
-        try:
-            uprn = int(val)
-        except (ValueError, TypeError):
-            raise SourceArgumentException("uprn", message) from None
-        if uprn <= 0:
-            raise SourceArgumentException("uprn", message)
-        return uprn
+class _Entry(TypedDict):
+    featureType: str
+    previousCollectionDate: str
+    nextCollectionDate: str
 
-    def _sanitise_search_val(self, val: str | int | None) -> str | None:
-        if val is None:
-            return None
-        stripped = str(val).strip()
-        return stripped or None
 
-    def _check_required_args(self, message, *args):
-        if missing := [name for name, val in args if not val]:
-            raise SourceArgumentExceptionMultiple(missing, message)
+def _extract_uprn(lookup, source) -> int:
+    addresses: list[_Address] = JsonParser(shape=list[_Address])(lookup, source)
+    if not addresses:
+        raise SourceArgumentNotFound("postcode", source.params["postcode"])
 
-    def fetch(self) -> list[Collection]:
-        if self._uprn is None:
-            self._uprn = self._get_uprn()
+    housenameornumber = str(source.params["housenameornumber"])
+    suggestions: list[str] = []
+    for address in addresses:
+        candidate = _address_housenameornumber(address)
+        if not candidate:
+            continue
+        if candidate.casefold() == housenameornumber.casefold():
+            return int(address["uprn"])
+        suggestions.append(candidate)
 
-        entries = self._call_api(API_COLLECTION_SUMMARY_URL.format(uprn=self._uprn))
-        return [
-            Collection(
-                date=datetime.fromisoformat(isodate).date(),
-                t=props["alias"],
-                icon=props["icon"],
-            )
-            for entry in entries
-            if (props := TYPES.get(entry.get("featureType")))
-            for date_type in ["previous", "next"]
-            if (isodate := entry.get(f"{date_type}CollectionDate"))
-        ]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "housenameornumber", housenameornumber, suggestions
+    )
 
-    def _get_uprn(self) -> int:
-        addresses = self._call_api(
-            API_ADDRESSES_SEARCH_URL.format(postcode=self._postcode)
-        )
-        if not addresses:
-            raise SourceArgumentNotFound("postcode", self._postcode)
 
-        address = next(filter(self._filter_address, addresses), None)
-        if address is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "housenameornumber",
-                self._housenameornumber,
-                filter(None, [self._address_housenameornumber(a) for a in addresses]),
-            )
-        return int(address["uprn"])
+def _address_housenameornumber(address: _Address) -> str | None:
+    parts = address["payment_Address"].split("|")
+    if len(parts) < 2:
+        return None
+    return str(parts[1].strip())
 
-    def _filter_address(self, address: Mapping[str, Any]) -> bool:
-        housenameornumber = self._address_housenameornumber(address)
-        return (
-            housenameornumber is not None
-            and housenameornumber.casefold() == self._housenameornumber.casefold()
-        )
 
-    def _address_housenameornumber(self, address: Mapping[str, Any]) -> str | None:
-        parts = str(address.get("payment_Address", "")).split("|")
-        if len(parts) < 2:
-            return None
-        return parts[1].strip()
+@final
+class Source(BaseSource):
+    TITLE = "Bath & North East Somerset Council"
+    DESCRIPTION = (
+        "Source for bathnes.gov.uk services for Bath & North East Somerset Council"
+    )
+    URL = "https://bathnes.gov.uk"
+    COUNTRY = "uk"
 
-    def _call_api(self, url: str):
-        r = requests.get(url, timeout=REQUEST_TIMEOUT)
-        r.raise_for_status()
-        if r.text.strip() == "":
-            raise Exception(f"Empty response from API for url: {url}")
-        return r.json()
+    TEST_CASES: ClassVar[dict] = {
+        "uprn": {"uprn": "10001138699"},
+        "houseNumber": {"postcode": "BA1 2LR", "housenameornumber": 1},
+        "houseName": {
+            "postcode": "BA1 5SX",
+            "housenameornumber": "St Stephen's Church",
+        },
+    }
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide your UPRN, or both your postcode and house name "
+            "or number. Find your UPRN at https://www.findmyaddress.co.uk/"
+        ),
+    }
+
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [
+                postcode(),
+                text_field("housenameornumber", label="House Name or Number"),
+            ],
+        ),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = TwoStepRetriever(
+        lookup_url=lambda postcode, **_: _LOOKUP_URL.format(postcode=postcode),
+        extract=_extract_uprn,
+        schedule_url=lambda found_uprn, **_: _SCHEDULE_URL.format(uprn=int(found_uprn)),
+        direct_key=lambda source: source.params.get("uprn"),
+    )
+    parse = JsonParser(shape=list[_Entry])
+    preprocess = SplitByFields(
+        src_keys=("previousCollectionDate", "nextCollectionDate"), dst_key="date"
+    )
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="featureType",
+        type_value_map={
+            "Residual": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+        },
+    )
