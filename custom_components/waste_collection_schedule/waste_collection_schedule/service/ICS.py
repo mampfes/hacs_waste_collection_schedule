@@ -16,6 +16,23 @@ class IcsEvent(NamedTuple):
     description: str | None = None
 
 
+# Some generators append a second time component to their UTC timestamp
+# properties, e.g. "CREATED:20260101T000000ZT000000Z" (seen on the RESO /
+# abfallkalender.services feeds). Current icalendar versions refuse to parse
+# such a value and icalevents raises as soon as the property is accessed.
+_DUPLICATED_TIME_SUFFIX = re.compile(
+    r"(?mi)^((?:CREATED|LAST-MODIFIED|DTSTAMP):\d{8}T\d{6}Z)T\d{6}Z(?=\r?$)"
+)
+
+
+def _drop_duplicated_time_suffix(ics_data: str) -> str:
+    """Remove a duplicated time component from UTC timestamp properties.
+
+    Well-formed feeds are left untouched.
+    """
+    return _DUPLICATED_TIME_SUFFIX.sub(r"\1", ics_data)
+
+
 def _event_location_description(e: Any) -> tuple[str | None, str | None]:
     raw_loc = getattr(e, "location", None)
     if isinstance(raw_loc, str):
@@ -96,6 +113,8 @@ class ICS:
             r"\1;\2",
             ics_data,
         )
+
+        ics_data = _drop_duplicated_time_suffix(ics_data)
 
         # parse ics data
         events: list[Any] = icalevents.events(
@@ -179,6 +198,8 @@ class ICS:
             r"\1;\2",
             ics_data,
         )
+
+        ics_data = _drop_duplicated_time_suffix(ics_data)
 
         # parse ics data
         events: list[Any] = icalevents.events(
