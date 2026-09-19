@@ -216,3 +216,89 @@ def test_an_entry_stored_before_the_fix_still_loads() -> None:
     shell = SourceShell.create("koppl_at", {}, {"kwargs": ""})
 
     assert shell is not None
+
+
+# --- #7444: the customize selection offers the provider's original labels ----
+
+
+def _raw_label_entries():
+    import datetime
+
+    from waste_collection_schedule import Collection
+
+    d = datetime.date(2030, 1, 1)
+    carried = Collection(d, "Restmuell")
+    carried.set_description_from_raw_label("Container Restmuell")
+    genuine = Collection(d, "Papier")
+    genuine.set_description("Real ICS DESCRIPTION")
+    return [carried, genuine]
+
+
+class _FakeSource:
+    def fetch(self):
+        return _raw_label_entries()
+
+
+def _shell(show_original_label: bool) -> SourceShell:
+    return SourceShell(
+        source=_FakeSource(),
+        customize={},
+        title="t",
+        description="d",
+        url=None,
+        calendar_title=None,
+        unique_id="u",
+        day_offset=0,
+        show_original_label=show_original_label,
+    )
+
+
+def test_shell_exposes_raw_labels_but_not_genuine_descriptions() -> None:
+    for show in (True, False):
+        shell = _shell(show)
+        assert shell.raw_labels == []
+        assert shell.fetch()
+        # Recorded before the description is cleared, so it survives
+        # show_original_label=False; a genuine description is never included.
+        assert shell.raw_labels == ["Container Restmuell"]
+
+
+def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
+    from custom_components.waste_collection_schedule import const
+    from custom_components.waste_collection_schedule.config_flow import (
+        WCSCoordinator,
+    )
+
+    shell = _shell(False)
+    shell.fetch()
+
+    coordinator = object.__new__(WCSCoordinator)
+    coordinator._shell = shell  # type: ignore[attr-defined]
+    coordinator._aggregator = type(  # type: ignore[attr-defined]
+        "_Agg", (), {"types": {"Restmuell", "Papier"}}
+    )()
+
+    from types import SimpleNamespace
+
+    entry = SimpleNamespace(entry_id="e1", options={}, data={})
+    hass = SimpleNamespace(
+        config=SimpleNamespace(language="en"),
+        data={const.DOMAIN: {"e1": coordinator}},
+    )
+
+    flow = object.__new__(WasteCollectionOptionsFlow)
+    flow._entry = cast(Any, entry)
+    flow.hass = cast(Any, hass)
+
+    result = asyncio.run(flow.async_step_init())
+    schema = result["data_schema"]
+    selector = next(
+        v for k, v in schema.schema.items() if str(k.schema) == "customize_select"
+    )
+    values = {o["value"] for o in selector.config["options"]}
+    assert "Container Restmuell" in values
+    assert "Real ICS DESCRIPTION" not in values
+    assert {"Restmuell", "Papier"} <= values
+
+    # Sensor types come from the aggregator only: no raw labels.
+    assert "Container Restmuell" not in flow.get_types_of_sensors_and_customizations()

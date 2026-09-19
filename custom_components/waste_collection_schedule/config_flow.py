@@ -50,6 +50,7 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.source_shell import (
     default_ignore_duplicates,
+    raw_labels_of,
     source_supports_show_original_label,
 )
 
@@ -1032,6 +1033,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self._fetched_types = list(
                     set(self._fetched_types) | set(waste_type_names)
                 )
+            # Customize targets: also offer the provider's original labels,
+            # when the source carries them (#7444). Never used for sensors.
+            self._customize_targets = list(self._fetched_types)
+            if source_supports_show_original_label(source):
+                self._customize_targets = sorted(
+                    set(self._fetched_types) | set(raw_labels_of(resp))
+                )
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
@@ -1183,7 +1191,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             {
                 vol.Optional(CONF_TYPE): SelectSelector(
                     SelectSelectorConfig(
-                        options=self._fetched_types,
+                        options=getattr(
+                            self, "_customize_targets", self._fetched_types
+                        ),
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
                         multiple=True,
@@ -1385,6 +1395,11 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         if coordinator and isinstance(coordinator, WCSCoordinator):
             collection_types = list(coordinator._aggregator.types)
             calendar_title = coordinator._shell.calendar_title
+            # Customize selection only (never sensors): also offer the
+            # provider's original labels (#7444).
+            collection_types = sorted(
+                set(collection_types) | set(coordinator._shell.raw_labels)
+            )
 
         customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
         uncustomized_types = [x for x in collection_types if x not in customized_types]
