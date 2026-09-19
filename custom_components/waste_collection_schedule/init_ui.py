@@ -11,6 +11,8 @@ import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryError
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import entity_registry as er
 
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
@@ -160,6 +162,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         and config_entry.minor_version < const.CONFIG_MINOR_VERSION
     ):
         _LOGGER.debug("Migrating from version %s", config_entry.version)
+        old_registry_base = _get_source_unique_id(config_entry.data)
         new_data = {**config_entry.data}
 
         if config_entry.version < 2 and const.CONFIG_VERSION >= 2:
@@ -379,6 +382,9 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 new_data["args"]["street"] = new_data["args"]["strasse"]
                 del new_data["args"]["strasse"]
 
+        if config_entry.version < 3:
+            _migrate_registry_unique_ids(hass, config_entry, old_registry_base)
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
@@ -389,3 +395,50 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         _LOGGER.debug("Migration to version %s successful", config_entry.version)
 
     return True
+
+
+def _get_source_unique_id(data: dict[str, Any]) -> str | None:
+    source_name = data.get(const.CONF_SOURCE_NAME)
+    source_args = data.get(const.CONF_SOURCE_ARGS, {})
+    if not source_name or not isinstance(source_args, dict):
+        return None
+    return source_name + str(sorted(source_args.items()))
+
+
+def _migrate_registry_unique_ids(
+    hass: HomeAssistant, config_entry: ConfigEntry, old_base: str | None
+) -> None:
+    """Migrate v2 source-based registry IDs to config-entry-based IDs."""
+    if old_base is None:
+        return
+
+    new_base = config_entry.entry_id
+    if old_base == new_base:
+        return
+
+    entity_registry = er.async_get(hass)
+    for entity_entry in entity_registry.entities.values():
+        if (
+            entity_entry.config_entry_id == config_entry.entry_id
+            and entity_entry.unique_id.startswith(old_base)
+        ):
+            entity_registry.async_update_entity(
+                entity_entry.entity_id,
+                new_unique_id=new_base + entity_entry.unique_id[len(old_base) :],
+            )
+
+    device_registry = dr.async_get(hass)
+    old_identifier = (const.DOMAIN, old_base)
+    new_identifier = (const.DOMAIN, new_base)
+    for device_entry in device_registry.devices.values():
+        if (
+            config_entry.entry_id in device_entry.config_entries
+            and old_identifier in device_entry.identifiers
+        ):
+            identifiers = set(device_entry.identifiers)
+            identifiers.remove(old_identifier)
+            identifiers.add(new_identifier)
+            device_registry.async_update_device(
+                device_entry.id,
+                identifiers=identifiers,
+            )
