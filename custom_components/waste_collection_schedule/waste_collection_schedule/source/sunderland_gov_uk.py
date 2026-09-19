@@ -1,20 +1,27 @@
+"""Source for Sunderland City Council bin collection information."""
+
+from __future__ import annotations
+
 import base64
 import json
 import re
 from datetime import datetime
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
+from waste_collection_schedule import Collection
 
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-)
-
+# ============================================================================
+# WASTE COLLECTION SCHEDULE SOURCE METADATA
+# ============================================================================
 
 TITLE = "Sunderland City Council"
+
 DESCRIPTION = "Source for Sunderland City Council bin collection schedules."
+
 URL = "https://www.sunderland.gov.uk/bindays?ccp=true"
+
 COUNTRY = "uk"
 
 TEST_CASES = {
@@ -24,92 +31,136 @@ TEST_CASES = {
 }
 
 
+# ============================================================================
+# SUNDERLAND / GOSS CONFIGURATION
+# ============================================================================
+
 BASE_URL = "https://www.sunderland.gov.uk"
+
 BIN_DAYS_URL = f"{BASE_URL}/bindays?ccp=true"
 
 FORM_PREFIX = "BINCOLLECTIONCHECKERNEWV3"
 
-POSTCODE_FIELD = (
-    f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE"
-)
+POSTCODE_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE"
 
-ADDRESS_FIELD = (
-    f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES"
-)
+ADDRESS_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES"
 
-POSTCODE_TRIGGER = (
-    f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER"
-)
+POSTCODE_TRIGGER = f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER"
 
-FORM_ACTION_NEXT = (
-    f"{FORM_PREFIX}_FORMACTION_NEXT"
-)
+FORM_ACTION_NEXT = f"{FORM_PREFIX}_FORMACTION_NEXT"
 
 UPRN_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN"
 
-POSTCODE_RESULT_FIELD = (
-    f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE"
-)
+POSTCODE_RESULT_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE"
 
-ADDRESS_TEXT_FIELD = (
-    f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT"
-)
+ADDRESS_TEXT_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT"
 
-FORM_DATA_PATTERN = re.compile(
-    r'BINCOLLECTIONCHECKERNEWV3FormData\s*=\s*"([^"]+)"'
-)
-
-
-ICON_MAP = {
-    "RECYCLING": Icons.RECYCLING,
-    "GENERAL WASTE": Icons.GENERAL_WASTE,
-    "GARDEN WASTE": Icons.ORGANIC,
-}
+FORM_DATA_PATTERN = re.compile(r'BINCOLLECTIONCHECKERNEWV3FormData\s*=\s*"([^"]+)"')
 
 
 class Source:
-    def __init__(self, postcode: str, **kwargs):
-        self.postcode = postcode.strip().upper()
+    """Sunderland City Council source."""
 
-        self.session = requests.Session(
-            impersonate="chrome"
-        )
+    def __init__(
+        self,
+        postcode: str,
+        address: str
+    ):
+        self._postcode = self._normalise_postcode(postcode)
+        self._address = address
+
+        self._session = requests.Session(impersonate="chrome")
+
+    # =========================================================================
+    # HELPERS
+    # =========================================================================
 
     @staticmethod
-    def _normalise_postcode(postcode: str) -> str:
-        postcode = re.sub(
+    def _normalise_postcode(
+        postcode: str,
+    ) -> str:
+        """Normalise a UK postcode."""
+
+        return re.sub(
             r"\s+",
-            "",
-            postcode.upper(),
+            " ",
+            str(postcode).strip().upper(),
         )
-
-        if len(postcode) > 3:
-            return f"{postcode[:-3]} {postcode[-3:]}"
-
-        return postcode
 
     @staticmethod
-    def _get_form_data(soup):
-        postcode_input = soup.find(
-            "input",
-            {
-                "name": POSTCODE_FIELD,
-            },
+    def _follow_redirects(
+        session,
+        location: str,
+    ):
+        """
+        Follow Sunderland/GOSS redirects manually.
+
+        Sunderland uses a mixture of 303 and 302 redirects
+        and the intermediate pages must retain the same
+        session/cookies.
+        """
+
+        while True:
+            response = session.get(
+                location,
+                allow_redirects=False,
+                timeout=30,
+            )
+
+            if response.status_code not in (
+                301,
+                302,
+                303,
+                307,
+                308,
+            ):
+                return response
+
+            redirect = response.headers.get("Location")
+
+            if not redirect:
+                return response
+
+            location = urljoin(
+                response.url,
+                redirect,
+            )
+
+    @staticmethod
+    def _element_value(
+        element,
+    ) -> str:
+        """Return the value of a form element."""
+
+        if element.name == "textarea":
+            return element.text or ""
+
+        if element.name == "select":
+            selected = element.find(
+                "option",
+                selected=True,
+            )
+
+            if selected:
+                return selected.get(
+                    "value",
+                    "",
+                )
+
+            return ""
+
+        return element.get(
+            "value",
+            "",
         )
 
-        if postcode_input is None:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland postcode search form was not found.",
-            )
-
-        form = postcode_input.find_parent("form")
-
-        if form is None:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland postcode search form was not found.",
-            )
+    @classmethod
+    def _build_form_data(
+        cls,
+        form,
+        include_buttons: bool = False,
+    ) -> dict[str, str]:
+        """Build POST data from a GOSS form."""
 
         data = {}
 
@@ -126,462 +177,537 @@ class Source:
             if not name:
                 continue
 
-            element_type = (
-                element.get("type") or ""
-            ).lower()
+            element_type = (element.get("type") or "").lower()
+
+            # Buttons are only included when explicitly
+            # requested. The postcode form needs its
+            # NEXT button.
+            if element.name == "button":
+                if not include_buttons:
+                    continue
+
+                if name != FORM_ACTION_NEXT:
+                    continue
+
+            if element_type in (
+                "submit",
+                "button",
+                "image",
+            ):
+                if not include_buttons:
+                    continue
 
             if element_type in (
                 "checkbox",
                 "radio",
-            ) and not element.has_attr("checked"):
-                continue
-
-            if element.name == "select":
-                selected = element.find(
-                    "option",
-                    selected=True,
-                )
-
-                value = (
-                    selected.get("value", "")
-                    if selected
-                    else ""
-                )
-
-            elif element.name == "textarea":
-                value = element.text or ""
-
-            else:
-                value = element.get(
-                    "value",
-                    "",
-                )
-
-            if element.name == "button":
-                if name != FORM_ACTION_NEXT:
+            ):
+                if not element.has_attr("checked"):
                     continue
 
-            data[name] = value
+            data[name] = cls._element_value(element)
 
-        return form, data
+        return data
 
-    def _follow_redirects(self, response):
-        redirects = 0
+    # =========================================================================
+    # STEP 1 - INITIAL PAGE
+    # =========================================================================
 
-        while response.is_redirect:
-            redirects += 1
+    def _get_initial_page(self):
+        """Open the Sunderland bin checker."""
 
-            if redirects > 10:
-                raise SourceArgumentNotFound(
-                    "postcode",
-                    "Too many redirects while contacting Sunderland City Council.",
-                )
-
-            location = response.headers.get("Location")
-
-            if not location:
-                raise SourceArgumentNotFound(
-                    "postcode",
-                    "Sunderland City Council returned an invalid redirect.",
-                )
-
-            response = self.session.get(
-                requests.compat.urljoin(
-                    response.url,
-                    location,
-                ),
-                timeout=30,
-                allow_redirects=False,
-            )
-
-        return response
-
-    def _submit_postcode(self, postcode: str):
-        response = self.session.get(
+        response = self._session.get(
             BIN_DAYS_URL,
             timeout=30,
         )
 
         response.raise_for_status()
 
+        return response
+
+    def _find_postcode_form(
+        self,
+        html: str,
+    ):
+        """Find the postcode search form."""
+
         soup = BeautifulSoup(
-            response.text,
+            html,
             "html.parser",
         )
 
-        form, data = self._get_form_data(soup)
+        postcode = soup.find(
+            "input",
+            {
+                "name": POSTCODE_FIELD,
+            },
+        )
 
-        data[POSTCODE_FIELD] = postcode
-        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
+        if postcode is None:
+            raise RuntimeError("Sunderland: postcode field not found")
+
+        form = postcode.find_parent("form")
+
+        if form is None:
+            raise RuntimeError("Sunderland: postcode form not found")
+
+        return form
+
+    # =========================================================================
+    # STEP 2 - POSTCODE LOOKUP
+    # =========================================================================
+
+    def _lookup_postcode(
+        self,
+    ):
+        """Submit the postcode and retrieve addresses."""
+
+        initial = self._get_initial_page()
+
+        form = self._find_postcode_form(initial.text)
 
         action = form.get("action")
 
         if not action:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland postcode form has no submission URL.",
-            )
+            raise RuntimeError("Sunderland: postcode form action not found")
 
-        response = self.session.post(
-            requests.compat.urljoin(
-                response.url,
-                action,
-            ),
-            data=data,
-            timeout=30,
-            allow_redirects=False,
+        process_url = urljoin(
+            initial.url,
+            action,
         )
 
-        response = self._follow_redirects(response)
+        data = self._build_form_data(
+            form,
+            include_buttons=True,
+        )
 
-        response.raise_for_status()
+        # Exact postcode entered by the user.
+        data[POSTCODE_FIELD] = self._postcode
 
-        return BeautifulSoup(
-            response.text,
+        # Exact action used by the working
+        # standalone Sunderland flow.
+        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
+
+        response = self._session.post(
+            process_url,
+            data=data,
+            allow_redirects=False,
+            timeout=30,
+        )
+
+        if response.status_code not in (
+            301,
+            302,
+            303,
+            307,
+            308,
+        ):
+            raise RuntimeError(
+                "Sunderland: postcode submission "
+                f"failed with HTTP "
+                f"{response.status_code}"
+            )
+
+        location = response.headers.get("Location")
+
+        if not location:
+            raise RuntimeError("Sunderland: postcode submission returned no redirect")
+
+        location = urljoin(
+            response.url,
+            location,
+        )
+
+        return self._follow_redirects(
+            self._session,
+            location,
+        )
+
+    # =========================================================================
+    # STEP 3 - ADDRESS LIST
+    # =========================================================================
+
+    @staticmethod
+    def _get_addresses(
+        html: str,
+    ):
+        """Extract addresses returned by Sunderland."""
+
+        soup = BeautifulSoup(
+            html,
             "html.parser",
         )
 
-    def _find_address(self, soup):
-        address_select = soup.find(
+        select = soup.find(
             "select",
             {
                 "name": ADDRESS_FIELD,
             },
         )
 
-        if address_select is None:
-            raise SourceArgumentNotFound(
-                "postcode",
-                (
-                    "We could not find any addresses for "
-                    f"the postcode '{self.postcode}'."
-                ),
-            )
-
-        options = address_select.find_all(
-            "option"
-        )
+        if select is None:
+            return []
 
         addresses = []
 
-        for option in options:
+        for option in select.find_all("option"):
             value = option.get(
                 "value",
                 "",
             ).strip()
-
-            if not value:
-                continue
 
             text = option.get_text(
                 " ",
                 strip=True,
             )
 
-            addresses.append(
-                (
-                    value,
-                    text,
+            if value:
+                addresses.append(
+                    (
+                        value,
+                        text,
+                    )
                 )
-            )
 
-        if not addresses:
-            raise SourceArgumentNotFound(
-                "postcode",
-                (
-                    "We could not find any addresses for "
-                    f"the postcode '{self.postcode}'."
-                ),
-            )
+        return addresses
 
-        # The WCS source currently receives only a postcode.
-        # Sunderland's form requires an address/UPRN before it
-        # exposes the collection schedule. Select the first valid
-        # address returned for the postcode.
-        return addresses[0]
+    # =========================================================================
+    # STEP 4 - SUBMIT SELECTED ADDRESS
+    # =========================================================================
 
     def _submit_address(
         self,
-        soup,
+        html: str,
         uprn: str,
         address: str,
     ):
-        address_input = soup.find(
+        """Submit the selected UPRN."""
+
+        soup = BeautifulSoup(
+            html,
+            "html.parser",
+        )
+
+        select = soup.find(
             "select",
             {
                 "name": ADDRESS_FIELD,
             },
         )
 
-        if address_input is None:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland address selection form was not found.",
-            )
+        if select is None:
+            raise RuntimeError("Sunderland: address select not found")
 
-        form = address_input.find_parent("form")
+        form = select.find_parent("form")
 
         if form is None:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland address selection form was not found.",
-            )
-
-        data = {}
-
-        for element in form.find_all(
-            [
-                "input",
-                "select",
-                "textarea",
-                "button",
-            ]
-        ):
-            name = element.get("name")
-
-            if not name:
-                continue
-
-            element_type = (
-                element.get("type") or ""
-            ).lower()
-
-            if element_type in (
-                "checkbox",
-                "radio",
-            ) and not element.has_attr("checked"):
-                continue
-
-            if element.name == "select":
-                selected = element.find(
-                    "option",
-                    selected=True,
-                )
-
-                value = (
-                    selected.get("value", "")
-                    if selected
-                    else ""
-                )
-
-            elif element.name == "textarea":
-                value = element.text or ""
-
-            else:
-                value = element.get(
-                    "value",
-                    "",
-                )
-
-            if element.name == "button":
-                if name != FORM_ACTION_NEXT:
-                    continue
-
-            data[name] = value
-
-        data[ADDRESS_FIELD] = uprn
-        data[POSTCODE_RESULT_FIELD] = self.postcode
-        data[UPRN_FIELD] = uprn
-        data[ADDRESS_TEXT_FIELD] = address
-        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
+            raise RuntimeError("Sunderland: address form not found")
 
         action = form.get("action")
 
         if not action:
-            raise SourceArgumentNotFound(
-                "postcode",
-                "Sunderland address form has no submission URL.",
-            )
+            raise RuntimeError("Sunderland: address form action not found")
 
-        response = self.session.post(
-            requests.compat.urljoin(
-                response.url if "response" in locals() else BIN_DAYS_URL,
-                action,
-            ),
-            data=data,
-            timeout=30,
-            allow_redirects=False,
+        process_url = urljoin(
+            BASE_URL,
+            action,
         )
 
-        response = self._follow_redirects(response)
+        data = self._build_form_data(
+            form,
+            include_buttons=False,
+        )
 
-        response.raise_for_status()
+        # These exactly reproduce the Javascript
+        # event handler from Sunderland:
+        #
+        # helper.setFieldValue(
+        #     "POSTCODE",
+        #     helper.getFieldValue("SCCPOSTCODE")
+        # )
+        #
+        # helper.setFieldValue("UPRN", value)
+        #
+        # helper.setFieldValue(
+        #     "ADDRESSTEXT",
+        #     selected address
+        # )
+        #
+        # helper.triggerActionButton("NEXT")
 
-        return response
+        data[ADDRESS_FIELD] = uprn
+
+        data[POSTCODE_RESULT_FIELD] = self._postcode
+
+        data[UPRN_FIELD] = uprn
+
+        data[ADDRESS_TEXT_FIELD] = address
+
+        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
+
+        response = self._session.post(
+            process_url,
+            data=data,
+            allow_redirects=False,
+            timeout=30,
+        )
+
+        if response.status_code not in (
+            301,
+            302,
+            303,
+            307,
+            308,
+        ):
+            raise RuntimeError(
+                "Sunderland: address submission "
+                f"failed with HTTP "
+                f"{response.status_code}"
+            )
+
+        location = response.headers.get("Location")
+
+        if not location:
+            raise RuntimeError("Sunderland: address submission returned no redirect")
+
+        location = urljoin(
+            response.url,
+            location,
+        )
+
+        return self._follow_redirects(
+            self._session,
+            location,
+        )
+
+    # =========================================================================
+    # STEP 5 - SERIALIZED FORM DATA
+    # =========================================================================
 
     @staticmethod
-    def _decode_form_data(html: str):
+    def _extract_form_data(
+        html: str,
+    ):
+        """Extract BINCOLLECTIONCHECKERNEWV3FormData."""
+
         match = FORM_DATA_PATTERN.search(html)
 
         if not match:
-            raise SourceArgumentNotFound(
-                "postcode",
-                (
-                    "Sunderland City Council returned a page "
-                    "without collection schedule data."
-                ),
+            raise RuntimeError("Sunderland: serialized form data not found")
+
+        encoded = match.group(1)
+
+        try:
+            decoded = base64.b64decode(encoded).decode("utf-8")
+        except Exception as error:
+            raise RuntimeError(
+                "Sunderland: failed to decode serialized form data"
+            ) from error
+
+        try:
+            return json.loads(decoded)
+        except json.JSONDecodeError as error:
+            raise RuntimeError(
+                "Sunderland: decoded form data is not valid JSON"
+            ) from error
+
+    @staticmethod
+    def _extract_result(
+        form_data,
+    ):
+        """Extract result from DATARETURNED."""
+
+        address_search = form_data.get(
+            "ADDRESSSEARCH_1",
+            {},
+        )
+
+        raw = address_search.get("DATARETURNED")
+
+        if not raw:
+            raise RuntimeError("Sunderland: DATARETURNED not found")
+
+        if isinstance(raw, dict):
+            return raw.get(
+                "result",
+                raw,
             )
 
         try:
-            decoded = base64.b64decode(
-                match.group(1)
-            ).decode("utf-8")
+            decoded = json.loads(raw)
+        except json.JSONDecodeError as error:
+            raise RuntimeError("Sunderland: DATARETURNED is not valid JSON") from error
 
-            return json.loads(decoded)
+        return decoded.get(
+            "result",
+            decoded,
+        )
 
-        except (
-            ValueError,
-            UnicodeDecodeError,
-            json.JSONDecodeError,
-        ) as err:
-            raise SourceArgumentNotFound(
-                "postcode",
-                (
-                    "Sunderland City Council returned "
-                    "invalid collection schedule data."
-                ),
-            ) from err
+    # =========================================================================
+    # STEP 6 - COLLECTION PARSING
+    # =========================================================================
 
     @staticmethod
-    def _parse_date(value):
+    def _parse_date(
+        value,
+    ):
+        """Parse Sunderland's ISO date."""
+
         if not value:
             return None
 
         try:
-            return datetime.fromisoformat(
+            parsed = datetime.fromisoformat(
                 str(value).replace(
                     "Z",
                     "+00:00",
                 )
-            ).date()
+            )
+
+            # WCS requires datetime.date objects,
+            # not datetime.datetime objects.
+            return parsed.date()
 
         except ValueError:
             return None
 
     @classmethod
-    def _create_collections(cls, data):
-        schedules = (
-            data.get("result", {})
-            .get("schedules", [])
-        )
+    def _create_collections(
+        cls,
+        result,
+    ):
+        """Convert Sunderland schedules into Collections."""
 
         collections = []
 
-        for schedule in schedules:
-            collection_type = (
-                schedule.get("type")
-                or schedule.get("name")
-                or schedule.get("description")
-                or ""
-            ).strip()
+        schedules = result.get(
+            "schedules",
+            [],
+        )
 
-            if not collection_type:
+        for schedule in schedules:
+            status = str(
+                schedule.get(
+                    "status",
+                    "",
+                )
+            ).upper()
+
+            # Sunderland can return PLANNED services
+            # such as garden waste and bulky collections.
+            #
+            # Only IN SERVICE schedules represent actual
+            # active household collection schedules.
+            if status != "IN SERVICE":
                 continue
 
-            # Sunderland returns the actual future collection
-            # dates in futureJobs. Do not rely on RESIDUALBIN,
-            # RECYCLEBIN, etc., as those are only form variables.
+            bin_name = (
+                schedule.get("binName") or schedule.get("jobName") or "Bin Collection"
+            )
+
             future_jobs = schedule.get(
                 "futureJobs",
                 [],
             )
 
-            if not isinstance(
-                future_jobs,
-                list,
-            ):
-                continue
+            for date_value in future_jobs:
+                date = cls._parse_date(date_value)
 
-            icon = None
-
-            normalized_type = collection_type.upper()
-
-            for name, mapped_icon in ICON_MAP.items():
-                if name in normalized_type:
-                    icon = mapped_icon
-                    break
-
-            for job in future_jobs:
-                if isinstance(job, dict):
-                    date_value = (
-                        job.get("date")
-                        or job.get("collectionDate")
-                        or job.get("collectionDateTime")
-                        or job.get("dateTime")
-                    )
-
-                else:
-                    date_value = job
-
-                collection_date = cls._parse_date(
-                    date_value
-                )
-
-                if collection_date is None:
+                if date is None:
                     continue
 
                 collections.append(
                     Collection(
-                        date=collection_date,
-                        type=collection_type,
-                        icon=icon,
+                        date,
+                        bin_name,
                     )
                 )
 
         return collections
 
+    # =========================================================================
+    # MAIN WCS ENTRY POINT
+    # =========================================================================
+
     def fetch(self):
-        postcode = self._normalise_postcode(
-            self.postcode
-        )
+        """Fetch all available Sunderland collections."""
 
-        address_page = self._submit_postcode(
-            postcode
-        )
+        # -------------------------------------------------------------
+        # Postcode lookup
+        # -------------------------------------------------------------
 
-        uprn, address = self._find_address(
-            address_page
-        )
+        address_page = self._lookup_postcode()
 
-        final_response = self._submit_address(
-            address_page,
+        addresses = self._get_addresses(address_page.text)
+
+        if not addresses:
+            raise ValueError(
+                f"Sunderland: no address list returned for postcode {self._postcode}"
+            )
+
+        # -------------------------------------------------------------
+        # Address selection
+        # -------------------------------------------------------------
+
+        #
+        # The current WCS configuration for Sunderland
+        # only requires a postcode.
+        #
+        # Sunderland can return multiple UPRNs for one
+        # postcode. The current source therefore uses the
+        # first returned address, matching the behaviour of
+        # the existing source implementation.
+        #
+
+        uprn, address = addresses[0]
+
+        # -------------------------------------------------------------
+        # Address submission
+        # -------------------------------------------------------------
+
+        final_page = self._submit_address(
+            address_page.text,
             uprn,
             address,
         )
 
-        data = self._decode_form_data(
-            final_response.text
-        )
+        # -------------------------------------------------------------
+        # Extract serialized GOSS data
+        # -------------------------------------------------------------
 
-        collections = self._create_collections(
-            data
-        )
+        form_data = self._extract_form_data(final_page.text)
 
-        if not collections:
-            raise SourceArgumentNotFound(
-                "postcode",
-                (
-                    "Sunderland City Council returned "
-                    "no future bin collections for "
-                    f"'{postcode}'."
-                ),
-            )
+        # -------------------------------------------------------------
+        # Extract API result
+        # -------------------------------------------------------------
 
-        # Remove duplicate date/type pairs.
+        result = self._extract_result(form_data)
+
+        # -------------------------------------------------------------
+        # Convert schedules into WCS collections
+        # -------------------------------------------------------------
+
+        collections = self._create_collections(result)
+
+        # -------------------------------------------------------------
+        # Remove duplicates
+        # -------------------------------------------------------------
+
         unique = {}
 
         for collection in collections:
-            unique[
-                (
-                    collection.date,
-                    collection.type,
-                )
-            ] = collection
-
-        return sorted(
-            unique.values(),
-            key=lambda collection: (
+            key = (
                 collection.date,
                 collection.type,
-            ),
-        )
+            )
+
+            unique[key] = collection
+
+        collections = list(unique.values())
+
+        # -------------------------------------------------------------
+        # Sort chronologically
+        # -------------------------------------------------------------
+
+        collections.sort(key=lambda collection: collection.date)
+
+        return collections
