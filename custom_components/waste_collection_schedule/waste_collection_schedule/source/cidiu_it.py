@@ -1,17 +1,28 @@
-import logging
-from datetime import datetime
+import re
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.service.junker_app import (
+    AreaNotFound,
+    AreaRequired,
+    Junker,
+    replace_accents,
+)
 
-_LOGGER = logging.getLogger(__name__)
 TITLE = "CIDIU S.p.A."
 DESCRIPTION = (
     "Source for CIDIU waste collection services for the north-west Turin province"
 )
 URL = "https://cidiu.it/"
+COUNTRY = "it"
 
+# CIDIU retired its own calendar (cidiu-processer.php) and now publishes the
+# schedules through the Junker app, one Junker "municipality" per town, with one
+# zone per street or range of street numbers.
 TEST_CASES = {
     "Collegno": {
         "city": "COLLEGNO",
@@ -30,83 +41,131 @@ TEST_CASES = {
     },
 }
 
-ICON_MAP = {
-    "INDIFFERENZIATO": Icons.GENERAL_WASTE,
-    "ORGANICO": Icons.BIO_KITCHEN,
-    "VETRO E LATTINE": Icons.GLASS,
-    "CARTA": Icons.PAPER,
-    "PLASTICA": Icons.RECYCLING,
-    "SFALCI ABBONAMENTO NORMALE": Icons.GARDEN,
-    "SFALCI ABBONAMENTO RIDOTTO": Icons.GARDEN,
+PARAM_TRANSLATIONS = {
+    "en": {
+        "city": "City",
+        "street": "Street",
+        "street_number": "Street number",
+    },
+    "it": {
+        "city": "Comune",
+        "street": "Via",
+        "street_number": "Numero civico",
+    },
 }
 
-API_URL = "https://cidiu.it/wp-content/themes/icelander/integrazione-lista/cidiu-processer.php"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "text/html",
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "city": "Town served by CIDIU, e.g. Collegno",
+        "street": "Street name without the number",
+        "street_number": "Street number",
+    },
+    "it": {
+        "city": "Comune servito da CIDIU, ad esempio Collegno",
+        "street": "Nome della via senza il numero civico",
+        "street_number": "Numero civico",
+    },
 }
 
-_LOGGER = logging.getLogger(__name__)
+_RANGE_RE = re.compile(r"(\d+)\s*[a-z]?\s+a\s+(?:civico\s*)?(\d+)")
+_EXCEPTION_RE = re.compile(r"tranne\s+(?:civico\s*)?(\d+)")
+
+
+def _normalize(text: str) -> str:
+    return re.sub(r"\s+", " ", replace_accents(text).lower()).strip()
+
+
+_QUALIFIER_RE = re.compile(r"\s(?=(?:da|pari|dispari|civico)\b|\d)")
+
+
+def _split_zone_name(zone_name: str) -> tuple[str, str]:
+    """Split a Junker zone name into (street, qualifier).
+
+    Junker names its zones like "VIA CONDOVE da civico 2 a civico 124 e da civico
+    1 a civico 123" or "CORSO SUSA pari da 2 a 314 dispari da 17 a 315".
+    """
+    parts = _QUALIFIER_RE.split(_normalize(zone_name), maxsplit=1)
+    return parts[0], parts[1] if len(parts) > 1 else ""
+
+
+def _covers(qualifier: str, number: int) -> bool:
+    """Whether a zone qualifier ("da 1 a 15", "pari da 2 a 314", ...) contains `number`."""
+    if not qualifier:
+        return True
+    excluded = {int(m.group(1)) for m in _EXCEPTION_RE.finditer(qualifier)}
+    if number in excluded:
+        return False
+    # Split into segments so that parity words apply to the range that follows
+    # them ("pari da 2 a 314 dispari da 17 a 315").
+    for segment in re.split(r"(?=\bpari\b|\bdispari\b)", qualifier):
+        parity_odd = "dispari" in segment
+        parity_even = not parity_odd and "pari" in segment
+        for match in _RANGE_RE.finditer(segment):
+            low, high = int(match.group(1)), int(match.group(2))
+            if not low <= number <= high:
+                continue
+            if parity_even and number % 2:
+                continue
+            if parity_odd and not number % 2:
+                continue
+            return True
+    return False
 
 
 class Source:
     def __init__(self, street, street_number, city):
-        self._street = street.upper()
-        self._street_number = str(street_number).upper()
-        self._city = city.upper()
+        self._street = street
+        self._street_number = str(street_number)
+        self._city = city
 
-    def fetch(self):
-        session = requests.Session()
-        params = {
-            "func": "getrecollection",
-            "comune": self._city,
-            "indirizzo": self._street,
-            "civico": self._street_number,
-        }
+    def _find_zone(self, zones: list[tuple[str, int]]) -> str:
+        street = _normalize(self._street)
+        match = re.match(r"\d+", self._street_number.strip())
+        if match is None:
+            raise SourceArgumentNotFound(
+                "street_number", self._street_number, "Enter a street number."
+            )
+        number = int(match.group(0))
 
-        r = session.get(API_URL, headers=HEADERS, params=params)
-        r.raise_for_status()
+        parsed = [(name, *_split_zone_name(name)) for name, _id in zones]
+        same_street = [
+            (name, qualifier) for name, base, qualifier in parsed if base == street
+        ]
+        if not same_street:
+            # Junker often spells the street out in full ("Viale Antonio
+            # Gramsci") where CIDIU's old calendar used "VIALE GRAMSCI".
+            tokens = set(street.split())
+            same_street = [
+                (name, qualifier)
+                for name, base, qualifier in parsed
+                if tokens <= set(base.split())
+            ]
+        if not same_street:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                self._street,
+                sorted({name for name, _id in zones}),
+            )
 
-        soup = BeautifulSoup(r.text, features="html.parser")
-        rows = soup.find_all("tr")
+        candidates = [
+            name for name, qualifier in same_street if _covers(qualifier, number)
+        ]
+        if not candidates:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_number", self._street_number, [n for n, _q in same_street]
+            )
+        if len(candidates) > 1:
+            raise SourceArgAmbiguousWithSuggestions("street", self._street, candidates)
+        return candidates[0]
 
-        header_row = rows[0]
-        headers = [th.text.strip() for th in header_row.find_all(["th", "td"])][
-            1:
-        ]  # Skip the first empty header
+    def fetch(self) -> list[Collection]:
+        try:
+            Junker(self._city, use_embed_url=False).fetch()
+        except AreaRequired as e:
+            zone = self._find_zone(e.areas)
+        except AreaNotFound as e:
+            zone = self._find_zone(e.areas)
+        else:
+            raise ValueError("Expected CIDIU to publish one zone per street")
 
-        entries = []
-        for row in rows[1:]:  # Skip the header row
-            cells = row.find_all("td")
-            if len(cells) < 2:
-                continue
-
-            date_cell = cells[0].text.strip()
-            if "," not in date_cell:
-                _LOGGER.warning(f"Unexpected date format: {date_cell}")
-                continue
-
-            # date format is "11/08/2024, Domenica" - we can get rid of the italian day name
-            date_str, _day = date_cell.split(", ")
-            try:
-                date = datetime.strptime(date_str, "%d/%m/%Y").date()
-            except ValueError:
-                _LOGGER.warning(f"Could not parse date: {date_str}")
-                continue
-
-            collections = []
-            for header, cell in zip(headers, cells[1:], strict=False):
-                if cell.text.strip():
-                    collections.append(header)
-
-            for collection in collections:
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection.capitalize(),
-                        icon=ICON_MAP.get(collection.upper()),
-                    ),
-                )
-
-        return entries
+        return Junker(self._city, area_name=zone, use_embed_url=False).fetch()
