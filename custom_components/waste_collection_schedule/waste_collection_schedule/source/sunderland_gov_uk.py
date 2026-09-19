@@ -10,7 +10,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 # ============================================================================
@@ -72,6 +72,31 @@ ADDRESS_TEXT_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT"
 
 FORM_DATA_PATTERN = re.compile(r'BINCOLLECTIONCHECKERNEWV3FormData\s*=\s*"([^"]+)"')
 
+MAX_REDIRECTS = 10
+
+# Labels used by the rendered results page.
+ICON_MAP = {
+    "Household Green Bin": Icons.GENERAL_WASTE,
+    "Blue Recycling Bin": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
+}
+
+# The serialized form data exposes free-text ``binName`` values which do not
+# always match the rendered labels above, so fall back to keyword matching to
+# keep the canonical icons. Order matters: "Garden Waste" must match GARDEN
+# before the generic "waste" keyword.
+ICON_KEYWORDS: tuple[tuple[str, Icons], ...] = (
+    ("garden", Icons.GARDEN),
+    ("recycl", Icons.RECYCLING),
+    ("blue", Icons.RECYCLING),
+    ("bulky", Icons.BULKY),
+    ("household", Icons.GENERAL_WASTE),
+    ("green", Icons.GENERAL_WASTE),
+    ("residual", Icons.GENERAL_WASTE),
+    ("refuse", Icons.GENERAL_WASTE),
+    ("waste", Icons.GENERAL_WASTE),
+)
+
 
 class Source:
     """Sunderland City Council source."""
@@ -105,6 +130,23 @@ class Source:
         return " ".join(re.sub(r"[^\w]+", " ", str(address)).split()).casefold()
 
     @staticmethod
+    def _icon_for(bin_name: str) -> Icons | None:
+        """Return the canonical icon for a Sunderland bin name."""
+
+        icon = ICON_MAP.get(bin_name)
+
+        if icon is not None:
+            return icon
+
+        lowered = bin_name.casefold()
+
+        for keyword, candidate in ICON_KEYWORDS:
+            if keyword in lowered:
+                return candidate
+
+        return None
+
+    @staticmethod
     def _follow_redirects(
         session,
         location: str,
@@ -117,7 +159,9 @@ class Source:
         session/cookies.
         """
 
-        while True:
+        response = None
+
+        for _ in range(MAX_REDIRECTS):
             response = session.get(
                 location,
                 allow_redirects=False,
@@ -131,6 +175,8 @@ class Source:
                 307,
                 308,
             ):
+                response.raise_for_status()
+
                 return response
 
             redirect = response.headers.get("Location")
@@ -142,6 +188,10 @@ class Source:
                 response.url,
                 redirect,
             )
+
+        # Too many hops: hand the last response back so the caller raises an
+        # argument-specific error rather than looping forever.
+        return response
 
     @staticmethod
     def _element_value(
@@ -260,12 +310,12 @@ class Source:
         )
 
         if postcode is None:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", "", [])
+            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
 
         form = postcode.find_parent("form")
 
         if form is None:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", "", [])
+            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
 
         return form
 
@@ -504,8 +554,8 @@ class Source:
     # STEP 5 - SERIALIZED FORM DATA
     # =========================================================================
 
-    @staticmethod
     def _extract_form_data(
+        self,
         html: str,
     ):
         """Extract BINCOLLECTIONCHECKERNEWV3FormData."""
@@ -513,22 +563,26 @@ class Source:
         match = FORM_DATA_PATTERN.search(html)
 
         if not match:
-            raise SourceArgumentNotFoundWithSuggestions("address", "", [])
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         encoded = match.group(1)
 
         try:
             decoded = base64.b64decode(encoded).decode("utf-8")
         except (ValueError, UnicodeDecodeError) as error:
-            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, []
+            ) from error
 
         try:
             return json.loads(decoded)
         except json.JSONDecodeError as error:
-            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, []
+            ) from error
 
-    @staticmethod
     def _extract_result(
+        self,
         form_data,
     ):
         """Extract result from DATARETURNED."""
@@ -541,7 +595,7 @@ class Source:
         raw = address_search.get("DATARETURNED")
 
         if not raw:
-            raise SourceArgumentNotFoundWithSuggestions("address", "", [])
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         if isinstance(raw, dict):
             return raw.get(
@@ -552,7 +606,9 @@ class Source:
         try:
             decoded = json.loads(raw)
         except json.JSONDecodeError as error:
-            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, []
+            ) from error
 
         return decoded.get(
             "result",
@@ -636,6 +692,7 @@ class Source:
                     Collection(
                         date,
                         bin_name,
+                        icon=cls._icon_for(bin_name),
                     )
                 )
 
