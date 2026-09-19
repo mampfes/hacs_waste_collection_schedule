@@ -8,6 +8,7 @@ from types import GeneratorType, ModuleType
 from typing import Any
 from unittest.mock import MagicMock, patch
 
+import pytest
 import yaml
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip
@@ -1452,3 +1453,113 @@ def test_wm_com_parses_delay_length_after_the_word_delay() -> None:
         )
         == {}
     )
+
+
+# Zone names as Junker publishes them for CIDIU towns, including the shapes that
+# are not a plain "street + range": dedicated single-number zones, parity-only
+# zones and streets whose name contains "da" or a number.
+_CIDIU_ZONES = [
+    ("VIA CONDOVE da civico 2 a civico 124 e da civico 1 a civico 123", 1),
+    ("CORSO SUSA da 1 a 15", 2),
+    ("CORSO SUSA pari da 2 a 314 dispari da 17 a 315", 3),
+    ("Viale Antonio Gramsci", 4),
+    ("VIA ROMA da civico 1 a civico 99 (tranne civico 51)", 5),
+    ("VIA ROMA da civico 51 a civico 51", 6),
+    ("Viale Bruno Radich", 7),
+    ("Viale Bruno Radich 11", 8),
+    ("Via Ettore Montanaro 17", 9),
+    ("Via Ettore Montanaro 20", 10),
+    ("Via Pietro Micca da civico 1 a civico 32", 11),
+    ("Via Pietro Micca 33", 12),
+    ("Via Torino civici pari", 13),
+    ("Via Torino civici dispari", 14),
+    ("VIA LEONARDO DA VINCI", 15),
+    ("Piazza 66 Martiri", 16),
+]
+
+
+def _cidiu_zone(street, number):
+    module = _get_module("cidiu_it")
+    source = module.Source(street=street, street_number=number, city="x")
+    return {i: n for n, i in _CIDIU_ZONES}[source._find_zone(_CIDIU_ZONES)]
+
+
+def test_cidiu_it_matches_zone_by_range_parity_and_exception() -> None:
+    assert _cidiu_zone("via condove", 2).startswith("VIA CONDOVE")
+    assert _cidiu_zone("CORSO SUSA", 7) == "CORSO SUSA da 1 a 15"
+    assert _cidiu_zone("CORSO SUSA", 124).startswith("CORSO SUSA pari")
+    assert _cidiu_zone("CORSO SUSA", "17").startswith("CORSO SUSA pari")
+    assert _cidiu_zone("VIA ROMA", 50).startswith("VIA ROMA da civico 1")
+    assert _cidiu_zone("VIA ROMA", 51) == "VIA ROMA da civico 51 a civico 51"
+    # Junker spells the street out where the old calendar abbreviated it.
+    assert _cidiu_zone("VIALE GRAMSCI", "18") == "Viale Antonio Gramsci"
+
+
+def test_cidiu_it_prefers_the_most_specific_zone() -> None:
+    assert _cidiu_zone("Viale Bruno Radich", 11) == "Viale Bruno Radich 11"
+    assert _cidiu_zone("Viale Bruno Radich", 5) == "Viale Bruno Radich"
+    assert _cidiu_zone("Via Ettore Montanaro", 17) == "Via Ettore Montanaro 17"
+    assert _cidiu_zone("Via Ettore Montanaro", 20) == "Via Ettore Montanaro 20"
+    assert _cidiu_zone("Via Pietro Micca", 33) == "Via Pietro Micca 33"
+    assert _cidiu_zone("Via Pietro Micca", 5).startswith("Via Pietro Micca da")
+
+
+def test_cidiu_it_handles_parity_only_zones_and_street_names_with_da() -> None:
+    assert _cidiu_zone("Via Torino", 4) == "Via Torino civici pari"
+    assert _cidiu_zone("Via Torino", 5) == "Via Torino civici dispari"
+    assert _cidiu_zone("Via Leonardo da Vinci", 3) == "VIA LEONARDO DA VINCI"
+    assert _cidiu_zone("Piazza 66 Martiri", 1) == "Piazza 66 Martiri"
+
+
+def test_cidiu_it_reports_unmatched_addresses() -> None:
+    from waste_collection_schedule.exceptions import (
+        SourceArgAmbiguousWithSuggestions,
+        SourceArgumentNotFoundWithSuggestions,
+    )
+
+    module = _get_module("cidiu_it")
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        _cidiu_zone("VIA INESISTENTE", 1)
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        _cidiu_zone("CORSO SUSA", 400)
+    with pytest.raises(SourceArgAmbiguousWithSuggestions):
+        module.Source(street="VIA VERDI", street_number=7, city="x")._find_zone(
+            [("VIA VERDI da 1 a 10", 1), ("VIA VERDI da 5 a 15", 2)]
+        )
+
+
+def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
+    module = _get_module("cidiu_it")
+    from datetime import date
+
+    from waste_collection_schedule import Collection, Icons
+    from waste_collection_schedule.service.junker_app import AreaRequired
+
+    calls = []
+
+    class _Junker:
+        def __init__(self, municipality, area=None, use_embed_url=True):
+            calls.append(area)
+            self._area = area
+
+        def fetch(self):
+            if self._area is None:
+                raise AreaRequired(_CIDIU_ZONES)
+            return [
+                Collection(date(2026, 1, 1), "General waste collection"),
+                Collection(date(2026, 1, 2), "Glass/Cans"),
+                Collection(date(2026, 1, 3), "Something new", icon="mdi:x"),
+            ]
+
+    with patch.object(module, "Junker", _Junker):
+        entries = module.Source(
+            street="CORSO SUSA", street_number=124, city="Rivoli"
+        ).fetch()
+
+    assert calls == [None, 3]
+    assert [e.type for e in entries] == [
+        "Indifferenziato",
+        "Vetro e lattine",
+        "Something new",
+    ]
+    assert entries[1].icon == Icons.GLASS
