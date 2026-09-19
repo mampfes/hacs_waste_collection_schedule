@@ -22,6 +22,7 @@ ICON_MAP = {
     "hackseldienst": Icons.GARDEN,
     "papier und karton": Icons.PAPER,
     "altmetalle": Icons.METAL,
+    "sonderabfall": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {
@@ -67,7 +68,7 @@ class Source:
                 )
                 icon = next(
                     (icon for key, icon in ICON_MAP.items() if key in icon_key),
-                    "mdi:trash-can",
+                    Icons.GENERAL_WASTE,
                 )
 
                 entries.append(
