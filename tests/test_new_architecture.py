@@ -2456,6 +2456,51 @@ class TestAthosWasteManagementRetriever:
             "SubmitAction": "filedownload_ICAL",
         }
 
+    def test_iterate_field_runs_all_steps_for_each_value(self):
+        """Each discovered period runs the complete wizard and returns its
+        final response."""
+        from waste_collection_schedule.retrievers import (
+            AthosWasteManagementRetriever,
+        )
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = """
+            <html><body><form>
+                <input type="hidden" name="SessionId" value="abc123">
+                <input type="radio" name="Zeitraum" value="2026">
+                <input type="radio" name="Zeitraum" value="2027">
+            </form></body></html>
+        """
+        first_intermediate = MagicMock()
+        first_final = MagicMock()
+        second_intermediate = MagicMock()
+        second_final = MagicMock()
+        source.session.get.return_value = initial
+        source.session.post.side_effect = [
+            first_intermediate,
+            first_final,
+            second_intermediate,
+            second_final,
+        ]
+
+        responses = AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            iterate_field="Zeitraum",
+            steps=[
+                {"submit_action": "forward"},
+                {"submit_action": "filedownload_ICAL"},
+            ],
+        )(source)
+
+        assert responses == [first_final, second_final]
+        assert source.session.post.call_count == 4
+        assert [
+            call.kwargs["data"]["Zeitraum"]
+            for call in source.session.post.call_args_list
+        ] == ["2026", "2026", "2027", "2027"]
+
     def test_step_remove_drops_fields_before_posting(self):
         """A step's `remove` list drops fields from the running state (the
         bmv_at variant's final step, which must not resend the address)."""

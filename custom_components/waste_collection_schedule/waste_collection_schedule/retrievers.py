@@ -1124,8 +1124,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
        against ``source.params`` if callable), then POST the accumulated state
        back to the servlet URL. Run that step's ``validate``, if set, on the
        response before moving to the next step.
-    4. Return the *last* step's response (the ICS download) unparsed; pair
-       with ``parsers.IcsParser()`` / ``parsers.IcsEventsParser()``.
+    4. Return the *last* step's response (the ICS download) unparsed. When
+       ``iterate_field`` is set and matching inputs are present, run all steps
+       once per input value and return the final responses as a list. Pair a
+       single response with ``parsers.IcsParser()`` /
+       ``parsers.IcsEventsParser()``, or a response list with
+       ``parsers.EachResponse(...)``.
 
     A step whose ``fields`` only sets *part* of the address (e.g. the Ort
     alone) lets a later step's ``validate`` inspect that response's own
@@ -1220,9 +1224,6 @@ class AthosWasteManagementRetriever(_BaseRetriever):
             Optional input field whose multiple values from the initial page
             are iterated. When set, the retriever returns a list of responses
             and should be paired with parsers.EachResponse(...).
-        iterate_accept:
-            Optional predicate used to filter responses produced by
-            iterate_field.
     """
 
     def __init__(
@@ -1239,7 +1240,6 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         verify: bool | str = True,
         initial_validate: Callable[[Response, BaseSource], None] | None = None,
         iterate_field: str | None = None,
-        iterate_accept: Callable[[Response], bool] | None = None,
     ):
         if not steps:
             raise ValueError("AthosWasteManagementRetriever requires at least one step")
@@ -1263,7 +1263,6 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         self.verify = verify
         self.initial_validate = initial_validate
         self.iterate_field = iterate_field
-        self.iterate_accept = iterate_accept
 
     def _apply_encoding(self, response: Response) -> Response:
         if self.encoding is not None:
@@ -1356,16 +1355,15 @@ class AthosWasteManagementRetriever(_BaseRetriever):
                 responses = []
 
                 for value in values:
-                    response = self._run_steps(
-                        source,
-                        url,
-                        headers,
-                        initial,
-                        field_override=(self.iterate_field, value),
+                    responses.append(
+                        self._run_steps(
+                            source,
+                            url,
+                            headers,
+                            initial,
+                            field_override=(self.iterate_field, value),
+                        )
                     )
-
-                    if self.iterate_accept is None or self.iterate_accept(response):
-                        responses.append(response)
 
                 return responses
 
