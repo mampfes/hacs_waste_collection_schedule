@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 import requests
@@ -69,7 +70,15 @@ class Source:
         r = requests.post(API_URL, data=args)
         r.raise_for_status()
 
-        dates = self._ics.convert(r.text)
+        # The feed appends a second time to its timestamps
+        # ("CREATED:20260101T000000ZT000000Z"). Newer icalendar versions refuse
+        # to parse such a value, so drop the duplicated suffix.
+        ics_text = re.sub(
+            r"(?m)^((?:CREATED|LAST-MODIFIED|DTSTAMP):\d{8}T\d{6}Z)T\d{6}Z\s*$",
+            r"\1",
+            r.text,
+        )
+        dates = self._ics.convert(ics_text)
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].lower())))
