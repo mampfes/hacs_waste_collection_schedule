@@ -4,6 +4,7 @@ from random import randrange
 from typing import Any
 
 import homeassistant.util.dt as dt_util
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.dispatcher import dispatcher_send
@@ -29,9 +30,15 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     _fetch_time: datetime.time
     _last_fetch_date: datetime.date | None
 
+    # Entity identity is derived from the config entry id, so the entry must be
+    # known for certain rather than inferred from HA's `current_entry`
+    # contextvar (which types it `ConfigEntry | None`).
+    config_entry: ConfigEntry
+
     def __init__(
         self,
         hass: HomeAssistant,
+        config_entry: ConfigEntry,
         source_shell: SourceShell,
         separator: str,
         fetch_time: str | datetime.time,
@@ -69,6 +76,10 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._day_switch_time = day_switch_time_new
 
         super().__init__(hass, _LOGGER, name=const.DOMAIN)
+        # `DataUpdateCoordinator.__init__` only grew a `config_entry` keyword in
+        # HA 2024.11; this integration still supports 2024.4, so set it after
+        # the base class has picked the value up from the contextvar.
+        self.config_entry = config_entry
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
@@ -147,7 +158,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     @property
     def device_info(self):
         return DeviceInfo(
-            identifiers={(const.DOMAIN, f"{self.shell.unique_id}")},
+            identifiers={(const.DOMAIN, self.config_entry.entry_id)},
             name="Waste Collection Schedule",
             manufacturer=self.shell.title,
             model="Waste Collection Schedule",
