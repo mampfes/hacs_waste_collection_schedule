@@ -19973,7 +19973,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107)"
+          "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107). Gorišnica, Hajdina, Juršinci in Markovci so razdeljeni na dve območji odvoza, zato zanje potrebujete ID regije."
         }
       },
       "reconfigure_cistomesto_si": {
@@ -19984,7 +19984,7 @@
           "region": "Regija"
         },
         "data_description": {
-          "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107)"
+          "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107). Gorišnica, Hajdina, Juršinci in Markovci so razdeljeni na dve območji odvoza, zato zanje potrebujete ID regije."
         }
       },
       "args_durban_gov_za": {
