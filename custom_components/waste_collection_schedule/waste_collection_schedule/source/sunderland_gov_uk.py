@@ -18,9 +18,9 @@ URL = "https://www.sunderland.gov.uk/bindays?ccp=true"
 COUNTRY = "uk"
 
 TEST_CASES = {
-    "SR1 2RH": {
-        "postcode": "SR1 2RH",
-    },
+    "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
+    "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
+    "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
 }
 
 
