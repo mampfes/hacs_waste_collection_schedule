@@ -467,7 +467,10 @@ class Source:
             if source.get("metas", {}).get("sectorization") == "single":
                 garbage_type = source.get("metas", {}).get("garbage_types", [""])[0]
                 if garbage_type:
-                    result[garbage_type] = {"schedules": source.get("schedules", {})}
+                    result.setdefault(garbage_type, {"schedules": []})
+                    result[garbage_type]["schedules"].extend(
+                        source.get("schedules", [])
+                    )
         return result
 
     def _is_week_day(self, input_string):
