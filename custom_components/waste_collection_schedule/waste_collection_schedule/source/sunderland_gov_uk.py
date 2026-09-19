@@ -11,6 +11,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 # ============================================================================
 # WASTE COLLECTION SCHEDULE SOURCE METADATA
@@ -28,6 +29,20 @@ TEST_CASES = {
     "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
     "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
     "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "postcode": "Postcode",
+        "address": "Address",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "postcode": "The postcode for the property.",
+        "address": "The full address of the property.",
+    }
 }
 
 
@@ -61,11 +76,7 @@ FORM_DATA_PATTERN = re.compile(r'BINCOLLECTIONCHECKERNEWV3FormData\s*=\s*"([^"]+
 class Source:
     """Sunderland City Council source."""
 
-    def __init__(
-        self,
-        postcode: str,
-        address: str
-    ):
+    def __init__(self, postcode: str, address: str):
         self._postcode = self._normalise_postcode(postcode)
         self._address = address
 
@@ -243,12 +254,12 @@ class Source:
         )
 
         if postcode is None:
-            raise RuntimeError("Sunderland: postcode field not found")
+            raise SourceArgumentNotFoundWithSuggestions("postcode", "", [])
 
         form = postcode.find_parent("form")
 
         if form is None:
-            raise RuntimeError("Sunderland: postcode form not found")
+            raise SourceArgumentNotFoundWithSuggestions("postcode", "", [])
 
         return form
 
@@ -268,7 +279,7 @@ class Source:
         action = form.get("action")
 
         if not action:
-            raise RuntimeError("Sunderland: postcode form action not found")
+            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
 
         process_url = urljoin(
             initial.url,
@@ -294,6 +305,8 @@ class Source:
             timeout=30,
         )
 
+        response.raise_for_status()
+
         if response.status_code not in (
             301,
             302,
@@ -301,16 +314,16 @@ class Source:
             307,
             308,
         ):
-            raise RuntimeError(
-                "Sunderland: postcode submission "
-                f"failed with HTTP "
-                f"{response.status_code}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "postcode",
+                self._postcode,
+                [],
             )
 
         location = response.headers.get("Location")
 
         if not location:
-            raise RuntimeError("Sunderland: postcode submission returned no redirect")
+            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
 
         location = urljoin(
             response.url,
@@ -395,17 +408,17 @@ class Source:
         )
 
         if select is None:
-            raise RuntimeError("Sunderland: address select not found")
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         form = select.find_parent("form")
 
         if form is None:
-            raise RuntimeError("Sunderland: address form not found")
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         action = form.get("action")
 
         if not action:
-            raise RuntimeError("Sunderland: address form action not found")
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         process_url = urljoin(
             BASE_URL,
@@ -451,6 +464,8 @@ class Source:
             timeout=30,
         )
 
+        response.raise_for_status()
+
         if response.status_code not in (
             301,
             302,
@@ -458,16 +473,16 @@ class Source:
             307,
             308,
         ):
-            raise RuntimeError(
-                "Sunderland: address submission "
-                f"failed with HTTP "
-                f"{response.status_code}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [],
             )
 
         location = response.headers.get("Location")
 
         if not location:
-            raise RuntimeError("Sunderland: address submission returned no redirect")
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
         location = urljoin(
             response.url,
@@ -492,23 +507,19 @@ class Source:
         match = FORM_DATA_PATTERN.search(html)
 
         if not match:
-            raise RuntimeError("Sunderland: serialized form data not found")
+            raise SourceArgumentNotFoundWithSuggestions("address", "", [])
 
         encoded = match.group(1)
 
         try:
             decoded = base64.b64decode(encoded).decode("utf-8")
-        except Exception as error:
-            raise RuntimeError(
-                "Sunderland: failed to decode serialized form data"
-            ) from error
+        except (ValueError, UnicodeDecodeError) as error:
+            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
 
         try:
             return json.loads(decoded)
         except json.JSONDecodeError as error:
-            raise RuntimeError(
-                "Sunderland: decoded form data is not valid JSON"
-            ) from error
+            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
 
     @staticmethod
     def _extract_result(
@@ -524,7 +535,7 @@ class Source:
         raw = address_search.get("DATARETURNED")
 
         if not raw:
-            raise RuntimeError("Sunderland: DATARETURNED not found")
+            raise SourceArgumentNotFoundWithSuggestions("address", "", [])
 
         if isinstance(raw, dict):
             return raw.get(
@@ -535,7 +546,7 @@ class Source:
         try:
             decoded = json.loads(raw)
         except json.JSONDecodeError as error:
-            raise RuntimeError("Sunderland: DATARETURNED is not valid JSON") from error
+            raise SourceArgumentNotFoundWithSuggestions("address", "", []) from error
 
         return decoded.get(
             "result",
@@ -631,6 +642,9 @@ class Source:
     def fetch(self):
         """Fetch all available Sunderland collections."""
 
+        if not self._postcode:
+            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
+
         # -------------------------------------------------------------
         # Postcode lookup
         # -------------------------------------------------------------
@@ -640,8 +654,10 @@ class Source:
         addresses = self._get_addresses(address_page.text)
 
         if not addresses:
-            raise ValueError(
-                f"Sunderland: no address list returned for postcode {self._postcode}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "postcode",
+                self._postcode,
+                [],
             )
 
         # -------------------------------------------------------------
@@ -649,16 +665,20 @@ class Source:
         # -------------------------------------------------------------
 
         #
-        # The current WCS configuration for Sunderland
-        # only requires a postcode.
-        #
-        # Sunderland can return multiple UPRNs for one
-        # postcode. The current source therefore uses the
-        # first returned address, matching the behaviour of
-        # the existing source implementation.
-        #
+        requested_address = " ".join(str(self._address or "").split()).casefold()
+        address_map = {
+            " ".join(address_text.split()).casefold(): (uprn, address_text)
+            for uprn, address_text in addresses
+        }
 
-        uprn, address = addresses[0]
+        if requested_address not in address_map:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [address_text for _, address_text in addresses],
+            )
+
+        uprn, address = address_map[requested_address]
 
         # -------------------------------------------------------------
         # Address submission
