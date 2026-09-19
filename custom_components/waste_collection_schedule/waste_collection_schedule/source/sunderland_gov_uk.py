@@ -99,6 +99,12 @@ class Source:
         )
 
     @staticmethod
+    def _normalise_address(address: str) -> str:
+        """Normalise address text for matching provider results."""
+
+        return " ".join(re.sub(r"[^\w]+", " ", str(address)).split()).casefold()
+
+    @staticmethod
     def _follow_redirects(
         session,
         location: str,
@@ -664,9 +670,9 @@ class Source:
         # Address selection
         # -------------------------------------------------------------
 
-        requested_address = " ".join(str(self._address or "").split()).casefold()
+        requested_address = self._normalise_address(self._address or "")
         normalised_addresses = [
-            (uprn, address_text, " ".join(address_text.split()).casefold())
+            (uprn, address_text, self._normalise_address(address_text))
             for uprn, address_text in addresses
         ]
 
