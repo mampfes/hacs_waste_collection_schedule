@@ -1331,7 +1331,7 @@ class TestRiSKommunalComponents:
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
                 calls["n"] += 1
-                page = params.get("page", 0)
+                page = (params or {}).get("page", 0)
                 return outer._response(outer._PAGE0 if page == 0 else outer._EMPTY)
 
         source = MagicMock()
@@ -1469,7 +1469,7 @@ class TestRiSKommunalComponents:
 
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
-                captured.update(params)
+                captured.update(params or {})
                 return outer._response(outer._EMPTY)
 
         source = MagicMock()
@@ -1497,7 +1497,7 @@ class TestRiSKommunalComponents:
 
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
-                captured.update(params)
+                captured.update(params or {})
                 return outer._response(outer._EMPTY)
 
         source = MagicMock()
@@ -6973,7 +6973,6 @@ CASES_AWAITING_CASSETTE = {
     "app_abfallplus_de::de_k4systems_abfallappwug_bergen_hauptstr_1",
     "app_abfallplus_de::de_k4systems_bonnorange_auf_dem_h_gel",
     "app_abfallplus_de::de_k4systems_leipziglk_brandis_brandis",
-    "awb_emsland_de::andervenne_am_gallenberg",
     "c_trace_de::roth",
     "cheshire_west_and_chester_gov_uk::knutsford_no_results",
     "ecoharmonogram_pl::ukrainian_language",
