@@ -664,22 +664,32 @@ class Source:
         # Address selection
         # -------------------------------------------------------------
 
-        #
         requested_address = " ".join(str(self._address or "").split()).casefold()
-        address_map = {
-            " ".join(address_text.split()).casefold(): (uprn, address_text)
+        normalised_addresses = [
+            (uprn, address_text, " ".join(address_text.split()).casefold())
             for uprn, address_text in addresses
-        }
+        ]
 
-        if requested_address not in address_map:
+        matches = [
+            (uprn, address_text)
+            for uprn, address_text, key in normalised_addresses
+            if key == requested_address
+        ]
+        if not matches and requested_address:
+            matches = [
+                (uprn, address_text)
+                for uprn, address_text, key in normalised_addresses
+                if requested_address in key
+            ]
+
+        if len(matches) != 1:
             raise SourceArgumentNotFoundWithSuggestions(
                 "address",
                 self._address,
                 [address_text for _, address_text in addresses],
             )
 
-        uprn, address = address_map[requested_address]
-
+        uprn, address = matches[0]
         # -------------------------------------------------------------
         # Address submission
         # -------------------------------------------------------------
