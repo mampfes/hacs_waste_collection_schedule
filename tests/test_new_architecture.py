@@ -35,7 +35,7 @@ sys.path.insert(
     ),
 )
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from update_docu_links import BLACK_LIST  # isort:skip
+from update_docu_links import BLACK_LIST, LANGUAGES  # isort:skip
 
 # Shared generic-engine allowance: modules documenting a shared engine (ics,
 # static, ...) rather than one provider — same BLACK_LIST test_source_components.py
@@ -47,6 +47,19 @@ _GENERIC_ENGINE_SOURCES = {g.split("/")[-1].removesuffix(".md") for g in BLACK_L
 # =====================================================================
 # 1. Core types
 # =====================================================================
+
+
+class TestLanguageRegistries:
+    """The config-flow allowlist and the waste-type languages move together."""
+
+    def test_languages_match_supported_languages(self):
+        from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
+
+        assert set(LANGUAGES) == set(SUPPORTED_LANGUAGES), (
+            "update_docu_links.LANGUAGES and waste_types.SUPPORTED_LANGUAGES must "
+            "list the same languages: add a language to both (with complete "
+            "waste_types names and field_terms labels), or to neither."
+        )
 
 
 class TestWasteType:
