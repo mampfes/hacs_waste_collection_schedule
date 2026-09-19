@@ -1,10 +1,12 @@
 # Bath & North East Somerset Council
 
-Support for schedules provided by [Bath & North East Somerset Council](https://www.bathnes.gov.uk/).
+Support for schedules provided by [Bath & North East Somerset Council](https://bathnes.gov.uk).
 
-If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
+Source for bathnes.gov.uk services for Bath & North East Somerset Council
 
 ## Configuration via configuration.yaml
+
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
@@ -14,38 +16,53 @@ waste_collection_schedule:
         uprn: UPRN
 ```
 
+### Using postcode and housenameornumber
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bathnes_gov_uk
+      args:
+        postcode: POSTCODE
+        housenameornumber: HOUSENAMEORNUMBER
+```
+
 ### Configuration Variables
 
-**postcode**
-_(string) (optional)_
+**uprn**  
+*(string) (alternative)*
 
-**housenameornumber**
-_(string|int) (optional)_
+**postcode**  
+*(string) (alternative)*
 
-**uprn**
-_(string) (optional)_
+**housenameornumber**  
+*(string) (alternative)*
 
-Either the postcode _and_ housenameornumber or the UPRN should be supplied in the arguments
+Provide one of: `uprn` or `postcode` + `housenameornumber`.
 
-## Examples
+## Example
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: bathnes_gov_uk
-      args:
-        uprn: "10001138699"
-```
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: bathnes_gov_uk
       args:
-        postcode: "BA1 2LR"
-        housenameornumber: "1"
+        uprn: '10001138699'
 ```
 
-## How to find your UPRN
+### Using postcode and housenameornumber
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providing your address details.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bathnes_gov_uk
+      args:
+        postcode: BA1 2LR
+        housenameornumber: 1
+```
+
+## How to get the source arguments
+
+Provide your UPRN, or both your postcode and house name or number. Find your UPRN at https://www.findmyaddress.co.uk/
