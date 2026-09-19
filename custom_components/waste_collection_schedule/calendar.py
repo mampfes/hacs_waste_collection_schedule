@@ -138,7 +138,11 @@ def create_calendar_entries(
             shell.get_collection_type_name(type) for type in dedicated_types
         }
 
-        base_id = coordinator.config_entry.entry_id if coordinator else shell.unique_id
+        # UI entries key entity identity on the config entry id, which survives
+        # a reconfigure; YAML setups have no entry and keep the source-derived
+        # id. Both spellings go through calc_unique_calendar_id so they cannot
+        # drift apart (the config-entry migration relies on that).
+        base_id = coordinator.config_entry.entry_id if coordinator else None
 
         for type in dedicated_types:
             entities.append(
@@ -148,7 +152,7 @@ def create_calendar_entries(
                     aggregator=aggregator,
                     name=shell.get_calendar_title_for_type(type),
                     include_types={shell.get_collection_type_name(type)},
-                    unique_id=f"{base_id}_{type}_calendar",
+                    unique_id=calc_unique_calendar_id(shell, type, base_id=base_id),
                 )
             )
 
@@ -160,7 +164,7 @@ def create_calendar_entries(
                     aggregator=aggregator,
                     name=shell.calendar_title,
                     exclude_types=dedicated_calendar_types,
-                    unique_id=f"{base_id}_calendar",
+                    unique_id=calc_unique_calendar_id(shell, base_id=base_id),
                 )
             )
 
@@ -199,5 +203,14 @@ async def async_setup_platform(
     async_add_entities(entities)
 
 
-def calc_unique_calendar_id(shell: SourceShell, type: str | None = None):
-    return shell.unique_id + ("_" + type if type is not None else "") + "_calendar"
+def calc_unique_calendar_id(
+    shell: SourceShell, type: str | None = None, base_id: str | None = None
+) -> str:
+    """The one spelling of a calendar entity's unique_id.
+
+    ``base_id`` is the config entry id for UI-configured entries. It defaults
+    to the source-derived ``shell.unique_id``, which is what YAML setups use
+    and what config entries used before version 3.
+    """
+    base = shell.unique_id if base_id is None else base_id
+    return base + ("_" + type if type is not None else "") + "_calendar"
