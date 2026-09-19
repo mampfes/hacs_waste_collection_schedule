@@ -10,7 +10,7 @@ CIDIU no longer runs its own calendar page. Its schedules are published through 
 - Find your street in the list. Zones for long streets are split by number range, for example `CORSO SUSA pari da 2 a 314 dispari da 17 a 315`.
 - Use the town, street name and street number in the configuration.
 
-If your street is spelled differently by Junker (for example `Viale Antonio Gramsci` where you would write `Viale Gramsci`), the source tries to match on the words you give. If it cannot find exactly one zone it lists the matching zone names in the error message.
+If your street is spelled differently by Junker (for example `Viale Antonio Gramsci` where you would write `Viale Gramsci`), the source tries to match on the words you give. Zones dedicated to a single number (`Viale Bruno Radich 11`) take precedence over a range or the zone for the rest of the street, and zones split by parity (`Via Roma civici pari` / `civici dispari`) are supported. If it cannot find exactly one zone it lists the matching zone names in the error message.
 
 ## Configuration via configuration.yaml
 
@@ -44,4 +44,6 @@ Street number. Only the leading digits are used to pick the zone (`3/A` is treat
 
 ## Returned Collections
 
-This source returns the collections published in the Junker calendar for your zone. Collection types are the ones Junker uses (for example *General waste collection*, *Organic waste*, *Paper*, *Plastic* and *Glass/Cans*).
+This source returns the collections published in the Junker calendar for your zone. Junker's types are mapped onto the labels CIDIU's own calendar used: *Indifferenziato*, *Organico*, *Carta*, *Plastica* and *Vetro e lattine*. Any other type Junker publishes is returned unchanged.
+
+Garden waste (*Sfalci*) is not published in the Junker calendar and is therefore no longer returned.
