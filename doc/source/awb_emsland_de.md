@@ -40,5 +40,5 @@ waste_collection_schedule:
       args:
         city: Andervenne
         street: Am Gallenberg
-        house_number: '1'
+        house_number: '2'
 ```
