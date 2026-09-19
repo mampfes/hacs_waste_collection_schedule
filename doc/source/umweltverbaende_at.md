@@ -196,7 +196,7 @@ waste_collection_schedule:
 | Krems | krems | [link](https://krems.umweltverbaende.at/?kat=32) |
 | Stadt Krems | kremsstadt | [link](https://kremsstadt.umweltverbaende.at/?kat=32) |
 | Lilienfeld | lilienfeld | [link](https://lilienfeld.umweltverbaende.at/?kat=32) |
-| Mödling | moedling | [link](https://moedling.umweltverbaende.at/?kat=32) |
+| Mödling | moedling | [link](https://gvamoedling.at/muellabfuhrkalender/) |
 | Melk | melk | [link](https://melk.umweltverbaende.at/?kat=32) |
 | Mistelbach | mistelbach | [link](https://mistelbach.umweltverbaende.at/?kat=32) |
 | St. Pölten | stpoeltenland | [link](https://stpoeltenland.umweltverbaende.at/?kat=32) |
