@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.4] - 2026-09-21
+
+This is another call for testers of the BaseSource/pipeline rewrite: if you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. This is still an opt-in pre-release; stable installs are unaffected until 3.0.0 ships.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@bineyamtsegaye1-cyber, @gvasilakiss, @ppslim and @smoki3. 🎉
+Thanks as well to our returning contributors (@kjanas, @Darkslayer3324j, @klsx0, @trvrnrth, @costajohnt) for the fixes, sources and features below.
+
+### Added Sources
+
+- added TrashDayNow (trashdaynow_com), US/CA, via the generic ICS source (thanks @bineyamtsegaye1-cyber) (#7479)
+- added Slovenian (`sl`) to the translation generation pipeline (thanks @costajohnt) (#7455)
+- added 3 default cities to publidata_fr (thanks @klsx0) (#7487)
+- added a language-neutral "Overview sensors" default set (next collection, days until collection, last update) and a choice of which default sensor sets to create, in the config flow and options flow; every sensor with an upcoming collection now always exposes `daysTo`, `date` and `next_types` attributes next to `color` (#7484, #7496)
+- added a `color` attribute on schedule sensors, plus `value.color` in value templates, so cards can follow the waste color (#7485)
+- added an "original provider labels" list to the config-flow and options-flow customize selection, so labels carried via `carry_raw_label` can be aliased or hidden (#7477)
+- added a one-level-per-view config flow for `cascading_select` sources, so each dropdown is populated from the previous choice instead of free-text boxes; kiedysmieci_info and abfall_neunkirchen_siegerland_de now use it (thanks @kjanas) (#7448, #7495)
+
+### Fixed Sources
+
+- fixed awb_emsland_de: show collections across multiple years (#7463)
+- fixed adur_worthing_gov_uk: variable reuse broke the legacy collector when the loop ran more than once (thanks @ppslim) (#7472)
+- fixed kiedysmieci_info: keep the HTTP status when the response envelope reports a failure (thanks @kjanas) (#7494)
+- fixed umweltverbaende_at: scope Korneuburg's ICS list to the requested municipality and support the GVA Mödling calendar (port of #7436, #7478) (#7481)
+- fixed lindau_ch: read plain date/name fields now that the `*-sort` fields are obfuscated (thanks @Darkslayer3324j) (port of #7469) (#7481)
+- fixed sjobo_se: read the day from its own div when the cell carries a week label (thanks @Darkslayer3324j) (port of #7468) (#7481)
+- fixed publidata_fr: merge schedules per garbage type instead of overwriting them (thanks @klsx0) (port of #7465) (#7481)
+- fixed cidiu_it: read schedules from the Junker app now that `cidiu-processer.php` is gone (thanks @Darkslayer3324j) (port of #7471) (#7482)
+- fixed sunderland_gov_uk: updated form scraper (thanks @gvasilakiss) (port of #7466; not live-verified, the site returned 403 to the porter) (#7483)
+
+### Other
+
+- migrated bathnes_gov_uk (Bath and North East Somerset) to the BaseSource pipeline, adding a shared `SplitByFields` preprocessor (thanks @trvrnrth) (#7474). As a pipeline migration, its waste-type labels are now the canonical, localised ones; check any filters or templates that match an exact label.
+- fixed the config flow to reuse existing unique IDs on reconfigure instead of creating new ones (thanks @smoki3) (#7462)
+- docs: documented the sensor color attribute (card-mod example), the default sensors, and the `si`/`sl` country versus language namespaces; pinned `LANGUAGES` to `SUPPORTED_LANGUAGES` in a test (#7486, #7475)
+
 ## [3.0.0-beta.3] - 2026-09-16
 
 This is a renewed call for testers of the BaseSource/pipeline rewrite: if you tried beta.1 or beta.2, please update and let us know what breaks; if you haven't yet, now's a good time to opt in via HACS' "show beta versions" toggle. We're aiming to ship at least one 3.0.0 beta per week from here on, so expect frequent, small updates rather than one big drop. Two things we could really use a hand with: migrating more of the existing legacy sources over to the new BaseSource architecture, and triaging/working through the open issues on this pre-release track. Thanks for testing!
