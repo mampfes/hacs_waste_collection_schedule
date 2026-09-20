@@ -63,7 +63,7 @@ _ERROR_FIXTURES = discover_error_fixtures()
 #    property of the committed fixtures, so it is exactly reproducible, and
 #    re-recording a source is the only thing that moves it. Lower it every time
 #    you re-record: that is how the debt gets paid off.
-UNPINNED_INTERACTIONS = 2228
+UNPINNED_INTERACTIONS = 2224
 
 # 2. The ceiling. How many requests a full replay may serve off the loose
 #    method+url fallback rather than the exact key. This catches what the
