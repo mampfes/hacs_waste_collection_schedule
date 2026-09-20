@@ -3211,8 +3211,8 @@
   "abfall_neunkirchen_siegerland_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_neunkirchen_siegerland_de.md",
     "howto": {
-      "de": "Geben Sie einen Teil oder den vollständigen Straßennamen wie im Abfallkalender Neunkirchen Siegerland ein (z.B. 'Waldstr' für 'Waldstraße'). Kommt die Straße in mehreren Ortsteilen vor, ergänzen Sie den Ortsteil in Klammern (z.B. 'Neunkirchen').",
-      "en": "Enter a partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen')."
+      "de": "Wählen Sie Ihre Straße aus der Liste (Anzeige 'Straße (Ortsteil)'). In YAML genügt auch ein Teil oder der vollständige Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße'). Kommt die Straße in mehreren Ortsteilen vor, ergänzen Sie den Ortsteil in Klammern (z.B. 'Neunkirchen').",
+      "en": "Pick your street from the list (shown as 'Street (district)'). When configuring in YAML, a partial or full street name as shown on the Neunkirchen Siegerland waste calendar also works (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen')."
     },
     "urls": {}
   },
