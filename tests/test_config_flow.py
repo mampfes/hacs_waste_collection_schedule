@@ -302,3 +302,50 @@ def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
 
     # Sensor types come from the aggregator only: no raw labels.
     assert "Container Restmuell" not in flow.get_types_of_sensors_and_customizations()
+
+
+# --- default sensors are optional and combine with custom sensors --------------
+
+
+def _finish_options(create_default: bool | None, custom: list[dict]) -> list[dict]:
+    flow = object.__new__(WasteCollectionConfigFlow)
+    flow._title = "t"
+    flow._args_data = {}
+    flow._options = {CONF_SENSORS: custom} if custom else {}
+    flow._auto_sensor_types = ["Paper", "Glass"]
+    if create_default is not None:
+        flow._create_default_sensors = create_default
+    captured: dict[str, Any] = {}
+
+    def _create_entry(**kwargs: Any) -> dict:
+        captured.update(kwargs)
+        return kwargs
+
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    asyncio.run(flow.finish())
+    return captured["options"].get(CONF_SENSORS, [])
+
+
+def test_default_sensors_are_created_by_default() -> None:
+    assert [s[CONF_NAME] for s in _finish_options(None, [])] == ["Paper", "Glass"]
+
+
+def test_default_sensors_can_be_switched_off() -> None:
+    assert _finish_options(False, []) == []
+
+
+def test_default_sensors_are_added_next_to_custom_sensors() -> None:
+    custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
+    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    assert names == ["Mine", "Paper", "Glass"]
+
+
+def test_custom_sensors_only_when_defaults_are_off() -> None:
+    custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
+    assert [s[CONF_NAME] for s in _finish_options(False, custom)] == ["Mine"]
+
+
+def test_a_custom_sensor_named_like_a_type_replaces_that_default() -> None:
+    custom = [{CONF_NAME: "Paper", CONF_COLLECTION_TYPES: ["Paper"]}]
+    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    assert names == ["Paper", "Glass"]
