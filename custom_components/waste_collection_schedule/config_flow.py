@@ -1731,8 +1731,10 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             self._entry.entry_id
         )
 
+        fetched_types: list[str] = []
         if coordinator and isinstance(coordinator, WCSCoordinator):
             collection_types = list(coordinator._aggregator.types)
+            fetched_types = sorted(collection_types)
             calendar_title = coordinator._shell.calendar_title
             # Customize selection only (never sensors): also offer the
             # provider's original labels (#7444).
@@ -1839,6 +1841,9 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     multiple=True,
                 )
             ),
+            # Adds default sensors an older entry does not have yet. Nothing
+            # is preselected, so opening the options never changes anything.
+            vol.Optional("default_sensors", default=[]): default_sensors_selector(),
             vol.Optional(
                 "customize_select",
             ): SelectSelector(
@@ -1893,6 +1898,8 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             except vol.Invalid:
                 errors[CONF_DAY_SWITCH_TIME] = "time_format"
             if len(errors) == 0:
+                # Not an option of its own: it only decides which sensors to add.
+                default_kinds = user_input.pop("default_sensors", [])
                 user_input[CONF_RANDOM_FETCH_TIME_OFFSET] = (
                     user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60
                     + user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["minutes"]
@@ -1913,6 +1920,15 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     for s in self._entry.options.get(CONF_SENSORS, [])
                     if s[CONF_NAME] not in self._sensor_select
                 ]
+                # Only what is missing is added. A sensor picked for editing is
+                # still counted as present, so its name is never duplicated.
+                self._options[CONF_SENSORS].extend(
+                    build_default_sensors(
+                        default_kinds,
+                        fetched_types,
+                        existing=self._entry.options.get(CONF_SENSORS, []),
+                    )
+                )
                 return await self.async_step_customize()
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)

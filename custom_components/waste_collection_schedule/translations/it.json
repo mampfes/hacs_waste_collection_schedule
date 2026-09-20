@@ -31452,6 +31452,7 @@
         "description": "Aggiorna i dettagli del calendario di raccolta dei rifiuti.",
         "data": {
           "sensor_select": "Sensori da modificare",
+          "default_sensors": "Aggiungi sensori predefiniti",
           "customize_select": "Tipi di raccolte da modificare",
           "calendar_title": "Titolo del calendario",
           "separator": "Separatore",
@@ -31465,6 +31466,7 @@
         },
         "data_description": {
           "sensor_select": "Seleziona il sensore che vuoi modificare. (seleziona 'Aggiungi nuovo sensore' per creare un nuovo sensore)",
+          "default_sensors": "Aggiunge i sensori predefiniti selezionati che mancano. I sensori esistenti restano invariati.",
           "customize_select": "Seleziona il tipo di raccolta che vuoi modificare.",
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verrà utilizzato il nome del tuo fornitore di servizi.",
           "separator": "Utilizzato per unire le voci se la fonte restituisce più valori per un singolo giorno.",

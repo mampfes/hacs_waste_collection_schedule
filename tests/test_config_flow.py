@@ -916,6 +916,95 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
             "as its raw field name. Add them by hand - the args_* sections are "
             "generated, this one is not."
         )
+def _options_flow(existing: list[dict]) -> tuple[WasteCollectionOptionsFlow, dict]:
+    """An options flow of an existing entry that already has ``existing`` sensors."""
+    from types import SimpleNamespace
+
+    from custom_components.waste_collection_schedule import const
+    from custom_components.waste_collection_schedule.config_flow import (
+        WCSCoordinator,
+    )
+
+    coordinator = object.__new__(WCSCoordinator)
+    coordinator._shell = cast(  # type: ignore[attr-defined]
+        Any, SimpleNamespace(calendar_title="Calendar", raw_labels=[])
+    )
+    coordinator._aggregator = type(  # type: ignore[attr-defined]
+        "_Agg", (), {"types": {"Restmuell", "Papier"}}
+    )()
+    entry = SimpleNamespace(
+        entry_id="e1", options={CONF_SENSORS: existing} if existing else {}, data={}
+    )
+    hass = SimpleNamespace(
+        config=SimpleNamespace(language="en"),
+        data={const.DOMAIN: {"e1": coordinator}},
+    )
+    flow = object.__new__(WasteCollectionOptionsFlow)
+    flow._entry = cast(Any, entry)
+    flow.hass = cast(Any, hass)
+    saved: dict[str, Any] = {}
+
+    def _create_entry(**kwargs: Any) -> dict:
+        saved.update(kwargs["data"])
+        return kwargs
+
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    return flow, saved
+
+
+def _submit_options(existing: list[dict], **extra: Any) -> dict:
+    flow, saved = _options_flow(existing)
+    form = {
+        "calendar_title": "Calendar",
+        "separator": ", ",
+        "fetch_time": "01:00:00",
+        "fetch_interval_days": 1,
+        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
+        "day_switch_time": "10:00:00",
+        "day_offset": 0,
+        "ignore_duplicates": False,
+        **extra,
+    }
+    asyncio.run(flow.async_step_init(form))
+    # Picking a sensor to edit shows its form first, so nothing is saved yet:
+    # the options built so far are what the next steps continue from.
+    return saved or flow._options
+
+
+def test_options_flow_adds_no_default_sensors_unless_asked() -> None:
+    flow, _ = _options_flow([])
+    schema = asyncio.run(flow.async_step_init())["data_schema"]
+    marker, validator = _marker_and_validator(schema, "default_sensors")
+    assert marker.default() == []  # opening the options changes nothing
+    assert validator.config["multiple"] is True
+
+    saved = _submit_options([{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Papier"]}])
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == ["Mine"]
+
+
+def test_options_flow_adds_only_the_missing_default_sensors() -> None:
+    per_type = build_default_sensors([KIND_LEGACY], ["Papier"])
+    saved = _submit_options(per_type, default_sensors=[KIND_LEGACY, KIND_NEW])
+    # Papier exists and stays untouched; the rest of the sets is added.
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
+        "Papier",
+        "Restmuell",
+        NEXT_COLLECTION_NAME,
+    ]
+    assert saved[CONF_SENSORS][0] == per_type[0]
+    assert "default_sensors" not in saved  # a choice, not a stored option
+
+
+def test_options_flow_does_not_duplicate_a_sensor_picked_for_editing() -> None:
+    existing = build_default_sensors([KIND_NEW], [])
+    saved = _submit_options(
+        existing, default_sensors=[KIND_NEW], sensor_select=[NEXT_COLLECTION_NAME]
+    )
+    # The sensor is being edited (removed and re-added by the next step), so
+    # ticking the set must not add a second one under the same name.
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == []
+
+
 def _flow_type_schema_and_choice(submitted: dict | None):
     flow = object.__new__(WasteCollectionConfigFlow)
     flow._title = "t"

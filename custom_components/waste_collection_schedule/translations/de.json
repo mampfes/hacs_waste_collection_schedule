@@ -31641,6 +31641,7 @@
         "description": "Waste Collection Schedule Details aktualisieren.",
         "data": {
           "sensor_select": "Sensoren zum Ändern",
+          "default_sensors": "Standard-Sensoren hinzufügen",
           "customize_select": "Zu Bearbeitende Anpassungen",
           "separator": "Trenner",
           "fetch_time": "Abrufzeit",
@@ -31653,6 +31654,7 @@
         },
         "data_description": {
           "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
+          "default_sensors": "Fügt die gewählten Standard-Sensoren hinzu, die noch fehlen. Bestehende Sensoren bleiben unverändert.",
           "customize_select": "Wähle die Anpassung aus, die du ändern möchtest. (oder wähle eine neue Anpassung, um eine neue zu erstellen)",
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "seperator": "Wird verwendet, um Einträge aneinander zu hängen, wenn die Quelle mehrere Werte für einen Tag zurückgibt.",

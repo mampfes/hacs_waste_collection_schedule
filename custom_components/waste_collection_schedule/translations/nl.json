@@ -31280,6 +31280,7 @@
         "description": "Update Waste Collection Schedule details.",
         "data": {
           "sensor_select": "Sensors To Modify",
+          "default_sensors": "Standaardsensoren toevoegen",
           "customize_select": "Customizations To Modify",
           "calendar_title": "Calendar Title",
           "separator": "Separator",
@@ -31293,6 +31294,7 @@
         },
         "data_description": {
           "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
+          "default_sensors": "Voegt de gekozen standaardsensoren toe die nog ontbreken. Bestaande sensoren blijven ongewijzigd.",
           "customize_select": "Select the customization you want to modify. (or select a new customization to create a new one)",
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
