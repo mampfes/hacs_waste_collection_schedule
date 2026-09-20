@@ -20174,12 +20174,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20188,11 +20190,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configurer la Source",

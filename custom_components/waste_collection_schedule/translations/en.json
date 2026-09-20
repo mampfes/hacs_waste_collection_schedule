@@ -20793,7 +20793,9 @@
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20806,7 +20808,10 @@
           "street": "Street",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configure Source",

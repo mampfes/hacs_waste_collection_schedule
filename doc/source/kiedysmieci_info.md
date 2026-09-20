@@ -1,6 +1,8 @@
 # Kiedy śmieci
 
-Support for schedules provided by [Kiedy śmieci](https://kiedysmieci.info/), serving multiple municipalities, Poland.
+Support for schedules provided by [Kiedy śmieci](https://kiedysmieci.info).
+
+Source script for Kiedy śmieci, Poland
 
 ## Configuration via configuration.yaml
 
@@ -9,26 +11,25 @@ waste_collection_schedule:
   sources:
     - name: kiedysmieci_info
       args:
-        voivodeship: voivodeship (województwo)
-        district: district (powiat)
-        municipality: municipality (gmina)
-        street: street (ulica)
-        
+        voivodeship: VOIVODESHIP
+        district: DISTRICT
+        municipality: MUNICIPALITY
+        street: STREET
 ```
 
 ### Configuration Variables
 
-**voivodeship**
-*(String) (required)*
+**voivodeship**  
+*(string) (optional)*
 
-**district**
-*(String) (required)*
+**district**  
+*(string) (optional)*
 
-**municipality**
-*(String) (required)*
+**municipality**  
+*(string) (optional)*
 
-**street**
-*(String) (required)*
+**street**  
+*(string) (optional)*
 
 ## Example
 
@@ -43,6 +44,6 @@ waste_collection_schedule:
         street: Nadolany
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The parameters can be found by using the apps ([GooglePlay](https://play.google.com/store/apps/details?id=com.fxsystems.KiedySmieci_info), [AppStore](https://apps.apple.com/pl/app/kiedy-%C5%9Bmieci/id1539957094?l=pl)) or on the [website](https://kiedysmieci.info/index.html#harmonogram) by providing your municipality in the search form.
+Setting this source up through the Home Assistant UI needs no lookup: the wizard asks for the voivodeship (województwo), district (powiat), municipality (gmina) and street or locality (ulica) one at a time, and each dropdown lists what the provider returns for the levels already chosen. For configuration.yaml, the same values can be read off the apps ([GooglePlay](https://play.google.com/store/apps/details?id=com.fxsystems.KiedySmieci_info), [AppStore](https://apps.apple.com/pl/app/kiedy-%C5%9Bmieci/id1539957094?l=pl)) or the [website](https://kiedysmieci.info/index.html#harmonogram).

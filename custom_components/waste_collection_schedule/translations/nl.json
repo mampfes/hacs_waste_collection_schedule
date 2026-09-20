@@ -20023,12 +20023,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "municipality": "Municipality",
-          "street": "Street",
+          "municipality": "Gemeente",
+          "street": "Straat",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20037,11 +20039,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "municipality": "Municipality",
-          "street": "Street",
+          "municipality": "Gemeente",
+          "street": "Straat",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configure Source",
