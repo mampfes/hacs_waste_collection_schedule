@@ -39,9 +39,28 @@ LOCATION_LEVELS = (
 NO_SCHEDULE_MARKER = "brak harmonogramu"
 
 
-def request(request_type: str, params: dict[str, Any]) -> dict[str, Any]:
-    """GET one query type and unwrap the response envelope."""
-    response = requests.get(
+class KiedySmieciError(Exception):
+    """The proxy answered with a failed envelope (``ok`` is not true).
+
+    Distinct from a transport error, which the HTTP client raises, and from a
+    wrong address, which this API does not report as a failure at all (see
+    ``Source.RAISE_ON_EMPTY``).
+    """
+
+
+def request(
+    request_type: str, params: dict[str, Any], session: Any = None
+) -> dict[str, Any]:
+    """GET one query type and unwrap the response envelope.
+
+    ``session`` is the source's shared client (``source.session``), so the
+    retrieve step and the cascade walk that diagnoses its failure go over one
+    connection. It is optional because the config flow reaches ``choices()``
+    through the ``cascading_select`` classmethod contract, which has no source
+    instance to take a session from.
+    """
+    client = session if session is not None else requests
+    response = client.get(
         API_URL, params={"type": request_type} | params, timeout=TIMEOUT
     )
 
@@ -54,7 +73,7 @@ def request(request_type: str, params: dict[str, Any]) -> dict[str, Any]:
         raise
 
     if not payload.get("ok"):
-        raise Exception(
+        raise KiedySmieciError(
             payload.get("message") or "Unexpected response from kiedysmieci.info"
         )
 
@@ -66,13 +85,15 @@ def location_params(params: dict[str, Any]) -> dict[str, str]:
     return {param: params[argument] for argument, param, _ in LOCATION_LEVELS}
 
 
-def options_for(param: str, list_key: str, selection: dict[str, str]) -> list[str]:
+def options_for(
+    param: str, list_key: str, selection: dict[str, str], session: Any = None
+) -> list[str]:
     """One level's options, given the narrower selection above it."""
-    items = request("locations", selection).get(list_key) or []
+    items = request("locations", selection, session).get(list_key) or []
     return [item[param] for item in items if item.get(param)]
 
 
-def choices(field: str, selections: dict[str, str]) -> list[str]:
+def choices(field: str, selections: dict[str, str], session: Any = None) -> list[str]:
     """Options for one cascade level, given the levels chosen so far.
 
     Returns [] while a level above this one is unanswered, which keeps the
@@ -82,7 +103,7 @@ def choices(field: str, selections: dict[str, str]) -> list[str]:
 
     for argument, param, list_key in LOCATION_LEVELS:
         if argument == field:
-            return options_for(param, list_key, selection)
+            return options_for(param, list_key, selection, session)
 
         value = selections.get(argument)
         if not value:
@@ -92,7 +113,7 @@ def choices(field: str, selections: dict[str, str]) -> list[str]:
     return []
 
 
-def validate_location(location: dict[str, str]) -> None:
+def validate_location(location: dict[str, str], session: Any = None) -> None:
     """Walk the cascade and report the first argument that is unknown.
 
     Returns without raising if every level matches, which means the request
@@ -102,7 +123,7 @@ def validate_location(location: dict[str, str]) -> None:
 
     for argument, param, list_key in LOCATION_LEVELS:
         try:
-            options = options_for(param, list_key, selection)
+            options = options_for(param, list_key, selection, session)
         except Exception:
             # The cascade itself is unreachable, so it cannot tell us anything -
             # leave the original error to the caller.
@@ -128,9 +149,9 @@ class KiedySmieciRetriever(RetrieverFunc):
     def __call__(self, source: Any) -> dict[str, Any]:
         location = location_params(source.params)
         try:
-            return request("terms", location)
+            return request("terms", location, source.session)
         except Exception:
-            validate_location(location)
+            validate_location(location, source.session)
             raise
 
 

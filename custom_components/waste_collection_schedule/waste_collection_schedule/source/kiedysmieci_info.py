@@ -212,7 +212,7 @@ class Source(BaseSource):
         be wrong together is the municipality and the street.
         """
         location = location_params(self.params)
-        validate_location(location)
+        validate_location(location, self.session)
         raise SourceArgumentExceptionMultiple(
             ("municipality", "street"),
             f"No schedule published for {location['ulica']}, {location['gmina']}",
