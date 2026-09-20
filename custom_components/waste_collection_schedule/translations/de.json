@@ -75,6 +75,20 @@
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
+      "cascade_confirm": {
+        "title": "Quelle konfigurieren",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "app_id": "App Id",
+          "f_abfallarten": "Abfallarten",
+          "key": "API-Schlüssel"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "f_abfallarten": "Optionaler Filter: die einzuschließenden Abfallarten."
+        }
+      },
       "sensor": {
         "title": "Sensor Erstellen \"{sensor_number}\"",
         "description": "Konfiguriere einen Sensor nach dem anderen.",

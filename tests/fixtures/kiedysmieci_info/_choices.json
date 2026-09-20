@@ -1,0 +1,91 @@
+{
+  "recorded_at": "2026-09-16",
+  "interactions": [
+    {
+      "key": "GET https://kiedysmieci.info/schedule-proxy.php af3925c95a",
+      "method": "GET",
+      "url": "https://kiedysmieci.info/schedule-proxy.php",
+      "final_url": "https://kiedysmieci.info/schedule-proxy.php?type=locations",
+      "body": "{\"params\":[[\"type\",\"locations\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Wed, 16 Sep 2026 19:17:23 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Powered-By": "PHP/7.4"
+      },
+      "content_b64": "eyJvayI6dHJ1ZSwiZGF0YSI6eyJsaXN0YVdvamV3b2R6dHciOlt7IndvamV3b2R6dHdvIjoiZG9sbm/Fm2zEhXNraWUifSx7IndvamV3b2R6dHdvIjoia3VqYXdza28tcG9tb3Jza2llIn0seyJ3b2pld29kenR3byI6Imx1YmVsc2tpZSJ9LHsid29qZXdvZHp0d28iOiJsdWJ1c2tpZSJ9LHsid29qZXdvZHp0d28iOiLFgsOzZHpraWUifSx7IndvamV3b2R6dHdvIjoibWHFgm9wb2xza2llIn0seyJ3b2pld29kenR3byI6Im1hem93aWVja2llIn0seyJ3b2pld29kenR3byI6Im9wb2xza2llIn0seyJ3b2pld29kenR3byI6InBvZGthcnBhY2tpZSJ9LHsid29qZXdvZHp0d28iOiJwb2RsYXNraWUifSx7IndvamV3b2R6dHdvIjoicG9tb3Jza2llIn0seyJ3b2pld29kenR3byI6IsWbbMSFc2tpZSJ9LHsid29qZXdvZHp0d28iOiLFm3dpxJl0b2tyenlza2llIn0seyJ3b2pld29kenR3byI6Indhcm1pxYRza28tbWF6dXJza2llIn0seyJ3b2pld29kenR3byI6IndpZWxrb3BvbHNraWUifSx7IndvamV3b2R6dHdvIjoiemFjaG9kbmlvcG9tb3Jza2llIn1dfX0="
+    },
+    {
+      "key": "GET https://kiedysmieci.info/schedule-proxy.php 6946c3c5c8",
+      "method": "GET",
+      "url": "https://kiedysmieci.info/schedule-proxy.php",
+      "final_url": "https://kiedysmieci.info/schedule-proxy.php?type=locations&wojewodztwo=podkarpackie",
+      "body": "{\"params\":[[\"type\",\"locations\"],[\"wojewodztwo\",\"podkarpackie\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Wed, 16 Sep 2026 19:17:25 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Powered-By": "PHP/7.4"
+      },
+      "content_b64": "eyJvayI6dHJ1ZSwiZGF0YSI6eyJsaXN0YVBvd2lhdG93IjpbeyJwb3dpYXQiOiJkxJliaWNraSJ9LHsicG93aWF0Ijoia3JvxZtuaWXFhHNraSJ9LHsicG93aWF0IjoibHViYWN6b3dza2kifSx7InBvd2lhdCI6IsWCYcWEY3Vja2kifSx7InBvd2lhdCI6Im1pZWxlY2tpIn0seyJwb3dpYXQiOiJwcnpld29yc2tpIn0seyJwb3dpYXQiOiJyb3Bjenlja28tc8SZZHppc3pvd3NraSJ9LHsicG93aWF0Ijoic2Fub2NraSJ9XX19"
+    },
+    {
+      "key": "GET https://kiedysmieci.info/schedule-proxy.php 9417721e52",
+      "method": "GET",
+      "url": "https://kiedysmieci.info/schedule-proxy.php",
+      "final_url": "https://kiedysmieci.info/schedule-proxy.php?type=locations&wojewodztwo=podkarpackie&powiat=sanocki",
+      "body": "{\"params\":[[\"powiat\",\"sanocki\"],[\"type\",\"locations\"],[\"wojewodztwo\",\"podkarpackie\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Wed, 16 Sep 2026 19:17:25 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Powered-By": "PHP/7.4"
+      },
+      "content_b64": "eyJvayI6dHJ1ZSwiZGF0YSI6eyJsaXN0YUdtaW4iOlt7ImdtaW5hIjoiQnVrb3dza28ifSx7ImdtaW5hIjoiVHlyYXdhIFdvxYJvc2thIn1dfX0="
+    },
+    {
+      "key": "GET https://kiedysmieci.info/schedule-proxy.php 73ecab5261",
+      "method": "GET",
+      "url": "https://kiedysmieci.info/schedule-proxy.php",
+      "final_url": "https://kiedysmieci.info/schedule-proxy.php?type=locations&wojewodztwo=podkarpackie&powiat=sanocki&gmina=Bukowsko",
+      "body": "{\"params\":[[\"gmina\",\"Bukowsko\"],[\"powiat\",\"sanocki\"],[\"type\",\"locations\"],[\"wojewodztwo\",\"podkarpackie\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Wed, 16 Sep 2026 19:17:25 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Powered-By": "PHP/7.4"
+      },
+      "content_b64": "eyJvayI6dHJ1ZSwiZGF0YSI6eyJsaXN0YVVsaWMiOlt7InVsaWNhIjoiQnVrb3dza28ifSx7InVsaWNhIjoiRHVkecWEY2UifSx7InVsaWNhIjoiS2FybGlrw7N3In0seyJ1bGljYSI6Ik5hZG9sYW55In0seyJ1bGljYSI6Ik5hZ8OzcnphbnkifSx7InVsaWNhIjoiTm93b3RhbmllYyJ9LHsidWxpY2EiOiJQxYJvbm5hIn0seyJ1bGljYSI6IlBvYmllZG5vIn0seyJ1bGljYSI6IlRva2FybmlhIn0seyJ1bGljYSI6IldvbGEgUGlvdHJvd2EifSx7InVsaWNhIjoiV29sYSBTxJlrb3dhIn0seyJ1bGljYSI6IldvbGljYSJ9LHsidWxpY2EiOiJaYm9pc2thIn1dfX0="
+    }
+  ],
+  "widget": "cascading_select",
+  "fields": [
+    "voivodeship",
+    "district",
+    "municipality",
+    "street"
+  ],
+  "context": {},
+  "expected": {
+    "voivodeship": "podkarpackie",
+    "district": "sanocki",
+    "municipality": "Bukowsko",
+    "street": "Nadolany"
+  }
+}

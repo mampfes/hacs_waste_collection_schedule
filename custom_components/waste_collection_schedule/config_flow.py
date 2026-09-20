@@ -204,6 +204,20 @@ def _is_new_style_source(source_cls) -> bool:
     return isinstance(source_cls, type) and issubclass(source_cls, BaseSource)
 
 
+def _cascade_fields(source_cls) -> list[str]:
+    """The levels of this source's cascading_select param, widest first.
+
+    Empty for a legacy source and for any source that does not declare one, so
+    callers can use it as "does this source want the step-by-step wizard?".
+    """
+    if not _is_new_style_source(source_cls) or not hasattr(source_cls, "get_choices"):
+        return []
+    for param in source_cls.PARAMS:
+        if param.widget == "cascading_select":
+            return list(param.fields)
+    return []
+
+
 def _build_schema_from_params(
     params: list[ConfigParam],
     pre_filled: dict[str, Any],
@@ -212,6 +226,7 @@ def _build_schema_from_params(
     title: str = "",
     dependent_options: dict[str, list] | None = None,
     error_suggestions: dict[str, list[Any]] | None = None,
+    omit_fields: tuple[str, ...] = (),
 ) -> vol.Schema:
     """Build a voluptuous schema from PARAMS declarations.
 
@@ -224,6 +239,12 @@ def _build_schema_from_params(
     ``SourceArgumentNotFoundWithSuggestions`` raised on a previous attempt; such
     a field re-renders as a custom-value dropdown of those suggestions (the same
     enrichment the legacy introspection path provides).
+
+    ``omit_fields`` leaves fields out of the form altogether. The cascade wizard
+    uses it for the levels it already collected: they are settled, and re-offering
+    them here would let a user pick a different voivodeship on the last screen,
+    silently invalidating the district/municipality/street chosen under the old
+    one. The caller is then responsible for supplying those values.
 
     Field labels are not set here: Home Assistant renders them from the
     generated ``translations/<lang>.json`` (produced from each param's typed
@@ -254,6 +275,8 @@ def _build_schema_from_params(
         # optional (validate() enforces exactly one group is provided).
         param_optional = force_optional or (not param.required) or bool(param.groups)
         for field_name in param.fields:
+            if field_name in omit_fields:
+                continue
             description = None
             if args_input is not None and field_name in args_input:
                 description = {"suggested_value": args_input[field_name]}
@@ -560,6 +583,35 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _sources: dict[str, list[SourceDict]] = {}  # noqa: RUF012
     _error_suggestions: dict[str, list[Any]]
 
+    # State of the cascading_select wizard: the levels answered so far, the
+    # index of the level being asked for, and whether the cascade has finished
+    # (from then on async_step_args behaves like it does for any other source).
+    _cascade_selections: dict[str, Any]
+    _cascade_level: int
+    _cascade_done: bool
+    # Every level the wizard stepped past, answered or skipped. A level that
+    # returned no options does not apply to this selection and is not in
+    # _cascade_selections, but it is just as settled: it has to come off the
+    # closing form too, or the levels the wizard deliberately stepped over come
+    # back as empty text boxes on the last screen.
+    _cascade_visited: list[str]
+    # The label of the option chosen at each answered level. An option may be a
+    # (label, value) pair, and it is the value that is stored, so without this
+    # the closing summary would show abfall_io's numeric ids where the user
+    # picked a municipality by name.
+    _cascade_labels: dict[str, str]
+    # value -> label for the level currently on screen, so the label can be kept
+    # when the answer to it comes back.
+    _cascade_offered: dict[str, str]
+    # Whether the cascade ran all the way to its last level. Only then are the
+    # levels settled enough to be left off the argument form; a cascade that
+    # stopped early (provider unreachable) has to stay editable.
+    _cascade_complete: bool
+    # Whether the argument form has been shown since the cascade finished. The
+    # submit that answers the last level carries only that level, so the form is
+    # rendered once more before anything is validated.
+    _cascade_answered: bool
+
     def __init__(self) -> None:
         """Give each config-flow run its own mutable state.
 
@@ -572,6 +624,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         keeps successive runs independent.
         """
         self._options: dict[str, Any] = {}
+        self._cascade_selections = {}
+        self._cascade_level = 0
+        self._cascade_done = False
+        self._cascade_complete = False
+        self._cascade_answered = False
+        self._cascade_visited = []
+        self._cascade_labels = {}
+        self._cascade_offered = {}
 
     async def _async_setup_sources(self) -> None:
         if len(self._sources) > 0:
@@ -729,6 +789,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         source_cls,
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
+        omit_fields: tuple[str, ...] = (),
     ) -> dict[str, list]:
         """Fetch option lists for any dependent_select PARAM of this source.
 
@@ -747,7 +808,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 # level returning [] is not applicable and is left as free text.
                 if not hasattr(source_cls, "get_choices"):
                     continue
-                level_fields = list(param.fields)
+                level_fields = [f for f in param.fields if f not in omit_fields]
+                if not level_fields:
+                    # Already collected by the wizard and left off the form, so
+                    # there is nothing to populate (and no request to make).
+                    continue
                 for index, field in enumerate(level_fields):
                     prior = level_fields[:index]
                     if any(chosen.get(p) in (None, "") for p in prior):
@@ -788,6 +853,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
         include_title=True,
+        omit_fields: tuple[str, ...] = (),
     ) -> tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
 
@@ -830,7 +896,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         # New-style source: build schema from PARAMS
         if _is_new_style_source(source_cls):
             dependent_options = await self.__get_dependent_options(
-                source_cls, pre_filled, args_input
+                source_cls, pre_filled, args_input, omit_fields
             )
             schema = _build_schema_from_params(
                 source_cls.PARAMS,
@@ -840,6 +906,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 title=title,
                 dependent_options=dependent_options,
                 error_suggestions=suggestions,
+                omit_fields=omit_fields,
             )
             return schema, module
 
@@ -1125,16 +1192,241 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         return await self.async_step_args()
 
+    async def __async_cascade_level(self, args_input) -> ConfigFlowResult | None:
+        """Ask for the next cascading_select level, one level per view.
+
+        Returns a form for the level currently due, or None once the cascade is
+        finished (or the source has none), which lets async_step_args carry on
+        with the ordinary argument form.
+
+        Without this the whole cascade lived on that one form: only the widest
+        level could be populated up front, because every deeper level needs the
+        choices above it, so the remaining ones rendered as free text and the
+        user had to submit an incomplete form - and read the validation error it
+        produced - once per level just to reveal the next dropdown (#7419).
+        """
+        module = await self.hass.async_add_executor_job(
+            importlib.import_module,
+            f"waste_collection_schedule.source.{self._source}",
+        )
+        levels = _cascade_fields(module.Source)
+        if not levels or self._cascade_done:
+            return None
+
+        # Params that are already answered but are not cascade levels. A source
+        # may need one to walk its cascade at all - abfall_io keys every lookup
+        # on its service `key`, app_abfallplus_de on its `app_id` - and both get
+        # it from the region the user picked, not from the cascade. Passing only
+        # the levels made get_choices return [] at every step for those two, so
+        # the wizard skipped itself and never offered a dropdown.
+        context = {
+            field: value
+            for field, value in self._extra_info_default_params.items()
+            if field not in levels and value not in (None, "")
+        }
+
+        if args_input is not None:
+            field = levels[self._cascade_level]
+            if args_input.get(field) not in (None, ""):
+                value = args_input[field]
+                self._cascade_selections[field] = value
+                label = self._cascade_offered.get(str(value))
+                if label is not None and label != str(value):
+                    self._cascade_labels[field] = label
+                self._cascade_visited.append(field)
+                self._cascade_level += 1
+
+        while self._cascade_level < len(levels):
+            field = levels[self._cascade_level]
+            try:
+                options = await self.hass.async_add_executor_job(
+                    module.Source.get_choices,
+                    field,
+                    {**context, **self._cascade_selections},
+                )
+            except Exception as exc:
+                # The provider is unreachable, so the wizard cannot offer
+                # anything. Hand over to the ordinary form, which degrades the
+                # remaining fields to free text, rather than dead-ending the
+                # flow. The levels answered before it broke are kept.
+                _LOGGER.debug("get_choices(%s) failed: %s", field, exc)
+                self._finish_cascade(complete=False)
+                return None
+            if options:
+                # A region may already answer a level it does not pin (a
+                # default_params city, say). Offer it anyway - the levels above
+                # it decide what it may be - but with that answer preselected,
+                # so picking the region still means something.
+                suggested = self._extra_info_default_params.get(field)
+                description = (
+                    {"suggested_value": suggested}
+                    if suggested not in (None, "")
+                    else None
+                )
+                self._cascade_offered = {
+                    str(opt[1] if isinstance(opt, tuple) else opt): str(
+                        opt[0] if isinstance(opt, tuple) else opt
+                    )
+                    for opt in options
+                }
+                return self.async_show_form(
+                    step_id=f"args_{self._id}",
+                    data_schema=vol.Schema(
+                        {
+                            vol.Required(
+                                field, description=description
+                            ): SelectSelector(
+                                SelectSelectorConfig(
+                                    options=[
+                                        SelectOptionDict(label=opt[0], value=opt[1])
+                                        if isinstance(opt, tuple)
+                                        else SelectOptionDict(label=opt, value=opt)
+                                        for opt in options
+                                    ],
+                                    mode=SelectSelectorMode.DROPDOWN,
+                                    sort=False,
+                                )
+                            )
+                        }
+                    ),
+                    description_placeholders=self._get_description_placeholders(
+                        self._id
+                    ),
+                )
+            # A level with no options does not apply to this selection
+            # (config_params.cascading_select), so skip it. It still counts as
+            # visited: the wizard has settled it, and leaving it on the closing
+            # form would offer as free text exactly what was just stepped over.
+            self._cascade_visited.append(field)
+            self._cascade_level += 1
+
+        # A cascade that answered nothing never engaged: every level was
+        # inapplicable, which is what a source whose lookup key is still unset
+        # looks like (abfall_io before its `key` is known). Nothing is settled,
+        # so the ordinary form keeps all of them editable.
+        self._finish_cascade(complete=bool(self._cascade_selections))
+        return None
+
+    def _finish_cascade(self, complete: bool) -> None:
+        """Leave the wizard, carrying the levels answered so far.
+
+        A completed cascade hands its picks straight to the entry: they are left
+        off the argument form entirely (see ``_cascade_omitted``) and merged back
+        in when it is submitted. A cascade that stopped early keeps its picks as
+        pre-filled values on a form that still lets the user finish the address
+        by hand.
+        """
+        self._cascade_done = True
+        self._cascade_complete = complete
+        self._extra_info_default_params = {
+            **self._extra_info_default_params,
+            **self._cascade_selections,
+        }
+
+    def _cascade_omitted(self) -> tuple[str, ...]:
+        """Cascade levels that are settled and so are not shown as inputs.
+
+        Every level the wizard visited, not only the answered ones: a level it
+        skipped as not applicable is settled too, and leaving it on the form
+        would offer as free text the very thing that was stepped over.
+
+        Empty once a level stops being settled: either the cascade never
+        finished, or validation blamed one of them, which puts them back on the
+        form so the user can correct the one at fault (see async_step_args).
+        """
+        if not self._cascade_complete:
+            return ()
+        return tuple(self._cascade_visited)
+
+    def _cascade_values(self) -> dict[str, Any]:
+        """What the settled levels contribute to the submission.
+
+        An answered level contributes what was picked. A skipped one contributes
+        whatever the region pre-filled for it, or nothing at all - the levels are
+        individually optional, so a level that does not apply is simply absent.
+        """
+        values: dict[str, Any] = {}
+        for field in self._cascade_omitted():
+            if field in self._cascade_selections:
+                values[field] = self._cascade_selections[field]
+            elif self._extra_info_default_params.get(field) not in (None, ""):
+                values[field] = self._extra_info_default_params[field]
+        return values
+
+    def _cascade_summary(self, module) -> str:
+        """The chosen address, as labelled lines for the confirmation view.
+
+        The levels are no longer fields on the form, so this is the whole of
+        that step's description: what the user picked, and nothing else.
+        """
+        omitted = self._cascade_omitted()
+        if not omitted:
+            return ""
+
+        language = getattr(getattr(self, "hass", None), "config", None)
+        language = getattr(language, "language", "en")
+        labels: dict[str, str] = {}
+        for param in getattr(module.Source, "PARAMS", ()):
+            if param.widget != "cascading_select":
+                continue
+            labels = dict(param.fields)
+            localised = param.labels.get(language) or {}
+            labels.update(localised)
+
+        # A markdown list: the step description is rendered as markdown, where a
+        # bare newline is not a line break, so plain lines would run together
+        # into one paragraph.
+        #
+        # Only the answered levels: one that was skipped as not applicable has
+        # nothing to show, and listing it blank would read as something the user
+        # failed to fill in. The option's label rather than its stored value,
+        # which for abfall_io is a numeric id.
+        lines = [
+            f"- **{labels.get(field, field)}:** "
+            f"{self._cascade_labels.get(field, self._cascade_selections[field])}"
+            for field in omitted
+            if field in self._cascade_selections
+        ]
+        return "\n".join(lines)
+
     # Step 3: User fills in source arguments
     async def async_step_args(self, args_input=None) -> ConfigFlowResult:
         self._source = cast(str, self._source)
+
+        cascade_form = await self.__async_cascade_level(args_input)
+        if cascade_form is not None:
+            return cascade_form
+        if self._cascade_selections and not self._cascade_answered:
+            # The submit that completed the cascade carried only the last level,
+            # so show the argument form instead of validating a part of it.
+            self._cascade_answered = True
+            args_input = None
+
+        omit_fields = self._cascade_omitted()
+        if args_input is not None and omit_fields:
+            # Those levels are not on the form, so put them back before anything
+            # tries to build a Source out of this.
+            args_input = {**args_input, **self._cascade_values()}
+
         schema, module = await self.__get_arg_schema(
-            self._source, self._extra_info_default_params, args_input
+            self._source,
+            self._extra_info_default_params,
+            args_input,
+            omit_fields=omit_fields,
         )
         errors: dict[str, str] = {}
-        description_placeholders: dict[str, str] = self._get_description_placeholders(
-            self._id
-        )
+        if omit_fields:
+            # The wizard's closing view. It has its own step so its description
+            # can be the chosen address alone: the generic "Configure your
+            # service provider" blurb and the source's HOWTO both answer
+            # questions that the cascade has already answered by this point.
+            step_id = "cascade_confirm"
+            description_placeholders = {
+                "cascade_summary": self._cascade_summary(module)
+            }
+        else:
+            step_id = f"args_{self._id}"
+            description_placeholders = self._get_description_placeholders(self._id)
         # If all args are filled in
         if args_input is not None:
             # if contains method:
@@ -1145,8 +1437,32 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             ) = await self.__validate_args_user_input(self._source, args_input, module)
 
             if len(errors) > 0:
+                if not errors.keys().isdisjoint(omit_fields):
+                    # The closing view has no input for a settled level, so an
+                    # error naming one is bound to a field that is not on the
+                    # form: it renders nowhere, and the user is left resubmitting
+                    # a form that never says what is wrong. The lists can go out
+                    # of date between the wizard reading them and the fetch, and
+                    # a source may blame a level the cascade cannot rule out on
+                    # its own (kiedysmieci_info's _raise_empty blames the
+                    # municipality/street pair), so this is reachable however
+                    # carefully the levels were picked.
+                    #
+                    # Re-open them - still dropdowns, populated for the levels
+                    # above - on the ordinary argument form, which is where
+                    # invalid_arg's message renders and where the user can
+                    # actually change the answer.
+                    self._cascade_complete = False
+                    omit_fields = self._cascade_omitted()
+                    step_id = f"args_{self._id}"
+                    description_placeholders = self._get_description_placeholders(
+                        self._id
+                    )
                 schema, module = await self.__get_arg_schema(
-                    self._source, self._extra_info_default_params, args_input
+                    self._source,
+                    self._extra_info_default_params,
+                    args_input,
+                    omit_fields=omit_fields,
                 )
                 # Update placeholders with validation errors
                 description_placeholders.update(validation_placeholders)
@@ -1158,11 +1474,20 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self._options.update(options)
                 return await self.async_step_flow_type()
         return self.async_show_form(
-            step_id=f"args_{self._id}",
+            step_id=step_id,
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,
         )
+
+    async def async_step_cascade_confirm(self, user_input=None) -> ConfigFlowResult:
+        """Submit handler for the wizard's closing view.
+
+        A fixed step id, unlike the per-source ``args_<id>``: every source that
+        reaches this view shows the same two things, so one translation serves
+        them all.
+        """
+        return await self.async_step_args(user_input)
 
     async def async_step_flow_type(
         self, user_input: dict[str, Any] | None = None
