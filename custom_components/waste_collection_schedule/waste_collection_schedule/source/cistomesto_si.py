@@ -24,11 +24,17 @@ PARAM_TRANSLATIONS = {
     "en": {
         "region": "Region",
     },
+    "sl": {
+        "region": "Regija",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
         "region": "Name of your region (e.g. Majšperk) or its numeric region ID (e.g. 107). Gorišnica, Hajdina, Juršinci and Markovci are split into two collection areas each, so those need the region ID",
+    },
+    "sl": {
+        "region": "Ime vaše regije (npr. Majšperk ali Ptuj) ali njen ID (npr. 107). Gorišnica, Hajdina, Juršinci in Markovci so razdeljeni na dve območji odvoza, zato zanje potrebujete ID regije.",
     },
 }
 

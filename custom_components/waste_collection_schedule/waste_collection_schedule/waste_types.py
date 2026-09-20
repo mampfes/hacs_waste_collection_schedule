@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 # would only cover a fixed value set and not these surfaces. Any HA language
 # outside this set falls back to English. Add a language here AND to the
 # config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
-SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl")
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl")
 
 
 @dataclass(frozen=True)
@@ -73,6 +73,7 @@ GENERAL_WASTE = WasteType(
         "fr": "Ordures ménagères",
         "it": "Rifiuto indifferenziato",
         "nl": "Restafval",
+        "sl": "Mešani komunalni odpadki",
     },
     aliases={
         "en": [
@@ -93,6 +94,7 @@ GENERAL_WASTE = WasteType(
         "fr": ["déchets résiduels", "ordures"],
         "it": ["indifferenziato", "secco", "secco residuo"],
         "nl": ["restafval", "restafvalcontainer"],
+        "sl": ["mešani komunalni odpadki", "mešani odpadki", "mesani", "mko", "ost."],
     },
 )
 
@@ -106,6 +108,7 @@ RECYCLABLES = WasteType(
         "fr": "Recyclage",
         "it": "Differenziata",
         "nl": "Recycling",
+        "sl": "Mešana embalaža",
     },
     aliases={
         "en": [
@@ -135,6 +138,7 @@ RECYCLABLES = WasteType(
         "fr": ["recyclables", "emballages", "tri sélectif", "bac jaune"],
         "it": ["imballaggi", "plastica e lattine", "multimateriale"],
         "nl": ["pmd", "plastic", "verpakkingen", "plastic verpakkingen"],
+        "sl": ["mešana embalaža", "embalaža", "embalaza", "emb", "emb."],
     },
 )
 
@@ -148,6 +152,7 @@ ORGANIC = WasteType(
         "fr": "Biodéchets",
         "it": "Organico",
         "nl": "GFT-afval",
+        "sl": "Biološki odpadki",
     },
     aliases={
         "en": ["organic", "biowaste", "fogo", "food and garden"],
@@ -155,6 +160,14 @@ ORGANIC = WasteType(
         "fr": ["déchets organiques"],
         "it": ["umido", "frazione organica"],
         "nl": ["gft", "groente fruit tuinafval", "bioafval"],
+        "sl": [
+            "biološki odpadki",
+            "bio odpadki",
+            "biološki",
+            "bioloski",
+            "bio",
+            "bio.",
+        ],
     },
 )
 
@@ -168,6 +181,7 @@ PAPER = WasteType(
         "fr": "Papier",
         "it": "Carta e cartone",
         "nl": "Papier en karton",
+        "sl": "Papir",
     },
     aliases={
         "en": ["paper", "cardboard", "paper and card", "blue bin"],
@@ -182,6 +196,7 @@ PAPER = WasteType(
         "fr": ["carton", "papiers", "papier et carton"],
         "it": ["carta", "cartone"],
         "nl": ["papier", "oud papier", "karton"],
+        "sl": ["papir", "papir in karton", "karton", "pap", "pap."],
     },
 )
 
@@ -195,12 +210,14 @@ GLASS = WasteType(
         "fr": "Verre",
         "it": "Vetro",
         "nl": "Glas",
+        "sl": "Steklo",
     },
     aliases={
         "en": ["glass bottles"],
         "de": ["altglas", "glascontainer"],
         "it": ["vetro e lattine"],
         "nl": ["glasbak"],
+        "sl": ["steklo", "stek."],
     },
 )
 
@@ -214,12 +231,14 @@ FOOD_WASTE = WasteType(
         "fr": "Déchets alimentaires",
         "it": "Rifiuto alimentare",
         "nl": "Etensresten",
+        "sl": "Ostanki hrane",
     },
     aliases={
         "en": ["food", "food scraps", "food caddy"],
         "de": ["speisereste", "küchenabfälle"],
         "it": ["scarti alimentari"],
         "nl": ["etensresten", "voedselresten", "keukenafval"],
+        "sl": ["ostanki hrane", "kuhinjski odpadki"],
     },
 )
 
@@ -233,6 +252,7 @@ GARDEN_WASTE = WasteType(
         "fr": "Déchets verts",
         "it": "Rifiuto verde",
         "nl": "Tuinafval",
+        "sl": "Zeleni odrez",
     },
     aliases={
         "en": [
@@ -259,6 +279,7 @@ GARDEN_WASTE = WasteType(
         "fr": ["déchets de jardin", "sapins de noël"],
         "it": ["sfalci e potature", "verde"],
         "nl": ["tuinafval", "snoeiafval", "groenafval", "takken"],
+        "sl": ["zeleni odrez", "vrtni odpadki", "vejevje", "listje"],
     },
 )
 
@@ -272,6 +293,7 @@ BULKY_WASTE = WasteType(
         "fr": "Encombrants",
         "it": "Ingombranti",
         "nl": "Grofvuil",
+        "sl": "Kosovni odpadki",
     },
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
@@ -279,6 +301,7 @@ BULKY_WASTE = WasteType(
         "fr": ["objets encombrants"],
         "it": ["rifiuti ingombranti"],
         "nl": ["grofvuil", "grof huishoudelijk afval"],
+        "sl": ["kosovni odpadki", "kosovni"],
     },
 )
 
@@ -292,6 +315,7 @@ HAZARDOUS = WasteType(
         "fr": "Déchets dangereux",
         "it": "Rifiuti pericolosi",
         "nl": "Klein chemisch afval",
+        "sl": "Nevarni odpadki",
     },
     aliases={
         "en": ["hazardous", "household hazardous waste", "hhw", "chemicals"],
@@ -306,6 +330,7 @@ HAZARDOUS = WasteType(
         ],
         "fr": ["déchets toxiques"],
         "nl": ["kca", "chemisch afval", "klein chemisch afval"],
+        "sl": ["nevarni odpadki"],
     },
 )
 
@@ -319,6 +344,7 @@ ELECTRONICS = WasteType(
         "fr": "Déchets électroniques",
         "it": "Rifiuti elettronici",
         "nl": "Elektronisch afval",
+        "sl": "Elektronski odpadki",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -335,6 +361,7 @@ ELECTRONICS = WasteType(
         "fr": ["deee", "électroménager"],
         "it": ["raee"],
         "nl": ["e-waste", "elektrische apparaten", "wit- en bruingoed", "elektronica"],
+        "sl": ["elektronski odpadki", "e-odpadki", "odpadna električna oprema"],
     },
 )
 
@@ -353,6 +380,7 @@ TEXTILES = WasteType(
         "it": "Abiti usati",
         "fr": "Textiles",
         "nl": "Textiel",
+        "sl": "Tekstil",
     },
     aliases={
         "en": [
@@ -377,6 +405,7 @@ TEXTILES = WasteType(
         "fr": ["vieux vêtements", "vêtements", "textiles usagés"],
         "it": ["abiti", "indumenti", "indumenti usati", "abbigliamento"],
         "nl": ["kleding", "oude kleding", "textielinzameling"],
+        "sl": ["tekstil", "oblačila", "stara oblačila"],
     },
 )
 
@@ -390,6 +419,7 @@ OTHER = WasteType(
         "fr": "Autres",
         "it": "Altro",
         "nl": "Overig",
+        "sl": "Drugo",
     },
 )
 
