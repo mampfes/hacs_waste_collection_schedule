@@ -381,6 +381,7 @@ class ScheduleSensor(SensorEntity):
             attributes["last_update"] = refreshtime
 
         if len(upcoming1) > 0:
+            attributes["color"] = upcoming1[0].color
             if self._add_days_to:
                 attributes["daysTo"] = upcoming1[0].daysTo
 

@@ -142,3 +142,14 @@ def test_yaml_color_validation_normalizes_and_rejects_invalid_overrides():
     )
     with pytest.raises(vol.Invalid):
         CUSTOMIZE_CONFIG({"type": "organic", "color": "brown"})
+
+
+def test_collection_group_exposes_color_for_sensors():
+    paper = Collection(date=D, waste_type=PAPER, color="#123456")
+    organic = Collection(date=D, waste_type=ORGANIC)
+
+    single = CollectionGroup.create([paper])
+    assert single.color == "#123456"
+
+    # Several collections on one day: the group shows the first one's color.
+    assert CollectionGroup.create([organic, paper]).color == ORGANIC.color

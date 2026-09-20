@@ -368,6 +368,7 @@ class CollectionGroup:
         self._date = date
         self._icon: str | None = None
         self._picture: str | None = None
+        self._color: str | None = None
         self._types: list[str] = []
         self._collections: list[dict] = []
         self._locations: list[str] = []
@@ -376,6 +377,9 @@ class CollectionGroup:
     @staticmethod
     def create(group):
         x = CollectionGroup(group[0].date)
+        # Like the icon, a group shows one color: a lone collection's own, else
+        # the first one's (the icon is generic there, but a card still needs a color).
+        x._color = group[0].color
         if len(group) == 1:
             x._icon = group[0].icon
             x._picture = group[0].picture
@@ -415,6 +419,10 @@ class CollectionGroup:
     @property
     def picture(self):
         return self._picture
+
+    @property
+    def color(self) -> str | None:
+        return self._color
 
     @property
     def types(self) -> list:
