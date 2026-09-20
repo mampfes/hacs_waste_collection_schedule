@@ -1530,28 +1530,21 @@ def test_cidiu_it_reports_unmatched_addresses() -> None:
 
 def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
     module = _get_module("cidiu_it")
-    from datetime import date
-
-    from waste_collection_schedule import Collection, Icons
-    from waste_collection_schedule.service.junker_app import AreaRequired
+    from waste_collection_schedule import Icons
 
     calls = []
 
-    class _Junker:
-        def __init__(self, municipality, area=None, use_embed_url=True):
-            calls.append(area)
-            self._area = area
+    def _fetch_junker(self, area=None):
+        calls.append(area)
+        if area is None:
+            return "zones", _CIDIU_ZONES
+        return "events", [
+            {"date": "2026-01-01", "vbin_desc": "General waste collection"},
+            {"date": "2026-01-02", "vbin_desc": "Glass/Cans"},
+            {"date": "2026-01-03", "vbin_desc": "Something new"},
+        ]
 
-        def fetch(self):
-            if self._area is None:
-                raise AreaRequired(_CIDIU_ZONES)
-            return [
-                Collection(date(2026, 1, 1), "General waste collection"),
-                Collection(date(2026, 1, 2), "Glass/Cans"),
-                Collection(date(2026, 1, 3), "Something new", icon="mdi:x"),
-            ]
-
-    with patch.object(module, "Junker", _Junker):
+    with patch.object(module.Source, "_fetch_junker", _fetch_junker):
         entries = module.Source(
             street="CORSO SUSA", street_number=124, city="Rivoli"
         ).fetch()

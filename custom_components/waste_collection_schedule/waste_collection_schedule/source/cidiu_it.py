@@ -1,5 +1,8 @@
+import json
 import re
+from datetime import datetime
 
+import requests
 from waste_collection_schedule import (  # type: ignore[attr-defined]
     Collection,
     Icons,
@@ -10,9 +13,14 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.service.junker_app import (
-    AreaRequired,
-    Junker,
-    replace_accents,
+    EVENTS_REGEX,
+    PLAIN_URL,
+    PLAIN_URL_WITH_AREA,
+    ZONE_REGEX,
+    _slugify,
+)
+from waste_collection_schedule.service.junker_app import (
+    _replace_accents as replace_accents,
 )
 
 TITLE = "CIDIU S.p.A."
@@ -205,16 +213,44 @@ class Source:
             )
         return candidates[0][1]
 
+    def _fetch_junker(self, area: int | None = None):
+        """Return ("zones", [(name, id)]) or ("events", [event dict])."""
+        slug = _slugify(self._city)
+        url = (
+            PLAIN_URL_WITH_AREA.format(municipality=slug, area=area)
+            if area
+            else PLAIN_URL.format(municipality=slug)
+        )
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+
+        zone_match = ZONE_REGEX.search(r.text)
+        if zone_match:
+            return "zones", [(z["NOME"], z["ID"]) for z in json.loads(zone_match[1])]
+        events_match = EVENTS_REGEX.search(r.text)
+        if not events_match:
+            raise SourceArgumentNotFound(
+                "city", self._city, "No events found, the town may be unsupported."
+            )
+        return "events", json.loads(events_match[1])
+
     def fetch(self) -> list[Collection]:
-        try:
-            # Towns without per-street zones return their calendar right away.
-            collections = Junker(self._city, use_embed_url=False).fetch()
-        except AreaRequired as e:
-            zone_id = self._find_zone(e.areas)
-            collections = Junker(self._city, area=zone_id, use_embed_url=False).fetch()
+        kind, data = self._fetch_junker()
+        if kind == "zones":
+            # Towns with per-street zones list them instead of a calendar.
+            kind, data = self._fetch_junker(self._find_zone(data))
+            if kind == "zones":
+                raise SourceArgumentNotFound(
+                    "street", self._street, "Could not resolve the street zone."
+                )
 
         entries = []
-        for c in collections:
-            label, icon = TYPE_MAP.get(c.type, (c.type, c.icon))
-            entries.append(Collection(date=c.date, t=label, icon=icon))
+        for event in data:
+            label, icon = TYPE_MAP.get(event["vbin_desc"], (event["vbin_desc"], None))
+            date = datetime.strptime(event["date"], "%Y-%m-%d").date()
+            entries.append(Collection(date=date, t=label, icon=icon))
+        if not entries:
+            raise SourceArgumentNotFound(
+                "street", self._street, "No collections found for this address."
+            )
         return entries
