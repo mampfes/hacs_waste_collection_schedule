@@ -95,6 +95,7 @@ from .const import (
     CONFIG_VERSION,
     DOMAIN,
 )
+from .default_sensors import KIND_LEGACY, build_default_sensors
 from .init_ui import WCSCoordinator
 from .sensor import DetailsFormat
 
@@ -1626,16 +1627,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             self, "_auto_sensor_types"
         ):
             sensors = list(self._options.get(CONF_SENSORS) or [])
-            taken = {s.get(CONF_NAME) for s in sensors}
             sensors.extend(
-                {
-                    CONF_NAME: t,
-                    CONF_DETAILS_FORMAT: "upcoming",
-                    CONF_COLLECTION_TYPES: [t],
-                    CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
-                }
-                for t in self._auto_sensor_types
-                if t and t not in taken
+                build_default_sensors(
+                    [KIND_LEGACY], self._auto_sensor_types, existing=sensors
+                )
             )
             self._options[CONF_SENSORS] = sensors
 

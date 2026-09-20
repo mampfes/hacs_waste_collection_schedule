@@ -3,7 +3,7 @@
 import calendar  # noqa: F401 - import stdlib calendar before the package path
 import json
 import sys
-from datetime import date
+from datetime import date, time
 from pathlib import Path
 
 import pytest
@@ -17,6 +17,11 @@ from waste_collection_schedule.collection import CollectionGroup
 from waste_collection_schedule.source.ecoharmonogram_pl import Source
 from waste_collection_schedule.source_shell import Customize, customize_function
 from waste_collection_schedule.waste_types import ORGANIC, PAPER
+
+from custom_components.waste_collection_schedule.sensor import (
+    DetailsFormat,
+    ScheduleSensor,
+)
 
 D = date(2099, 9, 14)
 
@@ -153,3 +158,43 @@ def test_collection_group_exposes_color_for_sensors():
 
     # Several collections on one day: the group shows the first one's color.
     assert CollectionGroup.create([organic, paper]).color == ORGANIC.color
+
+
+def test_sensor_exposes_language_neutral_attributes_of_the_next_collection():
+    group = CollectionGroup.create(
+        [
+            Collection(date=D, waste_type=PAPER, color="#123456"),
+            Collection(date=D, waste_type=ORGANIC),
+        ]
+    )
+
+    class Aggregator:
+        refreshtime = None
+        types = frozenset({"Paper", "Organic"})
+
+        def get_upcoming_group_by_day(self, **_):
+            return [group]
+
+    class Coordinator:
+        separator = ", "
+        day_switch_time = time(23, 59)
+
+    sensor = object.__new__(ScheduleSensor)
+    sensor._aggregator = Aggregator()
+    sensor._api = None
+    sensor._coordinator = Coordinator()
+    sensor._collection_types = None
+    sensor._event_index = 0
+    sensor._value_template = None
+    sensor._date_template = None
+    sensor._add_days_to = False
+    sensor._count = None
+    sensor._leadtime = None
+    sensor._details_format = DetailsFormat.hidden
+    sensor._update_sensor()
+
+    attrs = sensor._attr_extra_state_attributes
+    assert attrs["daysTo"] == group.daysTo
+    assert attrs["date"] == D.isoformat()
+    assert attrs["next_types"] == list(group.types)
+    assert attrs["color"] == group.color

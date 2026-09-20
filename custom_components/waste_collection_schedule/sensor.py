@@ -381,9 +381,13 @@ class ScheduleSensor(SensorEntity):
             attributes["last_update"] = refreshtime
 
         if len(upcoming1) > 0:
+            # Language-neutral raw values of the next collection, so cards and
+            # templates can render them in the user's own language. `daysTo`
+            # used to need add_days_to; that option is still accepted.
             attributes["color"] = upcoming1[0].color
-            if self._add_days_to:
-                attributes["daysTo"] = upcoming1[0].daysTo
+            attributes["daysTo"] = upcoming1[0].daysTo
+            attributes["date"] = upcoming1[0].date.isoformat()
+            attributes["next_types"] = list(upcoming1[0].types)
 
         self._attr_extra_state_attributes = attributes
         self._add_refreshtime()

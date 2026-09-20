@@ -48,6 +48,10 @@ from custom_components.waste_collection_schedule.const import (  # isort:skip
     CONF_SENSORS,
     CONF_SOURCE_CALENDAR_TITLE,
 )
+from custom_components.waste_collection_schedule.default_sensors import (  # isort:skip
+    KIND_LEGACY,
+    build_default_sensors,
+)
 
 
 def _marker_and_validator(schema: vol.Schema, field_name: str):
@@ -893,3 +897,24 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
             "as its raw field name. Add them by hand - the args_* sections are "
             "generated, this one is not."
         )
+# --- build_default_sensors: one place decides what a default sensor is ---------
+
+
+def test_legacy_default_sensors_keep_their_exact_shape() -> None:
+    assert build_default_sensors([KIND_LEGACY], ["Paper"]) == [
+        {
+            CONF_NAME: "Paper",
+            "details_format": "upcoming",
+            CONF_COLLECTION_TYPES: ["Paper"],
+            "value_template": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
+        }
+    ]
+
+
+def test_no_kind_builds_no_default_sensors() -> None:
+    assert build_default_sensors([], ["Paper", "Glass"]) == []
+
+
+def test_building_defaults_twice_never_duplicates_a_sensor() -> None:
+    first = build_default_sensors([KIND_LEGACY], ["Paper", "Glass"])
+    assert build_default_sensors([KIND_LEGACY], ["Paper", "Glass"], first) == []
