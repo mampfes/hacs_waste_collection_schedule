@@ -16811,12 +16811,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "street": "Strada",
-          "street_number": "Numero Strada"
+          "city": "Comune",
+          "street": "Via",
+          "street_number": "Numero civico"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "Comune servito da CIDIU, ad esempio Collegno",
+          "street": "Nome della via senza il numero civico",
+          "street_number": "Numero civico"
         }
       },
       "reconfigure_cidiu_it": {
@@ -16824,11 +16827,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "street": "Strada",
-          "street_number": "Numero Strada"
+          "city": "Comune",
+          "street": "Via",
+          "street_number": "Numero civico"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Comune servito da CIDIU, ad esempio Collegno",
+          "street": "Nome della via senza il numero civico",
+          "street_number": "Numero civico"
+        }
       },
       "args_comune_digital_it": {
         "title": "Configurazione Sorgente",

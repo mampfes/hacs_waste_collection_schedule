@@ -17610,10 +17610,13 @@
           "calendar_title": "Calendar Title",
           "city": "City",
           "street": "Street",
-          "street_number": "Street Number"
+          "street_number": "Street number"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Town served by CIDIU, e.g. Collegno",
+          "street": "Street name without the number",
+          "street_number": "Street number"
         }
       },
       "reconfigure_cidiu_it": {
@@ -17623,9 +17626,13 @@
           "calendar_title": "Calendar Title",
           "city": "City",
           "street": "Street",
-          "street_number": "Street Number"
+          "street_number": "Street number"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Town served by CIDIU, e.g. Collegno",
+          "street": "Street name without the number",
+          "street_number": "Street number"
+        }
       },
       "args_comune_digital_it": {
         "title": "Configure Source",
