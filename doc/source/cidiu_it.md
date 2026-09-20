@@ -1,15 +1,16 @@
 # CIDIU S.p.A.
 
-Support for schedules provided by [CIDIU S.p.A.](https://www.cidiu.it/), in the nort-west Turin province in Italy.
-The service will scrape the bi-weekly schedule table returned by the getRecollection method from cidiu-processer.php
+Support for schedules provided by [CIDIU S.p.A.](https://www.cidiu.it/), in the north-west Turin province in Italy.
+
+CIDIU no longer runs its own calendar page. Its schedules are published through the [Junker app](https://junker.app), which has one zone per street (or per range of street numbers). This source looks up the zone that covers your street and number and returns that zone's calendar.
 
 ## How to get the configuration arguments
 
-- Browse to the [waste schedule page](https://cidiu.it/calendario-delle-raccolte)
-- Select your town, street name and number from the dropdowns
-- Click on "Visualizza il calendario bisettimanale"
+- Browse to the [Junker calendar](https://differenziata.junkerapp.it/collegno/calendario) for your town (replace `collegno` with your town's name in the address).
+- Find your street in the list. Zones for long streets are split by number range, for example `CORSO SUSA pari da 2 a 314 dispari da 17 a 315`.
+- Use the town, street name and street number in the configuration.
 
-If you get a schedule, you can use the same parameters in the configuration
+If your street is spelled differently by Junker (for example `Viale Antonio Gramsci` where you would write `Viale Gramsci`), the source tries to match on the words you give. Zones dedicated to a single number (`Viale Bruno Radich 11`) take precedence over a range or the zone for the rest of the street, and zones split by parity (`Via Roma civici pari` / `civici dispari`) are supported. If it cannot find exactly one zone it lists the matching zone names in the error message.
 
 ## Configuration via configuration.yaml
 
@@ -19,8 +20,8 @@ waste_collection_schedule:
     - name: cidiu_it
       args:
         city: Collegno
-        street_name: via Roma
-        street_number: '1'
+        street: via Condove
+        street_number: '107'
 
 ```
 
@@ -29,48 +30,20 @@ waste_collection_schedule:
 **city**  
 *(string (required))*
 
-Your city name. All cities/towns/communalities served by CIDIU are listed on the [available service](https://cidiu.it/i-servizi-nel-tuo-comune/) web page.
+Your town. All towns served by CIDIU are listed on the [available services](https://cidiu.it/cidiu/servizi-nei-comuni/) page.
 
 **street**  
 *(string) (required)*
 
-Street name without number, make sure it's the same you tested on the [waste schedule page](https://cidiu.it/calendario-delle-raccolte).
+Street name without the number, as it appears in the Junker calendar for your town.
 
 **street_number**  
 *(string) (required)*
 
-Street number, make sure it's the same you tested on the [waste schedule page](https://cidiu.it/calendario-delle-raccolte).
+Street number. Only the leading digits are used to pick the zone (`3/A` is treated as `3`).
 
 ## Returned Collections
 
-This source will return the schedule for the next 15 days for each container type.
+This source returns the collections published in the Junker calendar for your zone. Junker's types are mapped onto the labels CIDIU's own calendar used: *Indifferenziato*, *Organico*, *Carta*, *Plastica* and *Vetro e lattine*. Any other type Junker publishes is returned unchanged.
 
-## Returned collection types
-
-### Indifferenziato
-
-Green bin for general domestic waste.
-
-### Organico
-
-Brown bin for organic waste (food waste and anything biodegradable and compostable).
-
-### Carta
-
-White bin for paper, cardboard, magazines, pamphlets, books, notebooks, paper bags, paper packaging and tetrapaks.
-
-### Vetro e lattine
-
-Green/brown bin for bottles, jars, aluminium drinks cans, metal food cans and canisters, aluminium caps.
-
-### Plastica
-
-Blue bin for water and soft drinks bottles, liquid containers in general, polystyrene, plastic plates and cups, grocery bags.
-
-### Sfalci
-
-Green bin for grass cuts, foliage, and prunings in general
-
-
-- *Sfalci abbonamento ridotto* will list the bi-weekly schedule collections from March to October
-- *Sfalci abbonamento intero* will list the weekly schedule collections from March to October and the monthly schedule from November to February
+Garden waste (*Sfalci*) is not published in the Junker calendar and is therefore no longer returned.
