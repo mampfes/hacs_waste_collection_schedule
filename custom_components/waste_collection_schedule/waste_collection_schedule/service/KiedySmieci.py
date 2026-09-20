@@ -73,9 +73,16 @@ def request(
         raise
 
     if not payload.get("ok"):
-        raise KiedySmieciError(
-            payload.get("message") or "Unexpected response from kiedysmieci.info"
-        )
+        # Two independent pieces of information, and neither is reliably there:
+        # the envelope carries the provider's own explanation, the status says
+        # whether it failed or refused. A failed envelope can arrive with 200,
+        # and a 5xx can arrive carrying no message at all - which used to leave
+        # the error as a bare "unexpected response" naming neither.
+        message = payload.get("message") or ""
+        status = response.status_code
+        if status >= 400:
+            message = f"{message} (HTTP {status})" if message else f"HTTP {status}"
+        raise KiedySmieciError(message or "Unexpected response from kiedysmieci.info")
 
     return payload.get("data") or {}
 
