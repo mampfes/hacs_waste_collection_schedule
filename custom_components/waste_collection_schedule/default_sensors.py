@@ -22,6 +22,13 @@ LEGACY_VALUE_TEMPLATE = (
     'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}'
 )
 
+# The sensors that expose language-neutral raw values for cards and templates.
+KIND_NEW = "new"
+
+# English on purpose: the name fixes the entity id, so every user gets the same
+# ids and the documentation examples work when copied. Users can rename them.
+NEXT_COLLECTION_NAME = "Next collection"
+
 
 def build_default_sensors(
     kinds: Iterable[str],
@@ -51,5 +58,18 @@ def build_default_sensors(
                     CONF_VALUE_TEMPLATE: LEGACY_VALUE_TEMPLATE,
                 }
             )
+
+    if KIND_NEW in kinds and NEXT_COLLECTION_NAME not in taken:
+        taken.add(NEXT_COLLECTION_NAME)
+        # All types, state = the types collected on the next day. `hidden`
+        # keeps the attributes to the raw values (daysTo, date, next_types,
+        # color) instead of a list of upcoming dates.
+        sensors.append(
+            {
+                CONF_NAME: NEXT_COLLECTION_NAME,
+                CONF_DETAILS_FORMAT: "hidden",
+                CONF_VALUE_TEMPLATE: '{{value.types|join(", ")}}',
+            }
+        )
 
     return sensors

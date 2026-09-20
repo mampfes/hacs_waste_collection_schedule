@@ -50,6 +50,8 @@ from custom_components.waste_collection_schedule.const import (  # isort:skip
 )
 from custom_components.waste_collection_schedule.default_sensors import (  # isort:skip
     KIND_LEGACY,
+    KIND_NEW,
+    NEXT_COLLECTION_NAME,
     build_default_sensors,
 )
 
@@ -913,6 +915,35 @@ def test_legacy_default_sensors_keep_their_exact_shape() -> None:
 
 def test_no_kind_builds_no_default_sensors() -> None:
     assert build_default_sensors([], ["Paper", "Glass"]) == []
+
+
+def test_new_defaults_add_a_next_collection_sensor_over_all_types() -> None:
+    import homeassistant.helpers.config_validation as cv  # isort:skip
+
+    (sensor,) = build_default_sensors([KIND_NEW], ["Paper", "Glass"])
+    assert sensor[CONF_NAME] == NEXT_COLLECTION_NAME == "Next collection"
+    assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
+    assert sensor["details_format"] == "hidden"
+    cv.template(sensor["value_template"])  # must be a valid template
+
+
+def test_new_defaults_do_not_depend_on_the_fetched_types() -> None:
+    assert [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [])] == [
+        NEXT_COLLECTION_NAME
+    ]
+
+
+def test_legacy_and_new_defaults_combine() -> None:
+    names = [
+        s[CONF_NAME]
+        for s in build_default_sensors([KIND_LEGACY, KIND_NEW], ["Paper", "Glass"])
+    ]
+    assert names == ["Paper", "Glass", NEXT_COLLECTION_NAME]
+
+
+def test_an_existing_next_collection_sensor_is_not_duplicated() -> None:
+    existing = [{CONF_NAME: NEXT_COLLECTION_NAME}]
+    assert build_default_sensors([KIND_NEW], ["Paper"], existing) == []
 
 
 def test_building_defaults_twice_never_duplicates_a_sensor() -> None:
