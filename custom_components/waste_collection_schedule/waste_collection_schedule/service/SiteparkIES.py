@@ -107,6 +107,18 @@ class SiteparkIES:
         data = r.json()
         return data if isinstance(data, list) else []
 
+    def street_choices(self, refid: str | None = None) -> list[str]:
+        """Return every street label ("Street (Place)") the installation knows.
+
+        Uses the same autocomplete endpoint as the lookup, with an empty term,
+        which most installations answer with the complete list. The labels are
+        exactly what :meth:`get_pois` matches on, so a picked label resolves
+        back to a single pois. Installations that need a dynamic refid answer
+        an empty term with nothing (``[]``) and are not covered.
+        """
+        labels = {str(item[1]).strip() for item in self.autocomplete("", refid=refid)}
+        return sorted(label for label in labels if label)
+
     def resolve_refid(
         self,
         ort: str,
@@ -307,6 +319,15 @@ class SiteparkIESRetriever(RetrieverFunc):
         self._strasse = strasse
         self._ort = ort
         self._pois = pois
+
+    def street_choices(self) -> list[str]:
+        """Street labels for a config-flow dropdown (see ``SiteparkIES``).
+
+        Runs before any ``Source`` exists, so it only uses the construction-time
+        ``refid`` and needs no source params.
+        """
+        client = SiteparkIES(self._base_url, refid=self._refid)
+        return client.street_choices()
 
     def __call__(self, source: "BaseSource"):
         client = SiteparkIES(
