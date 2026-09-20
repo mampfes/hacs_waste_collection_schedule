@@ -1117,7 +1117,7 @@ def test_no_kind_builds_no_default_sensors() -> None:
 
 
 def test_new_defaults_are_the_three_overview_sensors_over_all_types() -> None:
-    import homeassistant.helpers.config_validation as cv  # isort:skip
+    from jinja2 import Environment  # isort:skip
 
     sensors = {s[CONF_NAME]: s for s in build_default_sensors([KIND_NEW], ["Paper"])}
     assert list(sensors) == list(NEW_SENSOR_NAMES)
@@ -1126,7 +1126,8 @@ def test_new_defaults_are_the_three_overview_sensors_over_all_types() -> None:
         assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
         assert sensor["details_format"] == "hidden"
 
-    cv.template(sensors[NEXT_COLLECTION_NAME]["value_template"])
+    # Syntax only: HA's cv.template needs a running event loop on current HA.
+    Environment().parse(sensors[NEXT_COLLECTION_NAME]["value_template"])
     assert CONF_SENSOR_MODE not in sensors[NEXT_COLLECTION_NAME]
     assert sensors[DAYS_TO_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
     assert sensors[LAST_UPDATE_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_LAST_UPDATE
