@@ -126,7 +126,18 @@ class Source:
         if not cell:
             # workaround for a programmer error
             cell = table.find("td", {"style": "styleDayHit"})
-        day = cell.text
+        # The first day of each week also carries a week-number label
+        # (`<div>v.2</div>`) in the same cell, so `cell.text` runs the label and
+        # the day together ("v.25" for Monday the 5th). Read the day from the
+        # div that holds just the digits instead.
+        day = next(
+            (
+                div.get_text(strip=True)
+                for div in reversed(cell.find_all("div"))
+                if div.get_text(strip=True).isdigit()
+            ),
+            cell.text,
+        )
 
         date_str = f"{year} {int(MONTH_MAP[month]):02d} {int(day):02d}"
         return datetime.strptime(date_str, "%Y %m %d").date()
