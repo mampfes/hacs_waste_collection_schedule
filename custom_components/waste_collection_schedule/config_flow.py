@@ -268,7 +268,7 @@ def _build_schema_from_params(
             vol.Optional(
                 CONF_SOURCE_CALENDAR_TITLE,
                 description=description,
-                default=title,
+                default=cast(Any, title),
             )
         ] = str
 
@@ -404,7 +404,7 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
 def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = None):
     if defaults is None:
         defaults = {}
-    schema = {
+    schema: dict[Any, Any] = {
         vol.Optional(CONF_NAME, default=defaults.get(CONF_NAME, UNDEFINED)): cv.string,
     }
     if add_delete:
@@ -488,8 +488,8 @@ def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = N
         }
     )
     if not add_delete:
-        schema[vol.Optional("skip", default=False)] = cv.boolean
-        schema[vol.Optional("additional", default=False)] = cv.boolean
+        schema[vol.Optional("skip", default=cast(Any, False))] = cv.boolean
+        schema[vol.Optional("additional", default=cast(Any, False))] = cv.boolean
 
     return vol.Schema(schema)
 
@@ -921,7 +921,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"]  # Remove self
         # Convert schema for vol
-        vol_args = {}
+        # Legacy schemas contain voluptuous marker objects as keys and selectors
+        # or validators as values; keep the mapping type broad for type checkers.
+        vol_args: dict[Any, Any] = {}
 
         if include_title:
             description = None
@@ -933,7 +935,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 vol.Optional(
                     CONF_SOURCE_CALENDAR_TITLE,
                     description=description,
-                    default=title,
+                    default=cast(Any, title),
                 ): str,
             }
 
@@ -1022,7 +1024,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 vol_args[
                     vol.Optional(
                         arg_name,
-                        default=UNDEFINED if default is None else default,
+                        default=cast(Any, UNDEFINED if default is None else default),
                         description=description,
                     )
                 ] = field_type or cv.string
@@ -1116,7 +1118,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
-            self._error_suggestions.update({e.argument: e.suggestions})
+            self._error_suggestions[e.argument] = list(e.suggestions)
             errors[e.argument] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.simple_message
             if e.suggestion_type != str and e.suggestion_type != int:
@@ -1129,13 +1131,14 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             description_placeholders["invalid_arg_message"] = e.message
         except SourceArgumentExceptionMultiple as e:
             description_placeholders["invalid_arg_message"] = e.message
-            if len(e.arguments) == 0:
+            arguments = list(e.arguments)
+            if len(arguments) == 0:
                 errors["base"] = "invalid_arg"
             else:
                 # Bind to the bare field names the schema registers, so the UI
                 # highlights the offending inputs (both arg-schema paths use
                 # unprefixed field names).
-                for arg in e.arguments:
+                for arg in arguments:
                     errors[arg] = "invalid_arg"
         except Exception as e:
             errors["base"] = "fetch_error"
@@ -1187,7 +1190,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"
         return placeholders
 
-    async def async_source_selected(self) -> None:
+    async def async_source_selected(self) -> ConfigFlowResult:
         async def args_method(args_input):
             return await self.async_step_args(args_input)
 
@@ -1500,10 +1503,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     ) -> ConfigFlowResult:
         schema = vol.Schema(
             {
-                vol.Optional("show_customize_config", default=False): bool,
-                vol.Optional("show_sensor_config", default=False): bool,
+                vol.Optional("show_customize_config", default=cast(Any, False)): bool,
+                vol.Optional("show_sensor_config", default=cast(Any, False)): bool,
                 vol.Optional(
-                    "default_sensors", default=list(DEFAULT_SENSOR_KINDS)
+                    "default_sensors", default=cast(Any, list(DEFAULT_SENSOR_KINDS))
                 ): default_sensors_selector(),
             }
         )
@@ -1593,8 +1596,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             data_schema=schema,
             description_placeholders={
                 "type": types[self._customize_index],
-                "index": self._customize_index + 1,
-                "total": len(types),
+                "index": str(self._customize_index + 1),
+                "total": str(len(types)),
             },
             errors=errors,
         )
@@ -1721,7 +1724,8 @@ class WasteCollectionOptionsFlow(OptionsFlow):
 
     async def translate(self, text: str) -> str:
         user_language = self.hass.config.language
-        return await async_get_translations(self.hass, user_language, DOMAIN)(text)
+        translations = await async_get_translations(self.hass, user_language, DOMAIN)
+        return translations.get(text, text)
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None):
         # get SourceShells
@@ -1791,19 +1795,22 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             ): vol.All(int, vol.Range(min=1)),
             vol.Optional(
                 CONF_RANDOM_FETCH_TIME_OFFSET,
-                default={
-                    "hours": self._entry.options.get(
-                        CONF_RANDOM_FETCH_TIME_OFFSET,
-                        CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                    )
-                    // 60,
-                    "minutes": self._entry.options.get(
-                        CONF_RANDOM_FETCH_TIME_OFFSET,
-                        CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                    )
-                    % 60,
-                    "seconds": 0,
-                },
+                default=cast(
+                    Any,
+                    {
+                        "hours": self._entry.options.get(
+                            CONF_RANDOM_FETCH_TIME_OFFSET,
+                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                        )
+                        // 60,
+                        "minutes": self._entry.options.get(
+                            CONF_RANDOM_FETCH_TIME_OFFSET,
+                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                        )
+                        % 60,
+                        "seconds": 0,
+                    },
+                ),
             ): DurationSelector(DurationSelectorConfig(enable_day=False)),
             vol.Optional(
                 CONF_DAY_SWITCH_TIME,
@@ -1844,7 +1851,9 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             ),
             # Adds default sensors an older entry does not have yet. Nothing
             # is preselected, so opening the options never changes anything.
-            vol.Optional("default_sensors", default=[]): default_sensors_selector(),
+            vol.Optional(
+                "default_sensors", default=cast(Any, [])
+            ): default_sensors_selector(),
             vol.Optional(
                 "customize_select",
             ): SelectSelector(

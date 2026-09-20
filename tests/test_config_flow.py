@@ -17,7 +17,9 @@ sys.path.insert(
 )
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from typing import Any, cast  # isort:skip
+from typing import Any, cast
+
+from collections.abc import Mapping  # isort:skip
 
 # Home Assistant selects its validation implementation during startup. Import it
 # before voluptuous so current HA and the minimum supported version share types.
@@ -77,7 +79,7 @@ def test_integer_selector_coerces_submitted_value() -> None:
         include_title=False,
     )
 
-    result = schema({"count": 5.0})
+    result = cast(dict[str, Any], schema({"count": 5.0}))
 
     assert result["count"] == 5
     assert isinstance(result["count"], int)
@@ -304,7 +306,8 @@ def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
     flow.hass = cast(Any, hass)
 
     result = asyncio.run(flow.async_step_init())
-    schema = result["data_schema"]
+    schema = result.get("data_schema")
+    assert schema is not None
     selector = next(
         v for k, v in schema.schema.items() if str(k.schema) == "customize_select"
     )
@@ -432,7 +435,7 @@ def _cascade_flow(source_name: str):
     return flow, shown
 
 
-def _shown_fields(form: dict) -> list[str]:
+def _shown_fields(form: Mapping) -> list[str]:
     return [
         str(getattr(marker, "schema", marker)) for marker in form["data_schema"].schema
     ]
@@ -476,9 +479,14 @@ def test_a_cascade_asks_for_one_level_per_view() -> None:
     # entry is about to be created from. That view has its own step, whose
     # description is the address and nothing else — no "configure your service
     # provider" blurb, no source HOWTO, both already answered by the cascade.
-    assert form["step_id"] == "cascade_confirm"
-    assert list(form["description_placeholders"]) == ["cascade_summary"]
-    summary = form["description_placeholders"]["cascade_summary"]
+    assert form.get("step_id") == "cascade_confirm"
+    placeholders = form.get("description_placeholders")
+    assert placeholders is not None
+    assert list(placeholders) == ["cascade_summary"]
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    summary = description_placeholders["cascade_summary"]
+    assert isinstance(summary, str)
     for level, value in picked.items():
         # A markdown list item per level: the description is rendered as
         # markdown, where bare newlines would run the levels into one line.
@@ -629,7 +637,7 @@ def _settled_cascade(name: str):
     asyncio.run(flow.async_step_args({"one": "A"}))
     asyncio.run(flow.async_step_args({"two": "B"}))
     form = asyncio.run(flow.async_step_args({"three": "C"}))
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
 
     return flow, shown
 
@@ -656,19 +664,19 @@ def test_an_error_on_a_settled_level_re_opens_the_cascade() -> None:
     # Back on the ordinary argument form, with every level offered again - the
     # blamed one has to be changeable, and the levels above it decide what it
     # may be changed to.
-    assert form["step_id"] == "args_cascade_stale"
+    assert form.get("step_id") == "args_cascade_stale"
     assert set(_shown_fields(form)) == {
         CONF_SOURCE_CALENDAR_TITLE,
         "one",
         "two",
         "three",
     }
-    assert form["errors"] == {"three": "invalid_arg"}
+    assert form.get("errors") == {"three": "invalid_arg"}
     # invalid_arg's text is "Argument is invalid: {invalid_arg_message}", so the
     # placeholder has to survive the switch back to that step.
-    assert form["description_placeholders"]["invalid_arg_message"] == (
-        "no schedule for C"
-    )
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    assert description_placeholders["invalid_arg_message"] == ("no schedule for C")
     # Still the user's own answers, not a blank form.
     assert flow._extra_info_default_params == {"one": "A", "two": "B", "three": "C"}
 
@@ -686,9 +694,9 @@ def test_an_error_elsewhere_keeps_the_closing_view() -> None:
 
     form = asyncio.run(flow.async_step_args({CONF_SOURCE_CALENDAR_TITLE: "Bins"}))
 
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
     assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
-    assert form["errors"] == {"base": "fetch_error"}
+    assert form.get("errors") == {"base": "fetch_error"}
 
 
 # ---------------------------------------------------------------------------
@@ -751,7 +759,7 @@ def test_the_wizard_walks_a_recorded_cascade_one_level_per_view() -> None:
         assert asked == [f for f in meta["fields"] if f in meta["expected"]], (
             module_name
         )
-        assert form["step_id"] == "cascade_confirm", module_name
+        assert form.get("step_id") == "cascade_confirm", module_name
         assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE], module_name
 
 
@@ -766,14 +774,14 @@ def test_a_cascade_keyed_on_a_non_level_param_still_walks() -> None:
     # f_id_kommune is absent because this recorded service fixes its kommune and
     # returns [] for that level, which the cascade contract says to skip.
     assert asked == ["f_id_bezirk", "f_id_strasse", "f_id_strasse_hnr"]
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
 
     # ...and without the key, every level returns [] - which is what the wizard
     # did with it before, and is why it has to be passed through.
     asked, form, _meta = _walk_real_cascade("abfall_io", context={})
 
     assert asked == []
-    assert form["step_id"] == "args_abfall_io"
+    assert form.get("step_id") == "args_abfall_io"
 
 
 def test_a_skipped_level_is_not_offered_on_the_closing_form() -> None:
@@ -797,14 +805,19 @@ def test_a_skipped_level_is_not_offered_on_the_closing_form() -> None:
     assert _shown_fields(form) == ["three"]
     form = asyncio.run(flow.async_step_args({"three": "C"}))
 
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
     assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
     assert "two" in flow._cascade_omitted()
     # ...and it contributes nothing to the entry, rather than an empty string.
     assert "two" not in flow._cascade_values()
     # Nor is it listed in the summary, where a blank line would read as
     # something the user failed to fill in.
-    assert "two" not in form["description_placeholders"]["cascade_summary"].lower()
+    assert (
+        "two"
+        not in (
+            (form.get("description_placeholders") or {}).get("cascade_summary") or ""
+        ).lower()
+    )
 
 
 def test_a_skipped_level_keeps_a_value_the_region_pre_filled() -> None:
@@ -835,7 +848,7 @@ def test_an_inert_cascade_leaves_every_level_editable() -> None:
 
     form = asyncio.run(flow.async_step_args())
 
-    assert form["step_id"] == "args_cascade_inert"
+    assert form.get("step_id") == "args_cascade_inert"
     assert set(_shown_fields(form)) == {
         CONF_SOURCE_CALENDAR_TITLE,
         "one",
@@ -865,7 +878,10 @@ def test_the_summary_shows_labels_not_stored_values() -> None:
     asyncio.run(flow.async_step_args({"two": "two-id-42"}))
     form = asyncio.run(flow.async_step_args({"three": "three-id-42"}))
 
-    summary = form["description_placeholders"]["cascade_summary"]
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    summary = description_placeholders["cascade_summary"]
+    assert isinstance(summary, str)
     for level in ("one", "two", "three"):
         assert f"{level.capitalize()} Name" in summary
         assert f"{level}-id-42" not in summary
@@ -922,6 +938,8 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
             "as its raw field name. Add them by hand - the args_* sections are "
             "generated, this one is not."
         )
+
+
 def _options_flow(existing: list[dict]) -> tuple[WasteCollectionOptionsFlow, dict]:
     """An options flow of an existing entry that already has ``existing`` sensors."""
     from types import SimpleNamespace
@@ -979,7 +997,10 @@ def _submit_options(existing: list[dict], **extra: Any) -> dict:
 
 def test_options_flow_adds_no_default_sensors_unless_asked() -> None:
     flow, _ = _options_flow([])
-    schema = asyncio.run(flow.async_step_init())["data_schema"]
+    result = asyncio.run(flow.async_step_init())
+    assert "data_schema" in result
+    schema = result["data_schema"]
+    assert schema is not None
     marker, validator = _marker_and_validator(schema, "default_sensors")
     assert marker.default() == []  # opening the options changes nothing
     assert validator.config["multiple"] is True
