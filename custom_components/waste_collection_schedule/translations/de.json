@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Mülltyp Anpassungsmenü Anzeigen",
           "show_sensor_config": "Sensor Konfiguration Anzeigen",
-          "create_default_sensors": "Standard-Sensoren anlegen"
+          "default_sensors": "Standard-Sensoren"
         },
         "data_description": {
           "show_customize_config": "Wähle dies, wenn du Mülltypen anpassen möchtest.",
           "show_sensor_config": "Wähle dies, wenn du Sensoren konfigurieren möchtest.",
-          "create_default_sensors": "Legt pro Mülltyp einen Sensor an. Kann mit eigenen Sensoren kombiniert werden."
+          "default_sensors": "Wähle, welche Standard-Sensoren angelegt werden. Können mit eigenen Sensoren kombiniert werden."
         }
       },
       "customize_select": {
@@ -31641,6 +31641,7 @@
         "description": "Waste Collection Schedule Details aktualisieren.",
         "data": {
           "sensor_select": "Sensoren zum Ändern",
+          "default_sensors": "Standard-Sensoren hinzufügen",
           "customize_select": "Zu Bearbeitende Anpassungen",
           "separator": "Trenner",
           "fetch_time": "Abrufzeit",
@@ -31653,6 +31654,7 @@
         },
         "data_description": {
           "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
+          "default_sensors": "Fügt die gewählten Standard-Sensoren hinzu, die noch fehlen. Bestehende Sensoren bleiben unverändert.",
           "customize_select": "Wähle die Anpassung aus, die du ändern möchtest. (oder wähle eine neue Anpassung, um eine neue zu erstellen)",
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "seperator": "Wird verwendet, um Einträge aneinander zu hängen, wenn die Quelle mehrere Werte für einen Tag zurückgibt.",
@@ -31736,6 +31738,12 @@
         "appointment_types": "Abfallarten",
         "generic": "Generisch",
         "hidden": "Versteckt"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Ein Sensor pro Abfallart",
+        "new": "Übersichts-Sensoren (nächste Abholung, Tage bis Abholung, letzte Aktualisierung)"
       }
     },
     "custom_flow_types": {

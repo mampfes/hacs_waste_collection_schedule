@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Show Collection Event Customize Configurations",
           "show_sensor_config": "Show Sensor Configurations",
-          "create_default_sensors": "Standaardsensoren aanmaken"
+          "default_sensors": "Standaardsensoren"
         },
         "data_description": {
           "show_customize_config": "Select this if you want to customize the collection types.",
           "show_sensor_config": "Select this if you want to configure sensors.",
-          "create_default_sensors": "Maakt één sensor per afvaltype aan. Kan worden gecombineerd met eigen sensoren."
+          "default_sensors": "Kies welke standaardsensoren worden aangemaakt. Ze kunnen worden gecombineerd met eigen sensoren."
         }
       },
       "customize_select": {
@@ -31280,6 +31280,7 @@
         "description": "Update Waste Collection Schedule details.",
         "data": {
           "sensor_select": "Sensors To Modify",
+          "default_sensors": "Standaardsensoren toevoegen",
           "customize_select": "Customizations To Modify",
           "calendar_title": "Calendar Title",
           "separator": "Separator",
@@ -31293,6 +31294,7 @@
         },
         "data_description": {
           "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
+          "default_sensors": "Voegt de gekozen standaardsensoren toe die nog ontbreken. Bestaande sensoren blijven ongewijzigd.",
           "customize_select": "Select the customization you want to modify. (or select a new customization to create a new one)",
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
@@ -31376,6 +31378,12 @@
         "appointment_types": "Appointment Types",
         "generic": "Generic",
         "hidden": "Hidden"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Eén sensor per afvaltype",
+        "new": "Overzichtssensoren (volgende ophaling, dagen tot ophaling, laatste update)"
       }
     },
     "custom_flow_types": {

@@ -7,11 +7,16 @@ from typing import Any
 import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 import voluptuous as vol
-from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
+from homeassistant.components.sensor import (
+    PLATFORM_SCHEMA,
+    SensorDeviceClass,
+    SensorEntity,
+)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
+from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.template import Template
 
 # fmt: off
@@ -27,9 +32,12 @@ from .const import (
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
     CONF_LEADTIME,
+    CONF_SENSOR_MODE,
     CONF_SENSORS,
     CONF_SOURCE_INDEX,
     DOMAIN,
+    SENSOR_MODE_DAYS_TO,
+    SENSOR_MODE_LAST_UPDATE,
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
@@ -97,7 +105,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
             details_format = DetailsFormat(details_format)
 
         entities.append(
-            ScheduleSensor(
+            SENSOR_CLASSES.get(sensor.get(CONF_SENSOR_MODE), ScheduleSensor)(
                 hass=hass,
                 api=None,
                 coordinator=coordinator,
@@ -381,12 +389,48 @@ class ScheduleSensor(SensorEntity):
             attributes["last_update"] = refreshtime
 
         if len(upcoming1) > 0:
+            # Language-neutral raw values of the next collection, so cards and
+            # templates can render them in the user's own language. `daysTo`
+            # used to need add_days_to; that option is still accepted.
             attributes["color"] = upcoming1[0].color
-            if self._add_days_to:
-                attributes["daysTo"] = upcoming1[0].daysTo
+            attributes["daysTo"] = upcoming1[0].daysTo
+            attributes["date"] = upcoming1[0].date.isoformat()
+            attributes["next_types"] = list(upcoming1[0].types)
 
         self._attr_extra_state_attributes = attributes
         self._add_refreshtime()
 
         if self.hass is not None:
             self.async_write_ha_state()
+
+
+class DaysToSensor(ScheduleSensor):
+    """Days until the next collection as a number, for automations."""
+
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_native_unit_of_measurement = UnitOfTime.DAYS
+
+    def _set_state(self, upcoming: list[CollectionGroup]):
+        super()._set_state(upcoming)
+        self._value = upcoming[0].daysTo if upcoming else None
+
+
+class LastUpdateSensor(ScheduleSensor):
+    """When the schedule was last fetched, a diagnostic timestamp."""
+
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    @callback
+    def _update_sensor(self):
+        refreshtime = self._aggregator.refreshtime if self._aggregator else None
+        # The fetch time is a naive local datetime; a timestamp needs a zone.
+        self._value = refreshtime.astimezone() if refreshtime else None
+        if self.hass is not None:
+            self.async_write_ha_state()
+
+
+SENSOR_CLASSES: dict[str | None, type[ScheduleSensor]] = {
+    SENSOR_MODE_DAYS_TO: DaysToSensor,
+    SENSOR_MODE_LAST_UPDATE: LastUpdateSensor,
+}

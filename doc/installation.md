@@ -60,6 +60,19 @@ As of version 2.0.0 of the Waste Collection Schedule component, you can configur
 1. You will be asked to configure sensors. If you do not want to configure any sensors scroll down and select `Do not create sensor`. Otherwise configure the sensors as described in the [Configuring Sensor(s)](#configuring-sensors) section, if you want to configure multiple sensors, you must select `Add additional sensors` while configuring the previous sensor.
 1. After completing the configuration you can click `CUSTOMIZE` to change some advanced settings described in the [Configuring Source(s)](#configuring-sources) section. You can also change the sensor or customizees here. Or click on the 3 dots and select reconfigure to change attributes of the source.
 
+### Default sensors
+
+When you add a source in the GUI you can choose which default sensors are created. Both sets are preselected, you can untick either or both, and they can be combined with your own sensors:
+
+| Set | Sensors |
+|--|--|
+| One sensor per waste type | One sensor per waste type of your address, showing the next collection date of that type (e.g. `on Mon, 21.09.2026`) |
+| Overview sensors | **Next collection**: the waste types of the next collection day, with the [attributes](#attributes-of-a-sensor) `daysTo`, `date`, `next_types` and `color`<br>**Days until collection**: the number of days until the next collection (unit `d`), for automations<br>**Last update**: when the schedule was last fetched (diagnostic, hidden by default) |
+
+The overview sensors have English names on purpose, so the entity ids are the same for everyone and the examples in this documentation work when copied. You can rename them in Home Assistant; the entity id stays the same. They only contain raw values (numbers, dates, waste types), so a card or template can show them in your own language, see the [FAQ](/doc/faq.md).
+
+To add the default sensors to an entry you set up earlier, click `CUSTOMIZE` on the entry and select them under `Add default sensors`. Only sensors that are missing are added, existing sensors are never changed.
+
 ### GUI limitations
 
 - You cannot define sensors in the YAML configuration that access the GUI sources (or the other way around)
@@ -190,9 +203,20 @@ waste_collection_schedule:
 | leadtime | int | optional | Limits Home Assistant's _more info_ popup to only displaying collections happening within the next _leadtime_ days|
 | value_template | string | optional | Uses Home Assistant templating to format the state information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | date_template | string | optional | Uses Home Assistant templating to format the dates appearing within the _more info_ popup information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
-| add_days_to | boolean | optional | Adds a `daysTo` attribute to the source entity state containing the number of days to  the next collection |
+| add_days_to | boolean | optional | Deprecated, has no effect: the `daysTo` attribute is now always set. Still accepted so existing configurations stay valid |
 | event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
 | types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used `alias` in the customize section of the sources configuration. |
+
+### Attributes of a sensor
+
+Every sensor that has an upcoming collection exposes these language-neutral attributes of that next collection, so cards and templates can show them in your own language:
+
+| Attribute | Description |
+|--|--|
+| `daysTo` | Number of days until the next collection (`0` = today) |
+| `date` | Date of the next collection, ISO format (`YYYY-MM-DD`) |
+| `next_types` | List of the waste types collected on that day |
+| `color` | Display color of the next collection (`#RRGGBB`), if known |
 
 ## Options for _details_format_ parameter
 

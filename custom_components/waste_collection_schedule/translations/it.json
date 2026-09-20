@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Mostra Configurazioni di Personalizzazione Eventi di Raccolta",
           "show_sensor_config": "Mostra Configurazioni Sensori",
-          "create_default_sensors": "Crea i sensori predefiniti"
+          "default_sensors": "Sensori predefiniti"
         },
         "data_description": {
           "show_customize_config": "Seleziona questo se vuoi personalizzare i tipi di raccolta.",
           "show_sensor_config": "Seleziona questo se vuoi configurare i sensori.",
-          "create_default_sensors": "Crea un sensore per tipo di rifiuto. Può essere combinato con sensori personalizzati."
+          "default_sensors": "Scegli quali sensori predefiniti creare. Possono essere combinati con sensori personalizzati."
         }
       },
       "customize_select": {
@@ -31452,6 +31452,7 @@
         "description": "Aggiorna i dettagli del calendario di raccolta dei rifiuti.",
         "data": {
           "sensor_select": "Sensori da modificare",
+          "default_sensors": "Aggiungi sensori predefiniti",
           "customize_select": "Tipi di raccolte da modificare",
           "calendar_title": "Titolo del calendario",
           "separator": "Separatore",
@@ -31465,6 +31466,7 @@
         },
         "data_description": {
           "sensor_select": "Seleziona il sensore che vuoi modificare. (seleziona 'Aggiungi nuovo sensore' per creare un nuovo sensore)",
+          "default_sensors": "Aggiunge i sensori predefiniti selezionati che mancano. I sensori esistenti restano invariati.",
           "customize_select": "Seleziona il tipo di raccolta che vuoi modificare.",
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verrà utilizzato il nome del tuo fornitore di servizi.",
           "separator": "Utilizzato per unire le voci se la fonte restituisce più valori per un singolo giorno.",
@@ -31548,6 +31550,12 @@
         "appointment_types": "Appuntamenti",
         "generic": "Generico",
         "hidden": "Nascosto"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Un sensore per tipo di rifiuto",
+        "new": "Sensori di riepilogo (prossimo ritiro, giorni mancanti, ultimo aggiornamento)"
       }
     },
     "custom_flow_types": {

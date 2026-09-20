@@ -212,6 +212,74 @@ waste_collection_schedule:
 </details>
 
 <details>
+<summary>How do I show the next collection in my own language on a Lovelace card?</summary>
+<p>
+
+The sensor state and attributes contain only raw values (waste types, number of days, ISO date, color), so the card decides the wording. With the GUI's default overview sensors (see [Default sensors](/doc/installation.md#default-sensors)) you can use [Button Card](https://github.com/custom-cards/button-card) without splitting a text:
+
+```yaml
+# button-card configuration
+type: custom:button-card
+entity: sensor.waste_collection_schedule_next_collection # adjust to your entity id
+layout: icon_name_state2nd
+show_name: true
+show_label: true
+name: "[[[ return entity.state; ]]]" # the waste types of the next collection
+label: |
+  [[[
+    const d = entity.attributes.daysTo;
+    // Replace the words to match your language, e.g. "Heute" / "Morgen" / `in ${d} Tagen`
+    if (d == 0) return "Today";
+    if (d == 1) return "Tomorrow";
+    return `in ${d} days`;
+  ]]]
+styles:
+  icon:
+    - color: "[[[ return entity.attributes.color; ]]]"
+```
+
+The weekday in the language of your browser can be derived from the ISO date in the `date` attribute:
+
+```yaml
+label: |
+  [[[
+    return new Date(entity.attributes.date).toLocaleDateString(undefined, { weekday: "long" });
+  ]]]
+```
+
+For automations use the numeric **Days until collection** sensor, e.g. a `numeric_state` trigger with `below: 2` fires when the value drops to 1, the day before the collection. Waste types of that day are in the `next_types` attribute of **Next collection**.
+
+</p>
+</details>
+
+<details>
+<summary>How do I use the waste color on a Tile card (with card-mod)?</summary>
+<p>
+
+Every sensor with an upcoming collection has a `color` attribute (`#RRGGBB`). The Home Assistant [Tile card](https://www.home-assistant.io/dashboards/tile/) can only use a fixed color, but with [card-mod](https://github.com/thomasloven/lovelace-card-mod) it can follow the attribute:
+
+```yaml
+type: tile
+entity: sensor.waste_collection_schedule_next_collection # adjust to your entity id
+name: Next collection
+state_content:
+  - state
+  - daysTo
+card_mod:
+  style: |
+    ha-card {
+      --tile-color: {{ state_attr(config.entity, 'color') or 'var(--primary-color)' }};
+    }
+```
+
+The tile then shows the waste types and the number of days, and its icon takes the color of the next collection. `daysTo` is shown as a plain number; for wording like "Today" or "Tomorrow" in your language use the Button Card example in the entry above.
+
+The same works for the per-type sensors, use their entity id instead.
+
+</p>
+</details>
+
+<details>
 <summary>How do I show a coloured Lovelace card depending on the due date?</summary>
 <p>
 

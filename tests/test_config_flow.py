@@ -17,7 +17,9 @@ sys.path.insert(
 )
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from typing import Any, cast  # isort:skip
+from typing import Any, cast
+
+from collections.abc import Mapping  # isort:skip
 
 # Home Assistant selects its validation implementation during startup. Import it
 # before voluptuous so current HA and the minimum supported version share types.
@@ -45,8 +47,20 @@ from custom_components.waste_collection_schedule.config_flow import (  # isort:s
 from custom_components.waste_collection_schedule.const import (  # isort:skip
     CONF_COLLECTION_TYPES,
     CONF_CUSTOMIZE,
+    CONF_SENSOR_MODE,
     CONF_SENSORS,
     CONF_SOURCE_CALENDAR_TITLE,
+    SENSOR_MODE_DAYS_TO,
+    SENSOR_MODE_LAST_UPDATE,
+)
+from custom_components.waste_collection_schedule.default_sensors import (  # isort:skip
+    DAYS_TO_NAME,
+    KIND_LEGACY,
+    KIND_NEW,
+    LAST_UPDATE_NAME,
+    NEW_SENSOR_NAMES,
+    NEXT_COLLECTION_NAME,
+    build_default_sensors,
 )
 
 
@@ -65,7 +79,7 @@ def test_integer_selector_coerces_submitted_value() -> None:
         include_title=False,
     )
 
-    result = schema({"count": 5.0})
+    result = cast(dict[str, Any], schema({"count": 5.0}))
 
     assert result["count"] == 5
     assert isinstance(result["count"], int)
@@ -292,7 +306,8 @@ def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
     flow.hass = cast(Any, hass)
 
     result = asyncio.run(flow.async_step_init())
-    schema = result["data_schema"]
+    schema = result.get("data_schema")
+    assert schema is not None
     selector = next(
         v for k, v in schema.schema.items() if str(k.schema) == "customize_select"
     )
@@ -308,14 +323,14 @@ def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
 # --- default sensors are optional and combine with custom sensors --------------
 
 
-def _finish_options(create_default: bool | None, custom: list[dict]) -> list[dict]:
+def _finish_options(kinds: list[str] | None, custom: list[dict]) -> list[dict]:
     flow = object.__new__(WasteCollectionConfigFlow)
     flow._title = "t"
     flow._args_data = {}
     flow._options = {CONF_SENSORS: custom} if custom else {}
     flow._auto_sensor_types = ["Paper", "Glass"]
-    if create_default is not None:
-        flow._create_default_sensors = create_default
+    if kinds is not None:
+        flow._default_sensor_kinds = kinds
     captured: dict[str, Any] = {}
 
     def _create_entry(**kwargs: Any) -> dict:
@@ -327,28 +342,45 @@ def _finish_options(create_default: bool | None, custom: list[dict]) -> list[dic
     return captured["options"].get(CONF_SENSORS, [])
 
 
-def test_default_sensors_are_created_by_default() -> None:
-    assert [s[CONF_NAME] for s in _finish_options(None, [])] == ["Paper", "Glass"]
+def test_both_default_sets_are_created_by_default() -> None:
+    assert [s[CONF_NAME] for s in _finish_options(None, [])] == [
+        "Paper",
+        "Glass",
+        *NEW_SENSOR_NAMES,
+    ]
+
+
+def test_only_the_legacy_default_sensors() -> None:
+    assert [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], [])] == [
+        "Paper",
+        "Glass",
+    ]
+
+
+def test_only_the_new_default_sensors() -> None:
+    assert [s[CONF_NAME] for s in _finish_options([KIND_NEW], [])] == list(
+        NEW_SENSOR_NAMES
+    )
 
 
 def test_default_sensors_can_be_switched_off() -> None:
-    assert _finish_options(False, []) == []
+    assert _finish_options([], []) == []
 
 
 def test_default_sensors_are_added_next_to_custom_sensors() -> None:
     custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
     assert names == ["Mine", "Paper", "Glass"]
 
 
 def test_custom_sensors_only_when_defaults_are_off() -> None:
     custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    assert [s[CONF_NAME] for s in _finish_options(False, custom)] == ["Mine"]
+    assert [s[CONF_NAME] for s in _finish_options([], custom)] == ["Mine"]
 
 
 def test_a_custom_sensor_named_like_a_type_replaces_that_default() -> None:
     custom = [{CONF_NAME: "Paper", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
     assert names == ["Paper", "Glass"]
 
 
@@ -403,7 +435,7 @@ def _cascade_flow(source_name: str):
     return flow, shown
 
 
-def _shown_fields(form: dict) -> list[str]:
+def _shown_fields(form: Mapping) -> list[str]:
     return [
         str(getattr(marker, "schema", marker)) for marker in form["data_schema"].schema
     ]
@@ -447,9 +479,14 @@ def test_a_cascade_asks_for_one_level_per_view() -> None:
     # entry is about to be created from. That view has its own step, whose
     # description is the address and nothing else — no "configure your service
     # provider" blurb, no source HOWTO, both already answered by the cascade.
-    assert form["step_id"] == "cascade_confirm"
-    assert list(form["description_placeholders"]) == ["cascade_summary"]
-    summary = form["description_placeholders"]["cascade_summary"]
+    assert form.get("step_id") == "cascade_confirm"
+    placeholders = form.get("description_placeholders")
+    assert placeholders is not None
+    assert list(placeholders) == ["cascade_summary"]
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    summary = description_placeholders["cascade_summary"]
+    assert isinstance(summary, str)
     for level, value in picked.items():
         # A markdown list item per level: the description is rendered as
         # markdown, where bare newlines would run the levels into one line.
@@ -600,7 +637,7 @@ def _settled_cascade(name: str):
     asyncio.run(flow.async_step_args({"one": "A"}))
     asyncio.run(flow.async_step_args({"two": "B"}))
     form = asyncio.run(flow.async_step_args({"three": "C"}))
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
 
     return flow, shown
 
@@ -627,19 +664,19 @@ def test_an_error_on_a_settled_level_re_opens_the_cascade() -> None:
     # Back on the ordinary argument form, with every level offered again - the
     # blamed one has to be changeable, and the levels above it decide what it
     # may be changed to.
-    assert form["step_id"] == "args_cascade_stale"
+    assert form.get("step_id") == "args_cascade_stale"
     assert set(_shown_fields(form)) == {
         CONF_SOURCE_CALENDAR_TITLE,
         "one",
         "two",
         "three",
     }
-    assert form["errors"] == {"three": "invalid_arg"}
+    assert form.get("errors") == {"three": "invalid_arg"}
     # invalid_arg's text is "Argument is invalid: {invalid_arg_message}", so the
     # placeholder has to survive the switch back to that step.
-    assert form["description_placeholders"]["invalid_arg_message"] == (
-        "no schedule for C"
-    )
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    assert description_placeholders["invalid_arg_message"] == ("no schedule for C")
     # Still the user's own answers, not a blank form.
     assert flow._extra_info_default_params == {"one": "A", "two": "B", "three": "C"}
 
@@ -657,9 +694,9 @@ def test_an_error_elsewhere_keeps_the_closing_view() -> None:
 
     form = asyncio.run(flow.async_step_args({CONF_SOURCE_CALENDAR_TITLE: "Bins"}))
 
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
     assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
-    assert form["errors"] == {"base": "fetch_error"}
+    assert form.get("errors") == {"base": "fetch_error"}
 
 
 # ---------------------------------------------------------------------------
@@ -722,7 +759,7 @@ def test_the_wizard_walks_a_recorded_cascade_one_level_per_view() -> None:
         assert asked == [f for f in meta["fields"] if f in meta["expected"]], (
             module_name
         )
-        assert form["step_id"] == "cascade_confirm", module_name
+        assert form.get("step_id") == "cascade_confirm", module_name
         assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE], module_name
 
 
@@ -737,14 +774,14 @@ def test_a_cascade_keyed_on_a_non_level_param_still_walks() -> None:
     # f_id_kommune is absent because this recorded service fixes its kommune and
     # returns [] for that level, which the cascade contract says to skip.
     assert asked == ["f_id_bezirk", "f_id_strasse", "f_id_strasse_hnr"]
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
 
     # ...and without the key, every level returns [] - which is what the wizard
     # did with it before, and is why it has to be passed through.
     asked, form, _meta = _walk_real_cascade("abfall_io", context={})
 
     assert asked == []
-    assert form["step_id"] == "args_abfall_io"
+    assert form.get("step_id") == "args_abfall_io"
 
 
 def test_a_skipped_level_is_not_offered_on_the_closing_form() -> None:
@@ -768,14 +805,19 @@ def test_a_skipped_level_is_not_offered_on_the_closing_form() -> None:
     assert _shown_fields(form) == ["three"]
     form = asyncio.run(flow.async_step_args({"three": "C"}))
 
-    assert form["step_id"] == "cascade_confirm"
+    assert form.get("step_id") == "cascade_confirm"
     assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
     assert "two" in flow._cascade_omitted()
     # ...and it contributes nothing to the entry, rather than an empty string.
     assert "two" not in flow._cascade_values()
     # Nor is it listed in the summary, where a blank line would read as
     # something the user failed to fill in.
-    assert "two" not in form["description_placeholders"]["cascade_summary"].lower()
+    assert (
+        "two"
+        not in (
+            (form.get("description_placeholders") or {}).get("cascade_summary") or ""
+        ).lower()
+    )
 
 
 def test_a_skipped_level_keeps_a_value_the_region_pre_filled() -> None:
@@ -806,7 +848,7 @@ def test_an_inert_cascade_leaves_every_level_editable() -> None:
 
     form = asyncio.run(flow.async_step_args())
 
-    assert form["step_id"] == "args_cascade_inert"
+    assert form.get("step_id") == "args_cascade_inert"
     assert set(_shown_fields(form)) == {
         CONF_SOURCE_CALENDAR_TITLE,
         "one",
@@ -836,7 +878,10 @@ def test_the_summary_shows_labels_not_stored_values() -> None:
     asyncio.run(flow.async_step_args({"two": "two-id-42"}))
     form = asyncio.run(flow.async_step_args({"three": "three-id-42"}))
 
-    summary = form["description_placeholders"]["cascade_summary"]
+    description_placeholders = form.get("description_placeholders")
+    assert description_placeholders is not None
+    summary = description_placeholders["cascade_summary"]
+    assert isinstance(summary, str)
     for level in ("one", "two", "three"):
         assert f"{level.capitalize()} Name" in summary
         assert f"{level}-id-42" not in summary
@@ -893,3 +938,221 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
             "as its raw field name. Add them by hand - the args_* sections are "
             "generated, this one is not."
         )
+
+
+def _options_flow(existing: list[dict]) -> tuple[WasteCollectionOptionsFlow, dict]:
+    """An options flow of an existing entry that already has ``existing`` sensors."""
+    from types import SimpleNamespace
+
+    from custom_components.waste_collection_schedule import const
+    from custom_components.waste_collection_schedule.config_flow import (
+        WCSCoordinator,
+    )
+
+    coordinator = object.__new__(WCSCoordinator)
+    coordinator._shell = cast(  # type: ignore[attr-defined]
+        Any, SimpleNamespace(calendar_title="Calendar", raw_labels=[])
+    )
+    coordinator._aggregator = type(  # type: ignore[attr-defined]
+        "_Agg", (), {"types": {"Restmuell", "Papier"}}
+    )()
+    entry = SimpleNamespace(
+        entry_id="e1", options={CONF_SENSORS: existing} if existing else {}, data={}
+    )
+    hass = SimpleNamespace(
+        config=SimpleNamespace(language="en"),
+        data={const.DOMAIN: {"e1": coordinator}},
+    )
+    flow = object.__new__(WasteCollectionOptionsFlow)
+    flow._entry = cast(Any, entry)
+    flow.hass = cast(Any, hass)
+    saved: dict[str, Any] = {}
+
+    def _create_entry(**kwargs: Any) -> dict:
+        saved.update(kwargs["data"])
+        return kwargs
+
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    return flow, saved
+
+
+def _submit_options(existing: list[dict], **extra: Any) -> dict:
+    flow, saved = _options_flow(existing)
+    form = {
+        "calendar_title": "Calendar",
+        "separator": ", ",
+        "fetch_time": "01:00:00",
+        "fetch_interval_days": 1,
+        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
+        "day_switch_time": "10:00:00",
+        "day_offset": 0,
+        "ignore_duplicates": False,
+        **extra,
+    }
+    asyncio.run(flow.async_step_init(form))
+    # Picking a sensor to edit shows its form first, so nothing is saved yet:
+    # the options built so far are what the next steps continue from.
+    return saved or flow._options
+
+
+def test_options_flow_adds_no_default_sensors_unless_asked() -> None:
+    flow, _ = _options_flow([])
+    result = asyncio.run(flow.async_step_init())
+    assert "data_schema" in result
+    schema = result["data_schema"]
+    assert schema is not None
+    marker, validator = _marker_and_validator(schema, "default_sensors")
+    assert marker.default() == []  # opening the options changes nothing
+    assert validator.config["multiple"] is True
+
+    saved = _submit_options([{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Papier"]}])
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == ["Mine"]
+
+
+def test_options_flow_adds_only_the_missing_default_sensors() -> None:
+    per_type = build_default_sensors([KIND_LEGACY], ["Papier"])
+    saved = _submit_options(per_type, default_sensors=[KIND_LEGACY, KIND_NEW])
+    # Papier exists and stays untouched; the rest of the sets is added.
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
+        "Papier",
+        "Restmuell",
+        *NEW_SENSOR_NAMES,
+    ]
+    assert saved[CONF_SENSORS][0] == per_type[0]
+    assert "default_sensors" not in saved  # a choice, not a stored option
+
+
+def test_options_flow_does_not_duplicate_a_sensor_picked_for_editing() -> None:
+    existing = build_default_sensors([KIND_NEW], [])
+    saved = _submit_options(
+        existing, default_sensors=[KIND_NEW], sensor_select=[NEXT_COLLECTION_NAME]
+    )
+    # The sensor is being edited (removed and re-added by the next step), so
+    # ticking the set must not add a second one under the same name.
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
+        DAYS_TO_NAME,
+        LAST_UPDATE_NAME,
+    ]
+
+
+def test_editing_an_overview_sensor_keeps_its_mode() -> None:
+    existing = build_default_sensors([KIND_NEW], [])
+    flow, saved = _options_flow(existing)
+    form = {
+        "calendar_title": "Calendar",
+        "separator": ", ",
+        "fetch_time": "01:00:00",
+        "fetch_interval_days": 1,
+        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
+        "day_switch_time": "10:00:00",
+        "day_offset": 0,
+        "ignore_duplicates": False,
+        "sensor_select": [DAYS_TO_NAME],
+    }
+    asyncio.run(flow.async_step_init(form))
+    # The sensor form has no mode field: submitting it must not turn the
+    # sensor into a plain one.
+    asyncio.run(flow.async_step_sensor({CONF_NAME: DAYS_TO_NAME}))
+
+    edited = next(s for s in saved[CONF_SENSORS] if s[CONF_NAME] == DAYS_TO_NAME)
+    assert edited[CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
+
+
+def _flow_type_schema_and_choice(submitted: dict | None):
+    flow = object.__new__(WasteCollectionConfigFlow)
+    flow._title = "t"
+    flow._args_data = {}
+    flow._options = {}
+    flow._auto_sensor_types = ["Paper"]
+    captured: dict[str, Any] = {}
+
+    def _show_form(**kwargs: Any) -> dict:
+        captured["schema"] = kwargs["data_schema"]
+        return kwargs
+
+    def _create_entry(**kwargs: Any) -> dict:
+        captured["options"] = kwargs["options"]
+        return kwargs
+
+    flow.async_show_form = _show_form  # type: ignore[method-assign]
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    asyncio.run(flow.async_step_flow_type(submitted))
+    return captured
+
+
+def test_flow_type_offers_both_default_sets_preselected() -> None:
+    schema = _flow_type_schema_and_choice(None)["schema"]
+    marker, validator = _marker_and_validator(schema, "default_sensors")
+    assert marker.default() == [KIND_LEGACY, KIND_NEW]
+    assert validator.config["multiple"] is True
+    assert validator.config["translation_key"] == "default_sensors"
+
+
+def test_flow_type_choice_decides_which_default_sets_are_created() -> None:
+    def names(submitted: dict) -> list[str]:
+        options = _flow_type_schema_and_choice(submitted)["options"]
+        return [s[CONF_NAME] for s in options.get(CONF_SENSORS, [])]
+
+    assert names({"default_sensors": [KIND_NEW]}) == list(NEW_SENSOR_NAMES)
+    assert names({"default_sensors": []}) == []
+    assert names({}) == ["Paper", *NEW_SENSOR_NAMES]  # untouched = both
+
+
+# --- build_default_sensors: one place decides what a default sensor is ---------
+
+
+def test_legacy_default_sensors_keep_their_exact_shape() -> None:
+    assert build_default_sensors([KIND_LEGACY], ["Paper"]) == [
+        {
+            CONF_NAME: "Paper",
+            "details_format": "upcoming",
+            CONF_COLLECTION_TYPES: ["Paper"],
+            "value_template": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
+        }
+    ]
+
+
+def test_no_kind_builds_no_default_sensors() -> None:
+    assert build_default_sensors([], ["Paper", "Glass"]) == []
+
+
+def test_new_defaults_are_the_three_overview_sensors_over_all_types() -> None:
+    from jinja2 import Environment  # isort:skip
+
+    sensors = {s[CONF_NAME]: s for s in build_default_sensors([KIND_NEW], ["Paper"])}
+    assert list(sensors) == list(NEW_SENSOR_NAMES)
+    assert NEXT_COLLECTION_NAME == "Next collection"
+    for sensor in sensors.values():
+        assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
+        assert sensor["details_format"] == "hidden"
+
+    # Syntax only: HA's cv.template needs a running event loop on current HA.
+    Environment().parse(sensors[NEXT_COLLECTION_NAME]["value_template"])
+    assert CONF_SENSOR_MODE not in sensors[NEXT_COLLECTION_NAME]
+    assert sensors[DAYS_TO_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
+    assert sensors[LAST_UPDATE_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_LAST_UPDATE
+
+
+def test_new_defaults_do_not_depend_on_the_fetched_types() -> None:
+    assert [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [])] == list(
+        NEW_SENSOR_NAMES
+    )
+
+
+def test_legacy_and_new_defaults_combine() -> None:
+    names = [
+        s[CONF_NAME]
+        for s in build_default_sensors([KIND_LEGACY, KIND_NEW], ["Paper", "Glass"])
+    ]
+    assert names == ["Paper", "Glass", *NEW_SENSOR_NAMES]
+
+
+def test_an_existing_overview_sensor_is_not_duplicated() -> None:
+    existing = [{CONF_NAME: NEXT_COLLECTION_NAME}]
+    names = [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [], existing)]
+    assert names == [DAYS_TO_NAME, LAST_UPDATE_NAME]  # only the missing ones
+
+
+def test_building_defaults_twice_never_duplicates_a_sensor() -> None:
+    first = build_default_sensors([KIND_LEGACY], ["Paper", "Glass"])
+    assert build_default_sensors([KIND_LEGACY], ["Paper", "Glass"], first) == []
