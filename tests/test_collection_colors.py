@@ -3,7 +3,7 @@
 import calendar  # noqa: F401 - import stdlib calendar before the package path
 import json
 import sys
-from datetime import date, time
+from datetime import date, datetime, time
 from pathlib import Path
 
 import pytest
@@ -18,8 +18,15 @@ from waste_collection_schedule.source.ecoharmonogram_pl import Source
 from waste_collection_schedule.source_shell import Customize, customize_function
 from waste_collection_schedule.waste_types import ORGANIC, PAPER
 
+from custom_components.waste_collection_schedule.const import (
+    SENSOR_MODE_DAYS_TO,
+    SENSOR_MODE_LAST_UPDATE,
+)
 from custom_components.waste_collection_schedule.sensor import (
+    SENSOR_CLASSES,
+    DaysToSensor,
     DetailsFormat,
+    LastUpdateSensor,
     ScheduleSensor,
 )
 
@@ -160,7 +167,8 @@ def test_collection_group_exposes_color_for_sensors():
     assert CollectionGroup.create([organic, paper]).color == ORGANIC.color
 
 
-def test_sensor_exposes_language_neutral_attributes_of_the_next_collection():
+def _sensor(cls, refreshtime=None):
+    """A sensor of ``cls`` over one collection group, without a running HA."""
     group = CollectionGroup.create(
         [
             Collection(date=D, waste_type=PAPER, color="#123456"),
@@ -169,17 +177,18 @@ def test_sensor_exposes_language_neutral_attributes_of_the_next_collection():
     )
 
     class Aggregator:
-        refreshtime = None
         types = frozenset({"Paper", "Organic"})
 
         def get_upcoming_group_by_day(self, **_):
             return [group]
 
+    Aggregator.refreshtime = refreshtime  # type: ignore[attr-defined]
+
     class Coordinator:
         separator = ", "
         day_switch_time = time(23, 59)
 
-    sensor = object.__new__(ScheduleSensor)
+    sensor = object.__new__(cls)
     sensor._aggregator = Aggregator()
     sensor._api = None
     sensor._coordinator = Coordinator()
@@ -192,9 +201,42 @@ def test_sensor_exposes_language_neutral_attributes_of_the_next_collection():
     sensor._leadtime = None
     sensor._details_format = DetailsFormat.hidden
     sensor._update_sensor()
+    return sensor, group
+
+
+def test_sensor_exposes_language_neutral_attributes_of_the_next_collection():
+    sensor, group = _sensor(ScheduleSensor)
 
     attrs = sensor._attr_extra_state_attributes
     assert attrs["daysTo"] == group.daysTo
     assert attrs["date"] == D.isoformat()
     assert attrs["next_types"] == list(group.types)
     assert attrs["color"] == group.color
+
+
+def test_days_to_sensor_is_a_number_of_days_with_the_raw_attributes():
+    sensor, group = _sensor(DaysToSensor)
+
+    assert sensor.native_value == group.daysTo
+    assert isinstance(sensor.native_value, int)
+    assert sensor.native_unit_of_measurement == "d"
+    assert sensor.device_class == "duration"
+    assert sensor._attr_extra_state_attributes["date"] == D.isoformat()
+
+
+def test_last_update_sensor_is_a_diagnostic_timestamp_with_a_timezone():
+    fetched = datetime(2099, 9, 1, 12, 30)  # the shell stores a naive local time
+    sensor, _ = _sensor(LastUpdateSensor, refreshtime=fetched)
+
+    assert sensor.native_value.tzinfo is not None
+    assert sensor.native_value.replace(tzinfo=None) == fetched
+    assert sensor.device_class == "timestamp"
+    assert sensor.entity_category == "diagnostic"
+    assert _sensor(LastUpdateSensor)[0].native_value is None  # never fetched
+
+
+def test_a_sensor_mode_picks_the_sensor_class():
+    assert SENSOR_CLASSES[SENSOR_MODE_DAYS_TO] is DaysToSensor
+    assert SENSOR_CLASSES[SENSOR_MODE_LAST_UPDATE] is LastUpdateSensor
+    # No mode (every sensor stored before the modes existed) stays a plain sensor.
+    assert SENSOR_CLASSES.get(None, ScheduleSensor) is ScheduleSensor

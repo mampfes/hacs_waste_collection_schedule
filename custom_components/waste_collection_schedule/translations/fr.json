@@ -31471,7 +31471,7 @@
     "default_sensors": {
       "options": {
         "legacy": "Un capteur par type de déchet",
-        "new": "Capteurs de synthèse (prochaine collecte)"
+        "new": "Capteurs de synthèse (prochaine collecte, jours restants, dernière mise à jour)"
       }
     }
   }

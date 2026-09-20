@@ -32726,7 +32726,7 @@
     "default_sensors": {
       "options": {
         "legacy": "One sensor per waste type",
-        "new": "Overview sensors (next collection)"
+        "new": "Overview sensors (next collection, days until, last update)"
       }
     },
     "custom_flow_types": {

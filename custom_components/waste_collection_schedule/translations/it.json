@@ -31555,7 +31555,7 @@
     "default_sensors": {
       "options": {
         "legacy": "Un sensore per tipo di rifiuto",
-        "new": "Sensori di riepilogo (prossimo ritiro)"
+        "new": "Sensori di riepilogo (prossimo ritiro, giorni mancanti, ultimo aggiornamento)"
       }
     },
     "custom_flow_types": {

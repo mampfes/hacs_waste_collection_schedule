@@ -17,7 +17,13 @@ from homeassistant.helpers.selector import (
     SelectSelectorMode,
 )
 
-from .const import CONF_COLLECTION_TYPES, CONF_DETAILS_FORMAT
+from .const import (
+    CONF_COLLECTION_TYPES,
+    CONF_DETAILS_FORMAT,
+    CONF_SENSOR_MODE,
+    SENSOR_MODE_DAYS_TO,
+    SENSOR_MODE_LAST_UPDATE,
+)
 
 # One sensor per waste type, exactly as the config flow always created them.
 KIND_LEGACY = "legacy"
@@ -34,6 +40,9 @@ KIND_NEW = "new"
 # English on purpose: the name fixes the entity id, so every user gets the same
 # ids and the documentation examples work when copied. Users can rename them.
 NEXT_COLLECTION_NAME = "Next collection"
+DAYS_TO_NAME = "Days until collection"
+LAST_UPDATE_NAME = "Last update"
+NEW_SENSOR_NAMES = (NEXT_COLLECTION_NAME, DAYS_TO_NAME, LAST_UPDATE_NAME)
 
 DEFAULT_SENSOR_KINDS = (KIND_LEGACY, KIND_NEW)
 
@@ -79,17 +88,38 @@ def build_default_sensors(
                 }
             )
 
-    if KIND_NEW in kinds and NEXT_COLLECTION_NAME not in taken:
-        taken.add(NEXT_COLLECTION_NAME)
-        # All types, state = the types collected on the next day. `hidden`
-        # keeps the attributes to the raw values (daysTo, date, next_types,
-        # color) instead of a list of upcoming dates.
-        sensors.append(
-            {
-                CONF_NAME: NEXT_COLLECTION_NAME,
-                CONF_DETAILS_FORMAT: "hidden",
-                CONF_VALUE_TEMPLATE: '{{value.types|join(", ")}}',
-            }
-        )
+    if KIND_NEW in kinds:
+        for sensor in _new_sensors():
+            if sensor[CONF_NAME] not in taken:
+                taken.add(sensor[CONF_NAME])
+                sensors.append(sensor)
 
     return sensors
+
+
+def _new_sensors() -> list[dict[str, Any]]:
+    """The overview sensors, all over every waste type.
+
+    `hidden` keeps their attributes to the raw values (daysTo, date,
+    next_types, color) instead of a list of upcoming dates.
+    """
+    return [
+        # State = the types collected on the next day.
+        {
+            CONF_NAME: NEXT_COLLECTION_NAME,
+            CONF_DETAILS_FORMAT: "hidden",
+            CONF_VALUE_TEMPLATE: '{{value.types|join(", ")}}',
+        },
+        # State = a number of days, for automations.
+        {
+            CONF_NAME: DAYS_TO_NAME,
+            CONF_DETAILS_FORMAT: "hidden",
+            CONF_SENSOR_MODE: SENSOR_MODE_DAYS_TO,
+        },
+        # State = when the schedule was last fetched (diagnostic).
+        {
+            CONF_NAME: LAST_UPDATE_NAME,
+            CONF_DETAILS_FORMAT: "hidden",
+            CONF_SENSOR_MODE: SENSOR_MODE_LAST_UPDATE,
+        },
+    ]

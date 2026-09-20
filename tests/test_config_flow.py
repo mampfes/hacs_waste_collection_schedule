@@ -45,12 +45,18 @@ from custom_components.waste_collection_schedule.config_flow import (  # isort:s
 from custom_components.waste_collection_schedule.const import (  # isort:skip
     CONF_COLLECTION_TYPES,
     CONF_CUSTOMIZE,
+    CONF_SENSOR_MODE,
     CONF_SENSORS,
     CONF_SOURCE_CALENDAR_TITLE,
+    SENSOR_MODE_DAYS_TO,
+    SENSOR_MODE_LAST_UPDATE,
 )
 from custom_components.waste_collection_schedule.default_sensors import (  # isort:skip
+    DAYS_TO_NAME,
     KIND_LEGACY,
     KIND_NEW,
+    LAST_UPDATE_NAME,
+    NEW_SENSOR_NAMES,
     NEXT_COLLECTION_NAME,
     build_default_sensors,
 )
@@ -337,7 +343,7 @@ def test_both_default_sets_are_created_by_default() -> None:
     assert [s[CONF_NAME] for s in _finish_options(None, [])] == [
         "Paper",
         "Glass",
-        NEXT_COLLECTION_NAME,
+        *NEW_SENSOR_NAMES,
     ]
 
 
@@ -349,9 +355,9 @@ def test_only_the_legacy_default_sensors() -> None:
 
 
 def test_only_the_new_default_sensors() -> None:
-    assert [s[CONF_NAME] for s in _finish_options([KIND_NEW], [])] == [
-        NEXT_COLLECTION_NAME
-    ]
+    assert [s[CONF_NAME] for s in _finish_options([KIND_NEW], [])] == list(
+        NEW_SENSOR_NAMES
+    )
 
 
 def test_default_sensors_can_be_switched_off() -> None:
@@ -989,7 +995,7 @@ def test_options_flow_adds_only_the_missing_default_sensors() -> None:
     assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
         "Papier",
         "Restmuell",
-        NEXT_COLLECTION_NAME,
+        *NEW_SENSOR_NAMES,
     ]
     assert saved[CONF_SENSORS][0] == per_type[0]
     assert "default_sensors" not in saved  # a choice, not a stored option
@@ -1002,7 +1008,33 @@ def test_options_flow_does_not_duplicate_a_sensor_picked_for_editing() -> None:
     )
     # The sensor is being edited (removed and re-added by the next step), so
     # ticking the set must not add a second one under the same name.
-    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == []
+    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
+        DAYS_TO_NAME,
+        LAST_UPDATE_NAME,
+    ]
+
+
+def test_editing_an_overview_sensor_keeps_its_mode() -> None:
+    existing = build_default_sensors([KIND_NEW], [])
+    flow, saved = _options_flow(existing)
+    form = {
+        "calendar_title": "Calendar",
+        "separator": ", ",
+        "fetch_time": "01:00:00",
+        "fetch_interval_days": 1,
+        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
+        "day_switch_time": "10:00:00",
+        "day_offset": 0,
+        "ignore_duplicates": False,
+        "sensor_select": [DAYS_TO_NAME],
+    }
+    asyncio.run(flow.async_step_init(form))
+    # The sensor form has no mode field: submitting it must not turn the
+    # sensor into a plain one.
+    asyncio.run(flow.async_step_sensor({CONF_NAME: DAYS_TO_NAME}))
+
+    edited = next(s for s in saved[CONF_SENSORS] if s[CONF_NAME] == DAYS_TO_NAME)
+    assert edited[CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
 
 
 def _flow_type_schema_and_choice(submitted: dict | None):
@@ -1040,9 +1072,9 @@ def test_flow_type_choice_decides_which_default_sets_are_created() -> None:
         options = _flow_type_schema_and_choice(submitted)["options"]
         return [s[CONF_NAME] for s in options.get(CONF_SENSORS, [])]
 
-    assert names({"default_sensors": [KIND_NEW]}) == [NEXT_COLLECTION_NAME]
+    assert names({"default_sensors": [KIND_NEW]}) == list(NEW_SENSOR_NAMES)
     assert names({"default_sensors": []}) == []
-    assert names({}) == ["Paper", NEXT_COLLECTION_NAME]  # untouched = both
+    assert names({}) == ["Paper", *NEW_SENSOR_NAMES]  # untouched = both
 
 
 # --- build_default_sensors: one place decides what a default sensor is ---------
@@ -1063,20 +1095,26 @@ def test_no_kind_builds_no_default_sensors() -> None:
     assert build_default_sensors([], ["Paper", "Glass"]) == []
 
 
-def test_new_defaults_add_a_next_collection_sensor_over_all_types() -> None:
+def test_new_defaults_are_the_three_overview_sensors_over_all_types() -> None:
     import homeassistant.helpers.config_validation as cv  # isort:skip
 
-    (sensor,) = build_default_sensors([KIND_NEW], ["Paper", "Glass"])
-    assert sensor[CONF_NAME] == NEXT_COLLECTION_NAME == "Next collection"
-    assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
-    assert sensor["details_format"] == "hidden"
-    cv.template(sensor["value_template"])  # must be a valid template
+    sensors = {s[CONF_NAME]: s for s in build_default_sensors([KIND_NEW], ["Paper"])}
+    assert list(sensors) == list(NEW_SENSOR_NAMES)
+    assert NEXT_COLLECTION_NAME == "Next collection"
+    for sensor in sensors.values():
+        assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
+        assert sensor["details_format"] == "hidden"
+
+    cv.template(sensors[NEXT_COLLECTION_NAME]["value_template"])
+    assert CONF_SENSOR_MODE not in sensors[NEXT_COLLECTION_NAME]
+    assert sensors[DAYS_TO_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
+    assert sensors[LAST_UPDATE_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_LAST_UPDATE
 
 
 def test_new_defaults_do_not_depend_on_the_fetched_types() -> None:
-    assert [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [])] == [
-        NEXT_COLLECTION_NAME
-    ]
+    assert [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [])] == list(
+        NEW_SENSOR_NAMES
+    )
 
 
 def test_legacy_and_new_defaults_combine() -> None:
@@ -1084,12 +1122,13 @@ def test_legacy_and_new_defaults_combine() -> None:
         s[CONF_NAME]
         for s in build_default_sensors([KIND_LEGACY, KIND_NEW], ["Paper", "Glass"])
     ]
-    assert names == ["Paper", "Glass", NEXT_COLLECTION_NAME]
+    assert names == ["Paper", "Glass", *NEW_SENSOR_NAMES]
 
 
-def test_an_existing_next_collection_sensor_is_not_duplicated() -> None:
+def test_an_existing_overview_sensor_is_not_duplicated() -> None:
     existing = [{CONF_NAME: NEXT_COLLECTION_NAME}]
-    assert build_default_sensors([KIND_NEW], ["Paper"], existing) == []
+    names = [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [], existing)]
+    assert names == [DAYS_TO_NAME, LAST_UPDATE_NAME]  # only the missing ones
 
 
 def test_building_defaults_twice_never_duplicates_a_sensor() -> None:

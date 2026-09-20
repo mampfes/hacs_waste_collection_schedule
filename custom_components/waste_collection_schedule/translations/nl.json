@@ -31383,7 +31383,7 @@
     "default_sensors": {
       "options": {
         "legacy": "Eén sensor per afvaltype",
-        "new": "Overzichtssensoren (volgende ophaling)"
+        "new": "Overzichtssensoren (volgende ophaling, dagen tot ophaling, laatste update)"
       }
     },
     "custom_flow_types": {

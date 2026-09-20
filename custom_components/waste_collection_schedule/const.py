@@ -59,6 +59,11 @@ CONF_DATE_TEMPLATE: Final = "date_template"
 CONF_COLLECTION_TYPES: Final = "types"
 CONF_ADD_DAYS_TO: Final = "add_days_to"
 CONF_EVENT_INDEX: Final = "event_index"
+# Selects a sensor that shows a single value instead of the usual collection
+# text. UI sensors only; a sensor without it behaves exactly as before.
+CONF_SENSOR_MODE: Final = "mode"
+SENSOR_MODE_DAYS_TO: Final = "days_to"
+SENSOR_MODE_LAST_UPDATE: Final = "last_update"
 
 
 CONF_SENSORS: Final = "sensors"

@@ -31743,7 +31743,7 @@
     "default_sensors": {
       "options": {
         "legacy": "Ein Sensor pro Abfallart",
-        "new": "Übersichts-Sensoren (nächste Abholung)"
+        "new": "Übersichts-Sensoren (nächste Abholung, Tage bis Abholung, letzte Aktualisierung)"
       }
     },
     "custom_flow_types": {

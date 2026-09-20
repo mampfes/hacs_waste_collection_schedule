@@ -80,6 +80,7 @@ from .const import (
     CONF_PICTURE,
     CONF_RANDOM_FETCH_TIME_OFFSET,
     CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+    CONF_SENSOR_MODE,
     CONF_SENSORS,
     CONF_SEPARATOR,
     CONF_SEPARATOR_DEFAULT,
@@ -2041,6 +2042,10 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             )
 
             if len(errors) == 0:
+                # The form has no field for the sensor mode, so an edited
+                # overview sensor must not silently turn into a plain one.
+                if original_sensor and original_sensor.get(CONF_SENSOR_MODE):
+                    args[CONF_SENSOR_MODE] = original_sensor[CONF_SENSOR_MODE]
                 self._options[CONF_SENSORS].append(args)
                 self._sensor_select_idx += 1
                 return await self.async_step_sensor()
