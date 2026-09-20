@@ -82,7 +82,8 @@
           "calendar_title": "Kalender Titel",
           "app_id": "App Id",
           "f_abfallarten": "Abfallarten",
-          "key": "API-Schlüssel"
+          "key": "API-Schlüssel",
+          "ort": "Ortsteil"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
