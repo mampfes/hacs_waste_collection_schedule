@@ -7241,6 +7241,32 @@
         },
         "data_description": {}
       },
+      "args_publidata_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {}
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7350,32 +7376,6 @@
           "city": "Mesto",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
-        },
-        "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Naslov",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Naslov",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
         },
         "data_description": {}
       },
@@ -20006,13 +20006,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "District",
           "municipality": "Občina",
           "street": "Ulica",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20020,12 +20022,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "District",
           "municipality": "Občina",
           "street": "Ulica",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configure Source",
@@ -23117,13 +23122,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "housenameornumber": "Hišna številka ali ime",
+          "housenameornumber": "Housenameornumber",
           "postcode": "Poštna številka",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_bathnes_gov_uk": {
@@ -23131,12 +23137,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "housenameornumber": "Hišna številka ali ime",
+          "housenameornumber": "Housenameornumber",
           "postcode": "Poštna številka",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_bcp_gov_uk": {
@@ -31101,6 +31108,50 @@
           "calendar_title": "Calendar Title",
           "prem_code": "Koda objekta",
           "street_address": "Ulični naslov"
+        },
+        "data_description": {}
+      },
+      "args_ics_trashdaynow_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Ime datoteke",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metoda",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Preveri SSL",
+          "version": "Verzija",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_trashdaynow_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Ime datoteke",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metoda",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Preveri SSL",
+          "version": "Verzija",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
