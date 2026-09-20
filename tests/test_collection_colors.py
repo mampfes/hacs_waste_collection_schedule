@@ -11,6 +11,10 @@ import pytest
 sys.path.append(
     str(Path(__file__).parents[1] / "custom_components/waste_collection_schedule")
 )
+# The sensor tests import `custom_components...` at module level. CI runs plain
+# `pytest`, which (unlike `python -m pytest`) does not put the repo root on the
+# path, and no other test module has appended it yet when this one is collected.
+sys.path.append(str(Path(__file__).parents[1]))
 
 from waste_collection_schedule import Collection
 from waste_collection_schedule.collection import CollectionGroup
