@@ -66,6 +66,21 @@ TEST_CASES = {
         "insee_code": "83112",
         "instance_id": 1483,
     },
+    "Agglo d'Agen, Boé": {
+        "address": "1 Rue de la Birade",
+        "insee_code": "47031",
+        "instance_id": 1264,
+    },
+    "SICTOM du Marsan, Mont-de-Marsan": {
+        "address": "1 rue Impasse Henri IV",
+        "insee_code": "40192",
+        "instance_id": 158,
+    },
+    "Valodev 18, Vierzon": {
+        "address": "1 Avenue du 8 Mai 1945",
+        "insee_code": "18279",
+        "instance_id": 1619,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -323,6 +338,21 @@ EXTRA_INFO = [
         "title": "Sud Sainte Baume",
         "url": "https://www.agglo-sudsaintebaume.fr/",
         "default_params": {"instance_id": 1483},
+    },
+    {
+        "title": "Agglo d'Agen",
+        "url": "https://www.agglo-agen.net/vie-quotidienne/collecte-et-traitement-des-dechets/particuliers/calendriers-et-informations-collecte",
+        "default_params": {"instance_id": 1264},
+    },
+    {
+        "title": "SICTOM du Marsan",
+        "url": "https://sictomdumarsan.fr/la-collecte/mes-jours-de-collecte/",
+        "default_params": {"instance_id": 158},
+    },
+    {
+        "title": "Valodev 18",
+        "url": "https://valodev18.fr/la-collecte-des-vos-dechets/",
+        "default_params": {"instance_id": 1619},
     },
 ]
 

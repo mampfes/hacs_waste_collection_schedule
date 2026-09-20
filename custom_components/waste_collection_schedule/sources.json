@@ -6071,6 +6071,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Agglo d'Agen",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1264
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Aigrefeuille-sur-Maine",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -7956,6 +7964,14 @@
       "id": "sictom_lons_le_saunier_fr"
     },
     {
+      "title": "SICTOM du Marsan",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 158
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "SICTOM du Val de Sa\u00f4ne",
       "module": "sictomvds_com",
       "default_params": {},
@@ -8118,6 +8134,14 @@
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 750
+      },
+      "id": "publidata_fr"
+    },
+    {
+      "title": "Valodev 18",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1619
       },
       "id": "publidata_fr"
     },

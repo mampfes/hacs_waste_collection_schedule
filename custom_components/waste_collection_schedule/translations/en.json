@@ -75,6 +75,20 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
+      "cascade_confirm": {
+        "title": "Configure Source",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "app_id": "App ID",
+          "f_abfallarten": "Waste Types",
+          "key": "API Key"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "f_abfallarten": "Optional filter: the waste types to include."
+        }
+      },
       "sensor": {
         "title": "Create Sensor \"{sensor_number}\"",
         "description": "Configure one sensor at a time.",
@@ -7555,6 +7569,41 @@
           "commune": "Name of the town (or Rennes quarter) as listed on the Rennes Métropole collection calendar page."
         }
       },
+      "args_publidata_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "INSEE Code",
+          "instance_id": "Instance ID",
+          "public_type": "Housing Type"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
+          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
+          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "INSEE Code",
+          "instance_id": "Instance ID",
+          "public_type": "Housing Type"
+        },
+        "data_description": {
+          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
+          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
+          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
+        }
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7684,41 +7733,6 @@
           "typevoie": "Typevoie"
         },
         "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code",
-          "instance_id": "Instance ID",
-          "public_type": "Housing Type"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
-          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
-          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
-          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "INSEE Code",
-          "instance_id": "Instance ID",
-          "public_type": "Housing Type"
-        },
-        "data_description": {
-          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
-          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
-          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
-          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
-        }
       },
       "args_coeur_yvelines_fr": {
         "title": "Configure Source",
@@ -20779,7 +20793,9 @@
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20792,7 +20808,10 @@
           "street": "Street",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configure Source",

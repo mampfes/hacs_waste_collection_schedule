@@ -262,6 +262,36 @@ state:
 </details>
 
 <details>
+<summary>How do I color a Lovelace card with the color of the waste type?</summary>
+<p>
+
+Every sensor has a `color` attribute (a hex code such as `#9E5E23`) while a collection is upcoming. It is the color of the waste type, or the color the source provides for it, or the one you set with `color` in the `customize` section (YAML only). If several types are collected on the same day, it is the color of the first one.
+
+The Tile card itself cannot read an attribute for its `color` option. With [card-mod](https://github.com/thomasloven/lovelace-card-mod) you can set the tile color from the attribute:
+
+```yaml
+type: tile
+entity: sensor.waste_collection_schedule_paper
+card_mod:
+  style: |
+    ha-card {
+      --tile-color: {{ state_attr('sensor.waste_collection_schedule_paper', 'color') }};
+    }
+```
+
+The [Mushroom template card](https://github.com/piitaya/lovelace-mushroom) can also use the attribute directly:
+
+```yaml
+type: custom:mushroom-template-card
+entity: sensor.waste_collection_schedule_paper
+primary: "{{ state_attr(entity, 'friendly_name') }}"
+icon_color: "{{ state_attr(entity, 'color') }}"
+```
+
+</p>
+</details>
+
+<details>
 <summary>Can I also use the Garbage Collection Card instead?</summary>
 <p>
 

@@ -75,6 +75,20 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
+      "cascade_confirm": {
+        "title": "Configure Source",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "app_id": "App Id",
+          "f_abfallarten": "Afvalsoorten",
+          "key": "API-sleutel"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "f_abfallarten": "Optioneel filter: de op te nemen afvalsoorten."
+        }
+      },
       "sensor": {
         "title": "Create Sensor \"{sensor_number}\"",
         "description": "Configure one sensor at a time.",
@@ -7243,6 +7257,32 @@
         },
         "data_description": {}
       },
+      "args_publidata_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {}
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7352,32 +7392,6 @@
           "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
-        },
-        "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
         },
         "data_description": {}
       },
@@ -20009,12 +20023,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "municipality": "Municipality",
-          "street": "Street",
+          "municipality": "Gemeente",
+          "street": "Straat",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20023,11 +20039,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "municipality": "Municipality",
-          "street": "Street",
+          "municipality": "Gemeente",
+          "street": "Straat",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configure Source",
