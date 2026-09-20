@@ -212,6 +212,7 @@ The following variables can be used within `value_template` and `date_template`:
 | `value.date` | Collection date | [datetime.date](https://docs.python.org/3/library/datetime.html#datetime.date) | Use [strftime](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior) to format the output |
 | `value.daysTo` | Days to collection | int  | 0 = today, 1 = tomorrow, etc |
 | `value.types`  | Waste types | list of strings | Use `join` filter to join types |
+| `value.color`  | Color of the collection | string | Hex code such as `#9E5E23`. Also available as the `color` attribute of the sensor. |
 
 Examples:
 
