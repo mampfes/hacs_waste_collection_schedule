@@ -7299,6 +7299,32 @@
           "commune": "Nom de la commune (ou du quartier de Rennes) tel qu'il apparaît sur la page des calendriers de collecte de Rennes Métropole."
         }
       },
+      "args_publidata_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {}
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -7426,32 +7452,6 @@
           "city": "Ville",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
-        },
-        "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Adresse",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Adresse",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
         },
         "data_description": {}
       },
