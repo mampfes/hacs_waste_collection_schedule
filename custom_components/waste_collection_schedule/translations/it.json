@@ -26,11 +26,13 @@
         "description": "Seleziona quanto dettagliata vuoi che sia la configurazione di questa integrazione. Lascia vuoto se desideri configurare solo un semplice calendario.",
         "data": {
           "show_customize_config": "Mostra Configurazioni di Personalizzazione Eventi di Raccolta",
-          "show_sensor_config": "Mostra Configurazioni Sensori"
+          "show_sensor_config": "Mostra Configurazioni Sensori",
+          "create_default_sensors": "Crea i sensori predefiniti"
         },
         "data_description": {
           "show_customize_config": "Seleziona questo se vuoi personalizzare i tipi di raccolta.",
-          "show_sensor_config": "Seleziona questo se vuoi configurare i sensori."
+          "show_sensor_config": "Seleziona questo se vuoi configurare i sensori.",
+          "create_default_sensors": "Crea un sensore per tipo di rifiuto. Può essere combinato con sensori personalizzati."
         }
       },
       "customize_select": {

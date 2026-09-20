@@ -1171,12 +1171,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             {
                 vol.Optional("show_customize_config", default=False): bool,
                 vol.Optional("show_sensor_config", default=False): bool,
+                vol.Optional("create_default_sensors", default=True): bool,
             }
         )
 
         if user_input is not None:
             self._show_customize_config = user_input.get("show_customize_config", False)
             self._show_sensor_config = user_input.get("show_sensor_config", False)
+            self._create_default_sensors = user_input.get(
+                "create_default_sensors", True
+            )
             if self._show_customize_config:
                 return await self.async_step_customize_select()
             if self._show_sensor_config:
@@ -1290,9 +1294,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         # is augmented with every canonical WASTE_TYPES name so a user can
         # pre-make a sensor for an unseen type; seeding the default sensors from
         # that union created a permanently empty sensor for each uncollected
-        # type (#6937).
-        if not self._options.get(CONF_SENSORS) and hasattr(self, "_auto_sensor_types"):
-            self._options[CONF_SENSORS] = [
+        # type (#6937). The default sensors are optional and are added next to
+        # any sensors the user configured; a default is dropped when a custom
+        # sensor already uses its name.
+        if getattr(self, "_create_default_sensors", True) and hasattr(
+            self, "_auto_sensor_types"
+        ):
+            sensors = list(self._options.get(CONF_SENSORS) or [])
+            taken = {s.get(CONF_NAME) for s in sensors}
+            sensors.extend(
                 {
                     CONF_NAME: t,
                     CONF_DETAILS_FORMAT: "upcoming",
@@ -1300,8 +1310,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
                 }
                 for t in self._auto_sensor_types
-                if t
-            ]
+                if t and t not in taken
+            )
+            self._options[CONF_SENSORS] = sensors
 
         return self.async_create_entry(
             title=self._title,

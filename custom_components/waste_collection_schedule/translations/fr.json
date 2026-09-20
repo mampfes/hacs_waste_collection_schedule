@@ -26,11 +26,13 @@
         "description": "Choisissez le niveau de détail souhaité pour cette intégration. Laissez vide si vous souhaitez simplement configurer un calendrier de base.",
         "data": {
           "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
-          "show_sensor_config": "Afficher les Configurations des Capteurs"
+          "show_sensor_config": "Afficher les Configurations des Capteurs",
+          "create_default_sensors": "Créer les capteurs par défaut"
         },
         "data_description": {
           "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
-          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs."
+          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs.",
+          "create_default_sensors": "Crée un capteur par type de déchet. Peut être combiné avec vos propres capteurs."
         }
       },
       "customize_select": {
