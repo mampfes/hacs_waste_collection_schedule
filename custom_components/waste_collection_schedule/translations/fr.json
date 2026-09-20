@@ -79,10 +79,14 @@
         "title": "Configurer la Source",
         "description": "{cascade_summary}",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "app_id": "App Id",
+          "f_abfallarten": "Types de déchets",
+          "key": "Clé API"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "f_abfallarten": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "sensor": {

@@ -745,3 +745,151 @@ def test_a_cascade_keyed_on_a_non_level_param_still_walks() -> None:
 
     assert asked == []
     assert form["step_id"] == "args_abfall_io"
+
+
+def test_a_skipped_level_is_not_offered_on_the_closing_form() -> None:
+    # A level that returns no options does not apply to this selection, and the
+    # wizard steps over it. It is settled just as much as an answered one: left
+    # on the closing form it comes back as an empty text box, offering exactly
+    # what was stepped over (app_abfallplus_de skips bundesland/landkreis for
+    # apps that fix them).
+    def choices(field, selections):
+        if field == "two":
+            return []  # not applicable
+        if field == "one":
+            return ["A"]
+        return ["C"] if selections.get("one") else []
+
+    _register_cascade_source("cascade_skip_hidden", choices)
+    flow, _shown = _cascade_flow("cascade_skip_hidden")
+
+    asyncio.run(flow.async_step_args())
+    form = asyncio.run(flow.async_step_args({"one": "A"}))
+    assert _shown_fields(form) == ["three"]
+    form = asyncio.run(flow.async_step_args({"three": "C"}))
+
+    assert form["step_id"] == "cascade_confirm"
+    assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
+    assert "two" in flow._cascade_omitted()
+    # ...and it contributes nothing to the entry, rather than an empty string.
+    assert "two" not in flow._cascade_values()
+    # Nor is it listed in the summary, where a blank line would read as
+    # something the user failed to fill in.
+    assert "two" not in form["description_placeholders"]["cascade_summary"].lower()
+
+
+def test_a_skipped_level_keeps_a_value_the_region_pre_filled() -> None:
+    # Skipping must not drop it: it is not asked for because it is already
+    # decided, and the entry still needs it.
+    def choices(field, selections):
+        return ["A"] if field == "one" else []
+
+    _register_cascade_source("cascade_skip_prefilled", choices)
+    flow, _shown = _cascade_flow("cascade_skip_prefilled")
+    flow._extra_info_default_params = {"two": "pinned"}
+
+    asyncio.run(flow.async_step_args())
+    asyncio.run(flow.async_step_args({"one": "A"}))
+
+    assert flow._cascade_values() == {"one": "A", "two": "pinned"}
+
+
+def test_an_inert_cascade_leaves_every_level_editable() -> None:
+    # Every level inapplicable means the cascade never engaged - a source whose
+    # lookup key is not known yet (abfall_io before `key`). Nothing is settled,
+    # so hiding the levels would leave a form with no address fields at all.
+    def choices(field, selections):
+        return []
+
+    _register_cascade_source("cascade_inert", choices)
+    flow, _shown = _cascade_flow("cascade_inert")
+
+    form = asyncio.run(flow.async_step_args())
+
+    assert form["step_id"] == "args_cascade_inert"
+    assert set(_shown_fields(form)) == {
+        CONF_SOURCE_CALENDAR_TITLE,
+        "one",
+        "two",
+        "three",
+    }
+
+
+def test_the_summary_shows_labels_not_stored_values() -> None:
+    # An option may be a (label, value) pair and it is the value that is stored,
+    # so a summary built from the selections shows abfall_io's numeric ids where
+    # the user picked a municipality by name.
+    def choices(field, selections):
+        levels = ["one", "two", "three"]
+        for level in levels:
+            if level == field:
+                return [(f"{level.capitalize()} Name", f"{level}-id-42")]
+            if not selections.get(level):
+                return []
+        return []
+
+    _register_cascade_source("cascade_labels", choices)
+    flow, _shown = _cascade_flow("cascade_labels")
+
+    asyncio.run(flow.async_step_args())
+    asyncio.run(flow.async_step_args({"one": "one-id-42"}))
+    asyncio.run(flow.async_step_args({"two": "two-id-42"}))
+    form = asyncio.run(flow.async_step_args({"three": "three-id-42"}))
+
+    summary = form["description_placeholders"]["cascade_summary"]
+    for level in ("one", "two", "three"):
+        assert f"{level.capitalize()} Name" in summary
+        assert f"{level}-id-42" not in summary
+    # The stored value is still what reaches the entry.
+    assert flow._cascade_values() == {
+        "one": "one-id-42",
+        "two": "two-id-42",
+        "three": "three-id-42",
+    }
+
+
+def test_the_closing_step_labels_every_field_it_can_show() -> None:
+    # cascade_confirm is a fixed step id, so its labels are hand-maintained
+    # while args_<id> is generated. Any non-cascade param of a cascading source
+    # can appear on that form (stadt_kerpen_de's waste-type selection is the
+    # case that shows it), and an unlabelled field renders as its raw name.
+    # Computed from the sources so a new cascading source cannot quietly add a
+    # param that loses its label.
+    import json
+    from pathlib import Path
+
+    from waste_collection_schedule.source import __path__ as source_path
+
+    extras = {CONF_SOURCE_CALENDAR_TITLE}
+    for module_path in sorted(Path(source_path[0]).glob("*.py")):
+        if module_path.stem.startswith("_"):
+            continue
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{module_path.stem}"
+            )
+        except Exception:
+            continue
+        params = getattr(getattr(module, "Source", None), "PARAMS", None)
+        if not params or not any(p.widget == "cascading_select" for p in params):
+            continue
+        extras.update(
+            field
+            for param in params
+            if param.widget != "cascading_select"
+            for field in param.fields
+        )
+
+    base = Path(__file__).resolve().parent.parent / (
+        "custom_components/waste_collection_schedule/translations"
+    )
+    for lang in ("en", "de", "fr", "it", "nl"):
+        labels = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
+        labels = labels["config"]["step"]["cascade_confirm"]["data"]
+        missing = sorted(extras - set(labels))
+        assert not missing, (
+            f"{lang}.json: cascade_confirm.data has no label for {missing}. "
+            "The closing view can show these, and an unlabelled field renders "
+            "as its raw field name. Add them by hand - the args_* sections are "
+            "generated, this one is not."
+        )

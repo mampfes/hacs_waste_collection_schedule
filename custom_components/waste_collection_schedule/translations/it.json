@@ -79,10 +79,14 @@
         "title": "Configurazione Sorgente",
         "description": "{cascade_summary}",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "app_id": "App Id",
+          "f_abfallarten": "Tipi di rifiuto",
+          "key": "Chiave API"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "f_abfallarten": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "sensor": {

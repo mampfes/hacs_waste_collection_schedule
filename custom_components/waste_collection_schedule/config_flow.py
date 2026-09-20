@@ -589,6 +589,20 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _cascade_selections: dict[str, Any]
     _cascade_level: int
     _cascade_done: bool
+    # Every level the wizard stepped past, answered or skipped. A level that
+    # returned no options does not apply to this selection and is not in
+    # _cascade_selections, but it is just as settled: it has to come off the
+    # closing form too, or the levels the wizard deliberately stepped over come
+    # back as empty text boxes on the last screen.
+    _cascade_visited: list[str]
+    # The label of the option chosen at each answered level. An option may be a
+    # (label, value) pair, and it is the value that is stored, so without this
+    # the closing summary would show abfall_io's numeric ids where the user
+    # picked a municipality by name.
+    _cascade_labels: dict[str, str]
+    # value -> label for the level currently on screen, so the label can be kept
+    # when the answer to it comes back.
+    _cascade_offered: dict[str, str]
     # Whether the cascade ran all the way to its last level. Only then are the
     # levels settled enough to be left off the argument form; a cascade that
     # stopped early (provider unreachable) has to stay editable.
@@ -615,6 +629,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         self._cascade_done = False
         self._cascade_complete = False
         self._cascade_answered = False
+        self._cascade_visited = []
+        self._cascade_labels = {}
+        self._cascade_offered = {}
 
     async def _async_setup_sources(self) -> None:
         if len(self._sources) > 0:
@@ -1211,7 +1228,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if args_input is not None:
             field = levels[self._cascade_level]
             if args_input.get(field) not in (None, ""):
-                self._cascade_selections[field] = args_input[field]
+                value = args_input[field]
+                self._cascade_selections[field] = value
+                label = self._cascade_offered.get(str(value))
+                if label is not None and label != str(value):
+                    self._cascade_labels[field] = label
+                self._cascade_visited.append(field)
                 self._cascade_level += 1
 
         while self._cascade_level < len(levels):
@@ -1241,6 +1263,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     if suggested not in (None, "")
                     else None
                 )
+                self._cascade_offered = {
+                    str(opt[1] if isinstance(opt, tuple) else opt): str(
+                        opt[0] if isinstance(opt, tuple) else opt
+                    )
+                    for opt in options
+                }
                 return self.async_show_form(
                     step_id=f"args_{self._id}",
                     data_schema=vol.Schema(
@@ -1266,10 +1294,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     ),
                 )
             # A level with no options does not apply to this selection
-            # (config_params.cascading_select), so skip it.
+            # (config_params.cascading_select), so skip it. It still counts as
+            # visited: the wizard has settled it, and leaving it on the closing
+            # form would offer as free text exactly what was just stepped over.
+            self._cascade_visited.append(field)
             self._cascade_level += 1
 
-        self._finish_cascade(complete=True)
+        # A cascade that answered nothing never engaged: every level was
+        # inapplicable, which is what a source whose lookup key is still unset
+        # looks like (abfall_io before its `key` is known). Nothing is settled,
+        # so the ordinary form keeps all of them editable.
+        self._finish_cascade(complete=bool(self._cascade_selections))
         return None
 
     def _finish_cascade(self, complete: bool) -> None:
@@ -1291,13 +1326,32 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     def _cascade_omitted(self) -> tuple[str, ...]:
         """Cascade levels that are settled and so are not shown as inputs.
 
+        Every level the wizard visited, not only the answered ones: a level it
+        skipped as not applicable is settled too, and leaving it on the form
+        would offer as free text the very thing that was stepped over.
+
         Empty once a level stops being settled: either the cascade never
         finished, or validation blamed one of them, which puts them back on the
         form so the user can correct the one at fault (see async_step_args).
         """
         if not self._cascade_complete:
             return ()
-        return tuple(self._cascade_selections)
+        return tuple(self._cascade_visited)
+
+    def _cascade_values(self) -> dict[str, Any]:
+        """What the settled levels contribute to the submission.
+
+        An answered level contributes what was picked. A skipped one contributes
+        whatever the region pre-filled for it, or nothing at all - the levels are
+        individually optional, so a level that does not apply is simply absent.
+        """
+        values: dict[str, Any] = {}
+        for field in self._cascade_omitted():
+            if field in self._cascade_selections:
+                values[field] = self._cascade_selections[field]
+            elif self._extra_info_default_params.get(field) not in (None, ""):
+                values[field] = self._extra_info_default_params[field]
+        return values
 
     def _cascade_summary(self, module) -> str:
         """The chosen address, as labelled lines for the confirmation view.
@@ -1322,9 +1376,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         # A markdown list: the step description is rendered as markdown, where a
         # bare newline is not a line break, so plain lines would run together
         # into one paragraph.
+        #
+        # Only the answered levels: one that was skipped as not applicable has
+        # nothing to show, and listing it blank would read as something the user
+        # failed to fill in. The option's label rather than its stored value,
+        # which for abfall_io is a numeric id.
         lines = [
-            f"- **{labels.get(field, field)}:** {self._cascade_selections[field]}"
+            f"- **{labels.get(field, field)}:** "
+            f"{self._cascade_labels.get(field, self._cascade_selections[field])}"
             for field in omitted
+            if field in self._cascade_selections
         ]
         return "\n".join(lines)
 
@@ -1345,7 +1406,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if args_input is not None and omit_fields:
             # Those levels are not on the form, so put them back before anything
             # tries to build a Source out of this.
-            args_input = {**args_input, **self._cascade_selections}
+            args_input = {**args_input, **self._cascade_values()}
 
         schema, module = await self.__get_arg_schema(
             self._source,
