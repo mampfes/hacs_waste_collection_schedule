@@ -579,3 +579,169 @@ def test_a_cascade_that_breaks_mid_way_keeps_what_was_answered() -> None:
         "three",
     }
     assert flow._extra_info_default_params == {"one": "A"}
+
+
+def _settled_cascade(name: str):
+    """A flow parked on the closing view, with all three levels answered."""
+
+    def choices(field, selections):
+        levels = ["one", "two", "three"]
+        for level in levels:
+            if level == field:
+                return ["A", "B", "C"]
+            if not selections.get(level):
+                return []
+        return []
+
+    _register_cascade_source(name, choices)
+    flow, shown = _cascade_flow(name)
+
+    asyncio.run(flow.async_step_args())
+    asyncio.run(flow.async_step_args({"one": "A"}))
+    asyncio.run(flow.async_step_args({"two": "B"}))
+    form = asyncio.run(flow.async_step_args({"three": "C"}))
+    assert form["step_id"] == "cascade_confirm"
+
+    return flow, shown
+
+
+def test_an_error_on_a_settled_level_re_opens_the_cascade() -> None:
+    # The closing view has no input for a settled level, so an error naming one
+    # would bind to a field that is not on the form: nothing renders, and the
+    # user is asked to resubmit a form that never says what is wrong. The lists
+    # can also go stale between the wizard reading them and the fetch, so this
+    # is reachable however carefully the levels were picked.
+    flow, _shown = _settled_cascade("cascade_stale")
+
+    async def _validate(source, args_input, module):
+        return (
+            {"three": "invalid_arg"},
+            {"invalid_arg_message": "no schedule for C"},
+            {},
+        )
+
+    flow._WasteCollectionConfigFlow__validate_args_user_input = _validate  # type: ignore[attr-defined]
+
+    form = asyncio.run(flow.async_step_args({CONF_SOURCE_CALENDAR_TITLE: "Bins"}))
+
+    # Back on the ordinary argument form, with every level offered again - the
+    # blamed one has to be changeable, and the levels above it decide what it
+    # may be changed to.
+    assert form["step_id"] == "args_cascade_stale"
+    assert set(_shown_fields(form)) == {
+        CONF_SOURCE_CALENDAR_TITLE,
+        "one",
+        "two",
+        "three",
+    }
+    assert form["errors"] == {"three": "invalid_arg"}
+    # invalid_arg's text is "Argument is invalid: {invalid_arg_message}", so the
+    # placeholder has to survive the switch back to that step.
+    assert form["description_placeholders"]["invalid_arg_message"] == (
+        "no schedule for C"
+    )
+    # Still the user's own answers, not a blank form.
+    assert flow._extra_info_default_params == {"one": "A", "two": "B", "three": "C"}
+
+
+def test_an_error_elsewhere_keeps_the_closing_view() -> None:
+    # Only an error the closing view cannot show re-opens the cascade. A fetch
+    # error, or one naming a field that IS on the form, renders where it is and
+    # must not throw the settled levels back at the user.
+    flow, _shown = _settled_cascade("cascade_base_error")
+
+    async def _validate(source, args_input, module):
+        return {"base": "fetch_error"}, {"fetch_error_message": "boom"}, {}
+
+    flow._WasteCollectionConfigFlow__validate_args_user_input = _validate  # type: ignore[attr-defined]
+
+    form = asyncio.run(flow.async_step_args({CONF_SOURCE_CALENDAR_TITLE: "Bins"}))
+
+    assert form["step_id"] == "cascade_confirm"
+    assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE]
+    assert form["errors"] == {"base": "fetch_error"}
+
+
+# ---------------------------------------------------------------------------
+# The wizard is generic, so it also takes over the flow for the cascading_select
+# sources that were already shipping. These drive it against the real ones,
+# replaying each source's recorded get_choices walk (tests/fixtures/<source>/
+# _choices.json), so the contract is checked against live-recorded provider
+# responses rather than a synthetic stand-in.
+# ---------------------------------------------------------------------------
+
+
+def _walk_real_cascade(module_name: str, context: dict | None = None):
+    """Run the wizard against a recorded source, answering as the walk records.
+
+    Returns (fields asked one per view, final form).
+    """
+    import json
+
+    import cassette  # tests/ is only on sys.path at runtime
+
+    path = os.path.join(
+        os.path.dirname(__file__), "fixtures", module_name, "_choices.json"
+    )
+    with open(path, encoding="utf-8") as fh:
+        meta = json.load(fh)
+    assert meta.get("widget") == "cascading_select"
+
+    importlib.import_module(f"waste_collection_schedule.source.{module_name}")
+    flow, _shown = _cascade_flow(module_name)
+    # What the source needs but the cascade does not ask for: abfall_io keys
+    # every lookup on `key`, which the user gets from the region they picked.
+    flow._extra_info_default_params = dict(
+        meta["context"] if context is None else context
+    )
+
+    asked: list[str] = []
+    with cassette.replaying(path):
+        form = asyncio.run(flow.async_step_args())
+        for _ in range(len(meta["fields"]) + 1):
+            fields = _shown_fields(form)
+            # A cascade view is one dropdown and nothing else; anything wider is
+            # the ordinary argument form, which ends the walk.
+            if len(fields) != 1 or fields == [CONF_SOURCE_CALENDAR_TITLE]:
+                break
+            field = fields[0]
+            asked.append(field)
+            form = asyncio.run(
+                flow.async_step_args({field: str(meta["expected"][field])})
+            )
+
+    return asked, form, meta
+
+
+def test_the_wizard_walks_a_recorded_cascade_one_level_per_view() -> None:
+    for module_name in ("kiedysmieci_info", "aw_harburg_de", "beachwood_oh_us"):
+        asked, form, meta = _walk_real_cascade(module_name)
+
+        # Every level the recording resolved was asked for on its own view, in
+        # declaration order, and the walk ended on the confirmation.
+        assert asked == [f for f in meta["fields"] if f in meta["expected"]], (
+            module_name
+        )
+        assert form["step_id"] == "cascade_confirm", module_name
+        assert _shown_fields(form) == [CONF_SOURCE_CALENDAR_TITLE], module_name
+
+
+def test_a_cascade_keyed_on_a_non_level_param_still_walks() -> None:
+    # abfall_io (41 regions) and app_abfallplus_de (145) resolve nothing without
+    # a param that is not a cascade level - the service `key` / `app_id` that
+    # the region pre-fills. Passing get_choices only the levels made it return
+    # [] at every step, so the wizard skipped itself and silently handed back
+    # the old single form.
+    asked, form, _meta = _walk_real_cascade("abfall_io")
+
+    # f_id_kommune is absent because this recorded service fixes its kommune and
+    # returns [] for that level, which the cascade contract says to skip.
+    assert asked == ["f_id_bezirk", "f_id_strasse", "f_id_strasse_hnr"]
+    assert form["step_id"] == "cascade_confirm"
+
+    # ...and without the key, every level returns [] - which is what the wizard
+    # did with it before, and is why it has to be passed through.
+    asked, form, _meta = _walk_real_cascade("abfall_io", context={})
+
+    assert asked == []
+    assert form["step_id"] == "args_abfall_io"

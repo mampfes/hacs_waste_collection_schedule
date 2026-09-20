@@ -1196,6 +1196,18 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if not levels or self._cascade_done:
             return None
 
+        # Params that are already answered but are not cascade levels. A source
+        # may need one to walk its cascade at all - abfall_io keys every lookup
+        # on its service `key`, app_abfallplus_de on its `app_id` - and both get
+        # it from the region the user picked, not from the cascade. Passing only
+        # the levels made get_choices return [] at every step for those two, so
+        # the wizard skipped itself and never offered a dropdown.
+        context = {
+            field: value
+            for field, value in self._extra_info_default_params.items()
+            if field not in levels and value not in (None, "")
+        }
+
         if args_input is not None:
             field = levels[self._cascade_level]
             if args_input.get(field) not in (None, ""):
@@ -1206,7 +1218,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             field = levels[self._cascade_level]
             try:
                 options = await self.hass.async_add_executor_job(
-                    module.Source.get_choices, field, dict(self._cascade_selections)
+                    module.Source.get_choices,
+                    field,
+                    {**context, **self._cascade_selections},
                 )
             except Exception as exc:
                 # The provider is unreachable, so the wizard cannot offer
@@ -1217,11 +1231,23 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self._finish_cascade(complete=False)
                 return None
             if options:
+                # A region may already answer a level it does not pin (a
+                # default_params city, say). Offer it anyway - the levels above
+                # it decide what it may be - but with that answer preselected,
+                # so picking the region still means something.
+                suggested = self._extra_info_default_params.get(field)
+                description = (
+                    {"suggested_value": suggested}
+                    if suggested not in (None, "")
+                    else None
+                )
                 return self.async_show_form(
                     step_id=f"args_{self._id}",
                     data_schema=vol.Schema(
                         {
-                            vol.Required(field): SelectSelector(
+                            vol.Required(
+                                field, description=description
+                            ): SelectSelector(
                                 SelectSelectorConfig(
                                     options=[
                                         SelectOptionDict(label=opt[0], value=opt[1])
@@ -1263,7 +1289,12 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         }
 
     def _cascade_omitted(self) -> tuple[str, ...]:
-        """Cascade levels that are settled and so are not shown as inputs."""
+        """Cascade levels that are settled and so are not shown as inputs.
+
+        Empty once a level stops being settled: either the cascade never
+        finished, or validation blamed one of them, which puts them back on the
+        form so the user can correct the one at fault (see async_step_args).
+        """
         if not self._cascade_complete:
             return ()
         return tuple(self._cascade_selections)
@@ -1345,6 +1376,27 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             ) = await self.__validate_args_user_input(self._source, args_input, module)
 
             if len(errors) > 0:
+                if not errors.keys().isdisjoint(omit_fields):
+                    # The closing view has no input for a settled level, so an
+                    # error naming one is bound to a field that is not on the
+                    # form: it renders nowhere, and the user is left resubmitting
+                    # a form that never says what is wrong. The lists can go out
+                    # of date between the wizard reading them and the fetch, and
+                    # a source may blame a level the cascade cannot rule out on
+                    # its own (kiedysmieci_info's _raise_empty blames the
+                    # municipality/street pair), so this is reachable however
+                    # carefully the levels were picked.
+                    #
+                    # Re-open them - still dropdowns, populated for the levels
+                    # above - on the ordinary argument form, which is where
+                    # invalid_arg's message renders and where the user can
+                    # actually change the answer.
+                    self._cascade_complete = False
+                    omit_fields = self._cascade_omitted()
+                    step_id = f"args_{self._id}"
+                    description_placeholders = self._get_description_placeholders(
+                        self._id
+                    )
                 schema, module = await self.__get_arg_schema(
                     self._source,
                     self._extra_info_default_params,
