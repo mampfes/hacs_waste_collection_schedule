@@ -95,7 +95,11 @@ from .const import (
     CONFIG_VERSION,
     DOMAIN,
 )
-from .default_sensors import KIND_LEGACY, build_default_sensors
+from .default_sensors import (
+    DEFAULT_SENSOR_KINDS,
+    build_default_sensors,
+    default_sensors_selector,
+)
 from .init_ui import WCSCoordinator
 from .sensor import DetailsFormat
 
@@ -1497,15 +1501,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             {
                 vol.Optional("show_customize_config", default=False): bool,
                 vol.Optional("show_sensor_config", default=False): bool,
-                vol.Optional("create_default_sensors", default=True): bool,
+                vol.Optional(
+                    "default_sensors", default=list(DEFAULT_SENSOR_KINDS)
+                ): default_sensors_selector(),
             }
         )
 
         if user_input is not None:
             self._show_customize_config = user_input.get("show_customize_config", False)
             self._show_sensor_config = user_input.get("show_sensor_config", False)
-            self._create_default_sensors = user_input.get(
-                "create_default_sensors", True
+            self._default_sensor_kinds = user_input.get(
+                "default_sensors", list(DEFAULT_SENSOR_KINDS)
             )
             if self._show_customize_config:
                 return await self.async_step_customize_select()
@@ -1622,14 +1628,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         # that union created a permanently empty sensor for each uncollected
         # type (#6937). The default sensors are optional and are added next to
         # any sensors the user configured; a default is dropped when a custom
-        # sensor already uses its name.
-        if getattr(self, "_create_default_sensors", True) and hasattr(
-            self, "_auto_sensor_types"
-        ):
+        # sensor already uses its name. Which sets are created is the user's
+        # choice on the flow_type step; without one, both sets are.
+        kinds = getattr(self, "_default_sensor_kinds", list(DEFAULT_SENSOR_KINDS))
+        if kinds:
             sensors = list(self._options.get(CONF_SENSORS) or [])
             sensors.extend(
                 build_default_sensors(
-                    [KIND_LEGACY], self._auto_sensor_types, existing=sensors
+                    kinds,
+                    getattr(self, "_auto_sensor_types", []),
+                    existing=sensors,
                 )
             )
             self._options[CONF_SENSORS] = sensors

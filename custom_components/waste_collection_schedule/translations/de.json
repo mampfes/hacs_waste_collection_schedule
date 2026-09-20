@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Mülltyp Anpassungsmenü Anzeigen",
           "show_sensor_config": "Sensor Konfiguration Anzeigen",
-          "create_default_sensors": "Standard-Sensoren anlegen"
+          "default_sensors": "Standard-Sensoren"
         },
         "data_description": {
           "show_customize_config": "Wähle dies, wenn du Mülltypen anpassen möchtest.",
           "show_sensor_config": "Wähle dies, wenn du Sensoren konfigurieren möchtest.",
-          "create_default_sensors": "Legt pro Mülltyp einen Sensor an. Kann mit eigenen Sensoren kombiniert werden."
+          "default_sensors": "Wähle, welche Standard-Sensoren angelegt werden. Können mit eigenen Sensoren kombiniert werden."
         }
       },
       "customize_select": {
@@ -31736,6 +31736,12 @@
         "appointment_types": "Abfallarten",
         "generic": "Generisch",
         "hidden": "Versteckt"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Ein Sensor pro Abfallart",
+        "new": "Übersichts-Sensoren (nächste Abholung)"
       }
     },
     "custom_flow_types": {

@@ -10,6 +10,12 @@ from collections.abc import Iterable
 from typing import Any
 
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
+from homeassistant.helpers.selector import (
+    SelectOptionDict,
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+)
 
 from .const import CONF_COLLECTION_TYPES, CONF_DETAILS_FORMAT
 
@@ -28,6 +34,20 @@ KIND_NEW = "new"
 # English on purpose: the name fixes the entity id, so every user gets the same
 # ids and the documentation examples work when copied. Users can rename them.
 NEXT_COLLECTION_NAME = "Next collection"
+
+DEFAULT_SENSOR_KINDS = (KIND_LEGACY, KIND_NEW)
+
+
+def default_sensors_selector() -> SelectSelector:
+    """Multi-select over the default sensor sets, labelled by translation."""
+    return SelectSelector(
+        SelectSelectorConfig(
+            options=[SelectOptionDict(label=k, value=k) for k in DEFAULT_SENSOR_KINDS],
+            multiple=True,
+            mode=SelectSelectorMode.LIST,
+            translation_key="default_sensors",
+        )
+    )
 
 
 def build_default_sensors(

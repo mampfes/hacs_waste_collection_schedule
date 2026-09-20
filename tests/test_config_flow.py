@@ -314,14 +314,14 @@ def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
 # --- default sensors are optional and combine with custom sensors --------------
 
 
-def _finish_options(create_default: bool | None, custom: list[dict]) -> list[dict]:
+def _finish_options(kinds: list[str] | None, custom: list[dict]) -> list[dict]:
     flow = object.__new__(WasteCollectionConfigFlow)
     flow._title = "t"
     flow._args_data = {}
     flow._options = {CONF_SENSORS: custom} if custom else {}
     flow._auto_sensor_types = ["Paper", "Glass"]
-    if create_default is not None:
-        flow._create_default_sensors = create_default
+    if kinds is not None:
+        flow._default_sensor_kinds = kinds
     captured: dict[str, Any] = {}
 
     def _create_entry(**kwargs: Any) -> dict:
@@ -333,28 +333,45 @@ def _finish_options(create_default: bool | None, custom: list[dict]) -> list[dic
     return captured["options"].get(CONF_SENSORS, [])
 
 
-def test_default_sensors_are_created_by_default() -> None:
-    assert [s[CONF_NAME] for s in _finish_options(None, [])] == ["Paper", "Glass"]
+def test_both_default_sets_are_created_by_default() -> None:
+    assert [s[CONF_NAME] for s in _finish_options(None, [])] == [
+        "Paper",
+        "Glass",
+        NEXT_COLLECTION_NAME,
+    ]
+
+
+def test_only_the_legacy_default_sensors() -> None:
+    assert [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], [])] == [
+        "Paper",
+        "Glass",
+    ]
+
+
+def test_only_the_new_default_sensors() -> None:
+    assert [s[CONF_NAME] for s in _finish_options([KIND_NEW], [])] == [
+        NEXT_COLLECTION_NAME
+    ]
 
 
 def test_default_sensors_can_be_switched_off() -> None:
-    assert _finish_options(False, []) == []
+    assert _finish_options([], []) == []
 
 
 def test_default_sensors_are_added_next_to_custom_sensors() -> None:
     custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
     assert names == ["Mine", "Paper", "Glass"]
 
 
 def test_custom_sensors_only_when_defaults_are_off() -> None:
     custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    assert [s[CONF_NAME] for s in _finish_options(False, custom)] == ["Mine"]
+    assert [s[CONF_NAME] for s in _finish_options([], custom)] == ["Mine"]
 
 
 def test_a_custom_sensor_named_like_a_type_replaces_that_default() -> None:
     custom = [{CONF_NAME: "Paper", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options(True, custom)]
+    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
     assert names == ["Paper", "Glass"]
 
 
@@ -899,6 +916,46 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
             "as its raw field name. Add them by hand - the args_* sections are "
             "generated, this one is not."
         )
+def _flow_type_schema_and_choice(submitted: dict | None):
+    flow = object.__new__(WasteCollectionConfigFlow)
+    flow._title = "t"
+    flow._args_data = {}
+    flow._options = {}
+    flow._auto_sensor_types = ["Paper"]
+    captured: dict[str, Any] = {}
+
+    def _show_form(**kwargs: Any) -> dict:
+        captured["schema"] = kwargs["data_schema"]
+        return kwargs
+
+    def _create_entry(**kwargs: Any) -> dict:
+        captured["options"] = kwargs["options"]
+        return kwargs
+
+    flow.async_show_form = _show_form  # type: ignore[method-assign]
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    asyncio.run(flow.async_step_flow_type(submitted))
+    return captured
+
+
+def test_flow_type_offers_both_default_sets_preselected() -> None:
+    schema = _flow_type_schema_and_choice(None)["schema"]
+    marker, validator = _marker_and_validator(schema, "default_sensors")
+    assert marker.default() == [KIND_LEGACY, KIND_NEW]
+    assert validator.config["multiple"] is True
+    assert validator.config["translation_key"] == "default_sensors"
+
+
+def test_flow_type_choice_decides_which_default_sets_are_created() -> None:
+    def names(submitted: dict) -> list[str]:
+        options = _flow_type_schema_and_choice(submitted)["options"]
+        return [s[CONF_NAME] for s in options.get(CONF_SENSORS, [])]
+
+    assert names({"default_sensors": [KIND_NEW]}) == [NEXT_COLLECTION_NAME]
+    assert names({"default_sensors": []}) == []
+    assert names({}) == ["Paper", NEXT_COLLECTION_NAME]  # untouched = both
+
+
 # --- build_default_sensors: one place decides what a default sensor is ---------
 
 

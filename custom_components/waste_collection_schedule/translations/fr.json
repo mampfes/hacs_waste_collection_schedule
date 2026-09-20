@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
           "show_sensor_config": "Afficher les Configurations des Capteurs",
-          "create_default_sensors": "Créer les capteurs par défaut"
+          "default_sensors": "Capteurs par défaut"
         },
         "data_description": {
           "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
           "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs.",
-          "create_default_sensors": "Crée un capteur par type de déchet. Peut être combiné avec vos propres capteurs."
+          "default_sensors": "Choisissez les capteurs par défaut à créer. Ils peuvent être combinés avec vos propres capteurs."
         }
       },
       "customize_select": {
@@ -31464,6 +31464,14 @@
         "data_description": {
           "address": "Adresse (ou simplement le nom de la rue) à Ciudad de la Costa, par ex. 'De los Pinos, Ciudad de la Costa'. Ajouter le quartier (barrio) améliore la précision pour les noms de rue courants."
         }
+      }
+    }
+  },
+  "selector": {
+    "default_sensors": {
+      "options": {
+        "legacy": "Un capteur par type de déchet",
+        "new": "Capteurs de synthèse (prochaine collecte)"
       }
     }
   }

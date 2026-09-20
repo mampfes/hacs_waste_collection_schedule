@@ -27,12 +27,12 @@
         "data": {
           "show_customize_config": "Show Collection Event Customize Configurations",
           "show_sensor_config": "Show Sensor Configurations",
-          "create_default_sensors": "Create default sensors"
+          "default_sensors": "Default sensors"
         },
         "data_description": {
           "show_customize_config": "Select this if you want to customize the collection types.",
           "show_sensor_config": "Select this if you want to configure sensors.",
-          "create_default_sensors": "Creates one sensor per waste type. Can be combined with your own sensors."
+          "default_sensors": "Choose which default sensors to create. They can be combined with your own sensors."
         }
       },
       "customize_select": {
@@ -32719,6 +32719,12 @@
         "appointment_types": "Appointment Types",
         "generic": "Generic",
         "hidden": "Hidden"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "One sensor per waste type",
+        "new": "Overview sensors (next collection)"
       }
     },
     "custom_flow_types": {
