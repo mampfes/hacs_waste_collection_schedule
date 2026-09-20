@@ -1022,6 +1022,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>France</summary>
 
 - [Acigné](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [Agglo d'Agen](/doc/source/publidata_fr.md) / agglo-agen.net/vie-quotidienne/collecte-et-traitement-des-dechets/particuliers/calendriers-et-informations-collecte
 - [Aigrefeuille-sur-Maine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Aingeray](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Alfortville](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
@@ -1262,6 +1263,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [SIAVED (Valenciennes Métropole)](/doc/source/publidata_fr.md) / siaved.fr/votre-calendrier-de-collecte
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
+- [SICTOM du Marsan](/doc/source/publidata_fr.md) / sictomdumarsan.fr/la-collecte/mes-jours-de-collecte
 - [SICTOM du Val de Saône](/doc/source/sictomvds_com.md) / sictomvds.com
 - [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
 - [SIVOM Rive Droite](/doc/source/publidata_fr.md) / sivom-rivedroite.fr
@@ -1284,6 +1286,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr
 - [ValDem](/doc/source/publidata_fr.md) / valdem.fr
 - [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
+- [Valodev 18](/doc/source/publidata_fr.md) / valodev18.fr/la-collecte-des-vos-dechets
 - [Vern-sur-Seiche](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
 - [Vezin-le-Coquet](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -3959,7 +3962,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
 - [Stratford District Council](/doc/source/stratford_gov_uk.md) / stratford.gov.uk
 - [Stroud District Council](/doc/source/stroud_gov_uk.md) / stroud.gov.uk
-- [Sunderland City Council](/doc/source/sunderland_gov_uk.md) / sunderland.gov.uk
+- [Sunderland City Council](/doc/source/sunderland_gov_uk.md) / sunderland.gov.uk/bindays?ccp=true
 - [Surrey Heath Borough Council](/doc/source/jointwastesolutions_org.md) / surreyheath.gov.uk
 - [Sutton Council, London](/doc/source/sutton_gov_uk.md) / sutton.gov.uk
 - [Swale Borough Council](/doc/source/swale_gov_uk.md) / swale.gov.uk
@@ -4094,6 +4097,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sacramento County, CA](/doc/ics/recollect.md) / wmr.saccounty.gov
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tacoma, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-tacoma
+- [TrashDayNow](/doc/ics/trashdaynow_com.md) / trashdaynow.com
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Village of Sunbury, Ohio](/doc/source/sunbury_ohio_org.md) / sunburyohio.org

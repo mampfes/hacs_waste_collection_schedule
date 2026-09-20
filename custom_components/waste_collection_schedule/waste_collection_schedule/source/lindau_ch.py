@@ -1,4 +1,6 @@
 import json
+import re
+import unicodedata
 from datetime import datetime
 
 import requests
@@ -20,6 +22,7 @@ ICON_MAP = {
     "hackseldienst": Icons.GARDEN,
     "papier und karton": Icons.PAPER,
     "altmetalle": Icons.METAL,
+    "sonderabfall": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {
@@ -47,17 +50,32 @@ class Source:
                 self._city in item["abfallkreisIds"]
                 or self._city in item["abfallkreisNameList"]
             ):
-                next_pickup = item["_anlassDate-sort"].split()[0]
-                next_pickup_date = datetime.fromisoformat(next_pickup).date()
+                # The `*-sort` fields are now obfuscated ("#1713..."), so read
+                # the plain display fields instead.
+                next_pickup = re.search(r"\d{2}\.\d{2}\.\d{4}", item["_anlassDate"])
+                if next_pickup is None:
+                    continue
+                next_pickup_date = datetime.strptime(
+                    next_pickup.group(0), "%d.%m.%Y"
+                ).date()
 
                 waste_type = BeautifulSoup(item["name"], "html.parser").text
-                waste_type_sorted = BeautifulSoup(item["name-sort"], "html.parser").text
+                icon_key = (
+                    unicodedata.normalize("NFKD", waste_type)
+                    .encode("ascii", "ignore")
+                    .decode()
+                    .lower()
+                )
+                icon = next(
+                    (icon for key, icon in ICON_MAP.items() if key in icon_key),
+                    Icons.GENERAL_WASTE,
+                )
 
                 entries.append(
                     Collection(
                         date=next_pickup_date,
                         t=waste_type,
-                        icon=ICON_MAP.get(waste_type_sorted, "mdi:trash-can"),
+                        icon=icon,
                     )
                 )
 

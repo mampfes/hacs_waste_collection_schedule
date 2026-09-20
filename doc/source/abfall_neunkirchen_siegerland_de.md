@@ -18,7 +18,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*
 
 **ort**  
 *(string) (optional)*
@@ -30,9 +30,9 @@ waste_collection_schedule:
   sources:
     - name: abfall_neunkirchen_siegerland_de
       args:
-        strasse: Waldstr
+        strasse: "Waldstra\xDFe (Altenseelbach)"
 ```
 
 ## How to get the source arguments
 
-Enter a partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen').
+Pick your street from the list (shown as 'Street (district)'). When configuring in YAML, a partial or full street name as shown on the Neunkirchen Siegerland waste calendar also works (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen').

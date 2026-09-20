@@ -1,0 +1,24 @@
+# TrashDayNow
+
+TrashDayNow is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+
+
+## How to get the configuration arguments
+
+- Go to <https://www.trashdaynow.com> and enter your full street address.
+- Under the collection days on the result, click `Add to Calendar`, then `Copy calendar link`.
+- Use the copied link as the `url` parameter. The link carries your city, the services and the day pattern, never your address, and stays valid for as long as the day is published.
+- Each service is its own event (`Trash day`, `Recycling day`, `Organics day`, `Yard waste day`, `Bulk pickup`). A service whose published schedule is not a plain weekly or every-other-week pattern is left out rather than guessed.
+- Covers US and Canadian cities where TrashDayNow can verify the address against the city's or hauler's published source; where it cannot, the result says so and offers no calendar.
+
+## Examples
+
+### Charlotte, NC
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.trashdaynow.com/api/cal/v1?c=Charlotte&st=NC&e=trash.w1%2Corganics.w1%2Cyard.w1&src=My+Charlotte+Lookup+solid-waste+service+layer&k=961f9178e173200ec754fbab6480fbff&sig=431afcb613c4d0fddcb3
+```

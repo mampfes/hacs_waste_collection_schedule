@@ -551,7 +551,7 @@ On a pipeline source the metadata lives on the class:
 | `TITLE` | str | Display name. Shown in README.md and info.md. |
 | `DESCRIPTION` | str | One-line description. |
 | `URL` | str | Provider homepage. The abbreviated domain appears next to the title in README.md. |
-| `COUNTRY` | str | Lowercase country code. Optional if the file name ends in a valid code; otherwise required. UK is `"uk"`, Canada is `"ca"`. |
+| `COUNTRY` | str | Lowercase country code. Optional if the file name ends in a valid code; otherwise required. UK is `"uk"`, Canada is `"ca"`. This is ISO 3166-1 alpha-2 (Slovenia is `si`); language codes in translations are ISO 639-1, a different namespace (Slovenian is `sl`). |
 | `TEST_CASES` | dict | Maps a case name to constructor kwargs. Must not be empty. |
 | `PARAMS` | list | Typed `ConfigParam` descriptors driving the config flow and validation. |
 | `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |

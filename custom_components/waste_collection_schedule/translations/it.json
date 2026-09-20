@@ -26,11 +26,13 @@
         "description": "Seleziona quanto dettagliata vuoi che sia la configurazione di questa integrazione. Lascia vuoto se desideri configurare solo un semplice calendario.",
         "data": {
           "show_customize_config": "Mostra Configurazioni di Personalizzazione Eventi di Raccolta",
-          "show_sensor_config": "Mostra Configurazioni Sensori"
+          "show_sensor_config": "Mostra Configurazioni Sensori",
+          "create_default_sensors": "Crea i sensori predefiniti"
         },
         "data_description": {
           "show_customize_config": "Seleziona questo se vuoi personalizzare i tipi di raccolta.",
-          "show_sensor_config": "Seleziona questo se vuoi configurare i sensori."
+          "show_sensor_config": "Seleziona questo se vuoi configurare i sensori.",
+          "create_default_sensors": "Crea un sensore per tipo di rifiuto. Può essere combinato con sensori personalizzati."
         }
       },
       "customize_select": {
@@ -71,6 +73,21 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Configurazione Sorgente",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "app_id": "App Id",
+          "f_abfallarten": "Tipi di rifiuto",
+          "key": "Chiave API",
+          "ort": "Quartiere"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "f_abfallarten": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "sensor": {
@@ -7270,6 +7287,41 @@
         },
         "data_description": {}
       },
+      "args_publidata_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "insee_code": "Codice INSEE",
+          "instance_id": "ID Istanza",
+          "public_type": "Tipo Abitazione"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
+          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
+          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "insee_code": "Codice INSEE",
+          "instance_id": "ID Istanza",
+          "public_type": "Tipo Abitazione"
+        },
+        "data_description": {
+          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
+          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
+          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
+        }
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -7386,41 +7438,6 @@
           "typevoie": "Typevoie"
         },
         "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "address": "Indirizzo",
-          "insee_code": "Codice INSEE",
-          "instance_id": "ID Istanza",
-          "public_type": "Tipo Abitazione"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
-          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
-          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
-          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "address": "Indirizzo",
-          "insee_code": "Codice INSEE",
-          "instance_id": "ID Istanza",
-          "public_type": "Tipo Abitazione"
-        },
-        "data_description": {
-          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
-          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
-          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
-          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
-        }
       },
       "args_coeur_yvelines_fr": {
         "title": "Configurazione Sorgente",
@@ -17448,12 +17465,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "street": "Strada",
-          "street_number": "Numero Strada"
+          "city": "Comune",
+          "street": "Via",
+          "street_number": "Numero civico"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "Comune servito da CIDIU, ad esempio Collegno",
+          "street": "Nome della via senza il numero civico",
+          "street_number": "Numero civico"
         }
       },
       "reconfigure_cidiu_it": {
@@ -17461,11 +17481,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "street": "Strada",
-          "street_number": "Numero Strada"
+          "city": "Comune",
+          "street": "Via",
+          "street_number": "Numero civico"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Comune servito da CIDIU, ad esempio Collegno",
+          "street": "Nome della via senza il numero civico",
+          "street_number": "Numero civico"
+        }
       },
       "args_comune_digital_it": {
         "title": "Configurazione Sorgente",
@@ -20115,13 +20139,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "municipality": "Municipality",
-          "street": "Strada",
+          "district": "District",
+          "municipality": "Comune",
+          "street": "Via",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20129,12 +20155,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "municipality": "Municipality",
-          "street": "Strada",
+          "district": "District",
+          "municipality": "Comune",
+          "street": "Via",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configurazione Sorgente",
@@ -23265,13 +23294,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "housenameornumber": "Numero o Nome Casa",
-          "postcode": "Codice Postale CAP",
+          "housenameornumber": "Housenameornumber",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_bathnes_gov_uk": {
@@ -23279,12 +23309,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "housenameornumber": "Numero o Nome Casa",
-          "postcode": "Codice Postale CAP",
+          "housenameornumber": "Housenameornumber",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_bcp_gov_uk": {
@@ -31261,6 +31292,50 @@
           "calendar_title": "Nome Calendario",
           "prem_code": "Premises Code",
           "street_address": "Indirizzo Strada"
+        },
+        "data_description": {}
+      },
+      "args_ics_trashdaynow_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_trashdaynow_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },

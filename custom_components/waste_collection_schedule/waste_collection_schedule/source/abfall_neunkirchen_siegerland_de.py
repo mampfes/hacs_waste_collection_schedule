@@ -25,10 +25,10 @@ merge — an address with both a bin and a container keeps both.
 
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import field_terms, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.config_params import cascading_select, district
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -44,28 +44,30 @@ class Source(BaseSource):
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
 
     TEST_CASES: ClassVar[dict] = {
-        "Waldstraße": {"strasse": "Waldstr"},
+        "Waldstraße (Altenseelbach)": {"strasse": "Waldstraße (Altenseelbach)"},
         "Altenseelbacher Weg (Neunkirchen)": {
-            "strasse": "Altenseelbacher Weg",
-            "ort": "Neunkirchen",
+            "strasse": "Altenseelbacher Weg (Neunkirchen)"
         },
     }
 
     PARAMS = (
-        street("strasse"),
+        cascading_select(("strasse", field_terms.STREET)),
         district("ort", optional=True),
     )
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Enter a partial or full street name as shown on the Neunkirchen "
-            "Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße'). If the "
+            "Pick your street from the list (shown as 'Street (district)'). "
+            "When configuring in YAML, a partial or full street name as shown on "
+            "the Neunkirchen Siegerland waste calendar also works (e.g. 'Waldstr' "
+            "for 'Waldstraße'). If the "
             "street exists in several districts, add the district (Ortsteil) "
             "shown in parentheses (e.g. 'Neunkirchen')."
         ),
         "de": (
-            "Geben Sie einen Teil oder den vollständigen Straßennamen wie im "
-            "Abfallkalender Neunkirchen Siegerland ein (z.B. 'Waldstr' für "
+            "Wählen Sie Ihre Straße aus der Liste (Anzeige 'Straße (Ortsteil)'). "
+            "In YAML genügt auch ein Teil oder der vollständige Straßenname wie im "
+            "Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für "
             "'Waldstraße'). Kommt die Straße in mehreren Ortsteilen vor, "
             "ergänzen Sie den Ortsteil in Klammern (z.B. 'Neunkirchen')."
         ),
@@ -85,6 +87,12 @@ class Source(BaseSource):
         refid="3362.1",
         download_params={"kat": "1", "alarm": "0"},
     )
+
+    @classmethod
+    def get_choices(cls, field: str, selections: dict) -> list[str]:
+        """Street dropdown for the config flow: every "Street (Ortsteil)" label."""
+        return cls.retrieve.street_choices() if field == "strasse" else []
+
     parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={

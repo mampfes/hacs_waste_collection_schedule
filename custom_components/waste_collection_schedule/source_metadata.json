@@ -1796,6 +1796,17 @@
     },
     "urls": {}
   },
+  "publidata_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md",
+    "howto": {
+      "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
+      "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
+      "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto."
+    },
+    "urls": {
+      "url_www_insee_fr": "https://www.insee.fr"
+    }
+  },
   "clissonsevremaine_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/clissonsevremaine_fr.md",
     "howto": {
@@ -1823,17 +1834,6 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_angers_fr.md",
     "howto": {},
     "urls": {}
-  },
-  "publidata_fr": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md",
-    "howto": {
-      "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
-      "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
-      "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto."
-    },
-    "urls": {
-      "url_www_insee_fr": "https://www.insee.fr"
-    }
   },
   "coeur_yvelines_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coeur_yvelines_fr.md",
@@ -3211,8 +3211,8 @@
   "abfall_neunkirchen_siegerland_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_neunkirchen_siegerland_de.md",
     "howto": {
-      "de": "Geben Sie einen Teil oder den vollständigen Straßennamen wie im Abfallkalender Neunkirchen Siegerland ein (z.B. 'Waldstr' für 'Waldstraße'). Kommt die Straße in mehreren Ortsteilen vor, ergänzen Sie den Ortsteil in Klammern (z.B. 'Neunkirchen').",
-      "en": "Enter a partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen')."
+      "de": "Wählen Sie Ihre Straße aus der Liste (Anzeige 'Straße (Ortsteil)'). In YAML genügt auch ein Teil oder der vollständige Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße'). Kommt die Straße in mehreren Ortsteilen vor, ergänzen Sie den Ortsteil in Klammern (z.B. 'Neunkirchen').",
+      "en": "Pick your street from the list (shown as 'Street (district)'). When configuring in YAML, a partial or full street name as shown on the Neunkirchen Siegerland waste calendar also works (e.g. 'Waldstr' for 'Waldstraße'). If the street exists in several districts, add the district (Ortsteil) shown in parentheses (e.g. 'Neunkirchen')."
     },
     "urls": {}
   },
@@ -4470,7 +4470,9 @@
   },
   "kiedysmieci_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
-    "howto": {},
+    "howto": {
+      "en": "Setting this source up through the Home Assistant UI needs no lookup: the wizard asks for the voivodeship (województwo), district (powiat), municipality (gmina) and street or locality (ulica) one at a time, and each dropdown lists what the provider returns for the levels already chosen. For configuration.yaml, the same values can be read off the apps ([GooglePlay](https://play.google.com/store/apps/details?id=com.fxsystems.KiedySmieci_info), [AppStore](https://apps.apple.com/pl/app/kiedy-%C5%9Bmieci/id1539957094?l=pl)) or the [website](https://kiedysmieci.info/index.html#harmonogram)."
+    },
     "urls": {}
   },
   "zys_harmonogram_pl": {
@@ -5270,7 +5272,9 @@
   },
   "bathnes_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bathnes_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Provide your UPRN, or both your postcode and house name or number. Find your UPRN at https://www.findmyaddress.co.uk/"
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7586,6 +7590,13 @@
   "seattle_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seattle_gov.md",
     "howto": {},
+    "urls": {}
+  },
+  "ics_trashdaynow_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/trashdaynow_com.md",
+    "howto": {
+      "en": "- Go to <https://www.trashdaynow.com> and enter your full street address.\n- Under the collection days on the result, click `Add to Calendar`, then `Copy calendar link`.\n- Use the copied link as the `url` parameter. The link carries your city, the services and the day pattern, never your address, and stays valid for as long as the day is published.\n- Each service is its own event (`Trash day`, `Recycling day`, `Organics day`, `Yard waste day`, `Bulk pickup`). A service whose published schedule is not a plain weekly or every-other-week pattern is left out rather than guessed.\n- Covers US and Canadian cities where TrashDayNow can verify the address against the city's or hauler's published source; where it cannot, the result says so and offers no calendar.\n"
+    },
     "urls": {}
   },
   "sunbury_ohio_org": {

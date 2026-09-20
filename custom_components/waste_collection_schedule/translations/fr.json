@@ -26,11 +26,13 @@
         "description": "Choisissez le niveau de détail souhaité pour cette intégration. Laissez vide si vous souhaitez simplement configurer un calendrier de base.",
         "data": {
           "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
-          "show_sensor_config": "Afficher les Configurations des Capteurs"
+          "show_sensor_config": "Afficher les Configurations des Capteurs",
+          "create_default_sensors": "Créer les capteurs par défaut"
         },
         "data_description": {
           "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
-          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs."
+          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs.",
+          "create_default_sensors": "Crée un capteur par type de déchet. Peut être combiné avec vos propres capteurs."
         }
       },
       "customize_select": {
@@ -71,6 +73,21 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Configurer la Source",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "app_id": "App Id",
+          "f_abfallarten": "Types de déchets",
+          "key": "Clé API",
+          "ort": "Quartier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "f_abfallarten": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "sensor": {
@@ -7297,6 +7314,32 @@
           "commune": "Nom de la commune (ou du quartier de Rennes) tel qu'il apparaît sur la page des calendriers de collecte de Rennes Métropole."
         }
       },
+      "args_publidata_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_publidata_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "insee_code": "Insee Code",
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
+        },
+        "data_description": {}
+      },
       "args_clissonsevremaine_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -7424,32 +7467,6 @@
           "city": "Ville",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
-        },
-        "data_description": {}
-      },
-      "args_publidata_fr": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Adresse",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_publidata_fr": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "address": "Adresse",
-          "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
-          "public_type": "Public Type"
         },
         "data_description": {}
       },
@@ -20158,12 +20175,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_kiedysmieci_info": {
@@ -20172,11 +20191,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_zys_harmonogram_pl": {
         "title": "Configurer la Source",
@@ -23307,13 +23329,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "housenameornumber": "Numéro civique",
+          "housenameornumber": "Housenameornumber",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_bathnes_gov_uk": {
@@ -23321,12 +23344,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "housenameornumber": "Numéro civique",
+          "housenameornumber": "Housenameornumber",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_bcp_gov_uk": {
@@ -31303,6 +31327,50 @@
           "calendar_title": "Titre du Calendrier",
           "prem_code": "Prem Code",
           "street_address": "Adresse de rue"
+        },
+        "data_description": {}
+      },
+      "args_ics_trashdaynow_com": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Méthode",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ics_trashdaynow_com": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Méthode",
+          "offset": "Offset",
+          "params": "Paramètres",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },

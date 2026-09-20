@@ -35,7 +35,7 @@ sys.path.insert(
     ),
 )
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from update_docu_links import BLACK_LIST  # isort:skip
+from update_docu_links import BLACK_LIST, LANGUAGES  # isort:skip
 
 # Shared generic-engine allowance: modules documenting a shared engine (ics,
 # static, ...) rather than one provider — same BLACK_LIST test_source_components.py
@@ -47,6 +47,19 @@ _GENERIC_ENGINE_SOURCES = {g.split("/")[-1].removesuffix(".md") for g in BLACK_L
 # =====================================================================
 # 1. Core types
 # =====================================================================
+
+
+class TestLanguageRegistries:
+    """The config-flow allowlist and the waste-type languages move together."""
+
+    def test_languages_match_supported_languages(self):
+        from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
+
+        assert set(LANGUAGES) == set(SUPPORTED_LANGUAGES), (
+            "update_docu_links.LANGUAGES and waste_types.SUPPORTED_LANGUAGES must "
+            "list the same languages: add a language to both (with complete "
+            "waste_types names and field_terms labels), or to neither."
+        )
 
 
 class TestWasteType:
@@ -1331,7 +1344,7 @@ class TestRiSKommunalComponents:
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
                 calls["n"] += 1
-                page = params.get("page", 0)
+                page = (params or {}).get("page", 0)
                 return outer._response(outer._PAGE0 if page == 0 else outer._EMPTY)
 
         source = MagicMock()
@@ -1469,7 +1482,7 @@ class TestRiSKommunalComponents:
 
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
-                captured.update(params)
+                captured.update(params or {})
                 return outer._response(outer._EMPTY)
 
         source = MagicMock()
@@ -1497,7 +1510,7 @@ class TestRiSKommunalComponents:
 
         class FakeSession:
             def get(self, url, params=None, headers=None, timeout=None):
-                captured.update(params)
+                captured.update(params or {})
                 return outer._response(outer._EMPTY)
 
         source = MagicMock()
@@ -2455,6 +2468,51 @@ class TestAthosWasteManagementRetriever:
             "ApplicationName": "x.y.z",
             "SubmitAction": "filedownload_ICAL",
         }
+
+    def test_iterate_field_runs_all_steps_for_each_value(self):
+        """Each discovered period runs the complete wizard and returns its
+        final response."""
+        from waste_collection_schedule.retrievers import (
+            AthosWasteManagementRetriever,
+        )
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = """
+            <html><body><form>
+                <input type="hidden" name="SessionId" value="abc123">
+                <input type="radio" name="Zeitraum" value="2026">
+                <input type="radio" name="Zeitraum" value="2027">
+            </form></body></html>
+        """
+        first_intermediate = MagicMock()
+        first_final = MagicMock()
+        second_intermediate = MagicMock()
+        second_final = MagicMock()
+        source.session.get.return_value = initial
+        source.session.post.side_effect = [
+            first_intermediate,
+            first_final,
+            second_intermediate,
+            second_final,
+        ]
+
+        responses = AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            iterate_field="Zeitraum",
+            steps=[
+                {"submit_action": "forward"},
+                {"submit_action": "filedownload_ICAL"},
+            ],
+        )(source)
+
+        assert responses == [first_final, second_final]
+        assert source.session.post.call_count == 4
+        assert [
+            call.kwargs["data"]["Zeitraum"]
+            for call in source.session.post.call_args_list
+        ] == ["2026", "2026", "2027", "2027"]
 
     def test_step_remove_drops_fields_before_posting(self):
         """A step's `remove` list drops fields from the running state (the
@@ -6973,7 +7031,6 @@ CASES_AWAITING_CASSETTE = {
     "app_abfallplus_de::de_k4systems_abfallappwug_bergen_hauptstr_1",
     "app_abfallplus_de::de_k4systems_bonnorange_auf_dem_h_gel",
     "app_abfallplus_de::de_k4systems_leipziglk_brandis_brandis",
-    "awb_emsland_de::andervenne_am_gallenberg",
     "c_trace_de::roth",
     "cheshire_west_and_chester_gov_uk::knutsford_no_results",
     "ecoharmonogram_pl::ukrainian_language",

@@ -9,13 +9,16 @@ import homeassistant.helpers.config_validation as cv
 import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryError
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import entity_registry as er
 
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
 )
+from .waste_collection_schedule.source_shell import calc_unique_source_id
 from .wcs_coordinator import WCSCoordinator
 
 from . import const  # type: ignore # isort:skip
@@ -86,6 +89,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     coordinator = WCSCoordinator(
         hass,
+        config_entry=entry,
         source_shell=shell,
         separator=options.get(const.CONF_SEPARATOR, const.CONF_SEPARATOR_DEFAULT),
         fetch_time=cv.time(
@@ -160,6 +164,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         and config_entry.minor_version < const.CONFIG_MINOR_VERSION
     ):
         _LOGGER.debug("Migrating from version %s", config_entry.version)
+        old_registry_base = _get_source_unique_id(config_entry.data)
         new_data = {**config_entry.data}
 
         if config_entry.version < 2 and const.CONFIG_VERSION >= 2:
@@ -379,6 +384,9 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 new_data["args"]["street"] = new_data["args"]["strasse"]
                 del new_data["args"]["strasse"]
 
+        if config_entry.version < 3:
+            await _migrate_registry_unique_ids(hass, config_entry, old_registry_base)
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,
@@ -389,3 +397,55 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         _LOGGER.debug("Migration to version %s successful", config_entry.version)
 
     return True
+
+
+def _get_source_unique_id(data: dict[str, Any]) -> str | None:
+    """Rebuild the pre-v3 source-derived id entities/devices were registered under.
+
+    Up to config version 2 every entity's unique_id and the device identifier
+    were prefixed with ``SourceShell.unique_id``, i.e. the source name plus its
+    arguments. Reuse ``calc_unique_source_id`` rather than re-spelling that
+    format here, so the migration cannot drift away from the ids it has to find.
+    """
+    source_name = data.get(const.CONF_SOURCE_NAME)
+    source_args = data.get(const.CONF_SOURCE_ARGS, {})
+    if not source_name or not isinstance(source_args, dict):
+        return None
+    return calc_unique_source_id(source_name, source_args)
+
+
+async def _migrate_registry_unique_ids(
+    hass: HomeAssistant, config_entry: ConfigEntry, old_base: str | None
+) -> None:
+    """Migrate v2 source-based registry IDs to config-entry-based IDs.
+
+    Entity identity used to track the source arguments, so reconfiguring an
+    entry to a new address orphaned every entity. From version 3 the ids are
+    based on the config entry id instead, which is stable across reconfigures.
+    Re-key the existing registry entries here so the change is transparent:
+    without this, upgrading would duplicate every entity and lose its history.
+    """
+    if old_base is None:
+        return
+
+    new_base = config_entry.entry_id
+    if old_base == new_base:
+        return
+
+    @callback
+    def _update_unique_id(entity_entry: er.RegistryEntry) -> dict[str, Any] | None:
+        if not entity_entry.unique_id.startswith(old_base):
+            return None
+        return {"new_unique_id": new_base + entity_entry.unique_id[len(old_base) :]}
+
+    await er.async_migrate_entries(hass, config_entry.entry_id, _update_unique_id)
+
+    device_registry = dr.async_get(hass)
+    device_entry = device_registry.async_get_device(
+        identifiers={(const.DOMAIN, old_base)}
+    )
+    if device_entry is not None:
+        device_registry.async_update_device(
+            device_entry.id,
+            new_identifiers={(const.DOMAIN, new_base)},
+        )

@@ -2,11 +2,31 @@
   "recorded_at": "2026-09-20",
   "interactions": [
     {
-      "key": "GET https://www.neunkirchen-siegerland.de/output/autocomplete.php 4bb6b95f6e",
+      "key": "GET https://www.neunkirchen-siegerland.de/output/autocomplete.php a18dde62da",
       "method": "GET",
       "url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
-      "final_url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php?out=json&type=abto&select=2&term=Altenseelbacher+Weg+%28Neunkirchen%29&refid=3362.1",
-      "body": "{\"params\":[[\"out\",\"json\"],[\"refid\",\"3362.1\"],[\"select\",\"2\"],[\"term\",\"Altenseelbacher Weg (Neunkirchen)\"],[\"type\",\"abto\"]]}",
+      "final_url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php?out=json&type=abto&select=2&term=Waldstra%C3%9Fe+%28Altenseelbach%29&refid=3362.1",
+      "body": "{\"params\":[[\"out\",\"json\"],[\"refid\",\"3362.1\"],[\"select\",\"2\"],[\"term\",\"Waldstra\u00dfe (Altenseelbach)\"],[\"type\",\"abto\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 20 Sep 2026 16:17:51 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "strict-transport-security": "max-age=63072000; includeSubDomains"
+      },
+      "content_b64": "bnVsbA=="
+    },
+    {
+      "key": "GET https://www.neunkirchen-siegerland.de/output/autocomplete.php ca6c9d6546",
+      "method": "GET",
+      "url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
+      "final_url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php?out=json&type=abto&select=2&term=Waldstra%C3%83%C2%9Fe+%28Altenseelbach%29&refid=3362.1",
+      "body": "{\"params\":[[\"out\",\"json\"],[\"refid\",\"3362.1\"],[\"select\",\"2\"],[\"term\",\"Waldstra\u00c3\u009fe (Altenseelbach)\"],[\"type\",\"abto\"]]}",
       "status": 200,
       "encoding": "utf-8",
       "headers": {
@@ -22,11 +42,11 @@
       "content_b64": "bnVsbA=="
     },
     {
-      "key": "GET https://www.neunkirchen-siegerland.de/output/autocomplete.php 7c2dd7ac32",
+      "key": "GET https://www.neunkirchen-siegerland.de/output/autocomplete.php e9fb689280",
       "method": "GET",
       "url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
-      "final_url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php?out=json&type=abto&select=2&term=Altenseelbacher+Weg&refid=3362.1",
-      "body": "{\"params\":[[\"out\",\"json\"],[\"refid\",\"3362.1\"],[\"select\",\"2\"],[\"term\",\"Altenseelbacher Weg\"],[\"type\",\"abto\"]]}",
+      "final_url": "https://www.neunkirchen-siegerland.de/output/autocomplete.php?out=json&type=abto&select=2&term=Waldstra%C3%9Fe&refid=3362.1",
+      "body": "{\"params\":[[\"out\",\"json\"],[\"refid\",\"3362.1\"],[\"select\",\"2\"],[\"term\",\"Waldstra\u00dfe\"],[\"type\",\"abto\"]]}",
       "status": 200,
       "encoding": "utf-8",
       "headers": {
@@ -39,14 +59,14 @@
         "referrer-policy": "no-referrer-when-downgrade",
         "strict-transport-security": "max-age=63072000; includeSubDomains"
       },
-      "content_b64": "W1siMzM2Mi45IiwiQWx0ZW5zZWVsYmFjaGVyIFdlZyAoQWx0ZW5zZWVsYmFjaCkiXSxbIjMzNjIuNTEiLCJBbHRlbnNlZWxiYWNoZXIgV2VnIChOZXVua2lyY2hlbikiXV0="
+      "content_b64": "W1siMzM2Mi40NCIsIldhbGRzdHJhXHUwMGRmZSAoQWx0ZW5zZWVsYmFjaCkiXV0="
     },
     {
-      "key": "GET https://www.neunkirchen-siegerland.de/output/options.php bdba521cc2",
+      "key": "GET https://www.neunkirchen-siegerland.de/output/options.php e531f6c019",
       "method": "GET",
       "url": "https://www.neunkirchen-siegerland.de/output/options.php",
-      "final_url": "https://www.neunkirchen-siegerland.de/output/options.php?ModID=48&call=ical&pois=3362.51&kat=1&alarm=0",
-      "body": "{\"params\":[[\"ModID\",\"48\"],[\"alarm\",\"0\"],[\"call\",\"ical\"],[\"kat\",\"1\"],[\"pois\",\"3362.51\"]]}",
+      "final_url": "https://www.neunkirchen-siegerland.de/output/options.php?ModID=48&call=ical&pois=3362.44&kat=1&alarm=0",
+      "body": "{\"params\":[[\"ModID\",\"48\"],[\"alarm\",\"0\"],[\"call\",\"ical\"],[\"kat\",\"1\"],[\"pois\",\"3362.44\"]]}",
       "status": 200,
       "encoding": "utf-8",
       "headers": {

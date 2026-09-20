@@ -412,6 +412,47 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     yield collection_date, key
 
 
+class SplitByFields(Preprocessor[Any, Mapping[str, Any]]):
+    """Split one record into several same-shape records, one per source field.
+
+    For a response that carries multiple collection values on one record,
+    e.g. ``previousCollectionDate`` and ``nextCollectionDate``, this duplicates the
+    record once per field and renames the chosen field to a single destination
+    key so the normal transformer pipeline sees one value per record::
+
+        parse = parsers.JsonParser(shape=list[dict])
+        preprocess = preprocessors.SplitByFields(
+            src_keys=("previousCollectionDate", "nextCollectionDate"),
+            dst_key="date",
+        )
+        transform = JsonTransformer(date_key="date", type_key="featureType")
+
+    The result keeps every other field in the record unchanged, removes the
+    original source fields, and yields a copy with ``dst_key`` set to that field's
+    value. Missing source values are skipped.
+
+    Args:
+        src_keys: field names whose values should be promoted into their own record.
+        dst_key: the field name written into each output record.
+    """
+
+    def __init__(self, *, src_keys: Sequence[str], dst_key: str):
+        self._src_keys = tuple(src_keys)
+        self._dst_key = dst_key
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Mapping[str, Any]]:
+        for record in records:
+            base = {
+                key: value for key, value in record.items() if key not in self._src_keys
+            }
+            for field_name in self._src_keys:
+                value = record.get(field_name)
+                if value is not None:
+                    yield {**base, self._dst_key: value}
+
+
 class ArgumentLookup(Preprocessor[Any, Any]):
     """Resolve a config argument against a table read out of the response.
 

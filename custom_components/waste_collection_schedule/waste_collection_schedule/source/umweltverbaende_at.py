@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -331,6 +332,10 @@ TEST_CASES = {
         "calendar_title_separator": ",",
         "calendar_splitter": ":",
     },
+    "Korneuburg - Enzersfeld": {
+        "district": "korneuburg",
+        "municipal": "Enzersfeld",
+    },  # regression test for #7428: flat ICS list (no accordion) needs municipal scoping so the single-match shortcut can trigger
     "Krems - Langenlois Land": {
         "district": "krems",
         "municipal": "Langenlois Land",
@@ -347,10 +352,11 @@ TEST_CASES = {
         "municipal": "Staatz",
         "town": "kautendorf",
     },  # schedules use www.gaul-laa.at
-    # "Mödling": {
-    #     "district": "moedling",
-    #     "municipal": "Wienerwald",
-    # },  # Not supported anymore as they only provide a PDFs now
+    "Mödling": {
+        "district": "moedling",
+        "municipal": "Wienerwald",
+        "town": "Gruberau",
+    },  # gvamoedling.at/muellabfuhrkalender/ (regression test for issue #7476)
     "Melk": {"district": "melk", "municipal": "Schollach"},
     "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
@@ -389,6 +395,7 @@ ICON_MAP = {
 }
 
 POSSIBLE_COLLECTION_PATHS = (
+    "muellabfuhrkalender/",  # Mödling
     "abholtermine-preview/",  # Hollabrunn
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
@@ -516,6 +523,14 @@ class Source:
                 if not entries:
                     return self.fetch_old()
                 return entries
+            except SourceArgumentException:
+                # Argument errors (e.g. a missing/ambiguous calendar or
+                # municipal) are actionable for the user and carry helpful
+                # suggestions. Surface them directly instead of silently
+                # falling back to the old parser, which returns an empty
+                # result for new-style websites and previously masked the
+                # real error behind a generic "empty response" (#7428).
+                raise
             except Exception as e:
                 # If new method fails, fallback to old method
                 try:
@@ -726,6 +741,23 @@ class Source:
                 ics_links.update(self._collect_ics_links(section))
         else:
             ics_links = self._collect_ics_links(soup)
+            # Some districts (e.g. Korneuburg) list every municipality's
+            # ICS links in one flat list instead of grouping them into an
+            # accordion with a heading per municipality. Without scoping,
+            # a municipal with a single unambiguous calendar (e.g.
+            # "Enzersfeld") gets mixed in with every other municipality's
+            # calendars, so the "exactly one link" shortcut below never
+            # triggers and unrelated calendars leak into the suggestions
+            # (see issue #7428). Narrow down to the requested municipal
+            # where its name appears (bounded) in the link text.
+            if self._municipal:
+                scoped_links = {
+                    name: url
+                    for name, url in ics_links.items()
+                    if self._bounded_substring_match(self._municipal, name)
+                }
+                if scoped_links:
+                    ics_links = scoped_links
 
         if not ics_links:
             raise Exception("Could not find any ics links on the page")

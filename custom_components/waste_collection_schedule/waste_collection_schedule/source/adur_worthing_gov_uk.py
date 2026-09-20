@@ -101,16 +101,22 @@ class Source:
         entries = []
 
         for container in containers:
-            waste_type = container.find("h2").text
+            waste_heading = container.find("h2")
+            if waste_heading is None:
+                continue
+            waste_type = waste_heading.text
             waste_texts = container.find_all("p")
+            waste_date = None
             for text in waste_texts:
                 if "Next collection:" in text.text:
                     waste_date = text.text.split(": ")[1]
+            if waste_date is None:
+                continue
             # Append year and deal with year-end dates
             waste_date += f" {datetime.now().year}"
-            waste_date = parser.parse(waste_date).date()
-            if waste_date.month < datetime.now().month:
-                waste_date = waste_date + timedelta(days=365)
+            waste_date_dt = parser.parse(waste_date).date()
+            if waste_date_dt.month < datetime.now().month:
+                waste_date_dt = waste_date_dt + timedelta(days=365)
             # waste descriptions changed, so make consistent with old configs
             if waste_type == "General rubbish":
                 waste_type = "Refuse"
@@ -118,7 +124,9 @@ class Source:
                 waste_type = "Garden"
 
             entries.append(
-                Collection(t=waste_type, date=waste_date, icon=ICON_MAP.get(waste_type))
+                Collection(
+                    t=waste_type, date=waste_date_dt, icon=ICON_MAP.get(waste_type)
+                )
             )
 
         return entries

@@ -4,15 +4,6 @@ Demonstrates: the Athos "WasteManagementServlet" wizard's plain German
 shape (one field-setting step, one container-selection step, one download
 step; see the ``awn_de`` docstring), applied to a near-identical deployment
 under a different host/path/``ApplicationName``.
-
-Known gap (documented, not reproduced here, matching the precedent set by
-``bielefeld_de``): the legacy source additionally scraped every ``Zeitraum``
-(calendar-year) hidden input the initial page offered and re-ran the whole
-three-step wizard once per year, merging events across all of them.
-``AthosWasteManagementRetriever`` runs the wizard's steps exactly once per
-fetch, using whatever single ``Zeitraum`` default the scraped hidden state
-carries (the same fallback the legacy source used when it found no
-``Zeitraum`` inputs at all).
 """
 
 from typing import ClassVar, final
@@ -47,7 +38,7 @@ class Source(BaseSource):
         "Andervenne Am Gallenberg": {
             "city": "Andervenne",
             "street": "Am Gallenberg",
-            "house_number": "1",
+            "house_number": "2",
         },
         "Neubörger Aschendorfer Straße 1 A": {
             "city": "Neubörger",
@@ -72,6 +63,7 @@ class Source(BaseSource):
     retrieve = AthosWasteManagementRetriever(
         url=_SERVLET,
         initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        iterate_field="Zeitraum",
         steps=[
             {
                 "submit_action": "CITYCHANGED",
@@ -96,7 +88,7 @@ class Source(BaseSource):
             },
         ],
     )
-    parse = parsers.IcsParser()
+    parse = parsers.EachResponse(parsers.IcsParser())
     transform = ICSTransformer(
         type_value_map={
             "Restabfallbehaelter": wt.GENERAL_WASTE,
