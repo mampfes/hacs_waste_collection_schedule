@@ -384,7 +384,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "municipality_id": "ID občine",
         "name": "Ime",
         "number": "Številka",
-        "operator": "Operater",
+        "operator": "Operater",  # codespell:ignore operater
         "ort": "Mesto",
         "ortsgemeinde": "Lokalna skupnost",
         "ortsteil": "Mestna četrt",
