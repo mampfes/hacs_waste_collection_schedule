@@ -4094,6 +4094,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sacramento County, CA](/doc/ics/recollect.md) / wmr.saccounty.gov
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tacoma, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-tacoma
+- [TrashDayNow](/doc/ics/trashdaynow_com.md) / trashdaynow.com
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Village of Sunbury, Ohio](/doc/source/sunbury_ohio_org.md) / sunburyohio.org

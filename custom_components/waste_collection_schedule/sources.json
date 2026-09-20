@@ -27341,6 +27341,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "TrashDayNow",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_trashdaynow_com"
+    },
+    {
       "title": "Tucson, Arizona, USA",
       "module": "recyclecoach_com",
       "default_params": {

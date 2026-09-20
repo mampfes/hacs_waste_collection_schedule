@@ -7590,6 +7590,13 @@
     "howto": {},
     "urls": {}
   },
+  "ics_trashdaynow_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/trashdaynow_com.md",
+    "howto": {
+      "en": "- Go to <https://www.trashdaynow.com> and enter your full street address.\n- Under the collection days on the result, click `Add to Calendar`, then `Copy calendar link`.\n- Use the copied link as the `url` parameter. The link carries your city, the services and the day pattern, never your address, and stays valid for as long as the day is published.\n- Each service is its own event (`Trash day`, `Recycling day`, `Organics day`, `Yard waste day`, `Bulk pickup`). A service whose published schedule is not a plain weekly or every-other-week pattern is left out rather than guessed.\n- Covers US and Canadian cities where TrashDayNow can verify the address against the city's or hauler's published source; where it cannot, the result says so and offers no calendar.\n"
+    },
+    "urls": {}
+  },
   "sunbury_ohio_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunbury_ohio_org.md",
     "howto": {},

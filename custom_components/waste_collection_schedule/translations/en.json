@@ -32415,6 +32415,50 @@
         },
         "data_description": {}
       },
+      "args_ics_trashdaynow_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regular expression",
+          "split_at": "Split at",
+          "title_template": "Title template",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_trashdaynow_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regular expression",
+          "split_at": "Split at",
+          "title_template": "Title template",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year field"
+        },
+        "data_description": {}
+      },
       "args_sunbury_ohio_org": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

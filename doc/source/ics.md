@@ -522,6 +522,7 @@ This source has been successfully tested with the following service providers:
 - [Recycle By City](/doc/ics/recyclebycity_com.md) / recyclebycity.com
 - [Rogue Disposal & Recycling (Medford, OR)](/doc/ics/recollect.md) / roguedisposal.com
 - [Sacramento County, CA](/doc/ics/recollect.md) / wmr.saccounty.gov
+- [TrashDayNow](/doc/ics/trashdaynow_com.md) / trashdaynow.com
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 
