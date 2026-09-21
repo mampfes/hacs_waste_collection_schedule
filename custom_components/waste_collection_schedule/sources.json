@@ -8557,14 +8557,6 @@
       "id": "abfall_io_graphql"
     },
     {
-      "title": "Abfallwirtschaft Landkreis Freudenstadt",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "595f903540a36fe8610ec39aa3a06f6a"
-      },
-      "id": "abfall_io"
-    },
-    {
       "title": "Abfallwirtschaft Landkreis G\u00f6ppingen",
       "module": "ics",
       "default_params": {},
@@ -8581,22 +8573,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_awhas_de"
-    },
-    {
-      "title": "Abfallwirtschaft Landkreis Kitzingen",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "594f805eb33677ad5bc645aeeeaf2623"
-      },
-      "id": "abfall_io"
-    },
-    {
-      "title": "Abfallwirtschaft Landkreis Landsberg am Lech",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "7df877d4f0e63decfb4d11686c54c5d6"
-      },
-      "id": "abfall_io"
     },
     {
       "title": "Abfallwirtschaft Landkreis Nordhausen",
@@ -11282,14 +11258,6 @@
       "id": "abfallnavi_de"
     },
     {
-      "title": "G\u00f6ttinger Entsorgungsbetriebe",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "7dd0d724cbbd008f597d18fcb1f474cb"
-      },
-      "id": "abfall_io"
-    },
-    {
       "title": "Hachborn",
       "module": "123abfallkalender_de",
       "default_params": {
@@ -12759,11 +12727,11 @@
     },
     {
       "title": "Landkreis Bayreuth",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "951da001077dc651a3bf437bc829964e"
+        "key": "41cec8bb0482f3002c699cc11a9ea678"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis Berchtesgadener Land",
@@ -12803,14 +12771,6 @@
         "subdomain": "boerde"
       },
       "id": "hausmuell_info"
-    },
-    {
-      "title": "Landkreis Calw",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "690a3ae4906c52b232c1322e2f88550c"
-      },
-      "id": "abfall_io"
     },
     {
       "title": "Landkreis Coburg",
@@ -12978,14 +12938,6 @@
       "id": "ics_abfall_hdh_de"
     },
     {
-      "title": "Landkreis Heilbronn",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "1a1e7b200165683738adddc4bd0199a2"
-      },
-      "id": "abfall_io"
-    },
-    {
       "title": "Landkreis Helmstedt",
       "module": "landkreis_helmstedt_de",
       "default_params": {},
@@ -13076,11 +13028,11 @@
     },
     {
       "title": "Landkreis Limburg-Weilburg",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "0ff491ffdf614d6f34870659c0c8d917"
+        "key": "29727e74d11041d98df0c0d013a846c6"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis L\u00fcchow-Dannenberg",
@@ -13155,11 +13107,11 @@
     },
     {
       "title": "Landkreis Ostallg\u00e4u",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "342cedd68ca114560ed4ca4b7c4e5ab6"
+        "key": "254ef8a2f4aa7cd1bff7f372d5dcfc53"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis Paderborn (MyMuell App)",
@@ -13235,11 +13187,11 @@
     },
     {
       "title": "Landkreis Rottweil",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "d287412901d68d66825e588a60c94641"
+        "key": "30f9958cb64ca47a83f40e0a738ddea0"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis Schweinfurt",
@@ -13257,11 +13209,11 @@
     },
     {
       "title": "Landkreis Sigmaringen",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "39886c5699d14e040063c0142cd0740b"
+        "key": "b24ea660ffd230210376afd62f54bdda"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis soest",
@@ -13418,11 +13370,11 @@
     },
     {
       "title": "Landratsamt Traunstein",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "279cc5db4db838d1cfbf42f6f0176a90"
+        "key": "4f015b3440c907b8ed7d46fc0f09c02a"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landratsamt Unterallg\u00e4u",
@@ -15955,14 +15907,6 @@
       "module": "vevg_karlsburg_de",
       "default_params": {},
       "id": "vevg_karlsburg_de"
-    },
-    {
-      "title": "VIVO Landkreis Miesbach",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "4e33d4f09348fdcc924341bf2f27ec86"
-      },
-      "id": "abfall_io"
     },
     {
       "title": "Vlotho",

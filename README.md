@@ -1349,12 +1349,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/source/abfall_io_graphql.md) / awb-bb.de
-- [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
-- [Abfallwirtschaft Landkreis Kitzingen](/doc/source/abfall_io.md) / abfallwelt.de
-- [Abfallwirtschaft Landkreis Landsberg am Lech](/doc/source/abfall_io.md) / abfallberatung-landsberg.de
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
@@ -1708,7 +1705,6 @@ If you already have enough information for your municipality/region, you are ver
 - [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
 - [Gut Pinkler](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
-- [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
 - [Hachborn](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/5-hachborn
 - [Hachenhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hagen](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1890,13 +1886,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
 - [Landkreis Aschaffenburg](/doc/source/awido_de.md) / landkreis-aschaffenburg.de
 - [Landkreis Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Landkreis Bayreuth](/doc/source/abfall_io.md) / landkreis-bayreuth.de
+- [Landkreis Bayreuth](/doc/source/abfall_io_graphql.md) / landkreis-bayreuth.de
 - [Landkreis Berchtesgadener Land](/doc/source/awido_de.md) / lra-bgl.de
 - [Landkreis Biberach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Böblingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Börde AöR (KsB)](/doc/source/hausmuell_info.md) / ks-boerde.de
-- [Landkreis Calw](/doc/source/abfall_io.md) / kreis-calw.de
 - [Landkreis Coburg](/doc/source/awido_de.md) / landkreis-coburg.de
 - [Landkreis Cuxhaven](/doc/source/abfall_io.md) / landkreis-cuxhaven.de
 - [Landkreis Eichstätt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1916,7 +1911,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
-- [Landkreis Heilbronn](/doc/source/abfall_io.md) / landkreis-heilbronn.de
 - [Landkreis Helmstedt](/doc/source/landkreis_helmstedt_de.md) / landkreis-helmstedt.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
@@ -1929,7 +1923,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Leipzig](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Landkreis Lichtenfels](/doc/source/awido_de.md) / lkr-lif.de
-- [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
+- [Landkreis Limburg-Weilburg](/doc/source/abfall_io_graphql.md) / landkreis-limburg-weilburg.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Main-Spessart](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Landkreis Mecklenburgische Seenplatte](/doc/source/lk_mecklenburgische_seenplatte_de.md) / lk-mecklenburgische-seenplatte.de
@@ -1940,7 +1934,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
 - [Landkreis Northeim (unofficial)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Oldenburg](/doc/source/abfall_io.md) / oldenburg-kreis.de
-- [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
+- [Landkreis Ostallgäu](/doc/source/abfall_io_graphql.md) / landkreis-ostallgaeu.de
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/source/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
@@ -1951,10 +1945,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Rotenburg (Wümme)](/doc/source/abfall_io.md) / lk-awr.de
 - [Landkreis Roth](/doc/source/awido_de.md) / landratsamt-roth.de
 - [Landkreis Roth](/doc/source/c_trace_de.md) / landratsamt-roth.de
-- [Landkreis Rottweil](/doc/source/abfall_io.md) / landkreis-rottweil.de
+- [Landkreis Rottweil](/doc/source/abfall_io_graphql.md) / landkreis-rottweil.de
 - [Landkreis Schweinfurt](/doc/source/awido_de.md) / landkreis-schweinfurt.de
 - [Landkreis Schwäbisch Hall (Broken)](/doc/source/lrasha_de.md) / lrasha.de
-- [Landkreis Sigmaringen](/doc/source/abfall_io.md) / landkreis-sigmaringen.de
+- [Landkreis Sigmaringen](/doc/source/abfall_io_graphql.md) / landkreis-sigmaringen.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
@@ -1976,7 +1970,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landratsamt Main-Tauber-Kreis](/doc/source/c_trace_de.md) / main-tauber-kreis.de
 - [Landratsamt Miltenberg](/doc/ics/landkreis_miltenberg_de.md) / landkreis-miltenberg.de
 - [Landratsamt Regensburg](/doc/source/awido_de.md) / landkreis-regensburg.de
-- [Landratsamt Traunstein](/doc/source/abfall_io.md) / traunstein.com
+- [Landratsamt Traunstein](/doc/source/abfall_io_graphql.md) / traunstein.com
 - [Landratsamt Unterallgäu](/doc/source/abfall_io.md) / landratsamt-unterallgaeu.de
 - [Landshut](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
@@ -2308,7 +2302,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Vettweiß](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [VEVG Vorpommern-Greifswald](/doc/source/vevg_karlsburg_de.md) / vevg-karlsburg.de
-- [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [Vogelbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Voldagsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
