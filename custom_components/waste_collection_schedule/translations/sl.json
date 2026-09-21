@@ -77,7 +77,7 @@
         "title": "Configure Source",
         "description": "{cascade_summary}",
         "data": {
-          "calendar_title": "Calendar Title",
+          "calendar_title": "Naslov koledarja",
           "app_id": "ID aplikacije",
           "f_abfallarten": "Tipi odpadkov",
           "key": "API ključ",
