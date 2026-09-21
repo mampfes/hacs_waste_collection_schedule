@@ -72,13 +72,6 @@ class Source(BaseSource):
             "f_id_strasse": "5916abteistrasse",
             "f_id_strasse_hnr": 33,
         },
-        "AWB Limburg-Weilburg": {
-            "key": "0ff491ffdf614d6f34870659c0c8d917",
-            "f_id_kommune": 6031,
-            "f_id_strasse": 621,
-            "f_id_strasse_hnr": 872,
-            "f_abfallarten": [27, 28, 17, 67],
-        },
         "Landkreis Prignitz, Gemeinde Karstädt, Blüthen": {
             "key": "798f59a75627f5d7686dab0c7226c877",
             "f_id_kommune": 3229,

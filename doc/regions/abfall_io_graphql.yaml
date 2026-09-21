@@ -44,3 +44,21 @@
   - title: AWG Abfallwirtschaft Landkreis Calw
     url: https://www.awg-info.de/
     service_id: 0813ea99f520c462373386564a99a51e
+  - title: Landkreis Bayreuth
+    url: https://www.landkreis-bayreuth.de/
+    service_id: 41cec8bb0482f3002c699cc11a9ea678
+  - title: Landkreis Ostallgäu
+    url: https://www.landkreis-ostallgaeu.de/
+    service_id: 254ef8a2f4aa7cd1bff7f372d5dcfc53
+  - title: Landkreis Sigmaringen
+    url: https://www.landkreis-sigmaringen.de/
+    service_id: b24ea660ffd230210376afd62f54bdda
+  - title: Landratsamt Traunstein
+    url: https://www.traunstein.com/
+    service_id: 4f015b3440c907b8ed7d46fc0f09c02a
+  - title: Landkreis Limburg-Weilburg
+    url: https://www.landkreis-limburg-weilburg.de/
+    service_id: 29727e74d11041d98df0c0d013a846c6
+  - title: Landkreis Rottweil
+    url: https://www.landkreis-rottweil.de/
+    service_id: 30f9958cb64ca47a83f40e0a738ddea0

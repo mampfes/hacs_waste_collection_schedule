@@ -31,6 +31,7 @@ class Source(BaseSource):
     # Canonical types observed across the registered providers; the transformer
     # resolves each provider's German labels through the shared vocabulary.
     WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
         wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
         wt.GLASS,
@@ -100,6 +101,30 @@ class Source(BaseSource):
         "AWG Calw, Altensteig, Altensteigdorf": {
             "key": "0813ea99f520c462373386564a99a51e",
             "idHouseNumber": 14814,
+        },
+        "Landkreis Bayreuth, Ahorntal, Adlitz": {
+            "key": "41cec8bb0482f3002c699cc11a9ea678",
+            "idHouseNumber": 360487,
+        },
+        "Landkreis Ostallgäu, Aitrang, Aggensteinstr.": {
+            "key": "254ef8a2f4aa7cd1bff7f372d5dcfc53",
+            "idHouseNumber": 10460,
+        },
+        "Landkreis Sigmaringen, Bad Saulgau, Adalbert-Stifter-Straße": {
+            "key": "b24ea660ffd230210376afd62f54bdda",
+            "idHouseNumber": 286,
+        },
+        "Landratsamt Traunstein, Altenmarkt a.d. Alz": {
+            "key": "4f015b3440c907b8ed7d46fc0f09c02a",
+            "idHouseNumber": 3309,
+        },
+        "Landkreis Limburg-Weilburg, Bad Camberg, Adolf-Just-Straße": {
+            "key": "29727e74d11041d98df0c0d013a846c6",
+            "idHouseNumber": 249,
+        },
+        "Landkreis Rottweil, Aichhalden, Ahornweg": {
+            "key": "30f9958cb64ca47a83f40e0a738ddea0",
+            "idHouseNumber": 18576,
         },
     }
 
