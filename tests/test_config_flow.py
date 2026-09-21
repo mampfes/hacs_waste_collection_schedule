@@ -503,7 +503,7 @@ def test_the_confirmation_step_is_translated() -> None:
     base = Path(__file__).resolve().parent.parent / (
         "custom_components/waste_collection_schedule/translations"
     )
-    for lang in ("en", "de", "fr", "it", "nl"):
+    for lang in ("en", "de", "fr", "it", "nl", "sl"):
         step = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
         step = step["config"]["step"]["cascade_confirm"]
         assert step["description"] == "{cascade_summary}"
@@ -928,7 +928,7 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
     base = Path(__file__).resolve().parent.parent / (
         "custom_components/waste_collection_schedule/translations"
     )
-    for lang in ("en", "de", "fr", "it", "nl"):
+    for lang in ("en", "de", "fr", "it", "nl", "sl"):
         labels = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
         labels = labels["config"]["step"]["cascade_confirm"]["data"]
         missing = sorted(extras - set(labels))

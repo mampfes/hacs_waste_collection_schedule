@@ -73,6 +73,22 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
+      "cascade_confirm": {
+        "title": "Configure Source",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "app_id": "ID aplikacije",
+          "f_abfallarten": "Vrste odpadkov",
+          "key": "API ključ",
+          "ort": "Okrožje",
+          "wasteTypes": "Waste Types"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "f_abfallarten": "Izbirni filter: vrste odpadkov, ki naj bodo vključene."
+        }
+      },
       "sensor": {
         "title": "Create Sensor \"{sensor_number}\"",
         "description": "Configure one sensor at a time.",
