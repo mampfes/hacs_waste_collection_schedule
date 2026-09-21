@@ -1,0 +1,74 @@
+{
+  "recorded_at": "2026-09-21",
+  "interactions": [
+    {
+      "key": "GET https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/0/query 719242d6f1",
+      "method": "GET",
+      "url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/0/query",
+      "final_url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/0/query?outFields=AvtLnr&returnGeometry=false&f=json&where=UPPER%28Adresse%29+%3D+%27KANELVEIEN+4%27+AND+AvtStatus+%3D+0",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"AvtLnr\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPPER(Adresse) = 'KANELVEIEN 4' AND AvtStatus = 0\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"ecb1bd9e\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|iPA09YwD28jMLgmYwRBj_g==|TDiY89rf054_wZEZMtJg2hXO_63Nel2YHNQ9oHgk; Max-Age=60; Expires=Mon, 21 Sep 2026 15:51:22 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET, ARR/3.0",
+        "Date": "Mon, 21 Sep 2026 15:50:22 GMT",
+        "Content-Length": "137"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiR25yIiwiZmllbGRBbGlhc2VzIjp7IkF2dExuciI6IkF2dExuciJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJBdnRMbnIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZU9JRCIsImFsaWFzIjoiQXZ0TG5yIn1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJBdnRMbnIiOjI1MjR9fV19"
+    },
+    {
+      "key": "GET https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1/query d6cf423f7a",
+      "method": "GET",
+      "url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1/query",
+      "final_url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1/query?outFields=Dato%2CAvfallId&returnGeometry=false&f=json&where=AvtLnr+%3D+2524+AND+Dato+%3E%3D+date+%272026-09-21%27+AND+Dato+%3C%3D+date+%272027-09-21%27",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"Dato,AvfallId\"],[\"returnGeometry\",\"false\"],[\"where\",\"AvtLnr = 2524 AND Dato >= date '2026-09-21' AND Dato <= date '2027-09-21'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"54278af6\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|Zys5WjQsN7lUoidANcaE_Q==|AIE9zWmLUn_nPIyGz7ARvp8AhiNXgV_qCBtN1j3h; Max-Age=60; Expires=Mon, 21 Sep 2026 15:51:22 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET, ARR/3.0",
+        "Date": "Mon, 21 Sep 2026 15:50:22 GMT",
+        "Content-Length": "587"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiR05hdm4iLCJmaWVsZEFsaWFzZXMiOnsiRGF0byI6IkRhdG8iLCJBdmZhbGxJZCI6IkF2ZmFsbElkIn0sImZpZWxkcyI6W3sibmFtZSI6IkRhdG8iLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGUiLCJhbGlhcyI6IkRhdG8iLCJsZW5ndGgiOjh9LHsibmFtZSI6IkF2ZmFsbElkIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVJbnRlZ2VyIiwiYWxpYXMiOiJBdmZhbGxJZCJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MDU1MzYwMDAwMCwiQXZmYWxsSWQiOjZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5Mjk3MjgwMDAwMCwiQXZmYWxsSWQiOjZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NDE4MjQwMDAwMCwiQXZmYWxsSWQiOjZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NTM5MjAwMDAwMCwiQXZmYWxsSWQiOjZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NjYwMTYwMDAwMCwiQXZmYWxsSWQiOjZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MDIwODAwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MTQxNzYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MjYyNzIwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MzgzNjgwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NTA0NjQwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NjI1NjAwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NzQ2NTYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5OTE5MzYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwMDQwMzIwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwMTYxMjgwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwMjgyMjQwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwNDAzMjAwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwNTI0MTYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwNjg4MzIwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwODA5MjgwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwOTMwMjQwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxMDY4NDgwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxMTg5NDQwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxMzEwNDAwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxNDMxMzYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxNTUyMzIwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxNjczMjgwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxNzk0MjQwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxOTE1MjAwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgyMDM2MTYwMDAwMCwiQXZmYWxsSWQiOjF9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5MDgxMjgwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTIwMjI0MDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxNzkzMjMyMDAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5NDQ0MTYwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTU2NTEyMDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxNzk2ODYwODAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTc5ODQxNjAwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTk3OTg0MDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODAxMDA4MDAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwMjIxNzYwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDM0MjcyMDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODA0NjM2ODAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwNTg0NjQwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDc0ODgwMDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODA4Njk3NjAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgwOTk5MzYwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTEyODk2MDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODEyNDk5MjAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxMzcwODgwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTQ5MTg0MDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODE2MTI4MDAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgxNzMzNzYwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTg1NDcyMDAwMDAsIkF2ZmFsbElkIjoxNn19LHsiYXR0cmlidXRlcyI6eyJEYXRvIjoxODE5NzU2ODAwMDAwLCJBdmZhbGxJZCI6MTZ9fSx7ImF0dHJpYnV0ZXMiOnsiRGF0byI6MTgyMDk2NjQwMDAwMCwiQXZmYWxsSWQiOjE2fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTAwMzUyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTYwODMyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDIxMzEyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDgxNzkyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTQyMjcyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MjAyNzUyMDAwMDAsIkF2ZmFsbElkIjo0fX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTEyNDQ4MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTM2NjQwMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTYwODMyMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE3OTk3MTIwMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDIxMzEyMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDQ1NTA0MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDY5Njk2MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MDkzODg4MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTE4MDgwMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTQyMjcyMDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTY2NDY0MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MTkwNjU2MDAwMDAsIkF2ZmFsbElkIjoyfX0seyJhdHRyaWJ1dGVzIjp7IkRhdG8iOjE4MjE0ODQ4MDAwMDAsIkF2ZmFsbElkIjoyfX1dfQ=="
+    },
+    {
+      "key": "GET https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1 28b0f2c75c",
+      "method": "GET",
+      "url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1",
+      "final_url": "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer/1?f=json",
+      "body": "{\"params\":[[\"f\",\"json\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "cache-control": "must-revalidate,max-age=0,public",
+        "content-type": "application/json; charset=UTF-8",
+        "content-encoding": "gzip",
+        "etag": "\"4a7fc56d\"",
+        "vary": "Origin",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "AGS_ROLES=sym-gcm|1|7cCEBjCg1r5i2vLhT8Ollg==|90EpeYwT6NIynmxfG-i8JEvnbLT590myBlTptIa_; Max-Age=60; Expires=Mon, 21 Sep 2026 15:51:22 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "ASP.NET, ARR/3.0",
+        "date": "Mon, 21 Sep 2026 15:50:22 GMT",
+        "content-length": "886"
+      },
+      "content_b64": "eyJjdXJyZW50VmVyc2lvbiI6MTEuNSwiY2ltVmVyc2lvbiI6IjMuNS4wIiwiaWQiOjEsIm5hbWUiOiJUb21tZWRhdG9lckZvckF2dGFsZSIsInR5cGUiOiJUYWJsZSIsImRlc2NyaXB0aW9uIjpudWxsLCJjb3B5cmlnaHRUZXh0IjpudWxsLCJoYXNBdHRhY2htZW50cyI6ZmFsc2UsImh0bWxQb3B1cFR5cGUiOiJlc3JpU2VydmVySFRNTFBvcHVwVHlwZU5vbmUiLCJkaXNwbGF5RmllbGQiOiJHTmF2biIsInR5cGVJZEZpZWxkIjpudWxsLCJzdWJ0eXBlRmllbGROYW1lIjpudWxsLCJzdWJ0eXBlRmllbGQiOm51bGwsImRlZmF1bHRTdWJ0eXBlQ29kZSI6bnVsbCwiZmllbGRzIjpbeyJuYW1lIjoiQXZ0TG5yIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVJbnRlZ2VyIiwiYWxpYXMiOiJBdnRMbnIiLCJkb21haW4iOm51bGx9LHsibmFtZSI6IktvbW11bmUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZUludGVnZXIiLCJhbGlhcyI6IktvbW11bmUiLCJkb21haW4iOm51bGx9LHsibmFtZSI6IkdOYXZuIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdOYXZuIiwibGVuZ3RoIjo1MCwiZG9tYWluIjpudWxsfSx7Im5hbWUiOiJBSHVzbnIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZU9JRCIsImFsaWFzIjoiQUh1c25yIiwiZG9tYWluIjpudWxsfSx7Im5hbWUiOiJBQm9rc3QiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQUJva3N0IiwibGVuZ3RoIjo1MCwiZG9tYWluIjpudWxsfSx7Im5hbWUiOiJTbnIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZUludGVnZXIiLCJhbGlhcyI6IlNuciIsImRvbWFpbiI6bnVsbH0seyJuYW1lIjoiRGF0byIsInR5cGUiOiJlc3JpRmllbGRUeXBlRGF0ZSIsImFsaWFzIjoiRGF0byIsImxlbmd0aCI6OCwiZG9tYWluIjpudWxsfSx7Im5hbWUiOiJBdmZhbGxJZCIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiQXZmYWxsSWQiLCJkb21haW4iOm51bGx9XSwiaW5kZXhlcyI6W3sibmFtZSI6IkZET19BSHVzbnIiLCJmaWVsZHMiOiJBSHVzbnIiLCJpc0FzY2VuZGluZyI6dHJ1ZSwiaXNVbmlxdWUiOnRydWUsImRlc2NyaXB0aW9uIjoiIn1dLCJzdWJ0eXBlcyI6W10sInJlbGF0aW9uc2hpcHMiOltdLCJjYXBhYmlsaXRpZXMiOiJNYXAsUXVlcnksRGF0YSIsIm1heFJlY29yZENvdW50IjoyMDAwLCJzdXBwb3J0c1N0YXRpc3RpY3MiOnRydWUsInN1cHBvcnRzRXhjZWVkc0xpbWl0U3RhdGlzdGljcyI6dHJ1ZSwic3VwcG9ydHNBZHZhbmNlZFF1ZXJpZXMiOnRydWUsInN1cHBvcnRlZFF1ZXJ5Rm9ybWF0cyI6IkpTT04sIFBCRiIsImlzRGF0YVZlcnNpb25lZCI6ZmFsc2UsInVzZVN0YW5kYXJkaXplZFF1ZXJpZXMiOnRydWUsImFkdmFuY2VkUXVlcnlDYXBhYmlsaXRpZXMiOnsidXNlU3RhbmRhcmRpemVkUXVlcmllcyI6dHJ1ZSwic3VwcG9ydHNTdGF0aXN0aWNzIjp0cnVlLCJzdXBwb3J0c1BlcmNlbnRpbGVTdGF0aXN0aWNzIjp0cnVlLCJzdXBwb3J0c0hhdmluZ0NsYXVzZSI6dHJ1ZSwic3VwcG9ydHNPcmRlckJ5Ijp0cnVlLCJzdXBwb3J0c0Rpc3RpbmN0Ijp0cnVlLCJzdXBwb3J0c0NvdW50RGlzdGluY3QiOnRydWUsInN1cHBvcnRzUGFnaW5hdGlvbiI6dHJ1ZSwic3VwcG9ydHNUcnVlQ3VydmUiOmZhbHNlLCJzdXBwb3J0c1JldHVybmluZ1F1ZXJ5RXh0ZW50Ijp0cnVlLCJzdXBwb3J0c1F1ZXJ5V2l0aERpc3RhbmNlIjp0cnVlLCJzdXBwb3J0c1NxbEV4cHJlc3Npb24iOnRydWUsInN1cHBvcnRzVGltZVJlbGF0aW9uIjp0cnVlLCJzdXBwb3J0c0FkdmFuY2VkUXVlcnlSZWxhdGVkIjp0cnVlLCJzdXBwb3J0c1F1ZXJ5UmVsYXRlZFBhZ2luYXRpb24iOnRydWUsInN1cHBvcnRzU3FsRm9ybWF0IjpmYWxzZSwic3VwcG9ydHNRdWVyeUFuYWx5dGljIjp0cnVlLCJzdXBwb3J0c0N1cnJlbnRVc2VyUXVlcmllcyI6dHJ1ZX0sImFkdmFuY2VkUXVlcnlBbmFseXRpY0NhcGFiaWxpdGllcyI6eyJzdXBwb3J0c0xpbmVhclJlZ3Jlc3Npb24iOnRydWUsInN1cHBvcnRzQXN5bmMiOmZhbHNlLCJzdXBwb3J0c1BlcmNlbnRpbGVBbmFseXRpYyI6dHJ1ZX0sImRhdGVGaWVsZHNUaW1lUmVmZXJlbmNlIjpudWxsLCJwcmVmZXJyZWRUaW1lUmVmZXJlbmNlIjpudWxsLCJkYXRlc0luVW5rbm93blRpbWV6b25lIjpmYWxzZSwiaGFzTWV0YWRhdGEiOnRydWUsImlzRGF0YUFyY2hpdmVkIjpmYWxzZSwiYXJjaGl2aW5nSW5mbyI6eyJzdXBwb3J0c1F1ZXJ5V2l0aEhpc3RvcmljTW9tZW50IjpmYWxzZSwic3RhcnRBcmNoaXZpbmdNb21lbnQiOi0xfSwidW5pcXVlSWRJbmZvIjp7InR5cGUiOiJzaW1wbGUiLCJmaWVsZHMiOlsiQUh1c25yIl0sIk9JREZpZWxkQ29udGFpbnNIYXNoVmFsdWUiOmZhbHNlfSwibWF4VW5pcXVlSURDb3VudCI6MTAwMDAwLCJzZXJ2aWNlSXRlbUlkIjoiZGI2NGMxNjQ0OWVkNDYwZjk4NzA1OTA2OThiNDQxNTcifQ=="
+    }
+  ]
+}
