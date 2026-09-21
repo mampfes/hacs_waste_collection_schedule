@@ -99,6 +99,10 @@ class Source(BaseSource):
         type_value_map={
             "Restabfallbehaelter": wt.GENERAL_WASTE,
             "Bioabfallbehaelter": wt.ORGANIC,
+            # Seasonal organic bin: the first and last collection of the season
+            # carry their own summaries.
+            "Bioabfallbehaelter , erste Leerung Saison-Biotonne": wt.ORGANIC,
+            "Bioabfallbehaelter , letzte Leerung Saison-Biotonne": wt.ORGANIC,
             "Papierbehaelter": wt.PAPER,
             "Wertstofftonne": wt.RECYCLABLES,
         }
