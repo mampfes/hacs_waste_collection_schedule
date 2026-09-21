@@ -33,6 +33,7 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [
         wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
+        wt.GLASS,
         wt.HAZARDOUS,
         wt.ORGANIC,
         wt.PAPER,
@@ -95,6 +96,10 @@ class Source(BaseSource):
             "idDistrict": 24527,
             "idStreet": 24565,
             "idHouseNumber": 24717,
+        },
+        "AWG Calw, Altensteig, Altensteigdorf": {
+            "key": "0813ea99f520c462373386564a99a51e",
+            "idHouseNumber": 14814,
         },
     }
 
