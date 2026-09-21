@@ -29,21 +29,20 @@ CLIENT_ID_LOOKUP = {
     "viborg": "4EBB900C-088E-475F-83ED-B087F4AD07BA",
 }
 
-"""
-Provides the cascading_select choices for affaldonline_dk
-The ``street`` field is populated with every street in a given ```municipality```
-
-When a ``street`` is selected the house numbers for that ``street`` is gathered.
-This also gives us the ``values`` associated with that address on the affaldonline platform.
-
-The house number field is called ``values`` for backwards compatability reasons, as the retired screenscraping approach used this naming convention.
-By keeping that naming scheme old installations can continue working.
-
-The ``values`` field is labeled with the house numbers, while the value is the internal affaldonline identifier string for that address.
-"""
-
 
 def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
+    """
+    Provides the cascading_select choices for affaldonline_dk
+    The ``street`` field is populated with every street in a given ```municipality```
+
+    When a ``street`` is selected the house numbers for that ``street`` is gathered.
+    This also gives us the ``values`` associated with that address on the affaldonline platform.
+
+    The house number field is called ``values`` for backwards compatability reasons, as the retired screenscraping approach used this naming convention.
+    By keeping that naming scheme old installations can continue working.
+
+    The ``values`` field is labeled with the house numbers, while the value is the internal affaldonline identifier string for that address.
+    """
     municipality = selections.get("municipality")
     if not municipality:
         return []
