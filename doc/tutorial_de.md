@@ -712,32 +712,31 @@ Um dies zu erreichen, ist Folgendes zu tun:
     Um dieses Text-Template als Sensor zu erstellen, ist lediglich der nachfolgende Code-Block an das Ende der Datei `wcs-template--erinnerung-ebs-abfuhr.yaml` einzufügen :
   
     ```yaml
-    - sensor:
-        - name: Text-Erinnerung EBS-Abfuhr
-          unique_id: text_erinnerung_ebsabfuhr
-          icon: mdi:trash-can-outline
-          state: >
-            {% set StatusSensoren = {
-            'braune Tonne': states.sensor.braune_tonne.state,
-            'blaue Tonne': states.sensor.blaue_tonne.state,
-            'gelber Sack': states.sensor.gelber_sack.state,
-            'blauer Container': states.sensor.blauer_container.state,
-            'Grünabfall 1': states.sensor.grunabfall_1.state,
-            'Grünabfall 2': states.sensor.grunabfall_2.state,
-            'Grünabfall 3': states.sensor.grunabfall_3.state,
-            'Grünabfall 4': states.sensor.grunabfall_4.state,
-            'schwarze Tonne': states.sensor.schwarze_tonne.state,
-            'Sonderabfall 1': states.sensor.sonderabfall_1.state,
-            'Sonderabfall 2': states.sensor.sonderabfall_2.state,
-            'Tannenbaum': states.sensor.tannenbaum.state }
-            %}
-            {%- set SensorDeadLine = namespace(key=[]) %}
-            {% for item in StatusSensoren %}
-            {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
+    - name: Text-Erinnerung EBS-Abfuhr
+      unique_id: text_erinnerung_ebsabfuhr
+      icon: mdi:trash-can-outline
+      state: >
+        {% set StatusSensoren = {
+        'braune Tonne': states.sensor.braune_tonne.state,
+        'blaue Tonne': states.sensor.blaue_tonne.state,
+        'gelber Sack': states.sensor.gelber_sack.state,
+        'blauer Container': states.sensor.blauer_container.state,
+        'Grünabfall 1': states.sensor.grunabfall_1.state,
+        'Grünabfall 2': states.sensor.grunabfall_2.state,
+        'Grünabfall 3': states.sensor.grunabfall_3.state,
+        'Grünabfall 4': states.sensor.grunabfall_4.state,
+        'schwarze Tonne': states.sensor.schwarze_tonne.state,
+        'Sonderabfall 1': states.sensor.sonderabfall_1.state,
+        'Sonderabfall 2': states.sensor.sonderabfall_2.state,
+        'Tannenbaum': states.sensor.tannenbaum.state }
+        %}
+        {%- set SensorDeadLine = namespace(key=[]) %}
+        {% for item in StatusSensoren %}
+          {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
             {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
-            {%- endif -%}
-            {% endfor %}
-            {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
+          {%- endif -%}
+        {% endfor %}
+        {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
     ```
   
     Die Datei `wcs-template--erinnerung-ebsabfuhr.yaml` sollte letztendlich nachfolgenden Inhalt haben :
