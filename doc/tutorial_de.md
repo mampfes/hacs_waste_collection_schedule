@@ -830,6 +830,125 @@ views:
           - type: custom:html-template-card
             ignore_line_breaks: true
             content: >
+              <style>
+                ha-card {
+                border-radius: 0px;
+                /*
+                margin: -7px 0px 0px -15px;
+                border: 1px solid red;
+                */
+                width: 188px;
+                min-width: 188px;
+                max-width: 188px;
+                height: 178px;
+                min-height: 178px;
+                max-height: 178px;
+                margin: -6px 0px 0px -6px; 
+                padding: 0px 0px 0px 0px;
+                /*
+                */
+                }
+                #ebs_table {
+                /* Debugging 
+                font-variant: small-caps;
+                border: 1px solid green;
+                */
+                padding: 0px 0px 0px 0px;
+                margin: -15px 0px 0px -15px;
+                font-family: 'Bahnschrift';
+                font-stretch: semi-condensed;
+                text-transform: uppercase;
+                font-size: 12px;
+                letter-spacing: 1px;
+                color: #aaaaaa;
+                vertical-align: top;
+                }
+                /* CONTENT */
+                #ebs_inner_table {
+                /* Debugging 
+                font-variant: small-caps;
+                border: 1px solid red;
+                */
+                margin: -6px 0px 0px 0px;
+                width: 176px;
+                min-width: 176px;
+                max-width: 176px;
+                min-height: 100%;
+                padding: 0px 0px 0px 0px;
+                vertical-align: top;
+                }
+                .ebs_titel {
+                font-family: verdana;
+                text-transform: uppercase;
+                font-size: 22px;
+                letter-spacing: 3px;
+                height: 30px;
+                vertical-align: top;
+                text-align: center;
+                padding: 0px 0px 0px 2px;
+                color: #bbbbbb;
+                }
+                .line {
+                height: 10px;
+                border-top: 1px solid steelblue;
+                }
+                .ebs_art {
+                /* Debugging 
+                border: 1px solid red;
+                margin: 0px;
+                */
+                width: 108px;
+                min-width: 108px;
+                max-width: 108px;
+                padding:  0px 0px 0px 4px;
+                line-height: 22px;
+                vertical-align: bottom;
+                }
+                .ebs_tage {
+                /* Debugging 
+                border: 1px solid gold;
+                */
+                font-size: 11px;
+                width: 62px;
+                min-width: 62px;
+                max-width: 62px;  
+                text-align: right;
+                padding: 0px 0px 0px 4px;
+                margin: 0px;
+                line-height: 20px;
+                vertical-align: bottom;
+                }
+                #ebs_tage {
+                font-size: 15px;
+                color:#cccccc;
+                }
+                #ebs_jahr {
+                font-stretch: semi-condensed;
+                letter-spacing: 1px;
+                vertical-align: bottom;
+                }
+                .ebs_heute {
+                color: gold;
+                text-align: center;
+                }
+                .blink { 
+                animation-name: animation_blink; 
+                animation-timing-function:
+                  ease-in; 
+                  animation-duration: 1.5s;
+                  animation-iteration-count: infinite;
+                font-size: 20px; 
+                vertical-align: top; 
+                padding: 0px 0px 15px 0px;
+                }
+                @keyframes
+                  animation_blink {
+                    0% { opacity: 1; }
+                    50% { opacity: 0; }
+                    100% { opacity: 1; }    
+                  }
+              </style>
+
               {%- set aktuell_datum = now().date() -%} {#
                 {%- set StatusSensoren = {
                 'braune Tonne': states.sensor.braune_tonne.state,
@@ -854,7 +973,7 @@ views:
                   -%}
               {%- set SensorDeadLine = namespace(key=[]) -%} {%- for item in
               StatusSensoren -%}
-                {%- if StatusSensoren[item] == '1'-%}
+                {%- if StatusSensoren[item] == '10'-%}
                   {# 1: wird morgen abgeholt, also heute die Erinnerung #}
                   {%- set SensorDeadLine.key = SensorDeadLine.key + [item] -%}
                 {%- endif -%} 
@@ -963,8 +1082,8 @@ views:
                   </td>
                 {%- endif -%}
                 </tr>
-              {%- endif -%} </table>
-
+              {%- endif -%}
+              </table>
 ```
 
 So könnte beispielsweise eine Übersicht der wichtigen Abfallarten aussehen:
