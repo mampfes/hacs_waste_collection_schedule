@@ -12,6 +12,9 @@ waste_collection_schedule:
     - name: abfall_io_graphql
       args:
         key: KEY
+        idCity: IDCITY
+        idDistrict: IDDISTRICT
+        idStreet: IDSTREET
         idHouseNumber: IDHOUSENUMBER
         wasteTypes: WASTETYPES
 ```
@@ -21,8 +24,17 @@ waste_collection_schedule:
 **key**  
 *(string) (required)*
 
+**idCity**  
+*(string) (optional)*
+
+**idDistrict**  
+*(string) (optional)*
+
+**idStreet**  
+*(string) (optional)*
+
 **idHouseNumber**  
-*(string) (required)*
+*(string) (optional)*
 
 **wasteTypes**  
 *(string) (optional)*

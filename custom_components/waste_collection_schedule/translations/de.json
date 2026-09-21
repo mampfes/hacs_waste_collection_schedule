@@ -4427,12 +4427,19 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Stadt",
+          "idDistrict": "Ortsteil",
+          "idHouseNumber": "Hausnummer",
+          "idStreet": "Straße",
           "key": "API-Schlüssel",
           "wasteTypes": "Abfallarten"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "idCity": "Ihre Stadt oder Gemeinde.",
+          "idDistrict": "Ihr Ortsteil oder Stadtteil.",
+          "idHouseNumber": "Ihre Hausnummer.",
+          "idStreet": "Ihr Straßenname.",
           "wasteTypes": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },
@@ -4441,11 +4448,18 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Stadt",
+          "idDistrict": "Ortsteil",
+          "idHouseNumber": "Hausnummer",
+          "idStreet": "Straße",
           "key": "API-Schlüssel",
           "wasteTypes": "Abfallarten"
         },
         "data_description": {
+          "idCity": "Ihre Stadt oder Gemeinde.",
+          "idDistrict": "Ihr Ortsteil oder Stadtteil.",
+          "idHouseNumber": "Ihre Hausnummer.",
+          "idStreet": "Ihr Straßenname.",
           "wasteTypes": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },

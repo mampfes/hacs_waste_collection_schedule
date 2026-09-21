@@ -4377,12 +4377,19 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Ville",
+          "idDistrict": "Quartier",
+          "idHouseNumber": "Numéro",
+          "idStreet": "Rue",
           "key": "Clé API",
           "wasteTypes": "Types de déchets"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "idCity": "Votre ville ou village.",
+          "idDistrict": "Votre quartier ou partie de la commune.",
+          "idHouseNumber": "Votre numéro de rue.",
+          "idStreet": "Le nom de votre rue.",
           "wasteTypes": "Filtre facultatif : les types de déchets à inclure."
         }
       },
@@ -4391,11 +4398,18 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Ville",
+          "idDistrict": "Quartier",
+          "idHouseNumber": "Numéro",
+          "idStreet": "Rue",
           "key": "Clé API",
           "wasteTypes": "Types de déchets"
         },
         "data_description": {
+          "idCity": "Votre ville ou village.",
+          "idDistrict": "Votre quartier ou partie de la commune.",
+          "idHouseNumber": "Votre numéro de rue.",
+          "idStreet": "Le nom de votre rue.",
           "wasteTypes": "Filtre facultatif : les types de déchets à inclure."
         }
       },

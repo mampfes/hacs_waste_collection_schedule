@@ -4386,12 +4386,19 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Città",
+          "idDistrict": "Quartiere",
+          "idHouseNumber": "Numero civico",
+          "idStreet": "Via",
           "key": "Chiave API",
           "wasteTypes": "Tipi di rifiuto"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "idCity": "La vostra città o paese.",
+          "idDistrict": "Il vostro quartiere o parte del comune.",
+          "idHouseNumber": "Il vostro numero civico.",
+          "idStreet": "Il nome della vostra via.",
           "wasteTypes": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
@@ -4400,11 +4407,18 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Città",
+          "idDistrict": "Quartiere",
+          "idHouseNumber": "Numero civico",
+          "idStreet": "Via",
           "key": "Chiave API",
           "wasteTypes": "Tipi di rifiuto"
         },
         "data_description": {
+          "idCity": "La vostra città o paese.",
+          "idDistrict": "Il vostro quartiere o parte del comune.",
+          "idHouseNumber": "Il vostro numero civico.",
+          "idStreet": "Il nome della vostra via.",
           "wasteTypes": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },

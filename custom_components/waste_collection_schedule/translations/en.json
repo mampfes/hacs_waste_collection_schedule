@@ -4588,12 +4588,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "House number ID",
+          "idCity": "City",
+          "idDistrict": "District",
+          "idHouseNumber": "House Number",
+          "idStreet": "Street",
           "key": "API Key",
           "wasteTypes": "Waste Types"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "idCity": "Your city or town.",
+          "idDistrict": "Your district or part of the municipality.",
+          "idHouseNumber": "Your house number.",
+          "idStreet": "Your street name.",
           "wasteTypes": "Optional filter: the waste types to include."
         }
       },
@@ -4602,11 +4609,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "House number ID",
+          "idCity": "City",
+          "idDistrict": "District",
+          "idHouseNumber": "House Number",
+          "idStreet": "Street",
           "key": "API Key",
           "wasteTypes": "Waste Types"
         },
         "data_description": {
+          "idCity": "Your city or town.",
+          "idDistrict": "Your district or part of the municipality.",
+          "idHouseNumber": "Your house number.",
+          "idStreet": "Your street name.",
           "wasteTypes": "Optional filter: the waste types to include."
         }
       },

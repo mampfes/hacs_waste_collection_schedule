@@ -4371,12 +4371,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Plaats",
+          "idDistrict": "Wijk",
+          "idHouseNumber": "Huisnummer",
+          "idStreet": "Straat",
           "key": "API-sleutel",
           "wasteTypes": "Afvalsoorten"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "idCity": "Uw stad of dorp.",
+          "idDistrict": "Uw wijk of deel van de gemeente.",
+          "idHouseNumber": "Uw huisnummer.",
+          "idStreet": "Uw straatnaam.",
           "wasteTypes": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },
@@ -4385,11 +4392,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Plaats",
+          "idDistrict": "Wijk",
+          "idHouseNumber": "Huisnummer",
+          "idStreet": "Straat",
           "key": "API-sleutel",
           "wasteTypes": "Afvalsoorten"
         },
         "data_description": {
+          "idCity": "Uw stad of dorp.",
+          "idDistrict": "Uw wijk of deel van de gemeente.",
+          "idHouseNumber": "Uw huisnummer.",
+          "idStreet": "Uw straatnaam.",
           "wasteTypes": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },

@@ -4353,12 +4353,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Mesto",
+          "idDistrict": "Naselje",
+          "idHouseNumber": "Hišna številka",
+          "idStreet": "Ulica",
           "key": "API ključ",
           "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "idCity": "Vaše mesto ali kraj.",
+          "idDistrict": "Vaše naselje ali del občine.",
+          "idHouseNumber": "Vaša hišna številka.",
+          "idStreet": "Ime vaše ulice.",
           "wasteTypes": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
@@ -4367,11 +4374,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "idHouseNumber": "Id House Number",
+          "idCity": "Mesto",
+          "idDistrict": "Naselje",
+          "idHouseNumber": "Hišna številka",
+          "idStreet": "Ulica",
           "key": "API ključ",
           "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
+          "idCity": "Vaše mesto ali kraj.",
+          "idDistrict": "Vaše naselje ali del občine.",
+          "idHouseNumber": "Vaša hišna številka.",
+          "idStreet": "Ime vaše ulice.",
           "wasteTypes": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
