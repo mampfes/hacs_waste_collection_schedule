@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="12mm"
+   height="19.440001mm"
+   viewBox="0 0 12 19.440001"
+   version="1.1"
+   id="svg3283"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="EBS-tannenbaum.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3285"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="2.8716111"
+     inkscape:cx="13.581226"
+     inkscape:cy="30.818936"
+     inkscape:current-layer="svg3283">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="1"
+       originy="4.5800003"
+       spacingx="0.99999999"
+       spacingy="0.99999999"
+       empcolor="#003dc3"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="10"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3280" />
+  <g
+     id="g4"
+     inkscape:label="Tannenbaum"
+     transform="translate(1,4.58)">
+    <path
+       style="fill:#784421;stroke:#666666;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 4.341821,8.86 0.116358,6 H 5.6 v -6 z"
+       id="path2"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="Stamm" />
+    <path
+       style="fill:#225500;stroke:#666666;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 0.78125,7.2975 -1,10.86 H 11 L 9.21875,7.2975 Z"
+       id="path1"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="Basis" />
+    <path
+       style="fill:#338000;stroke:#666666;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0.2,6.8599998 h 9.6 l -1.65,-3.3 h -6.3 z"
+       id="path3"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="Mitte" />
+    <path
+       style="fill:#44aa00;stroke:#666666;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 1.16,3.0999998 H 8.84 L 5,-4.58 Z"
+       id="path4"
+       inkscape:label="Krone" />
+  </g>
+</svg>
