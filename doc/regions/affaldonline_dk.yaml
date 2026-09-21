@@ -1,0 +1,52 @@
+---
+# Provider registry for the affaldonline_dk platform.
+#
+# Each entry becomes its own listing in README.md / sources.json, with its
+# params pre-filled, via regions.from_yaml() in source/affaldonline_dk.py. Adding a
+# provider is a change to this file alone.
+
+- municipality: aeroe
+  title: Ærø Kommune
+  url: https://www.aeroekommune.dk/
+- municipality: assens
+  title: Assens Forsyning
+  url: https://www.assensforsyning.dk/
+- municipality: favrskov
+  title: Favrskov Forsyning
+  url: https://www.favrskovforsyning.dk/
+- municipality: fanoe
+  title: Fanø Kommune
+  url: https://fanoe.dk/
+- municipality: fredericia
+  title: Fredericia Kommune Affald & Genbrug
+  url: https://affaldgenbrug-fredericia.dk/
+- municipality: ffv
+  title: Faaborg Forsynings Virksomhed
+  url: https://www.ffv.dk/
+- municipality: holbaek
+  title: Fors (Holbæk)
+  url: https://www.fors.dk/
+- municipality: langeland
+  title: Langeland Forsyning
+  url: https://www.langeland-forsyning.dk/
+- municipality: Middelfart
+  title: Middelfart Kommune
+  url: https://www.middelfart.dk/
+- municipality: morsoe
+  title: Morsø Kommune
+  url: https://www.mors.dk/
+- municipality: nyborg
+  title: Nyborg Forsyning & Service A/S
+  url: https://www.nfs.as/
+- municipality: silkeborg
+  title: Silkeborg Forsyning
+  url: https://www.silkeborgforsyning.dk/
+- municipality: rebild
+  title: Rebild Kommune
+  url: https://rebild.dk/
+- municipality: vejle
+  title: Vejle Kommune
+  url: https://vejle.dk
+- municipality: viborg
+  title: Revas (Viborg Kommune)
+  url: https://revas.dk/

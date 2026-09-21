@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-09-21",
+  "interactions": [
+    {
+      "key": "GET https://www.affaldonline.dk/api/address/collections e2f1ddfcc7",
+      "method": "GET",
+      "url": "https://www.affaldonline.dk/api/address/collections",
+      "final_url": "https://www.affaldonline.dk/api/address/collections?groupBy=date&addressId=1081575%7C2055",
+      "body": "{\"params\":[[\"addressId\",\"1081575|2055\"],[\"groupBy\",\"date\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, POST, OPTIONS, PUT",
+        "access-control-allow-headers": "*",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Mon, 21 Sep 2026 09:30:03 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "W3siZGF0ZSI6IjIwMjYtMDktMjQiLCJjb2xsZWN0aW9ucyI6W3siZnJhY3Rpb24iOnsiaWQiOjEwLCJuYW1lIjoiUmVzdC9tYWQifSwiZGFJY29uIjpbODAsNDNdLCJjb250YWluZXJzIjpbeyJpZCI6NTQ4OTUsImRlc2NyaXB0aW9uIjoiMjQwTCBNYWQgMTQuZGcgU3RhbmQifSx7ImlkIjo1NTM5MSwiZGVzY3JpcHRpb24iOiI3NzBMIFJlc3QgMTQuZGcgU3RhbmQifSx7ImlkIjo1NTM5MiwiZGVzY3JpcHRpb24iOiI3NzBMIFJlc3QgMTQuZGcgU3RhbmQifV19LHsiZnJhY3Rpb24iOnsiaWQiOjE0LCJuYW1lIjoiUGFwL1BhcGlyIn0sImRhSWNvbiI6WzU4LDQ3XSwiY29udGFpbmVycyI6W3siaWQiOjI5NDkwNCwiZGVzY3JpcHRpb24iOiI2NjBMIFBhcC9QYXBpciAxNC5kZyBTdGFuZCJ9LHsiaWQiOjczODExLCJkZXNjcmlwdGlvbiI6IjY2MEwgUGFwL1BhcGlyIDE0LmRnIFN0YW5kIn1dfV19XQ=="
+    }
+  ]
+}
