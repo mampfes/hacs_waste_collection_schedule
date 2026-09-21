@@ -1087,7 +1087,7 @@ views:
 ```
 
 So könnte beispielsweise eine Übersicht der wichtigen Abfallarten aussehen:
-![Übersicht der nächsten Entsorgung-Termine der unterschiedlichen Abfallarten](pictures/Dashboard---WCS--Termin_Abholung.png)
+![Übersicht der nächsten Entsorgung-Termine der unterschiedlichen Abfallarten](pictures/Dashboard---WCS--Termin_Abholung.gif)
 *Abbildung: Übersicht der nächsten Entsorgung-Termine der unterschiedlichen Abfallarten*
 
 Und so könnte beispielsweise eine Erinnerung für das Herausstellen der Abfallbehälter aussehen:
