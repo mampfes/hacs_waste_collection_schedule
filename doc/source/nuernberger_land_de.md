@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: nuernberger_land_de
       args:
-        id: 16952001
+        id: 40-16952001
 ```
