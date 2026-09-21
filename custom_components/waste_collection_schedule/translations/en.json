@@ -15702,12 +15702,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Waste Types",
+          "f_id_bezirk": "District",
           "f_id_strasse": "Street",
           "f_id_strasse_hnr": "House Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "f_abfallarten": "Optional filter: the waste types to include.",
+          "f_id_bezirk": "Your district or part of the municipality.",
           "f_id_strasse": "Your street name.",
           "f_id_strasse_hnr": "Your house number."
         }
@@ -15718,11 +15720,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Waste Types",
+          "f_id_bezirk": "District",
           "f_id_strasse": "Street",
           "f_id_strasse_hnr": "House Number"
         },
         "data_description": {
           "f_abfallarten": "Optional filter: the waste types to include.",
+          "f_id_bezirk": "Your district or part of the municipality.",
           "f_id_strasse": "Your street name.",
           "f_id_strasse_hnr": "Your house number."
         }
@@ -17465,6 +17469,29 @@
           "year_field": "Year field"
         },
         "data_description": {}
+      },
+      "args_aksd_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Street name, e.g. `Kinizsi utca`"
+        }
+      },
+      "reconfigure_aksd_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "street": "Street name, e.g. `Kinizsi utca`"
+        }
       },
       "args_deponia_hu": {
         "title": "Configure Source",

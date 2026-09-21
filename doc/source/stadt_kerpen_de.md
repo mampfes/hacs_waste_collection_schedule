@@ -11,12 +11,16 @@ waste_collection_schedule:
   sources:
     - name: stadt_kerpen_de
       args:
+        f_id_bezirk: F_ID_BEZIRK
         f_id_strasse: F_ID_STRASSE
         f_id_strasse_hnr: F_ID_STRASSE_HNR
         f_abfallarten: F_ABFALLARTEN
 ```
 
 ### Configuration Variables
+
+**f_id_bezirk**  
+*(string) (optional)*
 
 **f_id_strasse**  
 *(string) (optional)*

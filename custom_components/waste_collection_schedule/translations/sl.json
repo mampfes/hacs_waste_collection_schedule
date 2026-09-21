@@ -15206,12 +15206,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Tipi odpadkov",
+          "f_id_bezirk": "Naselje",
           "f_id_strasse": "Ulica",
           "f_id_strasse_hnr": "Hišna številka"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "f_abfallarten": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni.",
+          "f_id_bezirk": "Vaše naselje ali del občine.",
           "f_id_strasse": "Ime vaše ulice.",
           "f_id_strasse_hnr": "Vaša hišna številka."
         }
@@ -15222,11 +15224,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Tipi odpadkov",
+          "f_id_bezirk": "Naselje",
           "f_id_strasse": "Ulica",
           "f_id_strasse_hnr": "Hišna številka"
         },
         "data_description": {
           "f_abfallarten": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni.",
+          "f_id_bezirk": "Vaše naselje ali del občine.",
           "f_id_strasse": "Ime vaše ulice.",
           "f_id_strasse_hnr": "Vaša hišna številka."
         }
@@ -16940,6 +16944,26 @@
           "verify_ssl": "Preveri SSL",
           "version": "Verzija",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_aksd_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_aksd_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Ulica"
         },
         "data_description": {}
       },

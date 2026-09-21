@@ -2396,6 +2396,7 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Hungary</summary>
 
+- [AKSD Debrecen](/doc/source/aksd_hu.md) / aksd.hu
 - [Depónia Nonprofit Kft.](/doc/source/deponia_hu.md) / deponia.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu

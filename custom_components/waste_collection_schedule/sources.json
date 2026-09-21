@@ -16595,6 +16595,12 @@
   ],
   "Hungary": [
     {
+      "title": "AKSD Debrecen",
+      "module": "aksd_hu",
+      "default_params": {},
+      "id": "aksd_hu"
+    },
+    {
       "title": "Dep\u00f3nia Nonprofit Kft.",
       "module": "deponia_hu",
       "default_params": {},

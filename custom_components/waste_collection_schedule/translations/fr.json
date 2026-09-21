@@ -15347,12 +15347,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "f_abfallarten": "Types de déchets",
+          "f_id_bezirk": "Quartier",
           "f_id_strasse": "Rue",
           "f_id_strasse_hnr": "Numéro"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "f_abfallarten": "Filtre facultatif : les types de déchets à inclure.",
+          "f_id_bezirk": "Votre quartier ou partie de la commune.",
           "f_id_strasse": "Le nom de votre rue.",
           "f_id_strasse_hnr": "Votre numéro de rue."
         }
@@ -15363,11 +15365,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "f_abfallarten": "Types de déchets",
+          "f_id_bezirk": "Quartier",
           "f_id_strasse": "Rue",
           "f_id_strasse_hnr": "Numéro"
         },
         "data_description": {
           "f_abfallarten": "Filtre facultatif : les types de déchets à inclure.",
+          "f_id_bezirk": "Votre quartier ou partie de la commune.",
           "f_id_strasse": "Le nom de votre rue.",
           "f_id_strasse_hnr": "Votre numéro de rue."
         }
@@ -17081,6 +17085,26 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_aksd_hu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_aksd_hu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue"
         },
         "data_description": {}
       },

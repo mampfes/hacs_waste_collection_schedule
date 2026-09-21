@@ -15266,12 +15266,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "f_abfallarten": "Tipi di rifiuto",
+          "f_id_bezirk": "Quartiere",
           "f_id_strasse": "Via",
           "f_id_strasse_hnr": "Numero civico"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "f_abfallarten": "Filtro facoltativo: i tipi di rifiuto da includere.",
+          "f_id_bezirk": "Il vostro quartiere o parte del comune.",
           "f_id_strasse": "Il nome della vostra via.",
           "f_id_strasse_hnr": "Il vostro numero civico."
         }
@@ -15282,11 +15284,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "f_abfallarten": "Tipi di rifiuto",
+          "f_id_bezirk": "Quartiere",
           "f_id_strasse": "Via",
           "f_id_strasse_hnr": "Numero civico"
         },
         "data_description": {
           "f_abfallarten": "Filtro facoltativo: i tipi di rifiuto da includere.",
+          "f_id_bezirk": "Il vostro quartiere o parte del comune.",
           "f_id_strasse": "Il nome della vostra via.",
           "f_id_strasse_hnr": "Il vostro numero civico."
         }
@@ -17000,6 +17004,26 @@
           "verify_ssl": "Verifica SSL",
           "version": "Versione",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_aksd_hu": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_aksd_hu": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street": "Strada"
         },
         "data_description": {}
       },

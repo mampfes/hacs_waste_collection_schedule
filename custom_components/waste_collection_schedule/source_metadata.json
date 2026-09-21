@@ -3703,6 +3703,14 @@
     },
     "urls": {}
   },
+  "aksd_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aksd_hu.md",
+    "howto": {
+      "de": "Geben Sie den Straßennamen genau so ein, wie er in der Straßensuche auf https://www.aksd.hu/hulladeknaptar erscheint (z. B. `Kinizsi utca`). Groß-/Kleinschreibung und Akzente werden ignoriert.",
+      "en": "Enter the street name exactly as it appears in the street search at https://www.aksd.hu/hulladeknaptar (e.g. `Kinizsi utca`). Upper/lower case and accents are ignored."
+    },
+    "urls": {}
+  },
   "deponia_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/deponia_hu.md",
     "howto": {

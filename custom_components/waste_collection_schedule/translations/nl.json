@@ -15223,12 +15223,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Afvalsoorten",
+          "f_id_bezirk": "Wijk",
           "f_id_strasse": "Straat",
           "f_id_strasse_hnr": "Huisnummer"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "f_abfallarten": "Optioneel filter: de op te nemen afvalsoorten.",
+          "f_id_bezirk": "Uw wijk of deel van de gemeente.",
           "f_id_strasse": "Uw straatnaam.",
           "f_id_strasse_hnr": "Uw huisnummer."
         }
@@ -15239,11 +15241,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "f_abfallarten": "Afvalsoorten",
+          "f_id_bezirk": "Wijk",
           "f_id_strasse": "Straat",
           "f_id_strasse_hnr": "Huisnummer"
         },
         "data_description": {
           "f_abfallarten": "Optioneel filter: de op te nemen afvalsoorten.",
+          "f_id_bezirk": "Uw wijk of deel van de gemeente.",
           "f_id_strasse": "Uw straatnaam.",
           "f_id_strasse_hnr": "Uw huisnummer."
         }
@@ -16957,6 +16961,26 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_aksd_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_aksd_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
         },
         "data_description": {}
       },
