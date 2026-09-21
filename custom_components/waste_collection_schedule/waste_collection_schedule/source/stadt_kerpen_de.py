@@ -10,7 +10,8 @@ from waste_collection_schedule.source.abfall_io import Source as AbfallIOSource
 # and kommune pinned to Kerpen, so it subclasses the abfall.io pipeline source
 # and only overrides metadata, the params the user still has to supply, and
 # __init__. PINNED_PARAMS feeds the fixed values back into the config flow's
-# cascade so the street and house-number dropdowns still populate.
+# cascade so the district, street and house-number dropdowns still populate.
+# Kerpen's form requires a district (f_id_bezirk) before it lists any streets.
 
 _KEY = "e5543a3e190cb8d91c645660ad60965f"
 _KOMMUNE = 3703
@@ -54,6 +55,7 @@ class Source(AbfallIOSource):
     # The key and kommune are fixed for Kerpen, so they are not user params.
     PARAMS = (
         cascading_select(
+            ("f_id_bezirk", field_terms.DISTRICT),
             ("f_id_strasse", field_terms.STREET),
             ("f_id_strasse_hnr", field_terms.HOUSE_NUMBER),
         ),
@@ -66,11 +68,13 @@ class Source(AbfallIOSource):
         self,
         f_id_strasse: int | str,
         f_id_strasse_hnr: int | str | None = None,
+        f_id_bezirk: int | str | None = None,
         f_abfallarten: list[int] | None = None,
     ):
         super().__init__(
             key=_KEY,
             f_id_kommune=_KOMMUNE,
+            f_id_bezirk=f_id_bezirk,
             f_id_strasse=f_id_strasse,
             f_id_strasse_hnr=f_id_strasse_hnr,
             f_abfallarten=f_abfallarten,
