@@ -9324,11 +9324,11 @@
     },
     {
       "title": "AWG Abfallwirtschaft Landkreis Calw",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
         "key": "0813ea99f520c462373386564a99a51e"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "AWG Bassum",
