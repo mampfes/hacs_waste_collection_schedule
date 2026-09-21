@@ -741,9 +741,8 @@ Um dies zu erreichen, ist Folgendes zu tun:
     Die Datei `wcs-template--erinnerung-ebsabfuhr.yaml` sollte letztendlich nachfolgenden Inhalt haben :
   
     ```yaml
-    ## SENSOR Erinnerung EBS-Abfuhr
+    ## Erinnerung EBS-Abfuhr
    
-    - sensor:
     - name: Erinnerung EBS-Abfuhr
       unique_id: erinnerung_ebsabfuhr
       icon: mdi:trash-can-outline
