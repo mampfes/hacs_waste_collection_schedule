@@ -37,6 +37,10 @@ TEST_CASES = {
     "Acate (RG)": {
         "municipality": "Acate",
     },
+    "Treviglio (BG) - Zona arancione": {
+        "municipality": "Treviglio",
+        "area": "Zona arancione",
+    },
 }
 
 # Municipalities on the platform that expose a waste calendar, as (name,
@@ -46,12 +50,17 @@ TEST_CASES = {
 COMUNI = [
     ("Acate", "RG"),
     ("Serrastretta", "CZ"),
+    ("Treviglio", "BG"),
 ]
 
 
 def EXTRA_INFO():
     for name, province in COMUNI:
-        yield {"title": f"{name} ({province})", "country": "it"}
+        yield {
+            "title": f"{name} ({province})",
+            "country": "it",
+            "default_params": {"municipality": name},
+        }
 
 
 # Municipium categories vary per municipality; match on a normalised keyword.
