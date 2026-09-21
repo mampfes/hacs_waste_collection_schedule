@@ -294,9 +294,9 @@ Während der Installation wurden die nachfolgenden Dateien und Ordner angelegt:
       wcs_coordinator.py
 ```
 
-## Konfiguration
+## (5) Konfiguration
 
-### Sensoren
+### (A) Sensoren
 
 Alle Sensoren werden nach demselben Code-Muster konstruiert, somit muss lediglich der jeweilge Inhalt kopiert, und anschließend die entsprechenden Werte der Parameter `name` und `types` angepasst werden. Deswegen werden hier nur zwei Sensoren als Beispiel herangezogen:
 
@@ -528,7 +528,7 @@ Letztendlich sind dies hier :
 
 12. HA → Werkzeuge → Konfiguration prüfen → OK ! → neu starten → HA → Übersicht → unterhalb des Bereichs `Sensor` sollten nun alle neu angelegten Sensoren zu finden sein.
 
-### Templates
+### (B) Templates
 
 Einige Template-Schnipsel wurden bereits jeweils bei den Sensor-`.yaml`-Dateien verwendet. Diese dienten dazu, die Anzeige des jeweiligen Sensors beziehungsweise der jeweiligen Sensorgruppe im Dashboard zu steuern. Dasjenige Template, welches letztendlich die ***Textausgabe*** des Pop-ups (beispielsweise: *Heute müssen folgende Abfälle bereitgestellt werden: ...*) steuert, besteht weitgehend aus `Jinja2`-Code, und kann - mit wenigen Einschränkungen - nach persönlichen Vorlieben erstellt werden.
 
@@ -810,7 +810,7 @@ Um dies zu erreichen, ist Folgendes zu tun:
 
    Diese Überprüfung zeigt, dass der Zustand des Text-Sensors richtig interpretiert wird.
 
-## Visualisierung
+## (6) Visualisierung
 
 Nachfolgend ein Beispiel(-Code), wie man dies auch grafisch darstellen kann.
 
