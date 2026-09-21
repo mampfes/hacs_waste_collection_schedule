@@ -16675,7 +16675,9 @@
     {
       "title": "Acate (RG)",
       "module": "municipium_it",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Acate"
+      },
       "id": "municipium_it"
     },
     {
@@ -19353,7 +19355,9 @@
     {
       "title": "Serrastretta (CZ)",
       "module": "municipium_it",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Serrastretta"
+      },
       "id": "municipium_it"
     },
     {
@@ -19553,6 +19557,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Treviglio (BG)",
+      "module": "municipium_it",
+      "default_params": {
+        "municipality": "Treviglio"
+      },
+      "id": "municipium_it"
     },
     {
       "title": "Trezzano Rosa",

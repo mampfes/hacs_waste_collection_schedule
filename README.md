@@ -2882,6 +2882,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Torrevecchia Pia](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Traona](/doc/source/junker_app.md) / junker.app
 - [Trappeto](/doc/source/junker_app.md) / junker.app
+- [Treviglio (BG)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Trezzano Rosa](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Trezzo Sull'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Tribiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
