@@ -6275,7 +6275,6 @@ SOURCES_AWAITING_CASSETTE = {
     "fuquay_varina_nc_us",
     "nuernberger_land_de",
     "plano_gov",
-    "regioentsorgung_de",
     "sepan_remondis_pl",
     # Arrived from master in the v2.32.0 merge; never recorded.
     "stadt_kerpen_de",
