@@ -37,6 +37,10 @@ TEST_CASES = {
     "Acate (RG)": {
         "municipality": "Acate",
     },
+    "Treviglio (BG) - Zona arancione": {
+        "municipality": "Treviglio",
+        "area": "Zona arancione",
+    },
 }
 
 # Municipalities on the platform that expose a waste calendar, as (name,
@@ -46,6 +50,7 @@ TEST_CASES = {
 COMUNI = [
     ("Acate", "RG"),
     ("Serrastretta", "CZ"),
+    ("Treviglio", "BG"),
 ]
 
 
