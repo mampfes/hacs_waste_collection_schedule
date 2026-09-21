@@ -18,6 +18,7 @@ still passes through, leaving the current year's collections intact.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.service.ICS import IcsFeedsParser, IcsSessionRetriever
@@ -60,11 +61,21 @@ class Source(BaseSource):
 
     parse = IcsFeedsParser(parsers.IcsParser(split_at=" / "))
 
-    # No WASTE_TYPES. A bare pass-through transformer has no
-    # type_value_map, so every label this feed sends is classified by the
-    # shared multilingual vocabulary, which cannot be enumerated
-    # statically; and with no cassette yet (#7051) the produced set
-    # cannot be derived by replay either. An empty declaration is the
-    # honest one, and it only narrows a config-flow dropdown offer
-    # (#7028). Declare the real vocabulary once this source is recorded.
-    transform = ICSTransformer()
+    # Summaries look like "Gelber Sack , Mo" or "Problemabfall , Mi, 10:00 -
+    # 11:00, Schloßplatz, Forth": the waste type, then weekday/time/place.
+    # Only the part before " , " names the type.
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüllcontainer": wt.GENERAL_WASTE,
+            "Problemabfall": wt.HAZARDOUS,
+        },
+        clean=lambda summary: summary.split(" , ")[0],
+    )
