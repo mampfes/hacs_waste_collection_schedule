@@ -41,6 +41,37 @@ PARAM_DESCRIPTIONS = {
 }
 
 
+def _nth_weekday(year: int, month: int, weekday: int, n: int) -> date:
+    first = date(year, month, 1)
+    offset = (weekday - first.weekday()) % 7
+    return first + timedelta(days=offset + 7 * (n - 1))
+
+
+def _delay_holidays(year: int) -> list[date]:
+    """Holidays after which LA Sanitation delays collection by one day.
+
+    See https://sanitation.lacity.gov/services/lasan-holiday-collection-delays
+    Holidays on a weekend cause no delay, so they are ignored by the caller.
+    """
+    return [
+        date(year, 1, 1),  # New Year's Day
+        date(year, 7, 4),  # Independence Day
+        _nth_weekday(year, 9, 0, 1),  # Labor Day (first Monday of September)
+        _nth_weekday(year, 11, 3, 4),  # Thanksgiving (fourth Thursday of November)
+        date(year, 12, 25),  # Christmas Day
+    ]
+
+
+def _apply_holiday_delay(collection_date: date) -> date:
+    """Shift a regular collection date by one day if a weekday holiday
+    occurred earlier in the same week (or on the collection day itself)."""
+    week_start = collection_date - timedelta(days=collection_date.weekday())
+    for holiday in _delay_holidays(collection_date.year):
+        if holiday.weekday() < 5 and week_start <= holiday <= collection_date:
+            return collection_date + timedelta(days=1)
+    return collection_date
+
+
 class Source:
     def __init__(self, street_address: str):
         """Initialize the LA City waste collection source.
@@ -83,7 +114,7 @@ class Source:
         if data["status"] != "exactMatch":
             raise SourceArgumentException(
                 argument=self._street_address,
-                message=data["message"],
+                message=data.get("message", "Address not found"),
             )
 
         # Get Collection Day
@@ -99,15 +130,19 @@ class Source:
 
         entries = []
 
-        # Get Next 2 Weeks for Collection Dates
+        # Get Next 2 Weeks for Collection Dates. Start one day back so that a
+        # pickup delayed by a holiday and landing on today is still included.
         today = date.today()
-        for i in range(14):  # Look ahead 2 weeks
+        for i in range(-1, 14):
             check_date = today + timedelta(days=i)
             if check_date.weekday() == collection_weekday:
+                actual_date = _apply_holiday_delay(check_date)
+                if actual_date < today:
+                    continue
                 for waste_type in ICON_MAP:
                     entries.append(
                         Collection(
-                            date=check_date,
+                            date=actual_date,
                             t=waste_type,
                             icon=ICON_MAP.get(waste_type),
                         )
