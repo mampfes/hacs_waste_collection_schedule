@@ -79,14 +79,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "app_id": "ID aplikacije",
-          "f_abfallarten": "Vrste odpadkov",
+          "f_abfallarten": "Tipi odpadkov",
           "key": "API ključ",
-          "ort": "Okrožje",
-          "wasteTypes": "Waste Types"
+          "ort": "Naselje",
+          "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "f_abfallarten": "Izbirni filter: vrste odpadkov, ki naj bodo vključene."
+          "f_abfallarten": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
       "sensor": {
