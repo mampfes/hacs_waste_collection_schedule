@@ -49,13 +49,11 @@ ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
 
-PACKAGE_DIR = (
-    Path(__file__).resolve().parents[0]
-    / "custom_components"
-    / "waste_collection_schedule"
-)
+PROJECT_ROOT = Path(__file__).resolve().parent
+PACKAGE_DIR = PROJECT_ROOT / "custom_components" / "waste_collection_schedule"
 SOURCE_DIR = PACKAGE_DIR / "waste_collection_schedule" / "source"
-DOC_SOURCE_DIR = Path(__file__).resolve().parents[0] / "doc" / "source"
+DOC_DIR = PROJECT_ROOT / "doc"
+DOC_SOURCE_DIR = DOC_DIR / "source"
 DOC_URL_BASE = "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master"
 
 T = TypeVar("T")
@@ -360,7 +358,7 @@ def update_edpevent_se(modules: dict[str, ModuleType]):
     for provider, data in sorted(services.items()):
         str += f"- `{provider}`: {data['title']}\n"
 
-    _patch_file("doc/source/edpevent_se.md", "service", str)
+    _patch_file(DOC_SOURCE_DIR / "edpevent_se.md", "service", str)
 
 
 def main() -> None:
@@ -602,7 +600,7 @@ def write_ics_yaml_docs() -> None:
     -- it only renders each provider's own doc/ics/<stem>.md page, exactly as
     the listing-producing browse_ics_yaml() used to alongside its listing work.
     """
-    doc_dir = Path(__file__).resolve().parents[0] / "doc"
+    doc_dir = DOC_DIR
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
@@ -685,7 +683,7 @@ def update_ics_md(sources: list[SourceInfo]):
 
         str += "\n"
 
-    _patch_file("doc/source/ics.md", "service", str)
+    _patch_file(DOC_SOURCE_DIR / "ics.md", "service", str)
 
 
 def multiline_indent(s, numspaces):
@@ -755,7 +753,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
             )
 
     with open(
-        "custom_components/waste_collection_schedule/sources.json",
+        PACKAGE_DIR / "sources.json",
         "w",
         encoding="utf-8",
         newline="\n",
@@ -763,11 +761,11 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
         f.write(json.dumps(output, indent=2))
 
     # Save metadata separately (for runtime use)
-    metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
+    metadata_file = PACKAGE_DIR / "source_metadata.json"
     with open(metadata_file, "w", encoding="utf-8", newline="\n") as f:
         json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
 
-    source_owner_file = ".github/source_owners.json"
+    source_owner_file = PROJECT_ROOT / ".github" / "source_owners.json"
     source_owner_output = {
         "default": [],
         "sources": {
@@ -855,10 +853,8 @@ def update_json(
     ) = get_custom_translations(countries)
 
     for lang in LANGUAGES:
-        tranlation_file = (
-            f"custom_components/waste_collection_schedule/translations/{lang}.json"
-        )
-        if not Path(tranlation_file).exists():
+        tranlation_file = PACKAGE_DIR / "translations" / f"{lang}.json"
+        if not tranlation_file.exists():
             print(f"Translation file {tranlation_file} not found")
             continue
 
@@ -1032,7 +1028,7 @@ def update_readme_md(countries: dict[str, list[SourceInfo]]):
         str += "</details>\n"
         str += "\n"
 
-    _patch_file("README.md", "country", str)
+    _patch_file(PROJECT_ROOT / "README.md", "country", str)
 
 
 def update_info_md(countries: dict[str, list[SourceInfo]]):
@@ -1051,7 +1047,7 @@ def update_info_md(countries: dict[str, list[SourceInfo]]):
         )
         str += " |\n"
 
-    _patch_file("info.md", "country", str)
+    _patch_file(PROJECT_ROOT / "info.md", "country", str)
 
 
 def update_awido_de(modules: dict[str, ModuleType]):
@@ -1065,7 +1061,7 @@ def update_awido_de(modules: dict[str, ModuleType]):
     for service in sorted(services, key=lambda s: s["service_id"]):
         str += f"- `{service['service_id']}`: {service['title']}\n"
 
-    _patch_file("doc/source/awido_de.md", "service", str)
+    _patch_file(DOC_SOURCE_DIR / "awido_de.md", "service", str)
 
 
 def update_citiesapps_com(modules: dict[str, ModuleType]):
@@ -1079,7 +1075,7 @@ def update_citiesapps_com(modules: dict[str, ModuleType]):
     for service in sorted(services, key=lambda service: service["title"]):
         str += f"| {service['title']} | [{beautify_url(service['url'])}]({service['url']}) |\n"
 
-    _patch_file("doc/source/citiesapps_com.md", "service", str)
+    _patch_file(DOC_SOURCE_DIR / "citiesapps_com.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):
