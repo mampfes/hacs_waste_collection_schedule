@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-09-20",
+  "interactions": [
+    {
+      "key": "GET https://api.abfall.io 86cd53c2cc",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=8b016df0116d1d5094fa339bebea0c65",
+      "body": "{\"params\":[[\"key\",\"8b016df0116d1d5094fa339bebea0c65\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=qgsn1umvpemcast6rg0nkvgd3f; path=/",
+        "last-modified": "Mon, 21 Sep 2026 05:30:35 GMT",
+        "content-type": "application/json",
+        "date": "Mon, 21 Sep 2026 05:30:35 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiI0YzgwY2QxZTNhMGM1MWI1Y2IzNDZiMDdiZjhlZTc2ZGQxNjhkMmFjOTA1YWE1NzIiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0VYUE9SVF9FTUFJTCI6IjAiLCJQVUJfQU5aRUlHRSI6IkkiLCJQVUJfSkFIUiI6IjMwMDAxIiwiUFVCX0pBSFJfTU9OQVRFX01JTk9SIjoiMCIsIlBVQl9URU1QTEFURSI6Im9zdGVyaG9seiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNzkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNCIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjE1IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjEyIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjIiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6IiIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6IiIsIlBVQl9aVVNBVFpfU0VMRUNUIjoiIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI2MDIwMS0yMDI3MDEzMSIsImRpc3BsYXkiOiIyXC8yMDI2LTAxXC8yMDI3Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVU19NSU4iOiIyMDI2MDkyMSJ9LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql a2b99ec6e3",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Date, $showInactive: Boolean) {\\n    appointments(idHouseNumber: $idHouseNumber, wasteTypes: $wasteTypes, dateMin: $dateMin, dateMax: $dateMax, showInactive: $showInactive) {\\n        date\\n        wasteType {\\n            name\\n        }\\n    }\\n}\\n\",\"variables\":{\"dateMax\":\"2027-09-20\",\"dateMin\":\"2026-09-20\",\"idHouseNumber\":\"24717\",\"showInactive\":false,\"wasteTypes\":[\"79\",\"214\",\"215\",\"213\",\"217\",\"212\",\"216\"]}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:35 GMT",
+        "etag": "W/\"881-+xTsUWtCD++E2kjkm/ddgRdHLPE\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "2177"
+      },
+      "content_b64": "eyJkYXRhIjp7ImFwcG9pbnRtZW50cyI6W3siZGF0ZSI6IjIwMjYtMDktMjMiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3Rtw7xsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0wOS0yOSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmUgU8OkY2tlIn19LHsiZGF0ZSI6IjIwMjYtMTAtMDEiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkJpb2FiZmFsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0xMC0wNyIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIDYwLTI0MCBMaXRlciJ9fSx7ImRhdGUiOiIyMDI2LTEwLTEzIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZSBTw6Rja2UifX0seyJkYXRlIjoiMjAyNi0xMC0xNCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiQWx0cGFwaWVyIEJsYXVlIFRvbm5lIn19LHsiZGF0ZSI6IjIwMjYtMTAtMTUiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkJpb2FiZmFsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0xMC0yMSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIDYwLTI0MCBMaXRlciJ9fSx7ImRhdGUiOiIyMDI2LTEwLTI3Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZSBTw6Rja2UifX0seyJkYXRlIjoiMjAyNi0xMC0yOSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiQmlvYWJmYWxsIDYwLTI0MCBMaXRlciJ9fSx7ImRhdGUiOiIyMDI2LTExLTA0Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJSZXN0bcO8bGwgNjAtMjQwIExpdGVyIn19LHsiZGF0ZSI6IjIwMjYtMTEtMTAiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkdlbGJlIFPDpGNrZSJ9fSx7ImRhdGUiOiIyMDI2LTExLTExIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJBbHRwYXBpZXIgQmxhdWUgVG9ubmUifX0seyJkYXRlIjoiMjAyNi0xMS0xMiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiQmlvYWJmYWxsIDYwLTI0MCBMaXRlciJ9fSx7ImRhdGUiOiIyMDI2LTExLTE4Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJSZXN0bcO8bGwgNjAtMjQwIExpdGVyIn19LHsiZGF0ZSI6IjIwMjYtMTEtMjQiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkdlbGJlIFPDpGNrZSJ9fSx7ImRhdGUiOiIyMDI2LTExLTI2Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJCaW9hYmZhbGwgNjAtMjQwIExpdGVyIn19LHsiZGF0ZSI6IjIwMjYtMTItMDIiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3Rtw7xsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0xMi0wOCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmUgU8OkY2tlIn19LHsiZGF0ZSI6IjIwMjYtMTItMDkiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkFsdHBhcGllciBCbGF1ZSBUb25uZSJ9fSx7ImRhdGUiOiIyMDI2LTEyLTEwIiwid2FzdGVUeXBlIjp7Im5hbWUiOiJCaW9hYmZhbGwgNjAtMjQwIExpdGVyIn19LHsiZGF0ZSI6IjIwMjYtMTItMTYiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3Rtw7xsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0xMi0yMiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmUgU8OkY2tlIn19LHsiZGF0ZSI6IjIwMjYtMTItMjQiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkJpb2FiZmFsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNi0xMi0zMCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIDYwLTI0MCBMaXRlciJ9fSx7ImRhdGUiOiIyMDI3LTAxLTA1Iiwid2FzdGVUeXBlIjp7Im5hbWUiOiJHZWxiZSBTw6Rja2UifX0seyJkYXRlIjoiMjAyNy0wMS0wNiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiQWx0cGFwaWVyIEJsYXVlIFRvbm5lIn19LHsiZGF0ZSI6IjIwMjctMDEtMDciLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkJpb2FiZmFsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNy0wMS0xMSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiU2FtbWx1bmcgVGFubmVuYsOkdW1lIn19LHsiZGF0ZSI6IjIwMjctMDEtMTMiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlJlc3Rtw7xsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNy0wMS0xOSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiR2VsYmUgU8OkY2tlIn19LHsiZGF0ZSI6IjIwMjctMDEtMjEiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkJpb2FiZmFsbCA2MC0yNDAgTGl0ZXIifX0seyJkYXRlIjoiMjAyNy0wMS0yNyIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIDYwLTI0MCBMaXRlciJ9fV19fQo="
+    }
+  ]
+}

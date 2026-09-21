@@ -83,7 +83,8 @@
           "app_id": "App Id",
           "f_abfallarten": "Tipi di rifiuto",
           "key": "Chiave API",
-          "ort": "Quartiere"
+          "ort": "Quartiere",
+          "wasteTypes": "Tipi di rifiuto"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
