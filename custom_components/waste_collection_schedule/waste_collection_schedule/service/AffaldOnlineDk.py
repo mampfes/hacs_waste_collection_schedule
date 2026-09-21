@@ -33,7 +33,8 @@ CLIENT_ID_LOOKUP = {
 def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
     """
     Provides the cascading_select choices for affaldonline_dk
-    The ``street`` field is populated with every street in a given ```municipality```
+    The ``city`` field is populated with every city in a given ``municipality``
+    When a ``city`` is selected the ``street`` field is populated with every street in the ``municipality``, filtered to only show ``street``s in the selected ``city``.
 
     When a ``street`` is selected the house numbers for that ``street`` is gathered.
     This also gives us the ``values`` associated with that address on the affaldonline platform.
@@ -47,6 +48,15 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
     if not municipality:
         return []
     session = cffi_requests.Session(impersonate="chrome")
+    if field == "city":
+        response = session.get(
+            url=f"https://www.affaldonline.dk/kalender/{municipality}/acCal.php?term="
+        )
+        if response.status_code != 200:
+            return []
+        json_entries = response.json()
+        city_list = [(entry["Bynavn"]) for entry in json_entries]
+        return list(set(city_list))
     if field == "street":
         response = session.get(
             url=f"https://www.affaldonline.dk/kalender/{municipality}/acCal.php?term="
@@ -54,12 +64,15 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
         if response.status_code != 200:
             return []
         json_entries = response.json()
+
+        city = selections.get("city")
         street_list = [
             (
-                entry["value"],
+                entry["vejnavn"],
                 f"{entry['vejnavn']}|{entry['postnr']}|{entry['Bynavn']}",
             )
             for entry in json_entries
+            if not city or entry["Bynavn"] == city
         ]
         return street_list
     if field == "values":
