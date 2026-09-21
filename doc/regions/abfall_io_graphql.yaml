@@ -41,6 +41,9 @@
   - title: ASO Abfall-Service Osterholz
     url: https://www.aso-ohz.de/
     service_id: 8b016df0116d1d5094fa339bebea0c65
+  - title: AWG Abfallwirtschaft Landkreis Calw
+    url: https://www.awg-info.de/
+    service_id: 0813ea99f520c462373386564a99a51e
   - title: Landkreis Bayreuth
     url: https://www.landkreis-bayreuth.de/
     service_id: 41cec8bb0482f3002c699cc11a9ea678
