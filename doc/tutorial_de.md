@@ -541,11 +541,12 @@ Um dies zu erreichen, ist Folgendes zu tun:
 1. HA → Studio Code Server → die Datei `wcs-template--erinnerung-ebs-abfuhr.yaml` im Verzeichnis `/config/templates` anlegen, und vorab den nachfolgenden Code-Block einfügen :
   
     ```yaml
-    - name: Erinnerung EBS-Abfuhr # Namen anpassen
-      unique_id: erinnerung_ebsabfuhr # ID anpassen
-      icon: mdi:trash-can-outline
-      state: >
-        # hier wird später der persönliche Template-Code eingefügt - die Einrückung(en) dabei stets beachten !
+    - sensor:
+        - name: Erinnerung EBS-Abfuhr # Namen anpassen
+          unique_id: erinnerung_ebsabfuhr # ID anpassen
+          icon: mdi:trash-can-outline
+          state: >
+            # hier wird später der persönliche Template-Code eingefügt - die Einrückung(en) dabei stets beachten !
     ```
 
 2. HA → Werkzeuge → in der Menüleiste den Eintrag `Template` auswählen → in den dortigen Editor den individuellen Code eingeben. Nachfolgend ein Beispiel-Code, anhand dessen man üben kann, um letztendlich den eigenen Code anlegen zu können.
@@ -711,93 +712,94 @@ Um dies zu erreichen, ist Folgendes zu tun:
     Um dieses Text-Template als Sensor zu erstellen, ist lediglich der nachfolgende Code-Block an das Ende der Datei `wcs-template--erinnerung-ebs-abfuhr.yaml` einzufügen :
   
     ```yaml
-    - name: Text-Erinnerung EBS-Abfuhr
-      unique_id: text_erinnerung_ebsabfuhr
-      icon: mdi:trash-can-outline
-      state: >
-        {% set StatusSensoren = {
-        'braune Tonne': states.sensor.braune_tonne.state,
-        'blaue Tonne': states.sensor.blaue_tonne.state,
-        'gelber Sack': states.sensor.gelber_sack.state,
-        'blauer Container': states.sensor.blauer_container.state,
-        'Grünabfall 1': states.sensor.grunabfall_1.state,
-        'Grünabfall 2': states.sensor.grunabfall_2.state,
-        'Grünabfall 3': states.sensor.grunabfall_3.state,
-        'Grünabfall 4': states.sensor.grunabfall_4.state,
-        'schwarze Tonne': states.sensor.schwarze_tonne.state,
-        'Sonderabfall 1': states.sensor.sonderabfall_1.state,
-        'Sonderabfall 2': states.sensor.sonderabfall_2.state,
-        'Tannenbaum': states.sensor.tannenbaum.state }
-        %}
-        {%- set SensorDeadLine = namespace(key=[]) %}
-        {% for item in StatusSensoren %}
-        {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
-        {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
-        {%- endif -%}
-        {% endfor %}
-        {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
+    - sensor:
+        - name: Text-Erinnerung EBS-Abfuhr
+          unique_id: text_erinnerung_ebsabfuhr
+          icon: mdi:trash-can-outline
+          state: >
+            {% set StatusSensoren = {
+            'braune Tonne': states.sensor.braune_tonne.state,
+            'blaue Tonne': states.sensor.blaue_tonne.state,
+            'gelber Sack': states.sensor.gelber_sack.state,
+            'blauer Container': states.sensor.blauer_container.state,
+            'Grünabfall 1': states.sensor.grunabfall_1.state,
+            'Grünabfall 2': states.sensor.grunabfall_2.state,
+            'Grünabfall 3': states.sensor.grunabfall_3.state,
+            'Grünabfall 4': states.sensor.grunabfall_4.state,
+            'schwarze Tonne': states.sensor.schwarze_tonne.state,
+            'Sonderabfall 1': states.sensor.sonderabfall_1.state,
+            'Sonderabfall 2': states.sensor.sonderabfall_2.state,
+            'Tannenbaum': states.sensor.tannenbaum.state }
+            %}
+            {%- set SensorDeadLine = namespace(key=[]) %}
+            {% for item in StatusSensoren %}
+            {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
+            {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
+            {%- endif -%}
+            {% endfor %}
+            {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
     ```
   
     Die Datei `wcs-template--erinnerung-ebsabfuhr.yaml` sollte letztendlich nachfolgenden Inhalt haben :
   
     ```yaml
     ## Erinnerung EBS-Abfuhr
-   
-    - name: Erinnerung EBS-Abfuhr
-      unique_id: erinnerung_ebsabfuhr
-      icon: mdi:trash-can-outline
-      state: >
-        {% set StatusSensoren = {
-        'braune Tonne': states.sensor.braune_tonne.state,
-        'blaue Tonne': states.sensor.blaue_tonne.state,
-        'gelber Sack': states.sensor.gelber_sack.state,
-        'blauer Container': states.sensor.blauer_container.state,
-        'Grünabfall 1': states.sensor.grunabfall_1.state,
-        'Grünabfall 2': states.sensor.grunabfall_2.state,
-        'Grünabfall 3': states.sensor.grunabfall_3.state,
-        'Grünabfall 4': states.sensor.grunabfall_4.state,
-        'schwarze Tonne': states.sensor.schwarze_tonne.state,
-        'Sonderabfall 1': states.sensor.sonderabfall_1.state,
-        'Sonderabfall 2': states.sensor.sonderabfall_2.state,
-        'Tannenbaum': states.sensor.tannenbaum.state }
-        %}
-        {%- set SensorDeadLine = namespace(key=[]) %}
-        {% for item in StatusSensoren %}
-        {%- if StatusSensoren[item] == '1'-%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
-        {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
-        {%- endif -%}
-        {% endfor %}
-        {% for item in SensorDeadLine.key -%}
-        {% if not loop.first %}{% if loop.last %} und {% else %}, {% endif %}{% endif %}{{ item }}
-        {%- endfor %}
-        {%- if SensorDeadLine.key %} bitte heute bereitstellen !{%- endif %}
+    - sensor:
+        - name: Erinnerung EBS-Abfuhr
+          unique_id: erinnerung_ebsabfuhr
+          icon: mdi:trash-can-outline
+          state: >
+            {% set StatusSensoren = {
+            'braune Tonne': states.sensor.braune_tonne.state,
+            'blaue Tonne': states.sensor.blaue_tonne.state,
+            'gelber Sack': states.sensor.gelber_sack.state,
+            'blauer Container': states.sensor.blauer_container.state,
+            'Grünabfall 1': states.sensor.grunabfall_1.state,
+            'Grünabfall 2': states.sensor.grunabfall_2.state,
+            'Grünabfall 3': states.sensor.grunabfall_3.state,
+            'Grünabfall 4': states.sensor.grunabfall_4.state,
+            'schwarze Tonne': states.sensor.schwarze_tonne.state,
+            'Sonderabfall 1': states.sensor.sonderabfall_1.state,
+            'Sonderabfall 2': states.sensor.sonderabfall_2.state,
+            'Tannenbaum': states.sensor.tannenbaum.state }
+            %}
+            {%- set SensorDeadLine = namespace(key=[]) %}
+            {% for item in StatusSensoren %}
+            {%- if StatusSensoren[item] == '1'-%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
+            {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
+            {%- endif -%}
+            {% endfor %}
+            {% for item in SensorDeadLine.key -%}
+            {% if not loop.first %}{% if loop.last %} und {% else %}, {% endif %}{% endif %}{{ item }}
+            {%- endfor %}
+            {%- if SensorDeadLine.key %} bitte heute bereitstellen !{%- endif %}
 
-    ## JINJA - Text-Template
-    - name: Text-Erinnerung EBS-Abfuhr
-      unique_id: text_erinnerung_ebsabfuhr
-      icon: mdi:trash-can-outline
-      state: >
-        {% set StatusSensoren = {
-        'braune Tonne': states.sensor.braune_tonne.state,
-        'blaue Tonne': states.sensor.blaue_tonne.state,
-        'gelber Sack': states.sensor.gelber_sack.state,
-        'blauer Container': states.sensor.blauer_container.state,
-        'Grünabfall 1': states.sensor.grunabfall_1.state,
-        'Grünabfall 2': states.sensor.grunabfall_2.state,
-        'Grünabfall 3': states.sensor.grunabfall_3.state,
-        'Grünabfall 4': states.sensor.grunabfall_4.state,
-        'schwarze Tonne': states.sensor.schwarze_tonne.state,
-        'Sonderabfall 1': states.sensor.sonderabfall_1.state,
-        'Sonderabfall 2': states.sensor.sonderabfall_2.state,
-        'Tannenbaum': states.sensor.tannenbaum.state }
-        %}
-        {%- set SensorDeadLine = namespace(key=[]) %}
-        {% for item in StatusSensoren %}
-        {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
-        {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
-        {%- endif -%}
-        {% endfor %}
-        {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
+        ## JINJA - Text-Template
+        - name: Text-Erinnerung EBS-Abfuhr
+          unique_id: text_erinnerung_ebsabfuhr
+          icon: mdi:trash-can-outline
+          state: >
+            {% set StatusSensoren = {
+            'braune Tonne': states.sensor.braune_tonne.state,
+            'blaue Tonne': states.sensor.blaue_tonne.state,
+            'gelber Sack': states.sensor.gelber_sack.state,
+            'blauer Container': states.sensor.blauer_container.state,
+            'Grünabfall 1': states.sensor.grunabfall_1.state,
+            'Grünabfall 2': states.sensor.grunabfall_2.state,
+            'Grünabfall 3': states.sensor.grunabfall_3.state,
+            'Grünabfall 4': states.sensor.grunabfall_4.state,
+            'schwarze Tonne': states.sensor.schwarze_tonne.state,
+            'Sonderabfall 1': states.sensor.sonderabfall_1.state,
+            'Sonderabfall 2': states.sensor.sonderabfall_2.state,
+            'Tannenbaum': states.sensor.tannenbaum.state }
+            %}
+            {%- set SensorDeadLine = namespace(key=[]) %}
+            {% for item in StatusSensoren %}
+            {%- if StatusSensoren[item] == '1' -%}  {# 1: wird morgen abgeholt, also heute die Erinnerung #}
+            {% set SensorDeadLine.key = SensorDeadLine.key + [item] %}
+            {%- endif -%}
+            {% endfor %}
+            {% if SensorDeadLine.key -%} {{ states('sensor.erinnerung_ebsabfuhr') }} {% endif %}
     ```
   
     HA → Werkzeuge → Konfiguration prüfen → OK ! → neu starten
