@@ -56,7 +56,11 @@ COMUNI = [
 
 def EXTRA_INFO():
     for name, province in COMUNI:
-        yield {"title": f"{name} ({province})", "country": "it"}
+        yield {
+            "title": f"{name} ({province})",
+            "country": "it",
+            "default_params": {"municipality": name},
+        }
 
 
 # Municipium categories vary per municipality; match on a normalised keyword.
