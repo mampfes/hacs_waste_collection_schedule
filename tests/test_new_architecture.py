@@ -6272,7 +6272,6 @@ SOURCES_AWAITING_CASSETTE = {
     "chesapeake_va_us",
     "data_umweltprofis_at",
     "erlangen_hoechstadt_de",
-    "fredrikstad_no",
     "fuquay_varina_nc_us",
     "nuernberger_land_de",
     "plano_gov",
