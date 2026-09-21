@@ -17,6 +17,7 @@ so those toggles are dropped and every ``ContainerGewaehlt_N`` is selected.
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     city,
@@ -94,11 +95,10 @@ class Source(BaseSource):
         ],
     )
     parse = parsers.IcsParser()
-    # No WASTE_TYPES. A bare pass-through transformer has no
-    # type_value_map, so every label this feed sends is classified by the
-    # shared multilingual vocabulary, which cannot be enumerated
-    # statically; and with no cassette yet (SOURCES_AWAITING_CASSETTE) the produced set
-    # cannot be derived by replay either. An empty declaration is the
-    # honest one, and it only narrows a config-flow dropdown offer
-    # (#7028). Declare the real vocabulary once this source is recorded.
+    # Derived by replaying the cassettes. A bare pass-through transformer has
+    # no type_value_map, so the auto-derived set is empty; the shared
+    # vocabulary resolves only the hazardous-waste pickup. The feed's own
+    # German labels (Restmuell, Bioenergietonne, ...) are kept as
+    # ``preserved:`` ids, which are not declarable.
+    WASTE_TYPES: ClassVar[list] = [wt.HAZARDOUS]
     transform = ICSTransformer()

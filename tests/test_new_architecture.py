@@ -6267,7 +6267,6 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 SOURCES_AWAITING_CASSETTE = {
     "alba_com_pl",
     "allerdale_gov_uk",
-    "awn_de",
     "bielefeld_de",
     "chesapeake_va_us",
     "data_umweltprofis_at",
