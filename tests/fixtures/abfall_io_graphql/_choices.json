@@ -1,0 +1,257 @@
+{
+  "recorded_at": "2026-09-20",
+  "interactions": [
+    {
+      "key": "GET https://api.abfall.io 86cd53c2cc",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=8b016df0116d1d5094fa339bebea0c65",
+      "body": "{\"params\":[[\"key\",\"8b016df0116d1d5094fa339bebea0c65\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=286ov1cp25epbc7fcgu43afai6; path=/",
+        "last-modified": "Mon, 21 Sep 2026 05:30:36 GMT",
+        "content-type": "application/json",
+        "date": "Mon, 21 Sep 2026 05:30:36 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiI0YzgwY2QxZTNhMGM1MWI1Y2IzNDZiMDdiZjhlZTc2ZGQxNjhkMmFjOTA1YWE1NzIiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0VYUE9SVF9FTUFJTCI6IjAiLCJQVUJfQU5aRUlHRSI6IkkiLCJQVUJfSkFIUiI6IjMwMDAxIiwiUFVCX0pBSFJfTU9OQVRFX01JTk9SIjoiMCIsIlBVQl9URU1QTEFURSI6Im9zdGVyaG9seiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNzkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNCIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjE1IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjEyIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjIiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6IiIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6IiIsIlBVQl9aVVNBVFpfU0VMRUNUIjoiIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI2MDIwMS0yMDI3MDEzMSIsImRpc3BsYXkiOiIyXC8yMDI2LTAxXC8yMDI3Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVU19NSU4iOiIyMDI2MDkyMSJ9LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql b4c2f9e9a4",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery {\\n    cities(query: \\\"\\\") { id name idHouseNumber districtsCount appointmentsSupported }\\n}\\n\",\"variables\":{}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:37 GMT",
+        "etag": "W/\"488-YGhlxGXtZM3sr8VfQ8026F3EioQ\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1160"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNpdGllcyI6W3siaWQiOiIyNjUyIiwibmFtZSI6IkF4c3RlZHQiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6MSwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfSx7ImlkIjoiMjY0NCIsIm5hbWUiOiJHcmFzYmVyZyIsImlkSG91c2VOdW1iZXIiOm51bGwsImRpc3RyaWN0c0NvdW50IjoxMCwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfSx7ImlkIjoiMjY0OSIsIm5hbWUiOiJIYW1iZXJnZW4iLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6MSwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfSx7ImlkIjoiMjY1MyIsIm5hbWUiOiJIb2xzdGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6MSwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfSx7ImlkIjoiMjY0NSIsIm5hbWUiOiJMaWxpZW50aGFsIiwiaWRIb3VzZU51bWJlciI6bnVsbCwiZGlzdHJpY3RzQ291bnQiOjUsImFwcG9pbnRtZW50c1N1cHBvcnRlZCI6dHJ1ZX0seyJpZCI6IjI2NTQiLCJuYW1lIjoiTMO8YmJlcnN0ZWR0IiwiaWRIb3VzZU51bWJlciI6bnVsbCwiZGlzdHJpY3RzQ291bnQiOjEsImFwcG9pbnRtZW50c1N1cHBvcnRlZCI6dHJ1ZX0seyJpZCI6IjI2NDciLCJuYW1lIjoiT3N0ZXJob2x6LVNjaGFybWJlY2siLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6MTIsImFwcG9pbnRtZW50c1N1cHBvcnRlZCI6dHJ1ZX0seyJpZCI6IjI2NDgiLCJuYW1lIjoiUml0dGVyaHVkZSIsImlkSG91c2VOdW1iZXIiOm51bGwsImRpc3RyaWN0c0NvdW50Ijo2LCJhcHBvaW50bWVudHNTdXBwb3J0ZWQiOnRydWV9LHsiaWQiOiIyNjUwIiwibmFtZSI6IlNjaHdhbmV3ZWRlIiwiaWRIb3VzZU51bWJlciI6bnVsbCwiZGlzdHJpY3RzQ291bnQiOjExLCJhcHBvaW50bWVudHNTdXBwb3J0ZWQiOnRydWV9LHsiaWQiOiIyNjUxIiwibmFtZSI6IlZvbGxlcnNvZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6MSwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfSx7ImlkIjoiMjY0NiIsIm5hbWUiOiJXb3Jwc3dlZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJkaXN0cmljdHNDb3VudCI6OCwiYXBwb2ludG1lbnRzU3VwcG9ydGVkIjp0cnVlfV19fQo="
+    },
+    {
+      "key": "GET https://api.abfall.io 86cd53c2cc",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=8b016df0116d1d5094fa339bebea0c65",
+      "body": "{\"params\":[[\"key\",\"8b016df0116d1d5094fa339bebea0c65\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=0jja9mv353mc9hcqr0095mh079; path=/",
+        "last-modified": "Mon, 21 Sep 2026 05:30:37 GMT",
+        "content-type": "application/json",
+        "date": "Mon, 21 Sep 2026 05:30:37 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiI0YzgwY2QxZTNhMGM1MWI1Y2IzNDZiMDdiZjhlZTc2ZGQxNjhkMmFjOTA1YWE1NzIiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0VYUE9SVF9FTUFJTCI6IjAiLCJQVUJfQU5aRUlHRSI6IkkiLCJQVUJfSkFIUiI6IjMwMDAxIiwiUFVCX0pBSFJfTU9OQVRFX01JTk9SIjoiMCIsIlBVQl9URU1QTEFURSI6Im9zdGVyaG9seiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNzkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNCIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjE1IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjEyIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjIiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6IiIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6IiIsIlBVQl9aVVNBVFpfU0VMRUNUIjoiIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI2MDIwMS0yMDI3MDEzMSIsImRpc3BsYXkiOiIyXC8yMDI2LTAxXC8yMDI3Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVU19NSU4iOiIyMDI2MDkyMSJ9LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql 7fa3bc2ab7",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!) {\\n    city(id: $id) {\\n        name idHouseNumber districtsCount\\n        districts { id name idHouseNumber }\\n        streets { id name idHouseNumber }\\n    }\\n}\\n\",\"variables\":{\"id\":\"2654\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:38 GMT",
+        "etag": "W/\"633-+MS2RTXoYXqLBmFNFKxNuIWN01Y\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1587"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNpdHkiOnsibmFtZSI6IkzDvGJiZXJzdGVkdCIsImlkSG91c2VOdW1iZXIiOm51bGwsImRpc3RyaWN0c0NvdW50IjoxLCJkaXN0cmljdHMiOlt7ImlkIjoiMjQ1MjciLCJuYW1lIjoiTMO8YmJlcnN0ZWR0IiwiaWRIb3VzZU51bWJlciI6bnVsbH1dLCJzdHJlZXRzIjpbeyJpZCI6IjI0NzA3IiwibmFtZSI6IkFtIEZpbmtlbm1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzEiLCJuYW1lIjoiQmFobmhvZnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MjYiLCJuYW1lIjoiQmFyZ2thbXBzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjQ4IiwibmFtZSI6IkJpcmtlbndlZyIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDYyMSIsIm5hbWUiOiJCb2dlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjMiLCJuYW1lIjoiQnJ1bm5lbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzgiLCJuYW1lIjoiRGVua21hbHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MTkiLCJuYW1lIjoiRHJpZnRzd2VnIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NzA2IiwibmFtZSI6IkZlbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6IjI0NzA2In0seyJpZCI6IjI0NjI3IiwibmFtZSI6IkhhbW1ld2VnIiwiaWRIb3VzZU51bWJlciI6IjI0NjI3In0seyJpZCI6IjI0NjA0IiwibmFtZSI6IkltIFdlaXNzZW4gU2FuZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MzEiLCJuYW1lIjoiSW0gV3Jvb2ciLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjUiLCJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjEiLCJuYW1lIjoiS3VyemUgU3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOiIyNDU2MSJ9LHsiaWQiOiIyNDU2NyIsIm5hbWUiOiJMYW5kc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU2MCIsIm5hbWUiOiJNw7xobGVuc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU5MiIsIm5hbWUiOiJQb3N0c3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU4NiIsIm5hbWUiOiJSaWVuaG9yc3R3ZWciLCJpZEhvdXNlTnVtYmVyIjoiMjQ1ODYifSx7ImlkIjoiMjQ1NzciLCJuYW1lIjoiU2NobWllZGVzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTU2IiwibmFtZSI6IlNjaHVsc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIzNzEzMSIsIm5hbWUiOiJTdHJhw59lIFp1ciBGcmllZGVuc2VpY2hlIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjEwIiwibmFtZSI6IldhbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTcwIiwibmFtZSI6IldpZXNlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1ODciLCJuYW1lIjoiWnVtIEhvaGVuIE1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfV19fX0K"
+    },
+    {
+      "key": "GET https://api.abfall.io 86cd53c2cc",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=8b016df0116d1d5094fa339bebea0c65",
+      "body": "{\"params\":[[\"key\",\"8b016df0116d1d5094fa339bebea0c65\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=oqu6c3up8jaeg63jbu0gc1rhr1; path=/",
+        "last-modified": "Mon, 21 Sep 2026 05:30:39 GMT",
+        "content-type": "application/json",
+        "date": "Mon, 21 Sep 2026 05:30:39 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiI0YzgwY2QxZTNhMGM1MWI1Y2IzNDZiMDdiZjhlZTc2ZGQxNjhkMmFjOTA1YWE1NzIiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0VYUE9SVF9FTUFJTCI6IjAiLCJQVUJfQU5aRUlHRSI6IkkiLCJQVUJfSkFIUiI6IjMwMDAxIiwiUFVCX0pBSFJfTU9OQVRFX01JTk9SIjoiMCIsIlBVQl9URU1QTEFURSI6Im9zdGVyaG9seiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNzkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNCIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjE1IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjEyIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjIiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6IiIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6IiIsIlBVQl9aVVNBVFpfU0VMRUNUIjoiIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI2MDIwMS0yMDI3MDEzMSIsImRpc3BsYXkiOiIyXC8yMDI2LTAxXC8yMDI3Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVU19NSU4iOiIyMDI2MDkyMSJ9LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql 7fa3bc2ab7",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!) {\\n    city(id: $id) {\\n        name idHouseNumber districtsCount\\n        districts { id name idHouseNumber }\\n        streets { id name idHouseNumber }\\n    }\\n}\\n\",\"variables\":{\"id\":\"2654\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:39 GMT",
+        "etag": "W/\"633-+MS2RTXoYXqLBmFNFKxNuIWN01Y\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1587"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNpdHkiOnsibmFtZSI6IkzDvGJiZXJzdGVkdCIsImlkSG91c2VOdW1iZXIiOm51bGwsImRpc3RyaWN0c0NvdW50IjoxLCJkaXN0cmljdHMiOlt7ImlkIjoiMjQ1MjciLCJuYW1lIjoiTMO8YmJlcnN0ZWR0IiwiaWRIb3VzZU51bWJlciI6bnVsbH1dLCJzdHJlZXRzIjpbeyJpZCI6IjI0NzA3IiwibmFtZSI6IkFtIEZpbmtlbm1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzEiLCJuYW1lIjoiQmFobmhvZnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MjYiLCJuYW1lIjoiQmFyZ2thbXBzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjQ4IiwibmFtZSI6IkJpcmtlbndlZyIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDYyMSIsIm5hbWUiOiJCb2dlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjMiLCJuYW1lIjoiQnJ1bm5lbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzgiLCJuYW1lIjoiRGVua21hbHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MTkiLCJuYW1lIjoiRHJpZnRzd2VnIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NzA2IiwibmFtZSI6IkZlbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6IjI0NzA2In0seyJpZCI6IjI0NjI3IiwibmFtZSI6IkhhbW1ld2VnIiwiaWRIb3VzZU51bWJlciI6IjI0NjI3In0seyJpZCI6IjI0NjA0IiwibmFtZSI6IkltIFdlaXNzZW4gU2FuZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MzEiLCJuYW1lIjoiSW0gV3Jvb2ciLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjUiLCJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjEiLCJuYW1lIjoiS3VyemUgU3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOiIyNDU2MSJ9LHsiaWQiOiIyNDU2NyIsIm5hbWUiOiJMYW5kc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU2MCIsIm5hbWUiOiJNw7xobGVuc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU5MiIsIm5hbWUiOiJQb3N0c3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU4NiIsIm5hbWUiOiJSaWVuaG9yc3R3ZWciLCJpZEhvdXNlTnVtYmVyIjoiMjQ1ODYifSx7ImlkIjoiMjQ1NzciLCJuYW1lIjoiU2NobWllZGVzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTU2IiwibmFtZSI6IlNjaHVsc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIzNzEzMSIsIm5hbWUiOiJTdHJhw59lIFp1ciBGcmllZGVuc2VpY2hlIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjEwIiwibmFtZSI6IldhbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTcwIiwibmFtZSI6IldpZXNlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1ODciLCJuYW1lIjoiWnVtIEhvaGVuIE1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfV19fX0K"
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql a028a9505c",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!) {\\n    district(id: $id) { name idHouseNumber streets { id name idHouseNumber } }\\n}\\n\",\"variables\":{\"id\":\"24527\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:40 GMT",
+        "etag": "W/\"5dc-bCzHl1K9Hc2mJwDBw0piJc+cgiM\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1500"
+      },
+      "content_b64": "eyJkYXRhIjp7ImRpc3RyaWN0Ijp7Im5hbWUiOiJMw7xiYmVyc3RlZHQiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJzdHJlZXRzIjpbeyJpZCI6IjI0NzA3IiwibmFtZSI6IkFtIEZpbmtlbm1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzEiLCJuYW1lIjoiQmFobmhvZnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MjYiLCJuYW1lIjoiQmFyZ2thbXBzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjQ4IiwibmFtZSI6IkJpcmtlbndlZyIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDYyMSIsIm5hbWUiOiJCb2dlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjMiLCJuYW1lIjoiQnJ1bm5lbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzgiLCJuYW1lIjoiRGVua21hbHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MTkiLCJuYW1lIjoiRHJpZnRzd2VnIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NzA2IiwibmFtZSI6IkZlbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6IjI0NzA2In0seyJpZCI6IjI0NjI3IiwibmFtZSI6IkhhbW1ld2VnIiwiaWRIb3VzZU51bWJlciI6IjI0NjI3In0seyJpZCI6IjI0NjA0IiwibmFtZSI6IkltIFdlaXNzZW4gU2FuZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MzEiLCJuYW1lIjoiSW0gV3Jvb2ciLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjUiLCJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjEiLCJuYW1lIjoiS3VyemUgU3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOiIyNDU2MSJ9LHsiaWQiOiIyNDU2NyIsIm5hbWUiOiJMYW5kc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU2MCIsIm5hbWUiOiJNw7xobGVuc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU5MiIsIm5hbWUiOiJQb3N0c3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU4NiIsIm5hbWUiOiJSaWVuaG9yc3R3ZWciLCJpZEhvdXNlTnVtYmVyIjoiMjQ1ODYifSx7ImlkIjoiMjQ1NzciLCJuYW1lIjoiU2NobWllZGVzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTU2IiwibmFtZSI6IlNjaHVsc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIzNzEzMSIsIm5hbWUiOiJTdHJhw59lIFp1ciBGcmllZGVuc2VpY2hlIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjEwIiwibmFtZSI6IldhbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTcwIiwibmFtZSI6IldpZXNlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1ODciLCJuYW1lIjoiWnVtIEhvaGVuIE1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfV19fX0K"
+    },
+    {
+      "key": "GET https://api.abfall.io 86cd53c2cc",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "final_url": "https://api.abfall.io/?key=8b016df0116d1d5094fa339bebea0c65",
+      "body": "{\"params\":[[\"key\",\"8b016df0116d1d5094fa339bebea0c65\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=cqju44a969h5mcn7in1tnvql1d; path=/",
+        "last-modified": "Mon, 21 Sep 2026 05:30:40 GMT",
+        "content-type": "application/json",
+        "date": "Mon, 21 Sep 2026 05:30:40 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiI0YzgwY2QxZTNhMGM1MWI1Y2IzNDZiMDdiZjhlZTc2ZGQxNjhkMmFjOTA1YWE1NzIiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0VYUE9SVF9FTUFJTCI6IjAiLCJQVUJfQU5aRUlHRSI6IkkiLCJQVUJfSkFIUiI6IjMwMDAxIiwiUFVCX0pBSFJfTU9OQVRFX01JTk9SIjoiMCIsIlBVQl9URU1QTEFURSI6Im9zdGVyaG9seiIsIlBVQl9TVEFUVVNfQUtUSVYiOiIxIiwiUFVCX0FUVFJJQlVURSI6IiIsIlBVQl9BQkZBTExUWVBFTiI6W3sid2FzdGVUeXBlIjoiNzkiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNCIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjE1IiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjIxNyIsImNoZWNrZWQiOnRydWUsInJhZGlvZ3JvdXAiOm51bGx9LHsid2FzdGVUeXBlIjoiMjEyIiwiY2hlY2tlZCI6dHJ1ZSwicmFkaW9ncm91cCI6bnVsbH0seyJ3YXN0ZVR5cGUiOiIyMTYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlXC9BYmZ1aHJiZXppcmsiLCJQVUJfQ0FQVElPTl9ITlIiOiJIYXVzbnVtbWVyIiwiUFVCX0NBUFRJT05fWUVBUiI6IlplaXRyYXVtIiwiUFVCX0NBUFRJT05fRVhQT1JUSUVSRU5fQUxTIjoiRXhwb3J0aWVyZW4gYWxzIiwiUFVCX0NBUFRJT05fS0VJTkVfVEVSTUlORSI6IkVzIHN0ZWhlbiBrZWluZSBUZXJtaW5lIHp1ciBWZXJmXHUwMGZjZ3VuZy4iLCJQVUJfQ0FQVElPTl9BQkZBTExUWVBFTiI6IkJpdHRlIHdcdTAwZTRobGVuIFNpZSBkaWUgQWJmYWxsYXJ0ZW4gYXVzLCBkaWUgU2llIHZlcndlbmRlbiBtXHUwMGY2Y2h0ZW4uIiwiUFVCX0NBUFRJT05fQlVUVE9OX1BERiI6IlBERiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9JQ1MiOiJJQ1MiLCJQVUJfQ0FQVElPTl9CVVRUT05fQ1NWIjoiQ1NWIiwiUFVCX0NBUFRJT05fQlVUVE9OX1RYVCI6IlRYVCIsIlBVQl9DQVBUSU9OX0JVVFRPTl9FTUFJTCI6IkVtYWlsLUVyaW5uZXJ1bmciLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjIiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6IiIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6IiIsIlBVQl9aVVNBVFpfU0VMRUNUIjoiIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI2MDIwMS0yMDI3MDEzMSIsImRpc3BsYXkiOiIyXC8yMDI2LTAxXC8yMDI3Iiwic2VsZWN0ZWQiOnRydWV9XSwiUFVCX0hJTldFSVNfS0VJTkVfVEVSTUlORSI6IktlaW5lIFRlcm1pbmUiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVU19NSU4iOiIyMDI2MDkyMSJ9LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql 7fa3bc2ab7",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!) {\\n    city(id: $id) {\\n        name idHouseNumber districtsCount\\n        districts { id name idHouseNumber }\\n        streets { id name idHouseNumber }\\n    }\\n}\\n\",\"variables\":{\"id\":\"2654\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:41 GMT",
+        "etag": "W/\"633-+MS2RTXoYXqLBmFNFKxNuIWN01Y\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1587"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNpdHkiOnsibmFtZSI6IkzDvGJiZXJzdGVkdCIsImlkSG91c2VOdW1iZXIiOm51bGwsImRpc3RyaWN0c0NvdW50IjoxLCJkaXN0cmljdHMiOlt7ImlkIjoiMjQ1MjciLCJuYW1lIjoiTMO8YmJlcnN0ZWR0IiwiaWRIb3VzZU51bWJlciI6bnVsbH1dLCJzdHJlZXRzIjpbeyJpZCI6IjI0NzA3IiwibmFtZSI6IkFtIEZpbmtlbm1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzEiLCJuYW1lIjoiQmFobmhvZnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MjYiLCJuYW1lIjoiQmFyZ2thbXBzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjQ4IiwibmFtZSI6IkJpcmtlbndlZyIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDYyMSIsIm5hbWUiOiJCb2dlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjMiLCJuYW1lIjoiQnJ1bm5lbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzgiLCJuYW1lIjoiRGVua21hbHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MTkiLCJuYW1lIjoiRHJpZnRzd2VnIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NzA2IiwibmFtZSI6IkZlbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6IjI0NzA2In0seyJpZCI6IjI0NjI3IiwibmFtZSI6IkhhbW1ld2VnIiwiaWRIb3VzZU51bWJlciI6IjI0NjI3In0seyJpZCI6IjI0NjA0IiwibmFtZSI6IkltIFdlaXNzZW4gU2FuZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MzEiLCJuYW1lIjoiSW0gV3Jvb2ciLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjUiLCJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjEiLCJuYW1lIjoiS3VyemUgU3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOiIyNDU2MSJ9LHsiaWQiOiIyNDU2NyIsIm5hbWUiOiJMYW5kc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU2MCIsIm5hbWUiOiJNw7xobGVuc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU5MiIsIm5hbWUiOiJQb3N0c3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU4NiIsIm5hbWUiOiJSaWVuaG9yc3R3ZWciLCJpZEhvdXNlTnVtYmVyIjoiMjQ1ODYifSx7ImlkIjoiMjQ1NzciLCJuYW1lIjoiU2NobWllZGVzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTU2IiwibmFtZSI6IlNjaHVsc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIzNzEzMSIsIm5hbWUiOiJTdHJhw59lIFp1ciBGcmllZGVuc2VpY2hlIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjEwIiwibmFtZSI6IldhbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTcwIiwibmFtZSI6IldpZXNlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1ODciLCJuYW1lIjoiWnVtIEhvaGVuIE1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfV19fX0K"
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql a028a9505c",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!) {\\n    district(id: $id) { name idHouseNumber streets { id name idHouseNumber } }\\n}\\n\",\"variables\":{\"id\":\"24527\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:41 GMT",
+        "etag": "W/\"5dc-bCzHl1K9Hc2mJwDBw0piJc+cgiM\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1500"
+      },
+      "content_b64": "eyJkYXRhIjp7ImRpc3RyaWN0Ijp7Im5hbWUiOiJMw7xiYmVyc3RlZHQiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJzdHJlZXRzIjpbeyJpZCI6IjI0NzA3IiwibmFtZSI6IkFtIEZpbmtlbm1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzEiLCJuYW1lIjoiQmFobmhvZnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MjYiLCJuYW1lIjoiQmFyZ2thbXBzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjQ4IiwibmFtZSI6IkJpcmtlbndlZyIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDYyMSIsIm5hbWUiOiJCb2dlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjMiLCJuYW1lIjoiQnJ1bm5lbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NzgiLCJuYW1lIjoiRGVua21hbHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MTkiLCJuYW1lIjoiRHJpZnRzd2VnIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NzA2IiwibmFtZSI6IkZlbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6IjI0NzA2In0seyJpZCI6IjI0NjI3IiwibmFtZSI6IkhhbW1ld2VnIiwiaWRIb3VzZU51bWJlciI6IjI0NjI3In0seyJpZCI6IjI0NjA0IiwibmFtZSI6IkltIFdlaXNzZW4gU2FuZGUiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ2MzEiLCJuYW1lIjoiSW0gV3Jvb2ciLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjUiLCJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1NjEiLCJuYW1lIjoiS3VyemUgU3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOiIyNDU2MSJ9LHsiaWQiOiIyNDU2NyIsIm5hbWUiOiJMYW5kc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU2MCIsIm5hbWUiOiJNw7xobGVuc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU5MiIsIm5hbWUiOiJQb3N0c3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIyNDU4NiIsIm5hbWUiOiJSaWVuaG9yc3R3ZWciLCJpZEhvdXNlTnVtYmVyIjoiMjQ1ODYifSx7ImlkIjoiMjQ1NzciLCJuYW1lIjoiU2NobWllZGVzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTU2IiwibmFtZSI6IlNjaHVsc3RyYcOfZSIsImlkSG91c2VOdW1iZXIiOm51bGx9LHsiaWQiOiIzNzEzMSIsIm5hbWUiOiJTdHJhw59lIFp1ciBGcmllZGVuc2VpY2hlIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NjEwIiwibmFtZSI6IldhbGRzdHJhw59lIiwiaWRIb3VzZU51bWJlciI6bnVsbH0seyJpZCI6IjI0NTcwIiwibmFtZSI6IldpZXNlbnN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsfSx7ImlkIjoiMjQ1ODciLCJuYW1lIjoiWnVtIEhvaGVuIE1vb3IiLCJpZEhvdXNlTnVtYmVyIjpudWxsfV19fX0K"
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql 83d28e7160",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "final_url": "https://widgets.abfall.io/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery ($id: ID!, $idDistrict: ID) {\\n    street(id: $id) { name idHouseNumber houseNumbers(idDistrict: $idDistrict) { id name } }\\n}\\n\",\"variables\":{\"id\":\"24565\",\"idDistrict\":\"24527\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 21 Sep 2026 05:30:41 GMT",
+        "etag": "W/\"13e-joupPTLRFD6v1qqomalYU+EplW4\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "318"
+      },
+      "content_b64": "eyJkYXRhIjp7InN0cmVldCI6eyJuYW1lIjoiS2FtcHN0cmHDn2UiLCJpZEhvdXNlTnVtYmVyIjpudWxsLCJob3VzZU51bWJlcnMiOlt7ImlkIjoiMjQ3MjEiLCJuYW1lIjoiMiJ9LHsiaWQiOiIyNDgwNSIsIm5hbWUiOiIzIn0seyJpZCI6IjI0NTY4IiwibmFtZSI6IjQifSx7ImlkIjoiMjQ3MjMiLCJuYW1lIjoiNEMifSx7ImlkIjoiMjQ3MTciLCJuYW1lIjoiNSJ9LHsiaWQiOiIyNDU2NSIsIm5hbWUiOiI3In0seyJpZCI6IjI0NjI5IiwibmFtZSI6IjgifSx7ImlkIjoiMjQ3MTAiLCJuYW1lIjoiMTEifSx7ImlkIjoiMjQ3NzIiLCJuYW1lIjoiMTMifV19fX0K"
+    }
+  ],
+  "widget": "cascading_select",
+  "fields": [
+    "idCity",
+    "idDistrict",
+    "idStreet",
+    "idHouseNumber"
+  ],
+  "context": {
+    "key": "8b016df0116d1d5094fa339bebea0c65"
+  },
+  "expected": {
+    "idCity": 2654,
+    "idDistrict": 24527,
+    "idStreet": 24565,
+    "idHouseNumber": 24717
+  }
+}

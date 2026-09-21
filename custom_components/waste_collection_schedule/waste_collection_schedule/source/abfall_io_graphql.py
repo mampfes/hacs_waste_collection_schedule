@@ -1,12 +1,17 @@
 from typing import ClassVar, final
 
-from waste_collection_schedule import regions
+from waste_collection_schedule import field_terms, regions
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import api_key, text_field, waste_types
+from waste_collection_schedule.config_params import (
+    api_key,
+    cascading_select,
+    waste_types,
+)
 from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLParser,
     AbfallIoGraphQLRetriever,
+    list_choices,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -83,11 +88,27 @@ class Source(BaseSource):
             "key": "8b016df0116d1d5094fa339bebea0c65",
             "idHouseNumber": 6644,
         },
+        # The whole cascade, as the config flow stores it.
+        "ASO Abfall-Service Osterholz, Lübberstedt, Kampstraße 5": {
+            "key": "8b016df0116d1d5094fa339bebea0c65",
+            "idCity": 2654,
+            "idDistrict": 24527,
+            "idStreet": 24565,
+            "idHouseNumber": 24717,
+        },
     }
 
+    # The config flow walks city -> (district) -> (street) -> (house number)
+    # and stores the idHouseNumber the retriever reads as the last level, so a
+    # configuration.yaml entry with only key + idHouseNumber keeps working.
     PARAMS = (
         api_key("key"),
-        text_field("idHouseNumber", "House number ID"),
+        cascading_select(
+            ("idCity", field_terms.CITY),
+            ("idDistrict", field_terms.DISTRICT),
+            ("idStreet", field_terms.STREET),
+            ("idHouseNumber", field_terms.HOUSE_NUMBER),
+        ),
         waste_types("wasteTypes"),
     )
 
@@ -100,3 +121,16 @@ class Source(BaseSource):
     REGIONS = regions.from_yaml(
         "abfall_io_graphql", country="country", key="service_id"
     )
+
+    @classmethod
+    def get_choices(cls, field: str, selections: dict) -> list[tuple[str, str]]:
+        """Options for one cascade level given the levels chosen so far.
+
+        Implements the config_params.cascading_select contract: (visible name,
+        stored id) pairs walked live from the v3 GraphQL API, or [] when this
+        level does not apply to the current selections.
+        """
+        key = selections.get("key")
+        if not key:
+            return []
+        return list_choices(cls, str(key), field, selections)

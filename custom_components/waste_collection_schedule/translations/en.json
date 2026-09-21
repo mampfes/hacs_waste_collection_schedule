@@ -83,7 +83,8 @@
           "app_id": "App ID",
           "f_abfallarten": "Waste Types",
           "key": "API Key",
-          "ort": "District"
+          "ort": "District",
+          "wasteTypes": "Waste Types"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",

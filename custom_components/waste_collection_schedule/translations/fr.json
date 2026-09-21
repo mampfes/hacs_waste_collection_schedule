@@ -83,7 +83,8 @@
           "app_id": "App Id",
           "f_abfallarten": "Types de déchets",
           "key": "Clé API",
-          "ort": "Quartier"
+          "ort": "Quartier",
+          "wasteTypes": "Types de déchets"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",

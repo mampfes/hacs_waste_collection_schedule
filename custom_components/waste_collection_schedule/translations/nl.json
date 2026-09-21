@@ -83,7 +83,8 @@
           "app_id": "App Id",
           "f_abfallarten": "Afvalsoorten",
           "key": "API-sleutel",
-          "ort": "Wijk"
+          "ort": "Wijk",
+          "wasteTypes": "Afvalsoorten"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
