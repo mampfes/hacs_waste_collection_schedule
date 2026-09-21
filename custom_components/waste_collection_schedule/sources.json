@@ -8902,11 +8902,11 @@
     },
     {
       "title": "ALBA Berlin",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "9583a2fa1df97ed95363382c73b41b1b"
+        "key": "1f1371466654fbe4e69725dc9f0bb223"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "ALBA Braunschweig",

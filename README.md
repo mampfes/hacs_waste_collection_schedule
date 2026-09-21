@@ -1398,7 +1398,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ahlshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Aholfing](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/aholfing/abfallkalender
 - [AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH](/doc/source/ajl_mbh_de.md) / ajl-mbh.de
-- [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
+- [ALBA Berlin](/doc/source/abfall_io_graphql.md) / berlin.alba.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Albrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / abfallplus.de
