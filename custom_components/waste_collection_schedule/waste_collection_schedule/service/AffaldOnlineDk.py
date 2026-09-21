@@ -55,7 +55,7 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
         if response.status_code != 200:
             return []
         json_entries = response.json()
-        city_list = [(entry["Bynavn"]) for entry in json_entries]
+        city_list = [(entry["Bynavn"]) for entry in json_entries if entry["Bynavn"] != "0"]
         return list(set(city_list))
     if field == "street":
         response = session.get(
