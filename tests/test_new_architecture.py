@@ -6272,7 +6272,6 @@ SOURCES_AWAITING_CASSETTE = {
     "data_umweltprofis_at",
     "erlangen_hoechstadt_de",
     "fuquay_varina_nc_us",
-    "nuernberger_land_de",
     "plano_gov",
     "sepan_remondis_pl",
     # Arrived from master in the v2.32.0 merge; never recorded.

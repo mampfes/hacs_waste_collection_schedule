@@ -28,9 +28,9 @@ class Source(BaseSource):
     COUNTRY = "de"
 
     TEST_CASES: ClassVar[dict] = {
-        "Schwarzenbruck, Mühlbergstraße": {"id": 16952001},
-        "Burgthann, Brunhildstr": {"id": 14398001},
-        "Kirchensittenbach, Erlenweg": {"id": 15192001},
+        "Schwarzenbruck, Mühlbergstraße": {"id": "40-16952001"},
+        "Burgthann, Brunhildstr": {"id": "39-14398001"},
+        "Kirchensittenbach, Erlenweg": {"id": "12-15192001"},
     }
 
     PARAMS = (location_id(field="id"),)
