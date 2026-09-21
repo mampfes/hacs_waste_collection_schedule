@@ -13,6 +13,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     cascading_select,
     municipality,
+    boolean
 )
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -20,53 +21,60 @@ from waste_collection_schedule.exceptions import (
 
 _LOGGER = logging.getLogger("waste_collection_schedule.affaldonline_dk")
 
-# AffaldOnline is extremely random with their naming, which can vary even in the same municipality.
-ICON_MAP = {
-    # Residual / residual+food rounds
-    "Rest/Mad": Icons.GENERAL_WASTE,
-    "Mad/Rest": Icons.GENERAL_WASTE,
-    "Rest/mad": Icons.GENERAL_WASTE,
-    "Rest-/madaffald": Icons.GENERAL_WASTE,
-    "Restaffald": Icons.GENERAL_WASTE,
-    "Dagrenovation": Icons.GENERAL_WASTE,
-    # Food / organic
-    "Bioaffald": Icons.BIO_KITCHEN,
-    "Haveaffald": Icons.GARDEN,
-    # Paper and cardboard, alone or combined with glass/metal
-    "Pap": Icons.PAPER,
-    "Papir/Pap": Icons.PAPER,
-    "Pap/Papir": Icons.PAPER,
-    "PPGM": Icons.RECYCLING,
-    "Papir/Pap/Glas": Icons.RECYCLING,
-    "Papir/Pap og tekstil": Icons.RECYCLING,
-    "Papir/Pap-Metal/Glas": Icons.RECYCLING,
-    "Papir/Pap og Plast/Mad- og drikkekartoner": Icons.RECYCLING,
-    "Papir/småt pap og glas/metal": Icons.RECYCLING,
-    "Pap/papir og glas/metal": Icons.RECYCLING,
-    # Glass and metal
-    "Glas og metal": Icons.GLASS,
-    # Plastic and beverage cartons (MDK = mad-/drikkekartoner)
-    "PMDK": Icons.PLASTIC_PACKAGING,
-    "Plast/Drikkekarton": Icons.PLASTIC_PACKAGING,
-    "Plast/Drikkekarton/Metal": Icons.PLASTIC_PACKAGING,
-    "Plast/fødevarekarton": Icons.PLASTIC_PACKAGING,
-    "Plast + Mad-/Drikkekartoner": Icons.PLASTIC_PACKAGING,
-    "Plast/mad- og drikkekartoner og glas/metal": Icons.PLASTIC_PACKAGING,
-    "Metal/Glas/Plast/MDK": Icons.RECYCLING,
-    # Mixed recyclables
-    "Genbrug": Icons.RECYCLING,
-    "Genanvendeligt": Icons.RECYCLING,
-    # Everything else
-    "Storskrald": Icons.BULKY,
-    "Miljøkasse": Icons.HAZARDOUS,
-    "Røde kasser": Icons.HAZARDOUS,
-    "Tekstilaffald": Icons.TEXTILE,
-}
+""" 
+Waste seperation in Denmark is mandetory to be atleast seperated into these 10 fractions:
+Food Waste
+Paper
+Cardboard
+Plastic
+Food and drink cartons
+Metal
+Glass
+Textiles
+Hazardous waste
+Residual waste
 
-# Maps abbreviations into more readable texts.
-TYPE_MAP = {
-    "PMDK": "Plast og Drikkekartoner",
-    "PPGM": "Pap/Papir og Glas/Metal",
+Only 6 out of the 10 types currently have a WasteType, the following are missing:
+Cardboard, Plastic, Food and drink cartons, Metal
+
+These 10 fractions are usually combined into bins for collection, with one or two compartments. 
+Some fractions are additionally allowed to be combined into the same compartment. As such some bins have 4 different fractions combined.
+
+This makes the WasteType approach highly impractical, as some bins would end up with the same WasteType, even though it is a completely different bin and content.
+For example take these two bins:
+Metal, Glass, Paper & Cardboard
+Plastic & Food and drink cartons
+
+Both of these would under the current WasteType system end up as WasteType.RECYCLING, making for a confusing UX.
+
+Instead the source currently uses the older direct Collection system, which offers more flexibility.
+The API contains the exact fractions from each collection, and thus is able to dynamically name every collection based on the fraction content.
+Additionally, if the user so desires, the param "split_bins" can be set. This splits each collection into separate collections, one for each fraction.
+"""
+
+"""
+Maps fraction ID's to text and icon.
+There are 90 fractions, however most are only used at recycling stations.
+"""
+FRACTION_MAP = {
+    19: ("Elektronik", Icons.ELECTRONICS),
+    27: ("Farligt affald", Icons.HAZARDOUS),
+    41: ("Genbrug", Icons.RECYCLING),
+    43: ("Madaffald", Icons.BIO_KITCHEN),
+    46: ("Glas", Icons.GLASS),
+    47: ("Papir", Icons.PAPER),
+    50: ("Drikkedåser", Icons.METAL),
+    51: ("Metal", Icons.METAL),
+    53: ("Metal", Icons.METAL),
+    54: ("Haveaffald", Icons.GARDEN),
+    58: ("Pap", Icons.PAPER),
+    59: ("Kartoner", Icons.PLASTIC_PACKAGING),
+    72: ("Plast", Icons.PLASTIC_PACKAGING),
+    78: ("Restaffald", Icons.GENERAL_WASTE),
+    80: ("Restaffald", Icons.GENERAL_WASTE),
+    81: ("Storskrald", Icons.BULKY),
+    88: ("Tekstiler", Icons.TEXTILE),
+    89: ("Madaffald", Icons.BIO_KITCHEN),
 }
 
 CLIENT_ID_LOOKUP = {
@@ -150,6 +158,12 @@ class Source(BaseSource):
             "street": "Østervang|7900|Nykøbing M",
             "values": "Østervang|1||||7900|Nykøbing M|8970056|1719615|0",
         },
+        "morsoe_split": {
+            "municipality": "morsoe",
+            "split_bins": True,
+            "street": "Østervang|7900|Nykøbing M",
+            "values": "Østervang|1||||7900|Nykøbing M|8970056|1719615|0",
+        },
         "nyborg": {
             "municipality": "nyborg",
             "street": "Nørregade|5800|Nyborg",
@@ -179,6 +193,7 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     PARAMS = (
         municipality("municipality"),
+        boolean("split_bins", "Split bins into fractions"),
         cascading_select(
             ("street", field_terms.STREET),
             ("values", field_terms.HOUSE_NUMBER),
@@ -269,7 +284,12 @@ class Source(BaseSource):
         for entry in json_content:
             for collection in entry["collections"]:
                 fraction_name = str(collection["fraction"]["name"]).strip()
-                entries.append({"date": entry["date"], "type": fraction_name})
+                if self.params.get("split_bins", False):
+                    # Split the fractions into individual collections
+                    for fraction_id in collection["daIcon"]:
+                        entries.append({"date": entry["date"], "fraction_name": fraction_name, "fraction_types": [fraction_id]})
+                else:
+                    entries.append({"date": entry["date"], "fraction_name": fraction_name, "fraction_types": collection["daIcon"]})
         return entries
 
     # Yes, under the new WasteTypes paradime, this is "wrong".
@@ -279,12 +299,18 @@ class Source(BaseSource):
         date = parse_date(record["date"])
         if not date:
             return None
-        if not record["type"]:
+        if not record["fraction_name"]:
             return None
+        fraction_names = []
+        fraction_icon = Icons.GENERAL_WASTE
+        for fraction_id in record["fraction_types"]:
+            fraction_info = FRACTION_MAP.get(fraction_id, (f"{fraction_id} Mangler navn", Icons.GENERAL_WASTE))    
+            fraction_names.append(fraction_info[0])
+            fraction_icon = fraction_info[1]
         return Collection(
             date=date,
-            t=TYPE_MAP.get(record["type"], str(record["type"])),
-            icon=ICON_MAP.get(record["type"], Icons.GENERAL_WASTE),
+            t=fraction_names[0] if len(fraction_names) == 1 else " og ".join([", ".join(fraction_names[:-1]),fraction_names[-1]]),
+            icon=fraction_icon,
         )
 
     """     
