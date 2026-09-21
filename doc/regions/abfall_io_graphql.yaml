@@ -7,6 +7,9 @@
   - title: Landkreis Märkisch-Oderland
     url: https://www.maerkisch-oderland.de/
     service_id: efb75cbd1f08fae1d4e47ae72a85c655
+  - title: ALBA Berlin
+    url: https://berlin.alba.info/
+    service_id: 1f1371466654fbe4e69725dc9f0bb223
   - title: Holding Graz
     url: https://www.holding-graz.at/
     service_id: 1c230a689579b6d3ddb9ceb5a56c6072
