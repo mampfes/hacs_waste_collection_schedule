@@ -6270,7 +6270,6 @@ SOURCES_AWAITING_CASSETTE = {
     "chesapeake_va_us",
     "data_umweltprofis_at",
     "fuquay_varina_nc_us",
-    "nuernberger_land_de",
     "plano_gov",
     "sepan_remondis_pl",
     # Arrived from master in the v2.32.0 merge; never recorded.
