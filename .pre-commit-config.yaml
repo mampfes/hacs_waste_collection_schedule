@@ -21,6 +21,7 @@ repos:
           - --skip="./.*,*.csv,*.json"
           - --quiet-level=2
         exclude_types: [csv, json]
+        exclude: ^doc/wip/de/
   - repo: https://github.com/PyCQA/bandit
     rev: 1.9.4
     hooks:
