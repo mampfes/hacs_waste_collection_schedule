@@ -34,6 +34,7 @@ class Source(BaseSource):
         wt.BULKY_WASTE,
         wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
+        wt.GLASS,
         wt.HAZARDOUS,
         wt.ORGANIC,
         wt.PAPER,
@@ -120,6 +121,9 @@ class Source(BaseSource):
         "Landkreis Rottweil, Aichhalden, Ahornweg": {
             "key": "30f9958cb64ca47a83f40e0a738ddea0",
             "idHouseNumber": 18576,
+        "AWG Calw, Altensteig, Altensteigdorf": {
+            "key": "0813ea99f520c462373386564a99a51e",
+            "idHouseNumber": 14814,
         },
     }
 

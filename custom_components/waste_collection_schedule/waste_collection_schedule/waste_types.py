@@ -123,6 +123,7 @@ RECYCLABLES = WasteType(
             "wertstofftonne",
             "gelber sack",
             "gelbe tonne",
+            "gelber sack/gelbe tonne",
             "leichtverpackungen",
             "leicht- und metallverpackungen",
             "metallverpackungen",
