@@ -21,7 +21,11 @@ waste_collection_schedule:
 **house_letter**  
 *(string) (optional)*
 
-The arguments should be written exactly like on the <https://bir.no/> website
+May also be written as part of **house_number** (e.g. `house_number: "13A"`).
+
+The arguments should be written exactly like on the <https://bir.no/> website.
+BIR indexes some addresses with a space before the house letter (`Alf Bondes Veg 13 A`)
+and others without it (`Alf Bondes Veg 13B`); both spellings are accepted.
 
 # Example configuration.yaml:
 
