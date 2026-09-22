@@ -121,11 +121,11 @@ TEST_CASES = {
     # "insee_code": "62193",
     # "instance_id": 679,
     # },
-    # "Métropole Européenne de Lille, Lille": {
-    # "address": "34 Place Augustin Laurent",
-    # "insee_code": "59350",
-    # "instance_id": 876,
-    # },
+    "Métropole Européenne de Lille, Provin": {
+        "address": "Rue Pierre Maille",
+        "insee_code": "59477",
+        "instance_id": 876,
+    },
     # "Valcobreizh, Irodouër": {
     # "address": "1 rue de Rennes",
     # "insee_code": "35135",
