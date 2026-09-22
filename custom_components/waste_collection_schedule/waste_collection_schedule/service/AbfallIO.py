@@ -55,7 +55,11 @@ def _hidden_inputs(text: str) -> dict[str, str]:
 
 
 def _select_options(soup: BeautifulSoup, field: str) -> list[tuple[str, str]]:
-    """The ``<select name=field>`` options as (visible name, stored id) pairs."""
+    """The ``<select name=field>`` options as (visible name, stored id) pairs.
+
+    Skips the form's prompt option ("Bitte auswählen...", value ``0``): it is
+    the unselected state, not a choice. No real id on the platform is ``0``.
+    """
     select = soup.find("select", attrs={"name": field})
     if not isinstance(select, Tag):
         return []
@@ -65,7 +69,7 @@ def _select_options(soup: BeautifulSoup, field: str) -> list[tuple[str, str]]:
             continue
         value = option.get("value")
         name = option.get_text(strip=True)
-        if isinstance(value, str) and value and value != "-1" and name:
+        if isinstance(value, str) and value not in ("", "-1", "0") and name:
             pairs.append((name, value))
     return pairs
 
