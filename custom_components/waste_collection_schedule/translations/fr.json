@@ -83,7 +83,9 @@
           "app_id": "App Id",
           "f_abfallarten": "Types de déchets",
           "key": "Clé API",
+          "municipality": "Commune",
           "ort": "Quartier",
+          "split_bins": "Diviser les bacs en fractions",
           "wasteTypes": "Types de déchets"
         },
         "data_description": {

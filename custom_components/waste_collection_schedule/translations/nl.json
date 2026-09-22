@@ -83,7 +83,9 @@
           "app_id": "App Id",
           "f_abfallarten": "Afvalsoorten",
           "key": "API-sleutel",
+          "municipality": "Gemeente",
           "ort": "Wijk",
+          "split_bins": "Containers opsplitsen in fracties",
           "wasteTypes": "Afvalsoorten"
         },
         "data_description": {
