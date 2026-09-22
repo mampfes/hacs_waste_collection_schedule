@@ -83,7 +83,9 @@
           "app_id": "App Id",
           "f_abfallarten": "Tipi di rifiuto",
           "key": "Chiave API",
-          "ort": "Quartiere"
+          "municipality": "Comune",
+          "ort": "Quartiere",
+          "split_bins": "Dividi i bidoni in frazioni"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",

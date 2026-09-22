@@ -4,7 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 from curl_cffi import requests as cffi_requests
 
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+    SourceArgumentRequiredWithSuggestions,
+)
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
@@ -55,10 +60,11 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
         if response.status_code != 200:
             return []
         json_entries = response.json()
-        city_list = [
-            (entry["Bynavn"]) for entry in json_entries if entry["Bynavn"] != "0"
-        ]
-        return list(set(city_list))
+        city_list = {
+            entry["Bynavn"] for entry in json_entries if entry["Bynavn"] != "0"
+        }
+        # Sorted, so the dropdown order is stable between config-flow runs.
+        return sorted(city_list)
     if field == "street":
         response = session.get(
             url=f"https://www.affaldonline.dk/kalender/{municipality}/acCal.php?term="
@@ -98,7 +104,7 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
     return []
 
 
-class AffaldOnlineDkRetriver(RetrieverFunc):
+class AffaldOnlineDkRetriever(RetrieverFunc):
     """
     Calls the undocumented affaldonline api.
     The api differentiates municipalities by the "X-Client-Provider" header.
@@ -112,20 +118,26 @@ class AffaldOnlineDkRetriver(RetrieverFunc):
     def __call__(self, source: "BaseSource") -> dict[str, Any]:
         municipality = source.params.get("municipality")
         if not municipality:
-            raise SourceArgumentException(
-                "municipality", "Provided munipality is not valid"
+            raise SourceArgumentRequiredWithSuggestions(
+                "municipality",
+                "A municipality is required",
+                sorted(CLIENT_ID_LOOKUP),
             )
         client_id = CLIENT_ID_LOOKUP.get(municipality)
         if not client_id:
-            raise SourceArgumentException(
-                "municipality", "Provided munipality is not valid"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", municipality, sorted(CLIENT_ID_LOOKUP)
             )
         values = source.params.get("values")
         if not values:
-            raise SourceArgumentException("values", "Internal values are missing")
+            raise SourceArgumentRequired(
+                "values", "it identifies the address on the Affaldonline platform"
+            )
         address_id_split = values.split("|")
         if len(address_id_split) < 2:
-            raise SourceArgumentException("values", "Provided address is not valid")
+            raise SourceArgumentRequired(
+                "values", "it must be the full pipe-separated address string"
+            )
         address_id = "|".join(address_id_split[-2:])
         return source.session.get(
             url="https://www.affaldonline.dk/api/address/collections",
@@ -150,7 +162,9 @@ class AffaldOnlineDkParser(Parser["list[dict]"]):
     ) -> "list[dict]":
         json_content = response.json()
         if "message" in json_content:
-            raise ValueError("Error from API: " + json_content["message"])
+            raise SourceArgumentException(
+                "values", f"Error from Affaldonline API: {json_content['message']}"
+            )
         entries = []
         for entry in json_content:
             for collection in entry["collections"]:

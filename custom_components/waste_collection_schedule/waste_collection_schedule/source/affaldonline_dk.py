@@ -1,4 +1,3 @@
-import logging
 from typing import ClassVar
 
 from waste_collection_schedule import (
@@ -16,11 +15,9 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.service.AffaldOnlineDk import (
     AffaldOnlineDkParser,
-    AffaldOnlineDkRetriver,
+    AffaldOnlineDkRetriever,
     discover_choices,
 )
-
-_LOGGER = logging.getLogger("waste_collection_schedule.affaldonline_dk")
 
 """
 Waste separation in Denmark is mandatory to be at least separated into these 10 fractions:
@@ -83,17 +80,17 @@ class Source(BaseSource):
     TITLE = "Affaldonline"
     DESCRIPTION = "Gather waste collection schedules from Affaldonline"
     URL = "https://affaldonline.dk"
-    API_URL = "https://www.affaldonline.dk/api/address/collections"
+    COUNTRY = "dk"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@superrob"]
 
-    REGIONS = regions.from_yaml("affaldonline_dk", title_suffix="affaldonline")
+    REGIONS = regions.from_yaml("affaldonline_dk", municipality="municipality")
 
     TEST_CASES: ClassVar[dict] = {
         "aeroe": {
             "municipality": "aeroe",
             "city": "Ærøskøbing",
             "street": "Nørregade|5970|Ærøskøbing",
-            "values": "Nørregade|1||||5970|Ærøskøbing|1228262|448776|0",
+            "values": "Nørregade|1||||5970|Ærøskøbing|4162588|448776|0",
         },
         "assens": {
             "municipality": "assens",
@@ -127,7 +124,7 @@ class Source(BaseSource):
         },
         "holbaek": {
             "municipality": "holbaek",
-            "city": "Broby",
+            "city": "Holbæk",
             "street": "Østerled|4300|Holbæk",
             "values": "Østerled|5||||4300|Holbæk|28441|1081575|2055",
         },
@@ -204,7 +201,7 @@ class Source(BaseSource):
         """Options for one cascade level given the levels chosen so far."""
         return discover_choices(field, selections)
 
-    retrieve = AffaldOnlineDkRetriver()
+    retrieve = AffaldOnlineDkRetriever()
     parse = AffaldOnlineDkParser()
 
     """
@@ -228,6 +225,10 @@ class Source(BaseSource):
             )
             fraction_names.append(fraction_info[0])
             fraction_icon = fraction_info[1]
+        if not fraction_names:
+            # The provider named the bin but listed no fraction icons for it:
+            # fall back to its own label rather than indexing an empty list.
+            fraction_names = [record["fraction_name"]]
         return Collection(
             date=date,
             t=fraction_names[0]
@@ -235,14 +236,3 @@ class Source(BaseSource):
             else " og ".join([", ".join(fraction_names[:-1]), fraction_names[-1]]),
             icon=fraction_icon,
         )
-
-    """
-    This is the unused transformer approach. Due to waste_type overlap.
-    transform = JsonTransformer(
-        date_key="date",
-        parse_date=date_parsers.for_format("%Y-%m-%d"),
-        type_key="type",
-        description_key="type",
-        type_value_map=TYPE_MAP,
-        carry_raw_label=True,
-    ) """
