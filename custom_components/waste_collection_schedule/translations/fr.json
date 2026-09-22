@@ -10713,10 +10713,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
           "street": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
           "street": "Le nom de votre rue."
         }
       },
@@ -10725,9 +10727,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
           "street": "Rue"
         },
         "data_description": {
+          "house_number": "Votre numéro de rue.",
           "street": "Le nom de votre rue."
         }
       },

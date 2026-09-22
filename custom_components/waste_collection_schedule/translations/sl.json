@@ -10587,10 +10587,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "house_number": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Vaša hišna številka.",
           "street": "Ime vaše ulice."
         }
       },
@@ -10599,9 +10601,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "house_number": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
+          "house_number": "Vaša hišna številka.",
           "street": "Ime vaše ulice."
         }
       },

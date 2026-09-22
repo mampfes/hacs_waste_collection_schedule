@@ -12,12 +12,16 @@ waste_collection_schedule:
     - name: awg_wuppertal_de
       args:
         street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
 *(string) (required)*
+
+**house_number**  
+*(string) (optional)*
 
 ## Example
 

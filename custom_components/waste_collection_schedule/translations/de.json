@@ -10725,10 +10725,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
           "street": "Ihr Straßenname."
         }
       },
@@ -10737,9 +10739,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
+          "house_number": "Ihre Hausnummer.",
           "street": "Ihr Straßenname."
         }
       },
