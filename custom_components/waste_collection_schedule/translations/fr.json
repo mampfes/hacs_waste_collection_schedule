@@ -5337,11 +5337,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "url": "URL",
-          "xmlurl": "Xmlurl"
+          "city": "Ville",
+          "district": "Quartier",
+          "house_number": "Numéro",
+          "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "district": "Votre quartier ou partie de la commune.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_data_umweltprofis_at": {
@@ -5349,10 +5355,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "url": "URL",
-          "xmlurl": "Xmlurl"
+          "city": "Ville",
+          "district": "Quartier",
+          "house_number": "Numéro",
+          "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "district": "Votre quartier ou partie de la commune.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_ics_waidhofen_at": {
         "title": "Configurer la Source",

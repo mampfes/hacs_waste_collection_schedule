@@ -5551,11 +5551,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "URL (Deprecated do not use)",
-          "xmlurl": "XML URL"
+          "city": "City",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_data_umweltprofis_at": {
@@ -5563,10 +5569,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "URL (Deprecated do not use)",
-          "xmlurl": "XML URL"
+          "city": "City",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_ics_waidhofen_at": {
         "title": "Configure Source",

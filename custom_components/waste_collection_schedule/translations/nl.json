@@ -5331,11 +5331,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url",
-          "xmlurl": "Xmlurl"
+          "city": "Plaats",
+          "district": "Wijk",
+          "house_number": "Huisnummer",
+          "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_data_umweltprofis_at": {
@@ -5343,10 +5349,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url",
-          "xmlurl": "Xmlurl"
+          "city": "Plaats",
+          "district": "Wijk",
+          "house_number": "Huisnummer",
+          "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_ics_waidhofen_at": {
         "title": "Configure Source",

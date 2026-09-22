@@ -1334,8 +1334,8 @@
   "data_umweltprofis_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_umweltprofis_at.md",
     "howto": {
-      "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu https://data.umweltprofis.at/opendata/AppointmentService/index.aspx und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als XML-URL.",
-      "en": "You need to generate your personal XML link before you can start using this source. Go to https://data.umweltprofis.at/opendata/AppointmentService/index.aspx and fill out the form. At the end, step 6 gives you a link to an XML file. Copy this link and use it as the XML URL."
+      "de": "Geben Sie Ihre Adresse genau so an, wie sie unter https://www.umweltprofis.at/allgemein/module/wann_wird_mein_abfall_abgeholt.html angeboten wird: Bezirk, Gemeinde, Straße und Hausnummer. Wird eine Abfallart in mehreren Intervallen angeboten (z. B. Restabfall 2- oder 4-wöchentlich), wird das erste auf der Seite genannte verwendet.",
+      "en": "Enter your address exactly as it is offered at https://www.umweltprofis.at/allgemein/module/wann_wird_mein_abfall_abgeholt.html: district (Bezirk), municipality, street and house number. Where a type is offered at several intervals (for example Restabfall 2- or 4-weekly), the first one the page lists is used."
     },
     "urls": {}
   },

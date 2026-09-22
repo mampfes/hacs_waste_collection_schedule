@@ -5329,11 +5329,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "URL",
-          "xmlurl": "Xmlurl"
+          "city": "Mesto",
+          "district": "Naselje",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_data_umweltprofis_at": {
@@ -5341,10 +5347,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "URL",
-          "xmlurl": "Xmlurl"
+          "city": "Mesto",
+          "district": "Naselje",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ics_waidhofen_at": {
         "title": "Configure Source",
