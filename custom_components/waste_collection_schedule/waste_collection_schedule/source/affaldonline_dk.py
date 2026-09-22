@@ -2,11 +2,11 @@ from typing import ClassVar
 
 from waste_collection_schedule import (
     Collection,
-    Icons,
     date_parsers,
     field_terms,
     regions,
 )
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     boolean,
@@ -21,59 +21,58 @@ from waste_collection_schedule.service.AffaldOnlineDk import (
 
 """
 Waste separation in Denmark is mandatory to be at least separated into these 10 fractions:
-Food Waste
-Paper
-Cardboard
-Plastic
-Food and drink cartons
-Metal
-Glass
-Textiles
-Hazardous waste
-Residual waste
+Food Waste, Paper, Cardboard, Plastic, Food and drink cartons, Metal, Glass,
+Textiles, Hazardous waste, Residual waste.
 
-Only 6 out of the 10 types currently have a WasteType, the following are missing:
-Cardboard, Plastic, Food and drink cartons, Metal
+These 10 fractions are usually combined into bins for collection, with one or two
+compartments. Some fractions are additionally allowed to be combined into the same
+compartment, so some bins have up to 4 different fractions combined.
 
-These 10 fractions are usually combined into bins for collection, with one or two compartments.
-Some fractions are additionally allowed to be combined into the same compartment. As such some bins have 4 different fractions combined.
+Every fraction resolves to a canonical WasteType (PAPER covers both paper and
+cardboard - its English name is "Paper & Cardboard" - and RECYCLABLES covers the
+mixed plastic/metal/carton packaging stream, matching the Danish "genbrug"
+scheme). When a bin's fractions all resolve to the *same* canonical type, that
+type is used directly. When a bin combines fractions that resolve to *different*
+canonical types (e.g. "Restaffald og Madaffald" mixes GENERAL_WASTE and
+FOOD_WASTE), collapsing it onto either one would misrepresent what is actually
+being collected, so the provider's own composite label is kept verbatim via
+waste_types.preserved() instead.
 
-This makes the WasteType approach highly impractical, as some bins would end up with the same WasteType, even though it is a completely different bin and content.
-For example take these two bins:
-Metal, Glass, Paper & Cardboard
-Plastic & Food and drink cartons
-
-Both of these would under the current WasteType system end up as WasteType.RECYCLING, making for a confusing UX.
-
-Instead the source currently uses the older direct Collection system, which offers more flexibility.
-The API contains the exact fractions from each collection, and thus is able to dynamically name every collection based on the fraction content.
-Additionally, if the user so desires, the param "split_bins" can be set. This splits each collection into separate collections, one for each fraction.
+If the user so desires, the param "split_bins" can be set. This splits each
+collection into separate collections, one per fraction - every one of those
+then carries a single, canonical WasteType.
 """
 
-"""
-Maps fraction ID's to text and icon.
-There are 90 fractions, however most are only used at recycling stations.
-"""
-FRACTION_MAP = {
-    19: ("Elektronik", Icons.ELECTRONICS),
-    27: ("Farligt affald", Icons.HAZARDOUS),
-    41: ("Genbrug", Icons.RECYCLING),
-    43: ("Madaffald", Icons.BIO_KITCHEN),
-    46: ("Glas", Icons.GLASS),
-    47: ("Papir", Icons.PAPER),
-    50: ("Drikkedåser", Icons.METAL),
-    51: ("Metal", Icons.METAL),
-    53: ("Metal", Icons.METAL),
-    54: ("Haveaffald", Icons.GARDEN),
-    58: ("Pap", Icons.PAPER),
-    59: ("Kartoner", Icons.PLASTIC_PACKAGING),
-    72: ("Plast", Icons.PLASTIC_PACKAGING),
-    78: ("Restaffald", Icons.GENERAL_WASTE),
-    80: ("Restaffald", Icons.GENERAL_WASTE),
-    81: ("Storskrald", Icons.BULKY),
-    88: ("Tekstiler", Icons.TEXTILE),
-    89: ("Madaffald", Icons.BIO_KITCHEN),
+# Fraction ID -> (Danish display label, canonical WasteType).
+# There are 90 fractions in total, but most are only used at recycling stations.
+FRACTION_MAP: dict[int, tuple[str, wt.WasteType]] = {
+    19: ("Elektronik", wt.ELECTRONICS),
+    27: ("Farligt affald", wt.HAZARDOUS),
+    41: ("Genbrug", wt.RECYCLABLES),
+    43: ("Madaffald", wt.FOOD_WASTE),
+    46: ("Glas", wt.GLASS),
+    47: ("Papir", wt.PAPER),
+    50: ("Drikkedåser", wt.RECYCLABLES),
+    51: ("Metal", wt.RECYCLABLES),
+    53: ("Metal", wt.RECYCLABLES),
+    54: ("Haveaffald", wt.GARDEN_WASTE),
+    58: ("Pap", wt.PAPER),
+    59: ("Kartoner", wt.RECYCLABLES),
+    72: ("Plast", wt.RECYCLABLES),
+    78: ("Restaffald", wt.GENERAL_WASTE),
+    80: ("Restaffald", wt.GENERAL_WASTE),
+    81: ("Storskrald", wt.BULKY_WASTE),
+    88: ("Tekstiler", wt.TEXTILES),
+    89: ("Madaffald", wt.FOOD_WASTE),
 }
+
+# The distinct canonical types FRACTION_MAP resolves to. classify() may also
+# emit a dynamic wt.preserved() label for a combined bin, but that is exempt
+# from declaration (see tests/test_declared_waste_types.py).
+_DECLARED_WASTE_TYPES = sorted(
+    {waste_type.id: waste_type for _, waste_type in FRACTION_MAP.values()}.values(),
+    key=lambda w: w.id,
+)
 
 
 class Source(BaseSource):
@@ -82,6 +81,7 @@ class Source(BaseSource):
     URL = "https://affaldonline.dk"
     COUNTRY = "dk"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@superrob"]
+    WASTE_TYPES: ClassVar[list] = _DECLARED_WASTE_TYPES
 
     REGIONS = regions.from_yaml("affaldonline_dk", municipality="municipality")
 
@@ -204,12 +204,6 @@ class Source(BaseSource):
     retrieve = AffaldOnlineDkRetriever()
     parse = AffaldOnlineDkParser()
 
-    """
-    Under the new WasteTypes paradigm, this is "wrong".
-    However the alternative would be both breaking and in many cases group multiple different containers into the same category.
-    See the notes on the top of this file.
-    """
-
     def classify(self, record):
         parse_date = date_parsers.for_format("%Y-%m-%d")
         date = parse_date(record["date"])
@@ -217,22 +211,44 @@ class Source(BaseSource):
             return None
         if not record["fraction_name"]:
             return None
-        fraction_names = []
-        fraction_icon = Icons.GENERAL_WASTE
+
+        labels: list[str] = []
+        # WasteType is unhashable (its aliases/names fields are dicts), so track
+        # distinctness by id and keep one representative instance alongside it.
+        resolved: list[wt.WasteType | None] = []
         for fraction_id in record["fraction_types"]:
-            fraction_info = FRACTION_MAP.get(
-                fraction_id, (f"{fraction_id} Mangler navn", Icons.GENERAL_WASTE)
-            )
-            fraction_names.append(fraction_info[0])
-            fraction_icon = fraction_info[1]
-        if not fraction_names:
-            # The provider named the bin but listed no fraction icons for it:
+            mapped = FRACTION_MAP.get(fraction_id)
+            if mapped is None:
+                # An uncatalogued fraction id: keep going so the label still
+                # names it, but force the preserved() fallback below since we
+                # don't know which canonical type it belongs to.
+                labels.append(f"{fraction_id} Mangler navn")
+                resolved.append(None)
+                continue
+            label, waste_type = mapped
+            labels.append(label)
+            resolved.append(waste_type)
+
+        if not labels:
+            # The provider named the bin but listed no fraction ids for it:
             # fall back to its own label rather than indexing an empty list.
-            fraction_names = [record["fraction_name"]]
-        return Collection(
-            date=date,
-            t=fraction_names[0]
-            if len(fraction_names) == 1
-            else " og ".join([", ".join(fraction_names[:-1]), fraction_names[-1]]),
-            icon=fraction_icon,
+            return Collection(
+                date=date, waste_type=wt.preserved(record["fraction_name"])
+            )
+
+        distinct_ids = {w.id if w is not None else None for w in resolved}
+        if len(distinct_ids) == 1 and None not in distinct_ids:
+            # Every fraction in this bin resolves to the same canonical type:
+            # using it directly loses nothing.
+            return Collection(date=date, waste_type=resolved[0])
+
+        # The bin combines fractions that resolve to more than one canonical
+        # type (or includes one we don't recognise). Collapsing it onto any
+        # single type would misrepresent what's actually being collected, so
+        # keep the provider's own composite label verbatim instead.
+        combined_label = (
+            labels[0]
+            if len(labels) == 1
+            else " og ".join([", ".join(labels[:-1]), labels[-1]])
         )
+        return Collection(date=date, waste_type=wt.preserved(combined_label))
