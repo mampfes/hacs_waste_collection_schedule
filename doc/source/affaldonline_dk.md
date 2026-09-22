@@ -44,7 +44,7 @@ The municipality of the app. The following are supported:
 **split_bins**  
 _(Boolean) (optional)_
 
-If True, the collections will be split into seperate collections for every fraction that collection contains.
+If True, the collections will be split into separate collections for every fraction that collection contains.
 
 **values**  
 _(String) (required)_

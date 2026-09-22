@@ -1,7 +1,7 @@
 import logging
 from typing import ClassVar
 
-from waste_collection_schedule import (  # type: ignore[attr-defined]
+from waste_collection_schedule import (
     Collection,
     Icons,
     date_parsers,
@@ -23,7 +23,7 @@ from waste_collection_schedule.service.AffaldOnlineDk import (
 _LOGGER = logging.getLogger("waste_collection_schedule.affaldonline_dk")
 
 """
-Waste seperation in Denmark is mandetory to be atleast seperated into these 10 fractions:
+Waste separation in Denmark is mandatory to be at least separated into these 10 fractions:
 Food Waste
 Paper
 Cardboard
@@ -208,7 +208,7 @@ class Source(BaseSource):
     parse = AffaldOnlineDkParser()
 
     """
-    Under the new WasteTypes paradime, this is "wrong".
+    Under the new WasteTypes paradigm, this is "wrong".
     However the alternative would be both breaking and in many cases group multiple different containers into the same category.
     See the notes on the top of this file.
     """
@@ -237,7 +237,7 @@ class Source(BaseSource):
         )
 
     """
-    This is the unused transformer aproach. Due to waste_type overlap.
+    This is the unused transformer approach. Due to waste_type overlap.
     transform = JsonTransformer(
         date_key="date",
         parse_date=date_parsers.for_format("%Y-%m-%d"),

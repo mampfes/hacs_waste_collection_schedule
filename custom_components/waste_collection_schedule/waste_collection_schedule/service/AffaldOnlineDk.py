@@ -39,7 +39,7 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
     When a ``street`` is selected the house numbers for that ``street`` is gathered.
     This also gives us the ``values`` associated with that address on the affaldonline platform.
 
-    The house number field is called ``values`` for backwards compatability reasons, as the retired screenscraping approach used this naming convention.
+    The house number field is called ``values`` for backwards compatibility reasons, as the retired screenscraping approach used this naming convention.
     By keeping that naming scheme old installations can continue working.
 
     The ``values`` field is labeled with the house numbers, while the value is the internal affaldonline identifier string for that address.
@@ -55,7 +55,9 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
         if response.status_code != 200:
             return []
         json_entries = response.json()
-        city_list = [(entry["Bynavn"]) for entry in json_entries if entry["Bynavn"] != "0"]
+        city_list = [
+            (entry["Bynavn"]) for entry in json_entries if entry["Bynavn"] != "0"
+        ]
         return list(set(city_list))
     if field == "street":
         response = session.get(
@@ -99,7 +101,7 @@ def discover_choices(field: str, selections: dict) -> list[tuple[str, str]]:
 class AffaldOnlineDkRetriver(RetrieverFunc):
     """
     Calls the undocumented affaldonline api.
-    The api differenciates municipalities by the "X-Client-Provider" header.
+    The api differentiates municipalities by the "X-Client-Provider" header.
     Suitable provider_id's are available in the CLIENT_ID_LOOKUP map.
 
     Reads the fields ``municipality`` and ``values`` from the source params.
