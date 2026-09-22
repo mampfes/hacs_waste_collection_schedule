@@ -33,6 +33,10 @@ TEST_CASES = {
         "house_number": "13",
         "house_letter": "A",
     },
+    "Alf Bondes Veg 13B (combined house_number)": {
+        "street_name": "Alf Bondes Veg",
+        "house_number": "13B",
+    },
 }
 
 API_URL = "https://bir.no/api/search/AddressSearch"
@@ -45,6 +49,14 @@ ICON_MAP = {
 
 def normalize(text):
     return "".join(str(text).split()).lower()
+
+
+def strip_street(title, street):
+    # Reduce a provider address title to its house-number portion (letter
+    # included), so a suggestion can be resubmitted directly as house_number.
+    if title.lower().startswith(street.lower()):
+        return title[len(street) :].strip()
+    return title
 
 
 def map_icon(text):
@@ -98,11 +110,18 @@ class Source:
             return next(iter(results))
 
         if results:
-            raise SourceArgAmbiguousWithSuggestions(
-                "house_letter", letter, sorted(results.values())
+            # Suggestions must be valid house_number values (letter included),
+            # not full titles, or picking one would overwrite house_letter
+            # with an entire address instead of resolving it (#7523).
+            suggestions = sorted(
+                strip_street(title, street) for title in results.values()
             )
+            raise SourceArgAmbiguousWithSuggestions("house_number", number, suggestions)
 
-        suggestions = sorted({r["Title"] for r in self._search(street, headers)})
+        suggestions = sorted(
+            strip_street(title, street)
+            for title in {r["Title"] for r in self._search(street, headers)}
+        )
         raise SourceArgumentNotFoundWithSuggestions(
             "house_number" if suggestions else "street_name",
             number if suggestions else street,
