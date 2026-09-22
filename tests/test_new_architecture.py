@@ -788,9 +788,9 @@ class TestParsers:
 class TestByBodyPrefix:
     """Picking the parser from the document the provider actually returned.
 
-    Stands in for ``data_umweltprofis_at``, which has no cassette (#7095): it
-    serves a deprecated iCalendar export and its XML replacement from one
-    source, and the body is what says which.
+    Stands in for the former ``data_umweltprofis_at`` (#7095), which served a
+    deprecated iCalendar export and its XML replacement from one source, and
+    where the body was what said which.
     """
 
     def _mock_response(self, text):
@@ -854,7 +854,7 @@ class TestByBodyPrefix:
 class TestXmlDateListParser:
     """The flat XML appointment export, walked into (date, label) pairs.
 
-    Also stands in for ``data_umweltprofis_at``'s uncassetted XML branch.
+    Also stands in for the former ``data_umweltprofis_at``'s XML branch.
     """
 
     _FEED = (
@@ -6268,7 +6268,6 @@ SOURCES_AWAITING_CASSETTE = {
     "alba_com_pl",
     "allerdale_gov_uk",
     "chesapeake_va_us",
-    "data_umweltprofis_at",
     "fuquay_varina_nc_us",
     "plano_gov",
     "sepan_remondis_pl",

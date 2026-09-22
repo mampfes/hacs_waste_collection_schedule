@@ -1,50 +1,36 @@
 """Umweltprofis (umweltprofis.at).
 
-Demonstrates: a single provider exposing two unrelated static GET feeds under
-one source -- a deprecated personal ICS export (``url``) and its replacement, a
-personal XML export (``xmlurl``) -- selected via ``alternatives()`` so the
-config flow accepts exactly one. ``HttpGetRetriever`` fetches whichever URL was
-given, and ``ByBodyPrefix`` picks the parser from the body that came back:
-``IcsFeedsParser`` for the iCalendar export, ``XmlDateListParser`` for the
-other. Both produce the same ``(date, summary)`` shape ``ICSTransformer``
-expects.
+Demonstrates: an address-resolving pipeline source for a provider that has no
+export URL, only a web module. ``UmweltprofisRetriever`` walks the module's
+district, municipality, street and house-number lookups from the names the user
+configured, submits the choice and reads the schedule page the module answers
+with; ``UmweltprofisParser`` pairs that page's type and date columns into the
+``(date, label)`` tuples ``ICSTransformer`` resolves through the shared
+multilingual vocabulary.
 
-The ICS branch undoes a provider quirk first, through ``IcsFeedsParser``'s
-``unwrap`` hook: this provider spaces out the ``REFRESH-INTERVAL`` property so
-that no ICS library accepts it as written.
+This replaced the ``data.umweltprofis.at`` personal ICS/XML export (``url`` /
+``xmlurl``), which the provider shut down: the host has answered ``503`` since
+at least August 2026 and its keys can no longer be issued.
 
-No ``type_value_map``: the legacy source never mapped a type either, and the
-shared multilingual resolver already recognises most of this provider's labels,
-so nothing is lost by not hand-mapping the rest.
+No ``type_value_map``: the shared resolver already recognises this provider's
+labels.
 """
 
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import alternatives, text_field
-from waste_collection_schedule.exceptions import SourceArgumentRequired
-from waste_collection_schedule.retrievers import HttpGetRetriever
-from waste_collection_schedule.service.ICS import IcsFeedsParser
+from waste_collection_schedule.config_params import (
+    city,
+    district,
+    house_number,
+    street,
+)
+from waste_collection_schedule.service.Umweltprofis import (
+    UmweltprofisParser,
+    UmweltprofisRetriever,
+)
 from waste_collection_schedule.transformers import ICSTransformer
-
-_REFRESH_INTERVAL_FIX = ("REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE=")
-
-
-def _resolve_url(
-    url: "str | None" = None, xmlurl: "str | None" = None, **_: object
-) -> str:
-    resolved = url or xmlurl
-    if not resolved:
-        raise SourceArgumentRequired("url", "either url or xmlurl must be provided")
-    return resolved
-
-
-def _repair_refresh_interval(text: str) -> str:
-    """Rejoin the ``REFRESH-INTERVAL`` property this provider spaces out."""
-    for broken, fixed in (_REFRESH_INTERVAL_FIX,):
-        text = text.replace(broken, fixed)
-    return text
 
 
 @final
@@ -56,55 +42,53 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
-        "Ebensee": {
-            "url": "https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1"
-        },
         "Rohrbach": {
-            "xmlurl": "https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle"
+            "district": "Rohrbach",
+            "city": "Aigen-Schlägl",
+            "street": "Almesbergerweg",
+            "house_number": "1",
+        },
+        "Gmunden": {
+            "district": "Gmunden",
+            "city": "Altmünster",
+            "street": "Abteistraße",
+            "house_number": "1",
+        },
+        "Vöcklabruck": {
+            "district": "Vöcklabruck",
+            "city": "Ampflwang im Hausruckwald",
+            "street": "Aigen",
+            "house_number": "1",
         },
     }
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "You need to generate your personal XML link before you can start "
-            "using this source. Go to "
-            "https://data.umweltprofis.at/opendata/AppointmentService/index.aspx "
-            "and fill out the form. At the end, step 6 gives you a link to an "
-            "XML file. Copy this link and use it as the XML URL."
+            "Enter your address exactly as it is offered at "
+            "https://www.umweltprofis.at/allgemein/module/wann_wird_mein_abfall_abgeholt.html: "
+            "district (Bezirk), municipality, street and house number. Where "
+            "a type is offered at several intervals (for example Restabfall "
+            "2- or 4-weekly), the first one the page lists is used."
         ),
         "de": (
-            "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie "
-            "diese Quelle verwenden können. Gehen Sie zu "
-            "https://data.umweltprofis.at/opendata/AppointmentService/index.aspx "
-            "und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie "
-            "einen Link zu einer XML-Datei. Kopieren Sie diesen Link und "
-            "verwenden Sie ihn als XML-URL."
+            "Geben Sie Ihre Adresse genau so an, wie sie unter "
+            "https://www.umweltprofis.at/allgemein/module/wann_wird_mein_abfall_abgeholt.html "
+            "angeboten wird: Bezirk, Gemeinde, Straße und Hausnummer. Wird "
+            "eine Abfallart in mehreren Intervallen angeboten (z. B. Restabfall "
+            "2- oder 4-wöchentlich), wird das erste auf der Seite genannte "
+            "verwendet."
         ),
     }
 
-    PARAMS = (
-        alternatives(
-            [text_field("url", "URL (Deprecated do not use)")],
-            [text_field("xmlurl", "XML URL")],
-        ),
-    )
+    PARAMS = (district(), city(), street(), house_number())
 
-    retrieve = HttpGetRetriever(url=_resolve_url)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    parse = parsers.ByBodyPrefix(
-        {
-            "BEGIN:VCALENDAR": IcsFeedsParser(
-                parsers.IcsParser(), unwrap=_repair_refresh_interval
-            )
-        },
-        default=parsers.XmlDateListParser("AppointmentEntry", "Datum", "WasteType"),
-    )
-
-    # No WASTE_TYPES. A bare pass-through transformer has no
-    # type_value_map, so every label this feed sends is classified by the
-    # shared multilingual vocabulary, which cannot be enumerated
-    # statically; and with no cassette yet (#7095) the produced set
-    # cannot be derived by replay either. An empty declaration is the
-    # honest one, and it only narrows a config-flow dropdown offer
-    # (#7028). Declare the real vocabulary once this source is recorded.
+    retrieve = UmweltprofisRetriever()
+    parse = UmweltprofisParser()
     transform = ICSTransformer()
