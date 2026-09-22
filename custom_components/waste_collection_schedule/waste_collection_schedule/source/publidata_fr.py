@@ -495,13 +495,28 @@ class Source:
         for hit in hits:
             source = hit.get("_source", {})
             if source.get("metas", {}).get("sectorization") == "single":
-                garbage_type = source.get("metas", {}).get("garbage_types", [""])[0]
-                if garbage_type:
-                    result.setdefault(garbage_type, {"schedules": []})
-                    result[garbage_type]["schedules"].extend(
-                        source.get("schedules", [])
-                    )
+                self._add_hit(result, source)
+
+        if not result:
+            # Some instances never report a "single" sectorization hit for the
+            # address (e.g. areas only covered by "multi" hits). Fall back to
+            # every hit, each grouped under its own waste type.
+            for hit in hits:
+                self._add_hit(result, hit.get("_source", {}))
+
+        if not result:
+            _LOGGER.warning(
+                "Publidata returned %d hits but none with a waste type", len(hits)
+            )
         return result
+
+    @staticmethod
+    def _add_hit(result, source):
+        garbage_types = source.get("metas", {}).get("garbage_types") or []
+        garbage_type = garbage_types[0] if garbage_types else None
+        if garbage_type:
+            result.setdefault(garbage_type, {"schedules": []})
+            result[garbage_type]["schedules"].extend(source.get("schedules") or [])
 
     def _is_week_day(self, input_string):
         return any(day in input_string for day in _CALENDAR_DAY_VERY_ABBR)
@@ -806,11 +821,15 @@ class Source:
                         err,
                     )
                     continue
+            # Never hand Collection a None/empty type (#5127).
+            label = LABEL_MAP.get(waste_type) or (
+                waste_type.capitalize() if waste_type else "Autre"
+            )
             for entry in my_rruleset:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
+                        label,
                         icon=ICON_MAP.get(waste_type),
                     )
                 )
