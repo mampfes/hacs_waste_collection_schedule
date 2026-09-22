@@ -222,11 +222,9 @@ each one gives:
 
 | Failure seen | Sources | Where it is tracked |
 |---|---|---|
-| Cannot connect to host (curl 7), connect timeout on `regioentsorgung.de` | `bielefeld_de`, `erlangen_hoechstadt_de`, `regioentsorgung_de` | #7051 |
 | 403 Forbidden from `gis1.fuquay-varina.org`, not a network block | `fuquay_varina_nc_us` | #7052 |
 | DNS does not resolve `arcgis.fredrikstad.kommune.no` | `fredrikstad_no` | #7055 |
 | Connect timeout to `geoweb.shawinigan.ca` | `shawinigan_ca` | #7056 |
-| Stale test data, not a geo-block: the recorded `url` key returns no collections, and the `Rohrbach` case passes no `url` at all | `data_umweltprofis_at` | #7095 |
 
 Add any new finding to the matching issue rather than starting a new one, and
 say which failure you saw. "Connect timeout to `<host>`" is useful to a
