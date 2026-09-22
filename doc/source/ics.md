@@ -394,6 +394,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
+- [Stadt Espelkamp](/doc/ics/abfall_export_vcal.md) / espelkamp.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
 - [Stadt Löhne](/doc/ics/loehne_de.md) / loehne.de

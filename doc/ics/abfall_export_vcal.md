@@ -53,3 +53,14 @@ waste_collection_schedule:
         url: https://www.roedinghausen.de/output/abfall_export.php?csv_export=1&amp;mode=vcal&amp;ort=393.1&amp;strasse=521.244.1&amp;vtyp=2&amp;vMo=01&amp;vJ=2026&amp;bMo=12
         year_field: vJ
 ```
+### Stadt Espelkamp Kantstraße
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        params: {}
+        url: https://www.espelkamp.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=322.4&strasse=2862.243.1&vtyp=2&vMo=01&vJ=2026&bMo=12
+        year_field: vJ
+```

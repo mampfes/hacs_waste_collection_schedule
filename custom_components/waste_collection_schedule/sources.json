@@ -15159,6 +15159,12 @@
       "id": "ics_enger_de"
     },
     {
+      "title": "Stadt Espelkamp",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
+    },
+    {
       "title": "Stadt Frankenberg (Eder)",
       "module": "frankenberg_de",
       "default_params": {},

@@ -2200,6 +2200,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Dorsten](/doc/source/abfallnavi_de.md) / ebd-dorsten.de
 - [Stadt Emmendingen](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
+- [Stadt Espelkamp](/doc/ics/abfall_export_vcal.md) / espelkamp.de
 - [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Frankenthal](/doc/source/abfallnavi_de.md) / frankenthal.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
