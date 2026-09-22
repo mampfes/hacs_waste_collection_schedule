@@ -2,9 +2,7 @@ import csv
 from datetime import datetime, timedelta
 
 import requests
-
-from ..collection import Collection
-from ..icons import Icons
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Toronto (ON)"
 DESCRIPTION = "Source for Toronto waste collection"
