@@ -11,6 +11,12 @@ platform module and the source declares only its URLs.
 The feeds title a postponed collection "<type> / !!! Terminverschiebung !!!"
 and occasionally suffix the type itself; ``regex`` trims the first and the
 transformer's ``clean`` the second.
+
+A handful of streets fall into more than one collection area (district
+boundaries running through them); AWG then shows a house-number picker
+instead of a calendar, which is why ``house_number`` exists (see #7368). Most
+streets never hit it, so it is optional; ``WasteCalendarRetriever`` only
+consults it once the street alone resolves to no feeds.
 """
 
 from typing import ClassVar, final
@@ -18,7 +24,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import street
+from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.service.BwWasteCalendar import WasteCalendarRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -39,11 +45,19 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES: ClassVar[dict] = {"Hauptstraße": {"street": "Hauptstraße"}}
+    TEST_CASES: ClassVar[dict] = {
+        "Hauptstraße": {"street": "Hauptstraße"},
+        "Nützenberger Straße 1": {
+            "street": "Nützenberger Straße",
+            "house_number": "1",
+        },
+    }
 
-    PARAMS = (street(field="street"),)
+    PARAMS = (street(field="street"), house_number(optional=True))
 
-    retrieve = WasteCalendarRetriever(url=_API_URL, base_url=_BASE_URL)
+    retrieve = WasteCalendarRetriever(
+        url=_API_URL, base_url=_BASE_URL, house_number_argument="house_number"
+    )
     parse = parsers.EachResponse(
         parsers.IcsParser(split_at="/", regex=r"(.*)/ !!! Terminverschiebung !!!")
     )
