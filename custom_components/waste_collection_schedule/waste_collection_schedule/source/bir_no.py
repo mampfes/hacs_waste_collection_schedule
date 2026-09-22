@@ -1,8 +1,13 @@
 import datetime
+import re
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "BIR (Bergensområdets Interkommunale Renovasjonsselskap)"
 DESCRIPTION = "Askøy, Bergen, Bjørnafjorden, Eidfjord, Kvam, Osterøy, Samnanger, Ulvik, Vaksdal, Øygarden og Voss Kommune (Norway)."
@@ -23,6 +28,11 @@ TEST_CASES = {
         "house_number": "13",
         "house_letter": "B",
     },
+    "Alf Bondes Veg 13 A": {
+        "street_name": "Alf Bondes Veg",
+        "house_number": "13",
+        "house_letter": "A",
+    },
 }
 
 API_URL = "https://bir.no/api/search/AddressSearch"
@@ -31,6 +41,10 @@ ICON_MAP = {
     "papir": Icons.PAPER,
     "matavfall": Icons.BIO_KITCHEN,
 }
+
+
+def normalize(text):
+    return "".join(str(text).split()).lower()
 
 
 def map_icon(text):
@@ -46,18 +60,61 @@ class Source:
         self._house_number = house_number
         self._house_letter = house_letter
 
+    def _search(self, query, headers):
+        # The space at the end is serving as a termination character for the query
+        return requests.get(
+            API_URL, params={"q": f"{query} ", "s": False}, headers=headers
+        ).json()
+
+    def _address_id(self, headers):
+        street = str(self._street_name).strip()
+        number = str(self._house_number).strip()
+        letter = str(self._house_letter).strip()
+
+        # Accept the house letter as part of the house number ("13A")
+        match = re.fullmatch(r"(\d+)\s*([A-Za-zÆØÅæøå]*)", number)
+        if match and not letter:
+            number, letter = match.group(1), match.group(2)
+
+        # BIR is inconsistent about the separator: some addresses are indexed
+        # as "Alf Bondes Veg 13 A" and others as "Alf Bondes Veg 13B", try both
+        queries = (
+            [f"{street} {number} {letter}", f"{street} {number}{letter}"]
+            if letter
+            else [f"{street} {number}"]
+        )
+
+        wanted = normalize(f"{street}{number}{letter}")
+        results = {}
+        for query in queries:
+            for result in self._search(query, headers):
+                if normalize(result["Title"]) == wanted:
+                    return result["Id"]
+                results[result["Id"]] = result["Title"]
+
+        # A single hit for a query that contained the whole address is good
+        # enough, BIR groups some addresses under a range ("9 A-N")
+        if len(results) == 1:
+            return next(iter(results))
+
+        if results:
+            raise SourceArgAmbiguousWithSuggestions(
+                "house_letter", letter, sorted(results.values())
+            )
+
+        suggestions = sorted({r["Title"] for r in self._search(street, headers)})
+        raise SourceArgumentNotFoundWithSuggestions(
+            "house_number" if suggestions else "street_name",
+            number if suggestions else street,
+            suggestions[:25],
+        )
+
     def fetch(self):
         headers = {"user-agent": "Home-Assitant-waste-col-sched/0.1"}
 
-        args = {
-            "q": f"{self._street_name} {self._house_number}{self._house_letter} ",  # The space at the end is serving as a termination character for the query
-            "s": False,
-        }
-
-        r = requests.get(API_URL, params=args, headers=headers)
         r = requests.get(
             f"{URL}/adressesoek/toemmekalender",
-            params={"rId": {r.json()[0]["Id"]}},
+            params={"rId": self._address_id(headers)},
             headers=headers,
         )
         doc = BeautifulSoup(r.content, "html.parser")
