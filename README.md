@@ -400,6 +400,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Bürmoos](/doc/source/buermoos_at.md) / buermoos.at
 - [Gemeinde Ebbs](/doc/source/ebbs_gv_at.md) / ebbs.gv.at
 - [Gemeinde Felixdorf](/doc/source/felixdorf_gv_at.md) / felixdorf.gv.at
+- [Gemeinde Flirsch](/doc/source/flirsch_gv_at.md) / flirsch.gv.at
 - [Gemeinde Mils](/doc/source/mils_tirol_at.md) / mils-tirol.at
 - [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at

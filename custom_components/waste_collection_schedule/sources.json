@@ -2278,6 +2278,12 @@
       "id": "felixdorf_gv_at"
     },
     {
+      "title": "Gemeinde Flirsch",
+      "module": "flirsch_gv_at",
+      "default_params": {},
+      "id": "flirsch_gv_at"
+    },
+    {
       "title": "Gemeinde Mils",
       "module": "mils_tirol_at",
       "default_params": {},

@@ -1041,6 +1041,11 @@
     },
     "urls": {}
   },
+  "flirsch_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/flirsch_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "mils_tirol_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mils_tirol_at.md",
     "howto": {
