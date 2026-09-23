@@ -1,6 +1,8 @@
 # Renoweb
 
-Support for schedules provided by Sweco's [RenoWeb](https://renoweb.dk/), serving many Danish municipalities.
+Support for schedules provided by Sweco's [RenoWeb](https://renoweb.dk/), for the Danish municipalities that are still served by RenoWeb's public API.
+
+> **Note:** RenoWeb's old "Legacy" website API now requires a MitID login and can no longer be used by this integration (see [issue #4084](https://github.com/mampfes/hacs_waste_collection_schedule/issues/4084)). This source instead uses the public API used by RenoWeb's own "Mit Affald" app, which does not require any login, but which only a subset of former RenoWeb municipalities are still served by — many municipalities have since moved their waste collection system to a different vendor entirely (most commonly "Perfect Waste"), which isn't supported by this source.
 
 ## Configuration via configuration.yaml
 
@@ -11,32 +13,21 @@ waste_collection_schedule:
           args:
               municipality: MUNICIPALITY
               address: ADDRESS
-              address_id: ADDRESS_ID
 ```
 
 ### Configuration Variables
 
-**municipality**  
+**municipality**
 _(String) (required)_
 
-The name of the municipality as it appears in the URL. E.g. https://htk.renoweb.dk/Legacy/selvbetjening/mit_affald.aspx where "htk" is for Høje-Taastrup municipality.
+The name of the municipality. Currently supported: Aabenraa, Aalborg, Billund, Bornholm, Brøndby, Brønderslev, Dragør, Egedal, Esbjerg, Fredensborg, Gentofte, Glostrup, Hjørring, Jammerbugt, Kerteminde, Mariagerfjord, Randers, Rødovre, Samsø, Svendborg, Sønderborg, Varde, Vordingborg.
+
+If your municipality isn't in this list, it is most likely no longer served by RenoWeb and this source won't work for you.
 
 **address**
-_(String) (optional)_
+_(String) (required)_
 
-The address to look up. It should be exactly as it is on the website until the comma between the street address and the postal code.
-
-**address_id**
-_(Int) (optional)_
-
-Use address_id if the address lookup fails.
-
-_Note that while both **address** and **address_id** are optional, one of them must be supplied and if both are used, **address_id** will take precedence._
-
-**include_ordered_pickup_entries**
-_(Bool) (optional)_
-
-Whether to include entries that are not collected automatically but should be ordered for pickup (has 'afhentningsbestillingmateriel' = True).
+The street name and house number, e.g. `"Torvegade 3"` or `"Torvegade 3, 6700 Esbjerg"`. Including the postal code helps disambiguate streets that exist more than once within the same municipality. A letter suffix (e.g. `"Torvegade 3A"`) is supported for addresses that need it.
 
 ## Example
 
@@ -45,25 +36,8 @@ waste_collection_schedule:
     sources:
         - name: renoweb_dk
           args:
-              municipality: frederiksberg
-              address: "Roskildevej 40"
-          customize:
-              - type: "Haveaffald - Haveaffald henteordning (1 stk.)"
-                alias: "Haveaffald"
-```
-
-## How to find the address_id
-
-Go to the RenoWeb site for your municipality, e.g. https://htk.renoweb.dk/Legacy/selvbetjening/mit_affald.aspx if you are lucky enough to live in Høje-Taastrup.
-
-Open the developer console in your browser.
-
-Enter your address and select it in the dropdown menu. (Note that the Ejd.nr. in the dropdown is _not_ the ID we are looking for).
-
-In the Network tab in the browser console, find the latest URL ending in **Adresse_SearchByString** and look in under Response, where you should see a chunk of JSON-ish data. The ID you need to use for adress_id is in the "value" field.
-
-```json
-d: '{"list":[{"value":"45149","label":"Rådhusstræde 1, 2630 Taastrup (Ejd.nr. 186783)"}],"status":{"id":0,"status":"Ok","msg":""}}'
+              municipality: Esbjerg
+              address: "Torvegade 3, 6700 Esbjerg"
 ```
 
 ### Customizing Waste Types
@@ -75,9 +49,9 @@ waste_collection_schedule:
     sources:
         - name: renoweb_dk
           args:
-              municipality: frederiksberg
-              address: "Roskildevej 40"
+              municipality: Esbjerg
+              address: "Torvegade 3, 6700 Esbjerg"
           customize:
-              - type: "Haveaffald - Haveaffald henteordning (1 stk.)"
-                alias: "Haveaffald"
+              - type: "Haveaffald"
+                alias: "Garden waste"
 ```
