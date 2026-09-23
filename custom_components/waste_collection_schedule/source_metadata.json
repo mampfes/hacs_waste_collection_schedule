@@ -4316,6 +4316,14 @@
     },
     "urls": {}
   },
+  "hra_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hra_no.md",
+    "howto": {
+      "de": "Suche Deine Adresse auf hra.no/tommekalender und verwende sie so, wie sie in der Ergebnisliste angezeigt wird, z.B. 'Myllavegen 1, 2742 GRUA'.",
+      "en": "Search for your address at hra.no/tommekalender and use the address as shown in the result list, e.g. 'Myllavegen 1, 2742 GRUA'."
+    },
+    "urls": {}
+  },
   "innherredrenovasjon_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
     "howto": {},

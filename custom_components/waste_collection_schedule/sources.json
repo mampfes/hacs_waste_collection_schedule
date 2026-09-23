@@ -20835,6 +20835,12 @@
       "id": "him_as"
     },
     {
+      "title": "HRA (Hadeland og Ringerike Avfallsselskap)",
+      "module": "hra_no",
+      "default_params": {},
+      "id": "hra_no"
+    },
+    {
       "title": "Innherred Renovasjon",
       "module": "innherredrenovasjon_no",
       "default_params": {},
