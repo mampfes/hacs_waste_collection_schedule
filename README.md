@@ -2939,18 +2939,18 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Liechtenstein</summary>
 
-- [Balzers](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Eschen Nendeln](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [FL Abfalltransport AG](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Gamprin Bendern](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Mauren Schaanwald](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Planken](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Ruggell](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Schaan](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Schellenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Triesen](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Triesenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
-- [Vaduz](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Balzers](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Entsorgungszweckverband der Gemeinden Liechtensteins (EZV)](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Eschen Nendeln](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Gamprin Bendern](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Mauren Schaanwald](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Planken](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Ruggell](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Schaan](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Schellenberg](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Triesen](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Triesenberg](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
+- [Vaduz](/doc/source/abfalltransport_li.md) / ezv.li/abfallentsorgung/abfallkalender
 </details>
 
 <details>

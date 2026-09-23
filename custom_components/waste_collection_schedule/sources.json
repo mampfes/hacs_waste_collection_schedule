@@ -19853,17 +19853,17 @@
       "id": "abfalltransport_li"
     },
     {
+      "title": "Entsorgungszweckverband der Gemeinden Liechtensteins (EZV)",
+      "module": "abfalltransport_li",
+      "default_params": {},
+      "id": "abfalltransport_li"
+    },
+    {
       "title": "Eschen Nendeln",
       "module": "abfalltransport_li",
       "default_params": {
         "municipality": "eschen-nendeln"
       },
-      "id": "abfalltransport_li"
-    },
-    {
-      "title": "FL Abfalltransport AG",
-      "module": "abfalltransport_li",
-      "default_params": {},
       "id": "abfalltransport_li"
     },
     {
