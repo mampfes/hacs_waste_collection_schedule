@@ -41,6 +41,7 @@ PARAM_TRANSLATIONS = {
         "district": "District",
         "language": "Language",
         "additional_sides_matcher": "Additional Sides Matcher",
+        "region": "Region",
         "community": "Community",
         "g1": "Group 1",
         "g2": "Group 2",
@@ -54,6 +55,7 @@ PARAM_TRANSLATIONS = {
     #     "house_number": "Numer domu",
     #     "district": "Dzielnica",
     #     "additional_sides_matcher": "Matcher dodatkowych stron zbiórki",
+    #     "region": "Region",
     #     "community": "Społeczność",
     #     "g1": "Grupa 1",
     #     "g2": "Grupa 2",
@@ -70,6 +72,7 @@ PARAM_DESCRIPTIONS = {
         "district": "District",
         "language": "Language for waste type names (pl, en, uk, ru)",
         "additional_sides_matcher": "Additional matcher for collection sides. Also used to pick between single-family ('Zabudowa jednorodzinna') and multi-family ('Zabudowa wielorodzinna') schedules for streets that offer both.",
+        "region": "Sub-region within the town used to disambiguate streets that appear in multiple collection areas (e.g. 'Nowy Ramiszów' vs the rest of Ramiszów). Leave empty unless you get an error asking for it — a list of valid options will be shown.",
         "community": "Community",
         "g1": GROUP_DESCRIPTION_EN,
         "g2": GROUP_DESCRIPTION_EN,
@@ -83,6 +86,7 @@ PARAM_DESCRIPTIONS = {
     #     "house_number": "Numer domu",
     #     "district": "Dzielnica",
     #     "additional_sides_matcher": "Dodatkowy matcher dla stron zbiórki",
+    #     "region": "Podregion w obrębie miasta, używany do rozróżnienia ulic występujących w kilku obszarach zbiórki (np. 'Nowy Ramiszów' vs reszta Ramiszowa). Pozostaw puste, chyba że pojawi się błąd wymagający tego pola — lista dostępnych opcji zostanie wyświetlona.",
     #     "community": "Społeczność",
     #     "g1": GROUP_DESCRIPTION_PL,
     #     "g2": GROUP_DESCRIPTION_PL,
@@ -219,6 +223,12 @@ TEST_CASES = {
         "street": "Mszańska",
         "house_number": "16",
     },
+    "Ramiszów (region Nowy Ramiszów)": {
+        "town": "Ramiszów",
+        "house_number": "200",
+        "additional_sides_matcher": "Zabudowa jednorodzinna",
+        "region": "Nowy Ramiszów",
+    },
 }
 
 
@@ -236,6 +246,7 @@ class Source:
         street="",
         house_number="",
         additional_sides_matcher="",
+        region="",
         community="",
         g1="",
         g2="",
@@ -248,6 +259,7 @@ class Source:
         self.house_number_input = house_number
         self.district_input = district
         self.additional_sides_matcher_input = additional_sides_matcher
+        self.region_input = region
         self.community_input = community
         self._g1 = g1
         self._g2 = g2
@@ -396,29 +408,70 @@ class Source:
                 self.street_input,
             )
 
+        available_regions = {
+            (street.get("region") or "").strip()
+            for street in streets["streets"]
+            if (street.get("region") or "").strip()
+        }
+        _LOGGER.debug("Available regions: %s", available_regions)
+
         to_return: list[Street] = []
         for street in streets["streets"]:
-            if street["sides"] == "" or (
-                self.additional_sides_matcher_input != ""
-                and (
-                    street["sides"].lower().casefold()
-                    == self.additional_sides_matcher_input.lower().casefold()
+            if not (
+                street["sides"] == ""
+                or (
+                    self.additional_sides_matcher_input != ""
+                    and (
+                        street["sides"].lower().casefold()
+                        == self.additional_sides_matcher_input.lower().casefold()
+                    )
                 )
             ):
-                to_return.append(street)
+                continue
+
+            if self.region_input != "":
+                street_region = (street.get("region") or "").strip()
+                if street_region.casefold() == self.region_input.strip().casefold():
+                    to_return.append(street)
+                continue
+
+            to_return.append(street)
 
         if len(to_return) == 0:
-            if self.additional_sides_matcher_input == "":
-                raise SourceArgumentRequiredWithSuggestions(
+            if self.region_input != "":
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "region",
+                    self.region_input,
+                    sorted(available_regions),
+                )
+            if self.additional_sides_matcher_input != "":
+                raise SourceArgumentNotFoundWithSuggestions(
                     "additional_sides_matcher",
                     self.additional_sides_matcher_input,
                     {x["sides"] for x in streets["streets"]},
                 )
-            raise SourceArgumentNotFoundWithSuggestions(
+            raise SourceArgumentRequiredWithSuggestions(
                 "additional_sides_matcher",
                 self.additional_sides_matcher_input,
                 {x["sides"] for x in streets["streets"]},
             )
+
+        # Only ask for a region when the streets that are still candidates
+        # after house-number narrowing sit in more than one *named* region
+        # (e.g. "Nowy Ramiszów" vs "Stary Ramiszów"). Streets without a
+        # region, or a house-number match that already picks one region
+        # (e.g. Rzeszów, Krakowska 317E), must keep working without it.
+        if len(to_return) > 1 and self.region_input == "":
+            candidate_regions = {
+                (s.get("region") or "").strip()
+                for s in self._filter_streets_by_house_number(to_return)
+            } - {""}
+            if len(candidate_regions) > 1:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "region",
+                    self.region_input,
+                    sorted(candidate_regions),
+                )
 
         return {**streets, "streets": to_return}
 
