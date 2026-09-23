@@ -5,6 +5,7 @@ from typing import ClassVar, cast
 
 from ..collection import Collection
 from ..exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
     SourceArgumentRequiredWithSuggestions,
@@ -401,12 +402,18 @@ class Source:
         if len(streets["streets"]) == 1:
             return streets
 
-        available_regions = set()
-        for street in streets["streets"]:
-            if street.get("region"):
-                available_regions.add(street.get("region", "").strip())
+        if len(streets["streets"]) == 0:
+            raise SourceArgumentNotFound(
+                "street",
+                self.street_input,
+            )
 
-        _LOGGER.debug(f"Available regions: {available_regions}")
+        available_regions = {
+            (street.get("region") or "").strip()
+            for street in streets["streets"]
+            if (street.get("region") or "").strip()
+        }
+        _LOGGER.debug("Available regions: %s", available_regions)
 
         to_return: list[Street] = []
         for street in streets["streets"]:
@@ -423,8 +430,8 @@ class Source:
                 continue
 
             if self.region_input != "":
-                street_region = street.get("region", "").strip()
-                if street_region == self.region_input:
+                street_region = (street.get("region") or "").strip()
+                if street_region.casefold() == self.region_input.strip().casefold():
                     to_return.append(street)
                 continue
 
@@ -449,16 +456,22 @@ class Source:
                 {x["sides"] for x in streets["streets"]},
             )
 
-        if (
-            len(to_return) > 1
-            and self.region_input == ""
-            and len({s.get("region", "").strip() for s in to_return}) > 1
-        ):
-            raise SourceArgumentRequiredWithSuggestions(
-                "region",
-                self.region_input,
-                sorted(available_regions),
-            )
+        # Only ask for a region when the streets that are still candidates
+        # after house-number narrowing sit in more than one *named* region
+        # (e.g. "Nowy Ramiszów" vs "Stary Ramiszów"). Streets without a
+        # region, or a house-number match that already picks one region
+        # (e.g. Rzeszów, Krakowska 317E), must keep working without it.
+        if len(to_return) > 1 and self.region_input == "":
+            candidate_regions = {
+                (s.get("region") or "").strip()
+                for s in self._filter_streets_by_house_number(to_return)
+            } - {""}
+            if len(candidate_regions) > 1:
+                raise SourceArgumentRequiredWithSuggestions(
+                    "region",
+                    self.region_input,
+                    sorted(candidate_regions),
+                )
 
         return {**streets, "streets": to_return}
 
