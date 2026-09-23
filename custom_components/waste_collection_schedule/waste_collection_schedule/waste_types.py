@@ -273,6 +273,8 @@ GARDEN_WASTE = WasteType(
             "strauchschnittsammlung",
             "grünschnittsammlung",
             "laub",
+            "laubsäcke",
+            "abfuhr laubsäcke",
             "weihnachtsbäume",
             "tannenbäume",
             "christbäume",
