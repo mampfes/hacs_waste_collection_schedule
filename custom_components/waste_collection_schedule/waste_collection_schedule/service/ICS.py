@@ -43,8 +43,10 @@ if TYPE_CHECKING:
 #: detection alone), ``select`` (``{<select> name: config parameter}``, resolved
 #: against this step's own response, see :func:`resolve_select_option`),
 #: ``extract`` (``callable(response, context) -> dict`` merged into the running
-#: context) and ``cookies`` (``callable(**context) -> dict`` merged into the
-#: running cookie jar, evaluated after ``extract``).
+#: context), ``cookies`` (``callable(**context) -> dict`` merged into the
+#: running cookie jar, evaluated after ``extract``) and ``when``
+#: (``callable(**context) -> bool``; a falsy result skips the step, for a lookup
+#: that is only needed when the user did not supply the id it would find).
 type IcsSessionStep = "dict[str, Any]"
 
 _LOGGER = logging.getLogger(__name__)
@@ -1217,7 +1219,9 @@ class IcsSessionRetriever(RetrieverFunc):
     to merge.
 
     Args:
-        feed_url: the calendar URL (literal or ``callable(**context) -> str``).
+        feed_url: the calendar URL (literal or ``callable(**context) -> str``,
+            or ``-> list[str]`` for a page that offers several calendars, all
+            of which are fetched and returned).
             ``None`` (the default) means the last step's own response *is* the
             calendar, for a provider that answers the form submission with the
             feed rather than redirecting to a download URL; at least one step
@@ -1254,6 +1258,19 @@ class IcsSessionRetriever(RetrieverFunc):
         empty_message: the message ``require_entries`` raises with, for a
             provider that can say something more useful than the default about
             why the address found nothing.
+        argument: name of the config parameter to blame when the *calendar
+            request* is answered with an HTTP error. For a provider whose feed
+            endpoint doubles as the address check, answering an address it does
+            not know with a 500 rather than an empty calendar: the user then
+            sees ``SourceArgumentNotFound`` against that field instead of a bare
+            HTTP error. A failing *step* is still an ordinary error, since a
+            lookup failing says the provider is down, not that the address is
+            wrong. ``None`` (default) keeps every HTTP error as it is. A
+            ``callable(**context) -> str`` picks the field per request, for a
+            provider that takes the address either as a key or as separate
+            fields, so the blamed one is whichever the user filled in.
+        argument_message: what that error says about the value (default: the
+            service does not know it, check the address and try again).
     """
 
     def __init__(
@@ -1271,11 +1288,19 @@ class IcsSessionRetriever(RetrieverFunc):
         require_lookahead: bool = False,
         require_entries: bool = False,
         empty_message: str | None = None,
+        argument: "str | Callable[..., str] | None" = None,
+        argument_message: str | None = None,
     ):
         if feed_url is None and not steps:
             raise ValueError(
                 "IcsSessionRetriever: give a `feed_url`, or at least one step "
                 "whose own response is the calendar"
+            )
+        if argument is not None and feed_url is None:
+            raise ValueError(
+                "IcsSessionRetriever: `argument` blames the calendar request, "
+                "so it needs a `feed_url` (with none, the last step is the "
+                "calendar and its errors are a step's errors)"
             )
         self.feed_url = feed_url
         self.steps = list(steps)
@@ -1289,6 +1314,8 @@ class IcsSessionRetriever(RetrieverFunc):
         self.require_lookahead = require_lookahead
         self.require_entries = require_entries
         self.empty_message = empty_message
+        self.argument = argument
+        self.argument_message = argument_message
 
     def __call__(self, source: "BaseSource") -> "list[Response]":
         feeds: list[Response] = []
@@ -1307,9 +1334,11 @@ class IcsSessionRetriever(RetrieverFunc):
         variants: Sequence[Any] = (
             self.variants if self.variants is not None else (None,)
         )
-        return [self._fetch(source, year, variant) for variant in variants]
+        return [
+            feed for variant in variants for feed in self._fetch(source, year, variant)
+        ]
 
-    def _fetch(self, source: "BaseSource", year: int, variant: Any) -> "Response":
+    def _fetch(self, source: "BaseSource", year: int, variant: Any) -> "list[Response]":
         context: dict[str, Any] = {**source.params, "year": year, "variant": variant}
         cookies: dict[str, str] = {}
         if self.cookies is not None:
@@ -1317,6 +1346,8 @@ class IcsSessionRetriever(RetrieverFunc):
 
         last: Any = None
         for step in self.steps:
+            if "when" in step and not step["when"](**context):
+                continue
             response = source.session.request(
                 step.get("method", "GET"),
                 _resolve_context(step["url"], context),
@@ -1346,23 +1377,54 @@ class IcsSessionRetriever(RetrieverFunc):
             if "cookies" in step:
                 cookies.update(step["cookies"](**context))
 
+        feeds: list[Response]
         if self.feed_url is None:
             # The last step's own response is the calendar. The constructor
             # guarantees there is at least one step in that case.
-            feed = last
+            feeds = [last]
         else:
-            feed = source.session.get(
-                _resolve_context(self.feed_url, context),
-                params=_resolve_context(self.feed_params, context),
-                headers=_resolve_context(self.headers, context),
-                cookies=cookies or None,
-                timeout=self.timeout,
+            urls = _resolve_context(self.feed_url, context)
+            # A list names several calendars found along the way (a property
+            # page offering one download per bin), each fetched the same way.
+            feeds = [
+                self._get_feed(source, url, context, cookies)
+                for url in ([urls] if isinstance(urls, str) else urls)
+            ]
+        for feed in feeds:
+            if self.encoding is not None:
+                feed.encoding = self.encoding
+            if self.require_entries and not ICS().convert(feed.text):
+                raise ValueError(
+                    self.empty_message or f"No ICS entries found for {year}"
+                )
+        return feeds
+
+    def _get_feed(
+        self,
+        source: "BaseSource",
+        url: str,
+        context: "dict[str, Any]",
+        cookies: "dict[str, str]",
+    ) -> "Response":
+        feed = source.session.get(
+            url,
+            params=_resolve_context(self.feed_params, context),
+            headers=_resolve_context(self.headers, context),
+            cookies=cookies or None,
+            timeout=self.timeout,
+        )
+        if self.argument is not None and feed.status_code >= 400:
+            blamed = (
+                self.argument(**context) if callable(self.argument) else self.argument
             )
-            feed.raise_for_status()
-        if self.encoding is not None:
-            feed.encoding = self.encoding
-        if self.require_entries and not ICS().convert(feed.text):
-            raise ValueError(self.empty_message or f"No ICS entries found for {year}")
+            raise SourceArgumentNotFound(
+                blamed,
+                context.get(blamed),
+                self.argument_message
+                or "the service does not know this value, please check "
+                "the address and try again.",
+            )
+        feed.raise_for_status()
         return feed
 
 
@@ -1554,13 +1616,22 @@ class IcsIndexRetriever(RetrieverFunc):
             than returning a silently short schedule (default 1). Counted
             against the links the page offers, before any ``argument``
             selection.
-        label: optional ``callable(anchor) -> str | None`` naming each feed
-            link (from its title, its text, its href). A link the callable
-            returns ``None`` for is left unnamed and can never be selected.
-            Required by ``argument``, and harmless without it.
+        label: optional ``callable(anchor) -> str | list[str] | None`` naming
+            each feed link (from its title, its text, its href). A link the
+            callable returns ``None`` for is left unnamed and can never be
+            selected. A list names a feed that serves several districts at once
+            ("Abfallkalender 2026 (1+3).ics" serves district 1 and district 3),
+            so either name selects it, and it is fetched once however many of
+            its names were asked for. Required by ``argument``, and harmless
+            without it.
         argument: optional name of the config parameter listing which labelled
             feeds to fetch. Its value may be a single name or a list of them,
             matched against the labels case-insensitively.
+        every_match: fetch *every* feed a name labels, not just the first. For
+            a provider that publishes one file per district and year under the
+            same district name, where the schedule is all of them together.
+            Default ``False`` keeps the first match, for feeds that are
+            alternatives.
         headers: optional headers applied to every request.
         timeout: per-request timeout in seconds.
     """
@@ -1572,8 +1643,9 @@ class IcsIndexRetriever(RetrieverFunc):
         pattern: str = r"\.ics(?:$|\?)",
         link_selector: "str | None" = None,
         min_feeds: int = 1,
-        label: "Callable[[Tag], str | None] | None" = None,
+        label: "Callable[[Tag], str | Sequence[str] | None] | None" = None,
         argument: str | None = None,
+        every_match: bool = False,
         headers: "HeadersArgs" = None,
         timeout: int = 30,
     ):
@@ -1588,6 +1660,7 @@ class IcsIndexRetriever(RetrieverFunc):
         self.min_feeds = min_feeds
         self.label = label
         self.argument = argument
+        self.every_match = every_match
         self.headers = headers
         self.timeout = timeout
 
@@ -1617,7 +1690,13 @@ class IcsIndexRetriever(RetrieverFunc):
             if url in seen:
                 continue
             seen.add(url)
-            found.append((self.label(anchor) if self.label else None, url))
+            labelled = self.label(anchor) if self.label else None
+            if labelled is None or isinstance(labelled, str):
+                found.append((labelled, url))
+            else:
+                # One link serving several names: keep an entry per name, all
+                # pointing at the same URL. Fetching de-duplicates them.
+                found.extend((name, url) for name in labelled)
         return found
 
     def _selected(
@@ -1633,15 +1712,20 @@ class IcsIndexRetriever(RetrieverFunc):
 
         urls: list[str] = []
         for value in wanted or []:
-            for label, url in available:
-                if str(label).lower() == str(value).lower():
-                    urls.append(url)
-                    break
-            else:
+            matches = [
+                url
+                for label, url in available
+                if str(label).lower() == str(value).lower()
+            ]
+            if not matches:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    argument, value, [str(label) for label, _ in available]
+                    argument,
+                    value,
+                    list(dict.fromkeys(str(label) for label, _ in available)),
                 )
-        return urls
+            urls.extend(matches if self.every_match else matches[:1])
+        # Several names can point at one feed; fetch it once, in the order asked.
+        return list(dict.fromkeys(urls))
 
     def __call__(self, source: "BaseSource") -> "list[Response]":
         headers = _resolve_arg(self.headers, source)
@@ -1651,9 +1735,10 @@ class IcsIndexRetriever(RetrieverFunc):
         index.raise_for_status()
 
         found = self._feed_urls(index_url, index.text)
-        if len(found) < self.min_feeds:
+        distinct = len({url for _, url in found})
+        if distinct < self.min_feeds:
             raise ValueError(
-                f"found {len(found)} ICS feed link(s) matching "
+                f"found {distinct} ICS feed link(s) matching "
                 f"{self.pattern.pattern!r} on {index_url}, expected at least "
                 f"{self.min_feeds}; the page layout may have changed."
             )
@@ -1661,7 +1746,7 @@ class IcsIndexRetriever(RetrieverFunc):
         urls = (
             self._selected(found, source)
             if self.argument is not None
-            else [url for _, url in found]
+            else list(dict.fromkeys(url for _, url in found))
         )
 
         feeds = []
@@ -1670,6 +1755,24 @@ class IcsIndexRetriever(RetrieverFunc):
             feed.raise_for_status()
             feeds.append(feed)
         return feeds
+
+
+def _retitle(entry: Any, title: str) -> Any:
+    """The entry with its title replaced, whichever record shape it is."""
+    if isinstance(entry, IcsEvent):
+        return entry._replace(title=title)
+    return (entry[0], title)
+
+
+_UNTIL_UTC_DAY = re.compile(r"UNTIL=(\d{8})T\d{6}Z")
+
+
+def _last_until_day(ics_text: str) -> "datetime.date | None":
+    """The latest day any RRULE in the feed is bounded by, if it has one."""
+    days = _UNTIL_UTC_DAY.findall(ics_text)
+    if not days:
+        return None
+    return max(datetime.datetime.strptime(day, "%Y%m%d").date() for day in days)
 
 
 class _UnwrappedFeed:
@@ -1728,6 +1831,20 @@ class IcsFeedsParser:
       as the response body but wraps it in an envelope, typically a JSON field
       holding the feed base64-encoded. Everything downstream (``require_calendar``
       included) then sees plain iCalendar text.
+    * ``labels`` — one title per feed, in retrieval order, for a provider that
+      publishes a calendar per waste type whose events carry no type of their
+      own (the calendar's *name* is the type). A string replaces every title in
+      that feed; ``None`` keeps a feed's own titles, for the one that is not a
+      stream (a holiday-notice calendar beside two recycling streams).
+    * ``clip_to_until`` — drop every entry dated after the last ``RRULE UNTIL``
+      day the feed declares. For a provider that bounds its recurrences with
+      ``UNTIL=<Dec 31>T230000Z``: for all-day events that instant is 00:00 local
+      time on Jan 1, so the recurrence yields one phantom collection on New
+      Year's Day, a date the published calendar does not contain. The bound is
+      read from the feed itself (no year is assumed) and this is not a
+      user-facing time-range filter: everything the provider publishes up to
+      that day is returned. Off by default, because a feed that *means* its
+      UNTIL literally must keep the occurrence it includes.
 
     A provider whose feed doubles as the address check is served by
     ``argument`` plus one or both of:
@@ -1753,6 +1870,8 @@ class IcsFeedsParser:
         exclude: str | None = None,
         dedupe: bool = False,
         unwrap: "Callable[[str], str] | None" = None,
+        labels: "Sequence[str | None] | None" = None,
+        clip_to_until: bool = False,
         argument: str | None = None,
         require_calendar: bool = False,
         suggestions: "Callable[[BaseSource], list[str]] | None" = None,
@@ -1764,6 +1883,8 @@ class IcsFeedsParser:
             )
         self._parser = parser
         self._unwrap = unwrap
+        self._labels = labels
+        self._clip_to_until = clip_to_until
         self._clean = clean
         self._exclude = re.compile(exclude, re.IGNORECASE) if exclude else None
         self._dedupe = dedupe
@@ -1819,10 +1940,20 @@ class IcsFeedsParser:
         feeds = response if isinstance(response, (list, tuple)) else [response]
         entries: IcsEntries = []
         seen: set = set()
-        for raw_feed in feeds:
+        if self._labels is not None and len(self._labels) != len(feeds):
+            raise ValueError(
+                f"IcsFeedsParser: {len(self._labels)} labels for {len(feeds)} feeds"
+            )
+        for index, raw_feed in enumerate(feeds):
             feed = self._unwrap_feed(raw_feed)
             self._check_calendar(feed, source)
+            last_day = _last_until_day(feed.text) if self._clip_to_until else None
+            label = self._labels[index] if self._labels is not None else None
             for parsed in parser(feed, source):
+                if last_day is not None and parsed[0] > last_day:
+                    continue
+                if label is not None:
+                    parsed = _retitle(parsed, label)
                 entry = self._clean_entry(parsed)
                 if self._exclude is not None and self._exclude.search(entry[1].strip()):
                     continue

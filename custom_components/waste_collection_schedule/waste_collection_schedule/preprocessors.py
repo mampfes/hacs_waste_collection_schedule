@@ -225,6 +225,100 @@ class SplitLabels(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     yield collection_date, stripped
 
 
+class SortRows(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Put ``(date, key)`` rows in date order, then by key.
+
+    For a provider whose endpoint returns the same events in a different order
+    on every request (an Athos servlet does), which makes two fetches of the same
+    address compare unequal and the ``test_sources.py -d`` double-fetch check
+    fail on a difference that is not a change in the schedule.
+    """
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        return sorted(records, key=lambda row: (row[0], row[1]))
+
+
+_DAY_NAMES = (
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+)
+
+
+class CollapseWeeks(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Collapse a stream marked day by day into one row per week.
+
+    For a provider that marks a whole collection *week* with an all-day event on
+    each day of it (an alternating-week recycling calendar), where the schedule
+    wants one collection per week, on the day the household is serviced. Each
+    ``(date, key)`` row of a collapsed stream is grouped by the week it falls in,
+    and one row per week is emitted, dated the day the week starts and shifted to
+    the household's own weekday when ``day`` names a parameter that carries one.
+
+    Rows of any other stream (a holiday-notice calendar sharing the feed list)
+    pass through unchanged.
+
+    Args:
+        keys: the stream keys to collapse; ``None`` collapses every row.
+        day: name of the config parameter holding the household's collection
+            weekday, in any language ``recurrence.weekday`` knows. Unset (or the
+            parameter empty) leaves each week on the day it starts. A value that
+            is not a weekday raises ``SourceArgumentNotFoundWithSuggestions``.
+        week_start: the day a week starts, ``0`` = Monday ... ``6`` = Sunday
+            (default), which is how a US calendar week runs.
+    """
+
+    def __init__(
+        self,
+        keys: "Iterable[str] | None" = None,
+        day: str | None = None,
+        week_start: int = 6,
+    ):
+        self._keys = None if keys is None else frozenset(keys)
+        self._day = day
+        self._week_start = week_start
+
+    def _offset(self, source: "BaseSource | None") -> int:
+        if self._day is None or source is None:
+            return 0
+        value = source.params.get(self._day)
+        if not value:
+            return 0
+        weekday = recurrence.weekday(str(value))
+        if weekday is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                self._day, value, list(_DAY_NAMES)
+            )
+        return (weekday - self._week_start) % 7
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        offset = datetime.timedelta(days=self._offset(source))
+        passed: list[tuple[datetime.date, str]] = []
+        weeks: dict[str, set[datetime.date]] = {}
+        for collection_date, key in records:
+            if self._keys is not None and key not in self._keys:
+                passed.append((collection_date, key))
+                continue
+            start = collection_date - datetime.timedelta(
+                days=(collection_date.weekday() - self._week_start) % 7
+            )
+            weeks.setdefault(key, set()).add(start)
+        collapsed = [
+            (start + offset, key)
+            for key, starts in weeks.items()
+            for start in sorted(starts)
+        ]
+        return [*collapsed, *passed]
+
+
 class RoundAreaSelector(Preprocessor[Any, "tuple[datetime.date, str]"]):
     """Keep the rows for this household's collection area, one area per round.
 
