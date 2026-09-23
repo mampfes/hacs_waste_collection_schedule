@@ -1,13 +1,14 @@
 ---
 name: Source Request
 description: Request that a municipality or region is supported
-title: '[Source Request]: '
 labels: [source request]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for requesting a new source!
+
+        **Title:** please enter a short title such as `France, Frasnoy` (country, municipality). The `[Source Request]: ` prefix is added automatically.
 
         **Before submitting**, please check if your provider is already supported:
         - Search the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) for your municipality name
