@@ -20096,6 +20096,7 @@
           "g5": "Group 5",
           "house_number": "House number",
           "language": "Language",
+          "region": "Region",
           "street": "Street",
           "town": "Town"
         },
@@ -20111,6 +20112,7 @@
           "g5": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
           "house_number": "House number",
           "language": "Language for waste type names (pl, en, uk, ru)",
+          "region": "Sub-region within the town used to disambiguate streets that appear in multiple collection areas (e.g. 'Nowy Ramiszów' vs the rest of Ramiszów). Leave empty unless you get an error asking for it — a list of valid options will be shown.",
           "street": "Street",
           "town": "Town"
         }
@@ -20131,6 +20133,7 @@
           "g5": "Group 5",
           "house_number": "House number",
           "language": "Language",
+          "region": "Region",
           "street": "Street",
           "town": "Town"
         },
@@ -20145,6 +20148,7 @@
           "g5": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
           "house_number": "House number",
           "language": "Language for waste type names (pl, en, uk, ru)",
+          "region": "Sub-region within the town used to disambiguate streets that appear in multiple collection areas (e.g. 'Nowy Ramiszów' vs the rest of Ramiszów). Leave empty unless you get an error asking for it — a list of valid options will be shown.",
           "street": "Street",
           "town": "Town"
         }

@@ -19186,6 +19186,7 @@
           "g5": "G5",
           "house_number": "Civico",
           "language": "Language",
+          "region": "Regione",
           "street": "Strada",
           "town": "Città"
         },
@@ -19209,6 +19210,7 @@
           "g5": "G5",
           "house_number": "Civico",
           "language": "Language",
+          "region": "Regione",
           "street": "Strada",
           "town": "Città"
         },

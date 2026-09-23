@@ -19221,6 +19221,7 @@
           "g5": "G5",
           "house_number": "Numéro civique",
           "language": "Language",
+          "region": "Région",
           "street": "Rue",
           "town": "Ville"
         },
@@ -19244,6 +19245,7 @@
           "g5": "G5",
           "house_number": "Numéro civique",
           "language": "Language",
+          "region": "Région",
           "street": "Rue",
           "town": "Ville"
         },
