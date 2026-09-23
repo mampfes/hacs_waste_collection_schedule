@@ -25812,6 +25812,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Merthyr Tydfil County Borough Council",
+      "module": "merthyr_gov_uk",
+      "default_params": {},
+      "id": "merthyr_gov_uk"
+    },
+    {
       "title": "Mid and East Antrim",
       "module": "midandeastantrim_gov_uk",
       "default_params": {},

@@ -6404,6 +6404,13 @@
     },
     "urls": {}
   },
+  "merthyr_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/merthyr_gov_uk.md",
+    "howto": {
+      "en": "Enter your postcode as on the council's collection day page: https://www.merthyr.gov.uk/resident/bins-and-recycling/check-your-collection-day/ If the page reports no results, the postcode is not currently supported by the council's finder."
+    },
+    "urls": {}
+  },
   "midandeastantrim_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midandeastantrim_gov_uk.md",
     "howto": {},

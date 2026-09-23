@@ -3853,6 +3853,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Medway Council](/doc/source/medway_gov_uk.md) / medway.gov.uk
 - [Melton Borough Council](/doc/source/melton_gov_uk.md) / melton.gov.uk
 - [Mendip District Council](/doc/source/iapp_itouchvision_com.md) / mendip.gov.uk
+- [Merthyr Tydfil County Borough Council](/doc/source/merthyr_gov_uk.md) / merthyr.gov.uk
 - [Mid and East Antrim](/doc/source/midandeastantrim_gov_uk.md) / midandeastantrim.gov.uk
 - [Mid Devon District Council](/doc/source/mid_devon_gov_uk.md) / middevon.gov.uk
 - [Mid Suffolk District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk/check-your-collection-day
