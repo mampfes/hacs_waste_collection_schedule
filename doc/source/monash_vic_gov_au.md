@@ -1,6 +1,8 @@
-# City of Monash Council
+# City of Monash
 
-Support for schedules provided by [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins).
+Support for schedules provided by [City of Monash](https://www.monash.vic.gov.au/).
+
+Source for City of Monash rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the City of Monash [When we collect your bins](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) page and search for your address. For example: ```4 Carson Street, Mulgrave 3170```. The **address** variable should exactly match the full street address after selecting the autocomplete result.'
+Visit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) "When we collect your bins" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.
