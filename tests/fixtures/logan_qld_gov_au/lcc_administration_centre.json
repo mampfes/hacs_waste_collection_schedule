@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.logan.qld.gov.au/api/v1/myarea/search 2ff0556ce4",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.logan.qld.gov.au/api/v1/myarea/search?keywords=150+Wembley+Road+Logan+Central&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"150 Wembley Road Logan Central\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "280",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:29 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=25, origin; dur=871, ak_p; desc=\"1790185528237_386904719_86979180_89501_22455_7_40_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=31BF9299EBFC6017E0F4678A09D480DA~000000000000000000000000000000~YAAQj7IPF9ucgMWgAQAAa19fzwGvxLMsU6B4Z6up0rN5pGrOCtuD72xAEmxErLVjxPDXeROn5Gceasn7z7MRdsw5ZZbsFsz3ouuqcz5PrCFS2jCU+c413+WyB5WSqZNX/hpi8KIZiImfPz9om3LEIg0+a8B8803IqKTfgoeOROIpFegGxGmEMca7NIZBJ/uqH6gC3Qlaxw3OpEYPcX8cXt/0WDPUGoWxqAiWcduNohV+4DwQFOlKkW3Z002UtCdHz0RoCgHBuy0VIce2NedA1QA4dE4TpjHCJNca2bzUDZQWssZlhMxIfVQNnQmaQYojwU42SokBbzuq9FDjYYEll0c4da8ODbKwZZIeGGFajxntiMr3h8Gr9KY7hX0cg+F0Jtm41yZy7vGzI+Fd9rjbM4UOaUo=; Domain=.logan.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:28 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI2MmI4NGJlMi0xZWNlLTQ1MzctYjNlMS05YTc4Mjk5NjFiODAiLCJBZGRyZXNzU2luZ2xlTGluZSI6IkxDQyBBRE1JTklTVFJBVElPTiBDRU5UUkUgMTUwIFdlbWJsZXkgUm9hZCBMT0dBTiBDRU5UUkFMICBRTEQgIDQxMTQiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IkRpdmlzaW9uIDIiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjIzLjkyNDE0LCJMYXRMb24iOlstMjcuNjQzMjExNzcsMTUzLjEwNDQwMTldfV0sIk9mZnNldCI6MCwiTGltaXQiOjEsIlRvdGFsIjoxfQ=="
+    },
+    {
+      "key": "GET https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices 1f3e4d5264",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=62b84be2-1ece-4537-b3e1-9a7829961b80&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"62b84be2-1ece-4537-b3e1-9a7829961b80\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "318",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:30 GMT",
+        "set-cookie": "ASP.NET_SessionId=1cvm2q52zumobocrfpwyrkwz; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=12, origin; dur=870, ak_p; desc=\"1790185529225_386904719_86980025_88398_17468_7_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIEZyaWRheSAyNSBTZXB0ZW1iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIEZyaWRheSAyNSBTZXB0ZW1iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

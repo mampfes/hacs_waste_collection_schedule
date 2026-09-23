@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.monash.vic.gov.au/api/v1/myarea/search f0020e1960",
+      "method": "GET",
+      "url": "https://www.monash.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.monash.vic.gov.au/api/v1/myarea/search?keywords=57+Hamilton+Place%2C+Mount+Waverley+3149",
+      "body": "{\"params\":[[\"keywords\",\"57 Hamilton Place, Mount Waverley 3149\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "252",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:18 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=113, origin; dur=326, ak_p; desc=\"1790185577663_386904782_79047050_43902_16928_3_10_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=765B50DE17706BD4F2F49247249A6ED5~000000000000000000000000000000~YAAQzrIPF0rMasWgAQAAkh5gzwFHJEe9h0cofQQm0VqpXV2yDWLKWVQUfd0MG5exSQLcnZdaWTca+Veva9TViz0BEa5NUakj5M0i0pC14tJJL0b44aHpv32Uex63AaROj0KDfkiEO4vy+6dHdeh1KtMWfLSWWqYxjWHmjwk+PCm/n14ws+P/Ni2NFEJR3Lm70XqJmE5jSQ4u9op2N+sshTxEtR4flyzSfA+EnhTkQSRCR5w11PHmB9erDoKvJj4NIOExr52D9jsEqr43UDhzaeoQII3tgdTHuDX8Njh/1dr7sYpjEL2lU6/ooE0MN89eq1k/n0iXksUZDQSQgMutk0bQZpUyMMOIqU/HkB25ItKJ+avyg51i3dl+i8Ap2q68YCK+A3DZK+5hhTLgDggs710qw3A=; Domain=.monash.vic.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:17 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI5NDMwMDhiZC1hNjE1LTRjMjItOGY4YS04NWMwMGM3ZjRmNGIiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjU3IEhhbWlsdG9uIFBsYWNlLCBNb3VudCBXYXZlcmxleSAzMTQ5IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJNYXlmaWVsZCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MzAuMDAyMTMyLCJMYXRMb24iOlstMzcuODc3MTE4MDksMTQ1LjEyNzgxODQ2XX1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices 818f18ae2c",
+      "method": "GET",
+      "url": "https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=943008bd-a615-4c22-8f8a-85c00c7f4f4b&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"943008bd-a615-4c22-8f8a-85c00c7f4f4b\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "401",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:19 GMT",
+        "set-cookie": "ASP.NET_SessionId=3yl4y1ffgae41sjvjjkmx4q0; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=59, origin; dur=857, ak_p; desc=\"1790185578136_386904782_79047510_91573_15247_3_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvbiBkYXRlc1x1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUxhbmRmaWxsIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseS5cdTAwM2Niclx1MDAzZVxuWW91ciBuZXh0IGNvbGxlY3Rpb24gZGF5IGlzOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVHVlIDI5LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5Llx1MDAzY2JyXHUwMDNlXG5Zb3VyIG5leHQgY29sbGVjdGlvbiBkYXkgaXM6XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUdWUgNi8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBncmVlbi13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlRm9vZCBhbmQgR2FyZGVuIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuXHUwMDNjYnJcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRheSBpczpcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFR1ZSAyOS85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

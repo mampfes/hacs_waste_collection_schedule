@@ -1,39 +1,45 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    TYPE_VALUE_MAP,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "City of Onkaparinga Council"
-DESCRIPTION = "Source for City of Onkaparinga Council, Australia."
-URL = "https://www.onkaparingacity.com/"
-COUNTRY = "au"
-TEST_CASES = {
-    "TestcaseI": {"address": "18 Flagstaff Road, FLAGSTAFF HILL 5159"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling Waste": Icons.RECYCLING,
-    "Green Waste": Icons.GARDEN,
-}
-
-HEADERS = {
-    "referer": "https://www.onkaparingacity.com/Services/Waste-and-recycling/Bin-collections"
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.onkaparingacity.com",
-    headers=HEADERS,
-    icon_keywords=ICON_MAP,
-    exclude_type_prefixes=("Calendar",),
-)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address
-        self._client = OpenCitiesClient(_CONFIG)
+@final
+class Source(BaseSource):
+    TITLE = "City of Onkaparinga Council"
+    DESCRIPTION = "Source for City of Onkaparinga Council, Australia."
+    URL = "https://www.onkaparingacity.com/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self._address)
+    TEST_CASES: ClassVar[dict] = {
+        "TestcaseI": {"address": "18 Flagstaff Road, FLAGSTAFF HILL 5159"}
+    }
+
+    PARAMS = (street_address(field="address"),)
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.onkaparingacity.com",
+        headers={
+            "referer": "https://www.onkaparingacity.com/Services/Waste-and-recycling/Bin-collections"
+        },
+    )
+    parse = OpenCitiesParser(exclude_type_prefixes=("Calendar",))
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={
+            **TYPE_VALUE_MAP,
+            "General waste (waste to landfill)": wt.GENERAL_WASTE,
+        },
+    )

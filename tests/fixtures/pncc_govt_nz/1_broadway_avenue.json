@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.pncc.govt.nz/api/v1/myarea/search 9a7a24b8f0",
+      "method": "GET",
+      "url": "https://www.pncc.govt.nz/api/v1/myarea/search",
+      "final_url": "https://www.pncc.govt.nz/api/v1/myarea/search?keywords=1+Broadway+Avenue+Palmerston+North",
+      "body": "{\"params\":[[\"keywords\",\"1 Broadway Avenue Palmerston North\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:47 GMT",
+        "content-length": "393",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=32, origin; dur=873, ak_p; desc=\"1790185606247_386904718_116357847_90463_22698_5_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=D19F084E0A66925F147AAD744957CAAD~000000000000000000000000000000~YAAQjrIPF7S0rcSgAQAAFpBgzwEJKdJ2Htxc/l+kzwy2RceW3SaX+KjurrLk3W4dp928iyu6vPeiAJHggnSbDahfiF63uOt8JKSRauqmRJrLLeGnE+peOHyhShpD1gKTSK98kx0OSlH7/lsQwkFcsAX02edMyzFtGtItsD3DPZvrRzeUy7u6xFr6Kb51YgIr2EJ/Wq9GXFmIxXgNJZ754Laysf8p+6wj0bu/B33b1cMsMP66/iW0iuWugUIYrCpnoXUCAdX+MtNORYcX8iOZrLibKz7uG+TtxC35tPy4mBfYTkSr6dku84V1HFDhsPN2hLmgcv0CtoByua5/PkQe6TATonJ3LjwyHepeU5b20rJmTrZkptgo99PiEQGVHsGvxLA5YP4gaTZP9HXtWnI5; Domain=.pncc.govt.nz; Path=/; Expires=Wed, 23 Sep 2026 19:46:46 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI3ZjM1MzM0Zi05MzgxLTQ3NTUtYmFhMy01YmUzNWQ5ZWUwN2EiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMzM3IEJST0FEV0FZIEFWRU5VRSBQQUxNRVJTVE9OIE5PUlRIIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6NS4xMTkyMzUsIkxhdExvbiI6bnVsbH0seyJJZCI6IjAzZWJkZTBjLTU4NDMtNDcyZi1hMGFhLWUwNmI0Yzg4MWZhMCIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiMS8zMzkgQlJPQURXQVkgQVZFTlVFIFBBTE1FUlNUT04gTk9SVEgiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6bnVsbCwiRGlzdGFuY2UiOjAsIlNjb3JlIjo1LjExOTIzNSwiTGF0TG9uIjpudWxsfSx7IklkIjoiNTM0OTViM2QtYzY0My00NTc3LTk1ZGMtOTE1MTk0N2EwOGFkIiwiQWRkcmVzc1NpbmdsZUxpbmUiOiIxLzM0MSBCUk9BRFdBWSBBVkVOVUUgUEFMTUVSU1RPTiBOT1JUSCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjpudWxsLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjUuMTE5MjM1LCJMYXRMb24iOm51bGx9LHsiSWQiOiJjNDMzMjcwYS05YjJiLTRlYzEtOGI3Yi0zMDViYWI1YjYyYzYiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMTg4IEJST0FEV0FZIEFWRU5VRSBQQUxNRVJTVE9OIE5PUlRIIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6NS4xMTkyMzUsIkxhdExvbiI6bnVsbH0seyJJZCI6IjIyYzExMDgyLWU4YmQtNGNiYy1iMGNmLTQyYzNlOTQzNmQyNiIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiMS8yMzAgQlJPQURXQVkgQVZFTlVFIFBBTE1FUlNUT04gTk9SVEgiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6bnVsbCwiRGlzdGFuY2UiOjAsIlNjb3JlIjo1LjExOTIzNSwiTGF0TG9uIjpudWxsfSx7IklkIjoiY2QwYzlhNDMtNDllMC00NzZkLTljYzEtZGI1ZDZhZWNjM2RhIiwiQWRkcmVzc1NpbmdsZUxpbmUiOiIxLzI3MSBCUk9BRFdBWSBBVkVOVUUgUEFMTUVSU1RPTiBOT1JUSCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjpudWxsLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjUuMTE5MjM1LCJMYXRMb24iOm51bGx9LHsiSWQiOiJlMTFkODI5My0wMzg5LTQzYjMtYjQ3ZS02NjFhYmI1NGE2YzMiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMzIzIEJST0FEV0FZIEFWRU5VRSBQQUxNRVJTVE9OIE5PUlRIIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6NS4xMTkyMzUsIkxhdExvbiI6bnVsbH1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjd9"
+    },
+    {
+      "key": "GET https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices 426a5823a6",
+      "method": "GET",
+      "url": "https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices?geolocationid=7f35334f-9381-4755-baa3-5be35d9ee07a&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"7f35334f-9381-4755-baa3-5be35d9ee07a\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "441",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:48 GMT",
+        "set-cookie": "ASP.NET_SessionId=3zvr1rxknj5vrcoi0klxn3qm; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=8, origin; dur=846, ak_p; desc=\"1790185607199_386904718_116359335_85478_16638_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJ1YmJpc2hcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlUGxhY2Ugb24gdGhlIGtlcmIgYmVmb3JlIDcuMzBhbVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly93d3cucG5jYy5nb3Z0Lm56L1NlcnZpY2VzL1J1YmJpc2gtYW5kLXJlY3ljbGluZy9QYWxteS1Db2xsZWN0aW9ucy9SdWJiaXNoLWJhZ3MtYW5kLWNvbGxlY3Rpb25cIiB0YXJnZXQ9XCJcIlx1MDAzZU1vcmUgYWJvdXQgcnViYmlzaCBiYWdzIGFuZCBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgY2JkLXJlY3ljbGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJlY3ljbGluZ1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VQbGFjZSBvbiB0aGUga2VyYiBiZWZvcmUgNy4zMGFtXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gMjgvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

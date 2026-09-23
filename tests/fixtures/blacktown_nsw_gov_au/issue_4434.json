@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/api/v1/myarea/search 852f3f38ed",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search?keywords=13+Coffey+St%2C+Tallawong+NSW+2762",
+      "body": "{\"params\":[[\"keywords\",\"13 Coffey St, Tallawong NSW 2762\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "224",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:38 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=15, origin; dur=307, ak_p; desc=\"1790185478575_1752388110_145140249_32166_21349_4_22_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=EDE3B19DA2991274E4C28E1C81900FB0~000000000000000000000000000000~YAAQDlJzaCAEsMmgAQAAHptezwF4UPNg9l62ox45uf95Z0L/Hvw1BbBPZpyhOIFuCWDY38MBhSsTWaReHwhdzQLrmhj5EppB0hkSUUSmDhB9YahNrX5g6IT7H8Dh1axaKLq5IDy8E6VXA6RQt6UyRDP4MdcTnXUiqZRsNt+aUlQzqbE41pDW0SmGtnKW9CtnjAuyL1ehXjmczetJgYR/qW1p1xlH6U5v0isxgeJKaXrPHYrgTygVoqTSVnC2MuNtP8h1sEYpHbciBa1gVILPF2ff8HnwYh7mVOc4XxM8FKsd+W9WNy56mWuVUdAwdl5rGIWWcZIoLeAWd97+dconvQQTr/LZc3vRJeJ70E5Je4E0hUMXBWk4UvuqYHG4X2g38QwKPghHzGzCKg55cn4Ld0jjeKYzRYXp; Domain=.blacktown.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:38 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJjYjRlOGFmNy1iYWVlLTQ3MDctYTJlMy1kNGZiOGYzZmIzOGYiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEzIENvZmZleSBTdHJlZXQsIFRBTExBV09ORyBOU1cgMjc2MiIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2FyZCAxIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyNS45ODQxMiwiTGF0TG9uIjpudWxsfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices f1fd65000e",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=cb4e8af7-baee-4707-a2e3-d4fb8f3fb38f&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"cb4e8af7-baee-4707-a2e3-d4fb8f3fb38f\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "441",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:39 GMT",
+        "set-cookie": "ASP.NET_SessionId=bju5cm0jbwrqaagtkly2a0d3; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=67, origin; dur=872, ak_p; desc=\"1790185478993_1752388110_145141157_98384_17117_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxhY2UgYmluIG9uIHRoZSBrZXJic2lkZS9uYXR1cmUgc3RyaXAgdGhlIG5pZ2h0IGJlZm9yZSBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiL1NlcnZpY2VzL1dhc3RlL0hvdXNlaG9sZC13YXN0ZVwiIHRhcmdldD1cIl9zZWxmXCJcdTAwM2VIb3VzZWhvbGQgZ2FyYmFnZSBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDI1LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGFjZSBiaW4gb24gdGhlIGtlcmJzaWRlL25hdHVyZSBzdHJpcCB0aGUgbmlnaHQgYmVmb3JlIGNvbGxlY3Rpb24uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBGcmkgMjUvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}
