@@ -1,37 +1,50 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    TYPE_VALUE_MAP,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Whittlesea City Council"
-DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
-URL = "https://www.whittlesea.vic.gov.au/My-Neighbourhood"
-TEST_CASES = {
-    "Whittlesea Council Office": {
-        "street_address": "25 Ferres Boulevard, South Morang 3752"
+
+@final
+class Source(BaseSource):
+    TITLE = "Whittlesea City Council"
+    DESCRIPTION = "Source for Whittlesea Council (VIC) rubbish collection."
+    URL = "https://www.whittlesea.vic.gov.au/My-Neighbourhood"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Whittlesea Council Office": {
+            "street_address": "25 Ferres Boulevard, South Morang 3752"
+        }
     }
-}
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green Waste": Icons.GARDEN,
-    "Glass": Icons.GLASS,
-}
+    PARAMS = (street_address(field="street_address"),)
 
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.whittlesea.vic.gov.au",
-    argument_name="street_address",
-    warm_up_url="https://www.whittlesea.vic.gov.au/My-Neighbourhood",
-    icon_keywords=ICON_MAP,
-)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GLASS,
+    ]
 
-
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
-        self._client = OpenCitiesClient(_CONFIG)
-
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self._street_address)
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.whittlesea.vic.gov.au",
+        address="street_address",
+        warm_up_url="https://www.whittlesea.vic.gov.au/My-Neighbourhood",
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={
+            **TYPE_VALUE_MAP,
+        },
+    )

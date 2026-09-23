@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.mildura.vic.gov.au/api/v1/myarea/search bf746b0692",
+      "method": "GET",
+      "url": "https://www.mildura.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mildura.vic.gov.au/api/v1/myarea/search?keywords=76+Deakin+Avenue%2C+Mildura+VIC+3500",
+      "body": "{\"params\":[[\"keywords\",\"76 Deakin Avenue, Mildura VIC 3500\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "233",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:14 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=16, origin; dur=294, ak_p; desc=\"1790185574106_386904732_190997667_31025_17583_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=80726A810E60A82D7A5D32F51EB0181F~000000000000000000000000000000~YAAQnLIPF6m4TrGgAQAAMBBgzwGu47zKeeS5PAwtCcxk2k8Y5nWbvMX6IQsbtxaCTcj0MP60ZjDAoY6mB904Kfe9C/jQfHd4KtQVxg/sO/K7QeqU81hnML3pfRbWYl0Amps9k3UEU2TprJuYCz2o2Kw/d1n3f35Bd+MKT5AIMZnzQA9R6q2Di6YtvK7qG2VGrU1Ua7N797ekbm3LW2AuueQPs9kkW6VEZYxcg8HuAxqtbKvQLmTSOCFfPwPyDSa+VbkqxN5bS610BCTbKUJColk2Y6CDqe/akYC5vlD+I6sOFFCp+hioNy0yLRkBXZzFa8YlebK3iUUR2+zgPgrJ5zaziwxm7OGykIMphUVIvtDzSO62X/e2pFpwhg3ug0uawnPSpemsIZ+3nybHCAW5sWGeTuSGdg==; Domain=.mildura.vic.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:14 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJkMDU0ZTZhOS1iMWMwLTQ3MzEtOTk1Ny02ZDJmYjZlNDI0YTMiLCJBZGRyZXNzU2luZ2xlTGluZSI6Ijc2LTg0IERlYWtpbiBBdmVudWUsIE1JTERVUkEgVklDIDM1MDAiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6Ik5vd2luZ2kgUGxhY2UiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjE1Ljk4ODMwNSwiTGF0TG9uIjpudWxsfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.mildura.vic.gov.au/ocapi/Public/myarea/wasteservices 27ebd18c73",
+      "method": "GET",
+      "url": "https://www.mildura.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.mildura.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=d054e6a9-b1c0-4731-9957-6d2fb6e424a3&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"d054e6a9-b1c0-4731-9957-6d2fb6e424a3\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "504",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:15 GMT",
+        "set-cookie": "ASP.NET_SessionId=prud0s2sc3aompsutmomz1kz; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=937, ak_p; desc=\"1790185574456_386904732_190997934_93787_17703_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlWW91ciBCaW4gQ29sbGVjdGlvbiBEYXlzXHUwMDNjL2gyXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cImdyaWQgd2FzdGUtc2VydmljZXMtcmVzdWx0cyByZXN1bHRzLTVcIlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZU9yZ2FuaWNzIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuIFBsYWNlIGJpbiBvdXQgdGhlIG5pZ2h0IGJlZm9yZSB0aGUgY29sbGVjdGlvbiBkYXRlLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDI1LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ2VuZXJhbC13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0xXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlTGFuZGZpbGwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LlxuUGxhY2UgYmluIG91dCB0aGUgbmlnaHQgYmVmb3JlIHRoZSBjb2xsZWN0aW9uIGRhdGUuXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIEZyaSAyLzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHJlY3ljbGluZyBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseS4gUGxhY2UgYmluIG91dCB0aGUgbmlnaHQgYmVmb3JlIHRoZSBjb2xsZWN0aW9uIGRhdGUuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBGcmkgMjUvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBnbGFzcyBkYXRlLXByZWNpc2UgaXRlbS0zXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlR2xhc3NcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGV2ZXJ5IGZvdXIgd2Vla3MuIFBsYWNlIGJpbiBvdXQgdGhlIG5pZ2h0IGJlZm9yZSBjb2xsZWN0aW9uIGRhdGUuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUdWUgNi8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBzZXJ2aWNlLWFyZWEgZGF0ZS1hcHByb3ggaXRlbS00XCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlQmluIENvbGxlY3Rpb24gQXJlYVx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgWW91IGFyZSBpbiBBcmVhIDJcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.ryde.nsw.gov.au/api/v1/myarea/search 169944a25d",
+      "method": "GET",
+      "url": "https://www.ryde.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.ryde.nsw.gov.au/api/v1/myarea/search?keywords=504+Victoria+Road+Ryde+2112",
+      "body": "{\"params\":[[\"keywords\",\"504 Victoria Road Ryde 2112\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "219",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:49 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=18, origin; dur=935, ak_p; desc=\"1790185608148_386904718_116361028_95313_18234_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=FE893D3889FCB7CB8D3163ACA210E9C5~000000000000000000000000000000~YAAQjrIPFwC1rcSgAQAArZdgzwGEKiCWouTLvkBQSdymqeVaZsU9OzFwvJTLshKkxbQuy6QA4B/nYIzbzKDGJl4B2MT55FZzeDmJpJY3d5eZtshtQ/qeHDT2y58Pu1Nbh6Q270NMKHEpnPqhTgzY4V6i9pKtw+imOxaganLubwU0YXZNH91wr/7yUI/78p27169cL1d5TXHKKy/N5mH6/N0US1upLTsNsxoNnltd208SjaYU/DgTSgKTqJsucm/2dgLGPUGX2tN9yR/ygGFQfTLbuwmnwSxIGOa8gVXnkw9OgveUqwk6eU6h2VjNFa+XLeLUASrhN6oE+GV0AV6CRtievARwKWJ1e+jpT9IhM4tIQbXccre8q0L9ySLKlzWb02uUv1Oz8B0IgdWbOH1oy9Gw/g==; Domain=.ryde.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:48 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI2MTllZjRjYS00NWUyLTQ4NjYtYTU1Yi0xNjVlNmQ1NjM5NDMiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjUwNCBWaWN0b3JpYSBSb2FkLCBSeWRlIDIxMTIiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IkVhc3QgV2FyZCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjIuMjYwNTIsIkxhdExvbiI6bnVsbH1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices 9d60c7147b",
+      "method": "GET",
+      "url": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=619ef4ca-45e2-4866-a55b-165e6d563943&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"619ef4ca-45e2-4866-a55b-165e6d563943\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "343",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:50 GMT",
+        "set-cookie": "ASP.NET_SessionId=de5bv4jzilzrmshlz0qgx0um; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1077, ak_p; desc=\"1790185609144_386904718_116363121_107744_20020_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbiAyOC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VHYXJkZW4gT3JnYW5pY3NcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbiA1LzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHJlY3ljbGluZyBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gMjgvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

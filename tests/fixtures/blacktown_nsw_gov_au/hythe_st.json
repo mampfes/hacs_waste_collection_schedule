@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/api/v1/myarea/search 16163d0136",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search?keywords=9-11+Hythe+St%2C+Mount+Druitt+NSW+2770",
+      "body": "{\"params\":[[\"keywords\",\"9-11 Hythe St, Mount Druitt NSW 2770\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:37 GMT",
+        "content-length": "493",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=160, origin; dur=1184, ak_p; desc=\"1790185475795_1752388118_71771895_134435_17370_5_15_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=1273ADA9E9272CE5DF0DAC2E087BBF70~000000000000000000000000000000~YAAQFlJzaPuMesugAQAAd5RezwFce41Hk68qEc0qvASHbecFaOgINZp933ehdp2KW1u79I9kW1712Wa+vW0zxMd8c/yAKjDAcBe4pg8NJYEsanHKgIQ/tuBg54XMM8Mr5sjl71ojXD2z/zk4TKgXScih/9UxNd4w9iB4zzwGY9QiFcL3Cy20moF40XwXRY75BSa1dXQOFgDGA+NTdKtM1rnv092BZ3ibFS5LkgT7I5q3Xojn+AELXQpk38NERJFiiwS330jg8Lu3U2Om8FbMML0lEzi8IR2Oq+dMAjEGAccumVZ6vcikiexC+89B9MBh9NOELfGvol/MLdDPnvWEIioLXZo//rsglDsSnd82w4YTtzHBpcs6KeQIDiBeOxG+gIALOkVQICaL7Zlfjy2MUIPgYiL92rnO; Domain=.blacktown.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:35 GMT; Max-Age=7198; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJkZmU4ZDEyNS0zNWRmLTQ1M2QtYmY5OC1jZGIxMjE4ZWZkZTkiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjExIEh5dGhlIFN0cmVldCwgTU9VTlQgRFJVSVRUIE5TVyAyNzcwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJXYXJkIDQiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjIzLjI2NjM2MSwiTGF0TG9uIjpudWxsfSx7IklkIjoiMmI0ODlhNGItMzczMy00ZWRlLTllOTAtODBhZmU4MmQyZTMxIiwiQWRkcmVzc1NpbmdsZUxpbmUiOiI5IEh5dGhlIFN0cmVldCwgTU9VTlQgRFJVSVRUIE5TVyAyNzcwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJXYXJkIDQiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjIzLjIxODg5MywiTGF0TG9uIjpudWxsfSx7IklkIjoiOTAyMTRjY2MtYjVhNS00ZWNjLWFiODItMGE4MjZmZDNmMGY2IiwiQWRkcmVzc1NpbmdsZUxpbmUiOiIxMS8zNyBIeXRoZSBTdHJlZXQsIE1PVU5UIERSVUlUVCBOU1cgMjc3MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2FyZCA0IiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyMS40NTY1MjYsIkxhdExvbiI6bnVsbH0seyJJZCI6IjVjYzhkODZhLWY1ZWQtNGRlNi04ZTQ5LTBhMWNkYTJiN2E3MyIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiMTEvNDAgSHl0aGUgU3RyZWV0LCBNT1VOVCBEUlVJVFQgTlNXIDI3NzAiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IldhcmQgNCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuNDU2NTI2LCJMYXRMb24iOm51bGx9LHsiSWQiOiJiMjNhYmQ4Ni0wZTQwLTRlYzYtODg1Yi0wYjY3NzlmMTliMTkiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMTEgSHl0aGUgU3RyZWV0LCBNT1VOVCBEUlVJVFQgTlNXIDI3NzAiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IldhcmQgNCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuNDU2NTI2LCJMYXRMb24iOm51bGx9LHsiSWQiOiJhNjBmMTY3MC05MDgyLTQwZDEtODgyMS0xNTllOGU5MjgyZTYiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjExLzIxIEh5dGhlIFN0cmVldCwgTU9VTlQgRFJVSVRUIE5TVyAyNzcwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJXYXJkIDQiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjIxLjQ1NjUyNiwiTGF0TG9uIjpudWxsfSx7IklkIjoiN2QzMjU0ZGEtMmJlNi00NjZkLWE4M2YtNDA1OTE5MmI0MDYzIiwiQWRkcmVzc1NpbmdsZUxpbmUiOiIxMS8zMCBIeXRoZSBTdHJlZXQsIE1PVU5UIERSVUlUVCBOU1cgMjc3MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2FyZCA0IiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyMS40NTY1MjYsIkxhdExvbiI6bnVsbH0seyJJZCI6IjY0YWM1Zjk0LWJhMjItNDA4OC05ZDQyLTRjMzc0YWJhM2JjNiIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiMTEvMTIgSHl0aGUgU3RyZWV0LCBNT1VOVCBEUlVJVFQgTlNXIDI3NzAiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IldhcmQgNCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuNDU2NTI2LCJMYXRMb24iOm51bGx9LHsiSWQiOiJlYmFhNGEwYi02MzY5LTQ0N2ItYTg2Yy01ODg1ZTZiYzNiNmIiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjExLzI2QSBIeXRoZSBTdHJlZXQsIE1PVU5UIERSVUlUVCBOU1cgMjc3MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2FyZCA0IiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyMS40NTY1MjYsIkxhdExvbiI6bnVsbH0seyJJZCI6IjUyNzdhY2Y1LTM5NmQtNDIwNS1hODAyLTU4ZDRkMGFlMjI1YyIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiMTEvMjggSHl0aGUgU3RyZWV0LCBNT1VOVCBEUlVJVFQgTlNXIDI3NzAiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IldhcmQgNCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuNDU2NTI2LCJMYXRMb24iOm51bGx9XSwiT2Zmc2V0IjowLCJMaW1pdCI6MTAsIlRvdGFsIjoxMH0="
+    },
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices 2229159d09",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=dfe8d125-35df-453d-bf98-cdb1218efde9&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"dfe8d125-35df-453d-bf98-cdb1218efde9\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "448",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:38 GMT",
+        "set-cookie": "ASP.NET_SessionId=q0ncf0oin5n2yq3gebvupgcc; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1109, ak_p; desc=\"1790185477315_1752388118_71774534_110903_19685_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxhY2UgYmluIG9uIHRoZSBrZXJic2lkZS9uYXR1cmUgc3RyaXAgdGhlIG5pZ2h0IGJlZm9yZSBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiL1NlcnZpY2VzL1dhc3RlL0hvdXNlaG9sZC13YXN0ZVwiIHRhcmdldD1cIl9zZWxmXCJcdTAwM2VIb3VzZWhvbGQgZ2FyYmFnZSBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGFjZSBiaW4gb24gdGhlIGtlcmJzaWRlL25hdHVyZSBzdHJpcCB0aGUgbmlnaHQgYmVmb3JlIGNvbGxlY3Rpb24uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gNS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

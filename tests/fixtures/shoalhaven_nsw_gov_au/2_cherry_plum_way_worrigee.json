@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.shoalhaven.nsw.gov.au/api/v1/myarea/search f0196d7302",
+      "method": "GET",
+      "url": "https://www.shoalhaven.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.shoalhaven.nsw.gov.au/api/v1/myarea/search?keywords=2+Cherry+Plum+Way%2C+WORRIGEE",
+      "body": "{\"params\":[[\"keywords\",\"2 Cherry Plum Way, WORRIGEE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "248",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:55 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=36, origin; dur=872, ak_p; desc=\"1790185614809_386904812_8998614_90801_22580_5_14_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=62769CA980E4D7EED538045C130923C0~000000000000000000000000000000~YAAQ7LIPF+UIAM6gAQAAjLFgzwFK3Nyvtx3fCPk7Gosae4mkh/r7qoEz1JOekrs4xf7FA5jzRnWzXmx0DgrAdq7KjBAF2JhKmukfERDqfy/iJvWTS4FnjaA42Nn+uL9IEIuJs1IgrRkYC+IGkJdxzAIwIIDgg1QZy2oAhYOWgLGZfReelPNFBoswgcMJ/aN96Z2ukY0XFz3sRE5rguQaS2CWoWGAZeoEpQoSsJkPuNd5YoWEFBgFLPgJTdViq04FX2zypHBo06ypOYfeEwp7wKO6vjhAOy2h9aVXz1Q/OYQMmSuKtrcHV4KObhuyGtbYr2GA6LsdyR6bOjorAUHOBhFmasdMH05Yn8f2KI1W+DEjsMe0MNqa5TF/SnzOJTQ0o4PQ69z3tesjEPKKggmzg9RDtXVIqceB; Domain=.shoalhaven.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:54 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI1OWUzMjA1ZC0yZGU5LTRjNzAtOWI3MC1mYmIzOTcwZTBlZjEiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjIgQ2hlcnJ5IFBsdW0gV2F5LCBXT1JSSUdFRSIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2FyZCAyIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjozNS44NjIwMzgsIkxhdExvbiI6Wy0zNC44OTE5OTU3ODExMjEyLDE1MC42MjI4Mzg0NDIxOTVdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.shoalhaven.nsw.gov.au/ocapi/Public/myarea/wasteservices 41665fb24a",
+      "method": "GET",
+      "url": "https://www.shoalhaven.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.shoalhaven.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=59e3205d-2de9-4c70-9b70-fbb3970e0ef1&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"59e3205d-2de9-4c70-9b70-fbb3970e0ef1\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "798",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:57 GMT",
+        "set-cookie": "ASP.NET_SessionId=l3om0sz1lpmijwxc3trh3053; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=90, origin; dur=1172, ak_p; desc=\"1790185615766_386904812_8999289_126101_18424_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlSW5mb3JtYXRpb24gZm9yIHlvdXIgYWRkcmVzc1x1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy00XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxhY2UgYmluIG9uIHRoZSBrZXJiIGJlZm9yZSB0aGUgbW9ybmluZyBvZiBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiL0hvbWUtYW5kLXByb3BlcnR5L1JlY3ljbGluZy1hbmQtd2FzdGUvWW91ci13YXN0ZS1zZXJ2aWNlcy9BYm91dC15b3VyLXJlZC1saWQtYmluP3JlZGlyZWN0PW15YXJlYVwiIHRhcmdldD1cIlwiXHUwMDNlTGVhcm4gbW9yZSBhYm91dCB5b3VyIHJlZC1saWQgYmluXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGFjZSBiaW4gb24gdGhlIGtlcmIgYmVmb3JlIHRoZSBtb3JuaW5nIG9mIGNvbGxlY3Rpb24uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvSG9tZS1hbmQtcHJvcGVydHkvUmVjeWNsaW5nLWFuZC13YXN0ZS9Zb3VyLXJlY3ljbGluZy1zZXJ2aWNlcy9BYm91dC15b3VyLXllbGxvdy1saWQtYmluP3JlZGlyZWN0PW15YXJlYVwiIHRhcmdldD1cIlwiXHUwMDNlTGVhcm4gbW9yZSBhYm91dCB5b3VyIHllbGxvdy1saWQgYmluXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgYXJlYSBkYXRlLWFwcHJveCBpdGVtLTJcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmcgY29sbGVjdGlvbiBhcmVhXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUJpbiBjb2xsZWN0aW9ucyBhY3Jvc3MgdGhlIFNob2FsaGF2ZW4gYXJlIGRpdmlkZWQgaW50byBBcmVhIDEgYW5kIEFyZWEgMi4gWW91ciByZWN5Y2xpbmcgYmlucyB3aWxsIGJlIGNvbGxlY3RlZCBvbiBhbHRlcm5hdGluZyB3ZWVrcyBkZXBlbmRpbmcgb24gd2hpY2ggYXJlYSB5b3UgYXJlIGxvY2F0ZWQgaW4uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvSG9tZS1hbmQtcHJvcGVydHkvUmVjeWNsaW5nLWFuZC13YXN0ZS9Zb3VyLXJlY3ljbGluZy1zZXJ2aWNlcy9BYm91dC15b3VyLXllbGxvdy1saWQtYmluL1llbGxvdy1saWQtYmluLWNvbGxlY3Rpb24tY2FsZW5kYXI/cmVkaXJlY3Q9bXlhcmVhXCIgdGFyZ2V0PVwiXCJcdTAwM2VWaWV3IHRoZSByZWN5Y2xpbmcgY29sbGVjdGlvbiBjYWxlbmRhclx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFlvdSBhcmUgaW4gcmVjeWNsaW5nIEFyZWEgMVxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2Ugd2FyZCBkYXRlLWFwcHJveCBpdGVtLTNcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VXYXJkXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVRoZSBTaG9hbGhhdmVuIGlzIGEgZGl2aWRlZCBMR0EgbWFkZSB1cCBvZiAzIHdhcmRzIHdpdGggYW4gZXF1YWwgbnVtYmVyIG9mIENvdW5jaWxsb3JzIHJlcHJlc2VudGluZyBlYWNoIHdhcmQuIFRoZSBDb3VuY2lsbG9ycyB0aGF0IHJlcHJlc2VudCB5b3UgZGVwZW5kIG9uIHdoaWNoIHdhcmQgeW91IGFyZSBpbi5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cIi9Db3VuY2lsL0NvdW5jaWwtZWxlY3Rpb25zLWFuZC12b3Rpbmc/cmVkaXJlY3Q9bXlhcmVhXCIgdGFyZ2V0PVwiXCJcdTAwM2VMZWFybiBtb3JlIGFib3V0IENvdW5jaWwgZWxlY3Rpb25zIGFuZCB2b3RpbmdcdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBZb3UgYXJlIGluIFdhcmQgMlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

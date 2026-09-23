@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.logan.qld.gov.au/api/v1/myarea/search 30861f20c5",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.logan.qld.gov.au/api/v1/myarea/search?keywords=12+Ashton+Street+Kingston&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"12 Ashton Street Kingston\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "249",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:27 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=29, origin; dur=1162, ak_p; desc=\"1790185526034_386904719_86977084_119070_15133_5_14_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=6E600239C060571245BF03F0E3F90FF9~000000000000000000000000000000~YAAQj7IPFzScgMWgAQAA1ldfzwGjlzW9dBcOB1V0Mo47uqTnWIuTy+12UpMC4MWv4292uJAu01Cgf7rnBa4P2XPkD4NGzTeoAr1+BHNs404s4MDxQNiz1GukwUb34p0+uY7UD9pPKpyUUDYW5IErp8w6p/6j2YegFAg/NvhuNo5xqbM1iVrGyYAsNZt3Dg0TLvwfi+mE51HY/FTw2hN5EGRNL9CZ87cLbjapCOtYltQsJp8rJ64jSAE2OScVgCK9eLr66pjwvf6eErJQcAkHsH8Fewr6/9KVYO68rBnMgTlu+/TEru9nSv5Vt2zJQCN82R9oD2jytIw+OPPFCUkkS95/ChR8oWaJjcri8kdcW/P4a9W50jhBtGAPk8464r2iA8eJCcazxzJQLDbBJjrAQTlCFw4=; Domain=.logan.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:26 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJkNjE2YmQ2OS04ZjM4LTQ5MWMtYWQ5ZS1lODBlZTE3ZDEzNjciLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEyIEFzaHRvbiBTdHJlZXQgS0lOR1NUT04gIFFMRCAgNDExNCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiRGl2aXNpb24gMiIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuMDMxNjQsIkxhdExvbiI6Wy0yNy42NTMyOTAwNSwxNTMuMTA4Nzk2Nl19XSwiT2Zmc2V0IjowLCJMaW1pdCI6MSwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices dad0ad7c00",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=d616bd69-8f38-491c-ad9e-e80ee17d1367&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"d616bd69-8f38-491c-ad9e-e80ee17d1367\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "345",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:28 GMT",
+        "set-cookie": "ASP.NET_SessionId=syv0b2oaw24ugwtbz22m2mm4; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=884, ak_p; desc=\"1790185527309_386904719_86978271_88398_15243_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZG5lc2RheSAzMCBTZXB0ZW1iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZG5lc2RheSA3IE9jdG9iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBXZWRuZXNkYXkgMzAgU2VwdGVtYmVyIDIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

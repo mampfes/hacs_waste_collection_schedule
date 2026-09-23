@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.cassowarycoast.qld.gov.au/api/v1/myarea/searchfuzzy 1b442df311",
+      "method": "GET",
+      "url": "https://www.cassowarycoast.qld.gov.au/api/v1/myarea/searchfuzzy",
+      "final_url": "https://www.cassowarycoast.qld.gov.au/api/v1/myarea/searchfuzzy?keywords=10+Bombala+Street%2C+Mourilyan%2C+4858&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"10 Bombala Street, Mourilyan, 4858\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "216",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:47 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=301, origin; dur=940, ak_p; desc=\"1790185486349_1752388110_145158469_124097_23210_4_14_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=78A5D1DD4E0D9B9EA39AE1C8F1B6BB8F~000000000000000000000000000000~YAAQDlJzaMsQsMmgAQAADL1ezwE4SgeQB5w5UTHC8WMFRnHVRoljEoRrKyR7/nNEkbw90Ral0wTRkRTAv2VOPji06N09bahPBsI6HAo2paqot85RLVckRNdWjuvzYlVKPxhiEvHhvabVoDWRoAbC2Y6dL0vmZtNFNWxw8jyHLD5gim65XxFDPmkQlRoW9JqbnvZUr+wzSNATDPe7E1BhgeOdH1M+SBtmopJoc6fa3rFVwpLqBG2c1T/UMWKozjVV0HFoL4ozKJcJQAy6oMu5o43zv07/APmUbMxlr0Yby1vTOE/xXc4DVj/pLbzrGZ0RZFPV2849dx0qocLqbOZ1QBsG9S4oWq8gn5F8OItKDTx42iV7iqdC3g7NwjTyHBMk8imFLaZp0mbMbV093IgEnxiGbuBhLyaAw6kStZo=; Domain=.cassowarycoast.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:46 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJjMDhiYmRlMy0wNzU4LTQ2ZGMtODkyNC02MjdhYjdhYzY2ODUiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEwIEJvbWJhbGEgU3RyZWV0IE1PVVJJTFlBTiA0ODU4IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6MjIuNjQyNTMyLCJMYXRMb24iOm51bGx9XSwiT2Zmc2V0IjowLCJMaW1pdCI6MSwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.cassowarycoast.qld.gov.au/ocapi/Public/myarea/wasteservices a376b302e9",
+      "method": "GET",
+      "url": "https://www.cassowarycoast.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.cassowarycoast.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=c08bbde3-0758-46dc-8924-627ab7ac6685&ocsvclang=en-AU&pageLink=%2FWaste-Water-and-Roads%2FWaste-and-Recycling%2FKerbside-Collection",
+      "body": "{\"params\":[[\"geolocationid\",\"c08bbde3-0758-46dc-8924-627ab7ac6685\"],[\"ocsvclang\",\"en-AU\"],[\"pageLink\",\"/Waste-Water-and-Roads/Waste-and-Recycling/Kerbside-Collection\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "349",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:48 GMT",
+        "set-cookie": "ASP.NET_SessionId=mnj4vzomm5dh02tw1rr14icr; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1159, ak_p; desc=\"1790185487646_1752388110_145161682_115961_22950_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHJlY3ljbGluZyBkYXRlLXByZWNpc2UgaXRlbS0wXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBldmVyeSBmb3J0bmlnaHQgXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gNS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBnZW5lcmFsLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VHZW5lcmFsIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBldmVyeSB3ZWVrXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gMjgvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}
