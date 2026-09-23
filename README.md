@@ -4080,6 +4080,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
 - [Peoria (IL)](/doc/source/recyclecoach_com.md) / peoriagov.org/533/Yes-Peoria-Picks-Up
+- [Phoenix, AZ](/doc/source/phoenix_gov.md) / phoenix.gov/publicworks/garbage/trashschedule/find-your-day-of-collection
 - [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
 - [Prince George's County, MD](/doc/source/prince_georges_county_md_us.md) / princegeorgescountymd.gov/departments-offices/environment/waste-recycling/residential-collections
 - [ReCollect](/doc/ics/recollect.md) / recollect.net

@@ -7146,8 +7146,6 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Naslov",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Občina"
         },
         "data_description": {
@@ -7160,8 +7158,6 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Naslov",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Občina"
         },
         "data_description": {}
@@ -31067,6 +31063,26 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Ulica"
+        },
+        "data_description": {}
+      },
+      "args_phoenix_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_phoenix_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov"
         },
         "data_description": {}
       },

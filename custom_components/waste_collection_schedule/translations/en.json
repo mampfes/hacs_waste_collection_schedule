@@ -7445,8 +7445,6 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
         },
         "data_description": {
@@ -7459,8 +7457,6 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
         },
         "data_description": {}
@@ -32391,6 +32387,29 @@
         },
         "data_description": {
           "street": "Street name (e.g. 'Ripcord Lane')"
+        }
+      },
+      "args_phoenix_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')"
+        }
+      },
+      "reconfigure_phoenix_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')"
         }
       },
       "args_prince_georges_county_md_us": {

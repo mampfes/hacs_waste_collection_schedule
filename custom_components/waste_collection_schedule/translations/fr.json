@@ -7201,8 +7201,6 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipalité"
         },
         "data_description": {
@@ -7215,8 +7213,6 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "address_id": "Address Id",
-          "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipalité"
         },
         "data_description": {}
@@ -31271,6 +31267,26 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street": "Rue"
+        },
+        "data_description": {}
+      },
+      "args_phoenix_gov": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_phoenix_gov": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
         },
         "data_description": {}
       },
