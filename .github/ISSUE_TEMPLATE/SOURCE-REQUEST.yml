@@ -16,6 +16,12 @@ body:
 
         ---
 
+        ### ⚠️ PDF-only providers will not be implemented by the maintainers
+
+        We receive many requests for providers that only publish their schedule as a PDF. **The maintainers do not have the capacity to implement these.** Such requests stay open only in the hope that a community member with a particular interest in PDF parsing picks them up. If you want to see it happen, please implement it yourself (see below) or find someone who will.
+
+        ---
+
         ### 💡 Have you considered implementing this yourself?
 
         Source requests are very welcome, but please note that only a small number of contributors are currently active. Most available maintainer capacity is focused on reviewing pull requests and fixing critical issues — there is no guarantee your request will be picked up.
@@ -53,13 +59,14 @@ body:
     id: format
     attributes:
       label: Data Format
-      description: How does the provider make collection dates available?
+      description: How does the provider make collection dates available? Note that requests for PDF-only providers will not be implemented by the maintainers,
+        only by community members who take them on.
       options:
         - ICS / iCal calendar file
         - HTML webpage (dates visible on the page)
         - JSON / REST API
         - Mobile app only (iOS/Android)
-        - PDF download only
+        - PDF download only (not implemented by maintainers, community contribution needed)
         - Other (describe in additional information)
     validations:
       required: true
