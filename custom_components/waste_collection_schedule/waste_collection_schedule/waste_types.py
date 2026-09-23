@@ -96,7 +96,7 @@ GENERAL_WASTE = WasteType(
         "it": ["indifferenziato", "secco", "secco residuo"],
         "nl": ["restafval", "restafvalcontainer"],
         "sl": ["mešani komunalni odpadki", "mešani odpadki", "mesani", "mko", "ost."],
-        "da": ["restaffald", "rest affald", "rest efter sortering", "rest"]
+        "da": ["restaffald", "rest affald", "rest efter sortering", "rest"],
     },
 )
 
@@ -143,7 +143,7 @@ RECYCLABLES = WasteType(
         "it": ["imballaggi", "plastica e lattine", "multimateriale"],
         "nl": ["pmd", "plastic", "verpakkingen", "plastic verpakkingen"],
         "sl": ["mešana embalaža", "embalaža", "embalaza", "emb", "emb."],
-        "da": ["genbrug"]
+        "da": ["genbrug"],
     },
 )
 
@@ -266,7 +266,7 @@ GARDEN_WASTE = WasteType(
         "it": "Rifiuto verde",
         "nl": "Tuinafval",
         "sl": "Zeleni odrez",
-        "da": "Haveaffald"
+        "da": "Haveaffald",
     },
     aliases={
         "en": [
@@ -351,7 +351,7 @@ HAZARDOUS = WasteType(
         "fr": ["déchets toxiques"],
         "nl": ["kca", "chemisch afval", "klein chemisch afval"],
         "sl": ["nevarni odpadki"],
-        "da": ["kemisk affald", "maling"]
+        "da": ["kemisk affald", "maling"],
     },
 )
 
@@ -384,7 +384,7 @@ ELECTRONICS = WasteType(
         "it": ["raee"],
         "nl": ["e-waste", "elektrische apparaten", "wit- en bruingoed", "elektronica"],
         "sl": ["elektronski odpadki", "e-odpadki", "odpadna električna oprema"],
-        "da": ["gammel elektronik", "elektronik til genbrug"]
+        "da": ["gammel elektronik", "elektronik til genbrug"],
     },
 )
 

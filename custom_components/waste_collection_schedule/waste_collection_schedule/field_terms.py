@@ -240,12 +240,21 @@ ADDRESS = _term(
     # breaks an exact-match lookup for a reason the user cannot see.
     coerce=as_text,
 )
-REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio", "Regija", "Region")
+REGION = _term(
+    "region", "Region", "Region", "Région", "Regione", "Regio", "Regija", "Region"
+)
 # Administrative levels above the municipality (used by German platforms whose
 # cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
 # German "Land"/"Landkreis" where there is no close equivalent; review welcome.
 STATE = _term(
-    "state", "Federal State", "Bundesland", "Land", "Land", "Deelstaat", "Zvezna dežela", "Region"
+    "state",
+    "Federal State",
+    "Bundesland",
+    "Land",
+    "Land",
+    "Deelstaat",
+    "Zvezna dežela",
+    "Region",
 )
 # COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
 # English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
@@ -404,7 +413,7 @@ WASTE_TYPES = _term(
         "Filtro facoltativo: i tipi di rifiuto da includere.",
         "Optioneel filter: de op te nemen afvalsoorten.",
         "Opcijski filter: tipi odpadkov, ki naj bodo vključeni.",
-        "Valgfrit filter: affaldstyperne du vil inkludere."
+        "Valgfrit filter: affaldstyperne du vil inkludere.",
     ),
     # Rendered as a plain text field (no generic multi-select), so the
     # config-flow UI stores what the visitor typed as one comma separated
