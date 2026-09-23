@@ -20612,6 +20612,7 @@
           "g5": "Group 5",
           "house_number": "House Number",
           "language": "Language",
+          "region": "Region",
           "street": "Street",
           "town": "City"
         },
@@ -20639,6 +20640,7 @@
           "g5": "Group 5",
           "house_number": "House Number",
           "language": "Language",
+          "region": "Region",
           "street": "Street",
           "town": "City"
         },

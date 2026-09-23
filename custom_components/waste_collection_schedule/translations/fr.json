@@ -20079,6 +20079,7 @@
           "g5": "G5",
           "house_number": "Numéro",
           "language": "Language",
+          "region": "Région",
           "street": "Rue",
           "town": "Ville"
         },
@@ -20106,6 +20107,7 @@
           "g5": "G5",
           "house_number": "Numéro",
           "language": "Language",
+          "region": "Région",
           "street": "Rue",
           "town": "Ville"
         },

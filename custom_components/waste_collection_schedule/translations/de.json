@@ -20186,6 +20186,7 @@
           "g5": "G5",
           "house_number": "Hausnummer",
           "language": "Language",
+          "region": "Region",
           "street": "Straße",
           "town": "Stadt"
         },
@@ -20213,6 +20214,7 @@
           "g5": "G5",
           "house_number": "Hausnummer",
           "language": "Language",
+          "region": "Region",
           "street": "Straße",
           "town": "Stadt"
         },

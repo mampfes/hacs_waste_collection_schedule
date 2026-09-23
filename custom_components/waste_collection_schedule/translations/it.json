@@ -20044,6 +20044,7 @@
           "g5": "G5",
           "house_number": "Numero civico",
           "language": "Language",
+          "region": "Regione",
           "street": "Via",
           "town": "Città"
         },
@@ -20071,6 +20072,7 @@
           "g5": "G5",
           "house_number": "Numero civico",
           "language": "Language",
+          "region": "Regione",
           "street": "Via",
           "town": "Città"
         },

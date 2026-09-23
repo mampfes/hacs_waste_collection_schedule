@@ -19926,6 +19926,7 @@
           "g5": "G5",
           "house_number": "Hišna številka",
           "language": "Language",
+          "region": "Regija",
           "street": "Ulica",
           "town": "Mesto"
         },
@@ -19953,6 +19954,7 @@
           "g5": "G5",
           "house_number": "Hišna številka",
           "language": "Language",
+          "region": "Regija",
           "street": "Ulica",
           "town": "Mesto"
         },

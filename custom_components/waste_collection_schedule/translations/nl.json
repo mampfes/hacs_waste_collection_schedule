@@ -19928,6 +19928,7 @@
           "g5": "G5",
           "house_number": "Huisnummer",
           "language": "Language",
+          "region": "Regio",
           "street": "Straat",
           "town": "Plaats"
         },
@@ -19955,6 +19956,7 @@
           "g5": "G5",
           "house_number": "Huisnummer",
           "language": "Language",
+          "region": "Regio",
           "street": "Straat",
           "town": "Plaats"
         },
