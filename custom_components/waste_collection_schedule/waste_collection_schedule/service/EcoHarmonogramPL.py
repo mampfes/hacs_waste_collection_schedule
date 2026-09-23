@@ -1,9 +1,9 @@
 import datetime
+import hashlib
 import json
 import logging
 import re
 from collections.abc import Mapping
-from random import randrange
 from typing import TYPE_CHECKING, Any, Literal, TypedDict, get_args
 
 from waste_collection_schedule import response_shape
@@ -183,7 +183,13 @@ class EcoharmonogramClient:
     exclusively by :class:`EcoharmonogramRetriever`.
     """
 
-    def __init__(self, session: Any, app: "str | None" = None, language: str = "pl"):
+    def __init__(
+        self,
+        session: Any,
+        app: "str | None" = None,
+        language: str = "pl",
+        client_seed: str = "",
+    ):
         self._session = session
         self._headers = {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -191,7 +197,11 @@ class EcoharmonogramClient:
         }
         self._app = app or None
         self._language = language if language in SUPPORTED_LANGUAGES else "pl"
-        self._client_id = hex(randrange(0x1000000000000000, 0xFFFFFFFFFFFFFFFF))[2:]
+        # The API wants an opaque per-client id. It is derived from the caller's
+        # seed (the address) rather than drawn at random, so a given
+        # configuration always sends the same request and its recorded cassette
+        # can pin the request body.
+        self._client_id = hashlib.sha256(client_seed.encode("utf-8")).hexdigest()[:16]
 
     def _do_request(
         self, action: str, payload: Mapping[str, "str | int"], url: str = API_URL
@@ -342,6 +352,7 @@ class EcoharmonogramRetriever(RetrieverFunc):
         street: str = "street",
         house_number: str = "house_number",
         additional_sides_matcher: str = "additional_sides_matcher",
+        region: str = "region",
         community: str = "community",
         app: str = "app",
         language: str = "language",
@@ -351,6 +362,7 @@ class EcoharmonogramRetriever(RetrieverFunc):
         self.street = street
         self.house_number = house_number
         self.additional_sides_matcher = additional_sides_matcher
+        self.region = region
         self.community = community
         self.app = app
         self.language = language
@@ -362,12 +374,24 @@ class EcoharmonogramRetriever(RetrieverFunc):
         street_input = str(params.get(self.street) or "")
         house_number_input = str(params.get(self.house_number) or "")
         matcher_input = str(params.get(self.additional_sides_matcher) or "")
+        region_input = str(params.get(self.region) or "")
         community_input = str(params.get(self.community) or "")
         app = params.get(self.app) or None
         language = params.get(self.language) or "pl"
         groups = {f"g{i}": str(params.get(f"g{i}") or "") for i in range(1, 6)}
 
-        client = EcoharmonogramClient(source.session, app=app, language=language)
+        client_seed = "|".join(
+            (
+                town_input,
+                district_input,
+                street_input,
+                house_number_input,
+                community_input,
+            )
+        )
+        client = EcoharmonogramClient(
+            source.session, app=app, language=language, client_seed=client_seed
+        )
 
         town = self._resolve_town(client, town_input, district_input, community_input)
         schedule_periods = client.fetch_scheduled_periods(town).get(
@@ -385,6 +409,7 @@ class EcoharmonogramRetriever(RetrieverFunc):
                     house_number_input,
                     matcher_input,
                     groups,
+                    region_input,
                 )
             )
 
@@ -452,6 +477,7 @@ class EcoharmonogramRetriever(RetrieverFunc):
         house_number_input: str,
         matcher_input: str,
         groups: "dict[str, str]",
+        region_input: str = "",
     ) -> StreetResponse:
         group_id: str = "1"
         choosed_street_ids = ""
@@ -523,7 +549,51 @@ class EcoharmonogramRetriever(RetrieverFunc):
                 self.additional_sides_matcher, matcher_input, sides_suggestions
             )
 
-        return {**streets, "streets": narrowed}
+        return {
+            **streets,
+            "streets": self._narrow_by_region(
+                narrowed, region_input, house_number_input
+            ),
+        }
+
+    def _narrow_by_region(
+        self, candidates: "list[Street]", region_input: str, house_number_input: str
+    ) -> "list[Street]":
+        """Pick the sub-region of a town (e.g. "Nowy Ramiszów").
+
+        Some towns list one street once per collection area, distinguished only
+        by ``region``. Without a ``region`` the user is asked for one, but only
+        when the candidates left after house-number narrowing sit in more than
+        one *named* region: streets without a region, or a house number that
+        already selects a single region (Rzeszów, Krakowska 317E), keep working
+        without it.
+        """
+        wanted = region_input.strip().casefold()
+        if wanted:
+            matched = [
+                st
+                for st in candidates
+                if (st.get("region") or "").strip().casefold() == wanted
+            ]
+            if not matched:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    self.region,
+                    region_input,
+                    sorted(
+                        {(st.get("region") or "").strip() for st in candidates} - {""}
+                    ),
+                )
+            return matched
+
+        named = {
+            (st.get("region") or "").strip()
+            for st in _filter_streets_by_house_number(candidates, house_number_input)
+        } - {""}
+        if len(named) > 1:
+            raise SourceArgumentRequiredWithSuggestions(
+                self.region, region_input, sorted(named)
+            )
+        return candidates
 
     def _gather_reports(
         self,
@@ -534,9 +604,17 @@ class EcoharmonogramRetriever(RetrieverFunc):
         house_number_input: str,
         matcher_input: str,
         groups: "dict[str, str]",
+        region_input: str = "",
     ) -> "list[ScheduleResponse]":
         streets = self._resolve_streets(
-            client, sp, town, street_input, house_number_input, matcher_input, groups
+            client,
+            sp,
+            town,
+            street_input,
+            house_number_input,
+            matcher_input,
+            groups,
+            region_input,
         )
         streets_list = _filter_streets_by_house_number(
             streets["streets"], house_number_input
