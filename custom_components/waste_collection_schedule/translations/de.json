@@ -12412,7 +12412,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname wie in der Auswahlliste auf der Website angezeigt."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_sperrmuell_erlensee_de": {
@@ -12423,7 +12423,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "street": "Straßenname wie in der Auswahlliste auf der Website angezeigt."
+          "street": "Ihr Straßenname."
         }
       },
       "args_ics_esg_soest_de": {
@@ -12743,7 +12743,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "district": "Der Hasselrother Ortsteil, z. B. 'Neuenhasslau', 'Niedermittlau' oder 'Gondsroth'"
+          "district": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "reconfigure_hasselroth_de": {
@@ -12754,7 +12754,7 @@
           "district": "Ortsteil"
         },
         "data_description": {
-          "district": "Der Hasselrother Ortsteil, z. B. 'Neuenhasslau', 'Niedermittlau' oder 'Gondsroth'"
+          "district": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "args_ics_hille_de": {
@@ -12903,8 +12903,7 @@
           "district": "Bezirk"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "district": "Der Krifteler Abfallbezirk, zu dem Ihre Adresse gehört: '1', '2' oder '3'"
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_kriftel_de": {
@@ -12914,9 +12913,7 @@
           "calendar_title": "Kalender Titel",
           "district": "Bezirk"
         },
-        "data_description": {
-          "district": "Der Krifteler Abfallbezirk, zu dem Ihre Adresse gehört: '1', '2' oder '3'"
-        }
+        "data_description": {}
       },
       "args_ics_neuberg_de": {
         "title": "Quelle konfigurieren",
@@ -13090,7 +13087,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname wie im Gronauer Abfallkalender gelistet (z.B. 'Viktoriastraße')."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_gronau_de": {
@@ -13101,7 +13098,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "street": "Straßenname wie im Gronauer Abfallkalender gelistet (z.B. 'Viktoriastraße')."
+          "street": "Ihr Straßenname."
         }
       },
       "args_ics_hws_halle_de": {
@@ -16474,14 +16471,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hausnummer": "Hausnummer",
-          "ort": "Ort",
+          "ort": "Gemeinde",
           "strasse": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "hausnummer": "Hausnummer",
-          "ort": "Ort (Gemeinde im Landkreis Würzburg)",
-          "strasse": "Straße"
+          "hausnummer": "Ihre Hausnummer.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "reconfigure_team_orange_de": {
@@ -16490,13 +16487,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hausnummer": "Hausnummer",
-          "ort": "Ort",
+          "ort": "Gemeinde",
           "strasse": "Straße"
         },
         "data_description": {
-          "hausnummer": "Hausnummer",
-          "ort": "Ort (Gemeinde im Landkreis Würzburg)",
-          "strasse": "Straße"
+          "hausnummer": "Ihre Hausnummer.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "args_ics_tbr_reutlingen_de": {
@@ -18682,14 +18679,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "house_number_addition": "Hausnummernzusatz",
+          "house_number_addition": "House Number Addition",
           "postcode": "Postleitzahl"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "house_number": "Hausnummer Ihrer Adresse, z. B. '9'",
-          "house_number_addition": "Optionaler Hausnummernzusatz, z. B. 'A'",
-          "postcode": "Niederländische Postleitzahl Ihrer Adresse, z. B. '5406XP'"
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_deafvalapp_nl": {
@@ -18698,13 +18694,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "house_number_addition": "Hausnummernzusatz",
+          "house_number_addition": "House Number Addition",
           "postcode": "Postleitzahl"
         },
         "data_description": {
-          "house_number": "Hausnummer Ihrer Adresse, z. B. '9'",
-          "house_number_addition": "Optionaler Hausnummernzusatz, z. B. 'A'",
-          "postcode": "Niederländische Postleitzahl Ihrer Adresse, z. B. '5406XP'"
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "args_circulus_nl": {
@@ -22385,8 +22380,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "zone": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_aarberg_ch": {
@@ -22396,9 +22390,7 @@
           "calendar_title": "Kalender Titel",
           "zone": "Zone"
         },
-        "data_description": {
-          "zone": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
-        }
+        "data_description": {}
       },
       "args_kvatg_ch": {
         "title": "Quelle konfigurieren",
@@ -22578,14 +22570,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
-          "key": "Schlüssel (optional)",
-          "strasse": "Strasse"
+          "key": "Key",
+          "strasse": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "hnr": "Hausnummer, z. B. '1' oder '3a'.",
-          "key": "Optional: Schlüssel aus dem iKalender-Link, ersetzt Strasse und Hausnummer.",
-          "strasse": "Strassenname, z. B. 'Bundesplatz'."
+          "hnr": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "reconfigure_bern_ch": {
@@ -22594,13 +22585,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
-          "key": "Schlüssel (optional)",
-          "strasse": "Strasse"
+          "key": "Key",
+          "strasse": "Straße"
         },
         "data_description": {
-          "hnr": "Hausnummer, z. B. '1' oder '3a'.",
-          "key": "Optional: Schlüssel aus dem iKalender-Link, ersetzt Strasse und Hausnummer.",
-          "strasse": "Strassenname, z. B. 'Bundesplatz'."
+          "hnr": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "args_koeniz_ch": {
@@ -24846,10 +24836,12 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
           "garden_waste": "Garden Waste",
-          "postcode": "PLZ"
+          "postcode": "Postleitzahl"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_clackmannanshire_gov_uk": {
@@ -24859,9 +24851,12 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
           "garden_waste": "Garden Waste",
-          "postcode": "PLZ"
+          "postcode": "Postleitzahl"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse.",
+          "postcode": "Ihre Postleitzahl."
+        }
       },
       "args_colchester_gov_uk": {
         "title": "Quelle konfigurieren",

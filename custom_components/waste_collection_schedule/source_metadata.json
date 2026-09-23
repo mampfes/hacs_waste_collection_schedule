@@ -2818,7 +2818,10 @@
   },
   "hasselroth_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hasselroth_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Der Hasselrother Ortsteil, z. B. 'Neuenhasslau', 'Niedermittlau' oder 'Gondsroth'.",
+      "en": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'."
+    },
     "urls": {}
   },
   "ics_hille_de": {
@@ -2854,7 +2857,10 @@
   },
   "kriftel_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kriftel_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Der Krifteler Abfallbezirk, zu dem Ihre Adresse gehört: '1', '2' oder '3'.",
+      "en": "The Kriftel collection district your address belongs to: '1', '2' or '3'."
+    },
     "urls": {}
   },
   "ics_neuberg_de": {
@@ -4976,7 +4982,12 @@
   },
   "aarberg_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aarberg_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli.",
+      "en": "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli.",
+      "fr": "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli.",
+      "it": "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli."
+    },
     "urls": {}
   },
   "kvatg_ch": {
@@ -5629,7 +5640,9 @@
   },
   "clackmannanshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/clackmannanshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode, e.g. 'FK10 3EY', and the address exactly as shown in the search results on the council website, e.g. '16 Crophill, Sauchie'. Set garden waste to true if you hold a paid garden waste (brown bin) permit, to include its collection dates."
+    },
     "urls": {}
   },
   "colchester_gov_uk": {

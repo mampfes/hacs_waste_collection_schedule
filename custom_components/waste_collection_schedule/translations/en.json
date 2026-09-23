@@ -12669,7 +12669,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street": "Street name as shown in the dropdown on the website."
+          "street": "Your street name."
         }
       },
       "reconfigure_sperrmuell_erlensee_de": {
@@ -12680,7 +12680,7 @@
           "street": "Street"
         },
         "data_description": {
-          "street": "Street name as shown in the dropdown on the website."
+          "street": "Your street name."
         }
       },
       "args_ics_esg_soest_de": {
@@ -13000,7 +13000,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+          "district": "Your district or part of the municipality."
         }
       },
       "reconfigure_hasselroth_de": {
@@ -13011,7 +13011,7 @@
           "district": "District"
         },
         "data_description": {
-          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+          "district": "Your district or part of the municipality."
         }
       },
       "args_ics_hille_de": {
@@ -13157,11 +13157,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District"
+          "district": "Collection district"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "district": "The Kriftel collection district your address belongs to: '1', '2' or '3'"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_kriftel_de": {
@@ -13169,11 +13168,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District"
+          "district": "Collection district"
         },
-        "data_description": {
-          "district": "The Kriftel collection district your address belongs to: '1', '2' or '3'"
-        }
+        "data_description": {}
       },
       "args_ics_neuberg_de": {
         "title": "Configure Source",
@@ -13347,7 +13344,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street": "Street name as listed in the Gronau waste calendar (e.g. 'Viktoriastraße')."
+          "street": "Your street name."
         }
       },
       "reconfigure_gronau_de": {
@@ -13358,7 +13355,7 @@
           "street": "Street"
         },
         "data_description": {
-          "street": "Street name as listed in the Gronau waste calendar (e.g. 'Viktoriastraße')."
+          "street": "Your street name."
         }
       },
       "args_ics_hws_halle_de": {
@@ -16730,15 +16727,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hausnummer": "House number",
+          "hausnummer": "House Number",
           "ort": "Municipality",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "hausnummer": "Street number",
-          "ort": "Municipality in Landkreis Würzburg",
-          "strasse": "Street"
+          "hausnummer": "Your house number.",
+          "ort": "The name of your municipality, as shown on the provider's website.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_team_orange_de": {
@@ -16746,14 +16743,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hausnummer": "House number",
+          "hausnummer": "House Number",
           "ort": "Municipality",
           "strasse": "Street"
         },
         "data_description": {
-          "hausnummer": "Street number",
-          "ort": "Municipality in Landkreis Würzburg",
-          "strasse": "Street"
+          "hausnummer": "Your house number.",
+          "ort": "The name of your municipality, as shown on the provider's website.",
+          "strasse": "Your street name."
         }
       },
       "args_ics_tbr_reutlingen_de": {
@@ -19044,15 +19041,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House number",
+          "house_number": "House Number",
           "house_number_addition": "House number addition",
-          "postcode": "Postal code"
+          "postcode": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number of your address, e.g. '9'",
-          "house_number_addition": "Optional house number addition, e.g. 'A'",
-          "postcode": "Dutch postal code of your address, e.g. '5406XP'"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_deafvalapp_nl": {
@@ -19060,14 +19056,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House number",
+          "house_number": "House Number",
           "house_number_addition": "House number addition",
-          "postcode": "Postal code"
+          "postcode": "Postcode"
         },
         "data_description": {
-          "house_number": "House number of your address, e.g. '9'",
-          "house_number_addition": "Optional house number addition, e.g. 'A'",
-          "postcode": "Dutch postal code of your address, e.g. '5406XP'"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "args_circulus_nl": {
@@ -22940,8 +22935,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "zone": "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_aarberg_ch": {
@@ -22951,9 +22945,7 @@
           "calendar_title": "Calendar Title",
           "zone": "Zone"
         },
-        "data_description": {
-          "zone": "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
-        }
+        "data_description": {}
       },
       "args_kvatg_ch": {
         "title": "Configure Source",
@@ -23132,15 +23124,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hnr": "House number",
-          "key": "Key (optional)",
+          "hnr": "House Number",
+          "key": "Key",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "hnr": "House number, e.g. '1' or '3a'.",
-          "key": "Optional: key from the iCalendar link, replaces street and house number.",
-          "strasse": "Street name, e.g. 'Bundesplatz'."
+          "hnr": "Your house number.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_bern_ch": {
@@ -23148,14 +23139,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hnr": "House number",
-          "key": "Key (optional)",
+          "hnr": "House Number",
+          "key": "Key",
           "strasse": "Street"
         },
         "data_description": {
-          "hnr": "House number, e.g. '1' or '3a'.",
-          "key": "Optional: key from the iCalendar link, replaces street and house number.",
-          "strasse": "Street name, e.g. 'Bundesplatz'."
+          "hnr": "Your house number.",
+          "strasse": "Your street name."
         }
       },
       "args_koeniz_ch": {
@@ -25448,9 +25438,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address exactly as shown in the search results on the council website, e.g. '16 Crophill, Sauchie'.",
-          "garden_waste": "Set to true if you hold a paid garden waste (brown bin) permit, to include its collection dates (optional, default false).",
-          "postcode": "Postcode of the property, e.g. 'FK10 3EY'."
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_clackmannanshire_gov_uk": {
@@ -25463,9 +25452,8 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "address": "Address exactly as shown in the search results on the council website, e.g. '16 Crophill, Sauchie'.",
-          "garden_waste": "Set to true if you hold a paid garden waste (brown bin) permit, to include its collection dates (optional, default false).",
-          "postcode": "Postcode of the property, e.g. 'FK10 3EY'."
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "args_colchester_gov_uk": {
@@ -32410,11 +32398,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pickup_day": "Pickup Day"
+          "pickup_day": "Pickup day"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_millvalleyrefuse_com": {
@@ -32422,11 +32409,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pickup_day": "Pickup Day"
+          "pickup_day": "Pickup day"
         },
-        "data_description": {
-          "pickup_day": "The weekday your address is serviced (e.g. 'Wednesday'). MVRS collects Monday-Friday depending on your street. If omitted, each recycling week is marked on the Sunday it begins."
-        }
+        "data_description": {}
       },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",

@@ -12306,10 +12306,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_sperrmuell_erlensee_de": {
@@ -12317,9 +12318,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Il nome della vostra via."
+        }
       },
       "args_ics_esg_soest_de": {
         "title": "Configurazione Sorgente",
@@ -12634,10 +12637,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto"
+          "district": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "district": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_hasselroth_de": {
@@ -12645,9 +12649,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto"
+          "district": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_ics_hille_de": {
         "title": "Configurazione Sorgente",
@@ -12967,10 +12973,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_gronau_de": {
@@ -12978,9 +12985,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Il nome della vostra via."
+        }
       },
       "args_ics_hws_halle_de": {
         "title": "Configurazione Sorgente",
@@ -16321,12 +16330,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "hausnummer": "Hausnummer",
-          "ort": "Ort",
-          "strasse": "Strasse"
+          "hausnummer": "Numero civico",
+          "ort": "Comune",
+          "strasse": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "hausnummer": "Il vostro numero civico.",
+          "ort": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "strasse": "Il nome della vostra via."
         }
       },
       "reconfigure_team_orange_de": {
@@ -16334,11 +16346,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "hausnummer": "Hausnummer",
-          "ort": "Ort",
-          "strasse": "Strasse"
+          "hausnummer": "Numero civico",
+          "ort": "Comune",
+          "strasse": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "hausnummer": "Il vostro numero civico.",
+          "ort": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "strasse": "Il nome della vostra via."
+        }
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Configurazione Sorgente",
@@ -18543,14 +18559,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Numero civico",
-          "house_number_addition": "Estensione del numero civico",
+          "house_number_addition": "House Number Addition",
           "postcode": "CAP"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "house_number": "Numero civico del tuo indirizzo, ad es. '9'",
-          "house_number_addition": "Estensione facoltativa del numero civico, ad es. 'A'",
-          "postcode": "CAP olandese del tuo indirizzo, ad es. '5406XP'"
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_deafvalapp_nl": {
@@ -18559,13 +18574,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Numero civico",
-          "house_number_addition": "Estensione del numero civico",
+          "house_number_addition": "House Number Addition",
           "postcode": "CAP"
         },
         "data_description": {
-          "house_number": "Numero civico del tuo indirizzo, ad es. '9'",
-          "house_number_addition": "Estensione facoltativa del numero civico, ad es. 'A'",
-          "postcode": "CAP olandese del tuo indirizzo, ad es. '5406XP'"
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "args_circulus_nl": {
@@ -22227,8 +22241,7 @@
           "zone": "Zona"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "zone": "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
       "reconfigure_aarberg_ch": {
@@ -22238,9 +22251,7 @@
           "calendar_title": "Nome Calendario",
           "zone": "Zona"
         },
-        "data_description": {
-          "zone": "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
-        }
+        "data_description": {}
       },
       "args_kvatg_ch": {
         "title": "Configurazione Sorgente",
@@ -22409,12 +22420,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "hnr": "Hnr",
+          "hnr": "Numero civico",
           "key": "Key",
-          "strasse": "Strasse"
+          "strasse": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "hnr": "Il vostro numero civico.",
+          "strasse": "Il nome della vostra via."
         }
       },
       "reconfigure_bern_ch": {
@@ -22422,11 +22435,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "hnr": "Hnr",
+          "hnr": "Numero civico",
           "key": "Key",
-          "strasse": "Strasse"
+          "strasse": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Il vostro numero civico.",
+          "strasse": "Il nome della vostra via."
+        }
       },
       "args_koeniz_ch": {
         "title": "Configurazione Sorgente",
@@ -24665,10 +24681,12 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
           "garden_waste": "Garden Waste",
-          "postcode": "Codice Postale CAP"
+          "postcode": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_clackmannanshire_gov_uk": {
@@ -24678,9 +24696,12 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
           "garden_waste": "Garden Waste",
-          "postcode": "Codice Postale CAP"
+          "postcode": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo.",
+          "postcode": "Il vostro codice postale (CAP)."
+        }
       },
       "args_colchester_gov_uk": {
         "title": "Configurazione Sorgente",

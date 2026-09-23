@@ -12264,7 +12264,8 @@
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_sperrmuell_erlensee_de": {
@@ -12274,7 +12275,9 @@
           "calendar_title": "Calendar Title",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ics_esg_soest_de": {
         "title": "Configure Source",
@@ -12589,10 +12592,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje"
+          "district": "Naselje"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Vaše naselje ali del občine."
         }
       },
       "reconfigure_hasselroth_de": {
@@ -12600,9 +12604,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje"
+          "district": "Naselje"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Vaše naselje ali del občine."
+        }
       },
       "args_ics_hille_de": {
         "title": "Configure Source",
@@ -12925,7 +12931,8 @@
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_gronau_de": {
@@ -12935,7 +12942,9 @@
           "calendar_title": "Calendar Title",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ics_hws_halle_de": {
         "title": "Configure Source",
@@ -16277,11 +16286,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "hausnummer": "Hišna številka",
-          "ort": "Mesto",
+          "ort": "Občina",
           "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "Vaša hišna številka.",
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "strasse": "Ime vaše ulice."
         }
       },
       "reconfigure_team_orange_de": {
@@ -16290,10 +16302,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "hausnummer": "Hišna številka",
-          "ort": "Mesto",
+          "ort": "Občina",
           "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "hausnummer": "Vaša hišna številka.",
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_ics_tbr_reutlingen_de": {
         "title": "Configure Source",
@@ -18443,7 +18459,9 @@
           "postcode": "Poštna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_deafvalapp_nl": {
@@ -18455,7 +18473,10 @@
           "house_number_addition": "House Number Addition",
           "postcode": "Poštna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
+        }
       },
       "args_circulus_nl": {
         "title": "Configure Source",
@@ -22257,7 +22278,9 @@
           "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hnr": "Vaša hišna številka.",
+          "strasse": "Ime vaše ulice."
         }
       },
       "reconfigure_bern_ch": {
@@ -22269,7 +22292,10 @@
           "key": "Key",
           "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Vaša hišna številka.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_koeniz_ch": {
         "title": "Configure Source",
@@ -24511,7 +24537,9 @@
           "postcode": "Poštna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov.",
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_clackmannanshire_gov_uk": {
@@ -24523,7 +24551,10 @@
           "garden_waste": "Garden Waste",
           "postcode": "Poštna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov.",
+          "postcode": "Vaša poštna številka."
+        }
       },
       "args_colchester_gov_uk": {
         "title": "Configure Source",

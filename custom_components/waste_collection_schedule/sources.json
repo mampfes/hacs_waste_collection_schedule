@@ -9476,6 +9476,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Bad Nauheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Bad Oeynhausen",
       "module": "abfallkalender_prezero_network",
       "default_params": {

@@ -1475,6 +1475,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Bad Münstereifel](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Bad Nauheim](/doc/ics/mein_abfallkalender_online.md) / bad-nauheim.de
 - [Bad Oeynhausen](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/bad-oeynhausen
 - [Bad Soden a.Ts.](/doc/ics/mein_abfallkalender_online.md) / bad-soden.de
 - [Bad Vilbel](/doc/ics/mein_abfallkalender_online.md) / sw-bv.de
