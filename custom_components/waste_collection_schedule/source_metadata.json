@@ -4226,6 +4226,13 @@
     "howto": {},
     "urls": {}
   },
+  "pncc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pncc_govt_nz.md",
+    "howto": {
+      "en": "Enter your street address as it appears in the search on the Palmerston North City Council 'Rubbish and recycling days' page, for example '8 Swansea Street Palmerston North'."
+    },
+    "urls": {}
+  },
   "poriruacity_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
     "howto": {},

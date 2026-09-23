@@ -3092,6 +3092,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Matamata-Piako District Council](/doc/source/mpdc_govt_nz.md) / mpdc.govt.nz/calendar
 - [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
 - [New Plymouth District Council](/doc/source/npdc_govt_nz.md) / npdc.govt.nz
+- [Palmerston North City Council](/doc/source/pncc_govt_nz.md) / pncc.govt.nz/Services/Rubbish-and-recycling/Palmy-Collections/Rubbish-and-recycling-days
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
 - [Selwyn District Council](/doc/source/selwyn_govt_nz.md) / selwyn.govt.nz

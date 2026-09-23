@@ -20737,6 +20737,12 @@
       "id": "npdc_govt_nz"
     },
     {
+      "title": "Palmerston North City Council",
+      "module": "pncc_govt_nz",
+      "default_params": {},
+      "id": "pncc_govt_nz"
+    },
+    {
       "title": "Porirua City",
       "module": "poriruacity_govt_nz",
       "default_params": {},
