@@ -2,13 +2,12 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from dateutil.relativedelta import relativedelta
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = "FL Abfalltransport AG"
-DESCRIPTION = "Source for FL Abfalltransport AG, Liechtenstein."
-URL = "https://www.abfalltransport.li"
+TITLE = "Entsorgungszweckverband der Gemeinden Liechtensteins (EZV)"
+DESCRIPTION = "Source for the waste collection calendar of the EZV, Liechtenstein."
+URL = "https://www.ezv.li/abfallentsorgung/abfallkalender/"
 COUNTRY = "li"
 
 MUNICIPALITIES = [
@@ -30,22 +29,6 @@ WASTE_TYPES = {
     "gruenabfuhr": "Grünabfuhr",
 }
 
-# Month number → URL slug (as expected by the website)
-MONTHS_URL = {
-    1: "januar",
-    2: "februar",
-    3: "maerz",
-    4: "april",
-    5: "mai",
-    6: "juni",
-    7: "juli",
-    8: "august",
-    9: "september",
-    10: "oktober",
-    11: "november",
-    12: "dezember",
-}
-
 # German month name in HTML → month number
 MONTHS_DE = {
     "januar": 1,
@@ -62,6 +45,9 @@ MONTHS_DE = {
     "dezember": 12,
 }
 
+API_URL = "https://www.ezv.li/abfallentsorgung/abfallkalender"
+LABEL_TO_TYPE = {v: k for k, v in WASTE_TYPES.items()}
+
 ICON_MAP = {
     "Kehricht": Icons.GENERAL_WASTE,
     "Grünabfuhr": Icons.GARDEN,
@@ -75,8 +61,8 @@ TEST_CASES = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your municipality from the list and choose a waste type ('kehricht', 'gruenabfuhr', or 'all'). Visit https://www.abfalltransport.li/abfallkalender to see the schedule.",
-    "de": "Wählen Sie Ihre Gemeinde aus der Liste und den Abfalltyp ('kehricht', 'gruenabfuhr' oder 'all'). Besuchen Sie https://www.abfalltransport.li/abfallkalender für den Kalender.",
+    "en": "Select your municipality from the list and choose a waste type ('kehricht', 'gruenabfuhr', or 'all'). Visit https://www.ezv.li/abfallentsorgung/abfallkalender/ to see the schedule.",
+    "de": "Wählen Sie Ihre Gemeinde aus der Liste und den Abfalltyp ('kehricht', 'gruenabfuhr' oder 'all'). Besuchen Sie https://www.ezv.li/abfallentsorgung/abfallkalender/ für den Kalender.",
 }
 
 PARAM_DESCRIPTIONS = {
@@ -153,51 +139,55 @@ class Source:
         return deduplicated
 
     def fetch(self) -> list[Collection]:
+        base = f"{API_URL}/{self._municipality}"
+        resp = requests.get(base, timeout=30)
+        resp.raise_for_status()
+        pages = [resp.text]
+
+        # The calendar page lists the available months in a select box.
+        soup = BeautifulSoup(resp.text, "html.parser")
+        month_urls = []
+        for opt in soup.select("select#pica-filter-month option"):
+            value = str(opt.get("value", "")).split("#")[0]
+            if value and not opt.get("selected"):
+                month_urls.append(f"https://www.ezv.li{value}")
+        for url in month_urls:
+            r = requests.get(url, timeout=30)
+            if r.status_code == 200:
+                pages.append(r.text)
+
         entries = []
-        today = datetime.date.today()
+        for html in pages:
+            entries.extend(self._parse_page(html))
+        return entries
 
-        for delta_month in range(3):
-            target = today.replace(day=1) + relativedelta(months=delta_month)
-            month = target.month
-            year = target.year
+    def _parse_page(self, html: str) -> list[Collection]:
+        soup = BeautifulSoup(html, "html.parser")
 
-            month_slug = MONTHS_URL[month]
-            for selected_type in self._waste_types:
-                url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/{month_slug}/{selected_type}"
-                resp = requests.get(url, timeout=30)
-                if resp.status_code != 200 and month_slug == "mai":
-                    # Keep compatibility if upstream uses capitalized May slug.
-                    fallback_url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/Mai/{selected_type}"
-                    resp = requests.get(fallback_url, timeout=30)
-                if resp.status_code != 200:
+        # Year is only given in the caption of the selected month option.
+        selected = soup.select_one("select#pica-filter-month option[selected]")
+        if selected is None:
+            return []
+        caption = str(selected.get("data-caption", "")).split()
+        try:
+            year = int(caption[-1])
+            month = MONTHS_DE[caption[0].lower()]
+        except (ValueError, IndexError, KeyError):
+            return []
+
+        entries = []
+        for day_el in soup.select("div.pica-day"):
+            day_txt = day_el.select_one(".pica-date-header-day")
+            if day_txt is None:
+                continue
+            try:
+                date = datetime.date(year, month, int(day_txt.get_text(strip=True)))
+            except ValueError:
+                continue
+            for name_el in day_el.select(".pica-category-name"):
+                label = name_el.get_text(strip=True)
+                key = LABEL_TO_TYPE.get(label)
+                if key is not None and key not in self._waste_types:
                     continue
-
-                soup = BeautifulSoup(resp.text, "html.parser")
-                year_str = str(year)
-
-                for tag in soup.find_all(string=True):
-                    if not ("." in tag and year_str in tag):
-                        continue
-                    text = tag.strip()
-                    parts = text.split()
-                    if len(parts) == 3:
-                        try:
-                            day = int(parts[0].replace(".", ""))
-                            mon = MONTHS_DE.get(parts[1].lower())
-                            yr = int(parts[2])
-                            if mon:
-                                dt = datetime.date(yr, mon, day)
-                                label = WASTE_TYPES.get(
-                                    selected_type, selected_type.capitalize()
-                                )
-                                entries.append(
-                                    Collection(
-                                        dt,
-                                        label,
-                                        icon=ICON_MAP.get(label),
-                                    )
-                                )
-                        except (ValueError, KeyError):
-                            pass
-
+                entries.append(Collection(date, label, icon=ICON_MAP.get(label)))
         return entries

@@ -1,6 +1,6 @@
-# FL Abfalltransport AG
+# Entsorgungszweckverband der Gemeinden Liechtensteins (EZV)
 
-Support for schedules provided by [FL Abfalltransport AG](https://www.abfalltransport.li).
+Support for schedules provided by the [EZV](https://www.ezv.li/abfallentsorgung/abfallkalender/) (formerly FL Abfalltransport AG).
 
 ## Configuration via configuration.yaml
 
@@ -66,6 +66,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit [https://www.abfalltransport.li/abfallkalender](https://www.abfalltransport.li/abfallkalender) and select your municipality and waste type to see your collection schedule.
+Visit [https://www.ezv.li/abfallentsorgung/abfallkalender/](https://www.ezv.li/abfallentsorgung/abfallkalender/) and select your municipality and waste type to see your collection schedule.
 
 Use the municipality name in lower case as the `municipality` argument (e.g. `balzers`, `vaduz`). For municipalities with a hyphen in their name, use the hyphenated form (e.g. `gamprin-bendern`, `mauren-schaanwald`, `eschen-nendeln`).
