@@ -19,13 +19,30 @@ jobs:
             const body = context.payload.issue.body || '';
             const labels = [];
 
+            // Source Request template: the form has no title prefix (so the
+            // reporter must type their own title); add the prefix here.
+            const issue = context.payload.issue;
+            const isSourceRequest = (issue.labels || []).some(
+              (l) => l.name === 'source request'
+            );
+            const prefix = '[Source Request]: ';
+            if (isSourceRequest && !issue.title.startsWith('[Source Request]')) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                title: prefix + issue.title.trim(),
+              });
+              console.log('Prefixed issue title');
+            }
+
             // Data format mapping (from Source Request template)
             const dataFormats = {
               'ICS / iCal calendar file': 'data: ICS',
               'HTML webpage (dates visible on the page)': 'data: HTML',
               'JSON / REST API': 'data: JSON/API',
               'Mobile app only (iOS/Android)': 'data: app',
-              'PDF download only': 'data: PDF',
+              'PDF download only (not implemented by maintainers, community contribution needed)': 'data: PDF',
             };
 
             // Platform mapping (from Source Request template)

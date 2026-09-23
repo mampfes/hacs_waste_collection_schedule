@@ -1,7 +1,6 @@
 ---
 name: Source Request
 description: Request that a municipality or region is supported
-title: '[Source Request]: '
 labels: [source request]
 body:
   - type: markdown
@@ -9,9 +8,17 @@ body:
       value: |
         Thanks for requesting a new source!
 
+        **Title:** please enter a short title such as `France, Frasnoy` (country, municipality). The `[Source Request]: ` prefix is added automatically.
+
         **Before submitting**, please check if your provider is already supported:
         - Search the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) for your municipality name
         - Check if your provider uses a platform we already support (Recollect, ArcGIS, ICS feeds, Abfall+ app, etc.)
+
+        ---
+
+        ### ⚠️ PDF-only providers will not be implemented by the maintainers
+
+        We receive many requests for providers that only publish their schedule as a PDF. **The maintainers do not have the capacity to implement these.** Such requests stay open only in the hope that a community member with a particular interest in PDF parsing picks them up. If you want to see it happen, please implement it yourself (see below) or find someone who will.
 
         ---
 
@@ -52,13 +59,14 @@ body:
     id: format
     attributes:
       label: Data Format
-      description: How does the provider make collection dates available?
+      description: How does the provider make collection dates available? Note that requests for PDF-only providers will not be implemented by the maintainers,
+        only by community members who take them on.
       options:
         - ICS / iCal calendar file
         - HTML webpage (dates visible on the page)
         - JSON / REST API
         - Mobile app only (iOS/Android)
-        - PDF download only
+        - PDF download only (not implemented by maintainers, community contribution needed)
         - Other (describe in additional information)
     validations:
       required: true
