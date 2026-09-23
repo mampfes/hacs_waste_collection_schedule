@@ -7368,7 +7368,7 @@
   "wirral_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wirral_gov_uk.md",
     "howto": {
-      "en": "Go to https://www.wirral.gov.uk/bincal_dev/ and enter your postcode. Right-click on your address in the dropdown and select 'Inspect' to find the 12-digit option value. Use that as the address_value parameter."
+      "en": "Go to https://www.wirral.gov.uk/bins-and-recycling/bin-collection-dates, enter your postcode and select your address. The number at the end of the resulting web address (.../view/42119794) is your address value. Use that as the address_value parameter."
     },
     "urls": {}
   },

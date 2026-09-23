@@ -31630,8 +31630,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address_value": "The 12-digit address value from the dropdown on the Wirral bin calendar page.",
-          "postcode": "Your postcode, e.g. CH49 4NP."
+          "address_value": "The address (UPRN) value found at the end of the web address on the Wirral bin collection dates page.",
+          "postcode": "Your postcode, e.g. CH49 4NP (no longer required)."
         }
       },
       "reconfigure_wirral_gov_uk": {
@@ -31643,8 +31643,8 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "address_value": "The 12-digit address value from the dropdown on the Wirral bin calendar page.",
-          "postcode": "Your postcode, e.g. CH49 4NP."
+          "address_value": "The address (UPRN) value found at the end of the web address on the Wirral bin collection dates page.",
+          "postcode": "Your postcode, e.g. CH49 4NP (no longer required)."
         }
       },
       "args_wokingham_gov_uk": {
