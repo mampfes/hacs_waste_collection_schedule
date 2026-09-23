@@ -1,144 +1,112 @@
-import datetime
+"""Mill Valley Refuse Service (MVRS), Marin County, California, USA.
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates ``FanOutRetriever`` over a fixed set of public calendars. MVRS
+publishes one alternating-week residential recycling schedule for its whole
+service area as three public Google Calendars, embedded on
+https://www.millvalleyrefuse.com/residential-services : container recycling and
+paper recycling are collected on alternating weeks (citywide), and a third
+calendar carries office-closure / holiday service notices. Garbage and compost
+are weekly on each address's normal route day and are not published in a
+machine-readable feed.
 
-TITLE = "Mill Valley Refuse Service"
-DESCRIPTION = (
-    "Source for Mill Valley Refuse Service (MVRS), Marin County, California, USA."
-)
-URL = "https://www.millvalleyrefuse.com"
+The two recycling calendars carry no waste type in their events, so the type is
+the calendar's own name (``IcsFeedsParser(labels=...)``), and each marks a
+recycling week with an all-day event on every day of it, so
+``CollapseWeeks`` reduces a stream to one entry per week. Each week is dated the
+Sunday that starts it, shifted to the resident's ``pickup_day`` when one is
+given.
+"""
 
-TEST_CASES = {
-    "Whole service area": {},
-    "With pickup day (Wednesday)": {"pickup_day": "Wednesday"},
-    "With pickup day (Tuesday)": {"pickup_day": "Tuesday"},
-}
+from typing import ClassVar, final
 
-COUNTRY = "us"
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.preprocessors import CollapseWeeks
+from waste_collection_schedule.retrievers import FanOutRetriever
+from waste_collection_schedule.service.ICS import IcsFeedsParser
+from waste_collection_schedule.transformers import ICSTransformer
 
-# MVRS publishes one alternating-week residential recycling schedule for its
-# whole service area as three public Google Calendars, embedded on
-# https://www.millvalleyrefuse.com/residential-services . Container recycling
-# and paper recycling are collected on alternating weeks (citywide); garbage and
-# compost are weekly on each address's normal route day and are not published in
-# a machine-readable feed.
-RECYCLING_CALENDARS = {
-    "Container Recycling": (
-        "https://calendar.google.com/calendar/ical/"
-        "uokfjeogcqe0daugrn58mvkgo0%40group.calendar.google.com/public/basic.ics"
-    ),
-    "Paper Recycling": (
-        "https://calendar.google.com/calendar/ical/"
-        "d5mdlvop2qp45vmstm6gs5p1kg%40group.calendar.google.com/public/basic.ics"
-    ),
-}
-# Office-closure / holiday service notices.
-HOLIDAY_CALENDAR = (
-    "https://calendar.google.com/calendar/ical/"
-    "millvalleyrefuse%40gmail.com/public/basic.ics"
-)
+_CALENDAR_URL = "https://calendar.google.com/calendar/ical/{}/public/basic.ics"
 
-ICON_MAP = {
-    "Container Recycling": Icons.RECYCLING,
-    "Paper Recycling": Icons.PAPER,
-}
+_CONTAINER_RECYCLING = "Container Recycling"
+_PAPER_RECYCLING = "Paper Recycling"
 
-# Number of days after the Sunday that starts each collection week.
-_WEEKDAY_OFFSETS = {
-    "Sunday": 0,
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-    "Saturday": 6,
-}
+# The calendars, in the order they are fetched (and labelled below).
+_CALENDARS = [
+    _CALENDAR_URL.format("uokfjeogcqe0daugrn58mvkgo0%40group.calendar.google.com"),
+    _CALENDAR_URL.format("d5mdlvop2qp45vmstm6gs5p1kg%40group.calendar.google.com"),
+    # Office-closure / holiday service notices.
+    _CALENDAR_URL.format("millvalleyrefuse%40gmail.com"),
+]
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "No address lookup is required. Mill Valley Refuse Service publishes a "
-        "single alternating-week recycling schedule for its whole service area "
-        "(Mill Valley, Corte Madera, Tiburon, Belvedere, Strawberry and "
-        "unincorporated Marin). Optionally set 'pickup_day' to the weekday your "
-        "street is serviced so each collection lands on your actual pickup day "
-        "instead of the start of the week."
+_WEEKDAYS = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Mill Valley Refuse Service"
+    DESCRIPTION = (
+        "Source for Mill Valley Refuse Service (MVRS), Marin County, California, USA."
     )
-}
+    URL = "https://www.millvalleyrefuse.com"
+    COUNTRY = "us"
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "pickup_day": "Pickup Day",
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES, wt.PAPER, wt.OTHER]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Whole service area": {},
+        "With pickup day (Wednesday)": {"pickup_day": "Wednesday"},
+        "With pickup day (Tuesday)": {"pickup_day": "Tuesday"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "pickup_day": (
-            "The weekday your address is serviced (e.g. 'Wednesday'). MVRS "
-            "collects Monday-Friday depending on your street. If omitted, each "
-            "recycling week is marked on the Sunday it begins."
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown pickup day": {"pickup_day": "Funday"},
+    }
+
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": (
+            "No address lookup is required. Mill Valley Refuse Service publishes a "
+            "single alternating-week recycling schedule for its whole service area "
+            "(Mill Valley, Corte Madera, Tiburon, Belvedere, Strawberry and "
+            "unincorporated Marin). Optionally set 'pickup_day' to the weekday your "
+            "street is serviced so each collection lands on your actual pickup day "
+            "instead of the start of the week."
         ),
     }
-}
 
+    # MVRS collects Monday-Friday depending on the street. If omitted, each
+    # recycling week is marked on the Sunday it begins.
+    PARAMS = (dropdown("pickup_day", _WEEKDAYS, label="Pickup day", optional=True),)
 
-def _weekly_collections(
-    dates: list[datetime.date], waste_type: str, offset: int
-) -> list[Collection]:
-    """Collapse a stream's per-day ICS events into one entry per week.
+    retrieve = FanOutRetriever(targets=lambda source, context: _CALENDARS)
 
-    MVRS marks each alternating recycling week with all-day calendar events.
-    Group every event date by the Sunday that starts its week, then emit a
-    single collection per week - shifted by ``offset`` days so it falls on the
-    resident's pickup weekday (0 = the week-start Sunday).
-    """
-    week_starts = {
-        # date.isoweekday(): Mon=1 .. Sun=7  ->  Sun%7=0, Mon%7=1, ...
-        d - datetime.timedelta(days=d.isoweekday() % 7)
-        for d in dates
-    }
-    return [
-        Collection(
-            ws + datetime.timedelta(days=offset),
-            waste_type,
-            icon=ICON_MAP.get(waste_type),
-        )
-        for ws in sorted(week_starts)
-    ]
+    parse = IcsFeedsParser(
+        parsers.IcsParser(),
+        labels=[_CONTAINER_RECYCLING, _PAPER_RECYCLING, None],
+    )
 
+    preprocess = CollapseWeeks(
+        keys=[_CONTAINER_RECYCLING, _PAPER_RECYCLING], day="pickup_day"
+    )
 
-class Source:
-    def __init__(self, pickup_day: str | None = None):
-        if pickup_day is not None:
-            match = [
-                d for d in _WEEKDAY_OFFSETS if d.lower() == pickup_day.strip().lower()
-            ]
-            if not match:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "pickup_day", pickup_day, list(_WEEKDAY_OFFSETS)
-                )
-            pickup_day = match[0]
-        self._pickup_day = pickup_day
-        self._ics = ICS()
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
-        offset = _WEEKDAY_OFFSETS[self._pickup_day] if self._pickup_day else 0
-        entries: list[Collection] = []
-
-        for waste_type, url in RECYCLING_CALENDARS.items():
-            r = session.get(url)
-            r.raise_for_status()
-            dates = [d for d, _ in self._ics.convert(r.text)]
-            entries.extend(_weekly_collections(dates, waste_type, offset))
-
-        r = session.get(HOLIDAY_CALENDAR)
-        r.raise_for_status()
-        for d, title in self._ics.convert(r.text):
-            icon = Icons.EVENT if "as usual" in title.lower() else Icons.NO_COLLECTION
-            entries.append(Collection(d, title, icon=icon))
-
-        return entries
+    # The holiday calendar's own titles are the notices ("Office Closed - No
+    # Collection Service"), which the raw label keeps as the description.
+    transform = ICSTransformer(
+        type_value_map={
+            _CONTAINER_RECYCLING: wt.RECYCLABLES,
+            _PAPER_RECYCLING: wt.PAPER,
+            "Office Closed - Collection Service as Usual": wt.OTHER,
+            "Office Closed - No Collection Service": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

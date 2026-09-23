@@ -1,123 +1,135 @@
+"""Aarberg (Bern, Switzerland).
+
+Demonstrates ``IcsSessionRetriever`` for a calendar page that hands out its ICS
+link only once a zone is chosen: the first step reads the page's own zone list
+(``<select id="zone_id">``, whose options carry the id as their value and the
+zone name with a trailing collection count as their text) and resolves the
+configured zone to its id, the second loads the page filtered to that zone and
+reads the download link out of it, and the feed request follows that link. The
+link is a rolling calendar rather than a per-year one, hence
+``lookahead_month=None``.
+"""
+
 import re
+from typing import Any, ClassVar, final
+from urllib.parse import urljoin
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.service.ICS import (
+    IcsFeedsParser,
+    IcsSessionRetriever,
+    resolve_select_option,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Aarberg"
-DESCRIPTION = "Source for Aarberg, Switzerland."
-URL = "https://www.aarberg.ch/"
-COUNTRY = "ch"
-TEST_CASES = {
-    "Aarberg": {"zone": "Aarberg"},
-    "Grafenmoos": {"zone": "Grafenmoos"},
-    "Leimern": {"zone": "Leimern"},
-    "Mülital": {"zone": "Mülital"},
-    "Spins": {"zone": "Spins"},
-    "Zälgli": {"zone": "Zälgli"},
-}
+_API_URL = "https://www.aarberg.ch/de/abfallwirtschaft/abfallkalender/"
 
-ICON_MAP = {
-    "Hauskehricht": Icons.GENERAL_WASTE,
-    "Grüngut": Icons.ORGANIC,
-    "Papier und Karton": Icons.PAPER,
-    "Häckseldienst": Icons.GARDEN,
-}
-
-BASE_URL = "https://www.aarberg.ch"
-API_URL = f"{BASE_URL}/de/abfallwirtschaft/abfallkalender/"
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "zone": "Zone",
-    },
-    "de": {
-        "zone": "Zone",
-    },
-    "fr": {
-        "zone": "Zone",
-    },
-    "it": {
-        "zone": "Zona",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli",
-    },
-    "de": {
-        "zone": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli",
-    },
-    "fr": {
-        "zone": "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli",
-    },
-    "it": {
-        "zone": "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli",
-    },
-}
+# An option's text is the zone plus its collection count: "Aarberg (12)".
+_COUNT_SUFFIX = re.compile(r"\s*\(\d+\)\s*$")
 
 
-class Source:
-    def __init__(self, zone: str):
-        self._zone = zone.strip()
+def _zone_id(response: Any, context: "dict[str, Any]") -> "dict[str, str]":
+    """The configured zone's id, read off the page's own zone list."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    select = soup.find("select", {"id": "zone_id"})
+    if select is None:
+        raise SourceArgumentException(
+            "zone", "the calendar page no longer offers a zone list"
+        )
+    zones: dict[str, str] = {}
+    for option in select.find_all("option"):
+        value = option.get("value")
+        if value:
+            zones[_COUNT_SUFFIX.sub("", option.get_text().strip())] = str(value)
+    name = resolve_select_option("zone", str(context["zone"]), list(zones))
+    return {"zone_id": zones[name]}
 
-    def fetch(self) -> list[Collection]:
-        session = requests.session()
 
-        # get the calendar page to determine the available zones and their ids
-        r = session.get(API_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+def _zone_calendar(zone_id: str, **_: Any) -> "dict[str, str]":
+    return {"zone_id": zone_id}
 
-        zone_select = soup.find("select", {"id": "zone_id"})
-        if zone_select is None:
-            raise Exception("No zone_id select found")
 
-        zone_id = None
-        zone_names = []
-        for option in zone_select.find_all("option"):
-            value = option.get("value")
-            if not value:
-                continue
-            name = re.sub(r"\s*\(\d+\)\s*$", "", option.text.strip())
-            zone_names.append(name)
-            if name.lower() == self._zone.lower():
-                zone_id = value
+def _ical_link(response: Any, context: "dict[str, Any]") -> "dict[str, str]":
+    """The zone's calendar download link, resolved against the page."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    link = soup.select_one("div#icalTermine a")
+    if link is None or not isinstance(link.get("href"), str):
+        raise SourceArgumentException(
+            "zone", "the calendar page offers no download link for this zone"
+        )
+    return {"ical_url": urljoin(_API_URL, str(link["href"]))}
 
-        if zone_id is None:
-            raise SourceArgumentNotFoundWithSuggestions("zone", self._zone, zone_names)
 
-        # get the calendar page filtered to the requested zone
-        r = session.get(API_URL, params={"zone_id": zone_id})
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+@final
+class Source(BaseSource):
+    TITLE = "Aarberg"
+    DESCRIPTION = "Source for Aarberg, Switzerland."
+    URL = "https://www.aarberg.ch/"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
 
-        ical_div = soup.select_one("div#icalTermine")
-        if ical_div is None:
-            raise Exception("No icalTermine found")
-        ical_link_a = ical_div.select_one("a")
-        if ical_link_a is None:
-            raise Exception("No ical link found")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-        href = ical_link_a["href"]
-        if not isinstance(href, str):
-            raise Exception("No href found")
+    TEST_CASES: ClassVar[dict] = {
+        "Aarberg": {"zone": "Aarberg"},
+        "Grafenmoos": {"zone": "Grafenmoos"},
+        "Leimern": {"zone": "Leimern"},
+        "Mülital": {"zone": "Mülital"},
+        "Spins": {"zone": "Spins"},
+        "Zälgli": {"zone": "Zälgli"},
+    }
 
-        if href.startswith("/"):
-            href = BASE_URL + href
-        if not href.startswith("http"):
-            href = API_URL + href
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown zone": {"zone": "Nirgendwo"},
+    }
 
-        r = session.get(href)
-        r.raise_for_status()
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": (
+            "The zone/area within Aarberg, e.g. Aarberg, Grafenmoos, Leimern, "
+            "Mülital, Spins, Zälgli."
+        ),
+        "de": (
+            "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, "
+            "Mülital, Spins, Zälgli."
+        ),
+        "fr": (
+            "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, "
+            "Mülital, Spins, Zälgli."
+        ),
+        "it": (
+            "La zona ad Aarberg, ad esempio Aarberg, Grafenmoos, Leimern, "
+            "Mülital, Spins, Zälgli."
+        ),
+    }
 
-        ics = ICS()
-        dates = ics.convert(r.text)
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1])))
+    PARAMS = (text_field("zone", "Zone"),)
 
-        return entries
+    retrieve = IcsSessionRetriever(
+        steps=[
+            {"url": _API_URL, "extract": _zone_id},
+            {"url": _API_URL, "params": _zone_calendar, "extract": _ical_link},
+        ],
+        feed_url=lambda ical_url, **_: ical_url,
+        lookahead_month=None,
+    )
+
+    parse = IcsFeedsParser(parsers.IcsParser())
+
+    transform = ICSTransformer(
+        type_value_map={
+            "Hauskehricht": wt.GENERAL_WASTE,
+            "Grüngut": wt.ORGANIC,
+            "Papier und Karton": wt.PAPER,
+            "Häckseldienst": wt.GARDEN_WASTE,
+        }
+    )

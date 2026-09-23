@@ -1,111 +1,150 @@
-import requests
+"""Erlensee (Hesse, Germany).
+
+Demonstrates ``IcsSessionRetriever`` for a reminder form whose submission *is*
+the calendar: the first step reads the form's own street list and event-type
+checkboxes, the second POSTs the chosen street plus every event type back and
+answers with the ICS download, so ``feed_url`` stays ``None`` and the last step's
+response is what the parser reads. The download is a rolling six-month window
+rather than a per-year calendar, hence ``lookahead_month=None``.
+
+Every summary carries the street as a suffix ("Restmüll (MT) (Am Rathaus)"),
+which ``RowRelabel(strip=...)`` removes. Only that trailing group may go: the
+waste type itself can contain parentheses, and so can the street
+("Oberhörr (Sandhof / Sonnenhof)").
+"""
+
+from typing import Any, ClassVar, final
+from urllib.parse import urlencode
+
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.preprocessors import RowRelabel
+from waste_collection_schedule.service.ICS import (
+    IcsFeedsParser,
+    IcsSessionRetriever,
+    resolve_select_option,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Erlensee"
-DESCRIPTION = "Source for waste collection in Erlensee, Hessen."
-URL = "https://sperrmuell.erlensee.de/"
-COUNTRY = "de"
-TEST_CASES = {
-    "Am Rathaus": {"street": "Am Rathaus"},
-    "Am Haspel": {"street": "Am Haspel"},
-    "Oberhörr (Sandhof / Sonnenhof)": {"street": "Oberhörr (Sandhof / Sonnenhof)"},
-}
-SOURCE_CODEOWNERS = ["@SgtSeppel"]
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": f"Go to {URL} and look up the exact street name in the dropdown.",
-    "de": f"Öffnen Sie {URL} und entnehmen Sie den Straßennamen aus der Auswahlliste.",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"street": "Street"},
-    "de": {"street": "Straße"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"street": "Street name as shown in the dropdown on the website."},
-    "de": {"street": "Straßenname wie in der Auswahlliste auf der Website angezeigt."},
-}
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Restmüll (MT)": Icons.GENERAL_WASTE,
-    "Erlensee stellt raus": Icons.GENERAL_WASTE,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Gartenabfälle": Icons.GARDEN,
-    "Gartenabfall-Straßensammlung": Icons.GARDEN,
-    "Sondermüll": Icons.HAZARDOUS,
-    "Weihnachtsbaum-Abholung": Icons.CHRISTMAS_TREE,
-}
-
-API_URL = "https://sperrmuell.erlensee.de/"
+_URL = "https://sperrmuell.erlensee.de/"
 
 # "timeframe" option 46 = "6 Monate" (rolling six month window, not year bound)
-TIMEFRAME = 46
+_TIMEFRAME = 46
+
+# The trailing "(<street>)" group of a summary: one parenthesised group at the
+# very end, allowing one level of nesting inside it because a street can carry
+# its own parentheses ("Oberhörr (Sandhof / Sonnenhof)"). It is the *last*
+# group only, so a waste type's own "(MT)" survives.
+_STREET_SUFFIX = r"\s*\((?:[^()]|\([^()]*\))*\)\s*$"
 
 
-class Source:
-    def __init__(self, street: str) -> None:
-        self._street = street
-        self._ics = ICS()
+def _reminder_form(response: Any, context: "dict[str, Any]") -> "dict[str, Any]":
+    """The configured street's id and every event type the form offers."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    streets: dict[str, int] = {}
+    select = soup.find("select", {"id": "street"})
+    if select:
+        for option in select.find_all("option"):
+            value = option.get("value")
+            if value:
+                streets[option.get_text(strip=True)] = int(str(value))
+    name = resolve_select_option("street", str(context["street"]), list(streets))
+    event_ids = [
+        int(str(box["value"]))
+        for box in soup.find_all("input", {"name": "eventType[]"})
+        if box.get("value")
+    ]
+    return {"street_id": streets[name], "street_name": name, "event_ids": event_ids}
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL, params={"type": "reminder"}, timeout=30)
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        streets = {}
-        select = soup.find("select", {"id": "street"})
-        if select:
-            for option in select.find_all("option"):
-                value = option.get("value")
-                if value:
-                    streets[option.get_text(strip=True)] = int(value)
-
-        if self._street not in streets:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, list(streets.keys())
-            )
-
-        event_ids = [
-            int(cb["value"])
-            for cb in soup.find_all("input", {"name": "eventType[]"})
-            if cb.get("value")
-        ]
-
-        data = [
-            ("street", streets[self._street]),
-            ("timeframe", TIMEFRAME),
+def _reminder_download(street_id: int, event_ids: "list[int]", **_: Any) -> str:
+    return urlencode(
+        [
+            ("street", street_id),
+            ("timeframe", _TIMEFRAME),
             ("download", "ical"),
+            *(("eventType[]", event_id) for event_id in event_ids),
         ]
-        for et in event_ids:
-            data.append(("eventType[]", et))
+    )
 
-        r = requests.post(
-            API_URL,
-            params={"type": "reminder"},
-            data=data,
-            timeout=30,
-        )
-        r.raise_for_status()
 
-        # summaries look like "Restmüll (MT) (Am Rathaus)": only the trailing
-        # street suffix may be removed, the waste type itself can contain "(...)"
-        street_suffix = f" ({self._street})"
+@final
+class Source(BaseSource):
+    TITLE = "Erlensee"
+    DESCRIPTION = "Source for waste collection in Erlensee, Hessen."
+    URL = _URL
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    SOURCE_CODEOWNERS: ClassVar[list[str]] = ["@SgtSeppel"]
 
-        entries = []
-        for date, waste_type in self._ics.convert(r.text):
-            name = waste_type.strip()
-            if name.endswith(street_suffix):
-                name = name[: -len(street_suffix)].strip()
-            entries.append(
-                Collection(date, name, ICON_MAP.get(name, Icons.GENERAL_WASTE))
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
+    ]
 
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "Am Rathaus": {"street": "Am Rathaus"},
+        "Am Haspel": {"street": "Am Haspel"},
+        "Oberhörr (Sandhof / Sonnenhof)": {"street": "Oberhörr (Sandhof / Sonnenhof)"},
+    }
+
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"street": "Nirgendwostraße"},
+    }
+
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": f"Go to {_URL} and look up the exact street name in the dropdown.",
+        "de": (
+            f"Öffnen Sie {_URL} und entnehmen Sie den Straßennamen aus der "
+            "Auswahlliste."
+        ),
+    }
+
+    PARAMS = (street(),)
+
+    retrieve = IcsSessionRetriever(
+        steps=[
+            {
+                "url": _URL,
+                "params": {"type": "reminder"},
+                "extract": _reminder_form,
+            },
+            {
+                "method": "POST",
+                "url": _URL,
+                "params": {"type": "reminder"},
+                "data": _reminder_download,
+                "headers": {"Content-Type": "application/x-www-form-urlencoded"},
+            },
+        ],
+        feed_url=None,
+        lookahead_month=None,
+    )
+
+    parse = IcsFeedsParser(parsers.IcsParser())
+
+    preprocess = RowRelabel(strip=_STREET_SUFFIX)
+
+    # "Restmüll" and "Restmüll (MT)" (and the two garden collections) are
+    # different rounds that resolve to one canonical type, so the raw label is
+    # kept as the description.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": wt.GENERAL_WASTE,
+            "Restmüll (MT)": wt.GENERAL_WASTE,
+            "Biotonne": wt.ORGANIC,
+            "Papier": wt.PAPER,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Gartenabfälle": wt.GARDEN_WASTE,
+            "Gartenabfall-Straßensammlung": wt.GARDEN_WASTE,
+            "Sondermüll": wt.HAZARDOUS,
+        },
+        carry_raw_label=True,
+    )
