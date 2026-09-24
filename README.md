@@ -903,6 +903,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Hills (ON)](/doc/source/recyclecoach_com.md) / haltonhills.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
+- [Halton Region, ON](/doc/source/recollect_net.md) / recollect.net
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
 - [Lakeshore (ON)](/doc/source/recyclecoach_com.md) / lakeshore.ca
@@ -935,6 +936,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Prince George (BC)](/doc/source/recyclecoach_com.md) / princegeorge.ca
 - [Publidata (Canada) generic source](/doc/source/publidata_ca.md) / publidata.ca
 - [Québec (QC)](/doc/source/ville_quebec_qc_ca.md) / ville.quebec.qc.ca/services/info-collecte
+- [ReCollect (JSON API)](/doc/source/recollect_net.md) / recollect.net
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Repentigny (QC)](/doc/source/repentigny_ca.md) / collectes-repentigny.coudmain.ca
 - [Richmond Hill (ON)](/doc/source/recyclecoach_com.md) / richmondhill.ca
@@ -3956,6 +3958,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
 - [Staffordshire Moorlands District Council](/doc/source/staffsmoorlands_gov_uk.md) / staffsmoorlands.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
+- [Stirling Council](/doc/source/recollect_net.md) / recollect.net
 - [Stirling Council](/doc/source/stirling_gov_uk.md) / stirling.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk

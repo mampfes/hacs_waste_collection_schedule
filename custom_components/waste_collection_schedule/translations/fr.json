@@ -6101,6 +6101,30 @@
         },
         "data_description": {}
       },
+      "args_recollect_net": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "locale": "Locale",
+          "place_id": "ID d'emplacement",
+          "service_id": "ID de service"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_recollect_net": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "locale": "Locale",
+          "place_id": "ID d'emplacement",
+          "service_id": "ID de service"
+        },
+        "data_description": {}
+      },
       "args_ics_laval_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

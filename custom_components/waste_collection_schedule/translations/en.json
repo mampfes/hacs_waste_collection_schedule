@@ -6294,6 +6294,30 @@
         },
         "data_description": {}
       },
+      "args_recollect_net": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "locale": "Language of the waste type names (e.g. en, fr, en-GB)",
+          "place_id": "Location ID",
+          "service_id": "Service ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_recollect_net": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "locale": "Language of the waste type names (e.g. en, fr, en-GB)",
+          "place_id": "Location ID",
+          "service_id": "Service ID"
+        },
+        "data_description": {}
+      },
       "args_ics_laval_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

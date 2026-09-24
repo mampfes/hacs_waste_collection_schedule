@@ -5358,6 +5358,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Halton Region, ON",
+      "module": "recollect_net",
+      "default_params": {
+        "place_id": "CD149A08-1F87-11E2-A81F-CD0EC465FF45",
+        "service_id": "224"
+      },
+      "id": "recollect_net"
+    },
+    {
       "title": "Kawartha Lakes (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5593,6 +5602,12 @@
       "module": "ville_quebec_qc_ca",
       "default_params": {},
       "id": "ville_quebec_qc_ca"
+    },
+    {
+      "title": "ReCollect (JSON API)",
+      "module": "recollect_net",
+      "default_params": {},
+      "id": "recollect_net"
     },
     {
       "title": "Region of Waterloo",
@@ -26454,6 +26469,16 @@
       "module": "stevenage_gov_uk",
       "default_params": {},
       "id": "stevenage_gov_uk"
+    },
+    {
+      "title": "Stirling Council",
+      "module": "recollect_net",
+      "default_params": {
+        "locale": "en-GB",
+        "place_id": "D6ADFBAE-D4AF-11F0-9DA3-EE0251E5C8E1",
+        "service_id": "waste"
+      },
+      "id": "recollect_net"
     },
     {
       "title": "Stirling Council",
