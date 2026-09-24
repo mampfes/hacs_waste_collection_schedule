@@ -92,11 +92,18 @@ class Source:
         )
         data = json.loads(r.text)
 
-        # Find the ID for our street
+        # Prefer the exact register name when another street only matches after
+        # whitespace normalization.
         for item in data["streets"]:
-            if same(item["name"], self.street_name):
+            if item["name"] == self.street_name:
                 street_id = item["id"]
                 break
+
+        if street_id == 0:
+            for item in data["streets"]:
+                if same(item["name"], self.street_name):
+                    street_id = item["id"]
+                    break
 
         if street_id == 0:
             raise SourceArgumentNotFoundWithSuggestions(
