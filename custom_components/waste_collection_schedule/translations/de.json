@@ -14251,6 +14251,39 @@
         },
         "data_description": {}
       },
+      "args_suedwestpfalz_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address_suffix": "Address Suffix",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_suedwestpfalz_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address_suffix": "Address Suffix",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
       "args_landkreis_verden_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

@@ -13277,6 +13277,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis S\u00fcdwestpfalz",
+      "module": "suedwestpfalz_de",
+      "default_params": {},
+      "id": "suedwestpfalz_de"
+    },
+    {
       "title": "Landkreis Tirschenreuth",
       "module": "awido_de",
       "default_params": {

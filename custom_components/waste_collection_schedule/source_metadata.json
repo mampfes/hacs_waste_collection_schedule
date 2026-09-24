@@ -3119,6 +3119,14 @@
     },
     "urls": {}
   },
+  "suedwestpfalz_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/suedwestpfalz_de.md",
+    "howto": {
+      "de": "Ort, Straße und Hausnummer wie im Abfuhrkalender unter https://abfallwirtschaft.lksuedwestpfalz.de/WasteManagementSuedwestpfalz/WasteManagementServlet angeben. Der Ort steht ohne Umlaute (z. B. Bruchweiler-Baerenbach). Ein Hausnummernzusatz (z. B. A) kommt in 'Address suffix'.",
+      "en": "Enter the village, street and house number exactly as the calendar at https://abfallwirtschaft.lksuedwestpfalz.de/WasteManagementSuedwestpfalz/WasteManagementServlet lists them. Village names use no umlauts (e.g. Bruchweiler-Baerenbach). Put a house number addition (e.g. A) in 'Address suffix'."
+    },
+    "urls": {}
+  },
   "landkreis_verden_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_verden_de.md",
     "howto": {},

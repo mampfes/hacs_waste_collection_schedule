@@ -1958,6 +1958,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
 - [Landkreis Sömmerda](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Südliche Weinstraße](/doc/source/awido_de.md) / suedliche-weinstrasse.de
+- [Landkreis Südwestpfalz](/doc/source/suedwestpfalz_de.md) / lksuedwestpfalz.de
 - [Landkreis Tirschenreuth](/doc/source/awido_de.md) / kreis-tir.de
 - [Landkreis Tübingen](/doc/source/awido_de.md) / abfall-kreis-tuebingen.de
 - [Landkreis Verden](/doc/source/landkreis_verden_de.md) / landkreis-verden.de

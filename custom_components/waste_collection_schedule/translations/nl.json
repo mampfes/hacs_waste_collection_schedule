@@ -14095,6 +14095,39 @@
         },
         "data_description": {}
       },
+      "args_suedwestpfalz_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
+      "reconfigure_suedwestpfalz_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
       "args_landkreis_verden_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

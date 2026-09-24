@@ -14219,6 +14219,39 @@
         },
         "data_description": {}
       },
+      "args_suedwestpfalz_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_suffix": "Address Suffix",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_suedwestpfalz_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_suffix": "Address Suffix",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
       "args_landkreis_verden_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

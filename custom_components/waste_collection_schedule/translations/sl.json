@@ -14093,6 +14093,39 @@
         },
         "data_description": {}
       },
+      "args_suedwestpfalz_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "city": "Mesto",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
+      "reconfigure_suedwestpfalz_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_suffix": "Address Suffix",
+          "city": "Mesto",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
       "args_landkreis_verden_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
