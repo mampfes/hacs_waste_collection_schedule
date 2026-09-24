@@ -219,6 +219,7 @@ howto:
       https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics?client_id=6FBD18FE-167B-11EC-992A-C843A7F05606
       ```
     - You can strip the client ID URL parameter to get the final URL: `https://recollect.a.ssl.fastly.net/api/places/BCCDF30E-578B-11E4-AD38-5839C200407A/services/208/events.en.ics`
+    - If the ICS link fails (for example `TooManyRedirects` / `curl: (47) Maximum (30) redirects followed`), use the [ReCollect](/doc/source/recollect_net.md) source instead, with the `place_id` and `service_id` from the same link.
 
     known to work with:
     |Region|Country|URL|
