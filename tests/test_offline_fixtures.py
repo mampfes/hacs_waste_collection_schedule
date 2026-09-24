@@ -13,6 +13,8 @@ import datetime
 import json
 import os
 import sys
+from contextlib import nullcontext
+from unittest.mock import patch
 
 import dateutil.parser  # noqa: F401
 import pytest
@@ -34,6 +36,7 @@ from fixtures_support import (
     discover_fixtures,
     slug,
 )
+from test_declared_waste_types import assert_returned_waste_types_declared
 from waste_collection_schedule import exceptions as exceptions_module
 from waste_collection_schedule.collection import Collection
 
@@ -114,10 +117,18 @@ def test_offline_replay(module_name, case_slug, path):
         f"cassette {module_name}/{case_slug} has no matching TEST_CASE"
     )
 
-    with cassette.replaying(path):
+    # The provider's one-second request throttle has no purpose when HTTP is
+    # served from a cassette. Keep it active for live requests.
+    throttle = (
+        patch("waste_collection_schedule.service.AppAbfallplusDe.time.sleep")
+        if module_name == "app_abfallplus_de"
+        else nullcontext()
+    )
+    with cassette.replaying(path), throttle:
         results = cls(**args).fetch()
 
     assert results, f"{module_name}::{case_slug}: replay produced no collections"
+    assert_returned_waste_types_declared(module_name, case_slug, cls, results)
     for r in results:
         assert isinstance(r, Collection)
         assert isinstance(r.date, datetime.date)
