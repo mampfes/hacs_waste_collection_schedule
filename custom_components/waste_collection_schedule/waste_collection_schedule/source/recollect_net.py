@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import regions
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -17,7 +18,7 @@ from waste_collection_schedule.transformers import ICSTransformer
 
 @final
 class Source(BaseSource):
-    TITLE = "ReCollect"
+    TITLE = "ReCollect (JSON API)"
     DESCRIPTION = "Source for municipalities on the ReCollect (Routeware) platform, via its JSON events API."
     URL = "https://recollect.net"
     COUNTRY = "ca"
@@ -46,6 +47,22 @@ class Source(BaseSource):
             "locale": "en-GB",
         },
     }
+
+    REGIONS: ClassVar[list] = [
+        regions.region(
+            "Halton Region, ON",
+            country="ca",
+            place_id="CD149A08-1F87-11E2-A81F-CD0EC465FF45",
+            service_id="224",
+        ),
+        regions.region(
+            "Stirling Council",
+            country="uk",
+            place_id="D6ADFBAE-D4AF-11F0-9DA3-EE0251E5C8E1",
+            service_id="waste",
+            locale="en-GB",
+        ),
+    ]
 
     HOWTO: ClassVar[dict] = {
         "en": (
