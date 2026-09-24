@@ -7549,6 +7549,13 @@
     },
     "urls": {}
   },
+  "fort_lauderdale_fl_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fort_lauderdale_fl_us.md",
+    "howto": {
+      "en": "Enter your full street address including city, state and ZIP code (e.g. '413 NW 15th Ave, Fort Lauderdale, FL 33311'). It is matched against the city's 'My Government Services' collection zones (https://gis.fortlauderdale.gov/MyGovernmentServices/). Holiday shifts are not reflected."
+    },
+    "urls": {}
+  },
   "fuquay_varina_nc_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fuquay_varina_nc_us.md",
     "howto": {},

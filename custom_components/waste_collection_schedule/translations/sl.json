@@ -31065,6 +31065,29 @@
           "address": "Vaš celoten naslov."
         }
       },
+      "args_fort_lauderdale_fl_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
+        }
+      },
+      "reconfigure_fort_lauderdale_fl_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov"
+        },
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
+      },
       "args_fuquay_varina_nc_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

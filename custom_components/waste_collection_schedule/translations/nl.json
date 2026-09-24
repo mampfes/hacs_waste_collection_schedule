@@ -31064,6 +31064,29 @@
           "address": "Uw volledige adres."
         }
       },
+      "args_fort_lauderdale_fl_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Adres"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_fort_lauderdale_fl_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Adres"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
       "args_fuquay_varina_nc_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

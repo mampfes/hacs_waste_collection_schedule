@@ -4067,6 +4067,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Tallahassee](/doc/source/talgov_com.md) / talgov.com/you/swslookup
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
+- [Fort Lauderdale, FL](/doc/source/fort_lauderdale_fl_us.md) / fortlauderdale.gov/government/departments-i-z/public-works/operations/sanitation-operations/collection-programs
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
