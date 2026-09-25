@@ -12,7 +12,7 @@ DESCRIPTION = (
 )
 URL = "https://bradford.gov.uk"
 TEST_CASES = {
-    "Ilkley": {"uprn": "100051250665"},
+    "Ilkley": {"uprn": "100051250665"},  # codespell:ignore ilkley
     "Bradford": {"uprn": "100051239296"},
     "Baildon": {"uprn": 10002329242},
 }

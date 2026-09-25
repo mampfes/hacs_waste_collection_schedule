@@ -119,9 +119,9 @@ You can enter an search address in the street address field and click continue. 
 
 ### Using the key from the mobile app
 
-In your mobile phone app, navigate to "Om appen" in the options section and copy the "Enhets-ID"
+In your mobile phone app, navigate to "Om appen" in the options section and copy the "Enhets-ID" <!-- codespell:ignore appen -->
 
-> **NOTE**: By re-using the same key as in app, the changes you make in your app (adding/removing addresses) directly affects what is fetched by the integration. You could force a reset of key in app by completely re-registrating the app to portal, but then you can no longer access the settings of which addresses that are registered to that key and thereby the integration (unless you restart the integration registration with the new key).
+> **NOTE**: By reusing the same key as in app, the changes you make in your app (adding/removing addresses) directly affects what is fetched by the integration. You could force a reset of key in app by completely re-registrating the app to portal, but then you can no longer access the settings of which addresses that are registered to that key and thereby the integration (unless you restart the integration registration with the new key).
 
 ## Disclaimer
 

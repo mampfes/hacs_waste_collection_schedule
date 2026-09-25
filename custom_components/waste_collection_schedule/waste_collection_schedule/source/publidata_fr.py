@@ -136,7 +136,7 @@ TEST_CASES = {
     # "insee_code": "62193",
     # "instance_id": 679,
     # },
-    "Métropole Européenne de Lille, Provin": {
+    "Métropole Européenne de Lille, Provin": {  # codespell:ignore provin
         "address": "Rue Pierre Maille",
         "insee_code": "59477",
         "instance_id": 876,

@@ -266,7 +266,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "ortsgemeinde": "Communauté",
         "ortsteil": "District",
         "params": "Paramètres",
-        "password": "Mot de passe",
+        "password": "Mot de passe",  # codespell:ignore mot
         "phone": "Téléphone",
         "plz": "Code postal",
         "postCode": "Code postal",

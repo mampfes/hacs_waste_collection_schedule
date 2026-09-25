@@ -425,7 +425,8 @@ class Source:
         layer_groups = map_config.get("legend", {}).get("layerGroups", [])
         layers = layer_groups[0].get("layers", []) if layer_groups else []
         layer_id = layers[0].get("id") if layers else None
-        wms_url = map_config.get("doubleClick", {}).get("url")
+        double_click = map_config.get("doubleClick", {})  # codespell:ignore doubleclick
+        wms_url = double_click.get("url")
 
         if not layer_id or not wms_url:
             raise SourceArgumentException(

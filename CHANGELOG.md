@@ -2960,7 +2960,7 @@ ADDED
 - add source my waste mobi, USA (thanks @expl0ratory)
 - add source mags Mönchengladbach, Germany (thanks @fr34kyn01535)
 - add source Ashford, UK (@5ila5)
-- add source Australian Captial Territory, Australia (thanks @eddster2309)
+- add source Australian Capital Territory, Australia (thanks @eddster2309)
 - add source Logan City Council, Australia (thanks @sh-nguyen)
 - add source Broxtowe County, UK (@5ila5)
 - add source Armadale WA, Australia (@5ila5)
