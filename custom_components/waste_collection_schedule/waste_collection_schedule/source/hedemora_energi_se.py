@@ -12,6 +12,7 @@ TITLE = "Hedemora Energi"
 DESCRIPTION = "Source for Hedemora Energi waste collection schedules, Sweden."
 URL = "https://www.hedemoraenergi.se/"
 COUNTRY = "se"
+SOURCE_CODEOWNERS = ["@crazyboy89"]
 TEST_CASES = {
     "Åsgatan 28": {"address": "Åsgatan 28"},
     "Pickup ID 1392000": {"pickup_id": "1392000"},
@@ -24,6 +25,9 @@ ICON_MAP = {
     "Brännbart": Icons.GENERAL_WASTE,
     "Kompost": Icons.BIO_KITCHEN,
     "Matavfall": Icons.BIO_KITCHEN,
+    "Papper": Icons.PAPER,
+    "Plast": Icons.PLASTIC_PACKAGING,
+    "Restavfall": Icons.GENERAL_WASTE,
 }
 DEFAULT_ICON = Icons.GENERAL_WASTE
 
