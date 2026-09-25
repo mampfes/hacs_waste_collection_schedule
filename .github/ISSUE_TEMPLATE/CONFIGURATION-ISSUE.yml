@@ -65,6 +65,13 @@ body:
       placeholder: ex. 2.19.0 or master
     validations:
       required: true
+  - type: input
+    id: ha-version
+    attributes:
+      label: Home Assistant Version
+      placeholder: ex. 2025.4.0
+    validations:
+      required: true
   - type: checkboxes
     id: checklist
     attributes:
