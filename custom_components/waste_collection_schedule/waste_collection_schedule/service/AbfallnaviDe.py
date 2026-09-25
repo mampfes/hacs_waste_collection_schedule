@@ -29,8 +29,20 @@ class AbfallnaviDe:
         "kranenburg",
     }
 
-    def __init__(self, service_domain, known_services=None):
+    # The source's field names, used as the ``argument`` of the errors below so
+    # the config flow can put the message and suggestions on the right form
+    # field. Defaults are abfallnavi_de's; a source naming its fields
+    # differently passes its own through AbfallnaviRetriever.
+    DEFAULT_ARGUMENTS: ClassVar = {
+        "service": "service",
+        "city": "ort",
+        "street": "strasse",
+        "house_number": "hausnummer",
+    }
+
+    def __init__(self, service_domain, known_services=None, arguments=None):
         self._service_domain = service_domain
+        self._arguments = {**self.DEFAULT_ARGUMENTS, **(arguments or {})}
         # Valid service ids for the 404 "did you mean" suggestion. Supplied by
         # the retriever from the source's REGIONS, so the provider registry
         # lives in the source and this service module holds no provider list.
@@ -68,7 +80,7 @@ class AbfallnaviDe:
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         if r.status_code == 404:
             raise SourceArgumentNotFoundWithSuggestions(
-                "service",
+                self._arguments["service"],
                 self._service_domain,
                 self._known_services,
             )
@@ -90,12 +102,12 @@ class AbfallnaviDe:
         if not city_id:
             # NOTE: the "argument" passed to SourceArgumentNotFoundWithSuggestions
             # must match the corresponding Source.__init__ keyword exactly
-            # ("ort"), not some other internal name ("city"). The config flow
+            # (e.g. "ort"), not some other internal name. The config flow
             # UI matches errors/suggestions back to the form field by this
             # name; a mismatch means the UI silently fails to show any error
             # or suggestion to the user (see issue #4426).
             raise SourceArgumentNotFoundWithSuggestions(
-                "ort", city, list(cities.values())
+                self._arguments["city"], city, list(cities.values())
             )
         return city_id
 
@@ -114,14 +126,22 @@ class AbfallnaviDe:
             return list(streets.keys())
         if street is None:
             # NOTE: the "argument" must match the Source.__init__ keyword
-            # exactly ("strasse"), see comment in get_city_id above.
+            # exactly, see comment in get_city_id above.
             raise SourceArgumentRequiredWithSuggestions(
-                "strasse", "street is required of this city", list(streets.values())
+                self._arguments["street"],
+                "street is required of this city",
+                list(streets.values()),
             )
         matches = [id for id, name in streets.items() if name == street]
         if len(matches) == 0:
+            matches = [
+                id
+                for id, name in streets.items()
+                if name.casefold() == street.casefold()
+            ]
+        if len(matches) == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", street, list(streets.values())
+                self._arguments["street"], street, list(streets.values())
             )
         return matches
 
@@ -143,16 +163,18 @@ class AbfallnaviDe:
             return next(iter(house_numbers.keys()))
         if house_number is None:
             # NOTE: the "argument" must match the Source.__init__ keyword
-            # exactly ("hausnummer"), see comment in get_city_id above.
+            # exactly, see comment in get_city_id above.
             raise SourceArgumentRequiredWithSuggestions(
-                "hausnummer",
+                self._arguments["house_number"],
                 "house number is required for this street",
                 list(house_numbers.values()),
             )
         house_number_id = self._find_in_inverted_dict(house_numbers, house_number)
         if house_number_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "hausnummer", house_number, list(house_numbers.values())
+                self._arguments["house_number"],
+                house_number,
+                list(house_numbers.values()),
             )
 
         return house_number_id
@@ -162,8 +184,14 @@ class AbfallnaviDe:
         return {waste_type["id"]: waste_type["name"] for waste_type in waste_types}
 
     def _find_in_inverted_dict(self, mydict, value):
+        """Look ``value`` up by name: an exact match first, then ignoring case."""
         inverted_dict = {v: k for k, v in mydict.items()}
-        return inverted_dict.get(value)
+        if value in inverted_dict:
+            return inverted_dict[value]
+        if not isinstance(value, str):
+            return None
+        folded = {str(v).casefold(): k for k, v in mydict.items()}
+        return folded.get(value.casefold())
 
 
 # --------------------------------------------------------------------------- #
@@ -215,7 +243,16 @@ class AbfallnaviRetriever(RetrieverFunc):
         if callable(regions):
             regions = regions()
         known_services = [r.params.get(self.service) for r in regions]
-        client = AbfallnaviDe(params[self.service], known_services=known_services)
+        client = AbfallnaviDe(
+            params[self.service],
+            known_services=known_services,
+            arguments={
+                "service": self.service,
+                "city": self.city,
+                "street": self.street,
+                "house_number": self.house_number,
+            },
+        )
 
         city_id = client.get_city_id(params.get(self.city))
         street_ids = client.get_street_ids(city_id, params.get(self.street))
