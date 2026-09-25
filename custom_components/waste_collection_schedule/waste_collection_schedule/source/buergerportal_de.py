@@ -118,6 +118,28 @@ class Source(BaseSource):
         subdistrict="subdistrict",
     )
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "1. Open your operator's Bürgerportal and select 'Abfuhrkalender'.\n"
+            "2. Choose your district (Ort). If it contains a comma "
+            "(e.g. 'Bullay, Bullay'), split it: the part before the comma is "
+            "`district`, the part after is `subdistrict` — even if both parts "
+            "are identical. Leave `subdistrict` empty only if there is no "
+            "comma.\n"
+            "3. Choose your street and house number."
+        ),
+        "de": (
+            "1. Öffne das Bürgerportal deines Betreibers und wähle "
+            "'Abfuhrkalender'.\n"
+            "2. Wähle deinen Ort (district). Enthält er ein Komma "
+            "(z. B. 'Bullay, Bullay'), trenne ihn auf: der Teil vor dem Komma "
+            "ist `district`, der Teil danach `subdistrict` — auch wenn beide "
+            "gleich sind. Lasse `subdistrict` nur leer, wenn kein Komma "
+            "vorhanden ist.\n"
+            "3. Wähle Straße und Hausnummer."
+        ),
+    }
+
     PARAMS = (
         dropdown("operator", options=sorted(BASE_URLS), label="Operator"),
         text_field("district", label="District (Ort)"),
