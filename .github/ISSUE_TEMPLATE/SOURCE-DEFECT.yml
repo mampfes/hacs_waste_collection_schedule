@@ -41,6 +41,14 @@ body:
       render: YAML
     validations:
       required: true
+  - type: input
+    id: version
+    attributes:
+      label: Integration Version
+      description: Which version of the integration are you running?
+      placeholder: ex. 2.19.0 or master
+    validations:
+      required: true
   - type: checkboxes
     id: checklist
     attributes:
