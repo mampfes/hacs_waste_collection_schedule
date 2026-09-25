@@ -66,6 +66,12 @@ class Source(BaseSource):
     URL = "https://www.c-trace.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    # Some deployments (alb_donau, cochem_zell) return one AbfuhrtermineAbJahr
+    # record per container size for the same collection, all sharing the same
+    # date and Abfallart name; since the container size isn't surfaced in the
+    # canonical label, those records collapse into 2-4x duplicate entries on
+    # the same day unless the pipeline dedupes them.
+    IGNORE_DUPLICATES_DEFAULT = True
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
         wt.ORGANIC,
@@ -129,12 +135,12 @@ class Source(BaseSource):
             "3. Choose your street and house number."
         ),
         "de": (
-            "1. Öffne das Bürgerportal deines Betreibers und wähle "
+            "1. Öffne das Bürgerportal deines Betreibers und wähle "  # codespell:ignore deines
             "'Abfuhrkalender'.\n"
-            "2. Wähle deinen Ort (district). Enthält er ein Komma "
-            "(z. B. 'Bullay, Bullay'), trenne ihn auf: der Teil vor dem Komma "
+            "2. Wähle deinen Ort (district). Enthält er ein Komma "  # codespell:ignore komma
+            "(z. B. 'Bullay, Bullay'), trenne ihn auf: der Teil vor dem Komma "  # codespell:ignore komma
             "ist `district`, der Teil danach `subdistrict` — auch wenn beide "
-            "gleich sind. Lasse `subdistrict` nur leer, wenn kein Komma "
+            "gleich sind. Lasse `subdistrict` nur leer, wenn kein Komma "  # codespell:ignore komma
             "vorhanden ist.\n"
             "3. Wähle Straße und Hausnummer."
         ),
