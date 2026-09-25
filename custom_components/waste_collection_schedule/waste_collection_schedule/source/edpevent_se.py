@@ -132,6 +132,8 @@ ICON_MAP = {
     "Matavfall": Icons.BIO_KITCHEN,
     "Slam": Icons.GENERAL_WASTE,
     "Trädgårdsavfall": Icons.GARDEN,
+    "Glas/Glas/Metal": Icons.RECYCLING,
+    "Papper/Plast": Icons.RECYCLING,
 }
 
 # This can be used to rename the waste types to something more user friendly
