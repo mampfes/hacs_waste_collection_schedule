@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://exeter.gov.uk/repositories/hidden-pages/address-finder/ cae53a5661",
+      "method": "GET",
+      "url": "https://exeter.gov.uk/repositories/hidden-pages/address-finder/",
+      "final_url": "https://exeter.gov.uk/repositories/hidden-pages/address-finder/?qsource=UPRN&qtype=bins&term=1",
+      "body": "{\"params\":[[\"qsource\",\"UPRN\"],[\"qtype\",\"bins\"],[\"term\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Fri, 25 Sep 2026 23:08:34 GMT",
+        "content-type": "application/json",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "vary": "Accept-Encoding",
+        "server": "Microsoft-IIS/10.0",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000;",
+        "x-permitted-cross-domain-policies": "master-only",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "DQoNCltdDQo="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'uprn' with the value '1', no collections found, please check this value is correct."
+  }
+}
