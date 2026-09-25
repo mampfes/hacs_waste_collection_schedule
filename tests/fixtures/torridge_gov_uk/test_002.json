@@ -1,0 +1,90 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://torridgedc-self.achieveservice.com/authapi/isauthenticated 52c322bed8",
+      "method": "GET",
+      "url": "https://torridgedc-self.achieveservice.com/authapi/isauthenticated",
+      "final_url": "https://torridgedc-self.achieveservice.com/authapi/isauthenticated?uri=https%3A%2F%2Ftorridgedc-self.achieveservice.com%2Fen%2Fservice%2FMy_property_information&hostname=torridgedc-self.achieveservice.com&withCredentials=true",
+      "body": "{\"params\":[[\"hostname\",\"torridgedc-self.achieveservice.com\"],[\"uri\",\"https://torridgedc-self.achieveservice.com/en/service/My_property_information\"],[\"withCredentials\",\"true\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "673",
+        "accept-ranges": "none",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 22:46:18 GMT",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "pragma": "no-cache",
+        "server": "Apache",
+        "set-cookie": "AWSALB=H36lNa2emG+ePECLHZ1+H1AvO1Uhs2TIxU0+PF/QZ5iDpzvfHyRAXxsMrJ7HmLUD8HGE3UltBPZDBl974+w20be0/F8hjXLq0Li2+1x7Gi3egFfRKt5r+IBMdXp1; Expires=Fri, 02 Oct 2026 22:46:18 GMT; Path=/, AWSALBCORS=H36lNa2emG+ePECLHZ1+H1AvO1Uhs2TIxU0+PF/QZ5iDpzvfHyRAXxsMrJ7HmLUD8HGE3UltBPZDBl974+w20be0/F8hjXLq0Li2+1x7Gi3egFfRKt5r+IBMdXp1; Expires=Fri, 02 Oct 2026 22:46:18 GMT; Path=/; SameSite=None; Secure, PHPSESSID=3u4jbdr54qgrkcg6d4fcap5ae4; path=/; secure; HttpOnly, SESSIONCHECK=4da7a4d151bfb1cc0abf2bcfae51a7c83671635a539a5adbcb5b39ea4f588e0138a5044f0c11718637fbd640a66f2f2d32c8782598630c07dd5ca030c90e8473; expires=Sat, 26-Sep-2026 04:46:18 GMT; Max-Age=21600; path=/api/; domain=torridgedc-self.achieveservice.com; secure; HttpOnly, SimpleSAMLSessionID=fa04b7e0290a3304b9299b21eb760511; path=/; secure; HttpOnly, SESSfsauthsession=0; path=/; secure; HttpOnly",
+        "strict-transport-security": "max-age=31536000;",
+        "vary": "Accept-Encoding",
+        "x-auth-session": "3u4jbdr54qgrkcg6d4fcap5ae4",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "CiAgICB7ImF1dGgtc2Vzc2lvbiI6ImM1NzhmYTRmMjNhMjU3NDdhNjQyYTJhN2ZmMjQ4ZWIwIiwiY29va2llLWRvbWFpbiI6IiIsImlzX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJwcm92aWRlcnMiOlt7Im5hbWUiOiJBenVyZV9fX0xvZ2luX19zZWxmXyIsImRpc3BsYXluYW1lIjoiQXp1cmUgKFNlbGYpIiwiaW1hZ2UiOiJodHRwczpcL1wvZnMtZmlsZXN0b3JlLWV1LnMzLWV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9yZXNvdXJjZXNcL2F6dXJlLnBuZyIsInN1cHBvcnRvbmx5IjoidHJ1ZSIsIm1hcHBpbmciOiJ7XCJ1c2VybmFtZVwiIDogXCJzQU1BY2NvdW50TmFtZVwiLFwiZW1haWxcIiA6IFwiZW1haWxhZGRyZXNzXCIsXCJtZW1iZXJvZlwiIDpcIm1lbWJlcm9mXCIsXCJuYW1lXCI6XCJkaXNwbGF5TmFtZVwiLFwiZmlyc3RfbmFtZVwiIDogXCJnaXZlbk5hbWVcIixcImxhc3RfbmFtZVwiIDpcInN1cm5hbWVcIixcImdyb3Vwb2ZcIiA6XCJncm91cHNcIn0iLCJ1cmwiOiJodHRwczpcL1wvdG9ycmlkZ2VkYy1zZWxmLmFjaGlldmVzZXJ2aWNlLmNvbVwvYXV0aGFwaVwvYXV0aD9wcm92aWRlcj1BenVyZV9fX0xvZ2luX19zZWxmXyZ1cmk9aHR0cHMlM0ElMkYlMkZ0b3JyaWRnZWRjLXNlbGYuYWNoaWV2ZXNlcnZpY2UuY29tJTJGZW4lMkZzZXJ2aWNlJTJGTXlfcHJvcGVydHlfaW5mb3JtYXRpb24ifSx7Im5hbWUiOiJnb29nbGVfYWRtaW4iLCJkaXNwbGF5bmFtZSI6IkZpcm1zdGVwIEFkbWluIiwiaW1hZ2UiOiJodHRwczpcL1wvZnMtZmlsZXN0b3JlLWV1LnMzLmFtYXpvbmF3cy5jb21cL3Jlc291cmNlc1wvR29vZ2xldGh1bWIuanBnIiwic3VwcG9ydG9ubHkiOiJ0cnVlIiwidXJsIjoiaHR0cHM6XC9cL3RvcnJpZGdlZGMtc2VsZi5hY2hpZXZlc2VydmljZS5jb21cL2F1dGhhcGlcL2F1dGg/cHJvdmlkZXI9Z29vZ2xlX2FkbWluJnVyaT1odHRwcyUzQSUyRiUyRnRvcnJpZGdlZGMtc2VsZi5hY2hpZXZlc2VydmljZS5jb20lMkZlbiUyRnNlcnZpY2UlMkZNeV9wcm9wZXJ0eV9pbmZvcm1hdGlvbiJ9LHsibmFtZSI6Imdvb2dsZV9mYW0iLCJkaXNwbGF5bmFtZSI6IkZpcm1zdGVwIEdvb2dsZSBGQU0iLCJpbWFnZSI6IlwvXC9mcy1maWxlc3RvcmUtZXUuczMuYW1hem9uYXdzLmNvbVwvcmVzb3VyY2VzXC9Mb2dvX2ljb25fcm91bmRfMTAwcHgucG5nIiwic3VwcG9ydG9ubHkiOiJ0cnVlIiwidXJsIjoiaHR0cHM6XC9cL3RvcnJpZGdlZGMtc2VsZi5hY2hpZXZlc2VydmljZS5jb21cL2F1dGhhcGlcL2F1dGg/cHJvdmlkZXI9Z29vZ2xlX2ZhbSZ1cmk9aHR0cHMlM0ElMkYlMkZ0b3JyaWRnZWRjLXNlbGYuYWNoaWV2ZXNlcnZpY2UuY29tJTJGZW4lMkZzZXJ2aWNlJTJGTXlfcHJvcGVydHlfaW5mb3JtYXRpb24ifSx7Im5hbWUiOiJzc2F1dGgiLCJkaXNwbGF5bmFtZSI6IlNlbGYtc2VydmljZSIsImltYWdlIjoiaHR0cHM6XC9cL2ZzLWZpbGVzdG9yZS1ldS5zMy5hbWF6b25hd3MuY29tXC9yZXNvdXJjZXNcL25ldHdvcmsucG5nIiwic3VwcG9ydG9ubHkiOiJ0cnVlIiwidXJsIjoiaHR0cHM6XC9cL3RvcnJpZGdlZGMtc2VsZi5hY2hpZXZlc2VydmljZS5jb21cL2F1dGhhcGlcL2F1dGg/cHJvdmlkZXI9c3NhdXRoJnVyaT1odHRwcyUzQSUyRiUyRnRvcnJpZGdlZGMtc2VsZi5hY2hpZXZlc2VydmljZS5jb20lMkZlbiUyRnNlcnZpY2UlMkZNeV9wcm9wZXJ0eV9pbmZvcm1hdGlvbiIsInJlZ2lzdGVyX3VybCI6Imh0dHBzOlwvXC90b3JyaWRnZWRjLXNlbGYuYWNoaWV2ZXNlcnZpY2UuY29tXC9hdXRoYXBpXC9yZWdpc3Rlcj9wcm92aWRlcj1zc2F1dGgmdXJpPWh0dHBzJTNBJTJGJTJGdG9ycmlkZ2VkYy1zZWxmLmFjaGlldmVzZXJ2aWNlLmNvbSUyRmVuJTJGc2VydmljZSUyRk15X3Byb3BlcnR5X2luZm9ybWF0aW9uIn0seyJuYW1lIjoiR3JhbmljdXNfQXp1cmVfU1NBVVRIIiwiZGlzcGxheW5hbWUiOiJHcmFuaWN1cyBBenVyZSBCMkMiLCJpbWFnZSI6Imh0dHBzOlwvXC9mcy1maWxlc3RvcmUtZXUuczMtZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL3Jlc291cmNlc1wvYXp1cmUucG5nIiwibWFwcGluZyI6IntcInVzZXJuYW1lXCI6IFwibG9naW5fZW1haWxcIixcImVtYWlsXCI6IFwibG9naW5fZW1haWxcIixcIm5hbWVcIjogXCJkaXNwbGF5X25hbWVcIixcImZpcnN0X25hbWVcIjogXCJmaXJzdF9uYW1lXCIsXCJsYXN0X25hbWVcIjogXCJsYXN0X25hbWVcIixcImF6dXJlX2IyY19sb2dpbl9tZXRob2RcIjogXCJsb2dpbl9tZXRob2RcIixcImlkZW50aXR5X3Byb3ZpZGVyXCI6IFwiaWRwXCIsXCJhenVyZV9iMmNfMmZhXCI6IFwiMmZhX2VuYWJsZWRcIn0iLCJ1cmwiOiJodHRwczpcL1wvdG9ycmlkZ2VkYy1zZWxmLmFjaGlldmVzZXJ2aWNlLmNvbVwvYXV0aGFwaVwvYXV0aD9wcm92aWRlcj1HcmFuaWN1c19BenVyZV9TU0FVVEgmdXJpPWh0dHBzJTNBJTJGJTJGdG9ycmlkZ2VkYy1zZWxmLmFjaGlldmVzZXJ2aWNlLmNvbSUyRmVuJTJGc2VydmljZSUyRk15X3Byb3BlcnR5X2luZm9ybWF0aW9uIn1dfQ=="
+    },
+    {
+      "key": "GET https://torridgedc-self.achieveservice.com/apibroker/domain/torridgedc-self.achieveservice.com 9088752063",
+      "method": "GET",
+      "url": "https://torridgedc-self.achieveservice.com/apibroker/domain/torridgedc-self.achieveservice.com",
+      "final_url": "https://torridgedc-self.achieveservice.com/apibroker/domain/torridgedc-self.achieveservice.com?sid=c578fa4f23a25747a642a2a7ff248eb0&_=1790294400000",
+      "body": "{\"params\":[[\"_\",\"1790294400000\"],[\"sid\",\"c578fa4f23a25747a642a2a7ff248eb0\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "203",
+        "accept-ranges": "none",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:",
+        "content-type": "application/json",
+        "date": "Fri, 25 Sep 2026 22:46:18 GMT",
+        "server": "Apache",
+        "set-cookie": "AWSALB=Okiou4wAINaslasnbqpBlPVu26DgiUln/0ZZ15N2ig7XLrLu4yzoWUAp6qoSgjcmgJPtXf6VbeLHhnuE3rKtogdpt/laLiCFFd78BxHY0stz1aWwUsAbMIhIPul/; Expires=Fri, 02 Oct 2026 22:46:18 GMT; Path=/, AWSALBCORS=Okiou4wAINaslasnbqpBlPVu26DgiUln/0ZZ15N2ig7XLrLu4yzoWUAp6qoSgjcmgJPtXf6VbeLHhnuE3rKtogdpt/laLiCFFd78BxHY0stz1aWwUsAbMIhIPul/; Expires=Fri, 02 Oct 2026 22:46:18 GMT; Path=/; SameSite=None; Secure",
+        "strict-transport-security": "max-age=31536000;",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "eyJob3N0IjoidG9ycmlkZ2VkYy1zZWxmLmFjaGlldmVzZXJ2aWNlLmNvbSIsImRvbWFpbl9pZCI6IjZkN2ViZTI0LWQzOGItMTFlNy1iYjFjLTIyMDAwYTYyMDkyZCIsImdhX2lkIjoiVUEtMTE3OTIxMDMtMjAiLCJjdXN0b21lcl9pZCI6IjE0YTc2OGJkLWFlNDctNDgwZS1iN2ZlLWVkY2Q5MzBiN2VjNSIsIm5hbWUiOiJ0b3JyaWRnZWRjIiwiZG9tYWluX2xhbmd1YWdlIjoiZW4iLCJtaW5faWVfdmVyc2lvbiI6OSwicHJvZHVjdCI6IlNlbGYtRGFzaCJ9"
+    },
+    {
+      "key": "POST https://torridgedc-self.achieveservice.com/apibroker/runLookup 8b2481197b",
+      "method": "POST",
+      "url": "https://torridgedc-self.achieveservice.com/apibroker/runLookup",
+      "final_url": "https://torridgedc-self.achieveservice.com/apibroker/runLookup?id=6583107397653&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1790294400000&sid=c578fa4f23a25747a642a2a7ff248eb0",
+      "body": "{\"body\":{\"formValues\":{\"Search\":{\"uprn\":{\"value\":\"10002296087\"}}}},\"params\":[[\"_\",\"1790294400000\"],[\"app_name\",\"AF-Renderer::Self\"],[\"getOnlyTokens\",\"undefined\"],[\"id\",\"6583107397653\"],[\"log_id\",\"\"],[\"noRetry\",\"false\"],[\"repeat_against\",\"\"],[\"sid\",\"c578fa4f23a25747a642a2a7ff248eb0\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "690",
+        "accept-ranges": "none",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Fri, 25 Sep 2026 22:46:20 GMT",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "pragma": "no-cache",
+        "server": "Apache",
+        "set-cookie": "AWSALB=ay+vxnR11DLGGXoffGDKHPPpwru1NgZOdfIj2aSmJ8AzMYmw5rbfsSq8SkcNnsGcv5zEFNlcilMLzJIdUPs/yiHYUOFMpngFWrf6DUEFX4+KIgZToan/AOT4ODFI; Expires=Fri, 02 Oct 2026 22:46:19 GMT; Path=/, AWSALBCORS=ay+vxnR11DLGGXoffGDKHPPpwru1NgZOdfIj2aSmJ8AzMYmw5rbfsSq8SkcNnsGcv5zEFNlcilMLzJIdUPs/yiHYUOFMpngFWrf6DUEFX4+KIgZToan/AOT4ODFI; Expires=Fri, 02 Oct 2026 22:46:19 GMT; Path=/; SameSite=None; Secure",
+        "strict-transport-security": "max-age=31536000;",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "eyJzdGF0dXMiOiJkb25lIiwiZGF0YSI6Ijw/eG1sIHZlcnNpb249XCIxLjBcIj8+XG48UmVzcG9uc2VzPjxSZXF1ZXN0UmVzcG9uc2U+PERhdGFiYXNlUmVzcG9uc2U+PEZpZWxkcz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwiUm91bmQxXCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwiUm91bmQyXCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwiUm91bmQzXCJcLz48XC9GaWVsZHM+PFJvd3M+PFJvdyBpZD1cIjBcIj48cmVzdWx0IGNvbHVtbj1cIlJvdW5kMVwiIGlzTnVsbD1cIkZhbHNlXCI+R2FyZGVuQmluOiBObyBHYXJkZW5CaW4gd2FzdGUgY29sbGVjdGlvbiBmb3IgdGhpcyBhZGRyZXNzPFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwiUm91bmQyXCIgaXNOdWxsPVwiRmFsc2VcIj5SZWZ1c2U6IE1vbiAyOCBTZXAgdGhlbiBldmVyeSBNb248XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJSb3VuZDNcIiBpc051bGw9XCJGYWxzZVwiPlJlY3ljbGluZzogTm8gUmVjeWNsaW5nIHdhc3RlIGNvbGxlY3Rpb24gZm9yIHRoaXMgYWRkcmVzczxcL3Jlc3VsdD48XC9Sb3c+PFwvUm93cz48XC9EYXRhYmFzZVJlc3BvbnNlPjxcL1JlcXVlc3RSZXNwb25zZT48XC9SZXNwb25zZXM+XG4iLCJpbnRlZ3JhdGlvbiI6eyJpZCI6IjY1ODMxMDczOTc2NTMiLCJ0eXBlIjoid2Vic2VydmljZSIsInRyYW5zZm9ybWVkIjp7ImVycm9yIjpudWxsLCJ4bWxfZGF0YSI6Ijw/eG1sIHZlcnNpb249XCIxLjBcIj8+PFJlc3BvbnNlcz48UmVxdWVzdFJlc3BvbnNlPjxEYXRhYmFzZVJlc3BvbnNlPjxGaWVsZHM+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cIlJvdW5kMVwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cIlJvdW5kMlwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cIlJvdW5kM1wiXC8+PFwvRmllbGRzPjxSb3dzPjxSb3cgaWQ9XCIwXCI+PHJlc3VsdCBjb2x1bW49XCJSb3VuZDFcIiBpc051bGw9XCJGYWxzZVwiPkdhcmRlbkJpbjogTm8gR2FyZGVuQmluIHdhc3RlIGNvbGxlY3Rpb24gZm9yIHRoaXMgYWRkcmVzczxcL3Jlc3VsdD48cmVzdWx0IGNvbHVtbj1cIlJvdW5kMlwiIGlzTnVsbD1cIkZhbHNlXCI+UmVmdXNlOiBNb24gMjggU2VwIHRoZW4gZXZlcnkgTW9uPFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwiUm91bmQzXCIgaXNOdWxsPVwiRmFsc2VcIj5SZWN5Y2xpbmc6IE5vIFJlY3ljbGluZyB3YXN0ZSBjb2xsZWN0aW9uIGZvciB0aGlzIGFkZHJlc3M8XC9yZXN1bHQ+PFwvUm93PjxcL1Jvd3M+PFwvRGF0YWJhc2VSZXNwb25zZT48XC9SZXF1ZXN0UmVzcG9uc2U+PFwvUmVzcG9uc2VzPiIsInJvd3NfZGF0YSI6eyIwIjp7IlJvdW5kMSI6IkdhcmRlbkJpbjogTm8gR2FyZGVuQmluIHdhc3RlIGNvbGxlY3Rpb24gZm9yIHRoaXMgYWRkcmVzcyIsIlJvdW5kMiI6IlJlZnVzZTogTW9uIDI4IFNlcCB0aGVuIGV2ZXJ5IE1vbiIsIlJvdW5kMyI6IlJlY3ljbGluZzogTm8gUmVjeWNsaW5nIHdhc3RlIGNvbGxlY3Rpb24gZm9yIHRoaXMgYWRkcmVzcyJ9fSwiZmllbGRzX2RhdGEiOnsiUm91bmQxIjp7InR5cGUiOiJ2YXJjaGFyIiwibmFtZSI6IlJvdW5kMSJ9LCJSb3VuZDIiOnsidHlwZSI6InZhcmNoYXIiLCJuYW1lIjoiUm91bmQyIn0sIlJvdW5kMyI6eyJ0eXBlIjoidmFyY2hhciIsIm5hbWUiOiJSb3VuZDMifX0sInNlbGVjdF9kYXRhIjpbeyJsYWJlbCI6IiIsInZhbHVlIjoiIn1dLCJtZXRhX2RhdGEiOltdLCJyZXN1bHRzX3BhZ2UiOm51bGwsInBvc3RfdHJhbnNmb3JtIjpudWxsLCJwcmVfdHJhbnNmb3JtIjpudWxsfSwidG9rZW5zIjpbInt3ZWJhc3B4Q291bmNpbH0iLCJ7d2ViYXNweFVzZXJuYW1lfSIsInt3ZWJhc3B4UGFzc3dvcmR9Iiwie3Vwcm59Iiwie3N0YXJ0RGF0ZUREc01Nc1lZWVk6c3RyaW5nfSJdLCJydW50aW1lcyI6eyJpbnRlZ3JhdGlvbiI6eyJ0ZW1wbGF0ZSI6IjEybXMiLCJsaW0iOiIxMm1zIiwid2Vic2VydmljZSI6IjY5MW1zIn0sImFwaSI6IjY5MW1zIiwibGltIjoiMTJtcyJ9LCJsb2dfaWQiOiI2MWYxZjExYS0wODg1LTQ5ZWItOGEyNS1jMzgwZGQyMWI3MGMifSwiaGFzaCI6IkJFQ0M3QzgwN0M5RjI2OEEwMTc1MEYzRkE3NTFEREY0QkU5ODI2MzdGNjE4MjMxNDg3NjJFN0EzMTY5NjlEQjUifQ=="
+    }
+  ]
+}

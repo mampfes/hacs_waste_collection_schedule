@@ -1,90 +1,77 @@
-import json
-from datetime import datetime, timedelta
-from time import time_ns
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsFieldMapPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Dudley Metropolitan Borough Council"
-DESCRIPTION = "Source for Dudley Metropolitan Borough Council, UK."
-URL = "https://dudley.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "90090715"},
-    "Test_002": {"uprn": 90104555},
-    "Test_003": {"uprn": "90164803"},
-    "Test_004": {"uprn": 90092621},
-}
-ICON_MAP = {
-    "RECYCLING": Icons.RECYCLING,
-    "FOOD": Icons.BIO_KITCHEN,
-    "REFUSE": Icons.GENERAL_WASTE,
-}
-
-LOOKUP_ID = "69a04ac70086b"
-BASE_URL = "https://my.dudley.gov.uk"
-
-COLLECTION_TYPES = {
-    "recyclingDate": "Recycling",
-    "foodDate": "Food",
-    "refuseDate": "Refuse",
-}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+_HOSTNAME = "my.dudley.gov.uk"
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn).zfill(12)
+def _form(context, source):
+    today = datetime.date.today()
+    return {
+        "uprnToCheck": {"value": source.params["uprn"].zfill(12)},
+        "NextCollectionFromDate": {"value": today.strftime("%Y-%m-%d")},
+        "NextCollectionToDate": {
+            "value": (today + datetime.timedelta(days=60)).strftime("%Y-%m-%d")
+        },
+    }
 
-    def fetch(self):
-        s = requests.Session()
 
-        # Get session ID
-        timestamp = time_ns() // 1_000_000
-        sid_request = s.get(
-            f"{BASE_URL}/authapi/isauthenticated?uri={BASE_URL}&hostname=my.dudley.gov.uk&withCredentials=true&_={timestamp}",
-            headers=HEADERS,
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+@final
+class Source(BaseSource):
+    TITLE = "Dudley Metropolitan Borough Council"
+    DESCRIPTION = "Source for Dudley Metropolitan Borough Council, UK."
+    URL = "https://dudley.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.FOOD_WASTE, wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-        # Fetch collection schedule
-        timestamp = time_ns() // 1_000_000
-        now = datetime.now()
-        from_date = now.strftime("%Y-%m-%d")
-        to_date = (now + timedelta(days=60)).strftime("%Y-%m-%d")
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "uprnToCheck": {"value": self._uprn},
-                    "NextCollectionFromDate": {"value": from_date},
-                    "NextCollectionToDate": {"value": to_date},
-                }
-            }
-        }
-        schedule_request = s.post(
-            f"{BASE_URL}/apibroker/runLookup?id={LOOKUP_ID}&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload,
-        )
-        schedule_request.raise_for_status()
-        data = json.loads(schedule_request.content)
-        rows_data = data["integration"]["transformed"]["rows_data"]
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "90090715"},
+        "Test_002": {"uprn": 90104555},
+        "Test_003": {"uprn": "90164803"},
+        "Test_004": {"uprn": 90092621},
+    }
 
-        entries = []
-        for row in rows_data.values():
-            for date_key, waste_type in COLLECTION_TYPES.items():
-                date_str = row.get(date_key, "")
-                if not date_str:
-                    continue
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date_str, "%d/%m/%Y").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type.upper()),
-                    )
-                )
+    PARAMS = (uprn(),)
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
+
+    # The next collection of each bin within the coming 60 days.
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        initial_url=f"https://{_HOSTNAME}",
+        skip_landing_page=True,
+        steps=[LookupStep("69a04ac70086b", form_values=_form, no_retry="true")],
+    )
+    parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsFieldMapPreprocessor(
+        fields=[
+            ("recyclingDate", "Recycling"),
+            ("foodDate", "Food"),
+            ("refuseDate", "Refuse"),
+        ],
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Recycling": wt.RECYCLABLES,
+            "Food": wt.FOOD_WASTE,
+            "Refuse": wt.GENERAL_WASTE,
+        },
+    )

@@ -1,136 +1,102 @@
-from datetime import datetime, timedelta
-from time import time_ns
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsIndexedFieldsPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Rochdale Borough Council"
-DESCRIPTION = "Source for Rochdale Borough Council, UK."
-URL = "https://www.rochdale.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "10094359340"},
-    "Test_002": {"uprn": "23030658"},
-    "Test_003": {"uprn": "23011384"},
-    "Test_004": {"uprn": "23045922"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Paper and Cardboard": Icons.PAPER,
-    "Glass and Bottles": Icons.GLASS,
-    "Food and Garden": Icons.BIO_KITCHEN,
-}
+_HOSTNAME = "rochdale-self.achieveservice.com"
+_SECTION = "Location details"
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-        self._base_url = "https://rochdale-self.achieveservice.com"
+def _store_token(response, context):
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data")
+    if isinstance(rows, dict):
+        context["token"] = rows.get("0", {}).get("bartecToken", "")
 
-    def fetch(self):
-        s = requests.Session()
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "X-Requested-With": "XMLHttpRequest",
-            "Referer": f"{self._base_url}/service/Bins___view_your_waste_collection_calendar",
-        }
+def _calendar_form(context, source):
+    today = datetime.date.today()
+    end = today + datetime.timedelta(days=365)
+    return {
+        "propertyUPRN": {"value": source.params["uprn"]},
+        "bartecToken": {"value": context.get("token", "")},
+        "dateAnnualMinimum": {"value": today.strftime("%Y-%m-%dT00:00:00")},
+        "dateAnnualMaximum": {"value": end.strftime("%Y-%m-%dT23:59:59")},
+    }
 
-        # 1. Initialize session and get SID
-        ts = time_ns() // 1_000_000
-        sGet = s.get(
-            f"{self._base_url}/apibroker/domain/rochdale-self.achieveservice.com?_={ts}",
-            headers=headers,
-            timeout=30,
-        )
-        sGet.raise_for_status()
 
-        auth_url = f"{self._base_url}/authapi/isauthenticated?uri=https%3A%2F%2Frochdale-self.achieveservice.com%2Fservice%2FBins___view_your_waste_collection_calendar&hostname=rochdale-self.achieveservice.com&withCredentials=true"
-        sidGet = s.get(auth_url, headers=headers, timeout=30)
-        sidGet.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "Rochdale Borough Council"
+    DESCRIPTION = "Source for Rochdale Borough Council, UK."
+    URL = "https://www.rochdale.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.GLASS, wt.ORGANIC, wt.PAPER]
 
-        sid = sidGet.json().get("auth-session")
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10094359340"},
+        "Test_002": {"uprn": "23030658"},
+        "Test_003": {"uprn": "23011384"},
+        "Test_004": {"uprn": "23045922"},
+    }
 
-        if not sid:
-            raise Exception("Rochdale API: Failed to obtain a session ID.")
+    PARAMS = (uprn(),)
 
-        # 2. STEP 1: Fetch the required Bartec Token using the UPRN
-        # Lookup 6846c784a46b5 returns the server-side {bartecToken}
-        payload_token = {
-            "formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264",
-            "formValues": {"Location details": {"propertyUPRN": {"value": self._uprn}}},
-        }
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
 
-        ts = time_ns() // 1_000_000
-        token_url = f"{self._base_url}/apibroker/runLookup?id=6846c784a46b5&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_token = s.post(token_url, headers=headers, json=payload_token, timeout=30)
-        r_token.raise_for_status()
-
-        # Fetch the Bartec Token
-        try:
-            bartec_token = r_token.json()["integration"]["transformed"]["rows_data"][
-                "0"
-            ]["bartecToken"]
-        except KeyError:
-            raise ValueError(
-                f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}."
-            ) from None
-
-        # 3. STEP 2: Fetch the Calendar
-        # Lookup 68b58a1364572 returns the annual calendar using the token and date bounds
-        now = datetime.now()
-        min_date = now.strftime("%Y-%m-%dT00:00:00")
-        max_date = (now + timedelta(days=365)).strftime("%Y-%m-%dT23:59:59")
-
-        payload_data = {
-            "formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264",
-            "formValues": {
-                "Location details": {
-                    "propertyUPRN": {"value": self._uprn},
-                    "bartecToken": {"value": bartec_token},
-                    "dateAnnualMinimum": {"value": min_date},
-                    "dateAnnualMaximum": {"value": max_date},
-                }
-            },
-        }
-
-        ts = time_ns() // 1_000_000
-        api_url = f"{self._base_url}/apibroker/runLookup?id=68b58a1364572&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_data = s.post(api_url, headers=headers, json=payload_data, timeout=30)
-        r_data.raise_for_status()
-        data = r_data.json()
-
-        # Fetch the Calendar
-        rows_data = (
-            data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        )
-        row = rows_data.get("0")
-
-        if not row or "bartecAnnualBin1Type" not in row:
-            raise ValueError(
-                "Rochdale API: Failed to fetch calendar data or missing required fields."
-            )
-
-        entries = []
-        for i in range(1, 17):
-            bin_type = row.get(f"bartecAnnualBin{i}Type")
-            day = row.get(f"bartecAnnualBin{i}Day")
-            month = row.get(f"bartecAnnualBin{i}Month")
-
-            if bin_type and day and month:
-                try:
-                    # Construct date using current year
-                    date_str = f"{day} {month} {now.year}"
-                    date_obj = datetime.strptime(date_str, "%d %B %Y").date()
-
-                    # Handle year rollover if the date parsed is older than ~1 month ago
-                    if date_obj < now.date() - timedelta(days=31):
-                        date_obj = date_obj.replace(year=now.year + 1)
-
-                    icon = ICON_MAP.get(bin_type, "mdi:trash-can")
-                    entries.append(Collection(date=date_obj, t=bin_type, icon=icon))
-                except KeyError:
-                    continue
-
-        return entries
+    # A Bartec token first, then the year's calendar from today.
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        service_page="Bins___view_your_waste_collection_calendar",
+        skip_landing_page=True,
+        auth_test_url=f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}",
+        steps=[
+            LookupStep(
+                "6846c784a46b5",
+                section=_SECTION,
+                form_values=lambda ctx, source: {
+                    "propertyUPRN": {"value": source.params["uprn"]}
+                },
+                extract=_store_token,
+            ),
+            LookupStep(
+                "68b58a1364572",
+                section=_SECTION,
+                form_values=_calendar_form,
+                no_retry="true",
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # The next collections, flattened into one row as numbered field groups
+    # (bartecAnnualBin1Type / ...Day / ...Month); the dates carry no year.
+    preprocess = AchieveFormsIndexedFieldsPreprocessor(
+        "bartecAnnualBin", require=("Type", "Day", "Month")
+    )
+    transform = JsonTransformer(
+        date_key=lambda group: f"{group['Day']} {group['Month']}",
+        type_key="Type",
+        parse_date=date_parsers.next_weekday("%d %B"),
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Paper and Cardboard": wt.PAPER,
+            "Glass and Bottles": wt.GLASS,
+            "Food and Garden": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )
