@@ -114,6 +114,10 @@ TEST_CASES = {
         "street_address": "Fogdevägen 13, Saltsjö-Duvnäs",
         "service_provider": "nvoa",
     },
+    "Danderyd - Banérvägen 6": {
+        "street_address": "Banérvägen 6",
+        "service_provider": "danderyd",
+    },
 }
 
 COUNTRY = "se"
@@ -241,6 +245,11 @@ SERVICE_PROVIDERS = {
         "title": "NVOA - Nacka Vatten och Avfall",
         "url": "https://www.nacka.se/nackavattenavfall/avfall/sophamtning/tomningsdag/",
         "api_url": "https://futureweb.nvoa.se/EDP/FutureWebBasic/SimpleWastePickup",
+    },
+    "danderyd": {
+        "title": "Danderyds kommun",
+        "url": "https://www.danderyd.se",
+        "api_url": "https://future.danderyd.se/Danderyd/EDPFutureweb/SimpleWastePickup",
     },
 }
 
