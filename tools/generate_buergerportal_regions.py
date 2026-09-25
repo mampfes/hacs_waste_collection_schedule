@@ -19,10 +19,22 @@ tool, not something the source runs.
 from __future__ import annotations
 
 import sys
+import textwrap
 from pathlib import Path
 
 import requests
 import yaml
+
+
+class _YamlfmtDumper(yaml.SafeDumper):
+    """Match the repo's yamlfmt pre-commit hook (mapping=2, sequence=4,
+    offset=2): force block sequences to indent even at top level, which
+    PyYAML's default dumper does not do on its own.
+    """
+
+    def increase_indent(self, flow=False, indentless=False):
+        return super().increase_indent(flow, False)
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = REPO_ROOT / "doc" / "regions" / "buergerportal_de.yaml"
@@ -111,16 +123,20 @@ def main() -> None:
         "# regions.from_yaml() in source/buergerportal_de.py. Re-run the generator\n"
         "# to pick up districts a provider has added or removed; do not hand-edit.\n"
     )
+    body = yaml.dump(
+        entries,
+        Dumper=_YamlfmtDumper,
+        allow_unicode=True,
+        default_flow_style=False,
+        sort_keys=False,
+        width=150,
+    )
+    # yamlfmt's offset=2 indents every sequence item, including at the
+    # document root, which PyYAML's dumper never does on its own.
+    indented_body = textwrap.indent(body, "  ")
     with open(OUTPUT_PATH, "w", encoding="utf-8") as stream:
         stream.write(header)
-        yaml.safe_dump(
-            entries,
-            stream,
-            allow_unicode=True,
-            default_flow_style=False,
-            sort_keys=False,
-            width=150,
-        )
+        stream.write(indented_body)
     print(f"wrote {len(entries)} entries to {OUTPUT_PATH}", file=sys.stderr)
 
 
