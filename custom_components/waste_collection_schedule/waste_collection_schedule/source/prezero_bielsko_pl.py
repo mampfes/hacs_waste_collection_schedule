@@ -198,7 +198,7 @@ class Source:
 
         payload = {
             "option": "com_sita",
-            "view": "daty",
+            "view": "daty",  # codespell:ignore daty
             "q": symbol,
             "rok": str(datetime.now().year),
         }

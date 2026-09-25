@@ -18,7 +18,7 @@ COUNTRY = "fr"
 # discovered via its browser network traffic.
 APP_ID = "3394f2c6-49bc-11ea-90a1-114edab0a319"
 APP_BASE = f"https://geo.gpsea.fr/adws/app/{APP_ID}"
-API_BASE = f"{APP_BASE}/services/aas/v1"
+API_BASE = f"{APP_BASE}/services/aas/v1"  # codespell:ignore aas
 
 SOURCE_ID = "ecce3c92-5194-11ea-9e88-250d8464572d"
 FILTER_COMMUNE = "79029f6a-f185-11e9-9256-e1c42467b095"

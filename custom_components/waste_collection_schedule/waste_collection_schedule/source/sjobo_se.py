@@ -109,7 +109,10 @@ class Source:
                 date_ = self._find_date(bin_)
                 icon = ICON_MAP.get(bin_type)
                 if bin_type.endswith("-H"):
-                    translation = "Varning: helgvecka. " + translation
+                    translation = (
+                        "Varning: helgvecka. "  # codespell:ignore varning
+                        + translation
+                    )
 
                 entries.append(Collection(date=date_, t=translation, icon=icon))
 

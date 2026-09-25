@@ -137,7 +137,7 @@ PARAM_DESCRIPTIONS = {
         _STREET_ADDRESS_ARG_NAME: "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted.",
     },
     "de": {
-        _STREET_ADDRESS_ARG_NAME: "Vollständige Straßenadresse, idealerweise mit Stadtteil, Bundesstaat und Postleitzahl. Kommas und abgekürzte Straßentypen sind zulässig.",
+        _STREET_ADDRESS_ARG_NAME: "Vollständige Straßenadresse, idealerweise mit Stadtteil, Bundesstaat und Postleitzahl. Kommas und abgekürzte Straßentypen sind zulässig.",  # codespell:ignore kommas
     },
     "it": {
         _STREET_ADDRESS_ARG_NAME: "Indirizzo completo, preferibilmente con quartiere, stato e CAP. Sono ammesse le virgole e le abbreviazioni del tipo di strada.",

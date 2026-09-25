@@ -65,7 +65,7 @@ PARAM_DESCRIPTIONS = {
         "house_number": "Numero civico, es. '18'.",
         "postal_code": "Codice postale svedese di cinque cifre, es. '85461'.",
         "city": "Località all'interno del comune di Sundsvall. Predefinito: 'Sundsvall'.",
-        "additional_information": "Lettera o identificativo aggiuntivo, es. 'A'. Lasciare vuoto se non applicabile.",
+        "additional_information": "Lettera o identificativo aggiuntivo, es. 'A'. Lasciare vuoto se non applicabile.",  # codespell:ignore applicabile
     },
     "fr": {
         "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'.",
@@ -103,7 +103,7 @@ PARAM_TRANSLATIONS = {
         "house_number": "Numéro",
         "postal_code": "Code postal",
         "city": "Ville",
-        "additional_information": "Informations complémentaires",
+        "additional_information": "Informations complémentaires",  # codespell:ignore informations
     },
 }
 

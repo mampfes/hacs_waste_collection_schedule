@@ -353,7 +353,7 @@ class Source:
         try:
             result = _api_get(
                 self._session,
-                "user/regist",
+                "user/regist",  # codespell:ignore regist
                 {
                     "user_id": "",  # empty → API allocates a new user_id
                     "area_id": self._area_id,

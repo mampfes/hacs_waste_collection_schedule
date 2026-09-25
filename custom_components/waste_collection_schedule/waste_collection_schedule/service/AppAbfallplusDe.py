@@ -434,7 +434,7 @@ def get_extra_info():
 
 
 API_BASE = "https://app.abfallplus.de/{}"
-API_ASSISTANT = API_BASE.format("assistent/{}")  # ignore: E501
+API_ASSISTANT = API_BASE.format("assistent/{}")  # codespell:ignore assistent
 USER_AGENT = "Android / {} 8.1.1 (1915081010) / DM=unknown;DT=vbox86p;SN=Google;SV=8.1.0 (27);MF=unknown"
 USER_AGENT_ASSISTANT = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Abfallwecker"
 ABFALLARTEN_H2_SKIP = ["Sondermüll", "Giftmobil"]
