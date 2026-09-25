@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/SearchAdress 1001f4a283",
+      "method": "POST",
+      "url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Olofsgatan 9 / Kommunhuset, Ljungby\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "79",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:29 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJPbG9mc2dhdGFuIDkgLyBLb21tdW5odXNldCwgTGp1bmdieSAoMTA5ODk3KSJdfQ=="
+    },
+    {
+      "key": "GET https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule c2aee92c59",
+      "method": "GET",
+      "url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://edpwebb.ljungby.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Olofsgatan+9+%2F+Kommunhuset%2C+Ljungby+%28109897%29",
+      "body": "{\"params\":[[\"address\",\"Olofsgatan 9 / Kommunhuset, Ljungby (109897)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "1093",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:29 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjgiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoxMDQsIldhc3RlVHlwZSI6Ikh1c2jDpWxsIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIG9jaCB0b3JzZGFnIHZhcmplIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiTcOlbmRhZyBvY2ggdG9yc2RhZyB2YXJqZSB2ZWNrYSIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiSGVsw6VyIDJnZ3IvdmVja2EgNjYwIGwga8OkcmwiLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoxMDQsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiMiBnZ3IgaSB2ZWNrYW4iLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJIMTIiLCJXYXN0ZVR5cGUiOiJIdXNow6VsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJIVjY2MDIiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiSGVsw6VyIDJnZ3IvdmVja2EgNjYwIGwga8OkcmwiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjEyMzgyNSwiRGVzY3JpcHRpb24iOiJIZWzDpXIgMmdnci92ZWNrYSA2NjAgbCBrw6RybCIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSg5MTI1NTMyMDAwMDApXC8iLCJTdG9wRGF0ZSI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJCdWlsZGluZ0lEIjoiMTA5ODk3In1dfQ=="
+    }
+  ]
+}

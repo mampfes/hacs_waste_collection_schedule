@@ -1,76 +1,50 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Partille kommun"
-DESCRIPTION = "Source for Partille kommun waste collection."
-URL = "https://vatjanst.partille.se"
-SOURCE_CODEOWNERS = ["@sadjad1"]
-
-COUNTRY = "se"
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_address": "Street address",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Street address including house number, e.g. 'Tiondevägen 6, Partille'",
-    },
-}
-
-TEST_CASES = {
-    "Tiondevägen 6": {"street_address": "Tiondevägen 6, Partille"},
-}
-
-SEARCH_URL = "https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/SearchAdress"
-SCHEDULE_URL = (
-    "https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
+
+_API_URL = "https://vatjanst.partille.se/FutureWeb/SimpleWastePickup"
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+@final
+class Source(BaseSource):
+    TITLE = "Partille kommun"
+    DESCRIPTION = "Source for Partille kommun waste collection."
+    URL = "https://vatjanst.partille.se"
+    COUNTRY = "se"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@sadjad1"]
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.FOOD_WASTE, wt.GENERAL_WASTE]
 
-    def fetch(self):
-        r = requests.post(
-            SEARCH_URL,
-            {"searchText": self._street_address},
-            timeout=30,
-        )
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Tiondevägen 6": {"street_address": "Tiondevägen 6, Partille"},
+    }
 
-        address_data = r.json()
-        address = None
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"street_address": "Ingen gata 999"},
+    }
 
-        if address_data["Succeeded"] is True and len(address_data["Buildings"]) > 0:
-            address = address_data["Buildings"][0]
+    PARAMS = (street_address("street_address"),)
 
-        if address is None:
-            raise SourceArgumentNotFound("street_address", self._street_address)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as the provider's own address search lists "
+            "it, including the locality."
+        ),
+    }
 
-        r = requests.get(SCHEDULE_URL, params={"address": address}, timeout=30)
-        r.raise_for_status()
-
-        data = r.json()
-
-        entries = []
-
-        for item in data["RhServices"]:
-            waste_type = item["WasteType"]
-            next_pickup_date = datetime.fromisoformat(item["NextWastePickup"]).date()
-
-            entries.append(
-                Collection(
-                    date=next_pickup_date,
-                    t=waste_type,
-                    icon=Icons.GENERAL_WASTE,
-                )
-            )
-
-        return entries
+    retrieve = EdpFutureWebRetriever(_API_URL)
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )

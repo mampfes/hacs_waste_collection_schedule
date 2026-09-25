@@ -1,35 +1,19 @@
-import json
-import logging
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address, text_field
 from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
     SourceArgumentException,
-    SourceArgumentNotFound,
     SourceArgumentSuggestionsExceptionBase,
 )
-
-TITLE = "VIVAB Sophämtning"
-DESCRIPTION = "Source for VIVAB waste collection."
-URL = "https://www.vivab.se"
-TEST_CASES = {
-    "Varberg: Gallerian": {"street_address": "Västra Vallgatan 2, Varberg"},
-    "Varberg: Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
-    "Falkenberg: Storgatan 1": {"street_address": "Storgatan 1, FALKENBERG"},
-    "Falkenberg: Östergränd 4": {"street_address": "Östergränd 4, Falkenberg"},
-    "Storgtan 26, Falkenberg": {"street_address": "Storgatan 26, Falkenberg"},
-    "Storgtan 26, Falkenberg 1": {
-        "street_address": "Falkenberg",
-        "building_id": "0012165858",
-    },
-    "Storgtan 26, Falkenberg  2": {
-        "street_address": "Falkenberg",
-        "building_id": "9593062021",
-    },
-}
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 API_URLS = {
     "falkenberg": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/",
@@ -66,169 +50,83 @@ MUNICIPALITY_LOCALITIES = {
     ],
 }
 
-# Swedish month abbreviations returned by the EDP Future Webb API.
-MONTH_MAP = {
-    "Jan": 1,
-    "Feb": 2,
-    "Mar": 3,
-    "Apr": 4,
-    "Maj": 5,
-    "Jun": 6,
-    "Jul": 7,
-    "Aug": 8,
-    "Sep": 9,
-    "Okt": 10,
-    "Nov": 11,
-    "Dec": 12,
-}
 
-ICON_MAP = {
-    "Mat": Icons.BIO_KITCHEN,
-    "Hushåll": Icons.GENERAL_WASTE,
-    "Slam": Icons.GENERAL_WASTE,
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-
-class Source:
-    def __init__(self, street_address: str, building_id: str | int | None = None):
-        if not street_address:
-            raise SourceArgumentException(
-                "street_address",
-                "Street address must be provided and must either be a valid address or 'Varberg' or 'Falkenberg' if using with building_id",
-            )
-
-        self._building_id = building_id
-        self._street_address = street_address
-        addr_lower = street_address.lower()
-        region = None
-        for municipality, localities in MUNICIPALITY_LOCALITIES.items():
-            if any(
-                re.search(rf"\b{re.escape(loc)}\b", addr_lower) for loc in localities
-            ):
-                region = municipality
-                break
-        if region is None:
-            if self._building_id:
-                raise SourceArgumentSuggestionsExceptionBase(
-                    "street_address",
-                    "street_address should be 'Varberg' or 'Falkenberg' if using with building_id",
-                    ["Varberg", "Falkenberg"],
-                )
-            raise SourceArgumentException(
-                "street_address",
-                "Address not supported, should end with a locality within the Varberg or Falkenberg municipality (e.g. 'Varberg', 'Veddige', 'Tvååker', 'Falkenberg', 'Ullared', 'Vessigebro')",
-            )
-        self._api_url = API_URLS[region]
-
-    def _fetch_building_id(self) -> None:
-        search_data = {"searchText": self._street_address.split(",")[0].strip()}
-
-        response = requests.post(
-            f"{self._api_url}SearchAdress",
-            data=search_data,
+def _api_url(street_address=None, building_id=None, **_) -> str:
+    """The deployment of the municipality the address's locality is in."""
+    text = (street_address or "").lower()
+    for municipality, localities in MUNICIPALITY_LOCALITIES.items():
+        if any(re.search(rf"\b{re.escape(loc)}\b", text) for loc in localities):
+            return API_URLS[municipality]
+    if building_id:
+        raise SourceArgumentSuggestionsExceptionBase(
+            "street_address",
+            "street_address should be 'Varberg' or 'Falkenberg' if using with "
+            "building_id",
+            ["Varberg", "Falkenberg"],
         )
+    raise SourceArgumentException(
+        "street_address",
+        "Address not supported, should end with a locality within the Varberg or "
+        "Falkenberg municipality (e.g. 'Varberg', 'Veddige', 'Tvååker', "
+        "'Falkenberg', 'Ullared', 'Vessigebro')",
+    )
 
-        building_data = json.loads(response.text)
-        if not (
-            building_data
-            and "Succeeded" in building_data
-            and "Buildings" in building_data
-            and len(building_data["Buildings"]) > 0
-        ):
-            raise SourceArgumentNotFound("street_address", self._street_address)
 
-        self._building_id = None
+@final
+class Source(BaseSource):
+    TITLE = "VIVAB Sophämtning"
+    DESCRIPTION = "Source for VIVAB waste collection."
+    URL = "https://www.vivab.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.FOOD_WASTE, wt.GENERAL_WASTE]
 
-        if len(building_data["Buildings"]) == 1:
-            # support only first building match
-            building_id_matches = re.findall(
-                r"\(([0-9]+)\)", building_data["Buildings"][0]
-            )
-            if not building_id_matches or len(building_id_matches) == 0:
-                raise ValueError("No building id found")
-            self._building_id = building_id_matches[0]
-            return
+    TEST_CASES: ClassVar[dict] = {
+        "Varberg: Gallerian": {"street_address": "Västra Vallgatan 2, Varberg"},
+        "Varberg: Polisen": {"street_address": "Östra Långgatan 5, Varberg"},
+        "Falkenberg: Storgatan 1": {"street_address": "Storgatan 1, FALKENBERG"},
+        "Falkenberg: Östergränd 4": {"street_address": "Östergränd 4, Falkenberg"},
+        "Storgtan 26, Falkenberg 1": {
+            "street_address": "Falkenberg",
+            "building_id": "0012165858",
+        },
+        "Storgtan 26, Falkenberg  2": {
+            "street_address": "Falkenberg",
+            "building_id": "9593062021",
+        },
+    }
 
-        building: str
-        addresses = []
-        perfect_matches = []
-        for building in building_data["Buildings"]:
-            address, building_id_match = building.split(" (")
-            addresses.append(address)
-            building_id_match.removesuffix(")")
-            if address.lower().replace(" ", "").replace(
-                ",", ""
-            ) == self._street_address.lower().replace(" ", "").replace(",", ""):
-                perfect_matches.append((address, building_id_match))
+    # Storgatan 26 in Falkenberg is two buildings the search lists under the
+    # same address; the building id tells them apart.
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Storgtan 26, Falkenberg": {"street_address": "Storgatan 26, Falkenberg"},
+        "Outside VIVAB": {"street_address": "Storgatan 1, Göteborg"},
+    }
 
-        if len(perfect_matches) == 1:
-            self._building_id = perfect_matches[0][1]
-            return
-        if len(perfect_matches) > 1:
-            raise ValueError(
-                f"Multiple buildings found perfectly matching your search please use a building_id: {perfect_matches}"
-            )
+    PARAMS = (
+        street_address("street_address"),
+        text_field("building_id", "Building ID", optional=True),
+    )
 
-        raise SourceArgAmbiguousWithSuggestions(
-            "street_address", self._street_address, addresses
-        )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address ending in its locality (e.g. 'Östergränd "
+            "4, Falkenberg'). Where several buildings share the address, give "
+            "'building_id' (the number in brackets in the provider's search) and "
+            "just 'Varberg' or 'Falkenberg' as the address."
+        ),
+    }
 
-    @staticmethod
-    def _parse_date(next_pickup: str):
-        """Parse a date string from the EDP Future Webb API.
-
-        Handles three formats:
-        - ISO date:           "2025-04-03"
-        - Week + month/year:  "v18 Maj 2025"
-        - Empty string:       returns None (entry should be skipped)
-        """
-        if not next_pickup:
-            return None
-
-        if next_pickup.startswith("v"):
-            # Format: "v<week> <MonthAbbr> <year>", e.g. "v18 Maj 2025"
-            try:
-                parts = next_pickup.split()
-                month = MONTH_MAP[parts[1]]
-                date_joined = "-".join([parts[0], str(month), parts[2]])
-                return datetime.strptime(date_joined, "v%W-%m-%Y").date()
-            except (KeyError, IndexError, ValueError) as err:
-                _LOGGER.warning(
-                    "Failed to parse week-based date %r: %s", next_pickup, err
-                )
-                return None
-
-        try:
-            return datetime.fromisoformat(next_pickup).date()
-        except ValueError as err:
-            _LOGGER.warning("Failed to parse date %r: %s", next_pickup, err)
-            return None
-
-    def fetch(self):
-        if not self._building_id:
-            self._fetch_building_id()
-
-        response = requests.get(
-            f"{self._api_url}GetWastePickupSchedule",
-            params={"address": f"({self._building_id})"},
-        )
-
-        waste_data = json.loads(response.text)
-        if not ("RhServices" in waste_data and len(waste_data["RhServices"]) > 0):
-            return []
-
-        data = waste_data["RhServices"]
-
-        entries = []
-        for item in data:
-            waste_type = item["WasteType"]
-            next_pickup = item["NextWastePickup"]
-            next_pickup_date = self._parse_date(next_pickup)
-            if next_pickup_date is None:
-                continue
-            icon = ICON_MAP.get(waste_type, Icons.GENERAL_WASTE)
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-
-        return entries
+    retrieve = EdpFutureWebRetriever(
+        _api_url,
+        building_id="building_id",
+        search_text=lambda street_address, **_: street_address.split(",")[0].strip(),
+        exact_match=True,
+    )
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )

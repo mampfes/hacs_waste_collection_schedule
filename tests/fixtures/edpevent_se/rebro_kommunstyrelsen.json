@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/SearchAdress 78f73097e6",
+      "method": "POST",
+      "url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Ringgatan 32\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "64",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:31 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJSaW5nZ2F0YW4gMzIsIMOWcmVicm8gKDc1OTMyKSJdfQ=="
+    },
+    {
+      "key": "GET https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 627e422a81",
+      "method": "GET",
+      "url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://futureweb.orebro.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Ringgatan+32%2C+%C3%96rebro+%2875932%29",
+      "body": "{\"params\":[[\"address\",\"Ringgatan 32, \u00d6rebro (75932)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2231",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:32 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiRnJlZGFnIHZhcmFubmFuIHZlY2thIHVkZGEiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJGcmVkYWcgdmFyYW5uYW4gdmVja2EgdWRkYSIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6Mi4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiUmVzdGF2ZmFsbCBWZXJrc2FtaGV0IDY2MEwga8OkcmwgdmFyIDE0ZSBkYWciLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IjI2IiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJSVks2RiIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJWSFQiLCJEZXNpZ25hdGlvbiI6IlJlc3RhdmZhbGwgVmVya3NhbWhldCA2NjBMIGvDpHJsIHZhciAxNGUgZGFnIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo1MzYyMywiRGVzY3JpcHRpb24iOiJSZXN0YXZmYWxsIFZlcmtzYW1oZXQgNjYwTCBrw6RybCB2YXIgMTRlIGRhZyIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxMTQ3ODE2ODAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6Ijc1OTMyIn0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJGcmVkYWcgdmFyYW5uYW4gdmVja2EgdWRkYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkZyZWRhZyB2YXJhbm5hbiB2ZWNrYSB1ZGRhIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE0MCIsIlNpemUiOjE0MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiJNYXRhdmZhbGwgVmVya3NhbWhldCAxNDBMIGvDpHJsIHZhciAxNGUgZGFnIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE0MCIsIlNpemUiOjE0MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVmFyYW5uYW4gdmVja2EiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiIyNiIsIldhc3RlVHlwZSI6Ik1hdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJNVksxRiIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJWSFQiLCJEZXNpZ25hdGlvbiI6Ik1hdGF2ZmFsbCBWZXJrc2FtaGV0IDE0MEwga8OkcmwgdmFyIDE0ZSBkYWciLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjUzNjI0LCJEZXNjcmlwdGlvbiI6Ik1hdGF2ZmFsbCBWZXJrc2FtaGV0IDE0MEwga8OkcmwgdmFyIDE0ZSBkYWciLCJTdGFydERhdGUiOiJcL0RhdGUoMTE0NzgxNjgwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiI3NTkzMiJ9XX0="
+    }
+  ]
+}
