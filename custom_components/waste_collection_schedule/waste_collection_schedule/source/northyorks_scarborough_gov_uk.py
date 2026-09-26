@@ -1,67 +1,49 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "North Yorkshire Council - Scarborough"
-DESCRIPTION = "Source for North Yorkshire Council - Scarborough."
-URL = "https://northyorks.gov.uk"
-TEST_CASES = {
-    "100052176620": {"uprn": 100050497178},
-    "10013454353": {"uprn": "100052161572"},
-}
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.NorthYorkshireBinCalendar import (
+    TYPE_VALUE_MAP,
+    BinCalendarParser,
+    bin_calendar_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-ICON_MAP = {
-    "Household waste": Icons.GENERAL_WASTE,
-    "Garden": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "North Yorkshire Council - Scarborough"
+    DESCRIPTION = "Source for North Yorkshire Council - Scarborough."
+    URL = "https://northyorks.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "100052176620": {"uprn": 100050497178},
+        "10013454353": {"uprn": "100052161572"},
+    }
 
-API_URL = "https://www.northyorks.gov.uk/bin-calendar/Scarborough/results/{uprn}/ajax?_wrapper_format=drupal_ajax"
+    PARAMS = (uprn(),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look your property up on the [North Yorkshire Council bin calendar]"
+            "(https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the "
+            "number at the end of the results page's URL, e.g. "
+            "`https://www.northyorks.gov.uk/bin-calendar/Scarborough/results/100050497178`."
+        ),
+    }
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
-
-    def fetch(self):
-        r = requests.post(API_URL.format(uprn=self._uprn))
-        r.raise_for_status()
-
-        html = None
-        for res in r.json():
-            if "data" in res and isinstance(res["data"], str):
-                html = res["data"]
-                break
-        if not html or "Unfortunately we were unable to find your property" in html:
-            raise SourceArgumentNotFound("uprn", self._uprn)
-        soup = BeautifulSoup(html, "html.parser")
-
-        rows = (
-            soup.find("div", id="upcoming-collection")
-            .find("table")
-            .find("tbody")
-            .find_all("tr")
-        )
-
-        entries = []
-        for row in rows:
-            tds = row.find_all("td")
-
-            if not tds or len(tds) < 3:
-                continue
-            date_str = tds[0].text
-            date = datetime.strptime(date_str, "%d %B %Y").date()
-            bin_types = [br.next_sibling.strip() for br in tds[2].find_all("i")]
-            if not bin_types:
-                continue
-
-            for bin_type in bin_types:
-                icon = ICON_MAP.get(bin_type.split(" ")[0])
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = bin_calendar_retriever("Scarborough")
+    parse = BinCalendarParser()
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map=TYPE_VALUE_MAP,
+    )

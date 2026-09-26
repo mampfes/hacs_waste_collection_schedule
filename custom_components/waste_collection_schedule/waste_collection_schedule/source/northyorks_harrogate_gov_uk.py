@@ -1,62 +1,51 @@
-import logging
+from typing import ClassVar, final
 
-import dateutil.parser as dparser
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "North Yorkshire Council - Harrogate"
-DESCRIPTION = "Source for North Yorkshire Council - Harrogate."
-
-URL = "https://secure.harrogate.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"uprn": 100050389710},
-    "Test_002": {"uprn": "100050389725"},
-    "Test_003": {"uprn": 100050394291},
-    "Test_004": {"uprn": "10003019065"},
-}
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Food Waste": Icons.BIO_KITCHEN,
-    "Garden Waste": Icons.GARDEN,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.NorthYorkshireBinCalendar import (
+    TYPE_VALUE_MAP,
+    BinCalendarParser,
+    bin_calendar_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "North Yorkshire Council - Harrogate"
+    DESCRIPTION = "Source for North Yorkshire Council - Harrogate."
+    URL = "https://northyorks.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(
-            f"https://secure.harrogate.gov.uk/inmyarea/property/?uprn={self._uprn}",
-            headers=HEADERS,
-        )
-        soup = BeautifulSoup(r.text, "html.parser")
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 100050389710},
+        "Test_002": {"uprn": "100050389725"},
+        "Test_003": {"uprn": 100050394291},
+        "Test_004": {"uprn": "10003019065"},
+    }
 
-        schedule = []
+    PARAMS = (uprn(),)
 
-        tableClass = soup.findAll("table", {"class": "hbcRounds"})
-        for tr in tableClass[1].find_all("tr"):
-            cells = []
-            cells.append(dparser.parse(tr.find("td").text.lstrip(), fuzzy=True).date())
-            cells.append(tr.find("th").text)
-            schedule.append(cells)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look your property up on the [North Yorkshire Council bin calendar]"
+            "(https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the "
+            "number at the end of the results page's URL, e.g. "
+            "`https://www.northyorks.gov.uk/bin-calendar/Harrogate/results/100050389710`."
+        ),
+    }
 
-        entries = []
-        for pickup in schedule:
-            entries.append(
-                Collection(
-                    date=pickup[0],
-                    t=pickup[1],
-                    icon=ICON_MAP.get(pickup[1]),
-                )
-            )
-
-        return entries
+    retrieve = bin_calendar_retriever("Harrogate")
+    parse = BinCalendarParser()
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map=TYPE_VALUE_MAP,
+    )

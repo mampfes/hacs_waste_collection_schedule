@@ -1,33 +1,34 @@
 # North Yorkshire Council - Harrogate
 
-Support for schedules provided by [North Yorkshire Council - Harrogate](https://northyorks.gov.uk), serving Harrogate North Yorkshire, UK.
+Support for schedules provided by [North Yorkshire Council - Harrogate](https://northyorks.gov.uk).
+
+Source for North Yorkshire Council - Harrogate.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northyorks_harrogate_gov_uk
       args:
-        uprn: "UPRN"
-        
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northyorks_harrogate_gov_uk
       args:
-        uprn: "10003019065"
+        uprn: 100050389710
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Harrogate/results/100050389710`.

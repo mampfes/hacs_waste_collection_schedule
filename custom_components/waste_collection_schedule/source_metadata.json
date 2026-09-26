@@ -3979,6 +3979,13 @@
     },
     "urls": {}
   },
+  "city_osaka_lg_jp": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/city_osaka_lg_jp.md",
+    "howto": {
+      "en": "Pick your ward, then enter your address in any of the usual forms: '浮田1丁目2番', '浮田1丁目2番地5号', '浮田1-2-5' or the full '大阪市北区浮田一丁目2-5' (the 号 is not needed). Towns listed without a chome take the ban directly ('味原町1番'). A town name alone lists its blocks. Check the spelling on the text version of the city's map: https://www.city.osaka.lg.jp/contents/wdu150/trashmap/text/index.html . A few blocks are split into areas with different weekdays (a 号 range, a building, '軽四輪車(小さい車)で収集している地域' or '上記以外'); only then fill in the block detail, from the values offered. Only the weekly schedule is published, so year-end and New Year breaks are not reflected."
+    },
+    "urls": {}
+  },
   "delight_system_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/delight_system_com.md",
     "howto": {
@@ -6662,7 +6669,7 @@
   "northyorks_craven_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_craven_gov_uk.md",
     "howto": {
-      "en": "You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Craven](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. Your UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Craven/results/10095432934`, then your UPRN is `10095432934`."
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Craven/results/10095432934`."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -6670,21 +6677,27 @@
   },
   "northyorks_hambleton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_hambleton_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Hambleton/results/10070735142`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
   "northyorks_harrogate_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_harrogate_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Harrogate/results/100050389710`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
   "richmondshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/richmondshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Richmondshire/results/100050441864`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6692,7 +6705,7 @@
   "northyorks_ryedale_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_ryedale_gov_uk.md",
     "howto": {
-      "en": "You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Ryedale](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. You UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10002317948`, then your UPRN is `10002317948`."
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Ryedale/results/10007630387`."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -6700,14 +6713,18 @@
   },
   "northyorks_scarborough_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_scarborough_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Scarborough/results/100050497178`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
   "northyorks_selby_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_selby_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Selby/results/100052176620`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
