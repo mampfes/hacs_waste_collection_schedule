@@ -2497,6 +2497,77 @@ class TestToolkitParsers:
             2028, 2, 29
         )
 
+    @freeze_time("2026-12-28")
+    def test_date_parser_nearest_year_crosses_the_new_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.nearest_year("%a %d %B")
+        # Yesterday stays yesterday, and January is next year's.
+        assert parse("Sun 27 December") == datetime.date(2026, 12, 27)
+        assert parse("Mon 4 January") == datetime.date(2027, 1, 4)
+        with pytest.raises(ValueError):
+            date_parsers.nearest_year("%d %B %Y")
+        with pytest.raises(ValueError):
+            parse("not a date")
+
+    @freeze_time("2027-01-02")
+    def test_date_parser_nearest_year_looks_back_across_the_new_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.nearest_year("%d %b")
+        assert parse("30 Dec") == datetime.date(2026, 12, 30)
+        assert parse("08 Jan") == datetime.date(2027, 1, 8)
+
+    def test_text_grouped_dates_reads_month_names(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import TextGroupedDates
+
+        rows = list(
+            TextGroupedDates(
+                keys=["Refuse:", "Food:"],
+                date_pattern=r"(?P<day>\d{1,2}) (?P<month>[A-Za-z]+) (?P<year>\d{4})",
+            )(
+                "Refuse: Tuesday 06 October 2026, Tuesday 29 Sep 2026 "
+                "Food: 3 Oktober 2026, 4 Smarch 2026",
+                None,
+            )
+        )
+        assert rows == [
+            (datetime.date(2026, 10, 6), "Refuse:"),
+            (datetime.date(2026, 9, 29), "Refuse:"),
+            # A month name in another supported language; an unknown one is skipped.
+            (datetime.date(2026, 10, 3), "Food:"),
+        ]
+
+    def test_html_transformer_can_skip_unparseable_dates(self):
+        from bs4 import BeautifulSoup
+        from waste_collection_schedule import date_parsers
+        from waste_collection_schedule.transformers import HtmlTransformer
+
+        rows = BeautifulSoup(
+            "<tr><td></td><td>Food</td></tr><tr><td>01/10/26</td><td>Food</td></tr>",
+            "html.parser",
+        ).select("tr")
+
+        def make(skip):
+            return HtmlTransformer(
+                date_getter=lambda row: row.select("td")[0].get_text(strip=True),
+                type_getter=lambda row: row.select("td")[1].get_text(strip=True),
+                parse_date=date_parsers.for_format("%d/%m/%y"),
+                skip_unparseable_dates=skip,
+            )
+
+        assert make(True)(rows[0]) is None
+        assert make(True)(rows[1]).date.isoformat() == "2026-10-01"
+        # Off by default: an empty date still raises, as before.
+        with pytest.raises(ValueError):
+            make(False)(rows[0])
+
     def test_date_fields_split(self):
         import datetime
 
