@@ -36,9 +36,9 @@ Usage::
     )
 """
 
+import datetime
 import json
 import re
-import time
 from collections.abc import Callable, Hashable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
@@ -51,6 +51,21 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
+
+
+def _cache_buster() -> int:
+    """The ``_`` query parameter the AchieveForms frontend adds to its calls.
+
+    It only defeats browser caching, and the servers do not check it, so it is
+    derived from today's date rather than the wall clock: the same value all
+    day, which lets a recorded cassette pin the request (replay freezes the
+    clock to the recording date).
+    """
+    today = datetime.date.today()
+    midnight = datetime.datetime(
+        today.year, today.month, today.day, tzinfo=datetime.UTC
+    )
+    return int(midnight.timestamp() * 1000)
 
 
 def init_session(
@@ -129,7 +144,7 @@ def init_session(
     if auth_test_url is not None:
         params_test: dict[str, str | int] = {
             "sid": sid,
-            "_": int(time.time() * 1000),
+            "_": _cache_buster(),
         }
         r = session.get(auth_test_url, params=params_test, timeout=timeout)
         r.raise_for_status()
@@ -201,7 +216,7 @@ def run_lookup(
         "getOnlyTokens": "undefined",
         "log_id": "",
         "app_name": app_name,
-        "_": int(time.time() * 1000),
+        "_": _cache_buster(),
         "sid": sid,
     }
     if method == "GET":
@@ -588,6 +603,47 @@ class AchieveFormsRowsParser(Parser[Any]):
         return rows
 
 
+_XML_ROW_RE = re.compile(r"<Row\b[^>]*>(.*?)</Row>", re.S)
+_XML_RESULT_RE = re.compile(
+    r'<result\b[^>]*?\bcolumn="([^"]+)"[^>]*?(?:/>|>(.*?)</result>)', re.S
+)
+
+
+class AchieveFormsXmlRowsParser(Parser[Any]):
+    """Read the XML a lookup returns in ``data`` into row dicts.
+
+    Some lookups have no ``integration.transformed`` rows; the records are in
+    the raw ``data`` field instead, as the integration's XML::
+
+        <Rows><Row><result column="Bartec_Refuse_Date" isNull="False">
+        2026-10-01T00:00:00</result>...</Row></Rows>
+
+    Each ``<Row>`` becomes a ``{column: text}`` dict (a null column is an empty
+    string), which the shape preprocessors read like ``rows_data``. A reply
+    without a ``<Row>`` parses to an empty list; one with no ``data`` at all is
+    a changed response and raises.
+    """
+
+    def __call__(self, raw: dict, source: "BaseSource | None" = None) -> Any:
+        from html import unescape
+
+        data = raw.get("data") if isinstance(raw, dict) else None
+        response_shape.expect(
+            isinstance(data, str),
+            source_name=response_shape.source_name(source),
+            detail="AchieveForms response has no XML 'data' field",
+            raw=raw,
+        )
+        assert isinstance(data, str)
+        return [
+            {
+                column: unescape(value or "").strip()
+                for column, value in _XML_RESULT_RE.findall(row)
+            }
+            for row in _XML_ROW_RE.findall(data)
+        ]
+
+
 def _rows(rows: Any) -> "list[dict]":
     """Normalise a parsed AchieveForms container into a list of row dicts.
 
@@ -601,6 +657,11 @@ def _rows(rows: Any) -> "list[dict]":
     else:
         return []
     return [row for row in values if isinstance(row, dict)]
+
+
+def _row_key(row_key: Any, source: "BaseSource | None") -> str:
+    """Resolve a ``row_key`` that may be a ``(source) -> str`` callable."""
+    return row_key(source) if callable(row_key) else row_key
 
 
 def _single_row(rows: Any, row_key: str) -> dict:
@@ -768,8 +829,10 @@ class AchieveFormsFieldMapPreprocessor(
             row's value for it looks true (AchieveForms represents booleans as
             the strings ``"True"``/``"False"``).
         row_key: the key of the row to read when the parsed value is a dict
-            keyed by row index (default ``"0"``, the common single-row shape).
-            Ignored when the parsed value is already a single flat dict.
+            keyed by row index (default ``"0"``, the common single-row shape),
+            or a ``(source) -> str`` callable for a lookup that keys its one
+            row by the property (the UPRN). Ignored when the parsed value is
+            already a single flat dict.
         min_year: a parsed date whose year is under this is treated as
             AchieveForms' "no next collection scheduled" sentinel (e.g.
             ``0001-01-01``) and skipped. Default 2000.
@@ -792,7 +855,7 @@ class AchieveFormsFieldMapPreprocessor(
         self,
         fields: "Sequence[FieldMapEntry]",
         *,
-        row_key: str = "0",
+        row_key: "str | Callable[[BaseSource | None], str]" = "0",
         min_year: int = 2000,
         parse_date: "Any | None" = None,
         truncate: "int | None" = None,
@@ -808,7 +871,7 @@ class AchieveFormsFieldMapPreprocessor(
         self.date_list = date_list
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
-        row = _single_row(rows, self.row_key)
+        row = _single_row(rows, _row_key(self.row_key, source))
         if not row:
             return
 
@@ -863,7 +926,9 @@ class AchieveFormsRowFieldsPreprocessor(
         transform = RowTransformer(parse_date=date_parsers.for_format("%d/%m/%Y"), ...)
 
     Args:
-        date_field: the row field holding this collection's date.
+        date_field: the row field holding this collection's date, or several
+            fields when a row carries more than one date for its service (a
+            last and a next instance); each populated one becomes a record.
         label_fields: the row field(s) naming the waste type(s). By default a
             row emits one record per *populated* field, for a council that
             lists several services collected on the same date in sibling
@@ -893,12 +958,15 @@ class AchieveFormsRowFieldsPreprocessor(
         dedupe: drop a record whose ``(date, label)`` pair has already been
             emitted during this fetch, for a provider whose job feed repeats
             an entry.
+        min_year: with ``parse_date``, a date whose year is under this is the
+            platform's "no date" placeholder (``1900-01-01``) and is skipped,
+            as in :class:`AchieveFormsFieldMapPreprocessor`.
     """
 
     def __init__(
         self,
         *,
-        date_field: str,
+        date_field: "str | Sequence[str]",
         label_fields: "Sequence[str]",
         first_label_only: bool = False,
         split_labels: "str | re.Pattern[str] | None" = None,
@@ -906,8 +974,11 @@ class AchieveFormsRowFieldsPreprocessor(
         truncate: "int | None" = None,
         parse_date: "Any | None" = None,
         dedupe: bool = False,
+        min_year: "int | None" = None,
     ):
-        self.date_field = date_field
+        self.date_fields = (
+            (date_field,) if isinstance(date_field, str) else tuple(date_field)
+        )
         self.label_fields = tuple(label_fields)
         self.first_label_only = first_label_only
         self.split_labels = (
@@ -917,6 +988,7 @@ class AchieveFormsRowFieldsPreprocessor(
         self.truncate = truncate
         self.parse_date = parse_date
         self.dedupe = dedupe
+        self.min_year = min_year
 
     def _labels(self, row: dict) -> "list[str]":
         labels: list[str] = []
@@ -940,29 +1012,32 @@ class AchieveFormsRowFieldsPreprocessor(
         mapping = self.label_lookup(source) if self.label_lookup is not None else None
         seen: set[tuple] = set()
         for row in _rows(rows):
-            raw_date = row.get(self.date_field)
-            if not raw_date:
-                continue
-            date_value: Any = str(raw_date)
-            if self.truncate is not None:
-                date_value = date_value[: self.truncate]
-            if self.parse_date is not None:
-                try:
-                    date_value = self.parse_date(date_value)
-                except (ValueError, TypeError):
+            for date_field in self.date_fields:
+                raw_date = row.get(date_field)
+                if not raw_date:
                     continue
-            for label in self._labels(row):
-                if mapping is not None:
-                    mapped = mapping.get(label)
-                    if mapped is None:
+                date_value: Any = str(raw_date)
+                if self.truncate is not None:
+                    date_value = date_value[: self.truncate]
+                if self.parse_date is not None:
+                    try:
+                        date_value = self.parse_date(date_value)
+                    except (ValueError, TypeError):
                         continue
-                    label = mapped
-                if self.dedupe:
-                    key = (date_value, label.lower())
-                    if key in seen:
+                    if self.min_year is not None and date_value.year < self.min_year:
                         continue
-                    seen.add(key)
-                yield date_value, label
+                for label in self._labels(row):
+                    if mapping is not None:
+                        mapped = mapping.get(label)
+                        if mapped is None:
+                            continue
+                        label = mapped
+                    if self.dedupe:
+                        key = (date_value, label.lower())
+                        if key in seen:
+                            continue
+                        seen.add(key)
+                    yield date_value, label
 
 
 class AchieveFormsLabelSplitPreprocessor(
@@ -984,23 +1059,95 @@ class AchieveFormsLabelSplitPreprocessor(
     separator itself ("RECYCLING BIN - 240L - 25/09/2026") stays intact. An
     entry with no separator is skipped.
 
+    The same shape also turns up as a summary row with one such text per
+    service field, the type leading ("Refuse: Fri 2 Oct then every Fri"):
+    pass those fields and ``split_at="first"``, and let the transformer's date
+    parser read the date off the front of the remainder.
+
     Args:
-        field: the entry field holding the combined label.
+        field: the entry field holding the combined label, or several fields
+            of one row, each read the same way.
         separator: what separates the date from the waste type.
+        split_at: ``"last"`` (default) splits at the last separator, where the
+            date is the tail; ``"first"`` at the first, where the waste type is
+            the head and the rest may itself contain the separator.
     """
 
-    def __init__(self, *, field: str = "label", separator: str = " - "):
-        self.field = field
+    def __init__(
+        self,
+        *,
+        field: "str | Sequence[str]" = "label",
+        separator: str = " - ",
+        split_at: str = "last",
+    ):
+        if split_at not in ("first", "last"):
+            raise ValueError(f"split_at must be 'first' or 'last', not {split_at!r}")
+        self.fields = (field,) if isinstance(field, str) else tuple(field)
         self.separator = separator
+        self.split_at = split_at
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
         for row in _rows(rows):
-            label = str(row.get(self.field) or "").strip()
-            parts = label.rsplit(self.separator, 1)
-            if len(parts) != 2:
-                continue
-            waste_type, date_str = parts
-            yield date_str.strip(), waste_type.strip()
+            for field_name in self.fields:
+                label = str(row.get(field_name) or "").strip()
+                if self.split_at == "first":
+                    parts = label.split(self.separator, 1)
+                else:
+                    parts = label.rsplit(self.separator, 1)
+                if len(parts) != 2:
+                    continue
+                waste_type, date_str = parts
+                yield date_str.strip(), waste_type.strip()
+
+
+class AchieveFormsIndexedFieldsPreprocessor(preprocessors.Preprocessor[Any, dict]):
+    """Regroup numbered fields of one summary row into one record per number.
+
+    A Bartec-backed lookup can flatten a whole list into one row, repeating a
+    group of fields under a running number::
+
+        bartecAnnualBin1Type: "General Waste"   bartecAnnualBin1Day: "30"
+        bartecAnnualBin1Month: "September"      bartecAnnualBin2Type: ...
+
+    With ``prefix="bartecAnnualBin"`` each number becomes one record keyed by
+    the rest of the field name (``{"Type": ..., "Day": ..., "Month": ...}``),
+    in numeric order, for a ``JsonTransformer`` to read::
+
+        preprocess = AchieveFormsIndexedFieldsPreprocessor("bartecAnnualBin")
+        transform = JsonTransformer(
+            date_key=lambda r: f"{r['Day']} {r['Month']}", type_key="Type", ...
+        )
+
+    Args:
+        prefix: the text before the number in every field of the group.
+        row_key: which row to read (default ``"0"``), or a ``(source) -> str``
+            callable; see :class:`AchieveFormsFieldMapPreprocessor`.
+        require: fields a group must have (non-empty) to be emitted, so a
+            half-filled trailing group is skipped rather than half-read.
+    """
+
+    def __init__(
+        self,
+        prefix: str,
+        *,
+        row_key: "str | Callable[[BaseSource | None], str]" = "0",
+        require: "Sequence[str]" = (),
+    ):
+        self.pattern = re.compile(rf"^{re.escape(prefix)}(\d+)(\D\w*)$")
+        self.row_key = row_key
+        self.require = tuple(require)
+
+    def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
+        row = _single_row(rows, _row_key(self.row_key, source))
+        groups: dict[int, dict[str, Any]] = {}
+        for key, value in row.items():
+            match = self.pattern.match(key)
+            if match:
+                groups.setdefault(int(match.group(1)), {})[match.group(2)] = value
+        for number in sorted(groups):
+            group = groups[number]
+            if all(group.get(name) for name in self.require):
+                yield group
 
 
 class AchieveFormsJsonRowsPreprocessor(preprocessors.Preprocessor[Any, dict]):
@@ -1085,8 +1232,9 @@ class AchieveFormsDynamicRowsPreprocessor(
             each row key, with exactly one capture group -- the label. Keys
             that don't match, or whose value is falsy, are skipped.
         row_key: the key of the row to read when the parsed value is a dict
-            keyed by row index (default ``"0"``). Ignored when the parsed
-            value is already a single flat dict.
+            keyed by row index (default ``"0"``), or a ``(source) -> str``
+            callable for a lookup that keys its one row by the property (the
+            UPRN). Ignored when the parsed value is already a single flat dict.
         split_label: split a PascalCase captured label into words
             (``"GeneralWaste"`` -> ``"General Waste"``). Default False (most
             AchieveForms key prefixes are already a single lower-case word;
@@ -1106,7 +1254,7 @@ class AchieveFormsDynamicRowsPreprocessor(
         self,
         key_pattern: "str | re.Pattern[str]",
         *,
-        row_key: str = "0",
+        row_key: "str | Callable[[BaseSource | None], str]" = "0",
         split_label: bool = False,
         key_filter: "Callable[[str, dict], bool] | None" = None,
         min_year: int = 2000,
@@ -1124,7 +1272,7 @@ class AchieveFormsDynamicRowsPreprocessor(
         self.parse_date = parse_date or date_parsers.auto
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
-        row = _single_row(rows, self.row_key)
+        row = _single_row(rows, _row_key(self.row_key, source))
 
         for key, value in row.items():
             if not value:
