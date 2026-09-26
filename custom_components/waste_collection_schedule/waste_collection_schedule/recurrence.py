@@ -72,7 +72,15 @@ _LOCALES = (
     "lv",
     "lt",
     "ga",
+    "ja",
 )
+
+# Languages whose *abbreviated* weekday names are also registered. Most scripts
+# abbreviate ambiguously ("mar" is Tuesday in Spanish but March elsewhere), so
+# only the wide names are indexed by default. Japanese is the exception: the
+# single-kanji form ("火" for 火曜日) is how providers actually write weekdays,
+# often run together ("火金" = Tuesday and Friday), and it collides with nothing.
+_ABBREVIATED_DAY_LOCALES = ("ja",)
 
 
 def _strip_accents(text: str) -> str:
@@ -113,9 +121,13 @@ def _build_index(attr: str) -> dict[str, int]:
         except Exception:
             continue
         table = getattr(locale, attr)
+        widths = ["wide"]
+        if attr == "days" and code in _ABBREVIATED_DAY_LOCALES:
+            widths.append("abbreviated")
         for context in ("format", "stand-alone"):
-            for number, name in table.get(context, {}).get("wide", {}).items():
-                _register(index, name, number)
+            for width in widths:
+                for number, name in table.get(context, {}).get(width, {}).items():
+                    _register(index, name, number)
     return index
 
 

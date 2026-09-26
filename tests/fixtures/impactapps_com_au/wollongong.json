@@ -1,0 +1,40 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://wollongong.waste-info.com.au/api/v1/properties/21444.json 74b58ccf27",
+      "method": "GET",
+      "url": "https://wollongong.waste-info.com.au/api/v1/properties/21444.json",
+      "final_url": "https://wollongong.waste-info.com.au/api/v1/properties/21444.json?start=2026-09-26&end=2027-09-26",
+      "body": "{\"params\":[[\"end\",\"2027-09-26\"],[\"start\",\"2026-09-26\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "access-control-allow-origin": "*",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "max-age=0, private, must-revalidate",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a4119abe2a9f2a6c-IAD",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 26 Sep 2026 10:32:25 GMT",
+        "etag": "W/\"764ab4fff21aa42c89f1435c52432222\"",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "set-cookie": "__cf_bm=lyfKjNOkL4FKm_zRmCPu2SG5GXupkLjRm1qKf.rlMF0-1790418744.0276055-1.0.1.1-Wxk2BF6AfaIkGiWhDjgDHqkBiaqYtDatWtZ_c9QHEymK5GnLOFdpTeDPtQep0gQoGrTKFFdHb2ND8KWjOztralMy3nw7nrH0QPm5LR5U7pIInOWmwfHJ6T7BXEyVkGjr; HttpOnly; SameSite=None; Secure; Path=/; Domain=wollongong.waste-info.com.au; Expires=Sat, 26 Sep 2026 11:02:25 GMT",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "svid": "02eff84234f567af0262bed114d05ae411a9143813bd6dd39eafab4ab963f8796d3a323a392b1b7cccb17451dacfb8601e28fa0186d6e85eada4e1183082d43122065e0c420c8d2be9e9ef94b28aca501b61b0a595fc88d50966d33fee824e596f3df3ed16b7dce2f3d0974d1d1ebace23dde2ab6186ddb2d46533637d404f8b39f886917da84f1503f44b5b6508b7fa8db48fab9bd8a021f0443be67a2382d336c7b5f3f7811f81ee5514cdb9c046856584bb8091d760f6bd94ca12c3d186fe7b400e45729d7463a8da4975b6950e5465dfc85041a1af6ec581321971b38a5d",
+        "vary": "Origin",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-permitted-cross-domain-policies": "none",
+        "x-request-id": "2264604bc44cd5cfa2cb2243253c2ad3",
+        "x-runtime": "0.013734",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "W3sicHJvcGVydHkiOnsiY29sbGVjdGlvbl9kYXkiOjMsImNvbGxlY3Rpb25fZGF5XzIiOm51bGwsInpvbmUiOiJub3J0aCIsInNocyI6bnVsbCwiYmluX2JhbmtfaWQiOm51bGwsImNsZWFuX3VwX2NvZGUiOm51bGwsImFkZHJlc3MiOiIxMyBNdXJyYXkgUm9hZCwgRWFzdCBDb3JyaW1hbCIsInNlcnZpY2VfdHlwZSI6ImFsbF9jb2xsZWN0aW9ucyIsImNvbGxlY3Rpb25zIjpbXX0sImNvbG9yIjoiI0VGMzM0MCIsImNvbG9yTm9EZWZhdWx0IjpudWxsLCJ0ZXh0Q29sb3IiOiIjRUYzMzQwIiwiYm9yZGVyQ29sb3IiOiIjMDAwIiwiZG93IjpbM10sImRheXNPZldlZWsiOlszXSwic3RhcnRfZGF0ZSI6IjIwMjYtMDktMjMiLCJldmVudF90eXBlIjoid2FzdGUifSx7InN0YXJ0SGFsZkRheSI6dHJ1ZSwiY29sb3IiOiIjNDRENjJDIiwiY29sb3JOb0RlZmF1bHQiOm51bGwsInRleHRDb2xvciI6IiM0NEQ2MkMiLCJib3JkZXJDb2xvciI6IiMwMDAiLCJkb3ciOlszXSwiZGF5c09mV2VlayI6WzNdLCJzdGFydF9kYXRlIjoiMjAyNi0wOS0yMyIsImV2ZW50X3R5cGUiOiJvcmdhbmljIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0wOS0zMCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMC0xNCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMC0yOCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMS0xMSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMS0yNSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMi0wOSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNi0xMi0yMyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMS0wNiIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMS0yMCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMi0wMyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMi0xNyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMy0wMyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMy0xNyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wMy0zMSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNC0xNCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNC0yOCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNS0xMiIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNS0yNiIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNi0wOSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNi0yMyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNy0wNyIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wNy0yMSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wOC0wNCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wOC0xOCIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wOS0wMSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wOS0xNSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn0seyJjb2xvciI6IiNGRURCMDAiLCJjb2xvck5vRGVmYXVsdCI6bnVsbCwidGV4dENvbG9yIjoiI0ZFREIwMCIsImJvcmRlckNvbG9yIjoiIzAwMCIsInN0YXJ0IjoiMjAyNy0wOS0yOSIsImV2ZW50X3R5cGUiOiJyZWN5Y2xlIn1d"
+    }
+  ]
+}

@@ -59,7 +59,9 @@
   },
   "impactapps_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/impactapps_com_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Service: the council's name as listed, its waste-info.com.au API URL (e.g. 'https://brisbane.waste-info.com.au'), or the first part of that host name (e.g. 'brisbane'). Then either the suburb, street name and street number, or the property ID, which the council's calendar page requests as '<property ID>.json' (browser developer tools, Network tab)."
+    },
     "urls": {}
   },
   "bayside_vic_gov_au": {
@@ -440,7 +442,9 @@
   },
   "hobsonsbay_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobsonsbay_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Street number, street name and suburb as shown on the council's bin collection calendar, for example '399 Queen St, Altona Meadows'. The comma is optional."
+    },
     "urls": {}
   },
   "hornsby_nsw_gov_au": {
@@ -876,7 +880,9 @@
   },
   "wollongongwaste_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wollongongwaste_com_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Open the Waste Calendar at https://www.wollongongwaste.com.au/calendar/ with your browser's developer tools on the Network tab and look up your address. The last request is for '<propertyID>.json', e.g. https://wollongong.waste-info.com.au/api/v1/properties/21444.json"
+    },
     "urls": {}
   },
   "woollahra_nsw_gov_au": {
@@ -7703,7 +7709,9 @@
   },
   "phoenix_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phoenix_gov.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')."
+    },
     "urls": {}
   },
   "prince_georges_county_md_us": {

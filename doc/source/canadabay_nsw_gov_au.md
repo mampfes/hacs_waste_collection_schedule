@@ -1,6 +1,8 @@
 # City of Canada Bay Council
 
-Support for schedules provided by [City of Canada Bay Council](https://www.canadabay.nsw.gov.au/).
+Support for schedules provided by [City of Canada Bay Council](https://www.canadabay.nsw.gov.au).
+
+Source for City of Canada Bay Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -32,11 +34,7 @@ waste_collection_schedule:
   sources:
     - name: canadabay_nsw_gov_au
       args:
-        suburb: Mortlake
-        street_name: Tennyson Road
-        street_number: 76
+        suburb: Concord
+        street_name: Gipps Street
+        street_number: 1A
 ```
-
-## How to get the source arguments
-
-Visit the [City of Canada Bay Council bin collection calendar](https://www.canadabay.nsw.gov.au/residents/waste-and-recycling/my-bins/my-bin-collection) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.

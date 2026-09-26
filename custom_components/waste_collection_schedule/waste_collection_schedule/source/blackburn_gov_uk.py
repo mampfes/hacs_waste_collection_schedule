@@ -1,82 +1,72 @@
-from datetime import datetime
+import datetime
+from typing import ClassVar, final
 
-import urllib3
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SSLError import get_legacy_session
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Blackburn with Darwen Borough Council"
-DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK."
-URL = "https://blackburn.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"uprn": "10091617919"},
-    "Test_002": {"uprn": "100010732130"},
-    "Test_003": {"uprn": 100010729702},
-    "Test_004": {"uprn": 100010751876},
-}
+# The council's API answers one calendar month per request, as a list of weekday
+# slots (most of them null) each holding the bins collected that day. A year of
+# schedule is therefore twelve requests, one response each, flattened into the
+# ordinary record stream.
 
-ICON_MAP = {
-    "Burgundy": Icons.GENERAL_WASTE,
-    "Grey": Icons.RECYCLING,
-    "Blue": Icons.PAPER,
-}
-
-API_URL = "https://mybins.blackburn.gov.uk/api/mybins/getbincollectiondays"
+_API_URL = "https://mybins.blackburn.gov.uk/api/mybins/getbincollectiondays"
+_MONTHS = 12
 
 
-# With verify=True the POST fails due to a SSLCertVerificationError.
-# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# This line suppresses the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+def _month_urls(source, _context) -> list[str]:
+    """One request URL per month, from the current month on."""
+    today = datetime.date.today()
+    uprn_value = source.params["uprn"]
+    urls = []
+    for offset in range(_MONTHS):
+        index = today.month - 1 + offset
+        year, month = today.year + index // 12, index % 12 + 1
+        urls.append(f"{_API_URL}?month={month}&year={year}&uprn={uprn_value}")
+    return urls
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Blackburn with Darwen Borough Council"
+    DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK."
+    URL = "https://blackburn.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    # The internal and external food caddies are both collected with the food
+    # waste, so they can share a day.
+    IGNORE_DUPLICATES_DEFAULT = True
 
-    def fetch(self):
-        date = datetime.now()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+    ]
 
-        # that's not very nice, but it is the only way I got it to work
-        s = get_legacy_session()
-        s.get_adapter("https://").ssl_context.check_hostname = False
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10091617919"},
+        "Test_002": {"uprn": "100010732130"},
+        "Test_003": {"uprn": 100010729702},
+        "Test_004": {"uprn": 100010751876},
+    }
 
-        year = date.year
-        month = date.month
-        entries = []
-        for _i in range(1, 13):
-            PARAMS = {
-                "month": month,
-                "year": year,
-                "uprn": self._uprn,
-            }
+    PARAMS = (uprn(),)
 
-            r = s.get(
-                API_URL,
-                params=PARAMS,
-                verify=False,
-            )
-            r.raise_for_status()
-
-            collection_days = r.json()["BinCollectionDays"]
-
-            for collection_day in collection_days:
-                if collection_day is not None and isinstance(collection_day, list):
-                    for collection in collection_day:
-                        entries.append(
-                            Collection(
-                                date=datetime.fromisoformat(
-                                    collection["CollectionDate"]
-                                ).date(),
-                                t=collection["BinType"],
-                                icon=ICON_MAP.get(collection["BinType"].split(" ")[0]),
-                            )
-                        )
-
-            month += 1
-            if month > 12:
-                month = 1
-                year += 1
-
-        return entries
+    retrieve = retrievers.FanOutRetriever(targets=_month_urls)
+    parse = parsers.EachResponse(parsers.JsonParser("BinCollectionDays"))
+    preprocess = preprocessors.FlattenGroups()
+    transform = JsonTransformer(
+        date_key="CollectionDate",
+        type_key="BinType",
+        type_value_map={
+            "Burgundy 140L (refuse bin)": wt.GENERAL_WASTE,
+            "Blue 240L (paper and cardboard bin)": wt.PAPER,
+            "Grey 240L (glass, tins and plastics bin)": wt.RECYCLABLES,
+            "Food Waste Caddy (External - large)": wt.FOOD_WASTE,
+            "Food Waste Caddy (Internal - small)": wt.FOOD_WASTE,
+        },
+        carry_raw_label=True,
+    )

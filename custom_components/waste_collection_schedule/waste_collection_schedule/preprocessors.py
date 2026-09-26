@@ -89,8 +89,10 @@ class FlattenGroups(Preprocessor[Any, Any]):
     the date inside the record; if it does not, the key is the only place the
     date exists and a source-specific expansion is the right tool instead.
 
-    A list of lists (``[[{...}, {...}], [{...}]]``, one inner list per day) is
-    flattened the same way.
+    The groups may also arrive as a list of lists, which is what a payload with
+    one slot per weekday (``[null, null, [{...}], ...]``) or several responses
+    parsed by :class:`~waste_collection_schedule.parsers.EachResponse` come to.
+    An empty slot (``None`` or ``[]``) contributes nothing.
     """
 
     def __call__(
@@ -100,7 +102,8 @@ class FlattenGroups(Preprocessor[Any, Any]):
             return
         groups = records.values() if isinstance(records, Mapping) else records
         for group in groups:
-            yield from group
+            if group:
+                yield from group
 
 
 class RowFilter(Preprocessor[Any, Any]):

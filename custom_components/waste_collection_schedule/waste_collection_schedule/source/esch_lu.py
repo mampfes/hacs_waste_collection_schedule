@@ -1,84 +1,86 @@
 import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from bs4 import Tag
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.transformers import HtmlTransformer
 
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
+# Demonstrates: HtmlTransformer over one table with a French long date
+# ("lundi, 28 septembre 2026"). The date getter returns a date directly, so no
+# date parser is involved; the month name resolves through recurrence.month().
 
-TITLE = "Esch-sur-Alzette"
-DESCRIPTION = "Source script for administration.esch.lu, communal website of the city of Esch-sur-Alzette in Luxembourg"
-URL = "https://esch.lu"
-TEST_CASES = {"Zone A": {"zone": "A"}, "Zone B": {"zone": "B"}}
+_TOURS = {"A": 1, "B": 2}
 
-API_URL = "https://administration.esch.lu/dechets/"
-ICON_MAP = {
-    "Poubelle ménage": Icons.GENERAL_WASTE,
-    "Papier": Icons.PAPER,
-    "Organique": Icons.ORGANIC,
-    "Verre": Icons.GLASS,
-    "Valorlux": Icons.RECYCLING,
-    "Déchets toxiques": Icons.HAZARDOUS,
-    "Container ménage": Icons.GENERAL_WASTE,
-}
-
-MONTH_NAMES = [
-    "janvier",
-    "février",
-    "mars",
-    "avril",
-    "mai",
-    "juin",
-    "juillet",
-    "août",
-    "septembre",
-    "octobre",
-    "novembre",
-    "décembre",
-]
+# Types whose cell carries collecting instructions after the name.
+_WITH_INSTRUCTIONS = ("Déchets toxiques", "Cartons en vrac")
 
 
-class Source:
-    def __init__(
-        self, zone
-    ):  # argX correspond to the args dict in the source configuration
-        zones = {"A": "1", "B": "2"}
-        self._zone = zones[zone]
+def _row_type(row: Tag) -> str:
+    """The collection type, without the collecting instructions some carry."""
+    cell = row.select("td")[1].get_text(strip=True)
+    for prefix in _WITH_INSTRUCTIONS:
+        if cell.startswith(prefix):
+            return prefix
+    return cell
 
-    def fetch(self):
-        s = get_legacy_session()
 
-        # locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8') # set the French locale to import the dates
-        params = {
-            "street": 0,
-            "tour": self._zone,
-        }
-        # The compressed response advertises chunked transfer encoding twice, which
-        # some urllib3 versions reject. Request identity encoding to avoid it.
-        r = s.get(
-            API_URL,
-            params=params,
-            headers={"Accept-Encoding": "identity"},
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
+def _row_date(row: Tag) -> datetime.date:
+    """``lundi, 28 septembre 2026`` as a date."""
+    text = row.select("td")[2].get_text(strip=True).split(", ")[1]
+    day, month_name, year = text.split()
+    month = recurrence.month(month_name)
+    if month is None:
+        raise ValueError(f"unknown month {month_name!r}")
+    return datetime.date(int(year), month, int(day))
 
-        # Find the table containing the waste collection schedule
-        table = soup.find("table", {"id": "garbage-table"})
 
-        entries = []  # List that holds collection schedule
-        for row in table.find_all("tr"):
-            cells = row.find_all("td")
-            if len(cells) == 3:
-                t = cells[1].text.strip()  # Collection type
-                if t.startswith("Cartons en vrac"):
-                    continue  # Skip the cardboard collection for companies
-                if t.startswith("Déchets toxiques"):
-                    t = "Déchets toxiques"  # Remove collecting instructions
-                date_fr = cells[2].text.strip().split(", ")[1]
-                day, month, year = date_fr.split()
-                date = datetime.datetime(
-                    year=int(year), month=MONTH_NAMES.index(month) + 1, day=int(day)
-                ).date()
-                entries.append(Collection(date, t, icon=ICON_MAP.get(t)))
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "Esch-sur-Alzette"
+    DESCRIPTION = "Source script for administration.esch.lu, communal website of the city of Esch-sur-Alzette in Luxembourg"
+    URL = "https://esch.lu"
+    COUNTRY = "lu"
+    IGNORE_DUPLICATES_DEFAULT = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.ORGANIC,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.HAZARDOUS,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Zone A": {"zone": "A"},
+        "Zone B": {"zone": "B"},
+    }
+
+    PARAMS = (dropdown("zone", list(_TOURS), label="Zone"),)
+
+    retrieve = retrievers.HttpGetRetriever(
+        url="https://administration.esch.lu/dechets/",
+        params=lambda zone, **_: {"street": 0, "tour": _TOURS[zone]},
+    )
+    parse = parsers.HtmlParser("#garbage-table tr", require=["#garbage-table"])
+    transform = HtmlTransformer(
+        date_getter=_row_date,
+        type_getter=_row_type,
+        type_value_map={
+            "Poubelle ménage": wt.GENERAL_WASTE,
+            "Container ménage": wt.GENERAL_WASTE,
+            "Papier": wt.PAPER,
+            "Organique": wt.ORGANIC,
+            "Verre": wt.GLASS,
+            "Valorlux": wt.RECYCLABLES,
+            "Déchets toxiques": wt.HAZARDOUS,
+            # The cardboard collection is for companies only.
+            "Cartons en vrac": None,
+        },
+        # "Poubelle ménage" and "Container ménage" are both general waste and
+        # can fall on the same day.
+        carry_raw_label=True,
+    )
