@@ -25,11 +25,14 @@ import ast
 import sys
 from pathlib import Path
 
+# Follows the base class, so a source subclassing another pipeline source
+# (offenbach_de via insert_it_de) counts as pipeline too.
+from loc_report import is_pipeline_source
+
 SOURCE_DIR = (
     Path(__file__).resolve().parent.parent
     / "custom_components/waste_collection_schedule/waste_collection_schedule/source"
 )
-MARKER = "class Source(BaseSource)"
 STEP_METHODS = ("retrieve", "parse", "preprocess", "transform")
 HTTP_VERBS = frozenset(
     {"get", "post", "put", "patch", "delete", "head", "options", "request"}
@@ -89,23 +92,29 @@ def _http_functions(text: str) -> list[str]:
     return found
 
 
+def _source_texts() -> dict[str, str]:
+    return {
+        path.stem: path.read_text(encoding="utf-8")
+        for path in sorted(SOURCE_DIR.glob("*.py"))
+        if path.name != "__init__.py"
+    }
+
+
 def classify() -> tuple[list[str], list[tuple[str, list[str]]], list[str]]:
     """Return (declarative, [(module, overridden steps)], legacy) module names."""
     declarative: list[str] = []
     debt: list[tuple[str, list[str]]] = []
     legacy: list[str] = []
-    for path in sorted(SOURCE_DIR.glob("*.py")):
-        if path.name == "__init__.py":
-            continue
-        text = path.read_text(encoding="utf-8")
-        if MARKER not in text:
-            legacy.append(path.stem)
+    texts = _source_texts()
+    for stem, text in texts.items():
+        if not is_pipeline_source(text, texts):
+            legacy.append(stem)
             continue
         steps = _overridden_steps(text)
         if steps:
-            debt.append((path.stem, sorted(set(steps))))
+            debt.append((stem, sorted(set(steps))))
         else:
-            declarative.append(path.stem)
+            declarative.append(stem)
     return declarative, debt, legacy
 
 
@@ -127,12 +136,11 @@ def main(argv: list[str]) -> int:
     )
     print(f"Legacy fetch() sources:                    {len(legacy)}")
 
+    texts = _source_texts()
     hand_rolled = [
-        (path.stem, funcs)
-        for path in sorted(SOURCE_DIR.glob("*.py"))
-        if path.name != "__init__.py"
-        and MARKER in (text := path.read_text(encoding="utf-8"))
-        and (funcs := _http_functions(text))
+        (stem, funcs)
+        for stem, text in texts.items()
+        if is_pipeline_source(text, texts) and (funcs := _http_functions(text))
     ]
     print(
         f"  still issuing their own HTTP:            {len(hand_rolled)} "
