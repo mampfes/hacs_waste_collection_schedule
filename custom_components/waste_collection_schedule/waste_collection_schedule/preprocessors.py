@@ -1524,6 +1524,97 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     yield collection_date, schedule.key
 
 
+class WeekdayRecurrence(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Project the weekday a record names into dates, from the next one on.
+
+    The most common schedule a GIS layer or a property lookup publishes is not
+    a date at all but a collection weekday ("Wednesday"), sometimes several at
+    once ("Monday/Thursday"). Every such source used to write the same
+    ``describe`` for :class:`RecurrenceExpander`; this is that ``describe``
+    made reusable::
+
+        parse = ArcGisFeatureParser()
+        preprocess = WeekdayRecurrence(day="TRASHDAY", keys=("Trash", "Recycling"))
+        transform = ICSTransformer(type_value_map={"Trash": ..., "Recycling": ...})
+
+    Each weekday resolves through :func:`recurrence.weekday` (multilingual,
+    full or abbreviated), so a record naming none is skipped rather than
+    raising, which is what a layer queried at an address it does not cover
+    returns.
+
+    A record carrying one weekday field per service passes ``day`` as a
+    mapping instead, and needs no ``keys``::
+
+        preprocess = WeekdayRecurrence(
+            day={"Trash_Day": "Trash", "Recycle_Day": "Recycling"}
+        )
+
+    A ``(date, key)`` pair is emitted once, so two fields (or two matched
+    features) naming the same weekday for one service add nothing.
+
+    Args:
+        day: the record field holding the weekday name(s); a callable
+            ``record -> str | None`` (e.g. for an ``(label, attributes)`` pair
+            from a multi-layer parser); or a ``{field: key}`` mapping, one
+            weekday field per waste-type key.
+        keys: the waste-type key(s) each date is emitted under, the same for
+            every record, or a callable ``record -> keys`` (the layer's label).
+            Not used with a ``day`` mapping.
+        count: how many dates to project per weekday.
+        step: the gap between dates (``recurrence.WEEKLY`` by default).
+        separator: splits a field naming several weekdays, each projected on
+            its own.
+    """
+
+    def __init__(
+        self,
+        day: "str | Callable[[Any], str | None] | Mapping[str, str]",
+        keys: "str | Sequence[str] | Callable[[Any], str | Sequence[str]]" = (),
+        *,
+        count: int = 26,
+        step: datetime.timedelta = recurrence.WEEKLY,
+        separator: "str | re.Pattern[str]" = re.compile(r"\s*(?:/|,|&|\band\b)\s*"),
+    ):
+        self.day = day
+        self.keys = keys
+        self.count = count
+        self.step = step
+        self.separator = (
+            re.compile(re.escape(separator))
+            if isinstance(separator, str)
+            else separator
+        )
+
+    def _days(self, record: Any) -> "Iterable[tuple[str, Sequence[str]]]":
+        """``(weekday text, keys)`` pairs this record schedules."""
+        if isinstance(self.day, Mapping):
+            for field_name, key in self.day.items():
+                yield str(record.get(field_name) or ""), (key,)
+            return
+        value = self.day(record) if callable(self.day) else record.get(self.day)
+        keys = self.keys(record) if callable(self.keys) else self.keys
+        yield str(value or ""), ((keys,) if isinstance(keys, str) else keys)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[datetime.date, str]]":
+        seen: set[tuple[datetime.date, str]] = set()
+        for record in records:
+            for text, keys in self._days(record):
+                for name in self.separator.split(text.strip()):
+                    weekday = recurrence.weekday(name)
+                    if weekday is None:
+                        continue
+                    start = recurrence.next_weekday(weekday)
+                    for collection_date in recurrence.recurring(
+                        start, self.step, self.count
+                    ):
+                        for key in keys:
+                            if (collection_date, key) not in seen:
+                                seen.add((collection_date, key))
+                                yield collection_date, key
+
+
 class Compose(Preprocessor[Any, Any]):
     """Apply several preprocessors in sequence; each consumes the previous output.
 

@@ -1,151 +1,85 @@
-from datetime import datetime, timedelta, timezone
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.service.ArcGis import ArcGisError, geocode
+from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Wingecarribee Shire Council"
-DESCRIPTION = "Source for Wingecarribee Shire Council (NSW) waste collection."
-URL = "https://www.wsc.nsw.gov.au"
-COUNTRY = "au"
-SOURCE_CODEOWNERS = ["@m1ckyb"]
+_ZONE_SERVICE_URL = "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer"
 
-TEST_CASES = {
-    "Willow Road": {"address": "8 Willow Road, Bowral NSW 2576"},
-    "Badgery Street": {"address": "12 Badgery Street, Willow Vale NSW 2575"},
-    "Willow Drive": {"address": "56 Willow Drive, Moss Vale NSW 2577"},
-}
+_EPOCH_MS = date_parsers.from_epoch(unit="ms")  # read in UTC
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Organics": Icons.GARDEN,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address within the Wingecarribee Shire (e.g. '8 Willow Road, Bowral NSW 2576')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-ZONE_SERVICE_URL = "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer"
-
-HEADERS = {
-    "Referer": "https://wscweb.maps.arcgis.com/",
-    "Origin": "https://wscweb.maps.arcgis.com",
-}
+# The collection zones are ten layers of one service; an address lies in one.
+_LAYERS = [
+    (layer, f"{_ZONE_SERVICE_URL}/{layer}", "Bin,BinDate,BinZoneLabel")
+    for layer in range(1, 11)
+]
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+def _describe(record, source):
+    """Red bin weekly; yellow (recycling) and green (garden) on alternate weeks.
 
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+    ``BinDate`` is a reference collection of the zone (stored as the evening
+    before, UTC) and ``Bin`` says which fortnightly bin goes out that week.
+    """
+    _, attrs = record
+    bin_type = attrs.get("Bin")
+    if not attrs.get("BinDate") or not bin_type:
+        return
+    base = _EPOCH_MS(str(attrs["BinDate"])) + datetime.timedelta(days=1)
+    other = base + datetime.timedelta(days=7)
+    recycling, garden = (base, other) if bin_type == "RedYellow" else (other, base)
+    yield Schedule("General Waste", base, recurrence.WEEKLY, 26, anchor=True)
+    yield Schedule("Recycling", recycling, recurrence.FORTNIGHTLY, 13, anchor=True)
+    yield Schedule("Garden Organics", garden, recurrence.FORTNIGHTLY, 13, anchor=True)
 
-        x = location["x"]
-        y = location["y"]
 
-        geometry = {
-            "x": x,
-            "y": y,
-            "spatialReference": {"wkid": 4326},
+@final
+class Source(BaseSource):
+    TITLE = "Wingecarribee Shire Council"
+    DESCRIPTION = "Source for Wingecarribee Shire Council (NSW) waste collection."
+    URL = "https://www.wsc.nsw.gov.au"
+    COUNTRY = "au"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@m1ckyb"]
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GARDEN_WASTE, wt.GENERAL_WASTE, wt.RECYCLABLES]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Willow Road": {"address": "8 Willow Road, Bowral NSW 2576"},
+        "Badgery Street": {"address": "12 Badgery Street, Willow Vale NSW 2575"},
+        "Willow Drive": {"address": "56 Willow Drive, Moss Vale NSW 2577"},
+    }
+
+    PARAMS = (street_address(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the full street address including suburb, state and postcode.",
+    }
+
+    # The service sits behind an ArcGIS Online proxy that only answers the
+    # council's web map.
+    retrieve = ArcGisMultiFeatureRetriever(
+        _LAYERS,
+        first_match=True,
+        argument="address",
+        headers={
+            "Referer": "https://wscweb.maps.arcgis.com/",
+            "Origin": "https://wscweb.maps.arcgis.com",
+        },
+    )
+    parse = ArcGisMultiFeatureParser(first_per_layer=True)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Organics": wt.GARDEN_WASTE,
         }
-
-        base_params = {
-            "geometry": str(geometry).replace("'", '"'),
-            "geometryType": "esriGeometryPoint",
-            "inSR": "4326",
-            "spatialRel": "esriSpatialRelIntersects",
-            "outFields": "Bin,BinDate,BinZoneLabel",
-            "returnGeometry": "false",
-            "f": "json",
-        }
-
-        for layer_id in range(1, 11):
-            url = f"{ZONE_SERVICE_URL}/{layer_id}/query"
-            try:
-                r = requests.get(url, params=base_params, headers=HEADERS, timeout=20)
-                r.raise_for_status()
-                data = r.json()
-                features = data.get("features", [])
-                if features:
-                    attrs = features[0].get("attributes", {})
-                    return self._build_schedule(attrs)
-            except requests.RequestException:
-                continue
-
-        raise SourceArgumentNotFound("address", self._address)
-
-    def _build_schedule(self, attrs: dict) -> list[Collection]:
-        bin_type = attrs.get("Bin", "")
-        bin_date_ms = attrs.get("BinDate")
-        if not bin_date_ms or not bin_type:
-            raise SourceArgumentNotFound("address", self._address)
-
-        base_date = datetime.fromtimestamp(
-            bin_date_ms / 1000, tz=timezone.utc
-        ).date() + timedelta(days=1)
-
-        today = datetime.now().date()
-
-        weekday = base_date.weekday()
-
-        next_red = today + timedelta(days=(weekday - today.weekday()) % 7)
-
-        entries: list[Collection] = []
-
-        for i in range(26):
-            d = next_red + timedelta(weeks=i)
-            entries.append(
-                Collection(
-                    date=d,
-                    t="General Waste",
-                    icon=ICON_MAP.get("General Waste"),
-                )
-            )
-
-        next_main = base_date
-        while next_main < today:
-            next_main += timedelta(days=14)
-
-        next_alt = next_main + timedelta(days=7)
-
-        if bin_type == "RedYellow":
-            recycling_start = next_main
-            garden_start = next_alt
-        else:
-            garden_start = next_main
-            recycling_start = next_alt
-
-        for i in range(13):
-            d = recycling_start + timedelta(weeks=i * 2)
-            entries.append(
-                Collection(
-                    date=d,
-                    t="Recycling",
-                    icon=ICON_MAP.get("Recycling"),
-                )
-            )
-
-        for i in range(13):
-            d = garden_start + timedelta(weeks=i * 2)
-            entries.append(
-                Collection(
-                    date=d,
-                    t="Garden Organics",
-                    icon=ICON_MAP.get("Garden Organics"),
-                )
-            )
-
-        return entries
+    )

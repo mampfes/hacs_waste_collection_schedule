@@ -43,7 +43,7 @@ from __future__ import annotations
 
 import json
 import logging
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 from datetime import date, timedelta
 from typing import TYPE_CHECKING, Any, TypedDict
 
@@ -360,6 +360,7 @@ def feature_query(
     result_record_count: int | None = None,
     count_only: bool = False,
     timeout: int = 20,
+    headers: Mapping[str, str] | None = None,
 ) -> Response:
     """GET a FeatureServer ``/query`` and return the *raw* Response (unparsed).
 
@@ -386,6 +387,9 @@ def feature_query(
             field list and ``returnGeometry`` are then left off the request,
             since a count carries neither.
         timeout: request timeout in seconds.
+        headers: extra request headers, for a layer behind a proxy that checks
+            where the request comes from (an ArcGIS Online ``utility.arcgis.com``
+            proxy answers 403 without its web map's ``Referer``).
     """
     params: dict[str, Any] = {}
     if not count_only:
@@ -410,8 +414,9 @@ def feature_query(
         params["resultRecordCount"] = result_record_count
     if count_only:
         params["returnCountOnly"] = "true"
+    extra: dict[str, Any] = {"headers": dict(headers)} if headers else {}
     return requests.get(
-        f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout
+        f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout, **extra
     )
 
 
@@ -472,6 +477,11 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         timeout: Request timeout in seconds.
         point: callable resolved against ``**source.params`` returning the
             ``{"x": lon, "y": lat}`` query point, bypassing the geocoder.
+        headers: extra request headers for the layer query (see
+            :func:`feature_query`).
+        result_record_count: cap on the features returned, e.g. ``1`` where
+            every match of a clause (the units of one building) carries the
+            same schedule and only one should be projected.
     """
 
     def __init__(
@@ -484,6 +494,8 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         timeout: int = 20,
         *,
         point: Callable[..., dict[str, Any]] | None = None,
+        headers: Mapping[str, str] | None = None,
+        result_record_count: int | None = None,
     ):
         self.feature_url = feature_url
         self.address = None if where is not None or point is not None else address
@@ -492,6 +504,8 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         self.in_sr = in_sr
         self.timeout = timeout
         self.point = point
+        self.headers = headers
+        self.result_record_count = result_record_count
 
     def __call__(self, source: BaseSource) -> Response:
         if self.where is not None:
@@ -500,7 +514,9 @@ class ArcGisFeatureRetriever(RetrieverFunc):
                 self.feature_url,
                 where=where,
                 out_fields=self.out_fields,
+                result_record_count=self.result_record_count,
                 timeout=self.timeout,
+                headers=self.headers,
             )
 
         location = _locate(source, self.address, self.point)
@@ -509,7 +525,9 @@ class ArcGisFeatureRetriever(RetrieverFunc):
             geometry=location,
             out_fields=self.out_fields,
             in_sr=self.in_sr,
+            result_record_count=self.result_record_count,
             timeout=self.timeout,
+            headers=self.headers,
         )
 
 
@@ -616,8 +634,11 @@ class ArcGisDistinctValues:
     Args:
         feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
         field: Field whose distinct values are offered.
-        where: SQL clause narrowing the candidates (default: every feature).
+        where: SQL clause narrowing the candidates (default: every feature), or
+            a callable resolved against ``**source.params``, to suggest only
+            the values close to what the user typed.
         order_by: ``orderByFields`` for the query; defaults to ``field``.
+        limit: cap on the suggestions returned.
         timeout: Request timeout in seconds.
     """
 
@@ -626,38 +647,49 @@ class ArcGisDistinctValues:
         feature_url: str,
         field: str,
         *,
-        where: str = "1=1",
+        where: str | Callable[..., str] = "1=1",
         order_by: str | None = None,
+        limit: int | None = None,
         timeout: int = 30,
     ):
         self.feature_url = feature_url
         self.field = field
         self.where = where
         self.order_by = order_by or field
+        self.limit = limit
         self.timeout = timeout
 
     def __call__(self, source: BaseSource | None = None) -> list[str]:
         try:
+            where = (
+                self.where(**(source.params if source is not None else {}))
+                if callable(self.where)
+                else self.where
+            )
+            params: dict[str, Any] = {
+                "where": where,
+                "outFields": self.field,
+                "returnGeometry": "false",
+                "returnDistinctValues": "true",
+                "orderByFields": self.order_by,
+                "f": "json",
+            }
+            if self.limit is not None:
+                params["resultRecordCount"] = self.limit
             response = requests.get(
                 f"{self.feature_url.rstrip('/')}/query",
-                params={
-                    "where": self.where,
-                    "outFields": self.field,
-                    "returnGeometry": "false",
-                    "returnDistinctValues": "true",
-                    "orderByFields": self.order_by,
-                    "f": "json",
-                },
+                params=params,
                 timeout=self.timeout,
             )
             response.raise_for_status()
-            return sorted(
+            values = sorted(
                 {
                     feature["attributes"][self.field]
                     for feature in response.json().get("features", [])
                     if feature.get("attributes", {}).get(self.field)
                 }
             )
+            return values[: self.limit] if self.limit is not None else values
         except Exception:
             _LOGGER.debug("Could not list distinct %s values", self.field)
             return []
@@ -942,6 +974,8 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
             a later layer's answer as if it were the first.
         argument: with ``first_match``, the ``source.params`` field to blame
             when no layer matched. Leave unset to return no responses.
+        headers: extra request headers for every layer query (see
+            :func:`feature_query`).
     """
 
     def __init__(
@@ -958,6 +992,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         count_only: bool = False,
         first_match: bool = False,
         argument: str | None = None,
+        headers: Mapping[str, str] | None = None,
     ):
         # Normalise to (label, url, out_fields) triples.
         self.layers: list[tuple[Any, str, str]] = []
@@ -979,6 +1014,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         self.count_only = count_only
         self.first_match = first_match
         self.argument = argument
+        self.headers = headers
 
     def _where_for(self, label: Any, params: dict[str, Any]) -> str | None:
         if callable(self.where):
@@ -1023,6 +1059,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
                     in_sr=self.in_sr,
                     count_only=self.count_only,
                     timeout=self.timeout,
+                    headers=self.headers,
                 )
                 response.raise_for_status()
             except requests.RequestException as err:

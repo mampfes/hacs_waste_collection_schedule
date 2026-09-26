@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates b1f6997fac",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=6807+McCormick+Rd%2C+Upper+Marlboro%2C+MD&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"6807 McCormick Rd, Upper Marlboro, MD\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:42 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "228",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"a7f11f09\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiNjgwNyBNY0Nvcm1pY2sgUmQsIFVwcGVyIE1hcmxib3JvLCBNYXJ5bGFuZCwgMjA3NzIiLCJsb2NhdGlvbiI6eyJ4IjotNzYuODM2MDI1MzAzNjE5LCJ5IjozOC43OTY4OTUwNDMzNjR9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOi03Ni44MzcwMjUzMDM2MTksInltaW4iOjM4Ljc5NTg5NTA0MzM2NCwieG1heCI6LTc2LjgzNTAyNTMwMzYxOSwieW1heCI6MzguNzk3ODk1MDQzMzY0fX1dfQ=="
+    },
+    {
+      "key": "GET https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query 21e978d85d",
+      "method": "GET",
+      "url": "https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query",
+      "final_url": "https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query?outFields=Address%2CBulky_Day_of_Service%2CRecycle_Day_of_Service%2CTrash_Day_of_Service1%2CTrash_Day_of_Service2%2CYard_Day_of_Service&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-76.836025303619%2C+%22y%22%3A+38.796895043364%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -76.836025303619, \\\"y\\\": 38.796895043364}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Address,Bulky_Day_of_Service,Recycle_Day_of_Service,Trash_Day_of_Service1,Trash_Day_of_Service2,Yard_Day_of_Service\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "315",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"e7b0563a\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|vRGCMKkYGv9uYYtR_izVew==|HL6R7o0hidkni-jbXuErn-3qbnUhYYWyQGEElutI; Max-Age=60; Expires=Sat, 26 Sep 2026 08:07:43 GMT; Path=/gisonline/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:06:43 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiT1dORVJfTkFNRSIsImZpZWxkQWxpYXNlcyI6eyJBZGRyZXNzIjoiQWRkcmVzcyIsIkJ1bGt5X0RheV9vZl9TZXJ2aWNlIjoiQnVsa3lfRGF5X29mX1NlcnZpY2UiLCJSZWN5Y2xlX0RheV9vZl9TZXJ2aWNlIjoiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMSI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMiI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMiIsIllhcmRfRGF5X29mX1NlcnZpY2UiOiJZYXJkX0RheV9vZl9TZXJ2aWNlIn0sImZpZWxkcyI6W3sibmFtZSI6IkFkZHJlc3MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQWRkcmVzcyIsImxlbmd0aCI6MTAwfSx7Im5hbWUiOiJCdWxreV9EYXlfb2ZfU2VydmljZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJCdWxreV9EYXlfb2ZfU2VydmljZSIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlJlY3ljbGVfRGF5X29mX1NlcnZpY2UiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJUcmFzaF9EYXlfb2ZfU2VydmljZTEiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJUcmFzaF9EYXlfb2ZfU2VydmljZTIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHJhc2hfRGF5X29mX1NlcnZpY2UyIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiWWFyZF9EYXlfb2ZfU2VydmljZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJZYXJkX0RheV9vZl9TZXJ2aWNlIiwibGVuZ3RoIjoyMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiNjgwNyBNQ0NPUk1JQ0sgUkQiLCJCdWxreV9EYXlfb2ZfU2VydmljZSI6IldlZG5lc2RheSIsIlJlY3ljbGVfRGF5X29mX1NlcnZpY2UiOiJXZWRuZXNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTEiOiJXZWRuZXNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTIiOiJObyBTZXJ2aWNlIiwiWWFyZF9EYXlfb2ZfU2VydmljZSI6Ik1vbmRheSJ9fV19"
+    }
+  ]
+}
