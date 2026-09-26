@@ -2808,7 +2808,7 @@ class TestFlattenGroups:
         from waste_collection_schedule.parsers import JsonParser
 
         def reply(payload):
-            return SimpleNamespace(json=lambda: payload)
+            return SimpleNamespace(json=lambda: payload, raise_for_status=lambda: None)
 
         assert JsonParser(0, "a")(reply([{"a": [1]}, {"a": [2]}])) == [1]
         assert JsonParser(0)(reply([])) == []

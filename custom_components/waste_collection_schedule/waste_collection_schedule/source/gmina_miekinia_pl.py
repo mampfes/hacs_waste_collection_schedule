@@ -29,6 +29,7 @@ class Source(BaseSource):
         wt.PAPER,
         wt.GLASS,
         wt.RECYCLABLES,
+        wt.BULKY_WASTE,
     ]
 
     TEST_CASES: ClassVar[dict] = {"Brzezina": {"location_id": 8}}
@@ -54,5 +55,6 @@ class Source(BaseSource):
             "Papier": wt.PAPER,
             "Szkło": wt.GLASS,
             "Tworzywa sztuczne": wt.RECYCLABLES,
+            "Wielkogabaryty": wt.BULKY_WASTE,
         },
     )
