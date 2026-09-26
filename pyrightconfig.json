@@ -88,6 +88,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/baumkirchen_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bayside_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bayswater_wa_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/belmont_wa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bendigo_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bern_ch.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/berndorf_gv_at.py",
