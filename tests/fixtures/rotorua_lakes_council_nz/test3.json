@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 3d3c036375",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=17+Tihi+road%2C+Rotorua%2C+New+Zealand&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"17 Tihi road, Rotorua, New Zealand\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:41:53 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "233",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"3c3029dd\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTcgVGloaSBSb2FkLCBTcHJpbmdmaWVsZCwgUm90b3J1YSwgQmF5IG9mIFBsZW50eSwgMzAxNSIsImxvY2F0aW9uIjp7IngiOjE3Ni4yMjg1OTkyMTEzMDgsInkiOi0zOC4xNjA5NTE4MzUxNzh9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOjE3Ni4yMjc1OTkyMTEzMDgsInltaW4iOi0zOC4xNjE5NTE4MzUxNzgsInhtYXgiOjE3Ni4yMjk1OTkyMTEzMDgsInltYXgiOi0zOC4xNTk5NTE4MzUxNzh9fV19"
+    },
+    {
+      "key": "GET https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query bfceafbc19",
+      "method": "GET",
+      "url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query",
+      "final_url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query?outFields=Collection&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+176.228599211308%2C+%22y%22%3A+-38.160951835178%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 176.228599211308, \\\"y\\\": -38.160951835178}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Collection\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "255",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"d11fc77c\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|9F_dZ8CrnLAGM_bTGXPEAw==|825IKmqi2vfXX-cr-MsxWxIiKWd7cGcLnZVq_GLl; Max-Age=60; Expires=Sat, 26 Sep 2026 08:42:54 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:41:54 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTmFtZSIsImZpZWxkQWxpYXNlcyI6eyJDb2xsZWN0aW9uIjoiQ29sbGVjdGlvbiJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJDb2xsZWN0aW9uIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbGxlY3Rpb24iLCJsZW5ndGgiOjIwMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJDb2xsZWN0aW9uIjoiXHUwMDNjdWxcdTAwM2VcdTAwM2NsaVx1MDAzZVx1MDAzY2JcdTAwM2VSdWJiaXNoIGFuZCByZWN5Y2xpbmdcdTAwM2MvYlx1MDAzZVx1MDAzY2JyL1x1MDAzZVR1ZXNkYXkgMjkgU2VwIDIwMjZcdTAwM2MvbGlcdTAwM2VcdTAwM2NsaVx1MDAzZVx1MDAzY2JcdTAwM2VSdWJiaXNoIG9ubHlcdTAwM2MvYlx1MDAzZVx1MDAzY2JyL1x1MDAzZVR1ZXNkYXkgMDYgT2N0IDIwMjZcdTAwM2MvbGlcdTAwM2VcdTAwM2MvdWxcdTAwM2UgXHUwMDNjcFx1MDAzZSZuYnNwOyZuYnNwOyhXZWVrIDIgQ3ljbGUpXHUwMDNjL3BcdTAwM2UifX1dfQ=="
+    }
+  ]
+}

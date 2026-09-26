@@ -929,6 +929,35 @@ class TestArcGisComponents:
         assert captured["params"]["f"] == "json"
         assert "geometry" in captured["params"]
 
+    def test_feature_retriever_resolves_web_map_layer_per_fetch(self):
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "Aspen 195"}
+        urls = []
+
+        def fake_get(url, params=None, timeout=None):
+            urls.append(url)
+            response = MagicMock()
+            response.json.return_value = {
+                "operationalLayers": [
+                    {"url": "https://x/Hosted/L_2026/FeatureServer/0"}
+                ]
+            }
+            return response
+
+        retriever = ArcGis.ArcGisFeatureRetriever(
+            ArcGis.WebMapLayer("https://x/items/abc/data"),
+            where=lambda address, **_: f"beladress = '{address}'",
+        )
+        with patch.object(ArcGis.requests, "get", side_effect=fake_get):
+            retriever(source)
+
+        assert urls == [
+            "https://x/items/abc/data",
+            "https://x/Hosted/L_2026/FeatureServer/0/query",
+        ]
+
     def test_feature_retriever_bad_address_raises_source_argument(self):
         from waste_collection_schedule.exceptions import SourceArgumentNotFound
         from waste_collection_schedule.service import ArcGis
@@ -2180,6 +2209,44 @@ class TestToolkitParsers:
         assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
+
+    @freeze_time("2026-09-26")
+    def test_date_parser_in_current_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.in_current_year("%d/%m")
+        # A past date stays in this year rather than rolling to the next.
+        assert parse("6/2") == datetime.date(2026, 2, 6)
+        assert parse(" 25/12 ") == datetime.date(2026, 12, 25)
+        with pytest.raises(ValueError):
+            date_parsers.in_current_year("%d/%m/%Y")
+
+    @freeze_time("2028-01-10")
+    def test_date_parser_in_current_year_leap_day(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        assert date_parsers.in_current_year("%d/%m")("29/2") == datetime.date(
+            2028, 2, 29
+        )
+
+    def test_date_fields_split(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers, preprocessors
+
+        rows = preprocessors.DateFields(
+            fields={"karl1": "Bin 1", "karl2": "Bin 2"},
+            parse_date=date_parsers.for_format("%d/%m/%Y"),
+            split=",",
+        )([{"karl1": "6/2/2026, 20/2/2026,\r\n", "karl2": None}])
+        assert list(rows) == [
+            (datetime.date(2026, 2, 6), "Bin 1"),
+            (datetime.date(2026, 2, 20), "Bin 1"),
+        ]
 
 
 class TestLookups:
