@@ -382,7 +382,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_belmont_wa_gov_au": {
@@ -392,7 +393,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_blacktown_nsw_gov_au": {
         "title": "Configure Source",
@@ -24546,7 +24549,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_blackburn_gov_uk": {
@@ -24557,7 +24560,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_blackpool_gov_uk": {
@@ -27051,7 +27054,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_harlow_gov_uk": {
@@ -27062,7 +27065,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_hart_gov_uk": {
@@ -28181,7 +28184,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_mansfield_gov_uk": {
@@ -28192,7 +28195,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_medway_gov_uk": {
@@ -30415,7 +30418,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your address as entered on the Stirling Council bin collection dates search (house number and street, property name, or single-dwelling postcode)"
+          "address": "Your full address."
         }
       },
       "reconfigure_stirling_gov_uk": {
@@ -30426,7 +30429,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Your address as entered on the Stirling Council bin collection dates search (house number and street, property name, or single-dwelling postcode)"
+          "address": "Your full address."
         }
       },
       "args_stockport_gov_uk": {
@@ -32659,11 +32662,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street Address"
+          "address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')"
+          "address": "Your full address."
         }
       },
       "reconfigure_phoenix_gov": {
@@ -32671,10 +32674,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street Address"
+          "address": "Address"
         },
         "data_description": {
-          "address": "Full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')"
+          "address": "Your full address."
         }
       },
       "args_prince_georges_county_md_us": {

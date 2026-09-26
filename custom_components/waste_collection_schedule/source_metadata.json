@@ -7703,7 +7703,9 @@
   },
   "phoenix_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phoenix_gov.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city and state (e.g. '4750 S 48th St, Phoenix, AZ 85040')."
+    },
     "urls": {}
   },
   "prince_georges_county_md_us": {

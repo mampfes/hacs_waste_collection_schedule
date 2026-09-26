@@ -375,7 +375,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_belmont_wa_gov_au": {
@@ -385,7 +386,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_blacktown_nsw_gov_au": {
         "title": "Quelle konfigurieren",
@@ -24014,7 +24017,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_blackburn_gov_uk": {
@@ -24025,7 +24028,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_blackpool_gov_uk": {
@@ -26422,7 +26425,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_harlow_gov_uk": {
@@ -26433,7 +26436,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_hart_gov_uk": {
@@ -27524,7 +27527,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_mansfield_gov_uk": {
@@ -27535,7 +27538,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_medway_gov_uk": {
@@ -29642,7 +29645,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_stirling_gov_uk": {
@@ -29652,7 +29656,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_stockport_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -31810,7 +31816,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_phoenix_gov": {
@@ -31820,7 +31827,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_prince_georges_county_md_us": {
         "title": "Quelle konfigurieren",

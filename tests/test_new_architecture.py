@@ -2426,6 +2426,25 @@ class TestLookups:
         assert lookups.normalize_text("  Main   Street ") == "main street"
 
 
+class TestFlattenGroups:
+    """FlattenGroups: a mapping or a list of groups flattened into records."""
+
+    def _run(self, records):
+        from waste_collection_schedule.preprocessors import FlattenGroups
+
+        return list(FlattenGroups()(records, None))
+
+    def test_flattens_a_mapping_of_lists(self):
+        assert self._run({"a": [1, 2], "b": [3]}) == [1, 2, 3]
+
+    def test_flattens_a_list_of_lists_skipping_empty_slots(self):
+        assert self._run([None, [1], [], [2, 3], None]) == [1, 2, 3]
+
+    def test_an_empty_payload_yields_nothing(self):
+        assert self._run(None) == []
+        assert self._run([]) == []
+
+
 class TestWeekdayRecurrence:
     """WeekdayRecurrence: a named collection weekday projected into dates."""
 
