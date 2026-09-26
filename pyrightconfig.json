@@ -141,6 +141,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/enns_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/eppingforestdc_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/erlangen_hoechstadt_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/esch_lu.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/felixdorf_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/frankenberg_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/frankston_vic_gov_au.py",
