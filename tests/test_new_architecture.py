@@ -7056,6 +7056,15 @@ CASES_AWAITING_CASSETTE = {
     "c_trace_de::roth",
     "cheshire_west_and_chester_gov_uk::knutsford_no_results",
     "ecoharmonogram_pl::ukrainian_language",
+    # edpevent_se (2026-09-25): Boden, Kiruna and Lidköping answer 502 from
+    # outside Sweden, NVOA's firewall rejects the request, and the Roslagsvatten
+    # host answers 404 on every path; none could be recorded.
+    "edpevent_se::boden_bodens_kommun",
+    "edpevent_se::boden_gymnasiet",
+    "edpevent_se::https_edpmypage_roslagsvatten_se_futurewebos_simplewastepickup_andromedav_gen_1_kersberga",
+    "edpevent_se::kiruna_tekniska_verken",
+    "edpevent_se::lidk_ping_stadshuset",
+    "edpevent_se::nvoa_nacka_fogdev_gen",
     "ics::abfall_zollernalbkreis_ebingen",
     "ics::esslingen_bahnhof",
     "ics::m_nchen_bahnstr_11",

@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 26cc2989b6",
+      "method": "GET",
+      "url": "https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=%28109400%29",
+      "body": "{\"params\":[[\"address\",\"(109400)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "2292",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:53 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjgiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiRnlyZmFja3Nrw6RybCAxIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIGrDpG1uIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik3DpW5kYWcgasOkbW4gdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIzNzAgbCBLw6RybCBmw7ZyIEZ5cmZhY2tza8OkcmwgMSBtZWQgdMO2bW5pbmcgVmFyYW5uYW4gdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwIiwiU2l6ZSI6MzcwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkgyMCIsIldhc3RlVHlwZSI6IkZ5cmZhY2tza8OkcmwgMSIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJLMzcwRkYxIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IkhVU0giLCJEZXNpZ25hdGlvbiI6IkvDpHJsIDM3MCBsLCBGeXJmYWNrIEvDpHJsIDEiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjEyMDkzLCJEZXNjcmlwdGlvbiI6IjEgc3QgMzcwIGwga8OkcmwgZsO2ciBmeXJmYWNrc2vDpHJsIDEgbWVkIHTDtm1uaW5nIG3DpW5kYWcgasOkbW4gdmVja2EgIiwiU3RhcnREYXRlIjoiXC9EYXRlKDk0NjUwODQwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxMDk0MDAifSx7IkJpbkRpcmVjdGlvbiI6bnVsbCwiTmV4dFdhc3RlUGlja3VwIjoiMjAyNi0xMC0wNSIsIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVR5cGUiOiJGeXJmYWNrc2vDpHJsIDIiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik3DpW5kYWcgdWRkYSB2ZWNrYSAiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJNw6VuZGFnIHVkZGEgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIzNzAgbCBLw6RybCBmw7ZyIEZ5cmZhY2tza8OkcmwgMiBtZWQgdMO2bW5pbmcgVmFyYW5uYW4gdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwIiwiU2l6ZSI6MzcwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkgyMCIsIldhc3RlVHlwZSI6IkZ5cmZhY2tza8OkcmwgMiIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJLMzcwRkYyIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IkhVU0giLCJEZXNpZ25hdGlvbiI6IkvDpHJsIDM3MCBsLCBGeXJmYWNrIEvDpHJsIDIiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjY1NDM3LCJEZXNjcmlwdGlvbiI6IjEgc3QgMzcwIGwga8OkcmwgZsO2ciBmeXJmYWNrc2vDpHJsIDIgbWVkIHTDtm1uaW5nIG3DpW5kYWcgdWRkYSB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTQzNTcwMTYwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxMDk0MDAifV19"
+    }
+  ]
+}

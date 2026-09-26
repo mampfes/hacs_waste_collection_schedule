@@ -1,50 +1,52 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Region Gotland"
-DESCRIPTION = "Source for Region Gotland waste collection."
-URL = "https://gotland.se"
-TEST_CASES = {
-    "TestService": {"uprn": "16903059805"},
-}
-
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Fyrfack 1": Icons.GENERAL_WASTE,
-    "Fyrfack 2": Icons.RECYCLING,
-}
+_API_URL = "https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Region Gotland"
+    DESCRIPTION = "Source for Region Gotland waste collection."
+    URL = "https://gotland.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        query_params = {"address": "(" + self._uprn + ")"}
-        response = requests.get(
-            "https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
-            params=query_params,
-        )
-        data = json.loads(response.text)
+    TEST_CASES: ClassVar[dict] = {
+        "Adelsgatan 10, Visby": {"uprn": "0106633415"},
+        "Hamngatan 1, Visby": {"uprn": "0107806309"},
+    }
 
-        entries = []
-        for item in data["RhServices"]:
-            if item["WasteType"] not in {
-                "Restavfall",
-                "Matavfall",
-                "Fyrfack 1",
-                "Fyrfack 2",
-            }:
-                continue
+    PARAMS = (text_field("uprn", "Building ID"),)
 
-            next_pickup = item["NextWastePickup"]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            waste_type = item["WasteType"]
-            icon = ICON_MAP.get(waste_type)
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search your address at https://edpfuture.gotland.se/FutureWeb/"
+            "SimpleWastePickup and use the number in brackets as 'uprn'."
+        ),
+    }
 
-        return entries
+    retrieve = EdpFutureWebRetriever(_API_URL, address=None, building_id="uprn")
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )
