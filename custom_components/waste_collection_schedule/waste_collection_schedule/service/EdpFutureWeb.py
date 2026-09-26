@@ -42,7 +42,7 @@ if TYPE_CHECKING:
 
 # Labels shared across deployments. The four-compartment bins ("fyrfack") are
 # numbered: bin 1 holds the residual and food waste, bin 2 the recyclables.
-TYPE_VALUE_MAP: dict[str, wt.WasteType] = {
+TYPE_VALUE_MAP: dict[str, wt.WasteType | list[wt.WasteType]] = {
     "Kärl 1": wt.GENERAL_WASTE,
     "Kärl 2": wt.RECYCLABLES,
     "FNI1": wt.GENERAL_WASTE,
