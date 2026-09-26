@@ -116,7 +116,9 @@
   },
   "cardinia_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cardinia_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '124 Main St, Pakenham Vic')."
+    },
     "urls": {}
   },
   "cassowarycoast_qld_gov_au": {
@@ -360,7 +362,7 @@
   "teatreegully_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teatreegully_sa_gov_au.md",
     "howto": {
-      "en": "Enter your street address (e.g. '4 Erica Street, Tea Tree Gully'). Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days"
+      "en": "Enter your street address with suburb (e.g. '4 Erica Street, Tea Tree Gully'). Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days"
     },
     "urls": {}
   },
@@ -862,7 +864,9 @@
   },
   "wingecarribee_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wingecarribee_nsw_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including suburb, state and postcode."
+    },
     "urls": {}
   },
   "wollondilly_nsw_gov_au": {
@@ -4282,7 +4286,9 @@
   },
   "taupodc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/taupodc_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street address as it appears on the Taupō District Council property map, e.g. '9 Richmond Avenue Taupo'."
+    },
     "urls": {}
   },
   "tauranga_govt_nz": {
@@ -6561,7 +6567,9 @@
   },
   "north_ayrshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7503,12 +7511,16 @@
   },
   "charlestoncounty_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charlestoncounty_org.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city, state, and ZIP code."
+    },
     "urls": {}
   },
   "charleston_sc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charleston_sc_gov.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city, state, and ZIP code."
+    },
     "urls": {}
   },
   "chesapeake_va_us": {
@@ -7633,12 +7645,16 @@
   },
   "kansas_city_mo_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kansas_city_mo_us.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110')."
+    },
     "urls": {}
   },
   "marysville_wa_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marysville_wa_us.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'), without city or ZIP code."
+    },
     "urls": {}
   },
   "millvalleyrefuse_com": {
@@ -7684,7 +7700,9 @@
   },
   "prince_georges_county_md_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prince_georges_county_md_us.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address including city and state."
+    },
     "urls": {}
   },
   "red_bank_tn_us": {
