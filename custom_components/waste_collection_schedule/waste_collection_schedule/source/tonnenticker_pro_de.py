@@ -60,7 +60,7 @@ class Source(BaseSource):
         ),
     }
 
-    retrieve = AbfallnaviRetriever(service="service", city="city", street="street")
+    retrieve = AbfallnaviRetriever(city="city", street="street", service_id=_SERVICE)
     parse = AbfallnaviParser()
     # Standard labels resolve via the shared vocabulary; these are AWG's own.
     # The provider's label is kept as the description, so the several paper
@@ -80,6 +80,3 @@ class Source(BaseSource):
         },
         carry_raw_label=True,
     )
-
-    def __init__(self, city: str, street: str):
-        super().__init__(service=_SERVICE, city=city, street=street)

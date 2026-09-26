@@ -217,7 +217,9 @@ class AbfallnaviRetriever(RetrieverFunc):
     """Resolve the place and return the raw ``termine`` feed + ``fraktionen`` map.
 
     Args are the ``source.params`` field names holding the regio iT service id,
-    the city, the street and (optionally) the house number.
+    the city, the street and (optionally) the house number. A source bound to
+    one service (a provider's own app) pins it with ``service_id`` instead, and
+    then need not declare a service field at all.
     """
 
     def __init__(
@@ -226,11 +228,14 @@ class AbfallnaviRetriever(RetrieverFunc):
         city: str = "city",
         street: str = "street",
         house_number: str = "house_number",
+        *,
+        service_id: str | None = None,
     ):
         self.service = service
         self.city = city
         self.street = street
         self.house_number = house_number
+        self.service_id = service_id
 
     def __call__(self, source: "BaseSource") -> dict[str, Any]:
         params = source.params
@@ -244,7 +249,7 @@ class AbfallnaviRetriever(RetrieverFunc):
             regions = regions()
         known_services = [r.params.get(self.service) for r in regions]
         client = AbfallnaviDe(
-            params[self.service],
+            self.service_id or params[self.service],
             known_services=known_services,
             arguments={
                 "service": self.service,
