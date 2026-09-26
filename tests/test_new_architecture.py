@@ -986,6 +986,30 @@ class TestBartecPublicDashboard:
         )
 
 
+class TestJaduXfpRetriever:
+    FORM = "https://example.gov.uk/xfp/form/1"
+
+    def test_uprn_none_needs_an_address_field(self):
+        from waste_collection_schedule.service.JaduXfp import XfpFormRetriever
+
+        with pytest.raises(ValueError, match="identifying the property"):
+            XfpFormRetriever(self.FORM, page="1", question="q1", uprn=None)
+        # lookup_address alone still picks the property by UPRN.
+        with pytest.raises(ValueError, match="identifying the property"):
+            XfpFormRetriever(
+                self.FORM, page="1", question="q1", uprn=None, lookup_address=True
+            )
+
+    def test_valid_configurations_construct(self):
+        from waste_collection_schedule.service.JaduXfp import XfpFormRetriever
+
+        assert XfpFormRetriever(self.FORM, page="1", question="q1").uprn == "uprn"
+        by_address = XfpFormRetriever(
+            self.FORM, page="1", question="q1", uprn=None, address="address"
+        )
+        assert by_address.lookup_address is True
+
+
 class TestXmlInJsonAndNestedGroups:
     def test_xml_parser_reads_xml_out_of_a_json_field(self):
         from waste_collection_schedule import parsers
@@ -1445,6 +1469,55 @@ class TestAbfallkalenderRetriever:
         with pytest.raises(SourceArgumentRequiredWithSuggestions) as raised:
             retriever(source)
         assert "Futterhof" in str(raised.value)
+class TestSismsPl:
+    """The SISMS / BLISKO platform components."""
+
+    def test_owner_accepts_the_listed_name_and_the_short_one(self):
+        from waste_collection_schedule.service.SismsPl import owner_id
+
+        # The config flow pre-fills the full listed name; people type the short
+        # one. Both must resolve.
+        assert owner_id("Gmina Jeżewo") == owner_id("Jeżewo") == 218
+        assert owner_id(" miasto rydułtowy ") == 223
+
+    def test_unknown_owner_lists_the_gminas(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.SismsPl import owner_id
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            owner_id("Nowhere")
+        assert raised.value.argument == "owner"
+
+    def test_parser_names_each_reception_by_its_bin(self):
+        from waste_collection_schedule.service.SismsPl import SismsParser
+
+        response = {
+            "bins": {"data": [{"id": "b:1", "name": "Szkło"}]},
+            "timetable": {
+                "data": [
+                    {"receptions": [{"date": "2026-10-01", "binId": "b:1"}]},
+                    {"receptions": [{"date": "2026-11-05", "binId": "b:1"}]},
+                ]
+            },
+        }
+        assert SismsParser()(response) == [
+            {"date": "2026-10-01", "type": "Szkło"},
+            {"date": "2026-11-05", "type": "Szkło"},
+        ]
+
+    def test_retriever_needs_a_house_number(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentExceptionMultiple,
+        )
+        from waste_collection_schedule.service.SismsPl import SismsRetriever
+
+        source = MagicMock()
+        source.params = {"owner": "Jeżewo", "town": "Ciemniki"}
+        with pytest.raises(SourceArgumentExceptionMultiple):
+            SismsRetriever()(source)
+        source.session.get.assert_not_called()
 
 
 class TestArcGisComponents:
@@ -2783,6 +2856,77 @@ class TestToolkitParsers:
             2028, 2, 29
         )
 
+    @freeze_time("2026-12-28")
+    def test_date_parser_nearest_year_crosses_the_new_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.nearest_year("%a %d %B")
+        # Yesterday stays yesterday, and January is next year's.
+        assert parse("Sun 27 December") == datetime.date(2026, 12, 27)
+        assert parse("Mon 4 January") == datetime.date(2027, 1, 4)
+        with pytest.raises(ValueError):
+            date_parsers.nearest_year("%d %B %Y")
+        with pytest.raises(ValueError):
+            parse("not a date")
+
+    @freeze_time("2027-01-02")
+    def test_date_parser_nearest_year_looks_back_across_the_new_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.nearest_year("%d %b")
+        assert parse("30 Dec") == datetime.date(2026, 12, 30)
+        assert parse("08 Jan") == datetime.date(2027, 1, 8)
+
+    def test_text_grouped_dates_reads_month_names(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import TextGroupedDates
+
+        rows = list(
+            TextGroupedDates(
+                keys=["Refuse:", "Food:"],
+                date_pattern=r"(?P<day>\d{1,2}) (?P<month>[A-Za-z]+) (?P<year>\d{4})",
+            )(
+                "Refuse: Tuesday 06 October 2026, Tuesday 29 Sep 2026 "
+                "Food: 3 Oktober 2026, 4 Smarch 2026",
+                None,
+            )
+        )
+        assert rows == [
+            (datetime.date(2026, 10, 6), "Refuse:"),
+            (datetime.date(2026, 9, 29), "Refuse:"),
+            # A month name in another supported language; an unknown one is skipped.
+            (datetime.date(2026, 10, 3), "Food:"),
+        ]
+
+    def test_html_transformer_can_skip_unparseable_dates(self):
+        from bs4 import BeautifulSoup
+        from waste_collection_schedule import date_parsers
+        from waste_collection_schedule.transformers import HtmlTransformer
+
+        rows = BeautifulSoup(
+            "<tr><td></td><td>Food</td></tr><tr><td>01/10/26</td><td>Food</td></tr>",
+            "html.parser",
+        ).select("tr")
+
+        def make(skip):
+            return HtmlTransformer(
+                date_getter=lambda row: row.select("td")[0].get_text(strip=True),
+                type_getter=lambda row: row.select("td")[1].get_text(strip=True),
+                parse_date=date_parsers.for_format("%d/%m/%y"),
+                skip_unparseable_dates=skip,
+            )
+
+        assert make(True)(rows[0]) is None
+        assert make(True)(rows[1]).date.isoformat() == "2026-10-01"
+        # Off by default: an empty date still raises, as before.
+        with pytest.raises(ValueError):
+            make(False)(rows[0])
+
     def test_date_fields_split(self):
         import datetime
 
@@ -2842,6 +2986,75 @@ class TestFlattenGroups:
     def test_an_empty_payload_yields_nothing(self):
         assert self._run(None) == []
         assert self._run([]) == []
+
+
+class TestIWebAbfalldatenRows:
+    """IWeb.AbfalldatenRows: i-web /abfalldaten records into (date, name) rows."""
+
+    RECORDS: ClassVar[list] = [
+        {
+            "name": "Kehricht",
+            "_anlassDate": "30.09.2026 7.00 Uhr 30.09.2026, 7.00 Uhr",
+            "abfallkreisIds": ["190", "192"],
+            "abfallkreisNameList": "Grafstal, Lindau",
+        },
+        {
+            # A time span is not a date span.
+            "name": "Sonderabfall",
+            "_anlassDate": "30.09.2026 8.30 Uhr - 11.30 Uhr",
+            "abfallkreisIds": ["193"],
+            "abfallkreisNameList": "Tagelswangen",
+        },
+        {
+            "name": "Häckseldienst",
+            "_anlassDate": "26.10.2026 - 27.10.2026 26.10.2026 - 27.10.2026",
+            "abfallkreisIds": ["190"],
+            "abfallkreisNameList": "Grafstal",
+        },
+    ]
+
+    def _run(self, area_value=None, **kwargs):
+        from waste_collection_schedule.service.IWeb import AbfalldatenRows
+
+        source = SimpleNamespace(params={"city": area_value})
+        return list(AbfalldatenRows(**kwargs)(self.RECORDS, source))
+
+    def test_keeps_every_record_without_an_area(self):
+        assert [name for _day, name in self._run()] == [
+            "Kehricht",
+            "Sonderabfall",
+            "Häckseldienst",
+        ]
+
+    def test_filters_by_district_id_or_name(self):
+        by_id = self._run("190", area="city")
+        by_name = self._run("grafstal", area="city")
+        assert (
+            by_id
+            == by_name
+            == [
+                (datetime.date(2026, 9, 30), "Kehricht"),
+                (datetime.date(2026, 10, 26), "Häckseldienst"),
+            ]
+        )
+
+    def test_expands_date_spans_when_asked(self):
+        rows = self._run("Grafstal", area="city", expand_ranges=True)
+        assert rows[-2:] == [
+            (datetime.date(2026, 10, 26), "Häckseldienst"),
+            (datetime.date(2026, 10, 27), "Häckseldienst"),
+        ]
+
+    def test_parser_raises_on_an_http_error_status(self):
+        """An error page is not reported as an empty (wrong-argument) schedule."""
+        from requests import HTTPError
+        from waste_collection_schedule.service.IWeb import abfalldaten_parser
+
+        resp = MagicMock()
+        resp.text = "<html><body>Service Unavailable</body></html>"
+        resp.raise_for_status.side_effect = HTTPError("503 Server Error")
+        with pytest.raises(HTTPError):
+            abfalldaten_parser()(resp)
 
 
 class TestWeekdayRecurrence:

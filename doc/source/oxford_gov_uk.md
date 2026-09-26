@@ -1,55 +1,39 @@
 # Oxford City Council
 
-Support for schedules provided by [Oxford City Council](https://www.oxford.gov.uk/), in the UK.
+Support for schedules provided by [Oxford City Council](https://oxford.gov.uk).
+
+Source for oxford.gov.uk services for Oxford, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: oxford_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
         postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
-*(string)*
+**uprn**  
+*(string) (required)*
 
-The "Unique Property Reference Number" for your address. You can find it by searching for your address at https://www.findmyaddress.co.uk/.
-
-**postcode**<br>
-*(string)*
-
-The Post Code for your address. This needs to match the postcode corresponding to your UPRN.
+**postcode**  
+*(string) (required)*
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: oxford_gov_uk
       args:
-        uprn: 100120827594
+        uprn: '100120827594'
         postcode: OX4 1RB
 ```
 
-## Returned Collections
-This source will return the next collection date for each container type.
-If you don't subscribe to a brown garden waste bin, we don't return data for it.
+## How to get the source arguments
 
-## Returned collection types
-
-### Refuse
-Green Bin for general waste
-
-### Recycling
-Blue Bin for mixed recycling 
-
-### Garden
-Brown Bin for garden waste.
-If you don't pay for a garden waste bin, it won't be included.
-
-### Food
-Green Caddy for food waste.
+Go to https://www.oxford.gov.uk/xfp/form/142 and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); you can also look it up on https://www.findmyaddress.co.uk/.

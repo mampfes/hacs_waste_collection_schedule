@@ -4441,7 +4441,9 @@
   },
   "sims_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Owner: your gmina as listed (or its numeric owner id, which the search page at https://sisms.pl requests as ownerId). Town: your town (Miejscowość). Then either the house number in the town, or the street (Ulica) and house number (Numer domu)."
+    },
     "urls": {}
   },
   "alba_com_pl": {
@@ -5165,7 +5167,10 @@
   },
   "lindau_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie Ihren Ortsteil so ein, wie er auf https://www.lindau.ch/abfalldaten steht (Grafstal, Lindau, Tagelswangen oder Winterberg).",
+      "en": "Enter your village as listed on https://www.lindau.ch/abfalldaten (Grafstal, Lindau, Tagelswangen or Winterberg)."
+    },
     "urls": {}
   },
   "ics_mopage_ch": {
@@ -5458,7 +5463,9 @@
   },
   "broxbourne_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/broxbourne_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://www.broxbourne.gov.uk/bin-collection-date and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); you can also look it up on https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5668,9 +5675,11 @@
   "chorley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chorley_gov_uk.md",
     "howto": {
-      "en": "Go to https://www.chorley.gov.uk/bincollectiondays and enter your postcode. Use browser dev tools to find the UPRN (the option value in the address dropdown)."
+      "en": "Go to https://www.chorley.gov.uk/bincollectiondays and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); an unknown UPRN is reported with the addresses the form lists for your postcode."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "doncaster_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/doncaster_gov_uk.md",
@@ -6760,7 +6769,9 @@
   },
   "oxford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oxford_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://www.oxford.gov.uk/xfp/form/142 and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); you can also look it up on https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7035,7 +7046,7 @@
   "southribble_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southribble_gov_uk.md",
     "howto": {
-      "en": "Go to https://www.southribble.gov.uk/bincollectiondays and enter your postcode. Use browser dev tools to find the UPRN (the option value in the address dropdown)."
+      "en": "Go to https://www.southribble.gov.uk/bincollectiondays and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); an unknown UPRN is reported with the addresses the form lists for your postcode."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -7255,7 +7266,9 @@
   },
   "tmbc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tmbc_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode, and the start of your address as the council's bin collection form lists it (e.g. '138 High Street')."
+    },
     "urls": {}
   },
   "torbay_council_gov_uk": {
@@ -7361,7 +7374,9 @@
   },
   "welhat_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/welhat_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://www.welhat.gov.uk/xfp/form/214 and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); you can also look it up on https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

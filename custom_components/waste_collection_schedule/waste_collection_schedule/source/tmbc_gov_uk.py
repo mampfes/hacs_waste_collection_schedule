@@ -1,97 +1,74 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFound,
-)
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, street_address
+from waste_collection_schedule.service.JaduXfp import XfpFormRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-# mostly copied from braintree_gov_uk
-
-TITLE = "Tonbridge and Malling Borough Council"
-DESCRIPTION = "Tonbridge and Malling Borough Council, UK - Waste Collection"
-URL = "https://www.tmbc.gov.uk"
-TEST_CASES = {
-    "High Street, West Malling": {
-        "address": "138 High Street",
-        "post_code": "ME19 6NE",
-    },
-    "Nutfields, Ightham, Sevenoaks": {
-        "address": "5 Nutfields, Ightham, Sevenoaks",
-        "post_code": "TN15 9EA",
-    },
-}
-
-ICON_MAP = {
-    "Black domestic waste": Icons.GENERAL_WASTE,
-    "Green recycling": Icons.RECYCLING,
-    "Brown garden waste": Icons.GARDEN,
-    "Food waste": Icons.BIO_KITCHEN,
-}
+# The results table has one row per date ("Mon 28 September", no year), listing
+# every round collected that day as its own paragraph.
 
 
-class Source:
-    def __init__(self, post_code: str, address: str):
-        self.post_code = post_code
-        self.address = address
-        self.url = f"{URL}/xfp/form/167"
-        self.form_data = {
-            "q752eec300b2ffef2757e4536b77b07061842041a_0_0": (None, post_code),
-            "page": (None, 128),
-        }
+@final
+class Source(BaseSource):
+    TITLE = "Tonbridge and Malling Borough Council"
+    DESCRIPTION = "Tonbridge and Malling Borough Council, UK - Waste Collection"
+    URL = "https://www.tmbc.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        address_lookup = requests.post(
-            "https://www.tmbc.gov.uk/xfp/form/167", files=self.form_data
-        )
-        address_lookup.raise_for_status()
-        addresses = {}
-        for address in BeautifulSoup(address_lookup.text, "html.parser").find_all(
-            "option"
-        ):
-            if "..." not in address["value"]:
-                addresses[address["value"]] = address.text.strip()
-        id = [
-            address
-            for address in addresses
-            if addresses[address].startswith(self.address)
-        ]
-        if len(id) == 0:
-            raise SourceArgumentNotFound("address", self.address)
-        if len(id) > 1:
-            raise SourceArgumentException("address", "Address is not unique")
-        id = id[0]
+    TEST_CASES: ClassVar[dict] = {
+        "High Street, West Malling": {
+            "address": "138 High Street",
+            "post_code": "ME19 6NE",
+        },
+        "Nutfields, Ightham, Sevenoaks": {
+            "address": "5 Nutfields, Ightham, Sevenoaks",
+            "post_code": "TN15 9EA",
+        },
+    }
 
-        self.form_data["q752eec300b2ffef2757e4536b77b07061842041a_1_0"] = (None, id)
-        self.form_data["next"] = (None, "Next")
-        collection_lookup = requests.post(
-            "https://www.tmbc.gov.uk/xfp/form/167", files=self.form_data
-        )
-        collection_lookup.raise_for_status()
-        entries = []
-        for rows in (
-            BeautifulSoup(collection_lookup.text, "html.parser")
-            .find("table", class_="waste-collections-table")
-            .find("tbody")
-            .find_all("tr")
-        ):
-            date_td = rows.find_all("td")[0]
-            bins_td = rows.find_all("td")[1]
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"address": "999 High Street", "post_code": "ME19 6NE"},
+    }
 
-            date = parser.parse(date_td.text.strip(), dayfirst=True).date()
-            if datetime.now().month == 12 and date.month in (1, 2):
-                date = date.replace(year=date.year + 1)
-            for bin in bins_td.find("div", class_="collections").findAll("p"):
-                bin = bin.text.strip()
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=bin,
-                        icon=ICON_MAP.get(bin),
-                    )
-                )
+    PARAMS = (postcode("post_code"), street_address())
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode, and the start of your address as the council's "
+            "bin collection form lists it (e.g. '138 High Street')."
+        ),
+    }
+
+    retrieve = XfpFormRetriever(
+        "https://www.tmbc.gov.uk/xfp/form/167",
+        page="128",
+        question="q752eec300b2ffef2757e4536b77b07061842041a",
+        postcode="post_code",
+        uprn=None,
+        address="address",
+    )
+    parse = parsers.HtmlLabelledDates(
+        "table.waste-collections-table tbody tr",
+        label="div.collections p",
+        date="td",
+        all_labels=True,
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.nearest_year("%a %d %B"),
+        type_value_map={
+            "Black domestic waste": wt.GENERAL_WASTE,
+            "Green recycling": wt.RECYCLABLES,
+            "Brown garden waste": wt.GARDEN_WASTE,
+            "Food waste": wt.FOOD_WASTE,
+        },
+    )

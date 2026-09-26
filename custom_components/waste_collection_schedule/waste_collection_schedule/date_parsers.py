@@ -158,6 +158,42 @@ class DateParserInCurrentYear(DateParser):
         return datetime.datetime.strptime(f"{date_str} {year}", f"{self.fmt} %Y").date()
 
 
+class DateParserNearestYear(DateParser):
+    """Parse a year-less date into whichever year puts it nearest today.
+
+    For the "your next collections" page that lists a few dates around today
+    without a year ("Mon 28 September"): the list crosses the new year in
+    December, and it may still show the collection that ran yesterday.
+    :class:`DateParserInCurrentYear` gets the first wrong (January lands in the
+    past), :class:`DateParserNextWeekday` the second (yesterday lands a year
+    ahead). Picking the candidate year that is closest to today gets both
+    right, for any page that shows dates within about six months of today.
+    Prefer the ``nearest_year(fmt)`` factory.
+    """
+
+    def __init__(self, fmt: str):
+        if "%Y" in fmt:
+            raise ValueError("nearest_year's fmt must not include a year (%Y)")
+        self.fmt = fmt
+
+    def __call__(self, *args: str) -> datetime.date:
+        date_str = str(args[-1]).strip()
+        today = datetime.date.today()
+        candidates = []
+        for year in (today.year - 1, today.year, today.year + 1):
+            try:
+                candidates.append(
+                    datetime.datetime.strptime(
+                        f"{date_str} {year}", f"{self.fmt} %Y"
+                    ).date()
+                )
+            except ValueError:
+                continue  # 29 February outside a leap year
+        if not candidates:
+            raise ValueError(f"{date_str!r} does not match {self.fmt!r}")
+        return min(candidates, key=lambda candidate: abs(candidate - today))
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -196,3 +232,12 @@ def in_current_year(fmt: str) -> DateParserInCurrentYear:
     the provider lists only upcoming dates.
     """
     return DateParserInCurrentYear(fmt)
+
+
+def nearest_year(fmt: str) -> DateParserNearestYear:
+    """Return a DateParser placing a year-less date in the year nearest today.
+
+    See :class:`DateParserNearestYear`: for a short list of dates around today
+    that may include the one just past and may cross the new year.
+    """
+    return DateParserNearestYear(fmt)

@@ -1,36 +1,35 @@
-# South Cambridgeshire District Council
+# South Cambridgeshire District Council (Deprecated)
 
-**This source has been deprecated. Please use the [Greater Cambridge Waste](./greater_cambridge_waste_org.md) source.**
+Support for schedules provided by [South Cambridgeshire District Council (Deprecated)](https://scambs.gov.uk).
 
-Support for schedules provided by [South Cambridgeshire District Council](https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/), serving South Cambridgeshire, UK.
+Source for scambs.gov.uk services for South Cambridgeshire District Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: scambs_gov_uk
       args:
         post_code: POST_CODE
         number: NUMBER
-
 ```
 
 ### Configuration Variables
 
-**POST_CODE**  
+**post_code**  
 *(string) (required)*
 
-**NUMBER**  
+**number**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: scambs_gov_uk
       args:
-        post_code: "CB236GZ"
-        number: "53"
+        post_code: CB236GZ
+        number: 53
 ```

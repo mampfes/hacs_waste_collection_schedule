@@ -1,0 +1,130 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://gateway.sisms.pl/akun/api/owners/188/towns/list?ownerId=188 ",
+      "method": "GET",
+      "url": "https://gateway.sisms.pl/akun/api/owners/188/towns/list?ownerId=188",
+      "final_url": "https://gateway.sisms.pl/akun/api/owners/188/towns/list?ownerId=188",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "application/json",
+        "date": "Sat, 26 Sep 2026 16:42:56 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-content-type-options": "nosniff",
+        "x-correlation-id": "d842a08f",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3OCIsImtpbmQiOiJUT1dOIiwibmFtZSI6IkJvYnJ6YSJ9LHsiaWQiOiIyNjowNDoxMDoyOjAyNTIxMTUiLCJraW5kIjoiVE9XTiIsIm5hbWUiOiJDaW9zb3dhIn0seyJpZCI6IjI2OjA0OjEwOjI6MTAwMzg3NCIsImtpbmQiOiJUT1dOIiwibmFtZSI6IsSGbWnFhHNrIn0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjI1NiIsImtpbmQiOiJUT1dOIiwibmFtZSI6Iktvc3RvbcWCb3R5IERydWdpZSJ9LHsiaWQiOiIyNjowNDoxMDoyOjAyNTIzMTYiLCJraW5kIjoiVE9XTiIsIm5hbWUiOiJLb3N0b23Fgm90eSBQaWVyd3N6ZSJ9LHsiaWQiOiIyNjowNDoxMDoyOjAyNTI0MDUiLCJraW5kIjoiVE9XTiIsIm5hbWUiOiJNaWVkemlhbmEgR8OzcmEifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyNTAwIiwia2luZCI6IlRPV04iLCJuYW1lIjoiUG9yemVjemUifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyMTA5Iiwia2luZCI6IlRPV04iLCJuYW1lIjoiUHJ6eWptbyJ9LHsiaWQiOiIyNjowNDoxMDoyOjAyNTI1MzAiLCJraW5kIjoiVE9XTiIsIm5hbWUiOiJUdW1saW4tUG9kZ3LDs2QifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyNTQ2Iiwia2luZCI6IlRPV04iLCJuYW1lIjoiVHVtbGluLVd5a2llxYQifV19"
+    },
+    {
+      "key": "GET https://gateway.sisms.pl/akun/api/owners/188/streets/list?townId=26:04:10:2:0252078 ",
+      "method": "GET",
+      "url": "https://gateway.sisms.pl/akun/api/owners/188/streets/list?townId=26:04:10:2:0252078",
+      "final_url": "https://gateway.sisms.pl/akun/api/owners/188/streets/list?townId=26:04:10:2:0252078",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "application/json",
+        "date": "Sat, 26 Sep 2026 16:42:56 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-content-type-options": "nosniff",
+        "x-correlation-id": "0b27356d",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMyIsImtpbmQiOiJTVFJFRVQiLCJuYW1lIjoidWwuIFN0LiBTdGFzemljYSJ9XX0="
+    },
+    {
+      "key": "GET https://gateway.sisms.pl/akun/api/owners/188/streetAddresses/list?streetId=26:04:10:2:0252078:39723 ",
+      "method": "GET",
+      "url": "https://gateway.sisms.pl/akun/api/owners/188/streetAddresses/list?streetId=26:04:10:2:0252078:39723",
+      "final_url": "https://gateway.sisms.pl/akun/api/owners/188/streetAddresses/list?streetId=26:04:10:2:0252078:39723",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "application/json",
+        "date": "Sat, 26 Sep 2026 16:42:56 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-content-type-options": "nosniff",
+        "x-correlation-id": "811dddb8",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyMCIsImtpbmQiOiJTVFJFRVRfQUREUkVTUyIsIm51bWJlciI6IjIwIn0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyMiIsImtpbmQiOiJTVFJFRVRfQUREUkVTUyIsIm51bWJlciI6IjIyIn0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyMyIsImtpbmQiOiJTVFJFRVRfQUREUkVTUyIsIm51bWJlciI6IjIzIn0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyNCIsImtpbmQiOiJTVFJFRVRfQUREUkVTUyIsIm51bWJlciI6IjI0In0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyNSIsImtpbmQiOiJTVFJFRVRfQUREUkVTUyIsIm51bWJlciI6IjI1In0seyJpZCI6IjI2OjA0OjEwOjI6MDI1MjA3ODozOTcyMzoyNUEiLCJraW5kIjoiU1RSRUVUX0FERFJFU1MiLCJudW1iZXIiOiIyNUEifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyMDc4OjM5NzIzOjI4Iiwia2luZCI6IlNUUkVFVF9BRERSRVNTIiwibnVtYmVyIjoiMjgifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyMDc4OjM5NzIzOjMyIiwia2luZCI6IlNUUkVFVF9BRERSRVNTIiwibnVtYmVyIjoiMzIifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyMDc4OjM5NzIzOjMzIiwia2luZCI6IlNUUkVFVF9BRERSRVNTIiwibnVtYmVyIjoiMzMifSx7ImlkIjoiMjY6MDQ6MTA6MjowMjUyMDc4OjM5NzIzOjM2Iiwia2luZCI6IlNUUkVFVF9BRERSRVNTIiwibnVtYmVyIjoiMzYifV19"
+    },
+    {
+      "key": "GET https://gateway.sisms.pl/akun/api/owners/188/bins/list?unitId=26:04:10:2:0252078:39723:23 ",
+      "method": "GET",
+      "url": "https://gateway.sisms.pl/akun/api/owners/188/bins/list?unitId=26:04:10:2:0252078:39723:23",
+      "final_url": "https://gateway.sisms.pl/akun/api/owners/188/bins/list?unitId=26:04:10:2:0252078:39723:23",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "application/json",
+        "date": "Sat, 26 Sep 2026 16:42:57 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-content-type-options": "nosniff",
+        "x-correlation-id": "061e03b3",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6MTMwMiwibmFtZSI6IlptaWVzemFuZSBvZHBhZHkga29tdW5hbG5lIiwidHlwZSI6IkJMQUNLIiwiY29sb3IiOiIjMmEyZTM0In0seyJpZCI6MTY1NCwibmFtZSI6IlpiacOzcmEgdGVrc3R5bGnDs3ciLCJ0eXBlIjpudWxsLCJjb2xvciI6IiM4ODAwYmUifSx7ImlkIjoxMzAzLCJuYW1lIjoiUGFwaWVyIGkgdGVrdHVyYSIsInR5cGUiOiJCTFVFIiwiY29sb3IiOiIjMmE2ZmM5In0seyJpZCI6MTMwNCwibmFtZSI6Ik9kcGFkeSBiaW9kZWdyYWRvd2FsbmUiLCJ0eXBlIjoiQlJPV04iLCJjb2xvciI6IiM1YjNkMzAifSx7ImlkIjoxMzA1LCJuYW1lIjoiVHdvcnp5d2Egc3p0dWN6bmUgaSBtZXRhbGUiLCJ0eXBlIjoiWUVMTE9XIiwiY29sb3IiOiIjZWZjZjAwIn0seyJpZCI6MTMwNiwibmFtZSI6IlN6a8WCbyIsInR5cGUiOiJHUkVFTiIsImNvbG9yIjoiIzQ3ODUwMCJ9LHsiaWQiOjEzMTksIm5hbWUiOiJQb3Bpw7PFgiIsInR5cGUiOiJHUkFZIiwiY29sb3IiOiIjODA4MDgwIn0seyJpZCI6MTMyMCwibmFtZSI6Ik9kcGFkeSB3aWVsa29nYWJhcnl0b3dlIiwidHlwZSI6IlBVUlBMRSIsImNvbG9yIjoiIzUzMGM0ZSJ9LHsiaWQiOjEzMjEsIm5hbWUiOiJFbGVrdHJvb2RwYWR5IiwidHlwZSI6IkRBUktfQkxVRSIsImNvbG9yIjoiIzE3NDY4NCJ9XX0="
+    },
+    {
+      "key": "GET https://gateway.sisms.pl/akun/api/owners/188/timetable/get?unitId=26:04:10:2:0252078:39723:23 ",
+      "method": "GET",
+      "url": "https://gateway.sisms.pl/akun/api/owners/188/timetable/get?unitId=26:04:10:2:0252078:39723:23",
+      "final_url": "https://gateway.sisms.pl/akun/api/owners/188/timetable/get?unitId=26:04:10:2:0252078:39723:23",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "content-type": "application/json",
+        "date": "Sat, 26 Sep 2026 16:42:58 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-content-type-options": "nosniff",
+        "x-correlation-id": "71673f6f",
+        "x-frame-options": "DENY",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJtb250aCI6IjIwMjYtMDkiLCJyZWNlcHRpb25zIjpbeyJpZCI6NzEyODAzLCJiaW5JZCI6MTMwMiwiZGF0ZSI6IjIwMjYtMDktMDEifSx7ImlkIjo3MTI4MDQsImJpbklkIjoxMzAyLCJkYXRlIjoiMjAyNi0wOS0xNSJ9LHsiaWQiOjcxMjgxMiwiYmluSWQiOjEzMDMsImRhdGUiOiIyMDI2LTA5LTA5In0seyJpZCI6NzEyODMzLCJiaW5JZCI6MTMwNSwiZGF0ZSI6IjIwMjYtMDktMDIifSx7ImlkIjo3MTI4MjMsImJpbklkIjoxMzA0LCJkYXRlIjoiMjAyNi0wOS0wOCJ9LHsiaWQiOjcxMjgyNCwiYmluSWQiOjEzMDQsImRhdGUiOiIyMDI2LTA5LTIyIn0seyJpZCI6NzEyODQwLCJiaW5JZCI6MTMwNiwiZGF0ZSI6IjIwMjYtMDktMjgifV19LHsibW9udGgiOiIyMDI2LTEwIiwicmVjZXB0aW9ucyI6W3siaWQiOjcyMzMyOCwiYmluSWQiOjE2NTQsImRhdGUiOiIyMDI2LTEwLTIwIn0seyJpZCI6NzEyODI1LCJiaW5JZCI6MTMwNCwiZGF0ZSI6IjIwMjYtMTAtMTMifSx7ImlkIjo3MTI4MzQsImJpbklkIjoxMzA1LCJkYXRlIjoiMjAyNi0xMC0wNyJ9LHsiaWQiOjcxMjgwNSwiYmluSWQiOjEzMDIsImRhdGUiOiIyMDI2LTEwLTA2In0seyJpZCI6NzEyODA2LCJiaW5JZCI6MTMwMiwiZGF0ZSI6IjIwMjYtMTAtMjAifSx7ImlkIjo3MTI4NDQsImJpbklkIjoxMzE5LCJkYXRlIjoiMjAyNi0xMC0xMyJ9XX0seyJtb250aCI6IjIwMjYtMTEiLCJyZWNlcHRpb25zIjpbeyJpZCI6NzEyODQyLCJiaW5JZCI6MTMwNiwiZGF0ZSI6IjIwMjYtMTEtMzAifSx7ImlkIjo3MTI4MDcsImJpbklkIjoxMzAyLCJkYXRlIjoiMjAyNi0xMS0wMyJ9LHsiaWQiOjcxMjgxMywiYmluSWQiOjEzMDMsImRhdGUiOiIyMDI2LTExLTEwIn0seyJpZCI6NzEyODI2LCJiaW5JZCI6MTMwNCwiZGF0ZSI6IjIwMjYtMTEtMTAifSx7ImlkIjo3MTI4MzUsImJpbklkIjoxMzA1LCJkYXRlIjoiMjAyNi0xMS0wNCJ9LHsiaWQiOjcxMjg0NSwiYmluSWQiOjEzMTksImRhdGUiOiIyMDI2LTExLTEwIn1dfSx7Im1vbnRoIjoiMjAyNi0xMiIsInJlY2VwdGlvbnMiOlt7ImlkIjo3MTI4MDgsImJpbklkIjoxMzAyLCJkYXRlIjoiMjAyNi0xMi0wMSJ9LHsiaWQiOjcxMjgzNiwiYmluSWQiOjEzMDUsImRhdGUiOiIyMDI2LTEyLTAyIn0seyJpZCI6NzEyODI3LCJiaW5JZCI6MTMwNCwiZGF0ZSI6IjIwMjYtMTItMDgifSx7ImlkIjo3MTI4NDYsImJpbklkIjoxMzE5LCJkYXRlIjoiMjAyNi0xMi0wOCJ9XX1dfQ=="
+    }
+  ]
+}
