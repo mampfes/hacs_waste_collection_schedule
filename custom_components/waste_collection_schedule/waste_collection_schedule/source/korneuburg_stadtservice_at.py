@@ -172,7 +172,6 @@ class Source(BaseSource):
         fetch=Request(
             lambda url, context, **_: url,
             cookies=lambda url, context, **_: _cookies(context[0]),
-            raise_for_status=False,
         ),
     )
     parse = EachResponse(IcsParser())

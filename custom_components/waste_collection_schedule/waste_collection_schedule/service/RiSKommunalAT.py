@@ -768,7 +768,7 @@ def address_selection(
         for hnr in entry[1]:
             label = str(hnr[1])
             labels.append(label)
-            if label.casefold() == house:
+            if label.casefold() == house and hnr[2] is not None:
                 return street_id, hnr[0], hnr[2]
         break
     raise SourceArgumentNotFoundWithSuggestions(house_argument, house_number, labels)

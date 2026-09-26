@@ -242,9 +242,9 @@ class AbfallkalenderRetriever(YearlyRetriever):
             )
 
         def needs_street(*keys, **params) -> bool:
-            if street_required:
-                return not keys[-1].endswith("-0")
-            return bool(params.get(street))
+            return not keys[-1].endswith("-0") and (
+                street_required or bool(params.get(street))
+            )
 
         def calendar_form(year: int, ids: tuple, **params) -> dict:
             district_id, street_id = ids[-2], ids[-1]
