@@ -2111,6 +2111,16 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    def test_html_parser_from_json_key_indexes_a_list(self):
+        from waste_collection_schedule import parsers
+
+        parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
+        elements = parse([{"Results": "<h2>Refuse</h2><h3>Friday</h3>"}])
+        assert [e.string for e in elements] == ["Friday"]
+        # An empty list is an empty result, so RAISE_ON_EMPTY can name the
+        # argument rather than the lookup failing with an IndexError.
+        assert parse([]) == []
+
     def test_date_parser_from_epoch(self):
         import datetime
 
