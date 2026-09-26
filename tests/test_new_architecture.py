@@ -2663,6 +2663,64 @@ class TestFlattenGroups:
         assert self._run([]) == []
 
 
+class TestIWebAbfalldatenRows:
+    """IWeb.AbfalldatenRows: i-web /abfalldaten records into (date, name) rows."""
+
+    RECORDS: ClassVar[list] = [
+        {
+            "name": "Kehricht",
+            "_anlassDate": "30.09.2026 7.00 Uhr 30.09.2026, 7.00 Uhr",
+            "abfallkreisIds": ["190", "192"],
+            "abfallkreisNameList": "Grafstal, Lindau",
+        },
+        {
+            # A time span is not a date span.
+            "name": "Sonderabfall",
+            "_anlassDate": "30.09.2026 8.30 Uhr - 11.30 Uhr",
+            "abfallkreisIds": ["193"],
+            "abfallkreisNameList": "Tagelswangen",
+        },
+        {
+            "name": "Häckseldienst",
+            "_anlassDate": "26.10.2026 - 27.10.2026 26.10.2026 - 27.10.2026",
+            "abfallkreisIds": ["190"],
+            "abfallkreisNameList": "Grafstal",
+        },
+    ]
+
+    def _run(self, area_value=None, **kwargs):
+        from waste_collection_schedule.service.IWeb import AbfalldatenRows
+
+        source = SimpleNamespace(params={"city": area_value})
+        return list(AbfalldatenRows(**kwargs)(self.RECORDS, source))
+
+    def test_keeps_every_record_without_an_area(self):
+        assert [name for _day, name in self._run()] == [
+            "Kehricht",
+            "Sonderabfall",
+            "Häckseldienst",
+        ]
+
+    def test_filters_by_district_id_or_name(self):
+        by_id = self._run("190", area="city")
+        by_name = self._run("grafstal", area="city")
+        assert (
+            by_id
+            == by_name
+            == [
+                (datetime.date(2026, 9, 30), "Kehricht"),
+                (datetime.date(2026, 10, 26), "Häckseldienst"),
+            ]
+        )
+
+    def test_expands_date_spans_when_asked(self):
+        rows = self._run("Grafstal", area="city", expand_ranges=True)
+        assert rows[-2:] == [
+            (datetime.date(2026, 10, 26), "Häckseldienst"),
+            (datetime.date(2026, 10, 27), "Häckseldienst"),
+        ]
+
+
 class TestWeekdayRecurrence:
     """WeekdayRecurrence: a named collection weekday projected into dates."""
 
