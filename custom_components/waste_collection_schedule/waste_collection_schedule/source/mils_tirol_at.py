@@ -1,83 +1,83 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Gemeinde Mils"
-DESCRIPTION = "Source for Gemeinde Mils, Tyrol, Austria."
-URL = "https://mils-tirol.at"
-COUNTRY = "at"
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-TEST_CASES: dict[str, dict] = {
-    "Fichtenweg 21": {
-        "strasse": "Fichtenweg",
-        "hausnummer": "21",
-    },
-    "Dorfplatz 1": {
-        "strasse": "Dorfplatz",
-        "hausnummer": "1",
-    },
-}
-
-ICON_MAP = {
-    "Biomüll": Icons.ORGANIC,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Altpapier&Kleinkartons": Icons.PAPER,
-    "Problemstoffsammlung": Icons.HAZARDOUS,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Mils waste calendar dropdown.",
-        "hausnummer": "House number as listed in the Mils waste calendar dropdown.",
-    },
-    "de": {
-        "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
-        "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Open https://mils-tirol.at/Service/Dienstleistungen/Abfallkalender, pick "
-        "your street and house number from the dropdowns, and use the same values "
-        "for 'strasse' and 'hausnummer'."
-    ),
-    "de": (
-        "Öffnen Sie https://mils-tirol.at/Service/Dienstleistungen/Abfallkalender, "
-        "wählen Sie Ihre Straße und Hausnummer aus den Dropdown-Menüs, und "
-        "verwenden Sie dieselben Werte für 'strasse' und 'hausnummer'."
-    ),
-}
+_BASE_URL = "https://mils-tirol.at"
+_SELECTION_URL = "https://mils-tirol.at/Service/Dienstleistungen/Abfallkalender"
+_LOOKAHEAD_DAYS = 365
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://mils-tirol.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = "https://mils-tirol.at/Service/Dienstleistungen/Abfallkalender"
-    LOOKAHEAD_DAYS = 365
-    MAX_PAGES = 30
+@final
+class Source(BaseSource):
+    TITLE = "Gemeinde Mils"
+    DESCRIPTION = "Source for Gemeinde Mils, Tyrol, Austria."
+    URL = _BASE_URL
+    COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     # An address that does not resolve should say so, not show an empty
-    # calendar. This source was reported as returning nothing (#7144); it does
-    # not, but it was the one RiSKommunal source that could have failed quietly.
+    # calendar (#7144).
     RAISE_ON_EMPTY = True
-    QUERY_PARAMS: ClassVar = {
-        "sprache": "1",
-        "menuonr": "226285523",
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Fichtenweg 21": {
+            "strasse": "Fichtenweg",
+            "hausnummer": "21",
+        },
+        "Dorfplatz 1": {
+            "strasse": "Dorfplatz",
+            "hausnummer": "1",
+        },
     }
 
-    def __init__(self, strasse: str, hausnummer: str | int):
-        super().__init__(strasse=strasse, hausnummer=hausnummer)
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"strasse": "Keine Straße", "hausnummer": "1"},
+    }
+
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            f"Open {_SELECTION_URL}, pick your street and house number from the "
+            "dropdowns, and use the same values for 'strasse' and 'hausnummer'."
+        ),
+        "de": (
+            f"Öffnen Sie {_SELECTION_URL}, wählen Sie Ihre Straße und Hausnummer "
+            "aus den Dropdown-Menüs, und verwenden Sie dieselben Werte für "
+            "'strasse' und 'hausnummer'."
+        ),
+    }
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={"sprache": "1", "menuonr": "226285523"},
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=_SELECTION_URL,
+        lookahead_days=_LOOKAHEAD_DAYS,
+        max_pages=30,
+    )
+    parse = RiSKommunalParser(lookahead_days=_LOOKAHEAD_DAYS)
+    # Restmüll, Biomüll and Gelber Sack resolve via the shared vocabulary.
+    transform = ICSTransformer(
+        type_value_map={
+            "Altpapier&Kleinkartons": wt.PAPER,
+            "Problemstoffsammlung": wt.HAZARDOUS,
+        },
+    )

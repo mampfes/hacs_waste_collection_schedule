@@ -114,6 +114,10 @@ TEST_CASES = {
         "street_address": "Fogdevägen 13, Saltsjö-Duvnäs",
         "service_provider": "nvoa",
     },
+    "Danderyd - Banérvägen 6": {
+        "street_address": "Banérvägen 6",
+        "service_provider": "danderyd",
+    },
 }
 
 COUNTRY = "se"
@@ -128,6 +132,8 @@ ICON_MAP = {
     "Matavfall": Icons.BIO_KITCHEN,
     "Slam": Icons.GENERAL_WASTE,
     "Trädgårdsavfall": Icons.GARDEN,
+    "Glas/Glas/Metal": Icons.RECYCLING,
+    "Papper/Plast": Icons.RECYCLING,
 }
 
 # This can be used to rename the waste types to something more user friendly
@@ -241,6 +247,11 @@ SERVICE_PROVIDERS = {
         "title": "NVOA - Nacka Vatten och Avfall",
         "url": "https://www.nacka.se/nackavattenavfall/avfall/sophamtning/tomningsdag/",
         "api_url": "https://futureweb.nvoa.se/EDP/FutureWebBasic/SimpleWastePickup",
+    },
+    "danderyd": {
+        "title": "Danderyds kommun",
+        "url": "https://www.danderyd.se",
+        "api_url": "https://future.danderyd.se/Danderyd/EDPFutureweb/SimpleWastePickup",
     },
 }
 

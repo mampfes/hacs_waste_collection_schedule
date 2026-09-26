@@ -1,6 +1,8 @@
-# Abfallwirtschaftsbetrieb Landkreis Ahrweiler (AWB)
+# Abfallwirtschaftsbetrieb Landkreis Ahrweiler
 
-Support for schedules provided by [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](https://www.meinawb.de/) located in Rhineland Palatinate, Germany.
+Support for schedules provided by [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](https://www.meinawb.de).
+
+Bin collection service from Kreis Ahrweiler/Germany
 
 ## Configuration via configuration.yaml
 
@@ -11,8 +13,8 @@ waste_collection_schedule:
       args:
         city: CITY
         street: STREET
-        house_number: HNR
-        address_suffix: HNR_SUFFIX
+        house_number: HOUSE_NUMBER
+        address_suffix: ADDRESS_SUFFIX
 ```
 
 ### Configuration Variables
@@ -24,10 +26,10 @@ waste_collection_schedule:
 *(string) (required)*
 
 **house_number**  
-*(integer) (required)*
+*(string) (required)*
 
 **address_suffix**  
-*(string) (optional) (default: "")*
+*(string) (optional)*
 
 ## Example
 
@@ -37,10 +39,6 @@ waste_collection_schedule:
     - name: meinawb_de
       args:
         city: Oberzissen
-        street: Ackerstrasse
-        house_number: 1
+        street: Lindenstrasse
+        house_number: '1'
 ```
-
-## How to get the source arguments
-
-The arguments are your address. The input validation is a bit petty, so make sure you write it exactly like in the [web form](https://www.meinawb.de/abfuhrtermine). For troubleshooting, have a look in the home assistant logs.

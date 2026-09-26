@@ -1641,6 +1641,26 @@ class TestAbfallnaviComponents:
         assert raw["fraktionen"] == {5: "Restmüll", 6: "Bioabfall"}
         assert len(raw["termine"]) == 2
 
+    def test_retriever_uses_a_pinned_service_id(self):
+        # A source bound to one service (tonnenticker_pro_de) pins it on the
+        # retriever instead of declaring a service field the user never sees.
+        from waste_collection_schedule.service import AbfallnaviDe as M
+
+        seen = []
+        original_init = M.AbfallnaviDe.__init__
+
+        def spy_init(self, service_domain, *args, **kwargs):
+            seen.append(service_domain)
+            original_init(self, service_domain, *args, **kwargs)
+
+        source = MagicMock()
+        source.params = {"city": "Aachen", "street": "Abteiplatz", "house_number": "7"}
+        retriever = M.AbfallnaviRetriever(service_id="krwaf")
+        with self._patched_client(), patch.object(M.AbfallnaviDe, "__init__", spy_init):
+            raw = retriever(source)
+        assert seen == ["krwaf"]
+        assert len(raw["termine"]) == 2
+
     def test_parser_cross_references_without_io(self):
         from waste_collection_schedule.service import AbfallnaviDe as M
 
@@ -2110,6 +2130,16 @@ class TestToolkitParsers:
         )
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
+
+    def test_html_parser_from_json_key_indexes_a_list(self):
+        from waste_collection_schedule import parsers
+
+        parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
+        elements = parse([{"Results": "<h2>Refuse</h2><h3>Friday</h3>"}])
+        assert [e.string for e in elements] == ["Friday"]
+        # An empty list is an empty result, so RAISE_ON_EMPTY can name the
+        # argument rather than the lookup failing with an IndexError.
+        assert parse([]) == []
 
     def test_date_parser_from_epoch(self):
         import datetime

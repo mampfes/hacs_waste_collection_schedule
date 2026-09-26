@@ -1374,6 +1374,17 @@ def test_opencities_projection_projects_a_weekly_note_over_four_weeks() -> None:
     ]
 
 
+def test_opencities_projection_reads_collected_weekly_as_weekly() -> None:
+    assert _oc_projection("Collected Weekly. Place bin on verge.") == [
+        "2027-02-01",
+        "2027-02-08",
+        "2027-02-15",
+        "2027-02-22",
+    ]
+    # "bi-weekly" is not a weekly cadence
+    assert _oc_projection("Collected bi-weekly") == ["2027-02-01"]
+
+
 def test_opencities_projection_leaves_a_note_without_a_cadence_alone() -> None:
     assert _oc_projection("Place bin on the kerb") == ["2027-02-01"]
     assert _oc_projection(None) == ["2027-02-01"]

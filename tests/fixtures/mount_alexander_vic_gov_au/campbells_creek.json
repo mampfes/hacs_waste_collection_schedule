@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://www.mountalexander.vic.gov.au/api/v1/myarea/search fe0f1c90d4",
+      "method": "GET",
+      "url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search?keywords=123+Main+Road+Campbells+Creek+Victoria+3451",
+      "body": "{\"params\":[[\"keywords\",\"123 Main Road Campbells Creek Victoria 3451\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "273",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:41 GMT",
+        "pragma": "no-cache",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=92, origin; dur=208, ak_p; desc=\"1790356960667_389949170_190752765_29926_10771_16_54_-\";dur=1",
+        "set-cookie": "ak_bmsc=755B9EEF7CBF70EE38C36AD4C381D62D~000000000000000000000000000000~YAAQ8iY+F/wx+dOgAQAACDeX2QEZjqXFKmfvWoO5wCD4rJY3bR3X1F2neeDe6w7/BUckHLpbaAAko75P2WYmI1VKx5ZzoN0aarxWB0JAYJrQDCKSgQpz+s6lWLA8YDGYNUXFDBS4nvmCl24SKsA0mM/Jeswp6Abxgl1tc7HsB1p79MOtaCAsYCtW/ixYt1F2AQF5u/jotCGbpxnpv1iOt31d3SiIDysXZm6FIRMTmEuayNA4MkL6xhbVUKleY5bQT6aAwgvvNiEMFbKgLvzGjJTqX9zAhnme4XQTLZaD8nGVuatdAI0EiW2I7Bzt655PrKcdVO3SDYpagYkgnlInue8aVfv0XlAdT0otvlEjkI0TyzsDJGVXMPILF7g=; Domain=.mountalexander.vic.gov.au; Path=/; Expires=Fri, 25 Sep 2026 19:22:40 GMT; Max-Age=7199; HttpOnly",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJlOTM5ZDU3My1lOThhLTQzMzctYWJkNy0wYTliYTg2MTBiOWYiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEyMyBNYWluIFJvYWQgQ0FNUEJFTExTIENSRUVLIFZJQ1RPUklBIDM0NTEiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IkNhbXBiZWxscyBDcmVlayIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjIuODU3OTM1LCJMYXRMb24iOlstMzcuMDkxOTc5OTUwMDgwOSwxNDQuMjA0MzA5OTMzMjA2XX1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices 865b34337a",
+      "method": "GET",
+      "url": "https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=e939d573-e98a-4337-abd7-0a9ba8610b9f&ocsvclang=en-AU&pageLink=%2FMy-Property%2FWaste-and-recycling%2FFind-your-bin-collection-day",
+      "body": "{\"params\":[[\"geolocationid\",\"e939d573-e98a-4337-abd7-0a9ba8610b9f\"],[\"ocsvclang\",\"en-AU\"],[\"pageLink\",\"/My-Property/Waste-and-recycling/Find-your-bin-collection-day\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "434",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "private, max-age=0",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:41 GMT",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=32, origin; dur=202, ak_p; desc=\"1790356961187_389949170_190753591_24618_10055_16_0_-\";dur=1",
+        "set-cookie": "ASP.NET_SessionId=qgfdbq3cjhym2s14hhwwl3q1; path=/; secure; HttpOnly; SameSite=None",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxlYXNlIHBsYWNlIHlvdXIgYmluIG9uIHRoZSB2ZXJnZSBiZWZvcmUgNi4wMGFtLCBvciB0aGUgbmlnaHQgYmVmb3JlLlx1MDAzYy9zcGFuXHUwMDNlXHUwMDNjL3BcdTAwM2UgWW91ciBuZXh0IGNvbGxlY3Rpb24gZGF5IGlzOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDEvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGVhc2UgbGVhdmUgeW91ciB5ZWxsb3ctbGlkIGJpbiBvbiB0aGUgdmVyZ2UgYmVmb3JlIDYuMDBhbSwgb3IgdGhlIG5pZ2h0IGJlZm9yZS5cblx1MDAzYy9zcGFuXHUwMDNlXHUwMDNjL3BcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRheSBpczpcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFRodSAxLzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}
