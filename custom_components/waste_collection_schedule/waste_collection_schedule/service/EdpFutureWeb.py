@@ -239,8 +239,9 @@ def parse_pickup(text: str) -> datetime.date | None:
     """Read a next-pickup value; ``None`` when it names no date.
 
     ``2026-10-06`` is that day; ``v41 Okt 2026`` and ``Vecka 41`` are the
-    Monday of ISO week 41 (of the stated year, else of the current one, or the
-    next if that week has passed); ``Feb 2027`` is the first of the month.
+    Monday of ISO week 41 (of the ISO year the stated month falls in, else its
+    earliest occurrence that has not passed); ``Feb 2027`` is the first of the
+    month.
     """
     text = text.strip()
     if not text:
@@ -253,19 +254,37 @@ def parse_pickup(text: str) -> datetime.date | None:
     parts = text.split()
     week = _WEEK_RE.match(text)
     if week:
+        number = int(week.group(1))
         years = [int(p) for p in parts if p.isdigit() and len(p) == 4]
         if years:
-            return datetime.date.fromisocalendar(years[0], int(week.group(1)), 1)
+            # The stated year is the calendar year of the stated month, not the
+            # ISO year: "v53 Jan 2027" is week 53 of 2026, "v1 Dec 2025" week 1
+            # of 2026.
+            year = years[0]
+            months = [_MONTHS.get(p[:3].lower()) for p in parts[1:]]
+            if 1 in months and number >= 52:
+                year -= 1
+            elif 12 in months and number == 1:
+                year += 1
+            return _iso_monday(year, number)
+        # No year: the earliest occurrence of that week that has not passed.
         today = datetime.date.today()
-        monday = datetime.date.fromisocalendar(today.year, int(week.group(1)), 1)
-        if monday + datetime.timedelta(days=6) < today:
-            monday = datetime.date.fromisocalendar(
-                today.year + 1, int(week.group(1)), 1
-            )
-        return monday
+        for year in (today.year - 1, today.year, today.year + 1):
+            monday = _iso_monday(year, number)
+            if monday and monday + datetime.timedelta(days=6) >= today:
+                return monday
+        return None
 
     if len(parts) == 2 and parts[1].isdigit():
         month = _MONTHS.get(parts[0][:3].lower())
         if month:
             return datetime.date(int(parts[1]), month, 1)
     return None
+
+
+def _iso_monday(year: int, week: int) -> datetime.date | None:
+    """The Monday of ISO ``week`` of ``year``; ``None`` if the year has no such week."""
+    try:
+        return datetime.date.fromisocalendar(year, week, 1)
+    except ValueError:
+        return None
