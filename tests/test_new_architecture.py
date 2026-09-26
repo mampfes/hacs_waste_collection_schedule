@@ -662,6 +662,24 @@ class TestParsers:
         resp = self._mock_response("", json_data=data)
         assert JsonParser("data", "items")(resp) == data["data"]["items"]
 
+    def test_json_parser_checks_status_before_decoding(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response("", json_data={"data": []})
+        resp.raise_for_status.side_effect = RuntimeError("HTTP 503")
+        with pytest.raises(RuntimeError, match="HTTP 503"):
+            JsonParser("data", raise_for_status=True)(resp)
+        resp.json.assert_not_called()
+
+    def test_json_parser_rejects_application_error_before_drilling(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response(
+            "", json_data={"message": "Invalid UPRN", "data": []}
+        )
+        with pytest.raises(ValueError, match="Invalid UPRN"):
+            JsonParser("data", expected_values={"message": "OK"})(resp)
+
     def test_text_parser(self):
         from waste_collection_schedule.parsers import TextParser
 
@@ -1237,6 +1255,238 @@ class TestIndexAndYearlyFetch:
             source.session.get.call_args.args[0] == "https://x/2026/north-abbecke.json"
         )
         source.session.get.return_value.raise_for_status.assert_called_once()
+
+
+class TestDeclaredRequests:
+    """retrievers.Request, Lookup, Chain and Suggestions (#7139)."""
+
+    @staticmethod
+    def _source(**params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_request_resolves_every_field_against_args_and_params(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(street="Main St")
+        request = retrievers.Request(
+            lambda year, street_id, **_: f"https://x/{year}",
+            method="POST",
+            params={"fixed": 1},
+            data=lambda year, street_id, street, **_: {"id": street_id, "s": street},
+            headers={"Accept": "text/calendar"},
+        )
+        request(source, 2026, "42")
+        call = source.session.post.call_args
+        assert call.args[0] == "https://x/2026"
+        assert call.kwargs["params"] == {"fixed": 1}
+        assert call.kwargs["data"] == {"id": "42", "s": "Main St"}
+        assert call.kwargs["headers"] == {"Accept": "text/calendar"}
+        source.session.post.return_value.raise_for_status.assert_called_once()
+
+    def test_request_rejects_a_body_on_a_get(self):
+        from waste_collection_schedule import retrievers
+
+        with pytest.raises(ValueError):
+            retrievers.Request("https://x", data={"a": 1})
+
+    def test_request_before_steps_extend_the_args(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        source.session.get.return_value.json.return_value = {"token": "t0k"}
+        request = retrievers.Request(
+            "https://x/ics",
+            before=(
+                retrievers.Lookup(
+                    "https://x/token",
+                    pick=lambda response, *_, **__: response.json()["token"],
+                ),
+            ),
+            params=lambda year, token, **_: {"year": year, "data": token},
+        )
+        request(source, 2026)
+        assert source.session.get.call_args.kwargs["params"] == {
+            "year": 2026,
+            "data": "t0k",
+        }
+
+    def test_request_when_false_makes_no_request(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        request = retrievers.Request("https://x", when=lambda *_, **__: False)
+        assert request(source) is None
+        source.session.get.assert_not_called()
+
+    def test_request_retry_if_asks_once_more(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        first, second = MagicMock(text="interstitial"), MagicMock(text="page")
+        source.session.get.side_effect = [first, second]
+        request = retrievers.Request(
+            "https://x", retry_if=lambda response: response.text == "interstitial"
+        )
+        assert request(source) is second
+        assert source.session.get.call_count == 2
+
+    def test_lookup_picks_from_the_response_with_keys_and_params(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(street="Main St")
+        source.session.get.return_value.json.return_value = {"Main St": "7"}
+        lookup = retrievers.Lookup(
+            lambda city_id, **_: f"https://x/{city_id}/streets",
+            pick=lambda response, city_id, street, **_: response.json()[street],
+        )
+        assert lookup(source, ("berlin",)) == "7"
+        assert source.session.get.call_args.args[0] == "https://x/berlin/streets"
+
+    def test_lookup_given_and_when_skip_the_request(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(street_id="99", street=None)
+        given = retrievers.Lookup(
+            "https://x",
+            given=lambda street_id=None, **_: street_id,
+            pick=lambda *_, **__: "unused",
+        )
+        skipped = retrievers.Lookup(
+            "https://x",
+            when=lambda street=None, **_: street is not None,
+            pick=lambda *_, **__: "unused",
+        )
+        assert given(source) == "99"
+        assert skipped(source) is None
+        source.session.get.assert_not_called()
+
+    def test_lookup_takes_a_whole_request_but_not_both(self):
+        from waste_collection_schedule import retrievers
+
+        request = retrievers.Request("https://x")
+        assert retrievers.Lookup(request, pick=lambda *_: 1).request is request
+        with pytest.raises(ValueError):
+            retrievers.Lookup(request, pick=lambda *_: 1, method="POST")
+
+    def test_chain_resolves_to_the_tuple_of_keys(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        chain = retrievers.Chain(
+            lambda source, keys: "a",
+            lambda source, keys: f"{keys[-1]}b",
+        )
+        assert chain(source) == ("a", "ab")
+
+    def test_suggestions_pick_and_fallback(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(street="Mai")
+        source.session.get.return_value.json.return_value = ["Main St", "High St"]
+        suggestions = retrievers.Suggestions(
+            "https://x",
+            pick=lambda response, street, **_: [
+                s for s in response.json() if s.startswith(street)
+            ],
+        )
+        assert suggestions(source) == ["Main St"]
+
+        source.session.get.side_effect = OSError("down")
+        with pytest.raises(OSError):
+            suggestions(source)
+        quiet = retrievers.Suggestions(
+            "https://x", pick=lambda *_, **__: [], fallback=[]
+        )
+        assert quiet(source) == []
+        assert quiet(None) == []
+
+
+class TestAbfallkalenderRetriever:
+    """service/Abfallkalender.py's retriever for the whole vendor conversation."""
+
+    _DISTRICTS = (
+        "f.ak_ortsteil.options[1].value = '1-1';"
+        "f.ak_ortsteil.options[1].text = 'Kernstadt';"
+        "f.ak_ortsteil.options[2].value = '2-0';"
+        "f.ak_ortsteil.options[2].text = 'Dorf';"
+    )
+    _STREETS = "f.ak_strasse.options[1].value = '51';f.ak_strasse.options[1].text = 'Futterhof';"
+
+    def _source(self, **params):
+        source = MagicMock()
+        source.params = params
+        replies = {
+            "get_ortsteile.php": self._DISTRICTS,
+            "get_strassen.php": self._STREETS,
+        }
+        source.session.get.side_effect = lambda url, **_: MagicMock(
+            text=replies[url.rsplit("/", 1)[-1]]
+        )
+        return source
+
+    def test_resolves_district_and_street_then_posts_each_year(self):
+        from waste_collection_schedule.service.Abfallkalender import (
+            AbfallkalenderRetriever,
+        )
+
+        source = self._source(district="Kernstadt", street="Futterhof")
+        retriever = AbfallkalenderRetriever(
+            "https://x/module/abfallkalender",
+            district="district",
+            street="street",
+            form=lambda year: {"extra": year},
+            rollover_month=None,
+        )
+        retriever(source)
+        data = source.session.post.call_args.kwargs["data"]
+        assert list(data) == [
+            "year",
+            "ak_bezirk",
+            "ak_ortsteil",
+            "alle_arten",
+            "extra",
+            "ak_strasse",
+        ]
+        assert data["ak_ortsteil"] == "1-1"
+        assert data["ak_strasse"] == "51"
+
+    def test_single_street_district_skips_the_street_lookup(self):
+        from waste_collection_schedule.service.Abfallkalender import (
+            AbfallkalenderRetriever,
+        )
+
+        source = self._source(district="Dorf", street=None)
+        AbfallkalenderRetriever(
+            "https://x/m",
+            district="district",
+            street="street",
+            street_required=True,
+            rollover_month=None,
+        )(source)
+        assert "ak_strasse" not in source.session.post.call_args.kwargs["data"]
+        assert source.session.get.call_count == 1
+
+    def test_required_street_is_reported_with_the_list(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentRequiredWithSuggestions,
+        )
+        from waste_collection_schedule.service.Abfallkalender import (
+            AbfallkalenderRetriever,
+        )
+
+        source = self._source(district="Kernstadt", street=None)
+        retriever = AbfallkalenderRetriever(
+            "https://x/m",
+            district="district",
+            street="street",
+            street_required=True,
+            rollover_month=None,
+        )
+        with pytest.raises(SourceArgumentRequiredWithSuggestions) as raised:
+            retriever(source)
+        assert "Futterhof" in str(raised.value)
 
 
 class TestSismsPl:
@@ -2813,6 +3063,75 @@ class TestFlattenGroups:
         assert JsonParser(0, "a")(reply([{"a": [1]}, {"a": [2]}])) == [1]
         assert JsonParser(0)(reply([])) == []
         assert JsonParser(0)(reply(None)) == []
+
+
+class TestIWebAbfalldatenRows:
+    """IWeb.AbfalldatenRows: i-web /abfalldaten records into (date, name) rows."""
+
+    RECORDS: ClassVar[list] = [
+        {
+            "name": "Kehricht",
+            "_anlassDate": "30.09.2026 7.00 Uhr 30.09.2026, 7.00 Uhr",
+            "abfallkreisIds": ["190", "192"],
+            "abfallkreisNameList": "Grafstal, Lindau",
+        },
+        {
+            # A time span is not a date span.
+            "name": "Sonderabfall",
+            "_anlassDate": "30.09.2026 8.30 Uhr - 11.30 Uhr",
+            "abfallkreisIds": ["193"],
+            "abfallkreisNameList": "Tagelswangen",
+        },
+        {
+            "name": "Häckseldienst",
+            "_anlassDate": "26.10.2026 - 27.10.2026 26.10.2026 - 27.10.2026",
+            "abfallkreisIds": ["190"],
+            "abfallkreisNameList": "Grafstal",
+        },
+    ]
+
+    def _run(self, area_value=None, **kwargs):
+        from waste_collection_schedule.service.IWeb import AbfalldatenRows
+
+        source = SimpleNamespace(params={"city": area_value})
+        return list(AbfalldatenRows(**kwargs)(self.RECORDS, source))
+
+    def test_keeps_every_record_without_an_area(self):
+        assert [name for _day, name in self._run()] == [
+            "Kehricht",
+            "Sonderabfall",
+            "Häckseldienst",
+        ]
+
+    def test_filters_by_district_id_or_name(self):
+        by_id = self._run("190", area="city")
+        by_name = self._run("grafstal", area="city")
+        assert (
+            by_id
+            == by_name
+            == [
+                (datetime.date(2026, 9, 30), "Kehricht"),
+                (datetime.date(2026, 10, 26), "Häckseldienst"),
+            ]
+        )
+
+    def test_expands_date_spans_when_asked(self):
+        rows = self._run("Grafstal", area="city", expand_ranges=True)
+        assert rows[-2:] == [
+            (datetime.date(2026, 10, 26), "Häckseldienst"),
+            (datetime.date(2026, 10, 27), "Häckseldienst"),
+        ]
+
+    def test_parser_raises_on_an_http_error_status(self):
+        """An error page is not reported as an empty (wrong-argument) schedule."""
+        from requests import HTTPError
+        from waste_collection_schedule.service.IWeb import abfalldaten_parser
+
+        resp = MagicMock()
+        resp.text = "<html><body>Service Unavailable</body></html>"
+        resp.raise_for_status.side_effect = HTTPError("503 Server Error")
+        with pytest.raises(HTTPError):
+            abfalldaten_parser()(resp)
 
 
 class TestWeekdayRecurrence:
@@ -6805,9 +7124,9 @@ def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
 # The hand-rolled-retrieval debt register.
 #
 # Every module-level function in a pipeline source that issues the provider's
-# HTTP itself, as the tree stood when the gate went in. Each one is a Retriever
-# written as a function: the next provider on the same platform cannot reach it,
-# which is exactly what the reuse rule above exists to prevent.
+# HTTP itself. Each one is a Retriever written as a function: the next provider
+# on the same platform cannot reach it, which is exactly what the reuse rule
+# above exists to prevent.
 #
 # It is a backlog, not an exemption list, and it is the same shape as
 # CASES_AWAITING_CASSETTE and LABELS_AWAITING_VOCABULARY.
@@ -6815,102 +7134,24 @@ def test_pipeline_sources_reuse_shared_components(stem: str) -> None:
 # function no longer issues HTTP, or has gone, so the list cannot rot into a
 # permanent excuse.
 #
-# HOW AN ENTRY IS CLEARED, because this is the part that gets misread:
+# It was seeded once, empirically, with 52 functions across 28 sources, and is
+# now empty. It is kept empty on purpose: do NOT add to it to make a new source
+# pass.
 #
-#   You clear an entry by giving the platform a component that expresses the
-#   provider's flow, and then configuring that component from the source. You
-#   do NOT clear it by relocating the function. A function cut out of
-#   frankenberg_de.py and pasted into service/ is still one provider's request
-#   written once for one caller; it has changed address, not layer, and the
-#   next provider on that platform still cannot use it. If the component you
-#   end up with has exactly one possible caller, you have moved the problem.
-#
-#   For a good number of these entries that is a design change rather than a
-#   tidy-up, and it should be planned as one. LookupChainRetriever,
-#   YearlyRetriever and FanOutRetriever all *document* handing the request to a
-#   source-supplied callback, on the stated grounds that "these lookups vary
-#   too much to template". So most of the sources below are doing exactly what
-#   their component's docstring told them to. Clearing those means deciding
-#   what the platform's flow actually is and building the component that says
-#   it, which is design work, needs a cassette on every affected provider, and
-#   is not a refactor you should expect to finish in an afternoon.
-#
-# So: 28 sources on this list are not 28 careless sources. Each entry is a
-# claim to judge, not a verdict, and the length of the list is the argument for
-# the next component rather than an indictment of the last 28 contributors.
-# That contradiction between the reuse rule and the component docstrings is the
-# finding this register exists to hold, and it is why the gate is a register
-# rather than an outright ban.
-#
-# Do NOT add to this list to make a new source pass. It was seeded once,
-# empirically, and only shrinks.
-#
-# Where to start: read it for clusters. A cluster spanning two or more sources
-# is a platform with a proven second consumer, and it is worth far more than a
-# cluster of four functions inside one file, which is usually one provider's
-# flow and risks a component nobody else can call. frankenberg_de and
-# zva_sek_de are the worked example and the only two-source cluster here. They
-# run one vendor module, both hand-rolled its dropdown decoder, and the two
-# copies drifted into four readings of one reply format with two bugs between
-# them (#7100). The decoder is now service/Abfallkalender.py; their HTTP
-# conversation is not, so both are still listed, and an AbfallkalenderRetriever
-# covering both cascades is what clears those five entries.
+# How it was cleared, because the same question will come back with the next
+# source: the component docstrings used to say that lookups "vary too much to
+# template", so the request had to be a source-supplied callback. They vary in
+# how the answer is *read*, not in how the request is *made*. So the request
+# became configuration (retrievers.Request, retrievers.Lookup, retrievers.Chain,
+# retrievers.Suggestions), and what stays in the source is a pure ``pick`` that
+# reads the reply and raises the argument errors. A platform's whole
+# conversation became a component where a platform has one:
+# service/Abfallkalender.py's AbfallkalenderRetriever for frankenberg_de and
+# zva_sek_de, which had drifted into four readings of one vendor reply (#7100).
+# Nothing was cleared by relocating a function into service/.
 # --------------------------------------------------------------------------- #
 
-SOURCES_HAND_ROLLING_RETRIEVAL = {
-    "1coast_com_au::_resolve_address",
-    "abfallkalender_prezero_network::_download_ical",
-    "abfallkalender_prezero_network::_resolve_street_id",
-    "abfallwirtschaft_germersheim_de::_read_export_form",
-    "abki_de::_calendar_for_year",
-    "abki_de::_resolve_ids",
-    "aha_region_de::_resolve_ladeort",
-    "aha_region_de::_resolve_street",
-    "aw_harburg_de::_child_html",
-    "aw_harburg_de::_fetch_ical",
-    "aw_harburg_de::_initial_html",
-    "aw_harburg_de::_search_page",
-    "awb_es_de::_download_feed",
-    "awb_es_de::_ics_urls",
-    "awb_es_de::_suggestions",
-    "awb_oldenburg_de::_find_export_link",
-    "awb_oldenburg_de::_read_form",
-    "awigo_de::_post",
-    "frankenberg_de::_calendar_for_year",
-    "frankenberg_de::_resolve_district",
-    "frankenberg_de::_resolve_street",
-    "gemeinde24_at::_gemeinden",
-    "gemeinde24_at::_streets",
-    "infeo_at::_fetch_by_address",
-    "infeo_at::_fetch_by_zone",
-    "infeo_at::_published_calendars",
-    "korneuburg_stadtservice_at::_fetch_ical",
-    "korneuburg_stadtservice_at::_region_ical_urls",
-    "korneuburg_stadtservice_at::_resolve_teilgebiet",
-    "kwu_de::_options",
-    "kwu_de::_resolve_ics_url",
-    "magdeburg_de::_street_suggestions",
-    "mulhouse_alsace_fr::_list_communes",
-    "mzv_rotenburg_bebra_de::_possible_cities",
-    "narab_se::_resolve_address",
-    "nemaffaldsservice_kk_dk::_resolve_address",
-    "nemaffaldsservice_kk_dk::_resolve_customer_id",
-    "nemaffaldsservice_kk_dk::_resolve_token",
-    "rsag_de::_resolve_city",
-    "rsag_de::_resolve_street",
-    "rsag_de::_resolve_waste_types",
-    "stadtreinigung_giessen_de::_load_streets_for_letter",
-    "stadtreinigung_leipzig_de::_resolve_position",
-    "stadtservice_bruehl_de::_resolve_district",
-    "staedteservice_de::_calendar_for_year",
-    "staedteservice_de::_lookup_street",
-    "verl_de::_read_calendar_page",
-    "wellington_govt_nz::_resolve_street",
-    "zva_sek_de::_calendar_for_year",
-    "zva_sek_de::_resolve_ids",
-    "zys_harmonogram_pl::_lookup",
-    "zys_harmonogram_pl::_resolve_report_url",
-}
+SOURCES_HAND_ROLLING_RETRIEVAL: set[str] = set()
 
 
 @pytest.mark.skipif(

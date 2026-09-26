@@ -1,12 +1,14 @@
 # South Gloucestershire Council
 
-Support for schedules provided by [South Gloucestershire Council](https://beta.southglos.gov.uk/waste-and-recycling-collection-date), serving the district of South Gloucestershire, UK.
+Support for schedules provided by [South Gloucestershire Council](https://southglos.gov.uk).
+
+Source script for southglos.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southglos_gov_uk
       args:
         uprn: UPRN
@@ -17,16 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southglos_gov_uk
       args:
-        uprn: 639072
+        uprn: '643346'
 ```
-
-## How to get the source argument
-
-Search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.

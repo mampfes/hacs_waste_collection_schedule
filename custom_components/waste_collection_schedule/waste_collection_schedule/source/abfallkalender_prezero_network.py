@@ -30,19 +30,14 @@ _META_REFRESH_RE = re.compile(r'url=[\'"]?([^\'" >]+)')
 _STREET_ID_RE = re.compile(r"/calendar/(\d+)/")
 
 
-def _resolve_street_id(source) -> str:
+def _street_id_from_redirect(r, street: str, **_) -> str:
     """The fan-out's prepare step: address -> the site's own street id.
 
     The id is only ever handed back in the redirect target, so the redirect is
     read rather than followed. A deployment that redirects with an HTML
     meta-refresh instead of a ``Location`` header is read the same way.
     """
-    street_name = source.params["street"]
-    r = source.session.post(
-        f"{_BASE_URL}/{source.params['city']}",
-        data={"street": street_name, "houseNo": source.params["house_number"]},
-        allow_redirects=False,
-    )
+    street_name = street
 
     if r.status_code not in _REDIRECT_STATUSES:
         raise SourceArgumentNotFound(
@@ -85,13 +80,6 @@ def _ical_urls(source, street_id: str) -> list[str]:
         f"{_BASE_URL}/{city}/download/ical/{street_id}/{house_no}/{year}"
         for year in (now.year, now.year + 1)
     ]
-
-
-def _download_ical(source, url: str, street_id: str):
-    """Fetch one year's calendar. The download is a POST, with no body."""
-    r = source.session.post(url)
-    r.raise_for_status()
-    return r
 
 
 @final
@@ -138,9 +126,20 @@ class Source(BaseSource):
     }
 
     retrieve = retrievers.FanOutRetriever(
-        prepare=_resolve_street_id,
+        prepare=retrievers.Lookup(
+            lambda city, **_: f"{_BASE_URL}/{city}",
+            method="POST",
+            data=lambda street, house_number, **_: {
+                "street": street,
+                "houseNo": house_number,
+            },
+            allow_redirects=False,
+            raise_for_status=False,
+            pick=_street_id_from_redirect,
+        ),
         targets=_ical_urls,
-        fetch=_download_ical,
+        # One year's calendar. The download is a POST, with no body.
+        fetch=retrievers.Request(lambda url, street_id, **_: url, method="POST"),
     )
     parse = parsers.EachResponse(parsers.IcsParser())
 

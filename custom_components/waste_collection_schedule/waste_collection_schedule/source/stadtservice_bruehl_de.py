@@ -3,7 +3,7 @@
 A two-POST resolve-then-download shape where the first POST's only job is to
 scrape a hidden ``post_district`` field out of the response HTML, which the
 second POST then needs alongside the street/house number and a fixed set of
-"include every waste type" checkboxes. The district lookup is the step below;
+"include every waste type" checkboxes. The district lookup is a declared ``Lookup``;
 the shared ``LookupChainRetriever`` POSTs for the ICS download.
 
 Labels carry a trailing bin colour (e.g. "Hausmüll (Grau)", "Biotonne
@@ -19,7 +19,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
 
 _DISTRICT_URL = "https://services.stadtservice-bruehl.de/abfallkalender/"
@@ -33,21 +33,9 @@ _clean_type = label_cleaner(
 )
 
 
-def _resolve_district(source: BaseSource, keys: tuple) -> str:
-    """POST the address and read the collection district back out of the page."""
-    strasse = source.params["strasse"]
-
-    r = source.session.post(
-        _DISTRICT_URL,
-        data={
-            "street": strasse,
-            "street_number": source.params["hnr"],
-            "send_street_and_nummber_data": "",
-        },
-    )
-    r.raise_for_status()
-
-    soup = BeautifulSoup(r.text, "html.parser")
+def _pick_district(response, strasse: str, **_) -> str:
+    """Read the collection district back out of the submitted address page."""
+    soup = BeautifulSoup(response.text, "html.parser")
     post_district = None
     for tag in soup.find_all("input", type="hidden"):
         if tag.get("name") == "post_district":
@@ -83,7 +71,18 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_district,),
+        steps=(
+            Lookup(
+                _DISTRICT_URL,
+                method="POST",
+                data=lambda strasse, hnr, **_: {
+                    "street": strasse,
+                    "street_number": hnr,
+                    "send_street_and_nummber_data": "",
+                },
+                pick=_pick_district,
+            ),
+        ),
         url=_CALENDAR_URL,
         method="POST",
         data=lambda district, strasse, hnr, **_: {

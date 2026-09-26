@@ -694,7 +694,10 @@ class RequireRecords(Preprocessor[Any, Any]):
     own list of them::
 
         preprocess = Compose(
-            RequireRecords(argument="commune", suggestions=_list_communes),
+            RequireRecords(
+                argument="commune",
+                suggestions=retrievers.Suggestions(INDEX_URL, pick=_communes),
+            ),
             Disambiguate(argument="quartier", key=_quartier),
         )
 

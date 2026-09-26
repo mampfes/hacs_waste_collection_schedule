@@ -5167,7 +5167,10 @@
   },
   "lindau_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lindau_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie Ihren Ortsteil so ein, wie er auf https://www.lindau.ch/abfalldaten steht (Grafstal, Lindau, Tagelswangen oder Winterberg).",
+      "en": "Enter your village as listed on https://www.lindau.ch/abfalldaten (Grafstal, Lindau, Tagelswangen or Winterberg)."
+    },
     "urls": {}
   },
   "ics_mopage_ch": {
@@ -5993,10 +5996,10 @@
   },
   "erewash_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/erewash_gov_uk.md",
-    "howto": {
-      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "urls": {}
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "exeter_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/exeter_gov_uk.md",

@@ -40,6 +40,7 @@ from waste_collection_schedule.parsers import (
 from waste_collection_schedule.retrievers import (
     Branch,
     FallbackRetriever,
+    Lookup,
     LookupChainRetriever,
     follow_link,
     reuse_prepared,
@@ -56,11 +57,9 @@ def _normalise(address: str) -> str:
     return address.lower().replace(" ", "").replace(",", "").replace(".", "")
 
 
-def _resolve_address(session, address: str) -> "tuple[str, str, dict]":
+def _pick_address(response, address: str, **_: Any) -> "tuple[str, str, dict]":
     """Resolve an address to (address_id, formatted_address, collection_params)."""
-    r = session.get(_SEARCH_URL, params={"a": "search", "s": address})
-    r.raise_for_status()
-    data = r.json()
+    data = response.json()
 
     if not data:
         raise SourceArgumentNotFound("address", address)
@@ -77,11 +76,6 @@ def _resolve_address(session, address: str) -> "tuple[str, str, dict]":
             return addr["id"], ",".join(addr["name"]), addr["collection"]
 
     raise SourceArgAmbiguousWithSuggestions("address", address, address_names)
-
-
-def _resolve_address_step(source, keys: tuple) -> "tuple[str, str, dict]":
-    """The LookupChainRetriever step: the address, as the page GET needs it."""
-    return _resolve_address(source.session, source.params["address"])
 
 
 def _collection_page_params(resolved: tuple, **params: Any) -> dict:
@@ -101,7 +95,13 @@ def _collection_page_params(resolved: tuple, **params: Any) -> dict:
 
 
 _collection_page = LookupChainRetriever(
-    steps=(_resolve_address_step,),
+    steps=(
+        Lookup(
+            _SEARCH_URL,
+            params=lambda address, **_: {"a": "search", "s": address},
+            pick=_pick_address,
+        ),
+    ),
     url=_COLLECTION_URL,
     params=_collection_page_params,
     raise_for_status=True,

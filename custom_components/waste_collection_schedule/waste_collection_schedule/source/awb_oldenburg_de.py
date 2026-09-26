@@ -25,7 +25,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://www.oldenburg.de"
@@ -43,13 +43,11 @@ class _CalendarForm(NamedTuple):
     data: dict
 
 
-def _read_form(source: BaseSource, keys: tuple) -> _CalendarForm:
+def _read_form(response, street: str, house_number, **_) -> _CalendarForm:
     """Resolve the street index and collect the form's TYPO3 security tokens."""
-    street_value = source.params["street"]
-    house_number_value = source.params["house_number"]
+    street_value = street
+    house_number_value = house_number
 
-    response = source.session.get(_API_URL)
-    response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
 
     # The calendar form is the second form on the page.
@@ -83,21 +81,15 @@ def _read_form(source: BaseSource, keys: tuple) -> _CalendarForm:
     return _CalendarForm(_BASE_URL + action if action.startswith("/") else action, data)
 
 
-def _find_export_link(source: BaseSource, keys: tuple) -> str:
-    """Submit the form and read the per-request ``exportIcs`` download link."""
-    form: _CalendarForm = keys[0]
-    response = source.session.post(form.post_url, data=form.data)
-    response.raise_for_status()
-
+def _find_export_link(response, form, *, house_number, **_) -> str:
+    """Read the per-request ``exportIcs`` download link off the submitted form."""
     soup = BeautifulSoup(response.text, "html.parser")
     for anchor in soup.find_all("a", href=True):
         if "exportIcs" in anchor["href"]:
             href = str(anchor["href"])
             return _BASE_URL + href if href.startswith("/") else href
 
-    raise SourceArgumentNotFoundWithSuggestions(
-        "house_number", source.params["house_number"], []
-    )
+    raise SourceArgumentNotFoundWithSuggestions("house_number", house_number, [])
 
 
 @final
@@ -124,7 +116,15 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_read_form, _find_export_link),
+        steps=(
+            Lookup(_API_URL, pick=_read_form),
+            Lookup(
+                lambda form, **_: form.post_url,
+                method="POST",
+                data=lambda form, **_: form.data,
+                pick=_find_export_link,
+            ),
+        ),
         url=lambda form, export_link, **_: export_link,
         raise_for_status=True,
     )

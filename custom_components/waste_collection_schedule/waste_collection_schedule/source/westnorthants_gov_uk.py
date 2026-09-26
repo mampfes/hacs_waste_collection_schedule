@@ -34,7 +34,7 @@ class Source(BaseSource):
             f"https://api.westnorthants.digital/openapi/v1/unified-waste-collections/{uprn}"
         ),
     )
-    parse = parsers.JsonParser("collectionItems")
+    parse = parsers.JsonParser("collectionItems", raise_for_status=True)
     transform = JsonTransformer(
         date_key="date",
         type_key="type",

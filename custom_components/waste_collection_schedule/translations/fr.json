@@ -22976,7 +22976,8 @@
           "city": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village."
         }
       },
       "reconfigure_lindau_ch": {
@@ -22986,7 +22987,9 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village."
+        }
       },
       "args_ics_mopage_ch": {
         "title": "Configurer la Source",
@@ -24508,7 +24511,9 @@
           "post_code": "Code postal"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
         }
       },
       "reconfigure_cambridge_gov_uk": {
@@ -24519,7 +24524,10 @@
           "number": "Numéro",
           "post_code": "Code postal"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
+        }
       },
       "args_cannock_chase_dc_gov_uk": {
         "title": "Configurer la Source",
@@ -25432,7 +25440,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_ealing_gov_uk": {
@@ -25443,7 +25451,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_east_ayrshire_gov_uk": {
@@ -25876,7 +25884,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_erewash_gov_uk": {
@@ -25886,7 +25895,9 @@
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_exeter_gov_uk": {
         "title": "Configurer la Source",
@@ -26417,7 +26428,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hart_gov_uk": {
@@ -26428,7 +26439,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_hartlepool_gov_uk": {
@@ -26629,7 +26640,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hull_gov_uk": {
@@ -26640,7 +26651,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_huntingdonshire_gov_uk": {
@@ -26652,7 +26663,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_huntingdonshire_gov_uk": {
@@ -26663,7 +26674,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_inverclyde_gov_uk": {
@@ -26973,7 +26984,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_lbbd_gov_uk": {
@@ -26984,7 +26995,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_barnet_gov_uk": {
@@ -27062,7 +27073,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_camden_gov_uk": {
@@ -27073,7 +27084,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_hackney_gov_uk": {
@@ -27107,7 +27118,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_harrow_gov_uk": {
@@ -27118,7 +27129,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_havering_gov_uk": {
@@ -28393,7 +28404,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_nottingham_city_gov_uk": {
@@ -28404,7 +28415,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_oadby_wigston_gov_uk": {
@@ -29217,7 +29228,9 @@
           "post_code": "Code postal"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
         }
       },
       "reconfigure_scambs_gov_uk": {
@@ -29228,7 +29241,10 @@
           "number": "Numéro",
           "post_code": "Code postal"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
+        }
       },
       "args_southderbyshire_gov_uk": {
         "title": "Configurer la Source",
@@ -29262,7 +29278,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_southglos_gov_uk": {
@@ -29273,7 +29289,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_sholland_gov_uk": {
@@ -30639,7 +30655,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_westnorthants_gov_uk": {
@@ -30650,7 +30666,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_westoxon_gov_uk": {

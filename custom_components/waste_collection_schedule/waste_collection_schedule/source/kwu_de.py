@@ -17,7 +17,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
@@ -35,64 +35,28 @@ def _find_option(options, value: str, field: str) -> str:
     raise SourceArgumentNotFoundWithSuggestions(field, value, labels)
 
 
-def _options(source: BaseSource, url: str, params: dict | None = None):
-    """GET one level of the dropdown cascade and return its ``<option>`` tags."""
-    r = source.session.get(url, params=params, headers=_HEADERS)
-    r.raise_for_status()
-    return BeautifulSoup(r.text, "html.parser").find_all("option")
-
-
-def _resolve_city(source: BaseSource, keys: tuple) -> str:
-    return _find_option(_options(source, _BASE_URL), source.params["city"], "city")
-
-
-def _resolve_street(source: BaseSource, keys: tuple) -> str:
-    (ort,) = keys
-    return _find_option(
-        _options(source, f"{_BASE_URL}/kal_str2ort.php", {"ort": ort}),
-        source.params["street"],
-        "street",
-    )
-
-
-def _resolve_object(source: BaseSource, keys: tuple) -> str:
-    ort, strasse = keys
-    return _find_option(
-        _options(
-            source,
-            f"{_BASE_URL}/kal_str2ort.php",
-            {"ort": ort, "strasse": strasse},
-        ),
-        str(source.params["number"]),
-        "number",
-    )
-
-
-def _resolve_ics_url(source: BaseSource, keys: tuple) -> str:
-    """POST the resolved cascade and scrape the ICS download link off the result."""
-    ort, strasse, objekt = keys
-
-    r = source.session.post(
-        f"{_BASE_URL}/kal_uebersicht-2023.php",
-        data={
-            "ort": ort,
-            "strasse": strasse,
-            "objekt": objekt,
-            "jahr": date.today().year,
-        },
+def _level(argument: str, **request) -> Lookup:
+    """One level of the dropdown cascade: GET it, pick the configured option."""
+    return Lookup(
         headers=_HEADERS,
+        pick=lambda response, *keys, **params: _find_option(
+            BeautifulSoup(response.text, "html.parser").find_all("option"),
+            str(params[argument]),
+            argument,
+        ),
+        **request,
     )
-    r.raise_for_status()
 
+
+def _ics_url(response, *keys, number, **_) -> str:
+    """Scrape the ICS download link off the submitted cascade's result page."""
     ics_url = None
-    for link in BeautifulSoup(r.text, "html.parser").find_all("a"):
+    for link in BeautifulSoup(response.text, "html.parser").find_all("a"):
         if "ICal herunterladen" in link.text:
             ics_url = str(link["href"])
             break
     if ics_url is None:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "number", str(source.params["number"]), []
-        )
+        raise SourceArgumentNotFoundWithSuggestions("number", str(number), [])
 
     # The link is sometimes emitted with the provider's internal hostname.
     if "kwu.lokal" in ics_url:
@@ -131,7 +95,31 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_city, _resolve_street, _resolve_object, _resolve_ics_url),
+        steps=(
+            _level("city", url=_BASE_URL),
+            _level(
+                "street",
+                url=f"{_BASE_URL}/kal_str2ort.php",
+                params=lambda ort, **_: {"ort": ort},
+            ),
+            _level(
+                "number",
+                url=f"{_BASE_URL}/kal_str2ort.php",
+                params=lambda ort, strasse, **_: {"ort": ort, "strasse": strasse},
+            ),
+            Lookup(
+                f"{_BASE_URL}/kal_uebersicht-2023.php",
+                method="POST",
+                data=lambda ort, strasse, objekt, **_: {
+                    "ort": ort,
+                    "strasse": strasse,
+                    "objekt": objekt,
+                    "jahr": date.today().year,
+                },
+                headers=_HEADERS,
+                pick=_ics_url,
+            ),
+        ),
         url=lambda ort, strasse, objekt, ics_url, **_: ics_url,
         headers=_HEADERS,
         raise_for_status=True,

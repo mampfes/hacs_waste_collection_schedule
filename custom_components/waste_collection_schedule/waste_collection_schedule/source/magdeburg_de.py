@@ -16,7 +16,7 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.regions import region
-from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.retrievers import HttpGetRetriever, Suggestions
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -25,15 +25,9 @@ _STREET_LIST_URL = "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
 _PREFIX = "Abfallkalender: "
 
 
-def _street_suggestions(source) -> list[str]:
+def _similar_streets(response, street: str, **_) -> list[str]:
     """Streets the provider does know that share the given street's first word."""
-    try:
-        r = source.session.get(_STREET_LIST_URL, timeout=15)
-        r.raise_for_status()
-    except Exception:
-        return []
-    street = source.params["street"]
-    streets = re.findall(r'option value="([^"]+)"', r.text)
+    streets = re.findall(r'option value="([^"]+)"', response.text)
     query = street.split()[0].lower() if street else ""
     return [s for s in streets if query in s.lower()][:20]
 
@@ -84,7 +78,9 @@ class Source(BaseSource):
     parse = IcsFeedsParser(
         parsers.IcsParser(),
         argument="street",
-        suggestions=_street_suggestions,
+        suggestions=Suggestions(
+            _STREET_LIST_URL, pick=_similar_streets, fallback=[], timeout=15
+        ),
     )
 
     transform = ICSTransformer(

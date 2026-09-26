@@ -20,6 +20,7 @@ class Source(BaseSource):
         wt.GENERAL_WASTE,
         wt.RECYCLABLES,
         wt.ORGANIC,
+        wt.BULKY_WASTE,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -34,7 +35,7 @@ class Source(BaseSource):
         params=lambda uprn, **_: {"bindate": uprn},
         headers={"Referer": "https://www.hull.gov.uk"},
     )
-    parse = parsers.JsonParser()
+    parse = parsers.JsonParser(raise_for_status=True)
     # The reply is a list wrapping the list of collections.
     preprocess = FlattenGroups()
     transform = JsonTransformer(
@@ -45,5 +46,6 @@ class Source(BaseSource):
             "Black Bin": wt.GENERAL_WASTE,
             "Blue Bin": wt.RECYCLABLES,
             "Brown Bin": wt.ORGANIC,
+            "Bulky Bin": wt.BULKY_WASTE,
         },
     )

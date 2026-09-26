@@ -34,7 +34,9 @@ class Source(BaseSource):
         json=lambda uprn, **_: {"councilId": "27", "uprn": str(uprn)},
         headers={"x-recaptcha-token": ""},
     )
-    parse = parsers.JsonParser("data")
+    parse = parsers.JsonParser(
+        "data", raise_for_status=True, expected_values={"message": "OK"}
+    )
     preprocess = ExplodeList("records")
     transform = JsonTransformer(
         date_key=lambda record: (record.get("actual_scheduled_date") or "")[:10],
@@ -45,5 +47,13 @@ class Source(BaseSource):
             "Recycling collection": wt.RECYCLABLES,
             "Food collection": wt.FOOD_WASTE,
             "Garden collection": wt.GARDEN_WASTE,
+            "Garden waste collection": wt.GARDEN_WASTE,
+            # Older spellings the legacy source also recognised.
+            "Domestic refuse collection": wt.GENERAL_WASTE,
+            "Domestic DMR collection": wt.RECYCLABLES,
+            "Domestic food collection": wt.FOOD_WASTE,
+            "Domestic garden collection": wt.GARDEN_WASTE,
+            # A record without a service name is not a collection.
+            "": None,
         },
     )

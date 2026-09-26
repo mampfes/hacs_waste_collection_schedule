@@ -38,6 +38,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, dropdown, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.retrievers import Lookup
 from waste_collection_schedule.transformers import ICSTransformer
 
 _SEARCH_URL = "https://www.awb-es.de/statics/abfallplus/search.json.php"
@@ -69,61 +70,55 @@ def _keep_chosen_cadence(record, source) -> bool:
     return not _is_unselected_restmuell(record[1], cadence)
 
 
-def _suggestions(session, search: str, parent: str, kind: str) -> list[str]:
-    r = session.post(
-        _SEARCH_URL,
-        data={"search": search, "parent": parent, "kind": kind},
-    )
-    r.raise_for_status()
-    return [entry["value"] for entry in r.json()["suggestions"]]
-
-
-def _validate(session, value: str, parent: str, kind: str, field: str) -> None:
-    suggestions = _suggestions(session, value, parent, kind)
-    for suggestion in suggestions:
-        if suggestion.lower() == value.lower():
-            return
-    raise SourceArgumentNotFoundWithSuggestions(field, value, suggestions)
-
-
-def _ics_urls(source, _context=None) -> list[str]:
-    """The fan-out's targets: every ICS download the property page lists.
-
-    An address that resolves to no download at all is almost always a misspelt
-    city or street, so the site's own autocomplete is asked which values it
-    does know before the error is raised.
-    """
-    session = source.session
-    city_value = source.params["city"]
-    street_value = source.params.get("street")
-
-    r = session.get(
-        _CALENDAR_URL,
-        params={"city": city_value, "street": street_value, "direct": "true"},
-    )
-    r.raise_for_status()
-
-    soup = BeautifulSoup(r.text, features="html.parser")
+def _ics_links(response, **_) -> list[str]:
+    """Every ICS download the property page lists, each once."""
+    soup = BeautifulSoup(response.text, features="html.parser")
     ics_urls: list[str] = []
     for download in soup.find_all("a", href=True):
         href = str(download["href"])
         # The website lists the same url multiple times; keep it once.
         if "t=ics" in href and href not in ics_urls:
             ics_urls.append(href)
-
-    if not ics_urls:
-        _validate(session, city_value, "", "removaldate.city", "city")
-        if street_value:
-            _validate(session, street_value, city_value, "removaldate.street", "street")
-        raise SourceArgumentNotFoundWithSuggestions("street", street_value, [])
-
     return ics_urls
 
 
-def _download_feed(source, url: str, _context=None):
-    r = source.session.get(url)
-    r.raise_for_status()
-    return r
+def _validate(argument: str, kind: str, parent) -> Lookup:
+    """Ask the site's autocomplete whether it knows the configured value.
+
+    Only asked when the property page listed no download at all, which is
+    almost always a misspelt city or street: the error then carries the values
+    the site does know.
+    """
+
+    def pick(response, *keys, **params) -> None:
+        value = params[argument]
+        suggestions = [entry["value"] for entry in response.json()["suggestions"]]
+        for suggestion in suggestions:
+            if suggestion.lower() == value.lower():
+                return
+        raise SourceArgumentNotFoundWithSuggestions(argument, value, suggestions)
+
+    return Lookup(
+        _SEARCH_URL,
+        method="POST",
+        data=lambda *keys, **params: {
+            "search": params[argument],
+            "parent": parent(**params),
+            "kind": kind,
+        },
+        when=lambda links, *_, **params: not links and bool(params.get(argument)),
+        pick=pick,
+    )
+
+
+def _ics_urls(source, context: tuple) -> list[str]:
+    """The fan-out's targets: the downloads, once the address is known good."""
+    links = context[0]
+    if not links:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", source.params.get("street"), []
+        )
+    return links
 
 
 @final
@@ -151,8 +146,21 @@ class Source(BaseSource):
     )
 
     retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Chain(
+            Lookup(
+                _CALENDAR_URL,
+                params=lambda city, street=None, **_: {
+                    "city": city,
+                    "street": street,
+                    "direct": "true",
+                },
+                pick=_ics_links,
+            ),
+            _validate("city", "removaldate.city", parent=lambda **_: ""),
+            _validate("street", "removaldate.street", parent=lambda city, **_: city),
+        ),
         targets=_ics_urls,
-        fetch=_download_feed,
+        fetch=retrievers.Request(lambda url, context, **_: url),
     )
     parse = parsers.EachResponse(parsers.IcsParser())
     preprocess = RowFilter(_keep_chosen_cadence)

@@ -18,7 +18,7 @@ from waste_collection_schedule.config_params import city, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.field_terms import STREET
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_URL = "https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html"
@@ -50,14 +50,9 @@ def _search_params(city_name: str, street_name: str, waste_types: list) -> dict:
     return params
 
 
-def _read_export_form(source: BaseSource, keys: tuple) -> _ExportForm:
-    """GET the form and read its download key, CSRF token and waste types."""
-    city_name = source.params["city"]
-    response = source.session.get(
-        _API_URL,
-        params=_search_params(city_name, source.params.get("street") or "", []),
-    )
-    response.raise_for_status()
+def _read_export_form(response, city: str, **_) -> _ExportForm:
+    """Read the rendered form's download key, CSRF token and waste types."""
+    city_name = city
 
     soup = BeautifulSoup(response.text, "html.parser")
     ics_download_tag = soup.find("input", {"type": "hidden", "name": "ICS_DOWNLOAD"})
@@ -104,7 +99,15 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_read_export_form,),
+        steps=(
+            Lookup(
+                _API_URL,
+                params=lambda city, street="", **_: _search_params(
+                    city, street or "", []
+                ),
+                pick=_read_export_form,
+            ),
+        ),
         url=_API_URL,
         method="POST",
         params=lambda form, city, street="", **_: _search_params(

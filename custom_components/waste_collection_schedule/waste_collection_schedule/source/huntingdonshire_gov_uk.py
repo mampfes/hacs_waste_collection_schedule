@@ -1,50 +1,38 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Huntingdonshire District Council"
-DESCRIPTION = (
-    "Source for Huntingdonshire.gov.uk services for Huntingdonshire District Council."
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.ThreeCWasteCalendar import (
+    PARSE_DATE,
+    TYPE_VALUE_MAP,
+    CollectionsParser,
+    uprn_retriever,
 )
-URL = "https://www.huntingdonshire.gov.uk"
-TEST_CASES = {
-    "Wells Close, Brampton": {"uprn": "100090123510"},
-    "Inkerman Rise, St. Neots": {"uprn": "10000144271"},
-}
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food": Icons.BIO_KITCHEN,
-}
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Huntingdonshire District Council"
+    DESCRIPTION = "Source for Huntingdonshire.gov.uk services for Huntingdonshire District Council."
+    URL = "https://www.huntingdonshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        # get json file
-        r = requests.get(
-            f"https://servicelayer3c.azure-api.net/wastecalendar/collection/search/{self._uprn}?authority=HDC&take=20"
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Wells Close, Brampton": {"uprn": "100090123510"},
+        "Inkerman Rise, St. Neots": {"uprn": "10000144271"},
+    }
 
-        # extract data from json
-        collections = r.json()["collections"]
-        entries = []
+    PARAMS = (uprn(),)
 
-        for collection in collections:
-            for round_type in collection["roundTypes"]:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            collection["date"], "%Y-%m-%dT%H:%M:%SZ"
-                        ).date(),
-                        t=round_type.title(),
-                        icon=ICON_MAP.get(round_type),
-                    )
-                )
-
-        return entries
+    retrieve = uprn_retriever(authority="HDC")
+    parse = CollectionsParser()
+    transform = RowTransformer(parse_date=PARSE_DATE, type_value_map=TYPE_VALUE_MAP)
