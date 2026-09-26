@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query e633ac366e",
+      "method": "GET",
+      "url": "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query",
+      "final_url": "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query?outFields=address&returnGeometry=false&f=json&where=UPPER%28address%29+LIKE+UPPER%28%2748+Lake+Terrace+Taupo%25%27%29&returnCentroid=true&resultRecordCount=5",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"address\"],[\"resultRecordCount\",\"5\"],[\"returnCentroid\",\"true\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPPER(address) LIKE UPPER('48 Lake Terrace Taupo%')\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "max-age=00:00:00",
+        "Content-Length": "267",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"44b70a06\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sat, 26 Sep 2026 08:08:14 GMT; Path=/server/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:07:14 GMT"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiJHbG9iYWxJRCIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjIxOTMsImxhdGVzdFdraWQiOjIxOTN9LCJmaWVsZHMiOlt7Im5hbWUiOiJhZGRyZXNzIiwiYWxpYXMiOiJhZGRyZXNzIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJsZW5ndGgiOjExNn1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiNDggTGFrZSBUZXJyYWNlIFRhdXBvIn0sImNlbnRyb2lkIjp7IngiOjE4NjcxNDAuNzgyNzkyOTc1NywieSI6NTcxMzA4My4zNTE2NjU2NzAxfX1dfQ=="
+    },
+    {
+      "key": "GET https://services7.arcgis.com/S7DHOirgbYgdtrbR/arcgis/rest/services/Refuse_Collection/FeatureServer/0/query 3fe3ca57f9",
+      "method": "GET",
+      "url": "https://services7.arcgis.com/S7DHOirgbYgdtrbR/arcgis/rest/services/Refuse_Collection/FeatureServer/0/query",
+      "final_url": "https://services7.arcgis.com/S7DHOirgbYgdtrbR/arcgis/rest/services/Refuse_Collection/FeatureServer/0/query?outFields=Collection_Day%2CLocation&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+1867140.7827929757%2C+%22y%22%3A+5713083.35166567%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+2193%7D%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 1867140.7827929757, \\\"y\\\": 5713083.35166567, \\\"spatialReference\\\": {\\\"wkid\\\": 2193}}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Collection_Day,Location\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:15 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "339",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=0, s-maxage=0",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Sun, 28 Sep 2025 21:33:14 GMT",
+        "ETag": "sd5945_-1459061834",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h07c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080715Z-16dd9bcdcdb5mvczhC1DTTbsfg000000062g000000001ape",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=6;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "e99dbbd7beefae66",
+        "X-ArcGIS-Instance": "lf3xzxihb000006",
+        "Request-Context": "appId=cid-v1:df0fefdc-3099-4f25-a42c-d213d1e16940",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080715Z-16dd9bcdcdb5mvczhC1DTTbsfg000000062g000000001ape",
+        "X-Cache": "CONFIG_NOCACHE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6Ikdsb2JhbElEIiwic2VydmVyR2VucyI6eyJtaW5TZXJ2ZXJHZW4iOjE2Mjk3MjcxLCJzZXJ2ZXJHZW4iOjE2Mjk3MjcxfSwiZ2VvbWV0cnlUeXBlIjoiZXNyaUdlb21ldHJ5UG9seWdvbiIsInNwYXRpYWxSZWZlcmVuY2UiOnsid2tpZCI6MjE5MywibGF0ZXN0V2tpZCI6MjE5M30sImZpZWxkcyI6W3sibmFtZSI6IkNvbGxlY3Rpb25fRGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbGxlY3Rpb25fRGF5Iiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImxlbmd0aCI6MTYsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJMb2NhdGlvbiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJMb2NhdGlvbiIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjUwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJDb2xsZWN0aW9uX0RheSI6IlR1ZXNkYXkgJiBGcmlkYXkiLCJMb2NhdGlvbiI6IlRhdXBvIn19XX0="
+    }
+  ]
+}

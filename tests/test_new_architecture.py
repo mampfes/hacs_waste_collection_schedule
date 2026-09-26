@@ -2182,6 +2182,65 @@ class TestLookups:
         assert lookups.normalize_text("  Main   Street ") == "main street"
 
 
+class TestWeekdayRecurrence:
+    """WeekdayRecurrence: a named collection weekday projected into dates."""
+
+    def _run(self, preprocessor, records):
+        from freezegun import freeze_time
+
+        with freeze_time("2026-09-23"):  # a Wednesday
+            return list(preprocessor(records, None))
+
+    def test_projects_each_named_weekday_from_the_next_one(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(day="DAY", keys="Trash", count=2),
+            [{"DAY": "Tuesday & Friday"}],
+        )
+        assert rows == [
+            (datetime.date(2026, 9, 29), "Trash"),
+            (datetime.date(2026, 10, 6), "Trash"),
+            (datetime.date(2026, 9, 25), "Trash"),
+            (datetime.date(2026, 10, 2), "Trash"),
+        ]
+
+    def test_today_counts_as_the_next_occurrence(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(day="DAY", keys=("Trash", "Recycling"), count=1),
+            [{"DAY": "wednesday"}],
+        )
+        assert rows == [
+            (datetime.date(2026, 9, 23), "Trash"),
+            (datetime.date(2026, 9, 23), "Recycling"),
+        ]
+
+    def test_a_field_mapping_names_the_key_and_duplicates_collapse(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(
+                day={"Trash1": "Trash", "Trash2": "Trash", "Yard": "Yard"}, count=1
+            ),
+            [{"Trash1": "Monday", "Trash2": "Monday", "Yard": "Call 311"}],
+        )
+        assert rows == [(datetime.date(2026, 9, 28), "Trash")]
+
+    def test_a_record_naming_no_weekday_adds_nothing(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(
+                day=lambda record: record[1].get("DAY"),
+                keys=lambda record: record[0],
+            ),
+            [("Garbage", {"DAY": None}), ("Yard", {})],
+        )
+        assert rows == []
+
+
 class TestSeasonalSchedule:
     """Schedule windowing (Gap 1): season-bounded, per-window cadence."""
 

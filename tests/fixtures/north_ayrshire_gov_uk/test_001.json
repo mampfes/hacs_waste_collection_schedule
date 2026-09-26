@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.maps.north-ayrshire.gov.uk/arcgis/rest/services/AGOL/YourLocationLive/MapServer/8/query d48c00309c",
+      "method": "GET",
+      "url": "https://www.maps.north-ayrshire.gov.uk/arcgis/rest/services/AGOL/YourLocationLive/MapServer/8/query",
+      "final_url": "https://www.maps.north-ayrshire.gov.uk/arcgis/rest/services/AGOL/YourLocationLive/MapServer/8/query?outFields=%2A&returnGeometry=false&f=json&where=UPRN+%3D+%27126043248%27",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPRN = '126043248'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Type": "application/json; charset=UTF-8",
+        "ETag": "\"194e5319\"",
+        "Vary": "Origin",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|Tw1y11XYTYkP98D53YVUGQ==|2PbxVjpyVQ4JlnJ7PqbsZcIb8hHYG4BpgPWw3eWZ; Max-Age=60; Expires=Sat, 26 Sep 2026 08:08:05 GMT; Path=/arcgis/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Powered-By": "ARR/3.0, ASP.NET",
+        "SERVER": "",
+        "Date": "Sat, 26 Sep 2026 08:09:41 GMT",
+        "Content-Length": "2409"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiVVBSTiIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiQ0FMRU5EQVIiOiJDYWxlbmRhciIsIkNPTExFQ1RJT05fREFZIjoiQmluIENvbGxlY3Rpb24gRGF5IiwiQlJPV05fREFZIjoiQnJvd24gQmluIENvbGxlY3Rpb24gRGF5IiwiVVJMIjoiUERGIENhbGVuZGFyIiwiQkxVRV9EQVRFIjoiQmx1ZSBCaW4gRGF0ZSIsIkdSRVlfREFURSI6IkdyZXkgQmluIERhdGUiLCJQVVJQTEVfREFURSI6IlB1cnBsZSBCaW4gRGF0ZSIsIkJST1dOX0RBVEUiOiJCcm93biBCaW4gRGF0ZSIsIkJMVUVfREFURV9URVhUIjoiQmx1ZSBCaW4gRGF0ZSBUZXh0IiwiR1JFWV9EQVRFX1RFWFQiOiJHcmV5IEJpbiBEYXRlIFRleHQiLCJQVVJQTEVfREFURV9URVhUIjoiUHVycGxlIEJpbiBEYXRlIFRleHQiLCJCUk9XTl9EQVRFX1RFWFQiOiJCcm93biBCaW4gRGF0ZSBUZXh0IiwiRUxFQ19DQUxFTkRBUiI6IkVsZWN0cm9uaWMgQ2FsZW5kYXIiLCJVUFJOIjoiVVBSTiJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJPQkpFQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlT0lEIiwiYWxpYXMiOiJPQkpFQ1RJRCJ9LHsibmFtZSI6IkNBTEVOREFSIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNhbGVuZGFyIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiQ09MTEVDVElPTl9EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQmluIENvbGxlY3Rpb24gRGF5IiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiQlJPV05fREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkJyb3duIEJpbiBDb2xsZWN0aW9uIERheSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IlVSTCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJQREYgQ2FsZW5kYXIiLCJsZW5ndGgiOjMwMH0seyJuYW1lIjoiQkxVRV9EQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJCbHVlIEJpbiBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJHUkVZX0RBVEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGUiLCJhbGlhcyI6IkdyZXkgQmluIERhdGUiLCJsZW5ndGgiOjh9LHsibmFtZSI6IlBVUlBMRV9EQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJQdXJwbGUgQmluIERhdGUiLCJsZW5ndGgiOjh9LHsibmFtZSI6IkJST1dOX0RBVEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGUiLCJhbGlhcyI6IkJyb3duIEJpbiBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJCTFVFX0RBVEVfVEVYVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJCbHVlIEJpbiBEYXRlIFRleHQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJHUkVZX0RBVEVfVEVYVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJHcmV5IEJpbiBEYXRlIFRleHQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJQVVJQTEVfREFURV9URVhUIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlB1cnBsZSBCaW4gRGF0ZSBUZXh0IiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiQlJPV05fREFURV9URVhUIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkJyb3duIEJpbiBEYXRlIFRleHQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJFTEVDX0NBTEVOREFSIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkVsZWN0cm9uaWMgQ2FsZW5kYXIiLCJsZW5ndGgiOjMwMH0seyJuYW1lIjoiVVBSTiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJVUFJOIiwibGVuZ3RoIjo1MH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJPQkpFQ1RJRCI6MTcxNzQsIkNBTEVOREFSIjoiMUEiLCJDT0xMRUNUSU9OX0RBWSI6IldlZG5lc2RheSIsIkJST1dOX0RBWSI6IlRodXJzZGF5IiwiVVJMIjoiaHR0cHM6Ly93d3cubm9ydGgtYXlyc2hpcmUuZ292LnVrL0RvY3VtZW50LWxpYnJhcnkvMWEtYmluLWNhbGVuZGFyLTIwMjUyMDI2LnBkZiIsIkJMVUVfREFURSI6MTc5MTMzMTIwMDAwMCwiR1JFWV9EQVRFIjoxNzkwNzI2NDAwMDAwLCJQVVJQTEVfREFURSI6MTc5MTkzNjAwMDAwMCwiQlJPV05fREFURSI6MTc5MTQxNzYwMDAwMCwiQkxVRV9EQVRFX1RFWFQiOiIwNy8xMC8yMDI2IiwiR1JFWV9EQVRFX1RFWFQiOiIzMC8wOS8yMDI2IiwiUFVSUExFX0RBVEVfVEVYVCI6IjE0LzEwLzIwMjYiLCJCUk9XTl9EQVRFX1RFWFQiOiIwOC8xMC8yMDI2IiwiRUxFQ19DQUxFTkRBUiI6Imh0dHBzOi8vd3d3Lm1hcHMubm9ydGgtYXlyc2hpcmUuZ292LnVrL1NpdGVzL1lvdXJMb2NhdGlvbi9XYXN0ZV9DYWxlbmRhcnMvQmluX2NhbGVuZGFyXzIwMjZfMTIuaWNzIiwiVVBSTiI6IjEyNjA0MzI0OCJ9fV19"
+    }
+  ]
+}
