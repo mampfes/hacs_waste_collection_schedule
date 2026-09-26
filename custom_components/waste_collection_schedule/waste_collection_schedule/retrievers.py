@@ -1585,6 +1585,267 @@ class YearUrl:
         return response
 
 
+def _with(value: Any, args: tuple, params: Mapping[str, Any]) -> Any:
+    """A declared request field: a literal, or ``callable(*args, **params)``."""
+    return value(*args, **params) if callable(value) else value
+
+
+class Request(_BaseRetriever):
+    """One HTTP request, declared rather than written.
+
+    The lookup and fan-out components hand a request to a callback: a
+    :class:`YearlyRetriever` ``fetch``, a :class:`FanOutRetriever` ``fetch``, a
+    :class:`LookupChainRetriever` step. Written as a function in the source
+    module, that callback is a retriever the next provider cannot reach, and
+    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates it (#7139). This
+    is the same request as configuration: what to send, with the source keeping
+    only the provider knowledge of which values go where.
+
+    Every field is a literal or a ``callable(*args, **source.params)``, where
+    ``args`` are whatever the calling component passes after the source: the
+    year and the prepared context for a :class:`YearlyRetriever` ``fetch``, the
+    target and context for a :class:`FanOutRetriever` ``fetch``. Name those
+    positional arguments apart from the source's own parameters: a callable
+    taking ``street_number`` positionally fails with "multiple values" when
+    ``street_number`` is also a configured param::
+
+        retrieve = retrievers.YearlyRetriever(
+            prepare=retrievers.Lookup(STREETS_URL, pick=_street_id, ...),
+            fetch=retrievers.Request(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda year, street_id, **_: {"jahr": year, "strasse": street_id},
+            ),
+        )
+
+    Some requests can only be addressed once another has answered: a per-year
+    download token, a link scraped off the page that lists it. ``before`` runs
+    those :class:`Lookup` steps first, each one's result appended to ``args``
+    for the steps after it and for this request's own fields.
+
+    Args:
+        url: the request URL.
+        method: ``"GET"`` (default) or ``"POST"``.
+        params: query string.
+        data: form body (``method="POST"`` only).
+        json: JSON body (``method="POST"`` only).
+        headers: request headers.
+        cookies: cookies sent with this request, on top of the session's.
+        allow_redirects: follow redirects (default). Off for a provider that
+            hands its answer back in the redirect itself.
+        before: :class:`Lookup` steps run first, see above.
+        encoding: forced on the response before its ``.text`` is read.
+        raise_for_status: raise on an error status (default). Off for a
+            provider whose error status is itself the answer a ``pick`` reads.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str,
+        *,
+        method: str = "GET",
+        params: Callable[..., ParamsType] | ParamsType = None,
+        data: Callable[..., Any] | Any = None,
+        json: Callable[..., JsonType] | JsonType = None,
+        headers: Callable[..., HeadersType] | HeadersType = None,
+        cookies: Callable[..., Mapping[str, str] | None]
+        | Mapping[str, str]
+        | None = None,
+        allow_redirects: bool = True,
+        before: Sequence[Callable[[BaseSource, tuple], Any]] = (),
+        encoding: str | None = None,
+        raise_for_status: bool = True,
+        timeout: int = 30,
+    ):
+        if method.upper() not in ("GET", "POST"):
+            raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
+        if (data is not None or json is not None) and method.upper() != "POST":
+            raise ValueError("Request data/json requires method='POST'")
+        self.url = url
+        self.method = method.upper()
+        self.params = params
+        self.data = data
+        self.json = json
+        self.headers = headers
+        self.cookies = cookies
+        self.allow_redirects = allow_redirects
+        self.before = tuple(before)
+        self.encoding = encoding
+        self.raise_for_status = raise_for_status
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, *args: Any) -> Response:
+        for step in self.before:
+            args = (*args, step(source, args))
+        params = source.params
+        kwargs: dict[str, Any] = {
+            "params": _with(self.params, args, params),
+            "headers": _with(self.headers, args, params),
+            "cookies": _with(self.cookies, args, params),
+            "allow_redirects": self.allow_redirects,
+            "timeout": self.timeout,
+        }
+        url = _with(self.url, args, params)
+        if self.method == "POST":
+            response = source.session.post(
+                url,
+                data=_with(self.data, args, params),
+                json=_with(self.json, args, params),
+                **kwargs,
+            )
+        else:
+            response = source.session.get(url, **kwargs)
+        if self.raise_for_status:
+            response.raise_for_status()
+        if self.encoding is not None:
+            response.encoding = self.encoding
+        return response
+
+
+class Lookup:
+    """A lookup step: one declared :class:`Request`, then a pure ``pick``.
+
+    The step every address-resolving component takes (a
+    :class:`LookupChainRetriever` step, a :class:`YearlyRetriever` or
+    :class:`FanOutRetriever` ``prepare``, a :class:`Request` ``before``), with
+    the request declared and only the reading left to the source. ``pick`` sees
+    the response and never issues a request of its own, so what stays in the
+    source module is provider knowledge (which field holds the id, how names
+    compare) rather than a retriever (#7139)::
+
+        retrieve = retrievers.LookupChainRetriever(
+            steps=(
+                retrievers.Lookup(f"{API}/city/all", pick=_city_id),
+                retrievers.Lookup(
+                    lambda city_id, **_: f"{API}/street/filter/{city_id}",
+                    pick=_street_id,
+                ),
+            ),
+            url=lambda city_id, street_id, **_: f"{API}/pickup/{street_id}/ics",
+        )
+
+    :class:`JsonIndexLookup` is the fully configured special case of this, for
+    a provider whose index is a plain JSON list of names and ids.
+
+    Args:
+        url: the lookup URL, as for :class:`Request`. Every request field is
+            called as ``callable(*keys, **source.params)``, ``keys`` being the
+            ids resolved by the steps before this one.
+        pick: ``callable(response, *keys, **source.params) -> key``. Raises
+            ``SourceArgumentNotFound*`` / ``SourceArgAmbiguous*`` for a value
+            that did not resolve.
+        given: optional ``callable(*keys, **source.params) -> key | None``. A
+            key it returns is used as-is and no request is made: the user
+            supplied the id directly, or already knows the answer.
+        when: optional ``callable(*keys, **source.params) -> bool``. When it
+            is False the step makes no request and resolves to ``None``: an
+            optional level the user left out.
+        **request: the remaining :class:`Request` arguments (``method``,
+            ``params``, ``data``, ``json``, ``headers``, ``cookies``,
+            ``allow_redirects``, ``encoding``, ``raise_for_status``,
+            ``timeout``).
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str,
+        *,
+        pick: Callable[..., Any],
+        given: Callable[..., Any] | None = None,
+        when: Callable[..., bool] | None = None,
+        **request: Any,
+    ):
+        self.request = Request(url, **request)
+        self.pick = pick
+        self.given = given
+        self.when = when
+
+    def __call__(self, source: BaseSource, keys: Sequence[Any] = ()) -> Any:
+        keys = tuple(keys)
+        if self.given is not None:
+            value = self.given(*keys, **source.params)
+            if value is not None:
+                return value
+        if self.when is not None and not self.when(*keys, **source.params):
+            return None
+        return self.pick(self.request(source, *keys), *keys, **source.params)
+
+
+class Chain:
+    """Several lookup steps run as one, resolving to the tuple of their keys.
+
+    :class:`LookupChainRetriever` runs its steps itself, but the
+    :class:`YearlyRetriever` and :class:`FanOutRetriever` ``prepare`` is a
+    single callable. This runs an address resolution that takes more than one
+    lookup there, each step seeing the keys resolved before it::
+
+        prepare=retrievers.Chain(
+            retrievers.Lookup(STREETS_URL, pick=_street_id),
+            retrievers.Lookup(NUMBERS_URL, params=..., pick=_number_id),
+        )
+
+    The prepared context is then the ``(street_id, number_id)`` tuple.
+    """
+
+    def __init__(self, *steps: Callable[[BaseSource, tuple], Any]):
+        if not steps:
+            raise ValueError("Chain requires at least one step")
+        self.steps = steps
+
+    def __call__(self, source: BaseSource, keys: Sequence[Any] = ()) -> tuple:
+        resolved = tuple(keys)
+        for step in self.steps:
+            resolved = (*resolved, step(source, resolved))
+        return resolved
+
+
+class Suggestions:
+    """The "did you mean" list for a bad argument, fetched from the provider.
+
+    The ``suggestions`` hook of ``parsers.ArgumentGuard``,
+    ``preprocessors.RequireRecords`` and ``service.ICS.IcsFeedsParser``: called
+    only on the error path, it asks the provider which values it does know.
+    ``pick`` reads them off the response::
+
+        suggestions=retrievers.Suggestions(
+            INDEX_URL, pick=lambda response, **_: response.json()["names"]
+        )
+
+    Args:
+        url: as for :class:`Request`, with fields called as
+            ``callable(**source.params)``.
+        pick: ``callable(response, **source.params) -> Iterable[str]``.
+        fallback: what to answer when the request or ``pick`` fails. ``None``
+            (default) lets the error through, which the argument guards turn
+            into a plain not-found; pass ``[]`` for a hook whose caller does
+            not catch.
+        **request: the remaining :class:`Request` arguments.
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str,
+        *,
+        pick: Callable[..., Iterable[str]],
+        fallback: Sequence[str] | None = None,
+        **request: Any,
+    ):
+        self.request = Request(url, **request)
+        self.pick = pick
+        self.fallback = fallback
+
+    def __call__(self, source: BaseSource | None) -> list[str]:
+        if source is None:
+            return list(self.fallback or [])
+        try:
+            return list(self.pick(self.request(source), **source.params))
+        except Exception:
+            if self.fallback is None:
+                raise
+            return list(self.fallback)
+
+
 def submit_page_form(
     source: BaseSource,
     url: str,

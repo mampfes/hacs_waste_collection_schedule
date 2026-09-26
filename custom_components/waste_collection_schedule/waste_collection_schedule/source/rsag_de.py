@@ -4,7 +4,8 @@ A JSON id cascade feeding an ICS download: the city id narrows the street
 list, the street id addresses the calendar, and the calendar path also carries
 every waste-type id and the months wanted. Each level needs the one above it,
 so the shared ``LookupChainRetriever`` runs the three lookups in order and
-builds the download URL from all three.
+builds the download URL from all three. Each lookup is a declared
+``retrievers.Lookup``; the source only says which field holds the id.
 
 The waste-type labels returned (e.g. "Restmülltonne 4-wö.",
 "Bio-Container Regelabfuhr für Wohnanlagen") don't match the canonical
@@ -21,7 +22,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_BASE = "https://www.rsag.de/api"
@@ -63,28 +64,12 @@ def _pick_id(entries: list[dict], wanted: str, id_key: str, argument: str) -> in
     raise SourceArgumentNotFoundWithSuggestions(argument, wanted, names)
 
 
-def _resolve_city(source: BaseSource, keys: tuple) -> int:
-    """City name -> city id."""
-    response = source.session.get(f"{_API_BASE}/city/all")
-    response.raise_for_status()
-    return _pick_id(response.json(), source.params["city"], "city_id", "city")
-
-
-def _resolve_street(source: BaseSource, keys: tuple) -> int:
-    """Street name -> street id, within the resolved city."""
-    response = source.session.get(f"{_API_BASE}/street/filter/{keys[0]}")
-    response.raise_for_status()
-    return _pick_id(response.json(), source.params["street"], "street_id", "street")
-
-
-def _resolve_waste_types(source: BaseSource, keys: tuple) -> str:
+def _all_waste_type_ids(response, *keys, **params) -> str:
     """Every waste-type id, comma-joined for the calendar path.
 
     Not a lookup against a user argument: the download URL has to name the
     types wanted, and the source asks for all of them.
     """
-    response = source.session.get(f"{_API_BASE}/wastetype/all")
-    response.raise_for_status()
     return ",".join(str(entry["wastetype_id"]) for entry in response.json())
 
 
@@ -142,7 +127,21 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_city, _resolve_street, _resolve_waste_types),
+        steps=(
+            Lookup(
+                f"{_API_BASE}/city/all",
+                pick=lambda response, city, **_: _pick_id(
+                    response.json(), city, "city_id", "city"
+                ),
+            ),
+            Lookup(
+                lambda city_id, **_: f"{_API_BASE}/street/filter/{city_id}",
+                pick=lambda response, city_id, street, **_: _pick_id(
+                    response.json(), street, "street_id", "street"
+                ),
+            ),
+            Lookup(f"{_API_BASE}/wastetype/all", pick=_all_waste_type_ids),
+        ),
         url=lambda city_id, street_id, waste_type_ids, **_: (
             f"{_API_BASE}/pickup/filter/{street_id}/{waste_type_ids}"
             f"/{_months_window()}/ics"

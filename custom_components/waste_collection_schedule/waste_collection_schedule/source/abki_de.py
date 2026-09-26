@@ -45,62 +45,42 @@ def _normalize(value: str) -> str:
     return value.lower().replace(" ", "").replace("-", "")
 
 
-def _resolve_ids(source) -> tuple[str, str, str]:
-    """Resolve a street name + house number to (street_id, number_id, standort_id).
+def _street_search(street: str, **_) -> dict:
+    return {
+        "filter[logic]": "and",
+        "filter[filters][0][value]": street,
+        "filter[filters][0][field]": "Strasse",
+        "filter[filters][0][operator]": "startswith",
+        "filter[filters][0][ignoreCase]": "true",
+    }
 
-    The ``YearlyRetriever``'s prepare step: neither lookup depends on the year,
-    so both run once per fetch rather than once per calendar year.
-    """
-    session = source.session
-    street_name = source.params["street"]
-    number = source.params["number"]
 
-    r = session.get(
-        _STREETS_URL,
-        params={
-            "filter[logic]": "and",
-            "filter[filters][0][value]": street_name,
-            "filter[filters][0][field]": "Strasse",
-            "filter[filters][0][operator]": "startswith",
-            "filter[filters][0][ignoreCase]": "true",
-        },
-    )
-    r.raise_for_status()
-    streets = r.json()
+def _pick_street(response, street: str, **_) -> str:
+    streets = response.json()
     if not streets:
-        raise SourceArgumentNotFound("street", street_name)
-    street_id = streets[0]["IDSTREET"]
+        raise SourceArgumentNotFound("street", street)
+    return streets[0]["IDSTREET"]
 
-    r = session.get(_NUMBERS_URL, params={"IDSTREET": street_id})
-    r.raise_for_status()
+
+def _pick_number(response, street_id: str, *, number, **_) -> tuple[str, str]:
+    """The house number's own id and the location (``IDSTANDORT``) it belongs to."""
     target = _normalize(number)
-    for entry in r.json():
+    for entry in response.json():
         if _normalize(entry["NUMBER"]) == target:
-            return street_id, entry["id"], entry["IDSTANDORT"]
-
+            return entry["id"], entry["IDSTANDORT"]
     raise SourceArgumentNotFound("number", number)
 
 
-def _calendar_for_year(source, year: int, context: tuple[str, str, str]):
-    """Mint one year's ICS download token, then fetch the calendar with it."""
-    session = source.session
-    street_id, number_id, standort_id = context
-    r = session.get(
-        _DATA_URL,
-        params={
-            "Zeitraum": year,
-            "Strasse_input": source.params["street"],
-            "Strasse": street_id,
-            "IDSTANDORT_input": 2,
-            "IDSTANDORT": standort_id,
-            "Hausnummernwahl": number_id,
-        },
-    )
-    r.raise_for_status()
-    request_data = r.json()["dataFile"]
-    r = session.get(_ICAL_URL, params={"data": request_data})
-    r.raise_for_status()
-    return r
+def _token_params(year: int, context: tuple, *, street: str, **_) -> dict:
+    street_id, (number_id, standort_id) = context
+    return {
+        "Zeitraum": year,
+        "Strasse_input": street,
+        "Strasse": street_id,
+        "IDSTANDORT_input": 2,
+        "IDSTANDORT": standort_id,
+        "Hausnummernwahl": number_id,
+    }
 
 
 @final
@@ -134,9 +114,28 @@ class Source(BaseSource):
         house_number(field="number"),
     )
 
+    # The street and house number resolve once; each year then mints a
+    # download token and redeems it.
     retrieve = retrievers.YearlyRetriever(
-        prepare=_resolve_ids,
-        fetch=_calendar_for_year,
+        prepare=retrievers.Chain(
+            retrievers.Lookup(_STREETS_URL, params=_street_search, pick=_pick_street),
+            retrievers.Lookup(
+                _NUMBERS_URL,
+                params=lambda street_id, **_: {"IDSTREET": street_id},
+                pick=_pick_number,
+            ),
+        ),
+        fetch=retrievers.Request(
+            _ICAL_URL,
+            before=(
+                retrievers.Lookup(
+                    _DATA_URL,
+                    params=_token_params,
+                    pick=lambda response, *_, **__: response.json()["dataFile"],
+                ),
+            ),
+            params=lambda year, context, token, **_: {"data": token},
+        ),
     )
     parse = parsers.EachResponse(parsers.IcsParser())
 
