@@ -1500,6 +1500,91 @@ class YearlyRetriever(_BaseRetriever):
             return self._all_years(source, context)
 
 
+class JsonIndexLookup:
+    """Resolve a user-supplied name to an id from an index the provider publishes.
+
+    Many providers answer "which towns (streets, districts) are there?" with a
+    JSON list of ``{"name": ..., "id": ...}`` rows, and the calendar request
+    wants the id. This fetches that list, matches the configured name against it
+    (case- and whitespace-insensitive, via :func:`lookups.resolve`) and raises
+    the argument error listing every name the index holds when nothing matches.
+
+    It is a lookup step, usable wherever one is taken: as
+    :class:`YearlyRetriever`'s ``prepare`` or as a :class:`LookupChainRetriever`
+    step::
+
+        retrieve = retrievers.YearlyRetriever(
+            prepare=retrievers.JsonIndexLookup(INDEX_URL, argument="town", items=("towns",)),
+            fetch=retrievers.YearUrl("https://example.org/{year}/{key}.json"),
+        )
+
+    Args:
+        url: the index URL.
+        argument: the ``source.params`` field holding the name, blamed on a miss.
+        items: path of keys leading to the list of rows (empty for a bare list).
+        name: the row field holding the name to match.
+        key: the row field holding the id to return.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        url: str,
+        *,
+        argument: str,
+        items: Sequence[str | int] = (),
+        name: str = "name",
+        key: str = "id",
+        timeout: int = 30,
+    ):
+        self.url = url
+        self.argument = argument
+        self.items = tuple(items)
+        self.name = name
+        self.key = key
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, keys: tuple = ()) -> Any:
+        from waste_collection_schedule import lookups
+
+        response = source.session.get(self.url, timeout=self.timeout)
+        response.raise_for_status()
+        rows: Any = response.json()
+        for item in self.items:
+            rows = rows[item]
+        mapping = {str(row[self.name]): row[self.key] for row in rows}
+        return lookups.resolve(
+            mapping, source.params.get(self.argument), argument=self.argument
+        )
+
+
+class YearUrl:
+    """:class:`YearlyRetriever` ``fetch`` that GETs one URL per year.
+
+    The template is formatted with ``year``, ``key`` (whatever ``prepare``
+    returned, e.g. a :class:`JsonIndexLookup` id) and the source's params::
+
+        fetch=retrievers.YearUrl("https://example.org/{year}/calendar-{key}.json")
+
+    An error status raises, which is how a year the provider has not published
+    yet (a 404) is skipped by the rollover fetch.
+
+    Args:
+        template: the URL template.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(self, template: str, *, timeout: int = 30):
+        self.template = template
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, year: int, context: Any) -> Response:
+        url = self.template.format(year=year, key=context, **source.params)
+        response = source.session.get(url, timeout=self.timeout)
+        response.raise_for_status()
+        return response
+
+
 def submit_page_form(
     source: BaseSource,
     url: str,

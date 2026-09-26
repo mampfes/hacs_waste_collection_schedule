@@ -901,6 +901,320 @@ class TestXmlDateListParser:
             parser(self._mock_response(body))
 
 
+class TestBartecPublicDashboard:
+    """The Bartec Municipal Public Dashboard components."""
+
+    PREMISES = (
+        '"dataSource": ejs.data.DataUtil.parse.isJson('
+        '[{"UPRN": 10010724045.0, "Premises": "1 Ash Grove"}])'
+    )
+
+    @staticmethod
+    def _page(*blocks: str):
+        response = MagicMock()
+        response.text = "<script>" + ",".join(blocks) + "</script>"
+        return response
+
+    @staticmethod
+    def _source(**params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_reads_each_appointment_once(self):
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        appointments = (
+            '"dataSource": ejs.data.DataUtil.parse.isJson(['
+            '{"Subject": "Rubbish", "StartTime": "2026-07-02T00:00:00"},'
+            '{"Subject": "Rubbish", "StartTime": "2026-07-02T00:00:00"},'
+            '{"Subject": "Recycling", "StartTime": "2026-07-09T00:00:00"}])'
+        )
+        records = BartecDashboardParser()(
+            self._page(self.PREMISES, appointments),
+            self._source(postcode="SK23 6BQ", uprn="10010724045"),
+        )
+        assert records == [
+            {"date": "2026-07-02", "type": "Rubbish"},
+            {"date": "2026-07-09", "type": "Recycling"},
+        ]
+
+    def test_unknown_uprn_suggests_the_postcodes_premises(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            BartecDashboardParser()(
+                self._page(
+                    self.PREMISES, '"dataSource": ejs.data.DataUtil.parse.isJson([])'
+                ),
+                self._source(postcode="SK23 6BQ", uprn="999"),
+            )
+        assert raised.value.argument == "uprn"
+        assert "1 Ash Grove (UPRN 10010724045)" in str(raised.value)
+
+    def test_unknown_postcode_blames_the_postcode(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        with pytest.raises(SourceArgumentNotFound) as raised:
+            BartecDashboardParser()(
+                self._page('"dataSource": ejs.data.DataUtil.parse.isJson([])'),
+                self._source(postcode="ZZ9 9ZZ", uprn="1"),
+            )
+        assert raised.value.argument == "postcode"
+
+    def test_known_uprn_without_appointments_is_just_empty(self):
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        assert (
+            BartecDashboardParser()(
+                self._page(self.PREMISES),
+                self._source(postcode="SK23 6BQ", uprn=10010724045),
+            )
+            == []
+        )
+
+
+class TestXmlInJsonAndNestedGroups:
+    def test_xml_parser_reads_xml_out_of_a_json_field(self):
+        from waste_collection_schedule import parsers
+
+        response = MagicMock()
+        response.json.return_value = {
+            "result": '<?xml version="1.0" encoding="utf-8"?>'
+            '<r xmlns="urn:x"><Job><Name>A</Name></Job><Job><Name>B</Name></Job></r>'
+        }
+        jobs = parsers.XmlParser(
+            ".//x:Job", namespaces={"x": "urn:x"}, from_json_key="result"
+        )(response)
+        assert [job.findtext("x:Name", namespaces={"x": "urn:x"}) for job in jobs] == [
+            "A",
+            "B",
+        ]
+
+    def test_flatten_groups_takes_a_list_of_lists(self):
+        from waste_collection_schedule import preprocessors
+
+        flat = preprocessors.FlattenGroups()([[{"a": 1}, {"a": 2}], [{"a": 3}]])
+        assert list(flat) == [{"a": 1}, {"a": 2}, {"a": 3}]
+
+
+class TestWasteInfoComponents:
+    """The waste-info.com.au (Impact Apps) platform components."""
+
+    @staticmethod
+    def _response(payload):
+        response = MagicMock()
+        response.json.return_value = payload
+        return response
+
+    @freeze_time("2026-09-26")  # a Saturday
+    def test_events_parser_expands_weekly_events_and_reads_one_offs(self):
+        from waste_collection_schedule.service.WasteInfo import WasteInfoEventsParser
+
+        payload = [
+            # Weekly on Sunday, which FullCalendar numbers 0.
+            {"start_date": "2026-09-20", "daysOfWeek": [0], "event_type": "organic"},
+            # Weekly on Monday. The real calendars put the property details on
+            # one ordinary event row like this one.
+            {
+                "property": {"address": "1 Test St"},
+                "start_date": "2026-09-21",
+                "daysOfWeek": [1],
+                "event_type": "waste",
+            },
+            {"start": "2026-10-01", "event_type": "special", "name": "Drop off"},
+            # A drop-off weekend: FullCalendar's end is exclusive.
+            {
+                "start": "2026-10-03",
+                "end": "2026-10-05",
+                "event_type": "special",
+                "name": "Weekend",
+            },
+            # A one-day event that spells out its exclusive end.
+            {"start": "2026-10-02", "end": "2026-10-03", "event_type": "recycle"},
+            # No event_type names no collection.
+            {"start": "2026-10-02"},
+        ]
+        records = WasteInfoEventsParser(window_days=9)(self._response(payload))
+        got = [(r["date"].isoformat(), r["type"], r["name"]) for r in records]
+        assert got == [
+            # Expanded from today, not from the series' start in the past.
+            ("2026-09-27", "organic", None),
+            ("2026-10-04", "organic", None),
+            ("2026-09-28", "waste", None),
+            # The window's last day (today + 9) is included.
+            ("2026-10-05", "waste", None),
+            ("2026-10-01", "special", "Drop off"),
+            ("2026-10-03", "special", "Weekend"),
+            ("2026-10-04", "special", "Weekend"),
+            ("2026-10-02", "recycle", None),
+        ]
+
+    def test_council_api_accepts_name_url_slug_and_old_spelling(self):
+        from waste_collection_schedule.service.WasteInfo import council_api
+
+        assert council_api("City of Ballarat") == "https://ballarat.waste-info.com.au"
+        assert (
+            council_api("Murrindindi Shire Counci")
+            == "https://murrindindi.waste-info.com.au"
+        )
+        assert (
+            council_api("https://brisbane.waste-info.com.au/")
+            == "https://brisbane.waste-info.com.au"
+        )
+        assert council_api("redland") == "https://redland.waste-info.com.au"
+
+    def test_property_lookup_tries_each_register_in_turn(self):
+        from waste_collection_schedule.service.WasteInfo import (
+            PropertyKey,
+            WasteInfoProperty,
+        )
+
+        answers = {
+            "https://a/api/v1/localities.json": {
+                "localities": [{"id": 1, "name": "Elsewhere"}]
+            },
+            "https://b/api/v1/localities.json": {
+                "localities": [{"id": 7, "name": "Summer Hill"}]
+            },
+            "https://b/api/v1/streets.json": {
+                "streets": [{"id": 70, "name": "Lackey Street"}]
+            },
+            "https://b/api/v1/properties.json": {
+                "properties": [{"id": 700, "name": "29 Lackey Street Summer Hill"}]
+            },
+        }
+        source = MagicMock()
+        source.params = {
+            "suburb": "summer  hill",
+            "street_name": "Lackey Street",
+            "street_number": "29",
+        }
+        source.session.get.side_effect = lambda url, **_: self._response(answers[url])
+
+        step = WasteInfoProperty(("https://a", "https://b"))
+        assert step(source, ()) == PropertyKey("https://b", 700)
+
+        # A one-line address whose suburb only the second register knows is
+        # not stopped by the first register failing to split it.
+        source.params = {"street_address": "29 Lackey Street, Summer Hill"}
+        step = WasteInfoProperty(
+            ("https://a", "https://b"), street_address="street_address"
+        )
+        assert step(source, ()) == PropertyKey("https://b", 700)
+
+    def test_one_line_address_unknown_to_every_register_lists_all_suburbs(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.WasteInfo import WasteInfoProperty
+
+        answers = {
+            "https://a/api/v1/localities.json": {
+                "localities": [{"id": 1, "name": "Elsewhere"}]
+            },
+            "https://b/api/v1/localities.json": {
+                "localities": [{"id": 7, "name": "Summer Hill"}]
+            },
+        }
+        source = MagicMock()
+        source.params = {"street_address": "1 Nowhere Road, Atlantis"}
+        source.session.get.side_effect = lambda url, **_: self._response(answers[url])
+
+        step = WasteInfoProperty(
+            ("https://a", "https://b"), street_address="street_address"
+        )
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            step(source, ())
+        assert raised.value.argument == "street_address"
+        assert raised.value.suggestions == ["Elsewhere", "Summer Hill"]
+
+    def test_property_id_skips_the_address_lookup(self):
+        from waste_collection_schedule.service.WasteInfo import (
+            PropertyKey,
+            WasteInfoProperty,
+        )
+
+        source = MagicMock()
+        source.params = {"propertyID": "21444"}
+        step = WasteInfoProperty("https://w", property_id="propertyID")
+        assert step(source, ()) == PropertyKey("https://w", "21444")
+        source.session.get.assert_not_called()
+
+    def test_split_address_prefers_the_longest_suburb(self):
+        from waste_collection_schedule.service.WasteInfo import split_address
+
+        assert split_address(
+            "399 Queen St, Altona Meadows", ["Altona", "Altona Meadows"]
+        ) == ("399", "Queen St", "Altona Meadows")
+
+
+class TestIndexAndYearlyFetch:
+    """retrievers.JsonIndexLookup and retrievers.YearUrl."""
+
+    @staticmethod
+    def _source(**params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_index_lookup_resolves_the_name_to_its_id(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(town="  bad   GANDERSHEIM ")
+        source.session.get.return_value.json.return_value = {
+            "towns": [
+                {"id": "abbecke", "name": "Abbecke"},
+                {"id": "bad_gandersheim", "name": "Bad Gandersheim"},
+            ]
+        }
+        lookup = retrievers.JsonIndexLookup(
+            "https://x/index.json", argument="town", items=("towns",)
+        )
+        assert lookup(source) == "bad_gandersheim"
+        # Also usable as a LookupChainRetriever step.
+        assert lookup(source, ()) == "bad_gandersheim"
+
+    def test_index_lookup_suggests_every_name_on_a_miss(self):
+        from waste_collection_schedule import retrievers
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+
+        source = self._source(town="Nowhere")
+        source.session.get.return_value.json.return_value = [
+            {"id": "a", "name": "Abbecke"}
+        ]
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            retrievers.JsonIndexLookup("https://x/i.json", argument="town")(source)
+        assert raised.value.argument == "town"
+        assert "Abbecke" in str(raised.value)
+
+    def test_year_url_formats_year_key_and_params(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(district="north")
+        retrievers.YearUrl("https://x/{year}/{district}-{key}.json")(
+            source, 2026, "abbecke"
+        )
+        assert (
+            source.session.get.call_args.args[0] == "https://x/2026/north-abbecke.json"
+        )
+        source.session.get.return_value.raise_for_status.assert_called_once()
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 
@@ -1927,6 +2241,10 @@ class TestRecurrence:
         assert recurrence.month("dezembro") == 12  # Portuguese
         assert recurrence.weekday("maandag") == 0  # Dutch
         assert recurrence.weekday("torsdag") == 3  # Swedish/Danish Thursday
+        # Japanese: the wide name and the single-kanji abbreviation both resolve.
+        assert recurrence.weekday("火曜日") == 1 and recurrence.weekday("火") == 1
+        assert recurrence.weekday("日") == 6
+        assert recurrence.month("12月") == 12
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
 
@@ -2273,6 +2591,25 @@ class TestLookups:
         from waste_collection_schedule import lookups
 
         assert lookups.normalize_text("  Main   Street ") == "main street"
+
+
+class TestFlattenGroups:
+    """FlattenGroups: a mapping or a list of groups flattened into records."""
+
+    def _run(self, records):
+        from waste_collection_schedule.preprocessors import FlattenGroups
+
+        return list(FlattenGroups()(records, None))
+
+    def test_flattens_a_mapping_of_lists(self):
+        assert self._run({"a": [1, 2], "b": [3]}) == [1, 2, 3]
+
+    def test_flattens_a_list_of_lists_skipping_empty_slots(self):
+        assert self._run([None, [1], [], [2, 3], None]) == [1, 2, 3]
+
+    def test_an_empty_payload_yields_nothing(self):
+        assert self._run(None) == []
+        assert self._run([]) == []
 
 
 class TestWeekdayRecurrence:

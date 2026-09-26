@@ -1,6 +1,8 @@
 # Cumberland Council (NSW)
 
-Support for schedules provided by [Cumberland Council (NSW)](https://www.cumberland.nsw.gov.au/find-your-bin-day).
+Support for schedules provided by [Cumberland Council (NSW)](https://www.cumberland.nsw.gov.au).
+
+Source for Cumberland Council (NSW) rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -36,7 +38,3 @@ waste_collection_schedule:
         street_name: Woodburn Road
         street_number: 98 to 104
 ```
-
-## How to get the source arguments
-
-Visit the [Cumberland Council (NSW)](https://www.cumberland.nsw.gov.au/find-your-bin-day) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.

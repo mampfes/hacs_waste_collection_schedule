@@ -1,6 +1,8 @@
 # Inner West Council (NSW)
 
-Support for schedules provided by [Inner West Council (NSW)](https://www.innerwest.nsw.gov.au/live/waste-and-recycling/bins-and-clean-ups/waste-calendar).
+Support for schedules provided by [Inner West Council (NSW)](https://www.innerwest.nsw.gov.au).
+
+Source for Inner West Council (NSW) rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -33,10 +35,6 @@ waste_collection_schedule:
     - name: innerwest_nsw_gov_au
       args:
         suburb: Tempe
-        street_name: Princess Highway
-        street_number: 810
+        street_name: Princes Highway
+        street_number: '813'
 ```
-
-## How to get the source arguments
-
-Visit the [Inner West Council (NSW)](https://www.innerwest.nsw.gov.au/live/waste-and-recycling/bins-and-clean-ups/waste-calendar) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.

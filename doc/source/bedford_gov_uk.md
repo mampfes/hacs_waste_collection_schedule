@@ -1,31 +1,30 @@
 # Bedford Borough Council
 
-Support for schedules provided by [Bedford Borough Council](https://www.bedford.gov.uk/), serving Bedford Borough Council, UK.
+Support for schedules provided by [Bedford Borough Council](https://bedford.gov.uk).
+
+Source for bedford.gov.uk services for Bedford Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bedford_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
+## Example
 
-#### How to find your `UPRN`
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bedford_gov_uk
       args:
-        uprn: 100080023672
+        uprn: '100080009302'
 ```

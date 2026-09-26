@@ -1,20 +1,35 @@
 # Scottish Borders Council
 
-Title: Scottish Borders Council
-Description: Supports Scottish Borders Council
-URL: https://scotborders.gov.uk
+Support for schedules provided by [Scottish Borders Council](https://scotborders-live-portal.bartecmunicipal.com/Embeddable/CollectionCalendar).
 
-### Configuration
+Source for Scottish Borders Council (Bartec Municipal)
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: scotborders_gov_uk
       args:
-        uprn: "12345678"
-        postcode: "TD1 1AA"
+        postcode: POSTCODE
+        uprn: UPRN
 ```
 
-### How to get the UPRN
+### Configuration Variables
 
-You can find your UPRN by searching your address on [FindMyAddress.co.uk](FindMyAddress.co.uk).
+**postcode**  
+*(string) (required)*
+
+**uprn**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: scotborders_gov_uk
+      args:
+        uprn: '116073632'
+        postcode: TD9 9HL
+```

@@ -1574,6 +1574,12 @@ class XmlParser(Parser["list[Any]"]):
     unknown input legitimately returns zero nodes, leave ``min_nodes`` unset and
     rely on ``RAISE_ON_EMPTY`` instead, so a bad lookup is reported as a bad
     argument rather than a changed feed.
+
+    For XML delivered inside a JSON response (a JSON-RPC ``result`` holding a
+    SOAP envelope, say), pass ``from_json_key``, the key or path of keys
+    holding the XML string, as :class:`HtmlParser` does for HTML::
+
+        parse = parsers.XmlParser(".//j:Job", namespaces=NS, from_json_key="result")
     """
 
     def __init__(
@@ -1581,15 +1587,30 @@ class XmlParser(Parser["list[Any]"]):
         path: "str | None" = None,
         min_nodes: "int | None" = None,
         namespaces: "dict[str, str] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.path = path
         self.min_nodes = min_nodes
         self.namespaces = namespaces
+        self.from_json_key = from_json_key
+
+    def _markup(self, response: Response) -> bytes:
+        if self.from_json_key is None:
+            return response.content
+        data: Any = response.json()
+        keys = (
+            (self.from_json_key,)
+            if isinstance(self.from_json_key, str)
+            else self.from_json_key
+        )
+        for key in keys:
+            data = data[key]
+        return str(data).encode("utf-8")
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> list:
         from lxml import etree  # type: ignore[attr-defined]
 
-        root = etree.fromstring(response.content)
+        root = etree.fromstring(self._markup(response))
         elements = (
             root.findall(self.path, namespaces=self.namespaces) if self.path else [root]
         )
