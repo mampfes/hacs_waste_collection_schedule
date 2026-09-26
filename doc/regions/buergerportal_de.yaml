@@ -10,12 +10,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Alf
-  - title: Alf
+  - title: Alf (Alf)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Alf
     subdistrict: Alf
-  - title: Alflen
+  - title: Alflen (Alflen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Alflen
@@ -25,7 +25,7 @@
     operator: cochem_zell
     district: Alflen
     subdistrict: Alflen Peterskaul
-  - title: Altlay
+  - title: Altlay (Altlay)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Altlay
@@ -34,12 +34,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Altstrimmig
-  - title: Altstrimmig
+  - title: Altstrimmig (Altstrimmig)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Altstrimmig
     subdistrict: Altstrimmig
-  - title: Auderath
+  - title: Auderath (Auderath)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Auderath
@@ -48,7 +48,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Bad Bertrich
-  - title: Bad Bertrich
+  - title: Bad Bertrich (Bad Bertrich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Bad Bertrich
@@ -63,7 +63,7 @@
     operator: cochem_zell
     district: Bad Bertrich
     subdistrict: Kennfus
-  - title: Beilstein
+  - title: Beilstein (Beilstein)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Beilstein
@@ -72,7 +72,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Beuren
-  - title: Beuren
+  - title: Beuren (Beuren)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Beuren
@@ -81,7 +81,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Binningen
-  - title: Binningen
+  - title: Binningen (Binningen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Binningen
@@ -90,17 +90,17 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Blankenrath
-  - title: Blankenrath
+  - title: Blankenrath (Blankenrath)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Blankenrath
     subdistrict: Blankenrath
-  - title: Brachtendorf
+  - title: Brachtendorf (Brachtendorf)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Brachtendorf
     subdistrict: Brachtendorf
-  - title: Bremm
+  - title: Bremm (Bremm)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Bremm
@@ -119,7 +119,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Briedel
-  - title: Briedel
+  - title: Briedel (Briedel)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Briedel
@@ -149,12 +149,12 @@
     operator: cochem_zell
     district: Briedel
     subdistrict: Briedel-Römerstraße
-  - title: Brieden
+  - title: Brieden (Brieden)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Brieden
     subdistrict: Brieden
-  - title: Briedern
+  - title: Briedern (Briedern)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Briedern
@@ -163,7 +163,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Brohl
-  - title: Brohl
+  - title: Brohl (Brohl)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Brohl
@@ -186,7 +186,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Büchel
-  - title: Büchel
+  - title: Büchel (Büchel)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Büchel
@@ -195,7 +195,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Bullay
-  - title: Bullay
+  - title: Bullay (Bullay)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Bullay
@@ -204,7 +204,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Cochem
-  - title: Cochem
+  - title: Cochem (Cochem)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Cochem
@@ -234,7 +234,7 @@
     operator: cochem_zell
     district: Cochem
     subdistrict: Cochem-Stadt
-  - title: Dohr
+  - title: Dohr (Dohr)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Dohr
@@ -243,7 +243,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Dünfus
-  - title: Dünfus
+  - title: Dünfus (Dünfus)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Dünfus
@@ -252,7 +252,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Düngenheim
-  - title: Düngenheim
+  - title: Düngenheim (Düngenheim)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Düngenheim
@@ -280,7 +280,7 @@
     operator: cochem_zell
     district: Ellenz-Poltersdorf
     subdistrict: Ellenz
-  - title: Ellenz-Poltersdorf
+  - title: Ellenz-Poltersdorf (Ellenz-Poltersdorf)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Ellenz-Poltersdorf
@@ -290,7 +290,7 @@
     operator: cochem_zell
     district: Ellenz-Poltersdorf
     subdistrict: Poltersdorf
-  - title: Eppenberg
+  - title: Eppenberg (Eppenberg)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Eppenberg
@@ -299,7 +299,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Ernst
-  - title: Ernst
+  - title: Ernst (Ernst)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Ernst
@@ -308,7 +308,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Eulgem
-  - title: Eulgem
+  - title: Eulgem (Eulgem)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Eulgem
@@ -317,12 +317,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Faid
-  - title: Faid
+  - title: Faid (Faid)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Faid
     subdistrict: Faid
-  - title: Filz
+  - title: Filz (Filz)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Filz
@@ -331,22 +331,22 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Forst (Eifel)
-  - title: Forst (Eifel)
+  - title: Forst (Eifel) (Forst (Eifel))
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Forst (Eifel)
     subdistrict: Forst (Eifel)
-  - title: Forst (Hunsrück)
+  - title: Forst (Hunsrück) (Forst (Hunsrück))
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Forst (Hunsrück)
     subdistrict: Forst (Hunsrück)
-  - title: Gamlen
+  - title: Gamlen (Gamlen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Gamlen
     subdistrict: Gamlen
-  - title: Gevenich
+  - title: Gevenich (Gevenich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Gevenich
@@ -355,7 +355,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Gillenbeuren
-  - title: Gillenbeuren
+  - title: Gillenbeuren (Gillenbeuren)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Gillenbeuren
@@ -364,32 +364,32 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Greimersburg
-  - title: Greimersburg
+  - title: Greimersburg (Greimersburg)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Greimersburg
     subdistrict: Greimersburg
-  - title: Grenderich
+  - title: Grenderich (Grenderich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Grenderich
     subdistrict: Grenderich
-  - title: Hambuch
+  - title: Hambuch (Hambuch)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Hambuch
     subdistrict: Hambuch
-  - title: Haserich
+  - title: Haserich (Haserich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Haserich
     subdistrict: Haserich
-  - title: Hauroth
+  - title: Hauroth (Hauroth)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Hauroth
     subdistrict: Hauroth
-  - title: Hesweiler
+  - title: Hesweiler (Hesweiler)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Hesweiler
@@ -398,17 +398,17 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Illerich
-  - title: Illerich
+  - title: Illerich (Illerich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Illerich
     subdistrict: Illerich
-  - title: Kaifenheim
+  - title: Kaifenheim (Kaifenheim)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kaifenheim
     subdistrict: Kaifenheim
-  - title: Kail
+  - title: Kail (Kail)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kail
@@ -417,7 +417,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kaisersesch
-  - title: Kaisersesch
+  - title: Kaisersesch (Kaisersesch)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kaisersesch
@@ -427,12 +427,12 @@
     operator: cochem_zell
     district: Kaisersesch
     subdistrict: Neuhof
-  - title: Kalenborn
+  - title: Kalenborn (Kalenborn)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kalenborn
     subdistrict: Kalenborn
-  - title: Kliding
+  - title: Kliding (Kliding)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Kliding
@@ -446,7 +446,7 @@
     operator: cochem_zell
     district: Klotten
     subdistrict: Annischerhof
-  - title: Klotten
+  - title: Klotten (Klotten)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Klotten
@@ -475,7 +475,7 @@
     operator: cochem_zell
     district: Landkern
     subdistrict: 56759 Neuhof
-  - title: Landkern
+  - title: Landkern (Landkern)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Landkern
@@ -494,7 +494,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Laubach
-  - title: Laubach
+  - title: Laubach (Laubach)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Laubach
@@ -508,7 +508,7 @@
     operator: cochem_zell
     district: Leienkaul
     subdistrict: Laubach
-  - title: Leienkaul
+  - title: Leienkaul (Leienkaul)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Leienkaul
@@ -517,12 +517,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Lieg
-  - title: Lieg
+  - title: Lieg (Lieg)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Lieg
     subdistrict: Lieg
-  - title: Liesenich
+  - title: Liesenich (Liesenich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Liesenich
@@ -531,12 +531,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Lütz
-  - title: Lütz
+  - title: Lütz (Lütz)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Lütz
     subdistrict: Lütz
-  - title: Lutzerath
+  - title: Lutzerath (Lutzerath)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Lutzerath
@@ -550,7 +550,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Masburg
-  - title: Masburg
+  - title: Masburg (Masburg)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Masburg
@@ -559,7 +559,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Mesenich
-  - title: Mesenich
+  - title: Mesenich (Mesenich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Mesenich
@@ -568,12 +568,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Mittelstrimmig
-  - title: Mittelstrimmig
+  - title: Mittelstrimmig (Mittelstrimmig)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Mittelstrimmig
     subdistrict: Mittelstrimmig
-  - title: Möntenich
+  - title: Möntenich (Möntenich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Möntenich
@@ -582,7 +582,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Moritzheim
-  - title: Moritzheim
+  - title: Moritzheim (Moritzheim)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Moritzheim
@@ -591,7 +591,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Moselkern
-  - title: Moselkern
+  - title: Moselkern (Moselkern)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Moselkern
@@ -600,7 +600,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Müden (Mosel)
-  - title: Müden (Mosel)
+  - title: Müden (Mosel) (Müden (Mosel))
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Müden (Mosel)
@@ -614,7 +614,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Müllenbach
-  - title: Müllenbach
+  - title: Müllenbach (Müllenbach)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Müllenbach
@@ -623,22 +623,22 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Neef
-  - title: Neef
+  - title: Neef (Neef)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Neef
     subdistrict: Neef
-  - title: Nehren
+  - title: Nehren (Nehren)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Nehren
     subdistrict: Nehren
-  - title: Neuhof
+  - title: Neuhof (Neuhof)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Neuhof
     subdistrict: Neuhof
-  - title: Panzweiler
+  - title: Panzweiler (Panzweiler)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Panzweiler
@@ -653,7 +653,7 @@
     operator: cochem_zell
     district: Peterswald-Löffelscheid
     subdistrict: Peterswald
-  - title: Peterswald-Löffelscheid
+  - title: Peterswald-Löffelscheid (Peterswald-Löffelscheid)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Peterswald-Löffelscheid
@@ -662,7 +662,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Pommern
-  - title: Pommern
+  - title: Pommern (Pommern)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Pommern
@@ -672,7 +672,7 @@
     operator: cochem_zell
     district: Pommern
     subdistrict: Pommern-Zehnthofstraße
-  - title: Pünderich
+  - title: Pünderich (Pünderich)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Pünderich
@@ -681,7 +681,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Reidenhausen
-  - title: Reidenhausen
+  - title: Reidenhausen (Reidenhausen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Reidenhausen
@@ -690,7 +690,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Roes
-  - title: Roes
+  - title: Roes (Roes)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Roes
@@ -699,12 +699,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Sankt Aldegund
-  - title: Sankt Aldegund
+  - title: Sankt Aldegund (Sankt Aldegund)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Sankt Aldegund
     subdistrict: Sankt Aldegund
-  - title: Schauren
+  - title: Schauren (Schauren)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Schauren
@@ -713,7 +713,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Schmitt
-  - title: Schmitt
+  - title: Schmitt (Schmitt)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Schmitt
@@ -727,12 +727,12 @@
     operator: cochem_zell
     district: Senheim
     subdistrict: Senhals
-  - title: Senheim
+  - title: Senheim (Senheim)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Senheim
     subdistrict: Senheim
-  - title: Sosberg
+  - title: Sosberg (Sosberg)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Sosberg
@@ -741,7 +741,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Tellig
-  - title: Tellig
+  - title: Tellig (Tellig)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Tellig
@@ -775,7 +775,7 @@
     operator: cochem_zell
     district: Ulmen
     subdistrict: Meiserich
-  - title: Ulmen
+  - title: Ulmen (Ulmen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Ulmen
@@ -799,7 +799,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Urmersbach
-  - title: Urmersbach
+  - title: Urmersbach (Urmersbach)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Urmersbach
@@ -808,12 +808,12 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Urschmitt
-  - title: Urschmitt
+  - title: Urschmitt (Urschmitt)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Urschmitt
     subdistrict: Urschmitt
-  - title: Valwig
+  - title: Valwig (Valwig)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Valwig
@@ -828,27 +828,27 @@
     operator: cochem_zell
     district: Valwig
     subdistrict: Valwigerberg..
-  - title: Wagenhausen
+  - title: Wagenhausen (Wagenhausen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Wagenhausen
     subdistrict: Wagenhausen
-  - title: Walhausen
+  - title: Walhausen (Walhausen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Walhausen
     subdistrict: Walhausen
-  - title: Weiler
+  - title: Weiler (Weiler)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Weiler
     subdistrict: Weiler
-  - title: Wirfus
+  - title: Wirfus (Wirfus)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Wirfus
     subdistrict: Wirfus
-  - title: Wollmerath
+  - title: Wollmerath (Wollmerath)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Wollmerath
@@ -886,7 +886,7 @@
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Zettingen
-  - title: Zettingen
+  - title: Zettingen (Zettingen)
     url: https://www.cochem-zell-online.de/
     operator: cochem_zell
     district: Zettingen
@@ -1840,7 +1840,7 @@
     operator: alb_donau
     district: Staig
     subdistrict: Harthausen
-  - title: Staig
+  - title: Staig (Staig)
     url: https://www.aw-adk.de/
     operator: alb_donau
     district: Staig
@@ -2217,7 +2217,7 @@
     operator: biedenkopf
     district: Gladenbach
     subdistrict: Frohnhausen
-  - title: Gladenbach
+  - title: Gladenbach (Gladenbach)
     url: https://mzv-biedenkopf.de/
     operator: biedenkopf
     district: Gladenbach

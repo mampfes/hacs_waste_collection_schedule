@@ -4,8 +4,7 @@ One-off registry generator for the buergerportal_de pipeline source
 (mampfes/hacs_waste_collection_schedule#7563). Queries each operator's
 ``OrteMitOrtsteilen`` endpoint live and writes one region entry per
 district/subdistrict pair it returns, pre-filling ``operator``/``district``
-(and ``subdistrict`` only where that operator's data model actually carries a
-distinct Ortsteil).
+(and ``subdistrict`` whenever the row carries an Ortsteil).
 
 Run from the repo root:
 
@@ -78,7 +77,10 @@ def _fetch_orte(api_base: str) -> list[dict]:
 
 
 def _title(district: str, subdistrict: str | None) -> str:
-    if subdistrict and subdistrict != district:
+    # A subdistrict named like its district ("Alf, Alf") is a distinct row
+    # from the district with no subdistrict ("Alf", null): the two resolve to
+    # different street lists, so their titles must differ too.
+    if subdistrict:
         return f"{district} ({subdistrict})"
     return district
 
@@ -99,11 +101,10 @@ def build_entries() -> list[dict]:
                 "operator": operator,
                 "district": district,
             }
-            # Only carry a subdistrict when this operator's data model actually
-            # distinguishes it from the district (klevestadt/alb_donau have
-            # none at all; several cochem_zell/biedenkopf/bedburg rows repeat
-            # the district name as its own "Ortsteil", which the source's
-            # cascade already treats as "no subdistrict" via None).
+            # Carry the subdistrict whenever the row has one, even when it
+            # repeats the district name: the street lookup filters on
+            # ``OrtsteilName``, so null and a same-named Ortsteil return
+            # different streets.
             if subdistrict is not None:
                 entry["subdistrict"] = subdistrict
             entries.append(entry)

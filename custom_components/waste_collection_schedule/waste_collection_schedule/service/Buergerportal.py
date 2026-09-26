@@ -31,6 +31,7 @@ from typing import Any
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.retrievers import RetrieverFunc
 
 #: Per-operator API base URL. The key is the source's ``operator`` PARAMS value.
 BASE_URLS: dict[str, str] = {
@@ -56,15 +57,16 @@ def _api_base(source: BaseSource) -> str:
     return BASE_URLS[source.params["operator"]]
 
 
-def resolve_district(source: BaseSource, keys: tuple) -> int:
+def resolve_district(source: BaseSource, timeout: int = 30) -> int:
     """District (``Ort`` + optional ``Ortsteil``) name -> its OData id.
 
-    A LookupChainRetriever step: the first level of the cascade.
+    The first level of the cascade.
     """
     base = _api_base(source)
     response = source.session.get(
         f"{base}/OrteMitOrtsteilen",
         headers=HEADERS,
+        timeout=timeout,
     )
     response.raise_for_status()
     entries = response.json()["d"]
@@ -90,12 +92,11 @@ def resolve_district(source: BaseSource, keys: tuple) -> int:
     )
 
 
-def resolve_street(source: BaseSource, keys: tuple) -> int:
+def resolve_street(source: BaseSource, district_id: int, timeout: int = 30) -> int:
     """Street name -> its OData id, within the already-resolved district.
 
-    A LookupChainRetriever step: the second level of the cascade.
+    The second level of the cascade.
     """
-    (district_id,) = keys
     base = _api_base(source)
     subdistrict = source.params.get("subdistrict")
     response = source.session.get(
@@ -108,6 +109,7 @@ def resolve_street(source: BaseSource, keys: tuple) -> int:
             "$orderby": "Name asc",
         },
         headers=HEADERS,
+        timeout=timeout,
     )
     response.raise_for_status()
     entries = response.json()["d"]
@@ -145,7 +147,7 @@ def _schedule_query(
     return query
 
 
-class BuergerportalRetriever:
+class BuergerportalRetriever(RetrieverFunc):
     """Resolve district -> street, then fetch that street's collection dates.
 
     Composes :func:`resolve_district` and :func:`resolve_street` (the
@@ -167,8 +169,8 @@ class BuergerportalRetriever:
 
     def __call__(self, source: BaseSource):
         base = _api_base(source)
-        district_id = resolve_district(source, ())
-        street_id = resolve_street(source, (district_id,))
+        district_id = resolve_district(source, self.timeout)
+        street_id = resolve_street(source, district_id, self.timeout)
         number = source.params.get("number")
 
         response = source.session.get(
