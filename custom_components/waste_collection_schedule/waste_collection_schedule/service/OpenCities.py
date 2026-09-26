@@ -554,7 +554,10 @@ def _approximate_date(
 # --------------------------------------------------------------------------- #
 
 _FORTNIGHTLY_RE = re.compile(r"fortnight", re.IGNORECASE)
-_WEEKLY_RE = re.compile(r"same day each week|\b(?:every|each) week\b", re.IGNORECASE)
+# "Collected weekly" as well as "same day each week"; not "bi-weekly".
+_WEEKLY_RE = re.compile(
+    r"same day each week|\b(?:every|each) week\b|(?<![\w-])weekly\b", re.IGNORECASE
+)
 
 
 class OpenCitiesProjection(Preprocessor[Any, "dict[str, Any]"]):
