@@ -1,15 +1,17 @@
 # Blackburn with Darwen Borough Council
 
-Support for schedules provided by [Blackburn with Darwen Borough Council](https://mybins.blackburn.gov.uk/), UK.
+Support for schedules provided by [Blackburn with Darwen Borough Council](https://blackburn.gov.uk/).
+
+Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: blackburn_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -21,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: blackburn_gov_uk
       args:
-        uprn: "10091617919"
+        uprn: '10091617919'
 ```
-
-## How to get the source argument
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

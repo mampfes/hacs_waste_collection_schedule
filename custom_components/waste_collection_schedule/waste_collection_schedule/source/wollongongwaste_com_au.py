@@ -1,70 +1,49 @@
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Wollongong City Council"
-DESCRIPTION = "Source script for wollongongwaste.com.au"
-URL = "https://wollongongwaste.com"
-COUNTRY = "au"
-TEST_CASES = {"TestName1": {"propertyID": "21444"}}
-
-API_URL = "https://wollongong.waste-info.com.au/api/v1/properties/"
-
-ICON_MAP = {
-    "waste": Icons.GENERAL_WASTE,
-    "organic": Icons.ORGANIC,
-    "recycle": Icons.RECYCLING,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.WasteInfo import (
+    TYPE_VALUE_MAP,
+    WasteInfoEventsParser,
+    WasteInfoRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-def day_of_week(start_date, end_date, day_of_week_index):
-    day_of_week_dates = []
-    while start_date <= end_date:
-        if start_date.weekday() == day_of_week_index:
-            day_of_week_dates.append(start_date)
-        start_date += timedelta(days=1)
-    return day_of_week_dates
+@final
+class Source(BaseSource):
+    TITLE = "Wollongong City Council"
+    DESCRIPTION = "Source script for wollongongwaste.com.au"
+    URL = "https://wollongongwaste.com"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {"TestName1": {"propertyID": "21444"}}
 
-class Source:
-    def __init__(self, propertyID):
-        self._propertyID = propertyID
+    PARAMS = (text_field("propertyID", "Property ID"),)
 
-    def fetch(self):
-        # Have to specify a start and end, or the API returns nothing. So lets request this year, and next year.
-        # start=2022-12-31T13:00:00.000Z&end=2024-12-30T13:00:00.000Z
-        startdate = datetime(date.today().year - 1, 12, 31, 13, 0, 0)
-        enddate = datetime(date.today().year + 1, 12, 31, 13, 0, 0)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open the Waste Calendar at https://www.wollongongwaste.com.au/calendar/ "
+            "with your browser's developer tools on the Network tab and look up "
+            "your address. The last request is for '<propertyID>.json', e.g. "
+            "https://wollongong.waste-info.com.au/api/v1/properties/21444.json"
+        ),
+    }
 
-        data = {
-            "start": startdate.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-            "end": enddate.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-        }
-
-        r = requests.get(f"{API_URL}{self._propertyID}.json", data=data)
-        r.raise_for_status()
-        d = r.json()
-
-        entries = []
-        for entry in d:
-            waste_type = entry["event_type"]
-            if waste_type in ("waste", "organic"):
-                for day in entry["daysOfWeek"]:
-                    for pickupdate in day_of_week(startdate, enddate, day - 1):
-                        entries.append(
-                            Collection(
-                                date=pickupdate.date(),
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-            if waste_type in ("recycle"):
-                entries.append(
-                    Collection(
-                        date=date(*map(int, entry["start"].split("-"))),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-        return entries
+    retrieve = WasteInfoRetriever(
+        "https://wollongong.waste-info.com.au", property_id="propertyID"
+    )
+    parse = WasteInfoEventsParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        description_key="name",
+    )
