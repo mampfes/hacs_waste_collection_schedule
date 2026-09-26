@@ -1,70 +1,48 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-TITLE = "London Borough of Harrow"
-DESCRIPTION = "Source for London Borough of Harrow."
-URL = "https://www.harrow.gov.uk/"
-TEST_CASES = {
-    "1 Dudley Gardens": {"uprn": "100021261713"},
-    "FLAT 3, 12, LOWER ROAD, HARROW, HA2 0DA": {"uprn": 10070270427},
-}
-
-COLLECTION_MAP = {
-    "RESIDUAL": {
-        "waste_type": "General waste",
-        "icon": "mdi:trash-can",
-    },
-    "GARDEN": {
-        "waste_type": "Garden waste",
-        "icon": "mdi:leaf",
-    },
-    "RECYCLABLES": {
-        "waste_type": "Recycling waste",
-        "icon": "mdi:recycle",
-    },
-    "FOOD": {
-        "waste_type": "Food waste",
-        "icon": "mdi:food",
-    },
-}
-
-API_URL = "https://www.harrow.gov.uk/ajax/bins?u={uprn}"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Harrow"
+    DESCRIPTION = "Source for London Borough of Harrow."
+    URL = "https://www.harrow.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn), headers=HEADERS)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "1 Dudley Gardens": {"uprn": "100021261713"},
+        "FLAT 3, 12, LOWER ROAD, HARROW, HA2 0DA": {"uprn": 10070270427},
+    }
 
-        if not r.content:
-            raise ValueError(
-                f"No data returned for UPRN {self._uprn} — the service may be temporarily unavailable"
-            )
+    PARAMS = (uprn(),)
 
-        rubbish_data = r.json()
-
-        entries = []
-
-        for next_collection in rubbish_data["results"]["collections"]["next"]:
-            collection_type = COLLECTION_MAP.get(next_collection["binType"])
-            if collection_type is None:
-                continue
-            collection_date = next_collection["eventTime"]
-            entries.append(
-                Collection(
-                    date=datetime.datetime.fromisoformat(collection_date).date(),
-                    t=collection_type["waste_type"],
-                    icon=collection_type["icon"],
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.harrow.gov.uk/ajax/bins",
+        # The council's UPRNs are twelve digits, zero-padded.
+        params=lambda uprn, **_: {"u": str(uprn).zfill(12)},
+    )
+    parse = parsers.JsonParser("results", "collections", "next", raise_for_status=True)
+    transform = JsonTransformer(
+        date_key=lambda record: (record.get("eventTime") or "")[:10],
+        type_key="binType",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "RESIDUAL": wt.GENERAL_WASTE,
+            "RECYCLABLES": wt.RECYCLABLES,
+            "GARDEN": wt.GARDEN_WASTE,
+            "FOOD": wt.FOOD_WASTE,
+        },
+    )

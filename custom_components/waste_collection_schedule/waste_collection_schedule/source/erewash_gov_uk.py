@@ -1,72 +1,44 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.BbdWhitespace import (
+    PARSE_DATE,
+    TYPE_VALUE_MAP,
+    CollectionDatesParser,
+    collection_dates_retriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Erewash Borough Council"
-DESCRIPTION = "Source for erewash.gov.uk services for Erewash Borough Council, UK."
-URL = "https://www.erewash.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"uprn": "100030126659"},
-    "Test_002": {"uprn": "100030154311"},
-    "Test_003": {"uprn": "100030118783"},
-}
-ICON_MAP = {
-    "recycling-collection-service": Icons.RECYCLING,
-    "garden-waste-collection-service": Icons.GARDEN,
-    "domestic-waste-collection-service": Icons.GENERAL_WASTE,
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+@final
+class Source(BaseSource):
+    TITLE = "Erewash Borough Council"
+    DESCRIPTION = "Source for erewash.gov.uk services for Erewash Borough Council, UK."
+    URL = "https://www.erewash.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100030126659"},
+        "Test_002": {"uprn": "100030154311"},
+        "Test_003": {"uprn": "100030118783"},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 
+    PARAMS = (uprn(),)
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self):
-        s = requests.Session()
-
-        """
-        There are two valid urls:
-        URL + "/bbd-whitespace/one-year-collection-dates" -- this returns Christmas and New Year dates with no indication which is going to be used.
-        URL + "/bbd-whitespace/one-year-collection-dates-without-christmas" -- this exclude Christmas and New Year dates.
-        The website says Christmas and New Year dates will be publicised via the website & socials closer to year end.
-        I've opted for the first one as it returns more dates.
-        If that causes year-end bug reports on GitHub, the alternative can be implemented.
-        """
-
-        r = s.get(
-            URL + "/bbd-whitespace/one-year-collection-dates",
-            # URL + "/bbd-whitespace/one-year-collection-dates-without-christmas"
-            params={"uprn": self._uprn, "_wrapper_format": "drupal_ajax"},
-            timeout=30,
-        )
-        r.raise_for_status()
-
-        entries = []
-
-        for _, data in r.json()[0]["settings"]["collection_dates"].items():
-            for collection in data:
-                entries.append(
-                    Collection(
-                        date=datetime.fromtimestamp(
-                            int(collection["timestamp"])
-                        ).date(),
-                        t=collection["service"],
-                        icon=ICON_MAP.get(collection["service-identifier"]),
-                    )
-                )
-
-        return entries
+    retrieve = collection_dates_retriever("https://www.erewash.gov.uk")
+    parse = CollectionDatesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="service",
+        parse_date=PARSE_DATE,
+        type_value_map=TYPE_VALUE_MAP,
+    )

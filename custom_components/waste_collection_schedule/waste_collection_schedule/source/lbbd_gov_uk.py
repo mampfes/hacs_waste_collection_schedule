@@ -1,61 +1,47 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-TITLE = "London Borough of Barking and Dagenham"
-DESCRIPTION = "Source for London Borough of Barking and Dagenham."
-URL = "https://www.lbbd.gov.uk/"
-TEST_CASES = {
-    "100 Heathway": {"uprn": "100014033"},
-    "40 Porters Avenue": {"uprn": "100024629"},
-}
-
-COLLECTION_MAP = {
-    "Grey-Household": {
-        "waste_type": "General waste",
-        "icon": "mdi:trash-can",
-    },
-    "Brown-Recycling": {
-        "waste_type": "Recycling",
-        "icon": "mdi:recycle",
-    },
-    "Green-Garden": {
-        "waste_type": "Garden waste",
-        "icon": "mdi:grass",
-    },
-}
-
-API_URL = "https://www.lbbd.gov.uk/rest/bin/{uprn}"
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Barking and Dagenham"
+    DESCRIPTION = "Source for London Borough of Barking and Dagenham."
+    URL = "https://www.lbbd.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        headers = {"user-agent": "Home-Assitant-waste-col-sched/2.11"}
+    TEST_CASES: ClassVar[dict] = {
+        "100 Heathway": {"uprn": "100014033"},
+        "40 Porters Avenue": {"uprn": "100024629"},
+    }
 
-        r = requests.get(API_URL.format(uprn=self._uprn), headers=headers, timeout=30)
-        rubbish_data = r.json()
+    PARAMS = (uprn(),)
 
-        entries = []
-
-        for result in rubbish_data["results"]:
-            collection_type = COLLECTION_MAP.get(
-                result["bin_type"],
-                {"waste_type": result["bin_type"], "icon": None},
-            )
-
-            for collection_date in (
-                [result["nextcollection"]] if result["nextcollection"] else []
-            ) + result["futurecollections"]:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(collection_date, "%A %d %B %Y").date(),
-                        t=collection_type["waste_type"],
-                        icon=collection_type["icon"],
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: f"https://www.lbbd.gov.uk/rest/bin/{uprn}",
+    )
+    parse = parsers.JsonParser("results")
+    # Each bin carries its next date and a list of the following ones.
+    preprocess = ExplodeList("nextcollection", "futurecollections", into="date")
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="bin_type",
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        type_value_map={
+            "Grey-Household": wt.GENERAL_WASTE,
+            "Brown-Recycling": wt.RECYCLABLES,
+            "Green-Garden": wt.GARDEN_WASTE,
+        },
+    )

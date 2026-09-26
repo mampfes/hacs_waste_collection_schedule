@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.lbbd.gov.uk/rest/bin/100014033 ",
+      "method": "GET",
+      "url": "https://www.lbbd.gov.uk/rest/bin/100014033",
+      "final_url": "https://www.lbbd.gov.uk/rest/bin/100014033",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 26 Sep 2026 20:30:56 GMT",
+        "content-type": "application/json",
+        "content-length": "574",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "frame-ancestors 'self'; upgrade-insecure-requests;",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "permissions-policy": "geolocation=(), microphone=(), camera=(), fullscreen=()",
+        "cache-control": "must-revalidate, no-cache, private",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "content-language": "en",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 10 (https://www.drupal.org)",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJ1cHJuIjoxMDAwMTQwMzMsImJpbl90eXBlIjoiR3JleS1Ib3VzZWhvbGQiLCJiaW5fbmFtZSI6IkdyZXkgQmluIChOb24tUmVjeWNsYWJsZSkiLCJjb2xsZWN0aW9uZGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiJGcmlkYXkgMjUgU2VwdGVtYmVyIDIwMjYiLCJyZXNjaGVkdWxlZCI6IiIsIm9yaWdpbmFsY29sbGVjdGlvbmRheSI6IjI1XC8wOVwvMjAyNiIsImZ1dHVyZWNvbGxlY3Rpb25zIjpbIkZyaWRheSAwMiBPY3RvYmVyIDIwMjYiLCJGcmlkYXkgMDkgT2N0b2JlciAyMDI2IiwiRnJpZGF5IDE2IE9jdG9iZXIgMjAyNiJdfSx7InVwcm4iOjEwMDAxNDAzMywiYmluX3R5cGUiOiJCcm93bi1SZWN5Y2xpbmciLCJiaW5fbmFtZSI6IkJyb3duIEJpbiAoUmVjeWNsaW5nKSIsImNvbGxlY3Rpb25kYXkiOiJGcmlkYXkiLCJuZXh0Y29sbGVjdGlvbiI6IkZyaWRheSAwMiBPY3RvYmVyIDIwMjYiLCJyZXNjaGVkdWxlZCI6IiIsIm9yaWdpbmFsY29sbGVjdGlvbmRheSI6IjAyXC8xMFwvMjAyNiIsImZ1dHVyZWNvbGxlY3Rpb25zIjpbIkZyaWRheSAxNiBPY3RvYmVyIDIwMjYiXX1dfQ=="
+    }
+  ]
+}

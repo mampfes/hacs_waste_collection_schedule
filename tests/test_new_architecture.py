@@ -662,6 +662,24 @@ class TestParsers:
         resp = self._mock_response("", json_data=data)
         assert JsonParser("data", "items")(resp) == data["data"]["items"]
 
+    def test_json_parser_checks_status_before_decoding(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response("", json_data={"data": []})
+        resp.raise_for_status.side_effect = RuntimeError("HTTP 503")
+        with pytest.raises(RuntimeError, match="HTTP 503"):
+            JsonParser("data", raise_for_status=True)(resp)
+        resp.json.assert_not_called()
+
+    def test_json_parser_rejects_application_error_before_drilling(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response(
+            "", json_data={"message": "Invalid UPRN", "data": []}
+        )
+        with pytest.raises(ValueError, match="Invalid UPRN"):
+            JsonParser("data", expected_values={"message": "OK"})(resp)
+
     def test_text_parser(self):
         from waste_collection_schedule.parsers import TextParser
 
@@ -2969,6 +2987,45 @@ class TestLookups:
         from waste_collection_schedule import lookups
 
         assert lookups.normalize_text("  Main   Street ") == "main street"
+
+
+class TestExplodeList:
+    """ExplodeList: one record per element of a list-valued field."""
+
+    def _run(self, records, *keys, into=None):
+        from waste_collection_schedule.preprocessors import ExplodeList
+
+        return list(ExplodeList(*keys, into=into)(records, None))
+
+    def test_writes_each_element_into_a_copy_of_the_record(self):
+        rows = self._run(
+            [{"Service": "Refuse", "collectionDate": ["01/10", "15/10"]}],
+            "collectionDate",
+            into="date",
+        )
+        assert [(r["Service"], r["date"]) for r in rows] == [
+            ("Refuse", "01/10"),
+            ("Refuse", "15/10"),
+        ]
+
+    def test_reads_several_keys_and_single_values_in_order(self):
+        rows = self._run(
+            [{"bin": "Grey", "next": "Fri 2", "later": ["Fri 9", "Fri 16"]}],
+            "next",
+            "later",
+            into="date",
+        )
+        assert [r["date"] for r in rows] == ["Fri 2", "Fri 9", "Fri 16"]
+
+    def test_yields_the_elements_themselves_without_into(self):
+        rows = self._run({"records": [{"a": 1}, {"a": 2}]}, "records")
+        assert rows == [{"a": 1}, {"a": 2}]
+
+    def test_skips_missing_and_empty_values(self):
+        rows = self._run(
+            [{"next": "", "later": None}, {"later": []}], "next", "later", into="d"
+        )
+        assert rows == []
 
 
 class TestFlattenGroups:

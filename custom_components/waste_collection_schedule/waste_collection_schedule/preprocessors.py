@@ -525,6 +525,58 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
                         yield collection_date, key
 
 
+class ExplodeList(Preprocessor[Any, Any]):
+    """One record per element of a list-valued field.
+
+    For a JSON API that nests a list inside each record rather than repeating
+    the record: a service carrying all its dates (``{"Service": "Refuse",
+    "collectionDate": ["01/10/2026", "15/10/2026"]}``), or a group carrying its
+    collection records (``{"records": [{...}, {...}]}``)::
+
+        parse = parsers.JsonParser("param2")
+        preprocess = preprocessors.ExplodeList("collectionDate", into="date")
+        transform = JsonTransformer(date_key="date", type_key="Service")
+
+    With ``into``, each element is written into a copy of the record under that
+    key, so the rest of the record (the service name) stays alongside it. Without
+    ``into``, each element *is* the output record, for a group whose elements
+    are complete records of their own::
+
+        preprocess = preprocessors.ExplodeList("records")
+
+    Several keys are read in order, so a next date and a list of later dates
+    held in separate fields come out as one run. A key holding a single value
+    rather than a list contributes that value; a missing, ``None`` or empty
+    value contributes nothing.
+
+    Args:
+        keys: the field(s) holding the list.
+        into: the field each element is written into, or ``None`` to yield the
+            elements themselves.
+    """
+
+    def __init__(self, *keys: str, into: "str | None" = None):
+        if not keys:
+            raise ValueError("ExplodeList needs at least one key")
+        self._keys = keys
+        self._into = into
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        if isinstance(records, Mapping):
+            records = [records]
+        for record in records or []:
+            for key in self._keys:
+                values = record.get(key)
+                if values in (None, "", []):
+                    continue
+                if not isinstance(values, (list, tuple)):
+                    values = [values]
+                for value in values:
+                    yield value if self._into is None else {**record, self._into: value}
+
+
 class SplitByFields(Preprocessor[Any, Mapping[str, Any]]):
     """Split one record into several same-shape records, one per source field.
 

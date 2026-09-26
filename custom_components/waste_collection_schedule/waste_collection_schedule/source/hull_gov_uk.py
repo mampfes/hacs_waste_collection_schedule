@@ -1,55 +1,51 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Hull City Council"
-DESCRIPTION = "Source for Hull City Council."
-URL = "https://hull.gov.uk/"
-TEST_CASES = {
-    "21095794": {"uprn": 21095794},
-    "21009164": {"uprn": "21009164"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import FlattenGroups
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-ICON_MAP = {
-    "black": Icons.GENERAL_WASTE,
-    "blue": Icons.PAPER,
-    "brown": Icons.BIO_KITCHEN,
-    "bulky": Icons.BULKY,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Hull City Council"
+    DESCRIPTION = "Source for Hull City Council."
+    URL = "https://hull.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "21095794": {"uprn": 21095794},
+        "21009164": {"uprn": "21009164"},
+    }
 
-API_URL = "https://www.hull.gov.uk/ajax/bin-collection"
-REFERER = "https://www.hull.gov.uk"
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0"
-)
+    PARAMS = (uprn(),)
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
-
-    def fetch(self):
-        # get json
-        r = requests.get(
-            API_URL,
-            params={"bindate": self._uprn},
-            headers={"Referer": REFERER, "User-Agent": USER_AGENT},
-        )
-        r.raise_for_status()
-
-        data = r.json()
-        data = data[0] if isinstance(data[0], list) else data
-
-        entries = []
-        for entry in data:
-            date = datetime.strptime(entry["next_collection_date"], "%Y-%m-%d").date()
-            icon = ICON_MAP.get(
-                entry["collection_type"].lower().replace("bin", "").strip()
-            )  # Collection icon
-            type = entry["collection_type"]
-            entries.append(Collection(date=date, t=type, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.hull.gov.uk/ajax/bin-collection",
+        params=lambda uprn, **_: {"bindate": uprn},
+        headers={"Referer": "https://www.hull.gov.uk"},
+    )
+    parse = parsers.JsonParser(raise_for_status=True)
+    # The reply is a list wrapping the list of collections.
+    preprocess = FlattenGroups()
+    transform = JsonTransformer(
+        date_key="next_collection_date",
+        type_key="collection_type",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Black Bin": wt.GENERAL_WASTE,
+            "Blue Bin": wt.RECYCLABLES,
+            "Brown Bin": wt.ORGANIC,
+            "Bulky Bin": wt.BULKY_WASTE,
+        },
+    )

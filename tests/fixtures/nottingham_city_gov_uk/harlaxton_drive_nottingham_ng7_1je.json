@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031553830 ",
+      "method": "GET",
+      "url": "https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031553830",
+      "final_url": "https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031553830",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "date": "Sat, 26 Sep 2026 20:30:58 GMT",
+        "content-length": "1083"
+      },
+      "content_b64": "ew0KICAidXBybiI6ICIxMDAwMzE1NTM4MzAiLA0KICAiYWRkcmVzcyI6ICIxMDggSEFSTEFYVE9OIERSSVZFIiwNCiAgInBvc3Rjb2RlIjogIk5HNyAxSkUiLA0KICAiYmluVHlwZXMiOiBbDQogICAgIldhc3RlIiwNCiAgICAiUmVjeWNsaW5nIiwNCiAgICAiR2FyZGVuIg0KICBdLA0KICAibmV4dENvbGxlY3Rpb25zIjogWw0KICAgIHsNCiAgICAgICJjb2xsZWN0aW9uVHlwZSI6ICJXYXN0ZSIsDQogICAgICAiY29sbGVjdGlvbkRhdGUiOiAiMjAyNi0xMC0wMVQwNzowMDowMCIsDQogICAgICAiY29sbGVjdGlvbkRheSI6ICJUaHVyc2RheSINCiAgICB9LA0KICAgIHsNCiAgICAgICJjb2xsZWN0aW9uVHlwZSI6ICJSZWN5Y2xpbmciLA0KICAgICAgImNvbGxlY3Rpb25EYXRlIjogIjIwMjYtMTAtMDhUMDc6MDA6MDAiLA0KICAgICAgImNvbGxlY3Rpb25EYXkiOiAiVGh1cnNkYXkiDQogICAgfSwNCiAgICB7DQogICAgICAiY29sbGVjdGlvblR5cGUiOiAiR2FyZGVuIiwNCiAgICAgICJjb2xsZWN0aW9uRGF0ZSI6ICIyNjUwLTAxLTEwVDAwOjAwOjAwIiwNCiAgICAgICJjb2xsZWN0aW9uRGF5IjogIlRodXJzZGF5Ig0KICAgIH0NCiAgXSwNCiAgImhhc1dhc3RlIjogdHJ1ZSwNCiAgImhhc1JlY3ljbGluZyI6IHRydWUsDQogICJoYXNHYXJkZW4iOiB0cnVlLA0KICAiaGFzRm9vZCI6IGZhbHNlLA0KICAiaXNDb21tdW5hbCI6IGZhbHNlLA0KICAibmV4dEJpbklzV2FzdGUiOiB0cnVlLA0KICAibmV4dEJpbklzUmVjeWNsaW5nIjogZmFsc2UsDQogICJuZXh0QmluSXNHYXJkZW4iOiBmYWxzZSwNCiAgIm5leHRCaW5Jc0Zvb2QiOiBmYWxzZSwNCiAgInJlY3ljbGluZ1dlZWsiOiAiUmVjeWNsaW5nIFdlZWsgQSIsDQogICJuZXh0Q29sbGVjdGlvblR5cGUiOiAiV2FzdGUiLA0KICAibmV4dENvbGxlY3Rpb25EYXRlIjogIjIwMjYtMTAtMDFUMDc6MDA6MDAiLA0KICAib2xkU3R5bGVDYXRlZ29yeUZvck15UHJvcGVydHkiOiAid2FzdGUtaGFzZ2FyZGVuIiwNCiAgImNvbGxlY3Rpb25EYXkiOiAiVGh1cnNkYXkiLA0KICAiY2FsZW5kYXJEYXkiOiAiVGh1cnNkYXkiLA0KICAiY29udGV4dEpvYnMiOiBudWxsDQp9"
+    }
+  ]
+}
