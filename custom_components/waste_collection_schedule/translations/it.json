@@ -8841,36 +8841,6 @@
         },
         "data_description": {}
       },
-      "args_buergerportal_de": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "number": "Numero",
-          "operator": "Operatore",
-          "show_volume": "Show Volume",
-          "street": "Strada",
-          "subdistrict": "Subdistrict"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_buergerportal_de": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "number": "Numero",
-          "operator": "Operatore",
-          "show_volume": "Show Volume",
-          "street": "Strada",
-          "subdistrict": "Subdistrict"
-        },
-        "data_description": {}
-      },
       "args_ics_awd_online_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -10174,6 +10144,39 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_buergerportal_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "District",
+          "number": "Numero civico",
+          "operator": "Operator",
+          "street": "Via",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
+      },
+      "reconfigure_buergerportal_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "district": "District",
+          "number": "Numero civico",
+          "operator": "Operator",
+          "street": "Via",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_app_abfallplus_de": {
         "title": "Configurazione Sorgente",

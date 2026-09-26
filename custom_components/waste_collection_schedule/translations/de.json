@@ -8906,36 +8906,6 @@
         },
         "data_description": {}
       },
-      "args_buergerportal_de": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Ort",
-          "number": "Hausnummer",
-          "operator": "Betreiber",
-          "show_volume": "Große Container anzeigen",
-          "street": "Straße",
-          "subdistrict": "Ortsteil"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_buergerportal_de": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Ort",
-          "number": "Hausnummer",
-          "operator": "Betreiber",
-          "show_volume": "Große Container anzeigen",
-          "street": "Straße",
-          "subdistrict": "Ortsteil"
-        },
-        "data_description": {}
-      },
       "args_ics_awd_online_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -10247,6 +10217,39 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_buergerportal_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "District",
+          "number": "Hausnummer",
+          "operator": "Operator",
+          "street": "Straße",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_buergerportal_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "District",
+          "number": "Hausnummer",
+          "operator": "Operator",
+          "street": "Straße",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_app_abfallplus_de": {
         "title": "Quelle konfigurieren",

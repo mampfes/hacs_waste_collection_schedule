@@ -1340,7 +1340,6 @@ If you already have enough information for your municipality/region, you are ver
 - [AbfallNavi (RegioIT.de)](/doc/source/abfallnavi_de.md) / regioit.de
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [abfallverband-rheingau](/doc/ics/mein_abfallkalender_online.md) / abfallverband-rheingau.de
-- [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Abfallwirtschaft Altenburger Land](/doc/source/awido_de.md) / awb-altenburg.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
@@ -1401,17 +1400,36 @@ If you already have enough information for your municipality/region, you are ver
 - [ALBA Berlin](/doc/source/abfall_io_graphql.md) / berlin.alba.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Albrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Alf](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Alf (Alf)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Alflen (Alflen Peterskaul)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Alflen (Alflen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Allendorf](/doc/source/lobbe_app.md) / lobbe.app
 - [Allensbach](/doc/source/muellmann_app_de.md) / allensbach.muellmann-app.de
 - [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
 - [Allershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Allmendingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Ennahofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Grötzingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Hausen ob Allmendingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Niederhofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Pfraunstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Schwörzkirch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Allmendingen (Weilersteußl.)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Alsdorf](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Alsdorf](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Altena](/doc/source/lobbe_app.md) / lobbe.app
 - [Altenbeken](/doc/source/lobbe_app.md) / lobbe.app
 - [Altgandersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Altheim](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Altheim (Alb)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Altheim (Alb) (Söglingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Altheim (Alb) (Zähringen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Altlay (Altlay)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
+- [Altstrimmig](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Altstrimmig (Altstrimmig)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [ALW Wolfenbüttel](/doc/source/jumomind_de.md) / alw-wf.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
@@ -1419,12 +1437,26 @@ If you already have enough information for your municipality/region, you are ver
 - [AMBnet](/doc/ics/ambnet_biz.md) / ambnet.biz
 - [Amelith](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Amelsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Amstetten](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Amstetten (Bräunisheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Amstetten (Hofstett-Emerbuch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Amstetten (Reutti)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Amstetten (Schalkstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Amstetten (Stubersheim)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Amt Bad Wilsnack/Weisen (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis](/doc/source/abfall_io_graphql.md) / lrasbk.de
 - [Amt Lenzen-Elbtalaue (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Meyenburg (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Amt Putlitz/Berge (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Amöneburg](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Amöneburg (Erfurtshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Amöneburg (Mardorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Amöneburg (Roßdorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Amöneburg (Rüdigheim)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Andershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Angelburg (Frechenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Angelburg (Gönnern)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Angelburg (Lixfeld)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Angerstein](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Anzing](/doc/source/awido_de.md) / lra-ebe.de
 - [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1435,9 +1467,11 @@ If you already have enough information for your municipality/region, you are ver
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io_graphql.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
+- [Asselfingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [ATHOS GmbH](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
+- [Auderath (Auderath)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Augsburg](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Aurich (MKW)](/doc/source/jumomind_de.md) / mkw-grossefehn.de
 - [Avendshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1472,7 +1506,19 @@ If you already have enough information for your municipality/region, you are ver
 - [Bad Arolsen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Berleburg](/doc/source/lobbe_app.md) / lobbe.app
+- [Bad Bertrich](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bad Bertrich (Bad Bertrich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bad Bertrich (Bad-Bertrich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bad Bertrich (Kennfus)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Bad Driburg](/doc/source/lobbe_app.md) / lobbe.app
+- [Bad Endbach](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Bottenhorn)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Dernbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Günterod)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Hartenrod)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Hülshof)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Schlierbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Bad Endbach (Wommelshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Bad Gandersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1487,7 +1533,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Baesweiler](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Baesweiler](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Baiern](/doc/source/awido_de.md) / lra-ebe.de
+- [Ballendorf](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Balve](/doc/source/lobbe_app.md) / lobbe.app
+- [Balzheim (Oberbalzheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Balzheim (Unterbalzheim)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Bamberg (City/Stadt)](/doc/source/stadt_bamberg_de.md) / stadt.bamberg.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
@@ -1495,26 +1544,85 @@ If you already have enough information for your municipality/region, you are ver
 - [Battenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [Bedburg (Bedburg/Blerichen)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Broich)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Gewerbegebiet Mühlenerft)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Kaster)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Kirchherten)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Kirchtroisdorf)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Kirdorf)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Kleintroisdorf)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Königshoven)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Lipp)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Oppendorf)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Pütz)](/doc/source/buergerportal_de.md) / bedburg.de
+- [Bedburg (Rath)](/doc/source/buergerportal_de.md) / bedburg.de
 - [Behrensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Beilstein (Beilstein)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Beimerstetten](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Beimerstetten (Eiselau)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Beimerstetten (Hagen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Bellenberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/bellenberg/abfallkalender
 - [Beltershausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/1-beltershausen
 - [Bentierode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Berghülen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Berghülen (Bühlenhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Berghülen (Treffensbuch)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berka](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Berlin](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [Bernstadt](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Berwartshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Bestwig](/doc/source/lobbe_app.md) / lobbe.app
 - [Beulshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Beuren](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Beuren (Beuren)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Beverungen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Biebergemünd](/doc/ics/mein_abfallkalender_online.md) / biebergemuend.de
+- [Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Breidenstein)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Dexbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Eckelshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Engelbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Katzenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Kombach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Wallau)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Biedenkopf (Weifenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
 - [Billerbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Binningen](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Binningen (Binningen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Bishausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Blankenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Blankenrath](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Blankenrath (Blankenrath)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Blaubeuren](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Altental)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Asch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Beiningen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Gerhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Pappelau)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Pappelau-Erstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Seißen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Seißen-Wennenden)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Sonderbuch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Sotzenhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaubeuren (Weiler)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Blaustein (Arnegg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Bermaringen - Hohenstein)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Bermaringen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Dietingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Ehrenstein)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Herrlingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Klingenstein)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Lautern)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Markbronn)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Weidach)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Blaustein (Wippingen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Bodenfelde](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bodman-Ludwigshafen](/doc/source/muellmann_app_de.md) / bodman.muellmann-app.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
@@ -1522,30 +1630,60 @@ If you already have enough information for your municipality/region, you are ver
 - [Bonn](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Borchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Borgentreich](/doc/source/lobbe_app.md) / lobbe.app
+- [Brachtendorf (Brachtendorf)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Brakel](/doc/source/lobbe_app.md) / lobbe.app
 - [Brandenburg an der Havel](/doc/ics/brandenburg_an_der_havel.md) / stadt-brandenburg.de
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
+- [Breidenbach](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Achenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Kleingladenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Niederdieten)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Oberdieten)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Wiesenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breidenbach (Wolzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Breitingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
 - [Bremerhavener Entsorgungsgesellschaft mbH](/doc/source/beg_logistics_de.md) / beg-bhv.de
+- [Bremm (Bremm)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bremm (Bremm-Am Storchenhaus)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bremm (Bremm-Kirchstraße)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Brensbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Breuberg](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Briedel](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedel-Briedeler Heck)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedel-Bummkopf)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedel-Maiermund)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedel-Römerstraße)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedel (Briedeler Heck)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Brieden (Brieden)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Briedern (Briedern)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
+- [Brohl](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Brohl (Brohl)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bromskirchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bruchhof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bruck](/doc/source/awido_de.md) / lra-ebe.de
 - [Brunsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Brunstein](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Bruttig-Fankel](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bruttig-Fankel (Bruttig)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bruttig-Fankel (Fankel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Buch](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/buch/abfallkalender
 - [Buensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Bullay](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Bullay (Bullay)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Burgenlandkreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Burgwald](/doc/source/lobbe_app.md) / lobbe.app
+- [Börslingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Büchel](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Büchel (Büchel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Bühle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Büren](/doc/source/lobbe_app.md) / lobbe.app
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
-- [Bürgerportal Bedburg](/doc/source/buergerportal_de.md) / bedburg.de
 - [C-Trace](/doc/source/c_trace_de.md) / c-trace.de
 - [Cederbaum Braunschweig](/doc/source/cederbaum_de.md) / cederbaum.de
 - [Celle](/doc/source/jumomind_de.md) / zacelle.de
@@ -1556,6 +1694,19 @@ If you already have enough information for your municipality/region, you are ver
 - [Clus](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Coburg Entsorgungs- und Baubetrieb CEB](/doc/source/ceb_coburg_de.md) / ceb-coburg.de
+- [Cochem](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem Sehl)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem-Brauheck)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem-Cond)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem-Sehl)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cochem (Cochem-Stadt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Cölbe](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Cölbe (Bernsdorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Cölbe (Bürgeln)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Cölbe (Reddehausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Cölbe (Schwarzenborn)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Cölbe (Schönstadt)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Dahlem](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Dankelsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dannhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1563,6 +1714,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
 - [Dassel](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dassensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Dautphetal (Allendorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Buchenau)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Damshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Dautphe)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Elmshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Friedensdorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Herzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Holzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Hommertshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Mornshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Silberg)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Dautphetal (Wolfgruben)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Deitersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Delbrück](/doc/source/lobbe_app.md) / lobbe.app
 - [Delliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1571,9 +1734,19 @@ If you already have enough information for your municipality/region, you are ver
 - [Diemelsee](/doc/source/lobbe_app.md) / lobbe.app
 - [Diemelstadt](/doc/source/lobbe_app.md) / lobbe.app
 - [Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR](/doc/ics/mein_abfallkalender_online.md) / dlb-aoer.de
+- [Dietenheim](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dietenheim (Regglisweiler - Kreuthöfe)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dietenheim (Regglisweiler)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Dinkelhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
+- [Dohr (Dohr)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de
+- [Dornstadt](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dornstadt (Bollingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dornstadt (Böttingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dornstadt (Scharenstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dornstadt (Temmenhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Dornstadt (Tomerdingen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Dreihausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/2-dreihausen
 - [Drekopf](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
@@ -1582,6 +1755,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Dögerode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dörrigsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Düderode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Dünfus](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Dünfus (Dünfus)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Düngenheim](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Düngenheim (Düngenheim)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
 - [EAW Rheingau-Taunus-Kreis](/doc/ics/eaw_rheingau_taunus_de.md) / eaw-rheingau-taunus.de
 - [EAW Sangerhausen (Gemos)](/doc/ics/eaw_wastebox_gemos_de.md) / eaw.wastebox.gemos-management.de
@@ -1595,11 +1772,46 @@ If you already have enough information for your municipality/region, you are ver
 - [Edertal](/doc/source/lobbe_app.md) / lobbe.app
 - [Edesheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
+- [Ediger-Eller](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ediger-Eller (Ediger)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ediger-Eller (Eller)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Egelsbach](/doc/ics/mein_abfallkalender_online.md) / egelsbach.de
 - [Egmating](/doc/source/awido_de.md) / lra-ebe.de
 - [EGN Abfallkalender](/doc/source/egn_abfallkalender_de.md) / egn-abfallkalender.de
 - [EGST Steinfurt](/doc/source/abfall_io.md) / egst.de
 - [EGW Westmünsterland](/doc/source/abfallnavi_de.md) / egw.de
+- [Ehingen (Donau)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Altbierlingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Altsteußlingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Berg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Blienshofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Bockighofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Briel)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Deppenhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Dettingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Dintenhofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Dächingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Erbstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Frankenhofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Gamerschwang)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Granheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Herbertshofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Heufelden)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Kirchbierlingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Kirchen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Litzholz)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Mundingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Mühlen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Nasgenstadt)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Rißtissen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Schaiblishausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Schlechtenfeld)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Sontheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Stetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Tiefenhülen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Unterwilzingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Volkersheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Ehingen (Donau) (Weisel)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
 - [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
@@ -1610,11 +1822,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Eisingen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/eisingen/abfallkalender
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [Ellensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Ellenz-Poltersdorf](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ellenz-Poltersdorf (Ellenz)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ellenz-Poltersdorf (Ellenz-Poltersdorf)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ellenz-Poltersdorf (Poltersdorf)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Ellierode (Bad Gandersheim)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ellierode (Hardegsen)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Elvershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Elvese](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
+- [Emeringen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Emerkingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Emerkingen (Köhlberg)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Emmering](/doc/source/awido_de.md) / lra-ebe.de
 - [ENNI Energie & Umwelt Niederrhein (Moers)](/doc/ics/abfallkalender_enni_de.md) / abfallkalender.enni.de
 - [Entsorgung Dortmund GmbH (EDG)](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1625,12 +1844,24 @@ If you already have enough information for your municipality/region, you are ver
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / eglz-abfall.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
 - [Entsorgungsverband Völklingen (EVV)](/doc/source/evv_voelklingen_de.md) / evv-voelklingen.de
+- [Eppenberg (Eppenberg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Eppstein](/doc/ics/mein_abfallkalender_online.md) / eppstein.de
+- [Erbach](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Erbach (Bach)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Dellmensingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Donaurieden)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Ersingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Erstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Ringingen - Steinenfeld)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Ringingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Erbach (Wernau)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
 - [Erichsburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Erlangen](/doc/ics/mein_abfallkalender_online.md) / erlangen.de
 - [Erlensee](/doc/source/sperrmuell_erlensee_de.md) / sperrmuell.erlensee.de
+- [Ernst](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ernst (Ernst)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Ertinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Erzhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Eschborn](/doc/ics/mein_abfallkalender_online.md) / eschborn.de
@@ -1643,14 +1874,22 @@ If you already have enough information for your municipality/region, you are ver
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
 - [Espol](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Essen](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Eulgem](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Eulgem (Eulgem)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
+- [Faid](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Faid (Faid)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Feichten a. d. Alz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/feichten-alz/abfallkalender
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / frankfurtplus.de
+- [Filz (Filz)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
+- [Forst (Eifel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Forst (Eifel) (Forst (Eifel))](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Forst (Hunsrück) (Forst (Hunsrück))](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Forstinning](/doc/source/awido_de.md) / lra-ebe.de
 - [Frankenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1660,10 +1899,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Fredelsloh](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
+- [Fronhausen](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Bellnhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Erbenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Hassenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Holzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Oberwalgern)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Fronhausen (Sichertshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Fürstenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gailingen am Hochrhein](/doc/source/muellmann_app_de.md) / gailingen.muellmann-app.de
 - [Gaimersheim](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gaimersheim/abfallkalender
+- [Gamlen (Gamlen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Garlebsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gehrenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
@@ -1689,21 +1936,45 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Rödinghausen](/doc/ics/abfall_export_vcal.md) / roedinghausen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
+- [Gevenich (Gevenich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
 - [Gierswalde](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gillenbeuren](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Gillenbeuren (Gillenbeuren)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Gillersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Gladebeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gladenbach](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Bellnhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Diedenshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Erdhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Friebertshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Frohnhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Gladenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Kehlnbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Mornshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Rachelshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Runzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Römershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Rüchenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Sinkershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Weidenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Gladenbach (Weitershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Glashütten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Glonn](/doc/source/awido_de.md) / lra-ebe.de
 - [Goseplack](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
 - [Greene](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Greimersburg](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Greimersburg (Greimersburg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Gremsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Grenderich (Grenderich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Griesingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Gronau](/doc/source/gronau_de.md) / abfallkalender.regioit.de/kalender-wml
 - [Großenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Grundsheim](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
 - [Grävenwiesbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
@@ -1720,11 +1991,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Halsbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/halsbach/abfallkalender
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Halver](/doc/source/lobbe_app.md) / lobbe.app
+- [Hambuch (Hambuch)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Hammenstedt](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hardegsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Harriehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Haserich (Haserich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
+- [Hauroth (Hauroth)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Hausen am Bussen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Heckenbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1738,10 +2013,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Hellenthal](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Helmscherode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
+- [Heroldstatt](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Heroldstatt (Breithülen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Heroldstatt (Ennabeuren)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Heroldstatt (Sontheim)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Herzogenrath](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Herzogenrath](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Heskem](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/6-heskem
+- [Hesweiler (Hesweiler)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Hettensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hevensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1758,6 +2038,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Holtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Holtershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Holzkirch](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Homburg](/doc/ics/mein_abfallkalender_online.md) / homburg.de
 - [Hoppensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
@@ -1767,7 +2048,21 @@ If you already have enough information for your municipality/region, you are ver
 - [Höckelheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Hürtgenwald](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/hurtgenwald/abfallkalender
+- [Hüttisheim](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Hüttisheim (Humlangen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Iber](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Illerich](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Illerich (Illerich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Illerkirchberg (Beutelreusch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Buch)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Gassenäcker-Nord)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Mussingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Oberkirchberg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Oberweiler)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerkirchberg (Unterkirchberg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerrieden](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerrieden (Dorndorf)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Illerrieden (Wangen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Ilschhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/7-ilschhausen
 - [Imbshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1782,7 +2077,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Juliusmühle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
+- [Kaifenheim (Kaifenheim)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Kail (Kail)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Kaisersesch](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Kaisersesch (Kaisersesch)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Kaisersesch (Neuhof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Kalefeld](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Kalenborn (Kalenborn)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Kall](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Kammerborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1800,6 +2101,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
 - [Kirchweidach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kirchweidach/abfallkalender
+- [Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
+- [Kliding (Kliding)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten (Annischerhof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten (Klotten)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten (Klotten-Mittelstraße)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten (Klotten-Räuschelstraße)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Klotten (Landkern-Kavelocher Hof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kohnsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
@@ -1882,9 +2191,24 @@ If you already have enough information for your municipality/region, you are ver
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
 - [Kupferberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kupferberg/abfallkalender
 - [Kuventhal](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
-- [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
 - [Lagershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lahntal (Brungershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Caldern)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Goßfelden)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Göttingen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Kernbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Sarnau)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lahntal (Sterzhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Laichingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Laichingen (Feldstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Laichingen (Machtolsheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Laichingen (Suppingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Landkern](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Landkern (56759 Neuhof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Landkern (Landkern)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Landkern (Neuhof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Landkern (Schöne Aussicht)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
@@ -1980,12 +2304,29 @@ If you already have enough information for your municipality/region, you are ver
 - [Landshut](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Langen](/doc/ics/mein_abfallkalender_online.md) / langen.de
+- [Langenau](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Albeck - Osterstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Albeck - Stuppelau)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Albeck)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Göttingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Hörvelsingen - Witthau)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Langenau (Hörvelsingen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Langenholtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Langerwehe](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Langerwehe](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Laubach](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Laubach (Laubach)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Lauenberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lauterach](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lauterach (Laufenmühle)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lauterach (Neuburg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lauterach (Reichenstein)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lauterach (Talheim)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
 - [Leidenhofen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/8-leidenhofen
+- [Leienkaul](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Leienkaul (Laubach)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Leienkaul (Leienkaul)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Leinetal](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -1993,21 +2334,45 @@ If you already have enough information for your municipality/region, you are ver
 - [Lichtenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Lichtenborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lichtenfels](/doc/source/lobbe_app.md) / lobbe.app
+- [Lieg](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Lieg (Lieg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Liesenich (Liesenich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Lindau](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Linnich](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Linnich](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Linsengericht](/doc/ics/mein_abfallkalender_online.md) / linsengericht.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lobbe App](/doc/source/lobbe_app.md) / lobbe.app
+- [Lohra](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Altenvers)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Damm)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Kirchvers)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Nanz-Willershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Reimershausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Rodenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Rollshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Seelbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Lohra (Weipoltshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Loiching](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/loiching/abfallkalender
+- [Lonsee](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Ettlenschieß)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Halzhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Luizhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Radelstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Sinabronn)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Lonsee (Urspring)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lutterbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lutterhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lutzerath (Lutzerath)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Lutzerath (Lutzerath-Driesch)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
 - [Lütgenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lüthorst](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lütz](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Lütz (Lütz)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Lützelbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Mackensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
@@ -2019,50 +2384,88 @@ If you already have enough information for your municipality/region, you are ver
 - [Markt Kastl (Lauterachtal)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl-lauterachtal/abfallkalender
 - [Markt Schwaben](/doc/source/awido_de.md) / lra-ebe.de
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Masburg](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Masburg (Masburg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Mechernich](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Medebach](/doc/source/lobbe_app.md) / lobbe.app
 - [Mein-Abfallkalender.online](/doc/ics/mein_abfallkalender_online.md) / mein-abfallkalender.online
 - [Meinerzhagen](/doc/source/lobbe_app.md) / lobbe.app
 - [Menden](/doc/source/lobbe_app.md) / lobbe.app
+- [Merklingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Merklingen (Widderstall)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Merzig](/doc/ics/mein_abfallkalender_online.md) / merzig.de
 - [Meschede](/doc/source/lobbe_app.md) / lobbe.app
+- [Mesenich](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Mesenich (Mesenich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Metzingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [MHEG Mülheim an der Ruhr](/doc/source/abfallnavi_de.md) / mheg.de
 - [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
+- [Mittelstrimmig](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Mittelstrimmig (Mittelstrimmig)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Monheim am Rhein](/doc/source/monheim_de.md) / monheim.de
 - [Monschau](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Monschau](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Moos](/doc/source/muellmann_app_de.md) / moos.muellmann-app.de
 - [Moosach](/doc/source/awido_de.md) / lra-ebe.de
 - [Moringen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Moritzheim](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Moritzheim (Moritzheim)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Moselkern](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Moselkern (Moselkern)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Munderkingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Munderkingen (Algershofen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [myWasteWatcher (WasteWatcher.NET)](/doc/source/mywastewatcher_de.md) / mywastewatcher.de
-- [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MZV Hegau](/doc/source/mzvhegau_de.md) / mzvhegau.de
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
 - [Mölln](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln
+- [Möntenich (Möntenich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
+- [Müden (Mosel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Müden (Mosel) (Müden (Mosel))](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Müden (Mosel) (Müdener Berg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Mühlenkreis Minden-Lübbecke](/doc/source/muehlenkreis_de.md) / muehlenkreis.de
 - [Mühlhausen-Ehingen](/doc/source/muellmann_app_de.md) / muehlhausen.muellmann-app.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Mühlingen](/doc/source/muellmann_app_de.md) / muehlingen.muellmann-app.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
+- [Müllenbach](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Müllenbach (Müllenbach)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Müllershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Müllmann-App](/doc/source/muellmann_app_de.md) / muellmann-app.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
 - [München Landkreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Münchhausen](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Münchhausen (Niederasphe)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Münchhausen (Oberasphe)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Münchhausen (Simtshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Münchhausen (Wollmar)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Nachrodt-Wiblingwerde](/doc/source/lobbe_app.md) / lobbe.app
 - [Naensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Neef](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Neef (Neef)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Neenstetten](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Negenborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Nehren (Nehren)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Nellingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Nellingen (Aichen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Nellingen (Oppingen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Nerenstetten](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Nerenstetten (Wettingen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Neu-Anspach](/doc/ics/mein_abfallkalender_online.md) / neu-anspach.de
 - [Neu-Ulm](/doc/source/neu_ulm_de.md) / nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender
 - [Neuenrade](/doc/ics/neuenrade_de.md) / neuenrade.de
+- [Neuhof (Neuhof)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Neumünster (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neunkirchen Siegerland](/doc/source/abfall_neunkirchen_siegerland_de.md) / neunkirchen-siegerland.de
+- [Neustadt](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Neustadt (Mengsberg)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Neustadt (Momberg)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Neustadt (Speckswinkel)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Neustadt a.d. Waldnaab](/doc/source/awido_de.md) / neustadt.de
 - [Neustadt an der Weinstraße](/doc/source/jumomind_de.md) / neustadt.eu
 - [Nidderau](/doc/ics/mein_abfallkalender_online.md) / nidderau.de
@@ -2078,11 +2481,24 @@ If you already have enough information for your municipality/region, you are ver
 - [Nörten-Hardenberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Nörvenich](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Nörvenich](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
+- [Oberdischingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
+- [Obermarchtal](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Obermarchtal (Datthausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Obermarchtal (Gütelhofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Obermarchtal (Luppenhofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Obermarchtal (Mittenhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Obermarchtal (Reutlingendorf)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Oberpframmern](/doc/source/awido_de.md) / lra-ebe.de
 - [Oberrieden](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberrieden/abfallkalender
 - [Oberroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberroth/abfallkalender
+- [Oberstadion](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Oberstadion (Hundersingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Oberstadion (Moosbeuren)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Oberstadion (Mundeldingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Oberstadion (Mühlhausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Oberstadion (Rettighofen)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
 - [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Odagsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2102,9 +2518,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Osterode am Harz](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Ostprignitz-Ruppin](/doc/source/ostprignitz_ruppin_de.md) / ostprignitz-ruppin.de
+- [Panzweiler (Panzweiler)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Parensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Pastetten](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pastetten/abfallkalender
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de
+- [Peterswald-Löffelscheid (Löffelscheid)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Peterswald-Löffelscheid (Peterswald)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Peterswald-Löffelscheid (Peterswald-Löffelscheid)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Pfaffenhausen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pfaffenhausen/abfallkalender
 - [Pirmasens](/doc/ics/mein_abfallkalender_online.md) / pirmasens.de
 - [Planegg](/doc/ics/mein_abfallkalender_online.md) / planegg.de
@@ -2112,6 +2532,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Pliening](/doc/source/awido_de.md) / lra-ebe.de
 - [Poing](/doc/source/awido_de.md) / lra-ebe.de
 - [Polier](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Pommern](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Pommern (Pommern)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Pommern (Pommern-Zehnthofstraße)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Portenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [PreZero](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network
@@ -2120,12 +2543,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Prignitz](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Pöring (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
+- [Pünderich (Pünderich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Radolfzell am Bodensee](/doc/source/muellmann_app_de.md) / radolfzell.muellmann-app.de
+- [Rammingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Rauischholzhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/10-rauischholzhausen
+- [Rechtenstein](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Reichenau](/doc/source/muellmann_app_de.md) / reichenau.muellmann-app.de
+- [Reidenhausen](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Reidenhausen (Reidenhausen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Relliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Remondis Rheinland](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Rengershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2142,6 +2570,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Rittierode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Rodenbach](/doc/ics/mein_abfallkalender_online.md) / rodenbach.de
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
+- [Roes](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Roes (Roes)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Roetgen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Roetgen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Roggenburg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/roggenburg/abfallkalender
@@ -2149,6 +2579,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Rosenplänter](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Rosenthal](/doc/source/lobbe_app.md) / lobbe.app
 - [Rotenkirchen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Rottenacker](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Rottenacker (Neudorf)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Rottweil](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Rottweil](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Roßberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/11-rossberg
@@ -2162,13 +2594,33 @@ If you already have enough information for your municipality/region, you are ver
 - [Salzderhelden](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Sankt Aldegund](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Sankt Aldegund (Sankt Aldegund)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Schachtenbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
+- [Schauren (Schauren)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Schelklingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Gundershofen - Springen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Gundershofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Hausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Hütten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Ingstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Justingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Schmiechen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Sondernach)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Talsteußlingen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Teuringshofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schelklingen (Urspring)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Schlarpe](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schleiden](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [Schmitt](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Schmitt (Schmitt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schnedinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Schnürpflingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schnürpflingen (Ammerstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Schnürpflingen (Beuren)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Schoningen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schwabach](/doc/source/abfuhrplan_schwabach_de.md) / abfuhrplan-schwabach.de
 - [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
@@ -2184,6 +2636,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Senden (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Senheim](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Senheim (Senhals)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Senheim (Senheim)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Setzingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [Sievershausen (Dassel)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sievershausen (Einbeck)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2191,6 +2647,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Simmerath](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Singen (Hohentwiel)](/doc/source/muellmann_app_de.md) / singenah.muellmann-app.de
 - [Sohlingen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Sosberg (Sosberg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
@@ -2258,6 +2715,19 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadtwerke Rösrath](/doc/source/stadtwerke_roesrath_de.md) / stadtwerke-roesrath.de/service/abfuhrkalender
 - [Stadtwerke Singen](/doc/source/stadtwerke_singen_de.md) / stadtwerke-singen.de
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
+- [Staig](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Altheim)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Essendorf)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Harthausen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Staig)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Steinberg)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Staig (Weinstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Steffenberg (Niedereisenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Steffenberg (Niederhörlen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Steffenberg (Obereisenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Steffenberg (Oberhörlen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Steffenberg (Quotshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Steffenberg (Steinperf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
@@ -2281,10 +2751,15 @@ If you already have enough information for your municipality/region, you are ver
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Team Orange (Landkreis Würzburg)](/doc/source/team_orange_de.md) / team-orange.info
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
+- [Tellig](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Tellig (Tellig)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Thüdinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
 - [Tonnenticker Pro](/doc/source/tonnenticker_pro_de.md) / regioit.de
 - [Trausnitz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/trausnitz/abfallkalender
+- [Treis-Karden (Karden)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Treis-Karden (Kardener Berg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Treis-Karden (Treis)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Trögen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
@@ -2296,12 +2771,29 @@ If you already have enough information for your municipality/region, you are ver
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
+- [Ulmen](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Hochporten)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Meiserich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Ulmen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Ulmen-Furth)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Ulmen-Meiserich)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Ulmen (Ulmen-Vorpochten)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Untermarchtal](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Unterroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/unterroth/abfallkalender
+- [Unterstadion](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Unterstadion (Bettighofen)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Unterwachingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Urmersbach](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Urmersbach (Urmersbach)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Urschmitt](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Urschmitt (Urschmitt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Uslar](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vahle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Valwig (Valwig)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Valwig (Valwigerberg)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Valwig (Valwigerberg..)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Vardeilsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
 - [Verliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2319,9 +2811,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Vöhl](/doc/source/lobbe_app.md) / lobbe.app
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Wachenhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wagenhausen (Wagenhausen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Wahmbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Waldshut](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Waldshut](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Walhausen (Walhausen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Warburg](/doc/source/lobbe_app.md) / lobbe.app
 - [Warstein](/doc/source/lobbe_app.md) / lobbe.app
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
@@ -2329,6 +2823,9 @@ If you already have enough information for your municipality/region, you are ver
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Weddehagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Weidenstetten](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Weidenstetten (Schechstetten)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Weiler (Weiler)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Weilerswist](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de
 - [Weimarer Land](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
@@ -2338,10 +2835,26 @@ If you already have enough information for your municipality/region, you are ver
 - [Werdohl](/doc/source/lobbe_app.md) / lobbe.app
 - [Wermelskirchen](/doc/source/wermelskirchen_de.md) / bavweb.de/Bergischer-Abfallwirtschaftsverband/Abfuhrkalender-Service/Wermelskirchen
 - [Wermertshausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/12-wermertshausen
+- [Westerheim](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Westerheim (Heuberg)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Westerhof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Westerstetten](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Westerstetten (Hinterdenkental)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Westerstetten (Vorderd. Tal)](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Westerstetten (Vorderd.Tal)](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Wetter](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Wetter](/doc/ics/mein_abfallkalender_online.md) / stadtbetrieb-wetter.de
+- [Wetter (Amönau)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Mellnau)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Niederwetter)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Oberndorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Oberrosphe)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Todenhausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Treisbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Unterrosphe)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wetter (Warzenbach)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Wetze](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
 - [Wiebrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2353,12 +2866,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Wirfus (Wirfus)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Wirtschaftsbetriebe Duisburg (WBD)](/doc/source/abfall_io_graphql.md) / wb-duisburg.de
 - [Wittelsberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/13-wittelsberg
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
+- [Wohratal (Halsdorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wohratal (Hertingshausen)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wohratal (Langendorf)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [Wohratal (Wohra)](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [Wolbrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wolfesing (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [Wollmerath (Wollmerath)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Wolperode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wrescherode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wutach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/wutach/abfallkalender
@@ -2373,6 +2892,14 @@ If you already have enough information for your municipality/region, you are ver
 - [ZAW-SR](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [ZAW-SR Straubing](/doc/source/zaw_sr_de.md) / zaw-sr.de
 - [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
+- [Zell (Mosel)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zell (Mosel) (Stadt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zell (Mosel) (Zell-Barl)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zell (Mosel) (Zell-Kaimt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zell (Mosel) (Zell-Merl)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zell (Mosel) (Zell-Stadt)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zettingen](/doc/source/buergerportal_de.md) / cochem-zell-online.de
+- [Zettingen (Zettingen)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
 - [ZKE Saarbrücken](/doc/source/zke_sb_de.md) / zke-sb.de
@@ -2389,6 +2916,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
 - [Zülpich](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Öllingen](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Öpfingen](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Üssinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 </details>
 
