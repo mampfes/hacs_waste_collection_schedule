@@ -464,15 +464,25 @@ class WasteInfoProperty:
         for api in apis:
             localities = self._get(source, api, "localities.json")["localities"]
             every_locality += [row["name"] for row in localities]
-            suburb, street, number = self._address(source, localities)
+            try:
+                suburb, street, number = self._address(source, localities)
+            except SourceArgumentNotFoundWithSuggestions:
+                # A one-line address ends in none of this register's suburbs;
+                # a later register may still hold it.
+                continue
             row = _find(localities, suburb)
             if row is not None:
                 found = (api, row)
                 break
-        suburb_field = self.street_address or self.suburb
         if found is None:
+            if self.street_address is not None:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    self.street_address,
+                    params[self.street_address],
+                    sorted(every_locality),
+                )
             raise SourceArgumentNotFoundWithSuggestions(
-                suburb_field, suburb, every_locality
+                self.suburb, suburb, every_locality
             )
         api, locality = found
 
@@ -539,11 +549,14 @@ class WasteInfoRetriever(LookupChainRetriever):
 class WasteInfoEventsParser(Parser["list[dict[str, Any]]"]):
     """One ``{"date", "type", "name"}`` record per collection in a calendar.
 
-    A one-off event carries its date in ``start``. A weekly one carries
-    ``start_date`` and ``daysOfWeek`` (FullCalendar's numbering: 0 = Sunday,
-    1 = Monday ... 6 = Saturday) and is expanded from its start date (or today,
-    if later) to the end of the window. An entry with no ``event_type`` (the
-    property summary the calendar opens with) is skipped.
+    A one-off event carries its date in ``start``, and a multi-day one (a
+    drop-off weekend) also an ``end``, exclusive as in FullCalendar, so
+    ``{"start": "2026-10-10", "end": "2026-10-12"}`` is the 10th and 11th. A
+    weekly one carries ``start_date`` and ``daysOfWeek`` (FullCalendar's
+    numbering: 0 = Sunday, 1 = Monday ... 6 = Saturday) and is expanded from its
+    start date (or today, if later) to the end of the window. The row that also
+    carries the ``property`` details is an ordinary event like the others. An
+    entry with no ``event_type`` names no collection and is skipped.
 
     Args:
         window_days: how far ahead a weekly event is expanded (default a year,
@@ -575,7 +588,16 @@ class WasteInfoEventsParser(Parser["list[dict[str, Any]]"]):
                         dates.append(day)
                     day += timedelta(days=1)
             elif "start" in event:
-                dates = [date.fromisoformat(event["start"][:10])]
+                day = date.fromisoformat(event["start"][:10])
+                last = (
+                    date.fromisoformat(event["end"][:10]) - timedelta(days=1)
+                    if event.get("end")
+                    else day
+                )
+                dates = [day]
+                while day < last:
+                    day += timedelta(days=1)
+                    dates.append(day)
             else:
                 continue
             records += [

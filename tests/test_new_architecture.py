@@ -915,13 +915,28 @@ class TestWasteInfoComponents:
         from waste_collection_schedule.service.WasteInfo import WasteInfoEventsParser
 
         payload = [
-            # The property summary the calendar opens with: no event_type.
-            {"property": {"address": "1 Test St"}, "start_date": "2026-09-21"},
             # Weekly on Sunday, which FullCalendar numbers 0.
             {"start_date": "2026-09-20", "daysOfWeek": [0], "event_type": "organic"},
-            # Weekly on Monday.
-            {"start_date": "2026-09-21", "daysOfWeek": [1], "event_type": "waste"},
+            # Weekly on Monday. The real calendars put the property details on
+            # one ordinary event row like this one.
+            {
+                "property": {"address": "1 Test St"},
+                "start_date": "2026-09-21",
+                "daysOfWeek": [1],
+                "event_type": "waste",
+            },
             {"start": "2026-10-01", "event_type": "special", "name": "Drop off"},
+            # A drop-off weekend: FullCalendar's end is exclusive.
+            {
+                "start": "2026-10-03",
+                "end": "2026-10-05",
+                "event_type": "special",
+                "name": "Weekend",
+            },
+            # A one-day event that spells out its exclusive end.
+            {"start": "2026-10-02", "end": "2026-10-03", "event_type": "recycle"},
+            # No event_type names no collection.
+            {"start": "2026-10-02"},
         ]
         records = WasteInfoEventsParser(window_days=9)(self._response(payload))
         got = [(r["date"].isoformat(), r["type"], r["name"]) for r in records]
@@ -933,6 +948,9 @@ class TestWasteInfoComponents:
             # The window's last day (today + 9) is included.
             ("2026-10-05", "waste", None),
             ("2026-10-01", "special", "Drop off"),
+            ("2026-10-03", "special", "Weekend"),
+            ("2026-10-04", "special", "Weekend"),
+            ("2026-10-02", "recycle", None),
         ]
 
     def test_council_api_accepts_name_url_slug_and_old_spelling(self):
@@ -979,6 +997,40 @@ class TestWasteInfoComponents:
 
         step = WasteInfoProperty(("https://a", "https://b"))
         assert step(source, ()) == PropertyKey("https://b", 700)
+
+        # A one-line address whose suburb only the second register knows is
+        # not stopped by the first register failing to split it.
+        source.params = {"street_address": "29 Lackey Street, Summer Hill"}
+        step = WasteInfoProperty(
+            ("https://a", "https://b"), street_address="street_address"
+        )
+        assert step(source, ()) == PropertyKey("https://b", 700)
+
+    def test_one_line_address_unknown_to_every_register_lists_all_suburbs(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.WasteInfo import WasteInfoProperty
+
+        answers = {
+            "https://a/api/v1/localities.json": {
+                "localities": [{"id": 1, "name": "Elsewhere"}]
+            },
+            "https://b/api/v1/localities.json": {
+                "localities": [{"id": 7, "name": "Summer Hill"}]
+            },
+        }
+        source = MagicMock()
+        source.params = {"street_address": "1 Nowhere Road, Atlantis"}
+        source.session.get.side_effect = lambda url, **_: self._response(answers[url])
+
+        step = WasteInfoProperty(
+            ("https://a", "https://b"), street_address="street_address"
+        )
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            step(source, ())
+        assert raised.value.argument == "street_address"
+        assert raised.value.suggestions == ["Elsewhere", "Summer Hill"]
 
     def test_property_id_skips_the_address_lookup(self):
         from waste_collection_schedule.service.WasteInfo import (
