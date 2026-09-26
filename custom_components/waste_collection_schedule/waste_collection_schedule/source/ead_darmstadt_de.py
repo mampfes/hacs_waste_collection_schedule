@@ -1,64 +1,60 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.preprocessors import FlattenGroups
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "EAD Darmstadt"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for waste collection in Darmstadt ead.darmstadt.de"  # Describe your source
-URL = "https://ead.darmstadt.de/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Stresemannstraße": {"street": "Stresemannstraße"},
-    "Trondheimstraße": {"street": "Trondheimstraße"},
-    "Mühltalstraße": {"street": "Mühltalstraße"},
-    "Heinheimer Straße": {"street": "Heinheimer Straße 1-15, 2-16"},
-    "Kleyerstraße": {"street": "Kleyerstraße"},
-    "Untere Mühlstraße": {"street": "Untere Mühlstraße 1-29, 2-36"},
-}
+# The reply maps each date to the rounds collected on it:
+# {"03.01.2026": ["RM1", "RM2", "RM4", "PPK"], ...}. RM1/RM2/RM4 are the
+# weekly, two-weekly and four-weekly residual-waste rounds, which can fall on
+# the same day.
 
-API_URL = "https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/"
-ICON_MAP = {
-    "RM1": Icons.GENERAL_WASTE,
-    "RM2": Icons.GENERAL_WASTE,
-    "RM4": Icons.GENERAL_WASTE,
-    "WET": Icons.RECYCLING,
-    "BIO": Icons.ORGANIC,
-    "PPK": Icons.PAPER,
-}
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
+@final
+class Source(BaseSource):
+    TITLE = "EAD Darmstadt"
+    DESCRIPTION = "Source script for waste collection in Darmstadt ead.darmstadt.de"
+    URL = "https://ead.darmstadt.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    IGNORE_DUPLICATES_DEFAULT = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Stresemannstraße": {"street": "Stresemannstraße"},
+        "Trondheimstraße": {"street": "Trondheimstraße"},
+        "Mühltalstraße": {"street": "Mühltalstraße"},
+        "Heinheimer Straße": {"street": "Heinheimer Straße"},
+        "Kleyerstraße": {"street": "Kleyerstraße"},
+        "Untere Mühlstraße": {"street": "Untere Mühlstraße 1-29, 2-36"},
     }
-}
 
+    PARAMS = (street(),)
 
-class Source:
-    def __init__(
-        self, street
-    ):  # argX correspond to the args dict in the source configuration
-        self.street = street
-
-    def fetch(self):
-        params = {"type": "742394", "street": self.street}
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-
-        schedule = r.json()
-        if schedule is None or len(schedule) == 0:
-            raise SourceArgumentNotFound("street", self.street)
-
-        entries = []  # List that holds collection schedule
-        for date, waste_type_list in schedule.items():
-            for waste_type in waste_type_list:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            date, "%d.%m.%Y"
-                        ).date(),  # Collection date
-                        t=waste_type,  # Collection type
-                        icon=ICON_MAP.get(waste_type),  # Collection icon
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/",
+        params=lambda street, **_: {"type": "742394", "street": street},
+    )
+    parse = parsers.JsonParser()
+    preprocess = FlattenGroups(with_key=True)
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+        type_value_map={
+            "RM1": wt.GENERAL_WASTE,
+            "RM2": wt.GENERAL_WASTE,
+            "RM4": wt.GENERAL_WASTE,
+            "PPK": wt.PAPER,
+            "WET": wt.RECYCLABLES,
+            "BIO": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )

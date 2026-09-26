@@ -478,6 +478,7 @@ class JsonParser(Parser[Any]):
 
         parse = parsers.JsonParser("collections")     # response.json()["collections"]
         parse = parsers.JsonParser("data", "items")   # response.json()["data"]["items"]
+        parse = parsers.JsonParser(0)                 # response.json()[0]
 
     If the response is already a list at the top level, omit keys entirely.
 
@@ -513,7 +514,17 @@ class JsonParser(Parser[Any]):
                         f"API advised error: expected {key}={expected!r}, got {actual!r}"
                     )
         for key in self.keys:
-            data = data[key]
+            # An int indexes a list; an empty (or null) reply at that step is an
+            # empty result, not an error, so a lookup that matched nothing
+            # reaches RAISE_ON_EMPTY instead of an IndexError.
+            if isinstance(key, int) and (
+                data is None or (isinstance(data, list) and not data)
+            ):
+                return []
+            # ``response.json()`` can be either a mapping or a sequence, so
+            # the JSON library's statically inferred type cannot represent
+            # both string and integer keys here.
+            data = cast(Any, data)[key]
         if self.shape is not None:
             data = response_shape.validate(
                 data, self.shape, source_name=response_shape.source_name(source)

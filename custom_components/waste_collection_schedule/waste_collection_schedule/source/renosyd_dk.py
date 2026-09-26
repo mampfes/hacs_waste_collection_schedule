@@ -1,58 +1,67 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Renosyd"
-DESCRIPTION = "Renosyd collections for Skanderborg and Odder kommunes"
-URL = "https://renosyd.dk"
-TEST_CASES = {
-    "TestCase1": {
-        "house_number": "013000",
-    },
-    "TestCase2": {
-        "house_number": "012000",
-    },
-    "TestCase3": {
-        "house_number": 11000,
-    },
-}
-
-ICON_MAP = {
-    "RESTAFFALD": Icons.GENERAL_WASTE,
-    "PAPIR": Icons.PAPER,
-    "PAP": Icons.PAPER,
-    "EMBALLAGE": Icons.RECYCLING,
-    "HAVEAFFALD": Icons.ORGANIC,
-    "GLAS": Icons.GLASS,
-    "METAL": Icons.METAL,
-    "HÅRD PLAST": Icons.PLASTIC_PACKAGING,
-}
+# One record per container, each carrying its planned emptyings, each naming
+# the fractions collected. A split bin empties two fractions of one type on
+# the same day (metal and plastic).
 
 
-class Source:
-    def __init__(self, house_number: str | int):
-        house_number = str(house_number).zfill(6)
-        self._api_url = f"https://skoda-selvbetjeningsapi.renosyd.dk/api/v1/toemmekalender?nummer={house_number}"
+@final
+class Source(BaseSource):
+    TITLE = "Renosyd"
+    DESCRIPTION = "Renosyd collections for Skanderborg and Odder kommunes"
+    URL = "https://renosyd.dk"
+    COUNTRY = "dk"
+    RAISE_ON_EMPTY = True
+    IGNORE_DUPLICATES_DEFAULT = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.TEXTILES,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        response = requests.get(self._api_url)
-        response.raise_for_status()
-        data = response.json()
+    TEST_CASES: ClassVar[dict] = {
+        "TestCase1": {"house_number": "013000"},
+        "TestCase2": {"house_number": "012000"},
+        "TestCase3": {"house_number": 11000},
+    }
 
-        entries = []
+    PARAMS = (text_field("house_number", "Standplads number"),)
 
-        for item in data:
-            for toemning in item.get("planlagtetømninger", []):
-                date = datetime.strptime(toemning["dato"], "%Y-%m-%dT%H:%M:%SZ").date()
-                for fraktion in toemning["fraktioner"]:
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=fraktion,
-                            icon=ICON_MAP.get(
-                                fraktion.upper(), "mdi:trash-can-outline"
-                            ),
-                        )
-                    )
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://skoda-selvbetjeningsapi.renosyd.dk/api/v1/toemmekalender",
+        # The standplads number is six digits, zero-padded.
+        params=lambda house_number, **_: {"nummer": str(house_number).zfill(6)},
+    )
+    parse = parsers.JsonParser()
+    preprocess = Compose(
+        ExplodeList("planlagtetømninger"),
+        ExplodeList("fraktioner", into="fraktion"),
+    )
+    transform = JsonTransformer(
+        date_key=lambda record: record["dato"][:10],
+        type_key="fraktion",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Restaffald": wt.GENERAL_WASTE,
+            "Madaffald": wt.FOOD_WASTE,
+            "Glas": wt.GLASS,
+            "Papir": wt.PAPER,
+            "Pap": wt.PAPER,
+            "Plast": wt.RECYCLABLES,
+            "Metal": wt.RECYCLABLES,
+            "Mad- og drikkekartoner": wt.RECYCLABLES,
+            "Tekstilaffald": wt.TEXTILES,
+        },
+        carry_raw_label=True,
+    )

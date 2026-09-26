@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://gis.hudiksvall.se/origoserver/EDPFuture 767ffb1a36",
+      "method": "GET",
+      "url": "https://gis.hudiksvall.se/origoserver/EDPFuture",
+      "final_url": "https://gis.hudiksvall.se/origoserver/EDPFuture?address=Tr%C3%A4dg%C3%A5rdsgatan+4+Hudiksvall",
+      "body": "{\"params\":[[\"address\",\"Tr\u00e4dg\u00e5rdsgatan 4 Hudiksvall\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "etag": "W/\"76-whX96dVMMOzm1BX9Dic+Q0h0doA\"",
+        "x-powered-by": "Express, ARR/3.0, ASP.NET",
+        "ratelimit-policy": "10000;w=900",
+        "ratelimit-limit": "10000",
+        "ratelimit-remaining": "9996",
+        "ratelimit-reset": "823",
+        "access-control-allow-origin": "*",
+        "date": "Sat, 26 Sep 2026 20:48:14 GMT",
+        "content-length": "118"
+      },
+      "content_b64": "W3sidHlwZSI6Ik1hdGF2ZmFsbCIsInllYXIiOjIwMjYsIndlZWsiOjQwLCJkYXkiOiJUaXNkYWcifSx7InR5cGUiOiJSZXN0YXZmYWxsIiwieWVhciI6MjAyNiwid2VlayI6NDAsImRheSI6IlRpc2RhZyJ9XQ=="
+    }
+  ]
+}

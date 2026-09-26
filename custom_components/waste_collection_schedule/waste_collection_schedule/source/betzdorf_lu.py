@@ -1,68 +1,50 @@
-"""
-Support for Betzdorf waste collection schedule.
+from typing import ClassVar, final
 
-For more details about this platform, please refer to the documentation at
-https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/betzdorf_lu.md
-"""
-
-from datetime import datetime
-
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Betzdorf"
-DESCRIPTION = "Source for Betzdorf, Luxembourg waste collection."
-URL = "https://www.betzdorf.lu"
-TEST_CASES: dict[str, dict] = {
-    "Betzdorf": {},
-}
-
-ICON_MAP = {
-    "centre-de-ressources-recyclingpark-superdreckskescht": Icons.RECYCLING,
-    "dechets-menagers-hausmull-exception": Icons.GENERAL_WASTE,
-    "dechets-biodegradables-biomull-exception": Icons.BIO_KITCHEN,
-    "valorlux": Icons.PAPER,
-    "verre-papiers-altglas-altpapier": Icons.PAPER,
-}
-
-API_URL = "https://www.betzdorf.lu/fr/waste"
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self):
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Betzdorf"
+    DESCRIPTION = "Source for Betzdorf, Luxembourg waste collection."
+    URL = "https://www.betzdorf.lu"
+    COUNTRY = "lu"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.PAPER,
+    ]
 
-    def fetch(self):
-        # Fetch data from API with SSL verification disabled
-        # (due to certificate issues with betzdorf.lu website)
-        r = requests.get(API_URL, verify=False)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {"Betzdorf": {}}
 
-        data = r.json()
+    PARAMS = ()
 
-        entries = []
-
-        for waste_type in data:
-            slug = waste_type.get("slug", "")
-            title = waste_type.get("title", "")
-            dates = waste_type.get("dates", [])
-
-            # Get icon based on slug
-            icon = ICON_MAP.get(slug, "mdi:trash-can")
-
-            # Process each date
-            for date_entry in dates:
-                date_start = date_entry.get("dateStart")
-                if date_start:
-                    # Parse the date (format: 2025-11-08T00:00:00)
-                    collection_date = datetime.fromisoformat(date_start).date()
-
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=title,
-                            icon=icon,
-                        )
-                    )
-
-        return entries
+    retrieve = HttpGetRetriever(url="https://www.betzdorf.lu/fr/waste")
+    parse = parsers.JsonParser()
+    # Each waste type lists all its dates.
+    preprocess = ExplodeList("dates", into="date")
+    transform = JsonTransformer(
+        date_key=lambda record: (record["date"].get("dateStart") or "")[:10],
+        type_key="slug",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "dechets-menagers-hausmull-exception": wt.GENERAL_WASTE,
+            "dechets-biodegradables-biomull-exception": wt.ORGANIC,
+            "dechets-verts-grunschnitt": wt.GARDEN_WASTE,
+            "dechets-encombrants-sperrmull": wt.BULKY_WASTE,
+            "valorlux": wt.RECYCLABLES,
+            "verre-papiers-altglas-altpapier": [wt.GLASS, wt.PAPER],
+            # The recycling park's opening days, not a collection.
+            "centre-de-ressources-recyclingpark-superdreckskescht": None,
+        },
+    )

@@ -84,21 +84,37 @@ class FlattenGroups(Preprocessor[Any, Any]):
         parse = parsers.JsonParser("dates")     # {"2026-07-03": [{...}, {...}], ...}
         preprocess = preprocessors.FlattenGroups()
 
-    The group key is dropped, so use this only where each record carries
-    everything the transformer needs. A date-keyed feed nearly always repeats
-    the date inside the record; if it does not, the key is the only place the
-    date exists and a source-specific expansion is the right tool instead.
+    By default the group key is dropped, so use this only where each record
+    carries everything the transformer needs. A date-keyed feed that does not
+    repeat the date inside its records (``{"03.01.2026": ["RM1", "PPK"]}``)
+    passes ``with_key=True`` instead, which yields ``(key, record)`` pairs, the
+    ``(date, label)`` row a ``RowTransformer`` reads::
+
+        preprocess = preprocessors.FlattenGroups(with_key=True)
+        transform = RowTransformer(parse_date=date_parsers.for_format("%d.%m.%Y"))
 
     The groups may also arrive as a list of lists, which is what a payload with
     one slot per weekday (``[null, null, [{...}], ...]``) or several responses
     parsed by :class:`~waste_collection_schedule.parsers.EachResponse` come to.
     An empty slot (``None`` or ``[]``) contributes nothing.
+
+    Args:
+        with_key: yield ``(group key, record)`` pairs rather than the bare
+            records. Only meaningful for a mapping; a list's groups have no key.
     """
+
+    def __init__(self, *, with_key: bool = False):
+        self.with_key = with_key
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[Any]:
         if not records:
+            return
+        if self.with_key and isinstance(records, Mapping):
+            for key, group in records.items():
+                for record in group or []:
+                    yield key, record
             return
         groups = records.values() if isinstance(records, Mapping) else records
         for group in groups:

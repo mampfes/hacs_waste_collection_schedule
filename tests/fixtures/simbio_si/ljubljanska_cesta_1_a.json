@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "POST https://www.simbio.si/sl/moj-dan-odvoza-odpadkov 4569ed4bb7",
+      "method": "POST",
+      "url": "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov",
+      "final_url": "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov",
+      "body": "{\"body\":[[\"action\",\"simbioOdvozOdpadkov\"],[\"query\",\"Ljubljanska cesta 1 A\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx/1.24.0 (Ubuntu)",
+        "date": "Sat, 26 Sep 2026 20:48:21 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "482",
+        "vary": "X-HTTP-Method-Override, Accept-Encoding",
+        "access-control-allow-origin": "*",
+        "cache-control": "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0",
+        "etag": "W/\"1e2-kzAmvvm2eqFoCJ5Z6vqYbeLv/w4\"",
+        "set-cookie": "connect.sid=s%3AoCsPpnlParuuZM1jcugkuqCKv0ruvonn.TsfhQ%2Bc2lFKLdPp9yjsXbwv3oyLts64CKoCAbLRlDFM; Path=/; HttpOnly"
+      },
+      "content_b64": "W3siX2lkIjoiNmFiNzI3MjIzMDRmNjNmYzBmM2UxNzkxIiwiaWQiOiIxMDA0MDAwMDAxMTIxMjk5OTgiLCJuYW1lIjoiTEpVQkxKQU5TS0EgQ0VTVEEgMSBBIiwicXVlcnkiOiJsanVibGphbnNrYSBjZXN0YSAxIGEgY2VsamUiLCJjaXR5IjoiQ0VMSkUiLCJuZXh0X21rbyI6IsSNZXRydGVrLCAxLiAxMC4gMjAyNiIsIm5leHRfZW1iIjoicGV0ZWssIDIuIDEwLiAyMDI2IiwibmV4dF9iaW8iOiJuaSBvZHZvemEifSx7Il9pZCI6IjZhYjcyNzIyMzA0ZjYzZmMwZjNlMTdhNiIsImlkIjoiMTAwNDAwMDAwMjM3NzY2MzQ0IiwibmFtZSI6IkxKVUJMSkFOU0tBIENFU1RBIDE4IEEiLCJxdWVyeSI6ImxqdWJsamFuc2thIGNlc3RhIDE4IGEgY2VsamUiLCJjaXR5IjoiQ0VMSkUiLCJuZXh0X21rbyI6InNyZWRhLCAzMC4gOS4gMjAyNiIsIm5leHRfZW1iIjoic3JlZGEsIDcuIDEwLiAyMDI2IiwibmV4dF9iaW8iOiLEjWV0cnRlaywgMS4gMTAuIDIwMjYifV0="
+    }
+  ]
+}

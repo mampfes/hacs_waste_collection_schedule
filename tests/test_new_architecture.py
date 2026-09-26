@@ -3046,6 +3046,24 @@ class TestFlattenGroups:
         assert self._run(None) == []
         assert self._run([]) == []
 
+    def test_with_key_pairs_each_record_with_its_group_key(self):
+        from waste_collection_schedule.preprocessors import FlattenGroups
+
+        rows = list(
+            FlattenGroups(with_key=True)({"03.01.": ["RM1", "PPK"], "06.01.": ["WET"]})
+        )
+        assert rows == [("03.01.", "RM1"), ("03.01.", "PPK"), ("06.01.", "WET")]
+
+    def test_json_parser_indexes_lists_and_reads_an_empty_one_as_no_records(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        def reply(payload):
+            return SimpleNamespace(json=lambda: payload, raise_for_status=lambda: None)
+
+        assert JsonParser(0, "a")(reply([{"a": [1]}, {"a": [2]}])) == [1]
+        assert JsonParser(0)(reply([])) == []
+        assert JsonParser(0)(reply(None)) == []
+
 
 class TestIWebAbfalldatenRows:
     """IWeb.AbfalldatenRows: i-web /abfalldaten records into (date, name) rows."""
