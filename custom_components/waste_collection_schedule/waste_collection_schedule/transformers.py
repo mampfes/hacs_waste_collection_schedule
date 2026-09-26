@@ -587,6 +587,8 @@ class HtmlTransformer(BaseTransformer[Tag]):
         type_getter:   Callable(element) → type string.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
         parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
+        skip_unparseable_dates: skip a row whose date is empty or won't parse
+                       (a round with no date scheduled) instead of raising.
         location_getter/description_getter: optional Callable(element) → metadata
             string, carried onto the Collection (HTML's spelling of
             ``location_key``/``description_key``).
@@ -603,11 +605,13 @@ class HtmlTransformer(BaseTransformer[Tag]):
         description_getter: Callable[[Tag], Any] | None = None,
         color_getter: Callable[[Tag], Any] | None = None,
         carry_raw_label: bool = False,
+        skip_unparseable_dates: bool = False,
     ):
         super().__init__(
             type_value_map,
             parse_date,
             clean,
+            skip_unparseable_dates,
             location_key=location_getter,
             description_key=description_getter,
             color_key=color_getter,
@@ -630,6 +634,11 @@ class HtmlTransformer(BaseTransformer[Tag]):
 
         if isinstance(raw_date, datetime.date):
             date = raw_date
+        elif self._skip_unparseable_dates:
+            parsed = self._to_date(str(raw_date).strip())
+            if parsed is None:
+                return None
+            date = parsed
         else:
             date = self._parse_date(str(raw_date))
 

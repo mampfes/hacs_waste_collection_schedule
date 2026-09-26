@@ -1146,7 +1146,9 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
             exactly that set.
         date_pattern: regex scanned across each segment. It must carry named
             groups ``day`` and ``month``, and may carry ``year`` when the
-            document dates each cell in full.
+            document dates each cell in full. ``month`` may match a number or a
+            month name ("October", "Oktober"), resolved in any supported
+            language.
         year_pattern: for the usual per-year calendar whose cells omit the year
             and whose heading states it once: a regex searched against the whole
             document, its first group the four-digit year. Falls back to the
@@ -1197,13 +1199,43 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
         return datetime.date.today().year
 
 
+# English month abbreviations. recurrence.month() deliberately indexes only
+# full names (abbreviations collide across languages when a word could be a
+# weekday or a month), but a value already captured as a month is unambiguous,
+# and English pages mix the forms ("Tuesday 29 Sep 2026, Tuesday 06 October").
+_EN_MONTH_ABBREVIATIONS = {
+    name: number
+    for number, names in enumerate(
+        (
+            ("jan",),
+            ("feb",),
+            ("mar",),
+            ("apr",),
+            ("may",),
+            ("jun",),
+            ("jul",),
+            ("aug",),
+            ("sep", "sept"),
+            ("oct",),
+            ("nov",),
+            ("dec",),
+        ),
+        start=1,
+    )
+    for name in names
+}
+
+
 def _month_number(value: "str | None") -> "int | None":
-    """A month written as a number or as a name in any supported language."""
+    """A month written as a number, a name in any supported language, or an
+    English abbreviation ("Sep")."""
     text = str(value or "").strip()
     if text.isdigit():
         number = int(text)
         return number if 1 <= number <= 12 else None
-    return recurrence.month(text)
+    return recurrence.month(text) or _EN_MONTH_ABBREVIATIONS.get(
+        text.rstrip(".").lower()
+    )
 
 
 class TextDatedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
@@ -1423,11 +1455,17 @@ class TextCalendarGrid(Preprocessor[str, "tuple[datetime.date, str]"]):
 def _date_from_groups(
     groups: "Mapping[str, str | None]", year: int
 ) -> "datetime.date | None":
-    """Build a date from ``day``/``month``/optional ``year`` groups, else None."""
+    """Build a date from ``day``/``month``/optional ``year`` groups, else None.
+
+    ``month`` may be a number or a month name in any supported language.
+    """
+    month = _month_number(groups["month"])
+    if month is None:
+        return None
     try:
         return datetime.date(
             int(groups.get("year") or year),
-            int(groups["month"] or 0),
+            month,
             int(groups["day"] or 0),
         )
     except ValueError:
