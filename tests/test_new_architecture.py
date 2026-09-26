@@ -2156,6 +2156,7 @@ class TestToolkitParsers:
             (datetime.date(2026, 10, 2), "Garden waste"),
             (datetime.date(2026, 10, 9), "Refuse"),
         ]
+
     def test_html_parser_from_json_key_indexes_a_list(self):
         from waste_collection_schedule import parsers
 
