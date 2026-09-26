@@ -669,6 +669,13 @@ class HtmlParser(Parser[list[Tag]]):
                           "tr", skip=1,
                           from_json_key=("integration", "transformed", "rows_data", "0", "UpcomingCollections"),
                       )
+
+                  An ``int`` in the path indexes a JSON list. An empty list at
+                  that step is an empty result (no elements), not an error, so a
+                  lookup that answers ``[]`` for an unknown address reaches
+                  ``RAISE_ON_EMPTY`` instead of an ``IndexError``::
+
+                      parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
     """
 
     def __init__(
@@ -676,7 +683,7 @@ class HtmlParser(Parser[list[Tag]]):
         selector: str,
         skip: int = 0,
         require: "list[str] | None" = None,
-        from_json_key: "str | tuple[str, ...] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.selector = selector
         self.skip = skip
@@ -700,6 +707,8 @@ class HtmlParser(Parser[list[Tag]]):
                 else self.from_json_key
             )
             for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
                 data = data[key]
             markup = str(data)
         else:

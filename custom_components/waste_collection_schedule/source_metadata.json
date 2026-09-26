@@ -2111,11 +2111,6 @@
     },
     "urls": {}
   },
-  "buergerportal_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md",
-    "howto": {},
-    "urls": {}
-  },
   "ics_awd_online_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awd_online_de.md",
     "howto": {
@@ -2356,6 +2351,14 @@
     "howto": {
       "de": "- Gehe zu <https://alba-bs.de/service/abfuhrtermine.html> und wähle deinen Standort aus.\n- Kopiere den Link der `ICS-Kalender-Datei`. Du musst zuerst darauf klicken und dann den Link des `ok`-Buttons kopieren, wenn der Link nicht direkt zur ICS-Datei führt.\n- Benutze diese URL als URL parameter.\n- Ersetze das Jahr in der URL durch `{%Y}`.\n- Du kannst den cHash Parameter aus der URL entfernen.\n",
       "en": "- Go to <https://alba-bs.de/service/abfuhrtermine.html> and select your location.  \n- Copy the link of `ICS-Kalender-Datei`. You need to click it first and then copy the link of the `ok` button if the link does not directly leads to the ICS file.\n- Use this url as the `URL` parameter.\n- Replace the year in the `url` with `{%Y}`.  \n  This will be replaced by the current year.\n- You can remove the cHash parameter from the url.\n"
+    },
+    "urls": {}
+  },
+  "buergerportal_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buergerportal_de.md",
+    "howto": {
+      "de": "1. Öffne das Bürgerportal deines Betreibers und wähle 'Abfuhrkalender'.\n2. Wähle deinen Ort (district). Enthält er ein Komma (z. B. 'Bullay, Bullay'), trenne ihn auf: der Teil vor dem Komma ist `district`, der Teil danach `subdistrict` — auch wenn beide gleich sind. Lasse `subdistrict` nur leer, wenn kein Komma vorhanden ist.\n3. Wähle Straße und Hausnummer.",
+      "en": "1. Open your operator's Bürgerportal and select 'Abfuhrkalender'.\n2. Choose your district (Ort). If it contains a comma (e.g. 'Bullay, Bullay'), split it: the part before the comma is `district`, the part after is `subdistrict` — even if both parts are identical. Leave `subdistrict` empty only if there is no comma.\n3. Choose your street and house number."
     },
     "urls": {}
   },
@@ -3592,8 +3595,8 @@
   "tonnenticker_pro_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tonnenticker_pro_de.md",
     "howto": {
-      "de": "Wählen Sie Ihren Ort und verwenden Sie den genauen Straßennamen aus der Tonnenticker Pro App oder der Website des Anbieters.",
-      "en": "Select your municipality, then use the exact street name shown in the Tonnenticker Pro app or the provider's website."
+      "de": "Wählen Sie Ihren Ort und verwenden Sie den Straßennamen aus der Tonnenticker Pro App oder von der Website des Anbieters.",
+      "en": "Select your municipality, then use the street name shown in the Tonnenticker Pro app or on the provider's website."
     },
     "urls": {}
   },
@@ -5241,7 +5244,9 @@
   },
   "angus_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/angus_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address, and enter the property's postcode."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5693,7 +5698,9 @@
     "howto": {
       "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "crawley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/crawley_gov_uk.md",
@@ -5783,7 +5790,9 @@
   },
   "dudley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dudley_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5900,7 +5909,9 @@
     "howto": {
       "en": "Find your UPRN by visiting https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "environmentfirst_co_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/environmentfirst_co_uk.md",
@@ -5948,7 +5959,9 @@
   },
   "exeter_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/exeter_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Look up your address on the Exeter City Council 'When is my bin collected?' page; your UPRN is the number at the end of the resulting URL. Alternatively, search for your address on [Find My Address](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6372,7 +6385,9 @@
   },
   "maidstone_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maidstone_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6459,11 +6474,15 @@
     "howto": {
       "en": "Find your UPRN and postcode from your council documents or invoices."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "milton_keynes_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/milton_keynes_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6712,9 +6731,11 @@
   "pkc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pkc_gov_uk.md",
     "howto": {
-      "en": "Find your UPRN by visiting https://my.pkc.gov.uk/AchieveForms/?form_uri=sandbox-publish://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa/AF-Stage-9fa33e2e-4c1b-4963-babf-4348ab8154bc/definition.json and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
+      "en": "Find your UPRN by searching for your address at https://my.pkc.gov.uk/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa/AF-Stage-9fa33e2e-4c1b-4963-babf-4348ab8154bc/definition.json&process=1&process_uri=sandbox-processes://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa&process_id=AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa or at https://www.findmyaddress.co.uk/."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "peterborough_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md",
@@ -6790,7 +6811,9 @@
   },
   "rochdale_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rochdale_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7187,7 +7210,9 @@
   },
   "torridge_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torridge_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

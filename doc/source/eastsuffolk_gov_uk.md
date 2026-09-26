@@ -1,6 +1,8 @@
 # East Suffolk Council
 
-Support for schedules provided by [East Suffolk Council](https://www.eastsuffolk.gov.uk), UK.
+Support for schedules provided by [East Suffolk Council](https://www.eastsuffolk.gov.uk).
+
+Source for East Suffolk Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -14,15 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN).
-
-## How to find your UPRN
-
-1. Visit the [East Suffolk bin collection dates finder](https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder) and search for your address.
-2. Alternatively, look up your address at [findmyaddress.co.uk](https://www.findmyaddress.co.uk/).
 
 ## Example
 
@@ -31,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: eastsuffolk_gov_uk
       args:
-        uprn: "YOUR_UPRN_HERE"
+        uprn: '100091126543'
 ```
+
+## How to get the source arguments
+
+Find your UPRN by visiting https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/.

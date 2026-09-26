@@ -1,18 +1,21 @@
 # Dudley Metropolitan Borough Council
 
-Support for schedules provided by [Dudley Metropolitan Borough Council](https://www.dudley.gov.uk/residents/bins-and-recycling/rubbish-collection/), serving the city of Dudley, UK.
+Support for schedules provided by [Dudley Metropolitan Borough Council](https://dudley.gov.uk).
+
+Source for Dudley Metropolitan Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dudley_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -20,13 +23,12 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dudley_gov_uk
       args:
-        uprn: "90092621"
+        uprn: '90090715'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-Your Unique Property Reference Number (UPRN) is displayed in the Property Details panel when you search for your address on the [My Council](https://maps.dudley.gov.uk/mycouncil.aspx) web page.
-Alternatively, you can your UPRN  by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.

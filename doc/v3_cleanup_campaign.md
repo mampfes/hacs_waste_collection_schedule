@@ -164,6 +164,16 @@ loosening the matcher. Check for a nonce, a uuid or a wall-clock stamp in the
 request before re-recording, and if there is one, leave the cassette alone and
 say so.
 
+For `AppAbfallplusDe` specifically, deriving the id from the configuration was
+tried (2026-09-25, while migrating `ahe_de`) and does **not** work: the backend
+keeps wizard state per client id, and a second fetch with the same id fails with
+a 404 on the wizard's `kommune/` step, every time, while a fresh `uuid4` succeeds. A
+date-derived id fails the same way on the second fetch of a day. So the value
+must stay unique per session, which means no request body of this platform can
+be pinned until the harness can control it (for example by freezing the clock
+while recording, so a clock-derived id replays). `ahe_de` stays legacy until
+then.
+
 `ecoharmonogram_pl` is the second one found, so this is a shape rather than a
 one-off: `EcoHarmonogramPL` puts `hex(randrange(...))` in every POST as
 `clientId`, and its 14 cassettes (88 interactions) cannot be pinned until the
