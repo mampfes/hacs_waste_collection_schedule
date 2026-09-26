@@ -16,7 +16,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _CALENDAR_URL = (
@@ -40,16 +40,13 @@ class _CalendarPage(NamedTuple):
     page_id: str
 
 
-def _read_calendar_page(source: BaseSource, keys: tuple) -> _CalendarPage:
+def _read_calendar_page(resp, bezirk, **_) -> _CalendarPage:
     """Read the middleware key and hidden page id off the calendar page."""
-    resp = source.session.get(_CALENDAR_URL)
-    resp.raise_for_status()
-
     key_match = _KEY_RE.search(resp.text)
     if not key_match:
         raise SourceArgumentNotFound(
             "bezirk",
-            int(source.params["bezirk"]),
+            int(bezirk),
             "could not find middleware key on Verl calendar page",
         )
 
@@ -92,7 +89,7 @@ class Source(BaseSource):
     }
 
     retrieve = LookupChainRetriever(
-        steps=(_read_calendar_page,),
+        steps=(Lookup(_CALENDAR_URL, pick=_read_calendar_page),),
         url=lambda page, **_: (
             f"{_BASE_URL}{_ENDPOINT_PATH}&middlewareKey={page.middleware_key}"
         ),

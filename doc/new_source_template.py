@@ -116,8 +116,14 @@ class Source(BaseSource):
     # component (YearlyRetriever(prepare=...), LookupChainRetriever(steps=...))
     # is rejected by test_pipeline_sources_do_not_hand_roll_retrieval: calling
     # source.session.get yourself is a retriever, whichever way it is spelled.
-    # If no configured retriever expresses the provider's flow, the platform is
-    # missing a capability; add it under waste_collection_schedule/service/.
+    # Declare the request instead, and keep only the reading in this module:
+    #
+    #   steps=(retrievers.Lookup(STREETS_URL, params=..., pick=_street_id),)
+    #
+    # where _street_id(response, *keys, **params) reads the reply and raises
+    # SourceArgumentNotFoundWithSuggestions. If no configured retriever
+    # expresses the provider's flow, the platform is missing a capability; add
+    # it under waste_collection_schedule/service/.
     #
     # def preprocess(self, records, source=None):
     #     # reshape parsed output into the records the transformer expects

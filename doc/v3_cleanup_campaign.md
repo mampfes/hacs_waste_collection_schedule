@@ -5,13 +5,14 @@ declarative and `SOURCES_WITH_LEGACY_STEP_OVERRIDES` is an empty set.
 
 **And then it turned out the count was measuring the wrong thing.** #7139 found
 that "fully declarative" meant "no step *method* and no step *class*", so 28 of
-those 263 sources still issue the provider's HTTP from a module-level function
-handed to a component. `tools/arch_coverage.py` now reports that as its own
-line, and `SOURCES_HAND_ROLLING_RETRIEVAL` in `tests/test_new_architecture.py`
-is the register. Zero on the old measure still stands; it just means less than
-it read as. Whoever picks this up next should decide whether the second number
-is the campaign's business or a successor's, because clearing it means new
-components rather than moved code.
+those 263 sources still issued the provider's HTTP from a module-level function
+handed to a component. `tools/arch_coverage.py` reports that as its own line,
+and `SOURCES_HAND_ROLLING_RETRIEVAL` in `tests/test_new_architecture.py` was the
+register. **That second count reached zero on 2026-09-26**, with new components
+rather than moved code: declared requests (`retrievers.Request`, `Lookup`,
+`Chain`, `Suggestions`) leaving only a pure `pick` in each source, and
+`service/Abfallkalender.py`'s `AbfallkalenderRetriever` for the one vendor
+module two sources share.
 
 This file said to delete it at zero. Do not delete it yet, and do not keep it as
 it stands. Most of it is scaffolding that has served its purpose, but four

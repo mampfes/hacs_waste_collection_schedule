@@ -38,16 +38,9 @@ _STREETS_URL = "https://portal.staedteservice.de/api/Strassen"
 _CITY_CODE_MAP = {"Rüsselsheim": 1, "Raunheim": 2}
 
 
-def _lookup_street(session, city_code: int, street_name: str) -> str:
+def _pick_street(response, *, street_name: str, **_) -> str:
     """The portal's opaque id for a street name in one of the two cities."""
-    r = session.get(
-        _STREETS_URL,
-        params={"$filter": f"Ort/OrteId eq {city_code}"},
-        headers={"Accept": "application/json, text/plain;q=0.5, */*;q=0.1"},
-    )
-    r.raise_for_status()
-
-    streets = r.json()["d"]
+    streets = response.json()["d"]
     for entry in streets:
         if (
             entry["Name"].replace(" ", "").lower()
@@ -59,42 +52,17 @@ def _lookup_street(session, city_code: int, street_name: str) -> str:
     )
 
 
-def _resolve_address(source) -> tuple[int, str, str]:
-    """City code, street id and house number, resolving the street if needed."""
-    city_code = _CITY_CODE_MAP[source.params["city"]]
-    street_number = source.params.get("street_number")
-    house_number_value = str(source.params.get("house_number") or "")
-    if not street_number:
-        street_number = _lookup_street(
-            source.session, city_code, source.params["street_name"]
-        )
-    return city_code, street_number, house_number_value
-
-
-def _calendar_for_year(source, year: int, context: tuple[int, str, str]):
+def _calendar_request(year: int, street_id: str, *, city: str, **params) -> dict:
     """One year's calendar request; the response body is the JSON envelope."""
-    city_code, street_number, house_number_value = context
-    payload = {
-        "orteId": city_code,
-        "strassenId": street_number,
+    house_number_value = str(params.get("house_number") or "")
+    return {
+        "orteId": _CITY_CODE_MAP[city],
+        "strassenId": street_id,
         "hausNr": f"'{house_number_value}'",
         "dateiName": f"'Abfallkalender{year}.ics'",
         "unixZeitOption": "-25200",
         "fixedYear": str(year),
     }
-    r = source.session.post(
-        _API_URL,
-        params=payload,
-        data=payload,
-        headers={
-            "Accept": "application/json, text/plain;q=0.5, text/calendar",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "Mozilla/5.0 (HomeAssistant)",
-        },
-        timeout=30,
-    )
-    r.raise_for_status()
-    return r
 
 
 def _ics_from_envelope(body: str) -> str:
@@ -145,8 +113,27 @@ class Source(BaseSource):
     )
 
     retrieve = retrievers.YearlyRetriever(
-        prepare=_resolve_address,
-        fetch=_calendar_for_year,
+        # The street id: the one given, or the one the street name resolves to.
+        prepare=retrievers.Lookup(
+            _STREETS_URL,
+            params=lambda city, **_: {
+                "$filter": f"Ort/OrteId eq {_CITY_CODE_MAP[city]}"
+            },
+            headers={"Accept": "application/json, text/plain;q=0.5, */*;q=0.1"},
+            given=lambda street_number=None, **_: street_number or None,
+            pick=_pick_street,
+        ),
+        fetch=retrievers.Request(
+            _API_URL,
+            method="POST",
+            params=_calendar_request,
+            data=_calendar_request,
+            headers={
+                "Accept": "application/json, text/plain;q=0.5, text/calendar",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "Mozilla/5.0 (HomeAssistant)",
+            },
+        ),
     )
 
     parse = IcsFeedsParser(

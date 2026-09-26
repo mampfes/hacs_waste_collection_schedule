@@ -119,14 +119,9 @@ def _parity(freq: str) -> "Literal['even', 'odd'] | None":
     return None
 
 
-def _list_communes(source: Any) -> list[str]:
+def _communes(response, **_: Any) -> list[str]:
     """Every commune the dataset covers; the suggestions for an unknown one."""
-    resp = source.session.get(
-        API_URL,
-        params={"select": "com_nom", "limit": 100, "group_by": "com_nom"},
-        timeout=30,
-    )
-    return sorted({r["com_nom"] for r in resp.json().get("results", [])})
+    return sorted({r["com_nom"] for r in response.json().get("results", [])})
 
 
 def _describe(row: dict, source: Any = None):
@@ -246,7 +241,14 @@ class Source(BaseSource):
     # does not cover, narrow to the district asked for, expand its cadences,
     # then apply that district's own holiday notes.
     preprocess = Compose(
-        RequireRecords(argument="commune", suggestions=_list_communes),
+        RequireRecords(
+            argument="commune",
+            suggestions=retrievers.Suggestions(
+                API_URL,
+                params={"select": "com_nom", "limit": 100, "group_by": "com_nom"},
+                pick=_communes,
+            ),
+        ),
         Disambiguate(
             argument="quartier",
             key=lambda row: row.get("quartier"),

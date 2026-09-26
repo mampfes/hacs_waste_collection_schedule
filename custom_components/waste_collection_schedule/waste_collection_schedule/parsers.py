@@ -420,7 +420,7 @@ class ArgumentGuard(Parser[Any]):
             parsers.IcsEventsParser(min_events=1),
             argument="city",
             contains="BEGIN:VCALENDAR",
-            suggestions=_possible_cities,
+            suggestions=retrievers.Suggestions(WEBAPP_URL, pick=_linked_cities),
             hint="spell the city exactly as in the links on the web-app page",
         )
 

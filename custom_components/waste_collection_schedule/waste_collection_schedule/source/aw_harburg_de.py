@@ -6,17 +6,18 @@ district -> an optional street/house-number range), expressed as
 level's id via an ajax endpoint, and the final id selects a
 "Abfuhrbezirk" search whose result page lists one iCal link per active waste
 type (more than one may appear during a year transition). That is a
-FanOutRetriever: the cascade is its ``prepare``, the iCal links on the result
-page are its targets. ``get_choices`` reuses the very same cascade-walking
-helpers so the config flow's dropdowns are resolved the same way as the live
-fetch.
+FanOutRetriever: the cascade is its ``prepare``, a chain of declared lookups
+whose picks only read the ``<select>`` each level renders, and the iCal links
+on the result page are its targets. ``get_choices`` issues the very same
+declared requests, so the config flow's dropdowns are resolved the same way as
+the live fetch.
 
 "Gelbe Tonne", "Biotonne" and "Grünabfall" already resolve against the
 standard German aliases. "Altpapier" and the two "Hausmüll ..." cadence
 labels are Harburg-specific phrasings mapped explicitly.
 """
 
-from typing import ClassVar, final
+from typing import Any, ClassVar, final
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import field_terms
@@ -25,7 +26,13 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import EachResponse, IcsParser
-from waste_collection_schedule.retrievers import FanOutRetriever
+from waste_collection_schedule.retrievers import (
+    Chain,
+    FanOutRetriever,
+    Lookup,
+    Request,
+    detached_source,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 
 _LEVEL_URL = (
@@ -34,6 +41,10 @@ _LEVEL_URL = (
 _AJAX_URL = "https://www.landkreis-harburg.de/ajax/abfall_gebiete_struktur_select.html"
 _SEARCH_URL = "https://www.landkreis-harburg.de/abfallkalender/abfallkalender_struktur_daten_suche.html"
 _HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)"}
+
+# The page sometimes serves an interstitial overlay on the first hit, which is
+# gone on a second try in the same session.
+_INTERSTITIAL = "Zur aufgerufenen Seite"
 
 
 def _normalize_name(value: object) -> str:
@@ -55,27 +66,6 @@ def _level_options(html: str, level: int) -> dict[str, str]:
     }
 
 
-def _initial_html(session) -> str:
-    r = session.get(_LEVEL_URL, headers=_HEADERS)
-    r.raise_for_status()
-    # Double request is deliberate: the page sometimes serves an interstitial
-    # overlay on the first hit, which is gone on a second try in the session.
-    if "Zur aufgerufenen Seite" in r.text:
-        r = session.get(_LEVEL_URL, headers=_HEADERS)
-        r.raise_for_status()
-    return r.text
-
-
-def _child_html(session, parent_id: str, ebene: int) -> str:
-    r = session.get(
-        _AJAX_URL,
-        params={"parent": parent_id, "ebene": ebene, "portal": 1, "selected_ebene": 0},
-        headers=_HEADERS,
-    )
-    r.raise_for_status()
-    return r.text
-
-
 def _match_id(options: dict[str, str], name: str, field: str) -> str:
     if name in options:
         return options[name]
@@ -86,50 +76,50 @@ def _match_id(options: dict[str, str], name: str, field: str) -> str:
     raise SourceArgumentNotFoundWithSuggestions(field, name, sorted(options))
 
 
-def _search_page(source):
-    """Walk the ajax cascade, then GET the Abfuhrbezirk result page."""
-    session = source.session
-    level_1 = source.params["level_1"]
-    level_2 = source.params["level_2"]
-    level_3 = source.params.get("level_3")
+def _child_params(parent_id: str, ebene: int) -> dict:
+    return {"parent": parent_id, "ebene": ebene, "portal": 1, "selected_ebene": 0}
 
-    level1_options = _level_options(_initial_html(session), 1)
-    id1 = _match_id(level1_options, level_1, "level_1")
 
-    level2_options = _level_options(_child_html(session, id1, 1), 2)
-    id2 = _match_id(level2_options, level_2, "level_2")
+# The two requests the cascade is made of, shared by the fetch and the config
+# flow: the calendar page renders the first level, the ajax endpoint each level
+# below the id chosen one level up.
+_FIRST_LEVEL = Request(
+    _LEVEL_URL,
+    headers=_HEADERS,
+    retry_if=lambda response: _INTERSTITIAL in response.text,
+)
+_CHILD_LEVEL = Request(
+    _AJAX_URL,
+    headers=_HEADERS,
+    params=lambda parent_id, ebene, **_: _child_params(parent_id, ebene),
+)
 
-    selected_id = id2
-    if level_3 is not None:
-        level3_options = _level_options(_child_html(session, id2, 2), 3)
-        selected_id = _match_id(level3_options, level_3, "level_3")
 
-    r = session.get(
-        _SEARCH_URL,
-        params={"selected_ebene": selected_id, "owner": 20100},
-        headers=_HEADERS,
-    )
-    r.raise_for_status()
+def _pick_level(level: int):
+    """A pick reading level ``level``'s select and matching its configured name."""
+    field = f"level_{level}"
 
-    if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
+    def pick(response, *keys, **params) -> str:
+        return _match_id(_level_options(response.text, level), params[field], field)
+
+    return pick
+
+
+def _pick_search_page(response, *keys, level_2, level_3=None, **_):
+    """The Abfuhrbezirk result page itself, once it is known to list one."""
+    if "Es sind keine Abfuhrbezirke hinterlegt." in response.text:
         raise SourceArgumentNotFoundWithSuggestions(
             "level_3" if level_3 is not None else "level_2",
             level_3 if level_3 is not None else level_2,
             [],
         )
-    return r
+    return response
 
 
-def _ical_links(source, page) -> list:
+def _ical_links(source, context: tuple) -> list:
     """One iCal link per active waste type, as listed on the result page."""
-    soup = BeautifulSoup(page.text, "html.parser")
+    soup = BeautifulSoup(context[-1].text, "html.parser")
     return [link.get("href") for link in soup.find_all("a") if " als iCal" in link.text]
-
-
-def _fetch_ical(source, url, context):
-    r = source.session.get(url, headers=_HEADERS)
-    r.raise_for_status()
-    return r
 
 
 @final
@@ -176,41 +166,54 @@ class Source(BaseSource):
     def get_choices(cls, field: str, selections: dict) -> list[str]:
         """Options for one cascade level given the levels chosen so far.
 
-        Walks the same live ajax cascade as ``retrieve``, using a throwaway
+        Issues the same declared requests as ``retrieve``, over a throwaway
         session (this runs at config-flow time, before a Source exists).
         """
-        from curl_cffi import requests as cffi_requests
-
-        session = cffi_requests.Session(impersonate="chrome")
-
-        level1_options = _level_options(_initial_html(session), 1)
-        if field == "level_1":
-            return sorted(level1_options)
-
-        level_1 = selections.get("level_1")
-        if level_1 not in level1_options:
-            return []
-        level2_options = _level_options(
-            _child_html(session, level1_options[level_1], 1), 2
-        )
-        if field == "level_2":
-            return sorted(level2_options)
-
-        level_2 = selections.get("level_2")
-        if level_2 not in level2_options:
-            return []
-        level3_options = _level_options(
-            _child_html(session, level2_options[level_2], 2), 3
-        )
-        if field == "level_3":
-            return sorted(level3_options)
+        walker = detached_source()
+        parent_id: Any = None
+        for level in (1, 2, 3):
+            response = (
+                _FIRST_LEVEL(walker)
+                if level == 1
+                else _CHILD_LEVEL(walker, parent_id, level - 1)
+            )
+            options = _level_options(response.text, level)
+            if field == f"level_{level}":
+                return sorted(options)
+            chosen = selections.get(f"level_{level}")
+            if chosen not in options:
+                return []
+            parent_id = options[chosen]
         return []
 
     retrieve = FanOutRetriever(
-        prepare=_search_page,
+        prepare=Chain(
+            Lookup(_FIRST_LEVEL, pick=_pick_level(1)),
+            Lookup(
+                _AJAX_URL,
+                headers=_HEADERS,
+                params=lambda id_1, **_: _child_params(id_1, 1),
+                pick=_pick_level(2),
+            ),
+            Lookup(
+                _AJAX_URL,
+                headers=_HEADERS,
+                params=lambda id_1, id_2, **_: _child_params(id_2, 2),
+                when=lambda *_, level_3=None, **__: level_3 is not None,
+                pick=_pick_level(3),
+            ),
+            Lookup(
+                _SEARCH_URL,
+                headers=_HEADERS,
+                params=lambda id_1, id_2, id_3, **_: {
+                    "selected_ebene": id_3 if id_3 is not None else id_2,
+                    "owner": 20100,
+                },
+                pick=_pick_search_page,
+            ),
+        ),
         targets=_ical_links,
-        fetch=_fetch_ical,
+        fetch=Request(lambda url, context, **_: url, headers=_HEADERS),
     )
-
     # During a year transition the next year's ical may be published but empty.
     parse = EachResponse(IcsParser(), skip_failures=True)

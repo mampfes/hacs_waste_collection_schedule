@@ -2,7 +2,7 @@
 
 A two-step address lookup (a street/house-number search resolves an opaque
 position id) feeding a single ICS download, which is the shared
-``LookupChainRetriever``: the lookup step below resolves the id and the
+``LookupChainRetriever``: a declared ``Lookup`` resolves the id and the
 retriever fetches the calendar with it.
 """
 
@@ -17,7 +17,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _STREETS_URL = "https://stadtreinigung-leipzig.de/rest/Navision/Streets"
@@ -49,15 +49,12 @@ def _clean(label: str) -> str:
     return label
 
 
-def _resolve_position(source: BaseSource, keys: tuple) -> str:
-    """Resolve the street and house number to the feed's opaque position id."""
-    street_name = source.params["street"]
-    house_number_value = source.params["house_number"]
+def _pick_position(response, street: str, house_number, **_) -> str:
+    """The feed's opaque position id for the street and house number."""
+    street_name = street
+    house_number_value = house_number
 
-    params = {"old_format": 1, "search": street_name}
-    r = source.session.get(_STREETS_URL, params=params)
-
-    data = json.loads(r.text)
+    data = json.loads(response.text)
     if len(data["results"]) == 0:
         raise SourceArgumentNotFound("street", street_name)
     street_entry = data["results"].get(street_name)
@@ -91,7 +88,14 @@ class Source(BaseSource):
     PARAMS = (street(), house_number())
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_position,),
+        steps=(
+            Lookup(
+                _STREETS_URL,
+                params=lambda street, **_: {"old_format": 1, "search": street},
+                pick=_pick_position,
+                raise_for_status=False,
+            ),
+        ),
         url=_ICS_URL,
         params=lambda position_nos, street, house_number, **_: {
             "position_nos": position_nos,
