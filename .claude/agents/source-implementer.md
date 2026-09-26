@@ -79,7 +79,7 @@ class Source(BaseSource):
 - **Errors:** skip a single malformed record (`None`), keep unknown labels verbatim (never collapse to `OTHER`), raise `ResponseShapeError` (declared shape or `min_*` counts) when the whole response changed; `RAISE_ON_EMPTY = True` for lookups; predefined exceptions only.
 - **No filtering options** (waste types, time frame): return everything; filtering is a framework feature.
 - **Migrations** of a legacy source are breaking (major): say so in the report; a replaced source gets a `DEPRECATIONS.md` row. Migrate the shared service, not a wrapper: split a client that GETs and parses in one method into a Retriever + Parser (see `abfall_neunkirchen_siegerland_de`, `abfallnavi_de`).
-- **Anti-patterns:** no `datetime.strptime`, no `requests`/`curl_cffi.Session` in the source (use `source.session` via a retriever), no hand-built `BeautifulSoup`, no `self._x = x` stash, no registry as a Python literal, no hand-rolled ArcGIS geocode+query.
+- **Anti-patterns:** no `datetime.strptime`, no `requests`/`curl_cffi.Session` in the source (use `source.session` via a retriever), no hand-built `BeautifulSoup`, no `self._x = x` stash, no registry as a Python literal (unless the source needs it while fetching), no hand-rolled ArcGIS geocode+query.
 - Type-hint any function or method you write (pyright covers pipeline sources).
 
 ## Steps

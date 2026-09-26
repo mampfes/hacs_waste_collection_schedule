@@ -101,6 +101,7 @@ The contributor handles the git steps themselves (you can guide). Walk them thro
    git add custom_components/.../source/<module>.py tests/fixtures/<module>/
    git commit -m "Add source: <Provider Name> (<module>)"
    ```
+   A legacy source also stages `doc/source/<module>.md`.
 
 4. **Push to the contributor's fork**:
    ```bash

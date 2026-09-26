@@ -61,6 +61,8 @@ You are a specialised PR reviewer and completer for mampfes/hacs_waste_collectio
 8. **Run the structural test suite against the post-fix state** — do not skip even if live-test is impossible:
    ```bash
    python -m pytest tests/test_source_components.py -q
+   # pipeline source: also
+   python -m pytest tests/test_new_architecture.py tests/test_offline_fixtures.py tests/test_declared_waste_types.py -q -k <module>
    ```
    If anything fails, fix it locally before producing the report. Include the result ("6 passed") in your "Fixes applied locally" section.
 
@@ -107,7 +109,7 @@ You are a specialised PR reviewer and completer for mampfes/hacs_waste_collectio
    ```
    (Repeat per file. Omit this step if no edits or new files.)
 4. [format commands: `ruff check --fix <file>` and/or `ruff format <file>`]
-5. **Mandatory checks (do not skip):** `python -m pytest tests/test_source_components.py -q` and `pre-commit run --all-files` — both must pass before commit. Use the hooks, not bare `ruff`/`mypy`/`pyright`: the hooks are pinned, and a bare `pyright` resolves a different stub set, so it reports a different error set from CI.
+5. **Mandatory checks (do not skip):** `python -m pytest tests/test_source_components.py -q` (pipeline source: also `tests/test_new_architecture.py tests/test_offline_fixtures.py tests/test_declared_waste_types.py -k <module>`) and `pre-commit run --all-files` — both must pass before commit. Use the hooks, not bare `ruff`/`mypy`/`pyright`: the hooks are pinned, and a bare `pyright` resolves a different stub set, so it reports a different error set from CI.
 6. `git add <files>`
 7. `git commit -m "<exact commit message>"`
 8. `git push https://github.com/<HEAD_OWNER>/hacs_waste_collection_schedule.git HEAD:<HEAD_BRANCH>`

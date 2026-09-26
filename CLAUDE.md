@@ -44,12 +44,12 @@ Two styles; the guide is `doc/contributing_source.md`.
 Required metadata (class attrs for pipeline, module-level for legacy): `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES` (non-empty). Strongly encouraged: `SOURCE_CODEOWNERS = ["@handle"]` (ICS YAML: `codeowners:`).
 
 - **`COUNTRY`**: lowercase ISO 3166-1 code from `COUNTRYCODES` in `update_docu_links.py`. UK is `"uk"` (not `"gb"`), Canada `"ca"`, Slovenia `si`. An invalid value silently drops the source from all listings.
-- **Languages**: ISO 639-1 (Slovenian is `sl`, not `si`). Allowed keys: `LANGUAGES` in `update_docu_links.py` (currently `en de it fr nl sl`). For any other language, strip it from the PR and open a separate issue `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist`.
+- **Languages**: ISO 639-1 (Slovenian is `sl`, not `si`). Allowed keys: `LANGUAGES` in `update_docu_links.py` (currently `en de it fr nl sl`). For any other language, strip it from the PR and open a separate issue `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist`. A language is only added to `LANGUAGES` together with `waste_types.SUPPORTED_LANGUAGES` and complete translations (`waste_types` names, `field_terms` labels, `default_translations.py`).
 - **Pipeline-only rules (gated in `tests/test_new_architecture.py`)**:
   - Declare `WASTE_TYPES` explicitly as what the cassette replay produces (`[]` only for a bare transformer with no `type_value_map`).
   - One cassette per `TEST_CASES` entry under `tests/fixtures/<module>/`, named by the slugged case key. The backlogs `SOURCES_AWAITING_CASSETTE` / `CASES_AWAITING_CASSETTE` are debt registers: never add to them, delete a line when you record it. Lower `FALLBACK_BUDGET` in `tests/test_offline_fixtures.py` when re-recording.
   - Reuse, don't define: no `Retriever`/`Parser` subclass, step override, or module-level function issuing the provider's HTTP inside a source module. Put the behaviour in a shared component under `service/` (or the retrievers/parsers modules). Never add a source to `SOURCE_LOCAL_STEP_EXCEPTIONS` or `SOURCES_HAND_ROLLING_RETRIEVAL`.
-  - Multi-provider coverage via `REGIONS`; a large registry goes in `doc/regions/<source>.yaml` via `regions.from_yaml()`. Never `EXTRA_INFO`, `PARAM_TRANSLATIONS`, `PARAM_DESCRIPTIONS` or `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (labels come from `field_terms.py`; guidance goes in `HOWTO`).
+  - Multi-provider coverage via `REGIONS`; a large registry goes in `doc/regions/<source>.yaml` via `regions.from_yaml()`. That is build-time only (`doc/` is not shipped in a HACS install, so `from_yaml()` yields `[]` at runtime): a registry the source needs *while fetching* must stay in Python. Never `EXTRA_INFO`, `PARAM_TRANSLATIONS`, `PARAM_DESCRIPTIONS` or `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (labels come from `field_terms.py`; guidance goes in `HOWTO`).
   - Use `RAISE_ON_EMPTY = True` on address/lookup sources.
   - In any new tool or gate, test pipeline membership with `issubclass(Source, BaseSource)`, never `PARAMS` truthiness (`PARAMS = ()` is falsy).
 - **Legacy-only**: `ICON_MAP` values must be `Icons` enum members (`waste_collection_schedule/icons.py`), never raw `"mdi:..."`; don't extend the enum in a source PR. Every new legacy source needs a hand-written `doc/source/<id>.md`.
@@ -65,7 +65,7 @@ Required metadata (class attrs for pipeline, module-level for legacy): `TITLE`, 
 
 ## Generated files: never edit, never run `update_docu_links.py`
 
-CI regenerates these after every push to `master`. If a PR diff touches one, revert with `git checkout upstream/master -- <file>`:
+CI regenerates these after every push to `master`. If a PR diff touches one, revert with `git checkout upstream/<base> -- <file>`, where `<base>` is the PR's target branch (`master` or `release/3.0.0`):
 
 - `README.md`, `info.md`
 - `custom_components/waste_collection_schedule/sources.json`, `source_metadata.json`
