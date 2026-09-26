@@ -23591,7 +23591,8 @@
           "city": "City"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town."
         }
       },
       "reconfigure_lindau_ch": {
@@ -23601,7 +23602,9 @@
           "calendar_title": "Calendar Title",
           "city": "City"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town."
+        }
       },
       "args_ics_mopage_ch": {
         "title": "Configure Source",
@@ -25146,11 +25149,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number",
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Your house number.",
+          "post_code": "Your postcode."
         }
       },
       "reconfigure_cambridge_gov_uk": {
@@ -25158,10 +25163,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Your house number.",
+          "post_code": "Your postcode."
+        }
       },
       "args_cannock_chase_dc_gov_uk": {
         "title": "Configure Source",
@@ -27392,7 +27400,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_huntingdonshire_gov_uk": {
@@ -27403,7 +27411,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_inverclyde_gov_uk": {
@@ -30077,11 +30085,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number",
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Your house number.",
+          "post_code": "Your postcode."
         }
       },
       "reconfigure_scambs_gov_uk": {
@@ -30089,10 +30099,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Your house number.",
+          "post_code": "Your postcode."
+        }
       },
       "args_southderbyshire_gov_uk": {
         "title": "Configure Source",

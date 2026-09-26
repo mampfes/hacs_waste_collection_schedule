@@ -22790,10 +22790,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City"
+          "city": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by"
         }
       },
       "reconfigure_lindau_ch": {
@@ -22801,9 +22802,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City"
+          "city": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by"
+        }
       },
       "args_ics_mopage_ch": {
         "title": "Konfigurer Kilde",
@@ -24321,11 +24324,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "post_code": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "number": "Dit husnummer",
+          "post_code": "Dit postnummer"
         }
       },
       "reconfigure_cambridge_gov_uk": {
@@ -24333,10 +24338,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "post_code": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Dit husnummer",
+          "post_code": "Dit postnummer"
+        }
       },
       "args_cannock_chase_dc_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -26466,7 +26474,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_huntingdonshire_gov_uk": {
@@ -26477,7 +26485,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_inverclyde_gov_uk": {
@@ -29021,11 +29029,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "post_code": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "number": "Dit husnummer",
+          "post_code": "Dit postnummer"
         }
       },
       "reconfigure_scambs_gov_uk": {
@@ -29033,10 +29043,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "post_code": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Dit husnummer",
+          "post_code": "Dit postnummer"
+        }
       },
       "args_southderbyshire_gov_uk": {
         "title": "Konfigurer Kilde",
