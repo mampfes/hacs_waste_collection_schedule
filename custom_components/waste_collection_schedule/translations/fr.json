@@ -20155,15 +20155,19 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "owner": "Owner",
+          "owner": "Commune",
           "owner_id": "Owner Id",
           "street": "Rue",
-          "street_address": "Adresse de rue",
+          "street_address": "Numéro",
           "town": "Ville",
           "town_address": "Town Address"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "owner": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue.",
+          "street_address": "Votre numéro de rue.",
+          "town": "Votre ville ou village."
         }
       },
       "reconfigure_sims_pl": {
@@ -20171,14 +20175,19 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "owner": "Owner",
+          "owner": "Commune",
           "owner_id": "Owner Id",
           "street": "Rue",
-          "street_address": "Adresse de rue",
+          "street_address": "Numéro",
           "town": "Ville",
           "town_address": "Town Address"
         },
-        "data_description": {}
+        "data_description": {
+          "owner": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue.",
+          "street_address": "Votre numéro de rue.",
+          "town": "Votre ville ou village."
+        }
       },
       "args_alba_com_pl": {
         "title": "Configurer la Source",

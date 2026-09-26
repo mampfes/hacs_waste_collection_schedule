@@ -4441,7 +4441,9 @@
   },
   "sims_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Owner: your gmina as listed (or its numeric owner id, which the search page at https://sisms.pl requests as ownerId). Town: your town (Miejscowość). Then either the house number in the town, or the street (Ulica) and house number (Numer domu)."
+    },
     "urls": {}
   },
   "alba_com_pl": {

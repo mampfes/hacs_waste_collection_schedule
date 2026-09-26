@@ -20120,15 +20120,19 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "owner": "Owner",
+          "owner": "Comune",
           "owner_id": "Owner Id",
-          "street": "Strada",
-          "street_address": "Indirizzo Strada",
+          "street": "Via",
+          "street_address": "Numero civico",
           "town": "Città",
           "town_address": "Town Address"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "owner": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via.",
+          "street_address": "Il vostro numero civico.",
+          "town": "La vostra città o paese."
         }
       },
       "reconfigure_sims_pl": {
@@ -20136,14 +20140,19 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "owner": "Owner",
+          "owner": "Comune",
           "owner_id": "Owner Id",
-          "street": "Strada",
-          "street_address": "Indirizzo Strada",
+          "street": "Via",
+          "street_address": "Numero civico",
           "town": "Città",
           "town_address": "Town Address"
         },
-        "data_description": {}
+        "data_description": {
+          "owner": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via.",
+          "street_address": "Il vostro numero civico.",
+          "town": "La vostra città o paese."
+        }
       },
       "args_alba_com_pl": {
         "title": "Configurazione Sorgente",

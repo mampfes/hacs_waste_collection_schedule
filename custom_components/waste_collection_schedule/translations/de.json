@@ -20230,15 +20230,19 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "owner": "Owner",
+          "owner": "Gemeinde",
           "owner_id": "Owner Id",
           "street": "Straße",
-          "street_address": "Street Address",
+          "street_address": "Hausnummer",
           "town": "Stadt",
           "town_address": "Town Address"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "owner": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "street_address": "Ihre Hausnummer.",
+          "town": "Ihre Stadt oder Gemeinde."
         }
       },
       "reconfigure_sims_pl": {
@@ -20246,14 +20250,19 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "owner": "Owner",
+          "owner": "Gemeinde",
           "owner_id": "Owner Id",
           "street": "Straße",
-          "street_address": "Street Address",
+          "street_address": "Hausnummer",
           "town": "Stadt",
           "town_address": "Town Address"
         },
-        "data_description": {}
+        "data_description": {
+          "owner": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "street_address": "Ihre Hausnummer.",
+          "town": "Ihre Stadt oder Gemeinde."
+        }
       },
       "args_alba_com_pl": {
         "title": "Quelle konfigurieren",

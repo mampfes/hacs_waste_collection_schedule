@@ -20618,18 +20618,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "owner": "Owner",
-          "owner_id": "Owner Id",
+          "owner": "Municipality",
+          "owner_id": "Owner ID",
           "street": "Street",
-          "street_address": "Street Address",
-          "town": "Town",
-          "town_address": "Town Address"
+          "street_address": "House Number",
+          "town": "City",
+          "town_address": "House number (in the town)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "owner_id": "Owner of the waste collection service You can see the owner id in the url requested by the search page",
-          "street_address": "House number of the street if street is set",
-          "town_address": "House number of the town if street is not set"
+          "owner": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name.",
+          "street_address": "Your house number.",
+          "town": "Your city or town."
         }
       },
       "reconfigure_sims_pl": {
@@ -20637,17 +20638,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "owner": "Owner",
-          "owner_id": "Owner Id",
+          "owner": "Municipality",
+          "owner_id": "Owner ID",
           "street": "Street",
-          "street_address": "Street Address",
-          "town": "Town",
-          "town_address": "Town Address"
+          "street_address": "House Number",
+          "town": "City",
+          "town_address": "House number (in the town)"
         },
         "data_description": {
-          "owner_id": "Owner of the waste collection service You can see the owner id in the url requested by the search page",
-          "street_address": "House number of the street if street is set",
-          "town_address": "House number of the town if street is not set"
+          "owner": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name.",
+          "street_address": "Your house number.",
+          "town": "Your city or town."
         }
       },
       "args_alba_com_pl": {
