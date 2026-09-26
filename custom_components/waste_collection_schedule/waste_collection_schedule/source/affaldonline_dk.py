@@ -45,32 +45,33 @@ then carries a single, canonical WasteType.
 
 # Fraction ID -> (Danish display label, canonical WasteType).
 # There are 90 fractions in total, but most are only used at recycling stations.
-FRACTION_MAP: dict[int, tuple[str, wt.WasteType]] = {
-    19: ("Elektronik", wt.ELECTRONICS),
-    27: ("Farligt affald", wt.HAZARDOUS),
-    41: ("Genbrug", wt.RECYCLABLES),
-    43: ("Madaffald", wt.FOOD_WASTE),
-    46: ("Glas", wt.GLASS),
-    47: ("Papir", wt.PAPER),
-    50: ("Drikkedåser", wt.RECYCLABLES),
-    51: ("Metal", wt.preserved("Metal")),
-    53: ("Metal", wt.preserved("Metal")),
-    54: ("Haveaffald", wt.GARDEN_WASTE),
-    58: ("Pap", wt.PAPER),
-    59: ("Kartoner", wt.preserved("Drinking cartons")),
-    72: ("Plast", wt.preserved("Plastic")),
-    78: ("Restaffald", wt.GENERAL_WASTE),
-    80: ("Restaffald", wt.GENERAL_WASTE),
-    81: ("Storskrald", wt.BULKY_WASTE),
-    88: ("Tekstiler", wt.TEXTILES),
-    89: ("Madaffald", wt.FOOD_WASTE),
+# The original danish label for the given Fraction ID is added beside each line
+FRACTION_MAP: dict[int, wt.WasteType] = {
+    19: wt.ELECTRONICS,  # Elektronik
+    27: wt.HAZARDOUS,  # Farligt affald
+    41: wt.RECYCLABLES,  # Genbrug
+    43: wt.FOOD_WASTE,  # Madaffald"
+    46: wt.GLASS,  # Glas
+    47: wt.PAPER,  # Papir
+    50: wt.preserved("Metal"),  # Drikkedåser
+    51: wt.preserved("Metal"),  # Metal
+    53: wt.preserved("Metal"),  # Metal
+    54: wt.GARDEN_WASTE,  # Haveaffald
+    58: wt.PAPER,  # Pap
+    59: wt.preserved("Drink cartons"),  # Drikke kartoner
+    72: wt.preserved("Plastic"),  # Plast
+    78: wt.GENERAL_WASTE,  # Restaffald
+    80: wt.GENERAL_WASTE,  # Restaffald
+    81: wt.BULKY_WASTE,  # Storskrald
+    88: wt.TEXTILES,  # Tekstiler
+    89: wt.FOOD_WASTE,  # Madaffald
 }
 
 # The distinct canonical types FRACTION_MAP resolves to. classify() may also
 # emit a dynamic wt.preserved() label for a combined bin, but that is exempt
 # from declaration (see tests/test_declared_waste_types.py).
 _DECLARED_WASTE_TYPES = sorted(
-    {waste_type.id: waste_type for _, waste_type in FRACTION_MAP.values()}.values(),
+    FRACTION_MAP.values(),
     key=lambda w: w.id,
 )
 
@@ -212,43 +213,45 @@ class Source(BaseSource):
         if not record["fraction_name"]:
             return None
 
-        labels: list[str] = []
         # WasteType is unhashable (its aliases/names fields are dicts), so track
         # distinctness by id and keep one representative instance alongside it.
-        resolved: list[wt.WasteType | None] = []
+        resolved_waste_types: list[wt.WasteType] = []
         for fraction_id in record["fraction_types"]:
-            mapped = FRACTION_MAP.get(fraction_id)
-            if mapped is None:
+            waste_type: wt.WasteType | None = FRACTION_MAP.get(fraction_id)
+            if waste_type is None:
                 # An uncatalogued fraction id: keep going so the label still
                 # names it, but force the preserved() fallback below since we
                 # don't know which canonical type it belongs to.
-                labels.append(f"{fraction_id} Mangler navn")
-                resolved.append(None)
+                resolved_waste_types.append(
+                    wt.preserved("{fraction_id} Unknown fraction id")
+                )
                 continue
-            label, waste_type = mapped
-            labels.append(label)
-            resolved.append(waste_type)
+            if waste_type not in resolved_waste_types:
+                resolved_waste_types.append(waste_type)
 
-        if not labels:
+        if len(resolved_waste_types) == 0:
             # The provider named the bin but listed no fraction ids for it:
             # fall back to its own label rather than indexing an empty list.
             return Collection(
                 date=date, waste_type=wt.preserved(record["fraction_name"])
             )
 
-        distinct_ids = {w.id if w is not None else None for w in resolved}
-        if len(distinct_ids) == 1 and None not in distinct_ids:
+        if len(resolved_waste_types) == 1:
             # Every fraction in this bin resolves to the same canonical type:
             # using it directly loses nothing.
-            return Collection(date=date, waste_type=resolved[0])
+            return Collection(date=date, waste_type=resolved_waste_types[0])
 
         # The bin combines fractions that resolve to more than one canonical
         # type (or includes one we don't recognise). Collapsing it onto any
         # single type would misrepresent what's actually being collected, so
-        # keep the provider's own composite label verbatim instead.
+        # create a composite label of the contents instead.
+        labels: list[str] = []
+        for w in resolved_waste_types:
+            labels.append(wt.display_name(w))
+
         combined_label = (
             labels[0]
             if len(labels) == 1
-            else " og ".join([", ".join(labels[:-1]), labels[-1]])
+            else " & ".join([", ".join(labels[:-1]), labels[-1]])
         )
         return Collection(date=date, waste_type=wt.preserved(combined_label))
