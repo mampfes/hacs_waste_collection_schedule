@@ -3290,7 +3290,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "property_id": "Property Id"
+          "property_id": "Standort-ID"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3301,7 +3301,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "property_id": "Property Id"
+          "property_id": "Standort-ID"
         },
         "data_description": {}
       },
@@ -11808,10 +11808,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk"
+          "district": "Ortsteil"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "reconfigure_chiemgau_recycling_lk_rosenheim": {
@@ -11819,9 +11820,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk"
+          "district": "Ortsteil"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Ihr Ortsteil oder Stadtteil."
+        }
       },
       "args_karlsruhe_de": {
         "title": "Quelle konfigurieren",
@@ -11910,7 +11913,8 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_ead_darmstadt_de": {
@@ -11920,7 +11924,9 @@
           "calendar_title": "Kalender Titel",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ihr Straßenname."
+        }
       },
       "args_ics_eaw_rheingau_taunus_de": {
         "title": "Quelle konfigurieren",
@@ -16426,7 +16432,8 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_stadtwerke_roesrath_de": {
@@ -16436,7 +16443,9 @@
           "calendar_title": "Kalender Titel",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ihr Straßenname."
+        }
       },
       "args_stadtwerke_singen_de": {
         "title": "Quelle konfigurieren",
@@ -19412,7 +19421,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_hcc_govt_nz": {
@@ -19422,7 +19432,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_hastingsdc_govt_nz": {
         "title": "Quelle konfigurieren",
@@ -20539,7 +20551,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location_id": "Standort-ID"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -20550,7 +20562,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location_id": "Standort-ID"
         },
         "data_description": {}
       },
@@ -21383,7 +21395,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_simbio_si": {
@@ -21394,7 +21408,10 @@
           "house_number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_snaga_mb_si": {
         "title": "Quelle konfigurieren",
@@ -21722,7 +21739,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_hudiksvall_se": {
@@ -21732,7 +21750,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_hassleholm_miljo_se": {
         "title": "Quelle konfigurieren",
@@ -21845,10 +21865,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street_address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_lsr_nu": {
@@ -21856,9 +21877,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Ihre vollständige Adresse."
+        }
       },
       "args_lerum_se": {
         "title": "Quelle konfigurieren",
@@ -22209,7 +22232,9 @@
           "city": "Stadt"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse.",
+          "city": "Ihre Stadt oder Gemeinde."
         }
       },
       "reconfigure_srvatervinning_se": {
@@ -22220,7 +22245,10 @@
           "address": "Adresse",
           "city": "Stadt"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse.",
+          "city": "Ihre Stadt oder Gemeinde."
+        }
       },
       "args_ssam_se": {
         "title": "Quelle konfigurieren",
@@ -31857,7 +31885,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_nyc_gov": {
@@ -31867,7 +31896,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_northville_township_mi_us": {
         "title": "Quelle konfigurieren",

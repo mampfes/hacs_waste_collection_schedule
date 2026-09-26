@@ -1,6 +1,8 @@
 # New York City
 
-Support for schedules provided by [New York City](https://www.nyc.gov/assets/dsny/forms/collection-schedule), serving the city of New York, NY, USA.
+Support for schedules provided by [New York City](https://www.nyc.gov).
+
+Source for New York City, US.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: nyc_gov
       args:
-        address: Queens Borough Hall, 120-55 Queens Blvd, Jamaica, NY 11424, USA
+        address: 120-55 Queens Blvd, Kew Gardens, NY 11424
 ```
-
-## How to get the source argument
-
-The `address` argument is simply the house mailing address. You can what formats of your address are accepted at <https://www.nyc.gov/assets/dsny/forms/collection-schedule>.

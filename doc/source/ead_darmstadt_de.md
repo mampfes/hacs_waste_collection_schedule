@@ -1,6 +1,8 @@
-# EAD Entsorgung
+# EAD Darmstadt
 
-Support for schedules provided by [ead.darmstadt.de](https://ead.darmstadt.de/) serving the city of Darmstadt, Germany.
+Support for schedules provided by [EAD Darmstadt](https://ead.darmstadt.de/).
+
+Source script for waste collection in Darmstadt ead.darmstadt.de
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: ead_darmstadt_de
       args:
-        street: Achatweg
+        street: STREET
 ```
 
 ### Configuration Variables
@@ -17,6 +19,12 @@ waste_collection_schedule:
 **street**  
 *(string) (required)*
 
-## How to get the source arguments
+## Example
 
-Visit [Abfallkalender](https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/) and search for your address. The `street` argument should exactly match the autocomplete result and may contain a number or range as well.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ead_darmstadt_de
+      args:
+        street: "Stresemannstra\xDFe"
+```

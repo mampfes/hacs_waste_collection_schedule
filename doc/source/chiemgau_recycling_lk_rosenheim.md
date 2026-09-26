@@ -1,34 +1,30 @@
-# Chiemgau Recycling - Landkreis Rosenheim (Unofficial API)
+# Chiemgau Recycling - Landkreis Rosenheim
 
-Support for schedules provided by [Chiemgau Recycling](https://chiemgau-recycling.de), serving Landkreis Rosenheim, Germany.
+Support for schedules provided by [Chiemgau Recycling - Landkreis Rosenheim](https://chiemgau-recycling.de).
+
+Source script for paper waste collection in Landkreis Rosenheim area
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: chiemgau_recycling_lk_rosenheim
       args:
-        district: "Bruckmühl 2"
-        
+        district: DISTRICT
 ```
 
 ### Configuration Variables
 
 **district**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: chiemgau_recycling_lk_rosenheim
       args:
-        district: "Bruckmühl 2"
-        
+        district: "Bruckm\xFChl 1"
 ```
-
-## How to get the source argument
-
-Open [Chiemgau Recycling](https://chiemgau-recycling.de/#abfuhrplaene) and pick your district from the Landkreis Rosenheim PDF.

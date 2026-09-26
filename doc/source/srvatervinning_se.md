@@ -1,6 +1,8 @@
 # SRV Återvinning
 
-Support for schedules provided by [SRV återvinning AB](https://www.srvatervinning.se/), Sweden.
+Support for schedules provided by [SRV Återvinning](https://www.srvatervinning.se).
+
+Source for SRV återvinning AB, Sweden
 
 ## Configuration via configuration.yaml
 
@@ -19,40 +21,14 @@ waste_collection_schedule:
 *(string) (required)*
 
 **city**  
-*(string)*
+*(string) (optional)*
 
-## Examples
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: srvatervinning_se
-      args:
-        address: "Skansvägen"
-
-```
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: srvatervinning_se
       args:
-        address: "Skolvägen"
-        city: "TUNGELSTA"
-
+        address: "Skansv\xE4gen"
 ```
-
-## How to get the source arguments
-
-1. Go to your calendar at [SRV återvinning AB](https://www.srvatervinning.se/avfallshamtning/nar-hamtar-vi-ditt-avfall)
-2. Enter your street address. Do not include postal code or city.
-3. Include city as an argument if there are multiple search results.
-
-### Configuration values
-#### source -> customization -> type
-##### Vanlig
-- "Matavfall"
-- "Restavfall"
-##### Sortera hemma
-- "Kärl 370 liter fyrfack kärl 1"
-- "Kärl 370 liter fyrfack kärl 2"

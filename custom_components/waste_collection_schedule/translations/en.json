@@ -3386,7 +3386,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -3397,7 +3397,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Location ID"
         },
         "data_description": {}
       },
@@ -7586,7 +7586,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number"
+          "house_number": "Standplads number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -7597,7 +7597,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number"
+          "house_number": "Standplads number"
         },
         "data_description": {}
       },
@@ -12043,7 +12043,8 @@
           "district": "District"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Your district or part of the municipality."
         }
       },
       "reconfigure_chiemgau_recycling_lk_rosenheim": {
@@ -12053,7 +12054,9 @@
           "calendar_title": "Calendar Title",
           "district": "District"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Your district or part of the municipality."
+        }
       },
       "args_karlsruhe_de": {
         "title": "Configure Source",
@@ -12142,7 +12145,8 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
         }
       },
       "reconfigure_ead_darmstadt_de": {
@@ -12152,7 +12156,9 @@
           "calendar_title": "Calendar Title",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Your street name."
+        }
       },
       "args_ics_eaw_rheingau_taunus_de": {
         "title": "Configure Source",
@@ -16658,7 +16664,8 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
         }
       },
       "reconfigure_stadtwerke_roesrath_de": {
@@ -16668,7 +16675,9 @@
           "calendar_title": "Calendar Title",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Your street name."
+        }
       },
       "args_stadtwerke_singen_de": {
         "title": "Configure Source",
@@ -19779,7 +19788,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_hcc_govt_nz": {
@@ -19789,7 +19799,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_hastingsdc_govt_nz": {
         "title": "Configure Source",
@@ -20944,7 +20956,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -20955,7 +20967,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {}
       },
@@ -21850,7 +21862,9 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_simbio_si": {
@@ -21861,7 +21875,10 @@
           "house_number": "House Number",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_snaga_mb_si": {
         "title": "Configure Source",
@@ -22221,7 +22238,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_hudiksvall_se": {
@@ -22231,7 +22249,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_hassleholm_miljo_se": {
         "title": "Configure Source",
@@ -22347,10 +22367,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_lsr_nu": {
@@ -22358,9 +22379,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_lerum_se": {
         "title": "Configure Source",
@@ -22711,7 +22734,9 @@
           "city": "City"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "city": "Your city or town."
         }
       },
       "reconfigure_srvatervinning_se": {
@@ -22722,7 +22747,10 @@
           "address": "Address",
           "city": "City"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address.",
+          "city": "Your city or town."
+        }
       },
       "args_ssam_se": {
         "title": "Configure Source",
@@ -32672,7 +32700,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_nyc_gov": {
@@ -32682,7 +32711,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_northville_township_mi_us": {
         "title": "Configure Source",

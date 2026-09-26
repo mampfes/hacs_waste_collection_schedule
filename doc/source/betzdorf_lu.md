@@ -1,9 +1,20 @@
-Support for schedules provided by [[https://www.betzdorf.lu/waste](https://www.betzdorf.lu/fr/waste)](https://www.betzdorf.lu/fr/waste).
+# Betzdorf
 
+Support for schedules provided by [Betzdorf](https://www.betzdorf.lu).
+
+Source for Betzdorf, Luxembourg waste collection.
+
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: betzdorf_lu
+```
 
 ### Configuration Variables
 
-*(no args required)*
+No configuration arguments are required.
 
 ## Example
 
@@ -11,5 +22,4 @@ Support for schedules provided by [[https://www.betzdorf.lu/waste](https://www.b
 waste_collection_schedule:
   sources:
     - name: betzdorf_lu
-      args: {}
 ```

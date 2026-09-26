@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Hamilton City Council](https://www.fightthelandfill.co.nz/).
 
+Source script for Hamilton City Council
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -9,38 +11,20 @@ waste_collection_schedule:
   sources:
     - name: hcc_govt_nz
       args:
-        address: STREET_NUMBER_AND_STREET_NAME
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **address**  
 *(string) (required)*
-excactyl written like autocompleted by <https://www.fightthelandfill.co.nz>
 
-## Bin Names example - Rubbish, Recycling
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: hcc_govt_nz
-      args:
-        address: "1 Hamilton Parade"
-```
-
-## Bin Colours example - Red, Yellow
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: hcc_govt_nz
       args:
-        address: "1 Hamilton Parade"
-      customize:
-          - type: Rubbish
-            alias: Red
-          - type: Recycling
-            alias: Yellow
-      calendar_title: "HCC Bins"
-  separator: " & "
+        address: 1 Hamilton Parade
 ```
