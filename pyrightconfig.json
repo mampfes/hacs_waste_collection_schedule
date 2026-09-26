@@ -332,6 +332,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/staedteservice_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stevenage_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/steyr_at.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stirling_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stirling_wa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stkh_hu.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stonnington_vic_gov_au.py",
