@@ -3466,6 +3466,7 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Japan</summary>
 
+- [Osaka City (大阪市)](/doc/source/city_osaka_lg_jp.md) / city.osaka.lg.jp/kankyo/page/0000370521.html
 - [ThreeR](/doc/source/delight_system_com.md) / threer1.delight-system.com
 </details>
 

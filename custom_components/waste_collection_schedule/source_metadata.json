@@ -3979,6 +3979,13 @@
     },
     "urls": {}
   },
+  "city_osaka_lg_jp": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/city_osaka_lg_jp.md",
+    "howto": {
+      "en": "Pick your ward, then enter your address in any of the usual forms: '浮田1丁目2番', '浮田1丁目2番地5号', '浮田1-2-5' or the full '大阪市北区浮田一丁目2-5' (the 号 is not needed). Towns listed without a chome take the ban directly ('味原町1番'). A town name alone lists its blocks. Check the spelling on the text version of the city's map: https://www.city.osaka.lg.jp/contents/wdu150/trashmap/text/index.html . A few blocks are split into areas with different weekdays (a 号 range, a building, '軽四輪車(小さい車)で収集している地域' or '上記以外'); only then fill in the block detail, from the values offered. Only the weekly schedule is published, so year-end and New Year breaks are not reflected."
+    },
+    "urls": {}
+  },
   "delight_system_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/delight_system_com.md",
     "howto": {
