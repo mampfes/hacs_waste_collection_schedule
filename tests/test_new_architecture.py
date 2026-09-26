@@ -1469,6 +1469,8 @@ class TestAbfallkalenderRetriever:
         with pytest.raises(SourceArgumentRequiredWithSuggestions) as raised:
             retriever(source)
         assert "Futterhof" in str(raised.value)
+
+
 class TestSismsPl:
     """The SISMS / BLISKO platform components."""
 
