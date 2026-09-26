@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://www.kempsey.nsw.gov.au/api/v1/myarea/search d0d5c6fc1d",
+      "method": "GET",
+      "url": "https://www.kempsey.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.kempsey.nsw.gov.au/api/v1/myarea/search?keywords=99+Nowhere+Street+Kempsey",
+      "body": "{\"params\":[[\"keywords\",\"99 Nowhere Street Kempsey\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "44",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:40 GMT",
+        "pragma": "no-cache",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=8, origin; dur=566, ak_p; desc=\"1790356959489_389949164_2969650301_57294_8705_20_0_-\";dur=1",
+        "set-cookie": "ak_bmsc=B7FA83946A5DBDF160CD6D77AACCE451~000000000000000000000000000000~YAAQ7CY+FzjaJKugAQAASDOX2QExkXIlFTPE6kzFKGkxgWtA6c5yXgK/UdTNjS3nid03+OLxvVyG+kz4028poN/K8uxqKtXVVCeV//YijF7rYDPfpNBGgvmwg0jlIlOVVHb6rNBpHNGAnUS/Y3MCKL0ETt42+VOASs0mmCMig6cnx730yOi4Z0F0ghZrUO+hkFuICOEiH5o1MvMoyd4iPTwUa4QZrFGLafjgXElaBeAguVOTdKo6nPykigGExsZSi7AGWwV+jSqf8FqC3Sn4pxC2x+PzmDPzUUtb4cvGOLV/1NUltv533jEJqErer5VIJcf6uo6HjFNp+HVCO1/IMBWPqQfs/0AcG5+bzlgAKfsT8jI2; Domain=.kempsey.nsw.gov.au; Path=/; Expires=Fri, 25 Sep 2026 19:22:39 GMT; Max-Age=7199; HttpOnly",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJJdGVtcyI6W10sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MH0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value '99 Nowhere Street Kempsey', please check the spelling and try again."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://www.mountalexander.vic.gov.au/api/v1/myarea/search e2c825b9a6",
+      "method": "GET",
+      "url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search?keywords=1+Mostyn+Street+Castlemaine+Victoria+3450",
+      "body": "{\"params\":[[\"keywords\",\"1 Mostyn Street Castlemaine Victoria 3450\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "524",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:41 GMT",
+        "pragma": "no-cache",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=27, origin; dur=192, ak_p; desc=\"1790356961632_389949170_190754541_22310_9562_21_0_-\";dur=1",
+        "set-cookie": "ak_bmsc=8421DBDC2BE8D8AA294EF75268B569DD~000000000000000000000000000000~YAAQ8iY+Fw0z+dOgAQAARjqX2QGAmV5xuVV/n70TXYu9PbhKiy+PSwXemiGbS0DKCmCizsoYPs7yDsFt+uFw5t4uDvJK9KAoG8e4SlQN694ur8DH/Ju7uVlE3yVsP6YS7weMPRcSY6diH/4QxuhKqzYLnwCNY0yAIRE72uCwR1nAXX14TM20rsR68a65FZgKrQBszBycd6uENPbJPFtB5+aRB0Ay0NBO02JaDNfw+8zTx/T8OR4RuVrkYqXnghlDXWi/z0Pq4ZDEx/urQKuR1VoGpzzh67vKkf81Dx2OjvMsMa6JUxMIh50VCGzhX4k7iQs3KIzcfqD5vhwV4k7Y5gwybkV7Au5LHxYZGn2M0eibPVJC6KtbJDAOmSk=; Domain=.mountalexander.vic.gov.au; Path=/; Expires=Fri, 25 Sep 2026 19:22:41 GMT; Max-Age=7200; HttpOnly",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI3OGQ2N2NmMy1hNTEwLTQ0NGUtYjE5OS05NWM5OGYyOWU0MjgiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMTA0IE1vc3R5biBTdHJlZXQgQ0FTVExFTUFJTkUgVklDVE9SSUEgMzQ1MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiTW9vbmxpZ2h0IENyZWVrIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoxNC43NjU3NjMsIkxhdExvbiI6Wy0zNy4wNjY3MjEwNDc5OTI0LDE0NC4yMjMwMTQ3ODU4MTNdfSx7IklkIjoiN2QzOTNkMjMtNWQ2My00NWZhLWIxNTYtYjYyMGJiZjhmMjk5IiwiQWRkcmVzc1NpbmdsZUxpbmUiOiJOZXdzYWdlbnQgU2hvcCAxIDQ1LTUzIE1vc3R5biBTdHJlZXQgQ0FTVExFTUFJTkUgVklDVE9SSUEgMzQ1MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiTW9vbmxpZ2h0IENyZWVrIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoxMy40NTU3MzEsIkxhdExvbiI6Wy0zNy4wNjU0OTUzMjAzNTQ5LDE0NC4yMTc1NTQ1MTA3NjJdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6Mn0="
+    },
+    {
+      "key": "GET https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices 9f6fad1864",
+      "method": "GET",
+      "url": "https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.mountalexander.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=78d67cf3-a510-444e-b199-95c98f29e428&ocsvclang=en-AU&pageLink=%2FMy-Property%2FWaste-and-recycling%2FFind-your-bin-collection-day",
+      "body": "{\"params\":[[\"geolocationid\",\"78d67cf3-a510-444e-b199-95c98f29e428\"],[\"ocsvclang\",\"en-AU\"],[\"pageLink\",\"/My-Property/Waste-and-recycling/Find-your-bin-collection-day\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "436",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "private, max-age=0",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:42 GMT",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=153, origin; dur=208, ak_p; desc=\"1790356962094_389949170_190755585_41237_12910_21_0_-\";dur=1",
+        "set-cookie": "ASP.NET_SessionId=c3eqmz1rh0bqnb2e5m0xwpij; path=/; secure; HttpOnly; SameSite=None",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxlYXNlIHBsYWNlIHlvdXIgYmluIG9uIHRoZSB2ZXJnZSBiZWZvcmUgNi4wMGFtLCBvciB0aGUgbmlnaHQgYmVmb3JlLlx1MDAzYy9zcGFuXHUwMDNlXHUwMDNjL3BcdTAwM2UgWW91ciBuZXh0IGNvbGxlY3Rpb24gZGF5IGlzOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGVhc2UgbGVhdmUgeW91ciB5ZWxsb3ctbGlkIGJpbiBvbiB0aGUgdmVyZ2UgYmVmb3JlIDYuMDBhbSwgb3IgdGhlIG5pZ2h0IGJlZm9yZS5cblx1MDAzYy9zcGFuXHUwMDNlXHUwMDNjL3BcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRheSBpczpcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbiAyOC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

@@ -1292,10 +1292,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_portphillip_vic_gov_au": {
@@ -1303,9 +1304,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_rockingham_wa_gov_au": {
         "title": "Configure Source",
@@ -1896,10 +1899,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_kempsey_nsw_gov_au": {
@@ -1907,9 +1911,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_kiama_nsw_gov_au": {
         "title": "Configure Source",
@@ -2468,10 +2474,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_mount_alexander_vic_gov_au": {
@@ -2479,9 +2486,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address"
+          "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_moyne_vic_gov_au": {
         "title": "Configure Source",
@@ -4233,11 +4242,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hausnummer": "House Number",
-          "strasse": "Street"
+          "hausnummer": "Huisnummer",
+          "strasse": "Straat"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "Uw huisnummer.",
+          "strasse": "Uw straatnaam."
         }
       },
       "reconfigure_mils_tirol_at": {
@@ -4245,10 +4256,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "hausnummer": "House Number",
-          "strasse": "Street"
+          "hausnummer": "Huisnummer",
+          "strasse": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "hausnummer": "Uw huisnummer.",
+          "strasse": "Uw straatnaam."
+        }
       },
       "args_ics_passail_at": {
         "title": "Configure Source",
@@ -8784,36 +8798,6 @@
         },
         "data_description": {}
       },
-      "args_buergerportal_de": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District",
-          "number": "Number",
-          "operator": "Operator",
-          "show_volume": "Show Volume",
-          "street": "Street",
-          "subdistrict": "Subdistrict"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_buergerportal_de": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "district": "District",
-          "number": "Number",
-          "operator": "Operator",
-          "show_volume": "Show Volume",
-          "street": "Street",
-          "subdistrict": "Subdistrict"
-        },
-        "data_description": {}
-      },
       "args_ics_awd_online_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -9683,12 +9667,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
-          "city": "City",
-          "house_number": "House Number",
-          "street": "Street"
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_meinawb_de": {
@@ -9697,11 +9684,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address_suffix": "Address Suffix",
-          "city": "City",
-          "house_number": "House Number",
-          "street": "Street"
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_ics_awb_landkreis_karlsruhe_de": {
         "title": "Configure Source",
@@ -10110,6 +10101,39 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_buergerportal_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "number": "Huisnummer",
+          "operator": "Operator",
+          "street": "Straat",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
+      "reconfigure_buergerportal_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "number": "Huisnummer",
+          "operator": "Operator",
+          "street": "Straat",
+          "subdistrict": "Subdistrict"
+        },
+        "data_description": {
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_app_abfallplus_de": {
         "title": "Configure Source",
@@ -16439,11 +16463,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street"
+          "city": "Plaats",
+          "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_tonnenticker_pro_de": {
@@ -16451,10 +16477,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street"
+          "city": "Plaats",
+          "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_ubzzw_de": {
         "title": "Configure Source",
@@ -25543,7 +25572,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_exeter_gov_uk": {
@@ -25554,7 +25583,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_falkirk_gov_uk": {
