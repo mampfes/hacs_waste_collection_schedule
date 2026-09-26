@@ -19910,7 +19910,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_rotorua_lakes_council_nz": {
@@ -19920,7 +19921,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_selwyn_govt_nz": {
         "title": "Configure Source",
@@ -22727,7 +22730,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
+          "address": "Your full address."
         }
       },
       "reconfigure_timra_se": {
@@ -22738,7 +22741,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
+          "address": "Your full address."
         }
       },
       "args_uddevallaenergi_se": {
@@ -26902,11 +26905,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Unique Property Reference Number"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Unique Property Reference Number (UPRN) for your address."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gloucester_gov_uk": {
@@ -26914,10 +26917,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Unique Property Reference Number"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Unique Property Reference Number (UPRN) for your address."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_gosport_gov_uk": {
@@ -28057,11 +28060,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Property UPRN (Unique Property Reference Number)"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Find your UPRN at {url_www_findmyaddress_co_uk}"
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_tower_hamlets_gov_uk": {
@@ -28069,10 +28072,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Property UPRN (Unique Property Reference Number)"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Find your UPRN at {url_www_findmyaddress_co_uk}"
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_maidstone_gov_uk": {
@@ -29482,7 +29485,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_reigatebanstead_gov_uk": {
@@ -29493,7 +29496,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_renfrewshire_gov_uk": {
