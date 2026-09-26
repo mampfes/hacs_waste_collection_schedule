@@ -28,7 +28,7 @@ from typing import Any
 
 from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
 
-_LANGS = ("en", "de", "fr", "it", "nl", "sl")
+_LANGS = ("en", "de", "fr", "it", "nl", "sl", "da")
 
 
 def as_text(value: object) -> str:
@@ -86,14 +86,15 @@ def _term(
     it: str,
     nl: str,
     sl: str,
+    da: str,
     *,
-    desc: tuple[str, str, str, str, str, str] | None = None,
+    desc: tuple[str, str, str, str, str, str, str] | None = None,
     coerce: "Callable[[Any], Any] | None" = None,
 ) -> FieldTerm:
-    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl, sl)``."""
+    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl, sl, da)``."""
     return FieldTerm(
         key=key,
-        labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl, "sl": sl},
+        labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl, "sl": sl, "da": da},
         descriptions=dict(zip(_LANGS, desc, strict=True)) if desc else {},
         coerce=coerce,
     )
@@ -108,6 +109,7 @@ MUNICIPALITY = _term(
     "Comune",
     "Gemeente",
     "Občina",
+    "Kommune",
     desc=(
         "The name of your municipality, as shown on the provider's website.",
         "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
@@ -115,6 +117,7 @@ MUNICIPALITY = _term(
         "Il nome del vostro comune, come indicato sul sito del fornitore.",
         "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
         "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+        "Navnet på din kommune, som vist på din leverandørs hjemmeside.",  # codespell:ignore vist
     ),
 )
 CITY = _term(
@@ -125,6 +128,7 @@ CITY = _term(
     "Città",
     "Plaats",
     "Mesto",
+    "By",
     desc=(
         "Your city or town.",
         "Ihre Stadt oder Gemeinde.",
@@ -132,6 +136,7 @@ CITY = _term(
         "La vostra città o paese.",
         "Uw stad of dorp.",  # codespell:ignore dorp
         "Vaše mesto ali kraj.",
+        "Din by",
     ),
 )
 DISTRICT = _term(
@@ -142,6 +147,7 @@ DISTRICT = _term(
     "Quartiere",
     "Wijk",
     "Naselje",
+    "Distrikt",
     desc=(
         "Your district or part of the municipality.",
         "Ihr Ortsteil oder Stadtteil.",
@@ -149,6 +155,7 @@ DISTRICT = _term(
         "Il vostro quartiere o parte del comune.",
         "Uw wijk of deel van de gemeente.",
         "Vaše naselje ali del občine.",
+        "Dit distrikt eller del af kommunen",
     ),
 )
 STREET = _term(
@@ -159,6 +166,7 @@ STREET = _term(
     "Via",
     "Straat",
     "Ulica",
+    "Gade",
     desc=(
         "Your street name.",
         "Ihr Straßenname.",
@@ -166,6 +174,7 @@ STREET = _term(
         "Il nome della vostra via.",
         "Uw straatnaam.",
         "Ime vaše ulice.",
+        "Dit gadenavn",
     ),
 )
 HOUSE_NUMBER = _term(
@@ -176,6 +185,7 @@ HOUSE_NUMBER = _term(
     "Numero civico",
     "Huisnummer",
     "Hišna številka",
+    "Husnummer",
     desc=(
         "Your house number.",
         "Ihre Hausnummer.",
@@ -183,6 +193,7 @@ HOUSE_NUMBER = _term(
         "Il vostro numero civico.",
         "Uw huisnummer.",
         "Vaša hišna številka.",
+        "Dit husnummer",
     ),
     # YAML types a bare `4` as an int, and a house number is text everywhere it
     # is sent (it may be "4a"), so normalise rather than leave each source to.
@@ -196,6 +207,7 @@ POSTCODE = _term(
     "CAP",
     "Postcode",
     "Poštna številka",
+    "Postnummer",
     desc=(
         "Your postcode.",
         "Ihre Postleitzahl.",
@@ -203,6 +215,7 @@ POSTCODE = _term(
         "Il vostro codice postale (CAP).",
         "Uw postcode.",
         "Vaša poštna številka.",
+        "Dit postnummer",
     ),
 )
 ADDRESS = _term(
@@ -213,6 +226,7 @@ ADDRESS = _term(
     "Indirizzo",
     "Adres",
     "Naslov",
+    "Adresse",
     desc=(
         "Your full address.",
         "Ihre vollständige Adresse.",
@@ -220,17 +234,27 @@ ADDRESS = _term(
         "Il vostro indirizzo completo.",
         "Uw volledige adres.",
         "Vaš celoten naslov.",
+        "Din fulde adresse",
     ),
     # A pasted address routinely carries leading or trailing whitespace, which
     # breaks an exact-match lookup for a reason the user cannot see.
     coerce=as_text,
 )
-REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio", "Regija")
+REGION = _term(
+    "region", "Region", "Region", "Région", "Regione", "Regio", "Regija", "Region"
+)
 # Administrative levels above the municipality (used by German platforms whose
 # cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
 # German "Land"/"Landkreis" where there is no close equivalent; review welcome.
 STATE = _term(
-    "state", "Federal State", "Bundesland", "Land", "Land", "Deelstaat", "Zvezna dežela"
+    "state",
+    "Federal State",
+    "Bundesland",
+    "Land",
+    "Land",
+    "Deelstaat",
+    "Zvezna dežela",
+    "Region",
 )
 # COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
 # English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
@@ -245,6 +269,7 @@ COUNTY = _term(
     "Circondario",
     "Landkreis",
     "Okraj",
+    "Region",
 )
 
 # --- Coordinates -------------------------------------------------------------
@@ -255,6 +280,7 @@ _MAP_HELP = (
     "Selezionate la vostra posizione sulla mappa.",
     "Selecteer uw locatie op de kaart.",
     "Izberite svojo lokacijo na zemljevidu.",
+    "Vælg din lokation på kortet.",
 )
 LATITUDE = _term(
     "latitude",
@@ -264,6 +290,7 @@ LATITUDE = _term(
     "Latitudine",
     "Breedtegraad",
     "Zemljepisna širina",
+    "Breddegrad",
     desc=_MAP_HELP,
 )
 LONGITUDE = _term(
@@ -274,12 +301,14 @@ LONGITUDE = _term(
     "Longitudine",
     "Lengtegraad",
     "Zemljepisna dolžina",
+    "Længdegrad",
     desc=_MAP_HELP,
 )
 
 # --- Identifiers -------------------------------------------------------------
 UPRN = _term(
     "uprn",
+    "UPRN",
     "UPRN",
     "UPRN",
     "UPRN",
@@ -298,6 +327,8 @@ UPRN = _term(
         "Uw Unique Property Reference Number (UPRN). Vind het op "
         "https://www.findmyaddress.co.uk/",
         "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na https://www.findmyaddress.co.uk/",
+        "Din Unique Property Reference Number. Find den på "
+        "https://www.findmyaddress.co.uk/",
     ),
     # A UPRN is a run of digits, but YAML types an unquoted one as an int and
     # every provider wants it as text. This was the single most repeated
@@ -312,6 +343,7 @@ LOCATION_ID = _term(
     "ID posizione",
     "Locatie-ID",
     "ID lokacije",
+    "Lokations-ID",
 )
 AREA_ID = _term(
     "area_id",
@@ -321,6 +353,7 @@ AREA_ID = _term(
     "ID area",
     "Gebied-ID",
     "ID območja",
+    "Område-ID",
 )
 CITY_ID = _term(
     "city_id",
@@ -330,6 +363,7 @@ CITY_ID = _term(
     "ID città",
     "Plaats-ID",
     "ID mesta",
+    "By-ID",
 )
 SERVICE_ID = _term(
     "service_id",
@@ -339,6 +373,7 @@ SERVICE_ID = _term(
     "ID servizio",
     "Service-ID",
     "ID storitve",
+    "Service-ID",
 )
 CUSTOMER_NUMBER = _term(
     "customer_number",
@@ -348,6 +383,7 @@ CUSTOMER_NUMBER = _term(
     "Numero cliente",
     "Klantnummer",
     "Šifra stranke",
+    "Kundenummer",
 )
 API_KEY = _term(
     "api_key",
@@ -357,6 +393,7 @@ API_KEY = _term(
     "Chiave API",
     "API-sleutel",
     "API ključ",
+    "API nøgle",
 )
 
 # --- Waste-specific ----------------------------------------------------------
@@ -368,6 +405,7 @@ WASTE_TYPES = _term(
     "Tipi di rifiuto",
     "Afvalsoorten",
     "Tipi odpadkov",
+    "Affaldstyper",
     desc=(
         "Optional filter: the waste types to include.",
         "Optionaler Filter: die einzuschließenden Abfallarten.",
@@ -375,6 +413,7 @@ WASTE_TYPES = _term(
         "Filtro facoltativo: i tipi di rifiuto da includere.",
         "Optioneel filter: de op te nemen afvalsoorten.",
         "Opcijski filter: tipi odpadkov, ki naj bodo vključeni.",
+        "Valgfrit filter: affaldstyperne du vil inkludere.",
     ),
     # Rendered as a plain text field (no generic multi-select), so the
     # config-flow UI stores what the visitor typed as one comma separated
