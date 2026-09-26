@@ -1215,6 +1215,57 @@ class TestIndexAndYearlyFetch:
         source.session.get.return_value.raise_for_status.assert_called_once()
 
 
+class TestSismsPl:
+    """The SISMS / BLISKO platform components."""
+
+    def test_owner_accepts_the_listed_name_and_the_short_one(self):
+        from waste_collection_schedule.service.SismsPl import owner_id
+
+        # The config flow pre-fills the full listed name; people type the short
+        # one. Both must resolve.
+        assert owner_id("Gmina Jeżewo") == owner_id("Jeżewo") == 218
+        assert owner_id(" miasto rydułtowy ") == 223
+
+    def test_unknown_owner_lists_the_gminas(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.SismsPl import owner_id
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            owner_id("Nowhere")
+        assert raised.value.argument == "owner"
+
+    def test_parser_names_each_reception_by_its_bin(self):
+        from waste_collection_schedule.service.SismsPl import SismsParser
+
+        response = {
+            "bins": {"data": [{"id": "b:1", "name": "Szkło"}]},
+            "timetable": {
+                "data": [
+                    {"receptions": [{"date": "2026-10-01", "binId": "b:1"}]},
+                    {"receptions": [{"date": "2026-11-05", "binId": "b:1"}]},
+                ]
+            },
+        }
+        assert SismsParser()(response) == [
+            {"date": "2026-10-01", "type": "Szkło"},
+            {"date": "2026-11-05", "type": "Szkło"},
+        ]
+
+    def test_retriever_needs_a_house_number(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentExceptionMultiple,
+        )
+        from waste_collection_schedule.service.SismsPl import SismsRetriever
+
+        source = MagicMock()
+        source.params = {"owner": "Jeżewo", "town": "Ciemniki"}
+        with pytest.raises(SourceArgumentExceptionMultiple):
+            SismsRetriever()(source)
+        source.session.get.assert_not_called()
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 
