@@ -1161,6 +1161,60 @@ class TestWasteInfoComponents:
         ) == ("399", "Queen St", "Altona Meadows")
 
 
+class TestIndexAndYearlyFetch:
+    """retrievers.JsonIndexLookup and retrievers.YearUrl."""
+
+    @staticmethod
+    def _source(**params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_index_lookup_resolves_the_name_to_its_id(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(town="  bad   GANDERSHEIM ")
+        source.session.get.return_value.json.return_value = {
+            "towns": [
+                {"id": "abbecke", "name": "Abbecke"},
+                {"id": "bad_gandersheim", "name": "Bad Gandersheim"},
+            ]
+        }
+        lookup = retrievers.JsonIndexLookup(
+            "https://x/index.json", argument="town", items=("towns",)
+        )
+        assert lookup(source) == "bad_gandersheim"
+        # Also usable as a LookupChainRetriever step.
+        assert lookup(source, ()) == "bad_gandersheim"
+
+    def test_index_lookup_suggests_every_name_on_a_miss(self):
+        from waste_collection_schedule import retrievers
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+
+        source = self._source(town="Nowhere")
+        source.session.get.return_value.json.return_value = [
+            {"id": "a", "name": "Abbecke"}
+        ]
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            retrievers.JsonIndexLookup("https://x/i.json", argument="town")(source)
+        assert raised.value.argument == "town"
+        assert "Abbecke" in str(raised.value)
+
+    def test_year_url_formats_year_key_and_params(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source(district="north")
+        retrievers.YearUrl("https://x/{year}/{district}-{key}.json")(
+            source, 2026, "abbecke"
+        )
+        assert (
+            source.session.get.call_args.args[0] == "https://x/2026/north-abbecke.json"
+        )
+        source.session.get.return_value.raise_for_status.assert_called_once()
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 

@@ -277,6 +277,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/mzv_rotenburg_bebra_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/narab_se.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/nemaffaldsservice_kk_dk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/nerdbridge_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/neu_ulm_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/newcastle_nsw_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/nillumbik_vic_gov_au.py",
