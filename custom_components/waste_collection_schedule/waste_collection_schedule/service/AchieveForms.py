@@ -318,6 +318,10 @@ class LookupStep:
             :class:`AchieveFormsMultiLookupRowsParser`. Unused otherwise.
         date_field: optional row field name holding this step's date, also
             only consumed by :class:`AchieveFormsMultiLookupRowsParser`.
+        when: optional ``(context, source) -> bool``; the step is skipped when
+            it returns False (a bin the property does not have, whose id an
+            earlier step left empty). A skipped step contributes an empty
+            response, so ``collect_all`` results stay aligned with the steps.
     """
 
     def __init__(
@@ -333,6 +337,7 @@ class LookupStep:
         headers: "Callable[[dict[str, Any], BaseSource], dict[str, str]] | None" = None,
         label: "str | None" = None,
         date_field: "str | None" = None,
+        when: "Callable[[dict[str, Any], BaseSource], bool] | None" = None,
     ):
         self.lookup_id = lookup_id
         self.form_values = form_values
@@ -344,6 +349,7 @@ class LookupStep:
         self.headers = headers
         self.label = label
         self.date_field = date_field
+        self.when = when
 
 
 class GetStep:
@@ -533,6 +539,8 @@ class AchieveFormsRetriever(RetrieverFunc):
                 r.raise_for_status()
                 result = r.json()
                 step.extract(result, context)
+            elif step.when is not None and not step.when(context, source):
+                result = {}
             else:
                 form_values = (
                     step.form_values(context, source) if step.form_values else {}

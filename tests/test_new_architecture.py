@@ -2111,6 +2111,32 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    def test_html_labelled_dates_all_labels_from_json_key(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers, parsers
+
+        html = (
+            "<div><div><h3>Friday 2 October 2026</h3></div>"
+            "<div><ul><li><span>Food waste</span></li>"
+            "<li><span>Garden waste</span></li></ul></div></div>"
+            "<div><div><h3>Friday 9 October 2026</h3></div>"
+            "<div><ul><li><span>Refuse</span></li></ul></div></div>"
+        )
+        parser = parsers.HtmlLabelledDates(
+            "div:has(> div > h3)",
+            label="ul span",
+            date="h3",
+            all_labels=True,
+            parse_date=date_parsers.for_format("%A %d %B %Y"),
+            from_json_key=("rows", "0", "root"),
+        )
+        assert parser({"rows": {"0": {"root": html}}}) == [
+            (datetime.date(2026, 10, 2), "Food waste"),
+            (datetime.date(2026, 10, 2), "Garden waste"),
+            (datetime.date(2026, 10, 9), "Refuse"),
+        ]
+
     def test_date_parser_from_epoch(self):
         import datetime
 
