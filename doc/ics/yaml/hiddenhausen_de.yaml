@@ -1,0 +1,138 @@
+---
+title: Hiddenhausen
+url: https://www.hiddenhausen.de
+country: de
+howto:
+  de: |
+    - Gehen Sie auf <https://www.hiddenhausen.de/Rathaus/Services/Abfall/Abfallkalender-online/> und wählen Sie Ihre Straße aus (der Abfuhrbezirk 1-6 wird automatisch anhand der Straße ermittelt).
+    - Klicken Sie mit der rechten Maustaste auf "Export in Kalenderanwendung" und kopieren Sie die Link-Adresse.
+    - Finden Sie darin den Wert des Parameters `strasse` (z.B. `1500.6.1` für Allensteiner Straße) und verwenden Sie ihn als `strasse`-Parameter unten.
+    - Die Beispielkonfiguration enthält bereits alle verfügbaren Abfallarten für das ganze Jahr. Entfernen Sie ggf. einzelne `abfart`-Einträge, wenn Sie bestimmte Abfallarten (z.B. Sondermüll, Sperrmüll) nicht angezeigt bekommen möchten.
+  en: |
+    - Go to <https://www.hiddenhausen.de/Rathaus/Services/Abfall/Abfallkalender-online/> and select your street (the collection district 1-6 is determined automatically from the street).
+    - Right-click "Export in Kalenderanwendung" and copy the link address.
+    - Find the value of the `strasse` parameter in it (e.g. `1500.6.1` for Allensteiner Straße) and use it as the `strasse` parameter below.
+    - The example configuration already includes all available waste types for the whole year. Remove individual `abfart` entries if you don't want certain waste types shown (e.g. hazardous waste, bulky waste).
+test_cases:
+  Allensteiner Straße (Abfuhrbezirk 1):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.6.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+  Ackerbrink (Abfuhrbezirk 2):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.1.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+  Adlerstraße (Abfuhrbezirk 3):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.2.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+  Alter Kirchweg (Abfuhrbezirk 4):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.10.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+  Ahornstraße (Abfuhrbezirk 5):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.3.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+  Am Frauenholz (Abfuhrbezirk 6):
+    url: https://www.hiddenhausen.de/output/abfall_export.php
+    params:
+      csv_export: '1'
+      mode: vcal
+      ort: '393.7'
+      strasse: 1500.20.1
+      "abfart[0]": '1500.1'
+      "abfart[1]": '1500.12'
+      "abfart[2]": '1500.2'
+      "abfart[3]": '1500.3'
+      "abfart[4]": '1500.4'
+      "abfart[5]": '1500.6'
+      "abfart[6]": '1500.7'
+      "abfart[7]": '1500.8'
+      "abfart[8]": '1500.11'
+      vtyp: '4'
+      vMo: '1'
+      bMo: '12'
+    year_field: vJ
+codeowners:
+  - "@dominikhellweg"
