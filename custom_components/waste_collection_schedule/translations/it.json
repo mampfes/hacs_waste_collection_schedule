@@ -83,7 +83,9 @@
           "app_id": "App Id",
           "f_abfallarten": "Tipi di rifiuto",
           "key": "Chiave API",
+          "municipality": "Comune",
           "ort": "Quartiere",
+          "split_bins": "Dividi i bidoni in frazioni",
           "wasteTypes": "Tipi di rifiuto"
         },
         "data_description": {

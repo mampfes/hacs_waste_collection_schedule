@@ -83,7 +83,9 @@
           "app_id": "App Id",
           "f_abfallarten": "Abfallarten",
           "key": "API-Schlüssel",
+          "municipality": "Gemeinde",
           "ort": "Ortsteil",
+          "split_bins": "Behälter in Fraktionen aufteilen",
           "wasteTypes": "Abfallarten"
         },
         "data_description": {

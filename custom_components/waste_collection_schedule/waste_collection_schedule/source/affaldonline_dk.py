@@ -1,253 +1,257 @@
-import logging
-from datetime import datetime
+from typing import ClassVar
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import (
+    Collection,
+    date_parsers,
+    field_terms,
+    regions,
+)
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    boolean,
+    cascading_select,
+    municipality,
+)
+from waste_collection_schedule.service.AffaldOnlineDk import (
+    AffaldOnlineDkParser,
+    AffaldOnlineDkRetriever,
+    discover_choices,
 )
 
-TITLE = "Affaldonline"
-DESCRIPTION = "Gather waste collection schedules from Affaldonline"
-URL = "https://affaldonline.dk"
-API_URL = "https://www.affaldonline.dk/api/address/collections?groupBy=date&addressId={values}"
+"""
+Waste separation in Denmark is mandatory to be at least separated into these 10 fractions:
+Food Waste, Paper, Cardboard, Plastic, Food and drink cartons, Metal, Glass,
+Textiles, Hazardous waste, Residual waste.
 
-SOURCE_CODEOWNERS = ["@superrob"]
+These 10 fractions are usually combined into bins for collection, with one or two
+compartments. Some fractions are additionally allowed to be combined into the same
+compartment, so some bins have up to 4 different fractions combined.
 
-_LOGGER = logging.getLogger("waste_collection_schedule.affaldonline_dk")
+Every fraction resolves to a canonical WasteType (PAPER covers both paper and
+cardboard - its English name is "Paper & Cardboard" - and RECYCLABLES covers the
+mixed plastic/metal/carton packaging stream, matching the Danish "genbrug"
+scheme). When a bin's fractions all resolve to the *same* canonical type, that
+type is used directly. When a bin combines fractions that resolve to *different*
+canonical types (e.g. "Restaffald og Madaffald" mixes GENERAL_WASTE and
+FOOD_WASTE), collapsing it onto either one would misrepresent what is actually
+being collected, so the provider's own composite label is kept verbatim via
+waste_types.preserved() instead.
 
-# AffaldOnline is extremely random with their naming, which can vary even in the same municipality.
-ICON_MAP = {
-    # Residual / residual+food rounds
-    "Rest/Mad": Icons.GENERAL_WASTE,
-    "Mad/Rest": Icons.GENERAL_WASTE,
-    "Rest/mad": Icons.GENERAL_WASTE,
-    "Rest-/madaffald": Icons.GENERAL_WASTE,
-    "Restaffald": Icons.GENERAL_WASTE,
-    "Dagrenovation": Icons.GENERAL_WASTE,
-    # Food / organic
-    "Bioaffald": Icons.BIO_KITCHEN,
-    "Haveaffald": Icons.GARDEN,
-    # Paper and cardboard, alone or combined with glass/metal
-    "Pap": Icons.PAPER,
-    "Papir/Pap": Icons.PAPER,
-    "Pap/Papir": Icons.PAPER,
-    "PPGM": Icons.RECYCLING,
-    "Papir/Pap/Glas": Icons.RECYCLING,
-    "Papir/Pap og tekstil": Icons.RECYCLING,
-    "Papir/Pap-Metal/Glas": Icons.RECYCLING,
-    "Papir/Pap og Plast/Mad- og drikkekartoner": Icons.RECYCLING,
-    "Papir/småt pap og glas/metal": Icons.RECYCLING,
-    "Pap/papir og glas/metal": Icons.RECYCLING,
-    # Glass and metal
-    "Glas og metal": Icons.GLASS,
-    # Plastic and beverage cartons (MDK = mad-/drikkekartoner)
-    "PMDK": Icons.PLASTIC_PACKAGING,
-    "Plast/Drikkekarton": Icons.PLASTIC_PACKAGING,
-    "Plast/Drikkekarton/Metal": Icons.PLASTIC_PACKAGING,
-    "Plast/fødevarekarton": Icons.PLASTIC_PACKAGING,
-    "Plast + Mad-/Drikkekartoner": Icons.PLASTIC_PACKAGING,
-    "Plast/mad- og drikkekartoner og glas/metal": Icons.PLASTIC_PACKAGING,
-    "Metal/Glas/Plast/MDK": Icons.RECYCLING,
-    # Mixed recyclables
-    "Genbrug": Icons.RECYCLING,
-    "Genanvendeligt": Icons.RECYCLING,
-    # Everything else
-    "Storskrald": Icons.BULKY,
-    "Miljøkasse": Icons.HAZARDOUS,
-    "Røde kasser": Icons.HAZARDOUS,
-    "Tekstilaffald": Icons.TEXTILE,
+If the user so desires, the param "split_bins" can be set. This splits each
+collection into separate collections, one per fraction - every one of those
+then carries a single, canonical WasteType.
+"""
+
+# Fraction ID -> (Danish display label, canonical WasteType).
+# There are 90 fractions in total, but most are only used at recycling stations.
+# The original danish label for the given Fraction ID is added beside each line
+FRACTION_MAP: dict[int, wt.WasteType] = {
+    19: wt.ELECTRONICS,  # Elektronik
+    27: wt.HAZARDOUS,  # Farligt affald
+    41: wt.RECYCLABLES,  # Genbrug
+    43: wt.FOOD_WASTE,  # Madaffald"
+    46: wt.GLASS,  # Glas
+    47: wt.PAPER,  # Papir
+    50: wt.preserved("Metal"),  # Drikkedåser
+    51: wt.preserved("Metal"),  # Metal
+    53: wt.preserved("Metal"),  # Metal
+    54: wt.GARDEN_WASTE,  # Haveaffald
+    58: wt.PAPER,  # Pap
+    59: wt.preserved("Drink cartons"),  # Drikke kartoner
+    72: wt.preserved("Plastic"),  # Plast
+    78: wt.GENERAL_WASTE,  # Restaffald
+    80: wt.GENERAL_WASTE,  # Restaffald
+    81: wt.BULKY_WASTE,  # Storskrald
+    88: wt.TEXTILES,  # Tekstiler
+    89: wt.FOOD_WASTE,  # Madaffald
 }
 
-# Maps abbreviations into more readable texts.
-TYPE_MAP = {
-    "PMDK": "Plast og Drikkekartoner",
-    "PPGM": "Pap/Papir og Glas/Metal",
-}
+# The distinct canonical types FRACTION_MAP resolves to. classify() may also
+# emit a dynamic wt.preserved() label for a combined bin, but that is exempt
+# from declaration (see tests/test_declared_waste_types.py).
+_DECLARED_WASTE_TYPES = sorted(
+    FRACTION_MAP.values(),
+    key=lambda w: w.id,
+)
 
-AFFALDONLINE_MUNICIPALITIES = {
-    "aeroe": {
-        "title": "Ærø Kommune",
-        "url": "https://www.aeroekommune.dk/",
-        "values": "Nørregade|1||||5970|Ærøskøbing|1228262|448776|0",
-        "client": "db765a2f-3f50-4abd-a738-3825813fedcb",
-    },
-    "assens": {
-        "title": "Assens Forsyning",
-        "url": "https://www.assensforsyning.dk/",
-        "values": "Vandværksvej|2||||5560|Aarup|11266|456952|0",
-        "client": "afd912a2-44b3-402f-9e13-5aeb701ce143",
-    },
-    "favrskov": {
-        "title": "Favrskov Forsyning",
-        "url": "https://www.favrskovforsyning.dk",
-        "values": "Nørregade|1||||8382|Hinnerup|6443|108156|0",
-        "client": "dffcc5b6-b9ee-478d-82e2-030123485f7e",
-    },
-    "fanoe": {
-        "title": "Fanø Kommune",
-        "url": "https://fanoe.dk/",
-        "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0",
-        "client": "af7badab-508b-43fa-87dc-162347b288f3",
-    },
-    "fredericia": {
-        "title": "Fredericia Kommune Affald & Genbrug",
-        "url": "https://affaldgenbrug-fredericia.dk/",
-        "values": "Nørre Allé|5||||7000|Fredericia|11079971|1907927|0",
-        "client": "dea6ff86-2ee9-4e7a-8fce-76dcb5625714",
-    },
-    "ffv": {
-        "title": "Faaborg Forsynings Virksomhed",
-        "url": "https://www.ffv.dk/",
-        "values": "Marsk Billesvej|18||||5672|Broby|36193544|576846|0",
-        "client": "ceca5978-6380-4ff8-ac28-9b6505457da8",
-    },
-    "holbaek": {
-        "title": "Fors (Holbæk)",
-        "url": "https://www.fors.dk/",
-        "values": "Østerled|5||||4300|Holbæk|28441|1081575|2055",
-        "client": "017efd06-ac42-4b36-8a70-ab309162e988",
-    },
-    "langeland": {
-        "title": "Langeland Forsyning",
-        "url": "https://www.langeland-forsyning.dk/",
-        "values": "Nørregade|1||||5900|Rudkøbing|3535|383566|0",
-        "client": "be8a9420-a9ae-42e6-83f2-eda5ec3fa29f",
-    },
-    "middelfart": {
-        "title": "Middelfart Kommune",
-        "url": "https://middelfart.dk/",
-        "values": "Nørregade|2||||5592|Ejby|11288085|6496420|0",
-        "client": "17F02B8B-7743-4FA6-8646-74F59436AED1",
-    },
-    "morsoe": {
-        "title": "Morsø Kommune",
-        "url": "https://mors.dk/",
-        "values": "Østervang|1||||7900|Nykøbing M|8970056|1719615|0",
-        "client": "0199b7d2-bbae-46a5-a726-293c9236f4e5",
-    },
-    "nyborg": {
-        "title": "Nyborg Forsyning & Service A/S",
-        "url": "https://www.nfs.as/",
-        "values": "Nørregade|5||||5800|Nyborg|8896288|552542|0",
-        "client": "4571D02F-602C-485A-8961-466EAA2B7B04",
-    },
-    "silkeborg": {
-        "title": "Silkeborg Forsyning",
-        "url": "https://www.silkeborgforsyning.dk/",
-        "values": "Nørregade|5||||8620|Kjellerup|45814316|1291964|0",
-        "client": "eea63ff1-96fd-4288-b96e-83100ebbc378",
-    },
-    # Sorø is NOT available on the API. But was also not available on the old codebase either
-    "soroe": {
-        "title": "Sorø Kommune",
-        "url": "https://soroe.dk/",
-        "values": "Nørrevej|4| |||4180|Sorø|8569|8838|0|0",
-    },
-    "rebild": {
-        "title": "Rebild Kommune",
-        "url": "https://rebild.dk/",
-        "values": "Nørregade|1||||9500|Hobro|11634418|19222228|0",
-        "client": "cb3ddc8c-900a-43ce-ac88-ec7587db4db3",
-    },
-    "vejle": {
-        "title": "Vejle Kommune",
-        "url": "https://www.vejle.dk/",
-        "values": "Nørregade|11||||7100|Vejle|16518799|16518799|0",
-        "client": "209cb669-e2e8-4c9b-8048-8287db51a61e",
-    },
-    "viborg": {
-        "title": "Revas (Viborg Kommune)",
-        "url": "https://www.revas.dk/",
-        "values": "Hjultorvet|1||||8800|Viborg|8228245|8739|0",
-        "client": "4EBB900C-088E-475F-83ED-B087F4AD07BA",
-    },
-}
 
-EXTRA_INFO = [
-    {
-        "title": info["title"],
-        "url": info["url"],
-        "default_params": {"municipality": municipality},
+class Source(BaseSource):
+    TITLE = "Affaldonline"
+    DESCRIPTION = "Gather waste collection schedules from Affaldonline"
+    URL = "https://affaldonline.dk"
+    COUNTRY = "dk"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@superrob"]
+    WASTE_TYPES: ClassVar[list] = _DECLARED_WASTE_TYPES
+
+    REGIONS = regions.from_yaml("affaldonline_dk", municipality="municipality")
+
+    TEST_CASES: ClassVar[dict] = {
+        "aeroe": {
+            "municipality": "aeroe",
+            "city": "Ærøskøbing",
+            "street": "Nørregade|5970|Ærøskøbing",
+            "values": "Nørregade|1||||5970|Ærøskøbing|4162588|448776|0",
+        },
+        "assens": {
+            "municipality": "assens",
+            "city": "Aarup",
+            "street": "Vandværksvej|5560|Aarup",
+            "values": "Vandværksvej|2||||5560|Aarup|11266|456952|0",
+        },
+        "favrskov": {
+            "municipality": "favrskov",
+            "city": "Hinnerup",
+            "street": "Nørregade|8382|Hinnerup",
+            "values": "Nørregade|1||||8382|Hinnerup|6443|108156|0",
+        },
+        "fanoe": {
+            "municipality": "fanoe",
+            "city": "Fanø",
+            "street": "Nørre Klit|6720|Fanø",
+            "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0",
+        },
+        "fredericia": {
+            "municipality": "fredericia",
+            "city": "Fredericia",
+            "street": "Nørre Allé|7000|Fredericia",
+            "values": "Nørre Allé|5||||7000|Fredericia|11079971|1907927|0",
+        },
+        "ffv": {
+            "municipality": "ffv",
+            "city": "Broby",
+            "street": "Marsk Billesvej|5672|Broby",
+            "values": "Marsk Billesvej|18||||5672|Broby|36193544|576846|0",
+        },
+        "holbaek": {
+            "municipality": "holbaek",
+            "city": "Holbæk",
+            "street": "Østerled|4300|Holbæk",
+            "values": "Østerled|5||||4300|Holbæk|28441|1081575|2055",
+        },
+        "langeland": {
+            "municipality": "langeland",
+            "city": "Rudkøbing",
+            "street": "Nørregade|5900|Rudkøbing",
+            "values": "Nørregade|1||||5900|Rudkøbing|3535|383566|0",
+        },
+        "middelfart": {
+            "municipality": "middelfart",
+            "city": "Ejby",
+            "street": "Nørregade|5592|Ejby",
+            "values": "Nørregade|2||||5592|Ejby|11288085|6496420|0",
+        },
+        "morsoe": {
+            "municipality": "morsoe",
+            "city": "Nykøbing M",
+            "street": "Østervang|7900|Nykøbing M",
+            "values": "Østervang|1||||7900|Nykøbing M|8970056|1719615|0",
+        },
+        "morsoe_split": {
+            "municipality": "morsoe",
+            "split_bins": True,
+            "city": "Nykøbing M",
+            "street": "Østervang|7900|Nykøbing M",
+            "values": "Østervang|1||||7900|Nykøbing M|8970056|1719615|0",
+        },
+        "nyborg": {
+            "municipality": "nyborg",
+            "city": "Nyborg",
+            "street": "Nørregade|5800|Nyborg",
+            "values": "Nørregade|5||||5800|Nyborg|8896288|552542|0",
+        },
+        "silkeborg": {
+            "municipality": "silkeborg",
+            "city": "Kjellerup",
+            "street": "Nørregade|8620|Kjellerup",
+            "values": "Nørregade|5||||8620|Kjellerup|45814316|1291964|0",
+        },
+        "rebild": {
+            "municipality": "rebild",
+            "city": "Hobro",
+            "street": "Nørregade|9500|Hobro",
+            "values": "Nørregade|1||||9500|Hobro|11634418|19222228|0",
+        },
+        "vejle": {
+            "municipality": "vejle",
+            "city": "Vejle",
+            "street": "Nørregade|7100|Vejle",
+            "values": "Nørregade|11||||7100|Vejle|16518799|16518799|0",
+        },
+        "viborg": {
+            "municipality": "viborg",
+            "city": "Viborg",
+            "street": "Hjultorvet|8800|Viborg",
+            "values": "Hjultorvet|1||||8800|Viborg|8228245|8739|0",
+        },
     }
-    for municipality, info in AFFALDONLINE_MUNICIPALITIES.items()
-    if "client" in info
-]
 
+    RAISE_ON_EMPTY = True
+    PARAMS = (
+        municipality("municipality"),
+        boolean("split_bins", "Split bins into fractions"),
+        cascading_select(
+            ("city", field_terms.CITY),
+            ("street", field_terms.STREET),
+            ("values", field_terms.HOUSE_NUMBER),
+        ),
+    )
 
-def select_test_cases(municipalities):
-    test_cases = {}
-    for name, info in municipalities.items():
-        if "client" in info:
-            test_cases[name] = {"municipality": name, "values": info["values"]}
+    @classmethod
+    def get_choices(cls, field: str, selections: dict) -> list[tuple[str, str]]:
+        """Options for one cascade level given the levels chosen so far."""
+        return discover_choices(field, selections)
 
-    return test_cases
+    retrieve = AffaldOnlineDkRetriever()
+    parse = AffaldOnlineDkParser()
 
+    def classify(self, record):
+        parse_date = date_parsers.for_format("%Y-%m-%d")
+        date = parse_date(record["date"])
+        if not date:
+            return None
+        if not record["fraction_name"]:
+            return None
 
-# Dynamically generate TEST_CASES from the AFFALDONLINE_MUNICIPALITIES dictionary
-TEST_CASES = select_test_cases(AFFALDONLINE_MUNICIPALITIES)
-
-
-class Source:
-    def __init__(self, municipality: str, values: str):
-        _LOGGER.debug(
-            "Initializing Source with municipality=%s, values=%s",
-            municipality,
-            values,
-        )
-
-        # Gather the address id from the raw values
-        # The address id is the last two values in the raw values string
-        address_id_split = values.split("|")
-        if len(address_id_split) < 2:
-            raise SourceArgumentException("values", "Provided values is not valid")
-        address_id = "|".join(address_id_split[-2:])
-
-        self._api_url = API_URL.format(values=address_id)
-        self._client_provider = AFFALDONLINE_MUNICIPALITIES.get(municipality, {}).get(
-            "client", ""
-        )
-        if self._client_provider == "":
-            raise SourceArgumentNotFoundWithSuggestions(
-                "municipality",
-                municipality,
-                [
-                    key
-                    for key, info in AFFALDONLINE_MUNICIPALITIES.items()
-                    if "client" in info
-                ],
-            )
-        self._client_provider = str(self._client_provider)
-
-    def fetch(self) -> list[Collection]:
-        _LOGGER.debug("Fetching data from %s", self._api_url)
-
-        entries: list[Collection] = []
-        response = requests.get(
-            self._api_url,
-            headers={
-                "X-Client-Provider": self._client_provider,
-                "X-Client-Type": "Kunde app",
-                "X-Client-OS": "android",
-                "X-Client-Version": "9999",  # Needs to be higher than the current version.
-            },
-            timeout=10,
-        )
-        json_content = response.json()
-
-        if "message" in json_content:
-            raise ValueError("Error from API: " + json_content["message"])
-
-        for entry in json_content:
-            for collection in entry["collections"]:
-                fraction_name = str(collection["fraction"]["name"]).strip()
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(entry["date"], "%Y-%m-%d").date(),
-                        t=TYPE_MAP.get(fraction_name, fraction_name),
-                        icon=ICON_MAP.get(fraction_name, Icons.GENERAL_WASTE),
-                    )
+        # WasteType is unhashable (its aliases/names fields are dicts), so track
+        # distinctness by id and keep one representative instance alongside it.
+        resolved_waste_types: list[wt.WasteType] = []
+        for fraction_id in record["fraction_types"]:
+            waste_type: wt.WasteType | None = FRACTION_MAP.get(fraction_id)
+            if waste_type is None:
+                # An uncatalogued fraction id: keep going so the label still
+                # names it, but force the preserved() fallback below since we
+                # don't know which canonical type it belongs to.
+                resolved_waste_types.append(
+                    wt.preserved("{fraction_id} Unknown fraction id")
                 )
+                continue
+            if waste_type not in resolved_waste_types:
+                resolved_waste_types.append(waste_type)
 
-        return entries
+        if len(resolved_waste_types) == 0:
+            # The provider named the bin but listed no fraction ids for it:
+            # fall back to its own label rather than indexing an empty list.
+            return Collection(
+                date=date, waste_type=wt.preserved(record["fraction_name"])
+            )
+
+        if len(resolved_waste_types) == 1:
+            # Every fraction in this bin resolves to the same canonical type:
+            # using it directly loses nothing.
+            return Collection(date=date, waste_type=resolved_waste_types[0])
+
+        # The bin combines fractions that resolve to more than one canonical
+        # type (or includes one we don't recognise). Collapsing it onto any
+        # single type would misrepresent what's actually being collected, so
+        # create a composite label of the contents instead.
+        labels: list[str] = []
+        for w in resolved_waste_types:
+            labels.append(wt.display_name(w))
+
+        combined_label = (
+            labels[0]
+            if len(labels) == 1
+            else " & ".join([", ".join(labels[:-1]), labels[-1]])
+        )
+        return Collection(date=date, waste_type=wt.preserved(combined_label))

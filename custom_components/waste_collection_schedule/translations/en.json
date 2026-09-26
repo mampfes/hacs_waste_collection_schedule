@@ -83,7 +83,9 @@
           "app_id": "App ID",
           "f_abfallarten": "Waste Types",
           "key": "API Key",
+          "municipality": "Municipality",
           "ort": "District",
+          "split_bins": "Split Bins Into Fractions",
           "wasteTypes": "Waste Types"
         },
         "data_description": {

@@ -81,7 +81,9 @@
           "app_id": "ID aplikacije",
           "f_abfallarten": "Tipi odpadkov",
           "key": "API ključ",
+          "municipality": "Občina",
           "ort": "Okrožje",
+          "split_bins": "Razdeli zabojnike na frakcije",
           "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
