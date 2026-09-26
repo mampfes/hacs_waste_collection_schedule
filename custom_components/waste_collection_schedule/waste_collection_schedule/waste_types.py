@@ -111,7 +111,7 @@ RECYCLABLES = WasteType(
         "it": "Differenziata",
         "nl": "Recycling",
         "sl": "Mešana embalaža",
-        "da": "Genbrugeligt",
+        "da": "Genanvendeligt affald",
     },
     aliases={
         "en": [
@@ -366,7 +366,7 @@ ELECTRONICS = WasteType(
         "it": "Rifiuti elettronici",
         "nl": "Elektronisch afval",
         "sl": "Elektronski odpadki",
-        "da": "Elektronik affald",
+        "da": "Elektronikaffald",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],

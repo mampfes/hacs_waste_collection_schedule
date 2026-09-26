@@ -475,7 +475,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "housenumberorname": "Husnummer eller navn",
         "hpid": "HPID",
         "kommune": "Kommune",
-        "ladeort": "Loader Lokation",
+        "ladeort": "Læssested",
         "lat": "Breddegrad",
         "lon": "Længdegrad",
         "ort": "By",
