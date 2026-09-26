@@ -654,8 +654,9 @@ class HtmlParser(Parser[list[Tag]]):
                       parse = parsers.HtmlParser("tr", skip=1, require=["table.bins"])
         from_json_key: When set, the HTML to parse is read from a field of a
                   JSON response instead of ``response.text`` — pass the key (or a
-                  path of keys) holding the HTML string. This covers the common
-                  pattern of an API returning rendered HTML inside JSON, e.g. the
+                  path of keys, an int indexing a list) holding the HTML
+                  string. This covers the common pattern of an API returning
+                  rendered HTML inside JSON, e.g. the
                   OCAPI ``wasteservices`` endpoint many AU councils use::
 
                       parse = parsers.HtmlParser("article", from_json_key="responseContent")

@@ -485,6 +485,9 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
             a provider that states the date in a sentence ("The next garbage
             pickup date for this address is Monday, January 06") report the
             sentences it did not write.
+        split: separator for a field that lists every date of its round
+            (``"6/2, 20/2, 6/3"``) rather than the next one. Each non-empty part
+            is parsed on its own and becomes its own row.
     """
 
     def __init__(
@@ -492,18 +495,27 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
         *,
         fields: Mapping[str, str],
         parse_date: "Callable[[Any], datetime.date | None]",
+        split: "str | None" = None,
     ):
         self._fields = dict(fields)
         self._parse_date = parse_date
+        self._split = split
+
+    def _values(self, value: Any) -> "list[Any]":
+        if self._split is None:
+            return [value]
+        parts = (part.strip() for part in str(value or "").split(self._split))
+        return [part for part in parts if part]
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[tuple[datetime.date, str]]:
         for record in records:
             for field_name, key in self._fields.items():
-                collection_date = self._parse_date(record.get(field_name, ""))
-                if collection_date is not None:
-                    yield collection_date, key
+                for value in self._values(record.get(field_name, "")):
+                    collection_date = self._parse_date(value)
+                    if collection_date is not None:
+                        yield collection_date, key
 
 
 class SplitByFields(Preprocessor[Any, Mapping[str, Any]]):
