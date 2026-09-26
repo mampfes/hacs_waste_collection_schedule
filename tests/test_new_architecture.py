@@ -2078,6 +2078,10 @@ class TestRecurrence:
         assert recurrence.month("dezembro") == 12  # Portuguese
         assert recurrence.weekday("maandag") == 0  # Dutch
         assert recurrence.weekday("torsdag") == 3  # Swedish/Danish Thursday
+        # Japanese: the wide name and the single-kanji abbreviation both resolve.
+        assert recurrence.weekday("火曜日") == 1 and recurrence.weekday("火") == 1
+        assert recurrence.weekday("日") == 6
+        assert recurrence.month("12月") == 12
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
 
