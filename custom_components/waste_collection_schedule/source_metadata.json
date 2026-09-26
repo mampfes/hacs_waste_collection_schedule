@@ -1999,12 +1999,10 @@
   "nerdbridge_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nerdbridge_de.md",
     "howto": {
-      "de": "Gehen Sie zu https://abfall.nerdbridge.de/ und wählen Sie Ihre Ortschaft aus. Verwenden Sie den angezeigten Namen als `municipality`-Parameter.",
-      "en": "Go to https://abfall.nerdbridge.de/ and select your municipality. Use the displayed municipality name as the `municipality` parameter."
+      "de": "Gehen Sie zu https://abfall.nerdbridge.de/ und wählen Sie Ihre Ortschaft aus. Verwenden Sie den angezeigten Namen.",
+      "en": "Go to https://abfall.nerdbridge.de/ and select your municipality. Use the displayed municipality name."
     },
-    "urls": {
-      "url_abfall_nerdbridge_de": "https://abfall.nerdbridge.de/"
-    }
+    "urls": {}
   },
   "ics_abfall_app_net": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md",

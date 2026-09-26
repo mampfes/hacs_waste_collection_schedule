@@ -8310,11 +8310,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "municipality": "Ortschaft"
+          "municipality": "Gemeinde"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "municipality": "Name Ihrer Ortschaft, wie auf {url_abfall_nerdbridge_de} angezeigt"
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_nerdbridge_de": {
@@ -8322,10 +8322,10 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "municipality": "Ortschaft"
+          "municipality": "Gemeinde"
         },
         "data_description": {
-          "municipality": "Name Ihrer Ortschaft, wie auf {url_abfall_nerdbridge_de} angezeigt"
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "args_ics_abfall_app_net": {

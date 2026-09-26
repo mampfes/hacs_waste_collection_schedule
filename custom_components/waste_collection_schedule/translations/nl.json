@@ -8205,10 +8205,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "municipality": "Municipality"
+          "municipality": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_nerdbridge_de": {
@@ -8216,9 +8217,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "municipality": "Municipality"
+          "municipality": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_ics_abfall_app_net": {
         "title": "Configure Source",
