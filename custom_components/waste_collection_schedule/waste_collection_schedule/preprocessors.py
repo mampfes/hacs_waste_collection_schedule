@@ -88,6 +88,11 @@ class FlattenGroups(Preprocessor[Any, Any]):
     everything the transformer needs. A date-keyed feed nearly always repeats
     the date inside the record; if it does not, the key is the only place the
     date exists and a source-specific expansion is the right tool instead.
+
+    The groups may also arrive as a list of lists, which is what a payload with
+    one slot per weekday (``[null, null, [{...}], ...]``) or several responses
+    parsed by :class:`~waste_collection_schedule.parsers.EachResponse` come to.
+    An empty slot (``None`` or ``[]``) contributes nothing.
     """
 
     def __call__(
@@ -95,8 +100,10 @@ class FlattenGroups(Preprocessor[Any, Any]):
     ) -> Iterable[Any]:
         if not records:
             return
-        for group in records.values():
-            yield from group
+        groups = records.values() if isinstance(records, Mapping) else records
+        for group in groups:
+            if group:
+                yield from group
 
 
 class RowFilter(Preprocessor[Any, Any]):

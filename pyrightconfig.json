@@ -94,6 +94,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/berndorf_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bexley_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bielefeld_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/blackburn_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/blacktown_nsw_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/bmv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/boroondara_vic_gov_au.py",
