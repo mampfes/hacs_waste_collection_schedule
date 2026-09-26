@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.pncc.govt.nz/api/v1/myarea/search a07b942e10",
+      "method": "GET",
+      "url": "https://www.pncc.govt.nz/api/v1/myarea/search",
+      "final_url": "https://www.pncc.govt.nz/api/v1/myarea/search?keywords=8+Swansea+Street+Palmerston+North",
+      "body": "{\"params\":[[\"keywords\",\"8 Swansea Street Palmerston North\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "218",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:44 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=35, origin; dur=1172, ak_p; desc=\"1790185603746_386904718_116353478_120669_18775_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=46B1630CF1804C08935E5B05492C9118~000000000000000000000000000000~YAAQjrIPF3u0rcSgAQAAeodgzwHAC4rc3GZmceFltqAwkNg5KWXu++6/LVNKn7g8ddpJtC2acQjKZBdepWeET1x1f3yTt7NK47gDHZsF4lOBrMwtd8m7xjl9lSxgv4s90PRFjZW/m6HRlm81ol2GV9nG1eSIVntPOn+6JSJzoQ5GFnHcGyYRxB+f04Al9S738HLv5XzBwq/5tvCKoXQL+rXXKlj/hQ3SKnBuuFEHl8iSg7zqJ+Nja9cZcyiB22q3eq6tt8mOZFDNR4jPPy8BOgN731sm7B7ykQpvnit9iKifFUJZHhDZF/q3Z8vA9D01ifXhdmBs9oY0m2K3XaRmnZC8dv3+u4ZZsbWWY+GjliKarhwuA/R/hZeb+HTVfWZtsQMxQdAtAZM3NaoZzOh3; Domain=.pncc.govt.nz; Path=/; Expires=Wed, 23 Sep 2026 19:46:43 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJmYzFiODk4Ni1lYjNlLTRiZGUtOGQ3My01YWI3MTZjZGUwMjEiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjggU1dBTlNFQSBTVFJFRVQgUEFMTUVSU1RPTiBOT1JUSCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjpudWxsLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjYuMDczODI4NywiTGF0TG9uIjpudWxsfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices 6ec9e5ed51",
+      "method": "GET",
+      "url": "https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.pncc.govt.nz/ocapi/Public/myarea/wasteservices?geolocationid=fc1b8986-eb3e-4bde-8d73-5ab716cde021&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"fc1b8986-eb3e-4bde-8d73-5ab716cde021\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "486",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:46 GMT",
+        "set-cookie": "ASP.NET_SessionId=jozjt1gjxkzbkdl5o3wpkbe2; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=28, origin; dur=1150, ak_p; desc=\"1790185605005_386904718_116355730_117810_19825_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJ1YmJpc2hcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlUGxhY2Ugb24gdGhlIGtlcmIgYmVmb3JlIDcuMzBhbVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly93d3cucG5jYy5nb3Z0Lm56L1NlcnZpY2VzL1J1YmJpc2gtYW5kLXJlY3ljbGluZy9QYWxteS1Db2xsZWN0aW9ucy9SdWJiaXNoLWJhZ3MtYW5kLWNvbGxlY3Rpb25cIiB0YXJnZXQ9XCJcIlx1MDAzZU1vcmUgYWJvdXQgcnViYmlzaCBiYWdzIGFuZCBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDI1LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsZSBkYXRlLXByZWNpc2UgaXRlbS0xXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlV2hlZWxpZSBCaW5cdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlUGxhY2Ugb24gdGhlIGtlcmIgYmVmb3JlIDcuMzBhbVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly93d3cucG5jYy5nb3Z0Lm56L1NlcnZpY2VzL1J1YmJpc2gtYW5kLXJlY3ljbGluZy9QYWxteS1Db2xsZWN0aW9ucy9SZWN5Y2xpbmctY29sbGVjdGlvblwiIHRhcmdldD1cIlwiXHUwMDNlTW9yZSBhYm91dCByZWN5Y2xpbmcgY29sbGVjdGlvblx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIEZyaSAyNS85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTJcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VHbGFzcyBDcmF0ZVx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VQbGFjZSBvbiB0aGUga2VyYiBiZWZvcmUgNy4zMGFtXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy5wbmNjLmdvdnQubnovU2VydmljZXMvUnViYmlzaC1hbmQtcmVjeWNsaW5nL1BhbG15LUNvbGxlY3Rpb25zL1JlY3ljbGluZy1jb2xsZWN0aW9uXCIgdGFyZ2V0PVwiXCJcdTAwM2VNb3JlIGFib3V0IHJlY3ljbGluZyBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDIvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

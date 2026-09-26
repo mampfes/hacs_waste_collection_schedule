@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.moorabool.vic.gov.au/api/v1/myarea/search 0455bffe17",
+      "method": "GET",
+      "url": "https://www.moorabool.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.moorabool.vic.gov.au/api/v1/myarea/search?keywords=191+Main+Street+Bacchus+Marsh+3340",
+      "body": "{\"params\":[[\"keywords\",\"191 Main Street Bacchus Marsh 3340\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "254",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:21 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=89, origin; dur=850, ak_p; desc=\"1790185581015_386904718_116320079_93895_17938_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=CAAC4F3C2776169E0394890B266A8581~000000000000000000000000000000~YAAQjrIPF8GxrcSgAQAAoi1gzwHSGVqRsXmnLsSCU+ioe4gvZ0fHmbRCHgq2UIulDON2YHpODhoPrFezibnlsAJ9x6R/H8u6VSFUhtvbknt/DRhNrVwxzed5VC9aaXdCnMENDduANsoyRAsQVpTux/pPjamQEMQH/cSIrA2dOG34bStura0UP46uk/nHiHw+hIYrEkjvzhSYGMvAZcqzZpHjVG5pWHsUSaKxk+IHKQlYwPZx/i4n7CtOWwYUJeMAntP18gxAW0BNQs4/jmMWMa9yBIkN9MQOonCN7WCdVLxXVLx6hUnC9iCNwJ7jn/a38qvskKVWzRfX3rqdVkdOxThjHX19KIRsmxFfv6RvMbw4bMc6F6zN+Q63ilyzE/wERkOlw3Cj5fZuRJpmZIrJZ0I8sMPj4JX0; Domain=.moorabool.vic.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:21 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJjOTdhZTUwZS01ZThhLTQzMmMtYTNmNi05ODM2MTdhMmNhZmEiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjE5MSBNYWluIFN0cmVldCBCYWNjaHVzIE1hcnNoIFZJQyAzMzQwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6MjEuMjY3MDUsIkxhdExvbiI6Wy0zNy42NzYyOTk3MDI4OTUzLDE0NC40Mzk5MTMwMTkwMDFdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.moorabool.vic.gov.au/ocapi/Public/myarea/wasteservices 1c4b04cf48",
+      "method": "GET",
+      "url": "https://www.moorabool.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.moorabool.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=c97ae50e-5e8a-432c-a3f6-983617a2cafa&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"c97ae50e-5e8a-432c-a3f6-983617a2cafa\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "341",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:22 GMT",
+        "set-cookie": "ASP.NET_SessionId=gibkquzm4ycpxg00unb1xs1s; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=52, origin; dur=881, ak_p; desc=\"1790185581997_386904718_116321478_93228_20243_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdhcmJhZ2UgY29sbGVjdGlvblx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmcgY29sbGVjdGlvblx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIHdhc3RlIGNvbGxlY3Rpb25cdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbiA1LzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

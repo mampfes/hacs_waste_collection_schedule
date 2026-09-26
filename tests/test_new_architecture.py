@@ -929,6 +929,35 @@ class TestArcGisComponents:
         assert captured["params"]["f"] == "json"
         assert "geometry" in captured["params"]
 
+    def test_feature_retriever_resolves_web_map_layer_per_fetch(self):
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "Aspen 195"}
+        urls = []
+
+        def fake_get(url, params=None, timeout=None):
+            urls.append(url)
+            response = MagicMock()
+            response.json.return_value = {
+                "operationalLayers": [
+                    {"url": "https://x/Hosted/L_2026/FeatureServer/0"}
+                ]
+            }
+            return response
+
+        retriever = ArcGis.ArcGisFeatureRetriever(
+            ArcGis.WebMapLayer("https://x/items/abc/data"),
+            where=lambda address, **_: f"beladress = '{address}'",
+        )
+        with patch.object(ArcGis.requests, "get", side_effect=fake_get):
+            retriever(source)
+
+        assert urls == [
+            "https://x/items/abc/data",
+            "https://x/Hosted/L_2026/FeatureServer/0/query",
+        ]
+
     def test_feature_retriever_bad_address_raises_source_argument(self):
         from waste_collection_schedule.exceptions import SourceArgumentNotFound
         from waste_collection_schedule.service import ArcGis
@@ -1641,6 +1670,26 @@ class TestAbfallnaviComponents:
         assert raw["fraktionen"] == {5: "Restmüll", 6: "Bioabfall"}
         assert len(raw["termine"]) == 2
 
+    def test_retriever_uses_a_pinned_service_id(self):
+        # A source bound to one service (tonnenticker_pro_de) pins it on the
+        # retriever instead of declaring a service field the user never sees.
+        from waste_collection_schedule.service import AbfallnaviDe as M
+
+        seen = []
+        original_init = M.AbfallnaviDe.__init__
+
+        def spy_init(self, service_domain, *args, **kwargs):
+            seen.append(service_domain)
+            original_init(self, service_domain, *args, **kwargs)
+
+        source = MagicMock()
+        source.params = {"city": "Aachen", "street": "Abteiplatz", "house_number": "7"}
+        retriever = M.AbfallnaviRetriever(service_id="krwaf")
+        with self._patched_client(), patch.object(M.AbfallnaviDe, "__init__", spy_init):
+            raw = retriever(source)
+        assert seen == ["krwaf"]
+        assert len(raw["termine"]) == 2
+
     def test_parser_cross_references_without_io(self):
         from waste_collection_schedule.service import AbfallnaviDe as M
 
@@ -2111,6 +2160,42 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    def test_html_labelled_dates_all_labels_from_json_key(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers, parsers
+
+        html = (
+            "<div><div><h3>Friday 2 October 2026</h3></div>"
+            "<div><ul><li><span>Food waste</span></li>"
+            "<li><span>Garden waste</span></li></ul></div></div>"
+            "<div><div><h3>Friday 9 October 2026</h3></div>"
+            "<div><ul><li><span>Refuse</span></li></ul></div></div>"
+        )
+        parser = parsers.HtmlLabelledDates(
+            "div:has(> div > h3)",
+            label="ul span",
+            date="h3",
+            all_labels=True,
+            parse_date=date_parsers.for_format("%A %d %B %Y"),
+            from_json_key=("rows", "0", "root"),
+        )
+        assert parser({"rows": {"0": {"root": html}}}) == [
+            (datetime.date(2026, 10, 2), "Food waste"),
+            (datetime.date(2026, 10, 2), "Garden waste"),
+            (datetime.date(2026, 10, 9), "Refuse"),
+        ]
+
+    def test_html_parser_from_json_key_indexes_a_list(self):
+        from waste_collection_schedule import parsers
+
+        parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
+        elements = parse([{"Results": "<h2>Refuse</h2><h3>Friday</h3>"}])
+        assert [e.string for e in elements] == ["Friday"]
+        # An empty list is an empty result, so RAISE_ON_EMPTY can name the
+        # argument rather than the lookup failing with an IndexError.
+        assert parse([]) == []
+
     def test_date_parser_from_epoch(self):
         import datetime
 
@@ -2124,6 +2209,44 @@ class TestToolkitParsers:
         assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
+
+    @freeze_time("2026-09-26")
+    def test_date_parser_in_current_year(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.in_current_year("%d/%m")
+        # A past date stays in this year rather than rolling to the next.
+        assert parse("6/2") == datetime.date(2026, 2, 6)
+        assert parse(" 25/12 ") == datetime.date(2026, 12, 25)
+        with pytest.raises(ValueError):
+            date_parsers.in_current_year("%d/%m/%Y")
+
+    @freeze_time("2028-01-10")
+    def test_date_parser_in_current_year_leap_day(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        assert date_parsers.in_current_year("%d/%m")("29/2") == datetime.date(
+            2028, 2, 29
+        )
+
+    def test_date_fields_split(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers, preprocessors
+
+        rows = preprocessors.DateFields(
+            fields={"karl1": "Bin 1", "karl2": "Bin 2"},
+            parse_date=date_parsers.for_format("%d/%m/%Y"),
+            split=",",
+        )([{"karl1": "6/2/2026, 20/2/2026,\r\n", "karl2": None}])
+        assert list(rows) == [
+            (datetime.date(2026, 2, 6), "Bin 1"),
+            (datetime.date(2026, 2, 20), "Bin 1"),
+        ]
 
 
 class TestLookups:
@@ -2150,6 +2273,65 @@ class TestLookups:
         from waste_collection_schedule import lookups
 
         assert lookups.normalize_text("  Main   Street ") == "main street"
+
+
+class TestWeekdayRecurrence:
+    """WeekdayRecurrence: a named collection weekday projected into dates."""
+
+    def _run(self, preprocessor, records):
+        from freezegun import freeze_time
+
+        with freeze_time("2026-09-23"):  # a Wednesday
+            return list(preprocessor(records, None))
+
+    def test_projects_each_named_weekday_from_the_next_one(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(day="DAY", keys="Trash", count=2),
+            [{"DAY": "Tuesday & Friday"}],
+        )
+        assert rows == [
+            (datetime.date(2026, 9, 29), "Trash"),
+            (datetime.date(2026, 10, 6), "Trash"),
+            (datetime.date(2026, 9, 25), "Trash"),
+            (datetime.date(2026, 10, 2), "Trash"),
+        ]
+
+    def test_today_counts_as_the_next_occurrence(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(day="DAY", keys=("Trash", "Recycling"), count=1),
+            [{"DAY": "wednesday"}],
+        )
+        assert rows == [
+            (datetime.date(2026, 9, 23), "Trash"),
+            (datetime.date(2026, 9, 23), "Recycling"),
+        ]
+
+    def test_a_field_mapping_names_the_key_and_duplicates_collapse(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(
+                day={"Trash1": "Trash", "Trash2": "Trash", "Yard": "Yard"}, count=1
+            ),
+            [{"Trash1": "Monday", "Trash2": "Monday", "Yard": "Call 311"}],
+        )
+        assert rows == [(datetime.date(2026, 9, 28), "Trash")]
+
+    def test_a_record_naming_no_weekday_adds_nothing(self):
+        from waste_collection_schedule.preprocessors import WeekdayRecurrence
+
+        rows = self._run(
+            WeekdayRecurrence(
+                day=lambda record: record[1].get("DAY"),
+                keys=lambda record: record[0],
+            ),
+            [("Garbage", {"DAY": None}), ("Yard", {})],
+        )
+        assert rows == []
 
 
 class TestSeasonalSchedule:
@@ -7026,6 +7208,15 @@ CASES_AWAITING_CASSETTE = {
     "c_trace_de::roth",
     "cheshire_west_and_chester_gov_uk::knutsford_no_results",
     "ecoharmonogram_pl::ukrainian_language",
+    # edpevent_se (2026-09-25): Boden, Kiruna and Lidköping answer 502 from
+    # outside Sweden, NVOA's firewall rejects the request, and the Roslagsvatten
+    # host answers 404 on every path; none could be recorded.
+    "edpevent_se::boden_bodens_kommun",
+    "edpevent_se::boden_gymnasiet",
+    "edpevent_se::https_edpmypage_roslagsvatten_se_futurewebos_simplewastepickup_andromedav_gen_1_kersberga",
+    "edpevent_se::kiruna_tekniska_verken",
+    "edpevent_se::lidk_ping_stadshuset",
+    "edpevent_se::nvoa_nacka_fogdev_gen",
     "ics::abfall_zollernalbkreis_ebingen",
     "ics::esslingen_bahnhof",
     "ics::m_nchen_bahnstr_11",

@@ -1,6 +1,8 @@
-# Rural City of Wangaratta Council
+# Rural City of Wangaratta
 
-Support for schedules provided by [Rural City of Wangaratta Council](https://www.wangaratta.vic.gov.au/Services/Waste-Recycling/Kerbside-Collection/Check-your-bin-day).
+Support for schedules provided by [Rural City of Wangaratta](https://www.wangaratta.vic.gov.au).
+
+Source for Rural City of Wangaratta rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: wangaratta_vic_gov_au
       args:
-        street_address: 23-27 Ryley St, Wangaratta
+        street_address: Edwards Street WANGARATTA VIC 3677
 ```
-
-## How to get the source arguments
-
-Visit the [Rural City of Wangaratta waste and recycling](https://www.wangaratta.vic.gov.au/Services/Waste-Recycling/Kerbside-Collection/Check-your-bin-day) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.

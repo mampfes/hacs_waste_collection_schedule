@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.lanecove.nsw.gov.au/api/v1/myarea/search 2f70f7bc76",
+      "method": "GET",
+      "url": "https://www.lanecove.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.lanecove.nsw.gov.au/api/v1/myarea/search?keywords=1+Austin+ST+LANE+COVE%2C+2066",
+      "body": "{\"params\":[[\"keywords\",\"1 Austin ST LANE COVE, 2066\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "236",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:25 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=12, origin; dur=870, ak_p; desc=\"1790185524139_386904797_165013562_88293_16267_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=31984876E6F0D9A6310FB8C7E1AA15A2~000000000000000000000000000000~YAAQ3bIPF7p2PLOgAQAAPE9fzwHSdtaMnDyXpIkOa6VNYw0KC8oUeRsBb83zEiy9MwHOhYcBWEwjxiDmHkiHVcwb+0c/P+gARNzo7wthIEKZOg4lVEXOW3uarmQKselqmrl0tzuvEepEYGqE2k22n+1Hxb+sNmVpcJXEHIJS0/LN2ReeeXvrqW1b1eTgIw0U9QS+GUtC5kRiQjjwjxWgfdLF/GIu0Bz33VuUG0nCnpP8gjdbhkOuWLqPmGc/YEKM/ldaVl6g1yhKnRQwXhYeCERoXZ38IJWqdCGK1+h8FY+dXk4iF/Xou1BlO7yVwT6k3+Gf4FzAswffolC1HADBxbTB7zHSwOsxzQXVsKuU/q0JZSuPq8TXqypfvGS0R0KBGV0nob8TWsvqWTP+fz4Ni/gNAZU/Bag=; Domain=.lanecove.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:24 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiIyNDI2OWQwYS05YTFmLTRiYWMtYjY3NS1mMmRlYzhlZGEzMmIiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvMzQgQXVzdGluIFNUIExBTkUgQ09WRSwgMjA2NiIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjpudWxsLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjEwLjQ4NzQwNSwiTGF0TG9uIjpbLTMzLjgxODQ0NDUsMTUxLjE2ODk5NDddfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.lanecove.nsw.gov.au/ocapi/Public/myarea/wasteservices 52a8955afc",
+      "method": "GET",
+      "url": "https://www.lanecove.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.lanecove.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=24269d0a-9a1f-4bac-b675-f2dec8eda32b&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"24269d0a-9a1f-4bac-b675-f2dec8eda32b\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "432",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:25 GMT",
+        "set-cookie": "ASP.NET_SessionId=n5lqzc5sfdoymx1jaf5tpufe; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=883, ak_p; desc=\"1790185525060_386904797_165014167_88293_14928_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy00XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGUgXHUwMDI2IEZvb2QgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxhY2UgYmluIG9uIHZlcmdlIG9uIG5pZ2h0IGJlZm9yZSBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSByZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUNvbnRhaW5lciBSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFRodSAyNC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHBhcGVyLWNhcmRib2FyZC1yZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tM1wiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVBhcGVyIGFuZCBDYXJkYm9hcmQgUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

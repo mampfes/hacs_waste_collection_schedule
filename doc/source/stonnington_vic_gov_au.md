@@ -1,6 +1,8 @@
 # Stonnington City Council
 
-Support for schedules provided by [Stonnington City Council](https://www.stonnington.vic.gov.au/Services/Waste-and-recycling).
+Support for schedules provided by [Stonnington City Council](https://www.stonnington.vic.gov.au).
+
+Source for Stonnington City Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -26,7 +28,3 @@ waste_collection_schedule:
       args:
         street_address: 500 Chapel Street, South Yarra
 ```
-
-## How to get the source arguments
-
-Visit the [Stonnington City Council waste and recycling](https://www.stonnington.vic.gov.au/Services/Waste-and-recycling) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.

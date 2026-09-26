@@ -1,6 +1,8 @@
 # Town of Cambridge (WA)
 
-Support for schedules provided by [Town of Cambridge](https://www.cambridge.wa.gov.au/), serving Western Australian suburbs including Floreat, Wembley, City Beach, West Leederville and Mount Claremont. The implementation uses the same OpenCities (OCAPI) back-end pattern as other Australian council sources.
+Support for schedules provided by [Town of Cambridge (WA)](https://www.cambridge.wa.gov.au).
+
+Source for Town of Cambridge (Western Australia) rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -10,6 +12,7 @@ waste_collection_schedule:
     - name: cambridge_wa_gov_au
       args:
         street_address: STREET_ADDRESS
+        geolocation_id: GEOLOCATION_ID
 ```
 
 ### Configuration Variables
@@ -20,8 +23,6 @@ waste_collection_schedule:
 **geolocation_id**  
 *(string) (optional)*
 
-At least one argument must be provided.
-
 ## Example
 
 ```yaml
@@ -29,19 +30,9 @@ waste_collection_schedule:
   sources:
     - name: cambridge_wa_gov_au
       args:
-        street_address: 99 The Boulevard, FLOREAT 6014
-```
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: cambridge_wa_gov_au
-      args:
-        geolocation_id: ec16b372-7aab-4082-8519-2163c431777d
+        geolocation_id: c70848c4-fe33-431d-85aa-987ff8b155cb
 ```
 
 ## How to get the source arguments
 
-Visit the [Town of Cambridge Find My Bin Day](https://www.cambridge.wa.gov.au/Residents/Waste-Recycling/Find-My-Bin-Day) page and search for your address. The ```street_address``` argument should exactly match the street address shown in the autocomplete result. For unlisted addresses use an adjacent listed address.
-
-The ```geolocation_id``` argument can be used to bypass the initial address lookup on first use. This value can be discovered using the developer console in any modern browser and inspecting the request sent once an address is selected and the search button is clicked. The request URL takes the format: ```https://www.cambridge.wa.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=<GEOLOCATION ID>&ocsvclang=en-AU```.
+Visit the [Town of Cambridge Find My Bin Day](https://www.cambridge.wa.gov.au/Residents/Waste-Recycling/Find-My-Bin-Day) page and search for your address. The street address should exactly match the address shown in the autocomplete result. For unlisted addresses use an adjacent listed address. Alternatively give the Location ID, the council's geolocation ID. It skips the address lookup and takes precedence when both are given. To find it, open your browser's developer tools (F12, Network tab), select your address on the page above and look for the request `https://www.cambridge.wa.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=<ID>&ocsvclang=en-AU`. The value after `geolocationid=` is your Location ID.

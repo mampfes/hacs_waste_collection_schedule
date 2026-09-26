@@ -1,6 +1,8 @@
 # Mackay Regional Council
 
-Support for schedules provided by [Mackay Regional Council](https://www.mackay.qld.gov.au/residents/services/waste), Queensland, Australia.
+Support for schedules provided by [Mackay Regional Council](https://www.mackay.qld.gov.au).
+
+Source for Mackay Regional Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -17,8 +19,6 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-Your street address. The closest match returned by the council's address search is used, so the exact council formatting is not required.
-
 ## Example
 
 ```yaml
@@ -31,6 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the council's [Rubbish and bins](https://www.mackay.qld.gov.au/residents/services/waste) page and search for your address in the bin collection lookup. Any address string the search box resolves to your property will work — for example `77 Wood Street Mackay` or `115 Nebo Road West Mackay`.
-
-The council publishes a weekly general waste collection and a fortnightly recycling collection.
+Enter your street address as used on the council's rubbish and bins page (https://www.mackay.qld.gov.au/residents/services/waste), for example '77 Wood Street Mackay'.

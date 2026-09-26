@@ -134,7 +134,7 @@ CITY = _term(
         "Ihre Stadt oder Gemeinde.",
         "Votre ville ou village.",
         "La vostra città o paese.",
-        "Uw stad of dorp.",
+        "Uw stad of dorp.",  # codespell:ignore dorp
         "Vaše mesto ali kraj.",
         "Din by",
     ),

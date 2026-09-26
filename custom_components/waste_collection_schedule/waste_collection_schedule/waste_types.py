@@ -316,7 +316,7 @@ BULKY_WASTE = WasteType(
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
         "de": ["sperrgut", "grobmüll"],
-        "fr": ["objets encombrants"],
+        "fr": ["objets encombrants"],  # codespell:ignore objets
         "it": ["rifiuti ingombranti"],
         "nl": ["grofvuil", "grof huishoudelijk afval"],
         "sl": ["kosovni odpadki", "kosovni"],

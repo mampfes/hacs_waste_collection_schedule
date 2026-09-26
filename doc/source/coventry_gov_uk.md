@@ -1,30 +1,34 @@
 # Coventry City Council
 
-Support for schedules provided by [Coventry City Council](https://www.coventry.gov.uk/rubbishandrecycling), serving Coventry, UK.
+Support for schedules provided by [Coventry City Council](https://www.coventry.gov.uk/).
 
-The council retired its street directory. This source now reads the council's "Find my bin day" service by UPRN. Only the next collection date per bin type is available.
+Source for waste collection services for Coventry City Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: coventry_gov_uk
       args:
         uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
-*(string) (required)*<br>
-Unique Property Reference Number of your address. You can find it at [findmyaddress.co.uk](https://www.findmyaddress.co.uk/).
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: coventry_gov_uk
       args:
-        uprn: "100070666040"
+        uprn: '100070666040'
 ```
+
+## How to get the source arguments
+
+Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.

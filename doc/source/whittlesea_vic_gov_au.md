@@ -1,6 +1,8 @@
-# City of Whittlesea Council
+# Whittlesea City Council
 
-Support for schedules provided by [City of Whittlesea Council](https://www.whittlesea.vic.gov.au/).
+Support for schedules provided by [Whittlesea City Council](https://www.whittlesea.vic.gov.au/My-Neighbourhood).
+
+Source for Whittlesea Council (VIC) rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -26,7 +28,3 @@ waste_collection_schedule:
       args:
         street_address: 25 Ferres Boulevard, South Morang 3752
 ```
-
-## How to get the source arguments
-
-Visit the [City of Whittlesea Council My Neighbourhood](https://www.whittlesea.vic.gov.au/My-Neighbourhood) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.

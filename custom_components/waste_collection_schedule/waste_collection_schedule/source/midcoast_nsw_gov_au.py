@@ -1,39 +1,39 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "MidCoast Council"
-DESCRIPTION = "Source for MidCoast Council (NSW) rubbish collection."
-URL = "https://www.midcoast.nsw.gov.au/"
-DEEPLINK = f"{URL}Services/Waste-and-recycling/When-is-my-bin-collected"
-TEST_CASES = {
-    "Randomly Selected Address": {"street_address": "101 Goldens Road, FORSTER"}
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green Waste": Icons.GARDEN,
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain=URL.rstrip("/"),
-    argument_name="street_address",
-    warm_up_url=URL,
-    icon_keywords=ICON_MAP,
-)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
-        self._client = OpenCitiesClient(_CONFIG)
+@final
+class Source(BaseSource):
+    TITLE = "MidCoast Council"
+    DESCRIPTION = "Source for MidCoast Council (NSW) rubbish collection."
+    URL = "https://www.midcoast.nsw.gov.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        entries = self._client.fetch(address=self._street_address)
-        # The wasteservices response for MidCoast also includes non-waste
-        # articles (e.g. bin-collection guidelines); only keep the known
-        # waste types, matching the pre-migration allowlist behaviour.
-        return [entry for entry in entries if entry.type in ICON_MAP]
+    TEST_CASES: ClassVar[dict] = {
+        "Randomly Selected Address": {"street_address": "101 Goldens Road, FORSTER"}
+    }
+
+    PARAMS = (street_address(field="street_address"),)
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.midcoast.nsw.gov.au",
+        address="street_address",
+        warm_up_url="https://www.midcoast.nsw.gov.au/",
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+    )

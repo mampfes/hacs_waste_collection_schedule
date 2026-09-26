@@ -347,7 +347,7 @@
       "id": "greatershepparton_com_au"
     },
     {
-      "title": "City of Hobart ",
+      "title": "City of Hobart",
       "module": "hobartcity_com_au",
       "default_params": {},
       "id": "hobartcity_com_au"
@@ -5358,6 +5358,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Halton Region, ON",
+      "module": "recollect_net",
+      "default_params": {
+        "place_id": "CD149A08-1F87-11E2-A81F-CD0EC465FF45",
+        "service_id": "224"
+      },
+      "id": "recollect_net"
+    },
+    {
       "title": "Kawartha Lakes (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5593,6 +5602,12 @@
       "module": "ville_quebec_qc_ca",
       "default_params": {},
       "id": "ville_quebec_qc_ca"
+    },
+    {
+      "title": "ReCollect (JSON API)",
+      "module": "recollect_net",
+      "default_params": {},
+      "id": "recollect_net"
     },
     {
       "title": "Region of Waterloo",
@@ -8476,14 +8491,6 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
-      "title": "Abfallwirtschaft Alb-Donau-Kreis",
-      "module": "buergerportal_de",
-      "default_params": {
-        "operator": "alb_donau"
-      },
-      "id": "buergerportal_de"
-    },
-    {
       "title": "Abfallwirtschaft Altenburger Land",
       "module": "awido_de",
       "default_params": {
@@ -8905,6 +8912,25 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Alf",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Alf",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Alf (Alf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Alf",
+        "operator": "cochem_zell",
+        "subdistrict": "Alf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "ALF Lahn-Fulda",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8912,6 +8938,26 @@
         "city": "ALF Lahn-Fulda"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Alflen (Alflen Peterskaul)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Alflen",
+        "operator": "cochem_zell",
+        "subdistrict": "Alflen Peterskaul"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Alflen (Alflen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Alflen",
+        "operator": "cochem_zell",
+        "subdistrict": "Alflen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Allendorf",
@@ -8943,6 +8989,85 @@
         "municipality": "Allershausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Allmendingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Ennahofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Ennahofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Gr\u00f6tzingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Gr\u00f6tzingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Hausen ob Allmendingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Hausen ob Allmendingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Niederhofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Niederhofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Pfraunstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Pfraunstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Schw\u00f6rzkirch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Schw\u00f6rzkirch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Allmendingen (Weilersteu\u00dfl.)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Allmendingen",
+        "operator": "alb_donau",
+        "subdistrict": "Weilersteu\u00dfl."
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Alsdorf",
@@ -8988,10 +9113,77 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Altheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altheim",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Altheim (Alb)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altheim (Alb)",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Altheim (Alb) (S\u00f6glingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altheim (Alb)",
+        "operator": "alb_donau",
+        "subdistrict": "S\u00f6glingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Altheim (Alb) (Z\u00e4hringen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altheim (Alb)",
+        "operator": "alb_donau",
+        "subdistrict": "Z\u00e4hringen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Altlay (Altlay)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altlay",
+        "operator": "cochem_zell",
+        "subdistrict": "Altlay"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Altmarkkreis Salzwedel",
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_app_net"
+    },
+    {
+      "title": "Altstrimmig",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altstrimmig",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Altstrimmig (Altstrimmig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Altstrimmig",
+        "operator": "cochem_zell",
+        "subdistrict": "Altstrimmig"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Alt\u00f6tting (LK)",
@@ -9044,6 +9236,65 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Amstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Amstetten (Br\u00e4unisheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Br\u00e4unisheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Amstetten (Hofstett-Emerbuch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Hofstett-Emerbuch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Amstetten (Reutti)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Reutti"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Amstetten (Schalkstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Schalkstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Amstetten (Stubersheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Amstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Stubersheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
       "module": "abfall_io",
       "default_params": {
@@ -9084,12 +9335,91 @@
       "id": "abfall_io"
     },
     {
+      "title": "Am\u00f6neburg",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Am\u00f6neburg",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Am\u00f6neburg (Erfurtshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Am\u00f6neburg",
+        "operator": "biedenkopf",
+        "subdistrict": "Erfurtshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Am\u00f6neburg (Mardorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Am\u00f6neburg",
+        "operator": "biedenkopf",
+        "subdistrict": "Mardorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Am\u00f6neburg (Ro\u00dfdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Am\u00f6neburg",
+        "operator": "biedenkopf",
+        "subdistrict": "Ro\u00dfdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Am\u00f6neburg (R\u00fcdigheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Am\u00f6neburg",
+        "operator": "biedenkopf",
+        "subdistrict": "R\u00fcdigheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Andershausen",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Andershausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Angelburg (Frechenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Angelburg",
+        "operator": "biedenkopf",
+        "subdistrict": "Frechenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Angelburg (G\u00f6nnern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Angelburg",
+        "operator": "biedenkopf",
+        "subdistrict": "G\u00f6nnern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Angelburg (Lixfeld)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Angelburg",
+        "operator": "biedenkopf",
+        "subdistrict": "Lixfeld"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Angerstein",
@@ -9171,6 +9501,15 @@
       "id": "asr_chemnitz_de"
     },
     {
+      "title": "Asselfingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Asselfingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "ASTO (Abfall- Sammel- und Transportverband Oberberg)",
       "module": "ics",
       "default_params": {},
@@ -9190,6 +9529,16 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfuhrtermine_info"
+    },
+    {
+      "title": "Auderath (Auderath)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Auderath",
+        "operator": "cochem_zell",
+        "subdistrict": "Auderath"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Augsburg",
@@ -9433,6 +9782,45 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Bad Bertrich",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Bertrich",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Bertrich (Bad Bertrich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Bertrich",
+        "operator": "cochem_zell",
+        "subdistrict": "Bad Bertrich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Bertrich (Bad-Bertrich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Bertrich",
+        "operator": "cochem_zell",
+        "subdistrict": "Bad-Bertrich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Bertrich (Kennfus)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Bertrich",
+        "operator": "cochem_zell",
+        "subdistrict": "Kennfus"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Bad Driburg",
       "module": "lobbe_app",
       "default_params": {
@@ -9440,6 +9828,85 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Bad Endbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (Bottenhorn)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Bottenhorn"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (Dernbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Dernbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (G\u00fcnterod)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "G\u00fcnterod"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (Hartenrod)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Hartenrod"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (H\u00fclshof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "H\u00fclshof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (Schlierbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Schlierbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bad Endbach (Wommelshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bad Endbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Wommelshausen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bad Gandersheim",
@@ -9474,6 +9941,12 @@
         "city": "Bad M\u00fcnstereifel"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Bad Nauheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Bad Oeynhausen",
@@ -9550,6 +10023,15 @@
       "id": "awido_de"
     },
     {
+      "title": "Ballendorf",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ballendorf",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Balve",
       "module": "lobbe_app",
       "default_params": {
@@ -9557,6 +10039,26 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Balzheim (Oberbalzheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Balzheim",
+        "operator": "alb_donau",
+        "subdistrict": "Oberbalzheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Balzheim (Unterbalzheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Balzheim",
+        "operator": "alb_donau",
+        "subdistrict": "Unterbalzheim"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bamberg (City/Stadt)",
@@ -9612,12 +10114,181 @@
       "id": "ics_bee_emden_de"
     },
     {
+      "title": "Bedburg (Bedburg/Blerichen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Bedburg/Blerichen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Broich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Broich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Gewerbegebiet M\u00fchlenerft)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Gewerbegebiet M\u00fchlenerft"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Kaster)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Kaster"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Kirchherten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Kirchherten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Kirchtroisdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Kirchtroisdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Kirdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Kirdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Kleintroisdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Kleintroisdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (K\u00f6nigshoven)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "K\u00f6nigshoven"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Lipp)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Lipp"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Oppendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Oppendorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (P\u00fctz)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "P\u00fctz"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bedburg (Rath)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bedburg",
+        "operator": "bedburg",
+        "subdistrict": "Rath"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Behrensen",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Behrensen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Beilstein (Beilstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beilstein",
+        "operator": "cochem_zell",
+        "subdistrict": "Beilstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Beimerstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beimerstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Beimerstetten (Eiselau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beimerstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Eiselau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Beimerstetten (Hagen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beimerstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Hagen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bellenberg",
@@ -9642,6 +10313,35 @@
         "municipality": "Bentierode"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bergh\u00fclen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bergh\u00fclen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bergh\u00fclen (B\u00fchlenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bergh\u00fclen",
+        "operator": "alb_donau",
+        "subdistrict": "B\u00fchlenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bergh\u00fclen (Treffensbuch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bergh\u00fclen",
+        "operator": "alb_donau",
+        "subdistrict": "Treffensbuch"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bergischer Abfallwirtschaftverbund",
@@ -9681,6 +10381,15 @@
       "id": "bsr_de"
     },
     {
+      "title": "Bernstadt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bernstadt",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Berwartshausen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -9712,6 +10421,25 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Beuren",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beuren",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Beuren (Beuren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Beuren",
+        "operator": "cochem_zell",
+        "subdistrict": "Beuren"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Beverungen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -9726,6 +10454,95 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Biedenkopf",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Breidenstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Breidenstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Dexbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Dexbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Eckelshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Eckelshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Engelbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Engelbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Katzenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Katzenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Kombach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Kombach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Wallau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Wallau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Biedenkopf (Weifenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Biedenkopf",
+        "operator": "biedenkopf",
+        "subdistrict": "Weifenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Bielefeld",
       "module": "bielefeld_de",
       "default_params": {},
@@ -9738,6 +10555,25 @@
         "municipality": "Billerbeck"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Binningen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Binningen",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Binningen (Binningen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Binningen",
+        "operator": "cochem_zell",
+        "subdistrict": "Binningen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bishausen",
@@ -9756,10 +10592,258 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Blankenrath",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blankenrath",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blankenrath (Blankenrath)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blankenrath",
+        "operator": "cochem_zell",
+        "subdistrict": "Blankenrath"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Altental)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Altental"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Asch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Asch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Beiningen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Beiningen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Gerhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Gerhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Pappelau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Pappelau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Pappelau-Erstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Pappelau-Erstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Sei\u00dfen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Sei\u00dfen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Sei\u00dfen-Wennenden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Sei\u00dfen-Wennenden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Sonderbuch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Sonderbuch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Sotzenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Sotzenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaubeuren (Weiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaubeuren",
+        "operator": "alb_donau",
+        "subdistrict": "Weiler"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Blaue Tonne - Schlaue Tonne",
       "module": "ics",
       "default_params": {},
       "id": "ics_blauetonne_schlauetonne_de"
+    },
+    {
+      "title": "Blaustein (Arnegg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Arnegg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Bermaringen - Hohenstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Bermaringen - Hohenstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Bermaringen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Bermaringen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Dietingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Dietingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Ehrenstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Ehrenstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Herrlingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Herrlingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Klingenstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Klingenstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Lautern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Lautern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Markbronn)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Markbronn"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Weidach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Weidach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Blaustein (Wippingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Blaustein",
+        "operator": "alb_donau",
+        "subdistrict": "Wippingen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Bodenfelde",
@@ -9821,6 +10905,16 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Brachtendorf (Brachtendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Brachtendorf",
+        "operator": "cochem_zell",
+        "subdistrict": "Brachtendorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Brakel",
       "module": "lobbe_app",
       "default_params": {
@@ -9854,6 +10948,84 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Breidenbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Achenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Achenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Kleingladenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Kleingladenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Niederdieten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Niederdieten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Oberdieten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberdieten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Wiesenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Wiesenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breidenbach (Wolzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breidenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Wolzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Breitingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Breitingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Bremer Stadtreinigung",
       "module": "c_trace_de",
       "default_params": {
@@ -9866,6 +11038,36 @@
       "module": "beg_logistics_de",
       "default_params": {},
       "id": "beg_logistics_de"
+    },
+    {
+      "title": "Bremm (Bremm)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bremm",
+        "operator": "cochem_zell",
+        "subdistrict": "Bremm"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bremm (Bremm-Am Storchenhaus)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bremm",
+        "operator": "cochem_zell",
+        "subdistrict": "Bremm-Am Storchenhaus"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bremm (Bremm-Kirchstra\u00dfe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bremm",
+        "operator": "cochem_zell",
+        "subdistrict": "Bremm-Kirchstra\u00dfe"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Brensbach",
@@ -9884,6 +11086,95 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Briedel",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedel"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedel-Briedeler Heck)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedel-Briedeler Heck"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedel-Bummkopf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedel-Bummkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedel-Maiermund)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedel-Maiermund"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedel-R\u00f6merstra\u00dfe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedel-R\u00f6merstra\u00dfe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedel (Briedeler Heck)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedel",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedeler Heck"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Brieden (Brieden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Brieden",
+        "operator": "cochem_zell",
+        "subdistrict": "Brieden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Briedern (Briedern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Briedern",
+        "operator": "cochem_zell",
+        "subdistrict": "Briedern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Brilon",
       "module": "lobbe_app",
       "default_params": {
@@ -9891,6 +11182,25 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Brohl",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Brohl",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Brohl (Brohl)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Brohl",
+        "operator": "cochem_zell",
+        "subdistrict": "Brohl"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Brombachtal",
@@ -9943,6 +11253,35 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Bruttig-Fankel",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bruttig-Fankel",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bruttig-Fankel (Bruttig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bruttig-Fankel",
+        "operator": "cochem_zell",
+        "subdistrict": "Bruttig"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bruttig-Fankel (Fankel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bruttig-Fankel",
+        "operator": "cochem_zell",
+        "subdistrict": "Fankel"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Buch",
       "module": "heimat_info_de",
       "default_params": {
@@ -9957,6 +11296,25 @@
         "municipality": "Buensen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bullay",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bullay",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Bullay (Bullay)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Bullay",
+        "operator": "cochem_zell",
+        "subdistrict": "Bullay"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Burgenland (Landkreis)",
@@ -9985,6 +11343,34 @@
       "id": "lobbe_app"
     },
     {
+      "title": "B\u00f6rslingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "B\u00f6rslingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "B\u00fcchel",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "B\u00fcchel",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "B\u00fcchel (B\u00fcchel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "B\u00fcchel",
+        "operator": "cochem_zell",
+        "subdistrict": "B\u00fcchel"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "B\u00fchle",
       "module": "nerdbridge_de",
       "default_params": {
@@ -10005,14 +11391,6 @@
       "title": "B\u00fcrgerportal",
       "module": "buergerportal_de",
       "default_params": {},
-      "id": "buergerportal_de"
-    },
-    {
-      "title": "B\u00fcrgerportal Bedburg",
-      "module": "buergerportal_de",
-      "default_params": {
-        "operator": "bedburg"
-      },
       "id": "buergerportal_de"
     },
     {
@@ -10084,6 +11462,134 @@
       "id": "ceb_coburg_de"
     },
     {
+      "title": "Cochem",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem Sehl)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem Sehl"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem-Brauheck)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem-Brauheck"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem-Cond)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem-Cond"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem-Sehl)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem-Sehl"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Cochem (Cochem-Stadt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Cochem",
+        "operator": "cochem_zell",
+        "subdistrict": "Cochem-Stadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe (Bernsdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf",
+        "subdistrict": "Bernsdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe (B\u00fcrgeln)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf",
+        "subdistrict": "B\u00fcrgeln"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe (Reddehausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf",
+        "subdistrict": "Reddehausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe (Schwarzenborn)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf",
+        "subdistrict": "Schwarzenborn"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "C\u00f6lbe (Sch\u00f6nstadt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "C\u00f6lbe",
+        "operator": "biedenkopf",
+        "subdistrict": "Sch\u00f6nstadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Dahlem",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -10139,6 +11645,126 @@
         "municipality": "Dassensen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Dautphetal (Allendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Allendorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Buchenau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Buchenau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Damshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Damshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Dautphe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Dautphe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Elmshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Elmshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Friedensdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Friedensdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Herzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Herzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Holzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Holzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Hommertshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Hommertshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Mornshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Mornshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Silberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Silberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dautphetal (Wolfgruben)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dautphetal",
+        "operator": "biedenkopf",
+        "subdistrict": "Wolfgruben"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Deitersen",
@@ -10206,6 +11832,35 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Dietenheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dietenheim",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dietenheim (Regglisweiler - Kreuth\u00f6fe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dietenheim",
+        "operator": "alb_donau",
+        "subdistrict": "Regglisweiler - Kreuth\u00f6fe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dietenheim (Regglisweiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dietenheim",
+        "operator": "alb_donau",
+        "subdistrict": "Regglisweiler"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Dinkelhausen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -10222,10 +11877,79 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Dohr (Dohr)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dohr",
+        "operator": "cochem_zell",
+        "subdistrict": "Dohr"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Dormagen",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Dornstadt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dornstadt (Bollingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau",
+        "subdistrict": "Bollingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dornstadt (B\u00f6ttingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau",
+        "subdistrict": "B\u00f6ttingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dornstadt (Scharenstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau",
+        "subdistrict": "Scharenstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dornstadt (Temmenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau",
+        "subdistrict": "Temmenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Dornstadt (Tomerdingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Dornstadt",
+        "operator": "alb_donau",
+        "subdistrict": "Tomerdingen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Dreihausen",
@@ -10290,6 +12014,44 @@
         "municipality": "D\u00fcderode"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "D\u00fcnfus",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "D\u00fcnfus",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "D\u00fcnfus (D\u00fcnfus)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "D\u00fcnfus",
+        "operator": "cochem_zell",
+        "subdistrict": "D\u00fcnfus"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "D\u00fcngenheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "D\u00fcngenheim",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "D\u00fcngenheim (D\u00fcngenheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "D\u00fcngenheim",
+        "operator": "cochem_zell",
+        "subdistrict": "D\u00fcngenheim"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "EAD Darmstadt",
@@ -10390,6 +12152,35 @@
       "id": "ics_edg_de"
     },
     {
+      "title": "Ediger-Eller",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ediger-Eller",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ediger-Eller (Ediger)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ediger-Eller",
+        "operator": "cochem_zell",
+        "subdistrict": "Ediger"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ediger-Eller (Eller)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ediger-Eller",
+        "operator": "cochem_zell",
+        "subdistrict": "Eller"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Egelsbach",
       "module": "ics",
       "default_params": {},
@@ -10425,6 +12216,325 @@
         "service": "wml2"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Ehingen (Donau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Altbierlingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Altbierlingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Altsteu\u00dflingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Altsteu\u00dflingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Berg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Berg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Blienshofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Blienshofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Bockighofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Bockighofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Briel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Briel"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Deppenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Deppenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Dettingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Dettingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Dintenhofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Dintenhofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (D\u00e4chingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "D\u00e4chingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Erbstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Erbstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Frankenhofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Frankenhofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Gamerschwang)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Gamerschwang"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Granheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Granheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Herbertshofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Herbertshofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Heufelden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Heufelden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Kirchbierlingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Kirchbierlingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Kirchen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Kirchen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Litzholz)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Litzholz"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Mundingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Mundingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (M\u00fchlen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "M\u00fchlen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Nasgenstadt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Nasgenstadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Ri\u00dftissen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Ri\u00dftissen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Schaiblishausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Schaiblishausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Schlechtenfeld)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Schlechtenfeld"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Sontheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Sontheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Stetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Stetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Tiefenh\u00fclen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Tiefenh\u00fclen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Unterwilzingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Unterwilzingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Volkersheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Volkersheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ehingen (Donau) (Weisel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ehingen (Donau)",
+        "operator": "alb_donau",
+        "subdistrict": "Weisel"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Eichsfeldwerke GmbH",
@@ -10501,6 +12611,45 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Ellenz-Poltersdorf",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ellenz-Poltersdorf",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ellenz-Poltersdorf (Ellenz)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ellenz-Poltersdorf",
+        "operator": "cochem_zell",
+        "subdistrict": "Ellenz"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ellenz-Poltersdorf (Ellenz-Poltersdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ellenz-Poltersdorf",
+        "operator": "cochem_zell",
+        "subdistrict": "Ellenz-Poltersdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ellenz-Poltersdorf (Poltersdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ellenz-Poltersdorf",
+        "operator": "cochem_zell",
+        "subdistrict": "Poltersdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Ellierode (Bad Gandersheim)",
       "module": "nerdbridge_de",
       "default_params": {
@@ -10539,6 +12688,34 @@
         "regex": "ELW - (.*)"
       },
       "id": "ics_elw_de"
+    },
+    {
+      "title": "Emeringen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Emeringen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Emerkingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Emerkingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Emerkingen (K\u00f6hlberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Emerkingen",
+        "operator": "alb_donau",
+        "subdistrict": "K\u00f6hlberg"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Emmering",
@@ -10613,10 +12790,29 @@
       "id": "evv_voelklingen_de"
     },
     {
+      "title": "Eppenberg (Eppenberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Eppenberg",
+        "operator": "cochem_zell",
+        "subdistrict": "Eppenberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Eppstein",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Erbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Erbach",
@@ -10625,6 +12821,86 @@
         "ort": "Erbach"
       },
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "Erbach (Bach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Bach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Dellmensingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Dellmensingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Donaurieden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Donaurieden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Ersingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Ersingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Erstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Erstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Ringingen - Steinenfeld)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Ringingen - Steinenfeld"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Ringingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Ringingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Erbach (Wernau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Erbach",
+        "operator": "alb_donau",
+        "subdistrict": "Wernau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Erftstadt (inoffical)",
@@ -10653,6 +12929,25 @@
       "module": "sperrmuell_erlensee_de",
       "default_params": {},
       "id": "sperrmuell_erlensee_de"
+    },
+    {
+      "title": "Ernst",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ernst",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ernst (Ernst)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ernst",
+        "operator": "cochem_zell",
+        "subdistrict": "Ernst"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Ertinghausen",
@@ -10748,6 +13043,25 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Eulgem",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Eulgem",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Eulgem (Eulgem)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Eulgem",
+        "operator": "cochem_zell",
+        "subdistrict": "Eulgem"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "EUV Stadtbetrieb Castrop-Rauxel",
       "module": "ics",
       "default_params": {},
@@ -10770,6 +13084,25 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Faid",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Faid",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Faid (Faid)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Faid",
+        "operator": "cochem_zell",
+        "subdistrict": "Faid"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Feichten a. d. Alz",
       "module": "heimat_info_de",
       "default_params": {
@@ -10784,6 +13117,16 @@
         "regex": "[^:]+:\\s*(.*)"
       },
       "id": "ics_fes_frankfurt_de"
+    },
+    {
+      "title": "Filz (Filz)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Filz",
+        "operator": "cochem_zell",
+        "subdistrict": "Filz"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Finnentrop",
@@ -10804,6 +13147,35 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_floersheim_umweltkalender_de"
+    },
+    {
+      "title": "Forst (Eifel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Forst (Eifel)",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Forst (Eifel) (Forst (Eifel))",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Forst (Eifel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Forst (Eifel)"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Forst (Hunsr\u00fcck) (Forst (Hunsr\u00fcck))",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Forst (Hunsr\u00fcck)",
+        "operator": "cochem_zell",
+        "subdistrict": "Forst (Hunsr\u00fcck)"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Forstinning",
@@ -10882,6 +13254,75 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Fronhausen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Bellnhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Bellnhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Erbenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Erbenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Hassenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Hassenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Holzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Holzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Oberwalgern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberwalgern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Fronhausen (Sichertshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Fronhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Sichertshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Fr\u00e4nkisch-Crumbach",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -10912,6 +13353,16 @@
         "commune": "gaimersheim"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Gamlen (Gamlen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gamlen",
+        "operator": "cochem_zell",
+        "subdistrict": "Gamlen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Garlebsen",
@@ -11094,6 +13545,16 @@
       "id": "awido_de"
     },
     {
+      "title": "Gevenich (Gevenich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gevenich",
+        "operator": "cochem_zell",
+        "subdistrict": "Gevenich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "GFA L\u00fcneburg",
       "module": "gfa_lueneburg_de",
       "default_params": {},
@@ -11106,6 +13567,25 @@
         "municipality": "Gierswalde"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gillenbeuren",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gillenbeuren",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gillenbeuren (Gillenbeuren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gillenbeuren",
+        "operator": "cochem_zell",
+        "subdistrict": "Gillenbeuren"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Gillersheim",
@@ -11154,6 +13634,165 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Gladenbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Bellnhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Bellnhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Diedenshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Diedenshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Erdhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Erdhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Friebertshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Friebertshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Frohnhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Frohnhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Gladenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Gladenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Kehlnbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Kehlnbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Mornshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Mornshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Rachelshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Rachelshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Runzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Runzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (R\u00f6mershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "R\u00f6mershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (R\u00fcchenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "R\u00fcchenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Sinkershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Sinkershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Weidenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Weidenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Gladenbach (Weitershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Gladenbach",
+        "operator": "biedenkopf",
+        "subdistrict": "Weitershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Glash\u00fctten (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -11196,12 +13835,50 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Greimersburg",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Greimersburg",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Greimersburg (Greimersburg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Greimersburg",
+        "operator": "cochem_zell",
+        "subdistrict": "Greimersburg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Gremsheim",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Gremsheim"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Grenderich (Grenderich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Grenderich",
+        "operator": "cochem_zell",
+        "subdistrict": "Grenderich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Griesingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Griesingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Gronau",
@@ -11224,6 +13901,15 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Grundsheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Grundsheim",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Gr\u00e4felfing",
@@ -11353,6 +14039,16 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Hambuch (Hambuch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Hambuch",
+        "operator": "cochem_zell",
+        "subdistrict": "Hambuch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Hammenstedt",
       "module": "nerdbridge_de",
       "default_params": {
@@ -11377,6 +14073,16 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Haserich (Haserich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Haserich",
+        "operator": "cochem_zell",
+        "subdistrict": "Haserich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Hattersheim am Main",
       "module": "jumomind_de",
       "default_params": {
@@ -11392,6 +14098,25 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Hauroth (Hauroth)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Hauroth",
+        "operator": "cochem_zell",
+        "subdistrict": "Hauroth"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Hausen am Bussen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Hausen am Bussen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "hausm\u00fcll.info",
@@ -11490,6 +14215,45 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Heroldstatt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Heroldstatt",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Heroldstatt (Breith\u00fclen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Heroldstatt",
+        "operator": "alb_donau",
+        "subdistrict": "Breith\u00fclen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Heroldstatt (Ennabeuren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Heroldstatt",
+        "operator": "alb_donau",
+        "subdistrict": "Ennabeuren"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Heroldstatt (Sontheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Heroldstatt",
+        "operator": "alb_donau",
+        "subdistrict": "Sontheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Herten (durth-roos.de)",
       "module": "ics",
       "default_params": {},
@@ -11519,6 +14283,16 @@
         "district": "Heskem"
       },
       "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Hesweiler (Hesweiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Hesweiler",
+        "operator": "cochem_zell",
+        "subdistrict": "Hesweiler"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Hettensen",
@@ -11645,6 +14419,15 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Holzkirch",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Holzkirch",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Homburg",
       "module": "ics",
       "default_params": {},
@@ -11713,12 +14496,149 @@
       "id": "heimat_info_de"
     },
     {
+      "title": "H\u00fcttisheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "H\u00fcttisheim",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "H\u00fcttisheim (Humlangen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "H\u00fcttisheim",
+        "operator": "alb_donau",
+        "subdistrict": "Humlangen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Iber",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Iber"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Illerich",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerich",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerich (Illerich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerich",
+        "operator": "cochem_zell",
+        "subdistrict": "Illerich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Beutelreusch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Beutelreusch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Buch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Buch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Gassen\u00e4cker-Nord)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Gassen\u00e4cker-Nord"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Mussingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Mussingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Oberkirchberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Oberkirchberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Oberweiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Oberweiler"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerkirchberg (Unterkirchberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerkirchberg",
+        "operator": "alb_donau",
+        "subdistrict": "Unterkirchberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerrieden",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerrieden",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerrieden (Dorndorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerrieden",
+        "operator": "alb_donau",
+        "subdistrict": "Dorndorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Illerrieden (Wangen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Illerrieden",
+        "operator": "alb_donau",
+        "subdistrict": "Wangen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Ilm-Kreis",
@@ -11831,12 +14751,71 @@
       "id": "kaev_niederlausitz"
     },
     {
+      "title": "Kaifenheim (Kaifenheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kaifenheim",
+        "operator": "cochem_zell",
+        "subdistrict": "Kaifenheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Kail (Kail)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kail",
+        "operator": "cochem_zell",
+        "subdistrict": "Kail"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Kaisersesch",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kaisersesch",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Kaisersesch (Kaisersesch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kaisersesch",
+        "operator": "cochem_zell",
+        "subdistrict": "Kaisersesch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Kaisersesch (Neuhof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kaisersesch",
+        "operator": "cochem_zell",
+        "subdistrict": "Neuhof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Kalefeld",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Kalefeld"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Kalenborn (Kalenborn)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kalenborn",
+        "operator": "cochem_zell",
+        "subdistrict": "Kalenborn"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Kall",
@@ -11967,6 +14946,84 @@
         "commune": "kirchweidach"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Kleve",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kleve",
+        "operator": "klevestadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Kliding (Kliding)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Kliding",
+        "operator": "cochem_zell",
+        "subdistrict": "Kliding"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten (Annischerhof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell",
+        "subdistrict": "Annischerhof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten (Klotten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell",
+        "subdistrict": "Klotten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten (Klotten-Mittelstra\u00dfe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell",
+        "subdistrict": "Klotten-Mittelstra\u00dfe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten (Klotten-R\u00e4uschelstra\u00dfe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell",
+        "subdistrict": "Klotten-R\u00e4uschelstra\u00dfe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Klotten (Landkern-Kavelocher Hof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Klotten",
+        "operator": "cochem_zell",
+        "subdistrict": "Landkern-Kavelocher Hof"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Knittel Entsorgung",
@@ -12674,14 +15731,6 @@
       "id": "nerdbridge_de"
     },
     {
-      "title": "KV Cochem-Zell",
-      "module": "buergerportal_de",
-      "default_params": {
-        "operator": "cochem_zell"
-      },
-      "id": "buergerportal_de"
-    },
-    {
       "title": "KWU Entsorgung Landkreis Oder-Spree",
       "module": "kwu_de",
       "default_params": {},
@@ -12694,6 +15743,164 @@
         "municipality": "Lagershausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Lahntal (Brungershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Brungershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (Caldern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Caldern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (Go\u00dffelden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Go\u00dffelden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (G\u00f6ttingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "G\u00f6ttingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (Kernbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Kernbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (Sarnau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Sarnau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lahntal (Sterzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lahntal",
+        "operator": "biedenkopf",
+        "subdistrict": "Sterzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Laichingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laichingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Laichingen (Feldstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laichingen",
+        "operator": "alb_donau",
+        "subdistrict": "Feldstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Laichingen (Machtolsheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laichingen",
+        "operator": "alb_donau",
+        "subdistrict": "Machtolsheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Laichingen (Suppingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laichingen",
+        "operator": "alb_donau",
+        "subdistrict": "Suppingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Landkern",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Landkern",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Landkern (56759 Neuhof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Landkern",
+        "operator": "cochem_zell",
+        "subdistrict": "56759 Neuhof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Landkern (Landkern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Landkern",
+        "operator": "cochem_zell",
+        "subdistrict": "Landkern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Landkern (Neuhof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Landkern",
+        "operator": "cochem_zell",
+        "subdistrict": "Neuhof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Landkern (Sch\u00f6ne Aussicht)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Landkern",
+        "operator": "cochem_zell",
+        "subdistrict": "Sch\u00f6ne Aussicht"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Landkreis Amberg-Sulzbach",
@@ -13256,6 +16463,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Landkreis S\u00fcdwestpfalz",
+      "module": "suedwestpfalz_de",
+      "default_params": {},
+      "id": "suedwestpfalz_de"
+    },
+    {
       "title": "Landkreis Tirschenreuth",
       "module": "awido_de",
       "default_params": {
@@ -13414,6 +16627,75 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Langenau",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (Albeck - Osterstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "Albeck - Osterstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (Albeck - Stuppelau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "Albeck - Stuppelau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (Albeck)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "Albeck"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (G\u00f6ttingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "G\u00f6ttingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (H\u00f6rvelsingen - Witthau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "H\u00f6rvelsingen - Witthau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Langenau (H\u00f6rvelsingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Langenau",
+        "operator": "alb_donau",
+        "subdistrict": "H\u00f6rvelsingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Langenholtensen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -13439,12 +16721,80 @@
       "id": "regioentsorgung_de"
     },
     {
+      "title": "Laubach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laubach",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Laubach (Laubach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Laubach",
+        "operator": "cochem_zell",
+        "subdistrict": "Laubach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Lauenberg",
       "module": "nerdbridge_de",
       "default_params": {
         "municipality": "Lauenberg"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Lauterach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lauterach",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lauterach (Laufenm\u00fchle)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lauterach",
+        "operator": "alb_donau",
+        "subdistrict": "Laufenm\u00fchle"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lauterach (Neuburg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lauterach",
+        "operator": "alb_donau",
+        "subdistrict": "Neuburg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lauterach (Reichenstein)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lauterach",
+        "operator": "alb_donau",
+        "subdistrict": "Reichenstein"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lauterach (Talheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lauterach",
+        "operator": "alb_donau",
+        "subdistrict": "Talheim"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Lebacher Abfallzweckverband (LAZ)",
@@ -13459,6 +16809,35 @@
         "district": "Leidenhofen"
       },
       "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Leienkaul",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Leienkaul",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Leienkaul (Laubach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Leienkaul",
+        "operator": "cochem_zell",
+        "subdistrict": "Laubach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Leienkaul (Leienkaul)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Leienkaul",
+        "operator": "cochem_zell",
+        "subdistrict": "Leienkaul"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Leinetal",
@@ -13518,6 +16897,35 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Lieg",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lieg",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lieg (Lieg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lieg",
+        "operator": "cochem_zell",
+        "subdistrict": "Lieg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Liesenich (Liesenich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Liesenich",
+        "operator": "cochem_zell",
+        "subdistrict": "Liesenich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Lindau",
       "module": "nerdbridge_de",
       "default_params": {
@@ -13563,12 +16971,180 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Lohra",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Altenvers)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Altenvers"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Damm)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Damm"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Kirchvers)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Kirchvers"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Nanz-Willershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Nanz-Willershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Reimershausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Reimershausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Rodenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Rodenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Rollshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Rollshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Seelbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Seelbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lohra (Weipoltshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lohra",
+        "operator": "biedenkopf",
+        "subdistrict": "Weipoltshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Loiching",
       "module": "heimat_info_de",
       "default_params": {
         "commune": "loiching"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Lonsee",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Ettlenschie\u00df)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Ettlenschie\u00df"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Halzhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Halzhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Luizhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Luizhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Radelstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Radelstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Sinabronn)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Sinabronn"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lonsee (Urspring)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lonsee",
+        "operator": "alb_donau",
+        "subdistrict": "Urspring"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Ludwigshafen",
@@ -13604,6 +17180,26 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Lutzerath (Lutzerath)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lutzerath",
+        "operator": "cochem_zell",
+        "subdistrict": "Lutzerath"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Lutzerath (Lutzerath-Driesch)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Lutzerath",
+        "operator": "cochem_zell",
+        "subdistrict": "Lutzerath-Driesch"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "L\u00fcbbecke (Jumomind)",
       "module": "jumomind_de",
       "default_params": {
@@ -13632,6 +17228,25 @@
         "municipality": "L\u00fcthorst"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "L\u00fctz",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "L\u00fctz",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "L\u00fctz (L\u00fctz)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "L\u00fctz",
+        "operator": "cochem_zell",
+        "subdistrict": "L\u00fctz"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "L\u00fctzelbach",
@@ -13721,6 +17336,25 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Masburg",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Masburg",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Masburg (Masburg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Masburg",
+        "operator": "cochem_zell",
+        "subdistrict": "Masburg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Mechernich",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -13763,6 +17397,25 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Merklingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Merklingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Merklingen (Widderstall)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Merklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Widderstall"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Merzig",
       "module": "ics",
       "default_params": {},
@@ -13776,6 +17429,25 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Mesenich",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Mesenich",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Mesenich (Mesenich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Mesenich",
+        "operator": "cochem_zell",
+        "subdistrict": "Mesenich"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Metzingen",
@@ -13809,6 +17481,25 @@
         "service_id": "sbm"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Mittelstrimmig",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Mittelstrimmig",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Mittelstrimmig (Mittelstrimmig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Mittelstrimmig",
+        "operator": "cochem_zell",
+        "subdistrict": "Mittelstrimmig"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Monheim am Rhein",
@@ -13859,6 +17550,44 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Moritzheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Moritzheim",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Moritzheim (Moritzheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Moritzheim",
+        "operator": "cochem_zell",
+        "subdistrict": "Moritzheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Moselkern",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Moselkern",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Moselkern (Moselkern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Moselkern",
+        "operator": "cochem_zell",
+        "subdistrict": "Moselkern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Mossautal",
       "module": "reso_gmbh_de",
       "default_params": {
@@ -13867,18 +17596,29 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Munderkingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Munderkingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Munderkingen (Algershofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Munderkingen",
+        "operator": "alb_donau",
+        "subdistrict": "Algershofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "myWasteWatcher (WasteWatcher.NET)",
       "module": "mywastewatcher_de",
       "default_params": {},
       "id": "mywastewatcher_de"
-    },
-    {
-      "title": "MZV Biedenkopf",
-      "module": "buergerportal_de",
-      "default_params": {
-        "operator": "biedenkopf"
-      },
-      "id": "buergerportal_de"
     },
     {
       "title": "MZV Hegau",
@@ -13901,10 +17641,49 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "M\u00f6ntenich (M\u00f6ntenich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00f6ntenich",
+        "operator": "cochem_zell",
+        "subdistrict": "M\u00f6ntenich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "M\u00f6rfelden-Walldorf",
       "module": "ics",
       "default_params": {},
       "id": "ics_moerfelden_walldorf_de"
+    },
+    {
+      "title": "M\u00fcden (Mosel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcden (Mosel)",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcden (Mosel) (M\u00fcden (Mosel))",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcden (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "M\u00fcden (Mosel)"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcden (Mosel) (M\u00fcdener Berg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcden (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "M\u00fcdener Berg"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "M\u00fchlenkreis Minden-L\u00fcbbecke",
@@ -13951,6 +17730,25 @@
       "id": "abfall_io"
     },
     {
+      "title": "M\u00fcllenbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcllenbach",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcllenbach (M\u00fcllenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcllenbach",
+        "operator": "cochem_zell",
+        "subdistrict": "M\u00fcllenbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "M\u00fcllershausen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -13980,6 +17778,55 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "M\u00fcnchhausen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcnchhausen",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcnchhausen (Niederasphe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcnchhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Niederasphe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcnchhausen (Oberasphe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcnchhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberasphe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcnchhausen (Simtshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcnchhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Simtshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "M\u00fcnchhausen (Wollmar)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "M\u00fcnchhausen",
+        "operator": "biedenkopf",
+        "subdistrict": "Wollmar"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Nachrodt-Wiblingwerde",
       "module": "lobbe_app",
       "default_params": {
@@ -14006,6 +17853,34 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Neef",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neef",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Neef (Neef)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neef",
+        "operator": "cochem_zell",
+        "subdistrict": "Neef"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Neenstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neenstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Negenborn",
       "module": "nerdbridge_de",
       "default_params": {
@@ -14014,12 +17889,70 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Nehren (Nehren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nehren",
+        "operator": "cochem_zell",
+        "subdistrict": "Nehren"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Nellingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nellingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Nellingen (Aichen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nellingen",
+        "operator": "alb_donau",
+        "subdistrict": "Aichen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Nellingen (Oppingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nellingen",
+        "operator": "alb_donau",
+        "subdistrict": "Oppingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Nenndorf (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Nerenstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nerenstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Nerenstetten (Wettingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Nerenstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Wettingen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Neu-Anspach",
@@ -14040,6 +17973,16 @@
       "id": "ics_neuenrade_de"
     },
     {
+      "title": "Neuhof (Neuhof)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neuhof",
+        "operator": "cochem_zell",
+        "subdistrict": "Neuhof"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Neum\u00fcnster (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -14052,6 +17995,45 @@
       "module": "abfall_neunkirchen_siegerland_de",
       "default_params": {},
       "id": "abfall_neunkirchen_siegerland_de"
+    },
+    {
+      "title": "Neustadt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neustadt",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Neustadt (Mengsberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neustadt",
+        "operator": "biedenkopf",
+        "subdistrict": "Mengsberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Neustadt (Momberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neustadt",
+        "operator": "biedenkopf",
+        "subdistrict": "Momberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Neustadt (Speckswinkel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Neustadt",
+        "operator": "biedenkopf",
+        "subdistrict": "Speckswinkel"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Neustadt a.d. Waldnaab",
@@ -14176,6 +18158,15 @@
       "id": "regioentsorgung_de"
     },
     {
+      "title": "Oberdischingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberdischingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Oberhavel",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -14189,6 +18180,65 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_awu_oberhavel_de"
+    },
+    {
+      "title": "Obermarchtal",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Obermarchtal (Datthausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau",
+        "subdistrict": "Datthausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Obermarchtal (G\u00fctelhofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau",
+        "subdistrict": "G\u00fctelhofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Obermarchtal (Luppenhofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau",
+        "subdistrict": "Luppenhofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Obermarchtal (Mittenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau",
+        "subdistrict": "Mittenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Obermarchtal (Reutlingendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Obermarchtal",
+        "operator": "alb_donau",
+        "subdistrict": "Reutlingendorf"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Oberpframmern",
@@ -14214,6 +18264,65 @@
         "commune": "oberroth"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Oberstadion",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Oberstadion (Hundersingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau",
+        "subdistrict": "Hundersingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Oberstadion (Moosbeuren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau",
+        "subdistrict": "Moosbeuren"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Oberstadion (Mundeldingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau",
+        "subdistrict": "Mundeldingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Oberstadion (M\u00fchlhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau",
+        "subdistrict": "M\u00fchlhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Oberstadion (Rettighofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Oberstadion",
+        "operator": "alb_donau",
+        "subdistrict": "Rettighofen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Obertshausen",
@@ -14367,6 +18476,16 @@
       "id": "ostprignitz_ruppin_de"
     },
     {
+      "title": "Panzweiler (Panzweiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Panzweiler",
+        "operator": "cochem_zell",
+        "subdistrict": "Panzweiler"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Parensen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -14387,6 +18506,36 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Peterswald-L\u00f6ffelscheid (L\u00f6ffelscheid)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Peterswald-L\u00f6ffelscheid",
+        "operator": "cochem_zell",
+        "subdistrict": "L\u00f6ffelscheid"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Peterswald-L\u00f6ffelscheid (Peterswald)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Peterswald-L\u00f6ffelscheid",
+        "operator": "cochem_zell",
+        "subdistrict": "Peterswald"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Peterswald-L\u00f6ffelscheid (Peterswald-L\u00f6ffelscheid)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Peterswald-L\u00f6ffelscheid",
+        "operator": "cochem_zell",
+        "subdistrict": "Peterswald-L\u00f6ffelscheid"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Pfaffenhausen",
@@ -14442,6 +18591,35 @@
         "municipality": "Polier"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Pommern",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Pommern",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Pommern (Pommern)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Pommern",
+        "operator": "cochem_zell",
+        "subdistrict": "Pommern"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Pommern (Pommern-Zehnthofstra\u00dfe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Pommern",
+        "operator": "cochem_zell",
+        "subdistrict": "Pommern-Zehnthofstra\u00dfe"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Portenhagen",
@@ -14508,6 +18686,16 @@
       "id": "awido_de"
     },
     {
+      "title": "P\u00fcnderich (P\u00fcnderich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "P\u00fcnderich",
+        "operator": "cochem_zell",
+        "subdistrict": "P\u00fcnderich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Radolfzell am Bodensee",
       "module": "muellmann_app_de",
       "default_params": {
@@ -14517,12 +18705,30 @@
       "id": "muellmann_app_de"
     },
     {
+      "title": "Rammingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Rammingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Rauischholzhausen",
       "module": "123abfallkalender_de",
       "default_params": {
         "district": "Rauischholzhausen"
       },
       "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Rechtenstein",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Rechtenstein",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Recklinghausen",
@@ -14553,6 +18759,25 @@
         "city": "Reichenau"
       },
       "id": "muellmann_app_de"
+    },
+    {
+      "title": "Reidenhausen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Reidenhausen",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Reidenhausen (Reidenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Reidenhausen",
+        "operator": "cochem_zell",
+        "subdistrict": "Reidenhausen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Relliehausen",
@@ -14672,6 +18897,25 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Roes",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Roes",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Roes (Roes)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Roes",
+        "operator": "cochem_zell",
+        "subdistrict": "Roes"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Roetgen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -14728,6 +18972,25 @@
         "municipality": "Rotenkirchen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Rottenacker",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Rottenacker",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Rottenacker (Neudorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Rottenacker",
+        "operator": "alb_donau",
+        "subdistrict": "Neudorf"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Rottweil",
@@ -14832,6 +19095,25 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Sankt Aldegund",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Sankt Aldegund",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Sankt Aldegund (Sankt Aldegund)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Sankt Aldegund",
+        "operator": "cochem_zell",
+        "subdistrict": "Sankt Aldegund"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Schachtenbeck",
       "module": "nerdbridge_de",
       "default_params": {
@@ -14847,6 +19129,135 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Schauren (Schauren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schauren",
+        "operator": "cochem_zell",
+        "subdistrict": "Schauren"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Gundershofen - Springen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Gundershofen - Springen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Gundershofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Gundershofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Hausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Hausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (H\u00fctten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "H\u00fctten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Ingstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Ingstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Justingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Justingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Schmiechen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Schmiechen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Sondernach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Sondernach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Talsteu\u00dflingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Talsteu\u00dflingen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Teuringshofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Teuringshofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schelklingen (Urspring)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schelklingen",
+        "operator": "alb_donau",
+        "subdistrict": "Urspring"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Schlarpe",
@@ -14872,6 +19283,25 @@
       "id": "ics_asf_online_de"
     },
     {
+      "title": "Schmitt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schmitt",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schmitt (Schmitt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schmitt",
+        "operator": "cochem_zell",
+        "subdistrict": "Schmitt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Schmitten im Taunus (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -14886,6 +19316,35 @@
         "municipality": "Schnedinghausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Schn\u00fcrpflingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schn\u00fcrpflingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schn\u00fcrpflingen (Ammerstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schn\u00fcrpflingen",
+        "operator": "alb_donau",
+        "subdistrict": "Ammerstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Schn\u00fcrpflingen (Beuren)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Schn\u00fcrpflingen",
+        "operator": "alb_donau",
+        "subdistrict": "Beuren"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Schoningen",
@@ -15003,6 +19462,44 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Senheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Senheim",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Senheim (Senhals)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Senheim",
+        "operator": "cochem_zell",
+        "subdistrict": "Senhals"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Senheim (Senheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Senheim",
+        "operator": "cochem_zell",
+        "subdistrict": "Senheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Setzingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Setzingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Siegen",
       "module": "ics",
       "default_params": {},
@@ -15057,6 +19554,16 @@
         "municipality": "Sohlingen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Sosberg (Sosberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Sosberg",
+        "operator": "cochem_zell",
+        "subdistrict": "Sosberg"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "St Ingbert",
@@ -15533,6 +20040,135 @@
       "id": "ics_gipsprojekt_de"
     },
     {
+      "title": "Staig",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Altheim)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Altheim"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Essendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Essendorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Harthausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Harthausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Staig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Staig"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Steinberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Steinberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Staig (Weinstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Staig",
+        "operator": "alb_donau",
+        "subdistrict": "Weinstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Niedereisenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Niedereisenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Niederh\u00f6rlen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Niederh\u00f6rlen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Obereisenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Obereisenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Oberh\u00f6rlen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberh\u00f6rlen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Quotshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Quotshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Steffenberg (Steinperf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Steffenberg",
+        "operator": "biedenkopf",
+        "subdistrict": "Steinperf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Steinheim",
       "module": "lobbe_app",
       "default_params": {
@@ -15708,6 +20344,25 @@
       "id": "ics_tbr_reutlingen_de"
     },
     {
+      "title": "Tellig",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Tellig",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Tellig (Tellig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Tellig",
+        "operator": "cochem_zell",
+        "subdistrict": "Tellig"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Th\u00fcdinghausen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -15734,6 +20389,36 @@
         "commune": "trausnitz"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Treis-Karden (Karden)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Treis-Karden",
+        "operator": "cochem_zell",
+        "subdistrict": "Karden"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Treis-Karden (Kardener Berg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Treis-Karden",
+        "operator": "cochem_zell",
+        "subdistrict": "Kardener Berg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Treis-Karden (Treis)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Treis-Karden",
+        "operator": "cochem_zell",
+        "subdistrict": "Treis"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Tr\u00f6gen",
@@ -15825,10 +20510,80 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Umweltbetriebe USK Kleve",
+      "title": "Ulmen",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "klevestadt"
+        "district": "Ulmen",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Hochporten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Hochporten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Meiserich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Meiserich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Ulmen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Ulmen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Ulmen-Furth)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Ulmen-Furth"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Ulmen-Meiserich)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Ulmen-Meiserich"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Ulmen (Ulmen-Vorpochten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Ulmen",
+        "operator": "cochem_zell",
+        "subdistrict": "Ulmen-Vorpochten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Untermarchtal",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Untermarchtal",
+        "operator": "alb_donau"
       },
       "id": "buergerportal_de"
     },
@@ -15839,6 +20594,72 @@
         "commune": "unterroth"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Unterstadion",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Unterstadion",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Unterstadion (Bettighofen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Unterstadion",
+        "operator": "alb_donau",
+        "subdistrict": "Bettighofen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Unterwachingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Unterwachingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Urmersbach",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Urmersbach",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Urmersbach (Urmersbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Urmersbach",
+        "operator": "cochem_zell",
+        "subdistrict": "Urmersbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Urschmitt",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Urschmitt",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Urschmitt (Urschmitt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Urschmitt",
+        "operator": "cochem_zell",
+        "subdistrict": "Urschmitt"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "USB Bochum",
@@ -15871,6 +20692,36 @@
         "municipality": "Vahle"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Valwig (Valwig)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Valwig",
+        "operator": "cochem_zell",
+        "subdistrict": "Valwig"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Valwig (Valwigerberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Valwig",
+        "operator": "cochem_zell",
+        "subdistrict": "Valwigerberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Valwig (Valwigerberg..)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Valwig",
+        "operator": "cochem_zell",
+        "subdistrict": "Valwigerberg.."
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Vardeilsen",
@@ -16006,6 +20857,16 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Wagenhausen (Wagenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wagenhausen",
+        "operator": "cochem_zell",
+        "subdistrict": "Wagenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Wahmbeck",
       "module": "nerdbridge_de",
       "default_params": {
@@ -16030,6 +20891,16 @@
         "city": "Waldshut"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Walhausen (Walhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Walhausen",
+        "operator": "cochem_zell",
+        "subdistrict": "Walhausen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Warburg",
@@ -16084,6 +20955,35 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Weidenstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Weidenstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Weidenstetten (Schechstetten)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Weidenstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Schechstetten"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Weiler (Weiler)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Weiler",
+        "operator": "cochem_zell",
+        "subdistrict": "Weiler"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Weilerswist",
@@ -16154,6 +21054,25 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "Westerheim",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerheim",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Westerheim (Heuberg)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerheim",
+        "operator": "alb_donau",
+        "subdistrict": "Heuberg"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Westerhof",
       "module": "nerdbridge_de",
       "default_params": {
@@ -16170,6 +21089,45 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Westerstetten",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerstetten",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Westerstetten (Hinterdenkental)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Hinterdenkental"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Westerstetten (Vorderd. Tal)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Vorderd. Tal"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Westerstetten (Vorderd.Tal)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Westerstetten",
+        "operator": "alb_donau",
+        "subdistrict": "Vorderd.Tal"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Westerwaldkreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -16180,9 +21138,108 @@
     },
     {
       "title": "Wetter",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Wetter (Am\u00f6nau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Am\u00f6nau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Mellnau)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Mellnau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Niederwetter)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Niederwetter"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Oberndorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberndorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Oberrosphe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Oberrosphe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Todenhausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Todenhausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Treisbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Treisbach"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Unterrosphe)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Unterrosphe"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wetter (Warzenbach)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wetter",
+        "operator": "biedenkopf",
+        "subdistrict": "Warzenbach"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Wetze",
@@ -16277,6 +21334,16 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wirfus (Wirfus)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wirfus",
+        "operator": "cochem_zell",
+        "subdistrict": "Wirfus"
+      },
+      "id": "buergerportal_de"
+    },
+    {
       "title": "Wirtschaftsbetriebe Duisburg (WBD)",
       "module": "abfall_io_graphql",
       "default_params": {
@@ -16297,6 +21364,46 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Wohratal (Halsdorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wohratal",
+        "operator": "biedenkopf",
+        "subdistrict": "Halsdorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wohratal (Hertingshausen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wohratal",
+        "operator": "biedenkopf",
+        "subdistrict": "Hertingshausen"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wohratal (Langendorf)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wohratal",
+        "operator": "biedenkopf",
+        "subdistrict": "Langendorf"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Wohratal (Wohra)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wohratal",
+        "operator": "biedenkopf",
+        "subdistrict": "Wohra"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Wolbrechtshausen",
@@ -16320,6 +21427,16 @@
       "module": "was_wolfsburg_de",
       "default_params": {},
       "id": "was_wolfsburg_de"
+    },
+    {
+      "title": "Wollmerath (Wollmerath)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Wollmerath",
+        "operator": "cochem_zell",
+        "subdistrict": "Wollmerath"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "Wolperode",
@@ -16428,6 +21545,84 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_zb_gladbeck_de"
+    },
+    {
+      "title": "Zell (Mosel)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zell (Mosel) (Stadt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Stadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zell (Mosel) (Zell-Barl)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Zell-Barl"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zell (Mosel) (Zell-Kaimt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Zell-Kaimt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zell (Mosel) (Zell-Merl)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Zell-Merl"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zell (Mosel) (Zell-Stadt)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zell (Mosel)",
+        "operator": "cochem_zell",
+        "subdistrict": "Zell-Stadt"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zettingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zettingen",
+        "operator": "cochem_zell"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "Zettingen (Zettingen)",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "Zettingen",
+        "operator": "cochem_zell",
+        "subdistrict": "Zettingen"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "ZEW Zweckverband Entsorgungsregion West",
@@ -16539,6 +21734,24 @@
         "city": "Z\u00fclpich"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "\u00d6llingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "\u00d6llingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
+    },
+    {
+      "title": "\u00d6pfingen",
+      "module": "buergerportal_de",
+      "default_params": {
+        "district": "\u00d6pfingen",
+        "operator": "alb_donau"
+      },
+      "id": "buergerportal_de"
     },
     {
       "title": "\u00dcssinghausen",
@@ -22622,6 +27835,14 @@
       "id": "vattenmiljoresurs_se"
     },
     {
+      "title": "Danderyds kommun",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "danderyd"
+      },
+      "id": "edpevent_se"
+    },
+    {
       "title": "EDPEvent - Multi Source",
       "module": "edpevent_se",
       "default_params": {},
@@ -25806,6 +31027,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Merthyr Tydfil County Borough Council",
+      "module": "merthyr_gov_uk",
+      "default_params": {},
+      "id": "merthyr_gov_uk"
+    },
+    {
       "title": "Mid and East Antrim",
       "module": "midandeastantrim_gov_uk",
       "default_params": {},
@@ -26442,6 +31669,16 @@
       "module": "stevenage_gov_uk",
       "default_params": {},
       "id": "stevenage_gov_uk"
+    },
+    {
+      "title": "Stirling Council",
+      "module": "recollect_net",
+      "default_params": {
+        "locale": "en-GB",
+        "place_id": "D6ADFBAE-D4AF-11F0-9DA3-EE0251E5C8E1",
+        "service_id": "waste"
+      },
+      "id": "recollect_net"
     },
     {
       "title": "Stirling Council",
@@ -27132,6 +32369,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Fort Lauderdale, FL",
+      "module": "fort_lauderdale_fl_us",
+      "default_params": {},
+      "id": "fort_lauderdale_fl_us"
     },
     {
       "title": "Fuquay-Varina, North Carolina",

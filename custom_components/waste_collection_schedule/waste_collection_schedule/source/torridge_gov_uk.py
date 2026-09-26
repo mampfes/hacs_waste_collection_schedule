@@ -1,154 +1,84 @@
-import json
+import datetime
 import re
-from datetime import datetime, timedelta
-from time import time_ns
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsLabelSplitPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Torridge Council"
-DESCRIPTION = "Source for torridge.gov.uk services for Torridge, UK."
-URL = "https://torridge.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "10093911050"},
-    "Test_002": {"uprn": 10002296087},
-    "Test_003": {"uprn": "200001644184"},
-    "Test_004": {"uprn": 100040385608},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-BIN_NAME = {
-    "Refuse": "Refuse",
-    "Recycling": "Recycling",
-    "GardenBin": "Garden",
-}
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN": Icons.GARDEN,
-}
-MONTHS = {
-    "January": 1,
-    "Jan": 1,
-    "February": 2,
-    "Feb": 2,
-    "March": 3,
-    "Mar": 3,
-    "April": 4,
-    "Apr": 4,
-    "May": 5,
-    "June": 6,
-    "Jun": 6,
-    "July": 7,
-    "Jul": 7,
-    "August": 8,
-    "Aug": 8,
-    "September": 9,
-    "Sep": 9,
-    "October": 10,
-    "Oct": 10,
-    "November": 11,
-    "Nov": 11,
-    "December": 12,
-    "Dec": 12,
-}
-RELATIVE_DATES = {"Today": 0, "Tomorrow": 1}
+_HOSTNAME = "torridgedc-self.achieveservice.com"
+_DAY_MONTH = date_parsers.next_weekday("%a %d %b")
+_RELATIVE = {"today": 0, "tomorrow": 1}
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+def _next_date(*args: str) -> datetime.date:
+    """The first date of "Wed 30 Sep then every Wed" (or "Today", "Tomorrow")."""
+    text = re.sub(r"\(.*?\)", "", args[-1].split(" then ")[0]).strip()
+    if text.lower() in _RELATIVE:
+        return datetime.date.today() + datetime.timedelta(days=_RELATIVE[text.lower()])
+    return _DAY_MONTH(text)
 
-    def fetch(self):
-        s = requests.Session()
 
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        s.get(
-            f"https://torridgedc-self.achieveservice.com/apibroker/domain/torridgedc-self.achieveservice.com?_={timestamp}",
-            headers=HEADERS,
-        )
+@final
+class Source(BaseSource):
+    TITLE = "Torridge Council"
+    DESCRIPTION = "Source for torridge.gov.uk services for Torridge, UK."
+    URL = "https://torridge.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GARDEN_WASTE, wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://torridgedc-self.achieveservice.com/authapi/isauthenticated?uri=https%3A%2F%2Ftorridgedc-self.achieveservice.com%2Fservice%2FMy_property_information&hostname=torridgedc-self.achieveservice.com&withCredentials=true",
-            headers=HEADERS,
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10093911050"},
+        "Test_002": {"uprn": 10002296087},
+        "Test_003": {"uprn": "200001644184"},
+        "Test_004": {"uprn": 100040385608},
+    }
 
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {"formValues": {"Search": {"uprn": {"value": self._uprn}}}}
-        schedule_request = s.post(
-            f"https://torridgedc-self.achieveservice.com/apibroker/runLookup?id=6583107397653&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload,
-        )
-        rowdata = json.loads(schedule_request.content)["integration"]["transformed"][
-            "rows_data"
-        ]
+    PARAMS = (uprn(),)
 
-        # Extract bin types and next collection dates
-        entries: list[Collection] = []
-        current_month = datetime.strftime(datetime.now(), "%b")  # Short month names
-        current_year = int(datetime.strftime(datetime.now(), "%Y"))
-        today = datetime.today().date()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
 
-        for item in rowdata.values():
-            for _, value in item.items():
-                # Example: "GardenBin: Wed 26 Feb then every alternate  Wed"
-                parts = value.split(": ")
-                if len(parts) < 2:
-                    raise ValueError("Unexpected data format")
-
-                waste_type = parts[0].strip()  # e.g., "GardenBin"
-                if waste_type in BIN_NAME:
-                    waste_type = BIN_NAME[waste_type]
-                else:
-                    raise ValueError(f"Unknown waste type: {waste_type}")
-
-                date_part = parts[1].split(" then ")[0].strip()  # e.g., "Wed 26 Feb"
-
-                # Strip parenthetical annotations e.g. "(Adjusted for Easter)"
-                date_part = re.sub(r"\(.*?\)", "", date_part).strip()
-
-                # Handle "No collection" or "No live" messages
-                if date_part.split()[0].lower() == "no":
-                    continue  # Skip entries where collection isn't available
-
-                # Handle "Today" or "Tomorrow"
-                if date_part in RELATIVE_DATES:
-                    collection_date = today + timedelta(days=RELATIVE_DATES[date_part])
-                else:
-                    # Extract the date
-                    date_parts = date_part.split()
-                    if len(date_parts) < 3:
-                        raise ValueError("Unexpected date format")
-
-                    _, bin_day_num, bin_month = date_parts[:3]
-                    if bin_month not in MONTHS:
-                        raise ValueError(f"Unknown month: {bin_month}")
-
-                    # Handle year rollover
-                    bin_year = (
-                        current_year
-                        if MONTHS[bin_month] >= MONTHS[current_month]
-                        else current_year + 1
-                    )
-
-                    # Convert to date object
-                    dt = f"{bin_day_num} {bin_month} {bin_year}"
-                    collection_date = datetime.strptime(dt, "%d %b %Y").date()
-
-                # Append valid collections
-                entries.append(
-                    Collection(
-                        t=waste_type,
-                        date=collection_date,
-                        icon=ICON_MAP.get(waste_type.upper()),
-                    )
-                )
-
-        return entries
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        service_page="My_property_information",
+        skip_landing_page=True,
+        auth_test_url=f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}",
+        steps=[
+            LookupStep(
+                "6583107397653",
+                section="Search",
+                form_values=lambda ctx, source: {
+                    "uprn": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # One row, a text per round: "Refuse: Fri 2 Oct then every alternate Fri",
+    # or "GardenBin: No GardenBin waste collection for this address".
+    preprocess = AchieveFormsLabelSplitPreprocessor(
+        field=("Round1", "Round2", "Round3"), separator=": ", split_at="first"
+    )
+    transform = RowTransformer(
+        parse_date=_next_date,
+        skip_unparseable_dates=True,
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "GardenBin": wt.GARDEN_WASTE,
+        },
+    )

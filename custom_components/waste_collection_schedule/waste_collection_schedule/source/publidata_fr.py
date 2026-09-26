@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from dateutil.rrule import (
+    DAILY,
     FR,
     MO,
     MONTHLY,
@@ -136,7 +137,7 @@ TEST_CASES = {
     # "insee_code": "62193",
     # "instance_id": 679,
     # },
-    "Métropole Européenne de Lille, Provin": {
+    "Métropole Européenne de Lille, Provin": {  # codespell:ignore provin
         "address": "Rue Pierre Maille",
         "insee_code": "59477",
         "instance_id": 876,
@@ -766,17 +767,26 @@ class Source:
             kwargs.update(self._parse_date_range(date_range, default_year))
 
         parts = opening_hours.split()
+        has_rule_part = False
         while parts:
             part = parts.pop(0)
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
+                has_rule_part = True
             elif part.startswith(
                 ("off", '"')
             ):  # schedule should be of type "closed" or "closing_exception", or part should be a comment
                 continue
             else:
                 kwargs.update(self._parse_part(part))
+                has_rule_part = True
+
+        # A bare date range such as 'Nov 29-Dec 31 off "Fermeture"' covers every
+        # day of the range. Left as MONTHLY, the exclusion rule only hit one day
+        # per month and seasonal collections kept showing during closures.
+        if not has_rule_part and self._has_date_range(schedule["opening_hours"]):
+            kwargs["freq"] = DAILY
 
         # Create the rrule
         rule = rrule(**kwargs)

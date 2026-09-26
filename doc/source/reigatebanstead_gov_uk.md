@@ -1,9 +1,8 @@
 # Reigate & Banstead Borough Council
 
-Support for schedules provided by the [Reigate & Banstead Borough](https://my.reigate-banstead.gov.uk/en/service/Bins_and_recycling___collections_calendar), serving the Reigate & Banstead Borough, Surrey, UK.
+Support for schedules provided by [Reigate & Banstead Borough Council](https://reigate-banstead.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new East Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
+Source for reigate-banstead.gov.uk services for the Reigate & Banstead Borough, UK.
 
 ## Configuration via configuration.yaml
 
@@ -12,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: reigatebanstead_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -27,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: reigatebanstead_gov_uk
       args:
-        uprn: "68110755"
+        uprn: 68110755
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/

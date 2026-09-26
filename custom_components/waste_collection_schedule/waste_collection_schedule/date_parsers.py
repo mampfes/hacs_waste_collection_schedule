@@ -136,6 +136,28 @@ class DateParserNextWeekday(DateParser):
         return parsed.replace(year=base.year).date()
 
 
+class DateParserInCurrentYear(DateParser):
+    """Parse a year-less date as falling in the current calendar year.
+
+    For a provider that publishes this year's whole schedule without a year
+    ("6/2, 20/2, 6/3"), where the past dates are genuinely past rather than
+    next year's: :class:`DateParserNextWeekday` would roll them forward and
+    invent a second year of collections. Prefer the ``in_current_year(fmt)``
+    factory. The year is appended before parsing, so 29 February parses in a
+    leap year.
+    """
+
+    def __init__(self, fmt: str):
+        if "%Y" in fmt:
+            raise ValueError("in_current_year's fmt must not include a year (%Y)")
+        self.fmt = fmt
+
+    def __call__(self, *args: str) -> datetime.date:
+        date_str = str(args[-1]).strip()
+        year = datetime.date.today().year
+        return datetime.datetime.strptime(f"{date_str} {year}", f"{self.fmt} %Y").date()
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -165,3 +187,12 @@ def next_weekday(
     weekday-plus-day-plus-month string. See :class:`DateParserNextWeekday`.
     """
     return DateParserNextWeekday(fmt, on_or_after=on_or_after)
+
+
+def in_current_year(fmt: str) -> DateParserInCurrentYear:
+    """Return a DateParser placing a year-less date in the current year.
+
+    See :class:`DateParserInCurrentYear`; use :func:`next_weekday` instead when
+    the provider lists only upcoming dates.
+    """
+    return DateParserInCurrentYear(fmt)

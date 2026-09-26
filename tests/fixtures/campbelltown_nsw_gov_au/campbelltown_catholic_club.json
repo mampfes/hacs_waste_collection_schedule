@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.campbelltown.nsw.gov.au/api/v1/myarea/search 4f272bfe7c",
+      "method": "GET",
+      "url": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search?keywords=20-22+Camden+Road+Campbelltown+NSW+2560",
+      "body": "{\"params\":[[\"keywords\",\"20-22 Camden Road Campbelltown NSW 2560\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "258",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:44 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=16, origin; dur=289, ak_p; desc=\"1790185484207_1752388118_71786521_30469_15847_4_12_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=591B21DE615D7447310DB225488AAB02~000000000000000000000000000000~YAAQFlJzaMCVesugAQAA/bBezwEg0KpYGKobfqbgbGhmVYjKnTRd6cv4KyWtpLIx7eIoDT1gktkS4X2LK26/ztpLldU4adz4xI4/csdJ+W2uDM9gfexVMv4Z3qM2meGro6Ev0ufJDPBWrzhvzU+AEvr9iRkY04iMfodmgr+u43M/H+utBXzOtKvJGC3RZWJ2UKgDeH4rVYZDCLjlE1TlUjVE8ssB/y0/a+shpafGxGa7oIyFS77+mYNBV2UV53iVdcqLDwWXJOE72izz5J4c/Y0A40aFC5I91SllpaQ3QVVKZDE8tslOg/I1XbydFDZd6QZi0Scdq5tE4kYXvCUjHPn2WPMJwWwnQ2NJMyPwifRRdeH5fENAgI0hNSuIVuqqUhmDoJ2c0oG7FcQRyGfYK5EiqkLGA/vNdGk=; Domain=.campbelltown.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:44 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiIyYWIyYTRjNC1mMjdlLTQ3ZmUtODYyNy1mMzFkZjQ3MzMzNGEiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjIwLTIyICBDYW1kZW4gUm9hZCwgQ0FNUEJFTExUT1dOIE5TVyAyNTYwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6MjguMjIxMjQzLCJMYXRMb24iOlstMzQuMDcyNTYwOTM1NDI2NywxNTAuODA3MzA4ODUxNzAxXX1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices 07c6a7a3af",
+      "method": "GET",
+      "url": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=2ab2a4c4-f27e-47fe-8627-f31df473334a&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"2ab2a4c4-f27e-47fe-8627-f31df473334a\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "721",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:44 GMT",
+        "set-cookie": "ASP.NET_SessionId=dtz5zp5x0upwtrgzw3cbl4rd; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=9, origin; dur=297, ak_p; desc=\"1790185484550_1752388118_71787096_30682_14881_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy01XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVHVlIDI5LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUdWUgMjkvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBncmVlbi13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlR3JlZW4gV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUdWUgNi8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSB3YXN0ZS1jYWxlbmRhciBkYXRlLWFwcHJveCBpdGVtLTNcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VXYXN0ZSBDYWxlbmRhciAtIFpvbmUgQlx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VZb3VyIHdhc3RlIGNhbGVuZGFyIGlzIG5vdyBhdmFpbGFibGUgb25saW5lIGFuZCB0aHJvdWdoIHRoZSBNeSBXYXN0ZSBCaW4gYXBwLCB3aGljaCB5b3UgY2FuIGRvd25sb2FkIHRvIHlvdXIgbW9iaWxlIGRldmljZS5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cImh0dHBzOi8vd3d3LmNhbXBiZWxsdG93bi5uc3cuZ292LmF1L1NlcnZpY2VzLWFuZC1GYWNpbGl0aWVzL1dhc3RlLWFuZC1SZWN5Y2xpbmcvV2FzdGUtQ2FsZW5kYXItYW5kLU15LVdhc3RlLUJpbi1hcHBcIiB0YXJnZXQ9XCJibGFua1wiXHUwMDNlQ2xpY2sgaGVyZSB0byB2aWV3IHlvdXIgY2FsZW5kYXIgYW5kIHRvIGxlYXJuIG1vcmUgYWJvdXQgdGhlIE15IFdhc3RlIEJpbiBhcHAuXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgXHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBrZXJic2lkZS1jbGVhbi11cCBkYXRlLWFwcHJveCBpdGVtLTRcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VLZXJic2lkZSBjbGVhbiB1cCAtIFR1ZXNkYXlzXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVlvdSBtdXN0IGJvb2sgYSBjbGVhbiB1cCBvbmxpbmUgb3IgY2FsbCB1cyBvbiAwMiA0NjQ1IDQwMDAgYmVmb3JlIHlvdSBwdXQgYW55IGl0ZW1zIG9uIHRoZSBrZXJic2lkZS4gXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy5jYW1wYmVsbHRvd24ubnN3Lmdvdi5hdS9TZXJ2aWNlcy1hbmQtRmFjaWxpdGllcy9XYXN0ZS1hbmQtUmVjeWNsaW5nL0dvdC1idWxreS1pdGVtcy1ib29rLWEta2VyYnNpZGUtY2xlYW4tdXBcIiB0YXJnZXQ9XCJibGFua1wiXHUwMDNlQm9vayBhIGNsZWFuIHVwIG9ubGluZVx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

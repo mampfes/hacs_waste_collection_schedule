@@ -1,6 +1,8 @@
-# Lund
+# Lund Waste Collection
 
-Support for schedules provided by [lund.se](https://lund.se/).
+Support for schedules provided by [Lund Waste Collection](https://eservice431601.lund.se).
+
+Source for Lund waste collection services, Sweden.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: lund_se
       args:
-        street_address: STREET ADDRESS
+        street_address: STREET_ADDRESS
 ```
 
 ### Configuration Variables
@@ -17,18 +19,16 @@ waste_collection_schedule:
 **street_address**  
 *(string) (required)*
 
-
-### How to get the street address
-
-1. Go to <https://lund.se/bygga-och-bo/avfall-och-atervinning/nar-toms-mitt-karl> and search your address below Tömningsschema.
-2. Use exactly the address that is displayed in the search result.
-
 ## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
-   - name: lund_se
+    - name: lund_se
       args:
-        street_address: Annedalsvägen 2 B, LUND (39037)
+        street_address: "Lokf\xF6raregatan 7, LUND (19120)"
 ```
+
+## How to get the source arguments
+
+Enter your street address as the provider's own address search lists it; the building id in brackets, e.g. 'Lokföraregatan 7, LUND (19120)', skips the search.

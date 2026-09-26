@@ -1,0 +1,79 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 518ca6da46",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=2758+August+Rd%2C+Johns+Island%2C+SC+29455&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"2758 August Rd, Johns Island, SC 29455\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:37 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "232",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"254affcc\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "EXPIRED",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMjc1OCBBdWd1c3QgUmQsIEpvaG5zIElzbGFuZCwgU291dGggQ2Fyb2xpbmEsIDI5NDU1IiwibG9jYXRpb24iOnsieCI6LTgwLjA2MDkyNjAwNTI3MywieSI6MzIuNzQ0MTI0NDg2NDU4fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjotODAuMDYxOTI2MDA1MjczLCJ5bWluIjozMi43NDMxMjQ0ODY0NTgsInhtYXgiOi04MC4wNTk5MjYwMDUyNzMsInltYXgiOjMyLjc0NTEyNDQ4NjQ1OH19XX0="
+    },
+    {
+      "key": "GET https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/10/query 4b07381752",
+      "method": "GET",
+      "url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/10/query",
+      "final_url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/10/query?outFields=DAY&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.060926005273%2C+%22y%22%3A+32.744124486458%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.060926005273, \\\"y\\\": 32.744124486458}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"DAY\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "public, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "Expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "ETag": "\"b092d2c6\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET, ARR/3.0, ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:06:35 GMT",
+        "Content-Length": "144"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiREFZIiwiZmllbGRBbGlhc2VzIjp7IkRBWSI6IkRBWSJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiREFZIiwibGVuZ3RoIjoyNTV9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiREFZIjoiV0VETkVTREFZIn19XX0="
+    },
+    {
+      "key": "GET https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/11/query 4b07381752",
+      "method": "GET",
+      "url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/11/query",
+      "final_url": "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer/11/query?outFields=DAY&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.060926005273%2C+%22y%22%3A+32.744124486458%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.060926005273, \\\"y\\\": 32.744124486458}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"DAY\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "public, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "Expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "ETag": "\"7e4b769b\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET, ARR/3.0, ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:06:36 GMT",
+        "Content-Length": "143"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiREFZIiwiZmllbGRBbGlhc2VzIjp7IkRBWSI6IkRBWSJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiREFZIiwibGVuZ3RoIjo1MH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJEQVkiOiJXRURORVNEQVkifX1dfQ=="
+    }
+  ]
+}

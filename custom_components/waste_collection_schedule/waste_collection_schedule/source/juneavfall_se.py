@@ -1,64 +1,57 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Jönköping - June Avfall & Miljö"
-DESCRIPTION = "Source for June Avfall & Miljö waste collection."
-URL = "https://www.juneavfall.se"
-TEST_CASES = {
-    "Storgatan 12": {"street_address": "Storgatan 12, Huskvarna"},
-    "Smedjegatan 20": {"street_address": "Smedjegatan 20, Jönköping"},
-    "Västra Ubbarp 20, Barnarp": {"street_address": "Västra Ubbarp 20, Barnarp"},
-}
+_API_URL = "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup"
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+@final
+class Source(BaseSource):
+    TITLE = "Jönköping - June Avfall & Miljö"
+    DESCRIPTION = "Source for June Avfall & Miljö waste collection."
+    URL = "https://www.juneavfall.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.OTHER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        r = requests.post(
-            "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SearchAdress",
-            {"searchText": self._street_address},
-        )
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Storgatan 12": {"street_address": "Storgatan 12, Huskvarna"},
+        "Smedjegatan 1": {"street_address": "Smedjegatan 1, Jönköping"},
+        "Västra Ubbarp 20": {"street_address": "Västra Ubbarp 20, Jönköping"},
+    }
 
-        address_data = r.json()
-        address = None
-        if address_data["Succeeded"] is True:
-            if len(address_data["Buildings"]) > 0:
-                address = address_data["Buildings"][0]
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"street_address": "Ingen gata 999"},
+    }
 
-        if address is None:
-            raise SourceArgumentNotFound("street_address", self._street_address)
+    PARAMS = (street_address("street_address"),)
 
-        params = {"address": address}
-        r = requests.get(
-            "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/GetWastePickupSchedule",
-            params=params,
-        )
-        r.raise_for_status()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as the provider's own address search lists "
+            "it, including the locality."
+        ),
+    }
 
-        data = r.json()
-
-        entries = []
-        for item in data["RhServices"]:
-            waste_type = item["WasteType"]
-            icon = "mdi:trash-can"
-            if waste_type == "Matavfall":
-                icon = "mdi:leaf"
-            next_pickup = item["NextWastePickup"]
-            if next_pickup.startswith("v"):
-                week_str, _, year_str = next_pickup[1:].split()
-                next_pickup_date = datetime.strptime(
-                    # W=weeknum, 1=Monday
-                    f"{year_str}-W{week_str}-1",
-                    "%G-W%V-%u",
-                ).date()
-            else:
-                next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
-
-        return entries
+    retrieve = EdpFutureWebRetriever(_API_URL)
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )

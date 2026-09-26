@@ -17,7 +17,7 @@ ICON_MAP = {
     "Communal dry recycling bin": Icons.RECYCLING,
     "Small kitchen waste box": Icons.BIO_KITCHEN,
     "Large brown kitchen waste box": Icons.BIO_KITCHEN,
-    "Reuseable garden waste sack": Icons.GARDEN,
+    "Reuseable garden waste sack": Icons.GARDEN,  # codespell:ignore reuseable
     "Household refuse sack": Icons.GENERAL_WASTE,
     "Refuse skip": Icons.COMMERCIAL,
     "Food waste recycling": Icons.BIO_KITCHEN,

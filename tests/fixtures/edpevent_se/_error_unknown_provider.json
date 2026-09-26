@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'service_provider' with the value 'nowhere', you may want to use one of the following: ['skelleftea', 'boden', 'ssam', 'uppsalavatten', 'boras', 'roslagsvatten', 'kretslopp-sydost', 'marks-kommun', 'lycksele-kommun', 'kiruna-kommun', 'lidkopings-kommun', 'stenungsund-kommun', 'orust-kommun', 'ljungby-kommun', 'orebro-kommun', 'herrljunga-vargarda', 'vafabmiljo', 'nvoa']"
+  }
+}

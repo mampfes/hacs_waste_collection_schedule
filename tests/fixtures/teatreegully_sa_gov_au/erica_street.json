@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates ba7963e7af",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=4+Erica+Street%2C+Tea+Tree+Gully%2C+South+Australia&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"4 Erica Street, Tea Tree Gully, South Australia\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:31 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "237",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"9a5e37a7\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiNCBFcmljYSBTdHJlZXQsIFRlYSBUcmVlIEd1bGx5LCBBZGVsYWlkZSwgU291dGggQXVzdHJhbGlhLCA1MDkxIiwibG9jYXRpb24iOnsieCI6MTM4LjczMjA2MzIzODg1LCJ5IjotMzQuODE5NDAzNzkxMjV9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOjEzOC43MzEwNjMyMzg4NSwieW1pbiI6LTM0LjgyMDQwMzc5MTI1LCJ4bWF4IjoxMzguNzMzMDYzMjM4ODUsInltYXgiOi0zNC44MTg0MDM3OTEyNX19XX0="
+    },
+    {
+      "key": "GET https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4/query c43613a008",
+      "method": "GET",
+      "url": "https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4/query",
+      "final_url": "https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4/query?outFields=Collection%2CWeek&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+138.73206323885%2C+%22y%22%3A+-34.81940379125%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 138.73206323885, \\\"y\\\": -34.81940379125}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Collection,Week\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:32 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "302",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Wed, 10 Aug 2022 18:50:06 GMT",
+        "ETag": "sd1739_748528993",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h09c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080732Z-16dd9bcdcdbp87z2hC1DTT4tbn00000005ug0000000029mq",
+        "x-esri-query-request-units": "3",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=3;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "5b2bb7e18b8331b3",
+        "X-ArcGIS-Instance": "wziaf7inz00000I",
+        "Request-Context": "appId=cid-v1:eccdbd2e-a85f-4676-a932-e967891b0fc6",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080732Z-16dd9bcdcdbp87z2hC1DTT4tbn00000005ug0000000029mq",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "PRIVATE_NOSTORE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6Ikdsb2JhbElEIiwiZ2VvbWV0cnlUeXBlIjoiZXNyaUdlb21ldHJ5UG9seWdvbiIsInNwYXRpYWxSZWZlcmVuY2UiOnsid2tpZCI6MTAyMTAwLCJsYXRlc3RXa2lkIjozODU3fSwiZmllbGRzIjpbeyJuYW1lIjoiQ29sbGVjdGlvbiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDb2xsZWN0aW9uIERheSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6IldlZWsiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IkNvbGxlY3Rpb24iOiJUaHVyc2RheSIsIldlZWsiOiJCIn19XX0="
+    }
+  ]
+}

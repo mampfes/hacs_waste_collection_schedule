@@ -1,45 +1,47 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Palmerston North City Council"
-DESCRIPTION = (
-    "Source for Palmerston North City Council rubbish and recycling collections."
-)
-URL = "https://www.pncc.govt.nz/Services/Rubbish-and-recycling/Palmy-Collections/Rubbish-and-recycling-days"
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter your street address as it appears in the search on the Palmerston "
-        "North City Council 'Rubbish and recycling days' page, for example "
-        "'8 Swansea Street Palmerston North'."
+
+@final
+class Source(BaseSource):
+    TITLE = "Palmerston North City Council"
+    DESCRIPTION = (
+        "Source for Palmerston North City Council rubbish and recycling collections."
     )
-}
-TEST_CASES = {
-    "8 Swansea Street, Hokowhitu": {"address": "8 Swansea Street Palmerston North"},
-    "1 Broadway Avenue": {"address": "1 Broadway Avenue Palmerston North"},
-}
+    URL = "https://www.pncc.govt.nz/Services/Rubbish-and-recycling/Palmy-Collections/Rubbish-and-recycling-days"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-ICON_MAP = {
-    "rubbish": Icons.GENERAL_WASTE,
-    "wheelie bin": Icons.RECYCLING,
-    "recycling": Icons.RECYCLING,
-    "glass": Icons.GLASS,
-}
+    TEST_CASES: ClassVar[dict] = {
+        "8 Swansea Street, Hokowhitu": {"address": "8 Swansea Street Palmerston North"},
+        "1 Broadway Avenue": {"address": "1 Broadway Avenue Palmerston North"},
+    }
 
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.pncc.govt.nz",
-    headers={"Accept": "application/json"},
-    use_curl_cffi=True,
-    icon_keywords=ICON_MAP,
-)
+    PARAMS = (street_address(field="address"),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your street address as it appears in the search on the "
+        "Palmerston North City Council 'Rubbish and recycling days' page, for "
+        "example '8 Swansea Street Palmerston North'."
+    }
 
-class Source:
-    def __init__(self, address: str):
-        self._address = " ".join(address.split())
-        self._client = OpenCitiesClient(_CONFIG)
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GLASS]
 
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self._address)
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.pncc.govt.nz",
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={"Glass Crate": wt.GLASS, "Wheelie Bin": wt.RECYCLABLES},
+    )

@@ -584,9 +584,17 @@ def generate_base_source_doc(file: str, source_cls: Any) -> None:
     The text is fully derived from the source class metadata via
     render_source_doc(). Legacy (module-level) sources are not handled here;
     they keep their hand-written doc file.
+
+    A doc that already carries a generated ``service`` section (patched later by
+    a per-source ``update_*`` function, e.g. edpevent_se) is hand-written around
+    that section and must not be overwritten, or the patch step cannot find it.
     """
     md = render_source_doc(file, source_cls)
     out_path = DOC_SOURCE_DIR / f"{file}.md"
+    if out_path.exists() and Section("service").start in out_path.read_text(
+        encoding="utf-8"
+    ):
+        return
     with open(out_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(md)
 

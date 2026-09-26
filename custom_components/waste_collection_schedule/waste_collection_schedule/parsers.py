@@ -654,8 +654,9 @@ class HtmlParser(Parser[list[Tag]]):
                       parse = parsers.HtmlParser("tr", skip=1, require=["table.bins"])
         from_json_key: When set, the HTML to parse is read from a field of a
                   JSON response instead of ``response.text`` — pass the key (or a
-                  path of keys) holding the HTML string. This covers the common
-                  pattern of an API returning rendered HTML inside JSON, e.g. the
+                  path of keys, an int indexing a list) holding the HTML
+                  string. This covers the common pattern of an API returning
+                  rendered HTML inside JSON, e.g. the
                   OCAPI ``wasteservices`` endpoint many AU councils use::
 
                       parse = parsers.HtmlParser("article", from_json_key="responseContent")
@@ -669,6 +670,13 @@ class HtmlParser(Parser[list[Tag]]):
                           "tr", skip=1,
                           from_json_key=("integration", "transformed", "rows_data", "0", "UpcomingCollections"),
                       )
+
+                  An ``int`` in the path indexes a JSON list. An empty list at
+                  that step is an empty result (no elements), not an error, so a
+                  lookup that answers ``[]`` for an unknown address reaches
+                  ``RAISE_ON_EMPTY`` instead of an ``IndexError``::
+
+                      parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
     """
 
     def __init__(
@@ -676,7 +684,7 @@ class HtmlParser(Parser[list[Tag]]):
         selector: str,
         skip: int = 0,
         require: "list[str] | None" = None,
-        from_json_key: "str | tuple[str, ...] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.selector = selector
         self.skip = skip
@@ -700,6 +708,8 @@ class HtmlParser(Parser[list[Tag]]):
                 else self.from_json_key
             )
             for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
                 data = data[key]
             markup = str(data)
         else:
@@ -764,6 +774,12 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             dates: the branches must agree on their record shape, because one
             transformer reads them both. Text the callable rejects is skipped,
             on the same reasoning as a block missing a half.
+        all_labels: read every element ``label`` matches in the block rather
+            than the first, one row each, for a page that lists every round
+            collected on a date under that date's heading.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as
+            :class:`HtmlParser` does.
     """
 
     def __init__(
@@ -775,6 +791,8 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         date_after: "str | None" = None,
         date_pattern: "str | None" = None,
         parse_date: "Callable[[str], datetime.date] | None" = None,
+        all_labels: bool = False,
+        from_json_key: "str | tuple[str, ...] | None" = None,
     ):
         if (date is None) == (date_after is None):
             raise ValueError("HtmlLabelledDates needs exactly one of date/date_after")
@@ -784,6 +802,33 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         self.date_after = date_after
         self.date_pattern = re.compile(date_pattern) if date_pattern else None
         self.parse_date = parse_date
+        self.all_labels = all_labels
+        self.from_json_key = from_json_key
+
+    def _markup(self, response: Any) -> str:
+        if self.from_json_key is None:
+            return response.text
+        data: Any = response if isinstance(response, (dict, list)) else response.json()
+        keys = (
+            (self.from_json_key,)
+            if isinstance(self.from_json_key, str)
+            else self.from_json_key
+        )
+        for key in keys:
+            data = data[key]
+        return str(data)
+
+    def _labels(self, element: Tag) -> "list[str]":
+        found = (
+            element.select(self.label)
+            if self.all_labels
+            else [element.select_one(self.label)]
+        )
+        return [
+            text
+            for text in (tag.get_text(strip=True) for tag in found if tag is not None)
+            if text
+        ]
 
     def _date_text(self, element: Tag) -> "str | None":
         if self.date is not None:
@@ -797,26 +842,25 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[tuple[Any, str]]":
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(self._markup(response), "html.parser")
         rows: list[tuple[Any, str]] = []
         for element in soup.select(self.block):
-            named = element.select_one(self.label)
-            name = named.get_text(strip=True) if named is not None else ""
-            text = self._date_text(element) if name else None
-            if not name or not text:
+            names = self._labels(element)
+            text = self._date_text(element) if names else None
+            if not names or not text:
                 continue
             if self.date_pattern is not None:
                 match = self.date_pattern.search(text)
                 if match is None:
                     continue
                 text = match.group(1) if match.groups() else match.group(0)
-            if self.parse_date is None:
-                rows.append((text, name))
-                continue
-            try:
-                rows.append((self.parse_date(text), name))
-            except (ValueError, TypeError):
-                continue
+            date_value: Any = text
+            if self.parse_date is not None:
+                try:
+                    date_value = self.parse_date(text)
+                except (ValueError, TypeError):
+                    continue
+            rows.extend((date_value, name) for name in names)
         return rows
 
 

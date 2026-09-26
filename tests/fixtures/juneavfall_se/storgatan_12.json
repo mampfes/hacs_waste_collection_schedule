@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SearchAdress 9637596d8e",
+      "method": "POST",
+      "url": "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SearchAdress",
+      "final_url": "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Storgatan 12, Huskvarna\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "66",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:41 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "volt-adc",
+        "strict-transport-security": "max-age=31536000",
+        "x-envoy-upstream-service-time": "233",
+        "x-volterra-location": "pa2-par"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJTdG9yZ2F0YW4gMTIsIEh1c2t2YXJuYSAoMTY5MTUpIl19"
+    },
+    {
+      "key": "GET https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/GetWastePickupSchedule 012f6cc617",
+      "method": "GET",
+      "url": "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/GetWastePickupSchedule?address=Storgatan+12%2C+Huskvarna+%2816915%29",
+      "body": "{\"params\":[[\"address\",\"Storgatan 12, Huskvarna (16915)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "3560",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:41 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "volt-adc",
+        "strict-transport-security": "max-age=31536000",
+        "x-envoy-upstream-service-time": "143",
+        "x-volterra-location": "pa2-par"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjgiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiRk5JIEvDpHJsIDEiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik3DpW5kYWcgasOkbW4gdmVja2EsIGhlbMOlciIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik3DpW5kYWcgasOkbW4gdmVja2EsIGhlbMOlciIsIkJpblR5cGUiOnsiQ29kZSI6IkZOSTM3MDEiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkZOSSAxIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiS8OkcmwsIDM3MCBMIGZ5cmZhY2suIEvDpHJsIDEuIFZhciAxNDplIGRhZy4gU23DpWh1cyIsIkJpblR5cGUiOnsiQ29kZSI6IkZOSTM3MDEiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkZOSSAxIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlQuIFZhciAxNDplIGRhZywgaGVsw6VyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDIwIiwiV2FzdGVUeXBlIjoiRk5JIEvDpHJsIDEiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSsOWS8OEMzcwRkYxMjYiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiS8OkcmwsIDM3MCBMIGZ5cmZhY2suIEvDpHJsIDEuIFZhciAxNDplIGRhZy4gU23DpWh1cyIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6MTEzNjA5LCJEZXNjcmlwdGlvbiI6IkvDpHJsLCAzNzAgTCBmeXJmYWNrLiBLw6RybCAxLiBWYXIgMTQ6ZSBkYWcuIFNtw6VodXMiLCJTdGFydERhdGUiOiJcL0RhdGUoMTUxNDc2MTIwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxNjkxNSJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTEwLTEyIiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTMsIldhc3RlVHlwZSI6IkZOSSBLw6RybCAyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIGrDpG1uIHZhciA0OmUgdmVja2Egc3RhcnR2ZWNrYSAyLCBoZWzDpXIiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJNw6VuZGFnIGrDpG1uIHZhciA0OmUgdmVja2Egc3RhcnR2ZWNrYSAyLCBoZWzDpXIiLCJCaW5UeXBlIjp7IkNvZGUiOiJGTkkzNzAyIiwiU2l6ZSI6MzcwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJGTkkgMiJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IkvDpHJsLCAzNzAgTCBmeXJmYWNrLiBLw6RybCAyLiBWYXIgNDplIHZlY2thLiBTbcOlaHVzIiwiQmluVHlwZSI6eyJDb2RlIjoiRk5JMzcwMiIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiRk5JIDIifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTMsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVC4gVmFyIDQ6ZSB2ZWNrYSwgaGVsw6VyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDQwIiwiV2FzdGVUeXBlIjoiRk5JIEvDpHJsIDIiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSsOWS8OEMzcwRkYyMTMiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiS8OkcmwsIDM3MCBMIGZ5cmZhY2suIEvDpHJsIDIuIFZhciA0OmUgdmVja2EuIFNtw6VodXMiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjE2MDkzNiwiRGVzY3JpcHRpb24iOiJLw6RybCwgMzcwIEwgZnlyZmFjay4gS8OkcmwgMi4gVmFyIDQ6ZSB2ZWNrYS4gU23DpWh1cyIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNTE0NzYxMjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjE2OTE1In0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDciLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoxNywiV2FzdGVUeXBlIjoiVHLDpGRnw6VyZHNhdmZhbGwiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik9uc2RhZyB1ZGRhIHZlY2thLCB0csOkZGfDpXJkIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiT25zZGFnIHVkZGEgdmVja2EsIHRyw6RkZ8OlcmQiLCJCaW5UeXBlIjp7IkNvZGUiOiJLw4QzNzAiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiS8OkcmwgMzcwIEwsIHRyw6RkZ8OlcmRzYXZmYWxsLiBWYXIgMTQ6ZSBkYWciLCJCaW5UeXBlIjp7IkNvZGUiOiJLw4QzNzAiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjE3LCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlQuIFZhciAxNDplIGRhZywgdHLDpGRnw6VyZCIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlQyMCIsIldhc3RlVHlwZSI6IlRyw6RkZ8OlcmRzYXZmYWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IkrDlkvDhDM3MFRSMTciLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiS8OkcmwgMzcwIEwsIHRyw6RkZ8OlcmRzYXZmYWxsLiBWYXIgMTQ6ZSBkYWciLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKDE3NzYwMzEyMDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoMTc5NjUxMTYwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIgKDEzLzQgLSA2LzEyKSIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjoxODAzNTQsIkRlc2NyaXB0aW9uIjoiS8OkcmwgMzcwIEwsIHRyw6RkZ8OlcmRzYXZmYWxsLiBWYXIgMTQ6ZSBkYWciLCJTdGFydERhdGUiOiJcL0RhdGUoMTUxNDc2MTIwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxNjkxNSJ9XX0="
+    }
+  ]
+}

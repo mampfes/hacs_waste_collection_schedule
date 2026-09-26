@@ -1,6 +1,8 @@
-# Abfallkalender Erlensee
+# Erlensee
 
-Support for schedules provided by [Abfallkalender Erlensee](https://sperrmuell.erlensee.de/), serving Stadt Erlensee, Hessen, Germany.
+Support for schedules provided by [Erlensee](https://sperrmuell.erlensee.de/).
+
+Source for waste collection in Erlensee, Hessen.
 
 ## Configuration via configuration.yaml
 
@@ -9,15 +11,13 @@ waste_collection_schedule:
   sources:
     - name: sperrmuell_erlensee_de
       args:
-        street: STREET_NAME
+        street: STREET
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
-
-The name of the street. Must match exactly one of the options shown in the dropdown on the website.
 
 ## Example
 
@@ -29,6 +29,6 @@ waste_collection_schedule:
         street: Am Rathaus
 ```
 
-## How to find the correct street name
+## How to get the source arguments
 
-Visit [https://sperrmuell.erlensee.de/?type=reminder](https://sperrmuell.erlensee.de/?type=reminder) and look at the street dropdown to find the exact name for your street.
+Go to https://sperrmuell.erlensee.de/ and look up the exact street name in the dropdown.

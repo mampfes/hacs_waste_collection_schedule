@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 07505e7331",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=1061+Haupapa+Street%2C+Rotorua%2C+New+Zealand&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"1061 Haupapa Street, Rotorua, New Zealand\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:41:50 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "229",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"a289321\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTA2MSBIYXVwYXBhIFN0cmVldCwgUm90b3J1YSwgQmF5IG9mIFBsZW50eSwgMzAxMCIsImxvY2F0aW9uIjp7IngiOjE3Ni4yNTQ0NzM2MjM1NTIsInkiOi0zOC4xMzU2OTMyNjAwNzh9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOjE3Ni4yNTM0NzM2MjM1NTIsInltaW4iOi0zOC4xMzY2OTMyNjAwNzgsInhtYXgiOjE3Ni4yNTU0NzM2MjM1NTIsInltYXgiOi0zOC4xMzQ2OTMyNjAwNzh9fV19"
+    },
+    {
+      "key": "GET https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query f1b7b76303",
+      "method": "GET",
+      "url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query",
+      "final_url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query?outFields=Collection&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+176.254473623552%2C+%22y%22%3A+-38.135693260078%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 176.254473623552, \\\"y\\\": -38.135693260078}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Collection\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "257",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"2f73812\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|7FX-R8nT-VelftWqCMTOwQ==|tXe9g3DejBZsEb39szIUoEC6JBnm0J24vQBbzE56; Max-Age=60; Expires=Sat, 26 Sep 2026 08:42:51 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:41:51 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTmFtZSIsImZpZWxkQWxpYXNlcyI6eyJDb2xsZWN0aW9uIjoiQ29sbGVjdGlvbiJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJDb2xsZWN0aW9uIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbGxlY3Rpb24iLCJsZW5ndGgiOjIwMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJDb2xsZWN0aW9uIjoiXHUwMDNjdWxcdTAwM2VcdTAwM2NsaVx1MDAzZVx1MDAzY2JcdTAwM2VSdWJiaXNoIG9ubHlcdTAwM2MvYlx1MDAzZVx1MDAzY2JyL1x1MDAzZVdlZG5lc2RheSAzMCBTZXAgMjAyNlx1MDAzYy9saVx1MDAzZVx1MDAzY2xpXHUwMDNlXHUwMDNjYlx1MDAzZVJ1YmJpc2ggYW5kIHJlY3ljbGluZ1x1MDAzYy9iXHUwMDNlXHUwMDNjYnIvXHUwMDNlV2VkbmVzZGF5IDA3IE9jdCAyMDI2XHUwMDNjL2xpXHUwMDNlXHUwMDNjL3VsXHUwMDNlIFx1MDAzY3BcdTAwM2UmbmJzcDsmbmJzcDsoV2VlayAxIEN5Y2xlKVx1MDAzYy9wXHUwMDNlIn19XX0="
+    }
+  ]
+}

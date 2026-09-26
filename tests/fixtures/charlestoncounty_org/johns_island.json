@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 518ca6da46",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=2758+August+Rd%2C+Johns+Island%2C+SC+29455&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"2758 August Rd, Johns Island, SC 29455\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:41 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "232",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"254affcc\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "EXPIRED",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMjc1OCBBdWd1c3QgUmQsIEpvaG5zIElzbGFuZCwgU291dGggQ2Fyb2xpbmEsIDI5NDU1IiwibG9jYXRpb24iOnsieCI6LTgwLjA2MDkyNjAwNTI3MywieSI6MzIuNzQ0MTI0NDg2NDU4fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjotODAuMDYxOTI2MDA1MjczLCJ5bWluIjozMi43NDMxMjQ0ODY0NTgsInhtYXgiOi04MC4wNTk5MjYwMDUyNzMsInltYXgiOjMyLjc0NTEyNDQ4NjQ1OH19XX0="
+    },
+    {
+      "key": "GET https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0/query e9b5e12b66",
+      "method": "GET",
+      "url": "https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0/query",
+      "final_url": "https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0/query?outFields=PickupDate&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.060926005273%2C+%22y%22%3A+32.744124486458%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.060926005273, \\\"y\\\": 32.744124486458}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"PickupDate\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:41 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "275",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Fri, 25 Sep 2026 19:46:34 GMT",
+        "ETag": "sd4079_-1128712531",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h00c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080641Z-16dd9bcdcdbfqfzdhC1DTTr5r80000000640000000002fqr",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=31;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "fe39679edb097fca",
+        "X-ArcGIS-Instance": "5yk64u4ec00000C",
+        "Request-Context": "appId=cid-v1:6959d3e4-1b50-49aa-a614-ab11f59afd47",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080641Z-16dd9bcdcdbfqfzdhC1DTTr5r80000000640000000002fqr",
+        "X-Cache": "CONFIG_NOCACHE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6Ikdsb2JhbElEIiwiZ2VvbWV0cnlUeXBlIjoiZXNyaUdlb21ldHJ5UG9seWdvbiIsInNwYXRpYWxSZWZlcmVuY2UiOnsid2tpZCI6MjI3MywibGF0ZXN0V2tpZCI6MjI3M30sImZpZWxkcyI6W3sibmFtZSI6IlBpY2t1cERhdGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUGlja3VwRGF0ZSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjI1NSwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiUGlja3VwRGF0ZSI6Ik9DVE9CRVIgNiJ9fV19"
+    }
+  ]
+}

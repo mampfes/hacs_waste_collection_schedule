@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 30c00da0e1",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=1015+Manks+Rd%2C+Dalmore+Vic&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"1015 Manks Rd, Dalmore Vic\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:27 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "227",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"50b7cb40\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTAxNSBNYW5rcyBSb2FkLCBEYWxtb3JlLCBDYXJkaW5pYSwgVmljdG9yaWEsIDM5ODEiLCJsb2NhdGlvbiI6eyJ4IjoxNDUuNDMzOTExMjM2NjcxLCJ5IjotMzguMTc1MzIxMjI1MTU5fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxNDUuNDMyOTExMjM2NjcxLCJ5bWluIjotMzguMTc2MzIxMjI1MTU5LCJ4bWF4IjoxNDUuNDM0OTExMjM2NjcxLCJ5bWF4IjotMzguMTc0MzIxMjI1MTU5fX1dfQ=="
+    },
+    {
+      "key": "GET https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query 9605f636c3",
+      "method": "GET",
+      "url": "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query",
+      "final_url": "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+145.433911236671%2C+%22y%22%3A+-38.175321225159%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 145.433911236671, \\\"y\\\": -38.175321225159}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:28 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "601",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Tue, 22 Sep 2026 00:31:53 GMT",
+        "ETag": "sd1162_-290445184",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h03c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080728Z-16dd9bcdcdb7njhfhC1DTTwzac00000005z00000000041q7",
+        "x-esri-query-request-units": "3",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=3;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "f7407db0b83c90cf",
+        "X-ArcGIS-Instance": "2hyjso3px00000Q",
+        "Request-Context": "appId=cid-v1:76c62117-7333-4258-8b6f-ed44d6def619",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080728Z-16dd9bcdcdb7njhfhC1DTTwzac00000005z00000000041q7",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "PRIVATE_NOSTORE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6IkZJRCIsInVuaXF1ZUlkRmllbGQiOnsibmFtZSI6IkZJRCIsImlzU3lzdGVtTWFpbnRhaW5lZCI6dHJ1ZX0sImdsb2JhbElkRmllbGROYW1lIjoiIiwiZ2VvbWV0cnlQcm9wZXJ0aWVzIjp7InNoYXBlQXJlYUZpZWxkTmFtZSI6IlNoYXBlX19BcmVhIiwic2hhcGVMZW5ndGhGaWVsZE5hbWUiOiJTaGFwZV9fTGVuZ3RoIiwidW5pdHMiOiJlc3JpTWV0ZXJzIn0sImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjEwMjEwMCwibGF0ZXN0V2tpZCI6Mzg1N30sImZpZWxkcyI6W3sibmFtZSI6IkZJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlT0lEIiwiYWxpYXMiOiJGSUQiLCJzcWxUeXBlIjoic3FsVHlwZUludGVnZXIiLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiZ3JuX2RheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJncm5fZGF5Iiwic3FsVHlwZSI6InNxbFR5cGVOVmFyY2hhciIsImxlbmd0aCI6NTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJncm5fd2Vla3MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZUludGVnZXIiLCJhbGlhcyI6Imdybl93ZWVrcyIsInNxbFR5cGUiOiJzcWxUeXBlSW50ZWdlciIsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJncm5fc3RhcnQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiZ3JuX3N0YXJ0Iiwic3FsVHlwZSI6InNxbFR5cGVOVmFyY2hhciIsImxlbmd0aCI6MTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJyZWNfZGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6InJlY19kYXkiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjoyMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6InJlY193ZWVrcyIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoicmVjX3dlZWtzIiwic3FsVHlwZSI6InNxbFR5cGVJbnRlZ2VyIiwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6InJlY19zdGFydCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJyZWNfc3RhcnQiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjoxMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6InJ1Yl9kYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoicnViX2RheSIsInNxbFR5cGUiOiJzcWxUeXBlTlZhcmNoYXIiLCJsZW5ndGgiOjUwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoicnViX3dlZWtzIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVJbnRlZ2VyIiwiYWxpYXMiOiJydWJfd2Vla3MiLCJzcWxUeXBlIjoic3FsVHlwZUludGVnZXIiLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoicnViX3N0YXJ0IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6InJ1Yl9zdGFydCIsInNxbFR5cGUiOiJzcWxUeXBlTlZhcmNoYXIiLCJsZW5ndGgiOjUwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoicmVjX25hbWUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoicmVjX25hbWUiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjoxMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6Imdybl9uYW1lIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6Imdybl9uYW1lIiwic3FsVHlwZSI6InNxbFR5cGVOVmFyY2hhciIsImxlbmd0aCI6MTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJOb3RlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6Ik5vdGUiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjoyNTQsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJTaGFwZV9fQXJlYSIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIiwiYWxpYXMiOiJTaGFwZV9fQXJlYSIsInNxbFR5cGUiOiJzcWxUeXBlRmxvYXQiLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiU2hhcGVfX0xlbmd0aCIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIiwiYWxpYXMiOiJTaGFwZV9fTGVuZ3RoIiwic3FsVHlwZSI6InNxbFR5cGVGbG9hdCIsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IkZJRCI6MjYsImdybl9kYXkiOiJNb25kYXkiLCJncm5fd2Vla3MiOjIsImdybl9zdGFydCI6IjIwMTctMDgtMDciLCJyZWNfZGF5IjoiTW9uZGF5IiwicmVjX3dlZWtzIjoyLCJyZWNfc3RhcnQiOiIyMDE3LTA3LTMxIiwicnViX2RheSI6Ik1vbmRheSIsInJ1Yl93ZWVrcyI6MSwicnViX3N0YXJ0IjoiMjAxNy0wNy0zMSIsInJlY19uYW1lIjoiV2VlayAyIiwiZ3JuX25hbWUiOiJXZWVrIDEiLCJOb3RlIjoiICIsIlNoYXBlX19BcmVhIjozMzc2MTAyMTYuNzU3ODEyNSwiU2hhcGVfX0xlbmd0aCI6MTQzMjgwLjIxMDI3NjgxOTc5fX1dfQ=="
+    }
+  ]
+}

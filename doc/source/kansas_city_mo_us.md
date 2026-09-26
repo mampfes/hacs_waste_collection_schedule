@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Kansas City, MO](https://www.kcmo.gov/city-hall/trash).
 
+Source for Kansas City, Missouri trash and recycling collection.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-Full street address including city and state.
 
 ## Example
 
@@ -31,6 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Use your full street address including city, state, and ZIP code (e.g. "4632 Paseo, Kansas City, MO 64110"). The source geocodes the address via the ArcGIS World Geocoder and then queries the city's "Trash Route Boundary" layer to determine your weekly collection day.
-
-Note: Kansas City collects trash and unlimited recycling on the same weekly day, so both are reported together. Holiday-shifted collection dates are not accounted for, since the city's GIS data does not expose holiday schedule information.
+Enter the full street address including city and state (e.g. '4632 Paseo, Kansas City, MO 64110').

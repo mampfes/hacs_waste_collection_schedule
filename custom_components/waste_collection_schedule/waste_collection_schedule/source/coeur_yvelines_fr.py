@@ -157,7 +157,7 @@ class Source:
         entries: list[Collection] = []
         for block in soup.select("div.semaine"):
             title_tag = block.find("h3")
-            periode_tag = block.find("p", class_="periode")
+            periode_tag = block.find("p", class_="periode")  # codespell:ignore periode
             jours_div = block.find("div", class_="jours")
             if not title_tag or not periode_tag or not jours_div:
                 continue

@@ -287,6 +287,7 @@ This source has been successfully tested with the following service providers:
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
+- [Bad Nauheim](/doc/ics/mein_abfallkalender_online.md) / bad-nauheim.de
 - [Bad Soden a.Ts.](/doc/ics/mein_abfallkalender_online.md) / bad-soden.de
 - [Bad Vilbel](/doc/ics/mein_abfallkalender_online.md) / sw-bv.de
 - [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de

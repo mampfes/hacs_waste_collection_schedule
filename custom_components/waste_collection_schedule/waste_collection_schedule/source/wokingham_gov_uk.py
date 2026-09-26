@@ -1,3 +1,5 @@
+import re
+from datetime import date as date_type
 from datetime import datetime
 
 import requests
@@ -48,45 +50,62 @@ class Source:
                 a = item.get("value")
         return a
 
+    @staticmethod
+    def _parse_day_month(text: str):
+        """Parse e.g. 'Thursday 25 December' -> (weekday, day, month) or None."""
+        m = re.search(r"([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)", text)
+        if not m:
+            return None
+        try:
+            weekday = datetime.strptime(m.group(1)[:3], "%a").weekday()
+            month = datetime.strptime(m.group(3)[:3], "%b").month
+            day = int(m.group(2))
+        except ValueError:
+            return None
+        return weekday, day, month
+
+    def parse_revised_schedules(self, txt: str) -> dict:
+        """Return {(day, month): (weekday, day, month)} of rescheduled dates.
+
+        The council publishes holiday adjustments in a table (normal date ->
+        rescheduled date, without a year) above the postcode look-up on the
+        main page. Rows such as "No change" are ignored.
+        """
+        revised: dict = {}
+        soup = BeautifulSoup(txt, "html.parser")
+        for tr in soup.find_all("tr"):
+            tds = tr.find_all("td")
+            if len(tds) < 2:
+                continue
+            normal = self._parse_day_month(tds[0].get_text(" ", strip=True))
+            new = self._parse_day_month(tds[1].get_text(" ", strip=True))
+            if normal is None or new is None:
+                continue
+            if normal[1:] == new[1:]:
+                continue
+            revised[normal[1:]] = new
+        return revised
+
+    @staticmethod
+    def apply_revision(revised: dict, date: date_type) -> date_type:
+        new = revised.get((date.day, date.month))
+        if new is None:
+            return date
+        _, day, month = new
+        year = date.year + (1 if month < date.month else 0)
+        try:
+            return date.replace(year=year, month=month, day=day)
+        except ValueError:
+            return date
+
     def fetch(self):
         s = requests.Session()
 
-        # Attempt to get Christmas & New Year schedule adjustments.
-        # The URL may not exist outside the holiday season; skip gracefully if unavailable.
-        revised_schedules: dict = {}
-        try:
-            r = s.get(
-                "https://www.wokingham.gov.uk/rubbish-and-recycling/christmas-bin-day-changes",
-                timeout=10,
-            )
-            if r.ok:
-                soup = BeautifulSoup(r.content, "html.parser")
-                trs: list = soup.find_all("tr")
-                for tr in trs:
-                    tds: list = tr.find_all("td")
-                    if tds:
-                        revised_schedules.update(
-                            {tds[0].text: tds[1].text.split(" (")[0]}
-                        )
-                # get rid of dates where there is no adjustment
-                revised_schedules = {
-                    k: v for k, v in revised_schedules.items() if v != "Normal"
-                }
-                # reformat dates to make comparison easier
-                revised_schedules = {
-                    datetime.strptime(k, "%A %d %B %Y").strftime(
-                        "%d/%m/%Y"
-                    ): datetime.strptime(v, "%A %d %B %Y").strftime("%d/%m/%Y")
-                    for k, v in revised_schedules.items()
-                }
-        except Exception:
-            pass
-
-        # Now get the regular collection schedule
-
-        # Load page to generate token needed for subsequent query
+        # Load page to generate token needed for subsequent query. The same page
+        # also contains the holiday (e.g. Christmas) schedule adjustments table.
         r = s.get(API_URL)
         form_id = self.get_form_id(r.text)
+        revised_schedules = self.parse_revised_schedules(r.text)
 
         # Perform postcode search to generate token needed for following query
         self._postcode = str(self._postcode.upper().strip().replace(" ", ""))
@@ -128,6 +147,10 @@ class Source:
         )
         soup = BeautifulSoup(r.text, "html.parser")
 
+        # The results page may repeat the adjustments table; merge if present
+        for k, v in self.parse_revised_schedules(r.text).items():
+            revised_schedules.setdefault(k, v)
+
         entries = []
 
         # Extract the collection schedules
@@ -137,22 +160,17 @@ class Source:
             waste_type = card.find("h3").text.split("(")[0].strip()
             waste_date = card.find("span").text.strip().split()[-1]
             try:
-                waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(
-                    "%d/%m/%Y"
-                )
+                date = datetime.strptime(waste_date, "%d/%m/%Y").date()
             except ValueError:
                 # occurs if next collections date shows as "No collection"
                 continue
 
-            # check to see if waste date is impacted by the Christmas & New Year adjustments
-            for item in revised_schedules:
-                if item == waste_date:
-                    waste_date = revised_schedules[item]
-                    break
+            # apply Christmas & New Year (or other holiday) adjustments
+            date = self.apply_revision(revised_schedules, date)
 
             entries.append(
                 Collection(
-                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
+                    date=date,
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type.upper()),
                 )

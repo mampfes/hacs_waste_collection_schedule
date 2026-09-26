@@ -26,7 +26,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
     "de": (
         "Öffnen Sie die Abfuhrkalender-Seite und notieren Sie, welche Route zu Ihrer "
-        "Adresse passt: 'Popůvky (Brno-venkov)' für den Ort selbst oder "
+        "Adresse passt: 'Popůvky (Brno-venkov)' für den Ort selbst oder "  # codespell:ignore passt
         "'Popůvky - chatová oblast' für das Hüttengebiet."
     ),
 }
