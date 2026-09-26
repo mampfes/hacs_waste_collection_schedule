@@ -986,6 +986,30 @@ class TestBartecPublicDashboard:
         )
 
 
+class TestJaduXfpRetriever:
+    FORM = "https://example.gov.uk/xfp/form/1"
+
+    def test_uprn_none_needs_an_address_field(self):
+        from waste_collection_schedule.service.JaduXfp import XfpFormRetriever
+
+        with pytest.raises(ValueError, match="identifying the property"):
+            XfpFormRetriever(self.FORM, page="1", question="q1", uprn=None)
+        # lookup_address alone still picks the property by UPRN.
+        with pytest.raises(ValueError, match="identifying the property"):
+            XfpFormRetriever(
+                self.FORM, page="1", question="q1", uprn=None, lookup_address=True
+            )
+
+    def test_valid_configurations_construct(self):
+        from waste_collection_schedule.service.JaduXfp import XfpFormRetriever
+
+        assert XfpFormRetriever(self.FORM, page="1", question="q1").uprn == "uprn"
+        by_address = XfpFormRetriever(
+            self.FORM, page="1", question="q1", uprn=None, address="address"
+        )
+        assert by_address.lookup_address is True
+
+
 class TestXmlInJsonAndNestedGroups:
     def test_xml_parser_reads_xml_out_of_a_json_field(self):
         from waste_collection_schedule import parsers

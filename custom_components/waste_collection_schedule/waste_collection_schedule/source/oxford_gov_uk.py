@@ -48,6 +48,15 @@ class Source(BaseSource):
 
     PARAMS = (uprn(), postcode())
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Go to https://www.oxford.gov.uk/xfp/form/142 and enter your "
+            "postcode. The UPRN is the option value of your address in the "
+            "address dropdown (browser dev tools); you can also look it up on "
+            "https://www.findmyaddress.co.uk/."
+        ),
+    }
+
     retrieve = XfpFormRetriever(
         "https://www.oxford.gov.uk/xfp/form/142",
         page="12",

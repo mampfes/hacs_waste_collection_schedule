@@ -71,7 +71,8 @@ class XfpFormRetriever(RetrieverFunc):
         question: the address question's field name prefix (``q<hash>``).
         postcode: the ``source.params`` field holding the postcode.
         uprn: the ``source.params`` field holding the UPRN, or ``None`` for a
-            source that identifies the property by ``address`` instead.
+            source that identifies the property by ``address`` instead
+            (``address`` is then required).
         address: the ``source.params`` field holding the start of the address
             as the form lists it, for a source whose users don't know their
             UPRN. Implies ``lookup_address``.
@@ -95,6 +96,13 @@ class XfpFormRetriever(RetrieverFunc):
         landing_url: "str | None" = None,
         timeout: int = 30,
     ):
+        # Without an address field the property is picked by its UPRN, even
+        # with lookup_address, so uprn=None needs address.
+        if uprn is None and address is None:
+            raise ValueError(
+                "XfpFormRetriever needs a field identifying the property: "
+                "set uprn, or address when uprn is None"
+            )
         self.form_url = form_url
         self.page = page
         self.question = question
