@@ -1,12 +1,14 @@
-# South Lanarkshire Council, United Kingdom
+# South Lanarkshire Council
 
-Support for schedules provided by [South Lanarkshire Council](https://wasteservices.southlanarkshire.gov.uk), serving South Lanarkshire, UK.
+Support for schedules provided by [South Lanarkshire Council](https://wasteservices.southlanarkshire.gov.uk).
+
+Source for South Lanarkshire Council waste collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southlanarkshire_gov_uk
       args:
         postcode: POSTCODE
@@ -15,30 +17,23 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**
-*(String) (required)*
+**postcode**  
+*(string) (required)*
 
-Your property's postcode (e.g. `G73 1UR`).
-
-**uprn**
-*(Integer) (required)*
-
-The Unique Property Reference Number (UPRN) for your property (e.g. `484000600`).
+**uprn**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southlanarkshire_gov_uk
       args:
-        postcode: "G73 1UR"
-        uprn: 484000600
+        postcode: G73 2LF
+        uprn: 484129473
 ```
 
 ## How to get the source arguments
 
-1. Go to <https://wasteservices.southlanarkshire.gov.uk/PublicDashboard>.
-2. Your **UPRN** can be found using the [FindMyAddress](https://www.findmyaddress.co.uk/search) or [UPRN.uk](https://uprn.uk) lookup tools - search for your full address and note the UPRN shown.
-
-Alternatively, after entering your postcode on the South Lanarkshire portal and selecting your property, you can inspect the property dropdown option (right-click > Inspect Element) and use the numeric value in the `value=` attribute of the selected `<option>` tag.
+Find your UPRN using FindMyAddress (https://www.findmyaddress.co.uk/search) or UPRN.uk (https://uprn.uk) - search for your address and note the UPRN shown. Alternatively, visit https://wasteservices.southlanarkshire.gov.uk/PublicDashboard, enter your postcode, select your property, then inspect the dropdown option (right-click > Inspect Element) and note the numeric value= attribute.
