@@ -5,7 +5,10 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown, text_field
-from waste_collection_schedule.exceptions import SourceArgAmbiguousWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.parsers import CsvParser
 from waste_collection_schedule.preprocessors import (
     Compose,
@@ -106,17 +109,54 @@ def _area(row: dict) -> str:
     return _split(row)[1]
 
 
-def _parse(text: str) -> tuple[str, tuple[int, ...]]:
+# What people paste in front of the town: a postcode and the prefecture/city
+# (the ward is stripped separately, by the name the ward's own rows carry).
+_POSTCODE = re.compile(r"^〒?\d{3}-?\d{4}")
+_CITY_PREFIXES = ("大阪府", "大阪市")
+# Kanji numerals are only read where they count a chome/ban/go, since town
+# names contain them too (十三東, 四貫島).
+_KANJI_NUMBER = re.compile(r"[一二三四五六七八九十]+(?=丁目|番|号)")
+_KANJI_DIGITS = "一二三四五六七八九"
+
+
+def _kanji_to_int(numeral: str) -> int:
+    """'五' -> 5, '十二' -> 12, '二十' -> 20 (chome and ban stay below 100)."""
+    tens, _, ones = numeral.rpartition("十")
+    if "十" not in numeral:
+        tens, ones = "", numeral
+    ten_value = (_KANJI_DIGITS.index(tens) + 1 if tens else 1) if "十" in numeral else 0
+    one_value = _KANJI_DIGITS.index(ones) + 1 if ones else 0
+    return ten_value * 10 + one_value
+
+
+def _clean(text: str, ward_name: str = "") -> str:
+    """Normalise a typed address down to what the CSV spells: town onwards."""
+    text = re.sub(r"\s+", "", _nfkc(text))
+    text = _POSTCODE.sub("", text)
+    for prefix in (*_CITY_PREFIXES, ward_name):
+        if prefix and text.startswith(prefix):
+            text = text[len(prefix) :]
+    return _KANJI_NUMBER.sub(lambda m: str(_kanji_to_int(m.group())), text)
+
+
+def _parse(text: str, ward_name: str = "") -> tuple[str, tuple[int, ...]]:
     """Split an address into its town and numbers: ``("諏訪", (1, 10, 16))``.
 
     Residents write the same block several ways ("諏訪1丁目10番", "諏訪1丁目
-    10番地16号", "諏訪1-10-16"), so only the town and the order of the numbers
-    are compared. A trailing 号 is simply one number more than the block needs.
+    10番地16号", "諏訪1-10-16", "大阪市城東区諏訪一丁目10-16"), so only the town
+    and the order of the numbers are compared. A trailing 号 is simply one
+    number more than the block needs.
     """
-    text = re.sub(r"\s+", "", _nfkc(text))
-    match = re.match(r"^(\D*)(.*)$", text)
+    match = re.match(r"^(\D*)(.*)$", _clean(text, ward_name))
     town, rest = (match.group(1), match.group(2)) if match else ("", "")
     return town.rstrip("-"), tuple(int(n) for n in re.findall(r"\d+", rest))
+
+
+def _common_prefix(a: tuple[int, ...], b: tuple[int, ...]) -> int:
+    depth = 0
+    while depth < min(len(a), len(b)) and a[depth] == b[depth]:
+        depth += 1
+    return depth
 
 
 def _match_block(rows, source) -> list:
@@ -125,22 +165,27 @@ def _match_block(rows, source) -> list:
     An address that spells out at least a whole listed block (anything after it,
     such as a 号, is ignored) selects that block, the most specific one if
     several are covered. A shorter one ("浮田1丁目", or just a town) is offered
-    the blocks it could mean.
+    the blocks it could mean, and a block the city does not list (offices and
+    other non-household sites are left out) is offered its nearest neighbours.
     """
+    rows = list(rows)
+    ward_name = next((_nfkc(r.get("地区名1")) for r in rows if r.get("地区名1")), "")
     wanted = source.params["address"]
-    town, numbers = _parse(wanted)
+    town, numbers = _parse(wanted, ward_name)
     if not town:
         # Without the town the numbers would match every town's blocks (and the
         # CSV's blank rows), so let RequireRecords ask for it.
         return []
-    candidates = []
+    candidates, same_town = [], []
     for row in rows:
         row_town, row_numbers = _parse(_address(row))
+        if row_town == town:
+            same_town.append((row_numbers, row))
         if numbers:
             depth = min(len(numbers), len(row_numbers))
             matched = row_town == town and row_numbers[:depth] == numbers[:depth]
         else:
-            matched = bool(town) and row_town.startswith(town)
+            matched = row_town.startswith(town)
         if matched:
             candidates.append((row_numbers, row))
 
@@ -156,6 +201,15 @@ def _match_block(rows, source) -> list:
             for row_numbers, row in candidates
             if len(row_numbers) == depth and numbers[:depth] == row_numbers
         ]
+
+    if not candidates and same_town:
+        best = max(_common_prefix(n, numbers) for n, _ in same_town)
+        nearest = {
+            _address(row) for n, row in same_town if _common_prefix(n, numbers) == best
+        }
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", wanted, sorted(nearest, key=_parse)[:10]
+        )
 
     blocks = sorted({_address(row) for _, row in candidates}, key=_parse)
     if len(blocks) > 1:
@@ -209,6 +263,10 @@ class Source(BaseSource):
             "ward": "kita",
             "address": "浮田1丁目2番",
         },
+        "Sumiyoshi-ku full address with kanji chome": {
+            "ward": "sumiyoshi",
+            "address": "大阪市住吉区住吉二丁目9-89",
+        },
         "Tennoji-ku Ajihara-cho 1-banchi (full-width input)": {
             "ward": "tennoji",
             "address": "味原町１番地",
@@ -223,9 +281,9 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Pick your ward, then enter your address starting with the town name, "
-            "in any of the usual forms: '浮田1丁目2番', '浮田1丁目2番地5号' or "
-            "'浮田1-2-5' (the 号 is not needed). Towns listed without a chome "
+            "Pick your ward, then enter your address in any of the usual forms: "
+            "'浮田1丁目2番', '浮田1丁目2番地5号', '浮田1-2-5' or the full "
+            "'大阪市北区浮田一丁目2-5' (the 号 is not needed). Towns listed without a chome "
             "take the ban directly ('味原町1番'). A town name alone lists its "
             "blocks. Check the spelling on the text version of the city's map: "
             "https://www.city.osaka.lg.jp/contents/wdu150/trashmap/text/index.html . "
@@ -244,7 +302,11 @@ class Source(BaseSource):
         _match_block,
         RequireRecords(
             argument="address",
-            hint="Start with the town name, e.g. '浮田1丁目2番' or '浮田1-2-5'.",
+            hint=(
+                "No such town in this ward. Start with the town name, e.g. "
+                "'浮田1丁目2番' or '浮田1-2-5', and check the ward. Areas without "
+                "household collection (parks, offices) are not listed."
+            ),
         ),
         _merge_identical_areas,
         Disambiguate(
