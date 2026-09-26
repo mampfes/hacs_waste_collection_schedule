@@ -54,7 +54,7 @@ class Source(BaseSource):
     )
     # The search can match the address in several towns; the first match is
     # the best one, as on the council's own page.
-    parse = parsers.JsonParser(0)
+    parse = parsers.JsonParser()
     preprocess = Compose(
         DefaultPreprocessor(),
         DateFields(
