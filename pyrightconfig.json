@@ -160,6 +160,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/greaterdandenong_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/gronau_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/gross_gerau_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/harlow_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/hartbeigraz_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/hartlepool_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/hasselroth_de.py",
