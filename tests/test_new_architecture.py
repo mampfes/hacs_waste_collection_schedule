@@ -901,6 +901,105 @@ class TestXmlDateListParser:
             parser(self._mock_response(body))
 
 
+class TestWasteInfoComponents:
+    """The waste-info.com.au (Impact Apps) platform components."""
+
+    @staticmethod
+    def _response(payload):
+        response = MagicMock()
+        response.json.return_value = payload
+        return response
+
+    @freeze_time("2026-09-26")  # a Saturday
+    def test_events_parser_expands_weekly_events_and_reads_one_offs(self):
+        from waste_collection_schedule.service.WasteInfo import WasteInfoEventsParser
+
+        payload = [
+            # The property summary the calendar opens with: no event_type.
+            {"property": {"address": "1 Test St"}, "start_date": "2026-09-21"},
+            # Weekly on Sunday, which FullCalendar numbers 0.
+            {"start_date": "2026-09-20", "daysOfWeek": [0], "event_type": "organic"},
+            # Weekly on Monday.
+            {"start_date": "2026-09-21", "daysOfWeek": [1], "event_type": "waste"},
+            {"start": "2026-10-01", "event_type": "special", "name": "Drop off"},
+        ]
+        records = WasteInfoEventsParser(window_days=9)(self._response(payload))
+        got = [(r["date"].isoformat(), r["type"], r["name"]) for r in records]
+        assert got == [
+            # Expanded from today, not from the series' start in the past.
+            ("2026-09-27", "organic", None),
+            ("2026-10-04", "organic", None),
+            ("2026-09-28", "waste", None),
+            # The window's last day (today + 9) is included.
+            ("2026-10-05", "waste", None),
+            ("2026-10-01", "special", "Drop off"),
+        ]
+
+    def test_council_api_accepts_name_url_slug_and_old_spelling(self):
+        from waste_collection_schedule.service.WasteInfo import council_api
+
+        assert council_api("City of Ballarat") == "https://ballarat.waste-info.com.au"
+        assert (
+            council_api("Murrindindi Shire Counci")
+            == "https://murrindindi.waste-info.com.au"
+        )
+        assert (
+            council_api("https://brisbane.waste-info.com.au/")
+            == "https://brisbane.waste-info.com.au"
+        )
+        assert council_api("redland") == "https://redland.waste-info.com.au"
+
+    def test_property_lookup_tries_each_register_in_turn(self):
+        from waste_collection_schedule.service.WasteInfo import (
+            PropertyKey,
+            WasteInfoProperty,
+        )
+
+        answers = {
+            "https://a/api/v1/localities.json": {
+                "localities": [{"id": 1, "name": "Elsewhere"}]
+            },
+            "https://b/api/v1/localities.json": {
+                "localities": [{"id": 7, "name": "Summer Hill"}]
+            },
+            "https://b/api/v1/streets.json": {
+                "streets": [{"id": 70, "name": "Lackey Street"}]
+            },
+            "https://b/api/v1/properties.json": {
+                "properties": [{"id": 700, "name": "29 Lackey Street Summer Hill"}]
+            },
+        }
+        source = MagicMock()
+        source.params = {
+            "suburb": "summer  hill",
+            "street_name": "Lackey Street",
+            "street_number": "29",
+        }
+        source.session.get.side_effect = lambda url, **_: self._response(answers[url])
+
+        step = WasteInfoProperty(("https://a", "https://b"))
+        assert step(source, ()) == PropertyKey("https://b", 700)
+
+    def test_property_id_skips_the_address_lookup(self):
+        from waste_collection_schedule.service.WasteInfo import (
+            PropertyKey,
+            WasteInfoProperty,
+        )
+
+        source = MagicMock()
+        source.params = {"propertyID": "21444"}
+        step = WasteInfoProperty("https://w", property_id="propertyID")
+        assert step(source, ()) == PropertyKey("https://w", "21444")
+        source.session.get.assert_not_called()
+
+    def test_split_address_prefers_the_longest_suburb(self):
+        from waste_collection_schedule.service.WasteInfo import split_address
+
+        assert split_address(
+            "399 Queen St, Altona Meadows", ["Altona", "Altona Meadows"]
+        ) == ("399", "Queen St", "Altona Meadows")
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 

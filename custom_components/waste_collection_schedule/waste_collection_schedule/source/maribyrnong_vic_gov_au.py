@@ -1,134 +1,48 @@
-from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.service.WasteInfo import (
+    TYPE_VALUE_MAP,
+    WasteInfoEventsParser,
+    WasteInfoRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Maribyrnong Council"
-DESCRIPTION = "Source for Maribyrnong Council (VIC) rubbish collection."
-URL = "https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling"
-TEST_CASES = {
-    "Random address": {
-        "suburb": "Footscray",
-        "street_name": "Ballarat Rd",
-        "street_number": "70-100",
+
+@final
+class Source(BaseSource):
+    TITLE = "Maribyrnong Council"
+    DESCRIPTION = "Source for Maribyrnong Council (VIC) rubbish collection."
+    URL = "https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Random address": {
+            "suburb": "Footscray",
+            "street_name": "Ballarat Rd",
+            "street_number": "70-100",
+        }
     }
-}
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+    PARAMS = (
+        text_field("suburb", "Suburb"),
+        street("street_name"),
+        house_number("street_number"),
+    )
 
-ICON_MAP = {
-    "recycle": Icons.RECYCLING,
-    "organic": Icons.ORGANIC,
-}
-
-
-class Source:
-    def __init__(self, suburb, street_name, street_number):
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
-
-    def fetch(self):
-        # Retrieve suburbs
-        r = requests.get(
-            "https://maribyrnong.waste-info.com.au/api/v1/localities.json",
-            headers=HEADERS,
-        )
-        data = r.json()
-
-        # Find the ID for our suburb
-        suburb_id = None
-        for item in data["localities"]:
-            if item["name"] == self.suburb:
-                suburb_id = item["id"]
-                break
-
-        if suburb_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, [x["name"] for x in data["localities"]]
-            )
-
-        # Retrieve the streets in our suburb
-        params = {"locality": suburb_id}
-        r = requests.get(
-            "https://maribyrnong.waste-info.com.au/api/v1/streets.json",
-            headers=HEADERS,
-            params=params,
-        )
-        data = r.json()
-
-        # Find the ID for our street
-        street_id = None
-        for item in data["streets"]:
-            if item["name"] == self.street_name:
-                street_id = item["id"]
-                break
-
-        if street_id is None:
-            SourceArgumentNotFoundWithSuggestions(
-                "street_name", self.street_name, [x["name"] for x in data["streets"]]
-            )
-
-        # Retrieve the properties in our street
-        params = {"street": street_id}
-        r = requests.get(
-            "https://maribyrnong.waste-info.com.au/api/v1/properties.json",
-            headers=HEADERS,
-            params=params,
-        )
-        data = r.json()
-
-        # Find the ID for our property
-        property_id = None
-        for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
-                property_id = item["id"]
-                break
-
-        if property_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
-                [
-                    x["name"].split(f" {self.street_name} {self.suburb}")[0]
-                    for x in data["properties"]
-                    if f" {self.street_name} {self.suburb}" in x["name"]
-                ],
-            )
-
-        # Retrieve the upcoming collections for our property
-        today = date.today()
-        params = {"start": today, "end": today + timedelta(days=365)}
-        r = requests.get(
-            f"https://maribyrnong.waste-info.com.au/api/v1/properties/{property_id}.json",
-            headers=HEADERS,
-            params=params,
-        )
-
-        data = r.json()
-
-        entries = []
-
-        for item in data:
-            if "start" in item:
-                collection_date = date.fromisoformat(item["start"])
-                if (collection_date - today).days >= 0:
-                    waste_type = item["event_type"]
-
-                    # Only consider recycle and organic events
-                    if waste_type in ["recycle", "organic"]:
-                        # Every collection day includes rubbish
-                        entries.append(Collection(date=collection_date, t="rubbish"))
-
-                        entries.append(
-                            Collection(
-                                date=collection_date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-        return entries
+    retrieve = WasteInfoRetriever("https://maribyrnong.waste-info.com.au")
+    parse = WasteInfoEventsParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        description_key="name",
+    )
