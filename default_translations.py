@@ -463,7 +463,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "abf_hausnr": "Husnummer",
         "abf_strasse": "Gade",
         "abf_suche": "Søg",
-        "address_name_number": "Adresse navn or nummer",
+        "address_name_number": "Adressenavn eller -nummer",
         "bezirk": "Distrikt",
         "gemeinde": "Kommune",
         "hausnr": "Husnummer",
@@ -481,7 +481,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "ort": "By",
         "ortsgemeinde": "Lokalsamfund",
         "ortsteil": "Distrikt",
-        "params": "Parametre",
+        "params": "Parametre",  # codespell:ignore parametre
         "postCode": "Postnummer",
         "post_code": "Postnummer",
         "postcode": "Postnummer",
@@ -516,7 +516,7 @@ DEFAULT_PARAM_DESCRIPTIONS = {
         "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete https://www.findmyaddress.co.uk/ in vnesete podatke o svojem naslovu.",
     },
     "da": {
-        "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på https://www.findmyaddress.co.uk/ og indtaste dine adressedetailjer.",
+        "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på https://www.findmyaddress.co.uk/ og indtaste dine adressedetaljer.",
     },
 }
 

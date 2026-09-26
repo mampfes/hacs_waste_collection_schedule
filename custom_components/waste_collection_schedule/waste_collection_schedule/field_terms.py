@@ -117,7 +117,7 @@ MUNICIPALITY = _term(
         "Il nome del vostro comune, come indicato sul sito del fornitore.",
         "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
         "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
-        "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+        "Navnet på din kommune, som vist på din leverandørs hjemmeside.",  # codespell:ignore vist
     ),
 )
 CITY = _term(
@@ -280,7 +280,7 @@ _MAP_HELP = (
     "Selezionate la vostra posizione sulla mappa.",
     "Selecteer uw locatie op de kaart.",
     "Izberite svojo lokacijo na zemljevidu.",
-    "Vælg din lokalition på kortet.",
+    "Vælg din lokation på kortet.",
 )
 LATITUDE = _term(
     "latitude",
