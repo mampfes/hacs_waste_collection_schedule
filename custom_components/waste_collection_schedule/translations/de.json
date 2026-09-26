@@ -1304,7 +1304,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_portphillip_vic_gov_au": {
@@ -1314,7 +1315,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_rockingham_wa_gov_au": {
         "title": "Quelle konfigurieren",
@@ -1908,7 +1911,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_kempsey_nsw_gov_au": {
@@ -1918,7 +1922,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_kiama_nsw_gov_au": {
         "title": "Quelle konfigurieren",
@@ -2480,7 +2486,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_mount_alexander_vic_gov_au": {
@@ -2490,7 +2497,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_moyne_vic_gov_au": {
         "title": "Quelle konfigurieren",
@@ -4284,8 +4293,8 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
-          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Mils aufgeführt."
+          "hausnummer": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "reconfigure_mils_tirol_at": {
@@ -4297,8 +4306,8 @@
           "strasse": "Straße"
         },
         "data_description": {
-          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
-          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Mils aufgeführt."
+          "hausnummer": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "args_ics_passail_at": {
@@ -9798,13 +9807,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Hausnummerzusatz",
-          "city": "Ort",
+          "address_suffix": "Address Suffix",
+          "city": "Stadt",
           "house_number": "Hausnummer",
-          "street": "Strasse"
+          "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_meinawb_de": {
@@ -9812,12 +9824,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Hausnummerzusatz",
-          "city": "Ort",
+          "address_suffix": "Address Suffix",
+          "city": "Stadt",
           "house_number": "Hausnummer",
-          "street": "Strasse"
+          "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_ics_awb_landkreis_karlsruhe_de": {
         "title": "Quelle konfigurieren",
@@ -16622,13 +16638,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
-          "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_tonnenticker_pro_de": {
@@ -16636,12 +16652,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
-          "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "args_ubzzw_de": {
