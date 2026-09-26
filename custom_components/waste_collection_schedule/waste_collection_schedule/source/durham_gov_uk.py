@@ -1,103 +1,77 @@
-import json
+import datetime
 import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Durham County Council"
-DESCRIPTION = "Source for Durham County Council, UK."
-URL = "https://durham.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "100110414978"},
-    "Test_002": {"uprn": 100110427200},
+_API_URL = "https://www.durham.gov.uk/apiserver/ajaxlibrary/"
+_NS = {
+    "jobs": "http://www.bartec-systems.com/Jobs_Get.xsd",
+    "b": "http://www.bartec-systems.com",
 }
-
-API_URL = "https://www.durham.gov.uk/apiserver/ajaxlibrary/"
-ICON_MAP = {
-    "Rubbish bin": Icons.GENERAL_WASTE,
-    "Recycle bin": Icons.RECYCLING,
-    "Garden waste bin": Icons.GARDEN,
-    "Food waste bin": Icons.BIO_KITCHEN,
-    "Clinical Waste": Icons.HAZARDOUS,
-}
-
-NAME_MAP = {
-    "Empty Bin Refuse": "Rubbish bin",
-    "Empty Bin Recycling": "Recycle bin",
-    "Empty Bin Organic": "Garden waste bin",
-    "Empty Bin Food": "Food waste bin",
-    "Empty Bin Clinical": "Clinical Waste",
-}
+# "Empty Bin Refuse 240L" -> "Refuse"
+_BIN = re.compile(r"^Empty Bin\s+|\s+\d+\s*L$", re.IGNORECASE)
 
 
-def _map_bin_name(name: str) -> str:
-    for prefix, display in NAME_MAP.items():
-        if name.startswith(prefix):
-            return display
-    return name
+def _start(job) -> str:
+    return (job.findtext("jobs:ScheduledStart", namespaces=_NS) or "")[:10]
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Durham County Council"
+    DESCRIPTION = "Source for Durham County Council, UK."
+    URL = "https://durham.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        s.headers.update(
-            {
-                "Content-Type": "application/json",
-                "Referer": f"https://www.durham.gov.uk/bincollections?uprn={self._uprn}",
-            }
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100110414978"},
+        "Test_002": {"uprn": 100110427200},
+    }
 
-        payload = json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "method": "durham.Localities.GetBartecCalendar",
-                "params": {"uprn": self._uprn},
-                "id": "21",
-                "name": "V2 AJAX End Point Library Worker",
-            }
-        )
-        r = s.post(API_URL, data=payload)
-        r.raise_for_status()
+    PARAMS = (uprn(),)
 
-        result = r.json()
-        xml_str = result.get("result", "")
-
-        today = date.today()
-        entries = []
-
-        for match in re.finditer(r"<Job>(.*?)</Job>", xml_str, re.DOTALL):
-            job_xml = match.group(1)
-
-            name_match = re.search(r"<Name[^>]*>([^<]+)</Name>", job_xml)
-            sched_match = re.search(
-                r"<ScheduledStart>([^<]+)</ScheduledStart>", job_xml
-            )
-
-            if not name_match or not sched_match:
-                continue
-
-            name = name_match.group(1).strip()
-            sched_str = sched_match.group(1).strip()
-
-            try:
-                collection_date = datetime.fromisoformat(sched_str).date()
-            except ValueError:
-                continue
-
-            if collection_date < today:
-                continue
-
-            waste_type = _map_bin_name(name)
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    # A JSON-RPC call whose result is Bartec's SOAP Jobs_Get reply, holding
+    # every job for the property back to when it was first scheduled.
+    retrieve = HttpPostRetriever(
+        url=_API_URL,
+        json=lambda uprn, **_: {
+            "jsonrpc": "2.0",
+            "method": "durham.Localities.GetBartecCalendar",
+            "params": {"uprn": str(uprn)},
+            "id": "21",
+            "name": "V2 AJAX End Point Library Worker",
+        },
+        headers=lambda uprn, **_: {
+            "Referer": f"https://www.durham.gov.uk/bincollections?uprn={uprn}",
+        },
+    )
+    parse = parsers.XmlParser(".//jobs:Job", namespaces=_NS, from_json_key="result")
+    preprocess = preprocessors.RowFilter(
+        lambda job, _: _start(job) >= datetime.date.today().isoformat()
+    )
+    transform = JsonTransformer(
+        date_key=_start,
+        type_key=lambda job: job.findtext("b:Name", namespaces=_NS) or "",
+        clean=lambda name: _BIN.sub("", name),
+        type_value_map={
+            "refuse": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "organic": wt.GARDEN_WASTE,
+            "food": wt.FOOD_WASTE,
+            "clinical": wt.HAZARDOUS,
+            "clinical waste sacks": wt.HAZARDOUS,
+        },
+    )

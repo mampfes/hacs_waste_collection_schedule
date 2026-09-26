@@ -88,6 +88,9 @@ class FlattenGroups(Preprocessor[Any, Any]):
     everything the transformer needs. A date-keyed feed nearly always repeats
     the date inside the record; if it does not, the key is the only place the
     date exists and a source-specific expansion is the right tool instead.
+
+    A list of lists (``[[{...}, {...}], [{...}]]``, one inner list per day) is
+    flattened the same way.
     """
 
     def __call__(
@@ -95,7 +98,8 @@ class FlattenGroups(Preprocessor[Any, Any]):
     ) -> Iterable[Any]:
         if not records:
             return
-        for group in records.values():
+        groups = records.values() if isinstance(records, Mapping) else records
+        for group in groups:
             yield from group
 
 

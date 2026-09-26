@@ -901,6 +901,115 @@ class TestXmlDateListParser:
             parser(self._mock_response(body))
 
 
+class TestBartecPublicDashboard:
+    """The Bartec Municipal Public Dashboard components."""
+
+    PREMISES = (
+        '"dataSource": ejs.data.DataUtil.parse.isJson('
+        '[{"UPRN": 10010724045.0, "Premises": "1 Ash Grove"}])'
+    )
+
+    @staticmethod
+    def _page(*blocks: str):
+        response = MagicMock()
+        response.text = "<script>" + ",".join(blocks) + "</script>"
+        return response
+
+    @staticmethod
+    def _source(**params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def test_reads_each_appointment_once(self):
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        appointments = (
+            '"dataSource": ejs.data.DataUtil.parse.isJson(['
+            '{"Subject": "Rubbish", "StartTime": "2026-07-02T00:00:00"},'
+            '{"Subject": "Rubbish", "StartTime": "2026-07-02T00:00:00"},'
+            '{"Subject": "Recycling", "StartTime": "2026-07-09T00:00:00"}])'
+        )
+        records = BartecDashboardParser()(
+            self._page(self.PREMISES, appointments),
+            self._source(postcode="SK23 6BQ", uprn="10010724045"),
+        )
+        assert records == [
+            {"date": "2026-07-02", "type": "Rubbish"},
+            {"date": "2026-07-09", "type": "Recycling"},
+        ]
+
+    def test_unknown_uprn_suggests_the_postcodes_premises(self):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as raised:
+            BartecDashboardParser()(
+                self._page(
+                    self.PREMISES, '"dataSource": ejs.data.DataUtil.parse.isJson([])'
+                ),
+                self._source(postcode="SK23 6BQ", uprn="999"),
+            )
+        assert raised.value.argument == "uprn"
+        assert "1 Ash Grove (UPRN 10010724045)" in str(raised.value)
+
+    def test_unknown_postcode_blames_the_postcode(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        with pytest.raises(SourceArgumentNotFound) as raised:
+            BartecDashboardParser()(
+                self._page('"dataSource": ejs.data.DataUtil.parse.isJson([])'),
+                self._source(postcode="ZZ9 9ZZ", uprn="1"),
+            )
+        assert raised.value.argument == "postcode"
+
+    def test_known_uprn_without_appointments_is_just_empty(self):
+        from waste_collection_schedule.service.BartecPublicDashboard import (
+            BartecDashboardParser,
+        )
+
+        assert (
+            BartecDashboardParser()(
+                self._page(self.PREMISES),
+                self._source(postcode="SK23 6BQ", uprn=10010724045),
+            )
+            == []
+        )
+
+
+class TestXmlInJsonAndNestedGroups:
+    def test_xml_parser_reads_xml_out_of_a_json_field(self):
+        from waste_collection_schedule import parsers
+
+        response = MagicMock()
+        response.json.return_value = {
+            "result": '<?xml version="1.0" encoding="utf-8"?>'
+            '<r xmlns="urn:x"><Job><Name>A</Name></Job><Job><Name>B</Name></Job></r>'
+        }
+        jobs = parsers.XmlParser(
+            ".//x:Job", namespaces={"x": "urn:x"}, from_json_key="result"
+        )(response)
+        assert [job.findtext("x:Name", namespaces={"x": "urn:x"}) for job in jobs] == [
+            "A",
+            "B",
+        ]
+
+    def test_flatten_groups_takes_a_list_of_lists(self):
+        from waste_collection_schedule import preprocessors
+
+        flat = preprocessors.FlattenGroups()([[{"a": 1}, {"a": 2}], [{"a": 3}]])
+        assert list(flat) == [{"a": 1}, {"a": 2}, {"a": 3}]
+
+
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
 
