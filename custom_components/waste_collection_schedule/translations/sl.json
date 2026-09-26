@@ -319,14 +319,16 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "ID nepremičnine",
-          "service": "Storitev",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "property_id": "Property Id",
+          "service": "Service",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_impactapps_com_au": {
@@ -334,13 +336,16 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "ID nepremičnine",
-          "service": "Storitev",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "property_id": "Property Id",
+          "service": "Service",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_bayside_vic_gov_au": {
         "title": "Configure Source",
@@ -450,12 +455,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_brisbane_qld_gov_au": {
@@ -463,11 +470,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_bundaberg_qld_gov_au": {
         "title": "Configure Source",
@@ -708,12 +718,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_canadabay_nsw_gov_au": {
@@ -721,11 +733,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_canning_wa_gov_au": {
         "title": "Configure Source",
@@ -1586,12 +1601,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_cumberland_nsw_gov_au": {
@@ -1599,11 +1616,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_fairfieldcity_nsw_gov_au": {
         "title": "Configure Source",
@@ -1774,10 +1794,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_hobsonsbay_vic_gov_au": {
@@ -1785,9 +1806,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_hornsby_nsw_gov_au": {
         "title": "Configure Source",
@@ -1839,12 +1862,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_innerwest_nsw_gov_au": {
@@ -1852,11 +1877,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_ipswich_qld_gov_au": {
         "title": "Configure Source",
@@ -2198,12 +2226,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_maribyrnong_vic_gov_au": {
@@ -2211,11 +2241,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_maroondah_vic_gov_au": {
         "title": "Configure Source",
@@ -2692,12 +2725,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_portstephens_nsw_gov_au": {
@@ -2705,11 +2740,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_recyclesmart_com": {
         "title": "Configure Source",
@@ -2738,12 +2776,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
         }
       },
       "reconfigure_redland_qld_gov_au": {
@@ -2751,11 +2791,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_name": "Ime ulice",
-          "street_number": "Številka ulice",
+          "street_name": "Ulica",
+          "street_number": "Hišna številka",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ime vaše ulice.",
+          "street_number": "Vaša hišna številka."
+        }
       },
       "args_wangaratta_vic_gov_au": {
         "title": "Configure Source",

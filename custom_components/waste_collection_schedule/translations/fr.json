@@ -321,14 +321,16 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "property_id": "ID de propriété",
+          "property_id": "Property Id",
           "service": "Service",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_impactapps_com_au": {
@@ -336,13 +338,16 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "property_id": "ID de propriété",
+          "property_id": "Property Id",
           "service": "Service",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_bayside_vic_gov_au": {
         "title": "Configurer la Source",
@@ -452,12 +457,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_brisbane_qld_gov_au": {
@@ -465,11 +472,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_bundaberg_qld_gov_au": {
         "title": "Configurer la Source",
@@ -710,12 +720,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_canadabay_nsw_gov_au": {
@@ -723,11 +735,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_canning_wa_gov_au": {
         "title": "Configurer la Source",
@@ -1594,12 +1609,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_cumberland_nsw_gov_au": {
@@ -1607,11 +1624,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_fairfieldcity_nsw_gov_au": {
         "title": "Configurer la Source",
@@ -1782,10 +1802,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_address": "Votre adresse complète."
         }
       },
       "reconfigure_hobsonsbay_vic_gov_au": {
@@ -1793,9 +1814,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Votre adresse complète."
+        }
       },
       "args_hornsby_nsw_gov_au": {
         "title": "Configurer la Source",
@@ -1847,12 +1870,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_innerwest_nsw_gov_au": {
@@ -1860,11 +1885,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_ipswich_qld_gov_au": {
         "title": "Configurer la Source",
@@ -2206,12 +2234,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_maribyrnong_vic_gov_au": {
@@ -2219,11 +2249,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_maroondah_vic_gov_au": {
         "title": "Configurer la Source",
@@ -2700,12 +2733,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_portstephens_nsw_gov_au": {
@@ -2713,11 +2748,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_recyclesmart_com": {
         "title": "Configurer la Source",
@@ -2746,12 +2784,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_redland_qld_gov_au": {
@@ -2759,11 +2799,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
+          "street_name": "Rue",
+          "street_number": "Numéro",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_wangaratta_vic_gov_au": {
         "title": "Configurer la Source",

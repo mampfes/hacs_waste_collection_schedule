@@ -1,6 +1,8 @@
 # Port Stephens Council
 
-Support for schedules provided by [Port Stephens Council Waste and Recycling](https://www.portstephens.nsw.gov.au/services/waste-and-recycling/household-rubbish-and-recycling).
+Support for schedules provided by [Port Stephens Council](https://www.portstephens.nsw.gov.au/).
+
+Source for Port Stephens Council waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -32,11 +34,7 @@ waste_collection_schedule:
   sources:
     - name: portstephens_nsw_gov_au
       args:
-        suburb: Campvale
-        street_name: Richardson Road
-        street_number: 969
+        suburb: Soldiers Point
+        street_name: Lyndel Close
+        street_number: '2'
 ```
-
-## How to get the source arguments
-
-Visit the [Port Stephens Council Waste and Recycling](https://apps.impactapps.com.au/port-stephens/calendar/) page and search for your address. The arguments should exactly match the results shown for Suburb, Street and number portion of the Property.

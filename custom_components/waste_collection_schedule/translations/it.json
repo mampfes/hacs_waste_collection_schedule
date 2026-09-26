@@ -321,14 +321,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "property_id": "ID Proprietà",
-          "service": "Servizio",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "property_id": "Property Id",
+          "service": "Service",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_impactapps_com_au": {
@@ -336,13 +338,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "property_id": "ID Proprietà",
-          "service": "Servizio",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "property_id": "Property Id",
+          "service": "Service",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_bayside_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -452,12 +457,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_brisbane_qld_gov_au": {
@@ -465,11 +472,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_bundaberg_qld_gov_au": {
         "title": "Configurazione Sorgente",
@@ -710,12 +720,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_canadabay_nsw_gov_au": {
@@ -723,11 +735,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_canning_wa_gov_au": {
         "title": "Configurazione Sorgente",
@@ -1594,12 +1609,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_cumberland_nsw_gov_au": {
@@ -1607,11 +1624,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_fairfieldcity_nsw_gov_au": {
         "title": "Configurazione Sorgente",
@@ -1782,10 +1802,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_hobsonsbay_vic_gov_au": {
@@ -1793,9 +1814,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_hornsby_nsw_gov_au": {
         "title": "Configurazione Sorgente",
@@ -1847,12 +1870,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_innerwest_nsw_gov_au": {
@@ -1860,11 +1885,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_ipswich_qld_gov_au": {
         "title": "Configurazione Sorgente",
@@ -2206,12 +2234,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_maribyrnong_vic_gov_au": {
@@ -2219,11 +2249,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_maroondah_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -2700,12 +2733,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_portstephens_nsw_gov_au": {
@@ -2713,11 +2748,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_recyclesmart_com": {
         "title": "Configurazione Sorgente",
@@ -2746,12 +2784,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
         }
       },
       "reconfigure_redland_qld_gov_au": {
@@ -2759,11 +2799,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
+          "street_name": "Via",
+          "street_number": "Numero civico",
           "suburb": "Suburb"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via.",
+          "street_number": "Il vostro numero civico."
+        }
       },
       "args_wangaratta_vic_gov_au": {
         "title": "Configurazione Sorgente",
