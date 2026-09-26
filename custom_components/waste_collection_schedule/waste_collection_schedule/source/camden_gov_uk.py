@@ -34,7 +34,9 @@ class Source(BaseSource):
         json=lambda uprn, **_: {"councilId": "27", "uprn": str(uprn)},
         headers={"x-recaptcha-token": ""},
     )
-    parse = parsers.JsonParser("data")
+    parse = parsers.JsonParser(
+        "data", raise_for_status=True, expected_values={"message": "OK"}
+    )
     preprocess = ExplodeList("records")
     transform = JsonTransformer(
         date_key=lambda record: (record.get("actual_scheduled_date") or "")[:10],

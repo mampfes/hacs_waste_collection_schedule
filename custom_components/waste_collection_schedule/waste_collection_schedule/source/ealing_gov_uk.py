@@ -34,7 +34,7 @@ class Source(BaseSource):
         url="https://www.ealing.gov.uk/site/custom_scripts/WasteCollectionWS/home/FindCollection",
         data=lambda uprn, **_: {"UPRN": uprn},
     )
-    parse = parsers.JsonParser("param2")
+    parse = parsers.JsonParser("param2", raise_for_status=True)
     # Each service lists all its dates.
     preprocess = ExplodeList("collectionDate", into="date")
     transform = JsonTransformer(

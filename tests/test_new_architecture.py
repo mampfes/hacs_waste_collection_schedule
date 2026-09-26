@@ -662,6 +662,24 @@ class TestParsers:
         resp = self._mock_response("", json_data=data)
         assert JsonParser("data", "items")(resp) == data["data"]["items"]
 
+    def test_json_parser_checks_status_before_decoding(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response("", json_data={"data": []})
+        resp.raise_for_status.side_effect = RuntimeError("HTTP 503")
+        with pytest.raises(RuntimeError, match="HTTP 503"):
+            JsonParser("data", raise_for_status=True)(resp)
+        resp.json.assert_not_called()
+
+    def test_json_parser_rejects_application_error_before_drilling(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        resp = self._mock_response(
+            "", json_data={"message": "Invalid UPRN", "data": []}
+        )
+        with pytest.raises(ValueError, match="Invalid UPRN"):
+            JsonParser("data", expected_values={"message": "OK"})(resp)
+
     def test_text_parser(self):
         from waste_collection_schedule.parsers import TextParser
 

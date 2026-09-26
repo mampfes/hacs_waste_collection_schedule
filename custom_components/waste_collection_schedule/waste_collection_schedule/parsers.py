@@ -489,12 +489,29 @@ class JsonParser(Parser[Any]):
         parse = parsers.JsonParser("collections", shape=list[CollectionRecord])
     """
 
-    def __init__(self, *keys: str, shape: Any = None):
+    def __init__(
+        self,
+        *keys: str,
+        shape: Any = None,
+        raise_for_status: bool = False,
+        expected_values: Mapping[str, Any] | None = None,
+    ):
         self.keys = keys
         self.shape = shape
+        self.raise_for_status = raise_for_status
+        self.expected_values = expected_values
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
+        if self.raise_for_status:
+            response.raise_for_status()
         data = response.json()
+        if self.expected_values is not None:
+            for key, expected in self.expected_values.items():
+                actual = data.get(key) if isinstance(data, Mapping) else None
+                if actual != expected:
+                    raise ValueError(
+                        f"API advised error: expected {key}={expected!r}, got {actual!r}"
+                    )
         for key in self.keys:
             data = data[key]
         if self.shape is not None:

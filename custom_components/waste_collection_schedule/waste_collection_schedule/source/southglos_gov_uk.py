@@ -33,7 +33,7 @@ class Source(BaseSource):
         url="https://api.southglos.gov.uk/wastecomp/GetCollectionDetails",
         params=lambda uprn, **_: {"uprn": uprn},
     )
-    parse = parsers.JsonParser("value")
+    parse = parsers.JsonParser("value", raise_for_status=True)
     # A service with no collection scheduled has no next date and is skipped.
     transform = JsonTransformer(
         date_key=lambda record: (record.get("hso_nextcollection") or "")[:10],

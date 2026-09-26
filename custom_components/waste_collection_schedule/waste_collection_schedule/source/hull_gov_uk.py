@@ -35,7 +35,7 @@ class Source(BaseSource):
         params=lambda uprn, **_: {"bindate": uprn},
         headers={"Referer": "https://www.hull.gov.uk"},
     )
-    parse = parsers.JsonParser()
+    parse = parsers.JsonParser(raise_for_status=True)
     # The reply is a list wrapping the list of collections.
     preprocess = FlattenGroups()
     transform = JsonTransformer(

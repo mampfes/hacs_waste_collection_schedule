@@ -34,7 +34,7 @@ class Source(BaseSource):
         # The council's UPRNs are twelve digits, zero-padded.
         params=lambda uprn, **_: {"u": str(uprn).zfill(12)},
     )
-    parse = parsers.JsonParser("results", "collections", "next")
+    parse = parsers.JsonParser("results", "collections", "next", raise_for_status=True)
     transform = JsonTransformer(
         date_key=lambda record: (record.get("eventTime") or "")[:10],
         type_key="binType",
