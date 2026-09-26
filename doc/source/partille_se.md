@@ -1,6 +1,8 @@
 # Partille kommun
 
-Support for waste collection schedules provided by [Partille kommun](https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/SimpleWastePickup), serving the municipality of Partille, Sweden.
+Support for schedules provided by [Partille kommun](https://vatjanst.partille.se).
+
+Source for Partille kommun waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: partille_se
       args:
-        street_address: Tiondevägen 6, Partille
+        street_address: "Tiondev\xE4gen 6, Partille"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the address of the property with waste collection. The address can be tested [here](https://vatjanst.partille.se/FutureWeb/SimpleWastePickup/SimpleWastePickup).
+Enter your street address as the provider's own address search lists it, including the locality.

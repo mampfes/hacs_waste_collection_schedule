@@ -21350,12 +21350,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "service_provider": "Fornitore di Servizi",
-          "street_address": "Indirizzo Strada",
+          "service_provider": "Service Provider",
+          "street_address": "Indirizzo",
           "url": "Url"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_edpevent_se": {
@@ -21363,11 +21364,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "service_provider": "Fornitore di Servizi",
-          "street_address": "Indirizzo Strada",
+          "service_provider": "Service Provider",
+          "street_address": "Indirizzo",
           "url": "Url"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_borlange_energi_se": {
         "title": "Configurazione Sorgente",
@@ -21525,10 +21528,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_juneavfall_se": {
@@ -21536,9 +21540,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_renhallningen_kristianstad_se": {
         "title": "Configurazione Sorgente",
@@ -21585,10 +21591,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_kungalv_se": {
@@ -21596,9 +21603,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_lsr_nu": {
         "title": "Configurazione Sorgente",
@@ -21665,10 +21674,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_lund_se": {
@@ -21676,9 +21686,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_msva_se": {
         "title": "Configurazione Sorgente",
@@ -21832,10 +21844,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_partille_se": {
@@ -21843,9 +21856,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_pireva_se": {
         "title": "Configurazione Sorgente",
@@ -21981,10 +21996,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_ssam_se": {
@@ -21992,9 +22008,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_sysav_se": {
         "title": "Configurazione Sorgente",
@@ -22082,10 +22100,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_uppsalavatten_se": {
@@ -22094,9 +22114,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_vasyd_se": {
         "title": "Configurazione Sorgente",
@@ -22124,10 +22147,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "building_id": "Building Id",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_vivab_se": {
@@ -22136,9 +22160,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "building_id": "Building Id",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
       },
       "args_vmab_se": {
         "title": "Configurazione Sorgente",

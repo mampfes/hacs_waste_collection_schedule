@@ -1,7 +1,8 @@
 # Mölndal
 
-This is a waste collection schedule integration for the Mölndal.
-Mölndal is using EDPEvent but does not allow for address search.
+Support for schedules provided by [Mölndal](https://molndal.se).
+
+Source for Mölndal waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -16,19 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **facility_id**  
-*(number) (required)*
+*(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: molndal_se
       args:
-        facility_id: 105000
+        facility_id: '105000'
 ```
 
-## How to get the correct facility id
+## How to get the source arguments
 
-Your facility_id (Anläggning) can be found on invoices from Mölndals stad or
-by the [Mölndals stad e-tjänst](https://etjanst.molndal.se/oversikt/overview/720).
+Search your address at https://future.molndal.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'facility_id'.

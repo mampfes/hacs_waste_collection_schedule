@@ -21999,12 +21999,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "service_provider": "Service Provider",
-          "street_address": "Street Address",
-          "url": "Url"
+          "service_provider": "Service provider",
+          "street_address": "Address",
+          "url": "URL"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_edpevent_se": {
@@ -22012,11 +22013,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "service_provider": "Service Provider",
-          "street_address": "Street Address",
-          "url": "Url"
+          "service_provider": "Service provider",
+          "street_address": "Address",
+          "url": "URL"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_borlange_energi_se": {
         "title": "Configure Source",
@@ -22182,10 +22185,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_juneavfall_se": {
@@ -22193,9 +22197,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_renhallningen_kristianstad_se": {
         "title": "Configure Source",
@@ -22245,11 +22251,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Street address for waste collection, including city."
+          "street_address": "Your full address."
         }
       },
       "reconfigure_kungalv_se": {
@@ -22257,10 +22263,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Street address for waste collection, including city."
+          "street_address": "Your full address."
         }
       },
       "args_lsr_nu": {
@@ -22328,10 +22334,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_lund_se": {
@@ -22339,9 +22346,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_msva_se": {
         "title": "Configure Source",
@@ -22387,7 +22396,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "facility_id": "Facility Id"
+          "facility_id": "Facility ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -22398,7 +22407,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "facility_id": "Facility Id"
+          "facility_id": "Facility ID"
         },
         "data_description": {}
       },
@@ -22495,11 +22504,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Street address including house number, e.g. 'Tiondevägen 6, Partille'"
+          "street_address": "Your full address."
         }
       },
       "reconfigure_partille_se": {
@@ -22507,10 +22516,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Street address including house number, e.g. 'Tiondevägen 6, Partille'"
+          "street_address": "Your full address."
         }
       },
       "args_pireva_se": {
@@ -22538,7 +22547,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "uprn": "Building ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -22550,7 +22559,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "uprn": "Building ID"
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
@@ -22647,10 +22656,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_ssam_se": {
@@ -22658,9 +22668,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_sysav_se": {
         "title": "Configure Source",
@@ -22760,7 +22772,9 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "reconfigure_uppsalavatten_se": {
@@ -22771,7 +22785,10 @@
           "city": "City",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "street": "Your street name."
+        }
       },
       "args_vasyd_se": {
         "title": "Configure Source",
@@ -22798,11 +22815,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "building_id": "Building Id",
-          "street_address": "Street Address"
+          "building_id": "Building ID",
+          "street_address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Your full address."
         }
       },
       "reconfigure_vivab_se": {
@@ -22810,10 +22828,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "building_id": "Building Id",
-          "street_address": "Street Address"
+          "building_id": "Building ID",
+          "street_address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Your full address."
+        }
       },
       "args_vmab_se": {
         "title": "Configure Source",

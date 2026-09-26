@@ -1,6 +1,8 @@
 # Region Gotland
 
-Support for schedules provided by [Region Gotland](https://gotland.se/), serving the municipality of Gotland, Sweden.
+Support for schedules provided by [Region Gotland](https://gotland.se).
+
+Source for Region Gotland waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: gotland_se
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: gotland_se
       args:
-        uprn: 0000000000
+        uprn: '0106633415'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The uprn argument is the unique number of your property that has an active waste collection service. The number can be obtained by logging in [here](https://edpfuture.gotland.se/FutureWeb/MyServices/SelectBuilding) and checking the "Välj anläggning" dropdown list.
+Search your address at https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'uprn'.

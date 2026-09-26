@@ -4743,7 +4743,9 @@
   },
   "edpevent_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own search lists it, and either the service provider key (see the list below) or the URL of your provider's EDP Future page ending in '/SimpleWastePickup'."
+    },
     "urls": {}
   },
   "borlange_energi_se": {
@@ -4787,7 +4789,9 @@
   },
   "juneavfall_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/juneavfall_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own address search lists it, including the locality."
+    },
     "urls": {}
   },
   "renhallningen_kristianstad_se": {
@@ -4804,7 +4808,9 @@
   },
   "kungalv_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kungalv_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own address search lists it, including the locality."
+    },
     "urls": {}
   },
   "lsr_nu": {
@@ -4824,7 +4830,9 @@
   },
   "lund_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lund_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own address search lists it; the building id in brackets, e.g. 'Lokföraregatan 7, LUND (19120)', skips the search."
+    },
     "urls": {}
   },
   "msva_se": {
@@ -4839,7 +4847,9 @@
   },
   "molndal_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/molndal_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Search your address at https://future.molndal.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'facility_id'."
+    },
     "urls": {}
   },
   "nvaa_se": {
@@ -4868,7 +4878,9 @@
   },
   "partille_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/partille_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own address search lists it, including the locality."
+    },
     "urls": {}
   },
   "pireva_se": {
@@ -4878,7 +4890,9 @@
   },
   "gotland_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gotland_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Search your address at https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'uprn'."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -4946,7 +4960,9 @@
   },
   "vivab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vivab_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address ending in its locality (e.g. 'Östergränd 4, Falkenberg'). Where several buildings share the address, give 'building_id' (the number in brackets in the provider's search) and just 'Varberg' or 'Falkenberg' as the address."
+    },
     "urls": {}
   },
   "vmab_se": {
