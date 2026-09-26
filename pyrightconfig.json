@@ -279,6 +279,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/partille_se.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/peterborough_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/phila_gov.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/phoenix_gov.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/piberbach_ooe_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/pkc_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/plano_gov.py",
