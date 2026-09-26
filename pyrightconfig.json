@@ -228,6 +228,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/mags_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/maidstone_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/mandurah_wa_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/mansfield_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/maroondah_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/marysville_wa_us.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/meinawb_de.py",
