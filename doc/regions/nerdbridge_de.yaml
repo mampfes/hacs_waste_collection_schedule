@@ -1,0 +1,197 @@
+---
+# Towns of Landkreis Northeim served by abfall.nerdbridge.de.
+#
+# Each entry becomes its own listing in README.md / sources.json, with the
+# municipality pre-filled, via regions.from_yaml() in source/nerdbridge_de.py.
+# The title is the town's name exactly as the site's index.json spells it.
+  - title: Abbecke
+  - title: Ackenhausen
+  - title: Ahlbershausen
+  - title: Ahlshausen
+  - title: Albrechtshausen
+  - title: Allershausen
+  - title: Altgandersheim
+  - title: Amelith
+  - title: Amelsen
+  - title: Andershausen
+  - title: Angerstein
+  - title: Asche
+  - title: Avendshausen
+  - title: Bad Gandersheim
+  - title: Bartshausen
+  - title: Behrensen
+  - title: Bentierode
+  - title: Berka
+  - title: Berwartshausen
+  - title: Beulshausen
+  - title: Billerbeck
+  - title: Bishausen
+  - title: Blankenhagen
+  - title: Bodenfelde
+  - title: Bollensen
+  - title: Bruchhof
+  - title: Brunsen
+  - title: Brunstein
+  - title: Bühle
+  - title: Buensen
+  - title: Clus
+  - title: Dankelsheim
+  - title: Dannhausen
+  - title: Dassel
+  - title: Dassensen
+  - title: Deitersen
+  - title: Delliehausen
+  - title: Denkershausen
+  - title: Dinkelhausen
+  - title: Dögerode
+  - title: Dörrigsen
+  - title: Drüber
+  - title: Düderode
+  - title: Eboldshausen
+  - title: Echte
+  - title: Edemissen
+  - title: Edesheim
+  - title: Eilensen
+  - title: Einbeck (Bezirk 1)
+  - title: Einbeck (Bezirk 2)
+  - title: Ellensen
+  - title: Ellierode (Bad Gandersheim)
+  - title: Ellierode (Hardegsen)
+  - title: Elvershausen
+  - title: Elvese
+  - title: Erichsburg
+  - title: Ertinghausen
+  - title: Erzhausen
+  - title: Eschershausen
+  - title: Espol
+  - title: Fredelsloh
+  - title: Fürstenhagen
+  - title: Garlebsen
+  - title: Gehrenrode
+  - title: Gierswalde
+  - title: Gillersheim
+  - title: Gladebeck
+  - title: Goseplack
+  - title: Greene
+  - title: Gremsheim
+  - title: Großenrode
+  - title: Gut Pinkler
+  - title: Hachenhausen
+  - title: Haieshausen
+  - title: Hallensen
+  - title: Hammenstedt
+  - title: Hardegsen
+  - title: Harriehausen
+  - title: Heckenbeck
+  - title: Helmscherode
+  - title: Hettensen
+  - title: Hevensen
+  - title: Hillerse
+  - title: Hilprechtshausen
+  - title: Hilwartshausen
+  - title: Höckelheim
+  - title: Hohnstedt
+  - title: Hollenstedt
+  - title: Holtensen
+  - title: Holtershausen
+  - title: Hoppensen
+  - title: Hullersen
+  - title: Hunnesrück
+  - title: Iber
+  - title: Imbshausen
+  - title: Immensen
+  - title: Ippensen
+  - title: Juliusmühle
+  - title: Kalefeld
+  - title: Kammerborn
+  - title: Katlenburg
+  - title: Kirchberg
+  - title: Kohnsen
+  - title: Kreiensen
+  - title: Krimmensen
+  - title: Kuventhal
+  - title: Lagershausen
+  - title: Langenholtensen
+  - title: Lauenberg
+  - title: Leinetal
+  - title: Levershausen
+  - title: Lichtenborn
+  - title: Lindau
+  - title: Lütgenrode
+  - title: Lüthorst
+  - title: Lutterbeck
+  - title: Lutterhausen
+  - title: Mackensen
+  - title: Markoldendorf
+  - title: Moringen
+  - title: Müllershausen
+  - title: Naensen
+  - title: Negenborn
+  - title: Nienhagen
+  - title: Nienover
+  - title: Nörten-Hardenberg
+  - title: Northeim (Bezirk 1)
+  - title: Northeim (Bezirk 2)
+  - title: Odagsen
+  - title: Offensen
+  - title: Oldenrode (Kalefeld)
+  - title: Oldenrode (Moringen)
+  - title: Oldershausen
+  - title: Olxheim
+  - title: Opperhausen
+  - title: Orxhausen
+  - title: Osterbruch
+  - title: Parensen
+  - title: Polier
+  - title: Portenhagen
+  - title: Relliehausen
+  - title: Rengershausen
+  - title: Rimmerode
+  - title: Rittierode
+  - title: Rosenplänter
+  - title: Rotenkirchen
+  - title: Salzderhelden
+  - title: Schachtenbeck
+  - title: Schlarpe
+  - title: Schnedinghausen
+  - title: Schönhagen
+  - title: Schoningen
+  - title: Sebexen
+  - title: Seboldshausen
+  - title: Sievershausen (Dassel)
+  - title: Sievershausen (Einbeck)
+  - title: Sohlingen
+  - title: Stöckheim
+  - title: Strodthagen
+  - title: Stroit
+  - title: Sudershausen
+  - title: Sudheim
+  - title: Sülbeck
+  - title: Suterode
+  - title: Thüdinghausen
+  - title: Tönnieshof
+  - title: Trögen
+  - title: Üssinghausen
+  - title: Uslar
+  - title: Vahle
+  - title: Vardeilsen
+  - title: Verliehausen
+  - title: Vogelbeck
+  - title: Voldagsen
+  - title: Volksen
+  - title: Volpriehausen
+  - title: Vorwerk Holtensen
+  - title: Wachenhausen
+  - title: Wahmbeck
+  - title: Weddehagen
+  - title: Wellersen
+  - title: Wenzen
+  - title: Westerhof
+  - title: Wetze
+  - title: Wiebrechtshausen
+  - title: Wiensen
+  - title: Wiershausen
+  - title: Willershausen
+  - title: Wolbrechtshausen
+  - title: Wolperode
+  - title: Wrescherode
