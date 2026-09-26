@@ -20,6 +20,7 @@ class Source(BaseSource):
         wt.GENERAL_WASTE,
         wt.RECYCLABLES,
         wt.ORGANIC,
+        wt.BULKY_WASTE,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -45,5 +46,6 @@ class Source(BaseSource):
             "Black Bin": wt.GENERAL_WASTE,
             "Blue Bin": wt.RECYCLABLES,
             "Brown Bin": wt.ORGANIC,
+            "Bulky Bin": wt.BULKY_WASTE,
         },
     )
