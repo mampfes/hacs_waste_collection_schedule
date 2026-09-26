@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://servicelayer3c.azure-api.net/wastecalendar/address/search/?postCode=ZZ99ZZ ",
+      "method": "GET",
+      "url": "https://servicelayer3c.azure-api.net/wastecalendar/address/search/?postCode=ZZ99ZZ",
+      "final_url": "https://servicelayer3c.azure-api.net/wastecalendar/address/search/?postCode=ZZ99ZZ",
+      "body": "",
+      "status": 400,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 26 Sep 2026 20:12:21 GMT",
+        "cache-control": "private",
+        "set-cookie": "ARRAffinity=d794e3b9856b8dae049767fa611ece9d39b52d2eb0f45f17988649b8931b52a5;Path=/;HttpOnly;Secure;Domain=servicelayer3c.azure-api.net, ARRAffinitySameSite=d794e3b9856b8dae049767fa611ece9d39b52d2eb0f45f17988649b8931b52a5;Path=/;HttpOnly;SameSite=None;Secure;Domain=servicelayer3c.azure-api.net",
+        "transfer-encoding": "chunked",
+        "strict-transport-security": "max-age=2592000",
+        "request-context": "appId=cid-v1:7a0cb704-87c9-41ac-afee-8203c76acee5",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'post_code' with the value 'ZZ99ZZ', please check the spelling and try again."
+  }
+}
