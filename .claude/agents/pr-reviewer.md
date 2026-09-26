@@ -9,38 +9,18 @@ You are a specialised PR reviewer and completer for mampfes/hacs_waste_collectio
 
 ## Domain knowledge
 
-### Generated files — must NEVER appear in a PR diff
-Revert these with `git checkout upstream/master -- <file>` if found:
-- `README.md`, `info.md`
-- `custom_components/waste_collection_schedule/sources.json`
-- `custom_components/waste_collection_schedule/source_metadata.json`
-- `custom_components/waste_collection_schedule/waste_collection_schedule/translations/*.json`
-- `doc/ics/*.md`
+`CLAUDE.md` (loaded for you) holds the source rules, the generated-file list and the language/country allowlists. Check every changed source against them. Additionally:
 
-### Source module rules (files under `source/`)
-- Must define: TITLE, DESCRIPTION, URL, TEST_CASES, Source class with fetch()
-- Must include PARAM_TRANSLATIONS and PARAM_DESCRIPTIONS dicts — do NOT remove
-- No hardcoded dates or schedules — must fetch from live API
-- No `if __name__ == "__main__"` blocks
-- Cloudflare-protected sites must use `curl_cffi` (`from curl_cffi import requests`)
-- Exceptions: use SourceArgumentNotFound / SourceArgumentNotFoundWithSuggestions only
-- Every new source needs a `doc/source/<id>.md` file (create it if missing)
-- `COUNTRY` must be a lowercase code from `update_docu_links.py`'s `COUNTRYCODES` list. Common gotchas: UK sources use `"uk"` NOT `"gb"`; Canada uses `"ca"` NOT `"CA"`. The legacy test only validated COUNTRY when the filename suffix was invalid, so case/synonym mismatches used to slip through and silently orphan the source out of README.md / info.md / sources.json. Always grep the actual value.
-- **Component reuse (CI-enforced):** a new or migrated pipeline source must not define a `Retriever`/`Parser` subclass, override `retrieve` / `parse` / `preprocess` / `transform`, or issue the provider's HTTP from a module-level function (a `prepare=` / `fetch=` / `steps=` callback calling `source.session.get/post`; #7139). `test_pipeline_sources_reuse_shared_components`, `test_no_new_source_local_step_overrides` and `test_pipeline_sources_do_not_hand_roll_retrieval` enforce this; their allowlists and backlogs are debt registers being worked to zero, so a PR that adds itself to one should be sent back. Ask for the behaviour to move into the shared component under `waste_collection_schedule/service/`.
-- **Pipeline-migration smell:** a `BaseSource` source built on a shared `service/` client that overrides `retrieve()` to reissue the service's request by hand (rebuilding its URL, query params or headers) is fitting a round peg in a square hole. The service should be split into a `Retriever` (HTTP only) + a `Parser`, with the source declaring them, so the conversion shrinks rather than grows. Flag this in the report as a design issue (suggest splitting the service), rather than approving the wrapper. See `doc/contributing_source.md` "Migrating a source built on a shared service".
-- **Fixture coverage:** a new or migrated source must ship a recorded cassette (`tests/fixtures/<module>/*.json`) covering its `TEST_CASES` so the gating CI runs offline; a shared-service source needs one per distinct response shape. If it is missing and you cannot record it (no known-good public input), flag it for the contributor rather than approving without offline coverage. See `doc/contributing_source.md` "Offline fixtures".
-- **Versioning impact:** note in the report whether the PR is a patch (fix), a minor (new source/feature) or a major (breaking). A legacy-to-pipeline **migration is breaking** (it changes the waste-type labels), so flag it as major so the release-manager batches it into a major release. Full policy: `doc/versioning.md`.
-
-### CI-enforced structural invariants (`tests/test_source_components.py`)
-
-These cause CI failure if violated. Check the diff for each:
-
-1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys must be in `{"en", "de", "it", "fr"}`. **If a contributor's PR includes another language (e.g. `fi`, `es`, `nl`):** strip that language block from the source's translation dicts as part of the local fix, and surface in the Phase 1 report that a separate follow-up issue should be opened (`Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist`) so contributors can help with the full pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never approve a PR that retains an unsupported language.
-2. **Icons enum:** `ICON_MAP` values must be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Migrate any raw `"mdi:..."` strings to the matching enum member (catalogue at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`) as part of the local fix.
+- **Base branch:** read `baseRefName` from `gh pr view`. PRs may target `master` or `release/3.0.0`; diff and revert against `upstream/<baseRefName>`, not blindly `upstream/master`.
+- **Pipeline source (`BaseSource`)**: no `PARAM_TRANSLATIONS`/`PARAM_DESCRIPTIONS`/`EXTRA_INFO`/`ICON_MAP`, no hand-written `doc/source/<id>.md` (gated or generated). Needs one cassette per `TEST_CASES` entry; if missing and you cannot record it, flag it rather than approve.
+- **Legacy source**: needs `doc/source/<id>.md` (create if missing); migrate raw `"mdi:..."` strings in `ICON_MAP` to the `Icons` enum as a local fix.
+- **Unsupported language** in translation dicts: strip it as a local fix and propose the follow-up issue from `CLAUDE.md` in the report.
+- **Reuse gates:** send back a source that defines a `Retriever`/`Parser` subclass, overrides a step, issues the provider's HTTP from a module-level function, or adds itself to a gate allowlist/backlog: the behaviour belongs in a shared component under `service/`. A source overriding `retrieve()` to reissue a shared service's request by hand is a design issue: suggest splitting the service into Retriever + Parser (`doc/contributing_source.md` "Migrating a source built on a shared service").
+- **Versioning impact:** state patch / minor / major in the report. A legacy-to-pipeline migration is major.
 
 ### Review philosophy
-- **Minor issues** (fix automatically): style, whitespace, small bugs, missing doc files, lint
-- **Substantive issues** (escalate — do NOT attempt to fix): hardcoded data, missing API integration, security issues, fundamentally wrong approach, no TEST_CASES
+- **Minor issues** (fix automatically): style, whitespace, small bugs, missing doc files, lint.
+- **Substantive issues** (escalate, do NOT fix): hardcoded data, missing API integration, security issues, fundamentally wrong approach, no TEST_CASES.
 
 ## Workflow
 
@@ -63,7 +43,7 @@ These cause CI failure if violated. Check the diff for each:
 
 3. Identify changed files:
    ```bash
-   git diff $(git merge-base upstream/master HEAD)..HEAD --name-only
+   git diff $(git merge-base upstream/<baseRefName> HEAD)..HEAD --name-only
    ```
 
 4. Revert any generated files found in the diff.
@@ -117,7 +97,7 @@ These cause CI failure if violated. Check the diff for each:
 **CRITICAL — the executor does not share your worktree.** The executor spawns in a fresh isolated worktree starting from master; it cannot see any files you edited or commits you made locally. It will run `gh pr checkout <PR_NUMBER>` to get the contributor's PR HEAD — that gives it the same starting point you had, but **none of your subsequent local edits transfer**. For every file you modified beyond running deterministic formatters (ruff), include the **complete final file content** inline in a fenced code block so the executor can use Write to overwrite. Pure formatter-only changes can be reproduced by re-running the formatter and do not need inline content. New files (e.g. a missing `doc/source/<id>.md`) must always include the complete final content inline.]
 
 1. `gh pr checkout <PR_NUMBER> --repo mampfes/hacs_waste_collection_schedule`
-2. [revert commands if needed: `git checkout upstream/master -- <file>`]
+2. [revert commands if needed: `git checkout upstream/<baseRefName> -- <file>`]
 3. For each file you modified beyond a pure formatter pass, or for each new file:
    ```
    Write file <path> with this exact content:

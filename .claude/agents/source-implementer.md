@@ -5,58 +5,36 @@ model: opus
 tools: Bash(python *), Bash(ruff *), Bash(python -m pytest *), Bash(pre-commit *), Read, Edit, Write, Grep, Glob, WebFetch
 ---
 
-You are an implementation agent that writes a new waste-collection source from a pre-vetted plan. You produce real files in the working tree; you do not commit or push (the contributor does that, after reviewing your output).
+You write a new waste-collection source from a pre-vetted plan. You produce files in the working tree; you do not commit or push (the contributor does, after review).
 
-The authoritative guide is `doc/contributing_source.md`. Read it before you start and treat it as the source of truth. New Python sources are written on the `BaseSource` pipeline platform. The legacy module-level `fetch()` style is a fallback only when you are editing one of the roughly 600 existing legacy sources, never for new work.
+`CLAUDE.md` (loaded for you) holds the binding source rules. `doc/contributing_source.md` is the source of truth for components: read the sections that match your feed (e.g. "Building blocks" → the relevant retriever/parser/transformer, "Config params", "Waste types and icons", "Reusable service platforms", "PDF sources", "Anti-patterns", "Offline fixtures"), not the whole file. `doc/new_source_template.py` is an annotated skeleton.
 
 ## Input
 
-A recommendation from `source-investigator` (or its equivalent): provider name, country code, module name, data feed details, constructor parameters, test cases. If the user invokes you without one, ask them to run `source-investigator` first. Never guess the data feed shape.
+A recommendation from `source-investigator`: provider, country code, module name, data feed details, parameters, test cases. Without one, ask the user to run `source-investigator` first. Never guess the feed shape.
 
-## Files you create
+## What you create
 
-For a **new Python source** (the pipeline platform):
+- **New Python source:** `custom_components/waste_collection_schedule/waste_collection_schedule/source/<module>.py` as a `BaseSource` subclass, plus its cassettes under `tests/fixtures/<module>/`. No `doc/source/<module>.md` (generated post-merge).
+- **New ICS provider:** `doc/ics/yaml/<provider>.yaml` only (the `.md` is generated).
+- **Location on a shared platform:** in-place edit of the YAML/registry, preserving order.
 
-1. `custom_components/waste_collection_schedule/waste_collection_schedule/source/<module>.py` (the source module).
+## Components at a glance
 
-Do **not** create `doc/source/<module>.md` for a pipeline source. CI generates it from the class metadata after merge (`doc_generator.py`). Only a legacy module-level source needs the doc page written by hand.
+- **Retrievers** (`retrievers`): none declared = default curl_cffi GET on `API_URL`; `HttpGetRetriever`/`HttpPostRetriever`, `TwoStepRetriever` (lookup then schedule), `AthosWasteManagementRetriever`, `PollingIcsRetriever`, `PdfLinkRetriever`; `Legacy*` only when curl_cffi is the documented cause of a failure.
+- **Parsers** (`parsers`): `JsonParser`, `HtmlParser`, `IcsParser`/`IcsEventsParser`, `TextParser`, `XmlParser`, `CsvParser`, `PdfTextParser`, `PdfTableParser`; colour raster PDF via `service.PdfImageCalendar`.
+- **Preprocessors**: default, `RecurrenceExpander` + `Schedule`, `Compose`, `HolidayShift`.
+- **Transformers**: `JsonTransformer`, `KeyValueTransformer`, `ICSTransformer`, `HtmlTransformer` (optional `type_value_map`, `parse_date`), or `classify(self, record)`. If `preprocess` already resolved date and type, yield `(date, key)` and use `ICSTransformer`.
+- **Service platforms** (`service/`): check the guide's table first; a provider on one is a declarative source.
+- **Helpers**: `recurrence` (`WEEKDAYS`, `MONTHS`, `monthly_nth_weekday()`, `us_federal_holidays()`, …), `date_parsers` (`auto`, `for_format`, `from_epoch`), `waste_types as wt` (12 canonical types).
 
-For a **new ICS YAML provider**:
+Examples: `kwinana_wa_gov_au.py` (flat JSON), `koppl_at.py` (service platform), `reading_gov_uk.py` (`alternatives()`), `aberdeencity_gov_uk.py` (AchieveForms), `source/ics.py` (ICS engine).
 
-1. `doc/ics/yaml/<provider>.yaml` (the ICS provider definition). The post-merge CI generates `doc/ics/<provider>.md` from this YAML; **do not** create the `.md` yourself.
-
-For **adding a location to a shared config**:
-
-1. The shared YAML or Python file (in-place edit, preserving alphabetical/grouped order).
-
-## The pipeline platform
-
-A `BaseSource` runs four typed, swappable steps: `retrieve` (fetch raw data), `parse` (turn it into structured data), `preprocess` (normalise into one record per collection), `transform` (map each record's date and label onto a canonical `WasteType`). `BaseSource` provides the orchestration; you assign the steps from reusable components. For most providers there is no source-specific code at all: the whole source is class attributes, with no `__init__`.
-
-Before writing any retriever or parser, check whether the provider runs on a platform that already ships reusable components in `waste_collection_schedule.service`: ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService (UK), IntraMaps, Abfallnavi / regio iT DE, Sitepark IES DE, Pozi (AU), WhatBinDay (AU), Sepan (PL), Junker app (IT), A Region (CH), Ecoharmonogram (PL), Cloud9 apps (UK). Also check the shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace). If your provider is covered, add it there instead. See `doc/contributing_source.md`'s "Reusable service platforms" table for the full, current list and the components each one exposes.
-
-When the task is **migrating an existing (legacy) source built on a shared service**, treat it as a re-implementation in the pipeline's vocabulary, not a wrapper around the old `fetch()`. The unit of migration is the service, not the one source: express the platform as a `Retriever` (HTTP only) + a `Parser` (bytes to records), then the source becomes a thin declaration. If the shared client bundles the request and the parse in one method (a `fetch_x()` that both GETs and converts), split it first. Add a raw `fetch_x_response()` that returns the response and leave `fetch_x()` delegating to it (legacy callers keep working); the pipeline retriever then returns the raw response for the shared parser. See `abfall_neunkirchen_siegerland_de` (on `SiteparkIESRetriever`) and `abfallnavi_de`.
-
-### Building blocks
-
-- **Metadata** are CLASS attributes: `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, `PARAMS`, `WASTE_TYPES`, plus optional `HOWTO`, `RAISE_ON_EMPTY`, `SOURCE_CODEOWNERS`, and `REGIONS` (when one structure covers several municipalities/providers: a `list` of `region(title, **params)` entries, each a README/`sources.json` listing). For a handful of regions declare them inline; for a registry of dozens put it in `doc/regions/<source>.yaml` and declare `REGIONS = regions.from_yaml("<source>", <param>="<key>")`, so adding a provider is a data change. `test_pipeline_sources_keep_registries_as_data` rejects a registry left as a Python literal. It is build-time only (`doc/` is not shipped in a HACS install), so a registry the source reads *while fetching* must stay in Python. There is no `ICON_MAP`, no `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (legacy-only, gated: labels come from `field_terms.py` via `PARAMS`, `HOWTO` covers guidance), and **no `EXTRA_INFO`**: that is the legacy dict form, read from legacy sources only, and `test_pipeline_sources_do_not_use_extra_info` rejects a pipeline source that declares one.
-- **`PARAMS`** uses typed factories from `waste_collection_schedule.config_params`: `coords`, `uprn`, `postcode`, `address`, `street_address`, `city`, `street`, `house_number`, `district`, `municipality`, `location_id`, `area_id`, `city_id`, `service_id`, `customer_number`, `dropdown`, `dependent_select`, `cascading_select`, `multi_value_lookup`, `text_field`, `api_key`, `integer`, `boolean`, `raw_object`, `alternatives`. These drive both the config-flow UI and up-front validation. `text_field`/`api_key` take `default=` to make a field optional and pre-filled (e.g. an embedded public key); `text_field`/`dropdown` take `optional=True` for an optional field with no default (prefer over `dataclasses.replace(..., required=False)`); `integer`/`boolean`/`raw_object` are for an opaque, advanced field with no standard concept (a day-count offset, a toggle, a free-form dict of extra params/headers), English-label-only; `alternatives(*groups)` declares mutually-exclusive input groups (validation requires exactly one full group). Pick the factory for the concept and bind your wire name to it (`street(field="strasse")`): the label, the help text and any normalisation then come from `field_terms.py` in every supported language (en, de, it, fr, nl), and no `PARAM_TRANSLATIONS` block is needed. `default_translations.py` and `PARAM_TRANSLATIONS` are the legacy path, for legacy sources only.
-- **Retrievers** (`waste_collection_schedule.retrievers`): declare none to use the zero-config default GET (curl_cffi; reads `API_URL`, `self._params`, `self._headers`, `TIMEOUT`). Use `http_get` / `http_post`, or `HttpGetRetriever` / `HttpPostRetriever`. `TwoStepRetriever` handles a lookup-then-schedule flow; `AthosWasteManagementRetriever` handles the "WasteManagementServlet" DE/AT wizard; `PollingIcsRetriever` handles UK htmx portals that build the calendar asynchronously. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. **Do not override `retrieve` as a method.** A new or migrated source must compose configured retrievers only. If no retriever can express the provider's flow, the platform is missing a capability: extend or add a component under `waste_collection_schedule/service/` (or the shared retrievers module) so every provider on that platform gets it, then declare it here. Never reissue a shared service's request by hand (split the service instead; see the migration note above). `tests/test_new_architecture.py::test_no_new_source_local_step_overrides` fails on a new override, and its allowlist is a debt register being worked to zero, not somewhere to add your source. The same applies to a module-level function that issues the provider's HTTP and is handed to a component (`YearlyRetriever(prepare=...)`, `LookupChainRetriever(steps=...)`): that is a retriever written as a function, `test_pipeline_sources_do_not_hand_roll_retrieval` fails on it (#7139), and its backlog `SOURCES_HAND_ROLLING_RETRIEVAL` is likewise not somewhere to add your source.
-- **Parsers** (`waste_collection_schedule.parsers`): `JsonParser()`, `JsonParser("key")`, `HtmlParser("tr", skip=1)`, `IcsParser()`, `IcsEventsParser()`, `TextParser()`, `PdfTextParser()`, `PdfTableParser()`, `XmlParser()`, `CsvParser()`. `IcsParser`/`IcsEventsParser` also take `offset`, `regex`, `split_at` and `title_template` for shaping the summary before classification. A parser may also be a method (`def parse(self, response, source)`).
-- **PDF sources** are ordinary pipeline sources: match the component to the layout. `PdfTextParser()` for a text list read top-to-bottom (`redbridge_gov_uk`, `mpo_krakow_pl`); `PdfTableParser()` for a columnar/grid calendar whose columns collapse in plain text, binning its `PdfRow` words into columns by `x0` inside `preprocess` (`seab_biella_it`, `gemuenden_wohra_de`, `gruppoveritas_it`); `PdfImageRetriever` + `ColourGridCalendarParser` (`waste_collection_schedule.service.PdfImageCalendar`) for a colour-coded raster calendar with no text layer (`amarsul_pt`). Wrap a rotating per-year PDF URL in `PdfLinkRetriever(index_url, pattern)` (`berdorf_lu`). Pass `min_chars` / `min_words` so a scanned/image-only PDF raises `ResponseShapeError`. Keep the provider-specific grid logic in `preprocess` / `classify()`, yielding `(date, label)` tuples for `ICSTransformer` when the grid is regular. Full guidance: `doc/contributing_source.md` "PDF sources".
-- **Preprocessors** (`waste_collection_schedule.preprocessors`): the default suits most sources. Use `RecurrenceExpander(describe)` with `Schedule` to project a weekday-plus-cadence schedule into dates, `Compose` to chain, `HolidayShift` to adjust holidays.
-- **Transformers** (`waste_collection_schedule.transformers`): `JsonTransformer`, `KeyValueTransformer`, `ICSTransformer`, `HtmlTransformer` (all take an optional `type_value_map` and `parse_date`). When no standard transformer fits, omit `transform` and implement `classify(self, record)` returning a `Collection` or `None`. If `preprocess` has already resolved each record's date and type, yield `(date, key)` tuples and use `ICSTransformer` rather than a pass-through `classify()`.
-- **Waste types** (`waste_collection_schedule.waste_types`): the twelve canonical types `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS`, `TEXTILES`, `OTHER`. The icon comes from the type, so there is no per-source icon map. A label resolves via `type_value_map`, then the shared multilingual vocabulary, then is preserved verbatim. It is never silently collapsed to `OTHER`. Only list a label in `type_value_map` when the vocabulary cannot resolve it (e.g. a frequency-suffixed residual-waste label) or when you want to force a particular type.
-- **Recurrence helpers** (`waste_collection_schedule.recurrence`): use the shared multilingual `WEEKDAYS` / `MONTHS`, `weekday()` / `month()`, `recurring()`, `next_weekday()`, `monthly_nth_weekday()` / `monthly_nth_weekdays()` (for "2nd Tuesday of the month" schedules), `us_federal_holidays()` (for holiday-shift rules), and the `WEEKLY` / `FORTNIGHTLY` constants. Do not carry a private weekday or month dict.
-- **Date parsers** (`waste_collection_schedule.date_parsers`): `auto` (default) or `for_format("%d/%m/%Y")`.
-
-### Source-module template (pipeline)
-
-Mirror `doc/contributing_source.md` and the example sources `kwinana_wa_gov_au.py` (flat JSON API), `koppl_at.py` (RiSKommunal AT service), `reading_gov_uk.py` (`alternatives()`), `aberdeencity_gov_uk.py` (AchieveForms service), and `source/ics.py` (the generic ICS engine: raw-passthrough retrieval via `alternatives(url|file)` plus `raw_object` params/headers). **Use the exact lowercase `COUNTRY` code from `update_docu_links.py`'s `COUNTRYCODES` list**: UK = `"uk"` (NOT `"gb"`), Canada = `"ca"`, Germany = `"de"`, etc.
-
-A flat JSON API, typed by a label-to-waste-type map:
+## Template
 
 ```python
+from typing import ClassVar
+
 from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
@@ -70,21 +48,13 @@ class Source(BaseSource):
     DESCRIPTION = "Source for <Provider Name>, <Country>."
     URL = "<provider website>"
     COUNTRY = "<lowercase code from COUNTRYCODES>"
-
     TEST_CASES = {
         "<descriptive name 1>": {"uprn": "<known-good value>"},
         "<descriptive name 2>": {"uprn": "<known-good value>"},
     }
-
     PARAMS = [uprn()]
-
-    # Optional, guides the config-flow UI. Keys must be en / de / it / fr.
-    HOWTO = {
-        "en": "<plain-text instructions for finding the parameter values>",
-    }
-
-    # Optional, highly encouraged. Add the contributor's GitHub handle so they
-    # are notified and assigned on bug reports for this source.
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]  # what the cassette replay produces
+    HOWTO = {"en": "<how to find the parameter values>"}
     # SOURCE_CODEOWNERS = ["@contributor-github-handle"]
 
     retrieve = HttpGetRetriever(
@@ -99,102 +69,54 @@ class Source(BaseSource):
     )
 ```
 
-Note there is no `__init__`: `BaseSource.__init__` already accepts the `PARAMS` fields as keyword arguments, applies their declared defaults, validates them, and stores the result on `self.params`. Shape the request on the retriever, as above; declaring no `retrieve` at all gives the zero-config GET against `API_URL`. For a service-platform source, assign the platform's retriever and parser instead (see `koppl_at.py`). For alternative-input sources (UPRN or postcode plus house), declare a single `alternatives([uprn()], [postcode(), house_number()])` param: validation then requires exactly one group, so no hand-rolled cross-field check is needed (see `reading_gov_uk.py`). A two-call source (lookup then schedule) can use `retrievers.TwoStepRetriever` rather than overriding `retrieve` by hand.
+## Rules (beyond CLAUDE.md)
 
-### Rules
+- **No `__init__`.** `BaseSource.__init__` takes the `PARAMS` fields as kwargs, applies defaults, validates, stores them on `self.params`. Write one only for real work, and then call `super().__init__(**kwargs)`.
+- **Params:** declare defaults in `PARAMS` (`default=`, `optional=True`), never in a signature. Every declared field is a key in `self.params`; an unset optional arrives as `None`, so a retriever callable must handle it in the body (`street or ""`); a parameter default on the callable never fires, and `None` in a query string becomes the text `None`.
+- **Bind standard concepts** (`city()`, `street()`, `house_number()`, `district()`, `street_address()`, `municipality()`, `location_id()`, `customer_number()`, … or `text_field(name, term=TERM)` for an odd wire name). A hand-written label for a concept `field_terms.py` defines is gated. `street_address()` is one free-text line; `address()` is separate fields; `district()` is an Ortsteil, a Landkreis is `COUNTY`. Coercion belongs to the concept (`coerce=` for provider-specific normalisation), never `str(x).strip()`.
+- **Alternative inputs:** one `alternatives([uprn()], [postcode(), house_number()])` param, no hand-rolled cross-field check.
+- **Waste types:** use canonical `WasteType`s; list a label in `type_value_map` only when the shared vocabulary can't resolve it. Never add a new `WasteType` or pick a type to satisfy an icon preference: use the nearest type and flag the gap under "Open questions" (users override icons in their own config).
+- **Errors:** skip a single malformed record (`None`), keep unknown labels verbatim (never collapse to `OTHER`), raise `ResponseShapeError` (declared shape or `min_*` counts) when the whole response changed; `RAISE_ON_EMPTY = True` for lookups; predefined exceptions only.
+- **No filtering options** (waste types, time frame): return everything; filtering is a framework feature.
+- **Migrations** of a legacy source are breaking (major): say so in the report; a replaced source gets a `DEPRECATIONS.md` row. Migrate the shared service, not a wrapper: split a client that GETs and parses in one method into a Retriever + Parser (see `abfall_neunkirchen_siegerland_de`, `abfallnavi_de`).
+- **Anti-patterns:** no `datetime.strptime`, no `requests`/`curl_cffi.Session` in the source (use `source.session` via a retriever), no hand-built `BeautifulSoup`, no `self._x = x` stash, no registry as a Python literal, no hand-rolled ArcGIS geocode+query.
+- Type-hint any function or method you write (pyright covers pipeline sources).
 
-- Subclass `BaseSource`. No module-level `fetch()`, no `ICON_MAP`.
-- **Declare `WASTE_TYPES` with what the source actually produces**, derived by replaying your recorded cassette. Do not rely on the auto-derivation: it reads only an explicit `type_value_map`, so it misses everything the shared vocabulary resolves, and `tests/test_declared_waste_types.py` fails that. A bare transformer with no map derives an empty list, which is allowed and honest, because nothing can be enumerated statically (it used to derive the whole `ALL_TYPES` catalogue and claim every canonical type; #7028 removed that). A `classify()`-based source has no derivation at all and must always declare.
-- **Do not write an `__init__`.** `BaseSource.__init__` accepts the `PARAMS` fields as keyword arguments, applies their declared defaults, validates them, and stores the result on `self.params`. `test_pipeline_sources_dont_redeclare_init` fails any source whose `__init__` only forwards its arguments to `super()`. Add one only to do real work, and if you do, it must still call `super().__init__(**kwargs)`.
-- Declare defaults in `PARAMS` (`text_field(..., default=...)`, `dropdown(..., default=...)`, `api_key(..., default=...)`, or `text_field(name, term=TERM, default=...)` to keep a standard concept's localised label), never in an `__init__` signature. Every field declared in `PARAMS` is a key in `self.params`: a defaulted field gets its default, any other field of a non-required param gets `None`. So a signature default of `None` adds nothing, and an optional field is safe to read as `self.params["x"]`.
-- **Bind the standard concept; never hand-write a label `field_terms.py` already defines.** `text_field("city", "City")` ships an English-only label when five languages exist, and `test_pipeline_sources_bind_standard_field_terms` rejects it. Use the factory (`city()`, `street()`, `house_number()`, `district()`, `street_address()`, `municipality()`, `location_id()`, `customer_number()`, …), or `text_field(name, term=TERM)` when the wire name is odd but the concept is standard. Keep a plain `text_field` label only for a genuinely provider-specific field (a bin rhythm, an opaque token).
-- Argument coercion belongs to the concept, not the source. `UPRN`, `HOUSE_NUMBER` and `ADDRESS` already coerce to a stripped string, so never write `str(uprn).strip()` or `address.strip()` in an `__init__`. For a normalisation specific to one provider, pass `coerce=` to `text_field`; if it repeats across providers, move it onto the `FieldTerm`.
-- `street_address()` is the single free-text address line; `address()` is the separate street / number / postcode inputs. `district()` is an `Ortsteil`; a `Landkreis` is `COUNTY`.
-- A retriever callable is invoked as `callable(**source.params)` and every declared field is a key, so a parameter default on the callable never fires. Handle the unset case in the body (`street or ""`), since an unset optional field arrives as `None`. Passing `None` into a query string serialises it as the text `None`.
-- Use the canonical `WasteType` values, never raw icons or `"mdi:..."` strings. Do not declare a per-source icon map; the icon comes from the type.
-- **Do not add a new `WasteType` yourself.** The catalogue is deliberately small. If the provider returns a genuinely new category that fits none of the canonical types and is general enough that other sources would use it, pick the nearest sensible type and flag the gap in the **Open questions for the contributor** section of your report. The contributor then opens an issue proposing the addition (name, MDI icon, two or three example providers); only after maintainer agreement does the catalogue gain it.
-- If the contributor (or a user) "just prefers" a different MDI icon for a waste type, they should use the per-user icon override in their YAML configuration (the `customise`-style override), not change the canonical default. Don't pick a non-canonical type to satisfy a stated preference.
-- Reach for a reusable service platform or shared YAML / EXTRA_INFO platform before writing new retrieval code.
-- For empty results on an address or lookup source, set `RAISE_ON_EMPTY = True` rather than returning `[]`. Where you raise explicitly, use the predefined exceptions from `waste_collection_schedule.exceptions` (`SourceArgumentNotFound`, `SourceArgumentNotFoundWithSuggestions`, `SourceArgumentExceptionMultiple`, etc.), never a bare `Exception`.
-- Follow the error-handling policy (`doc/contributing_source.md` "Error handling policy"): skip a single malformed record (return `None`), preserve an unknown waste-type label verbatim (never collapse to `OTHER`), and raise `ResponseShapeError` (via a declared response shape or a `min_*` count) when the provider's whole response shape has changed.
-- **Converting an existing legacy source to the pipeline is a breaking change** (it changes the waste-type labels), so it is a major-version change under the versioning policy (`doc/versioning.md`). Note it as breaking in the report so it is batched into a major release, and if it replaces/deprecates another source, follow the deprecation lifecycle and add a `DEPRECATIONS.md` row.
-- Do not add options to filter waste types or limit the time frame. Return all data for the entire available period; filtering is a framework feature.
-- No `if __name__ == "__main__":` blocks. No standalone-script boilerplate.
-- No hardcoded dates or schedules. Fetch live from the provider.
-- No dummy parameters (e.g. `_`) just to satisfy the config GUI.
-- Type-hint any function or method you do write; pyright covers pipeline sources.
-- **Do not reintroduce old-style habits inside the pipeline** (full list in `doc/contributing_source.md` "Anti-patterns"). No `datetime.strptime` (use `date_parsers.for_format(...)` / `from_epoch(...)` or `self.parse_date`); no `requests.get` / `curl_cffi.Session` in a source (use the default `http_get`, a configured retriever, or a named `Legacy*` one, all via `source.session`); no hand-built `BeautifulSoup` (use `HtmlParser`); no `self._x = x` stash that is read back unchanged (read `self.params["x"]`); never `EXTRA_INFO`, which is legacy-only and gated (use `REGIONS`); no provider registry as a Python literal with a hand-rolled comprehension turning it into Regions (use `regions.from_yaml` over `doc/regions/<source>.yaml`); prefer a configured retriever over a `retrieve` method that only injects params; when migrating a source built on a shared service, split the service into a retriever + parser rather than overriding `retrieve` to reissue its request (migration is a re-implementation, not a wrapper); for ArcGIS use the declarative `ArcGis*` retrievers/parsers, not a hand-rolled geocode+query.
+## Steps
 
-## Documentation page
-
-For a pipeline (BaseSource) source you do **not** write a doc page. CI generates `doc/source/<module>.md` from the class metadata (`TITLE`, `DESCRIPTION`, `URL`, `PARAMS`, `HOWTO`, the transformer's waste types) after merge. Set that metadata correctly and the generated page will be right. Make sure `HOWTO["en"]` gives clear instructions for finding the parameter values, since that text appears in both the UI and the generated page.
-
-Only a **legacy** module-level source still needs a hand-written `doc/source/<module>.md`. If you are editing such a source and it has no doc page, create one (Provider heading, configuration.yaml example, configuration variables, how-to, a worked example, and a bin-types table).
-
-## Step-by-step
-
-1. Confirm the recommendation is complete (module name, country code, parameters, data feed details, at least one test case). If anything's missing, ask the user.
-2. Check for a reusable service platform or shared YAML / EXTRA_INFO platform that already covers the provider before writing new retrieval code.
-3. Write the source `.py` file as a `BaseSource` subclass using the pipeline template. Declare the retrieve / parse / preprocess / transform steps from reusable components, shape the request on the retriever rather than in an `__init__`, and use a transformer (or `classify()`) rather than a hand-written `fetch()`.
-4. Encourage the contributor to add their GitHub handle to `SOURCE_CODEOWNERS` (a class attribute on a pipeline source, a module-level variable on a legacy source). Explain that this means they will be automatically notified and assigned on bug reports for their source. If they decline or are not present, leave the commented-out placeholder.
-5. Lint/format:
-   ```bash
-   ruff check --fix <source.py> <if you touched any other .py>
-   ruff format <source.py>
-   ```
-6. Run the structural tests:
-   ```bash
-   python -m pytest tests/test_source_components.py -q
-   pre-commit run --all-files
-   ```
-   This catches missing fields, invalid `COUNTRY` codes, malformed `EXTRA_INFO`, etc.
-7. Live-test against the test cases:
-   ```bash
-   cd custom_components/waste_collection_schedule/waste_collection_schedule/test
-   python test_sources.py -s <module> -l
-   ```
-   Expect non-empty `Collection` lists. Iterate if the parser is off. For address or lookup sources, confirm `RAISE_ON_EMPTY = True` raises a clear error on bad input rather than returning an empty list.
-8. Record the offline fixture (required coverage). Once it works live, record a cassette so the gating CI exercises the source offline:
-   ```bash
-   python tests/record_fixtures.py <module>
-   ```
-   Commit the recorded `tests/fixtures/<module>/*.json`. Every source must ship one covering its `TEST_CASES`; a shared-service source keeps one per distinct response shape. If a case genuinely cannot be recorded (CI-gated/rate-limited provider), mark it live-only and call it out in the report rather than dropping coverage. See `doc/contributing_source.md` "Offline fixtures".
-9. Type-check before handing back. `pyright` covers pipeline sources, so run the full pre-commit set (or at least mypy and pyright):
-   ```bash
-   pre-commit run --all-files
-   ```
+1. Confirm the recommendation is complete (module, country, params, feed, ≥1 test case); ask if not.
+2. Check the shared platforms before writing retrieval code.
+3. Write the source from the template; encourage `SOURCE_CODEOWNERS` (leave the commented placeholder if declined).
+4. `ruff check --fix <file>` and `ruff format <file>`.
+5. Live test: `cd custom_components/waste_collection_schedule/waste_collection_schedule/test && python test_sources.py -s <module> -l`. Expect non-empty lists; confirm bad input raises.
+6. Record cassettes: `python tests/record_fixtures.py <module>` (one per `TEST_CASES` entry). A case that genuinely can't be recorded: call it out in the report.
+7. Replay the cassette to set `WASTE_TYPES`, then run `python -m pytest tests/test_source_components.py tests/test_new_architecture.py tests/test_offline_fixtures.py tests/test_declared_waste_types.py -q` and `pre-commit run --all-files`.
 
 ## Output
-
-Return a structured report:
 
 ```
 ## Implementation Report
 
 **Module:** <module>
 **Country:** `<code>`
-**Approach:** <ICS YAML / JSON API / HTML scrape / PDF / location-only edit>
+**Approach:** <ICS YAML / JSON API / HTML scrape / PDF / service platform / location-only edit>
 
 ### Files created or changed
 - `<path>`: <one-line summary>
-- `<path>`: <one-line summary>
 
 ### Test results
-- pytest `tests/test_source_components.py`: <pass/fail summary>
-- `test_sources.py -s <module> -l`: <count of collections per test case, or first error>
+- pytest: <pass/fail summary>
+- `test_sources.py -s <module> -l`: <collections per test case, or first error>
+- cassettes: <recorded cases>
 
 ### Open questions for the contributor
-[Any decisions deferred, e.g. "couldn't determine the canonical WasteType for 'Brown bin', left as GENERAL_WASTE in type_value_map; flag for a possible catalogue addition"]
+[Deferred decisions, e.g. a waste type with no canonical match]
 
 ### Next steps for the contributor
-1. Eyeball the diff: `git diff`
-2. Stage and commit on a feature branch (do NOT push to your fork's master)
-3. Push to your fork and open a PR against `mampfes/hacs_waste_collection_schedule:master`
-4. Title format: `Add source: <Provider Name> (<module>)`
+1. Review `git diff`
+2. Commit on a feature branch based on `upstream/release/3.0.0`
+3. Push to your fork, open a PR against `mampfes/hacs_waste_collection_schedule:release/3.0.0`
+4. Title: `Add source: <Provider Name> (<module>)`
 ```
 
-## What you DON'T do
-
-- You do not run `update_docu_links.py`. That runs in CI post-merge.
-- You do not commit, push, or open a PR. The contributor does that, after reviewing your work.
-- You do not modify generated files (README.md, info.md, sources.json, translation JSONs, doc/ics/*.md). Revert any accidental changes with `git checkout upstream/master -- <file>`.
+You do not run `update_docu_links.py`, edit generated files, commit, push, or open PRs.
