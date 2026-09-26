@@ -25,6 +25,7 @@ import re
 from collections.abc import Iterable, Iterator
 from datetime import date, datetime, timedelta
 from typing import TYPE_CHECKING, ClassVar
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -721,6 +722,75 @@ class RiSKommunalRetriever(RetrieverFunc):
         raise SourceArgumentNotFoundWithSuggestions(
             self.hausnummer_param or "hausnummer", hausnummer, labels
         )
+
+
+def address_selection(
+    html: str,
+    street: str,
+    house_number: str,
+    *,
+    street_argument: str = "strasse",
+    house_argument: str = "hausnummer",
+) -> tuple[int, str, str]:
+    """``(street id, house-number id, typids)`` off the address picker page.
+
+    Every RiSKommunal install renders the same address picker: a street
+    ``<select>`` and the ``strassenArr`` array listing each street's house
+    numbers with the ``typids`` value that narrows the calendar to that
+    address. The two ids are what an install that keys its calendar off a
+    selection cookie (``riscms_muellkalender=<street>_<number>``) needs. Names
+    compare case- and space-insensitively, as :class:`RiSKommunalRetriever`
+    compares them.
+
+    A pure reader, for a :class:`~waste_collection_schedule.retrievers.Lookup`
+    ``pick``: it raises the argument errors with the options the page offers.
+    """
+    street_map = RiSKommunalSource._parse_street_dropdown(html)
+    target = str(street or "").casefold().replace(" ", "")
+    street_id = next(
+        (
+            sid
+            for name, sid in street_map.items()
+            if name.casefold().replace(" ", "") == target
+        ),
+        None,
+    )
+    if street_id is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            street_argument, street, sorted(street_map)
+        )
+
+    house = str(house_number or "").casefold()
+    labels: list[str] = []
+    for entry in RiSKommunalSource._parse_strassen_arr(html):
+        if entry[0] != street_id:
+            continue
+        for hnr in entry[1]:
+            label = str(hnr[1])
+            labels.append(label)
+            if label.casefold() == house:
+                return street_id, hnr[0], hnr[2]
+        break
+    raise SourceArgumentNotFoundWithSuggestions(house_argument, house_number, labels)
+
+
+def ical_download_link(html: str, base_url: str) -> str | None:
+    """The page's tracked "iCal/Kalender" download link, absolute, if it has one.
+
+    The CMS marks every file download with a ``piwik_download_tracker`` anchor
+    and names the calendar exports ``data-trackingtyp="iCal/Kalender"``, which
+    is how an install that publishes one iCal per waste round links each one
+    from that round's page.
+    """
+    link = BeautifulSoup(html, "html.parser").find(
+        "a",
+        {"class": "piwik_download_tracker", "data-trackingtyp": "iCal/Kalender"},
+    )
+    if isinstance(link, Tag):
+        href = link.get("href")
+        if isinstance(href, str):
+            return urljoin(base_url, href)
+    return None
 
 
 class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):

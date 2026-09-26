@@ -12,7 +12,12 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import (
+    Lookup,
+    LookupChainRetriever,
+    Request,
+    detached_source,
+)
 from waste_collection_schedule.transformers import JsonTransformer
 
 # Demonstrates: the config_params.dependent_select(parent, child) PARAM and the
@@ -118,15 +123,26 @@ def _suggestions(value: str, candidates: list[str]) -> list[str]:
     return _deduplicate(starts + contains + unique)[:20]
 
 
-def _gemeinden(session) -> list[dict]:
-    """Fetch the full municipality list (live)."""
-    resp = session.post(
-        f"{API_BASE_URL}/gemeinden.php",
-        params={"apiKEY": API_KEY},
-        data={"lat": SEARCH_LATITUDE, "long": SEARCH_LONGITUDE, "apiKEY": API_KEY},
-        timeout=30,
-    )
-    payload = resp.json()
+# The platform's two lookups, shared by the fetch and the config flow's
+# dropdowns. Neither reply is status-checked: the API reports failure in its
+# JSON "code" field, which the readers below check.
+_MUNICIPALITIES = Request(
+    f"{API_BASE_URL}/gemeinden.php",
+    method="POST",
+    params={"apiKEY": API_KEY},
+    data={"lat": SEARCH_LATITUDE, "long": SEARCH_LONGITUDE, "apiKEY": API_KEY},
+    raise_for_status=False,
+)
+_STREETS = Request(
+    f"{API_BASE_URL}/wastesetup_v2.php",
+    params=lambda gemeinde_id, *_, **__: {"GemeindeID": gemeinde_id, "apiKEY": API_KEY},
+    raise_for_status=False,
+)
+
+
+def _gemeinden(response) -> list[dict]:
+    """The full municipality list off a gemeinden.php reply."""
+    payload = response.json()
     if str(payload.get("code", "")).upper() != "OK":
         raise SourceArgumentNotFoundWithSuggestions("gemeinde", "", [])
     reports = payload.get("reports")
@@ -135,13 +151,12 @@ def _gemeinden(session) -> list[dict]:
     )
 
 
-def _resolve_gemeinde_id(session, gemeinde: str) -> str:
-    """Resolve a municipality name to its GemeindeID (live)."""
+def _resolve_gemeinde_id(reports: list[dict], gemeinde: str) -> str:
+    """Resolve a municipality name to its GemeindeID."""
     if not gemeinde:
         raise SourceArgumentRequired(
             "gemeinde", "or provide 'gemeinde_id' as an alternative."
         )
-    reports = _gemeinden(session)
     all_names = [_clean(r.get("Gemeindename")) for r in reports if r.get("GemeindeID")]
     matches = [
         (
@@ -168,14 +183,9 @@ def _resolve_gemeinde_id(session, gemeinde: str) -> str:
     )
 
 
-def _streets(session, gemeinde_id: str) -> list[tuple[str, str]]:
-    """Fetch (street name, streetID) pairs for a municipality (live)."""
-    resp = session.get(
-        f"{API_BASE_URL}/wastesetup_v2.php",
-        params={"GemeindeID": gemeinde_id, "apiKEY": API_KEY},
-        timeout=30,
-    )
-    payload = resp.json()
+def _streets(response) -> list[tuple[str, str]]:
+    """(street name, streetID) pairs off a wastesetup_v2.php reply."""
+    payload = response.json()
     if str(payload.get("code", "")).upper() != "OK":
         raise SourceArgumentNotFoundWithSuggestions("strasse", "", [])
     streets = payload.get("strassen")
@@ -192,9 +202,10 @@ def _streets(session, gemeinde_id: str) -> list[tuple[str, str]]:
     return pairs
 
 
-def _resolve_street_id(session, gemeinde_id: str, strasse: str, street_id: str) -> str:
+def _resolve_street_id(
+    pairs: list[tuple[str, str]], strasse: str, street_id: str
+) -> str:
     """Resolve a street name (or validate a street_id) within a municipality."""
-    pairs = _streets(session, gemeinde_id)
     if street_id:
         if any(sid == street_id for _, sid in pairs):
             return street_id
@@ -221,16 +232,14 @@ def _resolve_street_id(session, gemeinde_id: str, strasse: str, street_id: str) 
     )
 
 
-def _gemeinde_step(source, _keys) -> str:
+def _pick_gemeinde(response, gemeinde=None, **_) -> str:
     """First link of the lookup chain: municipality name -> GemeindeID."""
-    return _resolve_gemeinde_id(source.session, _clean(source.params.get("gemeinde")))
+    return _resolve_gemeinde_id(_gemeinden(response), _clean(gemeinde))
 
 
-def _street_step(source, keys) -> str:
+def _pick_street(response, gemeinde_id, *, strasse=None, **_) -> str:
     """Second link: street name -> streetID, within the resolved municipality."""
-    return _resolve_street_id(
-        source.session, keys[0], _clean(source.params.get("strasse")), ""
-    )
+    return _resolve_street_id(_streets(response), _clean(strasse), "")
 
 
 @final
@@ -267,7 +276,10 @@ class Source(BaseSource):
     }
 
     retrieve = LookupChainRetriever(
-        steps=(_gemeinde_step, _street_step),
+        steps=(
+            Lookup(_MUNICIPALITIES, pick=_pick_gemeinde),
+            Lookup(_STREETS, pick=_pick_street),
+        ),
         url=f"{API_BASE_URL}/content2.php",
         params=lambda gemeinde_id, street_id, **_: {
             "GemeindeID": gemeinde_id,
@@ -299,10 +311,8 @@ class Source(BaseSource):
         gemeinden.php returns every municipality (sorted by distance from a
         fixed point), so this is the complete option list.
         """
-        from curl_cffi import requests as _cffi
-
-        session = _cffi.Session(impersonate="chrome")
-        names = [_clean(r.get("Gemeindename")) for r in _gemeinden(session)]
+        reports = _gemeinden(_MUNICIPALITIES(detached_source()))
+        names = [_clean(r.get("Gemeindename")) for r in reports]
         return _deduplicate(sorted(n for n in names if n))
 
     @classmethod
@@ -312,10 +322,13 @@ class Source(BaseSource):
         Implements the config_params.dependent_select() contract: the framework
         calls this with the chosen parent (Gemeinde) value to populate the child
         (Strasse) selector. Resolves the municipality name to its GemeindeID,
-        then fetches that municipality's streets live.
+        then fetches that municipality's streets live, through the same
+        declared requests as the fetch.
         """
-        from curl_cffi import requests as _cffi
-
-        session = _cffi.Session(impersonate="chrome")
-        gemeinde_id = _resolve_gemeinde_id(session, _clean(parent_value))
-        return _deduplicate([name for name, _ in _streets(session, gemeinde_id)])
+        walker = detached_source()
+        gemeinde_id = _resolve_gemeinde_id(
+            _gemeinden(_MUNICIPALITIES(walker)), _clean(parent_value)
+        )
+        return _deduplicate(
+            [name for name, _ in _streets(_STREETS(walker, gemeinde_id))]
+        )

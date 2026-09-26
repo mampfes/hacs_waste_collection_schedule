@@ -1,26 +1,32 @@
 from typing import ClassVar, final
 from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import EachResponse, IcsParser
-from waste_collection_schedule.retrievers import FanOutRetriever
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.retrievers import (
+    Chain,
+    FanOutRetriever,
+    Lookup,
+    Request,
+)
+from waste_collection_schedule.service import RiSKommunalAT as riskommunal
 from waste_collection_schedule.transformers import ICSTransformer
 
 # A RiSKommunal municipality whose calendar is not exposed through the
 # platform's usual kalender.aspx table/list rendering at all. Korneuburg
 # instead resolves a "Teilgebiet" (subarea, 1-4) from the address via the same
 # street-dropdown + strassenArr address picker every RiSKommunal install
-# exposes (so RiSKommunalSource's parsing of those is reused rather than
-# re-implemented), then scrapes four fixed per-subarea pages for a
-# piwik_download_tracker iCal link each, and finally downloads those iCal
-# feeds. One feed per waste type is the shared FanOutRetriever's shape: the
-# address resolution is its `prepare`, the link scrape lists its targets, and
-# EachResponse folds the four calendars back into one record stream.
+# exposes (read by the platform's `address_selection`, not re-implemented),
+# then scrapes four fixed per-subarea pages for the CMS's tracked iCal download
+# link each (`ical_download_link`), and finally downloads those iCal feeds. One
+# feed per waste type is the shared FanOutRetriever's shape: the address
+# resolution and the four page reads are declared lookups chained as its
+# `prepare`, the links found are its targets, and EachResponse folds the four
+# calendars back into one record stream.
 
 _BASE_URL = "https://www.korneuburg.gv.at"
 _ADDRESS_URL = urljoin(_BASE_URL, "Rathaus/Buergerservice/Muellabfuhr")
@@ -63,101 +69,49 @@ def _extract_teilgebiet(soup: BeautifulSoup) -> str | None:
     return None
 
 
-def _resolve_teilgebiet(
-    source: BaseSource, session, cookies: dict[str, str]
-) -> tuple[str, dict[str, str]]:
-    """Resolve the Teilgebiet for the configured street/house number.
+def _cookies(address: "tuple | None") -> dict[str, str]:
+    """The consent cookie, plus the address selection once one is resolved."""
+    if address is None:
+        return dict(_BASE_COOKIES)
+    street_id, number_id, _typids = address
+    return dict(_BASE_COOKIES, riscms_muellkalender=f"{street_id}_{number_id}")
 
-    Reuses RiSKommunalSource's street-dropdown and strassenArr parsing (the
-    same address picker every RiSKommunal install exposes) to turn the
-    street/house number into a "typids" value and a selection cookie, then
-    scrapes the resulting overview page for its Teilgebiet label. Returns the
-    Teilgebiet plus the cookies to keep using for every later request (the
-    selection cookie the CMS expects to see from here on).
-    """
-    street_name = source.params["street_name"]
-    street_number = str(source.params["street_number"])
 
-    page = session.get(_ADDRESS_URL, cookies=cookies, timeout=source.TIMEOUT)
-    page.raise_for_status()
-    html = page.text
-
-    street_map = RiSKommunalSource._parse_street_dropdown(html)
-    street_id = street_map.get(street_name)
-    if street_id is None:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street_name", street_name, sorted(street_map)
-        )
-
-    number_id = None
-    typids = None
-    labels: list[str] = []
-    for entry in RiSKommunalSource._parse_strassen_arr(html):
-        if entry[0] != street_id:
-            continue
-        for hnr in entry[1]:
-            label = str(hnr[1])
-            labels.append(label)
-            if label == street_number:
-                number_id, typids = hnr[0], hnr[2]
-        break
-
-    if typids is None:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street_number", street_number, labels
-        )
-
-    cookies = dict(cookies, riscms_muellkalender=f"{street_id}_{number_id}")
-    overview = session.get(
-        _CALENDAR_URL,
-        cookies=cookies,
-        params={"sprache": "1", "menuonr": _MENUONR, "typids": typids},
-        timeout=source.TIMEOUT,
+def _pick_address(response, street_name: str, street_number, **_) -> tuple:
+    return riskommunal.address_selection(
+        response.text,
+        street_name,
+        str(street_number),
+        street_argument="street_name",
+        house_argument="street_number",
     )
-    overview.raise_for_status()
 
-    teilgebiet = _extract_teilgebiet(BeautifulSoup(overview.text, "html.parser"))
+
+def _pick_teilgebiet(response, address: tuple, *, street_number, **_) -> str:
+    teilgebiet = _extract_teilgebiet(BeautifulSoup(response.text, "html.parser"))
     if teilgebiet is None:
         raise SourceArgumentNotFoundWithSuggestions(
-            "street_number", street_number, labels
+            "street_number", str(street_number), []
         )
-    return teilgebiet, cookies
+    return teilgebiet
 
 
-def _region_ical_urls(session, teilgebiet: str, cookies: dict[str, str]) -> list[str]:
-    """Scrape each of a Teilgebiet's waste-type pages for its iCal link."""
-    urls = []
-    for path in _WASTE_TYPE_PATHS[teilgebiet]:
-        page = session.get(urljoin(_BASE_URL, path), cookies=cookies, timeout=30)
-        page.raise_for_status()
-        soup = BeautifulSoup(page.text, "html.parser")
-        link = soup.find(
-            "a",
-            {"class": "piwik_download_tracker", "data-trackingtyp": "iCal/Kalender"},
-        )
-        if isinstance(link, Tag):
-            href = link.get("href")
-            if isinstance(href, str):
-                urls.append(urljoin(_BASE_URL, href))
-    return urls
+def _round_page(index: int) -> Lookup:
+    """One of the Teilgebiet's four waste-round pages, read for its iCal link."""
+    return Lookup(
+        lambda address, area, *_, **__: urljoin(
+            _BASE_URL, _WASTE_TYPE_PATHS[area][index]
+        ),
+        cookies=lambda address, *_, **__: _cookies(address),
+        pick=lambda response, *_, **__: riskommunal.ical_download_link(
+            response.text, _BASE_URL
+        ),
+    )
 
 
-def _prepare_area(source: BaseSource) -> tuple[str, dict[str, str]]:
-    """Resolve the Teilgebiet (unless given directly) and the cookies to use."""
-    cookies = dict(_BASE_COOKIES)
-    teilgebiet = _valid_teilgebiet(source.params.get("teilgebiet"))
-    if teilgebiet is None:
-        teilgebiet, cookies = _resolve_teilgebiet(source, source.session, cookies)
-    return teilgebiet, cookies
-
-
-def _ical_urls(source: BaseSource, area: tuple[str, dict[str, str]]) -> list[str]:
-    teilgebiet, cookies = area
-    return _region_ical_urls(source.session, teilgebiet, cookies)
-
-
-def _fetch_ical(source: BaseSource, url: str, area: tuple[str, dict[str, str]]):
-    return source.session.get(url, cookies=area[1], timeout=source.TIMEOUT)
+def _ical_urls(source: BaseSource, context: tuple) -> list[str]:
+    """The fan-out's targets: the rounds whose page carried an iCal link."""
+    return [link for link in context[2:] if link]
 
 
 @final
@@ -191,7 +145,35 @@ class Source(BaseSource):
     )
 
     retrieve = FanOutRetriever(
-        prepare=_prepare_area, targets=_ical_urls, fetch=_fetch_ical
+        # A 1-4 "teilgebiet" given directly skips the address resolution.
+        prepare=Chain(
+            Lookup(
+                _ADDRESS_URL,
+                cookies=_BASE_COOKIES,
+                when=lambda teilgebiet=None, **_: _valid_teilgebiet(teilgebiet) is None,
+                pick=_pick_address,
+            ),
+            Lookup(
+                _CALENDAR_URL,
+                cookies=lambda address, **_: _cookies(address),
+                params=lambda address, **_: {
+                    "sprache": "1",
+                    "menuonr": _MENUONR,
+                    "typids": address[2],
+                },
+                given=lambda address, teilgebiet=None, **_: _valid_teilgebiet(
+                    teilgebiet
+                ),
+                pick=_pick_teilgebiet,
+            ),
+            *(_round_page(index) for index in range(4)),
+        ),
+        targets=_ical_urls,
+        fetch=Request(
+            lambda url, context, **_: url,
+            cookies=lambda url, context, **_: _cookies(context[0]),
+            raise_for_status=False,
+        ),
     )
     parse = EachResponse(IcsParser())
     transform = ICSTransformer()

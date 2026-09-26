@@ -8,7 +8,8 @@ number cascade -- and unioned into the full schedule. A year for which the
 configured zone/address isn't found is skipped (the site republishes with
 gaps around a boundary year) rather than failing the whole fetch: that is a
 FanOutRetriever whose ``prepare`` lists the published calendars and whose
-fetch returns ``None`` for a year this household is not in.
+fetch is a declared request, run after that year's own lookups, that is not
+made (and returns ``None``) for a year this household is not in.
 ``alternatives()`` now enforces that exactly one of
 the zone path or the city/street/house-number path is supplied, replacing the
 legacy code's crash (a bare ``None in ...`` TypeError) when neither was.
@@ -30,168 +31,138 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import EachResponse, IcsParser
 from waste_collection_schedule.regions import region
-from waste_collection_schedule.retrievers import FanOutRetriever
+from waste_collection_schedule.retrievers import FanOutRetriever, Lookup, Request
 from waste_collection_schedule.transformers import ICSTransformer
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def _fetch_by_zone(session, base_url: str, calendar_id, calendar_name, zone: str):
-    r = session.get(f"{base_url}/zones", params={"calendarId": calendar_id})
-    r.raise_for_status()
-    zones = r.json()
-    if not zones:
-        _LOGGER.warning(
-            "no zones found for calendar year %s, continuing with next calendar year ...",
-            calendar_name,
-        )
-        return None
-
-    zone_id = next((z["id"] for z in zones if zone in z["name"]), None)
-    if zone_id is None:
-        _LOGGER.warning(
-            "zone '%s' not found in calendar year %s, continuing with next calendar year ...",
-            zone,
-            calendar_name,
-        )
-        return None
-
-    r = session.get(
-        f"{base_url}/v2/export",
-        params={"calendarId": calendar_id, "zoneId": zone_id, "outputType": "ical"},
-    )
-    r.raise_for_status()
-    return r
+def _base(customer: str) -> str:
+    return f"https://services.infeo.at/awm/api/{customer}/wastecalendar"
 
 
-def _fetch_by_address(
-    session,
-    base_url: str,
-    calendar_id,
-    calendar_name,
-    city_name: str,
-    street_name: str,
-    housenumber: str,
-):
-    r = session.get(f"{base_url}/cities", params={"calendarId": calendar_id})
-    r.raise_for_status()
-    cities = r.json()
-    if not cities:
-        _LOGGER.warning(
-            "no cities found for calendar year %s, continuing with next calendar year ...",
-            calendar_name,
-        )
-        return None
-    city_id = next((c["id"] for c in cities if city_name in c["name"]), None)
-    if city_id is None:
-        _LOGGER.warning(
-            "city '%s' not found in calendar year %s, continuing with next calendar year ...",
-            city_name,
-            calendar_name,
-        )
-        return None
-
-    r = session.get(
-        f"{base_url}/streets",
-        params={"calendarId": calendar_id, "cityId": city_id},
-    )
-    r.raise_for_status()
-    streets = r.json()
-    if not streets:
-        _LOGGER.warning(
-            "no streets found for calendar year %s, continuing with next calendar year ...",
-            calendar_name,
-        )
-        return None
-    street_id = next((s["id"] for s in streets if street_name in s["name"]), None)
-    if street_id is None:
-        _LOGGER.warning(
-            "street '%s' not found in calendar year %s, continuing with next calendar year ...",
-            street_name,
-            calendar_name,
-        )
-        return None
-
-    r = session.get(
-        f"{base_url}/housenumbers",
-        params={"calendarId": calendar_id, "streetId": street_id},
-    )
-    r.raise_for_status()
-    housenumbers = r.json()
-    if not housenumbers:
-        _LOGGER.warning(
-            "no housenumbers found for calendar year %s, continuing with next calendar year ...",
-            calendar_name,
-        )
-        return None
-    # The API's "housenumbers" endpoint returns plain strings, not objects with
-    # their own id -- the configured value itself is the id once matched.
-    matched = next((hn for hn in housenumbers if housenumber in hn), None)
-    if matched is None:
-        _LOGGER.warning(
-            "housenumber '%s' not found in calendar year %s, continuing with next calendar year ...",
-            housenumber,
-            calendar_name,
-        )
-        return None
-
-    r = session.get(
-        f"{base_url}/v2/export",
-        params={
-            "calendarId": calendar_id,
-            "cityId": city_id,
-            "streetId": street_id,
-            "housenumber": housenumber,
-            "outputType": "ical",
-        },
-    )
-    r.raise_for_status()
-    return r
-
-
-def _published_calendars(source) -> tuple:
+def _published_years(response, customer: str, **_) -> list:
     """The customer's published calendar years, listed once."""
-    customer = source.params["customer"]
-    base_url = f"https://services.infeo.at/awm/api/{customer}/wastecalendar"
-
-    years_resp = source.session.get(
-        f"{base_url}/calendars", params={"showUnpublishedCalendars": "false"}
-    )
-    if years_resp.status_code == 500:
+    if response.status_code == 500:
         raise SourceArgumentNotFound("customer", customer)
-    years_resp.raise_for_status()
+    response.raise_for_status()
 
-    calendar_years = years_resp.json()
+    calendar_years = response.json()
     if not calendar_years:
         raise SourceArgumentNotFound(
             "customer", customer, "no calendars are published for this customer."
         )
-    return base_url, calendar_years
+    return calendar_years
 
 
-def _calendar_years(source, context: tuple) -> list:
-    return context[1]
+def _find(what: str, name=lambda entry: entry["name"], found=None):
+    """A pick: the id of the entry whose name contains the configured value.
+
+    ``None`` when the year does not list it: such a year is skipped, not
+    failed, because the site republishes with gaps around a boundary year.
+    """
+
+    def pick(response, calendar_year, *_keys, **params) -> object:
+        entries = response.json()
+        if not entries:
+            _LOGGER.warning(
+                "no %ss found for calendar year %s, continuing with next calendar year ...",
+                what,
+                calendar_year["name"],
+            )
+            return None
+        value = params[what]
+        match = next((entry for entry in entries if value in name(entry)), None)
+        if match is None:
+            _LOGGER.warning(
+                "%s '%s' not found in calendar year %s, continuing with next calendar year ...",
+                what,
+                value,
+                calendar_year["name"],
+            )
+            return None
+        return found(match) if found is not None else match["id"]
+
+    return pick
 
 
-def _fetch_calendar(source, calendar_year, context: tuple):
-    """One year's ICS, or None when this household is not in that year."""
-    base_url, _ = context
-    session = source.session
-    calendar_id = calendar_year["id"]
-    calendar_name = calendar_year["name"]
-
-    zone = source.params.get("zone")
-    if zone is not None:
-        return _fetch_by_zone(session, base_url, calendar_id, calendar_name, zone)
-    return _fetch_by_address(
-        session,
-        base_url,
-        calendar_id,
-        calendar_name,
-        source.params.get("city"),
-        source.params.get("street"),
-        source.params.get("housenumber"),
+def _level(path: str, what: str, *, params, when, **pick) -> Lookup:
+    """One per-year lookup below the customer's wastecalendar API."""
+    return Lookup(
+        lambda *_, customer, **__: f"{_base(customer)}/{path}",
+        params=params,
+        when=when,
+        pick=_find(what, **pick),
     )
+
+
+def _export_params(calendar_year, _years, zone_id, city_id, street_id, _number, **p):
+    if p.get("zone") is not None:
+        return {
+            "calendarId": calendar_year["id"],
+            "zoneId": zone_id,
+            "outputType": "ical",
+        }
+    return {
+        "calendarId": calendar_year["id"],
+        "cityId": city_id,
+        "streetId": street_id,
+        "housenumber": p.get("housenumber"),
+        "outputType": "ical",
+    }
+
+
+def _in_this_year(calendar_year, _years, zone_id, _city_id, _street_id, number, **p):
+    """Whether the zone (or the address, down to its house number) was found."""
+    return (zone_id if p.get("zone") is not None else number) is not None
+
+
+# One year's ICS, or None when this household is not in that year: either the
+# named zone, or the city -> street -> house number cascade, then the export.
+_CALENDAR = Request(
+    lambda *_, customer, **__: f"{_base(customer)}/v2/export",
+    before=(
+        _level(
+            "zones",
+            "zone",
+            params=lambda calendar_year, *_, **__: {"calendarId": calendar_year["id"]},
+            when=lambda *_, zone=None, **__: zone is not None,
+        ),
+        _level(
+            "cities",
+            "city",
+            params=lambda calendar_year, *_, **__: {"calendarId": calendar_year["id"]},
+            when=lambda *_, zone=None, **__: zone is None,
+        ),
+        _level(
+            "streets",
+            "street",
+            params=lambda calendar_year, _years, _zone, city_id, **_: {
+                "calendarId": calendar_year["id"],
+                "cityId": city_id,
+            },
+            when=lambda _year, _years, _zone, city_id, **_: city_id is not None,
+        ),
+        # The API's "housenumbers" endpoint returns plain strings, not objects
+        # with their own id -- the configured value itself is the id once
+        # matched.
+        _level(
+            "housenumbers",
+            "housenumber",
+            params=lambda calendar_year, _years, _zone, _city, street_id, **_: {
+                "calendarId": calendar_year["id"],
+                "streetId": street_id,
+            },
+            when=lambda _year, _years, _zone, _city, street_id, **_: (
+                street_id is not None
+            ),
+            name=lambda entry: entry,
+            found=lambda entry: entry,
+        ),
+    ),
+    when=_in_this_year,
+    params=_export_params,
+)
 
 
 @final
@@ -270,9 +241,14 @@ class Source(BaseSource):
     )
 
     retrieve = FanOutRetriever(
-        prepare=_published_calendars,
-        targets=_calendar_years,
-        fetch=_fetch_calendar,
+        prepare=Lookup(
+            lambda customer, **_: f"{_base(customer)}/calendars",
+            params={"showUnpublishedCalendars": "false"},
+            raise_for_status=False,
+            pick=_published_years,
+        ),
+        targets=lambda source, calendar_years: calendar_years,
+        fetch=_CALENDAR,
     )
 
     parse = EachResponse(IcsParser())
