@@ -1,80 +1,75 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "OZO Ostrava"
-DESCRIPTION = "Waste collection schedules for Ostrava and nearby municipalities"
-URL = "https://ozoostrava.cz"
-
-TEST_CASES = {
-    "Ostrava Poruba": {
-        "obec": "Ostrava",
-        "obvod": "Poruba",
-        "ulice": "Hlavní třída",
-        "cislo": "583",
-    },
-    "Hladké Životice": {
-        "obec": "Hladké Životice",
-        "obvod": "Hladké Životice",
-        "ulice": "Hlavní",
-        "cislo": "12",
-    },
-}
-
-ICON_MAP = {
-    "bio": Icons.ORGANIC,
-    "papír": Icons.PAPER,
-    "plasty": Icons.PLASTIC_PACKAGING,
-    "směsný odpad": Icons.GENERAL_WASTE,
-    "sklo": Icons.GLASS,
-    "singlestream": Icons.PLASTIC_PACKAGING,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import FlattenGroups
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, obec: str, obvod: str, ulice: str, cislo: str):
-        self._obec = obec
-        self._obvod = obvod
-        self._ulice = ulice
-        self._cislo = cislo
+@final
+class Source(BaseSource):
+    TITLE = "OZO Ostrava"
+    DESCRIPTION = "Waste collection schedules for Ostrava and nearby municipalities"
+    URL = "https://ozoostrava.cz"
+    COUNTRY = "cz"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.ORGANIC,
+    ]
 
-    def fetch(self):
-        params = {
-            "obec": self._obec,
-            "obvod": self._obvod,
-            "ulice": self._ulice,
-            "cisp": self._cislo,
+    TEST_CASES: ClassVar[dict] = {
+        "Ostrava Poruba": {
+            "obec": "Ostrava",
+            "obvod": "Poruba",
+            "ulice": "Hlavní třída",
+            "cislo": "583",
+        },
+        "Hladké Životice": {
+            "obec": "Hladké Životice",
+            "obvod": "Hladké Životice",
+            "ulice": "Hlavní",
+            "cislo": "12",
+        },
+    }
+
+    PARAMS = (
+        text_field("obec", "Obec (municipality)"),
+        text_field("obvod", "Obvod (district)"),
+        text_field("ulice", "Ulice (street)"),
+        text_field("cislo", "Číslo popisné (house number)"),
+    )
+
+    retrieve = HttpGetRetriever(
+        url="https://ozoostrava.cz/svoz2.php",
+        params=lambda obec, obvod, ulice, cislo, **_: {
+            "obec": obec,
+            "obvod": obvod,
+            "ulice": ulice,
+            "cisp": cislo,
             "druh": -1,
-        }
-
-        r = requests.get(f"{URL}/svoz2.php", params=params, timeout=30)
-        r.raise_for_status()
-
-        data = r.json()
-        entries = []
-
-        for date_str, waste in data.items():
-            try:
-                date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
-                waste_types = (
-                    list(waste.keys())
-                    if isinstance(waste, dict)
-                    else (waste if isinstance(waste, list) else [])
-                )
-
-                for type_name in waste_types:
-                    if type_name.lower() in ["velikonoce", "vánoce"]:
-                        continue
-
-                    entries.append(
-                        Collection(
-                            date=date_obj,
-                            t=type_name,
-                            icon=ICON_MAP.get(type_name.lower(), "mdi:trash-can"),
-                        )
-                    )
-            except (ValueError, TypeError):
-                continue
-
-        return entries
+        },
+    )
+    # {"2026-09-01": {"směsný odpad": ..., "sklo": ...}, ...}: each date names
+    # the rounds collected on it.
+    parse = parsers.JsonParser()
+    preprocess = FlattenGroups(with_key=True)
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "směsný odpad": wt.GENERAL_WASTE,
+            "sklo": wt.GLASS,
+            "plasty": wt.RECYCLABLES,
+            "papír": wt.PAPER,
+            "bioodpad": wt.ORGANIC,
+            # Holiday notices, not collections.
+            "velikonoce": None,
+            "vánoce": None,
+        },
+    )

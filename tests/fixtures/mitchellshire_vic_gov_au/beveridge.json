@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search b13e1282f4",
+      "method": "GET",
+      "url": "https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search",
+      "final_url": "https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search?lat=-37.48012709087705&lng=144.94518706976186",
+      "body": "{\"params\":[[\"lat\",\"-37.48012709087705\"],[\"lng\",\"144.94518706976186\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Sun, 27 Sep 2026 18:12:55 GMT",
+        "content-encoding": "gzip",
+        "x-envoy-upstream-service-time": "1635",
+        "server": "envoy",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-store",
+        "x-powered-by": "Craft CMS",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "strict-transport-security": "max-age=63072000; includeSubDomains",
+        "content-security-policy": "upgrade-insecure-requests",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 3b8bad63303b573ea6847cf9718f6a40.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P5",
+        "x-amz-cf-id": "FBkK8ar0YyJIeMXtkDmeNrHr0G16iDYrYdMygeRvN0M9I0eUvjELww=="
+      },
+      "content_b64": "eyJkYXRhIjpbeyJ0aXRsZSI6IkdlbmVyYWwgUnViYmlzaCIsImNvbG9yIjoicmVkIiwiY29sbGVjdGlvbkRhdGVzIjpbeyJkYXRlIjoiMjAyNi0xMC0wMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0xNSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0yOSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0xMiIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0yNiIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0xMCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0yNCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0wNyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0yMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMi0wNCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMi0xOCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMy0wNCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMy0xOCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNC0wMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNC0xNSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNC0yOSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNS0xMyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNS0yNyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wNi0xMCIsImRheU9mV2VlayI6IlRodXJzZGF5In1dLCJpbnRlcnZhbHMiOiJGb3J0bmlnaHRseSIsImlzUmVjdXJyaW5nIjp0cnVlLCJkZXNjcmlwdGlvbiI6IjEgT2N0LCB1cGNvbWluZyAxNSBPY3QifSx7InRpdGxlIjoiTWl4ZWQgUmVjeWNsaW5nIiwiY29sb3IiOiJ5ZWxsb3ciLCJjb2xsZWN0aW9uRGF0ZXMiOlt7ImRhdGUiOiIyMDI2LTEwLTA4IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTEwLTIyIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTExLTA1IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTExLTE5IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTEyLTAzIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTEyLTE3IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTEyLTMxIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTAxLTE0IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTAxLTI4IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifV0sImludGVydmFscyI6IkZvcnRuaWdodGx5IiwiaXNSZWN1cnJpbmciOnRydWUsImRlc2NyaXB0aW9uIjoiOCBPY3QsIHVwY29taW5nIDIyIE9jdCJ9LHsidGl0bGUiOiJGb29kIGFuZCBHYXJkZW4gT3JnYW5pY3MiLCJjb2xvciI6ImdyZWVuIiwiY29sbGVjdGlvbkRhdGVzIjpbeyJkYXRlIjoiMjAyNi0xMC0wMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0wOCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0xNSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0yMiIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMC0yOSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0wNSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0xMiIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0xOSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMS0yNiIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0wMyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0xMCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0xNyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0yNCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNi0xMi0zMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0wNyIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0xNCIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0yMSIsImRheU9mV2VlayI6IlRodXJzZGF5In0seyJkYXRlIjoiMjAyNy0wMS0yOCIsImRheU9mV2VlayI6IlRodXJzZGF5In1dLCJpbnRlcnZhbHMiOiJXZWVrbHkiLCJpc1JlY3VycmluZyI6dHJ1ZSwiZGVzY3JpcHRpb24iOiIxIE9jdCwgdXBjb21pbmcgOCBPY3QifSx7InRpdGxlIjoiR2xhc3MgUmVjeWNsaW5nIiwiY29sb3IiOiJwdXJwbGUiLCJjb2xsZWN0aW9uRGF0ZXMiOlt7ImRhdGUiOiIyMDI2LTEwLTIyIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTExLTE5IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI2LTEyLTE3IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTAxLTE0IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTAyLTExIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTAzLTExIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTA0LTA4IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTA1LTA2IiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifSx7ImRhdGUiOiIyMDI3LTA2LTAzIiwiZGF5T2ZXZWVrIjoiVGh1cnNkYXkifV0sImludGVydmFscyI6Ik1vbnRobHkiLCJpc1JlY3VycmluZyI6dHJ1ZSwiZGVzY3JpcHRpb24iOiIyMiBPY3QsIHVwY29taW5nIDE5IE5vdiJ9XSwicmVzdWx0Ijoic3VjY2VzcyJ9"
+    }
+  ]
+}

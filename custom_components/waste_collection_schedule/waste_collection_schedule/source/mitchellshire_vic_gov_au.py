@@ -1,70 +1,51 @@
-import datetime
-import logging
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Mitchell Shire Council"
-URL = "https://www.mitchellshire.vic.gov.au"
-DESCRIPTION = "Source for Mitchell Shire Council, Victoria, Australia."
-
-# Coordinates can be found by right-clicking your address in Google Maps and
-# selecting "What's here?" — copy the lat/lon values shown.
-TEST_CASES = {
-    "Wallan": {
-        "lat": -37.4195459,
-        "lon": 144.9592853,
-    },
-    "Beveridge": {
-        "lat": -37.48012709087705,
-        "lon": 144.94518706976186,
-    },
-    "McDonalds Wallan": {"lat": -37.41290975665613, "lon": 144.97998167557827},
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-API_URL = "https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search"
-
-# Map bin title to an MDI icon. The API also provides a `color` field
-# (red/yellow/green/purple) which matches the physical bin lid colours.
-ICON_MAP = {
-    "General Rubbish": Icons.GENERAL_WASTE,
-    "Mixed Recycling": Icons.RECYCLING,
-    "Food and Garden Organics": Icons.BIO_KITCHEN,
-    "Glass Recycling": Icons.GLASS,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import coords
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, lat: float, lon: float):
-        self._lat = lat
-        self._lon = lon
+@final
+class Source(BaseSource):
+    TITLE = "Mitchell Shire Council"
+    DESCRIPTION = "Source for Mitchell Shire Council, Victoria, Australia."
+    URL = "https://www.mitchellshire.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GLASS,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(
-            API_URL,
-            params={"lat": self._lat, "lng": self._lon},
-            timeout=30,
-        )
-        r.raise_for_status()
-        data = r.json()
+    TEST_CASES: ClassVar[dict] = {
+        "Wallan": {"lat": -37.4195459, "lon": 144.9592853},
+        "Beveridge": {"lat": -37.48012709087705, "lon": 144.94518706976186},
+        "McDonalds Wallan": {"lat": -37.41290975665613, "lon": 144.97998167557827},
+    }
 
-        if data.get("result") != "success":
-            raise ValueError(f"Unexpected API result: {data.get('result')}")
+    PARAMS = (coords(),)
 
-        entries = []
-        for bin_type in data.get("data", []):
-            title = bin_type.get("title", "Unknown")
-            icon = ICON_MAP.get(title)
-
-            for item in bin_type.get("collectionDates", []):
-                try:
-                    date = datetime.datetime.strptime(item["date"], "%Y-%m-%d").date()
-                except (ValueError, KeyError) as e:
-                    _LOGGER.warning("Could not parse date %s: %s", item, e)
-                    continue
-
-                entries.append(Collection(date=date, t=title, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search",
+        params=lambda lat, lon, **_: {"lat": lat, "lng": lon},
+    )
+    parse = parsers.JsonParser("data", expected_values=None)
+    # Each bin lists its collection dates.
+    preprocess = ExplodeList("collectionDates", into="collection")
+    transform = JsonTransformer(
+        date_key=lambda record: record["collection"]["date"],
+        type_key="title",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "General Rubbish": wt.GENERAL_WASTE,
+            "Mixed Recycling": wt.RECYCLABLES,
+            "Food and Garden Organics": wt.ORGANIC,
+            "Glass Recycling": wt.GLASS,
+        },
+    )
