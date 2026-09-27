@@ -1,15 +1,17 @@
-# Stoke-on-Trent Council
+# Stoke-on-Trent
 
-Support for schedules provided by [Stoke-on-Trent Council](https://stoke.gov.uk/)
+Support for schedules provided by [Stoke-on-Trent](https://www.stoke.gov.uk/).
+
+Source for Stoke-on-Trent
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stoke_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,18 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-This is required to unambiguously identify the property.
-
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stoke_gov_uk
       args:
-        uprn: "100060685712"
+        uprn: '3455011383'
 ```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

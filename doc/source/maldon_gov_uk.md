@@ -1,18 +1,17 @@
 # Maldon District Council
 
-Support for schedules provided by [Maldon District Council](https://maldon.suez.co.uk/maldon/AddressLookup/LookupAddresses), serving the district of Maldon, Essex, UK.
+Support for schedules provided by [Maldon District Council](https://www.maldon.gov.uk/).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new Mid Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for www.maldon.gov.uk services for Maldon, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: maldon_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -24,14 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: maldon_gov_uk
       args:
-        uprn: "200000917928"
+        uprn: '200000917928'
 ```
-
-## How to get the uprn argument above
-
-The UPRN code can be found by entering your postcode or address on the
-[Maldon District Council address lookup page
-](https://maldon.suez.co.uk/maldon/AddressLookup/LookupAddresses). Enter your postcode and click 'lookup address', then select your address from the drop down list and click 'Next'. Look at the web address (in your browsers address bar) of the page you are now on and it will look like https://maldon.suez.co.uk/maldon/ServiceSummary?uprn=YOURUPRNHERE, the numbers after 'uprn=' are your addresses's UPRN use this in your config.
