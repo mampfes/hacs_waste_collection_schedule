@@ -1643,3 +1643,27 @@ def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
         "Something new",
     ]
     assert entries[1].icon == Icons.GLASS
+
+
+def test_tommekalender_parser_uses_upstream_year_across_new_year() -> None:
+    from datetime import date
+    from types import SimpleNamespace
+
+    from waste_collection_schedule.service.Tommekalender import TommekalenderParser
+
+    response = SimpleNamespace(
+        text=(
+            '<tbody data-month="12-2026">'
+            '<tr class="waste-calendar__item"><td>30.12 - onsdag</td>'
+            '<td><img title="Restavfall"></td></tr></tbody>'
+            '<tbody data-month="1-2027">'
+            '<tr class="waste-calendar__item"><td>06.01 - onsdag</td>'
+            '<td><img title="Papp/papir"></td></tr></tbody>'
+        ),
+        raise_for_status=lambda: None,
+    )
+
+    assert TommekalenderParser()(response) == [
+        (date(2026, 12, 30), "Restavfall"),
+        (date(2027, 1, 6), "Papp/papir"),
+    ]
