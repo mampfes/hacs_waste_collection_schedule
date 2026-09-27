@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://ozoostrava.cz/svoz2.php 199f57290f",
+      "method": "GET",
+      "url": "https://ozoostrava.cz/svoz2.php",
+      "final_url": "https://ozoostrava.cz/svoz2.php?obec=Hladk%C3%A9+%C5%BDivotice&obvod=Hladk%C3%A9+%C5%BDivotice&ulice=Hlavn%C3%AD&cisp=12&druh=-1",
+      "body": "{\"params\":[[\"cisp\",\"12\"],[\"druh\",\"-1\"],[\"obec\",\"Hladk\u00e9 \u017divotice\"],[\"obvod\",\"Hladk\u00e9 \u017divotice\"],[\"ulice\",\"Hlavn\u00ed\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "https://ozoapka.ozoostrava.cz",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "313",
+        "content-type": "text/plain; charset=utf-8",
+        "date": "Sun, 27 Sep 2026 18:12:56 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "eyIyMDI2LTA5LTAyIjp7InNtXHUwMTFic25cdTAwZmQgb2RwYWQiOiJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIn0sIjIwMjYtMDktMTYiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNi0wOS0zMCI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI2LTA0LTA2Ijp7IlZlbGlrb25vY2UiOiJWZWxpa29ub2NlIn0sIjIwMjYtMDktMDkiOnsicGFwXHUwMGVkciI6InBhcFx1MDBlZHIifSwiMjAyNi0wOS0yMyI6eyJwbGFzdHkiOiJwbGFzdHkifSwiMjAyNi0xMC0wNyI6eyJwYXBcdTAwZWRyIjoicGFwXHUwMGVkciJ9LCIyMDI2LTEwLTE0Ijp7InNtXHUwMTFic25cdTAwZmQgb2RwYWQiOiJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIn0sIjIwMjYtMTAtMjgiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNi0xMC0yMSI6eyJwbGFzdHkiOiJwbGFzdHkifSwiMjAyNi0xMS0wNCI6eyJwYXBcdTAwZWRyIjoicGFwXHUwMGVkciJ9LCIyMDI2LTExLTExIjp7InNtXHUwMTFic25cdTAwZmQgb2RwYWQiOiJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIn0sIjIwMjYtMTEtMjUiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNi0xMS0xOCI6eyJwbGFzdHkiOiJwbGFzdHkifSwiMjAyNi0xMi0wMiI6eyJwYXBcdTAwZWRyIjoicGFwXHUwMGVkciJ9LCIyMDI2LTEyLTMwIjp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjYtMTItMDkiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNi0xMi0yMyI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI2LTEyLTE2Ijp7InBsYXN0eSI6InBsYXN0eSJ9LCIyMDI3LTAxLTA2Ijp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjctMDEtMTMiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNy0wMS0yNyI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTAxLTIwIjp7InBsYXN0eSI6InBsYXN0eSJ9LCIyMDI3LTAyLTAzIjp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjctMDItMTAiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNy0wMi0yNCI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTAyLTE3Ijp7InBsYXN0eSI6InBsYXN0eSJ9LCIyMDI3LTAzLTAzIjp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjctMDMtMzEiOnsicGFwXHUwMGVkciI6InBhcFx1MDBlZHIifSwiMjAyNy0wMy0xMCI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTAzLTI0Ijp7InNtXHUwMTFic25cdTAwZmQgb2RwYWQiOiJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIn0sIjIwMjctMDMtMTciOnsicGxhc3R5IjoicGxhc3R5In0sIjIwMjctMDQtMDciOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNy0wNC0yMSI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTA0LTE0Ijp7InBsYXN0eSI6InBsYXN0eSJ9LCIyMDI3LTA0LTI4Ijp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjctMDUtMDUiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNy0wNS0xOSI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTA1LTEyIjp7InBsYXN0eSI6InBsYXN0eSJ9LCIyMDI3LTA1LTI2Ijp7InBhcFx1MDBlZHIiOiJwYXBcdTAwZWRyIn0sIjIwMjctMDYtMDIiOnsic21cdTAxMWJzblx1MDBmZCBvZHBhZCI6InNtXHUwMTFic25cdTAwZmQgb2RwYWQifSwiMjAyNy0wNi0xNiI6eyJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIjoic21cdTAxMWJzblx1MDBmZCBvZHBhZCJ9LCIyMDI3LTA2LTMwIjp7InNtXHUwMTFic25cdTAwZmQgb2RwYWQiOiJzbVx1MDExYnNuXHUwMGZkIG9kcGFkIn0sIjIwMjctMDYtMDkiOnsicGxhc3R5IjoicGxhc3R5In0sIjIwMjctMDYtMjMiOnsicGFwXHUwMGVkciI6InBhcFx1MDBlZHIifX0="
+    }
+  ]
+}

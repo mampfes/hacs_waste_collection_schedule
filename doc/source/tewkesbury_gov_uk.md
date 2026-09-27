@@ -1,32 +1,34 @@
 # Tewkesbury Borough Council
 
-Support for upcoming schedules provided by [Tewkesbury Borough Council](https://tewkesbury.gov.uk/services/waste-and-recycling/), serving Tewkesbury (UK) and areas of North Gloucestershire.
+Support for schedules provided by [Tewkesbury Borough Council](https://www.tewkesbury.gov.uk).
+
+Home waste collection schedule for Tewkesbury Borough Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tewkesbury_gov_uk
       args:
-        uprn: UNIQUE PROPERTY REFERENCE NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**UPRN**  
+**uprn**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tewkesbury_gov_uk
       args:
         uprn: 100120544973
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Enter your UPRN; you can look it up on https://www.findmyaddress.co.uk/.

@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "POST https://www.wealden.gov.uk/wp-admin/admin-ajax.php f3023fde2a",
+      "method": "POST",
+      "url": "https://www.wealden.gov.uk/wp-admin/admin-ajax.php",
+      "final_url": "https://www.wealden.gov.uk/wp-admin/admin-ajax.php",
+      "body": "{\"body\":[[\"action\",\"wealden_get_collections_for_uprn\"],[\"uprn\",\"200001678582\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 18:13:10 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "content-length": "301",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "content-encoding": "gzip",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "set-cookie": "c_postcode=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0, ARRAffinity=81bec48ed5d69dce479b5ed5a221ae9b617e62893c84319f601896ac84876e44;Path=/;HttpOnly;Secure;Domain=www.wealden.gov.uk, ARRAffinitySameSite=81bec48ed5d69dce479b5ed5a221ae9b617e62893c84319f601896ac84876e44;Path=/;HttpOnly;SameSite=None;Secure;Domain=www.wealden.gov.uk",
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-robots-tag": "noindex",
+        "x-content-type-options": "nosniff, nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin, no-referrer-when-downgrade",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": ", ",
+        "x-xss-protection": "1; mode=block",
+        "permissions-policy": "geolocation=(self), microphone=()",
+        "x-permitted-cross-domain-policies": "none",
+        "expect-ct": "max-age=86400, enforce",
+        "x-content-security-policy": ""
+      },
+      "content_b64": "eyJzdGF0dXMiOiJzdWNjZXNzIiwiY29sbGVjdGlvbiI6eyJhZGRyZXNzIjpudWxsLCJnYXJkZW5Db2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDVUMDA6MDA6MDAiLCJnYXJkZW5TY2hlZHVsZWREYXkiOiJNb24iLCJnYXJkZW5TY2hlZHVsZWRXZWVrTm8iOiIxIiwicmVjeWNsaW5nQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTA5VDAwOjAwOjAwIiwicmVjeWNsaW5nQ29sbGVjdGlvbkNhbGVuZGFyIjoiIiwicmVjeWNsaW5nU2NoZWR1bGVkRGF5IjoiRnJpIiwicmVjeWNsaW5nU2NoZWR1bGVkV2Vla05vIjoiMSIsInJlZnVzZUNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wMlQwMDowMDowMCIsInJlZnVzZVNjaGVkdWxlZERheSI6IkZyaSIsInJlZnVzZVNjaGVkdWxlZFdlZWtObyI6IjIiLCJmb29kQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTAyVDAwOjAwOjAwIiwiZm9vZFNjaGVkdWxlZERheSI6IkZyaSIsImZvb2RTY2hlZHVsZWRXZWVrTm8iOiIifX0="
+    }
+  ]
+}

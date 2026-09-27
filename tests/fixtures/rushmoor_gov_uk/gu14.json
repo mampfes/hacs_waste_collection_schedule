@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get 30a09b0ae6",
+      "method": "GET",
+      "url": "https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get",
+      "final_url": "https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get?selectedAddress=100060551749&weeks=16",
+      "body": "{\"params\":[[\"selectedAddress\",\"100060551749\"],[\"weeks\",\"16\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 18:12:57 GMT",
+        "content-type": "text/plain; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=bfc442367ff94337e87eb4db29a62a6095d6c974e9103701df33d7ff4dbbc369;Path=/;HttpOnly;Secure;Domain=www.rushmoor.gov.uk, ARRAffinitySameSite=bfc442367ff94337e87eb4db29a62a6095d6c974e9103701df33d7ff4dbbc369;Path=/;HttpOnly;SameSite=None;Secure;Domain=www.rushmoor.gov.uk",
+        "vary": "Accept-Encoding",
+        "request-context": "appId=cid-v1:06260d65-0590-45fc-aed9-c9ea5345aa9d",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJVUFJOIjoiMTAwMDYwNTUxNzQ5IiwiTmV4dENvbGxlY3Rpb24iOnsiQ29sbGVjdGlvbkRheSI6IlRodXJzZGF5IiwiQ29sbGVjdGlvblNjaGVkdWxlIjoiQSIsIlJlZnVzZUNvbGxlY3Rpb25CaW5EYXRlIjoiMjAyNi0xMC0wMVQwMDowMDowMCIsIlJlZnVzZUJpbkV4Y2VwdGlvbk1lc3NhZ2UiOiIiLCJSZWN5Y2xpbmdDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDhUMDA6MDA6MDAiLCJSZWN5Y2xpbmdFeGNlcHRpb25NZXNzYWdlIjoiIiwiR2FyZGVuV2FzdGVDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDFUMDA6MDA6MDAiLCJHYXJkZW5XYXN0ZUV4Y2VwdGlvbk1lc3NhZ2UiOiIiLCJGb29kV2FzdGVDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDFUMDA6MDA6MDAiLCJGb29kV2FzdGVFeGNlcHRpb25NZXNzYWdlIjoiIn0sIlByZXZpb3VzQ29sbGVjdGlvbiI6eyJDb2xsZWN0aW9uRGF5IjoiVGh1cnNkYXkiLCJDb2xsZWN0aW9uU2NoZWR1bGUiOiJBIiwiUmVmdXNlQ29sbGVjdGlvbkJpbkRhdGUiOiIyMDI2LTEwLTAxVDAwOjAwOjAwIiwiUmVmdXNlQmluRXhjZXB0aW9uTWVzc2FnZSI6IiIsIlJlY3ljbGluZ0NvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0yNFQwMDowMDowMCIsIlJlY3ljbGluZ0V4Y2VwdGlvbk1lc3NhZ2UiOiIiLCJHYXJkZW5XYXN0ZUNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wMVQwMDowMDowMCIsIkdhcmRlbldhc3RlRXhjZXB0aW9uTWVzc2FnZSI6IiIsIkZvb2RXYXN0ZUNvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0yNFQwMDowMDowMCIsIkZvb2RXYXN0ZUV4Y2VwdGlvbk1lc3NhZ2UiOiIifSwiQnVsa0NvbGxlY3Rpb25EZXRhaWxzIjpudWxsfQ=="
+    }
+  ]
+}

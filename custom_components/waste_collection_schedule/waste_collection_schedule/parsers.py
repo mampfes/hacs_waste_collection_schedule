@@ -467,6 +467,20 @@ class ArgumentGuard(Parser[Any]):
         raise SourceArgumentNotFound(self.argument, value, self.hint)
 
 
+def _json(response: Response) -> Any:
+    """The response's JSON, tolerating a leading UTF-8 byte-order mark, which
+    some IIS/.NET endpoints prepend and ``response.json()`` rejects."""
+    try:
+        return response.json()
+    except ValueError:
+        import json
+
+        content = getattr(response, "content", None)
+        if not isinstance(content, bytes) or not content.startswith(b"\xef\xbb\xbf"):
+            raise
+        return json.loads(content.decode("utf-8-sig"))
+
+
 class JsonParser(Parser[Any]):
     """Parse response as JSON, optionally drilling into a nested key path.
 
@@ -492,7 +506,7 @@ class JsonParser(Parser[Any]):
 
     def __init__(
         self,
-        *keys: str,
+        *keys: "str | int",
         shape: Any = None,
         raise_for_status: bool = False,
         expected_values: Mapping[str, Any] | None = None,
@@ -505,13 +519,13 @@ class JsonParser(Parser[Any]):
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         if self.raise_for_status:
             response.raise_for_status()
-        data = response.json()
+        data = _json(response)
         if self.expected_values is not None:
-            for key, expected in self.expected_values.items():
-                actual = data.get(key) if isinstance(data, Mapping) else None
+            for field, expected in self.expected_values.items():
+                actual = data.get(field) if isinstance(data, Mapping) else None
                 if actual != expected:
                     raise ValueError(
-                        f"API advised error: expected {key}={expected!r}, got {actual!r}"
+                        f"API advised error: expected {field}={expected!r}, got {actual!r}"
                     )
         for key in self.keys:
             # An int indexes a list; an empty (or null) reply at that step is an

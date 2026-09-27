@@ -96,7 +96,9 @@ class FlattenGroups(Preprocessor[Any, Any]):
     The groups may also arrive as a list of lists, which is what a payload with
     one slot per weekday (``[null, null, [{...}], ...]``) or several responses
     parsed by :class:`~waste_collection_schedule.parsers.EachResponse` come to.
-    An empty slot (``None`` or ``[]``) contributes nothing.
+    An empty slot (``None`` or ``[]``) contributes nothing, and a group that is
+    itself a mapping is one record, for a payload keyed by id whose values are
+    the records.
 
     Args:
         with_key: yield ``(group key, record)`` pairs rather than the bare
@@ -118,7 +120,12 @@ class FlattenGroups(Preprocessor[Any, Any]):
             return
         groups = records.values() if isinstance(records, Mapping) else records
         for group in groups:
-            if group:
+            if isinstance(group, Mapping):
+                # A mapping of records rather than of lists
+                # ({"1111": {"fraction_name": ..., "dates": [...]}, ...}): each
+                # value is one record.
+                yield group
+            elif group:
                 yield from group
 
 

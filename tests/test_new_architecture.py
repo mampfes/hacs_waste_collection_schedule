@@ -3054,6 +3054,39 @@ class TestHtmlLabelledDatesAllDates:
             HtmlLabelledDates("li", label="h2", date="strong", all_dates=True)
 
 
+class TestBatch5Components:
+    """JsonParser BOM tolerance and FlattenGroups over a mapping of records."""
+
+    def test_json_parser_reads_a_reply_with_a_byte_order_mark(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        body = '\ufeff{"Collections": [1, 2]}'.encode()
+
+        def fail():
+            raise ValueError("BOM")
+
+        reply = SimpleNamespace(json=fail, content=body)
+        assert JsonParser("Collections")(reply) == [1, 2]
+
+    def test_json_parser_still_rejects_invalid_json(self):
+        from waste_collection_schedule.parsers import JsonParser
+
+        def fail():
+            raise ValueError("bad")
+
+        with pytest.raises(ValueError):
+            JsonParser()(SimpleNamespace(json=fail, content=b"<html>"))
+
+    def test_flatten_groups_reads_a_mapping_of_records(self):
+        from waste_collection_schedule.preprocessors import FlattenGroups
+
+        records = {"1": {"name": "Matavfall"}, "4": {"name": "Plast"}}
+        assert list(FlattenGroups()(records)) == [
+            {"name": "Matavfall"},
+            {"name": "Plast"},
+        ]
+
+
 class TestExplodeList:
     """ExplodeList: one record per element of a list-valued field."""
 

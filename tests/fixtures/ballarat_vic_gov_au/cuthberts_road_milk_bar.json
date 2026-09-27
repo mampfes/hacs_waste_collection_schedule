@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://data.ballarat.vic.gov.au/api/records/1.0/search/ 3a33cc051d",
+      "method": "GET",
+      "url": "https://data.ballarat.vic.gov.au/api/records/1.0/search/",
+      "final_url": "https://data.ballarat.vic.gov.au/api/records/1.0/search/?dataset=waste-collection-days&q=27+Cuthberts+Road+ALFREDTON+VIC+3350",
+      "body": "{\"params\":[[\"dataset\",\"waste-collection-days\"],[\"q\",\"27 Cuthberts Road ALFREDTON VIC 3350\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Sun, 27 Sep 2026 18:12:51 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4986",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-09-28 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJuaGl0cyI6IDEsICJwYXJhbWV0ZXJzIjogeyJkYXRhc2V0IjogIndhc3RlLWNvbGxlY3Rpb24tZGF5cyIsICJxIjogIjI3IEN1dGhiZXJ0cyBSb2FkIEFMRlJFRFRPTiBWSUMgMzM1MCIsICJyb3dzIjogMTAsICJzdGFydCI6IDAsICJmb3JtYXQiOiAianNvbiIsICJ0aW1lem9uZSI6ICJVVEMifSwgInJlY29yZHMiOiBbeyJkYXRhc2V0aWQiOiAid2FzdGUtY29sbGVjdGlvbi1kYXlzIiwgInJlY29yZGlkIjogImVjMWVjYWRjM2I4ZmI4MTQzYzQ5MjdlNGM5MGI2ZjAwYjY4MTQ4MjkiLCAiZmllbGRzIjogeyJhZGRyZXNzIjogIjI3IEN1dGhiZXJ0cyBSb2FkXHJBTEZSRURUT04gIFZJQyAgMzM1MCIsICJwcm9wbnVtIjogIjIwNzgzNzIiLCAiY29sbGVjdGlvbl9kYXkiOiAiVHVlc2RheSIsICJuZXh0cmVjeWNsZSI6ICIyMDI2LTA5LTI5IiwgIm5leHRfZ2xhc3MiOiAiMjAyNi0xMC0yMCIsICJzdHJlZXQiOiAiQ3V0aGJlcnRzIFJvYWQiLCAibmV4dHdhc3RlIjogIjIwMjYtMDktMjkiLCAibmV4dGdyZWVuIjogIjIwMjYtMTAtMDYiLCAiem9uZSI6ICJDIiwgImNvbGxlY3Rpb25kYXkiOiAiVHVlc2RheSBDIiwgInN1YnVyYiI6ICJBbGZyZWR0b24iLCAic2VydmljZV90eXBlIjogImFsbF9jb2xsZWN0aW9ucyJ9LCAicmVjb3JkX3RpbWVzdGFtcCI6ICIyMDI2LTA5LTI3VDE2OjA1OjU0LjM0NVoifV19"
+    }
+  ]
+}

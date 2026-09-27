@@ -1,51 +1,48 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "City of York Council"
-DESCRIPTION = "Source for York.gov.uk services for the city of York, UK."
-URL = "https://york.gov.uk"
-TEST_CASES = {
-    "Reighton Avenue, York": {"uprn": "100050580641"},
-    "Granary Walk, York": {"uprn": "010093236548"},
-}
-
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN": Icons.GARDEN,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "City of York Council"
+    DESCRIPTION = "Source for York.gov.uk services for the city of York, UK."
+    URL = "https://york.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        # get json file
-        r = requests.get(
-            f"https://waste-api.york.gov.uk/api/Collections/GetBinCalendarDataForUprn/{self._uprn}"
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Reighton Avenue, York": {"uprn": "100050580641"},
+        "Granary Walk, York": {"uprn": "010093236548"},
+    }
 
-        # extract data from json
-        data = json.loads(r.text)
+    PARAMS = (uprn(),)
 
-        entries = []
-
-        for collection in data["collections"]:
-            try:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            collection["date"], "%Y-%m-%dT%H:%M:%S"
-                        ).date(),
-                        t=collection["roundType"].title(),
-                        icon=ICON_MAP.get(collection["roundType"]),
-                    )
-                )
-            except ValueError:
-                pass  # ignore date conversion failure for not scheduled collections
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            f"https://waste-api.york.gov.uk/api/Collections/GetBinCalendarDataForUprn/{uprn}"
+        ),
+    )
+    parse = parsers.JsonParser("collections")
+    # A round not yet scheduled carries no parsable date and is skipped.
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="roundType",
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "REFUSE": wt.GENERAL_WASTE,
+            "RECYCLING": wt.RECYCLABLES,
+            "GARDEN": wt.GARDEN_WASTE,
+        },
+    )

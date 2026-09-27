@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "POST https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard 9c03fd8aa4",
+      "method": "POST",
+      "url": "https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard",
+      "final_url": "https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard",
+      "body": "{\"body\":{\"noticeBoard\":\"default\",\"uprn\":\"100081132201\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 18:12:58 GMT",
+        "cache-control": "private, max-age=0,no-store",
+        "content-type": "application/json; charset=utf-8",
+        "x-xss-protection": "1;mode=block",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny, SAMEORIGIN",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "content-length": "2014",
+        "vary": "Accept-Encoding"
+      },
+      "content_b64": "eyJkIjpbeyJfX3R5cGUiOiJDYWRjb3JwLkN1c3RvbS5WZW9saWFMaW5rLlZlb2xpYVNlcnZpY2UiLCJTZXJ2aWNlSGVhZGVycyI6W3siVGFza1R5cGUiOiJDb2xsZWN0IERvbWVzdGljIFJlY3ljbGluZyIsIkxhc3QiOiIyMDI2LTA5LTE3VDA3OjAwOjAwKzAxOjAwIiwiTmV4dCI6IjIwMjYtMTAtMDFUMDA6MDA6MDArMDE6MDAiLCJTY2hlZHVsZURlc2NyaXB0aW9uIjoiRXZlcnkgVGh1cnNkYXkgZm9ydG5pZ2h0bHkifV0sIlNlcnZpY2VOYW1lIjoiRG9tZXN0aWMgUmVjeWNsaW5nIENvbGxlY3Rpb24ifSx7Il9fdHlwZSI6IkNhZGNvcnAuQ3VzdG9tLlZlb2xpYUxpbmsuVmVvbGlhU2VydmljZSIsIlNlcnZpY2VIZWFkZXJzIjpbeyJUYXNrVHlwZSI6IkNvbGxlY3QgRG9tZXN0aWMgUmVjeWNsaW5nIiwiTGFzdCI6IjIwMjYtMDktMTdUMDc6MDA6MDArMDE6MDAiLCJOZXh0IjoiMjAyNi0xMC0wMVQwMDowMDowMCswMTowMCIsIlNjaGVkdWxlRGVzY3JpcHRpb24iOiJFdmVyeSBUaHVyc2RheSBmb3J0bmlnaHRseSJ9XSwiU2VydmljZU5hbWUiOiJEb21lc3RpYyBSZWN5Y2xpbmcgQ29sbGVjdGlvbiJ9LHsiX190eXBlIjoiQ2FkY29ycC5DdXN0b20uVmVvbGlhTGluay5WZW9saWFTZXJ2aWNlIiwiU2VydmljZUhlYWRlcnMiOlt7IlRhc2tUeXBlIjoiQ29sbGVjdCBEb21lc3RpYyBGb29kIiwiTGFzdCI6IjIwMjYtMDktMjRUMDc6MDA6MDArMDE6MDAiLCJOZXh0IjoiMjAyNi0xMC0wMVQwMDowMDowMCswMTowMCIsIlNjaGVkdWxlRGVzY3JpcHRpb24iOiJFdmVyeSBUaHVyc2RheSJ9LHsiVGFza1R5cGUiOiJDb2xsZWN0IENvbW11bmFsIEZvb2QiLCJMYXN0IjpudWxsLCJOZXh0IjpudWxsLCJTY2hlZHVsZURlc2NyaXB0aW9uIjoiIn1dLCJTZXJ2aWNlTmFtZSI6IkRvbWVzdGljIEZvb2QgQ29sbGVjdGlvbiJ9LHsiX190eXBlIjoiQ2FkY29ycC5DdXN0b20uVmVvbGlhTGluay5WZW9saWFTZXJ2aWNlIiwiU2VydmljZUhlYWRlcnMiOlt7IlRhc2tUeXBlIjoiQ29sbGVjdCBDb21tdW5hbCBSZWZ1c2UiLCJMYXN0IjpudWxsLCJOZXh0IjpudWxsLCJTY2hlZHVsZURlc2NyaXB0aW9uIjoiIn0seyJUYXNrVHlwZSI6IkNvbGxlY3QgQ29tbXVuYWwgUmVmdXNlIiwiTGFzdCI6bnVsbCwiTmV4dCI6bnVsbCwiU2NoZWR1bGVEZXNjcmlwdGlvbiI6IiJ9LHsiVGFza1R5cGUiOiJDb2xsZWN0IENvbW11bmFsIFJlZnVzZSIsIkxhc3QiOiIyMDI2LTA5LTI0VDA3OjAwOjAwKzAxOjAwIiwiTmV4dCI6IjIwMjYtMTAtMDhUMDA6MDA6MDArMDE6MDAiLCJTY2hlZHVsZURlc2NyaXB0aW9uIjoiRXZlcnkgVGh1cnNkYXkgZm9ydG5pZ2h0bHkifSx7IlRhc2tUeXBlIjoiQ29sbGVjdCBDb21tdW5hbCBSZWZ1c2UiLCJMYXN0IjpudWxsLCJOZXh0IjpudWxsLCJTY2hlZHVsZURlc2NyaXB0aW9uIjoiIn1dLCJTZXJ2aWNlTmFtZSI6IkNvbW11bmFsIFJlZnVzZSBDb2xsZWN0aW9uIn0seyJfX3R5cGUiOiJDYWRjb3JwLkN1c3RvbS5WZW9saWFMaW5rLlZlb2xpYVNlcnZpY2UiLCJTZXJ2aWNlSGVhZGVycyI6W3siVGFza1R5cGUiOiJDb2xsZWN0IERvbWVzdGljIFBhaWQgR2FyZGVuIiwiTGFzdCI6IjIwMjYtMDktMTdUMDc6MDA6MDArMDE6MDAiLCJOZXh0IjoiMjAyNi0xMC0wMVQwMDowMDowMCswMTowMCIsIlNjaGVkdWxlRGVzY3JpcHRpb24iOiJFdmVyeSBUaHVyc2RheSBmb3J0bmlnaHRseSJ9XSwiU2VydmljZU5hbWUiOiJEb21lc3RpYyBHYXJkZW4gV2FzdGUgQ29sbGVjdGlvbiJ9LHsiX190eXBlIjoiQ2FkY29ycC5DdXN0b20uVmVvbGlhTGluay5WZW9saWFTZXJ2aWNlIiwiU2VydmljZUhlYWRlcnMiOlt7IlRhc2tUeXBlIjoiQ29sbGVjdCBEb21lc3RpYyBSZWZ1c2UiLCJMYXN0IjoiMjAyNi0wOS0yNFQwNzowMDowMCswMTowMCIsIk5leHQiOiIyMDI2LTEwLTA4VDAwOjAwOjAwKzAxOjAwIiwiU2NoZWR1bGVEZXNjcmlwdGlvbiI6IkV2ZXJ5IFRodXJzZGF5IGZvcnRuaWdodGx5In1dLCJTZXJ2aWNlTmFtZSI6IkRvbWVzdGljIFJlZnVzZSBDb2xsZWN0aW9uIn1dfQ=="
+    }
+  ]
+}

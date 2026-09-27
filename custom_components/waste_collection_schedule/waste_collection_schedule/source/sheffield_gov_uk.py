@@ -1,77 +1,54 @@
-import logging
+from typing import ClassVar, final
 
-import requests
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Sheffield City Council"
-DESCRIPTION = "Source for waste collection services from Sheffield City Council (SCC)"
-URL = "https://sheffield.gov.uk/"
-TEST_CASES = {
-    # These are random addresses around Sheffield
-    # If your property is listed here and you don't want it, please raise an issue and I'll amend
-    "test001": {"uprn": 100050938234},
-    "test002": {"uprn": 100050961380},
-    "test003": {"uprn": "100050920796"},
-    "test004": {"uprn": "100051085306"},
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.service.CalendarDataApi import (
+    PARSE_DATE,
+    calendar_data_parser,
+    calendar_data_retriever,
+    scheduled_date,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-API_URL = "https://wasteservices.sheffield.gov.uk/"
+@final
+class Source(BaseSource):
+    TITLE = "Sheffield City Council"
+    DESCRIPTION = (
+        "Source for waste collection services from Sheffield City Council (SCC)"
+    )
+    URL = "https://sheffield.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-# Headers to mimic the browser
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-    "Content-type": "application/json",
-}
+    TEST_CASES: ClassVar[dict] = {
+        "test001": {"uprn": 100050938234},
+        "test002": {"uprn": 100050961380},
+        "test003": {"uprn": "100050920796"},
+        "test004": {"uprn": "100051085306"},
+    }
 
-# Icons for the different bin types
-ICON_MAP = {
-    "BLACK": Icons.GENERAL_WASTE,
-    "BROWN": Icons.GLASS,
-    "BLUE": Icons.NEWSPAPER,
-    "GREEN": Icons.ORGANIC,
-}
+    PARAMS = (uprn(),)
 
-_LOGGER = logging.getLogger(__name__)
-
-
-class Source:
-    def __init__(self, uprn=None):
-        self._uprn = str(uprn)
-
-    def fetch(self):
-        if self._uprn:
-            payload = {"councilId": "1", "uprn": f"{self._uprn}"}
-
-            response = requests.post(f"{API_URL}api/getCalendarData", json=payload)
-            response.raise_for_status()
-            json_doc = response.json()
-
-            if "data" not in json_doc:
-                raise ValueError(
-                    "The returned API data does not contain expected data element"
-                )
-            if "message" in json_doc and json_doc["message"] != "OK":
-                raise ValueError(f"API advised error: {json_doc['message']}")
-
-            entries = []
-            for data_item in json_doc["data"]:
-                if "records" not in data_item:
-                    continue
-                for record in data_item["records"]:
-                    collection_date = parser.parse(
-                        record["actual_scheduled_date"]
-                    ).date()
-                    collection_icon = ICON_MAP.get(
-                        record["service"].replace(" Bin", "").upper()
-                    )
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=record["service"],
-                            icon=collection_icon,
-                        )
-                    )
-            return entries
-        raise ValueError("No result information found when collected, recheck UPN")
+    retrieve = calendar_data_retriever("https://wasteservices.sheffield.gov.uk", "1")
+    parse = calendar_data_parser()
+    preprocess = ExplodeList("records")
+    transform = JsonTransformer(
+        date_key=scheduled_date,
+        type_key="service",
+        parse_date=PARSE_DATE,
+        type_value_map={
+            "Black Bin": wt.GENERAL_WASTE,
+            "Blue Bin": wt.PAPER,
+            "Brown Bin": wt.RECYCLABLES,
+            "Green Bin": wt.GARDEN_WASTE,
+        },
+    )
