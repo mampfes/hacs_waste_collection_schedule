@@ -472,7 +472,7 @@ METAL = WasteType(
         ],
         "de": [
             "eisen",
-            "dosen",
+            "dosen",  # codespell:ignore dosen
         ],
         "it": ["ferro", "lattine"],
         "fr": ["fer", "boîtes de conserve"],
@@ -535,7 +535,7 @@ CARTONS = WasteType(
         "fr": [
             "briques de lait",
             "briques alimentaires",
-            "briques de jus",
+            "briques de jus",  # codespell:ignore jus
             "briques de boissons",
         ],
         "nl": ["melkpakken", "sapkartons", "drankkartons", "voedselkartons"],
