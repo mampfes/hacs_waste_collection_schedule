@@ -135,7 +135,7 @@ class Source(BaseSource):
             "Plast": wt.RECYCLABLES,
             "Elektronik": wt.ELECTRONICS,
             "Farligt affald": wt.HAZARDOUS,
-            "Tekstil": wt.RECYCLABLES,
+            "Tekstil": wt.TEXTILES,
             "Storskrald": wt.BULKY_WASTE,
             "Haveaffald": wt.GARDEN_WASTE,
         }
