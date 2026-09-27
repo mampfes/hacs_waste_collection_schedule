@@ -47,5 +47,11 @@ class Source(BaseSource):
             "Recycling collection": wt.RECYCLABLES,
             "Food collection": wt.FOOD_WASTE,
             "Garden collection": wt.GARDEN_WASTE,
+            "Garden waste collection": wt.GARDEN_WASTE,
+            "Domestic refuse collection": wt.GENERAL_WASTE,
+            "Domestic DMR collection": wt.RECYCLABLES,
+            "Domestic food collection": wt.FOOD_WASTE,
+            "Domestic garden collection": wt.GARDEN_WASTE,
+            "": None,
         },
     )

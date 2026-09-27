@@ -3,8 +3,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field, uprn
-from waste_collection_schedule.field_terms import POSTCODE
+from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.preprocessors import (
     Compose,
     DateFields,
@@ -40,12 +39,11 @@ class Source(BaseSource):
         "UPRN example": {"uprn": 100120544973},
     }
 
-    PARAMS = (uprn(), text_field("postcode", term=POSTCODE, optional=True))
+    PARAMS = (uprn(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Enter your UPRN; you can look it up on https://www.findmyaddress.co.uk/. "
-            "The postcode is no longer used: the council retired the postcode lookup."
+            "Enter your UPRN; you can look it up on https://www.findmyaddress.co.uk/."
         ),
     }
 

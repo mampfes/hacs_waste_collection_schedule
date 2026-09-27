@@ -36,7 +36,7 @@ def calendar_data_retriever(site: str, council_id: str) -> HttpPostRetriever:
 
 def calendar_data_parser() -> JsonParser:
     """The reply's service groups; a message other than "OK" raises."""
-    return JsonParser("data", expected_values={"message": "OK"})
+    return JsonParser("data", raise_for_status=True, expected_values={"message": "OK"})
 
 
 def scheduled_date(record: "dict[str, Any]") -> str:
