@@ -1,69 +1,48 @@
-"""Source for Předměřice nad Labem, Czech Republic."""
+from typing import ClassVar, final
 
-import re
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Předměřice nad Labem"
-DESCRIPTION = "Source for Předměřice nad Labem, Czech Republic."
-URL = "https://www.predmericenl.cz/odpady"
-COUNTRY = "cz"
-
-TEST_CASES = {
-    "Předměřice nad Labem": {},
-}
-
-SOURCE_CODEOWNERS = ["@ArzykDev"]
-
-ICON_MAP = {
-    "Směsný komunální odpad": Icons.GENERAL_WASTE,
-    "Plasty": Icons.PLASTIC_PACKAGING,
-    "Papír a lepenky": Icons.PAPER,
-}
-
-# Header cell carries a 6-digit waste-catalogue code prefix, e.g.
-# "200301 Směsný komunální odpad" — capture the name after the code.
-WASTE_TYPE_RE = re.compile(r"^\d{6}\s+(.+)$")
-DATE_RE = re.compile(r"^\d{2}\.\d{2}\.\d{4}$")
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self):
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Předměřice nad Labem"
+    DESCRIPTION = "Source for Předměřice nad Labem, Czech Republic."
+    URL = "https://www.predmericenl.cz/odpady"
+    COUNTRY = "cz"
+    RAISE_ON_EMPTY = True
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@ArzykDev"]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(URL, timeout=30)
-        r.raise_for_status()
-        r.encoding = "utf-8"
+    TEST_CASES: ClassVar[dict] = {
+        "Předměřice nad Labem": {},
+    }
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        tables = soup.find_all("table", class_="svozovy_plan")
-        if not tables:
-            raise ValueError("No collection schedule tables found on the page.")
+    PARAMS = ()
 
-        entries: list[Collection] = []
-        for table in tables:
-            waste_type = None
-            for td in table.find_all("td"):
-                text = td.get_text(strip=True)
-                match = WASTE_TYPE_RE.match(text)
-                if match:
-                    waste_type = match.group(1)
-                    break
-            if waste_type is None:
-                continue
-
-            icon = ICON_MAP.get(waste_type)
-            for td in table.find_all("td"):
-                text = td.get_text(strip=True)
-                if DATE_RE.match(text):
-                    date = datetime.strptime(text, "%d.%m.%Y").date()
-                    entries.append(Collection(date=date, t=waste_type, icon=icon))
-
-        if not entries:
-            raise ValueError("No collection dates found on the page.")
-
-        return entries
+    retrieve = HttpGetRetriever(url="https://www.predmericenl.cz/odpady")
+    # One table per waste type: its catalogue code and name in the third row
+    # ("200301 Směsný komunální odpad"), then every collection date.
+    parse = parsers.HtmlLabelledDates(
+        "table.svozovy_plan",
+        label="tr:nth-of-type(3) > td",
+        date=":scope",
+        date_pattern=r"\d{2}\.\d{2}\.\d{4}",
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        clean=lambda label: label.split(maxsplit=1)[-1],
+        type_value_map={
+            "Směsný komunální odpad": wt.GENERAL_WASTE,
+            "Plasty": wt.RECYCLABLES,
+            "Papír a lepenky": wt.PAPER,
+        },
+    )

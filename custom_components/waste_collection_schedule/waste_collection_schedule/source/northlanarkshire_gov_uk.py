@@ -1,82 +1,66 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field, uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "North Lanarkshire Council"
-DESCRIPTION = "Source for waste collection services for North Lanarkshire Council"
-URL = "https://northlanarkshire.gov.uk"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "The easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`",
-}
+@final
+class Source(BaseSource):
+    TITLE = "North Lanarkshire Council"
+    DESCRIPTION = "Source for waste collection services for North Lanarkshire Council"
+    URL = "https://northlanarkshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GLASS,
+    ]
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "usrn": "Unique Street Reference Number (USRN)",
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "118026605", "usrn": "48406574"},
+        "Test_002": {"uprn": 118177268, "usrn": 48410258},
+        "Test_003": {"uprn": "000118035256", "usrn": "48409125"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "usrn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section.",
-        "uprn": "Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+    PARAMS = (uprn(), text_field("usrn", "USRN (Unique Street Reference Number)"))
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look your address up on the council's bin collection dates page; its "
+            "URL has the form www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN."
+        ),
     }
-}
 
-TEST_CASES = {
-    "Test_001": {
-        "uprn": "118026605",
-        "usrn": "48406574",
-    },
-    "Test_002": {
-        "uprn": 118177268,
-        "usrn": 48410258,
-    },
-    "Test_003": {
-        "uprn": "000118035256",
-        "usrn": "48409125",
-    },
-}
-
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Blue-lidded Recycling Bin": Icons.RECYCLING,
-    "Food and Garden": Icons.BIO_KITCHEN,
-    "Glass, Metals, Plastics and Cartons": Icons.PLASTIC_PACKAGING,
-}
-
-
-class Source:
-    def __init__(self, uprn: str | int, usrn: str | int):
-        self._uprn = str(uprn).zfill(12)
-        self._usrn = str(usrn)
-
-    def fetch(self):
-        s = requests.Session()
-
-        r = s.get(
-            f"https://www.northlanarkshire.gov.uk/bin-collection-dates/{self._uprn}/{self._usrn}"
-        )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        containers = soup.findAll("div", {"class": "waste-type-container"})
-
-        entries = []
-        for _idx, container in enumerate(containers):
-            waste_type = container.find("h3").text
-            waste_days = container.findAll("p")
-            for day in waste_days:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(day.text, "%d %B %Y").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        # The council's UPRNs are twelve digits, zero-padded.
+        url=lambda uprn, usrn, **_: (
+            "https://www.northlanarkshire.gov.uk/bin-collection-dates/"
+            f"{str(uprn).zfill(12)}/{usrn}"
+        ),
+    )
+    # One box per bin: its name, its weekday, then its dates.
+    parse = parsers.HtmlLabelledDates(
+        "div.waste-type-container",
+        label="h3",
+        date=":scope",
+        date_pattern=r"\d{2} \w+ \d{4}",
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Blue-lidded Recycling Bin": wt.RECYCLABLES,
+            "Food and Garden": wt.ORGANIC,
+            "Paper and Card": wt.PAPER,
+            "Glass, Metals, Plastics and Cartons": wt.RECYCLABLES,
+            "Glass": wt.GLASS,
+        },
+    )

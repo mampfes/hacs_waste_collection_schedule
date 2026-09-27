@@ -1,67 +1,74 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Hausmannstätten"
-DESCRIPTION = "Source for Hausmannstätten."
-URL = "https://www.hausmannstaetten.gv.at"
-TEST_CASES: dict[str, dict] = {"Testcase": {}}
-COUNTRY = "at"
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-ICON_MAP = {
-    "restmüll i": Icons.GENERAL_WASTE,
-    "restmüll ii": Icons.GENERAL_WASTE,
-    "restmüll ii + 1100": Icons.GENERAL_WASTE,
-    "bioabfall": Icons.BIO_KITCHEN,
-    "altpapier i": Icons.PAPER,
-    "altpapier ii": Icons.PAPER,
-    "sperrmüll asz-fernitz": Icons.BULKY,
-    "leicht- und metallverpackungen": Icons.METAL,
-}
-
-API_URL = "https://hausmannstaetten.gv.at/terminkalender"
+def _text(article, selector: str) -> "str | None":
+    found = article.select_one(selector)
+    return found.get_text(strip=True) if found is not None else None
 
 
-class Source:
-    def __init__(self):
-        pass
+def _title(article) -> str:
+    # A missing link raises, which HtmlTransformer turns into a skipped row.
+    link = article.select_one("a[title]")
+    if link is None:
+        raise AttributeError("no titled link")
+    return str(link["title"])
 
-    def _get_trash(self, table):
-        trash_collection = []
-        content = list(table.contents)[1]
-        articles = content.findAll("div", "article")
-        for article in articles:
-            title = self._get_trash_type(article)
-            date = self._get_date(article)
-            icon = ICON_MAP.get(title.lower())
-            time = self._get_time(article)
-            if time:
-                title = f"{title} ({time})"
-            trash_collection.append(Collection(date=date, t=title, icon=icon))
-        return trash_collection
 
-    def _get_trash_type(self, article):
-        return article.find("a").get("title", None)
+@final
+class Source(BaseSource):
+    TITLE = "Hausmannstätten"
+    DESCRIPTION = "Source for Hausmannstätten."
+    URL = "https://www.hausmannstaetten.gv.at"
+    COUNTRY = "at"
+    RAISE_ON_EMPTY = True
+    # The district rounds of one stream can fall on the same day.
+    IGNORE_DUPLICATES_DEFAULT = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.BULKY_WASTE,
+        wt.HAZARDOUS,
+        wt.GARDEN_WASTE,
+    ]
 
-    def _get_date(self, article):
-        date_string = article.find("span", class_="date")
-        return datetime.strptime(date_string.text.strip(), "%d.%m.%Y").date()
+    TEST_CASES: ClassVar[dict] = {
+        "Testcase": {},
+    }
 
-    def _get_time(self, article):
-        time = article.find("span", class_="time")
-        if not time:
-            return None
-        return time.text.strip()
+    PARAMS = ()
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        table = soup.find(id="content-tab-umweltkalender")
-
-        trash_type = self._get_trash(table)
-        return trash_type
+    retrieve = HttpGetRetriever(url="https://hausmannstaetten.gv.at/terminkalender")
+    # The municipal events calendar's environment tab: one article per
+    # collection, its type in the link title, a date and sometimes a time.
+    parse = parsers.HtmlParser("#content-tab-umweltkalender div.article")
+    transform = HtmlTransformer(
+        date_getter=lambda article: _text(article, "span.date"),
+        type_getter=_title,
+        description_getter=lambda article: _text(article, "span.time"),
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+        type_value_map={
+            # The municipality's two collection districts (I and II) run their
+            # own rounds of the same stream.
+            "Bioabfall": wt.ORGANIC,
+            "Bioabfall + Reinigung": wt.ORGANIC,
+            "Restmüll 1": wt.GENERAL_WASTE,
+            "Restmüll I": wt.GENERAL_WASTE,
+            "Restmüll II": wt.GENERAL_WASTE,
+            "Leicht- und Metallverpackung": wt.RECYCLABLES,
+            "Altpapier I": wt.PAPER,
+            "Altpapier II": wt.PAPER,
+            "Sperrmüll ASZ-Fernitz (Mi)": wt.BULKY_WASTE,
+            "Sperrmüll ASZ-Fernitz (Fr)": wt.BULKY_WASTE,
+            "Sperrmüll ASZ-Fernitz (Sa)": wt.BULKY_WASTE,
+            "Problemstoffsammlung": wt.HAZARDOUS,
+        },
+        carry_raw_label=True,
+    )
