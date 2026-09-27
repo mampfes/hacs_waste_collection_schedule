@@ -1,57 +1,67 @@
-from datetime import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from bs4 import Tag
+from bs4.element import NavigableString
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Gwynedd"
-DESCRIPTION = "Source for Gwynedd."
-URL = "https://www.gwynedd.gov.uk/"
-TEST_CASES = {
-    "200003177805": {"uprn": 200003177805},
-    "200003175227": {"uprn": "200003175227"},
-    "10070340900": {"uprn": 10070340900},
-}
-
-
-ICON_MAP = {
-    "brown": Icons.ORGANIC,
-    "green": Icons.GENERAL_WASTE,
-    "blue": Icons.RECYCLING,
-}
+# Under "Next collection dates:", one list item per round: "Blue box / food
+# waste: Thursday 01/10/2026", sometimes followed by a <p> note.
 
 
-API_URL = "https://diogel.gwynedd.llyw.cymru/Daearyddol/en/LleDwinByw/Index/{uprn}"
+def _line(item: Tag) -> str:
+    return " ".join(
+        str(part) for part in item.children if isinstance(part, NavigableString)
+    ).strip()
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+def _date(item: Tag) -> str:
+    match = re.search(r"\d{2}/\d{2}/\d{4}", _line(item))
+    if match is None:
+        raise ValueError("no date")
+    return match.group(0)
 
-    def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn))
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        collections_headline = soup.find("h6", text="Next collection dates:")
-        if not isinstance(collections_headline, Tag):
-            raise SourceArgumentNotFound("uprn", self._uprn)
-        collections = collections_headline.find_next("ul").find_all("li")
+@final
+class Source(BaseSource):
+    TITLE = "Gwynedd"
+    DESCRIPTION = "Source for Gwynedd."
+    URL = "https://www.gwynedd.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "200003177805": {"uprn": 200003177805},
+        "200003175227": {"uprn": "200003175227"},
+        "10070340900": {"uprn": 10070340900},
+    }
 
-        for collection in collections:
-            if not isinstance(collection, Tag):
-                continue
-            for p in collection.find_all("p"):
-                p.extract()
+    PARAMS = (uprn(),)
 
-            bin_type, date_str = collection.text.strip().split(":")[:2]
-            bin_type, date_str = bin_type.strip(), date_str.strip()
-
-            date = datetime.strptime(date_str, "%A %d/%m/%Y").date()
-            icon = ICON_MAP.get(bin_type.split(" ")[0].lower())  # Collection icon
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            f"https://diogel.gwynedd.llyw.cymru/Daearyddol/en/LleDwinByw/Index/{uprn}"
+        ),
+    )
+    parse = parsers.HtmlParser("h6:-soup-contains('Next collection dates') + ul > li")
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda item: _line(item).split(":")[0].strip(),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Blue box / food waste": [wt.RECYCLABLES, wt.FOOD_WASTE],
+            "Green bin": wt.GENERAL_WASTE,
+            "Brown bin (garden waste)": wt.GARDEN_WASTE,
+        },
+    )

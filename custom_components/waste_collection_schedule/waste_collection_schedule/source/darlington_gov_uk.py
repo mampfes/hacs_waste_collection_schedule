@@ -1,67 +1,54 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Darlington Borough Council"
-DESCRIPTION = "Source for Darlington Borough Council."
-URL = "https://darlington.gov.uk"
-TEST_CASES = {
-    "10013321444": {"uprn": 10013321444},
-    "010013315817": {"uprn": 10013315817},
-    "100110560916": {"uprn": 100110560916},
-    "200002724471": {"uprn": "200002724471"},
-}
-
-ICON_MAP = {
-    "Food waste": Icons.ORGANIC,
-    "Recycling": Icons.RECYCLING,
-    "Refuse": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-API_URL = (
-    "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/"
-)
+@final
+class Source(BaseSource):
+    TITLE = "Darlington Borough Council"
+    DESCRIPTION = "Source for Darlington Borough Council."
+    URL = "https://darlington.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "10013321444": {"uprn": 10013321444},
+        "010013315817": {"uprn": 10013315817},
+        "100110560916": {"uprn": 100110560916},
+        "200002724471": {"uprn": "200002724471"},
+    }
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+    PARAMS = (uprn(),)
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL, params={"uprn": self._uprn}, timeout=20)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        entries = []
-
-        cards = soup.select("div.refuse-results")
-
-        for card in cards:
-            date_element = card.select_one(".collectionDate p")
-            if not date_element:
-                continue
-
-            date_str = date_element.get_text(strip=True).split("(")[0].strip()
-            collection_date = datetime.strptime(
-                date_str,
-                "%A %d %B %Y",
-            ).date()
-            waste_types = [
-                x.get_text(strip=True) for x in card.select(".collection-result-text")
-            ]
-
-            for waste_type in waste_types:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    # One card per date, listing every round collected on it.
+    parse = parsers.HtmlLabelledDates(
+        "div.refuse-results",
+        label=".collection-result-text",
+        date=".collectionDate p",
+        date_pattern=r"\w+ \d{1,2} \w+ \d{4}",
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        all_labels=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food waste": wt.FOOD_WASTE,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )

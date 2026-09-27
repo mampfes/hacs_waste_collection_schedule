@@ -3012,6 +3012,48 @@ class TestHtmlLabelledDatesLabelSeparator:
         ]
 
 
+class TestHtmlLabelledDatesAllDates:
+    """HtmlLabelledDates(all_dates=True): several dates for one round."""
+
+    def test_reads_every_date_in_the_date_element(self):
+        from waste_collection_schedule.parsers import HtmlLabelledDates
+
+        html = (
+            "<ul><li><h2>Refuse</h2><strong>07/10/2026, and then 21/10/2026</strong>"
+            "</li></ul>"
+        )
+        rows = HtmlLabelledDates(
+            "li",
+            label="h2",
+            date="strong",
+            date_pattern=r"\d{2}/\d{2}/\d{4}",
+            all_dates=True,
+        )(SimpleNamespace(text=html))
+        assert rows == [("07/10/2026", "Refuse"), ("21/10/2026", "Refuse")]
+
+    def test_scope_reads_the_block_itself(self):
+        from waste_collection_schedule.parsers import HtmlLabelledDates
+
+        html = (
+            '<div class="d"><p><strong>Food</strong></p>'
+            "<p>30/09/2026</p><p>07/10/2026</p></div>"
+        )
+        rows = HtmlLabelledDates(
+            "div.d",
+            label="strong",
+            date=":scope",
+            date_pattern=r"\d{2}/\d{2}/\d{4}",
+            all_dates=True,
+        )(SimpleNamespace(text=html))
+        assert rows == [("30/09/2026", "Food"), ("07/10/2026", "Food")]
+
+    def test_all_dates_needs_a_pattern(self):
+        from waste_collection_schedule.parsers import HtmlLabelledDates
+
+        with pytest.raises(ValueError):
+            HtmlLabelledDates("li", label="h2", date="strong", all_dates=True)
+
+
 class TestExplodeList:
     """ExplodeList: one record per element of a list-valued field."""
 
