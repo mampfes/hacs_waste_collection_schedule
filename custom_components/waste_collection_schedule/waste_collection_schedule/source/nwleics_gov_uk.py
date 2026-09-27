@@ -1,69 +1,72 @@
-from datetime import date, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.JaduBinCollections import strip_ordinal
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "North West Leicestershire District Council"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source for www.nwleics.gov.uk services for the city of North West Leicestershire District Council, UK"  # Describe your source
-URL = "https://nwleics.gov.uk/"  # Insert url to service homepage. URL will show up in README.md and info.md
-COUNTRY = "uk"
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Dunmore": {"uprn": "10002359002"},
-    "Station Road": {"uprn": 100030573554},
-}
-
-RELATIVE_DATE_MAP = {
-    "today": lambda: date.today(),
-    "tomorrow": lambda: date.today() + timedelta(days=1),
-}
-
-API_URL = "https://my.nwleics.gov.uk/location?put=nwl{uprn}&rememberme=0&redirect=%2F"
+_parse = date_parsers.nearest_year("%a %d %b")
 
 
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Yellow Bag": Icons.PLASTIC_PACKAGING,
-    "Blue Bag": Icons.RECYCLING,
-    "Red Box": Icons.RECYCLING,
-}
+def _date(text: str) -> datetime.date:
+    """ "Tue 29th Sep", "Today" or "Tomorrow"."""
+    today = datetime.date.today()
+    lowered = text.strip().lower()
+    if lowered == "today":
+        return today
+    if lowered == "tomorrow":
+        return today + datetime.timedelta(days=1)
+    return _parse(strip_ordinal(text))
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "North West Leicestershire District Council"
+    DESCRIPTION = "Source for www.nwleics.gov.uk services for the city of North West Leicestershire District Council, UK"
+    URL = "https://nwleics.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn))
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Dunmore": {"uprn": "10002359002"},
+        "Station Road": {"uprn": 100030573554},
+    }
 
-        soup = BeautifulSoup(r.text, "html.parser")
+    PARAMS = (uprn(),)
 
-        refuse = soup.find("ul", {"class": "refuse"})
-        li_items = refuse.find_all("li")
-
-        entries = []
-
-        for li in li_items:
-            strong_tag = li.find("strong")
-            a_tag = li.find("a")
-
-            date_str = strong_tag.contents[0].strip()
-            date_str_lower = date_str.lower()
-            if date_str_lower in RELATIVE_DATE_MAP:
-                collection_date = RELATIVE_DATE_MAP[date_str_lower]()
-            else:
-                collection_date = parser.parse(date_str).date()
-            bin_type = a_tag.contents[0]
-
-            entries.append(
-                Collection(
-                    date=collection_date,  # Collection date
-                    t=bin_type,  # Collection type
-                    icon=ICON_MAP.get(bin_type),  # Collection icon
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://my.nwleics.gov.uk/location",
+        params=lambda uprn, **_: {
+            "put": f"nwl{uprn}",
+            "rememberme": "0",
+            "redirect": "/",
+        },
+    )
+    parse = parsers.HtmlLabelledDates(
+        "ul.refuse li",
+        label="a",
+        date="strong.date",
+        parse_date=_date,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Red Box": wt.RECYCLABLES,
+            "Blue Bag": wt.PAPER,
+            "Yellow Bag": wt.RECYCLABLES,
+            "Black Bin": wt.GENERAL_WASTE,
+            "Black Sack": wt.GENERAL_WASTE,
+            "Food Waste": wt.FOOD_WASTE,
+        },
+    )

@@ -1,57 +1,53 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Conwy County Borough Council"
-DESCRIPTION = "Source for Conwy County Borough Council."
-URL = "https://www.conwy.gov.uk/"
-TEST_CASES = {
-    "50000009637": {"uprn": 50000009637},
-    "100101037037": {"uprn": "100101037037"},
-    "50000007574": {"uprn": 50000007574},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-ICON_MAP = {
-    "garden": Icons.GARDEN,
-    "electrical": Icons.ELECTRONICS,
-    "refuse": Icons.GENERAL_WASTE,
-    "recycle": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Conwy County Borough Council"
+    DESCRIPTION = "Source for Conwy County Borough Council."
+    URL = "https://www.conwy.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.ELECTRONICS,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "50000009637": {"uprn": 50000009637},
+        "100101037037": {"uprn": "100101037037"},
+        "50000007574": {"uprn": 50000007574},
+    }
 
-API_URL = (
-    "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas2025.asp"
-)
+    PARAMS = (uprn(),)
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
-
-    def fetch(self):
-        r = requests.get(API_URL, params={"uprn": self._uprn, "ilangid": 1})
-        r.raise_for_status()
-
-        entries = []
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        collection_dates = soup.select(".containererf")
-
-        if not collection_dates:
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        for collection in collection_dates:
-            date_str = collection.select_one("#main #content").text.strip()
-            bin_types = [el.text for el in collection.select("#main1 li")]
-
-            date = datetime.strptime(date_str, "%A, %d/%m/%Y").date()
-
-            for bin_type in bin_types:
-                icon = ICON_MAP.get(bin_type.split(" ")[0].lower())  # Collection icon
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas2025.asp",
+        params=lambda uprn, **_: {"uprn": uprn, "ilangid": 1},
+    )
+    # One block per date, listing every round collected on it.
+    parse = parsers.HtmlLabelledDates(
+        ".containererf",
+        label="#main1 li",
+        date="#main #content",
+        parse_date=date_parsers.for_format("%A, %d/%m/%Y"),
+        all_labels=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Refuse collection": wt.GENERAL_WASTE,
+            "Recycle & food waste collection": [wt.RECYCLABLES, wt.FOOD_WASTE],
+            "Garden waste collection (if subscribed)": wt.GARDEN_WASTE,
+            "Electrical and textile collection": wt.ELECTRONICS,
+        },
+    )

@@ -1,70 +1,71 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Stavanger Kommune"
-DESCRIPTION = "Source for Stavanger Kommune, Norway"
-URL = "https://www.stavanger.kommune.no/"
-TEST_CASES = {
-    "TestcaseI": {
-        "id": "57bf9d36-722e-400b-ae93-d80f8e354724",
-        "municipality": "Stavanger",
-        "gnumber": "57",
-        "bnumber": "922",
-        "snumber": "0",
-    },
-}
-
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Papp/papir": Icons.PAPER,
-    "Bio": Icons.ORGANIC,
-    "Juletre": Icons.CHRISTMAS_TREE,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.Tommekalender import TommekalenderParser
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, id, municipality, gnumber, bnumber, snumber):
-        self._id = id
-        self._municipality = municipality
-        self._gnumber = gnumber
-        self._bnumber = bnumber
-        self._snumber = snumber
+@final
+class Source(BaseSource):
+    TITLE = "Stavanger Kommune"
+    DESCRIPTION = "Source for Stavanger Kommune, Norway"
+    URL = "https://www.stavanger.kommune.no/"
+    COUNTRY = "no"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GLASS,
+    ]
 
-    def fetch(self):
-        url = "https://www.stavanger.kommune.no/renovasjon-og-miljo/tommekalender/finn-kalender/show"
-        headers = {"referer": "https://www.stavanger.kommune.no"}
+    TEST_CASES: ClassVar[dict] = {
+        "TestcaseI": {
+            "id": "57bf9d36-722e-400b-ae93-d80f8e354724",
+            "municipality": "Stavanger",
+            "gnumber": "57",
+            "bnumber": "922",
+            "snumber": "0",
+        },
+    }
 
-        params = {
-            "ids": self._id,
-            "id": self._id,
-            "municipality": self._municipality,
-            "gnumber": self._gnumber,
-            "bnumber": self._bnumber,
-            "snumber": self._snumber,
-        }
+    PARAMS = (
+        text_field("id", "Property id"),
+        municipality(),
+        text_field("gnumber", "Gårdsnummer"),
+        text_field("bnumber", "Bruksnummer"),
+        text_field("snumber", "Seksjonsnummer"),
+    )
 
-        r = requests.get(url, params=params, headers=headers)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        tag = soup.find_all("option")
-        entries = []
-        for tag in soup.find_all("tr", {"class": "waste-calendar__item"}):
-            if tag.text.strip() == "Dato og dag\nAvfallstype":
-                continue
-
-            year = tag.parent.attrs["data-month"].split("-")[1]
-            date = tag.text.strip().split(" - ")
-            date = datetime.strptime(date[0] + "." + year, "%d.%m.%Y").date()
-
-            for img in tag.find_all("img"):
-                waste_type = img.get("title")
-                entries.append(
-                    Collection(date, waste_type, icon=ICON_MAP.get(waste_type))
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=(
+            "https://www.stavanger.kommune.no/renovasjon-og-miljo/tommekalender/"
+            "finn-kalender/show"
+        ),
+        params=lambda id, municipality, gnumber, bnumber, snumber, **_: {
+            "ids": id,
+            "id": id,
+            "municipality": municipality,
+            "gnumber": gnumber,
+            "bnumber": bnumber,
+            "snumber": snumber,
+        },
+        headers={"referer": "https://www.stavanger.kommune.no"},
+    )
+    parse = TommekalenderParser()
+    transform = RowTransformer(
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Hage": wt.GARDEN_WASTE,
+            "Mat": wt.FOOD_WASTE,
+            "Papp og papir": wt.PAPER,
+            "Papp/papir": wt.PAPER,
+            "Plastemballasje": wt.RECYCLABLES,
+            "Glass og metallemballasje": wt.GLASS,
+        },
+    )

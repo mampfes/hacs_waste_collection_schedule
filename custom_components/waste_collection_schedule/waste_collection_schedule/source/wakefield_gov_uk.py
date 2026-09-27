@@ -1,71 +1,55 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Deduplicate
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Wakefield Council"
-DESCRIPTION = "Source for Wakefield.gov.uk services for Wakefield Council"
-URL = "https://wakefield.gov.uk"
 
-TEST_CASES = {
-    "uprn1": {"uprn": "63024087"},
-    "uprn2": {"uprn": 63105305},
-    "uprn3": {"uprn": "63012193"},
-}
+@final
+class Source(BaseSource):
+    TITLE = "Wakefield Council"
+    DESCRIPTION = "Source for Wakefield.gov.uk services for Wakefield Council"
+    URL = "https://wakefield.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-TYPES = {
-    "Household": {"icon": "mdi:trash-can", "alias": "Household"},
-    "Mixed": {"icon": "mdi:recycle", "alias": "Mixed Recycling"},
-    "Garden": {"icon": "mdi:leaf", "alias": "Garden"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))."
-    "Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after."
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    TEST_CASES: ClassVar[dict] = {
+        "uprn1": {"uprn": "63024087"},
+        "uprn2": {"uprn": 63105305},
+        "uprn3": {"uprn": "63012193"},
     }
-}
 
+    PARAMS = (uprn(),)
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
-
-    def fetch(self) -> list[Collection]:
-        entries = []
-        with requests.Session() as sess:
-            url = "https://www.wakefield.gov.uk/where-i-live/"  # the a parameter is needed for page to load but contents doesn't matter
-            request = sess.get(url, params={"uprn": self._uprn, "a": "Your Address"})
-            soup = BeautifulSoup(request.content, "html.parser")
-            collection_sections = soup.select(".tablet\\:l-col-fb-4.u-mt-10")
-            for section in collection_sections:
-                collection_dates = set()
-                bin_type_raw = section.find("strong").text.split(" ")[0]
-                bin_type = TYPES.get(bin_type_raw)
-                if not bin_type:
-                    continue
-                date_elements = section.select(".u-mb-2")
-                date_elements.extend(section.find_all("li"))
-                for element in date_elements:
-                    if ", " not in element.text:
-                        continue
-                    try:
-                        date_str = element.text.split(", ")[1].strip()
-                        clean_date = datetime.strptime(date_str, "%d %B %Y").date()
-                        collection_dates.add(clean_date)
-                    except (ValueError, IndexError):
-                        continue
-                for collection_date in collection_dates:
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=bin_type["alias"],
-                            icon=bin_type["icon"],
-                        )
-                    )
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.wakefield.gov.uk/where-i-live/",
+        # The page needs the "a" parameter present; its value does not matter.
+        params=lambda uprn, **_: {"uprn": uprn, "a": "Your Address"},
+    )
+    # One box per bin: its name, then its last, next and future dates
+    # ("Next collection - Thursday, 1 October 2026").
+    parse = parsers.HtmlLabelledDates(
+        ".tablet\\:l-col-fb-4.u-mt-10",
+        label="strong",
+        date=":scope",
+        date_pattern=r"\d{1,2} [A-Z][a-z]+ \d{4}",
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        all_dates=True,
+    )
+    preprocess = Deduplicate()
+    transform = RowTransformer(
+        type_value_map={
+            "Household waste": wt.GENERAL_WASTE,
+            "Mixed recycling": wt.RECYCLABLES,
+            "Garden waste recycling": wt.GARDEN_WASTE,
+        },
+    )
