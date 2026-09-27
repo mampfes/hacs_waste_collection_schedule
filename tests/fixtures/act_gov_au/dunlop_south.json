@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.data.act.gov.au/resource/jzzy-44un.json e3b8c42a0b",
+      "method": "GET",
+      "url": "https://www.data.act.gov.au/resource/jzzy-44un.json",
+      "final_url": "https://www.data.act.gov.au/resource/jzzy-44un.json?suburb=DUNLOP&split_suburb=South",
+      "body": "{\"params\":[[\"split_suburb\",\"South\"],[\"suburb\",\"DUNLOP\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:51:17 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "*",
+        "etag": "\"Zm94dHJvdC41ODM0M184XzI1MzVQU1BsY242R2N1M0Zrb2RIMDhxQy1yWTBDVVU---gzio5Rc9fm4dhpn4QnYMH-ZDd9Swz-Q--gzip--gzip\"",
+        "x-soda2-fields": "[\"id\",\"suburb\",\"split_suburb\",\"collection_week\",\"greenwaste_collection_week\",\"garbage_collection_day\",\"garbage_collection_frequency\",\"garbage_pickup_date\",\"recycling_collection_day\",\"recycling_collection_frequency\",\"recycling_pickup_date\",\"greenwaste_collection_day\",\"greenwaste_collection_frequency\",\"next_greenwaste_date\",\"greenwaste_type\"]",
+        "x-soda2-types": "[\"number\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\"]",
+        "x-soda2-data-out-of-date": "false",
+        "x-soda2-truth-last-modified": "Fri, 25 Sep 2026 07:30:25 GMT",
+        "x-soda2-secondary-last-modified": "Fri, 25 Sep 2026 07:30:25 GMT",
+        "last-modified": "Fri, 25 Sep 2026 07:30:25 GMT",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-socrata-region": "aws-us-east-1-fedramp-prod",
+        "x-socrata-requestid": "7e7bde9097bd3711b9768510a814e4ca",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "W3siaWQiOiIzNSIsInN1YnVyYiI6IkRVTkxPUCIsInNwbGl0X3N1YnVyYiI6IlNvdXRoIiwiY29sbGVjdGlvbl93ZWVrIjoiQiIsImdyZWVud2FzdGVfY29sbGVjdGlvbl93ZWVrIjoiR3JlZW4iLCJnYXJiYWdlX2NvbGxlY3Rpb25fZGF5IjoiVGh1cnNkYXkiLCJnYXJiYWdlX2NvbGxlY3Rpb25fZnJlcXVlbmN5IjoiV2Vla2x5IiwiZ2FyYmFnZV9waWNrdXBfZGF0ZSI6IjAxLzEwLzIwMjYiLCJyZWN5Y2xpbmdfY29sbGVjdGlvbl9kYXkiOiJUaHVyc2RheSIsInJlY3ljbGluZ19jb2xsZWN0aW9uX2ZyZXF1ZW5jeSI6IkZvcnRuaWdodGx5IiwicmVjeWNsaW5nX3BpY2t1cF9kYXRlIjoiMDgvMTAvMjAyNiIsImdyZWVud2FzdGVfY29sbGVjdGlvbl9kYXkiOiJUaHVyc2RheSIsImdyZWVud2FzdGVfY29sbGVjdGlvbl9mcmVxdWVuY3kiOiJGb3J0bmlnaHRseSIsIm5leHRfZ3JlZW53YXN0ZV9kYXRlIjoiMDEvMTAvMjAyNiIsImdyZWVud2FzdGVfdHlwZSI6IkdyZWVud2FzdGUifV0K"
+    }
+  ]
+}

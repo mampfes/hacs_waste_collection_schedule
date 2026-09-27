@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/Taubaneveien%2046 ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/Taubaneveien%2046",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/Taubaneveien%2046",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:27 GMT"
+      },
+      "content_b64": "eyJzZWFyY2hSZXN1bHRzIjpbeyJpZCI6Ijc3NzExMzg4LTM2MzYtNDQ3Mi05ZWY4LTI1M2RmMzgxODMwMSIsInRpdGxlIjoiVGF1YmFuZXZlaWVuIDQ2Iiwic3ViVGl0bGUiOiJSZW5uZWJ1IGtvbW11bmUifV0sImFsdGVybmF0ZVNlYXJjaFJlc3VsdHMiOltdfQ=="
+    },
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/77711388-3636-4472-9ef8-253df3818301/details/ ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/77711388-3636-4472-9ef8-253df3818301/details/",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/77711388-3636-4472-9ef8-253df3818301/details/",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:27 GMT"
+      },
+      "content_b64": "eyJkaXNwb3NhbHMiOlt7ImRhdGUiOiIyMDI2LTA5LTMwVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiR2xhc3Mgb2cgbWV0YWxsZW1iYWxsYXNqZSIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTA5LTMwVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUGxhc3RlbWJhbGxhc2plIiwic3ltYm9sSWQiOjJ9LHsiZGF0ZSI6IjIwMjYtMTAtMDdUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJSZXN0YXZmYWxsIiwic3ltYm9sSWQiOjE1fSx7ImRhdGUiOiIyMDI2LTEwLTA3VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTAtMjFUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJQYXBpciIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTIxVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMDRUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJSZXN0YXZmYWxsIiwic3ltYm9sSWQiOjE1fSx7ImRhdGUiOiIyMDI2LTExLTA0VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMTFUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJHbGFzcyBvZyBtZXRhbGxlbWJhbGxhc2plIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMTFUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJQbGFzdGVtYmFsbGFzamUiLCJzeW1ib2xJZCI6Mn0seyJkYXRlIjoiMjAyNi0xMS0xOFQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6IlBhcGlyIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMThUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH1dfQ=="
+    }
+  ]
+}

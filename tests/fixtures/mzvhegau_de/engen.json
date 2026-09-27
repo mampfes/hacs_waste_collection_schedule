@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.mzvhegau.de/wp-admin/admin-post.php 6e36b80c36",
+      "method": "GET",
+      "url": "https://www.mzvhegau.de/wp-admin/admin-post.php",
+      "final_url": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&slug=Engen&whole_year=1&format=text",
+      "body": "{\"params\":[[\"action\",\"mzv_ics_download\"],[\"format\",\"text\"],[\"slug\",\"Engen\"],[\"whole_year\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.2.34",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self';",
+        "content-disposition": "attachment; filename=\"kalender_Engen_2026.txt\"",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "236",
+        "content-type": "text/plain; charset=utf-8",
+        "date": "Sun, 27 Sep 2026 20:50:47 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "QWJob2x0ZXJtaW5lIGbDvHIgRW5nZW4KCjI5LjA5LjIwMjY6IPCfjLEgQmlvbcO8bGwKMDUuMTAuMjAyNjog8J+Xnu+4jyBQYXBpZXIKMTMuMTAuMjAyNjog8J+MsSBCaW9tw7xsbAoxNC4xMC4yMDI2OiDwn4yxIEJpb23DvGxsCjIyLjEwLjIwMjY6IPCfjbYgR2VsYmVyIFNhY2sKMjcuMTAuMjAyNjog8J+MsSBCaW9tw7xsbAowMi4xMS4yMDI2OiDwn5ee77iPIFBhcGllcgoxMC4xMS4yMDI2OiDwn4yxIEJpb23DvGxsCjExLjExLjIwMjY6IOKZu++4jyBSZXN0bcO8bGwKMTkuMTEuMjAyNjog8J+NtiBHZWxiZXIgU2FjawoyNC4xMS4yMDI2OiDwn4yxIEJpb23DvGxsCjI3LjExLjIwMjY6IPCfjoQgQ2hyaXN0YmF1bQozMC4xMS4yMDI2OiDwn5ee77iPIFBhcGllcgowOC4xMi4yMDI2OiDwn4yxIEJpb23DvGxsCjA5LjEyLjIwMjY6IOKZu++4jyBSZXN0bcO8bGwKMTYuMTIuMjAyNjog8J+NtiBHZWxiZXIgU2FjawoyMS4xMi4yMDI2OiDwn4yxIEJpb23DvGxsCjI4LjEyLjIwMjY6IPCfl57vuI8gUGFwaWVyCjA1LjAxLjIwMjc6IPCfjLEgQmlvbcO8bGwKMTkuMDEuMjAyNzog8J+MsSBCaW9tw7xsbAowNy4wMS4yMDI3OiDimbvvuI8gUmVzdG3DvGxsCjI1LjAxLjIwMjc6IPCfl57vuI8gUGFwaWVyCjE0LjAxLjIwMjc6IPCfjbYgR2VsYmVyIFNhY2sK"
+    }
+  ]
+}

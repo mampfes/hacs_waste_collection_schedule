@@ -504,7 +504,8 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
     Rows come out grouped by record, in ``fields`` order. A field the record
     omits, and one whose value ``parse_date`` cannot read, contribute nothing,
     which is how such a provider spells "no collection scheduled for this
-    round".
+    round". A single record (a mapping rather than a list of them) is read as
+    a list of one, for the API that answers one property with one object.
 
     Args:
         fields: ``{field name: round label}``. The label is what the
@@ -517,7 +518,8 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
             sentences it did not write.
         split: separator for a field that lists every date of its round
             (``"6/2, 20/2, 6/3"``) rather than the next one. Each non-empty part
-            is parsed on its own and becomes its own row.
+            is parsed on its own and becomes its own row. A field holding a
+            JSON list of dates is read the same way without it.
     """
 
     def __init__(
@@ -532,6 +534,8 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
         self._split = split
 
     def _values(self, value: Any) -> "list[Any]":
+        if isinstance(value, (list, tuple)):
+            return list(value)
         if self._split is None:
             return [value]
         parts = (part.strip() for part in str(value or "").split(self._split))
@@ -540,6 +544,8 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[tuple[datetime.date, str]]:
+        if isinstance(records, Mapping):
+            records = [records]
         for record in records:
             for field_name, key in self._fields.items():
                 for value in self._values(record.get(field_name, "")):
@@ -899,17 +905,31 @@ class Deduplicate(Preprocessor[Any, Any]):
 
         preprocess = Compose(RecurrenceExpander(_describe), Deduplicate())
 
-    Records must be hashable, which the usual ``(date, key)`` row is.
+    Records must be hashable, which the usual ``(date, key)`` row is. For a
+    record that is not (a JSON object), or whose repeats differ in fields the
+    collection does not use (a job id), pass ``key``: ``callable(record)``
+    returning what makes two records the same collection::
+
+        preprocess = Deduplicate(key=lambda job: (job["start"][:10], job["bin"]))
+
+    Args:
+        key: optional ``callable(record) -> hashable``; the record itself by
+            default.
     """
+
+    def __init__(self, key: "Callable[[Any], Any] | None" = None):
+        self._key = key
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[Any]:
+        key = self._key
         seen: set[Any] = set()
         for record in records:
-            if record in seen:
+            marker = key(record) if key is not None else record
+            if marker in seen:
                 continue
-            seen.add(record)
+            seen.add(marker)
             yield record
 
 

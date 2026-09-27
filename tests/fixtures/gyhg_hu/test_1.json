@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://gyhg.bluespot.hu/api/get_schedule 0e156b8cb7",
+      "method": "GET",
+      "url": "https://gyhg.bluespot.hu/api/get_schedule",
+      "final_url": "https://gyhg.bluespot.hu/api/get_schedule?city_name=%C3%89cs&street=Ady+Endre+utca&house_number=1%2FA",
+      "body": "{\"params\":[[\"city_name\",\"\u00c9cs\"],[\"house_number\",\"1/A\"],[\"street\",\"Ady Endre utca\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:36 GMT",
+        "server": "Apache/2.4.68 (Debian)",
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "347",
+        "content-type": "application/json"
+      },
+      "content_b64": "eyJkYXRhIjp7ImJpbyI6WyIyMDI2LTA5LTAyIiwiMjAyNi0wOS0wOSIsIjIwMjYtMDktMTYiLCIyMDI2LTA5LTIzIiwiMjAyNi0wOS0zMCIsIjIwMjYtMTAtMDciLCIyMDI2LTEwLTE0IiwiMjAyNi0xMC0yMSIsIjIwMjYtMTAtMjgiLCIyMDI2LTExLTA0IiwiMjAyNi0xMS0xMSIsIjIwMjYtMTEtMTgiLCIyMDI2LTExLTI1IiwiMjAyNi0xMi0wMiIsIjIwMjYtMTItMDkiLCIyMDI2LTEyLTE2IiwiMjAyNi0xMi0yMyIsIjIwMjYtMTItMzAiLCIyMDI3LTAxLTA2IiwiMjAyNy0wMS0xMyIsIjIwMjctMDEtMjAiLCIyMDI3LTAxLTI3IiwiMjAyNy0wMi0wMyIsIjIwMjctMDItMTAiLCIyMDI3LTAyLTE3IiwiMjAyNy0wMi0yNCIsIjIwMjctMDMtMDMiLCIyMDI3LTAzLTEwIiwiMjAyNy0wMy0xNyIsIjIwMjctMDMtMjQiLCIyMDI3LTAzLTMxIiwiMjAyNy0wNC0wNyIsIjIwMjctMDQtMTQiLCIyMDI3LTA0LTIxIiwiMjAyNy0wNC0yOCIsIjIwMjctMDUtMDUiLCIyMDI3LTA1LTEyIiwiMjAyNy0wNS0xOSIsIjIwMjctMDUtMjYiLCIyMDI3LTA2LTAyIiwiMjAyNy0wNi0wOSIsIjIwMjctMDYtMTYiLCIyMDI3LTA2LTIzIiwiMjAyNy0wNi0zMCIsIjIwMjctMDctMDciLCIyMDI3LTA3LTE0IiwiMjAyNy0wNy0yMSIsIjIwMjctMDctMjgiLCIyMDI3LTA4LTA0IiwiMjAyNy0wOC0xMSIsIjIwMjctMDgtMTgiLCIyMDI3LTA4LTI1IiwiMjAyNy0wOS0wMSIsIjIwMjctMDktMDgiLCIyMDI3LTA5LTE1IiwiMjAyNy0wOS0yMiIsIjIwMjctMDktMjkiXSwibWl4ZWQiOm51bGwsImxlZnRvdmVyIjpbIjIwMjYtMDktMDciLCIyMDI2LTA5LTIxIiwiMjAyNi0xMC0wNSIsIjIwMjYtMTAtMTkiLCIyMDI2LTExLTAyIiwiMjAyNi0xMS0xNiIsIjIwMjYtMTEtMzAiLCIyMDI2LTEyLTE0IiwiMjAyNi0xMi0yOCIsIjIwMjctMDEtMDQiLCIyMDI3LTAxLTE4IiwiMjAyNy0wMi0wMSIsIjIwMjctMDItMTUiLCIyMDI3LTAzLTAxIiwiMjAyNy0wMy0xNSIsIjIwMjctMDMtMjkiLCIyMDI3LTA0LTEyIiwiMjAyNy0wNC0yNiIsIjIwMjctMDUtMTAiLCIyMDI3LTA1LTI0IiwiMjAyNy0wNi0wNyIsIjIwMjctMDYtMjEiLCIyMDI3LTA3LTA1IiwiMjAyNy0wNy0xOSIsIjIwMjctMDgtMDIiLCIyMDI3LTA4LTE2IiwiMjAyNy0wOC0zMCIsIjIwMjctMDktMTMiLCIyMDI3LTA5LTI3Il0sInJlY3ljbGUiOlsiMjAyNi0wOS0xMiIsIjIwMjYtMTAtMTAiLCIyMDI2LTExLTA3IiwiMjAyNi0xMi0wNSIsIjIwMjctMDEtMDIiLCIyMDI3LTAxLTMwIiwiMjAyNy0wMi0yNyIsIjIwMjctMDMtMjciLCIyMDI3LTA0LTI0IiwiMjAyNy0wNS0yMiIsIjIwMjctMDYtMTkiLCIyMDI3LTA3LTE3IiwiMjAyNy0wOC0xNCIsIjIwMjctMDktMTEiXX19"
+    }
+  ]
+}

@@ -1,76 +1,77 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, postcode, uprn
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Leicester City Council"
-DESCRIPTION = "Source for city of Leicester, UK."
-URL = "https://www.leicester.gov.uk"
-TEST_CASES = {
-    "30 Mayflower Rd, Leicester LE5 5QD": {"post_code": "LE5 5QD", "number": "30"},
-    "235 Glenfield Rd, Leicester LE3 6DL": {"uprn": "002465020938"},
-}
-
-API_URL = "https://biffaleicester.co.uk/wp-admin/admin-ajax.php"
-
-API_ACTIONS = {"address_search": "get_uprn_api", "collection": "get_details_api"}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-BINS = {
-    "DW": {"icon": "mdi:trash-can", "alias": "Refuse"},
-    "RY": {"icon": "mdi:recycle", "alias": "Recycling"},
-    "GW": {"icon": "mdi:leaf", "alias": "Green Waste"},
-}
+_API_URL = "https://biffaleicester.co.uk/wp-admin/admin-ajax.php"
 
 
-class Source:
-    def __init__(self, uprn=None, post_code=None, number=None):
-        self._uprn = uprn
-        self._post_code = post_code
-        self._number = number
+def _property_uprn(response, *, number, **_) -> str:
+    """The UPRN of the postcode's address that starts with the house number."""
+    addresses = response.json()["anyType"]
+    for address in addresses:
+        if address["UPRNAddress"].startswith(f"{number} "):
+            return address["UPRNID"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "number", number, [address["UPRNAddress"] for address in addresses]
+    )
 
-    def fetch(self):
-        # Lookup UPRN
-        if not self._uprn:
-            p = {"action": API_ACTIONS["address_search"], "postcode": self._post_code}
-            r = requests.post(API_URL, headers=HEADERS, data=p)
-            r.raise_for_status()
-            data = r.json()
-            addresses = data["anyType"]
 
-            for address in addresses:
-                if address["UPRNAddress"].startswith(self._number + " "):
-                    self._uprn = address["UPRNID"]
+@final
+class Source(BaseSource):
+    TITLE = "Leicester City Council"
+    DESCRIPTION = "Source for city of Leicester, UK."
+    URL = "https://www.leicester.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-            if not self._uprn:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "number", self._number, [a["UPRNAddress"] for a in addresses]
-                )
+    TEST_CASES: ClassVar[dict] = {
+        "30 Mayflower Rd, Leicester LE5 5QD": {"post_code": "LE5 5QD", "number": "30"},
+        "235 Glenfield Rd, Leicester LE3 6DL": {"uprn": "002465020938"},
+    }
 
-        # Get collections
-        p = {"action": API_ACTIONS["collection"], "uprn": self._uprn}
-        r = requests.post(API_URL, headers=HEADERS, data=p)
-        r.raise_for_status()
-        collections = r.json()["anyType"]
+    PARAMS = (alternatives([uprn()], [postcode("post_code", "number")]),)
 
-        entries = []
-
-        for collection in collections:
-            type = collection["ServiceMode"]
-            props = BINS[type]
-
-            next_date = datetime.datetime.strptime(
-                collection["ServiceDueDate"], "%d/%m/%y"
-            ).date()
-
-            entries.append(
-                Collection(date=next_date, t=props["alias"], icon=props["icon"])
-            )
-
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _API_URL,
+                method="POST",
+                data=lambda post_code, **_: {
+                    "action": "get_uprn_api",
+                    "postcode": post_code,
+                },
+                given=lambda uprn=None, **_: uprn or None,
+                pick=_property_uprn,
+            ),
+        ),
+        url=_API_URL,
+        method="POST",
+        data=lambda property_uprn, **_: {
+            "action": "get_details_api",
+            "uprn": property_uprn,
+        },
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("anyType")
+    transform = JsonTransformer(
+        date_key="ServiceDueDate",
+        type_key="ServiceMode",
+        parse_date=date_parsers.for_format("%d/%m/%y"),
+        type_value_map={
+            "DW": wt.GENERAL_WASTE,
+            "RY": wt.RECYCLABLES,
+            "GW": wt.GARDEN_WASTE,
+        },
+    )

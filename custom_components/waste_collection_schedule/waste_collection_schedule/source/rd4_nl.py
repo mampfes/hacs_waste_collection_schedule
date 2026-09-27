@@ -1,93 +1,81 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Rd4"
-DESCRIPTION = "Source for Rd4."
-URL = "https://rd4.nl/"
-TEST_CASES = {"6417 AT 32": {"postal_code": "6417 AT", "house_number": 32}}
-
-
-ICON_MAP = {
-    "pmd": Icons.RECYCLING,
-    "gft": Icons.BIO_KITCHEN,
-    "residual_waste": Icons.GENERAL_WASTE,
-    "paper": Icons.PAPER,
-    "pruning_waste": Icons.ORGANIC,
-    "best_bag": Icons.GENERAL_WASTE,
-    "christmas_trees": Icons.CHRISTMAS_TREE,
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.preprocessors import FlattenGroups
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-API_URL = "https://data.rd4.nl/api/v1/waste-calendar"
+def _calendar_query(
+    year: int,
+    _context,
+    postal_code: str,
+    house_number,
+    house_number_extension=None,
+    **_,
+) -> dict:
+    """One year's calendar for the address."""
+    query = {
+        "postal_code": postal_code,
+        "house_number": house_number,
+        "year": year,
+    }
+    if house_number_extension:
+        query["house_number_extension"] = house_number_extension
+    return query
 
 
-class Source:
-    def __init__(
-        self,
-        postal_code: str,
-        house_number: str | int,
-        house_number_extension: str | None = None,
-    ):
-        self._postal_code: str = postal_code
-        self._house_number: str | int = house_number
-        self._house_number_extension: str | None = house_number_extension
+@final
+class Source(BaseSource):
+    TITLE = "Rd4"
+    DESCRIPTION = "Source for Rd4."
+    URL = "https://rd4.nl/"
+    COUNTRY = "nl"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+        wt.OTHER,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        now = datetime.now()
-        year = now.year
-        entries = []
-        exception = None
-        try:
-            entries = self._get_collections(year)
-        except Exception as e:
-            # Do not fail in december to try to fetch next year
-            if now.month != 12:
-                raise
-            exception = e
+    TEST_CASES: ClassVar[dict] = {
+        "6417 AT 32": {"postal_code": "6417 AT", "house_number": 32}
+    }
 
-        if now.month != 12:
-            return entries
+    PARAMS = (
+        postcode("postal_code", "house_number"),
+        text_field("house_number_extension", "House Number Extension", optional=True),
+    )
 
-        # Fetch next year in December
-        year += 1
-        try:
-            return entries + self._get_collections(year)
-        except Exception:
-            if exception:
-                raise exception from None
-            return entries
-
-    def _get_collections(self, year) -> list[Collection]:
-        args = {
-            "postal_code": self._postal_code,
-            "house_number": self._house_number,
-            "year": year,
-        }
-
-        if self._house_number_extension:
-            args["house_number_extension"] = self._house_number_extension
-
-        # get json file
-        r = requests.get(API_URL, params=args)
-        r.raise_for_status()
-        data = r.json()
-        if not (
-            "data" in data
-            and "items" in data["data"]
-            and len(data["data"]["items"]) > 0
-        ):
-            raise ValueError("No data found, check your arguments")
-
-        entries = []
-
-        for item in data["data"]["items"]:
-            for collection in item:
-                date_ = datetime.strptime(collection["date"], "%Y-%m-%d").date()
-                bin_type = collection["type"]
-
-                icon = ICON_MAP.get(bin_type)  # Collection icon
-                entries.append(Collection(date=date_, t=bin_type, icon=icon))
-
-        return entries
+    # The calendar is published per year; December also asks for next year.
+    retrieve = retrievers.YearlyRetriever(
+        fetch=retrievers.Request(
+            "https://data.rd4.nl/api/v1/waste-calendar",
+            params=_calendar_query,
+        ),
+    )
+    # ``items`` holds one list of collections per month. Next year's calendar
+    # may not be published yet in December.
+    parse = parsers.EachResponse(
+        parsers.JsonParser("data", "items"), skip_failures=True
+    )
+    preprocess = FlattenGroups()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "pmd": wt.RECYCLABLES,
+            "gft": wt.ORGANIC,
+            "residual_waste": wt.GENERAL_WASTE,
+            "paper": wt.PAPER,
+            "pruning_waste": wt.GARDEN_WASTE,
+            "best_bag": wt.OTHER,
+            "christmas_trees": wt.GARDEN_WASTE,
+        },
+    )

@@ -1667,3 +1667,37 @@ def test_tommekalender_parser_uses_upstream_year_across_new_year() -> None:
         (date(2026, 12, 30), "Restavfall"),
         (date(2027, 1, 6), "Papp/papir"),
     ]
+
+
+def test_date_fields_reads_a_single_record_and_list_values() -> None:
+    from datetime import date
+
+    from waste_collection_schedule import date_parsers
+    from waste_collection_schedule.preprocessors import DateFields
+
+    preprocess = DateFields(
+        fields={"refuse": "Refuse", "garden": "Garden"},
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )
+
+    assert list(
+        preprocess({"refuse": "2026-10-01", "garden": ["2026-10-02", "2026-10-16"]})
+    ) == [
+        (date(2026, 10, 1), "Refuse"),
+        (date(2026, 10, 2), "Garden"),
+        (date(2026, 10, 16), "Garden"),
+    ]
+
+
+def test_deduplicate_key_collapses_unhashable_repeats() -> None:
+    from waste_collection_schedule.preprocessors import Deduplicate
+
+    jobs = [
+        {"id": 1, "day": "2026-10-01", "bin": "BLACK"},
+        {"id": 2, "day": "2026-10-01", "bin": "BLACK"},
+        {"id": 3, "day": "2026-10-01", "bin": "BLUE"},
+    ]
+
+    kept = list(Deduplicate(key=lambda job: (job["day"], job["bin"]))(jobs))
+
+    assert [job["id"] for job in kept] == [1, 3]

@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://gyhg.bluespot.hu/api/get_schedule b1cf18ea02",
+      "method": "GET",
+      "url": "https://gyhg.bluespot.hu/api/get_schedule",
+      "final_url": "https://gyhg.bluespot.hu/api/get_schedule?city_name=Veszpr%C3%A9mvars%C3%A1ny&street=Zr%C3%ADnyi+utca&house_number=34",
+      "body": "{\"params\":[[\"city_name\",\"Veszpr\u00e9mvars\u00e1ny\"],[\"house_number\",\"34\"],[\"street\",\"Zr\u00ednyi utca\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:36 GMT",
+        "server": "Apache/2.4.68 (Debian)",
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "57",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "349",
+        "content-type": "application/json"
+      },
+      "content_b64": "eyJkYXRhIjp7ImJpbyI6WyIyMDI2LTA5LTA1IiwiMjAyNi0wOS0xMiIsIjIwMjYtMDktMTkiLCIyMDI2LTA5LTI2IiwiMjAyNi0xMC0wMyIsIjIwMjYtMTAtMTAiLCIyMDI2LTEwLTE3IiwiMjAyNi0xMC0yNCIsIjIwMjYtMTAtMzEiLCIyMDI2LTExLTA3IiwiMjAyNi0xMS0xNCIsIjIwMjYtMTEtMjEiLCIyMDI2LTExLTI4IiwiMjAyNi0xMi0wNSIsIjIwMjYtMTItMTIiLCIyMDI2LTEyLTE5IiwiMjAyNi0xMi0yNiIsIjIwMjctMDEtMDIiLCIyMDI3LTAxLTA5IiwiMjAyNy0wMS0xNiIsIjIwMjctMDEtMjMiLCIyMDI3LTAxLTMwIiwiMjAyNy0wMi0wNiIsIjIwMjctMDItMTMiLCIyMDI3LTAyLTIwIiwiMjAyNy0wMi0yNyIsIjIwMjctMDMtMDYiLCIyMDI3LTAzLTEzIiwiMjAyNy0wMy0yMCIsIjIwMjctMDMtMjciLCIyMDI3LTA0LTAzIiwiMjAyNy0wNC0xMCIsIjIwMjctMDQtMTciLCIyMDI3LTA0LTI0IiwiMjAyNy0wNS0wMSIsIjIwMjctMDUtMDgiLCIyMDI3LTA1LTE1IiwiMjAyNy0wNS0yMiIsIjIwMjctMDUtMjkiLCIyMDI3LTA2LTA1IiwiMjAyNy0wNi0xMiIsIjIwMjctMDYtMTkiLCIyMDI3LTA2LTI2IiwiMjAyNy0wNy0wMyIsIjIwMjctMDctMTAiLCIyMDI3LTA3LTE3IiwiMjAyNy0wNy0yNCIsIjIwMjctMDctMzEiLCIyMDI3LTA4LTA3IiwiMjAyNy0wOC0xNCIsIjIwMjctMDgtMjEiLCIyMDI3LTA4LTI4IiwiMjAyNy0wOS0wNCIsIjIwMjctMDktMTEiLCIyMDI3LTA5LTE4IiwiMjAyNy0wOS0yNSIsIjIwMjctMTAtMDIiXSwibWl4ZWQiOm51bGwsImxlZnRvdmVyIjpbIjIwMjYtMDktMDgiLCIyMDI2LTA5LTIyIiwiMjAyNi0xMC0wNiIsIjIwMjYtMTAtMjAiLCIyMDI2LTExLTAzIiwiMjAyNi0xMS0xNyIsIjIwMjYtMTItMDEiLCIyMDI2LTEyLTE1IiwiMjAyNi0xMi0yOSIsIjIwMjctMDEtMDUiLCIyMDI3LTAxLTE5IiwiMjAyNy0wMi0wMiIsIjIwMjctMDItMTYiLCIyMDI3LTAzLTAyIiwiMjAyNy0wMy0xNiIsIjIwMjctMDMtMzAiLCIyMDI3LTA0LTEzIiwiMjAyNy0wNC0yNyIsIjIwMjctMDUtMTEiLCIyMDI3LTA1LTI1IiwiMjAyNy0wNi0wOCIsIjIwMjctMDYtMjIiLCIyMDI3LTA3LTA2IiwiMjAyNy0wNy0yMCIsIjIwMjctMDgtMDMiLCIyMDI3LTA4LTE3IiwiMjAyNy0wOC0zMSIsIjIwMjctMDktMTQiLCIyMDI3LTA5LTI4Il0sInJlY3ljbGUiOlsiMjAyNi0wOS0xNSIsIjIwMjYtMTAtMTMiLCIyMDI2LTExLTEwIiwiMjAyNi0xMi0wOCIsIjIwMjctMDEtMDUiLCIyMDI3LTAyLTAyIiwiMjAyNy0wMy0wMiIsIjIwMjctMDMtMzAiLCIyMDI3LTA0LTI3IiwiMjAyNy0wNS0yNSIsIjIwMjctMDYtMjIiLCIyMDI3LTA3LTIwIiwiMjAyNy0wOC0xNyIsIjIwMjctMDktMTQiXX19"
+    }
+  ]
+}

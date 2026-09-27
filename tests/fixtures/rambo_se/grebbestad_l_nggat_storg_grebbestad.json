@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://rambo.se/wp-json/app/v1/address-flat 3f8d201236",
+      "method": "GET",
+      "url": "https://rambo.se/wp-json/app/v1/address-flat",
+      "final_url": "https://rambo.se/wp-json/app/v1/address-flat?address=Grebbestad+%C3%96.l%C3%A5nggat.%2FStorg.",
+      "body": "{\"params\":[[\"address\",\"Grebbestad \u00d6.l\u00e5nggat./Storg.\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:50:37 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "vary": "Accept-Encoding, Origin",
+        "x-wp-doingitwrong": "register_rest_route (sedan 5.5.0; Definitionen av REST API-rutten <code>app/v1/stations</code> saknar det obligatoriska argumentet <code>permission_callback</code>. Anv\u00e4nd <code>__return_true</code> som tillst\u00e5nd till \u00e5teranrop f\u00f6r REST API-rutter som \u00e4r avsedda att vara offentliga.)",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.rambo.se/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "allow": "GET",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "x-cache": "BYPASS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "W3sia2V5IjoiRyIsImlzX2tleSI6dHJ1ZX0seyJwbGFudF9udW1iZXIiOiJ4MDdDNXg4OHdjT1FBZTRHaVFFU2hscUcxOHdWWHExaVZLeDNYNjcxTmhJPSIsImFkZHJlc3MiOiJHcmViYmVzdGFkIFx1MDBkNi5sXHUwMGU1bmdnYXQuXC9TdG9yZy4sIEdyZWJiZXN0YWQiLCJ6aXBfY2l0eSI6IkdyZWJiZXN0YWQifV0="
+    },
+    {
+      "key": "GET https://rambo.se/wp-json/app/v1/next-pickup-web 3f6c7beb06",
+      "method": "GET",
+      "url": "https://rambo.se/wp-json/app/v1/next-pickup-web",
+      "final_url": "https://rambo.se/wp-json/app/v1/next-pickup-web?plant-number=x07C5x88wcOQAe4GiQEShlqG18wVXq1iVKx3X671NhI%3D",
+      "body": "{\"params\":[[\"plant-number\",\"x07C5x88wcOQAe4GiQEShlqG18wVXq1iVKx3X671NhI=\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:50:37 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "vary": "Accept-Encoding, Origin",
+        "x-wp-doingitwrong": "register_rest_route (sedan 5.5.0; Definitionen av REST API-rutten <code>app/v1/stations</code> saknar det obligatoriska argumentet <code>permission_callback</code>. Anv\u00e4nd <code>__return_true</code> som tillst\u00e5nd till \u00e5teranrop f\u00f6r REST API-rutter som \u00e4r avsedda att vara offentliga.)",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.rambo.se/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "allow": "GET",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "x-cache": "BYPASS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJ0eXBlcyI6W3sidHlwZSI6Ik1hdGF2ZmFsbCIsImFkZHJlc3MiOiJHcmViYmVzdGFkIFx1MDBkNi5sXHUwMGU1bmdnYXQuXC9TdG9yZy4iLCJwaWNrdXBfZGF0ZSI6IjIwMjYtMDktMjkiLCJ6aXBfY2l0eSI6IkdyZWJiZXN0YWQiLCJmb3JtYXR0ZWQiOiIyOSBzZXAiLCJmb3JtYXR0ZWRfZnVsbCI6IjI5IHNlcHRlbWJlciIsImhhc19kZXZpYXRpbmdfZGF0ZSI6ZmFsc2UsIndlZWtfdHlwZSI6Ik9yZGluYXJpZSJ9LHsidHlwZSI6IlJlc3RhdmZhbGwiLCJhZGRyZXNzIjoiR3JlYmJlc3RhZCBcdTAwZDYubFx1MDBlNW5nZ2F0LlwvU3RvcmcuIiwicGlja3VwX2RhdGUiOiIyMDI2LTA5LTI5IiwiemlwX2NpdHkiOiJHcmViYmVzdGFkIiwiZm9ybWF0dGVkIjoiMjkgc2VwIiwiZm9ybWF0dGVkX2Z1bGwiOiIyOSBzZXB0ZW1iZXIiLCJoYXNfZGV2aWF0aW5nX2RhdGUiOmZhbHNlLCJ3ZWVrX3R5cGUiOiJPcmRpbmFyaWUifV0sImFkZHJlc3MiOiJHcmViYmVzdGFkIFx1MDBkNi5sXHUwMGU1bmdnYXQuXC9TdG9yZy4iLCJjaXR5IjoiR3JlYmJlc3RhZCJ9"
+    }
+  ]
+}

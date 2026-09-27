@@ -1,36 +1,19 @@
 import unicodedata
-from datetime import datetime
-from typing import Literal, get_args
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
-    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "MRC de Roussillon (QC)"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for info-collectes.ca/"  # Describe your source
-URL = "https://info-collectes.ca/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "TestName1": {"municipality": "La Prairie"},
-    "TestName2": {"municipality": "candiac"},
-    "TestName3": {"municipality": "chateauguay", "sector": "est"},
-    "TestName4": {"municipality": "Delson"},
-    "TestName5": {"municipality": "lery"},
-}
-
-API_URL = "https://info-collectes.ca/wp/wp-admin/admin-ajax.php"
-ICON_MAP = {
-    "organic": Icons.ORGANIC,
-    "recycling": Icons.RECYCLING,
-    "greenWaste": Icons.GARDEN,
-    "cardboard": Icons.PAPER,
-    "bulky": Icons.BULKY,
-    "garbage": Icons.GENERAL_WASTE,
-}
-
-MUNICIPALITY_LITERAL = Literal[
+_MUNICIPALITIES = (
     "candiac",
     "saint-constant",
     "chateauguay",
@@ -42,104 +25,88 @@ MUNICIPALITY_LITERAL = Literal[
     "lery",
     "sainte-catherine",
     "mercier",
-]
-MUNICIPALITY_NAMES = list(get_args(MUNICIPALITY_LITERAL))
+)
+_SECTORS = ("nord-ouest", "est")
 
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-    "fr": "COMMENT OBTENIR LES ARGUMENTS",
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "municipality": "Municipality Name",
-        "sector": "Sector",
-    },
-    "fr": {
-        "municipality": "Nom de la municipalité",
-        "sector": "Secteur",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "municipality": "Municipality name in MRC de Roussillon",
-        "sector": "Optional, Sector for Châteauguay, nord-ouest or est",
-    },
-    "fr": {
-        "municipality": "Nom de la municipalité dans le MRC de Roussillon",
-        "sector": "En option, Secteur de Châteauguay, nord-ouest ou est",
-    },
-}
+def _slug(name: str) -> str:
+    """A municipality name as the site's region slug: "La Prairie" -> "la-prairie"."""
+    decomposed = unicodedata.normalize("NFKD", name)
+    plain = "".join(c for c in decomposed if not unicodedata.combining(c))
+    return plain.replace(" ", "-").lower()
 
 
-def _normalize_municipality_name(municipality_name):
-    t = unicodedata.normalize("NFKD", municipality_name)
-    normalized__name = "".join(s for s in t if not unicodedata.combining(s))
-    return normalized__name.replace(" ", "-").lower()
-
-
-class Source:
-    def __init__(self, municipality: MUNICIPALITY_LITERAL, sector: str | None = None):
-        self.municipality = municipality
-        if sector:
-            self.sector: str | None = sector.lower()
-        else:
-            self.sector = None
-
-    def fetch(self) -> list[Collection]:
-        #  replace this comment with
-        #  api calls or web scraping required
-        #  to capture waste collection schedules
-        #  and extract date and waste type details
-        municipality_name = _normalize_municipality_name(self.municipality)
-        if not municipality_name:
-            raise SourceArgumentNotFound(
-                "municipality", self.municipality, "Empty municipality name."
-            )
-        if municipality_name not in MUNICIPALITY_NAMES:
+def _region(municipality: str, sector: str | None = None, **_) -> dict:
+    """The calendar request; Châteauguay is split into two sectors."""
+    region = _slug(municipality)
+    if region not in _MUNICIPALITIES:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "municipality", municipality, _MUNICIPALITIES
+        )
+    if sector:
+        sector = sector.lower()
+        if region != "chateauguay":
             raise SourceArgumentException(
-                "municipality", f"Invalid municipality name: {self.municipality}."
+                "sector", f"Invalid sector for {region.capitalize()}"
             )
+        if sector not in _SECTORS:
+            raise SourceArgumentNotFoundWithSuggestions("sector", sector, _SECTORS)
+        region = f"{region}-secteur-{sector}"
+    return {"action": "ajaxJsYearCalendar", "region": region}
 
-        if self.sector:
-            if municipality_name != "chateauguay":
-                raise SourceArgumentException(
-                    self.sector, f"Invalid sector for {municipality_name.capitalize()}"
-                )
-            if self.sector not in ["nord-ouest", "est"]:
-                raise SourceArgumentException(
-                    self.sector,
-                    f"Invalid sector for {municipality_name.capitalize()}, available sector: nord-ouest, est",
-                )
-            municipality_name = municipality_name + "-" + "secteur" + "-" + self.sector
 
-        data = {
-            "action": "ajaxJsYearCalendar",
-            "region": municipality_name,
-        }
+@final
+class Source(BaseSource):
+    TITLE = "MRC de Roussillon (QC)"
+    DESCRIPTION = "Source script for info-collectes.ca/"
+    URL = "https://info-collectes.ca/"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.BULKY_WASTE,
+    ]
 
-        resp = requests.post(API_URL, data=data)
-        resp.raise_for_status()
-        cal = resp.json()["data"]
+    TEST_CASES: ClassVar[dict] = {
+        "TestName1": {"municipality": "La Prairie"},
+        "TestName2": {"municipality": "candiac"},
+        "TestName3": {"municipality": "chateauguay", "sector": "est"},
+        "TestName4": {"municipality": "Delson"},
+        "TestName5": {"municipality": "lery"},
+    }
 
-        if not cal:
-            raise Exception(
-                "Failed to get collection schedule"
-            )  # DO NOT JUST return []
+    PARAMS = (
+        municipality(),
+        text_field("sector", "Sector", optional=True),
+    )
 
-        entries = []  # List that holds collection schedule
+    HOWTO: ClassVar[dict] = {
+        "en": "Your municipality in the MRC de Roussillon. Châteauguay also takes a sector: nord-ouest or est.",
+        "fr": "Votre municipalité dans la MRC de Roussillon. Châteauguay prend aussi un secteur : nord-ouest ou est.",
+    }
 
-        for day in cal:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        day["date"], "%Y%m%d"
-                    ).date(),  # Collection date
-                    t=day["icone"][0],  # Collection type
-                    icon=ICON_MAP.get(day["icone"][0]),  # Collection icon
-                )
-            )
-
-        return entries
+    retrieve = HttpPostRetriever(
+        url="https://info-collectes.ca/wp/wp-admin/admin-ajax.php",
+        data=_region,
+    )
+    # The year's collection days, each with the pictograms of that day's
+    # rounds.
+    parse = parsers.JsonParser("data")
+    preprocess = ExplodeList("icone", into="round")
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="round",
+        parse_date=date_parsers.for_format("%Y%m%d"),
+        type_value_map={
+            "garbage": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "organic": wt.ORGANIC,
+            "greenWaste": wt.GARDEN_WASTE,
+            "cardboard": wt.PAPER,
+            "bulky": wt.BULKY_WASTE,
+        },
+    )
