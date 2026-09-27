@@ -326,6 +326,7 @@ This source has been successfully tested with the following service providers:
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Gemeinde Hiddenhausen](/doc/ics/abfall_export_vcal.md) / hiddenhausen.de/Rathaus/Services/Abfall/Abfallkalender-online
 - [Gemeinde Hille](/doc/ics/hille_de.md) / hille.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Gemeinde Neuberg](/doc/ics/neuberg_de.md) / neuberg.eu

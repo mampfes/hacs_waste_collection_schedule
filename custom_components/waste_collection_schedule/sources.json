@@ -13447,6 +13447,12 @@
       "id": "hasselroth_de"
     },
     {
+      "title": "Gemeinde Hiddenhausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
+    },
+    {
       "title": "Gemeinde Hille",
       "module": "ics",
       "default_params": {},

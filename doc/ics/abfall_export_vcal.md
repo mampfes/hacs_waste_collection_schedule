@@ -64,3 +64,41 @@ waste_collection_schedule:
         url: https://www.espelkamp.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=322.4&strasse=2862.243.1&vtyp=2&vMo=01&vJ=2026&bMo=12
         year_field: vJ
 ```
+### Gemeinde Hiddenhausen Allensteiner Straße
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        params:
+          bMo: '12'
+          csv_export: '1'
+          mode: vcal
+          ort: '393.7'
+          strasse: 1500.6.1
+          vMo: '1'
+          vtyp: '4'
+        regex: 'Hi (.*): Hiddenhausen'
+        url: https://www.hiddenhausen.de/output/abfall_export.php
+        year_field: vJ
+```
+### Gemeinde Hiddenhausen Am Frauenholz
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        params:
+          bMo: '12'
+          csv_export: '1'
+          mode: vcal
+          ort: '393.7'
+          strasse: 1500.20.1
+          vMo: '1'
+          vtyp: '4'
+        regex: 'Hi (.*): Hiddenhausen'
+        url: https://www.hiddenhausen.de/output/abfall_export.php
+        year_field: vJ
+```

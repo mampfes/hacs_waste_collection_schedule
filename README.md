@@ -1922,6 +1922,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Gründau](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gruendau/abfallkalender
 - [Gemeinde Gumtow (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Gemeinde Hasselroth](/doc/source/hasselroth_de.md) / hasselroth.de
+- [Gemeinde Hiddenhausen](/doc/ics/abfall_export_vcal.md) / hiddenhausen.de/Rathaus/Services/Abfall/Abfallkalender-online
 - [Gemeinde Hille](/doc/ics/hille_de.md) / hille.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Gemeinde Ismaning – Abfallkalender](/doc/source/ismaning_de.md) / ismaning.de/umwelt-energie/abfall/abfallkalender
