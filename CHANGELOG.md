@@ -4,6 +4,48 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.35.0] - 2026-09-27
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@figpom-solutions, @giertzd, @gvasilakiss, @micvppl, @perlchamp, @ppslim and @stalar. 🎉
+Thanks as well to our returning contributors (@AtomBrake, @crazyboy89, @Darkslayer3324j,
+@klsx0) for the fixes and new sources below.
+
+📢 **Heads up:** a `3.0.0` beta pre-release is available on the `release/3.0.0` branch,
+migrating a large batch of sources to the new BaseSource pipeline with canonical,
+localised waste-type labels. Enable "Show beta versions" in HACS to opt in — **please test
+it thoroughly** against your own setup and report anything you hit on #6561. New source PRs
+should also target `release/3.0.0` rather than `master` (#7399).
+
+### Added Sources
+
+- added Danderyds kommun to edpevent_se, SE (thanks @stalar) (#7566)
+
+### Fixed Sources
+
+- fixed publidata_fr: merge schedules per garbage type instead of overwriting them (thanks @klsx0) (#7465)
+- fixed sunderland_gov_uk: rebuild the scraper for the council's new BINCOLLECTIONCHECKERNEWV3 postcode/address lookup flow (thanks @gvasilakiss) (#7466)
+- fixed adur_worthing_gov_uk: stop reusing a loop variable that mixed up collection dates and types (thanks @ppslim) (#7467)
+- fixed sjobo_se: read day from its own div when the cell carries a week label (thanks @Darkslayer3324j) (#7468)
+- fixed lindau_ch: read plain date and name fields now that *-sort fields are obfuscated (thanks @Darkslayer3324j) (#7469)
+- fixed ICS: strip the duplicated time suffix some feeds add to timestamps, affecting reso_gmbh_de (thanks @Darkslayer3324j) (#7470)
+- fixed cidiu_it: read schedules from the Junker app now that cidiu-processer.php is gone (thanks @Darkslayer3324j) (#7471)
+- fixed umweltverbaende_at: support the GVA Mödling calendar at gvamoedling.at (#7478)
+- fixed bir_no: address lookup for addresses with a house letter (thanks @giertzd) (#7523)
+- fixed publidata_fr: restore test coverage for Métropole Européenne de Lille (MEL) (#7529)
+- fixed ecoharmonogram_pl: add optional region parameter to disambiguate streets shared across collection areas (thanks @micvppl) (#7550)
+- fixed innerwest_nsw_gov_au: exact street matching (#7560)
+- fixed hedemora_energi_se: map Papper, Plast and Restavfall icons instead of falling back to the default (thanks @crazyboy89) (#7568)
+- fixed exeter_gov_uk: WAF block and misaligned bin dates (thanks @AtomBrake) (#7574)
+- fixed publidata_fr: exclude every day of bare closure ranges (thanks @figpom-solutions) (#7580)
+
+### Other
+
+- ci: run update-docs on release/** branches and add workflow_dispatch (#7446)
+- docs: add German getting-started documentation with images (thanks @perlchamp) (#7461)
+- docs: require a title in the source-request template and warn about PDF-only requests (#7541)
+- docs: add Integration and Home Assistant version fields to the issue templates (#7571)
+
 ## [2.34.2] - 2026-09-16
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
