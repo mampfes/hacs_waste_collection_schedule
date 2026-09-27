@@ -1175,6 +1175,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     placeholders["howto"] = howto.rstrip("\n") + "\n\n"
                 else:
                     placeholders["howto"] = ""
+                # URLs in PARAMS descriptions (e.g. field_terms' UPRN help) are
+                # rewritten to {url_*} placeholders in the generated translations;
+                # their values only live in the generated metadata.
+                placeholders.update(_SOURCE_METADATA.get(source, {}).get("urls", {}))
                 return placeholders
         except Exception:
             pass
