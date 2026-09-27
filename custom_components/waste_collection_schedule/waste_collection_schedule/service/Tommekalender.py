@@ -40,7 +40,10 @@ class TommekalenderParser(Parser["list[tuple[datetime.date, str]]"]):
             month_group = item.find_parent("tbody", attrs={"data-month": True})
             if month_group is None:
                 raise ValueError("Collection row has no data-month metadata")
-            month, year = (int(part) for part in month_group["data-month"].split("-"))
+            raw_month = month_group.get("data-month")
+            if not isinstance(raw_month, str):
+                raise ValueError("Collection row has invalid data-month metadata")
+            month, year = (int(part) for part in raw_month.split("-"))
             day = datetime.datetime.strptime(
                 f"{match.group(0)}.{year}", "%d.%m.%Y"
             ).date()
