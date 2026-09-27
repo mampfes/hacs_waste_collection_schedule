@@ -1,6 +1,8 @@
 # City of Ballarat
 
-Support for schedules provided by [City of Ballarat](https://data.ballarat.vic.gov.au/pages/waste-collection-day/).
+Support for schedules provided by [City of Ballarat](https://www.ballarat.vic.gov.au).
+
+Source for City of Ballarat rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Ballarat waste collection calendar](https://data.ballarat.vic.gov.au/pages/waste-collection-day/) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
+Check your address on https://data.ballarat.vic.gov.au/pages/waste-collection-day/ and enter it as it is listed there.

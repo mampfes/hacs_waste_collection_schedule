@@ -139,7 +139,9 @@
   },
   "ballarat_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ballarat_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Check your address on https://data.ballarat.vic.gov.au/pages/waste-collection-day/ and enter it as it is listed there."
+    },
     "urls": {}
   },
   "bayswater_wa_gov_au": {
@@ -2948,8 +2950,8 @@
   "heinz_entsorgung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md",
     "howto": {
-      "de": "So erhalten Sie den erforderlichen Parameter:\n1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. Öffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. Wählen Sie Ihren Ort und Ihre Straße aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.\n",
-      "en": "To get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Straße)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n"
+      "de": "Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ mit den Entwicklertools des Browsers (F12, Tab Netzwerk), wählen Sie Ort und Straße und kopieren Sie den 'param'-Wert der Anfrage an api-enttermine.heinz-entsorgung.net/termine.",
+      "en": "Open https://abfallkalender.heinz-entsorgung.de/ with the browser's developer tools (F12, Network tab), select your town and street, and copy the 'param' value of the request to api-enttermine.heinz-entsorgung.net/termine."
     },
     "urls": {}
   },
@@ -7234,7 +7236,9 @@
   },
   "tewkesbury_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tewkesbury_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your UPRN; you can look it up on https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

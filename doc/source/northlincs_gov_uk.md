@@ -1,15 +1,17 @@
 # North Lincolnshire Council
 
-Support for schedules provided by [North Lincolnshire Council ](https://www.northlincs.gov.uk/), UK.
+Support for schedules provided by [North Lincolnshire Council](https://www.northlincs.gov.uk).
+
+Source for northlincs.gov.uk services for North Lincolnshire Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northlincs_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -21,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northlincs_gov_uk
       args:
-        uprn: "100050200824"
+        uprn: '100050200824'
 ```
-
-## How to get the source argument
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
