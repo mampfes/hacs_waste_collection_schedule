@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/Makrellsvingen%2014%20-%2020 ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/Makrellsvingen%2014%20-%2020",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/Makrellsvingen%2014%20-%2020",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:26 GMT"
+      },
+      "content_b64": "eyJzZWFyY2hSZXN1bHRzIjpbeyJpZCI6IjM1M2M3NDJkLWMzM2EtNGQ5OS05NmE3LTk1MjRmZjM3Y2ZiOCIsInRpdGxlIjoiTWFrcmVsbHN2aW5nZW4gMTQgLSAyMCIsInN1YlRpdGxlIjoiS3Jpc3RpYW5zdW5kIGtvbW11bmUifV0sImFsdGVybmF0ZVNlYXJjaFJlc3VsdHMiOltdfQ=="
+    },
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/353c742d-c33a-4d99-96a7-9524ff37cfb8/details/ ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/353c742d-c33a-4d99-96a7-9524ff37cfb8/details/",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/353c742d-c33a-4d99-96a7-9524ff37cfb8/details/",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:26 GMT"
+      },
+      "content_b64": "eyJkaXNwb3NhbHMiOlt7ImRhdGUiOiIyMDI2LTEwLTAxVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTAtMDZUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJSZXN0YXZmYWxsIiwic3ltYm9sSWQiOjE1fSx7ImRhdGUiOiIyMDI2LTEwLTA5VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiR2xhc3Mgb2cgbWV0YWxsZW1iYWxsYXNqZSIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTE0VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUGFwaXIiLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMC0xNVQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6Ik1hdGF2ZmFsbCIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTIxVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUGxhc3RlbWJhbGxhc2plIiwic3ltYm9sSWQiOjJ9LHsiZGF0ZSI6IjIwMjYtMTAtMjlUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMS0wM1QwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6IlJlc3RhdmZhbGwiLCJzeW1ib2xJZCI6MTV9LHsiZGF0ZSI6IjIwMjYtMTEtMTFUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJQYXBpciIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTExLTEyVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMjZUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH1dfQ=="
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/search bd317200bb",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/search",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/search?query=%C3%96stra+Boulevarden+1",
+      "body": "{\"params\":[[\"query\",\"\u00d6stra Boulevarden 1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:11 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "112.5",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=OoJknPFRhtt4dSN7Xwlf4tyb7cT6H2Ueem5JPxAgCmKUp1diDqHc51Y6v39VF0UvFZhyfeBzs058wjUG%2B66D1OJezi4Sj0vN6DtuhWiSHg0xHg3Wfds16zKFBzQV8SXjYuNYFaUFS2Il8mv9y34%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d628c7d5fb8a6-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgNiBpdGVtcyIsInN0YXR1cyI6MjAwLCJkYXRhIjpbeyJ1dWlkIjoiZDRiN2RhZGUtYmI3Zi00MjU1LWI3OGMtODNkYmFlMmRhM2ZmIiwiYWxpYXMiOiJrcmFiLW9lc3RyYS1ib3VsZXZhcmRlbi0xLWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJcdTAwZDZzdHJhIEJvdWxldmFyZGVuIDEiLCJjaXR5IjoiS3Jpc3RpYW5zdGFkIiwiZGVzaWduYXRpb24iOiJCcmFuZHN0YXRpb25lbiAxIn0seyJ1dWlkIjoiY2I2MDQ4NzMtYzFmZi00NzRiLTljYWQtZjRmYmZlNjYwMjVlIiwiYWxpYXMiOiJrcmFiLW9lc3RyYS1ib3VsZXZhcmRlbi0xYS1mLSIsImFkZHJlc3MiOiJcdTAwZDZzdHJhIEJvdWxldmFyZGVuIDFBLUYiLCJjaXR5IjpudWxsLCJkZXNpZ25hdGlvbiI6IkJyYW5kc3RhdGlvbmVuIDEifSx7InV1aWQiOiJmODk3MTgxZi1lNmM4LTQwODItYjA1YS1lYzNjMGI3MTI0MjIiLCJhbGlhcyI6ImtyYWItb2VzdHJhLWJvdWxldmFyZGVuLTEwLWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJcdTAwZDZzdHJhIEJvdWxldmFyZGVuIDEwIiwiY2l0eSI6IktyaXN0aWFuc3RhZCIsImRlc2lnbmF0aW9uIjoiRGF2aWQgTnlib3JnIDE0In0seyJ1dWlkIjoiNDU2YjMzZmEtN2I1Yi00YWQyLTllNzItN2Y3Y2E1ZjZkNWEzIiwiYWxpYXMiOiJrcmFiLW9lc3RyYS1ib3VsZXZhcmRlbi0xMy1rcmlzdGlhbnN0YWQiLCJhZGRyZXNzIjoiXHUwMGQ2c3RyYSBCb3VsZXZhcmRlbiAxMyIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJkZXNpZ25hdGlvbiI6IktyaXN0aWFuc3RhZCA0OjQifSx7InV1aWQiOiJkMjA0MzhlMi1mMjAzLTQwZDgtOTEzMy04NmEzNWI1N2Y4MDgiLCJhbGlhcyI6ImtyYWItb2VzdHJhLWJvdWxldmFyZGVuLTE3LWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJcdTAwZDZzdHJhIEJvdWxldmFyZGVuIDE3IiwiY2l0eSI6IktyaXN0aWFuc3RhZCIsImRlc2lnbmF0aW9uIjoiVlx1MDBlNGR1cmVuIDEifSx7InV1aWQiOiIxZTBiMmYyZS0wNGMyLTQ4ZjItYWIwOC0wMjZhMmI3MmE0MTkiLCJhbGlhcyI6ImtyYWItb2VzdHJhLWJvdWxldmFyZGVuLTE5YS1rcmlzdGlhbnN0YWQiLCJhZGRyZXNzIjoiXHUwMGQ2c3RyYSBCb3VsZXZhcmRlbiAxOUEiLCJjaXR5IjoiS3Jpc3RpYW5zdGFkIiwiZGVzaWduYXRpb24iOiJWXHUwMGU0ZHVyZW4gNCJ9XSwicGFnaW5hdGlvbiI6eyJuZXh0IjpmYWxzZSwicGFnZSI6IjEifX0="
+    },
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/d4b7dade-bb7f-4255-b78c-83dbae2da3ff ",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/d4b7dade-bb7f-4255-b78c-83dbae2da3ff",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/d4b7dade-bb7f-4255-b78c-83dbae2da3ff",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:11 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "14.3",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=wFpeNPxErDyC1BP%2BGvr64vL0Gqg0pnwYy1b6JABEPQ5ueI%2FXwNkcY%2B32b3QJ9vQTX2JIvWOFWZFhDIk2F7gAWYgFcMaTnyu%2FoPfCbehIy8GaMoTA7kj52tBcN03nCrqm7x6CgmkUXAHXm1XFkGA%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d628dfe96b8a6-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgaXRlbSIsInN0YXR1cyI6MjAwLCJkYXRhIjp7InV1aWQiOiJkNGI3ZGFkZS1iYjdmLTQyNTUtYjc4Yy04M2RiYWUyZGEzZmYiLCJhbGlhcyI6ImtyYWItb2VzdHJhLWJvdWxldmFyZGVuLTEta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6Ilx1MDBkNnN0cmEgQm91bGV2YXJkZW4gMSIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJwcm9wZXJ0eV9pZCI6IjI1NjcwMiIsInNlcnZpY2VzIjpbeyJkZXNjcmlwdGlvbiI6IlJlc3RhdmZhbGwgaSB1bmRlcmpvcmRzYmVoXHUwMGU1bGxhcmUsIDEgZ1x1MDBlNW5nXC92ZWNrYSA1IGtibSIsInR5cGUiOiJSZXN0YXZmYWxsIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMDktMjgiLCJwcmVjaXNpb24iOiJkYXkifSx7ImRlc2NyaXB0aW9uIjoiTWF0YXZmYWxsIGkgdW5kZXJqb3Jkc2JlaFx1MDBlNWxsYXJlLCAxIGdcdTAwZTVuZ1wvdmVja2EiLCJ0eXBlIjoiTWF0YXZmYWxsIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMDktMzAiLCJwcmVjaXNpb24iOiJkYXkifSx7ImRlc2NyaXB0aW9uIjoiMzcwIGwga1x1MDBlNHJsIG1ldGFsbGZcdTAwZjZycGFja25pbmdhciB2YXIgNDplIHZlY2thIiwidHlwZSI6Ik1ldGFsbGZcdTAwZjZycCIsImNvbGxlY3Rpb25fYXQiOiIyMDI2LTEwLTA5IiwicHJlY2lzaW9uIjoiZGF5In0seyJkZXNjcmlwdGlvbiI6IjY2MCBsIGtcdTAwZTRybCBwbGFzdGZcdTAwZjZycGFja25pbmdhciB2YXJhbm5hbiB2ZWNrYSIsInR5cGUiOiJQbGFzdGZcdTAwZjZycCIsImNvbGxlY3Rpb25fYXQiOiIyMDI2LTA5LTI4IiwicHJlY2lzaW9uIjoiZGF5In0seyJkZXNjcmlwdGlvbiI6IjE5MCBsIGtcdTAwZTRybCBmXHUwMGU0cmdhdCBnbGFzIHZhciA0OmUgdmVja2EiLCJ0eXBlIjoiRlx1MDBlNHJnYXQgR2xhcyIsImNvbGxlY3Rpb25fYXQiOiIyMDI2LTEwLTE1IiwicHJlY2lzaW9uIjoiZGF5In0seyJkZXNjcmlwdGlvbiI6IjE5MCBsIGtcdTAwZTRybCBvZlx1MDBlNHJnYXQgZ2xhcyB2YXIgNDplIHZlY2thIiwidHlwZSI6Ik9mXHUwMGU0cmdhdCBHbGFzIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMTAtMTUiLCJwcmVjaXNpb24iOiJkYXkifSx7ImRlc2NyaXB0aW9uIjoiMzcwIGwga1x1MDBlNHJsIHRpZG5pbmdhciB2YXJhbm5hbiB2ZWNrYSIsInR5cGUiOiJUaWRuaW5nYXIiLCJjb2xsZWN0aW9uX2F0IjoiMjAyNi0wOS0yOCIsInByZWNpc2lvbiI6ImRheSJ9LHsiZGVzY3JpcHRpb24iOiI2NjAgbCBrXHUwMGU0cmwgcGFwcGVyc2ZcdTAwZjZycGFja25pbmdhciB2YXJhbm5hbiB2ZWNrYSIsInR5cGUiOiJQYXBwZXJzZlx1MDBmNnJwIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMTAtMDgiLCJwcmVjaXNpb24iOiJkYXkifV0sImRldmlhdGlvbnMiOlt7ImNvZGUiOiJUUkFTQkVIIiwiZGF0ZXRpbWUiOiIyMDI0LTA3LTAzIDEwOjMxOjAwIn0seyJjb2RlIjoiVFJBU0JFSCIsImRhdGV0aW1lIjoiMjAyNC0wNy0xMCAwNzozNzowMCJ9XSwidXBkYXRlZF9hdCI6IjIwMjYtMDktMjcgMDA6MTc6NDQifX0="
+    }
+  ]
+}

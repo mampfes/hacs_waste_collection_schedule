@@ -1,0 +1,62 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "POST https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days ce4c357a17",
+      "method": "POST",
+      "url": "https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days",
+      "final_url": "https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days?webpage_subpage_id=PAG0000570FEFFB1&webpage_token=390170046582b0e3d7ca68ef1d6b4829ccff0b1ae9c531047219c6f9b5295738&widget_action=handle_event",
+      "body": "{\"body\":[[\"action_cell_id\",\"PCL0003988FEFFB1\"],[\"action_page_id\",\"PAG0000570FEFFB1\"],[\"code_action\",\"find_addresses\"],[\"code_params\",\"{\\\"search\\\": \\\"RG42 2HB\\\"}\"]],\"params\":[[\"webpage_subpage_id\",\"PAG0000570FEFFB1\"],[\"webpage_token\",\"390170046582b0e3d7ca68ef1d6b4829ccff0b1ae9c531047219c6f9b5295738\"],[\"widget_action\",\"handle_event\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:50:40 GMT",
+        "content-type": "application/json",
+        "content-length": "206",
+        "connection": "keep-alive",
+        "strict-transport-security": "max-age=31536000; includeSubDomains;",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "0",
+        "x-permitted-cross-domain-policies": "none",
+        "set-cookie": "FEFFB3-mats_session=vgvq7g5pghv2bvnk5vnv24eii4; path=/; secure; HttpOnly; SameSite=None",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "content-security-policy": "default-src 'self' ; script-src 'self'  'unsafe-eval' 'unsafe-inline' maps.googleapis.com  https://publicapi.payments.service.gov.uk/ https://api.os.uk https://policy.cookiereports.com/ https://siteimproveanalytics.com blob:; style-src 'self'  *.googleapis.com  https://bfbc.nccloud.co.uk/ 'unsafe-inline'; img-src 'self'  data: *.googleapis.com maps.gstatic.com *.ggpht.com  https://bfbc.nccloud.co.uk/ https://300761.global.siteimproveanalytics.io/ blob:; font-src 'self'  *.googleapis.com fonts.gstatic.com  https://bfbc.nccloud.co.uk/ data:; connect-src 'self'    https://publicapi.payments.service.gov.uk/ https://api.os.uk maps.googleapis.com; media-src 'self'   https://bfbc.nccloud.co.uk/; object-src 'none' ; frame-src 'self'   https://bfbc.nccloud.co.uk/ https://iframetester.com/ blob:; worker-src 'self'  blob:; frame-ancestors 'self'   https://bfbc.nccloud.co.uk/ https://iframetester.com/",
+        "referrer-policy": "no-referrer",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJyZXN1bHQiOiJzdWNjZXNzIiwicmVzcG9uc2UiOnsiYWRkcmVzc2VzIjp7Iml0ZW1zIjpbeyJJZCI6IjQ1Mzk4NyIsIkRlc2NyaXB0aW9uIjoiMjggS0VOTkVMIExBTkUsIEJSQUNLTkVMTCwgUkc0MiAySEIifSx7IklkIjoiNDUyMTkzIiwiRGVzY3JpcHRpb24iOiIzMCBLRU5ORUwgTEFORSwgQlJBQ0tORUxMLCBSRzQyIDJIQiJ9LHsiSWQiOiI0NjYyNDQiLCJEZXNjcmlwdGlvbiI6IjMyIEtFTk5FTCBMQU5FLCBCUkFDS05FTEwsIFJHNDIgMkhCIn0seyJJZCI6IjUwNDQzMCIsIkRlc2NyaXB0aW9uIjoiMzQgS0VOTkVMIExBTkUsIEJSQUNLTkVMTCwgUkc0MiAySEIifSx7IklkIjoiNDkwNTc0IiwiRGVzY3JpcHRpb24iOiIzNiBLRU5ORUwgTEFORSwgQlJBQ0tORUxMLCBSRzQyIDJIQiJ9LHsiSWQiOiI0ODg5NDEiLCJEZXNjcmlwdGlvbiI6IjM4IEtFTk5FTCBMQU5FLCBCUkFDS05FTEwsIFJHNDIgMkhCIn0seyJJZCI6IjQ4NDU1OSIsIkRlc2NyaXB0aW9uIjoiNDAgS0VOTkVMIExBTkUsIEJSQUNLTkVMTCwgUkc0MiAySEIifSx7IklkIjoiNDUxNzcyIiwiRGVzY3JpcHRpb24iOiI0MiBLRU5ORUwgTEFORSwgQlJBQ0tORUxMLCBSRzQyIDJIQiJ9LHsiSWQiOiI0ODY0NTUiLCJEZXNjcmlwdGlvbiI6IjQ0IEtFTk5FTCBMQU5FLCBCUkFDS05FTEwsIFJHNDIgMkhCIn1dfX19"
+    },
+    {
+      "key": "POST https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days 1e1fef4fda",
+      "method": "POST",
+      "url": "https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days",
+      "final_url": "https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days?webpage_subpage_id=PAG0000570FEFFB1&webpage_token=390170046582b0e3d7ca68ef1d6b4829ccff0b1ae9c531047219c6f9b5295738&widget_action=handle_event",
+      "body": "{\"body\":[[\"action_cell_id\",\"PCL0003988FEFFB1\"],[\"action_page_id\",\"PAG0000570FEFFB1\"],[\"code_action\",\"find_rounds\"],[\"code_params\",\"{\\\"addressId\\\": \\\"453987\\\"}\"]],\"params\":[[\"webpage_subpage_id\",\"PAG0000570FEFFB1\"],[\"webpage_token\",\"390170046582b0e3d7ca68ef1d6b4829ccff0b1ae9c531047219c6f9b5295738\"],[\"widget_action\",\"handle_event\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:50:40 GMT",
+        "content-type": "application/json",
+        "content-length": "540",
+        "connection": "keep-alive",
+        "strict-transport-security": "max-age=31536000; includeSubDomains;",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "0",
+        "x-permitted-cross-domain-policies": "none",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "content-security-policy": "default-src 'self' ; script-src 'self'  'unsafe-eval' 'unsafe-inline' maps.googleapis.com  https://publicapi.payments.service.gov.uk/ https://api.os.uk https://policy.cookiereports.com/ https://siteimproveanalytics.com blob:; style-src 'self'  *.googleapis.com  https://bfbc.nccloud.co.uk/ 'unsafe-inline'; img-src 'self'  data: *.googleapis.com maps.gstatic.com *.ggpht.com  https://bfbc.nccloud.co.uk/ https://300761.global.siteimproveanalytics.io/ blob:; font-src 'self'  *.googleapis.com fonts.gstatic.com  https://bfbc.nccloud.co.uk/ data:; connect-src 'self'    https://publicapi.payments.service.gov.uk/ https://api.os.uk maps.googleapis.com; media-src 'self'   https://bfbc.nccloud.co.uk/; object-src 'none' ; frame-src 'self'   https://bfbc.nccloud.co.uk/ https://iframetester.com/ blob:; worker-src 'self'  blob:; frame-ancestors 'self'   https://bfbc.nccloud.co.uk/ https://iframetester.com/",
+        "referrer-policy": "no-referrer",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJyZXN1bHQiOiJzdWNjZXNzIiwicmVzcG9uc2UiOnsiaGVhZGluZyI6IllvdSBhcmUgaW4gd2FzdGUgY29sbGVjdGlvbiBzY2hlZHVsZSA2IiwiY29sbGVjdGlvbnMiOlt7InJvdW5kIjoiRm9vZCIsInVybCI6Imh0dHBzOlwvXC93d3cuYnJhY2tuZWxsLWZvcmVzdC5nb3YudWtcL2JpbnMtYW5kLXJlY3ljbGluZ1wvZm9vZC13YXN0ZS1jb2xsZWN0aW9uIiwiaWNvbiI6IlwvYXNzZXRzXC9jb2RlX3N0dWRpb1wvQ1NDMDAwMDA2MEZFRkZCMVwvRm9vZC5wbmc/dj1CQ1YwMDE3MjkyRkVGRkIzJndlYnBhZ2Vfc3VicGFnZV9pZD1QQUcwMDAwNTcwRkVGRkIxJndlYnBhZ2VfdG9rZW49MzkwMTcwMDQ2NTgyYjBlM2Q3Y2E2OGVmMWQ2YjQ4MjljY2ZmMGIxYWU5YzUzMTA0NzIxOWM2ZjliNTI5NTczOCIsInVwY29taW5nQ29sbGVjdGlvbnMiOlsiWW91ciBuZXh0IGZvb2QgY29sbGVjdGlvbiBpcyBUdWVzZGF5IDI5IFNlcHRlbWJlciAyMDI2IiwiWW91ciBzZWNvbmQgIGNvbGxlY3Rpb24gaXMgVHVlc2RheSA2IE9jdG9iZXIgMjAyNiIsIllvdXIgdGhpcmQgIGNvbGxlY3Rpb24gaXMgVHVlc2RheSAxMyBPY3RvYmVyIDIwMjYiXSwiZmlyc3REYXRlIjp7ImRhdGUiOiIyMDI2LTA5LTI5IDAwOjAwOjAwLjAwMDAwMCIsInRpbWV6b25lX3R5cGUiOjEsInRpbWV6b25lIjoiKzAxOjAwIn19LHsicm91bmQiOiJSZWN5Y2xpbmciLCJ1cmwiOiJodHRwczpcL1wvd3d3LmJyYWNrbmVsbC1mb3Jlc3QuZ292LnVrXC9iaW5zLWFuZC1yZWN5Y2xpbmdcL3JlY3ljbGluZy1iaW4tY29sbGVjdGlvbiIsImljb24iOiJcL2Fzc2V0c1wvY29kZV9zdHVkaW9cL0NTQzAwMDAwNjBGRUZGQjFcL1JlY3ljbGluZy5wbmc/dj1CQ1YwMDE3MjkyRkVGRkIzJndlYnBhZ2Vfc3VicGFnZV9pZD1QQUcwMDAwNTcwRkVGRkIxJndlYnBhZ2VfdG9rZW49MzkwMTcwMDQ2NTgyYjBlM2Q3Y2E2OGVmMWQ2YjQ4MjljY2ZmMGIxYWU5YzUzMTA0NzIxOWM2ZjliNTI5NTczOCIsInVwY29taW5nQ29sbGVjdGlvbnMiOlsiWW91ciBuZXh0IHJlY3ljbGluZyBjb2xsZWN0aW9uIGlzIFR1ZXNkYXkgNiBPY3RvYmVyIDIwMjYiLCJZb3VyIHNlY29uZCAgY29sbGVjdGlvbiBpcyBUdWVzZGF5IDIwIE9jdG9iZXIgMjAyNiIsIllvdXIgdGhpcmQgIGNvbGxlY3Rpb24gaXMgVHVlc2RheSAzIE5vdmVtYmVyIDIwMjYiXSwiZmlyc3REYXRlIjp7ImRhdGUiOiIyMDI2LTEwLTA2IDAwOjAwOjAwLjAwMDAwMCIsInRpbWV6b25lX3R5cGUiOjEsInRpbWV6b25lIjoiKzAxOjAwIn19LHsicm91bmQiOiJHZW5lcmFsIHdhc3RlIiwidXJsIjoiaHR0cHM6XC9cL3d3dy5icmFja25lbGwtZm9yZXN0Lmdvdi51a1wvYmlucy1hbmQtcmVjeWNsaW5nXC9nZW5lcmFsLXdhc3RlLWJpbi1jb2xsZWN0aW9uIiwiaWNvbiI6IlwvYXNzZXRzXC9jb2RlX3N0dWRpb1wvQ1NDMDAwMDA2MEZFRkZCMVwvUmVmdXNlLnBuZz92PUJDVjAwMTcyOTJGRUZGQjMmd2VicGFnZV9zdWJwYWdlX2lkPVBBRzAwMDA1NzBGRUZGQjEmd2VicGFnZV90b2tlbj0zOTAxNzAwNDY1ODJiMGUzZDdjYTY4ZWYxZDZiNDgyOWNjZmYwYjFhZTljNTMxMDQ3MjE5YzZmOWI1Mjk1NzM4IiwidXBjb21pbmdDb2xsZWN0aW9ucyI6WyJZb3VyIG5leHQgZ2VuZXJhbCB3YXN0ZSBjb2xsZWN0aW9uIGlzIFR1ZXNkYXkgMTMgT2N0b2JlciAyMDI2IiwiWW91ciBzZWNvbmQgIGNvbGxlY3Rpb24gaXMgVHVlc2RheSAzIE5vdmVtYmVyIDIwMjYiLCJZb3VyIHRoaXJkICBjb2xsZWN0aW9uIGlzIFR1ZXNkYXkgMjQgTm92ZW1iZXIgMjAyNiJdLCJmaXJzdERhdGUiOnsiZGF0ZSI6IjIwMjYtMTAtMTMgMDA6MDA6MDAuMDAwMDAwIiwidGltZXpvbmVfdHlwZSI6MSwidGltZXpvbmUiOiIrMDE6MDAifX1dfX0="
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://fosen.renovasjonsportal.no/api/address/lys%C3%B8ysundveien%20117 ",
+      "method": "GET",
+      "url": "https://fosen.renovasjonsportal.no/api/address/lys%C3%B8ysundveien%20117",
+      "final_url": "https://fosen.renovasjonsportal.no/api/address/lys%C3%B8ysundveien%20117",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:29 GMT"
+      },
+      "content_b64": "eyJzZWFyY2hSZXN1bHRzIjpbeyJpZCI6IjFjNzAxZTZjLTIzY2UtNDBlMi04NGM3LWM5MzEyN2FkZGQ0MiIsInRpdGxlIjoiTHlzw7h5c3VuZHZlaWVuIDExNyIsInN1YlRpdGxlIjoiw5hybGFuZCJ9XSwiYWx0ZXJuYXRlU2VhcmNoUmVzdWx0cyI6W3siaWQiOiIxYzcwMWU2Yy0yM2NlLTQwZTItODRjNy1jOTMxMjdhZGRkNDIiLCJ0aXRsZSI6Ikx5c8O4eXN1bmR2ZWllbiAxMTciLCJzdWJUaXRsZSI6IsOYcmxhbmQifV19"
+    },
+    {
+      "key": "GET https://fosen.renovasjonsportal.no/api/address/1c701e6c-23ce-40e2-84c7-c93127addd42/details ",
+      "method": "GET",
+      "url": "https://fosen.renovasjonsportal.no/api/address/1c701e6c-23ce-40e2-84c7-c93127addd42/details",
+      "final_url": "https://fosen.renovasjonsportal.no/api/address/1c701e6c-23ce-40e2-84c7-c93127addd42/details",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:29 GMT"
+      },
+      "content_b64": "eyJkaXNwb3NhbHMiOlt7ImRhdGUiOiIyMDI2LTA5LTMwVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMDktMzBUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJSZXN0YXZmYWxsIHRpbCBmb3JicmVubmluZyIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTE0VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUGFwaXIgb2cgcGxhc3RlbWJhbGxhc2plIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTAtMTRUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMC0yOFQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6Ik1hdGF2ZmFsbCIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTI4VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUmVzdGF2ZmFsbCB0aWwgZm9yYnJlbm5pbmciLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMS0xMVQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6IlBhcGlyIG9nIHBsYXN0ZW1iYWxsYXNqZSIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTExLTExVDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMjVUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMS0yNVQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6IlJlc3RhdmZhbGwgdGlsIGZvcmJyZW5uaW5nIiwic3ltYm9sSWQiOjB9XX0="
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/search 078fb1d26a",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/search",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/search?query=Skogsv%C3%A4gen+18",
+      "body": "{\"params\":[[\"query\",\"Skogsv\u00e4gen 18\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:12 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "125.1",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=F2lJQrjcFbXs25gXl1CjBGjCaWebKi6XznHHjaJmYpTm3GpRazp5cHUxYgGBS0QOb%2Blgf6qSwtAUPehd4pMlgRuf9dJ9J%2B%2BS6IrS%2FtBN7suc5X8OwAv2f6qiWCUAQcyOB9sRz6qHQH6xcB3u44c%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d62914f50dc4d-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgMyBpdGVtcyIsInN0YXR1cyI6MjAwLCJkYXRhIjpbeyJ1dWlkIjoiYWQ4YmE4OGEtMWY5ZC00ODJiLWE0ZTQtM2MzN2RjZjg3ZGQxIiwiYWxpYXMiOiJrcmFiLXNrb2dzdmFlZ2VuLTE4LWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJTa29nc3ZcdTAwZTRnZW4gMTgiLCJjaXR5IjoiS3Jpc3RpYW5zdGFkIiwiZGVzaWduYXRpb24iOiJWaW9sZW4gMTAifSx7InV1aWQiOiI0OTQ5MzE0YS1iYjEwLTQxZDEtYThlMS03YWVmZDFjMTY1OWMiLCJhbGlhcyI6ImtyYWItYmFlY2thc2tvZ3N2YWVnZW4tMTg4LWZqYWVsa2luZ2UiLCJhZGRyZXNzIjoiQlx1MDBlNGNrYXNrb2dzdlx1MDBlNGdlbiAxODgiLCJjaXR5IjoiRmpcdTAwZTRsa2luZ2UiLCJkZXNpZ25hdGlvbiI6IktpYWJ5IDg6OCJ9LHsidXVpZCI6ImJjNWJiNmI5LTUyN2YtNGFiNC1iNjA4LTVjNWM4YjA1YmZiNCIsImFsaWFzIjoia3JhYi1ub3JyZXNrb2dzdmFlZ2VuLTE4LWxpbmRlcm9lZCIsImFkZHJlc3MiOiJOb3JyZXNrb2dzdlx1MDBlNGdlbiAxOCIsImNpdHkiOiJMaW5kZXJcdTAwZjZkIiwiZGVzaWduYXRpb24iOiJCcm9zdG9ycCA1OjIwIn1dLCJwYWdpbmF0aW9uIjp7Im5leHQiOmZhbHNlLCJwYWdlIjoiMSJ9fQ=="
+    },
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/ad8ba88a-1f9d-482b-a4e4-3c37dcf87dd1 ",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/ad8ba88a-1f9d-482b-a4e4-3c37dcf87dd1",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/ad8ba88a-1f9d-482b-a4e4-3c37dcf87dd1",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:12 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "10.1",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=iMGZhK19dBpiLNqFSRb%2F8uakZlyO%2FVkhsKcSyMfYC4mdqRGurQvdEiBmUO%2FwqOoy91XQ2kK3qnDanxWbSCpKGz1cMRvF2vacsHwS3LmGhPRb7yjdwAHod4TKodovuds6%2BmQv2fIPxZlQSVgsxpk%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d6292cc7ddc4d-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgaXRlbSIsInN0YXR1cyI6MjAwLCJkYXRhIjp7InV1aWQiOiJhZDhiYTg4YS0xZjlkLTQ4MmItYTRlNC0zYzM3ZGNmODdkZDEiLCJhbGlhcyI6ImtyYWItc2tvZ3N2YWVnZW4tMTgta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6IlNrb2dzdlx1MDBlNGdlbiAxOCIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJwcm9wZXJ0eV9pZCI6IjIwNzc1NCIsInNlcnZpY2VzIjpbeyJkZXNjcmlwdGlvbiI6IkZ5cmZhY2sgMzcwIGxpdGVyLCBLXHUwMGU0cmwgMiB2YXIgNDplIHZlY2thIiwidHlwZSI6IktcdTAwZTRybCAyIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMTAtMjAiLCJwcmVjaXNpb24iOiJkYXkifSx7ImRlc2NyaXB0aW9uIjoiRnlyZmFjayAzNzAgbGl0ZXIsIEtcdTAwZTRybCAxIHZhcmFubmFuIHZlY2thIiwidHlwZSI6IktcdTAwZTRybCAxIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMDktMjkiLCJwcmVjaXNpb24iOiJkYXkifSx7ImRlc2NyaXB0aW9uIjoiVHJcdTAwZTRkZ1x1MDBlNXJkc2F2ZmFsbHNhYm9ubmVtYW5nIiwidHlwZSI6IlRyXHUwMGU0ZGdcdTAwZTVyZHNhdmZhbGwiLCJjb2xsZWN0aW9uX2F0IjoiMjAyNi0xMC0wOSIsInByZWNpc2lvbiI6ImRheSJ9XSwiZGV2aWF0aW9ucyI6bnVsbCwidXBkYXRlZF9hdCI6IjIwMjYtMDktMjcgMDA6MTc6NTYifX0="
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "POST https://biffaleicester.co.uk/wp-admin/admin-ajax.php 1ce291f541",
+      "method": "POST",
+      "url": "https://biffaleicester.co.uk/wp-admin/admin-ajax.php",
+      "final_url": "https://biffaleicester.co.uk/wp-admin/admin-ajax.php",
+      "body": "{\"body\":[[\"action\",\"get_details_api\"],[\"uprn\",\"002465020938\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 20:51:14 GMT",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "content-security-policy": "frame-ancestors 'self'",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-powered-by": "WP Engine",
+        "x-robots-tag": "noindex",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJhbnlUeXBlIjpbeyJTZXJ2aWNlTW9kZSI6IkRXIiwiU2VydmljZU1vZGVEZXNjIjoiUmVmdXNlIiwiU2VydmljZURheXMiOiJGcmlkYXkiLCJTZXJ2aWNlRHVlRGF0ZSI6IjAyXC8xMFwvMjYiLCJTZXJ2aWNlRnJlcXVlbmN5IjoiNyIsIlNlcnZpY2VSb3VuZCI6IjMxIiwiU2VydmljZVBhcmVudCI6e319LHsiU2VydmljZU1vZGUiOiJSWSIsIlNlcnZpY2VNb2RlRGVzYyI6IlJlY3ljbGluZyIsIlNlcnZpY2VEYXlzIjoiRnJpZGF5IiwiU2VydmljZUR1ZURhdGUiOiIwMlwvMTBcLzI2IiwiU2VydmljZUZyZXF1ZW5jeSI6IjciLCJTZXJ2aWNlUm91bmQiOiJETTQiLCJTZXJ2aWNlUGFyZW50Ijp7fX1dfQ=="
+    }
+  ]
+}

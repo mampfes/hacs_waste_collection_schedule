@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.canning.wa.gov.au/api/property-details/find/3%20Rossmoyne%20Drive%20ROSSMOYNE%20%206148 ",
+      "method": "GET",
+      "url": "https://www.canning.wa.gov.au/api/property-details/find/3%20Rossmoyne%20Drive%20ROSSMOYNE%20%206148",
+      "final_url": "https://www.canning.wa.gov.au/api/property-details/find/3%20Rossmoyne%20Drive%20ROSSMOYNE%20%206148",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:28 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;Secure;Domain=www2.canning.wa.gov.au, ARRAffinitySameSite=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;SameSite=None;Secure;Domain=www2.canning.wa.gov.au",
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "x-azure-ref": "20260927T205027Z-166978f957d7rzrmhC1FRAn60g00000010mg000000002fwd",
+        "x-cache": "CONFIG_NOCACHE"
+      },
+      "content_b64": "W3sia2V5IjoiMTQ4NzUwNyIsImFkZHJlc3MiOiIzMyBSb3NzbW95bmUgRHJpdmUgUk9TU01PWU5FICA2MTQ4In0seyJrZXkiOiIxNDg3NTA0IiwiYWRkcmVzcyI6IjIzIFJvc3Ntb3luZSBEcml2ZSBST1NTTU9ZTkUgIDYxNDgifSx7ImtleSI6IjE0NTY4MTUiLCJhZGRyZXNzIjoiMyBSb3NzbW95bmUgRHJpdmUgUk9TU01PWU5FICA2MTQ4In0seyJrZXkiOiIzMjU0NDA2IiwiYWRkcmVzcyI6IjEzIFJvc3Ntb3luZSBEcml2ZSBST1NTTU9ZTkUgIDYxNDgifSx7ImtleSI6IjM3MzUxNDUiLCJhZGRyZXNzIjoiNDMgUm9zc21veW5lIERyaXZlIFJPU1NNT1lORSAgNjE0OCJ9XQ=="
+    },
+    {
+      "key": "GET https://www.canning.wa.gov.au/api/property-details/bins/1487507 ",
+      "method": "GET",
+      "url": "https://www.canning.wa.gov.au/api/property-details/bins/1487507",
+      "final_url": "https://www.canning.wa.gov.au/api/property-details/bins/1487507",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:29 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;Secure;Domain=www2.canning.wa.gov.au, ARRAffinitySameSite=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;SameSite=None;Secure;Domain=www2.canning.wa.gov.au",
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "x-azure-ref": "20260927T205028Z-166978f957d7rzrmhC1FRAn60g00000010mg000000002g0u",
+        "x-cache": "CONFIG_NOCACHE"
+      },
+      "content_b64": "eyJncmVlbldhc3RlQ29sbGVjdGlvbkRhdGVzIjpbXSwianVua1dhc3RlQ29sbGVjdGlvbkRhdGVzIjpbXSwicnViYmlzaENvbGxlY3Rpb25EYXRlIjoiMjAyNi0wOS0yOFQxNjowMDowMCswMDowMCIsInJlY3ljbGluZ0NvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wNVQxNjowMDowMCswMDowMCJ9"
+    }
+  ]
+}

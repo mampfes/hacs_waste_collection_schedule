@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/search f230d90148",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/search",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/search?query=Grenadj%C3%A4rv%C3%A4gen+1",
+      "body": "{\"params\":[[\"query\",\"Grenadj\u00e4rv\u00e4gen 1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:12 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "133.8",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=1O25RXWjdqPQfUXBXMugzmuH80da5RLpGf9NGePVZtQHmOd65TgKd2iez1RpLLeJcnqmC5eVZyIQCPj3gCDmWQS0p07tGyLmHBeswtbXExq600YFHhtosDVclsPMWEfIZ1Dzz6vJvZmBybNPRD8%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d628edda80e10-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgOCBpdGVtcyIsInN0YXR1cyI6MjAwLCJkYXRhIjpbeyJ1dWlkIjoiNTNiNDc1MjAtMDM4ZS00ZmJiLWFkNjEtMWEwOTVhMGZjNmIxIiwiYWxpYXMiOiJrcmFiLWdyZW5hZGphZXJ2YWVnZW4tMS1rcmlzdGlhbnN0YWQiLCJhZGRyZXNzIjoiR3JlbmFkalx1MDBlNHJ2XHUwMGU0Z2VuIDEiLCJjaXR5IjoiS3Jpc3RpYW5zdGFkIiwiZGVzaWduYXRpb24iOiJcdTAwYzVydGFuIDE1In0seyJ1dWlkIjoiNjc0MThkZTMtZWFhMy00MzM5LWIzY2MtNWFmMTc4ZDdkODMxIiwiYWxpYXMiOiJrcmFiLWdyZW5hZGphZXJ2YWVnZW4tMTAta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6IkdyZW5hZGpcdTAwZTRydlx1MDBlNGdlbiAxMCIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJkZXNpZ25hdGlvbiI6IktuaXBhbiA1In0seyJ1dWlkIjoiOWU0ZTk1MDktODJmOC00ZmVjLTllMDItZmZhMDZiMmI3OGRhIiwiYWxpYXMiOiJrcmFiLWdyZW5hZGphZXJ2YWVnZW4tMTEta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6IkdyZW5hZGpcdTAwZTRydlx1MDBlNGdlbiAxMSIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJkZXNpZ25hdGlvbiI6Ilx1MDBjNXJ0YW4gMTAifSx7InV1aWQiOiJkMmQ5OTg3My0zYTYzLTQ2NGQtYTI4OC03ZjExNDJhZjhmOTkiLCJhbGlhcyI6ImtyYWItZ3JlbmFkamFlcnZhZWdlbi0xMi1rcmlzdGlhbnN0YWQiLCJhZGRyZXNzIjoiR3JlbmFkalx1MDBlNHJ2XHUwMGU0Z2VuIDEyIiwiY2l0eSI6IktyaXN0aWFuc3RhZCIsImRlc2lnbmF0aW9uIjoiS25pcGFuIDYifSx7InV1aWQiOiJjNzdlMTA1OC0zYjkxLTQzMjktOTg0NC05NTE3YWEzMTU5NjIiLCJhbGlhcyI6ImtyYWItZ3JlbmFkamFlcnZhZWdlbi0xMy1rcmlzdGlhbnN0YWQiLCJhZGRyZXNzIjoiR3JlbmFkalx1MDBlNHJ2XHUwMGU0Z2VuIDEzIiwiY2l0eSI6IktyaXN0aWFuc3RhZCIsImRlc2lnbmF0aW9uIjoiXHUwMGM1cnRhbiA5In0seyJ1dWlkIjoiNTBmYmQ5N2YtZDg0OC00YTQxLTlmNTctOWE5YWYzOGY3NjUxIiwiYWxpYXMiOiJrcmFiLWdyZW5hZGphZXJ2YWVnZW4tMTQta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6IkdyZW5hZGpcdTAwZTRydlx1MDBlNGdlbiAxNCIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJkZXNpZ25hdGlvbiI6IktuaXBhbiA3In0seyJ1dWlkIjoiZTA4ODkxMWYtNmY5Yi00YzQyLTkwZWItNmVhZmRmYTQyMjdiIiwiYWxpYXMiOiJrcmFiLWdyZW5hZGphZXJ2YWVnZW4tMTUta3Jpc3RpYW5zdGFkIiwiYWRkcmVzcyI6IkdyZW5hZGpcdTAwZTRydlx1MDBlNGdlbiAxNSIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJkZXNpZ25hdGlvbiI6Ilx1MDBjNXJ0YW4gOCJ9LHsidXVpZCI6IjY1M2M1NTA5LWE2ZmUtNDg5Ny04OTAwLTI2ZWM0NTNmNjI0MCIsImFsaWFzIjoia3JhYi1ncmVuYWRqYWVydmFlZ2VuLTE2LWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJHcmVuYWRqXHUwMGU0cnZcdTAwZTRnZW4gMTYiLCJjaXR5IjoiS3Jpc3RpYW5zdGFkIiwiZGVzaWduYXRpb24iOiJLbmlwYW4gOCJ9XSwicGFnaW5hdGlvbiI6eyJuZXh0IjpmYWxzZSwicGFnZSI6IjEifX0="
+    },
+    {
+      "key": "GET https://api-universal.appbolaget.se/waste/addresses/53b47520-038e-4fbb-ad61-1a095a0fc6b1 ",
+      "method": "GET",
+      "url": "https://api-universal.appbolaget.se/waste/addresses/53b47520-038e-4fbb-ad61-1a095a0fc6b1",
+      "final_url": "https://api-universal.appbolaget.se/waste/addresses/53b47520-038e-4fbb-ad61-1a095a0fc6b1",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:12 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "access-control-allow-origin": "*",
+        "x-powered-by": "Aware/2.8",
+        "timezone": "UTC",
+        "cached": "0",
+        "ms": "9.6",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=4I%2FQeeWUWr9AJrIE0Uz%2B%2Be14IOL6I3WuXto%2F34WqyY3Ho7%2BtCgCd%2F8QEmD%2BgoFus8pNHkqt2PVnp1gsd75oJ4CWuYLIjVmWFYHnT76%2BVOh3KoZi3GqDEut00u6DiCfLkYpCdjepy77kY9o3qly8%3D\"}]}",
+        "content-encoding": "zstd",
+        "cf-ray": "a41d62907f490e10-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiU3VjY2Vzc2Z1bGx5IGZldGNoZWQgaXRlbSIsInN0YXR1cyI6MjAwLCJkYXRhIjp7InV1aWQiOiI1M2I0NzUyMC0wMzhlLTRmYmItYWQ2MS0xYTA5NWEwZmM2YjEiLCJhbGlhcyI6ImtyYWItZ3JlbmFkamFlcnZhZWdlbi0xLWtyaXN0aWFuc3RhZCIsImFkZHJlc3MiOiJHcmVuYWRqXHUwMGU0cnZcdTAwZTRnZW4gMSIsImNpdHkiOiJLcmlzdGlhbnN0YWQiLCJwcm9wZXJ0eV9pZCI6IjIxMTgyNCIsInNlcnZpY2VzIjpbeyJkZXNjcmlwdGlvbiI6IkZ5cmZhY2sgMzcwIGxpdGVyLCBLXHUwMGU0cmwgMSB2YXJhbm5hbiB2ZWNrYSIsInR5cGUiOiJLXHUwMGU0cmwgMSIsImNvbGxlY3Rpb25fYXQiOiIyMDI2LTEwLTA5IiwicHJlY2lzaW9uIjoiZGF5In0seyJkZXNjcmlwdGlvbiI6IkZ5cmZhY2sgMzcwIGxpdGVyLCBLXHUwMGU0cmwgMiB2YXIgNDplIHZlY2thIiwidHlwZSI6IktcdTAwZTRybCAyIiwiY29sbGVjdGlvbl9hdCI6IjIwMjYtMTAtMDIiLCJwcmVjaXNpb24iOiJkYXkifV0sImRldmlhdGlvbnMiOm51bGwsInVwZGF0ZWRfYXQiOiIyMDI2LTA5LTI3IDAwOjE3OjIwIn19"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://refusecalendarapi.denbighshire.gov.uk/Csrf/token ",
+      "method": "GET",
+      "url": "https://refusecalendarapi.denbighshire.gov.uk/Csrf/token",
+      "final_url": "https://refusecalendarapi.denbighshire.gov.uk/Csrf/token",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "transfer-encoding": "chunked",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:22 GMT",
+        "strict-transport-security": "max-age=31536000"
+      },
+      "content_b64": "eyJ0b2tlbiI6IkNmREo4Ri0wVjZTRVJiSkxwLVpFZEVsalhhN3AxWUdvU09Wc2RsandzNThSVW1XTTIyRTNfM1htemVPaXNZY2xRdkRDXzZQZEVBQVVjRjIxYzhtTnhfOXBVYVRsek5vcE1qb0o5VlpIM0gzSnhyVEg5MG52dHJNZHhzODVQZzYwTXVWTjJ6NWRISUZQRzJfdGF5UUNDbEVTMjNnIn0="
+    },
+    {
+      "key": "GET https://refusecalendarapi.denbighshire.gov.uk/Calendar/100100183412 ",
+      "method": "GET",
+      "url": "https://refusecalendarapi.denbighshire.gov.uk/Calendar/100100183412",
+      "final_url": "https://refusecalendarapi.denbighshire.gov.uk/Calendar/100100183412",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "transfer-encoding": "chunked",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:22 GMT",
+        "strict-transport-security": "max-age=31536000"
+      },
+      "content_b64": "eyJ1cHJuIjoiMTAwMTAwMTgzNDEyIiwicmVmdXNlRGF0ZSI6IjE2LzEwLzIwMjYiLCJyZWN5Y2xpbmdEYXRlIjoiMDIvMTAvMjAyNiIsImdhcmRlbkRhdGUiOiIiLCJhaHBEYXRlIjoiIiwidHJhZGVEYXRlIjoiIiwidHJhZGVSZWZ1c2VEYXRlIjoiIiwidHJhZGVSZWN5Y2xpbmdEYXRlIjoiIn0="
+    }
+  ]
+}

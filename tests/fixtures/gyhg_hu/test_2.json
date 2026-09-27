@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://gyhg.bluespot.hu/api/get_schedule 3681431992",
+      "method": "GET",
+      "url": "https://gyhg.bluespot.hu/api/get_schedule",
+      "final_url": "https://gyhg.bluespot.hu/api/get_schedule?city_name=Mosonszentmikl%C3%B3s-Moson%C3%BAjhely&street=Radn%C3%B3ti+Mikl%C3%B3s+utca&house_number=25",
+      "body": "{\"params\":[[\"city_name\",\"Mosonszentmikl\u00f3s-Moson\u00fajhely\"],[\"house_number\",\"25\"],[\"street\",\"Radn\u00f3ti Mikl\u00f3s utca\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:36 GMT",
+        "server": "Apache/2.4.68 (Debian)",
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "58",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "348",
+        "content-type": "application/json"
+      },
+      "content_b64": "eyJkYXRhIjp7ImJpbyI6WyIyMDI2LTA5LTA1IiwiMjAyNi0wOS0xMiIsIjIwMjYtMDktMTkiLCIyMDI2LTA5LTI2IiwiMjAyNi0xMC0wMyIsIjIwMjYtMTAtMTAiLCIyMDI2LTEwLTE3IiwiMjAyNi0xMC0yNCIsIjIwMjYtMTAtMzEiLCIyMDI2LTExLTA3IiwiMjAyNi0xMS0xNCIsIjIwMjYtMTEtMjEiLCIyMDI2LTExLTI4IiwiMjAyNi0xMi0wNSIsIjIwMjYtMTItMTIiLCIyMDI2LTEyLTE5IiwiMjAyNi0xMi0yNiIsIjIwMjctMDEtMDIiLCIyMDI3LTAxLTA5IiwiMjAyNy0wMS0xNiIsIjIwMjctMDEtMjMiLCIyMDI3LTAxLTMwIiwiMjAyNy0wMi0wNiIsIjIwMjctMDItMTMiLCIyMDI3LTAyLTIwIiwiMjAyNy0wMi0yNyIsIjIwMjctMDMtMDYiLCIyMDI3LTAzLTEzIiwiMjAyNy0wMy0yMCIsIjIwMjctMDMtMjciLCIyMDI3LTA0LTAzIiwiMjAyNy0wNC0xMCIsIjIwMjctMDQtMTciLCIyMDI3LTA0LTI0IiwiMjAyNy0wNS0wMSIsIjIwMjctMDUtMDgiLCIyMDI3LTA1LTE1IiwiMjAyNy0wNS0yMiIsIjIwMjctMDUtMjkiLCIyMDI3LTA2LTA1IiwiMjAyNy0wNi0xMiIsIjIwMjctMDYtMTkiLCIyMDI3LTA2LTI2IiwiMjAyNy0wNy0wMyIsIjIwMjctMDctMTAiLCIyMDI3LTA3LTE3IiwiMjAyNy0wNy0yNCIsIjIwMjctMDctMzEiLCIyMDI3LTA4LTA3IiwiMjAyNy0wOC0xNCIsIjIwMjctMDgtMjEiLCIyMDI3LTA4LTI4IiwiMjAyNy0wOS0wNCIsIjIwMjctMDktMTEiLCIyMDI3LTA5LTE4IiwiMjAyNy0wOS0yNSIsIjIwMjctMTAtMDIiXSwibWl4ZWQiOm51bGwsImxlZnRvdmVyIjpbIjIwMjYtMDktMTAiLCIyMDI2LTA5LTI0IiwiMjAyNi0xMC0wOCIsIjIwMjYtMTAtMjIiLCIyMDI2LTExLTA1IiwiMjAyNi0xMS0xOSIsIjIwMjYtMTItMDMiLCIyMDI2LTEyLTE3IiwiMjAyNi0xMi0zMSIsIjIwMjctMDEtMDciLCIyMDI3LTAxLTIxIiwiMjAyNy0wMi0wNCIsIjIwMjctMDItMTgiLCIyMDI3LTAzLTA0IiwiMjAyNy0wMy0xOCIsIjIwMjctMDQtMDEiLCIyMDI3LTA0LTE1IiwiMjAyNy0wNC0yOSIsIjIwMjctMDUtMTMiLCIyMDI3LTA1LTI3IiwiMjAyNy0wNi0xMCIsIjIwMjctMDYtMjQiLCIyMDI3LTA3LTA4IiwiMjAyNy0wNy0yMiIsIjIwMjctMDgtMDUiLCIyMDI3LTA4LTE5IiwiMjAyNy0wOS0wMiIsIjIwMjctMDktMTYiLCIyMDI3LTA5LTMwIl0sInJlY3ljbGUiOlsiMjAyNi0wOS0wNSIsIjIwMjYtMTAtMDMiLCIyMDI2LTEwLTMxIiwiMjAyNi0xMS0yOCIsIjIwMjYtMTItMjYiLCIyMDI3LTAxLTIzIiwiMjAyNy0wMi0yMCIsIjIwMjctMDMtMjAiLCIyMDI3LTA0LTE3IiwiMjAyNy0wNS0xNSIsIjIwMjctMDYtMTIiLCIyMDI3LTA3LTEwIiwiMjAyNy0wOC0wNyIsIjIwMjctMDktMDQiLCIyMDI3LTEwLTAyIl19fQ=="
+    }
+  ]
+}

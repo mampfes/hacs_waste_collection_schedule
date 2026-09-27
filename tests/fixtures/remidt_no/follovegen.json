@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/Follovegen%201%20B ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/Follovegen%201%20B",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/Follovegen%201%20B",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:25 GMT"
+      },
+      "content_b64": "eyJzZWFyY2hSZXN1bHRzIjpbeyJpZCI6IjM5M2NlZThiLTFkMjQtNDUzMi1iMTA4LWNkNGJkMDQyODczMCIsInRpdGxlIjoiRm9sbG92ZWdlbiAxIEIiLCJzdWJUaXRsZSI6Ik9ya2xhbmQga29tbXVuZSJ9XSwiYWx0ZXJuYXRlU2VhcmNoUmVzdWx0cyI6W119"
+    },
+    {
+      "key": "GET https://kalender.renovasjonsportal.no/api/address/393cee8b-1d24-4532-b108-cd4bd0428730/details/ ",
+      "method": "GET",
+      "url": "https://kalender.renovasjonsportal.no/api/address/393cee8b-1d24-4532-b108-cd4bd0428730/details/",
+      "final_url": "https://kalender.renovasjonsportal.no/api/address/393cee8b-1d24-4532-b108-cd4bd0428730/details/",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET",
+        "date": "Sun, 27 Sep 2026 20:51:25 GMT"
+      },
+      "content_b64": "eyJkaXNwb3NhbHMiOlt7ImRhdGUiOiIyMDI2LTEwLTA3VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTAtMDhUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJQYXBpciIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTE0VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUmVzdGF2ZmFsbCIsInN5bWJvbElkIjoxNX0seyJkYXRlIjoiMjAyNi0xMC0yMVQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6Ik1hdGF2ZmFsbCIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTI5VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiR2xhc3Mgb2cgbWV0YWxsZW1iYWxsYXNqZSIsInN5bWJvbElkIjowfSx7ImRhdGUiOiIyMDI2LTEwLTI5VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiUGxhc3RlbWJhbGxhc2plIiwic3ltYm9sSWQiOjJ9LHsiZGF0ZSI6IjIwMjYtMTEtMDRUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJNYXRhdmZhbGwiLCJzeW1ib2xJZCI6MH0seyJkYXRlIjoiMjAyNi0xMS0wNVQwMDowMDowMCIsImRlc2NyaXB0aW9uIjpudWxsLCJ0eXBlIjpudWxsLCJmcmFjdGlvbiI6IlBhcGlyIiwic3ltYm9sSWQiOjB9LHsiZGF0ZSI6IjIwMjYtMTEtMTFUMDA6MDA6MDAiLCJkZXNjcmlwdGlvbiI6bnVsbCwidHlwZSI6bnVsbCwiZnJhY3Rpb24iOiJSZXN0YXZmYWxsIiwic3ltYm9sSWQiOjE1fSx7ImRhdGUiOiIyMDI2LTExLTE4VDAwOjAwOjAwIiwiZGVzY3JpcHRpb24iOm51bGwsInR5cGUiOm51bGwsImZyYWN0aW9uIjoiTWF0YXZmYWxsIiwic3ltYm9sSWQiOjB9XX0="
+    }
+  ]
+}

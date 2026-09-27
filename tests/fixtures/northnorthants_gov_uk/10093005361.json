@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/10093005361/2026-09-27/2026-11-08 ",
+      "method": "GET",
+      "url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/10093005361/2026-09-27/2026-11-08",
+      "final_url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/10093005361/2026-09-27/2026-11-08",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:21 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "cache-control": "must-revalidate, no-cache, private",
+        "content-language": "en",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "traceresponse": "00-18d948b7effb1e7b345fcb0a2af11574-8b4a5336aae1c154-01",
+        "vary": "Origin",
+        "x-content-type-options": "nosniff",
+        "x-debug-info": "eyJyZXRyaWVzIjowfQ==",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "x-frame-options": "SAMEORIGIN",
+        "x-generator": "Drupal 10 (https://www.drupal.org)",
+        "x-platform-server": "i-b1f212664f1b4380b6e044a88737c203, i-b1f212664f1b4380b6e044a88737c203",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "br",
+        "server": "cloudflare",
+        "cf-ray": "a41d62cc3b2f0e68-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3siaWQiOjk2MjMwOTU0LCJ0aXRsZSI6IkVtcHR5IEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MDYzNjM5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5NjI1Nzc2OCwidGl0bGUiOiJFbXB0eSBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkxMjQxMTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk2MjgwNzIzLCJ0aXRsZSI6IkVtcHR5IEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MTg0NTk5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5NjMwNzYyNywidGl0bGUiOiJFbXB0eSBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkyNDUwNzk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk2MzI2Mjk3LCJ0aXRsZSI6IkVtcHR5IEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MzA1OTE5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5NjM1MTAzNywidGl0bGUiOiJFbXB0eSBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkzNjYzOTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk2MzYyNDY2LCJ0aXRsZSI6IkVtcHR5IEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5NDI2ODc5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5NjM4NjAxOCwidGl0bGUiOiJFbXB0eSBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzk0ODczNTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk2NDE0MjczLCJ0aXRsZSI6IkVtcHR5IEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5NTQ3ODM5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5NjQ0MDU5OSwidGl0bGUiOiJFbXB0eSBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzk2MDgzMTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9XQ=="
+    }
+  ]
+}

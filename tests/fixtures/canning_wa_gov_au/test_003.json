@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.canning.wa.gov.au/api/property-details/find/12%20Battersea%20Road%20CANNING%20VALE%20%206155 ",
+      "method": "GET",
+      "url": "https://www.canning.wa.gov.au/api/property-details/find/12%20Battersea%20Road%20CANNING%20VALE%20%206155",
+      "final_url": "https://www.canning.wa.gov.au/api/property-details/find/12%20Battersea%20Road%20CANNING%20VALE%20%206155",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:31 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=d0b3dfac8a98c0c744085642ead1fadbe546333ecc799c73c400cd55769313eb;Path=/;HttpOnly;Secure;Domain=www1.canning.wa.gov.au, ARRAffinitySameSite=d0b3dfac8a98c0c744085642ead1fadbe546333ecc799c73c400cd55769313eb;Path=/;HttpOnly;SameSite=None;Secure;Domain=www1.canning.wa.gov.au",
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "x-azure-ref": "20260927T205029Z-r1d4974b4c5mtkj4hC1FRAezp400000009m0000000001wru",
+        "x-cache": "CONFIG_NOCACHE"
+      },
+      "content_b64": "W3sia2V5IjoiMTU5NDY5NyIsImFkZHJlc3MiOiIxMiBCYXR0ZXJzZWEgUm9hZCBDQU5OSU5HIFZBTEUgIDYxNTUifV0="
+    },
+    {
+      "key": "GET https://www.canning.wa.gov.au/api/property-details/bins/1594697 ",
+      "method": "GET",
+      "url": "https://www.canning.wa.gov.au/api/property-details/bins/1594697",
+      "final_url": "https://www.canning.wa.gov.au/api/property-details/bins/1594697",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:50:32 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;Secure;Domain=www2.canning.wa.gov.au, ARRAffinitySameSite=08a6e77b60b8fc4517db07b1281c29ee699bbec9cd4d80b0613980187d988df1;Path=/;HttpOnly;SameSite=None;Secure;Domain=www2.canning.wa.gov.au",
+        "vary": "Accept-Encoding",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "x-azure-ref": "20260927T205031Z-r1d4974b4c5mtkj4hC1FRAezp400000009m0000000001wsy",
+        "x-cache": "CONFIG_NOCACHE"
+      },
+      "content_b64": "eyJncmVlbldhc3RlQ29sbGVjdGlvbkRhdGVzIjpbIjIwMjYtMTAtMThUMTY6MDA6MDArMDA6MDAiXSwianVua1dhc3RlQ29sbGVjdGlvbkRhdGVzIjpbXSwicnViYmlzaENvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wMVQxNjowMDowMCswMDowMCIsInJlY3ljbGluZ0NvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wMVQxNjowMDowMCswMDowMCJ9"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://www.mzvhegau.de/wp-admin/admin-post.php fc95800f4b",
+      "method": "GET",
+      "url": "https://www.mzvhegau.de/wp-admin/admin-post.php",
+      "final_url": "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&slug=Gai&whole_year=1&format=text",
+      "body": "{\"params\":[[\"action\",\"mzv_ics_download\"],[\"format\",\"text\"],[\"slug\",\"Gai\"],[\"whole_year\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.2.34",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self';",
+        "content-disposition": "attachment; filename=\"kalender_Gailingen_2026.txt\"",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "248",
+        "content-type": "text/plain; charset=utf-8",
+        "date": "Sun, 27 Sep 2026 20:50:51 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "QWJob2x0ZXJtaW5lIGbDvHIgR2FpbGluZ2VuCgozMC4wOS4yMDI2OiDwn4yxIEJpb23DvGxsLCDimbvvuI8gUmVzdG3DvGxsCjA3LjEwLjIwMjY6IPCfjLEgQmlvbcO8bGwKMTIuMTAuMjAyNjog8J+Xnu+4jyBQYXBpZXIKMTUuMTAuMjAyNjog8J+NtiBHZWxiZXIgU2FjawoyMS4xMC4yMDI2OiDwn4yxIEJpb23DvGxsCjI4LjEwLjIwMjY6IOKZu++4jyBSZXN0bcO8bGwKMDQuMTEuMjAyNjog8J+MsSBCaW9tw7xsbAowOS4xMS4yMDI2OiDwn5ee77iPIFBhcGllcgoxMi4xMS4yMDI2OiDwn422IEdlbGJlciBTYWNrCjE3LjExLjIwMjY6IPCfjYMgR3LDvG5zY2huaXR0CjE4LjExLjIwMjY6IPCfjLEgQmlvbcO8bGwKMjUuMTEuMjAyNjog4pm777iPIFJlc3Rtw7xsbAowMi4xMi4yMDI2OiDwn4yxIEJpb23DvGxsCjA3LjEyLjIwMjY6IPCfl57vuI8gUGFwaWVyCjEwLjEyLjIwMjY6IPCfjbYgR2VsYmVyIFNhY2sKMTYuMTIuMjAyNjog8J+MsSBCaW9tw7xsbAoyMi4xMi4yMDI2OiDimbvvuI8gUmVzdG3DvGxsCjMwLjEyLjIwMjY6IPCfjLEgQmlvbcO8bGwKMTMuMDEuMjAyNzog8J+MsSBCaW9tw7xsbAoyNy4wMS4yMDI3OiDwn4yxIEJpb23DvGxsCjIwLjAxLjIwMjc6IOKZu++4jyBSZXN0bcO8bGwKMDQuMDEuMjAyNzog8J+Xnu+4jyBQYXBpZXIKMDguMDEuMjAyNzog8J+NtiBHZWxiZXIgU2Fjawo="
+    }
+  ]
+}
