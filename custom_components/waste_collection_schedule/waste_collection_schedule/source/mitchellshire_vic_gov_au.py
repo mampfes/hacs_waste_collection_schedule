@@ -35,7 +35,7 @@ class Source(BaseSource):
         url="https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin-collections/search",
         params=lambda lat, lon, **_: {"lat": lat, "lng": lon},
     )
-    parse = parsers.JsonParser("data", expected_values=None)
+    parse = parsers.JsonParser("data", expected_values={"result": "success"})
     # Each bin lists its collection dates.
     preprocess = ExplodeList("collectionDates", into="collection")
     transform = JsonTransformer(

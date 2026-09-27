@@ -22,6 +22,8 @@ class Source(BaseSource):
         wt.RECYCLABLES,
         wt.PAPER,
         wt.GARDEN_WASTE,
+        wt.TEXTILES,
+        wt.GLASS,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -46,5 +48,8 @@ class Source(BaseSource):
             "General waste wheeled bin": wt.GENERAL_WASTE,
             "Plastic and cardboard wheeled bin": wt.RECYCLABLES,
             "Brown garden waste wheeled bin": wt.GARDEN_WASTE,
+            "Blue kerbside box - paper": wt.PAPER,
+            "Textiles Bag": wt.TEXTILES,
+            "Green kerbside box - cans, glass and aluminium foil": wt.GLASS,
         },
     )

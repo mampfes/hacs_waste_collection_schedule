@@ -68,6 +68,7 @@ class Source(BaseSource):
             "plasty": wt.RECYCLABLES,
             "papír": wt.PAPER,
             "bioodpad": wt.ORGANIC,
+            "singlestream": wt.RECYCLABLES,
             # Holiday notices, not collections.
             "velikonoce": None,
             "vánoce": None,
