@@ -1,39 +1,35 @@
 # East Riding of Yorkshire Council
 
-Support for schedules provided by [East Riding of Yorkshire Council](https://eastriding.gov.uk), UK.
+Support for schedules provided by [East Riding of Yorkshire Council](https://eastriding.gov.uk).
+
+Source for East Riding of Yorkshire Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: eastriding_gov_uk
       args:
+        uprn: UPRN
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
 ```
 
 ### Configuration Variables
 
-**postcode**</br>
+**uprn**  
 *(string) (required)*
 
-**uprn**</br>
+**postcode**  
 *(string) (required)*
-
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: eastriding_gov_uk
       args:
-        postcode: "DN14 6BJ"
-        uprn: "010002364380"
+        uprn: 010002364380
+        postcode: DN14 6BJ
 ```
-
-#### How to find your `UPRN`
-You can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-
-

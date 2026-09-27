@@ -1,6 +1,8 @@
 # MZV Hegau
 
-Support for schedules provided by [MZV Hegau](https://www.mzvhegau.de), Germany.
+Support for schedules provided by [MZV Hegau](https://www.mzvhegau.de).
+
+Source for mzvhegau.de services for MZV Hegau, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -17,14 +19,16 @@ waste_collection_schedule:
 **city**  
 *(string) (required)*
 
-Your city or municipality name in the MZV Hegau service area, e.g. `Engen`, `Singen`.
-
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: mzvhegau_de
       args:
-        city: "Engen"
+        city: Engen
 ```
+
+## How to get the source arguments
+
+Enter your city/municipality shorthand in the MZV Hegau service area, e.g. Engen, Gai, GM.

@@ -1537,8 +1537,8 @@
   "info_collectes_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md",
     "howto": {
-      "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-      "fr": "COMMENT OBTENIR LES ARGUMENTS"
+      "en": "Your municipality in the MRC de Roussillon. Châteauguay also takes a sector: nord-ouest or est.",
+      "fr": "Votre municipalité dans la MRC de Roussillon. Châteauguay prend aussi un secteur : nord-ouest ou est."
     },
     "urls": {}
   },
@@ -3216,8 +3216,8 @@
   "mzvhegau_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzvhegau_de.md",
     "howto": {
-      "de": "Stadt/Gemeinde-Kürzel im MZV Hegau Verbandsgebiet eingeben.",
-      "en": "Enter your city/municipality shorthand in the MZV Hegau service area."
+      "de": "Stadt/Gemeinde-Kürzel im MZV Hegau Verbandsgebiet eingeben, z.B. Engen, Gai, GM.",
+      "en": "Enter your city/municipality shorthand in the MZV Hegau service area, e.g. Engen, Gai, GM."
     },
     "urls": {}
   },

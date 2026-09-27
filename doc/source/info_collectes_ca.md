@@ -1,20 +1,8 @@
-# info-collectes - waste schedule for MRC de Roussillon (QC, Canada)
+# MRC de Roussillon (QC)
 
-Waste collection schedules provided by [Info Collectes MRC de Roussillon](https://info-collectes.ca/).
+Support for schedules provided by [MRC de Roussillon (QC)](https://info-collectes.ca/).
 
-Including the following communities:
-
-- Candiac
-- Châteauguay
-- Delson
-- La Prairie
-- Léry
-- Mercier
-- Saint-Constant
-- Saint-Isidore
-- Saint-Mathieu
-- Saint-Philippe
-- Sainte-Catherine
+Source script for info-collectes.ca/
 
 ## Configuration via configuration.yaml
 
@@ -29,8 +17,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-- **municipality** *(string) (required)*: Municipality in MRC de Roussillon, case insensitive
-- **sector** *(string) (optional)*: For Châteauguay only, valid sectors are: **nord-ouest**, **est**
+**municipality**  
+*(string) (required)*
+
+**sector**  
+*(string) (optional)*
 
 ## Example
 
@@ -41,3 +32,7 @@ waste_collection_schedule:
       args:
         municipality: La Prairie
 ```
+
+## How to get the source arguments
+
+Your municipality in the MRC de Roussillon. Châteauguay also takes a sector: nord-ouest or est.

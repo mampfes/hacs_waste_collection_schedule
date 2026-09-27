@@ -1,15 +1,28 @@
-# Biffa Leicester
+# Leicester City Council
 
-Support for schedules provided by [Biffa Leicester](https://biffaleicester.co.uk/services/waste-collection-days), serving Leicester (UK).
+Support for schedules provided by [Leicester City Council](https://www.leicester.gov.uk).
+
+Source for city of Leicester, UK.
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: biffaleicester_co_uk
       args:
         uprn: UPRN
+```
+
+### Using post_code and number
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: biffaleicester_co_uk
+      args:
         post_code: POST_CODE
         number: NUMBER
 ```
@@ -17,42 +30,35 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **uprn**  
-*(string) (optional)*
-
-This is required if you do not supply any other options. (Using this removes the need to do an address look up web request)
-
-**number**  
-*(string) (optional)*
-
-This is required if you supply a Postcode.
+*(string) (alternative)*
 
 **post_code**  
-*(string) (optional)*
+*(string) (alternative)*
 
-This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
+**number**  
+*(string) (alternative)*
 
-#### How to find your `UPRN`
+Provide one of: `uprn` or `post_code` + `number`.
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-Otherwise you can inspect the web requests the Peterborough Council website makes when entering in your postcode and then selecting your address.
+## Example
 
-## Example using Address lookup
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: biffaleicester_co_uk
       args:
-        post_code: "LE5 5QD"
-        number: "30"
+        uprn: 002465020938
 ```
 
-## Example using UPRN
+### Using post_code and number
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: biffaleicester_co_uk
       args:
-        uprn: "002465020938"
+        post_code: LE5 5QD
+        number: '30'
 ```

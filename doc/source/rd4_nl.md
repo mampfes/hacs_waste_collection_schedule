@@ -1,54 +1,39 @@
 # Rd4
 
-Support for schedules provided by [Rd4](https://rd4.nl/), serving multiple municipalities in the Netherlands.
+Support for schedules provided by [Rd4](https://rd4.nl/).
+
+Source for Rd4.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rd4_nl
       args:
-        postal_code: POSTAL CODE (postcode)
-        house_number: "HOUSE NUMBER (huisnummer)"
-        house_number_extension: "HOUSE NUMBER EXTENSION (toevoeging, optional)"
+        postal_code: POSTAL_CODE
+        house_number: HOUSE_NUMBER
+        house_number_extension: HOUSE_NUMBER_EXTENSION
 ```
 
 ### Configuration Variables
 
 **postal_code**  
-*(String) (required)*
+*(string) (required)*
 
 **house_number**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **house_number_extension**  
-*(String) (optional)*  
-House number extension (toevoeging), e.g. `"A"`, `"B"`, `"bis"`. Only needed if your address has an extension.
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rd4_nl
       args:
         postal_code: 6417 AT
-        house_number: "32"
+        house_number: 32
 ```
-
-With house number extension:
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: rd4_nl
-      args:
-        postal_code: 6417 AT
-        house_number: "32"
-        house_number_extension: "A"
-```
-
-## How to get the source argument
-
-Use your postal code and house number. You can verify that your parameter are valid by entering them in the form at the [Rd4 website](https://mijn.rd4.nl/afvalkalender).

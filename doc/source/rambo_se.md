@@ -1,34 +1,30 @@
 # North / Middle Bohuslän - Rambo AB
 
-Support for schedules provided by [North / Middle Bohuslän - Rambo AB](https://www.rambo.se/), serving North / Middle Bohuslän, Sweden.
+Support for schedules provided by [North / Middle Bohuslän - Rambo AB](https://www.rambo.se/).
+
+Source for North / Middle Bohuslän - Rambo AB.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rambo_se
       args:
         address: ADDRESS
-        
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rambo_se
       args:
-        address: Grebbestad Ö.långgat./Storg., Grebbestad
-        
+        address: "Grebbestad \xD6.l\xE5nggat./Storg., Grebbestad"
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.rambo.se/](https://www.rambo.se/) and write them exactly like on the web page.
