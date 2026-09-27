@@ -5760,9 +5760,7 @@
   },
   "cumberland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cumberland_gov_uk.md",
-    "howto": {
-      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
+    "howto": {},
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5784,7 +5782,7 @@
   "dartford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dartford_gov_uk.md",
     "howto": {
-      "en": "Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule. Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+      "en": "Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule, or look it up on https://www.findmyaddress.co.uk/."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -5889,10 +5887,10 @@
   },
   "eastdunbarton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdunbarton_gov_uk.md",
-    "howto": {
-      "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "urls": {}
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "easthants_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/easthants_gov_uk.md",
@@ -7480,7 +7478,7 @@
   "wirral_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wirral_gov_uk.md",
     "howto": {
-      "en": "Go to https://www.wirral.gov.uk/bins-and-recycling/bin-collection-dates, enter your postcode and select your address. The number at the end of the resulting web address (.../view/42119794) is your address value. Use that as the address_value parameter."
+      "en": "Go to https://www.wirral.gov.uk/bins-and-recycling/bin-collection-dates, enter your postcode and select your address. The number at the end of the resulting web address (.../view/42119794) is your address value."
     },
     "urls": {}
   },

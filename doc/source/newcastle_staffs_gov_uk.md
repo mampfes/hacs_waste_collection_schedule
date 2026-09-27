@@ -1,15 +1,17 @@
 # Newcastle Under Lyme Borough Council
 
-Support for schedules provided by [Newcastle Under Lyme Borough Council](https://www.newcastle-staffs.gov.uk/waste)
+Support for schedules provided by [Newcastle Under Lyme Borough Council](https://www.newcastle-staffs.gov.uk).
+
+Source for waste collection services for Newcastle Under Lyme Borough Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: newcastle_staffs_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,18 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-This is required to unambiguously identify the property.
-
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: newcastle_staffs_gov_uk
       args:
-        uprn: "100031736973"
+        uprn: 100031744129
 ```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

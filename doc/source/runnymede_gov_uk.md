@@ -1,18 +1,17 @@
 # Runnymede Borough Council
 
-Support for schedules provided by [Runnymede Borough Council](https://www.runnymede.gov.uk/bin-collection-day), serving Runnymede, Surrey, UK.
+Support for schedules provided by [Runnymede Borough Council](https://www.runnymede.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new West Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
+Source Script for www.runnymede.gov.uk services for Runnymede Borough Council, Surrey, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: runnymede_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -24,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: runnymede_gov_uk
       args:
-        uprn: "100061482004"
+        uprn: '100061482004'
 ```
-
-## How to get the source argument
-
-Find the UPRN of your address using [https://www.findmyaddress.co.uk/search](https://www.findmyaddress.co.uk/search).
