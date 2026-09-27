@@ -1,61 +1,56 @@
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons
+from typing import ClassVar, final
 
-TITLE = "London Borough of Barnet"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for barnet.gov.uk"  # Describe your source
-URL = "https://www.barnet.gov.uk/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {"Test_001": {"uprn": "200062903"}, "Test_002": {"uprn": "200072958"}}
-HEADERS = {"user-agent": "Mozilla/5.0"}
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling Bin": Icons.RECYCLING,
-    "Food Waste": Icons.BIO_KITCHEN,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "de": {
-        "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-    },
-}
-
-API_URL = "https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Deduplicate
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.JaduBinCollections import (
+    tasks_parser,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Barnet"
+    DESCRIPTION = "Source script for barnet.gov.uk"
+    URL = "https://www.barnet.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        response = requests.get(
-            API_URL,
-            headers=HEADERS,
-            params={"address": self._uprn},
-            timeout=10,
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "200062903"},
+        "Test_002": {"uprn": "200072958"},
+    }
 
-        response.raise_for_status()
+    PARAMS = (uprn(),)
 
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        entries = []
-
-        bins = soup.find_all("h4", class_="bin-collection__heading")
-        dates = soup.find_all("p", class_="bin-collection__date")
-        for date_tag, bin_tag in zip(dates, bins, strict=True):
-            date = parser.parse(date_tag.text).date()
-            bin_name = bin_tag.text.strip()
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin_name,
-                    icon=ICON_MAP.get(bin_name),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day",
+        # The council's UPRNs are twelve digits, zero-padded.
+        params=lambda uprn, **_: {"address": str(uprn).zfill(12)},
+    )
+    # The older bin-collection__ variant of the widget, dated "Wednesday, 30th
+    # September".
+    parse = tasks_parser(
+        block="li.bin-collection",
+        heading=".bin-collection__heading",
+        date=".bin-collection__date",
+        date_format="%A, %d %B",
+    )
+    preprocess = Deduplicate()
+    transform = RowTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Recycling Bin": wt.RECYCLABLES,
+            "Food Waste": wt.FOOD_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

@@ -1,70 +1,45 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.BinsPropertyPortal import next_service_parser
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Bridgend County Borough Council"
-DESCRIPTION = "Source for bridgend.gov.uk"
-URL = "https://www.bridgend.gov.uk/"
-TEST_CASES: dict = {
-    "test_001": {"uprn": "100100479873"},
-    "test_002": {"uprn": 10032996088},
-    "test_003": {"uprn": "10090813443"},
-}
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-HEADERS: dict = {"user-agent": "Mozilla/5.0"}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+@final
+class Source(BaseSource):
+    TITLE = "Bridgend County Borough Council"
+    DESCRIPTION = "Source for bridgend.gov.uk"
+    URL = "https://www.bridgend.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "test_001": {"uprn": "100100479873"},
+        "test_002": {"uprn": 10032996088},
+        "test_003": {"uprn": "10090813443"},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    }
-}
 
+    PARAMS = (uprn(),)
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        r = s.get(
-            f"https://bridgendportal.azurewebsites.net/property/{self._uprn}",
-            headers=HEADERS,
-        )
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-
-        tds: list = soup.find_all("td", {"class": ["service-name", "next-service"]})
-        waste_types: list = tds[0::2]
-        waste_dates: list = tds[1::2]
-
-        entries: list = []
-        for i in range(len(waste_types)):
-            waste_type = waste_types[i].text.split(" ")[0].replace("\n", "").strip()
-            waste_date = (
-                waste_dates[i]
-                .text.split(" ")[1]
-                .replace("\t", "")
-                .replace("Service\n", "")
-                .strip()
-            )
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            f"https://bridgendportal.azurewebsites.net/property/{uprn}"
+        ),
+    )
+    parse = next_service_parser()
+    transform = RowTransformer(
+        type_value_map={
+            "Recycling collection": wt.RECYCLABLES,
+            "Refuse collection": wt.GENERAL_WASTE,
+            "Refuse Sacks collection": wt.GENERAL_WASTE,
+            "Garden Waste collection": wt.GARDEN_WASTE,
+        },
+    )

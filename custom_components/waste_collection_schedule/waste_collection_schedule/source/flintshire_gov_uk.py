@@ -1,66 +1,53 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Flintshire"
-DESCRIPTION = "Source for Flintshire, United Kingdom."
-URL = "https://flintshire.gov.uk/"
-TEST_CASES = {
-    "100100211557": {"uprn": 100100211557},
-    "200001744973": {"uprn": "200001744973"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bio": Icons.ORGANIC,
-    "Paper": Icons.PAPER,
-    "Recycle": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Flintshire"
+    DESCRIPTION = "Source for Flintshire, United Kingdom."
+    URL = "https://flintshire.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "100100211557": {"uprn": 100100211557},
+        "200001744973": {"uprn": "200001744973"},
+    }
 
-API_URL = "https://digital.flintshire.gov.uk/FCC_BinDay/Home/Details2/{UPRN}"
+    PARAMS = (uprn(),)
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = uprn
-        self._url = API_URL.format(UPRN=uprn)
-
-    def fetch(self):
-        r = requests.post(self._url)
-        if r.status_code == 500:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "web request failed: probably caused by an invalid UPRN",
-            )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        rows = soup.find_all("div", class_="col-md-12")
-        entries = []
-
-        for row in rows:
-            cols = row.find_all("div")
-            cols = [x.text.strip() for x in cols]
-            if len(cols) == 0 or not re.match(r"\d{2}/\d{2}/\d{4}", cols[0]):
-                continue
-
-            date_str = cols[0]
-            date = datetime.strptime(date_str, "%d/%m/%Y").date()
-
-            waste_types = cols[2].split("/")
-
-            for waste_type in waste_types:
-                icon = ICON_MAP.get(waste_type.lower().strip())  # Collection icon
-                type = waste_type.strip()
-                entries.append(Collection(date=date, t=type, icon=icon))
-
-        return entries
+    retrieve = HttpPostRetriever(
+        url=lambda uprn, **_: (
+            f"https://digital.flintshire.gov.uk/FCC_BinDay/Home/Details2/{uprn}"
+        ),
+    )
+    # One row per date: date, weekday, then the rounds separated by "/".
+    parse = parsers.HtmlLabelledDates(
+        "div.col-md-12",
+        label="div:nth-of-type(3)",
+        date="div:nth-of-type(1)",
+        label_separator="/",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Black Bin": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food": wt.FOOD_WASTE,
+            "Garden": wt.GARDEN_WASTE,
+            "Brown Bin": wt.GARDEN_WASTE,
+        },
+    )

@@ -1,70 +1,54 @@
-import datetime
-import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Lichfield District Council"
-DESCRIPTION = "Source for Lichfield District Council, UK."
-URL = "https://lichfielddc.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "100031695248"},
-    "Test_002": {"uprn": "100031704571"},
-    "Test_003": {"uprn": "10002768095"},
-    "Test_004": {"uprn": "100031699855"},
-}
-ICON_MAP = {
-    "Black Bin": Icons.GENERAL_WASTE,
-    "Blue Bin": Icons.RECYCLING,
-    "Blue Bag": Icons.RECYCLING,
-    "Purple Bin": Icons.RECYCLING,
-    "Garden Bin": Icons.GARDEN,
-    "Brown Bin": Icons.GARDEN,
-    "Food Waste Caddy": Icons.BIO_KITCHEN,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.JaduBinCollections import (
+    clean_heading,
+    tasks_parser,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "Lichfield District Council"
+    DESCRIPTION = "Source for Lichfield District Council, UK."
+    URL = "https://lichfielddc.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        response = requests.get(
-            "https://www.lichfielddc.gov.uk/bincalendar",
-            params={"uprn": self._uprn},
-            headers={"User-Agent": "Mozilla"},
-        )
-        soup = BeautifulSoup(response.text, "html.parser")
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100031695248"},
+        "Test_002": {"uprn": "100031704571"},
+        "Test_003": {"uprn": "10002768095"},
+        "Test_004": {"uprn": "100031699855"},
+    }
 
-        entries = []
+    PARAMS = (uprn(),)
 
-        boxes = soup.find_all("div", class_="boxed")
-
-        for box in boxes:
-            bdate_els = box.find_all(
-                "p", class_=re.compile("bin-collection-tasks__(date|frequency)")
-            )
-            if bdate_els:
-                bdate_str = bdate_els[0].contents[-1].string
-                bdate = parser.parse(bdate_str).date()
-                bname_els = box.find_all("h3", class_="bin-collection-tasks__heading")
-                bname = bname_els[0].contents[1]
-
-                if (
-                    bdate.month == 1
-                    and datetime.date.today().month == 12
-                    and bdate.year == datetime.date.today().year
-                ):
-                    bdate = bdate.replace(year=bdate.year + 1)
-
-                entries.append(
-                    Collection(
-                        date=bdate,
-                        t=bname,
-                        icon=ICON_MAP.get(bname),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.lichfielddc.gov.uk/bincalendar",
+        # The council's UPRNs are twelve digits, zero-padded.
+        params=lambda uprn, **_: {"uprn": str(uprn).zfill(12)},
+    )
+    parse = tasks_parser()
+    transform = RowTransformer(
+        clean=clean_heading,
+        type_value_map={
+            "Black Bin": wt.GENERAL_WASTE,
+            "Black Bag": wt.GENERAL_WASTE,
+            "Blue Bin": wt.RECYCLABLES,
+            "Blue Bag": wt.RECYCLABLES,
+            "Brown Bin": wt.GARDEN_WASTE,
+            "Food Caddy": wt.FOOD_WASTE,
+            "Purple Bin": wt.RECYCLABLES,
+        },
+    )

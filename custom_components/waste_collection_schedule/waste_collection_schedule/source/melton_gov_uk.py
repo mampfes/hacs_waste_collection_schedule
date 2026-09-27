@@ -1,79 +1,55 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Melton Borough Council"
-DESCRIPTION = "Source for waste collection services for Melton Borough Council, UK"
-URL = "https://www.melton.gov.uk/"
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+@final
+class Source(BaseSource):
+    TITLE = "Melton Borough Council"
+    DESCRIPTION = "Source for waste collection services for Melton Borough Council, UK"
+    URL = "https://www.melton.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100030544791"},
+        "Test_002": {"uprn": 100030549260},
+        "Test_003": {"uprn": "100030537000"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
+    PARAMS = (uprn(),)
 
-TEST_CASES = {
-    "Test_001": {
-        "uprn": "100030544791",
-    },
-    "Test_002": {
-        "uprn": 100030549260,
-    },
-    "Test_003": {
-        "uprn": "100030537000",
-    },
-}
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-
-        params: dict = {
-            "id": self._uprn,
+    retrieve = HttpGetRetriever(
+        url="https://my.melton.gov.uk/set-location",
+        params=lambda uprn, **_: {
+            "id": uprn,
             "redirect": "collections",
             "rememberloc": "",
-        }
-        r = s.get(
-            "https://my.melton.gov.uk/set-location", headers=HEADERS, params=params
-        )
-        r.raise_for_status()
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-
-        entries: list = []
-        list_items: list = soup.find_all("li", {"class": ["dark-blue", "burgundy"]})
-        for item in list_items:
-            waste_type: str = item.find("h2").text
-            waste_dates: list = item.find("strong").text.split(", and then ")
-            for waste_date in waste_dates:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+        },
+    )
+    # "07/10/2026, and then 21/10/2026" under each round's heading.
+    parse = parsers.HtmlLabelledDates(
+        "li.box-item:has(h2)",
+        label="h2",
+        date="strong",
+        date_pattern=r"\d{2}/\d{2}/\d{4}",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

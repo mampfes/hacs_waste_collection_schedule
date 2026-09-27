@@ -784,6 +784,8 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         block: CSS selector for each collection block.
         label: CSS selector, within the block, for the round's name.
         date: CSS selector, within the block, for the element holding the date.
+            ``":scope"`` reads the block's own text, for a block whose dates
+            are its own lines rather than one child's.
         date_after: alternative to ``date`` for a page that captions the date
             instead of classing it: the caption's exact text, whose next
             sibling element holds the date. Blocks commonly caption several
@@ -805,6 +807,10 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         all_labels: read every element ``label`` matches in the block rather
             than the first, one row each, for a page that lists every round
             collected on a date under that date's heading.
+        all_dates: read every ``date_pattern`` match in the date element
+            rather than the first, one row each, for a block listing several
+            dates for its round ("07/10/2026, and then 21/10/2026", a list of
+            upcoming dates). Requires ``date_pattern``.
         label_separator: split the label element's text into several labels
             at this separator, one row each, for a cell naming every round
             collected that day as bare text lines (``Recycling<br/>Refuse``).
@@ -826,8 +832,11 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         parse_date: "Callable[[str], datetime.date] | None" = None,
         all_labels: bool = False,
         label_separator: "str | None" = None,
+        all_dates: bool = False,
         from_json_key: "str | tuple[str, ...] | None" = None,
     ):
+        if all_dates and date_pattern is None:
+            raise ValueError("HtmlLabelledDates all_dates needs a date_pattern")
         if (date is None) == (date_after is None):
             raise ValueError("HtmlLabelledDates needs exactly one of date/date_after")
         self.block = block
@@ -838,6 +847,7 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         self.parse_date = parse_date
         self.all_labels = all_labels
         self.label_separator = label_separator
+        self.all_dates = all_dates
         self.from_json_key = from_json_key
 
     def _markup(self, response: Any) -> str:
@@ -875,13 +885,39 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         ]
 
     def _date_text(self, element: Tag) -> "str | None":
+        # Several dates in one element are read with a space between its
+        # parts, so adjacent list items do not run together.
+        separator = " " if self.all_dates else ""
         if self.date is not None:
-            found = element.select_one(self.date)
-            return found.get_text(strip=True) if found is not None else None
+            found = element if self.date == ":scope" else element.select_one(self.date)
+            return found.get_text(separator, strip=True) if found is not None else None
         caption = element.find(string=self.date_after)
         holder = caption.parent if caption is not None else None
         sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
-        return sibling.get_text(strip=True) if isinstance(sibling, Tag) else None
+        if not isinstance(sibling, Tag):
+            return None
+        return sibling.get_text(separator, strip=True)
+
+    def _date_values(self, text: str) -> "list[Any]":
+        """The block's date(s), parsed when ``parse_date`` is set."""
+        if self.date_pattern is None:
+            texts = [text]
+        else:
+            matches = (
+                list(self.date_pattern.finditer(text))
+                if self.all_dates
+                else [m for m in [self.date_pattern.search(text)] if m is not None]
+            )
+            texts = [m.group(1) if m.groups() else m.group(0) for m in matches]
+        if self.parse_date is None:
+            return list(texts)
+        values = []
+        for found in texts:
+            try:
+                values.append(self.parse_date(found))
+            except (ValueError, TypeError):
+                continue
+        return values
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -893,18 +929,8 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             text = self._date_text(element) if names else None
             if not names or not text:
                 continue
-            if self.date_pattern is not None:
-                match = self.date_pattern.search(text)
-                if match is None:
-                    continue
-                text = match.group(1) if match.groups() else match.group(0)
-            date_value: Any = text
-            if self.parse_date is not None:
-                try:
-                    date_value = self.parse_date(text)
-                except (ValueError, TypeError):
-                    continue
-            rows.extend((date_value, name) for name in names)
+            for date_value in self._date_values(text):
+                rows.extend((date_value, name) for name in names)
         return rows
 
 

@@ -1,59 +1,53 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Salford City Council"
-DESCRIPTION = "Source for bin collection services for Salford City Council, UK."
-URL = "https://www.salford.gov.uk"
-TEST_CASES = {
-    "domestic": {"uprn": "100011404886"},
-}
-
-ICON_MAP = {
-    "Domestic waste": Icons.GENERAL_WASTE,
-    "Blue recycling (paper and card)": Icons.PAPER,
-    "Brown recycling (bottles and cans)": Icons.GLASS,
-    "Food and garden waste": Icons.BIO_KITCHEN,
-}
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn: int):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Salford City Council"
+    DESCRIPTION = "Source for bin collection services for Salford City Council, UK."
+    URL = "https://www.salford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
 
-    def fetch(self):
-        url = "https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/"
-        params = {"UPRN": self._uprn}
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0"
-        }
+    TEST_CASES: ClassVar[dict] = {
+        "domestic": {"uprn": "100011404886"},
+    }
 
-        r = requests.get(url, params=params, headers=headers)
-        r.raise_for_status()
+    PARAMS = (uprn(),)
 
-        soup = BeautifulSoup(r.text, features="html.parser")
-        results = soup.find_all("div", {"class": "col-12 col-lg-6"})
-
-        entries = []
-
-        for result in results:
-            dates = []
-            for date in result.find_all("li"):
-                dates.append(date.text)
-            collection_type = (result.find("strong").text).replace(":", "")
-            for current_date in dates:
-                date = datetime.strptime(current_date, "%A %d %B %Y").date()
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/",
+        params=lambda uprn, **_: {"UPRN": uprn},
+    )
+    # One column per bin: its name, then a list of dates.
+    parse = parsers.HtmlLabelledDates(
+        "div.col-12.col-lg-6:has(ul)",
+        label="strong",
+        date="ul",
+        date_pattern=r"\w+ \d{2} \w+ \d{4}",
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        clean=lambda label: label.rstrip(":").strip(),
+        type_value_map={
+            "Domestic waste": wt.GENERAL_WASTE,
+            "Blue recycling (paper and card)": wt.PAPER,
+            "Pink recycling (glass, cans and plastic bottles)": wt.RECYCLABLES,
+            "Brown recycling (bottles and cans)": wt.RECYCLABLES,
+            "Food and garden waste": wt.ORGANIC,
+        },
+    )
