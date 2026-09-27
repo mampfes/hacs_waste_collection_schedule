@@ -1,54 +1,69 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    Deduplicate,
+    ExplodeList,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Rushmoor Borough Council"
-DESCRIPTION = "Source for rushmoor.gov.uk services for Rushmoor, UK."
-URL = "https://rushmoor.gov.uk"
-TEST_CASES = {
-    "GU14": {"uprn": "100060551749"},
-}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-}
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "GardenWaste": Icons.GARDEN,
-    "FoodWaste": Icons.BIO_KITCHEN,
-}
-
-API_URL = "https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get"
+_parse = date_parsers.for_format("%Y-%m-%d")
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Rushmoor Borough Council"
+    DESCRIPTION = "Source for rushmoor.gov.uk services for Rushmoor, UK."
+    URL = "https://rushmoor.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.GLASS,
+    ]
 
-    def fetch(self):
-        params = {"selectedAddress": self._uprn, "weeks": "16"}
-        r = requests.get(API_URL, params=params, headers=HEADERS)
-        r.raise_for_status()
-        data = r.json()
+    TEST_CASES: ClassVar[dict] = {
+        "GU14": {"uprn": "100060551749"},
+    }
 
-        entries = []
-        for collection_key in ("NextCollection", "PreviousCollection"):
-            for key, value in data[collection_key].items():
-                if not key.endswith("Date"):
-                    continue
-                wasteType = key.split("Collection")[0]
-                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S").date()
-                if any(
-                    entry.date == date and entry.type == wasteType for entry in entries
-                ):
-                    continue
-                entries.append(
-                    Collection(
-                        date,
-                        wasteType,
-                        icon=ICON_MAP.get(wasteType),
-                    )
-                )
-        return entries
+    PARAMS = (uprn(),)
+
+    retrieve = HttpGetRetriever(
+        url="https://www.rushmoor.gov.uk/Umbraco/Api/BinLookUpWorkAround/Get",
+        params=lambda uprn, **_: {"selectedAddress": uprn, "weeks": "16"},
+    )
+    # The next and the previous collection, each a record with a date field
+    # per stream.
+    parse = parsers.JsonParser()
+    preprocess = Compose(
+        ExplodeList("NextCollection", "PreviousCollection"),
+        DateFields(
+            fields={
+                "RefuseCollectionBinDate": "Refuse",
+                "RecyclingCollectionDate": "Recycling",
+                "GardenWasteCollectionDate": "Garden Waste",
+                "FoodWasteCollectionDate": "Food Waste",
+                "GlassCollectionDate": "Glass",
+            },
+            parse_date=lambda value: _parse(value[:10]) if value else None,
+        ),
+        Deduplicate(),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Food Waste": wt.FOOD_WASTE,
+            "Glass": wt.GLASS,
+        }
+    )

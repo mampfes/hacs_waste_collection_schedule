@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://pgh.st/locate/800/Negley/15232 ",
+      "method": "GET",
+      "url": "https://pgh.st/locate/800/Negley/15232",
+      "final_url": "https://pgh.st/locate/800/Negley/15232",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 18:13:16 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-frame-options": "SAMEORIGIN",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "CglbeyJkaXZpc2lvbiI6ICJFQVNURVJOIiwgIm5leHRfeWFyZF9kYXRlIjogIjExLTctMjAyNiIsICJuZXh0X3JlY3ljbGluZ19kYXRlX2xvbmciOiAiV2VkbmVzZGF5LCBPY3RvYmVyIDd0aCIsICJyZWd1bGFyX3RyYXNoX3BpY2t1cF9kYXkiOiAyLCAiemlwIjogMTUyMzIsICJuZXh0X3lhcmRfZGF0ZV9sb25nIjogIlNhdHVyZGF5LCBOb3ZlbWJlciA3dGgiLCAiZGl2aXNpb25fc2NoZWQiOiAwLCAibnVtYmVyIjogIjgwMCIsICJuZXh0X3BpY2t1cF9kYXRlIjogIjktMzAtMjAyNiIsICJob2xpZGF5X2NhbmNlbGxhdGlvbiI6IGZhbHNlLCAic3RyZWV0IjogIlMgTkVHTEVZIEFWRSIsICJob29kIjogIlNoYWR5c2lkZSIsICJvdGhlcl9jYW5jZWxsYXRpb24iOiBmYWxzZSwgIm5leHRfcGlja3VwX2RhdGVfbG9uZyI6ICJXZWRuZXNkYXksIFNlcHRlbWJlciAzMHRoIiwgIm5leHRfcmVjeWNsaW5nX2RhdGUiOiAiMTAtNy0yMDI2IiwgIm5leHRfcmVjeWNsaW5nIjogIlRoZSBuZXh0IHBpY2t1cCBpcyBib3RoIHJlY3ljbGluZyBhbmQgdHJhc2guIn1dCgoKCgkKCQ=="
+    }
+  ]
+}

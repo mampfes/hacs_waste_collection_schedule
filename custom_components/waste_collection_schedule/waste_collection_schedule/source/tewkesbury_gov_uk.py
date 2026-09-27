@@ -1,80 +1,75 @@
-import logging
-from datetime import datetime
-from urllib.parse import quote as urlquote
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    DefaultPreprocessor,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Tewkesbury Borough Council"
-DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
-URL = "https://www.tewkesbury.gov.uk"
-TEST_CASES = {
-    "UPRN example": {"uprn": 100120544973},
-    "Deprecated postcode": {"postcode": "GL20 5TT"},
-    "Deprecated postcode No Spaces": {"postcode": "GL205TT"},
-}
-
-DEPRECATED_API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextCollection"
-API_URL = "https://api-2.tewkesbury.gov.uk/incab/rounds/%s/next-collection"
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food": Icons.BIO_KITCHEN,
-}
-
-LOGGER = logging.getLogger(__name__)
+_parse = date_parsers.for_format("%Y-%m-%d")
 
 
-class Source:
-    def __init__(self, postcode: str | None = None, uprn: str | None = None):
-        self.uprn = str(uprn) if uprn is not None else None
-        self.postcode = str(postcode) if postcode is not None else None
+def _next_date(stream):
+    """The next date of one stream ({"nextCollectionDate": "2026-09-29T01:00:00.000Z"})."""
+    value = (stream or {}).get("nextCollectionDate")
+    return _parse(value[:10]) if value else None
 
-    def fetch(self):
-        if self.uprn is None:
-            LOGGER.warning(
-                "Using deprecated API might not work in the future. Please provide a UPRN."
-            )
-            return self.get_data(self.postcode, DEPRECATED_API_URL)
-        return self.get_data(self.uprn)
 
-    def get_data(self, uprn, api_url=API_URL):
-        if uprn is None:
-            raise SourceArgumentRequired(
-                "uprn", "UPRN is required to fetch collection data"
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Tewkesbury Borough Council"
+    DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
+    URL = "https://www.tewkesbury.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-        encoded_uprn = urlquote(uprn)
-        request_url = api_url % encoded_uprn
-        response = requests.get(request_url)
+    TEST_CASES: ClassVar[dict] = {
+        "UPRN example": {"uprn": 100120544973},
+    }
 
-        response.raise_for_status()
-        data = response.json()
+    PARAMS = (uprn(),)
 
-        entries = []
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your UPRN; you can look it up on https://www.findmyaddress.co.uk/."
+        ),
+    }
 
-        waste_type_map = {
-            "refuse": "Refuse",
-            "recycling": "Recycling",
-            "food": "Food",
-            "garden": "Garden",
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            f"https://api-2.tewkesbury.gov.uk/incab/rounds/{uprn}/next-collection"
+        ),
+    )
+    parse = parsers.JsonParser()
+    preprocess = Compose(
+        DefaultPreprocessor(),
+        DateFields(
+            fields={
+                "refuse": "Refuse",
+                "recycling": "Recycling",
+                "food": "Food",
+                "garden": "Garden",
+            },
+            parse_date=_next_date,
+        ),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food": wt.FOOD_WASTE,
+            "Garden": wt.GARDEN_WASTE,
         }
-        for waste_key, waste_label in waste_type_map.items():
-            if waste_key not in data:
-                continue
-            date_str = data[waste_key].get("nextCollectionDate")
-            if not date_str:
-                continue
-            entries.append(
-                Collection(
-                    date=datetime.fromisoformat(date_str.replace("Z", "+00:00")).date(),
-                    t=waste_label,
-                    icon=ICON_MAP.get(waste_label),
-                )
-            )
-        if not entries:
-            raise Exception(f"No collection data returned for identifier: {uprn!r}")
-        return entries
+    )

@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "POST https://apps.mosman.nsw.gov.au/test 3e37f9610c",
+      "method": "POST",
+      "url": "https://apps.mosman.nsw.gov.au/test",
+      "final_url": "https://apps.mosman.nsw.gov.au/test",
+      "body": "{\"body\":[[\"address\",\"14 Balmoral Avenue\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sun, 27 Sep 2026 18:13:15 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "vary": "Accept-Encoding, Accept-Encoding",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self';",
+        "last-modified": "Mon, 23 Feb 2026 02:59:03 GMT",
+        "etag": "W/\"1kpngjn\"",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "x-xss-protection": "1; mode=block",
+        "x-permitted-cross-domain-policies": "none",
+        "x-content-type-options": "nosniff",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET",
+        "access-control-allow-headers": "Content-Type",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "W3siY2FsZW5kYXJEYXRlIjoiMjAyNi0xMC0xOSAwMDowMDowMCIsImRhdGVTdHJpbmciOiIxOSBPY3RvYmVyIDIwMjYiLCJkYXRlRGF5IjoiTW9uZGF5IiwidHlwZSI6InZlZ2V0YXRpb24iLCJ6b25lIjoiMS4zIiwiZmlsZUlEIjoiMzg3OSJ9LHsiY2FsZW5kYXJEYXRlIjoiMjAyNi0wOS0yOCAwMDowMDowMCIsImRhdGVTdHJpbmciOiIyOCBTZXB0ZW1iZXIgMjAyNiIsImRhdGVEYXkiOiJNb25kYXkiLCJ0eXBlIjoiZ2VuZXJhbFdhc3RlIiwiem9uZSI6IjEuMyIsImZpbGVJRCI6IjM4NzkifSx7ImNhbGVuZGFyRGF0ZSI6IjIwMjYtMDktMjggMDA6MDA6MDAiLCJkYXRlU3RyaW5nIjoiMjggU2VwdGVtYmVyIDIwMjYiLCJkYXRlRGF5IjoiTW9uZGF5IiwidHlwZSI6ImNvbnRhaW5lcnNHbGFzcyIsInpvbmUiOiIxLjMiLCJmaWxlSUQiOiIzODc5In0seyJjYWxlbmRhckRhdGUiOiIyMDI2LTEwLTA1IDAwOjAwOjAwIiwiZGF0ZVN0cmluZyI6IjUgT2N0b2JlciAyMDI2IiwiZGF0ZURheSI6Ik1vbmRheSIsInR5cGUiOiJwYXBlckNhcmRib2FyZCIsInpvbmUiOiIxLjMiLCJmaWxlSUQiOiIzODc5In0seyJjYWxlbmRhckRhdGUiOiIyMDI3LTAyLTIyIDAwOjAwOjAwIiwiZGF0ZVN0cmluZyI6IjIyIEZlYnJ1YXJ5IDIwMjciLCJkYXRlRGF5IjoiTW9uZGF5IiwidHlwZSI6ImdlbmVyYWxDbGVhblVwIiwiem9uZSI6IjEuMyIsImZpbGVJRCI6IjM4NzkifV0="
+    }
+  ]
+}

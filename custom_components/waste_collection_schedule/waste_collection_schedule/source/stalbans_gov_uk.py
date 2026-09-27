@@ -1,75 +1,64 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "St Albans City & District Council"
-DESCRIPTION = "Source for St Albans City & District Council."
-URL = "https://stalbans.gov.uk"
-TEST_CASES = {
-    "55 St John's Ct": {"uprn": 100081132201},
-    "9 Tyttenhanger Grn": {"uprn": "100080869141"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Compose, ExplodeList, SplitByFields
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-ICON_MAP = {
-    "refuse": Icons.GENERAL_WASTE,
-    "food": Icons.BIO_KITCHEN,
-    "garden": Icons.GARDEN,
-    "recycling": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "St Albans City & District Council"
+    DESCRIPTION = "Source for St Albans City & District Council."
+    URL = "https://stalbans.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "55 St John's Ct": {"uprn": 100081132201},
+        "9 Tyttenhanger Grn": {"uprn": "100080869141"},
+    }
 
-API_URL = "https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard"
+    PARAMS = (uprn(),)
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
-
-    def fetch(self) -> list[Collection]:
-        data = {"noticeBoard": "default", "uprn": self._uprn}
-        s = requests.Session()
-        r = s.post(API_URL, json=data)
-        r.raise_for_status()
-
-        data = r.json()
-        if (
-            not data
-            or not isinstance(data, dict)
-            or "d" not in data
-            or not isinstance(data["d"], list)
-        ):
-            raise ValueError("Got invalid response from API")
-
-        entries = []
-        for entry in data["d"]:
-            if not isinstance(entry, dict):
-                continue
-
-            if not "ServiceHeaders" or not isinstance(entry["ServiceHeaders"], list):
-                continue
-
-            for header in entry["ServiceHeaders"]:
-                if not isinstance(header, dict):
-                    continue
-
-                bin_type = header.get("TaskType")
-                if not bin_type or not isinstance(bin_type, str):
-                    continue
-                bin_type = bin_type.removeprefix("Collect ")
-                icon = ICON_MAP.get(
-                    bin_type.lower()
-                    .replace("domestic", "")
-                    .replace("communal", "")
-                    .replace("paid", "")
-                    .strip()
-                )
-                for date_key in ("Last", "Next"):
-                    date_str = header.get(date_key)
-                    if not date_str or not isinstance(date_str, str):
-                        continue
-                    date_str = date_str.split("T")[0]
-                    d = datetime.strptime(date_str, "%Y-%m-%d").date()
-                    entries.append(Collection(d, bin_type, icon))
-        return entries
+    retrieve = HttpPostRetriever(
+        url=(
+            "https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/"
+            "GetServicesByUprnAndNoticeBoard"
+        ),
+        json=lambda uprn, **_: {"noticeBoard": "default", "uprn": uprn},
+    )
+    # Services, each with task headers carrying the last and next date.
+    parse = parsers.JsonParser("d")
+    preprocess = Compose(
+        ExplodeList("ServiceHeaders"),
+        SplitByFields(src_keys=("Last", "Next"), dst_key="date"),
+    )
+    transform = JsonTransformer(
+        date_key=lambda record: (record.get("date") or "")[:10],
+        type_key="TaskType",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        clean=lambda label: label.removeprefix("Collect ").strip(),
+        type_value_map={
+            "Domestic Refuse": wt.GENERAL_WASTE,
+            "Communal Refuse": wt.GENERAL_WASTE,
+            "Domestic Recycling": wt.RECYCLABLES,
+            "Communal Recycling": wt.RECYCLABLES,
+            "Domestic Food": wt.FOOD_WASTE,
+            "Communal Food": wt.FOOD_WASTE,
+            "Domestic Paper": wt.PAPER,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Paid Garden": wt.GARDEN_WASTE,
+            "Domestic Paid Garden": wt.GARDEN_WASTE,
+        },
+    )
