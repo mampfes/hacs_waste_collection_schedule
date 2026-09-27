@@ -1,15 +1,17 @@
 # Wakefield Council
 
-Support for schedules provided by [Wakefield Council](https://www.wakefield.gov.uk/), serving the district of Wakefield, UK.
+Support for schedules provided by [Wakefield Council](https://wakefield.gov.uk).
+
+Source for Wakefield.gov.uk services for Wakefield Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: wakefield_gov_uk
       args:
-        uprn: Unique Property Reference Number (UPRN)
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -21,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: wakefield_gov_uk
       args:
-        uprn: "63024087"
+        uprn: '63024087'
 ```
-
-## How to find the values for arguments above
-
-You can find your UPRN by going to the [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and searching there.

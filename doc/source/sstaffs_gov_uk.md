@@ -1,18 +1,21 @@
 # South Staffordshire Council
 
-Support for schedules provided by [South Staffordshire Council](https://www.sstaffs.gov.uk/bins-and-recycling/view-your-collection-calendar), serving South Staffordshire, UK.
+Support for schedules provided by [South Staffordshire Council](https://sstaffs.gov.uk/).
+
+Source for waste collection services for South Staffordshire Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sstaffs_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -20,15 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sstaffs_gov_uk
       args:
-        uprn: "100031831923"
+        uprn: '100031831923'
 ```
-
-## How to find your `UPRN`
-
-Your UPRN is displayed in the url when you are looking at your collection schedule. For example: _sstaffs.gov.uk/where-i-live?uprn=`100031831923`_
-
-Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-`

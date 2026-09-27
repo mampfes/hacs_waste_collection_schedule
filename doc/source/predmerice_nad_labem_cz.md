@@ -1,6 +1,8 @@
 # Předměřice nad Labem
 
-Support for waste collection schedules provided by [Předměřice nad Labem](https://www.predmericenl.cz/odpady), Czech Republic.
+Support for schedules provided by [Předměřice nad Labem](https://www.predmericenl.cz/odpady).
+
+Source for Předměřice nad Labem, Czech Republic.
 
 ## Configuration via configuration.yaml
 
@@ -12,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-None. The schedule is village-wide, so this source takes no arguments.
+No configuration arguments are required.
 
 ## Example
 
@@ -21,11 +23,3 @@ waste_collection_schedule:
   sources:
     - name: predmerice_nad_labem_cz
 ```
-
-## Bin types returned
-
-| Provider description       | Returned type              | Icon                     |
-|----------------------------|----------------------------|--------------------------|
-| Směsný komunální odpad     | Směsný komunální odpad     | `Icons.GENERAL_WASTE`    |
-| Plasty                     | Plasty                     | `Icons.PLASTIC_PACKAGING`|
-| Papír a lepenky            | Papír a lepenky            | `Icons.PAPER`            |

@@ -6620,10 +6620,9 @@
   "northlanarkshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northlanarkshire_gov_uk.md",
     "howto": {
-      "en": "The easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`"
+      "en": "Look your address up on the council's bin collection dates page; its URL has the form www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN."
     },
     "urls": {
-      "url_uprn_uk": "https://uprn.uk/",
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
@@ -7050,10 +7049,10 @@
   },
   "sstaffs_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sstaffs_gov_uk.md",
-    "howto": {
-      "en": "Your UPRN can be found by searching your postcode at https://www.sstaffs.gov.uk/viewyourcollectioncalendar and selecting your address. The objectId in the resulting URL is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/"
-    },
-    "urls": {}
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "southtyneside_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southtyneside_gov_uk.md",
@@ -7311,10 +7310,10 @@
   },
   "wakefield_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wakefield_gov_uk.md",
-    "howto": {
-      "en": "Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after."
-    },
-    "urls": {}
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "walsall_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walsall_gov_uk.md",
@@ -7640,7 +7639,7 @@
   "sandiego_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandiego_gov.md",
     "howto": {
-      "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url."
+      "en": "Search your address on https://getitdone.sandiego.gov/apex/CollectionMapLookup, click 'Bookmarkable Page', and copy the id from the schedule page's URL."
     },
     "urls": {}
   },

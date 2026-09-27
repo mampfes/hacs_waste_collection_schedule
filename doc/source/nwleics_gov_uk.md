@@ -1,15 +1,17 @@
 # North West Leicestershire District Council
 
+Support for schedules provided by [North West Leicestershire District Council](https://nwleics.gov.uk/).
+
 Source for www.nwleics.gov.uk services for the city of North West Leicestershire District Council, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: nwleics_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -21,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: nwleics_gov_uk
       args:
-        uprn: "100030573554"
+        uprn: '10002359002'
 ```
-
-## How to get the source argument
-
-The UPRN code can be found found using https://uprn.uk/
