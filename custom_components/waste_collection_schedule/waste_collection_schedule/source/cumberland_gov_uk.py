@@ -1,72 +1,51 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field, uprn
+from waste_collection_schedule.field_terms import POSTCODE
+from waste_collection_schedule.service.LocalGovWasteCollection import (
+    CollectionDaysParser,
+    uprn_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Cumberland Council"
-DESCRIPTION = "Source for cumberland.gov.uk services for Cumberland Council, UK."
-URL = "https://cumberland.gov.uk"
-TEST_CASES = {
-    "Test_001": {"postcode": "CA28 7QS", "uprn": "100110319463"},
-    "Test_002": {"postcode": "CA28 8LG", "uprn": 100110320734},
-    "Test_003": {"postcode": "CA28 6SW", "uprn": "10000895390"},
-    "Test_004": {"uprn": 10000895390},
-}
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Refuse": Icons.GENERAL_WASTE,
-    "Paper": Icons.PAPER,
-}
-HEADERS = {"user-agent": "Mozilla/5.0"}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode of your property",
-        "uprn": "Unique Property Reference Number (UPRN)",
+@final
+class Source(BaseSource):
+    TITLE = "Cumberland Council"
+    DESCRIPTION = "Source for cumberland.gov.uk services for Cumberland Council, UK."
+    URL = "https://cumberland.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "CA28 7QS", "uprn": "100110319463"},
+        "Test_002": {"postcode": "CA28 8LG", "uprn": 100110320734},
+        "Test_003": {"postcode": "CA28 6SW", "uprn": "10000895390"},
+        "Test_004": {"uprn": 10000895390},
     }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Postcode of your property",
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    }
-}
 
+    # The postcode is no longer needed; it stays optional so existing
+    # configurations keep working.
+    PARAMS = (uprn(), text_field("postcode", term=POSTCODE, optional=True))
 
-class Source:
-    def __init__(
-        self,
-        uprn: str | int,
-        postcode: str | None = None,
-    ):
-        # postcode is no longer needed, provide default value to make it optional for newer configs
-        self._uprn: str = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        r = s.get(
-            f"https://www.cumberland.gov.uk/bins-recycling-and-street-cleaning/waste-collections/bin-collection-schedule/view/{self._uprn}",
-            headers=HEADERS,
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "lxml")
-
-        entries = []
-        for item in soup.select("li.waste-collection__day"):
-            waste_date = item.select_one("time")["datetime"]
-            waste_type = item.select_one(".waste-collection__day--colour").get_text(
-                strip=True
-            )
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date, "%Y-%m-%d").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    retrieve = uprn_retriever(
+        "https://www.cumberland.gov.uk/bins-recycling-and-street-cleaning/"
+        "waste-collections/bin-collection-schedule"
+    )
+    parse = CollectionDaysParser()
+    transform = RowTransformer(
+        type_value_map={
+            "Domestic Waste": wt.GENERAL_WASTE,
+            "Glass, cans, tins, plastics and Tetra Paks": wt.RECYCLABLES,
+            "Paper and card": wt.PAPER,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

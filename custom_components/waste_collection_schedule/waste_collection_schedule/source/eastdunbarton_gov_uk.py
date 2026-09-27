@@ -1,63 +1,63 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "East Dunbartonshire Council"
-DESCRIPTION = "Source for East Dunbartonshire Council, UK."
-URL = "https://eastdunbarton.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "132020996"},
-    "Test_002": {"uprn": 132040577},
-    "Test_003": {"uprn": 132020494},
-}
-ICON_MAP = {
-    "Food caddy": Icons.BIO_KITCHEN,
-    "Green bin": Icons.ORGANIC,
-    "Brown bin": Icons.BIO_KITCHEN,
-    "Blue bin": Icons.RECYCLING,
-    "Grey bin": Icons.GENERAL_WASTE,
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+def _text(row: Tag, selector: str) -> str:
+    # A missing cell raises, which HtmlTransformer turns into a skipped row.
+    cell = row.select_one(selector)
+    if cell is None:
+        raise AttributeError(f"no cell matching {selector!r}")
+    return cell.get_text(strip=True)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "East Dunbartonshire Council"
+    DESCRIPTION = "Source for East Dunbartonshire Council, UK."
+    URL = "https://eastdunbarton.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "132020996"},
+        "Test_002": {"uprn": 132040577},
+        "Test_003": {"uprn": 132020494},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 
+    PARAMS = (uprn(),)
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(
-            f"https://www.eastdunbarton.gov.uk/services/a-z-of-services/bins-waste-and-recycling/bins-and-recycling/collections/?uprn={self._uprn}"
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
-
-        entries = []
-        trs = soup.find_all("tr")
-        for tr in trs[1:]:
-            tds = tr.find_all("td")
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        tds[1].text.strip().split(", ")[1], "%d %B %Y"
-                    ).date(),
-                    t=tds[0].text.strip(),
-                    icon=ICON_MAP.get(tds[0].text.strip()),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=(
+            "https://www.eastdunbarton.gov.uk/services/a-z-of-services/"
+            "bins-waste-and-recycling/bins-and-recycling/collections/"
+        ),
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    parse = parsers.HtmlParser("tr:has(td span)")
+    # "Monday, 28 September 2026"
+    transform = HtmlTransformer(
+        date_getter=lambda row: _text(row, "td span").split(", ")[1],
+        type_getter=lambda row: _text(row, "td"),
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map={
+            "Grey bin": wt.GENERAL_WASTE,
+            "Blue bin": wt.RECYCLABLES,
+            "Green bin": wt.ORGANIC,
+            "Food caddy": wt.FOOD_WASTE,
+            "Brown bin": wt.GARDEN_WASTE,
+        },
+    )

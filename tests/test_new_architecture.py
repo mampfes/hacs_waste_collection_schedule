@@ -2989,6 +2989,29 @@ class TestLookups:
         assert lookups.normalize_text("  Main   Street ") == "main street"
 
 
+class TestHtmlLabelledDatesLabelSeparator:
+    """HtmlLabelledDates(label_separator=...): one cell naming several rounds."""
+
+    def test_splits_the_label_cell_into_one_row_per_round(self):
+        from waste_collection_schedule.parsers import HtmlLabelledDates
+
+        html = (
+            "<table><tr><th>Date</th></tr>"
+            "<tr><td>Tuesday 29 September</td>"
+            "<td>Household Rubbish<br/>Food Waste<br/></td></tr></table>"
+        )
+        rows = HtmlLabelledDates(
+            "tr",
+            label="td:nth-of-type(2)",
+            date="td:nth-of-type(1)",
+            label_separator="\n",
+        )(SimpleNamespace(text=html))
+        assert rows == [
+            ("Tuesday 29 September", "Household Rubbish"),
+            ("Tuesday 29 September", "Food Waste"),
+        ]
+
+
 class TestExplodeList:
     """ExplodeList: one record per element of a list-valued field."""
 

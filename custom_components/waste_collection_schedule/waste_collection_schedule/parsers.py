@@ -805,6 +805,11 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         all_labels: read every element ``label`` matches in the block rather
             than the first, one row each, for a page that lists every round
             collected on a date under that date's heading.
+        label_separator: split the label element's text into several labels
+            at this separator, one row each, for a cell naming every round
+            collected that day as bare text lines (``Recycling<br/>Refuse``).
+            The element's text is read with the separator between its parts,
+            so ``"<br/>"``-separated lines are split with ``"\n"``.
         from_json_key: read the HTML from this key (or path of keys) of a JSON
             response instead of ``response.text``, as
             :class:`HtmlParser` does.
@@ -820,6 +825,7 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         date_pattern: "str | None" = None,
         parse_date: "Callable[[str], datetime.date] | None" = None,
         all_labels: bool = False,
+        label_separator: "str | None" = None,
         from_json_key: "str | tuple[str, ...] | None" = None,
     ):
         if (date is None) == (date_after is None):
@@ -831,6 +837,7 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         self.date_pattern = re.compile(date_pattern) if date_pattern else None
         self.parse_date = parse_date
         self.all_labels = all_labels
+        self.label_separator = label_separator
         self.from_json_key = from_json_key
 
     def _markup(self, response: Any) -> str:
@@ -852,6 +859,15 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             if self.all_labels
             else [element.select_one(self.label)]
         )
+        if self.label_separator is not None:
+            separator = self.label_separator
+            return [
+                part.strip()
+                for tag in found
+                if tag is not None
+                for part in tag.get_text(separator).split(separator)
+                if part.strip()
+            ]
         return [
             text
             for text in (tag.get_text(strip=True) for tag in found if tag is not None)

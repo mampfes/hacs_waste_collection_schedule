@@ -1,72 +1,76 @@
+import datetime
 import re
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Liverpool City Council"
-DESCRIPTION = "Source for liverpool.gov.uk services for Liverpool City"
-URL = "https://www.liverpool.gov.uk"
+# One row per bin with a cell per upcoming date: "Today", "Tomorrow", or
+# "Monday, 29th September" without a year.
 
-TEST_CASES = {
-    "52 Swallowhurst Crescent Liverpool L11 2UZ": {"uprn": "38148233"},
-    "1 Aston Street Liverpool L19 8LR": {"uprn": "38010019"},
-}
-
-API_URL = "https://liverpool.gov.uk/Bins/BinDatesTable?UPRN={uprn}&HideGreenBin=False&ShowTable=True"
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green": Icons.ORGANIC,
-}
+_parse = date_parsers.nearest_year("%A, %d %B")
 
 
-class Source:
-    def __init__(self, uprn=None, postcode=None, name_number=None):
-        self._uprn = uprn
+def _cell_date(cell: Tag) -> datetime.date:
+    text = " ".join(cell.get_text().split())
+    today = datetime.date.today()
+    if text.startswith("Today"):
+        return today
+    if text.startswith("Tomorrow"):
+        return today + datetime.timedelta(days=1)
+    return _parse(re.sub(r"(\d)(st|nd|rd|th)", r"\1", text))
 
-    def fetch(self):
-        today = datetime.today().date()
-        entries = []
 
-        def trimsuffix(s):
-            return re.sub(r"(\d)(st|nd|rd|th)", r"\1", s)
+def _row_type(cell: Tag) -> str:
+    row = cell.find_parent("tr")
+    heading = row.select_one("th") if row is not None else None
+    if heading is None:
+        # HtmlTransformer turns this into a skipped row.
+        raise AttributeError("date cell outside a bin row")
+    return heading.get_text(" ", strip=True)
 
-        q = str(API_URL).format(uprn=self._uprn)
 
-        r = requests.get(q)
-        r.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "Liverpool City Council"
+    DESCRIPTION = "Source for liverpool.gov.uk services for Liverpool City"
+    URL = "https://www.liverpool.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        table = soup.findAll("table")
+    TEST_CASES: ClassVar[dict] = {
+        "52 Swallowhurst Crescent Liverpool L11 2UZ": {"uprn": "38148233"},
+        "1 Aston Street Liverpool L19 8LR": {"uprn": "38010019"},
+    }
 
-        rows = table[0].findAll(lambda tag: tag.name == "tr")
+    PARAMS = (uprn(),)
 
-        for row in rows[1:]:
-            type = " ".join(row.find("th").text.split())
-            fields = row.find_all("td")
-            for field in fields:
-                collectiondate = trimsuffix(
-                    " ".join(field.text.split()) + " " + datetime.today().strftime("%Y")
-                )
-                if re.match("Today", collectiondate):
-                    date = today
-                elif re.match("Tomorrow", collectiondate):
-                    date = today + timedelta(days=1)
-                else:
-                    date = datetime.strptime(collectiondate, "%A, %d %B %Y").date()
-                    # As no year is specified we might need to add one year if it crosses Dec 31st
-                    if date.month == 1 and today.month == 12:
-                        date = date.replace(year=date.year + 1)
-
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=type,
-                        icon=ICON_MAP.get(type),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://liverpool.gov.uk/Bins/BinDatesTable",
+        params=lambda uprn, **_: {
+            "UPRN": uprn,
+            "HideGreenBin": "False",
+            "ShowTable": "True",
+        },
+    )
+    parse = parsers.HtmlParser("table tr td")
+    transform = HtmlTransformer(
+        date_getter=_cell_date,
+        type_getter=_row_type,
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Green": wt.GARDEN_WASTE,
+        },
+    )

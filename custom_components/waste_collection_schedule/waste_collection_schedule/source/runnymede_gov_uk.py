@@ -1,60 +1,47 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Runnymede Borough Council"
-
-DESCRIPTION = "Source Script for www.runnymede.gov.uk services for Runnymede Borough Council, Surrey, UK"
-
-URL = "https://www.runnymede.gov.uk"
-
-TEST_CASES = {
-    "Acacia Close/uprn as string": {"uprn": "100061482004"},
-    "Acacia Close/uprn as number": {"uprn": 100061482004},
-    "Addlestone Library/uprn as string": {"uprn": "10002019806"},
-    "Addlestone Library/uprn as number": {"uprn": 10002019806},
-}
-
-API_URL = "https://www.runnymede.gov.uk/bin-collection-day"
-HEADERS = {"user-agent": "Mozilla/5.0"}
-
-ICON_MAP = {
-    "Food caddy": Icons.BIO_KITCHEN,
-    "Garden waste": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-    "Refuse": Icons.GENERAL_WASTE,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Runnymede Borough Council"
+    DESCRIPTION = "Source Script for www.runnymede.gov.uk services for Runnymede Borough Council, Surrey, UK"
+    URL = "https://www.runnymede.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        session = requests.Session()
-        params = {"address": self._uprn}
-        r = session.get(API_URL, params=params, headers=HEADERS)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-        soup.prettify()
+    TEST_CASES: ClassVar[dict] = {
+        "Acacia Close/uprn as string": {"uprn": "100061482004"},
+        "Acacia Close/uprn as number": {"uprn": 100061482004},
+    }
 
-        results = soup.find_all("tr")
+    PARAMS = (uprn(),)
 
-        entries = []
-        for result in results:
-            result_row = result.find_all("td")
-            if len(result_row) >= 2:
-                date = datetime.strptime(result_row[1].text, "%A, %d %B %Y").date()
-
-                collection_text = result_row[0].text.strip()
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection_text,
-                        icon=ICON_MAP.get(collection_text),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.runnymede.gov.uk/bin-collection-day",
+        params=lambda uprn, **_: {"address": uprn},
+    )
+    parse = parsers.HtmlParser("tr:has(td + td)")
+    transform = HtmlTransformer(
+        date_getter=lambda row: row.select("td")[1].get_text(strip=True),
+        type_getter=lambda row: row.select("td")[0].get_text(strip=True),
+        parse_date=date_parsers.for_format("%A, %d %B %Y"),
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food caddy": wt.FOOD_WASTE,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )
