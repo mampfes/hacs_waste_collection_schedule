@@ -112,7 +112,7 @@ RECYCLABLES = WasteType(
         "it": "Differenziata",
         "nl": "Recycling",
         "sl": "Mešana embalaža",
-        "da": "Genanvendeligt affald",
+        "da": "Genbrugeligt",
     },
     aliases={
         "en": [
@@ -384,7 +384,7 @@ ELECTRONICS = WasteType(
         "it": "Rifiuti elettronici",
         "nl": "Elektronisch afval",
         "sl": "Elektronski odpadki",
-        "da": "Elektronikaffald",
+        "da": "Elektronik affald",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -452,6 +452,103 @@ TEXTILES = WasteType(
     },
 )
 
+METAL = WasteType(
+    id="metal",
+    icon="mdi:nail",
+    color="#C2C8CC",
+    names={
+        "en": "Metal",
+        "de": "Metall",
+        "it": "Metallo",
+        "fr": "Métal",
+        "nl": "Metaal",
+        "sl": "Kovina",
+        "da": "Metal",
+    },
+    aliases={
+        "en": [
+            "iron",
+            "cans",
+        ],
+        "de": [
+            "eisen",
+            "dosen",
+        ],
+        "it": ["ferro", "lattine"],
+        "fr": ["fer", "boîtes de conserve"],
+        "nl": ["ijzer", "blikjes"],
+        "sl": ["likati", "pločevinke"],
+        "da": ["jern", "dåser", "aluminium"],
+    },
+)
+
+PLASTIC = WasteType(
+    id="plastic",
+    icon="mdi:recycle-variant",
+    color="#3587BD",
+    names={
+        "en": "Plastic",
+        "de": "Plastik",
+        "it": "Plastica",
+        "fr": "Plastique",
+        "nl": "Plastic",
+        "sl": "Plastika",
+        "da": "Plastik",
+    },
+    aliases={
+        "en": ["plastic trays", "plastic bags", "plastic film"],
+        "de": ["kunststoffschalen", "plastikbeutel", "plastikfolie"],
+        "it": [
+            "vaschette di plastica",
+            "sacchetti di plastica",
+            "pellicola di plastica",
+        ],
+        "fr": ["barquettes en plastique", "sacs en plastique", "film plastique"],
+        "nl": ["plastic bakjes", "plastic zakken", "plasticfolie"],
+        "sl": ["plastični pladnji", "plastične vrečke", "plastična folija"],
+        "da": ["plastbakker", "plastikposer", "plastfolie"],
+    },
+)
+
+CARTONS = WasteType(
+    id="cartons",
+    icon="mdi:recycle-variant",
+    color="#5D9B75",
+    names={
+        "en": "Food and beverage cartons",
+        "de": "Lebensmittel- und Getränkekartons",
+        "it": "Cartoni per alimenti e bevande",
+        "fr": "Briques alimentaires et boissons",
+        "nl": "Drank- en voedselkartons",
+        "sl": "Kartonska embalaža za živila in pijače",
+        "da": "Mad- og drikkekartoner",
+    },
+    aliases={
+        "en": ["food cartons", "beverage cartons"],
+        "de": ["milchkartons", "saftkartons", "lebensmittelkartons", "getränkekartons"],
+        "it": [
+            "cartoni del latte",
+            "cartoni per bevande",
+            "cartoni per alimenti",
+            "cartoni per bevande",
+        ],
+        "fr": [
+            "briques de lait",
+            "briques alimentaires",
+            "briques de jus",
+            "briques de boissons",
+        ],
+        "nl": ["melkpakken", "sapkartons", "drankkartons", "voedselkartons"],
+        "sl": [
+            "kartoni za mleko",
+            "kartoni za sok",
+            "kartoni za pijače",
+            "kartoni za živila",
+        ],
+        "da": ["mælkekartoner", "juicekartoner", "kartoner"],
+    },
+)
+
 OTHER = WasteType(
     id="other",
     icon="mdi:calendar",
@@ -459,8 +556,8 @@ OTHER = WasteType(
     names={
         "en": "Other",
         "de": "Sonstiges",
-        "fr": "Autres",
         "it": "Altro",
+        "fr": "Autres",
         "nl": "Overig",
         "sl": "Drugo",
         "da": "Andet",
@@ -479,6 +576,9 @@ ALL_TYPES = [
     HAZARDOUS,
     ELECTRONICS,
     TEXTILES,
+    METAL,
+    PLASTIC,
+    CARTONS,
     OTHER,
 ]
 
