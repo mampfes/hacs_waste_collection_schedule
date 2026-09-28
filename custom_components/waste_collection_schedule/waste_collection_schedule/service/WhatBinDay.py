@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import datetime
+import json
 import logging
+import re
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any, ClassVar
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
+
+from bs4 import BeautifulSoup
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import (
@@ -14,7 +18,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
 )
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Response, RetrieverFunc
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
     GLASS,
@@ -514,4 +518,194 @@ class WhatBinDayParser(Parser["list[tuple[datetime.date, str]]"]):
             ).date()
             for bin_type in event.get("Items", []):
                 rows.append((collection_date, bin_type))
+        return rows
+
+
+# --- Website widget (api.whatbinday.com/api/search) -------------------------
+#
+# Some councils (Lismore) do not use the WhatBinDay mobile-app API above but
+# embed WhatBinDay's *website widget* on their own page. The widget is keyed by
+# an ``apiKey`` published in the council page's ``whatbinday.initialise({...})``
+# call and searches a different dataset from the app's V3 device API: the same
+# address can be unknown to one and correct in the other, so the two must not
+# be mixed. The search endpoint answers an HTML fragment.
+
+WIDGET_SEARCH_URL = "https://api.whatbinday.com/api/search"
+
+# ``apiKey: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'`` inside the council page's
+# ``whatbinday.initialise({...})`` call.
+_WIDGET_API_KEY_RE = re.compile(
+    r"""apiKey\s*:\s*['"]([0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12})['"]"""
+)
+
+# The widget's ``administrative_area_level_1`` wants the full state name.
+STATE_LONG_NAMES = {
+    "NSW": "New South Wales",
+    "VIC": "Victoria",
+    "QLD": "Queensland",
+    "SA": "South Australia",
+    "WA": "Western Australia",
+    "TAS": "Tasmania",
+    "ACT": "Australian Capital Territory",
+    "NT": "Northern Territory",
+}
+
+# ``dateFormat`` sent to the widget (Java SimpleDateFormat) and the matching
+# ``strptime`` format read back by :class:`WhatBinDayWidgetParser`.
+_WIDGET_DATE_FORMAT_SENT = "EEEE dd MMM yyyy"
+_WIDGET_DATE_FORMAT_READ = "%A %d %b %Y"
+
+
+class WhatBinDayWidgetRetriever(RetrieverFunc):
+    """Search a council's embedded WhatBinDay website widget for an address.
+
+    Two requests through the shared ``source.session`` (browser-impersonating:
+    plain ``requests`` is answered 403 by some council sites):
+
+    1. GET the council page and read the widget ``apiKey`` off it, so a
+       re-issued key never needs a code change.
+    2. POST the address, as the widget itself would, to
+       :data:`WIDGET_SEARCH_URL` with the council page as origin/referer, and
+       return that response (an HTML fragment, read by
+       :class:`WhatBinDayWidgetParser`).
+
+    The address is submitted as address parts only: the widget resolves the
+    council's roster from the address text, so no geocoding is involved
+    (coordinates are sent as 0/0, as the widget does for a typed address).
+
+    Args:
+        page_url: the council page hosting the widget.
+        split_address: ``callable(raw_value) -> AddressParts`` parsing the one
+            free-text address field (named by ``address_field``) into
+            ``street_number``/``street_name``/``suburb``/``post_code``/
+            ``state`` (state as an abbreviation such as ``"NSW"``).
+        address_field: the ``source.params`` field holding the address.
+        country: the country appended to ``formatted_address``.
+        result_limit: how many collection dates to ask the widget for.
+    """
+
+    def __init__(
+        self,
+        page_url: str,
+        split_address: Callable[[str], AddressParts],
+        address_field: str = "address",
+        country: str = "Australia",
+        result_limit: int = 30,
+    ):
+        self.page_url = page_url
+        self.split_address = split_address
+        self.address_field = address_field
+        self.country = country
+        self.result_limit = result_limit
+
+    def __call__(self, source: BaseSource) -> Response:
+        parts = self.split_address(source.params[self.address_field])
+
+        page = source.session.get(self.page_url, timeout=30)
+        page.raise_for_status()
+        match = _WIDGET_API_KEY_RE.search(page.text)
+        if match is None:
+            response_shape.expect(
+                False,
+                source_name=response_shape.source_name(source),
+                detail="WhatBinDay widget apiKey not found on the council page",
+                raw=page.text,
+            )
+            raise AssertionError("unreachable")  # expect() always raises here
+        api_key = match.group(1)
+
+        parsed = urlsplit(self.page_url)
+        response = source.session.post(
+            WIDGET_SEARCH_URL,
+            headers={
+                "Accept": "text/html",
+                "Origin": f"{parsed.scheme}://{parsed.netloc}",
+                "Referer": self.page_url,
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            data={
+                "apiKey": api_key,
+                "address": json.dumps(self._address(parts)),
+                "agendaResultLimit": str(self.result_limit),
+                "dateFormat": _WIDGET_DATE_FORMAT_SENT,
+                "displayFormat": "agenda",
+                "regionDisplay": "false",
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        return response
+
+    def _address(self, parts: AddressParts) -> dict[str, Any]:
+        """The Google-Places-shaped address object the widget posts."""
+        street_number = parts["street_number"]
+        subpremise = ""
+        if "/" in street_number:
+            subpremise, street_number = street_number.rsplit("/", 1)
+        state = parts["state"]
+        return {
+            "address": {
+                "street_number": street_number,
+                "route": parts["street_name"],
+                "locality": parts["suburb"],
+                "administrative_area_level_1": STATE_LONG_NAMES.get(state, state),
+                "postal_code": parts["post_code"],
+                "part": "",
+                "subpremise": subpremise,
+                "formatted_address": (
+                    f"{parts['street_number']} {parts['street_name']}, "
+                    f"{parts['suburb']} {state} {parts['post_code']}, "
+                    f"{self.country}"
+                ),
+            },
+            "geometry": {"location": {"lat": 0, "lng": 0}},
+        }
+
+
+class WhatBinDayWidgetParser(Parser["list[tuple[datetime.date, str]]"]):
+    """Decode the widget's HTML fragment into ``(date, label)`` rows.
+
+    Each ``li.WBD-result-item`` is one collection date
+    (``.WBD-event-date``) listing the bins collected that day
+    (``.WBD-bin-text``, e.g. "Waste Bin"). The label has its whitespace
+    removed ("WasteBin") so it matches the raw codes of
+    :data:`TYPE_VALUE_MAP`, which is shared with the app API. An address the
+    widget does not know answers a ``.WBD-failure-msg`` block and yields no
+    rows, so ``RAISE_ON_EMPTY`` reports a clear "address not found". Does no
+    I/O.
+    """
+
+    def __call__(
+        self,
+        response: Response,
+        source: BaseSource | None = None,
+    ) -> list[tuple[datetime.date, str]]:
+        soup = BeautifulSoup(response.text, "html.parser")
+        items = soup.select("li.WBD-result-item")
+        response_shape.expect(
+            bool(items) or soup.select_one(".WBD-failure-msg") is not None,
+            source_name=response_shape.source_name(source),
+            detail="WhatBinDay widget response has neither results nor a "
+            "failure message",
+            raw=response.text,
+        )
+
+        rows: list[tuple[datetime.date, str]] = []
+        for item in items:
+            date_tag = item.select_one(".WBD-event-date")
+            if date_tag is None:
+                response_shape.expect(
+                    False,
+                    source_name=response_shape.source_name(source),
+                    detail="WhatBinDay widget result without a date",
+                    raw=str(item),
+                )
+                continue  # expect() always raises here
+            collection_date = datetime.datetime.strptime(
+                date_tag.get_text(strip=True), _WIDGET_DATE_FORMAT_READ
+            ).date()
+            for bin_text in item.select(".WBD-event-detail .WBD-bin-text"):
+                label = "".join(bin_text.get_text().split())
+                if label:
+                    rows.append((collection_date, label))
         return rows
