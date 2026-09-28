@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch 818896c481",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/buildingaddresssearch",
+      "body": "{\"body\":[[\"query\",\"Industrigatan 13, Arl\u00f6v\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=snxvpim4kkxo4iy5bicfrfs1; path=/; HttpOnly; SameSite=Lax, SC_ANALYTICS_GLOBAL_COOKIE=8d7a84abde8f498a8d42cca405a2fe15|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "137"
+      },
+      "content_b64": "eyJxdWVyeSI6IkluZHVzdHJpZ2F0YW4gMTMsIEFybMO2diIsIml0ZW1zIjpbeyJzdHJlZXQiOiJJbmR1c3RyaWdhdGFuIDEzLCBBcmzDtnYiLCJpZCI6IjE5NTE3OSJ9XSwibWV0YSI6eyJzdWNjZXNzIjp0cnVlLCJtZXNzYWdlIjpudWxsfX0="
+    },
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress 37b3552953",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/wastepickupbyaddress",
+      "body": "{\"body\":[[\"query\",\"195179\"],[\"street\",\"Industrigatan 13, Arl\u00f6v\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "SC_ANALYTICS_GLOBAL_COOKIE=8d7a84abde8f498a8d42cca405a2fe15|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "329"
+      },
+      "content_b64": "eyJpdGVtcyI6W3siYWRkcmVzcyI6IkluZHVzdHJpZ2F0YW4gMTMsIEFybMO2diIsIndhc3RlVHlwZSI6IlJlc3RhdmZhbGwiLCJ3YXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlRvcnNkYWcgdmFyamUgdmVja2EiLCJuZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTEwLTAxIn0seyJhZGRyZXNzIjoiSW5kdXN0cmlnYXRhbiAxMywgQXJsw7Z2Iiwid2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwid2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJUb3JzZGFnIHZhcmplIHZlY2thIiwibmV4dFdhc3RlUGlja3VwIjoiMjAyNi0xMC0wMSJ9XSwibWV0YSI6eyJzdWNjZXNzIjp0cnVlLCJtZXNzYWdlIjpudWxsfX0="
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://info.ambervalley.gov.uk/WebServices/AVBCFeeds/WasteCollectionJSON.asmx/GetCollectionDetailsByUPRN 49b1ad7d8c",
+      "method": "GET",
+      "url": "https://info.ambervalley.gov.uk/WebServices/AVBCFeeds/WasteCollectionJSON.asmx/GetCollectionDetailsByUPRN",
+      "final_url": "https://info.ambervalley.gov.uk/WebServices/AVBCFeeds/WasteCollectionJSON.asmx/GetCollectionDetailsByUPRN?uprn=100030041980",
+      "body": "{\"params\":[[\"uprn\",\"100030041980\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0",
+        "content-type": "application/json; charset=utf-8",
+        "x-aspnet-version": "4.0.30319",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "access-control-allow-origin": "*",
+        "date": "Mon, 28 Sep 2026 20:53:42 GMT",
+        "content-length": "954"
+      },
+      "content_b64": "eyJjb21tdW5hbFdhc3RlSWQiOjAsIlVQUk4iOiIxMDAwMzAwNDE5ODAiLCJjb2xsZWN0aW9uWm9uZSI6IkoiLCJjbGluaWNhbCI6IkZhbHNlIiwicmVmdXNlUm91bmQiOiI0IiwicmVjeWNsaW5nUm91bmQiOiI0IiwiZ2FyZGVuWm9uZSI6IlMiLCJncmVlblJvdW5kIjoxLCJnYXJkZW5ab25lMjAyMCI6IlMiLCJncmVlblJvdW5kMjAyMCI6MCwiY29tbXVuYWxXYXN0ZUxvY2F0aW9uIjoiIiwicmVjeWNsaW5nTmV4dERhdGUiOiIyMDI2LTEwLTA5VDAwOjAwOjAwIiwicmVmdXNlTmV4dERhdGUiOiIyMDI2LTEwLTAyVDAwOjAwOjAwIiwiY2FsZW5kYXJVcmwiOiJodHRwczovL2luZm8uYW1iZXJ2YWxsZXkuZ292LnVrL2RvY2FyYy9kb2N2aWV3ZXIuYXNweD9kb2NndWlkPTY3MjA4ZGQ1ZWQ0NzQyMzdiYjMyZWU1OTRkYTUzZDY2IiwiZ2FyZGVuQ2FsZW5kYXJVcmwiOiJodHRwczovL2luZm8uYW1iZXJ2YWxsZXkuZ292LnVrL2RvY2FyYy9kb2N2aWV3ZXIuYXNweD9kb2NndWlkPTYzNzM2NTdhMTFkZjQ0MjI4N2QxNzEwZWNlMGRjMzVkIiwiZ3JlZW5OZXh0RGF0ZSI6IjIwMjYtMDktMjlUMDA6MDA6MDAiLCJjb21tdW5hbFJlZk5leHREYXRlIjoiMTkwMC0wMS0wMVQwMDowMDowMCIsImNvbW11bmFsUnljTmV4dERhdGUiOiIxOTAwLTAxLTAxVDAwOjAwOjAwIiwiYmFncyI6ZmFsc2UsImNvbW11bmFsUmVmdXNlIjpmYWxzZSwiY29tbXVuYWxSZWN5Y2xlIjpmYWxzZSwiY29tbXVuYWxSZWZXZWVrbHkiOmZhbHNlLCJjb21tdW5hbFJ5Y1dlZWtseSI6ZmFsc2UsIndlZWtseUNvbGxlY3Rpb24iOmZhbHNlLCJyZWN5Y2xpbmciOnRydWUsImhhc1NlcnZpY2UiOnRydWUsImlzVG9kYXlSZWZDb2xEYXkiOmZhbHNlLCJpc1RvZGF5UmVjQ29sRGF5IjpmYWxzZSwiaXNUb2RheUdyZENvbERheSI6ZmFsc2UsIkZvb2Rab25lIjoiIiwiTmV4dEZvb2REYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMCJ9"
+    }
+  ]
+}

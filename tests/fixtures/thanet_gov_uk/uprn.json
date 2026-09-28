@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php aa7569fe14",
+      "method": "GET",
+      "url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php",
+      "final_url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php?pAddress=100061108233",
+      "body": "{\"params\":[[\"pAddress\",\"100061108233\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 21:16:17 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding, Accept-Encoding,Cookie",
+        "x-powered-by": "WP Engine",
+        "x-cacheable": "SHORT",
+        "cache-control": "max-age=600, must-revalidate",
+        "x-cache": "MISS",
+        "x-cache-group": "normal",
+        "last-modified": "Mon, 28 Sep 2026 21:13:48 GMT",
+        "cf-cache-status": "HIT",
+        "set-cookie": "__cf_bm=oERvvJuYl6sLC5OthTJrbJGbORQZutnoQN9kVPidzl8-1790630177.402129-1.0.1.1-Kini8JLmpO0aHjuNq7m3ro5KjGthkqbbmaDUVB5v51bzdEAtGuRI4V9w4J7OEzM3PU.5xLRwvIZ25rqs9i5EN4zf2_XOYrTIqy0JTFoXrEcKw1GJXQg6Im9LnlhFdSkk; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.thanet.gov.uk; Expires=Mon, 28 Sep 2026 21:46:17 GMT",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "age": "149",
+        "content-encoding": "br",
+        "cf-ray": "a425c4b0cc4e0121-DUS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3sibmFtZSI6IkZvb2QgV2FzdGUiLCJ0eXBlIjoiRm9vZCIsIm5leHREYXRlIjoiMjhcLzA5XC8yMDI2IGF0IDY6MDBhbSIsIm5leHRTdGF0dXMiOiJDbG9zZWQtQ29tcGxldGUiLCJpbmRleCI6MCwiaWQiOjcyMjkwMDI3LCJwcmV2aW91c0RhdGUiOiIyMVwvMDlcLzIwMjYgYXQgNzo0MWFtIiwicHJldmlvdXNTdGF0dXMiOiJDbG9zZWQtQ29tcGxldGUifSx7Im5hbWUiOiJSZWZ1c2UgLSAxODBMIiwidHlwZSI6IlJlZnVzZSIsIm5leHREYXRlIjoiMDVcLzEwXC8yMDI2IGF0IDY6MDBhbSIsIm5leHRTdGF0dXMiOiJOb3QgU3RhcnRlZCIsImluZGV4IjowLCJpZCI6NzIyOTQ0OTAsInByZXZpb3VzRGF0ZSI6IjIxXC8wOVwvMjAyNiBhdCA3OjQxYW0iLCJwcmV2aW91c1N0YXR1cyI6IkNsb3NlZC1Db21wbGV0ZSJ9LHsibmFtZSI6IlBhcGVyICYgQ2FyZCAtIFJlZGJhZyIsInR5cGUiOiJSZWRSZWN5Y2xpbmciLCJuZXh0RGF0ZSI6IjEyXC8xMFwvMjAyNiBhdCAxMjowMGFtIiwibmV4dFN0YXR1cyI6Ik5vdCBTdGFydGVkIiwiaW5kZXgiOjAsImlkIjo3MTUwNjU2MywicHJldmlvdXNEYXRlIjoiMTRcLzA5XC8yMDI2IGF0IDEyOjAwYW0iLCJwcmV2aW91c1N0YXR1cyI6IkNsb3NlZC1Db21wbGV0ZSJ9LHsibmFtZSI6Ik1peGVkIFJlY3ljbGluZyAtIDI0MEwiLCJ0eXBlIjoiQmx1ZVJlY3ljbGluZyIsIm5leHREYXRlIjoiMjhcLzA5XC8yMDI2IGF0IDY6MDBhbSIsIm5leHRTdGF0dXMiOiJDbG9zZWQtQ29tcGxldGUiLCJpbmRleCI6MCwiaWQiOjcxNTA5ODA4LCJwcmV2aW91c0RhdGUiOiIxNFwvMDlcLzIwMjYgYXQgNjowMGFtIiwicHJldmlvdXNTdGF0dXMiOiJDbG9zZWQtQ29tcGxldGUifV0="
+    }
+  ]
+}

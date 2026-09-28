@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch 71276fd600",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/buildingaddresssearch",
+      "body": "{\"body\":[[\"query\",\"Storgatan 1, Malm\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=lvnkmmxdkylaoqre5ohnjj3u; path=/; HttpOnly; SameSite=Lax, SC_ANALYTICS_GLOBAL_COOKIE=958bf0cd69ff474bacf421eff5a5ccf3|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "174"
+      },
+      "content_b64": "eyJxdWVyeSI6IlN0b3JnYXRhbiAxLCBNYWxtw7YiLCJpdGVtcyI6W3sic3RyZWV0IjoiU3RvcmdhdGFuIDEsIE1hbG3DtiIsImlkIjoiMTg1OTA0In0seyJzdHJlZXQiOiJTdG9yZ2F0YW4gMSwgTWFsbcO2IiwiaWQiOiIxMjUwNDAifV0sIm1ldGEiOnsic3VjY2VzcyI6dHJ1ZSwibWVzc2FnZSI6bnVsbH19"
+    },
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress 63813eb70a",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/wastepickupbyaddress",
+      "body": "{\"body\":[[\"query\",\"185904\"],[\"street\",\"Storgatan 1, Malm\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "SC_ANALYTICS_GLOBAL_COOKIE=958bf0cd69ff474bacf421eff5a5ccf3|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "481"
+      },
+      "content_b64": "eyJpdGVtcyI6W3siYWRkcmVzcyI6IlN0b3JnYXRhbiAxLCBNYWxtw7YiLCJ3YXN0ZVR5cGUiOiJSZXN0YXZmYWxsIiwid2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnLCB0b3JzZGFnIHZhcmplIHZlY2thIiwibmV4dFdhc3RlUGlja3VwIjoiMjAyNi0wOS0yOCJ9LHsiYWRkcmVzcyI6IlN0b3JnYXRhbiAxLCBNYWxtw7YiLCJ3YXN0ZVR5cGUiOiJSZXN0YXZmYWxsIiwid2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnLCB0b3JzZGFnIHZhcmplIHZlY2thIiwibmV4dFdhc3RlUGlja3VwIjoiMjAyNi0wOS0yOCJ9LHsiYWRkcmVzcyI6IlN0b3JnYXRhbiAxLCBNYWxtw7YiLCJ3YXN0ZVR5cGUiOiJNYXRhdmZhbGwiLCJ3YXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik3DpW5kYWcsIHRvcnNkYWcgdmFyamUgdmVja2EiLCJuZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTA5LTI4In1dLCJtZXRhIjp7InN1Y2Nlc3MiOnRydWUsIm1lc3NhZ2UiOm51bGx9fQ=="
+    }
+  ]
+}

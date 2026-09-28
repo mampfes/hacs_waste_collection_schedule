@@ -546,6 +546,40 @@ class JsonParser(Parser[Any]):
         return data
 
 
+def eval_json(response: Response) -> Any:
+    """The JSON a response wraps in a JavaScript ``eval(...)`` call.
+
+    Some older endpoints answer ``eval({"dane": [...],})`` rather than plain
+    JSON, with trailing commas a strict parser rejects. This unwraps the call
+    and drops those commas; it is the reading half of :class:`EvalJsonParser`,
+    exported so a ``Lookup`` ``pick`` can read the same wrapped reply.
+    """
+    import json
+
+    match = re.search(r"eval\((.*)\)", response.text, re.DOTALL)
+    if match is None:
+        raise ValueError("response is not a JavaScript eval(...) wrapper")
+    return json.loads(re.sub(r",\s*([\]}])", r"\1", match.group(1).strip()))
+
+
+class EvalJsonParser(Parser[Any]):
+    """Parse a response whose JSON is wrapped in ``eval(...)``, drilling into keys.
+
+    Like :class:`JsonParser`, for endpoints that answer ``eval({...})``::
+
+        parse = parsers.EvalJsonParser("dane")   # eval_json(response)["dane"]
+    """
+
+    def __init__(self, *keys: "str | int"):
+        self.keys = keys
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
+        data = eval_json(response)
+        for key in self.keys:
+            data = cast(Any, data)[key]
+        return data
+
+
 class DateListParser(Parser["list[tuple[str, str]]"]):
     """Parse a JSON payload that is a flat array of date strings.
 

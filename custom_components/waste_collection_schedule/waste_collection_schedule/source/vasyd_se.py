@@ -1,53 +1,88 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import Deduplicate
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "VA Syd Sophämntning"
-DESCRIPTION = "Source for VA Syd waste collection."
-URL = "https://www.vasyd.se"
-TEST_CASES = {
-    "Home": {"street_address": "Industrigatan 13, Malmö"},
-    "Polisen": {"street_address": "Drottninggatan 20, Malmö"},
-}
+_API_URL = "https://www.vasyd.se/api/sitecore/MyPagesApi"
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+def _building(response, *keys, street_address, **_) -> str:
+    """The id of the first building the address search finds."""
+    buildings = response.json()["items"]
+    if not buildings:
+        raise SourceArgumentNotFound("street_address", street_address)
+    return buildings[0]["id"]
 
-    def fetch(self):
-        data = {"query": self._street_address}
-        response = requests.post(
-            "https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch",
-            data=data,
-        )
 
-        building_data = json.loads(response.text)["items"]
-        building_id = None
-        if building_data and len(building_data) > 0:
-            building_id = building_data[0]["id"]
+@final
+class Source(BaseSource):
+    TITLE = "VA Syd Sophämntning"
+    DESCRIPTION = "Source for VA Syd waste collection."
+    URL = "https://www.vasyd.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
 
-        if not building_id:
-            return []
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        data = {"query": building_id, "street": self._street_address}
-        response = requests.post(
-            "https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress",
-            data=data,
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Home": {"street_address": "Industrigatan 13, Arlöv"},
+        "Storgatan": {"street_address": "Storgatan 1, Malmö"},
+        "Kungsgatan": {"street_address": "Kungsgatan 10, Malmö"},
+    }
 
-        data = json.loads(response.text)["items"]
+    PARAMS = (street_address("street_address"),)
 
-        entries = []
-        for item in data:
-            waste_type = item["wasteType"]
-            icon = "mdi:trash-can"
-            if waste_type == "Trädgårdsavfall":
-                icon = "mdi:leaf"
-            next_pickup = item["nextWastePickup"]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the address as VA Syd lists it: '<street> <number>, <city>', for "
+            "example 'Storgatan 1, Malmö'. The first address the search finds is "
+            "used, so include the city to avoid a wrong match."
+        ),
+        "de": (
+            "Geben Sie die Adresse so ein, wie VA Syd sie führt: '<Straße> "
+            "<Nummer>, <Ort>', zum Beispiel 'Storgatan 1, Malmö'. Es wird der erste "
+            "Treffer der Suche verwendet, geben Sie daher den Ort mit an."
+        ),
+    }
 
-        return entries
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{_API_URL}/BuildingAddressSearch",
+                method="POST",
+                data=lambda street_address, **_: {"query": street_address},
+                pick=_building,
+            ),
+        ),
+        url=f"{_API_URL}/WastePickupByAddress",
+        method="POST",
+        data=lambda building, street_address, **_: {
+            "query": building,
+            "street": street_address,
+        },
+    )
+    parse = JsonParser("items")
+    # An address with several bins of one kind lists the collection once each.
+    preprocess = Deduplicate(
+        key=lambda item: (item["nextWastePickup"], item["wasteType"])
+    )
+    transform = JsonTransformer(
+        date_key="nextWastePickup",
+        type_key="wasteType",
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Trädgårdsavfall": wt.GARDEN_WASTE,
+            # Used cooking fat and oil collected in its own bin.
+            "Fett": wt.OTHER,
+        },
+    )

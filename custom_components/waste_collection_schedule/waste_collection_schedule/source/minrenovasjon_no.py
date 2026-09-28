@@ -1,122 +1,98 @@
-import datetime
-import json
-import re
-from urllib.parse import urlencode
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Min Renovasjon"
-DESCRIPTION = "Source for Norkart Komtek MinRenovasjon (Norway)."
-URL = "https://www.norkart.no"
-
-# **street_code:** \
-# **county_id:** \
-# Can be found with this REST-API call.
-# ```
-# https://ws.geonorge.no/adresser/v1/#/default/get_sok
-# https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012
-# ```
-# "street_code" equals to "adressekode" and "county_id" equals to "kommunenummer".
-
-TEST_CASES = {
-    "Sandvika Rådhus": {
-        "street_name": "Rådhustorget",
-        "house_number": 2,
-        "street_code": 2469,
-        "county_id": 3024,
-    },
-    "Lillehammer Åsmarkvegen 111": {
-        "street_name": "Åsmarkvegen",
-        "house_number": 111,
-        "street_code": 6530,
-        "county_id": 3405,
-    },
-}
-
-EXTRA_INFO = [
-    {
-        "title": "ROAF (Romerike Avfallsforedling IKS)",
-        "url": "https://www.roaf.no",
-        "country": "no",
-        "default_params": {
-            "street_name": "Solvangen",
-            "house_number": 2,
-            "street_code": 12950,
-            "county_id": 3205,
-        },
-    },
-]
-
-API_URL = (
-    "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server="
-    "https://komteksky.norkart.no/MinRenovasjon.Api/api/"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.NorkartMinRenovasjon import (
+    MinRenovasjonParser,
+    MinRenovasjonRetriever,
 )
-APP_KEY = "AE13DEEC-804F-4615-A74E-B4FAC11F0A30"
-ICON_MAP = {
-    "": Icons.GENERAL_WASTE,
-    "brush": Icons.GENERAL_WASTE,
-    "elektriskogelektronisk": Icons.ELECTRONICS,
-    "farligavfall": Icons.GENERAL_WASTE,
-    "glassogmetallemballasje": Icons.GENERAL_WASTE,
-    "hageavfall": Icons.ORGANIC,
-    "klaerogsko": Icons.TEXTILE,
-    "matavfall": Icons.BIO_KITCHEN,
-    "matrestavfall": Icons.GENERAL_WASTE,
-    "matrestavfallplast": Icons.GENERAL_WASTE,
-    "metall": Icons.METAL,
-    "papir": Icons.PAPER,
-    "pappogkartong": Icons.PAPER,
-    "plastemballasje": Icons.GENERAL_WASTE,
-    "restavfall": Icons.GENERAL_WASTE,
-    "drikkekartong": Icons.NEWSPAPER,
-    "papppapirdrikkekartong": Icons.NEWSPAPER,
-    "trevirke": Icons.GENERAL_WASTE,
-}
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, street_name, house_number, street_code, county_id):
-        self._street_name = street_name
-        self._house_number = house_number
-        self._street_code = street_code
-        self._county_id = county_id
+@final
+class Source(BaseSource):
+    TITLE = "Min Renovasjon"
+    DESCRIPTION = "Source for Norkart Komtek MinRenovasjon (Norway)."
+    URL = "https://www.norkart.no"
+    COUNTRY = "no"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        headers = {
-            "Kommunenr": str(self._county_id),
-            "RenovasjonAppKey": APP_KEY,
-            "user-agent": "Home-Assitant-waste-col-sched/0.1",
-        }
-        args = {}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-        r = requests.get(API_URL + "fraksjoner", params=args, headers=headers)
+    REGIONS = (
+        region(
+            "ROAF (Romerike Avfallsforedling IKS)",
+            url="https://www.roaf.no",
+            street_name="Solvangen",
+            house_number="2",
+            street_code="12950",
+            county_id="3205",
+        ),
+    )
 
-        type = {}
-        for f in json.loads(r.content):
-            # pprint(f)
-            icon_name = re.sub(r"^.*?/(\w+)\.\w{3,4}$", "\\1", f["Ikon"])
-            icon = ICON_MAP.get(icon_name)
-            type[f["Id"]] = {"name": f["Navn"], "image": f["Ikon"], "icon": icon}
+    TEST_CASES: ClassVar[dict] = {
+        "Sandvika Rådhus": {
+            "street_name": "Rådhustorget",
+            "house_number": 2,
+            "street_code": 2469,
+            "county_id": 3024,
+        },
+        "Lillehammer Åsmarkvegen 111": {
+            "street_name": "Åsmarkvegen",
+            "house_number": 111,
+            "street_code": 6530,
+            "county_id": 3405,
+        },
+    }
 
-        args = {
-            "gatenavn": self._street_name,
-            "husnr": self._house_number,
-            "gatekode": self._street_code,
-        }
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look up your address with the Kartverket address API, for example "
+            "https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012. "
+            "`street_code` is the result's `adressekode` and `county_id` its "
+            "`kommunenummer`."
+        ),
+    }
 
-        url_with_param = API_URL + "tommekalender?" + urlencode(args)
-        r = requests.get(url_with_param, headers=headers)
-        entries = []
-        for f in json.loads(r.content):
-            for d in f["Tommedatoer"]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(d, "%Y-%m-%dT%H:%M:%S").date(),
-                        t=type[f["FraksjonId"]]["name"],
-                        icon=type[f["FraksjonId"]]["icon"],
-                        picture=type[f["FraksjonId"]]["image"],
-                    )
-                )
+    PARAMS = (
+        street("street_name"),
+        house_number(),
+        text_field("street_code", "Street code"),
+        text_field("county_id", "Municipality number"),
+    )
 
-        return entries
+    retrieve = MinRenovasjonRetriever()
+    parse = MinRenovasjonParser()
+    transform = RowTransformer(
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Mat-/restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Våtorganisk": wt.FOOD_WASTE,
+            "Hageavfall": wt.GARDEN_WASTE,
+            "Papir": wt.PAPER,
+            "Papp": wt.PAPER,
+            "Papp og papir": wt.PAPER,
+            "Papir, papp": wt.PAPER,
+            "Papp, papir, kartong": wt.PAPER,
+            "Plast": wt.RECYCLABLES,
+            "Plastemballasje": wt.RECYCLABLES,
+            "Metaller": wt.RECYCLABLES,
+            "Drikkekartonger": wt.RECYCLABLES,
+            "Glass-/metallemb": wt.RECYCLABLES,
+            "Glass- og metallemballasje": wt.RECYCLABLES,
+            "Hermetikk- og glassemballasje": wt.RECYCLABLES,
+            "Farlig avfall": wt.HAZARDOUS,
+            "Spesialavfall": wt.HAZARDOUS,
+            "Tekstiler": wt.TEXTILES,
+            "Tekstiler, klær og sko": wt.TEXTILES,
+            "Grovavfall": wt.BULKY_WASTE,
+        },
+    )

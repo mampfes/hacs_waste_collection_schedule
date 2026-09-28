@@ -1,75 +1,60 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Dundee City Council"
-DESCRIPTION = "Source script for dundeecity.gov.uk"
-URL = "https://www.dundeecity.gov.uk"
-EXTRA_INFO = [
-    {"title": "Dundee MyBins", "url": "https://www.dundee-mybins.co.uk"},
-]
-TEST_CASES = {
-    "Test_1": {"uprn": 9059046613},
-    "Test_2": {"uprn": "9059082280"},
-    "Test_3": {
-        "uprn": 9059060343,
-    },
-}
-ICON_MAP = {
-    "GREY BIN": Icons.GENERAL_WASTE,
-    "BROWN BIN": Icons.BIO_KITCHEN,
-    "GREEN BIN": Icons.GLASS_COLORED,
-    "BURGUNDY BIN": Icons.RECYCLING,
-    "BLUE BIN": Icons.NEWSPAPER,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-# ### Arguments affecting the configuration GUI ####
+@final
+class Source(BaseSource):
+    TITLE = "Dundee City Council"
+    DESCRIPTION = "Source script for dundeecity.gov.uk"
+    URL = "https://www.dundeecity.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
+    REGIONS = (region("Dundee MyBins", url="https://www.dundee-mybins.co.uk"),)
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    },
-}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
 
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "uprn": "Unique Property Reference Number",
-    },
-}
+    TEST_CASES: ClassVar[dict] = {
+        "Test_1": {"uprn": 9059046613},
+        "Test_2": {"uprn": "9059082280"},
+        "Test_3": {"uprn": 9059060343},
+    }
 
-# ### End of arguments affecting the configuration GUI ####
+    PARAMS = (uprn(),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering your address details."
+        ),
+    }
 
-class Source:
-    def __init__(
-        self, uprn: str | int
-    ):  # argX correspond to the args dict in the source configuration
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        response = s.get(
-            f"https://www.dundee-mybins.co.uk/get_calendar.php?rn={self._uprn}"
-        )
-        response.raise_for_status()
-        schedule = json.loads(response.text)
-
-        entries = []
-
-        for item in schedule:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(item["start"], "%Y-%m-%d").date(),
-                    t=item["title"],
-                    icon=ICON_MAP.get(item["title"].upper()),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.dundee-mybins.co.uk/get_calendar.php",
+        params=lambda uprn, **_: {"rn": uprn},
+    )
+    parse = JsonParser()
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="title",
+        type_value_map={
+            "Grey Bin": wt.GENERAL_WASTE,
+            "Brown Bin": wt.ORGANIC,
+            "Green Bin": wt.GLASS,
+            "Burgundy Bin": wt.RECYCLABLES,
+            "Blue Bin": wt.PAPER,
+        },
+    )

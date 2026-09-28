@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://proaktiv.glor.offcenit.no/search 97561ee1ef",
+      "method": "GET",
+      "url": "https://proaktiv.glor.offcenit.no/search",
+      "final_url": "https://proaktiv.glor.offcenit.no/search?q=Gudbrandsdalsvegen+187",
+      "body": "{\"params\":[[\"q\",\"Gudbrandsdalsvegen 187\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 20:54:01 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "244",
+        "vary": "Origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "W3siaWQiOiIwMzA0YTUzNi0wOGY4LTQ2N2QtOWFhYi1hZGM3MzFiMGUxMmQiLCJrb21tdW5lTnIiOiIzNDA1Iiwia29tbXVuZSI6IkxpbGxlaGFtbWVyIiwiZ05yIjoiNTMiLCJiTnIiOiI3OCIsImZOciI6IjAiLCJzTnIiOiIwIiwiYWRyZXNzZSI6Ikd1ZGJyYW5kc2RhbHN2ZWdlbiAxODciLCJlaWVyIjpudWxsLCJieWduaW5nc251bW1lciI6bnVsbCwiYnlnbmluZ3R5cGUiOm51bGwsImJ5Z25pbmdzVHlwZU5hdm4iOm51bGx9XQ=="
+    },
+    {
+      "key": "GET https://proaktiv.glor.offcenit.no/details af64865d5d",
+      "method": "GET",
+      "url": "https://proaktiv.glor.offcenit.no/details",
+      "final_url": "https://proaktiv.glor.offcenit.no/details?id=0304a536-08f8-467d-9aab-adc731b0e12d",
+      "body": "{\"params\":[[\"id\",\"0304a536-08f8-467d-9aab-adc731b0e12d\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 20:54:01 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "2821",
+        "vary": "Origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "W3siZGF0byI6IjIwMjYtMTAtMDZUMDA6MDA6MDAiLCJmcmVrdmVuc1R5cGUiOjQsImZyZWt2ZW5zSW50ZXJ2YWxsIjo0LCJmcmFrc2pvbiI6Ik1hdGF2ZmFsbCIsImZyYWtzam9uSWQiOiIxMTExIiwic3ltYm9sSWQiOjksImVpZW5kb21JZCI6IjAzMDRhNTM2LTA4ZjgtNDY3ZC05YWFiLWFkYzczMWIwZTEyZCIsImVpZW5kb21zbmF2biI6Ikd1ZGJyYW5kc2RhbHN2ZWdlbiAxODciLCJrb21tdW5lbnVtbWVyIjozNDA1LCJydXRlbmF2biI6IlItNTAgTW9hdmVnZW4iLCJ3ZWJQb3J0YWxJbmZvIjoiIiwidGVsZWZvbnVtbWVyU2phZm9yIjpudWxsfSx7ImRhdG8iOiIyMDI2LTEwLTA2VDAwOjAwOjAwIiwiZnJla3ZlbnNUeXBlIjo0LCJmcmVrdmVuc0ludGVydmFsbCI6NCwiZnJha3Nqb24iOiJQYXBpciwgcGFwcCIsImZyYWtzam9uSWQiOiIxMjk5Iiwic3ltYm9sSWQiOjEyLCJlaWVuZG9tSWQiOiIwMzA0YTUzNi0wOGY4LTQ2N2QtOWFhYi1hZGM3MzFiMGUxMmQiLCJlaWVuZG9tc25hdm4iOiJHdWRicmFuZHNkYWxzdmVnZW4gMTg3Iiwia29tbXVuZW51bW1lciI6MzQwNSwicnV0ZW5hdm4iOiJSLTUwIE1vYXZlZ2VuIiwid2ViUG9ydGFsSW5mbyI6IiIsInRlbGVmb251bW1lclNqYWZvciI6bnVsbH0seyJkYXRvIjoiMjAyNi0xMC0yMFQwMDowMDowMCIsImZyZWt2ZW5zVHlwZSI6NCwiZnJla3ZlbnNJbnRlcnZhbGwiOjQsImZyYWtzam9uIjoiTWF0YXZmYWxsIiwiZnJha3Nqb25JZCI6IjExMTEiLCJzeW1ib2xJZCI6OSwiZWllbmRvbUlkIjoiMDMwNGE1MzYtMDhmOC00NjdkLTlhYWItYWRjNzMxYjBlMTJkIiwiZWllbmRvbXNuYXZuIjoiR3VkYnJhbmRzZGFsc3ZlZ2VuIDE4NyIsImtvbW11bmVudW1tZXIiOjM0MDUsInJ1dGVuYXZuIjoiUi01MCBNb2F2ZWdlbiIsIndlYlBvcnRhbEluZm8iOiIiLCJ0ZWxlZm9udW1tZXJTamFmb3IiOm51bGx9LHsiZGF0byI6IjIwMjYtMTAtMjBUMDA6MDA6MDAiLCJmcmVrdmVuc1R5cGUiOjQsImZyZWt2ZW5zSW50ZXJ2YWxsIjo0LCJmcmFrc2pvbiI6IlJlc3RhdmZhbGwiLCJmcmFrc2pvbklkIjoiOTk5OSIsInN5bWJvbElkIjoxNSwiZWllbmRvbUlkIjoiMDMwNGE1MzYtMDhmOC00NjdkLTlhYWItYWRjNzMxYjBlMTJkIiwiZWllbmRvbXNuYXZuIjoiR3VkYnJhbmRzZGFsc3ZlZ2VuIDE4NyIsImtvbW11bmVudW1tZXIiOjM0MDUsInJ1dGVuYXZuIjoiUi01MCBNb2F2ZWdlbiIsIndlYlBvcnRhbEluZm8iOiIiLCJ0ZWxlZm9udW1tZXJTamFmb3IiOm51bGx9LHsiZGF0byI6IjIwMjYtMTAtMjlUMDA6MDA6MDAiLCJmcmVrdmVuc1R5cGUiOjQsImZyZWt2ZW5zSW50ZXJ2YWxsIjo1LCJmcmFrc2pvbiI6IlBsYXN0IGJsYW5kZXQiLCJmcmFrc2pvbklkIjoiMTc5OSIsInN5bWJvbElkIjoxNCwiZWllbmRvbUlkIjoiMDMwNGE1MzYtMDhmOC00NjdkLTlhYWItYWRjNzMxYjBlMTJkIiwiZWllbmRvbXNuYXZuIjoiR3VkYnJhbmRzZGFsc3ZlZ2VuIDE4NyIsImtvbW11bmVudW1tZXIiOjM0MDUsInJ1dGVuYXZuIjoiUGxhc3QgTW9hdmVnZW4vU3BvcnRzcGxhc3NlbiIsIndlYlBvcnRhbEluZm8iOiIiLCJ0ZWxlZm9udW1tZXJTamFmb3IiOm51bGx9LHsiZGF0byI6IjIwMjYtMTEtMDRUMDA6MDA6MDAiLCJmcmVrdmVuc1R5cGUiOjQsImZyZWt2ZW5zSW50ZXJ2YWxsIjo0LCJmcmFrc2pvbiI6Ik1hdGF2ZmFsbCIsImZyYWtzam9uSWQiOiIxMTExIiwic3ltYm9sSWQiOjksImVpZW5kb21JZCI6IjAzMDRhNTM2LTA4ZjgtNDY3ZC05YWFiLWFkYzczMWIwZTEyZCIsImVpZW5kb21zbmF2biI6Ikd1ZGJyYW5kc2RhbHN2ZWdlbiAxODciLCJrb21tdW5lbnVtbWVyIjozNDA1LCJydXRlbmF2biI6IlItNTAgTW9hdmVnZW4iLCJ3ZWJQb3J0YWxJbmZvIjoiIiwidGVsZWZvbnVtbWVyU2phZm9yIjpudWxsfSx7ImRhdG8iOiIyMDI2LTExLTA0VDAwOjAwOjAwIiwiZnJla3ZlbnNUeXBlIjo0LCJmcmVrdmVuc0ludGVydmFsbCI6NCwiZnJha3Nqb24iOiJQYXBpciwgcGFwcCIsImZyYWtzam9uSWQiOiIxMjk5Iiwic3ltYm9sSWQiOjEyLCJlaWVuZG9tSWQiOiIwMzA0YTUzNi0wOGY4LTQ2N2QtOWFhYi1hZGM3MzFiMGUxMmQiLCJlaWVuZG9tc25hdm4iOiJHdWRicmFuZHNkYWxzdmVnZW4gMTg3Iiwia29tbXVuZW51bW1lciI6MzQwNSwicnV0ZW5hdm4iOiJSLTUwIE1vYXZlZ2VuIiwid2ViUG9ydGFsSW5mbyI6IiIsInRlbGVmb251bW1lclNqYWZvciI6bnVsbH0seyJkYXRvIjoiMjAyNi0xMS0xOFQwMDowMDowMCIsImZyZWt2ZW5zVHlwZSI6NCwiZnJla3ZlbnNJbnRlcnZhbGwiOjQsImZyYWtzam9uIjoiTWF0YXZmYWxsIiwiZnJha3Nqb25JZCI6IjExMTEiLCJzeW1ib2xJZCI6OSwiZWllbmRvbUlkIjoiMDMwNGE1MzYtMDhmOC00NjdkLTlhYWItYWRjNzMxYjBlMTJkIiwiZWllbmRvbXNuYXZuIjoiR3VkYnJhbmRzZGFsc3ZlZ2VuIDE4NyIsImtvbW11bmVudW1tZXIiOjM0MDUsInJ1dGVuYXZuIjoiUi01MCBNb2F2ZWdlbiIsIndlYlBvcnRhbEluZm8iOiIiLCJ0ZWxlZm9udW1tZXJTamFmb3IiOm51bGx9LHsiZGF0byI6IjIwMjYtMTEtMThUMDA6MDA6MDAiLCJmcmVrdmVuc1R5cGUiOjQsImZyZWt2ZW5zSW50ZXJ2YWxsIjo0LCJmcmFrc2pvbiI6IlJlc3RhdmZhbGwiLCJmcmFrc2pvbklkIjoiOTk5OSIsInN5bWJvbElkIjoxNSwiZWllbmRvbUlkIjoiMDMwNGE1MzYtMDhmOC00NjdkLTlhYWItYWRjNzMxYjBlMTJkIiwiZWllbmRvbXNuYXZuIjoiR3VkYnJhbmRzZGFsc3ZlZ2VuIDE4NyIsImtvbW11bmVudW1tZXIiOjM0MDUsInJ1dGVuYXZuIjoiUi01MCBNb2F2ZWdlbiIsIndlYlBvcnRhbEluZm8iOiIiLCJ0ZWxlZm9udW1tZXJTamFmb3IiOm51bGx9XQ=="
+    }
+  ]
+}

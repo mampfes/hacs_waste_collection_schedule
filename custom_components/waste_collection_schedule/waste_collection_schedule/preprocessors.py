@@ -578,13 +578,23 @@ class ExplodeList(Preprocessor[Any, Any]):
     rather than a list contributes that value; a missing, ``None`` or empty
     value contributes nothing.
 
+    A key may also be a ``callable(record, source) -> list``, for a list that is
+    not one field of the record but derived from it and the source's params (the
+    codes of one sector out of a record holding every sector's)::
+
+        preprocess = preprocessors.ExplodeList(_codes_for_sector, into="code")
+
     Args:
-        keys: the field(s) holding the list.
+        keys: the field(s) holding the list, or callables deriving it.
         into: the field each element is written into, or ``None`` to yield the
             elements themselves.
     """
 
-    def __init__(self, *keys: str, into: "str | None" = None):
+    def __init__(
+        self,
+        *keys: "str | Callable[[Any, BaseSource | None], Any]",
+        into: "str | None" = None,
+    ):
         if not keys:
             raise ValueError("ExplodeList needs at least one key")
         self._keys = keys
@@ -597,7 +607,7 @@ class ExplodeList(Preprocessor[Any, Any]):
             records = [records]
         for record in records or []:
             for key in self._keys:
-                values = record.get(key)
+                values = key(record, source) if callable(key) else record.get(key)
                 if values in (None, "", []):
                     continue
                 if not isinstance(values, (list, tuple)):

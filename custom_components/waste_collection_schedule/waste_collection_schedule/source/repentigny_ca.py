@@ -1,128 +1,95 @@
-import logging
-from datetime import datetime
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.retrievers import FirstMatchRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Repentigny (QC)"
-DESCRIPTION = "Source script for Ville de Repentigny waste collection using the city's calendar JSON"
-URL = "https://collectes-repentigny.coudmain.ca/"
-
-TEST_CASES = {
-    "Sector A": {"sector": "A"},
-    "Sector B": {"sector": "B"},
-    "Sector C": {"sector": "C"},
-    "Sector D": {"sector": "D"},
-    "Sector E": {"sector": "E"},
-    "Sector F": {"sector": "F"},
-}
-
-ICON_MAP = {
-    "R": Icons.RECYCLING,
-    "R+": Icons.RECYCLING,
-    "O": Icons.ORGANIC,
-    "O+": Icons.ORGANIC,
-    "D": Icons.GENERAL_WASTE,
-    "S": Icons.CHRISTMAS_TREE,
-    "B": Icons.GARDEN,
-    "E": Icons.BULKY,
-}
-
-LABEL_MAP = {
-    "R": "Recyclables",
-    "R+": "Recyclables + surplus accepté",
-    "O": "Matières organiques",
-    "O+": "Organiques + résidus verts",
-    "D": "Déchets",
-    "S": "Sapins",
-    "B": "Branches",
-    "E": "Encombrants",
-}
-
-LOGGER = logging.getLogger(__name__)
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "sector": "Sector",
-    },
-    "fr": {
-        "sector": "Secteur",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "sector": "Your waste collection sector (A, B, C, D, E, or F)",
-    },
-    "fr": {
-        "sector": "Votre secteur de collecte des déchets (A, B, C, D, E ou F)",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": 'Enter your sector manually if you know it from the <a href="https://repentigny.ca/services/citoyens/collectes">collection calendar</a>.',
-    "fr": 'Entrez votre secteur manuellement si vous le connaissez d\'après le <a href="https://repentigny.ca/services/citoyens/collectes">calendrier de collecte</a>.',
-}
-
-COUNTRY = "ca"
+SECTORS = ["A", "B", "C", "D", "E", "F"]
 
 
-class Source:
-    def __init__(self, sector: str | None = None):
-        self._sector = sector
+def _sector_codes(entry, source):
+    """Bin codes collected on this date for the configured sector."""
+    return sorted(
+        {
+            *entry.get("bySector", {}).get(source.params["sector"], []),
+            *entry.get("allSectors", []),
+        }
+    )
 
-        if not sector:
-            raise SourceArgumentNotFound(
-                "sector", "", "please provide a sector (A, B, C, D, E, or F)"
-            )
 
-        if sector not in ["A", "B", "C", "D", "E", "F"]:
-            raise SourceArgumentNotFound(
-                "sector", sector, "please provide a valid sector (A, B, C, D, E, or F)"
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Repentigny (QC)"
+    DESCRIPTION = "Source script for Ville de Repentigny waste collection using the city's calendar JSON"
+    URL = "https://collectes-repentigny.coudmain.ca/"
+    COUNTRY = "ca"
 
-    def fetch(self):
-        now = datetime.now()
-        base_url = "https://collectes-repentigny.coudmain.ca/data"
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+        wt.OTHER,
+    ]
 
-        # Try current year first, fall back to next year
-        for year in (now.year, now.year + 1):
-            url = f"{base_url}/calendrier-{year}.json"
-            response = requests.get(url, timeout=30)
-            if response.ok:
-                data = response.json()
-                break
-        else:
-            response.raise_for_status()
-            data = response.json()
-        entries = []
-        today = now.date()
+    TEST_CASES: ClassVar[dict] = {
+        "Sector A": {"sector": "A"},
+        "Sector B": {"sector": "B"},
+        "Sector C": {"sector": "C"},
+        "Sector D": {"sector": "D"},
+        "Sector E": {"sector": "E"},
+        "Sector F": {"sector": "F"},
+    }
 
-        for entry in data["collections"]:
-            date_str = entry["date"]
-            collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    PARAMS = (dropdown("sector", SECTORS, label="Sector"),)
 
-            if collection_date < today:
-                continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Pick your sector from the "
+            '<a href="https://repentigny.ca/services/citoyens/collectes">'
+            "collection calendar</a>."
+        ),
+        "fr": (
+            "Choisissez votre secteur d'après le "
+            '<a href="https://repentigny.ca/services/citoyens/collectes">'
+            "calendrier de collecte</a>."
+        ),
+    }
 
-            bin_types = set()
+    # The calendar is one file per year: try this year's, and next year's while
+    # this year's is not (or no longer) published.
+    retrieve = FirstMatchRetriever(
+        candidates=lambda **_: [
+            datetime.date.today().year,
+            datetime.date.today().year + 1,
+        ],
+        url=lambda year, **_: (
+            f"https://collectes-repentigny.coudmain.ca/data/calendrier-{year}.json"
+        ),
+        accept=lambda response: response.ok,
+    )
 
-            if "bySector" in entry and self._sector in entry["bySector"]:
-                bin_types.update(entry["bySector"][self._sector])
+    preprocess = Compose(
+        ExplodeList("collections"),
+        ExplodeList(_sector_codes, into="code"),
+    )
 
-            if "allSectors" in entry:
-                bin_types.update(entry["allSectors"])
-
-            for bin_type in sorted(bin_types):
-                label = LABEL_MAP.get(bin_type, bin_type)
-                icon = ICON_MAP.get(bin_type)
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=label,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="code",
+        type_value_map={
+            "D": wt.GENERAL_WASTE,
+            "R": wt.RECYCLABLES,
+            "R+": wt.RECYCLABLES,
+            "O": wt.ORGANIC,
+            "O+": wt.ORGANIC,
+            "B": wt.GARDEN_WASTE,
+            "E": wt.BULKY_WASTE,
+            "S": wt.OTHER,
+        },
+    )
