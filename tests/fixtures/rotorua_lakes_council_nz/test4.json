@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-09-26",
+  "recorded_at": "2026-09-29",
   "interactions": [
     {
       "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 070881fc54",
@@ -10,7 +10,7 @@
       "status": 200,
       "encoding": "UTF-8",
       "headers": {
-        "Date": "Sat, 26 Sep 2026 08:41:55 GMT",
+        "Date": "Mon, 28 Sep 2026 23:51:05 GMT",
         "Content-Type": "application/json;charset=UTF-8",
         "Content-Length": "240",
         "Connection": "keep-alive",
@@ -26,27 +26,27 @@
       "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTJBIFJvYmluIFN0cmVldCwgU2Vsd3luIEhlaWdodHMsIFJvdG9ydWEsIEJheSBvZiBQbGVudHksIDMwMTUiLCJsb2NhdGlvbiI6eyJ4IjoxNzYuMjE5MTAxOTI4Mjc3LCJ5IjotMzguMTE3NzE2ODg4OTUyfSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxNzYuMjE4MTAxOTI4Mjc3LCJ5bWluIjotMzguMTE4NzE2ODg4OTUyLCJ4bWF4IjoxNzYuMjIwMTAxOTI4Mjc3LCJ5bWF4IjotMzguMTE2NzE2ODg4OTUyfX1dfQ=="
     },
     {
-      "key": "GET https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query 37bc88f52a",
+      "key": "GET https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query 7981fb628a",
       "method": "GET",
-      "url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query",
-      "final_url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query?outFields=Collection&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+176.219101928277%2C+%22y%22%3A+-38.117716888952%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
-      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 176.219101928277, \\\"y\\\": -38.117716888952}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Collection\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query",
+      "final_url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query?outFields=RubbishCollection4%2CRubbishCollection3%2CRubbishCollection2%2CRubbishCollection1&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+176.219101928277%2C+%22y%22%3A+-38.117716888952%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 176.219101928277, \\\"y\\\": -38.117716888952}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"RubbishCollection4,RubbishCollection3,RubbishCollection2,RubbishCollection1\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
       "status": 200,
       "encoding": "UTF-8",
       "headers": {
         "Cache-Control": "must-revalidate,max-age=0,public",
-        "Content-Length": "256",
+        "Content-Length": "250",
         "Content-Type": "application/json; charset=UTF-8",
         "Content-Encoding": "gzip",
-        "ETag": "\"6a4dec51\"",
+        "ETag": "\"3da3f51b\"",
         "Vary": "Origin",
         "Server": "Microsoft-IIS/10.0",
         "X-Content-Type-Options": "nosniff",
-        "Set-Cookie": "AGS_ROLES=sym-gcm|1|0jlP0e6oY4Ylb4WbhJ1SRA==|2kCEP0y9lWalSWXBWlmxIjTpR639gEV1bI2EQYEF; Max-Age=60; Expires=Sat, 26 Sep 2026 08:42:56 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|a9PqKyE0nehPhePz14jJiQ==|D2H2k_hS1d_kdIKe3HtuY6Y5I6Np312yBjwkdMqQ; Max-Age=60; Expires=Mon, 28 Sep 2026 23:52:05 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
         "X-Powered-By": "ASP.NET",
-        "Date": "Sat, 26 Sep 2026 08:41:56 GMT"
+        "Date": "Mon, 28 Sep 2026 23:51:04 GMT"
       },
-      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTmFtZSIsImZpZWxkQWxpYXNlcyI6eyJDb2xsZWN0aW9uIjoiQ29sbGVjdGlvbiJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJDb2xsZWN0aW9uIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbGxlY3Rpb24iLCJsZW5ndGgiOjIwMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJDb2xsZWN0aW9uIjoiXHUwMDNjdWxcdTAwM2VcdTAwM2NsaVx1MDAzZVx1MDAzY2JcdTAwM2VSdWJiaXNoIG9ubHlcdTAwM2MvYlx1MDAzZVx1MDAzY2JyL1x1MDAzZU1vbmRheSAyOCBTZXAgMjAyNlx1MDAzYy9saVx1MDAzZVx1MDAzY2xpXHUwMDNlXHUwMDNjYlx1MDAzZVJ1YmJpc2ggYW5kIHJlY3ljbGluZ1x1MDAzYy9iXHUwMDNlXHUwMDNjYnIvXHUwMDNlTW9uZGF5IDA1IE9jdCAyMDI2XHUwMDNjL2xpXHUwMDNlXHUwMDNjL3VsXHUwMDNlIFx1MDAzY3BcdTAwM2UmbmJzcDsmbmJzcDsoV2VlayAxIEN5Y2xlKVx1MDAzYy9wXHUwMDNlIn19XX0="
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTmFtZSIsImZpZWxkQWxpYXNlcyI6eyJSdWJiaXNoQ29sbGVjdGlvbjQiOiJSdWJiaXNoQ29sbGVjdGlvbjQiLCJSdWJiaXNoQ29sbGVjdGlvbjMiOiJSdWJiaXNoQ29sbGVjdGlvbjMiLCJSdWJiaXNoQ29sbGVjdGlvbjIiOiJSdWJiaXNoQ29sbGVjdGlvbjIiLCJSdWJiaXNoQ29sbGVjdGlvbjEiOiJSdWJiaXNoQ29sbGVjdGlvbjEifSwiZmllbGRzIjpbeyJuYW1lIjoiUnViYmlzaENvbGxlY3Rpb240IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJ1YmJpc2hDb2xsZWN0aW9uNCIsImxlbmd0aCI6MTcxfSx7Im5hbWUiOiJSdWJiaXNoQ29sbGVjdGlvbjMiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUnViYmlzaENvbGxlY3Rpb24zIiwibGVuZ3RoIjoxNzF9LHsibmFtZSI6IlJ1YmJpc2hDb2xsZWN0aW9uMiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJSdWJiaXNoQ29sbGVjdGlvbjIiLCJsZW5ndGgiOjE3MX0seyJuYW1lIjoiUnViYmlzaENvbGxlY3Rpb24xIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJ1YmJpc2hDb2xsZWN0aW9uMSIsImxlbmd0aCI6MTcxfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlJ1YmJpc2hDb2xsZWN0aW9uNCI6Ik1vbmRheSAxMi8xMC8yMDI2IFJ1YmJpc2ggYW5kIEZPR08iLCJSdWJiaXNoQ29sbGVjdGlvbjMiOiJNb25kYXkgMDUvMTAvMjAyNiBSZWN5Y2xpbmcgYW5kIEZPR08iLCJSdWJiaXNoQ29sbGVjdGlvbjIiOiIgIiwiUnViYmlzaENvbGxlY3Rpb24xIjoiTW9uZGF5IDA1LzEwLzIwMjYgUmVjeWNsaW5nIGFuZCBSdWJiaXNoIn19XX0="
     }
   ]
 }

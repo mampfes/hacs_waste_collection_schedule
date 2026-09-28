@@ -1,15 +1,46 @@
-from typing import ClassVar, final
+import re
+from typing import Any, ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
-from waste_collection_schedule.service.ArcGis import ArcGisFeatureRetriever
-from waste_collection_schedule.transformers import HtmlTransformer
-
-_LAYER_URL = (
-    "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125"
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    Deduplicate,
+    SplitByFields,
 )
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+
+# Layer 125 (Refuse_Collection), which this source used to read, never gained
+# the FOGO (food and garden organics) round that starts in October 2026.
+_LAYER_URL = (
+    "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160"
+)
+
+# Newest first, so Deduplicate keeps the later field for a date two of them
+# share: in the week FOGO starts, RubbishCollection1 still carries the pre-FOGO
+# round ("Recycling and Rubbish") for the date RubbishCollection3 lists as
+# "Recycling and FOGO". RubbishCollection2 is blank in every zone.
+_FIELDS = (
+    "RubbishCollection4",
+    "RubbishCollection3",
+    "RubbishCollection2",
+    "RubbishCollection1",
+)
+
+# "Tuesday 06/10/2026 Recycling and FOGO". Zones without kerbside collection
+# hold a sentence ("No Collection: Take rubbish to ...") that doesn't match.
+_ENTRY = re.compile(r"^\s*\w+day\s+(\d{2}/\d{2}/\d{4})\s+(.+?)\s*$")
+
+
+def _entry_part(record: dict[str, Any], group: int) -> str | None:
+    match = _ENTRY.match(record.get("entry") or "")
+    return match[group] if match else None
 
 
 @final
@@ -19,7 +50,7 @@ class Source(BaseSource):
     URL = "https://www.rotorualakescouncil.nz"
     COUNTRY = "nz"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
 
     TEST_CASES: ClassVar[dict] = {
         "Test1": {"address": "1061 Haupapa Street"},
@@ -38,24 +69,32 @@ class Source(BaseSource):
     retrieve = ArcGisFeatureRetriever(
         _LAYER_URL,
         address=lambda address, **_: f"{address}, Rotorua, New Zealand",
-        out_fields="Collection",
+        out_fields=",".join(_FIELDS),
     )
-    # The matched zone's "Collection" field is an HTML list, one item per
-    # upcoming week: "<li><b>Rubbish and recycling</b><br/>Wednesday 07 Oct 2026".
     parse = parsers.ArgumentGuard(
-        parsers.HtmlParser(
-            "li", from_json_key=("features", 0, "attributes", "Collection")
-        ),
+        ArcGisFeatureParser(),
         argument="address",
         contains='"attributes"',
         hint="The address must be within the Rotorua Lakes district.",
     )
-    transform = HtmlTransformer(
-        date_getter=lambda li: li.get_text("|", strip=True).split("|")[-1],
-        type_getter=lambda li: li.get_text("|", strip=True).split("|")[0],
-        parse_date=date_parsers.for_format("%A %d %b %Y"),
+    preprocess = Compose(
+        SplitByFields(src_keys=_FIELDS, dst_key="entry"),
+        Deduplicate(key=lambda record: _entry_part(record, 1)),
+    )
+    transform = JsonTransformer(
+        date_key=lambda record: _entry_part(record, 1),
+        type_key=lambda record: _entry_part(record, 2),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
         type_value_map={
             "Rubbish only": wt.GENERAL_WASTE,
-            "Rubbish and recycling": [wt.GENERAL_WASTE, wt.RECYCLABLES],
+            "Recycling and Rubbish": [wt.RECYCLABLES, wt.GENERAL_WASTE],
+            "Rubbish and FOGO": [wt.GENERAL_WASTE, wt.ORGANIC],
+            "Recycling and FOGO": [wt.RECYCLABLES, wt.ORGANIC],
+            # CBD, Glenholme and Kuirau, where only food premises have a FOGO bin.
+            "Rubbish (and FOGO for food premises)": wt.GENERAL_WASTE,
+            "Recycling and Rubbish (and FOGO for food premises)": [
+                wt.RECYCLABLES,
+                wt.GENERAL_WASTE,
+            ],
         },
     )
