@@ -82,8 +82,10 @@
           "calendar_title": "Calendar Title",
           "app_id": "App Id",
           "f_abfallarten": "Afvalsoorten",
+          "hpid": "Homepage-ID",
           "key": "API-sleutel",
           "ort": "Wijk",
+          "realmid": "Realm-ID",
           "wasteTypes": "Afvalsoorten"
         },
         "data_description": {

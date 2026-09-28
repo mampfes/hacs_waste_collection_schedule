@@ -82,8 +82,10 @@
           "calendar_title": "Kalender Titel",
           "app_id": "App ID",
           "f_abfallarten": "Affaldstyper",
+          "hpid": "Homepage ID",
           "key": "API Nøgle",
           "ort": "Distrikt",
+          "realmid": "Realm ID",
           "wasteTypes": "Affaldstyper"
         },
         "data_description": {

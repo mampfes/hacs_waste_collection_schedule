@@ -82,8 +82,10 @@
           "calendar_title": "Titre du Calendrier",
           "app_id": "App Id",
           "f_abfallarten": "Types de déchets",
+          "hpid": "ID de la page d'accueil",
           "key": "Clé API",
           "ort": "Quartier",
+          "realmid": "ID du domaine",
           "wasteTypes": "Types de déchets"
         },
         "data_description": {
