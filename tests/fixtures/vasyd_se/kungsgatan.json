@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch 6b14c80e75",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/BuildingAddressSearch",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/buildingaddresssearch",
+      "body": "{\"body\":[[\"query\",\"Kungsgatan 10, Malm\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=wemwfgb0evsnqe4bgsd3vmbv; path=/; HttpOnly; SameSite=Lax, SC_ANALYTICS_GLOBAL_COOKIE=88c6cc7d702e4e6cb9f2707e3a98b20a|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "131"
+      },
+      "content_b64": "eyJxdWVyeSI6Ikt1bmdzZ2F0YW4gMTAsIE1hbG3DtiIsIml0ZW1zIjpbeyJzdHJlZXQiOiJLdW5nc2dhdGFuIDEwLCBNYWxtw7YiLCJpZCI6IjEyNTE3MiJ9XSwibWV0YSI6eyJzdWNjZXNzIjp0cnVlLCJtZXNzYWdlIjpudWxsfX0="
+    },
+    {
+      "key": "POST https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress 829fc3b779",
+      "method": "POST",
+      "url": "https://www.vasyd.se/api/sitecore/MyPagesApi/WastePickupByAddress",
+      "final_url": "https://www.vasyd.se/api/sitecore/mypagesapi/wastepickupbyaddress",
+      "body": "{\"body\":[[\"query\",\"125172\"],[\"street\",\"Kungsgatan 10, Malm\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "SC_ANALYTICS_GLOBAL_COOKIE=88c6cc7d702e4e6cb9f2707e3a98b20a|False; expires=Thu, 25-Sep-2036 21:15:28 GMT; path=/; HttpOnly, SC_ANALYTICS_GLOBAL_COOKIE=; expires=Sun, 27-Sep-2026 21:15:28 GMT; path=/",
+        "date": "Mon, 28 Sep 2026 21:15:28 GMT",
+        "content-length": "323"
+      },
+      "content_b64": "eyJpdGVtcyI6W3siYWRkcmVzcyI6Ikt1bmdzZ2F0YW4gMTAsIE1hbG3DtiIsIndhc3RlVHlwZSI6IlJlc3RhdmZhbGwiLCJ3YXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik3DpW5kYWcgdmFyamUgdmVja2EiLCJuZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTA5LTI4In0seyJhZGRyZXNzIjoiS3VuZ3NnYXRhbiAxMCwgTWFsbcO2Iiwid2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwid2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIHZhcmplIHZlY2thIiwibmV4dFdhc3RlUGlja3VwIjoiMjAyNi0wOS0yOCJ9XSwibWV0YSI6eyJzdWNjZXNzIjp0cnVlLCJtZXNzYWdlIjpudWxsfX0="
+    }
+  ]
+}

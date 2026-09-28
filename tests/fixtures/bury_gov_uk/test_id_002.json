@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://www.bury.gov.uk/app-services/getPropertyById ec957386f6",
+      "method": "GET",
+      "url": "https://www.bury.gov.uk/app-services/getPropertyById",
+      "final_url": "https://www.bury.gov.uk/app-services/getPropertyById?id=593456",
+      "body": "{\"params\":[[\"id\",\"593456\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 28 Sep 2026 21:15:47 GMT",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"d89-v1iBb8gDgBfqT5ZiD8Xhdvm5C0c\"",
+        "x-is-iis-fallback": "false",
+        "request-handler-metrics": "routeInfoFetch: 15 ms (nodeLookup: 11ms, getRouteInfoFetch: 3ms), generalRequestFetch: 42 ms, fallbackRequest 0 ms",
+        "x-version-no": "10",
+        "alt-svc": "h3=\":443\";ma=60;",
+        "x-origin-server": "backend-coordinator",
+        "x-host": "live-bury.cloud.contensis.com",
+        "x-grace": "72h",
+        "x-backend-ttl": "0.000",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-varnish": "815981080",
+        "x-varnish-authentication": "skip",
+        "x-age": "0",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "accept-ranges": "bytes",
+        "content-length": "698",
+        "x-server-name": "z-bury-CACHE1",
+        "strict-transport-security": "max-age=15768000",
+        "x-geoip-country-code": "DE",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "content_b64": "eyJlcnJvciI6bnVsbCwicmVzcG9uc2UiOnsiYWRkcmVzcyI6eyJpZCI6IjU5MzQ1NiIsImFkZHJlc3NMaW5lMSI6IjggT2Frd29vZCBDbG9zZSIsImNpdHkiOiJCdXJ5IiwicG9zdGNvZGUiOiJCTDggMUREIn0sImJpbnMiOnsiZ3JleSI6eyJjb2xsZWN0aW9uIjp0cnVlLCJuZXh0Q29sbGVjdGlvbiI6IlRodXJzZGF5IDh0aCBPY3RvYmVyIDIwMjYiLCJkZXNjcmlwdGlvbiI6ImZvciB3YXN0ZSB5b3UgY2Fu4oCZdCByZWN5Y2xlIn0sImJyb3duIjp7ImNvbGxlY3Rpb24iOnRydWUsIm5leHRDb2xsZWN0aW9uIjoiVGh1cnNkYXkgOHRoIE9jdG9iZXIgMjAyNiIsImRlc2NyaXB0aW9uIjoiZm9yIHJlY3ljbGluZyBnYXJkZW4gd2FzdGUgYW5kIGZvb2Qgd2FzdGUifSwiZ3JlZW4iOnsiY29sbGVjdGlvbiI6dHJ1ZSwibmV4dENvbGxlY3Rpb24iOiJUaHVyc2RheSAxNXRoIE9jdG9iZXIgMjAyNiIsImRlc2NyaXB0aW9uIjoiZm9yIHJlY3ljbGluZyBwYXBlciBhbmQgY2FyZGJvYXJkIn0sImJsdWUiOnsiY29sbGVjdGlvbiI6dHJ1ZSwibmV4dENvbGxlY3Rpb24iOiJUaHVyc2RheSAxc3QgT2N0b2JlciAyMDI2IiwiZGVzY3JpcHRpb24iOiJmb3IgZ2xhc3MgYm90dGxlcyBhbmQgamFycywgcGxhc3RpYyBib3R0bGVzLCBwb3RzLCB0dWJzIGFuZCB0cmF5cywgZm9vZCBhbmQgZHJpbmsgY2FucywgYWVyb3NvbCBjYW5zIGFuZCBhbHVtaW5pdW0gZm9pbCJ9fSwiY2FsZW5kYXIiOlt7ImRhdGUiOiJTZXB0ZW1iZXIgMjAyNiIsImRhdGVzIjpbeyJkYXRlIjoiVGh1cnNkYXkgM3JkIiwiYmlucyI6WyJncmVlbiJdfSx7ImRhdGUiOiJUaHVyc2RheSAxMHRoIiwiYmlucyI6WyJibHVlIiwiYnJvd24iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTd0aCIsImJpbnMiOlsiZ3JleSJdfSx7ImRhdGUiOiJUaHVyc2RheSAyNHRoIiwiYmlucyI6WyJicm93biIsImdyZWVuIl19XX0seyJkYXRlIjoiT2N0b2JlciAyMDI2IiwiZGF0ZXMiOlt7ImRhdGUiOiJUaHVyc2RheSAxc3QiLCJiaW5zIjpbImJsdWUiXX0seyJkYXRlIjoiVGh1cnNkYXkgOHRoIiwiYmlucyI6WyJicm93biIsImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMTV0aCIsImJpbnMiOlsiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMjJuZCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19LHsiZGF0ZSI6IlRodXJzZGF5IDI5dGgiLCJiaW5zIjpbImdyZXkiXX1dfSx7ImRhdGUiOiJOb3ZlbWJlciAyMDI2IiwiZGF0ZXMiOlt7ImRhdGUiOiJUaHVyc2RheSA1dGgiLCJiaW5zIjpbImJyb3duIiwiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTJ0aCIsImJpbnMiOlsiYmx1ZSJdfSx7ImRhdGUiOiJUaHVyc2RheSAxOXRoIiwiYmlucyI6WyJicm93biIsImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjZ0aCIsImJpbnMiOlsiZ3JlZW4iXX1dfSx7ImRhdGUiOiJEZWNlbWJlciAyMDI2IiwiZGF0ZXMiOlt7ImRhdGUiOiJUaHVyc2RheSAzcmQiLCJiaW5zIjpbImJsdWUiLCJicm93biJdfSx7ImRhdGUiOiJUaHVyc2RheSAxMHRoIiwiYmlucyI6WyJncmV5Il19LHsiZGF0ZSI6IlRodXJzZGF5IDE3dGgiLCJiaW5zIjpbImJyb3duIiwiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMjR0aCIsImJpbnMiOlsiYmx1ZSJdfSx7ImRhdGUiOiJUaHVyc2RheSAzMXN0IiwiYmlucyI6WyJicm93biIsImdyZXkiXX1dfSx7ImRhdGUiOiJKYW51YXJ5IDIwMjciLCJkYXRlcyI6W3siZGF0ZSI6IlRodXJzZGF5IDd0aCIsImJpbnMiOlsiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTR0aCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19LHsiZGF0ZSI6IlRodXJzZGF5IDIxc3QiLCJiaW5zIjpbImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjh0aCIsImJpbnMiOlsiYnJvd24iLCJncmVlbiJdfV19LHsiZGF0ZSI6IkZlYnJ1YXJ5IDIwMjciLCJkYXRlcyI6W3siZGF0ZSI6IlRodXJzZGF5IDR0aCIsImJpbnMiOlsiYmx1ZSJdfSx7ImRhdGUiOiJUaHVyc2RheSAxMXRoIiwiYmlucyI6WyJicm93biIsImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMTh0aCIsImJpbnMiOlsiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMjV0aCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19XX0seyJkYXRlIjoiTWFyY2ggMjAyNyIsImRhdGVzIjpbeyJkYXRlIjoiVGh1cnNkYXkgNHRoIiwiYmlucyI6WyJncmV5Il19LHsiZGF0ZSI6IlRodXJzZGF5IDExdGgiLCJiaW5zIjpbImJyb3duIiwiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTh0aCIsImJpbnMiOlsiYmx1ZSJdfSx7ImRhdGUiOiJUaHVyc2RheSAyNXRoIiwiYmlucyI6WyJicm93biIsImdyZXkiXX1dfSx7ImRhdGUiOiJBcHJpbCAyMDI3IiwiZGF0ZXMiOlt7ImRhdGUiOiJUaHVyc2RheSAxc3QiLCJiaW5zIjpbImdyZWVuIl19LHsiZGF0ZSI6IlRodXJzZGF5IDh0aCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19LHsiZGF0ZSI6IlRodXJzZGF5IDE1dGgiLCJiaW5zIjpbImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjJuZCIsImJpbnMiOlsiYnJvd24iLCJncmVlbiJdfSx7ImRhdGUiOiJUaHVyc2RheSAyOXRoIiwiYmlucyI6WyJibHVlIl19XX0seyJkYXRlIjoiTWF5IDIwMjciLCJkYXRlcyI6W3siZGF0ZSI6IlRodXJzZGF5IDZ0aCIsImJpbnMiOlsiYnJvd24iLCJncmV5Il19LHsiZGF0ZSI6IlRodXJzZGF5IDEzdGgiLCJiaW5zIjpbImdyZWVuIl19LHsiZGF0ZSI6IlRodXJzZGF5IDIwdGgiLCJiaW5zIjpbImJsdWUiLCJicm93biJdfSx7ImRhdGUiOiJUaHVyc2RheSAyN3RoIiwiYmlucyI6WyJncmV5Il19XX0seyJkYXRlIjoiSnVuZSAyMDI3IiwiZGF0ZXMiOlt7ImRhdGUiOiJUaHVyc2RheSAzcmQiLCJiaW5zIjpbImJyb3duIiwiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTB0aCIsImJpbnMiOlsiYmx1ZSJdfSx7ImRhdGUiOiJUaHVyc2RheSAxN3RoIiwiYmlucyI6WyJicm93biIsImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjR0aCIsImJpbnMiOlsiZ3JlZW4iXX1dfSx7ImRhdGUiOiJKdWx5IDIwMjciLCJkYXRlcyI6W3siZGF0ZSI6IlRodXJzZGF5IDFzdCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19LHsiZGF0ZSI6IlRodXJzZGF5IDh0aCIsImJpbnMiOlsiZ3JleSJdfSx7ImRhdGUiOiJUaHVyc2RheSAxNXRoIiwiYmlucyI6WyJicm93biIsImdyZWVuIl19LHsiZGF0ZSI6IlRodXJzZGF5IDIybmQiLCJiaW5zIjpbImJsdWUiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjl0aCIsImJpbnMiOlsiYnJvd24iLCJncmV5Il19XX0seyJkYXRlIjoiQXVndXN0IDIwMjciLCJkYXRlcyI6W3siZGF0ZSI6IlRodXJzZGF5IDV0aCIsImJpbnMiOlsiZ3JlZW4iXX0seyJkYXRlIjoiVGh1cnNkYXkgMTJ0aCIsImJpbnMiOlsiYmx1ZSIsImJyb3duIl19LHsiZGF0ZSI6IlRodXJzZGF5IDE5dGgiLCJiaW5zIjpbImdyZXkiXX0seyJkYXRlIjoiVGh1cnNkYXkgMjZ0aCIsImJpbnMiOlsiYnJvd24iLCJncmVlbiJdfV19XX19"
+    }
+  ]
+}
