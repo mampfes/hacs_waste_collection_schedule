@@ -82,6 +82,18 @@ TEST_CASES = {
         "insee_code": "18279",
         "instance_id": 1619,
     },
+    "CASA Sophia Antipolis, Antibes (individual)": {
+        "address": "10 rue de la République",
+        "insee_code": "06004",
+        "instance_id": 1398,
+        "public_type": "individual_housing",
+    },
+    "CASA Sophia Antipolis, Valbonne (collective)": {
+        "address": "10 rue Albert Einstein",
+        "insee_code": "06152",
+        "instance_id": 1398,
+        "public_type": "collective_housing",
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -354,6 +366,11 @@ EXTRA_INFO = [
         "title": "Valodev 18",
         "url": "https://valodev18.fr/la-collecte-des-vos-dechets/",
         "default_params": {"instance_id": 1619},
+    },
+    {
+        "title": "CA Sophia Antipolis",
+        "url": "https://www.agglo-sophiaantipolis.fr/vivre-et-habiter/gerer-ses-dechets",
+        "default_params": {"instance_id": 1398},
     },
 ]
 
