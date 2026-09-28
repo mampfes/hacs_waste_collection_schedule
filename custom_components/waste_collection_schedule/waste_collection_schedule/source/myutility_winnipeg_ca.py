@@ -1,74 +1,73 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-# Constants for the Winnipeg Utility Billing Service
-TITLE = "Winnipeg (MB)"
-DESCRIPTION = "Source script for https://myutility.winnipeg.ca Use the same address as that works on the website under 'Find your collection day'"
-URL = "https://myutility.winnipeg.ca"
-TEST_CASES = {
-    "TestWinnipeg": {"address": "123 EASY ST"},
-}
-
-# API URL for fetching collection management details
-API_URL = "https://myutility.winnipeg.ca/UtilityBillingService/CollectionManagement/getCollectionManagementDetails"
-
-# Mapping icons to different waste types for visual representation
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Garbage": Icons.GENERAL_WASTE,
-    "Yard Waste": Icons.GARDEN,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.parsers import ArgumentGuard, JsonParser
+from waste_collection_schedule.preprocessors import Compose, ExplodeList, RowFilter
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer, label_cleaner
 
 
-class Source:
-    def __init__(self, address):
-        # Format address for API call: convert to uppercase
-        self._address = address.upper()
+@final
+class Source(BaseSource):
+    TITLE = "Winnipeg (MB)"
+    DESCRIPTION = "Source script for https://myutility.winnipeg.ca Use the same address as that works on the website under 'Find your collection day'"
+    URL = "https://myutility.winnipeg.ca"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        # Perform API request using the formatted address
-        response = requests.get(API_URL, params={"address": self._address})
-        data = response.json()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        # Check if 'Address' key is present in data; return empty list if not
-        if "Address" not in data:
-            raise SourceArgumentNotFound("address", self._address)
+    TEST_CASES: ClassVar[dict] = {
+        "TestWinnipeg": {"address": "123 EASY ST"},
+    }
 
-        # Get eligible waste types for the address
-        eligible_waste_types = self.get_eligible_waste_types(data)
+    PARAMS = (street_address(),)
 
-        entries = []
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Use the same address that works on https://myutility.winnipeg.ca "
+            "under 'Find your collection day'."
+        ),
+    }
 
-        # Loop through each pickup date detail
-        for detail in data["Address"]["PickUpDateDetails"]:
-            # Loop through each waste type in the pickup date detail
-            for waste in detail["WasteTypes"]:
-                waste_type = waste["WasteType"]
-                waste_type_code = waste["WasteTypeCode"]
+    retrieve = HttpGetRetriever(
+        url="https://myutility.winnipeg.ca/UtilityBillingService/CollectionManagement/getCollectionManagementDetails",
+        params=lambda address, **_: {"address": address.upper()},
+    )
 
-                # Remove ' - A' suffix from waste type if present
-                waste_type = waste_type.replace(" - A", "")
+    # An unknown address is answered with a small object without "Address".
+    parse = ArgumentGuard(
+        JsonParser("Address"),
+        argument="address",
+        contains='"Address":{',
+        hint="use the address that works under 'Find your collection day' on the website",
+    )
 
-                # Check if waste type code is in the list of eligible waste types
-                if waste_type_code not in eligible_waste_types:
-                    continue
-                # Append collection entry with date, type, and icon
-                entries.append(
-                    Collection(
-                        date=datetime.date.fromisoformat(detail["Date"]),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-        return entries
+    # One record per waste type of each pickup day, for the types this address
+    # is eligible for (public holidays are listed with IsEligible false).
+    preprocess = Compose(
+        ExplodeList("PickUpDateDetails"),
+        ExplodeList("WasteTypes", into="waste"),
+        RowFilter(lambda record, source: record["waste"]["IsEligible"]),
+    )
 
-    def get_eligible_waste_types(self, data):
-        eligible_waste_type_codes = set()
-        # Extract waste type codes from 'EligibleCollectionEventList'
-        for event in data["Address"].get("EligibleCollectionEventList", []):
-            if event["IsStandardService"]:
-                eligible_waste_type_codes.add(event["WasteTypeCode"])
-        return eligible_waste_type_codes
+    transform = JsonTransformer(
+        date_key="Date",
+        type_key=lambda record: record["waste"]["WasteType"],
+        # "Yard Waste - A" is the A-week variant of "Yard Waste"
+        clean=label_cleaner(strip_suffixes=[" - A"]),
+        type_value_map={
+            "Garbage": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Yard Waste": wt.GARDEN_WASTE,
+            # eligible notices that are not collections
+            "Giveaway weekend": None,
+            "Waste reduction week": None,
+        },
+    )
