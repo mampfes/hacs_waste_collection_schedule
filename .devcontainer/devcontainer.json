@@ -13,12 +13,10 @@
 			"version": "3.12",
 			"installTools": true
 		},
-		// Claude Code CLI — comment out these two lines if you don't use Claude Code.
-		"ghcr.io/devcontainers/features/node:1": {},
-		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+		"ghcr.io/devcontainers/features/node:2.1.0": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
-	"postCreateCommand": "bash .devcontainer/setup.sh",
+	"postCreateCommand": "bash .devcontainer/setup.sh && curl -fsSL https://claude.ai/install.sh | bash",
 	"customizations": {
 		"vscode": {
 			"extensions": [
