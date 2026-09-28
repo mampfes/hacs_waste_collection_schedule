@@ -106,6 +106,7 @@
           "add_days_to": "Add Days To",
           "event_index": "Event Index",
           "types": "Types",
+          "exclude_types": "Types uitsluiten",
           "skip": "Do not create sensor",
           "additional": "Add additional sensors"
         },
@@ -118,6 +119,7 @@
           "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
           "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
           "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
+          "exclude_types": "Waste types to leave out. The sensor will display all collections except those matching these waste types, including waste types added by the source later. Can be combined with Types (Types is applied first). You need to use the alias if you used alias in the sources configuration.",
           "skip": "If checked the sensor will not be created and all your config above will be ignored.",
           "additional": "If checked you will be prompted to add another sensor after saving this one."
         }
@@ -32201,6 +32203,7 @@
           "add_days_to": "Add Days To",
           "event_index": "Event Index",
           "types": "Types",
+          "exclude_types": "Types uitsluiten",
           "skip": "Do not create sensor",
           "additional": "Add additional sensors"
         },
@@ -32214,6 +32217,7 @@
           "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
           "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
           "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
+          "exclude_types": "Waste types to leave out. The sensor will display all collections except those matching these waste types, including waste types added by the source later. Can be combined with Types (Types is applied first). You need to use the alias if you used alias in the sources configuration.",
           "skip": "If checked the sensor will not be created and all your config above will be ignored.",
           "additional": "If checked you will be prompted to add another sensor after saving this one."
         }

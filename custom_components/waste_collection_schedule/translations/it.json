@@ -106,6 +106,7 @@
           "add_days_to": "Aggiungi giorni a",
           "event_index": "Indice dell'evento",
           "types": "Tipi di rifiuti",
+          "exclude_types": "Escludi tipi",
           "skip": "Non creare sensore",
           "additional": "Aggiungi sensori aggiuntivi"
         },
@@ -118,6 +119,7 @@
           "add_days_to": "Aggiunge un attributo 'daysTo' allo stato dell'entità sorgente contenente il numero di giorni alla prossima raccolta.",
           "event_index": "Utilizzato per assegnare un sensore a un indice di data di raccolta specifico. La prossima data di raccolta ha event_index 0. Utile se si desidera avere sensori dedicati per la prossima raccolta, la seconda raccolta, la terza raccolta, ecc.",
           "types": "Utilizzato per filtrare i tipi di rifiuti. Il sensore mostrerà solo le raccolte corrispondenti a questi tipi di rifiuti. È necessario utilizzare l'alias se hai usato un alias nella configurazione delle sorgenti.",
+          "exclude_types": "Tipi di rifiuti da escludere. Il sensore mostrerà tutte le raccolte tranne quelle corrispondenti a questi tipi, compresi i tipi aggiunti in seguito dalla sorgente. Può essere combinato con Tipi di rifiuti (i tipi vengono applicati per primi). È necessario utilizzare l'alias se hai usato un alias nella configurazione delle sorgenti.",
           "skip": "Se selezionato, il sensore non verrà creato e tutta la tua configurazione sopra verrà ignorata.",
           "additional": "Se selezionato, ti verrà chiesto di aggiungere un altro sensore dopo aver salvato questo."
         }
@@ -32350,6 +32352,7 @@
           "add_days_to": "Aggiungi giorni a",
           "event_index": "Indice dell'evento",
           "types": "Tipi di rifiuti",
+          "exclude_types": "Escludi tipi",
           "skip": "Non creare sensore",
           "additional": "Aggiungi sensori aggiuntivi"
         },
@@ -32363,6 +32366,7 @@
           "add_days_to": "Aggiunge un attributo 'daysTo' allo stato dell'entità sorgente contenente il numero di giorni alla prossima raccolta.",
           "event_index": "Utilizzato per assegnare un sensore a un indice di data di raccolta specifico. La prossima data di raccolta ha event_index 0. Utile se si desidera avere sensori dedicati per la prossima raccolta, la seconda raccolta, la terza raccolta, ecc.",
           "types": "Utilizzato per filtrare i tipi di rifiuti. Il sensore mostrerà solo le raccolte corrispondenti a questi tipi di rifiuti. È necessario utilizzare l'alias se hai usato un alias nella configurazione delle sorgenti.",
+          "exclude_types": "Tipi di rifiuti da escludere. Il sensore mostrerà tutte le raccolte tranne quelle corrispondenti a questi tipi, compresi i tipi aggiunti in seguito dalla sorgente. Può essere combinato con Tipi di rifiuti (i tipi vengono applicati per primi). È necessario utilizzare l'alias se hai usato un alias nella configurazione delle sorgenti.",
           "skip": "Se selezionato, il sensore non verrà creato e tutta la tua configurazione sopra verrà ignorata.",
           "additional": "Se selezionato, ti verrà chiesto di aggiungere un altro sensore dopo aver salvato questo."
         }

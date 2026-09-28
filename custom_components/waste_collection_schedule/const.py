@@ -57,6 +57,7 @@ CONF_COUNT: Final = "count"
 CONF_LEADTIME: Final = "leadtime"
 CONF_DATE_TEMPLATE: Final = "date_template"
 CONF_COLLECTION_TYPES: Final = "types"
+CONF_EXCLUDE_TYPES: Final = "exclude_types"
 CONF_ADD_DAYS_TO: Final = "add_days_to"
 CONF_EVENT_INDEX: Final = "event_index"
 # Selects a sensor that shows a single value instead of the usual collection

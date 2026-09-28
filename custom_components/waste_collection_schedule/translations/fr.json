@@ -106,6 +106,7 @@
           "add_days_to": "Ajouter des Jours à",
           "event_index": "Index de l'Événement",
           "types": "Types",
+          "exclude_types": "Exclure des types",
           "skip": "Ne pas créer de capteur",
           "additional": "Ajouter des capteurs supplémentaires"
         },
@@ -118,6 +119,7 @@
           "add_days_to": "Ajoute un attribut 'daysTo' contenant le nombre de jours jusqu'à la prochaine collecte.",
           "event_index": "Utilisé pour attribuer un capteur à un index de date spécifique. Utile pour les collectes successives.",
           "types": "Utilisé pour filtrer les types de déchets. Affichera uniquement les collectes correspondantes.",
+          "exclude_types": "Types de déchets à exclure. Affichera toutes les collectes sauf celles correspondant à ces types, y compris les types ajoutés plus tard par la source. Peut être combiné avec Types (Types est appliqué en premier).",
           "skip": "Si coché, le capteur ne sera pas créé.",
           "additional": "Permet d'ajouter d'autres capteurs."
         }

@@ -192,6 +192,8 @@ waste_collection_schedule:
       types:
         - Waste Type 1
         - Waste Type 2
+      exclude_types:
+        - Waste Type 3
 ```
 
 | Parameter | Type | Requirement | Description |
@@ -206,6 +208,7 @@ waste_collection_schedule:
 | add_days_to | boolean | optional | Deprecated, has no effect: the `daysTo` attribute is now always set. Still accepted so existing configurations stay valid |
 | event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
 | types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used `alias` in the customize section of the sources configuration. |
+| exclude_types | list of strings | optional | Waste types to leave out. The sensor displays every collection except those matching these waste types, including waste types the source adds later. Can be combined with `types`: `types` is applied first, then `exclude_types` removes from that. A type is matched by its displayed name (use the alias if you set one) or by its language-independent id (e.g. `general_waste`), which keeps working when the Home Assistant language changes. |
 
 ### Attributes of a sensor
 

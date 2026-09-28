@@ -10,6 +10,11 @@ from .source_shell import SourceShell
 _LOGGER = logging.getLogger(__name__)
 
 
+def _type_keys(entry: Collection) -> set[str]:
+    """Names a type filter may use for ``entry``: displayed name and waste type id."""
+    return {entry.type, entry.waste_type.id}
+
+
 class CollectionAggregator:
     def __init__(self, shells: Sequence[SourceShell]):
         self._shells = shells
@@ -96,13 +101,21 @@ class CollectionAggregator:
         include_today: bool = False,
         start_index: int | None = None,
     ) -> list[Collection]:
+        # A type is matched by its displayed name (which follows the UI language
+        # and any alias) or by its canonical waste type id, which never changes.
+        # Matching the id keeps a filter working after a rename or a language
+        # switch; for an exclude list that matters, as a name that stopped
+        # matching would let the excluded type through.
+
         # remove unwanted waste types from include list
         if include_types is not None:
-            entries = list(filter(lambda e: e.type in set(include_types), entries))
+            wanted = set(include_types)
+            entries = list(filter(lambda e: _type_keys(e) & wanted, entries))
 
         # remove unwanted waste types from exclude list
         if exclude_types is not None:
-            entries = list(filter(lambda e: e.type not in set(exclude_types), entries))
+            unwanted = set(exclude_types)
+            entries = list(filter(lambda e: not _type_keys(e) & unwanted, entries))
 
         # remove expired entries
         now = datetime.now().date()

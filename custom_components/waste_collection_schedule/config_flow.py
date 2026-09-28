@@ -69,6 +69,7 @@ from .const import (
     CONF_DEDICATED_CALENDAR_TITLE,
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
+    CONF_EXCLUDE_TYPES,
     CONF_FETCH_INTERVAL_DAYS,
     CONF_FETCH_INTERVAL_DAYS_DEFAULT,
     CONF_FETCH_TIME,
@@ -477,6 +478,17 @@ def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = N
             vol.Optional(
                 CONF_COLLECTION_TYPES,
                 default=defaults.get(CONF_COLLECTION_TYPES, UNDEFINED),
+            ): SelectSelector(
+                SelectSelectorConfig(
+                    options=fetched_types,
+                    mode=SelectSelectorMode.DROPDOWN,
+                    custom_value=True,
+                    multiple=True,
+                )
+            ),
+            vol.Optional(
+                CONF_EXCLUDE_TYPES,
+                default=defaults.get(CONF_EXCLUDE_TYPES, UNDEFINED),
             ): SelectSelector(
                 SelectSelectorConfig(
                     options=fetched_types,
@@ -1969,8 +1981,9 @@ class WasteCollectionOptionsFlow(OptionsFlow):
             # Sensors store their waste types under CONF_COLLECTION_TYPES (see
             # finish()); CONF_TYPE was never present here, so the edit-sensor
             # type list was only ever populated from customisation keys (#6944).
-            types = c.get(CONF_COLLECTION_TYPES, [])
-            fetched_types.extend(types if isinstance(types, list) else [types])
+            for key in (CONF_COLLECTION_TYPES, CONF_EXCLUDE_TYPES):
+                types = c.get(key, [])
+                fetched_types.extend(types if isinstance(types, list) else [types])
 
         return sorted({t for t in fetched_types if t})
 

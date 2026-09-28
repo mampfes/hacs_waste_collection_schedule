@@ -46,6 +46,7 @@ SENSOR_CONFIG = vol.Schema(
         vol.Optional(const.CONF_COUNT): cv.positive_int,
         vol.Optional(const.CONF_LEADTIME): cv.positive_int,
         vol.Optional(const.CONF_COLLECTION_TYPES): cv.ensure_list,
+        vol.Optional(const.CONF_EXCLUDE_TYPES): cv.ensure_list,
         vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
         vol.Optional(const.CONF_DATE_TEMPLATE): cv.template,
         vol.Optional(const.CONF_ADD_DAYS_TO, default=False): cv.boolean,

@@ -106,6 +106,7 @@
           "add_days_to": "Tage Bis Hinzufügen",
           "event_index": "Ereignis Index",
           "types": "Typen",
+          "exclude_types": "Typen ausschließen",
           "skip": "Sensor nicht erstellen",
           "additional": "Weitere Sensoren hinzufügen"
         },
@@ -118,6 +119,7 @@
           "add_days_to": "Fügt dem Quellen-Entitätsstatus ein 'daysTo'-Attribut hinzu, das die Anzahl der Tage bis zur nächsten Sammlung enthält",
           "event_index": "Wird verwendet, um einen Sensor einem spezifischen Abholdatumsindex zuzuweisen. Das nächste Abholdatum hat den Ereignisindex 0. Nützlich, wenn du dedizierte Sensoren für die nächste Sammlung, die zweite Sammlung, die dritte Sammlung, ... haben möchtest",
           "types": "Wird verwendet, um Abfallarten zu filtern. Der Sensor zeigt nur Sammlungen an, die diesen Abfallarten entsprechen. Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
+          "exclude_types": "Abfallarten, die weggelassen werden. Der Sensor zeigt alle Sammlungen außer diesen Abfallarten an, auch Abfallarten, die die Quelle später hinzufügt. Kann mit Typen kombiniert werden (Typen wird zuerst angewendet). Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
           "skip": "Wenn aktiviert, wird der Sensor nicht erstellt und alle oben stehenden Konfigurationen werden ignoriert.",
           "additional": "Wenn aktiviert, wirst du aufgefordert, nach dem Speichern dieses Sensors einen weiteren Sensor hinzuzufügen."
         }
@@ -32504,6 +32506,7 @@
           "add_days_to": "Tage Bis Hinzufügen",
           "event_index": "Ereignis Index",
           "types": "Typen",
+          "exclude_types": "Typen ausschließen",
           "skip": "Sensor nicht erstellen",
           "additional": "Weitere Sensoren hinzufügen"
         },
@@ -32517,6 +32520,7 @@
           "add_days_to": "Fügt dem Quellen-Entitätsstatus ein 'daysTo'-Attribut hinzu, das die Anzahl der Tage bis zur nächsten Sammlung enthält",
           "event_index": "Wird verwendet, um einen Sensor einem spezifischen Abholdatumsindex zuzuweisen. Das nächste Abholdatum hat den Ereignisindex 0. Nützlich, wenn du dedizierte Sensoren für die nächste Sammlung, die zweite Sammlung, die dritte Sammlung, ... haben möchtest",
           "types": "Wird verwendet, um Abfallarten zu filtern. Der Sensor zeigt nur Sammlungen an, die diesen Abfallarten entsprechen. Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
+          "exclude_types": "Abfallarten, die weggelassen werden. Der Sensor zeigt alle Sammlungen außer diesen Abfallarten an, auch Abfallarten, die die Quelle später hinzufügt. Kann mit Typen kombiniert werden (Typen wird zuerst angewendet). Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
           "skip": "Wenn aktiviert, wird der Sensor nicht erstellt und alle oben stehenden Konfigurationen werden ignoriert.",
           "additional": "Wenn aktiviert, wirst du aufgefordert, nach dem Speichern dieses Sensors einen weiteren Sensor hinzuzufügen."
         }

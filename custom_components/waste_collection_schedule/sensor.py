@@ -31,6 +31,7 @@ from .const import (
     CONF_DATE_TEMPLATE,
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
+    CONF_EXCLUDE_TYPES,
     CONF_LEADTIME,
     CONF_SENSOR_MODE,
     CONF_SENSORS,
@@ -72,6 +73,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_COUNT): cv.positive_int,
         vol.Optional(CONF_LEADTIME): cv.positive_int,
         vol.Optional(CONF_COLLECTION_TYPES): cv.ensure_list,
+        vol.Optional(CONF_EXCLUDE_TYPES): cv.ensure_list,
         vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
         vol.Optional(CONF_DATE_TEMPLATE): cv.template,
         vol.Optional(CONF_ADD_DAYS_TO, default=False): cv.boolean,
@@ -115,6 +117,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 count=sensor.get(CONF_COUNT),
                 leadtime=sensor.get(CONF_LEADTIME),
                 collection_types=sensor.get(CONF_COLLECTION_TYPES),
+                exclude_types=sensor.get(CONF_EXCLUDE_TYPES),
                 value_template=value_template,
                 date_template=date_template,
                 add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
@@ -199,6 +202,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             count=sensor_config.get(CONF_COUNT),
             leadtime=sensor_config.get(CONF_LEADTIME),
             collection_types=sensor_config.get(CONF_COLLECTION_TYPES),
+            exclude_types=sensor_config.get(CONF_EXCLUDE_TYPES),
             value_template=value_template,
             date_template=date_template,
             add_days_to=sensor_config.get(CONF_ADD_DAYS_TO, False),
@@ -211,6 +215,8 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
 class ScheduleSensor(SensorEntity):
     """Base for sensors."""
+
+    _exclude_types: list[str] | None = None
 
     def __init__(
         self,
@@ -227,6 +233,7 @@ class ScheduleSensor(SensorEntity):
         date_template: Template | None,
         add_days_to: bool,
         event_index: int | None,
+        exclude_types: list[str] | None = None,
     ):
         """Initialize the entity."""
         self._api = api
@@ -236,6 +243,7 @@ class ScheduleSensor(SensorEntity):
         self._count = count
         self._leadtime = leadtime
         self._collection_types = collection_types
+        self._exclude_types = exclude_types
         self._value_template = value_template
         self._date_template = date_template
         self._add_days_to = add_days_to
@@ -334,6 +342,7 @@ class ScheduleSensor(SensorEntity):
         upcoming1 = self._aggregator.get_upcoming_group_by_day(
             count=1,
             include_types=self._collection_types,
+            exclude_types=self._exclude_types,
             include_today=self._include_today,
             start_index=self._event_index,
         )
@@ -347,6 +356,9 @@ class ScheduleSensor(SensorEntity):
             if self._collection_types is None
             else self._collection_types
         )
+        if self._exclude_types:
+            excluded = set(self._exclude_types)
+            collection_types = [t for t in collection_types if t not in excluded]
 
         if self._details_format == DetailsFormat.upcoming:
             # show upcoming events list in details
@@ -354,6 +366,7 @@ class ScheduleSensor(SensorEntity):
                 count=self._count,
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
+                exclude_types=self._exclude_types,
                 include_today=self._include_today,
                 start_index=self._event_index,
             )
@@ -367,6 +380,7 @@ class ScheduleSensor(SensorEntity):
                 collections = self._aggregator.get_upcoming(
                     count=1,
                     include_types=[t],
+                    exclude_types=self._exclude_types,
                     include_today=self._include_today,
                     start_index=self._event_index,
                 )
@@ -381,6 +395,7 @@ class ScheduleSensor(SensorEntity):
                 count=self._count,
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
+                exclude_types=self._exclude_types,
                 include_today=self._include_today,
             )
             refreshtime = ""

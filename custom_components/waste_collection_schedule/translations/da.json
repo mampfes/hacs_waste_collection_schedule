@@ -106,6 +106,7 @@
           "add_days_to": "Tilføj Dage Til",
           "event_index": "Begivenhedsindeks",
           "types": "Typer",
+          "exclude_types": "Udelad typer",
           "skip": "Tilføj ikke sensor",
           "additional": "Tilføj flere sensorer"
         },
@@ -118,6 +119,7 @@
           "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
           "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
           "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
+          "exclude_types": "Affaldstyper, der udelades. Sensoren viser alle afhentninger undtagen dem, der matcher disse affaldstyper, også typer som kilden tilføjer senere. Kan kombineres med Typer (Typer anvendes først). Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
           "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
           "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
         }
@@ -32201,6 +32203,7 @@
           "add_days_to": "Tilføj Dage Til",
           "event_index": "Begivenhedsindeks",
           "types": "Typer",
+          "exclude_types": "Udelad typer",
           "skip": "Tilføj ikke sensor",
           "additional": "Tilføj flere sensorer"
         },
@@ -32214,6 +32217,7 @@
           "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
           "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
           "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
+          "exclude_types": "Affaldstyper, der udelades. Sensoren viser alle afhentninger undtagen dem, der matcher disse affaldstyper, også typer som kilden tilføjer senere. Kan kombineres med Typer (Typer anvendes først). Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
           "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
           "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
         }
