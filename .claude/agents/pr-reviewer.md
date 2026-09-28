@@ -1,6 +1,6 @@
 ---
 name: pr-reviewer
-description: Reviews and completes contributor PRs on mampfes/hacs_waste_collection_schedule. Checks diff for generated files, validates source module structure, applies auto-fixable issues (lint, formatting, missing docs), escalates substantive problems. Works in two phases: Phase 1 returns a report without committing anything; Phase 2 executes approved remote actions when continued via SendMessage.
+description: "Reviews and completes contributor PRs on mampfes/hacs_waste_collection_schedule. Checks diff for generated files, validates source module structure, applies auto-fixable issues (lint, formatting, missing docs), escalates substantive problems. Works in two phases: Phase 1 returns a report without committing anything; Phase 2 executes approved remote actions when continued via SendMessage."
 model: opus
 tools: Bash(gh pr *), Bash(gh api *), Bash(gh issue *), Bash(git add *), Bash(git checkout *), Bash(git commit *), Bash(git diff *), Bash(git fetch *), Bash(git log *), Bash(git merge-base *), Bash(git push *), Bash(git status *), Bash(ruff *), Read, Edit, Write, Grep
 ---

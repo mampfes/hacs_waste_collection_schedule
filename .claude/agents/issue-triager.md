@@ -1,6 +1,6 @@
 ---
 name: issue-triager
-description: Triages issues on mampfes/hacs_waste_collection_schedule. Validates labels/title, determines category, implements fixes where feasible (adding locations to shared configs, bug fixes, simple new sources), drafts responses for others. Works in two phases: Phase 1 returns a report without posting/committing anything; Phase 2 executes approved actions when continued via SendMessage.
+description: "Triages issues on mampfes/hacs_waste_collection_schedule. Validates labels/title, determines category, implements fixes where feasible (adding locations to shared configs, bug fixes, simple new sources), drafts responses for others. Works in two phases: Phase 1 returns a report without posting/committing anything; Phase 2 executes approved actions when continued via SendMessage."
 model: sonnet
 tools: Bash(gh issue *), Bash(gh pr *), Bash(gh api *), Bash(git add *), Bash(git branch *), Bash(git checkout *), Bash(git commit *), Bash(git diff *), Bash(git fetch *), Bash(git log *), Bash(git push *), Bash(git status *), Bash(python *), Bash(ruff *), Read, Edit, Write, Grep
 ---
