@@ -29,20 +29,20 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
-        "Adelsgatan 10, Visby": {"uprn": "0106633415"},
-        "Hamngatan 1, Visby": {"uprn": "0107806309"},
+        "Adelsgatan 10, Visby": {"building_id": "0106633415"},
+        "Hamngatan 1, Visby": {"building_id": "0107806309"},
     }
 
-    PARAMS = (text_field("uprn", "Building ID"),)
+    PARAMS = (text_field("building_id", "Building ID"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
             "Search your address at https://edpfuture.gotland.se/FutureWeb/"
-            "SimpleWastePickup and use the number in brackets as 'uprn'."
+            "SimpleWastePickup and use the number in brackets as 'building_id'."
         ),
     }
 
-    retrieve = EdpFutureWebRetriever(_API_URL, address=None, building_id="uprn")
+    retrieve = EdpFutureWebRetriever(_API_URL, address=None, building_id="building_id")
     parse = EdpFutureWebParser()
     transform = JsonTransformer(
         date_key="date",
