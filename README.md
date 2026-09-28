@@ -1070,6 +1070,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bègles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bécherel](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [CA Saint Germain Boucles de Seine](/doc/source/publidata_fr.md) / saintgermainbouclesdeseine.fr
+- [CA Sophia Antipolis](/doc/source/publidata_fr.md) / agglo-sophiaantipolis.fr/vivre-et-habiter/gerer-ses-dechets
 - [Cabanac-et-Villagrains](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Cadaujac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Castres-Gironde](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
