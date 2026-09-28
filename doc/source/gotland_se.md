@@ -11,12 +11,12 @@ waste_collection_schedule:
   sources:
     - name: gotland_se
       args:
-        uprn: UPRN
+        building_id: BUILDING_ID
 ```
 
 ### Configuration Variables
 
-**uprn**  
+**building_id**  
 *(string) (required)*
 
 ## Example
@@ -26,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: gotland_se
       args:
-        uprn: '0106633415'
+        building_id: '0106633415'
 ```
 
 ## How to get the source arguments
 
-Search your address at https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'uprn'.
+Search your address at https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup and use the number in brackets as 'building_id'.
