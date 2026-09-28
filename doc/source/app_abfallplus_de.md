@@ -53,5 +53,5 @@ waste_collection_schedule:
         app_id: de.k4systems.abfallappfds
         city: Horb am Neckar
         strasse: Marktplatz
-        hnr: 1%7C%7C1004335001
+        hnr: 1
 ```
