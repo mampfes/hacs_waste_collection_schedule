@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from ..parsers import Parser
-from ..retrievers import RetrieverFunc
+from ..retrievers import Request, RetrieverFunc, detached_source
 
 if TYPE_CHECKING:
     from ..base_source import BaseSource
@@ -55,3 +55,28 @@ class CMCityMediaParser(Parser["list[dict]"]):
             raw=data,
         )
         return data["result"][1]["items"]
+
+
+# The districts endpoint shares the dates feed's {hpid}/{realm} addressing and
+# result[1].items envelope, so the config flow's "district" cascade level can
+# walk it live through the same declared-request style as the fetch.
+_DISTRICTS_URL = "http://slim.cmcitymedia.de/v1/{hpid}/waste/{realm}/districts"
+
+_DISTRICTS = Request(
+    url=lambda hpid, realm, **_: _DISTRICTS_URL.format(hpid=hpid, realm=realm)
+)
+
+
+def list_districts(hpid, realm) -> list[tuple[str, str]]:
+    """(district name, district id) pairs for one hpid/realm, fetched live.
+
+    Used by Source.get_choices() to populate the "district" cascade level at
+    config-flow time.
+    """
+    response = _DISTRICTS(detached_source(), hpid, realm)
+    items = response.json()["result"][1]["items"]
+    return [
+        (str(item["name"]), str(item["id"]))
+        for item in items
+        if item.get("id") is not None and item.get("name") is not None
+    ]

@@ -82,8 +82,10 @@
           "calendar_title": "Nome Calendario",
           "app_id": "App Id",
           "f_abfallarten": "Tipi di rifiuto",
+          "hpid": "ID Homepage",
           "key": "Chiave API",
           "ort": "Quartiere",
+          "realmid": "ID Realm",
           "wasteTypes": "Tipi di rifiuto"
         },
         "data_description": {

@@ -1,13 +1,14 @@
 from typing import ClassVar, final
 
-from waste_collection_schedule import date_parsers
+from waste_collection_schedule import date_parsers, field_terms
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import district, text_field
+from waste_collection_schedule.config_params import cascading_select, text_field
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.CMCityMedia import (
     CMCityMediaParser,
     CMCityMediaRetriever,
+    list_districts,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -61,6 +62,14 @@ _PROVIDERS = [
 ]
 
 
+def _resolve_realm(hpid, realmid):
+    """The realm the API needs: an explicit override, or the registry's."""
+    if realmid is not None:
+        return realmid
+    provider = next((p for p in _PROVIDERS if p["hpid"] == hpid), None)
+    return provider["realm"] if provider is not None else None
+
+
 @final
 class Source(BaseSource):
     TITLE = "CM City Media - Müllkalender"
@@ -91,7 +100,7 @@ class Source(BaseSource):
     PARAMS = (
         text_field("hpid", "Homepage ID"),
         text_field("realmid", "Realm ID (optional override)", optional=True),
-        district("district", optional=True),
+        cascading_select(("district", field_terms.DISTRICT)),
     )
 
     retrieve = CMCityMediaRetriever()
@@ -111,9 +120,24 @@ class Source(BaseSource):
     def __init__(self, hpid, realmid=None, district=None):
         # Resolve the realm the API needs from the provider registry (the user
         # selects only the hpid); realmid stays an explicit override.
-        realm = realmid
-        if realm is None:
-            provider = next((p for p in _PROVIDERS if p["hpid"] == hpid), None)
-            if provider is not None:
-                realm = provider["realm"]
+        realm = _resolve_realm(hpid, realmid)
         super().__init__(hpid=hpid, realmid=realmid, district=district, realm=realm)
+
+    @classmethod
+    def get_choices(cls, field: str, selections: dict) -> list[tuple[str, str]]:
+        """Live district list for the given hpid, once it is known.
+
+        Implements the config_params.cascading_select() contract. hpid is not a
+        cascade level itself (it comes from the region the user picked, or is
+        typed by hand), so this reads it from ``selections`` the same way
+        abfall_io reads its ``key`` (see config_flow's cascade level context).
+        """
+        if field != "district":
+            return []
+        hpid = selections.get("hpid")
+        if not hpid:
+            return []
+        realm = _resolve_realm(hpid, selections.get("realmid"))
+        if realm is None:
+            return []
+        return list_districts(hpid, realm)

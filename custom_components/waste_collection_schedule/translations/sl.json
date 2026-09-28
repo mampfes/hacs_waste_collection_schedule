@@ -80,8 +80,10 @@
           "calendar_title": "Naslov koledarja",
           "app_id": "ID aplikacije",
           "f_abfallarten": "Tipi odpadkov",
+          "hpid": "ID domače strani",
           "key": "API ključ",
           "ort": "Okrožje",
+          "realmid": "ID območja",
           "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
