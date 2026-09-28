@@ -1,12 +1,10 @@
 from collections.abc import Mapping
 from typing import Any, ClassVar, TypedDict, final
 
-from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import date_parsers, field_terms, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import (
-    dependent_select,
-)
+from waste_collection_schedule.config_params import cascading_select
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -20,18 +18,18 @@ from waste_collection_schedule.retrievers import (
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
-# Demonstrates: the config_params.dependent_select(parent, child) PARAM and the
-# get_choices() contract it relies on, on the BaseSource pipeline.
+# Demonstrates: the config_params.cascading_select(*levels) PARAM and the
+# get_choices(field, selections) contract it relies on, on the BaseSource
+# pipeline.
 #
 # Gemeinde24 is a cascading provider: the user first chooses a municipality
 # (Gemeinde), then a street/local area (Strasse) whose option list is valid only
 # within that municipality. The street list is fetched LIVE per municipality, so
-# this is the textbook two-level dependent_select cascade.
+# this is a two-level cascade, asked one level per view in the config flow.
 #
-# dependent_select("gemeinde", "strasse") declares that pairing. The framework
-# collects the parent value, then calls Source.get_choices(parent_value) to
-# populate the child selector. get_choices() here resolves the municipality name
-# to its GemeindeID and fetches that municipality's streets from wastesetup_v2.
+# get_choices() returns the municipality names for "gemeinde"; for "strasse" it
+# resolves the chosen municipality to its GemeindeID and fetches that
+# municipality's streets from wastesetup_v2.
 
 API_BASE_URL = "https://www.gemeinde24.at/admin/API"
 API_KEY = "justanapp"
@@ -262,7 +260,12 @@ class Source(BaseSource):
         "Gaal": {"gemeinde": "Gaal", "strasse": "Gaal"},
     }
 
-    PARAMS = (dependent_select("gemeinde", "strasse", child_label="Street"),)
+    PARAMS = (
+        cascading_select(
+            ("gemeinde", field_terms.MUNICIPALITY),
+            ("strasse", field_terms.STREET),
+        ),
+    )
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -298,37 +301,25 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%d"),
     )
 
-    def __init__(self, gemeinde: str | None = None, strasse: str | None = None):
-        # validate() (in super) enforces the required gemeinde + strasse cascade.
-        super().__init__(gemeinde=gemeinde, strasse=strasse)
-
     @classmethod
-    def get_parent_choices(cls) -> list[str]:
-        """Return the full list of municipality (Gemeinde) names.
+    def get_choices(cls, field: str, selections: dict) -> list[str]:
+        """Options for one cascade level given the levels chosen so far.
 
-        Implements the optional parent half of the dependent_select contract:
-        the framework calls this to populate the parent (Gemeinde) selector.
-        gemeinden.php returns every municipality (sorted by distance from a
-        fixed point), so this is the complete option list.
-        """
-        reports = _gemeinden(_MUNICIPALITIES(detached_source()))
-        names = [_clean(r.get("Gemeindename")) for r in reports]
-        return _deduplicate(sorted(n for n in names if n))
-
-    @classmethod
-    def get_choices(cls, parent_value: str) -> list[str]:
-        """Return the street names available within a municipality.
-
-        Implements the config_params.dependent_select() contract: the framework
-        calls this with the chosen parent (Gemeinde) value to populate the child
-        (Strasse) selector. Resolves the municipality name to its GemeindeID,
-        then fetches that municipality's streets live, through the same
-        declared requests as the fetch.
+        Implements the config_params.cascading_select() contract. "gemeinde"
+        lists every municipality (gemeinden.php returns them all, sorted by
+        distance from a fixed point, so the names are sorted here). "strasse"
+        resolves the chosen municipality to its GemeindeID and fetches that
+        municipality's streets live, through the same declared requests as the
+        fetch.
         """
         walker = detached_source()
-        gemeinde_id = _resolve_gemeinde_id(
-            _gemeinden(_MUNICIPALITIES(walker)), _clean(parent_value)
-        )
+        reports = _gemeinden(_MUNICIPALITIES(walker))
+        if field == "gemeinde":
+            names = [_clean(r.get("Gemeindename")) for r in reports]
+            return _deduplicate(sorted(n for n in names if n))
+        if field != "strasse" or not _clean(selections.get("gemeinde")):
+            return []
+        gemeinde_id = _resolve_gemeinde_id(reports, _clean(selections.get("gemeinde")))
         return _deduplicate(
             [name for name, _ in _streets(_STREETS(walker, gemeinde_id))]
         )
