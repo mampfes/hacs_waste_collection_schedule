@@ -40,6 +40,11 @@ PARAM_DESCRIPTIONS = {
         "huisnummer": "House number",
         "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)",
     },
+    "nl": {
+        "postcode": "Nederlandse postcode (4 cijfers + 2 letters), bijv. 4702AA",
+        "huisnummer": "Huisnummer",
+        "toevoeging": "Huisletter of toevoeging (alleen vereist als meer dan één adres dezelfde postcode/huisnummer deelt)",
+    },
 }
 
 PARAM_TRANSLATIONS = {
@@ -47,6 +52,11 @@ PARAM_TRANSLATIONS = {
         "postcode": "Postal code",
         "huisnummer": "House number",
         "toevoeging": "Addition",
+    },
+    "nl": {
+        "postcode": "Postcode",
+        "huisnummer": "Huisnummer",
+        "toevoeging": "Toevoeging",
     },
 }
 
@@ -56,6 +66,12 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "https://saver.nl/afvalkalender. If your address has a letter or "
         "addition (e.g. '5a'), provide the letter/addition in the "
         "'toevoeging' argument."
+    ),
+    "nl": (
+        "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
+        "https://saver.nl/afvalkalender. Als je adres een letter of "
+        "toevoeging heeft (bijv. '5a'), geef dan de letter/toevoeging in "
+        "het 'toevoeging'-argument."
     ),
 }
 

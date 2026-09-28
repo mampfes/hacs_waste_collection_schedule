@@ -2,77 +2,77 @@
   "title": "Waste Collection Schedule",
   "config": {
     "abort": {
-      "already_configured": "This source has already been configured."
+      "already_configured": "Deze bron is al geconfigureerd."
     },
     "step": {
       "user": {
-        "title": "Select Country",
+        "title": "Land kiezen",
         "data": {
-          "country": "Country"
+          "country": "Land"
         },
         "data_description": {
-          "country": "Select your country or *Generic* if you want to setup an *ICS* source."
+          "country": "Kies je land of *Generic* als je een *ICS*-bron wilt instellen."
         }
       },
       "source": {
-        "title": "Select Source",
-        "description": "Select your service provider from the list.",
+        "title": "Bron kiezen",
+        "description": "Kies je serviceprovider uit de lijst.",
         "data": {
-          "name": "Source"
+          "name": "Bron"
         }
       },
       "flow_type": {
-        "title": "Select Configuration Details",
-        "description": "Select How detailed you want to configure this integration. Leave empty if you only want to configure a basic calendar.",
+        "title": "Configuratieopties kiezen",
+        "description": "Kies hoe gedetailleerd je deze integratie wilt configureren. Laat leeg als je alleen een basiskalender wilt.",
         "data": {
-          "show_customize_config": "Show Collection Event Customize Configurations",
-          "show_sensor_config": "Show Sensor Configurations",
+          "show_customize_config": "Aanpassingen van ophaaltypes tonen",
+          "show_sensor_config": "Sensorconfiguraties tonen",
           "default_sensors": "Standaardsensoren"
         },
         "data_description": {
-          "show_customize_config": "Select this if you want to customize the collection types.",
-          "show_sensor_config": "Select this if you want to configure sensors.",
+          "show_customize_config": "Selecteer dit als je de ophaaltypes wilt aanpassen.",
+          "show_sensor_config": "Selecteer dit als je sensoren wilt configureren.",
           "default_sensors": "Kies welke standaardsensoren worden aangemaakt. Ze kunnen worden gecombineerd met eigen sensoren."
         }
       },
       "customize_select": {
-        "title": "Collection Type Customization: Select (optional)",
-        "description": "Select the collection types you want to customize in the next step.",
+        "title": "Ophaaltypes aanpassen: kiezen (optioneel)",
+        "description": "Kies de ophaaltypes die je in de volgende stap wilt aanpassen.",
         "data": {
-          "type": "Type (Optional)"
+          "type": "Type (optioneel)"
         },
         "data_description": {
-          "type": "You will be able to change the name/the icon/weather to use a own calendar/weather to hide in the next step."
+          "type": "In de volgende stap kun je de naam en het icoon wijzigen, een eigen kalender voor dit type gebruiken of het type verbergen."
         }
       },
       "customize": {
-        "title": "Collection Type Customization ({index}/{total}): {type}",
-        "description": "Customize {type}. You can leave all fields empty to use the default values.",
+        "title": "Ophaaltype aanpassen ({index}/{total}): {type}",
+        "description": "Pas {type} aan. Je kunt alle velden leeg laten om de standaardwaarden te gebruiken.",
         "data": {
           "alias": "Alias",
-          "show": "Show",
-          "icon": "Icon",
-          "picture": "Picture",
-          "use_dedicated_calendar": "Use dedicated calendar",
-          "dedicated_calendar_title": "Dedicated calendar title"
+          "show": "Weergeven",
+          "icon": "Icoon",
+          "picture": "Afbeelding",
+          "use_dedicated_calendar": "Eigen kalender gebruiken",
+          "dedicated_calendar_title": "Titel van eigen kalender"
         },
         "data_description": {
-          "alias": "The new name of the collection type. (only if you want to change it)",
-          "show": "Uncheck to hide the collection type.",
-          "icon": "The icon of the collection type. (only if you want to change it)",
-          "picture": "The path to a picture for the collection type.",
-          "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
-          "dedicated_calendar_title": "The title of the dedicated calendar entity."
+          "alias": "De nieuwe naam van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
+          "show": "Vink af om het ophaaltype te verbergen.",
+          "icon": "Het icoon van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
+          "picture": "Het pad naar een afbeelding voor het ophaaltype.",
+          "use_dedicated_calendar": "Vink aan als dit ophaaltype een eigen kalenderentity moet hebben.",
+          "dedicated_calendar_title": "De titel van de eigen kalenderentity."
         }
       },
       "args": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Kalendertitel"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
         }
       },
       "cascade_confirm": {
@@ -94,39 +94,39 @@
         }
       },
       "sensor": {
-        "title": "Create Sensor \"{sensor_number}\"",
-        "description": "Configure one sensor at a time.",
+        "title": "Sensor aanmaken \"{sensor_number}\"",
+        "description": "Configureer een sensor tegelijk.",
         "data": {
-          "name": "Name of the Sensor",
-          "details_format": "Details Format",
-          "count": "Count",
-          "leadtime": "Leadtime",
-          "value_template": "Value Template",
-          "date_template": "Date Template",
-          "add_days_to": "Add Days To",
-          "event_index": "Event Index",
+          "name": "Naam van de sensor",
+          "details_format": "Detailsformaat",
+          "count": "Aantal",
+          "leadtime": "Voorlooptijd",
+          "value_template": "Waarde-template",
+          "date_template": "Datumtemplate",
+          "add_days_to": "Dagen toevoegen aan",
+          "event_index": "Evenementindex",
           "types": "Types",
-          "skip": "Do not create sensor",
-          "additional": "Add additional sensors"
+          "skip": "Geen sensor aanmaken",
+          "additional": "Extra sensoren toevoegen"
         },
         "data_description": {
-          "details_format": "Specifies the format used to display info in Home Assistant's more info pop-up. 'upcoming': shows a list of upcoming collections, 'appointment_types': shows a list of waste types and their next collection date, 'generic': provides all attributes as generic Python data types, 'hidden': hide attributes of upcoming collections",
-          "count": "Limits Home Assistant's more info popup to displaying the next int collections",
-          "leadtime": "Limits Home Assistant's more info popup to only displaying collections happening within the next leadtime days",
-          "value_template": "Uses Home Assistant templating to format the state information of an entity. You can use 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Uses Home Assistant templating to format the dates appearing within the more info popup information of an entity. e.g. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
-          "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
-          "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
-          "skip": "If checked the sensor will not be created and all your config above will be ignored.",
-          "additional": "If checked you will be prompted to add another sensor after saving this one."
+          "details_format": "Geeft het formaat aan dat wordt gebruikt voor de weergave van informatie in het 'meer info'-popup van Home Assistant. 'Komend': toont een lijst met komende ophalingen, 'Afvaltypes': toont een lijst met afvaltypes en hun volgende ophaaldatum, 'Generisch': toont alle attributen als generieke Python-gegevens, 'Verborgen': verbergt attributen van komende ophalingen",
+          "count": "Beperkt het 'meer info'-popup van Home Assistant tot het tonen van de volgende X ophalingen",
+          "leadtime": "Beperkt het 'meer info'-popup van Home Assistant tot ophalingen die binnen de aangegeven voorlooptijd (in dagen) plaatsvinden",
+          "value_template": "Gebruikt Home Assistant templating om de statusinformatie van een entity op te maken. Je kunt 'value.date', 'value.daysTo' en 'value.types' gebruiken",
+          "date_template": "Gebruikt Home Assistant templating om de datums in het 'meer info'-popup van een entity op te maken, bijv. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Voegt een 'daysTo'-attribuut toe aan de status van de brone-entity met het aantal dagen tot de volgende ophaling",
+          "event_index": "Wordt gebruikt om een sensor aan een specifiek ophaaldatum-index toe te wijzen. De volgende ophaaldatum heeft index 0. Handig als je aparte sensoren wilt voor de volgende ophaling, de tweede ophaling, de derde ophaling, ...",
+          "types": "Wordt gebruikt om afvaltypes te filteren. De sensor toont alleen ophalingen die met deze afvaltypes overeenkomen. Gebruik de alias als je een alias hebt ingesteld in de bronconfiguratie.",
+          "skip": "Indien aangevinkt, wordt de sensor niet aangemaakt en wordt alle configuratie hierboven genegeerd.",
+          "additional": "Indien aangevinkt, word je na het opslaan van deze sensor gevraagd om een volgende sensor toe te voegen."
         }
       },
       "reconfigure": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Kalendertitel"
         }
       },
       "args_1coast_com_au": {
@@ -32117,125 +32117,125 @@
       }
     },
     "error": {
-      "invalid_weekday": "Invalid weekday. Please provide a valid weekday (MO, TU, WE, TH, FR, SA, SU).",
-      "invalid_count": "Invalid count. Please provide a valid number.",
-      "invalid_weekdays": "Invalid Weekday format please proivde one (MO, TU, WE, TH, FR, SA, SU) or a dictonary like MO: 1.",
-      "invalid_source": "You did not select a source. Please select a valid source.",
-      "fetch_error": "The source returned an invalid response: \"{fetch_error_message}\". Please check the provided arguments and try again.",
-      "invalid_arg": "Argument is invalid: \"{invalid_arg_message}\"",
-      "fetch_empty": "The source returned an empty response. Please check the provided arguments and try again.",
-      "invalid_template": "The template is invalid. Please check the syntax and try again.",
-      "skip_additional": "You cannot skip the current and add additional sensors at the same time.",
-      "name_exists": "The sensor name already exists. Please choose a different name.",
-      "preset_selected": "You cannot select a preset and provide custom values at the same time.",
-      "sensor_name_empty": "The sensor name cannot be empty. Please provide a name.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "You cannot provide a dedicated calendar title without enabling the dedicated calendar."
+      "invalid_weekday": "Ongeldige dag van de week. Geef een geldige dag van de week op (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Ongeldig aantal. Geef een geldig getal op.",
+      "invalid_weekdays": "Ongeldig formaat voor dag van de week. Geef een dag op (MO, TU, WE, TH, FR, SA, SU) of een dictionary zoals MO: 1.",
+      "invalid_source": "Je hebt geen bron geselecteerd. Selecteer een geldige bron.",
+      "fetch_error": "De bron gaf een ongeldig antwoord: \"{fetch_error_message}\". Controleer de opgegeven argumenten en probeer het opnieuw.",
+      "invalid_arg": "Argument is ongeldig: \"{invalid_arg_message}\"",
+      "fetch_empty": "De bron gaf een leeg antwoord. Controleer de opgegeven argumenten en probeer het opnieuw.",
+      "invalid_template": "De template is ongeldig. Controleer de syntax en probeer het opnieuw.",
+      "skip_additional": "Je kunt de huidige sensor niet overslaan en tegelijk extra sensoren toevoegen.",
+      "name_exists": "De sensornaam bestaat al. Kies een andere naam.",
+      "preset_selected": "Je kunt geen preset selecteren en tegelijk eigen waarden opgeven.",
+      "sensor_name_empty": "De sensornaam mag niet leeg zijn. Geef een naam op.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Update Waste Collection Schedule details.",
+        "description": "Waste Collection Schedule details bijwerken.",
         "data": {
-          "sensor_select": "Sensors To Modify",
+          "sensor_select": "Sensoren aanpassen",
           "default_sensors": "Standaardsensoren toevoegen",
-          "customize_select": "Customizations To Modify",
-          "calendar_title": "Calendar Title",
-          "separator": "Separator",
-          "fetch_time": "Fetch Time",
-          "random_fetch_time_offset": "Random Fetch Time Offset",
-          "day_switch_time": "Day Switch Time",
-          "fetch_interval_days": "Days between fetches",
-          "day_offset": "Day Offset",
-          "ignore_duplicates": "Ignore Duplicate Entries per Day",
+          "customize_select": "Aanpassingen aanpassen",
+          "calendar_title": "Kalendertitel",
+          "separator": "Scheidingsteken",
+          "fetch_time": "Ophaaltijd",
+          "random_fetch_time_offset": "Willekeurige ophaaltijd-afwijking",
+          "day_switch_time": "Dagwisselingstijd",
+          "fetch_interval_days": "Dagen tussen ophalingen",
+          "day_offset": "Dagverschuiving",
+          "ignore_duplicates": "Duplicaten per dag negeren",
           "show_original_label": "Oorspronkelijk label van de aanbieder tonen"
         },
         "data_description": {
-          "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
+          "sensor_select": "Selecteer de sensor die je wilt aanpassen. (selecteer 'Nieuwe sensor toevoegen' om een nieuwe sensor te maken)",
           "default_sensors": "Voegt de gekozen standaardsensoren toe die nog ontbreken. Bestaande sensoren blijven ongewijzigd.",
-          "customize_select": "Select the customization you want to modify. (or select a new customization to create a new one)",
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
-          "fetch_time": "Representation of the time of day in 'HH:MM' that Home Assistant polls service provider for latest collection schedule.",
-          "random_fetch_time_offset": "Randomly offsets the Fetch Time by up to x minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers.",
-          "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry.",
-          "fetch_interval_days": "Specifies how often Home Assistant fetches waste collection events from this calendar source. The default value is 1 day. With a value of 2, waste collection events are fetched every 2 days.",
-          "day_offset": "Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used",
-          "ignore_duplicates": "When enabled, duplicate collection entries with the same waste type on the same day are removed, keeping only one entry per type per day.",
+          "customize_select": "Selecteer de aanpassing die je wilt wijzigen. (of selecteer een nieuwe aanpassing om een nieuwe te maken)",
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "separator": "Wordt gebruikt om invoeritems te verbinden als de bron meerdere waarden voor één dag teruggeeft.",
+          "fetch_time": "Weergave van de tijd van de dag in 'HH:MM' waarop Home Assistant de serviceprovider afvraagt voor het nieuwste ophaalschema.",
+          "random_fetch_time_offset": "Verschuift de ophaaltijd willekeurig met maximaal x minuten. Kan gebruikt worden om Home Assistant-afvragingen over een langere periode te spreiden en piekbelasting bij serviceproviders te vermijden.",
+          "day_switch_time": "Tijd van de dag in 'HH:MM' waarop Home Assistant de huidige entry negeert en overgaat naar de volgende.",
+          "fetch_interval_days": "Geeft aan hoe vaak Home Assistant afvalophalingen van deze kalenderbron ophaalt. De standaardwaarde is 1 dag. Met een waarde van 2 worden afvalophalingen elke 2 dagen opgehaald.",
+          "day_offset": "Verschuiving in dagen die aan de ophaaldatum wordt toegevoegd (kan negatief zijn). Als er geen waarde wordt opgegeven, wordt de standaardwaarde 0 gebruikt.",
+          "ignore_duplicates": "Wanneer ingeschakeld, worden dubbele ophaalitems met hetzelfde afvaltype op dezelfde dag verwijderd, waarbij per type per dag slechts één item blijft.",
           "show_original_label": "Indien ingeschakeld (standaard), behouden sommige bronnen het oorspronkelijke label van de aanbieder (bijv. de exacte naam van de container/bak) in de beschrijving van de inzameling, ook na toewijzing aan een standaard afvaltype. Schakel uit om dat oorspronkelijke label te verbergen."
         }
       },
       "customize": {
-        "title": "Modify/Create Collection Type Customization ({index}/{total}): {type}",
-        "description": "Modify/Create Customization for \"{type}\". You can leave all fields empty to use the default values.",
+        "title": "Ophaaltype-aanpassing wijzigen/aanmaken ({index}/{total}): {type}",
+        "description": "Wijzig/maak een aanpassing voor \"{type}\". Je kunt alle velden leeg laten om de standaardwaarden te gebruiken.",
         "data": {
-          "delete": "Delete",
+          "delete": "Verwijderen",
           "alias": "Alias",
-          "show": "Show",
-          "icon": "Icon",
-          "picture": "Picture",
-          "use_dedicated_calendar": "Use dedicated calendar",
-          "dedicated_calendar_title": "Dedicated calendar title"
+          "show": "Weergeven",
+          "icon": "Icoon",
+          "picture": "Afbeelding",
+          "use_dedicated_calendar": "Eigen kalender gebruiken",
+          "dedicated_calendar_title": "Titel van eigen kalender"
         },
         "data_description": {
-          "delete": "Delete this customization.",
-          "alias": "The new name of the collection type. (only if you want to change it)",
-          "show": "Uncheck to hide the collection type.",
-          "icon": "The icon of the collection type. (only if you want to change it)",
-          "picture": "The path to a picture for the collection type.",
-          "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
-          "dedicated_calendar_title": "The title of the dedicated calendar entity."
+          "delete": "Verwijder deze aanpassing.",
+          "alias": "De nieuwe naam van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
+          "show": "Vink af om het ophaaltype te verbergen.",
+          "icon": "Het icoon van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
+          "picture": "Het pad naar een afbeelding voor het ophaaltype.",
+          "use_dedicated_calendar": "Vink aan als dit ophaaltype een eigen kalenderentity moet hebben.",
+          "dedicated_calendar_title": "De titel van de eigen kalenderentity."
         }
       },
       "sensor": {
-        "title": "Modify/Create Sensor \"{sensor_number}\"",
-        "description": "Configure one sensor at a time.",
+        "title": "Sensor wijzigen/aanmaken \"{sensor_number}\"",
+        "description": "Configureer een sensor tegelijk.",
         "data": {
-          "delete": "Delete",
-          "name": "Name of the Sensor",
-          "details_format": "Details Format",
-          "count": "Count",
-          "leadtime": "Leadtime",
-          "value_template": "Value Template",
-          "date_template": "Date Template",
-          "add_days_to": "Add Days To",
-          "event_index": "Event Index",
+          "delete": "Verwijderen",
+          "name": "Naam van de sensor",
+          "details_format": "Detailsformaat",
+          "count": "Aantal",
+          "leadtime": "Voorlooptijd",
+          "value_template": "Waarde-template",
+          "date_template": "Datumtemplate",
+          "add_days_to": "Dagen toevoegen aan",
+          "event_index": "Evenementindex",
           "types": "Types",
-          "skip": "Do not create sensor",
-          "additional": "Add additional sensors"
+          "skip": "Geen sensor aanmaken",
+          "additional": "Extra sensoren toevoegen"
         },
         "data_description": {
-          "delete": "Delete this customization.",
-          "details_format": "Specifies the format used to display info in Home Assistant's more info pop-up. 'upcoming': shows a list of upcoming collections, 'appointment_types': shows a list of waste types and their next collection date, 'generic': provides all attributes as generic Python data types, 'hidden': hide attributes of upcoming collections",
-          "count": "Limits Home Assistant's more info popup to displaying the next int collections",
-          "leadtime": "Limits Home Assistant's more info popup to only displaying collections happening within the next leadtime days",
-          "value_template": "Uses Home Assistant templating to format the state information of an entity. You can use 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Uses Home Assistant templating to format the dates appearing within the more info popup information of an entity. e.g. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Adds a 'daysTo' attribute to the source entity state containing the number of days to the next collection",
-          "event_index": "Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ...",
-          "types": "Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used alias in the sources configuration.",
-          "skip": "If checked the sensor will not be created and all your config above will be ignored.",
-          "additional": "If checked you will be prompted to add another sensor after saving this one."
+          "delete": "Verwijder deze sensor.",
+          "details_format": "Geeft het formaat aan dat wordt gebruikt voor de weergave van informatie in het 'meer info'-popup van Home Assistant. 'Komend': toont een lijst met komende ophalingen, 'Afvaltypes': toont een lijst met afvaltypes en hun volgende ophaaldatum, 'Generisch': toont alle attributen als generieke Python-gegevens, 'Verborgen': verbergt attributen van komende ophalingen",
+          "count": "Beperkt het 'meer info'-popup van Home Assistant tot het tonen van de volgende X ophalingen",
+          "leadtime": "Beperkt het 'meer info'-popup van Home Assistant tot ophalingen die binnen de aangegeven voorlooptijd (in dagen) plaatsvinden",
+          "value_template": "Gebruikt Home Assistant templating om de statusinformatie van een entity op te maken. Je kunt 'value.date', 'value.daysTo' en 'value.types' gebruiken",
+          "date_template": "Gebruikt Home Assistant templating om de datums in het 'meer info'-popup van een entity op te maken, bijv. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Voegt een 'daysTo'-attribuut toe aan de status van de brone-entity met het aantal dagen tot de volgende ophaling",
+          "event_index": "Wordt gebruikt om een sensor aan een specifiek ophaaldatum-index toe te wijzen. De volgende ophaaldatum heeft index 0. Handig als je aparte sensoren wilt voor de volgende ophaling, de tweede ophaling, de derde ophaling, ...",
+          "types": "Wordt gebruikt om afvaltypes te filteren. De sensor toont alleen ophalingen die met deze afvaltypes overeenkomen. Gebruik de alias als je een alias hebt ingesteld in de bronconfiguratie.",
+          "skip": "Indien aangevinkt, wordt de sensor niet aangemaakt en wordt alle configuratie hierboven genegeerd.",
+          "additional": "Indien aangevinkt, word je na het opslaan van deze sensor gevraagd om een volgende sensor toe te voegen."
         }
       }
     },
     "error": {
-      "time_format": "Times must be given in HH:MM format.",
-      "invalid_template": "The template is invalid. Please check the syntax and try again.",
-      "name_exists": "The sensor name already exists. Please choose a different name.",
-      "preset_selected": "You cannot select a preset and provide custom values at the same time.",
-      "sensor_name_empty": "The sensor name cannot be empty. Please provide a name.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "You cannot provide a dedicated calendar title without enabling the dedicated calendar."
+      "time_format": "Tijden moeten in het HH:MM-formaat worden opgegeven.",
+      "invalid_template": "De template is ongeldig. Controleer de syntax en probeer het opnieuw.",
+      "name_exists": "De sensornaam bestaat al. Kies een andere naam.",
+      "preset_selected": "Je kunt geen preset selecteren en tegelijk eigen waarden opgeven.",
+      "sensor_name_empty": "De sensornaam mag niet leeg zijn. Geef een naam op.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren."
     },
     "abort": {}
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Upcoming",
-        "appointment_types": "Appointment Types",
-        "generic": "Generic",
-        "hidden": "Hidden"
+        "upcoming": "Komend",
+        "appointment_types": "Afvaltypes",
+        "generic": "Generisch",
+        "hidden": "Verborgen"
       }
     },
     "default_sensors": {
@@ -32246,15 +32246,15 @@
     },
     "custom_flow_types": {
       "options": {
-        "yearly": "Yearly",
-        "monthly": "Monthly",
-        "weekly": "Weekly",
-        "daily": "Daily"
+        "yearly": "Jaarlijks",
+        "monthly": "Maandelijks",
+        "weekly": "Wekelijks",
+        "daily": "Dagelijks"
       }
     },
     "sensor_select": {
       "options": {
-        "sensor_select_add_new": "Add new sensor"
+        "sensor_select_add_new": "Nieuwe sensor toevoegen"
       }
     }
   },

@@ -95,6 +95,11 @@ class Source(BaseSource):
             "del numero civico che utilizzeresti su https://www.deafvalapp.nl "
             "per consultare il tuo calendario di raccolta rifiuti."
         ),
+        "nl": (
+            "Vul dezelfde postcode, huisnummer en (optionele) "
+            "huisnummertoevoeging in die je zou gebruiken op "
+            "https://www.deafvalapp.nl om je afvalkalender op te zoeken."
+        ),
     }
 
     REGIONS = tuple(region(name, url=_URL) for name in _MUNICIPALITIES)
