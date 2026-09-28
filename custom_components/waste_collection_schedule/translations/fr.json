@@ -4402,11 +4402,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "gemeinde": "Municipalité",
+          "gemeinde": "Commune",
           "strasse": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "gemeinde": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "strasse": "Le nom de votre rue."
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -4414,10 +4416,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "gemeinde": "Municipalité",
+          "gemeinde": "Commune",
           "strasse": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "strasse": "Le nom de votre rue."
+        }
       },
       "args_ics_geminfo_app": {
         "title": "Configurer la Source",

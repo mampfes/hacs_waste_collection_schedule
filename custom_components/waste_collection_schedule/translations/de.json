@@ -4446,7 +4446,9 @@
           "strasse": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "gemeinde": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -4457,7 +4459,10 @@
           "gemeinde": "Gemeinde",
           "strasse": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "strasse": "Ihr Straßenname."
+        }
       },
       "args_ics_geminfo_app": {
         "title": "Quelle konfigurieren",

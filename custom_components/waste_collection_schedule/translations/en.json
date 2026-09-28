@@ -4538,13 +4538,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gemeinde": "Gemeinde",
+          "gemeinde": "Municipality",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "gemeinde": "Select your gemeinde.",
-          "strasse": "Select your street (depends on Gemeinde)."
+          "gemeinde": "The name of your municipality, as shown on the provider's website.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -4552,12 +4552,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gemeinde": "Gemeinde",
+          "gemeinde": "Municipality",
           "strasse": "Street"
         },
         "data_description": {
-          "gemeinde": "Select your gemeinde.",
-          "strasse": "Select your street (depends on Gemeinde)."
+          "gemeinde": "The name of your municipality, as shown on the provider's website.",
+          "strasse": "Your street name."
         }
       },
       "args_ics_geminfo_app": {

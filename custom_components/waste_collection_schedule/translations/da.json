@@ -4400,7 +4400,9 @@
           "strasse": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "gemeinde": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "strasse": "Dit gadenavn"
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -4411,7 +4413,10 @@
           "gemeinde": "Kommune",
           "strasse": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "strasse": "Dit gadenavn"
+        }
       },
       "args_ics_geminfo_app": {
         "title": "Konfigurer Kilde",

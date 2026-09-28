@@ -18,10 +18,10 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **gemeinde**  
-*(string) (required)*
+*(string) (optional)*
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*
 
 ## Example
 
