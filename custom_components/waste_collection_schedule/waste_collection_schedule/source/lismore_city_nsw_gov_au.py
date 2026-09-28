@@ -7,8 +7,8 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.field_terms import ADDRESS
 from waste_collection_schedule.service.WhatBinDay import (
     TYPE_VALUE_MAP,
-    WhatBinDayParser,
-    WhatBinDayRetriever,
+    WhatBinDayWidgetParser,
+    WhatBinDayWidgetRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
 
@@ -48,10 +48,9 @@ def _split_address(address: str) -> dict:
     """Split a full free-text service address into WhatBinDay's parts.
 
     Lismore (unlike Kingston) takes a single address string, so this does the
-    same-shape regex split the legacy Source._split_address did, just
-    returning WhatBinDayRetriever's generic part names (street_name/suburb
-    rather than route/locality) so the shared retriever can stay
-    provider-agnostic.
+    same-shape regex split the legacy Source._split_address did, returning
+    the shared WhatBinDay components' generic part names (street_name/suburb
+    rather than route/locality) so they can stay provider-agnostic.
     """
     normalized = " ".join(address.replace(",", " , ").split())
     match = _ADDRESS_RE.match(normalized)
@@ -92,16 +91,11 @@ class Source(BaseSource):
 
     PARAMS = (text_field("address", term=ADDRESS),)
 
-    # Lismore only ever submits the parsed address text (no geocoding, unlike
-    # Kingston): this matches the legacy source, which never passed
-    # coordinates and so always fell back to WhatBinDay's default (Victorian)
-    # coordinates. The device key is not address-specific for this provider
-    # (a single static key is shared across every Lismore address), matching
-    # the legacy service's fixed "lismore_city_council" location_key.
-    retrieve = WhatBinDayRetriever(
-        location_key="lismore_city_council",
-        split_address=_split_address,
-        address_field="address",
-    )
-    parse = WhatBinDayParser()
+    # Lismore does not use the WhatBinDay mobile-app API (which holds no
+    # Lismore data and answers an unrelated roster for every address): it
+    # embeds WhatBinDay's website widget on the council page. The widget
+    # apiKey is read off that page and the address is searched through the
+    # widget endpoint.
+    retrieve = WhatBinDayWidgetRetriever(page_url=URL, split_address=_split_address)
+    parse = WhatBinDayWidgetParser()
     transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
