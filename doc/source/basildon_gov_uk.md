@@ -1,25 +1,26 @@
 # Basildon Council
 
-Support for schedules provided by [Basildon Council](https://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildon), Essex, UK.
+Support for schedules provided by [Basildon Council](https://basildon.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new South West Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for basildon.gov.uk services for Basildon Council, UK.
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: basildon_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
-or
+### Using postcode and address
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: basildon_gov_uk
       args:
         postcode: POSTCODE
@@ -29,39 +30,39 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **uprn**  
-*(string) (required if postcode and address is not provided)*
+*(string) (alternative)*
 
 **postcode**  
-*(string) (required if no uprn provided)*
+*(string) (alternative)*
 
 **address**  
-*(string) (required if no uprn provided)*
+*(string) (alternative)*
+
+Provide one of: `uprn` or `postcode` + `address`.
 
 ## Example
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: basildon_gov_uk
-      args:
-        uprn: "100090277795"
-```
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: basildon_gov_uk
       args:
-        postcode: "SS14 1QU"
-        address: "25 LONG RIDING"
+        uprn: '100090277795'
+```
+
+### Using postcode and address
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: basildon_gov_uk
+      args:
+        postcode: CM111BJ
+        address: 6, HEADLEY ROAD
 ```
 
 ## How to get the source arguments
 
-### Using postcode and address
-
-Go to <https://mybasildon.powerappsportals.com/check/where_i_live/> and enter your postcode and address. Then use the postcode and address as arguments.
-
-### Using UPRN
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Provide your UPRN, or your postcode and the first line of your address as the council lists it, e.g. '6, HEADLEY ROAD'. Find your UPRN at https://www.findmyaddress.co.uk/

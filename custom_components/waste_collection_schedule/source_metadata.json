@@ -1255,6 +1255,14 @@
     "howto": {},
     "urls": {}
   },
+  "wsz_moosburg_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wsz_moosburg_at.md",
+    "howto": {
+      "de": "Wählen Sie Ihre Gemeinde, dann Ihre Adresse und, falls die Adresse mehrere Straßen hat, die Straße. Alternativ können Sie die Adressen-ID direkt angeben: das ist die Zahl in der Anfrage https://wsz-moosburg.at/api/trash/<ID>, die der Kalender auf wsz-moosburg.at für Ihre Adresse stellt.",
+      "en": "Pick your municipality, then your address and, where the address has several streets, the street. Alternatively enter the address ID directly: it is the number in the request https://wsz-moosburg.at/api/trash/<ID> that the calendar on wsz-moosburg.at makes for your address."
+    },
+    "urls": {}
+  },
   "oberndorf_schwanenstadt_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oberndorf_schwanenstadt_at.md",
     "howto": {
@@ -1370,11 +1378,6 @@
     },
     "urls": {}
   },
-  "wsz_moosburg_at": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wsz_moosburg_at.md",
-    "howto": {},
-    "urls": {}
-  },
   "ics_zillingdorf_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zillingdorf_at.md",
     "howto": {
@@ -1416,7 +1419,9 @@
   },
   "recycleapp_be": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recycleapp_be.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode, street and house number as on https://www.recycleapp.be. Disable add_events to leave out events such as collection-point openings."
+    },
     "urls": {}
   },
   "tibi_be": {
@@ -1587,8 +1592,8 @@
   "repentigny_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/repentigny_ca.md",
     "howto": {
-      "en": "Enter your sector manually if you know it from the <a href=\"https://repentigny.ca/services/citoyens/collectes\">collection calendar</a>.",
-      "fr": "Entrez votre secteur manuellement si vous le connaissez d'après le <a href=\"https://repentigny.ca/services/citoyens/collectes\">calendrier de collecte</a>."
+      "en": "Pick your sector from the <a href=\"https://repentigny.ca/services/citoyens/collectes\">collection calendar</a>.",
+      "fr": "Choisissez votre secteur d'après le <a href=\"https://repentigny.ca/services/citoyens/collectes\">calendrier de collecte</a>."
     },
     "urls": {}
   },
@@ -1663,7 +1668,9 @@
   },
   "myutility_winnipeg_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/myutility_winnipeg_ca.md",
-    "howto": {},
+    "howto": {
+      "en": "Use the same address that works on https://myutility.winnipeg.ca under 'Find your collection day'."
+    },
     "urls": {}
   },
   "ics_detmarovice_glembovec_cz": {
@@ -3823,6 +3830,14 @@
     "howto": {},
     "urls": {}
   },
+  "siunet_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siunet_it.md",
+    "howto": {
+      "en": "Use the municipality name exactly as listed below. Two entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix: try the other one if your municipality returns no results. If your municipality splits collections by zone, add the zone name from your local waste-management provider's calendar (e.g. 'Zona Rossa'); collections that are not zone-specific are always included.",
+      "it": "Usa il nome del comune esattamente come indicato nell'elenco. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)': prova l'altra se il tuo comune non restituisce risultati. Se il comune divide le raccolte per zona, aggiungi il nome della zona dal calendario del tuo gestore (es. 'Zona Rossa'); le raccolte non specifiche di una zona sono sempre incluse."
+    },
+    "urls": {}
+  },
   "municipium_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/municipium_it.md",
     "howto": {
@@ -3961,14 +3976,6 @@
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
     "howto": {},
-    "urls": {}
-  },
-  "siunet_it": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/siunet_it.md",
-    "howto": {
-      "en": "Check the 'Supported municipalities' list in this source's documentation page for the exact spelling of your municipality. If it has zones, look up the zone name from your local waste-management provider's calendar (e.g. Esacom for the Verona area) or the yard schedule from your last paper calendar.",
-      "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto."
-    },
     "urls": {}
   },
   "araccolta_it": {
@@ -4387,7 +4394,9 @@
   },
   "minrenovasjon_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/minrenovasjon_no.md",
-    "howto": {},
+    "howto": {
+      "en": "Look up your address with the Kartverket address API, for example https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012. `street_code` is the result's `adressekode` and `county_id` its `kommunenummer`."
+    },
     "urls": {}
   },
   "movar_no": {
@@ -4599,7 +4608,9 @@
   },
   "prezero_bielsko_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street and house number in Bielsko-Biała as they appear on https://prezero-bielsko.pl/harmonogram-odbioru-odpadow/."
+    },
     "urls": {}
   },
   "rybnik_pl": {
@@ -4976,7 +4987,10 @@
   },
   "vasyd_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vasyd_se.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie die Adresse so ein, wie VA Syd sie führt: '<Straße> <Nummer>, <Ort>', zum Beispiel 'Storgatan 1, Malmö'. Es wird der erste Treffer der Suche verwendet, geben Sie daher den Ort mit an.",
+      "en": "Enter the address as VA Syd lists it: '<street> <number>, <city>', for example 'Storgatan 1, Malmö'. The first address the search finds is used, so include the city to avoid a wrong match."
+    },
     "urls": {}
   },
   "vivab_se": {
@@ -5363,7 +5377,9 @@
   },
   "basildon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/basildon_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Provide your UPRN, or your postcode and the first line of your address as the council lists it, e.g. '6, HEADLEY ROAD'. Find your UPRN at https://www.findmyaddress.co.uk/"
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5550,7 +5566,9 @@
   },
   "bury_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bury_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and the first line of your address as listed on https://bury.gov.uk. Alternatively enter the property id: it is the `id` of your address in the response of https://www.bury.gov.uk/app-services/getProperties?postcode=<postcode>."
+    },
     "urls": {}
   },
   "calderdale_gov_uk": {
@@ -5562,7 +5580,9 @@
   },
   "greater_cambridge_waste_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greater_cambridge_waste_org.md",
-    "howto": {},
+    "howto": {
+      "en": "Provide your UPRN, or your postcode together with your house name or number. Find your UPRN at https://www.findmyaddress.co.uk/"
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5840,7 +5860,7 @@
   "dundeecity_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dundeecity_gov_uk.md",
     "howto": {
-      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -7243,9 +7263,11 @@
   "thanet_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thanet_gov_uk.md",
     "howto": {
-      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))OR Enter your postcode and the first line of your address for street address e.g. '2 London Road' (anything before the first comma)UPRNs should work all of the time, Postcodes and Street Addresses will work if a match can be found."
+      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and the first line of your address, e.g. '2 London Road' (anything before the first comma of the address on the council's site). UPRNs work every time; a postcode and street address work when a match can be found."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "ics_kingston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kingston_gov_uk.md",

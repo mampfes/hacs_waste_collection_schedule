@@ -1,12 +1,14 @@
 # GLØR
 
-Support for schedules provided by [GLØR](https://glor.no) (Gudbrandsdal Lillehammer Øyer Ringebu Renovasjon), serving the municipalities of Lillehammer, Øyer, Ringebu and Gausdal, Norway.
+Support for schedules provided by [GLØR](https://glor.no).
+
+Source for GLØR (Gudbrandsdal Lillehammer Øyer Ringebu Renovasjon), Norway.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: glor_no
       args:
         address: ADDRESS
@@ -15,20 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
-
-The address, optionally followed by the municipality name after a comma, for example `Storgata 1, Lillehammer`. The municipality is only required if the same street name exists in more than one municipality served by GLØR.
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: glor_no
       args:
         address: Storgata 1, Lillehammer
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit [https://glor.no/tømmeplan](https://glor.no/t%C3%B8mmeplan), search for your address, and use the address exactly as shown in the result list, optionally followed by the municipality name.
+Search for your address at glor.no/tømmeplan. Use the address exactly as shown in the result list, optionally followed by the municipality name, for example 'Storgata 1, Lillehammer'.

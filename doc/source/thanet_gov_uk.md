@@ -1,55 +1,68 @@
 # Thanet District Council
 
-Support for schedules provided by [Thanet District Council](https://www.thanet.gov.uk/online-services/your-collection-day/), serving the
-district of Thanet, UK.
+Support for schedules provided by [Thanet District Council](https://thanet.gov.uk).
+
+Source for thanet.gov.uk services for Thanet District Council
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: thanet_gov_uk
       args:
-        postcode: Postcode
-        street_address: Street Address
-        uprn: Unique Property Reference Number (UPRN)
+        uprn: UPRN
+```
+
+### Using postcode and street_address
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: thanet_gov_uk
+      args:
+        postcode: POSTCODE
+        street_address: STREET_ADDRESS
 ```
 
 ### Configuration Variables
 
+**uprn**  
+*(string) (alternative)*
+
 **postcode**  
-*(string) (optional)*
+*(string) (alternative)*
 
 **street_address**  
-*(string) (optional)*
+*(string) (alternative)*
 
-**uprn**  
-*(string) (optional)*
-
-Supply both postcode and street_address args, or just the uprn argument
+Provide one of: `uprn` or `postcode` + `street_address`.
 
 ## Example
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: thanet_gov_uk
-      args:
-        uprn: "100061108233"
-```
-
-### Using street address and postcode
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: thanet_gov_uk
       args:
-        postcode: "CT7 0DN"
-        street_address: "12 Woodland Avenue"
+        uprn: '100061108233'
 ```
 
-## How to find the values for arguments above
+### Using postcode and street_address
 
-You can find your UPRN by going to the [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and searching there.
-If you're entering a postcode and street address you will need to use your post code with a space and for street address use the text before the first comma in the options provided yo you on Thanet's bin schedule webpage - e.g. if their site says "Lovely Cottage, Thanet,..." then use "Lovely Cottage" as the street address, if it says "1 London Road, Thanet..." then you need to enter "1 London Road".
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: thanet_gov_uk
+      args:
+        postcode: CT7 9SL
+        street_address: Forus
+```
+
+## How to get the source arguments
+
+Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and the first line of your address, e.g. '2 London Road' (anything before the first comma of the address on the council's site). UPRNs work every time; a postcode and street address work when a match can be found.

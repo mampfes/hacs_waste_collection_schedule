@@ -1,12 +1,14 @@
 # Dundee City Council
 
-Support for schedules provided by [Dundee City Council](https://www.dundeecity.gov.uk/services/bins-%26-recycling), serving Dundee City, Scotland (UK).
+Support for schedules provided by [Dundee City Council](https://www.dundeecity.gov.uk).
+
+Source script for dundeecity.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dundeecity_gov_uk
       args:
         uprn: UPRN
@@ -14,19 +16,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**UPRN**  
+**uprn**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dundeecity_gov_uk
       args:
-        uprn: "9059060343"
+        uprn: 9059046613
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details.

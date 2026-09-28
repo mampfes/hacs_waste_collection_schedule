@@ -3476,6 +3476,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Moosburg",
+      "module": "wsz_moosburg_at",
+      "default_params": {},
+      "id": "wsz_moosburg_at"
+    },
+    {
       "title": "Mooskirchen",
       "module": "lipizzanerheimat_at",
       "default_params": {},
@@ -3822,6 +3828,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "P\u00f6rtschach",
+      "module": "wsz_moosburg_at",
+      "default_params": {},
+      "id": "wsz_moosburg_at"
     },
     {
       "title": "P\u00f6rtschach am W\u00f6rther See",
@@ -4526,6 +4538,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Techelsberg",
+      "module": "wsz_moosburg_at",
+      "default_params": {},
+      "id": "wsz_moosburg_at"
     },
     {
       "title": "Techelsberg am W\u00f6rther See",
@@ -21856,6 +21874,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Abbadia Lariana (1)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ABBADIA LARIANA (1)"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Abbadia Lariana (2)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ABBADIA LARIANA (2)"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Acate (RG)",
       "module": "municipium_it",
       "default_params": {
@@ -21902,10 +21936,66 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Agrate Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "AGRATE BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Aicurzio",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Aicurzio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "AICURZIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Airuno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "AIRUNO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Albiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALBIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Albosaggia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALBOSAGGIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Alessano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALESSANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Alezio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALEZIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Alia Servizi Ambientali S.p.A.",
@@ -21920,10 +22010,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Alliste",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALLISTE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Altavilla Irpina",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Altavilla Vicentina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ALTAVILLA VICENTINA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Amag Ambiente",
@@ -21968,10 +22074,42 @@
       "id": "junker_app"
     },
     {
+      "title": "Andora",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ANDORA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Andria",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ANDRIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Angiari",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ANGIARI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Anguillara Sabazia - Cosp Tecno Service",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Annone Di Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ANNONE DI BRIANZA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Anzola dell'Emilia",
@@ -21982,10 +22120,26 @@
       "id": "geovest_it"
     },
     {
+      "title": "Anzola Dell'Emilia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ANZOLA DELL'EMILIA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Aprica S.p.A.",
       "module": "apricaspa_it",
       "default_params": {},
       "id": "apricaspa_it"
+    },
+    {
+      "title": "Apricena",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "APRICENA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Aprilia - Progetto Ambiente Spa",
@@ -21994,10 +22148,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Arconate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ARCONATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Arcore",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Arcore",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ARCORE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Ardea - DM Technology Srl",
@@ -22024,6 +22194,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Arrone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ARRONE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Artena",
@@ -22118,6 +22296,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Ballabio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BALLABIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Barberino di Mugello",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -22140,10 +22326,58 @@
       "id": "junker_app"
     },
     {
+      "title": "Barlassina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BARLASSINA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Barzago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BARZAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Barzan\u00f2",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BARZAN\u00d2"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Barzio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BARZIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Basiano",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Basiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BASIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Basiglio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BASIGLIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Bassano Romano",
@@ -22152,16 +22386,40 @@
       "id": "junker_app"
     },
     {
+      "title": "Belfiore",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BELFIORE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Belforte del Chienti",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Bellano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BELLANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Bellinzago Lombardo",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Bellinzago Lombardo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BELLINZAGO LOMBARDO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Bellunum Srl",
@@ -22176,16 +22434,64 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Bellusco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BELLUSCO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Bernareggio",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Bernareggio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BERNAREGGIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Besana In Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BESANA IN BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Bevilacqua",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BEVILACQUA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Biassono",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BIASSONO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Bientina",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Binasco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BINASCO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Bitti, Luna e Onan\u00ec - Formula Ambiente Spa",
@@ -22200,6 +22506,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Boffalora Sopra Ticino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BOFFALORA SOPRA TICINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Bolzano Vicentino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BOLZANO VICENTINO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Borghetto di Borbera",
       "module": "junker_app",
       "default_params": {},
@@ -22210,6 +22532,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Borgo San Giovanni",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BORGO SAN GIOVANNI"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Borgo San Lorenzo",
@@ -22232,6 +22562,30 @@
       "id": "junker_app"
     },
     {
+      "title": "Bosisio Parini",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BOSISIO PARINI"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Bovisio Masciago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BOVISIO MASCIAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Bovolone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BOVOLONE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Brandizzo",
       "module": "junker_app",
       "default_params": {},
@@ -22242,6 +22596,30 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Bressanvido",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BRESSANVIDO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Briosco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BRIOSCO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Brivio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BRIVIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Brixen/Bressanone - Stadtwerke Brixen AG/ASM Bressanone SpA",
@@ -22260,6 +22638,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Brugherio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BRUGHERIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Bubbiano",
@@ -22282,6 +22668,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Bulciago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BULCIAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Buonvicino",
       "module": "junker_app",
       "default_params": {},
@@ -22294,10 +22688,34 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Burago Di Molgora",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BURAGO DI MOLGORA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Buscate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BUSCATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Busnago",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Busnago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BUSNAGO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Bussero",
@@ -22306,10 +22724,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Bussero",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "BUSSERO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "C.C.S. - Consorzio Campale Stabile",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cabiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CABIATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Cabras",
@@ -22324,6 +22758,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Calco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CALCO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Calderara di Reno",
       "module": "geovest_it",
       "default_params": {
@@ -22332,12 +22774,36 @@
       "id": "geovest_it"
     },
     {
+      "title": "Caldogno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CALDOGNO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Calenzano",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Calenzano"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Calolziocorte",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CALOLZIOCORTE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Calvi Dell'Umbria",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CALVI DELL'UMBRIA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Calvi Risorta - Isola Verde Ecologia",
@@ -22352,10 +22818,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cambiago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAMBIAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Camerino",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Camisano Vicentino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAMISANO VICENTINO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Campagnano di Roma  - DM Technology Srl",
@@ -22368,6 +22850,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Camparada",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAMPARADA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Campi Bisenzio",
@@ -22396,6 +22886,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Canegrate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CANEGRATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Canicattini Bagni - Traina Srl",
       "module": "junker_app",
       "default_params": {},
@@ -22416,6 +22914,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Caponago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAPONAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Capraia e Limite",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -22428,6 +22934,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Carate Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CARATE BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Carenno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CARENNO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Carini - Senesi SpA",
@@ -22450,16 +22972,40 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Carnate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CARNATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Caronno Pertusella - Econord",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Carovigno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAROVIGNO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Carpiano",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Carpiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CARPIANO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Carpignano Salentino",
@@ -22480,10 +23026,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Carugate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CARUGATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Casale Marittimo",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Casaleone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASALEONE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Casaletto Lodigiano",
@@ -22492,10 +23054,50 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Casaletto Lodigiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASALETTO LODIGIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Casalmaiocco",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Casalmaiocco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASALMAIOCCO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Casargo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASARGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Casarile",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASARILE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Casatenovo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASATENOVO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Casavatore - Ecology Srl",
@@ -22510,16 +23112,72 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Caselle Lurani",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASELLE LURANI"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cassago Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASSAGO BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cassano D'Adda",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cassano D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASSANO D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cassina De' Pecchi",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cassina De' Pecchi",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASSINA DE' PECCHI"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cassina Valsassina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASSINA VALSASSINA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Castagnaro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASTAGNARO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Castegnero",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASTEGNERO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Castel Gandolfo - Coop 134",
@@ -22568,6 +23226,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Castellanza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASTELLANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Castello Di Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CASTELLO DI BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Castelnuovo di Porto",
       "module": "junker_app",
       "default_params": {},
@@ -22598,16 +23272,48 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cavenago Di Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CAVENAGO DI BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "CEM Ambiente",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Ceriano Laghetto",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERIANO LAGHETTO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cernusco Lombardone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERNUSCO LOMBARDONE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cernusco Sul Naviglio",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cernusco Sul Naviglio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERNUSCO SUL NAVIGLIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Cerreto Guidi",
@@ -22622,6 +23328,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cerro Al Lambro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERRO AL LAMBRO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Cerro Maggiore - Agesp Spa",
@@ -22644,16 +23358,56 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cervignano D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERVIGNANO D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cervo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CERVO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cesa - DM Technology Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Cesana Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CESANA BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cesano Boscone - San Germano - Gruppo Iren",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cesano Maderno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CESANO MADERNO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cesio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CESIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Challand-Saint-Victor",
@@ -22680,6 +23434,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Chiusanico",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CHIUSANICO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Chiusavecchia",
@@ -22724,6 +23486,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Cisternino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CISTERNINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Civate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CIVATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "CLARA Ambiente",
       "module": "junker_app",
       "default_params": {},
@@ -22734,6 +23512,30 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cogliate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COGLIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Colico",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COLICO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Colle Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COLLE BRIANZA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Collinas",
@@ -22748,6 +23550,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cologno Monzese",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COLOGNO MONZESE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cologno Monzese - CEM Ambiente",
       "module": "junker_app",
       "default_params": {},
@@ -22760,10 +23570,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Colturano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COLTURANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Comazzo",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Comazzo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COMAZZO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Comune.Digital",
@@ -22808,10 +23634,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Concamarise",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CONCAMARISE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Concorezzo",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Concorezzo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CONCOREZZO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Consac",
@@ -22842,16 +23684,48 @@
       "id": "junker_app"
     },
     {
+      "title": "Cornaredo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CORNAREDO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cornate D'Adda",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Cornate D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CORNATE D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Correzzana",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Correzzana",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CORREZZANA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cortenova",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CORTENOVA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Cosir Srl",
@@ -22866,6 +23740,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Costa Masnaga",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "COSTA MASNAGA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Cosvega",
       "module": "junker_app",
       "default_params": {},
@@ -22878,12 +23760,44 @@
       "id": "junker_app"
     },
     {
+      "title": "Crandola Valsassina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CRANDOLA VALSASSINA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cremella",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CREMELLA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Cremeno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CREMENO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Crevalcore",
       "module": "geovest_it",
       "default_params": {
         "town_id": "2"
       },
       "id": "geovest_it"
+    },
+    {
+      "title": "Cuggiono",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CUGGIONO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Cupello - Pulchra Ambiente Srl",
@@ -22898,10 +23812,74 @@
       "id": "junker_app"
     },
     {
+      "title": "Cusano Milanino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "CUSANO MILANINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Dairago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DAIRAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Decimoputzu - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Dervio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DERVIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Desio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DESIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Diano Arentino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DIANO ARENTINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Diano Castello",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DIANO CASTELLO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Diano Marina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DIANO MARINA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Diano San Pietro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DIANO SAN PIETRO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "DLR Ambiente - Ciclat",
@@ -22916,10 +23894,42 @@
       "id": "junker_app"
     },
     {
+      "title": "Dolzago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DOLZAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Dorio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DORIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Dresano",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Dresano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DRESANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Dueville",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "DUEVILLE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Ecoambiente Srl",
@@ -22946,6 +23956,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ello",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ELLO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Empoli",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -22966,10 +23984,50 @@
       "id": "junker_app"
     },
     {
+      "title": "Erb\u00e8",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ERB\u00c8"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Erve",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ERVE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Esino Lario",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ESINO LARIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Faleria",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Fasano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "FASANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Ferentillo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "FERENTILLO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Fiemme Servizi",
@@ -23060,6 +24118,38 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Gaggiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GAGGIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Galbiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GALBIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Gallarate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GALLARATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Gallipoli",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GALLIPOLI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Gallo Matese",
       "module": "junker_app",
       "default_params": {},
@@ -23074,6 +24164,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Garbagnate Monastero",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GARBAGNATE MONASTERO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "GardaUno Spa",
       "module": "junker_app",
       "default_params": {},
@@ -23086,16 +24184,40 @@
       "id": "junker_app"
     },
     {
+      "title": "Garlate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GARLATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Gavorrano",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Gazzo Veronese",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GAZZO VERONESE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "GEA Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Genova",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GENOVA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Geovest",
@@ -23114,6 +24236,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Gessate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GESSATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Gestione Ambiente Spa",
@@ -23146,6 +24276,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Giussano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GIUSSANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Gonnesa - De Vizia Transfer Spa",
       "module": "junker_app",
       "default_params": {},
@@ -23156,6 +24294,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Gorgonzola",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GORGONZOLA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Greve in Chianti",
@@ -23172,6 +24318,30 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Grezzago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GREZZAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Grisignano Di Zocco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GRISIGNANO DI ZOCCO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Grumolo Delle Abbadesse",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GRUMOLO DELLE ABBADESSE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Gruppo Veritas",
       "module": "gruppoveritas_it",
       "default_params": {},
@@ -23182,6 +24352,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Gudo Visconti",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "GUDO VISCONTI"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Iglesias",
@@ -23202,6 +24380,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Imbersago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "IMBERSAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Imperia - De Vizia Transfer Spa",
       "module": "junker_app",
       "default_params": {},
@@ -23216,6 +24402,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Introbio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "INTROBIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Inverno e Monteleone",
       "module": "junker_app",
       "default_params": {},
@@ -23228,16 +24422,56 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Inzago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "INZAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Iren Ambiente",
       "module": "irenambiente_it",
       "default_params": {},
       "id": "irenambiente_it"
     },
     {
+      "title": "Ischitella",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ISCHITELLA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Isola del Liri - Cosp Tecno Service",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Isola Della Scala",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ISOLA DELLA SCALA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Isola Rizza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ISOLA RIZZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Isola Vicentina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ISOLA VICENTINA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Isole Tremiti - Smaltimenti Sud",
@@ -23450,6 +24684,14 @@
       "id": "junker_app"
     },
     {
+      "title": "La Valletta Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LA VALLETTA BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Lacco Ameno - SuperEco SRL",
       "module": "junker_app",
       "default_params": {},
@@ -23470,6 +24712,14 @@
         "municipality": "Larciano"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Lasnigo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LASNIGO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Lastra a Signa",
@@ -23498,6 +24748,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Lecco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LECCO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Legnano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LEGNANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Lein\u00ec",
       "module": "junker_app",
       "default_params": {},
@@ -23516,10 +24782,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Lesina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LESINA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Lesmo",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Lesmo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LESMO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Letino",
@@ -23534,6 +24816,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Lierna",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LIERNA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Limbiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LIMBIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Limosano",
       "module": "junker_app",
       "default_params": {},
@@ -23546,6 +24844,30 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Liscate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LISCATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Lissone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LISSONE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Locate Di Triulzi",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LOCATE DI TRIULZI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Lodi",
       "module": "junker_app",
       "default_params": {},
@@ -23556,6 +24878,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Lomagna",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LOMAGNA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Longare",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "LONGARE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Loreto Aprutino - Diodoro Ecologia",
@@ -23588,10 +24926,58 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Macherio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MACHERIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Magenta",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MAGENTA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Magnago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MAGNAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Malgrate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MALGRATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Mandas - C.A.P.R.I.",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Mandello Del Lario",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MANDELLO DEL LARIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Manduria",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MANDURIA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Maracalagonis - Formula Ambiente Spa",
@@ -23606,10 +24992,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Marcallo Con Casone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MARCALLO CON CASONE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Marche Multiservizi Falconara",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Margherita Di Savoia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MARGHERITA DI SAVOIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Margno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MARGNO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Marliana",
@@ -23626,10 +25036,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Martignano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MARTIGNANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Martina Franca",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MARTINA FRANCA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Masate",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Masate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MASATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Massa e Cozzile",
@@ -23652,6 +25086,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Massalengo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MASSALENGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Meda",
       "module": "junker_app",
       "default_params": {},
@@ -23664,16 +25106,48 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Mediglia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MEDIGLIA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Melegnano",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Melegnano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MELEGNANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Melissano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MELISSANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Melzo",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Melzo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MELZO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Mentana - Paoletti Ecologia",
@@ -23688,10 +25162,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Merate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MERATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Merlino",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Merlino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MERLINO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Messina - Messinaservizi Bene Comune",
@@ -23704,6 +25194,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Mezzago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MEZZAGO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Minerva Ambiente",
@@ -23722,6 +25220,38 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Misinto",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MISINTO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Missaglia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MISSAGLIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Moggio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MOGGIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Molteno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MOLTENO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Mondolfo",
@@ -23784,6 +25314,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Monte Marenzo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTE MARENZO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Monte Urano - Eco Elpidiense Srl",
       "module": "junker_app",
       "default_params": {},
@@ -23804,6 +25342,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Montecchio Precalcino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTECCHIO PRECALCINO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Monteco Spa",
       "module": "montecospa_it",
       "default_params": {},
@@ -23820,6 +25366,30 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Montefranco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTEFRANCO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Montegalda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTEGALDA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Montegaldella",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTEGALDELLA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Montelongo - Rotello - San Giuliano di Puglia - Impregico Srl",
@@ -23876,10 +25446,34 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Montevecchia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTEVECCHIA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Monteverdi Marittimo",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Monticello Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTICELLO BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Monticello Conte Otto",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MONTICELLO CONTE OTTO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Monticiano",
@@ -23892,6 +25486,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Morciano Di Leuca",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MORCIANO DI LEUCA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Morterone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MORTERONE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Mosciano Sant'Angelo - Diodoro Ecologia",
@@ -23912,6 +25522,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Mulazzano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "MULAZZANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Municipium",
       "module": "municipium_it",
       "default_params": {},
@@ -23924,10 +25542,26 @@
       "id": "junker_app"
     },
     {
+      "title": "Narni",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NARNI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "NET SpA - Udine",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Nibionno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NIBIONNO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Nicosia - Leukosia",
@@ -23936,12 +25570,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Nogara",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NOGARA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Nogarole Rocca",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NOGAROLE ROCCA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Nonantola",
       "module": "geovest_it",
       "default_params": {
         "town_id": "6"
       },
       "id": "geovest_it"
+    },
+    {
+      "title": "Nova Milanese",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NOVA MILANESE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Novara",
@@ -23956,10 +25614,58 @@
       "id": "junker_app"
     },
     {
+      "title": "Noviglio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "NOVIGLIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Nuoro - \u00c8-Comune srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Oggiono",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OGGIONO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Olgiate Molgora",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OLGIATE MOLGORA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Olginate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OLGINATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Oliveto Lario",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OLIVETO LARIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Oppeano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OPPEANO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Orciano Pisano",
@@ -23980,6 +25686,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Ornago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ORNAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Orosei - Sceas - Ciclat",
       "module": "junker_app",
       "default_params": {},
@@ -23992,10 +25706,42 @@
       "id": "junker_app"
     },
     {
+      "title": "Osnago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OSNAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Ossago Lodigiano",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Ossona",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "OSSONA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Paderno D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PADERNO D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Pagnona",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PAGNONA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Palata",
@@ -24010,16 +25756,56 @@
       "id": "junker_app"
     },
     {
+      "title": "Pal\u00f9",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PAL\u00d9"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Pantigliate",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Pantigliate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PANTIGLIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Parabiago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PARABIAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Parlasco",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PARLASCO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Passerano Marmorito",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Pasturo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PASTURO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Patti - Pizzo Pippo",
@@ -24040,10 +25826,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Paullo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PAULLO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Perdasdefogu - Eco-Sistemi",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Perledo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PERLEDO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Pescate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PESCATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Pescia",
@@ -24066,6 +25876,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Pessano Con Bornago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PESSANO CON BORNAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Piazza Brembana",
       "module": "junker_app",
       "default_params": {},
@@ -24086,6 +25904,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Pieve Emanuele",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PIEVE EMANUELE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Pimonte - Ecogin Srl",
       "module": "junker_app",
       "default_params": {},
@@ -24100,12 +25926,28 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Poggiardo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "POGGIARDO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Poggio a Caiano",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Poggio a Caiano"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Polino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "POLINO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Pomarance",
@@ -24140,10 +25982,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Pozzo D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "POZZO D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Pozzuolo Martesana",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Pozzuolo Martesana",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "POZZUOLO MARTESANA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Prato",
@@ -24158,6 +26016,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Premana",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PREMANA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Primaluna",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PRIMALUNA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Priolo Gargallo -  IGM rifiuti industriali",
@@ -24178,6 +26052,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Pusiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "PUSIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Quarrata",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -24190,6 +26072,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Quinto Vicentino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "QUINTO VICENTINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Racale",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RACALE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Ravarino",
@@ -24206,10 +26104,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Renate (1)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RENATE (1)"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Renate (2)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RENATE (2)"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Rescaldina",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Rescaldina",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RESCALDINA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Rho - A.Se.R SpA",
@@ -24268,10 +26190,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Rivolta D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RIVOLTA D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Robbiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROBBIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Robecchetto con Induno",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Robecchetto Con Induno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROBECCHETTO CON INDUNO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Rocca di Papa - DM Technology Srl",
@@ -24292,16 +26238,72 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Rodano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RODANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Rogeno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROGENO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Rognano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROGNANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Roncello",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Roncello",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RONCELLO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Ronco All'Adige",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RONCO ALL'ADIGE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Ronco Briantino",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Ronco Briantino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "RONCO BRIANTINO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Rosate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROSATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Rosora",
@@ -24314,6 +26316,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Rovello Porro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROVELLO PORRO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Roverchiara",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ROVERCHIARA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "S.E.S.A.",
@@ -24348,16 +26366,40 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Salerano Sul Lambro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SALERANO SUL LAMBRO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Salerno - Salerno Pulita Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Salizzole",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SALIZZOLE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Saluggia",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Salve",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SALVE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Sambuca Pistoiese",
@@ -24374,6 +26416,14 @@
       "id": "junker_app"
     },
     {
+      "title": "San Bartolomeo Al Mare",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN BARTOLOMEO AL MARE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "San Casciano in Val di Pesa",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -24388,12 +26438,36 @@
       "id": "junker_app"
     },
     {
+      "title": "San Ferdinando Di Puglia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN FERDINANDO DI PUGLIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "San Giorgio Su Legnano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN GIORGIO SU LEGNANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "San Giovanni in Persiceto",
       "module": "geovest_it",
       "default_params": {
         "town_id": "5"
       },
       "id": "geovest_it"
+    },
+    {
+      "title": "San Giovanni Lupatoto",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN GIOVANNI LUPATOTO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "San Giovanni Teatino",
@@ -24410,10 +26484,42 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "San Pietro Di Morubio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN PIETRO DI MORUBIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "San Zenone Al Lambro",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "San Zenone Al Lambro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SAN ZENONE AL LAMBRO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Sandrigo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SANDRIGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Sannicandro Garganico",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SANNICANDRO GARGANICO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Sanremo - Amaie Energia e Servizi Srl",
@@ -24436,6 +26542,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Sant'Angelo Lodigiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SANT'ANGELO LODIGIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Santa Lucia del Mela",
       "module": "junker_app",
       "default_params": {},
@@ -24452,6 +26566,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Santa Maria Ho\u00e8",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SANTA MARIA HO\u00c8"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Santi Cosma e Damiano",
@@ -24530,6 +26652,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Seregno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SEREGNO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Sermoneta - Del Prete Srl",
       "module": "junker_app",
       "default_params": {},
@@ -24572,6 +26702,22 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Settala",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SETTALA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Seveso",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SEVESO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Sezze - SPL",
       "module": "junker_app",
       "default_params": {},
@@ -24610,9 +26756,33 @@
       "id": "junker_app"
     },
     {
+      "title": "Sirone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SIRONE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Sirtori",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SIRTORI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "SiUnet",
       "module": "siunet_it",
       "default_params": {},
+      "id": "siunet_it"
+    },
+    {
+      "title": "Solbiate Olona",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SOLBIATE OLONA"
+      },
       "id": "siunet_it"
     },
     {
@@ -24628,10 +26798,42 @@
       "id": "junker_app"
     },
     {
+      "title": "Sondrio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SONDRIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Sordio",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Sordio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SORDIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Sorg\u00e0",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SORG\u00c0"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Sovico",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SOVICO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Spoltore - Rieco",
@@ -24652,10 +26854,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Stellanello",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "STELLANELLO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Stradella",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sueglio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SUEGLIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Suello",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SUELLO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Sulbiate",
@@ -24664,10 +26890,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Sulbiate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "SULBIATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Suno",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Taceno",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TACENO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Taranto (araccolta.it)",
@@ -24676,10 +26918,26 @@
       "id": "araccolta_it"
     },
     {
+      "title": "Taviano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TAVIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Termoli - Rieco Sud Scarl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Terni",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TERNI"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Terno d'Isola",
@@ -24694,10 +26952,34 @@
       "id": "junker_app"
     },
     {
+      "title": "Terrazzo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TERRAZZO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Terre Roveresche",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Testico",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TESTICO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Tiggiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TIGGIANO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Tivoli - ASA Tivoli Spa",
@@ -24718,6 +27000,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Torre De' Busi",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TORRE DE' BUSI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Torre de' Passeri",
       "module": "junker_app",
       "default_params": {},
@@ -24730,6 +27020,22 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Torrevecchia Pia",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TORREVECCHIA PIA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Torri Di Quartesolo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TORRI DI QUARTESOLO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Traona",
       "module": "junker_app",
       "default_params": {},
@@ -24740,6 +27046,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Trevenzuolo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TREVENZUOLO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Treviglio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TREVIGLIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Treviglio (BG)",
@@ -24756,10 +27078,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Trezzano Rosa",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TREZZANO ROSA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Trezzo Sull'Adda",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Trezzo Sull'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TREZZO SULL'ADDA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Tribiano",
@@ -24768,16 +27106,40 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Tribiano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TRIBIANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Tricase",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Tricase",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TRICASE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Triora",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Triuggio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TRIUGGIO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Trivento - Smaltimenti Sud",
@@ -24792,10 +27154,26 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Truccazzano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TRUCCAZZANO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Turate - Turcato Snc",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Turbigo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "TURBIGO"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Unione Basso Biferno - Impregico Srl",
@@ -24858,6 +27236,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Usmate Velate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "USMATE VELATE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Ussita",
       "module": "junker_app",
       "default_params": {},
@@ -24894,6 +27280,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Valgreghentino",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VALGREGHENTINO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Valle Camonica Servizi Srl",
       "module": "junker_app",
       "default_params": {},
@@ -24906,10 +27300,50 @@
       "id": "junker_app"
     },
     {
+      "title": "Valmadrera",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VALMADRERA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Valvarrone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VALVARRONE"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Vaprio D'Adda",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Vaprio D'Adda",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VAPRIO D'ADDA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Varedo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VAREDO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Varenna",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VARENNA"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Vasto - Pulchra Ambiente Srl",
@@ -24922,6 +27356,54 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Vedano Al Lambro",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VEDANO AL LAMBRO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Veduggio Con Colzano",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VEDUGGIO CON COLZANO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Verano Brianza",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VERANO BRIANZA"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Vercurago",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VERCURAGO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Verderio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VERDERIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Vernate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VERNATE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Vernio",
@@ -24964,10 +27446,50 @@
       "id": "junker_app"
     },
     {
+      "title": "Vigan\u00f2",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIGAN\u00d2"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Vigasio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIGASIO"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Vignate",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Vignate",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIGNATE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Villa Cortese",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VILLA CORTESE"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Villa Faraldi",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VILLA FARALDI"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Villanterio",
@@ -24994,6 +27516,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Villasanta",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VILLASANTA"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Villaspeciosa",
       "module": "junker_app",
       "default_params": {},
@@ -25006,10 +27536,34 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Vimercate (1)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIMERCATE (1)"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Vimercate (2)",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIMERCATE (2)"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Vimodrone",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Vimodrone",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIMODRONE"
+      },
+      "id": "siunet_it"
     },
     {
       "title": "Vinci",
@@ -25038,6 +27592,14 @@
       "id": "cem_ambiente_it"
     },
     {
+      "title": "Vizzolo Predabissi",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "VIZZOLO PREDABISSI"
+      },
+      "id": "siunet_it"
+    },
+    {
       "title": "Volsca Ambiente",
       "module": "junker_app",
       "default_params": {},
@@ -25060,6 +27622,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Zevio",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ZEVIO"
+      },
+      "id": "siunet_it"
+    },
+    {
+      "title": "Zibido San Giacomo",
+      "module": "siunet_it",
+      "default_params": {
+        "comune": "ZIBIDO SAN GIACOMO"
+      },
+      "id": "siunet_it"
     }
   ],
   "Japan": [
@@ -26125,9 +28703,9 @@
       "title": "ROAF (Romerike Avfallsforedling IKS)",
       "module": "minrenovasjon_no",
       "default_params": {
-        "county_id": 3205,
-        "house_number": 2,
-        "street_code": 12950,
+        "county_id": "3205",
+        "house_number": "2",
+        "street_code": "12950",
         "street_name": "Solvangen"
       },
       "id": "minrenovasjon_no"

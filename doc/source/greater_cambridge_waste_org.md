@@ -1,56 +1,68 @@
-# Greater Cambridge Waste
+# Greater Cambridge Waste, UK
 
-Support for schedules provided by [Greater Cambridge Waste](https://www.greatercambridgewaste.org), the new shared recycling and waste service for [Cambridge City Council](https://www.cambridge.gov.uk) and [South Cambridgeshire District Council](https://www.scambs.gov.uk), UK
+Support for schedules provided by [Greater Cambridge Waste, UK](https://greatercambridgewaste.org).
+
+Source for greatercambridgewaste.org, the shared recycling and waste service for Cambridge City Council and South Cambridgeshire District Council.
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: greater_cambridge_waste_org
       args:
         uprn: UPRN
+```
+
+### Using postcode and name_or_number
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: greater_cambridge_waste_org
+      args:
         postcode: POSTCODE
         name_or_number: NAME_OR_NUMBER
 ```
 
 ### Configuration Variables
 
-**POST_CODE**  
-*(string) (optional)*
+**uprn**  
+*(string) (alternative)*
 
-**NAME_OR_NUMBER**  
-*(integer | string) (optional)*
+**postcode**  
+*(string) (alternative)*
 
-**UPRN**  
-*(integrer | string) (optional)*
+**name_or_number**  
+*(string) (alternative)*
 
-You must provide either the UPRN, or the POSTCODE and NAME_OR_NUMBER
+Provide one of: `uprn` or `postcode` + `name_or_number`.
 
-## UPRN Example (Preferred)
+## Example
+
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: greater_cambridge_waste_org
       args:
         uprn: 200004170895
 ```
 
-## Address Example
+### Using postcode and name_or_number
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: greater_cambridge_waste_org
       args:
-        postcode: "CB22 5HT"
-        name_or_number: "Rectory Farm Cottage"
+        postcode: CB13JD
+        name_or_number: 37
 ```
 
-## How to find your UPRN
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+## How to get the source arguments
 
-Alternatively, look at the url of the web page displaying your collection schedule. Your UPRN is the number at the end of the url.
-
-For example: _greatercambridgewaste.org/find-your-bin-collection-day#id=`10091624540`_
+Provide your UPRN, or your postcode together with your house name or number. Find your UPRN at https://www.findmyaddress.co.uk/
