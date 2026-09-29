@@ -4942,6 +4942,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Fort Lauderdale, FL](/doc/source/fort_lauderdale_fl_us.md) / fortlauderdale.gov/government/departments-i-z/public-works/operations/sanitation-operations/collection-programs
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
+- [Hanahan, SC](/doc/source/cityofhanahan_com.md) / cityofhanahan.com/publicworks/page/household-trash-collection-schedule
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler

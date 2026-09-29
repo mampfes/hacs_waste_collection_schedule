@@ -7731,6 +7731,13 @@
     "howto": {},
     "urls": {}
   },
+  "cityofhanahan_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cityofhanahan_com.md",
+    "howto": {
+      "en": "The city publishes its collection days by named area, without an address lookup. Check the <a href=\"https://www.cityofhanahan.com/publicworks/page/household-trash-collection-schedule\" target=\"_blank\">household trash collection schedule</a> and select the area that serves your home. Spring Valley Mobile Home Park, Gold Cup Springs, North Rhett and Lakeview subdivision have their own household waste day; choose the Tuesday household waste area only for the streets and street segments the city lists under Tuesday. Holiday and emergency changes are not included."
+    },
+    "urls": {}
+  },
   "hoover_al_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hoover_al_us.md",
     "howto": {
