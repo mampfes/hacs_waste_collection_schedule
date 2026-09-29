@@ -1,75 +1,70 @@
-from datetime import datetime
+import re
+from collections.abc import Iterable
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "West Suffolk Council"
-DESCRIPTION = "Source for West Suffolk Council."
-URL = "https://westsuffolk.gov.uk/"
-TEST_CASES = {
-    "Flat, The Flying Shuttle, Three Counties Way, Withersfield, CB9 7FB": {
-        "uprn": 10090739388
-    },
-    "Haere Mai, The Street, Troston, IP31 1EW": {"uprn": "100091387226"},
+# The council: green-lidded bin for paper and card, blue bin for mixed
+# recycling, brown bin for the paid garden waste service.
+_TYPE_MAP = {
+    "Black Bins": wt.GENERAL_WASTE,
+    "Blue Bins": wt.RECYCLABLES,
+    "Brown Bins": wt.GARDEN_WASTE,
+    "Food Bins": wt.FOOD_WASTE,
+    "Green Bins": wt.PAPER,
 }
 
-
-ICON_MAP = {
-    "Black bin": Icons.GENERAL_WASTE,
-    "Black Bins": Icons.GENERAL_WASTE,
-    "Brown bin": Icons.BIO_KITCHEN,
-    "Brown Bins": Icons.BIO_KITCHEN,
-    "Blue bin": Icons.RECYCLING,
-    "Blue Bins": Icons.RECYCLING,
-    "Food Bins": Icons.BIO_KITCHEN,
-    "Green Bins": Icons.GARDEN,
-}
+# "Food Bins: Tuesday 29th September": the page states no year.
+_ENTRY = re.compile(
+    r"(?P<label>[A-Za-z]+ Bins):\s*[A-Za-z]+\s+(?P<day>\d{1,2})(?:st|nd|rd|th)?\s+(?P<month>[A-Za-z]+)"
+)
 
 
-API_URL = "https://maps.westsuffolk.gov.uk/MyWestSuffolk.aspx"
+def _entries(text: str, source=None) -> Iterable[tuple[str, str]]:
+    """The ``(day month, label)`` rows of the page's "next bin collection days" list."""
+    for match in _ENTRY.finditer(text):
+        yield f"{match['day']} {match['month']}", match["label"]
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+@final
+class Source(BaseSource):
+    TITLE = "West Suffolk Council"
+    DESCRIPTION = "Source for West Suffolk Council."
+    URL = "https://westsuffolk.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        session = requests.session()
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
-            }
-        )
-        args = {"UniqueId": self._uprn, "action": "SetAddress"}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+    ]
 
-        # get json file
-        r = session.get(API_URL, params=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        waste_panel = soup.find("div", {"aria-label": "Waste and recycling"}).find(
-            "div", {"class": "atPanelData"}
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Flat, The Flying Shuttle, Three Counties Way, Withersfield, CB9 7FB": {
+            "uprn": 10090739388
+        },
+        "Haere Mai, The Street, Troston, IP31 1EW": {"uprn": "100091387226"},
+    }
 
-        bin_type = None
-        entries = []
-        today = datetime.now().date()
+    PARAMS = (uprn(),)
 
-        for collection in waste_panel.contents:
-            if isinstance(collection, Tag):
-                if collection.name == "strong":
-                    bin_type = " ".join(collection.text.strip().strip(":").split())
-                continue
+    retrieve = retrievers.HttpGetRetriever(
+        "https://maps.westsuffolk.gov.uk/MyWestSuffolk.aspx",
+        params=lambda uprn, **_: {"UniqueId": uprn, "action": "SetAddress"},
+    )
 
-            collection = collection.strip()
-            date_str = collection.strip()
-            # date: Saturday 30th December
-            coll_date = parser.parse(date_str).date()
-            if (today - coll_date).days > 180:
-                coll_date = coll_date.replace(year=coll_date.year + 1)
+    parse = parsers.HtmlTextParser()
 
-            entries.append(
-                Collection(date=coll_date, t=bin_type, icon=ICON_MAP.get(bin_type))
-            )
-        return entries
+    preprocess = staticmethod(_entries)
+
+    transform = RowTransformer(
+        parse_date=date_parsers.nearest_year("%d %B"),
+        type_value_map=_TYPE_MAP,
+    )
