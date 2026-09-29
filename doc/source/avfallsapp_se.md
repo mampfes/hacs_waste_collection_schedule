@@ -11,39 +11,40 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `sigtuna`: Sigtuna (Sivab)
 - `teknikivast`: Teknik i Väst (Arvika/Eda)
 - `nodra`: Nodra (Norrköping)
+- `atvidaberg`: Åtvidaberg
+- `boras`: Borås
+- `finspang`: Finspång
+- `habo`: Håbo
+- `kil`: Kil
+- `kinda`: Kinda
+- `knivsta`: Knivsta
+- `kungsbacka`: Kungsbacka
+- `vallentuna`: Vallentuna
+- `dalavatten`: Dala Vatten och Avfall
+- `vafab`: Vafab Miljö
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
 
-Should be possible to add by some minor additions
+The following providers are known to use Avfallsapp but do not expose the
+`/wp-json/nova/v1` API on `<name>.avfallsapp.se` (404), so they cannot be added yet.
 <!--Begin of service section-->
-`atvidaberg`: Åtvidaberg
-`boras`: Borås
-`finspang`: Finspång
 `gullspang`: Gullspång
-`habo`: Habo
-`kil`: Kil
-`kinda`: Kinda
-`knivsta`: Knivsta
-`kungsbacka`: Hungsbacka
 `molndal`: Mölndal
 `soderhamn`: Söderhamn
 `ulricehamn`: Ulricehamn
-`vallentuna`: Vallentuna
 <!--End of service section-->
 
 ## Current un-supported generic service providers (Companies?)
 
-Could be possible to add by some minor additions
+The API host of these providers is unknown or returns an error.
 <!--Begin of service section-->
 `avfallsappen`: Avfallsappen
 `munipal`: Munipal
-`dalavatten`: Dalavatten
 `june`: June
 `nodava`: Nodava
 `rambo`: Rambo
 `sysav`: Sysav
-`vafab`: Vafab
 <!--End of service section-->
 
 ## Configuration via configuration.yaml
