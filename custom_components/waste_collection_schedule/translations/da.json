@@ -30097,6 +30097,33 @@
         },
         "data_description": {}
       },
+      "args_threerivers_gov_uk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "Postnummer",
+          "uprn": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "postcode": "Dit postnummer",
+          "uprn": "Din fulde adresse"
+        }
+      },
+      "reconfigure_threerivers_gov_uk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "Postnummer",
+          "uprn": "Adresse"
+        },
+        "data_description": {
+          "postcode": "Dit postnummer",
+          "uprn": "Din fulde adresse"
+        }
+      },
       "args_thurrock_gov_uk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

@@ -7281,6 +7281,11 @@
     },
     "urls": {}
   },
+  "threerivers_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/threerivers_gov_uk.md",
+    "howto": {},
+    "urls": {}
+  },
   "thurrock_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thurrock_gov_uk.md",
     "howto": {},

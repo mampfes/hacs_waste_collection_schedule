@@ -4838,6 +4838,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
+- [Three Rivers District Council](/doc/source/threerivers_gov_uk.md) / threerivers.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
 - [Torbay Council](/doc/source/torbay_council_gov_uk.md) / torbay.gov.uk
