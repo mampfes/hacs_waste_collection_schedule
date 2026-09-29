@@ -100,7 +100,14 @@ class Source:
     def __init__(self, key, idHouseNumber, wasteTypes=None):
         self._key = key
         self._id_house_number = str(idHouseNumber)
-        self._waste_types = [str(w) for w in wasteTypes] if wasteTypes else None
+        if isinstance(wasteTypes, str):
+            self._waste_types = [
+                x.strip() for x in wasteTypes.split(",") if x.strip()
+            ] or None
+        elif wasteTypes:
+            self._waste_types = [str(w) for w in wasteTypes]
+        else:
+            self._waste_types = None
         # Some providers (e.g. KELL GmbH) reject GraphQL requests that don't
         # carry an Origin/Referer header matching their own website. Look up
         # the provider's URL (if known) so we can send it proactively.
