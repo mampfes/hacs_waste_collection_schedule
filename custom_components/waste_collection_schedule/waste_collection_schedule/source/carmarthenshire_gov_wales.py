@@ -21,6 +21,7 @@ class Source(BaseSource):
         wt.GENERAL_WASTE,
         wt.GLASS,
         wt.GARDEN_WASTE,
+        wt.OTHER,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -62,5 +63,9 @@ class Source(BaseSource):
             "blue": [wt.RECYCLABLES, wt.FOOD_WASTE],
             "black": [wt.GENERAL_WASTE, wt.GLASS],
             "garden": wt.GARDEN_WASTE,
+            # No canonical type for nappy and hygiene waste; the raw label is
+            # carried so the user still sees which collection it is.
+            "Hygiene waste": wt.OTHER,
         },
+        carry_raw_label=True,
     )

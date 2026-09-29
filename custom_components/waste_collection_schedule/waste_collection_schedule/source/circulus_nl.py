@@ -41,6 +41,7 @@ class Source(BaseSource):
         wt.ORGANIC,
         wt.PAPER,
         wt.RECYCLABLES,
+        wt.OTHER,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -81,5 +82,9 @@ class Source(BaseSource):
             "PAP": wt.PAPER,
             "PMD": wt.RECYCLABLES,
             "ZWAKRA": wt.RECYCLABLES,
+            # The API's meaning of this code is not documented; keep the raw
+            # label visible rather than guess a type.
+            "BESTAFR": wt.OTHER,
         },
+        carry_raw_label=True,
     )
