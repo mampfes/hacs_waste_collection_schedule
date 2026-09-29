@@ -38,6 +38,11 @@ PARAM_TRANSLATIONS = {
         "house_number": "House number",
         "addition": "Addition",
     },
+    "nl": {
+        "postalcode": "Postcode",
+        "house_number": "Huisnummer",
+        "addition": "Toevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -46,6 +51,11 @@ PARAM_DESCRIPTIONS = {
         "house_number": "House number",
         "addition": "House letter or addition (optional, only needed when multiple addresses share the same postal code and house number)",
     },
+    "nl": {
+        "postalcode": "Nederlandse postcode (4 cijfers + 2 letters, bijv. 8148PC)",
+        "house_number": "Huisnummer",
+        "addition": "Huisletter of toevoeging (optioneel, alleen nodig als meerdere adressen dezelfde postcode en huisnummer delen)",
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -53,6 +63,11 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "Use the same postal code and house number you would enter at "
         "https://www.rova.nl/afvalkalender. If your address has a letter or "
         "addition, provide it in the 'addition' field."
+    ),
+    "nl": (
+        "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
+        "https://www.rova.nl/afvalkalender. Als je adres een letter of "
+        "toevoeging heeft, geef deze dan in het 'addition'-veld."
     ),
 }
 

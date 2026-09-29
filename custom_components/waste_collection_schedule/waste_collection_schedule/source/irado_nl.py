@@ -56,6 +56,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Geben Sie die Postleitzahl (z. B. 3131VX) und die Hausnummer ein, die Sie auch auf https://www.irado.nl/afvalkalender verwenden würden",
     "fr": "Saisissez le code postal (par ex. 3131VX) et le numéro de maison que vous utiliseriez sur https://www.irado.nl/afvalkalender",
     "it": "Inserisci il CAP (ad es. 3131VX) e il numero civico che utilizzeresti su https://www.irado.nl/afvalkalender",
+    "nl": "Vul de postcode (bijv. 3131VX) en het huisnummer in die je zou gebruiken op https://www.irado.nl/afvalkalender",
 }
 
 PARAM_TRANSLATIONS = {
@@ -79,6 +80,11 @@ PARAM_TRANSLATIONS = {
         "house_number": "Numero civico",
         "suffix": "Suffisso del numero civico",
     },
+    "nl": {
+        "postcode": "Postcode",
+        "house_number": "Huisnummer",
+        "suffix": "Huisnummertoevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -101,6 +107,11 @@ PARAM_DESCRIPTIONS = {
         "postcode": "CAP olandese, ad es. 3131VX",
         "house_number": "Numero civico, ad es. 3",
         "suffix": "Suffisso opzionale del numero civico, ad es. A",
+    },
+    "nl": {
+        "postcode": "Nederlandse postcode, bijv. 3131VX",
+        "house_number": "Huisnummer, bijv. 3",
+        "suffix": "Optionele huisnummertoevoeging, bijv. A",
     },
 }
 
