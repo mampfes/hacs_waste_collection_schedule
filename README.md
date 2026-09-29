@@ -4936,6 +4936,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kansas City, MO](/doc/source/kansas_city_mo_us.md) / kcmo.gov/city-hall/trash
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
+- [Miami-Dade County](/doc/source/miamidade_gov.md) / miamidade.gov/global/solidwaste/home.page
 - [Mill Valley Refuse Service](/doc/source/millvalleyrefuse_com.md) / millvalleyrefuse.com
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates

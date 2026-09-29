@@ -7732,6 +7732,13 @@
     },
     "urls": {}
   },
+  "miamidade_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/miamidade_gov.md",
+    "howto": {
+      "en": "Enter your full street address including city, state and ZIP code (e.g. '9232 SW 148th Ct, Miami, FL 33196'). It is matched against the county's Garbage and Recycling Pickup Days routes (https://gisweb.miamidade.gov/garbageandrecyclingpickupdays/)."
+    },
+    "urls": {}
+  },
   "millvalleyrefuse_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/millvalleyrefuse_com.md",
     "howto": {
