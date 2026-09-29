@@ -1,52 +1,56 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Stafford Borough Council"
-DESCRIPTION = "Source for bin collection services for Stafford Borough Council, UK."
-URL = "https://www.staffordbc.gov.uk/"
-TEST_CASES = {
-    "domestic": {"uprn": "100031780029"},
-}
-
-API_URL = "https://www.staffordbc.gov.uk/address/"
-
-ICON_MAP = {
-    "Blue bin": Icons.RECYCLING,
-    "Brown bin": Icons.BIO_KITCHEN,
-    "Green bin": Icons.GENERAL_WASTE,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+def _label(row) -> str:
+    return row.find("td").get_text(strip=True)
 
-    def fetch(self):
-        req = requests.get(f"https://www.staffordbc.gov.uk/address/{self._uprn}")
 
-        soup = BeautifulSoup(req.content, "html.parser")
+def _next_date(row) -> str | None:
+    """Only the "Next ... collection date" rows carry a date."""
+    if not _label(row).startswith("Next"):
+        return None
+    return row.find_all("td")[1].get_text(strip=True)
 
-        greenbin = soup.find_all("td")[5]
-        bluebin = soup.find_all("td")[7]
 
-        entries = [
-            Collection(
-                date=datetime.strptime(
-                    greenbin.text.strip(), "%a %d %b %Y"
-                ).date(),  # Collection date
-                t="Green Bin",  # Collection type
-                icon=ICON_MAP.get("Green bin"),  # Collection icon
-            ),
-            Collection(
-                date=datetime.strptime(
-                    bluebin.text.strip(), "%a %d %b %Y"
-                ).date(),  # Collection date
-                t="Blue Bin",  # Collection type
-                icon=ICON_MAP.get("Blue bin"),  # Collection icon
-            ),
-        ]  # List that holds collection schedule
+@final
+class Source(BaseSource):
+    TITLE = "Stafford Borough Council"
+    DESCRIPTION = "Source for bin collection services for Stafford Borough Council, UK."
+    URL = "https://www.staffordbc.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "domestic": {"uprn": "100031780029"},
+    }
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering your address details."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: f"https://www.staffordbc.gov.uk/address/{uprn}",
+    )
+    parse = parsers.HtmlParser("table.my-area tr")
+    transform = HtmlTransformer(
+        date_getter=_next_date,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%a %d %b %Y"),
+        type_value_map={
+            "Next refuse (green bin) collection date": wt.GENERAL_WASTE,
+            "Next recycling (blue bin and bag) collection date": wt.RECYCLABLES,
+        },
+    )

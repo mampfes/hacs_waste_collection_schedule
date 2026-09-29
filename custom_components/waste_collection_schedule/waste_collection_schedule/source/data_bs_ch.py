@@ -1,93 +1,65 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Basel-Stadt"
-DESCRIPTION = "Source for waste collection schedule of Basel-Stadt, Switzerland."
-URL = "https://data.bs.ch"
-COUNTRY = "ch"
+_ZONES = ["A", "B", "C", "D", "E", "F", "G", "H", "GUF"]
 
-TEST_CASES = {
-    "Zone A": {"zone": "A"},
-    "Zone B": {"zone": "B"},
-}
-
-ICON_MAP = {
-    "Kehrichtabfuhr": Icons.GENERAL_WASTE,
-    "Grünabfuhr": Icons.ORGANIC,
-    "Papierabfuhr": Icons.PAPER,
-    "Grobsperrgut": Icons.BULKY,
-    "Metallabfuhr": Icons.METAL,
-    "Häckseldienst": Icons.GARDEN,
-    "Unbrennbares": Icons.GENERAL_WASTE,
-}
-
-VALID_ZONES = ["A", "B", "C", "D", "E", "F", "G", "H", "GUF"]
-
-API_URL = "https://data.bs.ch/api/records/1.0/search/"
-DATASET = "100096"
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your zone on the Basel-Stadt zone map at https://map.geo.bs.ch (search for 'Abfuhrzonen').",
-    "de": "Finden Sie Ihre Zone auf der Basel-Stadt Zonenkarte unter https://map.geo.bs.ch (suchen Sie nach 'Abfuhrzonen').",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"zone": "Your waste collection zone (A-H or GUF)."},
-    "de": {"zone": "Ihre Abfuhrzone (A-H oder GUF)."},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"zone": "Zone"},
-    "de": {"zone": "Zone"},
+_TYPE_MAP = {
+    "Kehrichtabfuhr": wt.GENERAL_WASTE,
+    "Grünabfuhr": wt.ORGANIC,
+    "Papierabfuhr": wt.PAPER,
+    "Grobsperrgut": wt.BULKY_WASTE,
+    "Häckseldienst": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, zone: str):
-        self._zone = zone.strip().upper()
+@final
+class Source(BaseSource):
+    TITLE = "Basel-Stadt"
+    DESCRIPTION = "Source for waste collection schedule of Basel-Stadt, Switzerland."
+    URL = "https://data.bs.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-        if self._zone not in VALID_ZONES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "zone", self._zone, suggestions=VALID_ZONES
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Zone A": {"zone": "A"},
+        "Zone B": {"zone": "B"},
+    }
 
-    def fetch(self) -> list[Collection]:
-        now = datetime.now()
-        entries: list[Collection] = []
+    PARAMS = (dropdown("zone", _ZONES, label="Zone"),)
 
-        for year in [now.year, now.year + 1] if now.month == 12 else [now.year]:
-            params: dict[str, str | int] = {
-                "dataset": DATASET,
+    HOWTO: ClassVar[dict] = {
+        "en": "Your waste collection zone (A-H or GUF).",
+        "de": "Ihre Abfuhrzone (A-H oder GUF).",
+    }
+
+    retrieve = retrievers.YearlyRetriever(
+        fetch=retrievers.Request(
+            "https://data.bs.ch/api/records/1.0/search/",
+            params=lambda year, context, zone, **_: {
+                "dataset": "100096",
                 "rows": 500,
-                "refine.zone": self._zone,
+                "refine.zone": zone,
                 "q": f"termin>={year}-01-01 AND termin<={year}-12-31",
                 "sort": "termin",
-            }
-            r = requests.get(
-                API_URL,
-                params=params,
-                timeout=30,
-            )
-            r.raise_for_status()
-            data = r.json()
-
-            for rec in data.get("records", []):
-                fields = rec.get("fields", {})
-                date_str = fields.get("termin")
-                waste_type = fields.get("art")
-
-                if not date_str or not waste_type:
-                    continue
-
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date_str, "%Y-%m-%d").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+            },
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsonParser("records"))
+    transform = JsonTransformer(
+        date_key=lambda record: record["fields"]["termin"],
+        type_key=lambda record: record["fields"]["art"],
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map=_TYPE_MAP,
+    )
