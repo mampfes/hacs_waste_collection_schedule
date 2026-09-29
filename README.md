@@ -3346,6 +3346,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Roslagsvatten](/doc/source/edpevent_se.md) / roslagsvatten.se
 - [Roslagsvatten](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Samverkan Återvinning Miljö (SÅM)](/doc/source/samiljo_se.md) / samiljo.se
+- [Sigtuna (Sivab)](/doc/source/avfallsapp_se.md) / sivab.se
 - [Sjöbo kommun](/doc/source/sjobo_se.md) / sjobo.se
 - [Skellefteå](/doc/source/edpevent_se.md) / skelleftea.se
 - [SRV Återvinning](/doc/source/srvatervinning_se.md) / srvatervinning.se

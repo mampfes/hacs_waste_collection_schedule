@@ -22053,6 +22053,14 @@
       "id": "samiljo_se"
     },
     {
+      "title": "Sigtuna (Sivab)",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "sigtuna"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Sj\u00f6bo kommun",
       "module": "sjobo_se",
       "default_params": {},
