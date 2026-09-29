@@ -1,72 +1,78 @@
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+from waste_collection_schedule.parsers import EachResponse, JsonParser
+from waste_collection_schedule.retrievers import FanOutRetriever, Lookup, Request
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Snaga Maribor"
-DESCRIPTION = "Source for Snaga Maribor."
-URL = "https://snaga-mb.si/"
-TEST_CASES = {
-    "Ruska ulica 24": {"street": "Ruska ulica", "house_number": 24},
-}
+_BASE_URL = "https://arhiv.snaga-mb.si/mso"
 
 
-BIN_TYPES = {
-    "O": "Ost.",
-    "B": "Bio.",
-    "U": "Emb.",
-    "P": "Pap.",
-    "S": "Stek.",
-}
-ICON_MAP = {
-    "O": Icons.GENERAL_WASTE,
-    "B": Icons.ORGANIC,
-    "U": Icons.RECYCLING,
-    "P": Icons.NEWSPAPER,
-    "S": Icons.GLASS,
-}
+def _address_ids(response, **_) -> list[str]:
+    """The ids of every address entry matching the street and house number.
 
-BASE_URL = "https://arhiv.snaga-mb.si/mso"
-ADDRESS_ID_URL = f"{BASE_URL}/tmRSkjpgG.php"
-COLLECTION_URL = f"{BASE_URL}/tmRSk.php"
+    An unknown address is answered with a literal ``null`` body.
+    """
+    entries = response.json()
+    if not entries:
+        raise SourceArgumentExceptionMultiple(
+            ["street", "house_number"], "Invalid address"
+        )
+    return [entry["OM"] for entry in entries]
 
 
-class Source:
-    def __init__(self, street: str, house_number: str | int):
-        self._street: str = street
-        self._house_number: str | int = house_number
+def _iso_date(item) -> str:
+    return f"{item['Leto']}-{int(item['Mesec']):02d}-{int(item['Dan']):02d}"
 
-    def fetch(self) -> list[Collection]:
-        args = {
-            "Naziv": self._street,
-            "HS": self._house_number,
-            "IDo": "0",
-            "_": int(datetime.now().timestamp() * 1000),
-        }
-        r = requests.get(ADDRESS_ID_URL, params=args)
-        r.raise_for_status()
-        if r.text == "null" or not r.json():
-            raise SourceArgumentExceptionMultiple(
-                ["street", "house_number"], "Invalid address"
-            )
 
-        entries = []
-        for id in r.json():
-            address_id = id["OM"]
-            r = requests.get(
-                COLLECTION_URL,
-                params={"sql": address_id, "_": int(datetime.now().timestamp() * 1000)},
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Snaga Maribor"
+    DESCRIPTION = "Source for Snaga Maribor."
+    URL = "https://snaga-mb.si/"
+    COUNTRY = "si"
+    RAISE_ON_EMPTY = True
 
-            for collection in r.json():
-                day = int(collection["Dan"])
-                month = int(collection["Mesec"])
-                year = int(collection["Leto"])
-                date_ = date(year, month, day)
-                type_char = collection["Odp"]
-                bin_type = BIN_TYPES.get(type_char, type_char)
-                icon = ICON_MAP.get(type_char)
-                entries.append(Collection(date=date_, t=bin_type, icon=icon))
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
 
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "Ruska ulica 24": {"street": "Ruska ulica", "house_number": 24},
+    }
+
+    PARAMS = (street(), house_number())
+
+    retrieve = FanOutRetriever(
+        prepare=Lookup(
+            f"{_BASE_URL}/tmRSkjpgG.php",
+            params=lambda street, house_number, **_: {
+                "Naziv": street,
+                "HS": house_number,
+                "IDo": "0",
+            },
+            pick=_address_ids,
+        ),
+        targets=lambda source, ids: ids,
+        fetch=Request(
+            f"{_BASE_URL}/tmRSk.php", params=lambda id, ids, **_: {"sql": id}
+        ),
+    )
+    parse = EachResponse(JsonParser())
+    transform = JsonTransformer(
+        date_key=_iso_date,
+        type_key="Odp",
+        type_value_map={
+            "O": wt.GENERAL_WASTE,
+            "B": wt.ORGANIC,
+            "U": wt.RECYCLABLES,
+            "P": wt.PAPER,
+            "S": wt.GLASS,
+        },
+    )
