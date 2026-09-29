@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search e923a462ae",
+      "method": "GET",
+      "url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search",
+      "final_url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search?address=Gran%C3%A4ngsv%C3%A4gen+1",
+      "body": "{\"params\":[[\"address\",\"Gran\u00e4ngsv\u00e4gen 1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.33",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "1404",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Tue, 29 Sep 2026 19:05:37 GMT",
+        "server": "LiteSpeed",
+        "alt-svc": "h3=\":443\"; ma=2592000, h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "eyJTa1x1MDBmNnZkZSI6W3siYWRkcmVzcyI6IkdyYW5cdTAwZTRuZ3N2XHUwMGU0Z2VuIDEiLCJ6aXBfY2l0eSI6IlNrXHUwMGY2dmRlIiwicGxhbnRfbnVtYmVyIjoiZXlKcGRpSTZJak16YVhsek1EaFFTM0JOWkZoUlZscERVMUJZVmxFOVBTSXNJblpoYkhWbElqb2lXbkJMVHpWR1pVUllhMEp6WlZaWVowdEdTR2d5ZHowOUlpd2liV0ZqSWpvaU9EVm1NREkyWmpVM1pEQmhOelF5WW1RNU9EazNPVE5qWmpKbE56UTNOak13WTJJNVpUZzJaVFkxTWpGalpUY3pNemd6Tm1SbU5EUm1NMlpoWTJJMk5TSXNJblJoWnlJNklpSjkiLCJ0eXBlIjoiU29waFx1MDBlNG10bmluZyIsImFkZHJlc3NUeXBlIjoibmV4dC1waWNrdXAifSx7ImFkZHJlc3MiOiJHcmFuXHUwMGU0bmdzdlx1MDBlNGdlbiAxMCIsInppcF9jaXR5IjoiU2tcdTAwZjZ2ZGUiLCJwbGFudF9udW1iZXIiOiJleUpwZGlJNklraEZkMEl4V2pGRlRWWkNhVXN3U1UxSFVqUnhMMmM5UFNJc0luWmhiSFZsSWpvaWJrUXZaMlpaV205MVMzazRUSE42VlhObk9VNUxRVDA5SWl3aWJXRmpJam9pWmpZMlptVTFOemxpTUdaak5qUmxaREZqWW1Jek5tWXhOekl5TmpFME4ySmlaR0UyTXpNNVpURmtaRFZrWldFek5qUXpZV0UyTldKbU5HWmpZVGhqWlNJc0luUmhaeUk2SWlKOSIsInR5cGUiOiJTb3BoXHUwMGU0bXRuaW5nIiwiYWRkcmVzc1R5cGUiOiJuZXh0LXBpY2t1cCJ9LHsiYWRkcmVzcyI6IkdyYW5cdTAwZTRuZ3N2XHUwMGU0Z2VuIDExIiwiemlwX2NpdHkiOiJTa1x1MDBmNnZkZSIsInBsYW50X251bWJlciI6ImV5SnBkaUk2SWpGUmRGZHBka2QzYnpOeEt6UlBVSFI2T1hrclVYYzlQU0lzSW5aaGJIVmxJam9pWmpSRE1YaHVOVEF3YVVSaVMwNUNZMjg1WkhKeFVUMDlJaXdpYldGaklqb2lNMlZpWVdSaVptSTBNbU5sWkRSa1lqQXpNV0l4T1Rjek5EWmxNelUxT1RnMlptTTROV1ZoTXpVME56RXdaakk1T0Rjd09UTmhOREJqTW1NME56bG1OaUlzSW5SaFp5STZJaUo5IiwidHlwZSI6IlNvcGhcdTAwZTRtdG5pbmciLCJhZGRyZXNzVHlwZSI6Im5leHQtcGlja3VwIn0seyJhZGRyZXNzIjoiR3Jhblx1MDBlNG5nc3ZcdTAwZTRnZW4gMTIiLCJ6aXBfY2l0eSI6IlNrXHUwMGY2dmRlIiwicGxhbnRfbnVtYmVyIjoiZXlKcGRpSTZJbUpNYkZCaVJITkplRXRQWTFGc1Z6ZEZTWFpITVVFOVBTSXNJblpoYkhWbElqb2laR2xxVm05dU1qaHRMMkZYYkhsb1VsZHRLM1l6UVQwOUlpd2liV0ZqSWpvaU56VmhaVGhtTVRGbE0yVTRZalU1T0dWbVkyRmpZelJqWldGa1pUQTRZV0UzTlRjd05Ua3dZVFEwWXprMk4yWTBNamxpWkRNNE9XVTFOVE14WmpJek9DSXNJblJoWnlJNklpSjkiLCJ0eXBlIjoiU29waFx1MDBlNG10bmluZyIsImFkZHJlc3NUeXBlIjoibmV4dC1waWNrdXAifSx7ImFkZHJlc3MiOiJHcmFuXHUwMGU0bmdzdlx1MDBlNGdlbiAxMyIsInppcF9jaXR5IjoiU2tcdTAwZjZ2ZGUiLCJwbGFudF9udW1iZXIiOiJleUpwZGlJNkltdEdhWFpyV2xNM1ZqTklkVzB6TkZCd1RXSkVURkU5UFNJc0luWmhiSFZsSWpvaWIxSktXbms0ZFdWVlRtRjBWVWczZWtReFJUUjBVVDA5SWl3aWJXRmpJam9pWmpKaE4yRXpNV1ppTm1Fd01HTTROVEJrTVRFd1pUSmhaREZpWVRrMllqSXdNV1ptWkdOaFptVTBZemRsT0RBM09UWTFOekJpWWpNNFpHUmpOVEEwTnlJc0luUmhaeUk2SWlKOSIsInR5cGUiOiJTb3BoXHUwMGU0bXRuaW5nIiwiYWRkcmVzc1R5cGUiOiJuZXh0LXBpY2t1cCJ9LHsiYWRkcmVzcyI6IkdyYW5cdTAwZTRuZ3N2XHUwMGU0Z2VuIDE0IiwiemlwX2NpdHkiOiJTa1x1MDBmNnZkZSIsInBsYW50X251bWJlciI6ImV5SnBkaUk2SW5SdFlXRlBXbWhET0VGelkxSlVWRk5FUjJWNVEyYzlQU0lzSW5aaGJIVmxJam9pVTNkUmNFbHhZVUZLU1dOUGNUZzNNa1JIYlVZNVFUMDlJaXdpYldGaklqb2laR0ppWVRrek9XWmlNekptTUdWbU1XTXdOVEZtT1RFek16WXlNR1UzWWpNeE5XRmxNRGcxT1dVMVpEY3paRFprTnpjMU9URm1aVFJpTWpBeVpERXdNQ0lzSW5SaFp5STZJaUo5IiwidHlwZSI6IlNvcGhcdTAwZTRtdG5pbmciLCJhZGRyZXNzVHlwZSI6Im5leHQtcGlja3VwIn0seyJhZGRyZXNzIjoiR3Jhblx1MDBlNG5nc3ZcdTAwZTRnZW4gMTUiLCJ6aXBfY2l0eSI6IlNrXHUwMGY2dmRlIiwicGxhbnRfbnVtYmVyIjoiZXlKcGRpSTZJbloyUm5vd1ZFdHRLMUZyVjBoNmVubDBjVXBzY0VFOVBTSXNJblpoYkhWbElqb2lObGxyUWl0QksyZElZaTkxTWxOSUt6TkVkelpFVVQwOUlpd2liV0ZqSWpvaU56SmlNbVUyWW1KbE16VTNZVFJqWkRkbVptTmxOV016WlRaaVl6UmhOVFZsTmpnM05qQTJPVFl6WVRBek0yRTVaalZoTVRWa00ySTBNVGd5WkRCaE9DSXNJblJoWnlJNklpSjkiLCJ0eXBlIjoiU29waFx1MDBlNG10bmluZyIsImFkZHJlc3NUeXBlIjoibmV4dC1waWNrdXAifSx7ImFkZHJlc3MiOiJHcmFuXHUwMGU0bmdzdlx1MDBlNGdlbiAxNiIsInppcF9jaXR5IjoiU2tcdTAwZjZ2ZGUiLCJwbGFudF9udW1iZXIiOiJleUpwZGlJNkluTXdXSFpQVkVjclQyMUxlV0YzYTBKRWVtMTZlR2M5UFNJc0luWmhiSFZsSWpvaVVsaHpRMGd2U25wcGNYZEROVzlOVVVoT1dVRkdkejA5SWl3aWJXRmpJam9pWmpRMFlXSXlNMlpqTnpGbU4yTmpZekJrTkRObVpqRm1PVEl6WW1Oa01qZzVZelk0Tnprek5USmlZelJrT1dRNE5EY3hPR1F6TkdGaE9URmlZekl3TkNJc0luUmhaeUk2SWlKOSIsInR5cGUiOiJTb3BoXHUwMGU0bXRuaW5nIiwiYWRkcmVzc1R5cGUiOiJuZXh0LXBpY2t1cCJ9LHsiYWRkcmVzcyI6IkdyYW5cdTAwZTRuZ3N2XHUwMGU0Z2VuIDE3IiwiemlwX2NpdHkiOiJTa1x1MDBmNnZkZSIsInBsYW50X251bWJlciI6ImV5SnBkaUk2SWxWQmExTk9SR0ZoTUU5aWNrdHFhM2hIVFhad1VWRTlQU0lzSW5aaGJIVmxJam9pVmxkNmVFbFBiR2wwU0hoTmJsbzBVR3h5WVRkelVUMDlJaXdpYldGaklqb2lNbVppTlRrek16TXpNVFZrWlRrMVpERTVNVGMwT0RGak9HRTNaVEZrTmpKbVpqSXlabVkxTlRZM05UQmxPVFJoWWpsaE0yVTFObVE1TURRNE5qZG1aU0lzSW5SaFp5STZJaUo5IiwidHlwZSI6IlNvcGhcdTAwZTRtdG5pbmciLCJhZGRyZXNzVHlwZSI6Im5leHQtcGlja3VwIn0seyJhZGRyZXNzIjoiR3Jhblx1MDBlNG5nc3ZcdTAwZTRnZW4gMTgiLCJ6aXBfY2l0eSI6IlNrXHUwMGY2dmRlIiwicGxhbnRfbnVtYmVyIjoiZXlKcGRpSTZJbmhETUZkaGFqSm1OMVZVVGxaRWNHRnVSWFpoVDBFOVBTSXNJblpoYkhWbElqb2lVUzlpVDFWeFFVbHJRMGhIUmtGaVRpdFFZbkphWnowOUlpd2liV0ZqSWpvaVptUTBZVGd3WVRRMk4yTXpNR1F6TTJaa05UWmtNbVF3TVRZNU9URTRNMlU1TXpRNFpHVmtOekZpTkRVME9XTmtNVEl3TUdRM1ptTmhNV1F4WmpoaU5DSXNJblJoWnlJNklpSjkiLCJ0eXBlIjoiU29waFx1MDBlNG10bmluZyIsImFkZHJlc3NUeXBlIjoibmV4dC1waWNrdXAifSx7ImFkZHJlc3MiOiJHcmFuXHUwMGU0bmdzdlx1MDBlNGdlbiAxOSIsInppcF9jaXR5IjoiU2tcdTAwZjZ2ZGUiLCJwbGFudF9udW1iZXIiOiJleUpwZGlJNklrd3lhMFo1ZWt0MUwwaHlNVFozUzBwYVFtNTNURUU5UFNJc0luWmhiSFZsSWpvaVNrRkNhRUZDVDFSUFJ5OWhSa2xRTTJVeldrZ3JkejA5SWl3aWJXRmpJam9pTlRjeU4yWm1PR0poWXpaaFpEaGtNMlpqTURBd01XSTNaVEptWVRJeU9EUmlOREptTXpJeE1HUmhORFpsTUdRME56VXpaR00yTTJRd01qaGlNemRrWWlJc0luUmhaeUk2SWlKOSIsInR5cGUiOiJTb3BoXHUwMGU0bXRuaW5nIiwiYWRkcmVzc1R5cGUiOiJuZXh0LXBpY2t1cCJ9XX0="
+    },
+    {
+      "key": "POST https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address e3e31d5a5f",
+      "method": "POST",
+      "url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address",
+      "final_url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address",
+      "body": "{\"body\":[[\"plant_id\",\"eyJpdiI6IjMzaXlzMDhQS3BNZFhRVlpDU1BYVlE9PSIsInZhbHVlIjoiWnBLTzVGZURYa0JzZVZYZ0tGSGgydz09IiwibWFjIjoiODVmMDI2ZjU3ZDBhNzQyYmQ5ODk3OTNjZjJlNzQ3NjMwY2I5ZTg2ZTY1MjFjZTczMzgzNmRmNDRmM2ZhY2I2NSIsInRhZyI6IiJ9\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.33",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "326",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Tue, 29 Sep 2026 19:05:37 GMT",
+        "server": "LiteSpeed"
+      },
+      "content_b64": "eyJhZGRyZXNzIjoiR3Jhblx1MDBlNG5nc3ZcdTAwZTRnZW4gMSIsImNpdHkiOiJTa1x1MDBmNnZkZSIsInBsYW50X2lkIjoiZXlKcGRpSTZJbkZGWTBoSmMyUm9kM2xSU0RWNlVuZFZPQzl4Vm5jOVBTSXNJblpoYkhWbElqb2lSVTVSYVVWWmNDOTBTRlpET1VFMVNFcHNPUzl2WnowOUlpd2liV0ZqSWpvaU5EQmpOMk5rWXpsa1pXTTRNVGxpWm1ReE5XRmhZVEJrWkdJMk1UWXdZVGRsWlRZek1tVm1NalE1WW1Fek9XSm1ObVl4TjJRd01qQmpOMlEyWkRkbE5DSXNJblJoWnlJNklpSjkiLCJiaW5zIjpbeyJ0eXBlIjoiQnJcdTAwZTRubmJhcnQiLCJwaWNrdXBfZGF0ZSI6IjIwMjYtMTAtMDciLCJmb3JtYXR0ZWQiOiI3IG9rdG9iZXIifSx7InR5cGUiOiJNYXRhdmZhbGwiLCJwaWNrdXBfZGF0ZSI6IjIwMjYtMTAtMDciLCJmb3JtYXR0ZWQiOiI3IG9rdG9iZXIifV19"
+    }
+  ]
+}

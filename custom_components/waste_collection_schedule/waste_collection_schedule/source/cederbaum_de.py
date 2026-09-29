@@ -1,103 +1,79 @@
-import datetime
 import re
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    ExplodeList,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Cederbaum Braunschweig"
-DESCRIPTION = "Cederbaum Braunschweig Paperimüll"
-URL = "https://www.cederbaum.de"
-TEST_CASES = {
-    "Hans-Sommer-Str": {"street": "Hans-Sommer-Str."},
-    "Adolfstr 31-42": {"street": "Adolfstr. 31-42"},
-    "Am Schwarzen Berge": {"street": "am Schwarzen Berge "},
-}
+# The page lists every street as a <select> option (value = index) and holds the
+# dates of all streets in one inline script, ``var rate = ["d.m.Y,d.m.Y", ...]``,
+# one comma list per street index.
+_RATE_RE = re.compile(r"var rate = \[(.*?)\];", re.DOTALL)
 
-API_URL = "https://www.cederbaum.de/blaue-tonne/"
-ICON_MAP = {
-    "PAPER": Icons.PAPER,
-}
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
+def _street_dates(html: str, source) -> dict[str, dict]:
+    """Map each street name to the list of its collection dates."""
+    match = _RATE_RE.search(html)
+    if not match:
+        return {}
+    rates = [text.strip('"') for text in match.group(1).split('","')]
+    table: dict[str, dict] = {}
+    for option in BeautifulSoup(html, "html.parser").select("select option"):
+        value = str(option.get("value"))
+        if not value.isdigit() or int(value) >= len(rates):
+            continue
+        table[option.get_text().strip()] = {"dates": rates[int(value)].split(",")}
+    return table
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Cederbaum Braunschweig"
+    DESCRIPTION = "Cederbaum Braunschweig Paperimüll"
+    URL = "https://www.cederbaum.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [wt.PAPER]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Hans-Sommer-Str": {"street": "Hans-Sommer-Str."},
+        "Adolfstr 31-42": {"street": "Adolfstr. 31-42"},
+        "Am Schwarzen Berge": {"street": "am Schwarzen Berge "},
     }
-}
 
+    PARAMS = (street(),)
 
-class Source:
-    def __init__(self, street):
-        self._street = street
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street exactly as it is listed on "
+            "https://www.cederbaum.de/blaue-tonne/ (e.g. 'Adolfstr. 31-42')."
+        ),
+        "de": (
+            "Gib die Straße genau so ein, wie sie auf "
+            "https://www.cederbaum.de/blaue-tonne/ aufgeführt ist "
+            "(z. B. 'Adolfstr. 31-42')."
+        ),
+    }
 
-        self.page_source = None
-        self.street_id = None
-        self.collection_data = None
-
-    def fetch_page_source(self):
-        resp = requests.get(API_URL)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        self.page_source = soup
-
-    def get_street_id(self):
-        if not self.page_source:
-            raise ValueError("No page source found")
-
-        select = self.page_source.find("select")
-
-        if not select:
-            raise ValueError("No <select> tag found")
-
-        options = select.find_all("option")
-        for option in options:
-            value = option.get("value")
-            text = option.get_text()
-            if text.lower().strip() == self._street.lower().strip():
-                self.street_id = int(value)
-                break
-
-    def get_collection_data(self):
-        if not self.page_source:
-            raise ValueError("No page source found")
-
-        script_tags = self.page_source.find_all("script")
-        script_with_text = [tag for tag in script_tags if tag.string]
-        pattern = re.compile(r"var rate = \[(.*?)\];")
-
-        # the dates are stored in a hardcoded js array
-        raw_date_text = None
-        for script_tag in script_with_text:
-            match = pattern.search(script_tag.string)
-            if match:
-                raw_date_text = match.group(1)
-                break
-
-        if not raw_date_text:
-            raise ValueError("Raw date text not found")
-
-        # one list of dates per location
-        raw_dates = [text.strip('"') for text in raw_date_text.split('","')]
-        self.collection_data = [dates.split(",") for dates in raw_dates]
-
-    def fetch(self):
-        self.fetch_page_source()
-        self.get_street_id()
-        self.get_collection_data()
-
-        if not self.collection_data:
-            raise ValueError("No collection data found")
-
-        entries = []
-        waste_dates = self.collection_data[self.street_id]  # type: ignore
-        for waste_date in waste_dates:
-            date = datetime.datetime.strptime(waste_date, "%d.%m.%Y")
-
-            entries.append(
-                Collection(
-                    date=date.date(),
-                    t="Paper",
-                    icon=ICON_MAP.get("PAPER"),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever("https://www.cederbaum.de/blaue-tonne/")
+    parse = parsers.TextParser()
+    preprocess = Compose(
+        ArgumentLookup(_street_dates, argument="street"),
+        ExplodeList("dates", into="date"),
+    )
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=lambda record: "Paper",
+        type_value_map={"Paper": wt.PAPER},
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+    )

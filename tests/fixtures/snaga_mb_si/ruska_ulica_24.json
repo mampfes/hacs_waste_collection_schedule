@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://arhiv.snaga-mb.si/mso/tmRSkjpgG.php 4e383c4a0e",
+      "method": "GET",
+      "url": "https://arhiv.snaga-mb.si/mso/tmRSkjpgG.php",
+      "final_url": "https://arhiv.snaga-mb.si/mso/tmRSkjpgG.php?Naziv=Ruska+ulica&HS=24&IDo=0",
+      "body": "{\"params\":[[\"HS\",\"24\"],[\"IDo\",\"0\"],[\"Naziv\",\"Ruska ulica\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 29 Sep 2026 19:05:53 GMT",
+        "server": "Apache",
+        "x-powered-by": "PHP/7.2.34",
+        "transfer-encoding": "chunked",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "content_b64": "W3siTGV0byI6IjIwMjYiLCJJRG8iOiI3MCIsIk5BWklWT0JDIjoiTUFSSUJPUiIsIk5BX0lNRSI6Ik1BUklCT1IiLCJVTF9JTUUiOiJSVVNLQSBVTElDQSIsIkhTRCI6IjI0IiwiT00iOiIyMDM4MiIsIk9NaSI6IiIsIkZSbyI6IkUifV0NCg0K"
+    },
+    {
+      "key": "GET https://arhiv.snaga-mb.si/mso/tmRSk.php 3d5167f1f6",
+      "method": "GET",
+      "url": "https://arhiv.snaga-mb.si/mso/tmRSk.php",
+      "final_url": "https://arhiv.snaga-mb.si/mso/tmRSk.php?sql=20382",
+      "body": "{\"params\":[[\"sql\",\"20382\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 29 Sep 2026 19:05:54 GMT",
+        "server": "Apache",
+        "x-powered-by": "PHP/7.2.34",
+        "transfer-encoding": "chunked",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "content_b64": "W3siTGV0byI6IjIwMjYiLCJNZXNlYyI6IjkiLCJEYW4iOiIzMCIsIkRUIjoiU3JlIiwiT2RwIjoiTyIsIlJlZCI6IjAiLCJWZXphIjoiS29sZWRhcl8xMl8xOTAuanBnIiwiSURvIjoiNzAiLCJ4eSI6IjQ2LjUzNDcwODY1Mzg3ODIwNSwxNS42NjgwODcxMjM5NDg4NjkifSx7IkxldG8iOiIyMDI2IiwiTWVzZWMiOiIxMCIsIkRhbiI6IjEiLCJEVCI6Ilx1MDEwY2V0IiwiT2RwIjoiQiIsIlJlZCI6IjAiLCJWZXphIjoiS29sZWRhcl8xMl8xOTAuanBnIiwiSURvIjoiNzAiLCJ4eSI6IjQ2LjUzNDcwODY1Mzg3ODIwNSwxNS42NjgwODcxMjM5NDg4NjkifSx7IkxldG8iOiIyMDI2IiwiTWVzZWMiOiIxMCIsIkRhbiI6IjciLCJEVCI6IlNyZSIsIk9kcCI6IlUiLCJSZWQiOiIwIiwiVmV6YSI6IktvbGVkYXJfMTJfMTkwLmpwZyIsIklEbyI6IjcwIiwieHkiOiI0Ni41MzQ3MDg2NTM4NzgyMDUsMTUuNjY4MDg3MTIzOTQ4ODY5In0seyJMZXRvIjoiMjAyNiIsIk1lc2VjIjoiMTAiLCJEYW4iOiI4IiwiRFQiOiJcdTAxMGNldCIsIk9kcCI6IkIiLCJSZWQiOiIwIiwiVmV6YSI6IktvbGVkYXJfMTJfMTkwLmpwZyIsIklEbyI6IjcwIiwieHkiOiI0Ni41MzQ3MDg2NTM4NzgyMDUsMTUuNjY4MDg3MTIzOTQ4ODY5In0seyJMZXRvIjoiMjAyNiIsIk1lc2VjIjoiMTAiLCJEYW4iOiIxMyIsIkRUIjoiVG9yIiwiT2RwIjoiUCIsIlJlZCI6IjAiLCJWZXphIjoiS29sZWRhcl8xMl8xOTAuanBnIiwiSURvIjoiNzAiLCJ4eSI6IjQ2LjUzNDcwODY1Mzg3ODIwNSwxNS42NjgwODcxMjM5NDg4NjkifV0="
+    }
+  ]
+}

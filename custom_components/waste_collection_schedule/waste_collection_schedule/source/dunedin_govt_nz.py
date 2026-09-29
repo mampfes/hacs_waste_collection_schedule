@@ -1,88 +1,53 @@
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Dunedin District Council"
-DESCRIPTION = "Source for Dunedin District Council Rubbish & Recycling collection."
-URL = "https://www.dunedin.govt.nz/"
-TEST_CASES = {
-    # "No Collection": {"address": "3 Farm Road West Berwick"},  # Useful for troubleshooting, elicits a "No Collection" response from website
-    "Calendar 1": {"address": "5 Bennett Road Ocean View"},
-    "Calendar 2": {"address": "2 Council Street Dunedin"},
-    # "All Week": {"address": "118 High Street"}, # Does not have a collection schedule using the new API
-    "Collection 'c'": {"address": "2 - 90 Harbour Terrace Dunedin"},
-}
-DAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-ICON_MAP = {
-    "RED BIN": Icons.GENERAL_WASTE,
-    "BLUE BIN": Icons.GLASS,
-    "YELLOW BIN": Icons.PLASTIC_PACKAGING,
-    "GREEN BIN": Icons.ORGANIC,
-}
-
-# To keep compatibility with the old version of this source and not break existing sensors
-OLD_BIN_MAP = {
-    "REC": "YELLOW BIN",
-    "GLA": "BLUE BIN",
-    "REF": "RED BIN",
-    "FOD": "GREEN BIN",
-}
-
-API_URL = "https://environz-api.azurewebsites.net/api/dcc/nextservicedate"
-API_KEY = "F9qPiSASucQZRqKi92rttnnfZ4d8cZNh8RfTVSpQ2it2AzFuMu13mA=="
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.Environz import (
+    TYPE_VALUE_MAP,
+    RoutesParser,
+    next_service_date_retriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, address):
-        self._address = str(address).strip()
-        split = self._address.split("-")
-        if len(split) > 1 and split[0].strip().isdigit():
-            split = [split[0].strip() + "/" + split[1].strip(), *split[2:]]
-            self._address = "-".join(split)
+@final
+class Source(BaseSource):
+    TITLE = "Dunedin District Council"
+    DESCRIPTION = "Source for Dunedin District Council Rubbish & Recycling collection."
+    URL = "https://www.dunedin.govt.nz/"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        end_date = (datetime.now() + timedelta(days=365)).strftime("%d/%m/%Y")
-        params = {
-            "code": API_KEY,
-            "address": self._address,
-            "endDate": end_date,
-            "postcode": "",
-        }
+    TEST_CASES: ClassVar[dict] = {
+        "Calendar 1": {"address": "5 Bennett Road Ocean View"},
+        "Calendar 2": {"address": "2 Council Street Dunedin"},
+        "Collection 'c'": {"address": "2 - 90 Harbour Terrace Dunedin"},
+    }
 
-        r = requests.get(API_URL, params=params)
-        if r.status_code == 400:
-            raise Exception(
-                "Invalid address or no collection schedule for this address, make sure the address matches an address, that has a schedule in the DCC Kerbside Collection app."
-            )
+    PARAMS = (street_address("address"),)
 
-        r.raise_for_status()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the full street address as displayed in the DCC Kerbside "
+            "Collection app, e.g. '5 Bennett Road Ocean View'."
+        ),
+    }
 
-        data = r.json()
-
-        entries = []
-        for key, value in data.items():
-            if not key.startswith("route") or not value:
-                continue
-            collection_type = key.removeprefix("route").strip()
-            collection_type = OLD_BIN_MAP.get(collection_type, collection_type)
-            for date in value.values():
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date, "%d/%m/%Y").date(),
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type.upper()),
-                    )
-                )
-        return entries
+    retrieve = next_service_date_retriever(
+        "dcc", "F9qPiSASucQZRqKi92rttnnfZ4d8cZNh8RfTVSpQ2it2AzFuMu13mA=="
+    )
+    parse = RoutesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map=TYPE_VALUE_MAP,
+    )

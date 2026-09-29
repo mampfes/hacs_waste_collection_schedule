@@ -1,102 +1,54 @@
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Central Otago District Council"
-DESCRIPTION = (
-    "Source for Central Otago District Council Rubbish & Recycling collection."
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.Environz import (
+    TYPE_VALUE_MAP,
+    RoutesParser,
+    next_service_date_retriever,
 )
-URL = "https://www.codc.govt.nz/"
-COUNTRY = "nz"
-TEST_CASES = {
-    "Alexandra": {"address": "5 Campbell Street Alexandra"},
-}
+from waste_collection_schedule.transformers import JsonTransformer
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Use the CODC Bin App (https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The address argument should match how the app displays your address alongside your next collection details.",
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
+@final
+class Source(BaseSource):
+    TITLE = "Central Otago District Council"
+    DESCRIPTION = (
+        "Source for Central Otago District Council Rubbish & Recycling collection."
+    )
+    URL = "https://www.codc.govt.nz/"
+    COUNTRY = "nz"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@soasmileynz"]
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Alexandra": {"address": "5 Campbell Street Alexandra"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'",
+    PARAMS = (street_address("address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the full street address as displayed in the CODC Bin App, "
+            "e.g. '5 Campbell Street Alexandra'."
+        ),
     }
-}
 
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-ICON_MAP = {
-    "RED BIN": Icons.GENERAL_WASTE,
-    "BLUE BIN": Icons.GLASS,
-    "YELLOW BIN": Icons.PLASTIC_PACKAGING,
-    "GREEN BIN": Icons.ORGANIC,
-}
-
-# CODC's API returns "ORG" for organics rather than "FOD" (used by some other
-# councils on the same Environz backend), so both are mapped for safety.
-OLD_BIN_MAP = {
-    "REC": "YELLOW BIN",
-    "GLA": "BLUE BIN",
-    "REF": "RED BIN",
-    "ORG": "GREEN BIN",
-    "FOD": "GREEN BIN",
-}
-
-API_URL = "https://environz-api.azurewebsites.net/api/codc/nextservicedate"
-API_KEY = "bPLjJjgubEyQ3ruJqjhFenL1SoHCTzNEVGoLY5MJpP9AAzFuj8pSzA=="
-
-SOURCE_CODEOWNERS = ["@soasmileynz"]
-
-
-class Source:
-    def __init__(self, address):
-        self._address = str(address).strip()
-        split = self._address.split("-")
-        if len(split) > 1 and split[0].strip().isdigit():
-            split = [split[0].strip() + "/" + split[1].strip(), *split[2:]]
-            self._address = "-".join(split)
-
-    def fetch(self):
-        end_date = (datetime.now() + timedelta(days=365)).strftime("%d/%m/%Y")
-        params = {
-            "code": API_KEY,
-            "address": self._address,
-            "endDate": end_date,
-            "postcode": "",
-        }
-
-        r = requests.get(API_URL, params=params, headers=HEADERS, timeout=30)
-        if r.status_code == 400:
-            raise SourceArgumentNotFound(
-                argument="address",
-                value=self._address,
-                message_addition="make sure the address matches an address that has a schedule in the CODC Bin App.",
-            )
-
-        r.raise_for_status()
-
-        data = r.json()
-
-        entries = []
-        for key, value in data.items():
-            if not key.startswith("route") or not value:
-                continue
-            collection_type = key.removeprefix("route").strip()
-            collection_type = OLD_BIN_MAP.get(collection_type, collection_type)
-            for date in value.values():
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date, "%d/%m/%Y").date(),
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type.upper()),
-                    )
-                )
-        return entries
+    retrieve = next_service_date_retriever(
+        "codc", "bPLjJjgubEyQ3ruJqjhFenL1SoHCTzNEVGoLY5MJpP9AAzFuj8pSzA=="
+    )
+    parse = RoutesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map=TYPE_VALUE_MAP,
+    )

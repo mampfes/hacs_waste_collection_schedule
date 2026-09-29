@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search 6369df3913",
+      "method": "GET",
+      "url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search",
+      "final_url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search?address=Eric+Ugglas+Plats+2",
+      "body": "{\"params\":[[\"address\",\"Eric Ugglas Plats 2\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.33",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "285",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Tue, 29 Sep 2026 19:05:38 GMT",
+        "server": "LiteSpeed",
+        "alt-svc": "h3=\":443\"; ma=2592000, h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "eyJTa1x1MDBmNnZkZSI6W3siYWRkcmVzcyI6IkVyaWMgVWdnbGFzIFBsYXRzIDIiLCJ6aXBfY2l0eSI6IlNrXHUwMGY2dmRlIiwicGxhbnRfbnVtYmVyIjoiZXlKcGRpSTZJbkZwVEVKYVlUTk5RVXRaYWpKeGJrTlFWWFpDU0hjOVBTSXNJblpoYkhWbElqb2lVR0YxYm0xQ1lUWXhjMXByUjBWWFYwVnljR3RHVVQwOUlpd2liV0ZqSWpvaU1XSmhabVZtT0Roa1pHSXlPRFZsWmpBeU4yUmpOVFEzTXpVeU16a3dOMlF5TmpRMU1XSXpPV1UwT1RreVpHUmpZbVZoWVdGbVlUazNORGRsT0dNNFlpSXNJblJoWnlJNklpSjkiLCJ0eXBlIjoiU29waFx1MDBlNG10bmluZyIsImFkZHJlc3NUeXBlIjoibmV4dC1waWNrdXAifV19"
+    },
+    {
+      "key": "POST https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address 78a6ad17e0",
+      "method": "POST",
+      "url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address",
+      "final_url": "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/address",
+      "body": "{\"body\":[[\"plant_id\",\"eyJpdiI6InFpTEJaYTNNQUtZajJxbkNQVXZCSHc9PSIsInZhbHVlIjoiUGF1bm1CYTYxc1prR0VXV0VycGtGUT09IiwibWFjIjoiMWJhZmVmODhkZGIyODVlZjAyN2RjNTQ3MzUyMzkwN2QyNjQ1MWIzOWU0OTkyZGRjYmVhYWFmYTk3NDdlOGM4YiIsInRhZyI6IiJ9\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.33",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "314",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Tue, 29 Sep 2026 19:05:38 GMT",
+        "server": "LiteSpeed"
+      },
+      "content_b64": "eyJhZGRyZXNzIjoiRXJpYyBVZ2dsYXMgUGxhdHMgMiIsImNpdHkiOiJTa1x1MDBmNnZkZSIsInBsYW50X2lkIjoiZXlKcGRpSTZJbUl4TDBseE5VMUhVRkUxVTFJdlEwTnZNV05JSzFFOVBTSXNJblpoYkhWbElqb2lUVWRtUTNoS04xQjFSVEpFWkhoR1VpOW9jazQ0VVQwOUlpd2liV0ZqSWpvaU5EWmxNekkyWkRZMFlUTTBNVFU0TlRBeFpEZzJZak5oTTJVeU56WXdOREZoWXpsaU16QmtNREkzTm1OaFl6Z3lNVEl6WkdNeFlUQmlObVl3WldGaE5TSXNJblJoWnlJNklpSjkiLCJiaW5zIjpbeyJ0eXBlIjoiQnJcdTAwZTRubmJhcnQiLCJwaWNrdXBfZGF0ZSI6IjIwMjYtMDktMzAiLCJmb3JtYXR0ZWQiOiIzMCBzZXB0ZW1iZXIifSx7InR5cGUiOiJCclx1MDBlNG5uYmFydCIsInBpY2t1cF9kYXRlIjoiMjAyNi0wOS0zMCIsImZvcm1hdHRlZCI6IjMwIHNlcHRlbWJlciJ9LHsidHlwZSI6Ik1hdGF2ZmFsbCIsInBpY2t1cF9kYXRlIjoiMjAyNi0wOS0zMCIsImZvcm1hdHRlZCI6IjMwIHNlcHRlbWJlciJ9XX0="
+    }
+  ]
+}
