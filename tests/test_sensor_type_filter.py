@@ -185,6 +185,21 @@ def test_generic_types_attribute_leaves_out_the_excluded_types():
     assert combined._attr_extra_state_attributes["types"] == [BIO]
 
 
+def test_attributes_leave_out_a_type_excluded_by_its_id():
+    agg = _aggregator(GENERAL_WASTE, ORGANIC, PAPER)
+
+    generic = _sensor(agg, DetailsFormat.generic, exclude=["paper"])
+    assert sorted(generic._attr_extra_state_attributes["types"]) == [GENERAL, BIO]
+
+    appointments = _sensor(agg, DetailsFormat.appointment_types, exclude=["paper"])
+    assert PAP not in appointments._attr_extra_state_attributes
+
+    by_id = _sensor(
+        agg, DetailsFormat.generic, types=["organic", "paper"], exclude=[PAP]
+    )
+    assert by_id._attr_extra_state_attributes["types"] == ["organic"]
+
+
 def test_sensor_without_exclude_is_unchanged():
     agg = _aggregator(GENERAL_WASTE, ORGANIC)
 

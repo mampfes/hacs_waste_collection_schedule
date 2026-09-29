@@ -34,6 +34,18 @@ class CollectionAggregator:
         """Return set() of all collection types."""
         return {e.type for e in self._entries}
 
+    def is_excluded(self, type_key: str, exclude_types: Iterable[str]) -> bool:
+        """Whether ``exclude_types`` removes every collection ``type_key`` names.
+
+        ``type_key`` is a displayed name or a waste type id, as in a type
+        filter, so an exclude given as an id also drops the matching name.
+        """
+        unwanted = set(exclude_types)
+        if type_key in unwanted:
+            return True
+        matches = [e for e in self._entries if type_key in _type_keys(e)]
+        return bool(matches) and all(_type_keys(e) & unwanted for e in matches)
+
     def get_upcoming(
         self,
         count: int | None = None,

@@ -357,8 +357,11 @@ class ScheduleSensor(SensorEntity):
             else self._collection_types
         )
         if self._exclude_types:
-            excluded = set(self._exclude_types)
-            collection_types = [t for t in collection_types if t not in excluded]
+            collection_types = [
+                t
+                for t in collection_types
+                if not self._aggregator.is_excluded(t, self._exclude_types)
+            ]
 
         if self._details_format == DetailsFormat.upcoming:
             # show upcoming events list in details
