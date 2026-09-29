@@ -113,6 +113,13 @@ SERVICE_PROVIDERS = {
         "requires_token": False,
         "app_version": "2.1.3",
     },
+    "sigtuna": {
+        "title": "Sigtuna (Sivab)",
+        "url": "https://www.sivab.se/",
+        "api_url": "https://sigtuna.avfallsappen.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
     "teknikivast": {
         "title": "Teknik i Väst (Arvika/Eda)",
         "url": "https://teknikivast.se",
