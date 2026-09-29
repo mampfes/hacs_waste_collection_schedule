@@ -1,67 +1,85 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Circulus"
-DESCRIPTION = "Source for circulus.nl waste collection."
-URL = "https://mijn.circulus.nl"
-
-TEST_CASES = {
-    "Test1": {"postal_code": "7206AC", "house_number": "1"},
-}
-
-ICON_MAP = {
-    "REST": Icons.GENERAL_WASTE,
-    "ZWAKRA": Icons.RECYCLING,
-    "GFT": Icons.BIO_KITCHEN,
-    "PAP": Icons.PAPER,
-}
-
-WASTE_MAP = {
-    "REST": "Zwarte Kliko",
-    "ZWAKRA": "Glas & Blik",
-    "GFT": "Groene Kliko",
-    "PAP": "Papier",
-}
-API_URL = "https://mijn.circulus.nl"
+_API_URL = "https://mijn.circulus.nl"
 
 
-class Source:
-    def __init__(self, postal_code, house_number):
-        self._postal_code = postal_code
-        self._house_number = house_number
+def _registered(response, *, postal_code: str, house_number: str, **_) -> bool:
+    """Registering the address opens the session the calendar is read in."""
+    if not response.json().get("success"):
+        raise SourceArgumentNotFound("postal_code", f"{postal_code} {house_number}")
+    return True
 
-    def fetch(self):
-        location_data = {"zipCode": self._postal_code, "number": self._house_number}
-        entries = []
 
-        # Make a post request and store the cookies
-        r = requests.post(f"{API_URL}/register/zipcode.json", data=location_data)
-        r.raise_for_status()
+def _window() -> dict[str, str]:
+    today = date.today()
+    return {
+        "from": today.isoformat(),
+        "till": (today + timedelta(days=365)).isoformat(),
+    }
 
-        cookies = r.cookies
 
-        # Check if the CB_SESSION cookie exists
-        if "CB_SESSION" in cookies:
-            # Make a GET request and store the JSON data
-            req_params = {
-                "from": date.today().strftime("%Y-%m-%d"),
-                "till": (date.today() + timedelta(days=365)).strftime("%Y-%m-%d"),
-            }
+@final
+class Source(BaseSource):
+    TITLE = "Circulus"
+    DESCRIPTION = "Source for circulus.nl waste collection."
+    URL = "https://mijn.circulus.nl"
+    COUNTRY = "nl"
+    RAISE_ON_EMPTY = True
 
-            r = requests.get(
-                f"{API_URL}/afvalkalender.json", params=req_params, cookies=cookies
-            )
-            r.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-            for item in r.json()["customData"]["response"]["garbage"]:
-                for newdate in item["dates"]:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(newdate, "%Y-%m-%d").date(),
-                            t=WASTE_MAP.get(item["code"], item["code"]),
-                            icon=ICON_MAP.get(item["code"]),
-                        )
-                    )
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "Test1": {"postal_code": "7206AC", "house_number": "1"},
+    }
+
+    PARAMS = (postcode(postcode_field="postal_code", house_field="house_number"),)
+
+    # The address is registered first: the calendar is served for the address
+    # held in the session cookie that answer sets.
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{_API_URL}/register/zipcode.json",
+                method="POST",
+                data=lambda postal_code, house_number, **_: {
+                    "zipCode": postal_code,
+                    "number": house_number,
+                },
+                pick=_registered,
+            ),
+        ),
+        url=f"{_API_URL}/afvalkalender.json",
+        params=lambda *_, **__: _window(),
+        raise_for_status=True,
+    )
+
+    parse = JsonParser("customData", "response", "garbage")
+
+    preprocess = ExplodeList("dates", into="date")
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="code",
+        type_value_map={
+            "REST": wt.GENERAL_WASTE,
+            "GFT": wt.ORGANIC,
+            "PAP": wt.PAPER,
+            "PMD": wt.RECYCLABLES,
+            "ZWAKRA": wt.RECYCLABLES,
+        },
+    )
