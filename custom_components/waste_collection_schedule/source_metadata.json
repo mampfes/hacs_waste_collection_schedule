@@ -4120,7 +4120,8 @@
       "de": "Geben Sie dieselbe Postleitzahl, Hausnummer und (optional) den Hausnummernzusatz ein, die Sie auch unter https://www.deafvalapp.nl verwenden würden, um Ihren Abfallkalender abzurufen.",
       "en": "Enter the same postcode, house number and (optional) house number addition that you would use at https://www.deafvalapp.nl to look up your waste collection calendar.",
       "fr": "Saisissez le même code postal, numéro de maison et (facultatif) complément de numéro que vous utiliseriez sur https://www.deafvalapp.nl pour consulter votre calendrier de collecte des déchets.",
-      "it": "Inserisci lo stesso CAP, numero civico e (facoltativo) estensione del numero civico che utilizzeresti su https://www.deafvalapp.nl per consultare il tuo calendario di raccolta rifiuti."
+      "it": "Inserisci lo stesso CAP, numero civico e (facoltativo) estensione del numero civico che utilizzeresti su https://www.deafvalapp.nl per consultare il tuo calendario di raccolta rifiuti.",
+      "nl": "Vul dezelfde postcode, huisnummer en (optionele) huisnummertoevoeging in die je zou gebruiken op https://www.deafvalapp.nl om je afvalkalender op te zoeken."
     },
     "urls": {}
   },
@@ -4170,7 +4171,8 @@
       "de": "Geben Sie die Postleitzahl (z. B. 3131VX) und die Hausnummer ein, die Sie auch auf https://www.irado.nl/afvalkalender verwenden würden",
       "en": "Enter the postcode (e.g. 3131VX) and house number you would use at https://www.irado.nl/afvalkalender",
       "fr": "Saisissez le code postal (par ex. 3131VX) et le numéro de maison que vous utiliseriez sur https://www.irado.nl/afvalkalender",
-      "it": "Inserisci il CAP (ad es. 3131VX) e il numero civico che utilizzeresti su https://www.irado.nl/afvalkalender"
+      "it": "Inserisci il CAP (ad es. 3131VX) e il numero civico che utilizzeresti su https://www.irado.nl/afvalkalender",
+      "nl": "Vul de postcode (bijv. 3131VX) en het huisnummer in die je zou gebruiken op https://www.irado.nl/afvalkalender"
     },
     "urls": {}
   },
@@ -4182,21 +4184,24 @@
   "rova_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rova_nl.md",
     "howto": {
-      "en": "Use the same postal code and house number you would enter at https://www.rova.nl/afvalkalender. If your address has a letter or addition, provide it in the 'addition' field."
+      "en": "Use the same postal code and house number you would enter at https://www.rova.nl/afvalkalender. If your address has a letter or addition, provide it in the 'addition' field.",
+      "nl": "Gebruik dezelfde postcode en huisnummer als je zou invoeren op https://www.rova.nl/afvalkalender. Als je adres een letter of toevoeging heeft, geef deze dan in het 'addition'-veld."
     },
     "urls": {}
   },
   "saver_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saver_nl.md",
     "howto": {
-      "en": "Use the same postcode and house number you would enter at https://saver.nl/afvalkalender. If your address has a letter or addition (e.g. '5a'), provide the letter/addition in the 'toevoeging' argument."
+      "en": "Use the same postcode and house number you would enter at https://saver.nl/afvalkalender. If your address has a letter or addition (e.g. '5a'), provide the letter/addition in the 'toevoeging' argument.",
+      "nl": "Gebruik dezelfde postcode en huisnummer als je zou invoeren op https://saver.nl/afvalkalender. Als je adres een letter of toevoeging heeft (bijv. '5a'), geef dan de letter/toevoeging in het 'toevoeging'-argument."
     },
     "urls": {}
   },
   "straatbeeld_online": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/straatbeeld_online.md",
     "howto": {
-      "en": "Open your municipality's Straatbeeld Online waste calendar (e.g. https://drimmelen.afvalkalender.straatbeeld.online), the 'municipality' argument is the first part of that URL (e.g. 'drimmelen'). Use the same postal code and house number you would enter on that page."
+      "en": "Open your municipality's Straatbeeld Online waste calendar (e.g. https://drimmelen.afvalkalender.straatbeeld.online), the 'municipality' argument is the first part of that URL (e.g. 'drimmelen'). Use the same postal code and house number you would enter on that page.",
+      "nl": "Open de Straatbeeld Online-afvalkalender van je gemeente (bijv. https://drimmelen.afvalkalender.straatbeeld.online). Het 'municipality'-argument is het eerste deel van die URL (bijv. 'drimmelen'). Gebruik dezelfde postcode en huisnummer als je op die pagina zou invoeren."
     },
     "urls": {
       "url_drimmelen_afvalkalender_straatbeeld_online": "https://drimmelen.afvalkalender.straatbeeld.online"
