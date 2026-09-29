@@ -39,9 +39,9 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
-        "Test_001": {"postcode": "PA12 4JU", "uprn": "123033059"},
-        "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
-        "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
+        "Test_001": {"uprn": "123033059"},
+        "Test_002": {"uprn": "123034174"},
+        "Test_003": {"uprn": "123046497"},
     }
 
     PARAMS = (uprn(),)
