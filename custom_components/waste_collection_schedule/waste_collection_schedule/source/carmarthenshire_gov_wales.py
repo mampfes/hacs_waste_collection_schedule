@@ -1,100 +1,66 @@
-# import datetime
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Carmarthenshire County Council"
-DESCRIPTION = "Source script for carmarthenshire.gov.wales"
-URL = "https://www.carmarthenshire.gov.wales/"
-COUNTRY = "uk"
-
-TEST_CASES = {
-    "Test_1": {"uprn": 10009546468},
-    "Test_2": {"uprn": "100100146591"},
-    "Test_3": {
-        "uprn": 10004876405,
-    },
-}
-
-ICON_MAP = {
-    "BLUE": Icons.RECYCLING,
-    "BLACK": Icons.GENERAL_WASTE,
-    "GARDEN": Icons.GARDEN,
-    "NAPPY": Icons.HAZARDOUS,
-}
-REMAP_WASTE = {  # Map websire containers to underlying waste types
-    "BLUE": "BLUE BAG & GREEN FOOD BIN",
-    "BLACK": "BLACK BAG & GLASS BOX",
-    "GARDEN": "GARDEN WATE",
-    "NAPPY": "NAPPY & HYGIENE WASTE",
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer, label_cleaner
 
 
-# ### Arguments affecting the configuration GUI ####
+@final
+class Source(BaseSource):
+    TITLE = "Carmarthenshire County Council"
+    DESCRIPTION = "Source script for carmarthenshire.gov.wales"
+    URL = "https://www.carmarthenshire.gov.wales/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+    ]
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
+    TEST_CASES: ClassVar[dict] = {
+        "Test_1": {"uprn": 10009546468},
+        "Test_2": {"uprn": "100100146591"},
+        "Test_3": {"uprn": 10004876405},
+    }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    },
-}
+    PARAMS = (uprn(),)
 
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "uprn": "Unique Property Reference Number",
-    },
-}
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering in your address details."
+        ),
+    }
 
-# ### End of arguments affecting the configuration GUI ####
-
-
-class Source:
-    def __init__(
-        self, uprn: str | int
-    ):  # argX correspond to the args dict in the source configuration
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        response = s.get(
-            f"https://www.carmarthenshire.gov.wales/umbraco/Surface/SurfaceRecycling/Index/?uprn={self._uprn}&lang=en-GB"
-        )
-        response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, "html.parser")
-        containers = soup.findAll("div", {"class": "bin-day-container"})
-        entries = []
-        for item in containers:
-            dates = item.findAll("p", {"class": "font11 text-center"})
-            # Some containers (e.g. when the council has no record for the
-            # UPRN, or a service such as garden/nappy waste is not signed up
-            # for) don't include a date paragraph at all. Skip those instead
-            # of crashing with an IndexError.
-            if not dates or "  " not in dates[0].text:
-                continue
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        dates[0].text.split("  ")[1].strip(), "%d/%m/%Y"
-                    ).date(),
-                    t=REMAP_WASTE.get(item["class"][1].upper()),
-                    icon=ICON_MAP.get(item["class"][1].upper()),
-                )
-            )
-
-        if not entries:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "the council has no collection information for this UPRN. "
-                "Please double-check the UPRN or contact Carmarthenshire "
-                "County Council directly.",
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.carmarthenshire.gov.wales/umbraco/Surface/SurfaceRecycling/Index/",
+        params=lambda uprn, **_: {"uprn": uprn, "lang": "en-GB"},
+    )
+    parse = parsers.HtmlLabelledDates(
+        "div.bin-day-container",
+        label="p.font1",
+        date="p.font11",
+        date_pattern=r"(\d{2}/\d{2}/\d{4})",
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=label_cleaner(
+            remap={
+                "Your next blue bag and food bin collection": "blue",
+                "Your next black bag and glass box collection": "black",
+                "Your next garden waste collection": "garden",
+                "Your next hygiene waste collection": "Hygiene waste",
+            }
+        ),
+        type_value_map={
+            "blue": [wt.RECYCLABLES, wt.FOOD_WASTE],
+            "black": [wt.GENERAL_WASTE, wt.GLASS],
+            "garden": wt.GARDEN_WASTE,
+        },
+    )
