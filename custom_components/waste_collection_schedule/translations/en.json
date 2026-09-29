@@ -3040,7 +3040,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road')."
+          "address": "Your full address."
         }
       },
       "reconfigure_murray_wa_gov_au": {
@@ -3051,7 +3051,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road')."
+          "address": "Your full address."
         }
       },
       "args_sjshire_wa_gov_au": {
@@ -19246,10 +19246,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "postal_code": "Postal Code"
+          "postal_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "postal_code": "Your postcode."
         }
       },
       "reconfigure_circulus_nl": {
@@ -19258,9 +19260,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "postal_code": "Postal Code"
+          "postal_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "postal_code": "Your postcode."
+        }
       },
       "args_ics_edam_volendam_nl": {
         "title": "Configure Source",
@@ -24531,7 +24536,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_basingstoke_gov_uk": {
@@ -24542,7 +24547,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_bathnes_gov_uk": {
@@ -25367,11 +25372,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Unique Property Reference Number"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_carmarthenshire_gov_wales": {
@@ -25379,10 +25384,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "Unique Property Reference Number"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_castlepoint_gov_uk": {
@@ -27231,7 +27236,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_haringey_gov_uk": {
@@ -27242,7 +27247,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_harlow_gov_uk": {
@@ -27478,7 +27483,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_horsham_gov_uk": {
@@ -27489,7 +27494,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_hull_gov_uk": {
@@ -28684,7 +28689,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Property ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -28695,7 +28700,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Property ID"
         },
         "data_description": {}
       },
@@ -29711,12 +29716,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_renfrewshire_gov_uk": {
@@ -29724,11 +29728,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_rctcbc_gov_uk": {
@@ -31649,15 +31652,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
+          "id": "Property ID",
+          "x": "Easting",
+          "y": "Northing"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_west_lindsey_gov_uk": {
@@ -31665,15 +31665,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
+          "id": "Property ID",
+          "x": "Easting",
+          "y": "Northing"
         },
-        "data_description": {
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
-        }
+        "data_description": {}
       },
       "args_westlothian_gov_uk": {
         "title": "Configure Source",
@@ -31754,7 +31750,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_westsuffolk_gov_uk": {
@@ -31765,7 +31761,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_westminster_gov_uk": {

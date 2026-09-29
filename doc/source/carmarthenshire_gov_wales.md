@@ -1,12 +1,14 @@
-# Cardiff Council
+# Carmarthenshire County Council
 
-Support for schedules provided by [Carmarthenshire County Council](https://www.carmarthenshire.gov.wales/home/council-services/), serving Carmathenshire, Wales (UK).
+Support for schedules provided by [Carmarthenshire County Council](https://www.carmarthenshire.gov.wales/).
+
+Source script for carmarthenshire.gov.wales
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: carmarthenshire_gov_wales
       args:
         uprn: UPRN
@@ -14,19 +16,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**UPRN**  
+**uprn**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: carmarthenshire_gov_wales
       args:
-        uprn: "10009546468"
+        uprn: 10009546468
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.

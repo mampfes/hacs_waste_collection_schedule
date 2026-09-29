@@ -1,6 +1,8 @@
 # Horsham District Council
 
-Support for schedules provided by [Horsham District Council](https://www.horsham.gov.uk/waste-recycling-and-bins/household-bin-collections/check-your-bin-collection-day).
+Support for schedules provided by [Horsham District Council](https://www.horsham.gov.uk).
+
+Source script for Horsham District Council
 
 ## Configuration via configuration.yaml
 
@@ -9,24 +11,24 @@ waste_collection_schedule:
   sources:
     - name: horsham_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(string) (required)_
+*(string) (required)*
 
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: horsham_gov_uk
       args:
-        uprn: "10013792881"
+        uprn: 10013792881
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.

@@ -1,6 +1,8 @@
 # Shire of Murray
 
-Support for schedules provided by [Shire of Murray](https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx).
+Support for schedules provided by [Shire of Murray](https://www.murray.wa.gov.au/).
+
+Source for Shire of Murray waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
 ## Example
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Shire of Murray Bins page](https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx) and search for your address. Use the address string exactly as you would type it into the search box on that page.
+Visit https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx and search for your address to verify it is found.

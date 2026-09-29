@@ -5400,7 +5400,9 @@
   },
   "basingstoke_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/basingstoke_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6164,7 +6166,9 @@
   },
   "haringey_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/haringey_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6234,7 +6238,9 @@
   },
   "horsham_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/horsham_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6585,7 +6591,9 @@
   },
   "moray_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moray_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your address in the Moray Council bin day finder (https://bindayfinder.moray.gov.uk). The property id is the `id` in the address of your calendar page (`cal_<year>_view.php?id=<id>`); leading zeros may be left out."
+    },
     "urls": {}
   },
   "neath_port_talbot_gov_uk": {
@@ -7451,7 +7459,7 @@
   "west_lindsey_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md",
     "howto": {
-      "en": "View the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md"
+      "en": "Search for your bin collection day on https://www.west-lindsey.gov.uk/bins-waste-recycling/find-your-bin-collection-day with the browser's Developer Tools open on the Network tab. Once the schedule is shown, look at the last few requests: one has a payload line `query: x=482566;y=390375;id=16636`. Use those three numbers as x (the 6-figure Easting), y (the 6-figure Northing) and id (the property id)."
     },
     "urls": {}
   },
