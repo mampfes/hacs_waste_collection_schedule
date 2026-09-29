@@ -14,6 +14,7 @@
 ## Checklist
 
 - [ ] `python -m pytest tests/test_source_components.py -q` passes
+- [ ] New sources use the `BaseSource` pipeline (new legacy-style sources are not accepted; fixes to existing legacy sources are fine)
 - [ ] `ruff check --fix` and `ruff format` run on changed source files
 - [ ] No generated files in diff (README.md, info.md, sources.json, translations/*.json — CI regenerates these post-merge)
 - [ ] `doc/source/<name>.md` created for new sources
