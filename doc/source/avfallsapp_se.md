@@ -8,6 +8,7 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `motala`: Motala
 - `vanersborg`: Vänersborg
 - `upplands-bro`: Upplands-Bro
+- `sigtuna`: Sigtuna (Sivab)
 - `teknikivast`: Teknik i Väst (Arvika/Eda)
 - `nodra`: Nodra (Norrköping)
 <!--End of service section-->
@@ -26,7 +27,6 @@ Should be possible to add by some minor additions
 `knivsta`: Knivsta
 `kungsbacka`: Hungsbacka
 `molndal`: Mölndal
-`sigtuna`: Sigtuna
 `soderhamn`: Söderhamn
 `ulricehamn`: Ulricehamn
 `vallentuna`: Vallentuna
