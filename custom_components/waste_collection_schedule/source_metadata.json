@@ -713,7 +713,9 @@
   },
   "shellharbourwaste_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your collection zone as shown on https://www.shellharbourwaste.com.au/find-my-bin-day/ (e.g. 'Monday A')."
+    },
     "urls": {}
   },
   "dardanup_wa_gov_au": {
@@ -2647,7 +2649,10 @@
   },
   "cederbaum_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cederbaum_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Gib die Straße genau so ein, wie sie auf https://www.cederbaum.de/blaue-tonne/ aufgeführt ist (z. B. 'Adolfstr. 31-42').",
+      "en": "Enter your street exactly as it is listed on https://www.cederbaum.de/blaue-tonne/ (e.g. 'Adolfstr. 31-42')."
+    },
     "urls": {}
   },
   "ics_entsorgung_cham_de": {
@@ -4222,7 +4227,7 @@
   "codc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/codc_govt_nz.md",
     "howto": {
-      "en": "Use the CODC Bin App (https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The address argument should match how the app displays your address alongside your next collection details."
+      "en": "Enter the full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'."
     },
     "urls": {}
   },
@@ -4233,7 +4238,9 @@
   },
   "dunedin_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dunedin_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the full street address as displayed in the DCC Kerbside Collection app, e.g. '5 Bennett Road Ocean View'."
+    },
     "urls": {}
   },
   "gardenbags_co_nz": {
@@ -4763,7 +4770,9 @@
   },
   "skaraborg_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/skaraborg_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address and city exactly as they appear when you search for your address on https://avfallskaraborg.se/."
+    },
     "urls": {}
   },
   "avfallsapp_se": {
@@ -5082,8 +5091,8 @@
   "data_bs_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_bs_ch.md",
     "howto": {
-      "de": "Finden Sie Ihre Zone auf der Basel-Stadt Zonenkarte unter https://map.geo.bs.ch (suchen Sie nach 'Abfuhrzonen').",
-      "en": "Find your zone on the Basel-Stadt zone map at https://map.geo.bs.ch (search for 'Abfuhrzonen')."
+      "de": "Ihre Abfuhrzone (A-H oder GUF).",
+      "en": "Your waste collection zone (A-H or GUF)."
     },
     "urls": {}
   },
@@ -6890,7 +6899,9 @@
   },
   "rctcbc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rctcbc_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN by searching for your address on [Find My Address](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7030,7 +7041,9 @@
   },
   "southderbyshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southderbyshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7129,7 +7142,9 @@
   },
   "staffordbc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staffordbc_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

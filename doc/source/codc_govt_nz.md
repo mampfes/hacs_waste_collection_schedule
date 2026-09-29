@@ -1,6 +1,8 @@
 # Central Otago District Council
 
-Support for schedules provided by [Central Otago District Council](https://www.codc.govt.nz/) Rubbish & Recycling collection. It uses the endpoint of the [CODC Bin App](https://play.google.com/store/apps/details?id=nz.co.environz.codc) (built by Environz, the same backend used by Dunedin, Waitaki and Timaru's council bin apps).
+Support for schedules provided by [Central Otago District Council](https://www.codc.govt.nz/).
+
+Source for Central Otago District Council Rubbish & Recycling collection.
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
 ## Example
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: codc_govt_nz
       args:
-        address: "5 Campbell Street Alexandra"
+        address: 5 Campbell Street Alexandra
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Use the [CODC Bin App](https://play.google.com/store/apps/details?id=nz.co.environz.codc) and search for your address. The `address` argument should match how the app displays your address alongside your next collection details.
+Enter the full street address as displayed in the CODC Bin App, e.g. '5 Campbell Street Alexandra'.

@@ -1,6 +1,8 @@
 # Avfall & Återvinning Skaraborg
 
-This is a waste collection schedule integration for Avfall & Återvinning Skaraborg in Sweden.
+Support for schedules provided by [Avfall & Återvinning Skaraborg](https://avfallskaraborg.se/).
+
+Source for Skaraborg.
 
 ## Configuration via configuration.yaml
 
@@ -15,24 +17,23 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
-**city**
+**city**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: skaraborg_se
       args:
-        address: Eric Ugglas Plats 2
-        city: Skövde
+        address: "Gran\xE4ngsv\xE4gen 1"
+        city: "Sk\xF6vde"
 ```
 
-## How to get the correct address
+## How to get the source arguments
 
-Visit [Se tömningsdagar för sophämtning](https://avfallskaraborg.se/sophamtning/se-tomningsdagar-for-sophamtning) and follow the instructions on the page.
-Both address and city is case-sensitive, so copy the values carefully.
+Enter your street address and city exactly as they appear when you search for your address on https://avfallskaraborg.se/.
