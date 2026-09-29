@@ -1,85 +1,80 @@
-from datetime import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Shire of Murray"
-DESCRIPTION = "Source for Shire of Murray waste collection."
-URL = "https://www.murray.wa.gov.au/"
-COUNTRY = "au"
-TEST_CASES = {
-    "41 Wilson Road, Pinjarra": {"address": "41 Wilson Road"},
-    "58 McLarty Street, Dwellingup": {"address": "58 McLarty Street"},
-    "28 Woodview Way, Barragup": {"address": "28 Woodview Way"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Verge Collection - Green waste": Icons.GARDEN,
-    "Verge Collection - Hard waste": Icons.BULKY,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx and search for your address to verify it is found.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road').",
-    },
-}
-
-API_BASE = "https://www.murray.wa.gov.au/api/cms/v1/wastecollection"
-ADDRESS_URL = f"{API_BASE}/GetAddressesByQuery"
-DETAILS_URL = f"{API_BASE}/GetAddressDetailsByGuid"
+_API = "https://www.murray.wa.gov.au/api/cms/v1/wastecollection"
+# The API answers XML unless JSON is asked for.
+_HEADERS = {"Accept": "application/json"}
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        # Step 1: Look up the address to get a GUID
-        r = requests.get(
-            ADDRESS_URL, params={"addressQuery": self._address}, timeout=30
+def _pick_guid(response, address: str, **_: Any) -> str:
+    addresses = response.json()
+    if not addresses:
+        raise SourceArgumentNotFoundWithSuggestions("address", address, [])
+    if len(addresses) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "address", address, [a["Address"] for a in addresses]
         )
-        r.raise_for_status()
-        addresses = r.json()
+    return addresses[0]["Guid"]
 
-        if len(addresses) == 0:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
-        if len(addresses) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "address",
-                self._address,
-                [a["Address"] for a in addresses],
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Shire of Murray"
+    DESCRIPTION = "Source for Shire of Murray waste collection."
+    URL = "https://www.murray.wa.gov.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+    ]
+    HOWTO: ClassVar[dict] = {
+        "en": "Visit https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx and search for your address to verify it is found.",
+    }
 
-        guid = addresses[0]["Guid"]
+    TEST_CASES: ClassVar[dict] = {
+        "41 Wilson Road, Pinjarra": {"address": "41 Wilson Road"},
+        "58 McLarty Street, Dwellingup": {"address": "58 McLarty Street"},
+        "28 Woodview Way, Barragup": {"address": "28 Woodview Way"},
+    }
 
-        # Step 2: Fetch collection details by GUID
-        r = requests.get(DETAILS_URL, params={"id": guid}, timeout=30)
-        r.raise_for_status()
-        data = r.json()
+    PARAMS = (street_address(),)
 
-        entries = []
-        for item in data.get("CollectionData", []):
-            bin_name = item["BinType"]["Name"]
-            date = datetime.strptime(
-                item["NextCollectionDate"], "%Y-%m-%dT%H:%M:%S"
-            ).date()
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin_name,
-                    icon=ICON_MAP.get(bin_name, "mdi:trash-can"),
-                )
-            )
-
-        return entries
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{_API}/GetAddressesByQuery",
+                params=lambda address, **_: {"addressQuery": address.strip()},
+                headers=_HEADERS,
+                pick=_pick_guid,
+            ),
+        ),
+        url=f"{_API}/GetAddressDetailsByGuid",
+        params=lambda guid, **_: {"id": guid},
+        headers=_HEADERS,
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("CollectionData")
+    transform = JsonTransformer(
+        date_key="NextCollectionDate",
+        type_key=lambda record: record["BinType"]["Name"],
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Verge Collection - Green waste": wt.GARDEN_WASTE,
+            "Verge Collection - Hard waste": wt.BULKY_WASTE,
+        },
+    )

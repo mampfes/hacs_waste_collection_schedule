@@ -1,103 +1,87 @@
-import re
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "West Lindsey District Council"
-DESCRIPTION = "Source for West Lindsey District Council, Lincolnshire, UK."
-URL = "https://www.west-lindsey.gov.uk"
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-    "referer": "https://www.west-lindsey.gov.uk/",
-    "host": "wlnk.statmap.co.uk",
-}
-TEST_CASES = {
-    "Test_001": {"x": 509762, "y": 384493, "id": 919},
-    "Test_002": {"x": "511918", "y": "401495", "id": "39713"},
-    "Test_003": {"x": 482566, "y": 390375, "id": 16636},
-}
-ICON_MAP = {
-    "BLACK": Icons.GENERAL_WASTE,
-    "BLUE": Icons.RECYCLING,
-    "PURPLE": Icons.NEWSPAPER,
-    "GREEN": Icons.ORGANIC,
-    "ORANGE": Icons.BIO_KITCHEN,
-}
-REGEX = r"(BLACK|BLUE|PURPLE|GREEN|ORANGE).+,\s(\d+\/\d+).+\s(\d+\/\d+)"
-
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "View the instructions found at: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_lindsey_gov_uk.md",
+_TYPE_MAP = {
+    "BLACK": wt.GENERAL_WASTE,
+    "BLUE": wt.RECYCLABLES,
+    "PURPLE": wt.PAPER,
+    "GREEN": wt.GARDEN_WASTE,
+    "ORANGE": wt.FOOD_WASTE,
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "x": "The 6-figure Easting grid reference assigned to your property.",
-        "y": "The 6-figure Northing grid reference assigned to your property.",
-        "id": "The unique property id assigned to your property",
+
+@final
+class Source(BaseSource):
+    TITLE = "West Lindsey District Council"
+    DESCRIPTION = "Source for West Lindsey District Council, Lincolnshire, UK."
+    URL = "https://www.west-lindsey.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"x": 509762, "y": 384493, "id": 919},
+        "Test_002": {"x": "511918", "y": "401495", "id": "39713"},
+        "Test_003": {"x": 482566, "y": 390375, "id": 16636},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "x": "The 6-figure Easting grid reference assigned to your property.",
-        "y": "The 6-figure Northing grid reference assigned to your property.",
-        "id": "The unique property id assigned to your property",
+    PARAMS = (
+        text_field("x", "Easting", coerce=str),
+        text_field("y", "Northing", coerce=str),
+        text_field("id", "Property ID", coerce=str),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search for your bin collection day on "
+            "https://www.west-lindsey.gov.uk/bins-waste-recycling/find-your-bin-collection-day "
+            "with the browser's Developer Tools open on the Network tab. Once the "
+            "schedule is shown, look at the last few requests: one has a payload "
+            "line `query: x=482566;y=390375;id=16636`. Use those three numbers "
+            "as x (the 6-figure Easting), y (the 6-figure Northing) and id (the "
+            "property id)."
+        ),
     }
-}
 
-
-class Source:
-    def __init__(self, x: int | str, y: int | str, id: int | str):
-        self._query: str = f"x={x!s};y={y!s};id={id!s}"
-
-    def append_year(self, d: list) -> list[date]:
-        today = datetime.now().date()
-        year: int = today.year
-        dates: list[date] = []
-        for dt in d:
-            dt = datetime.strptime(f"{dt}/{year!s}", "%d/%m/%Y").date()
-            if (dt - today) < timedelta(days=-31):
-                dt = dt.replace(year=dt.year + 1)
-            dates.append(dt)
-        return dates
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-
-        params = {
+    retrieve = retrievers.Request(
+        "https://wlnk.statmap.co.uk/map/Cluster.svc/getpage",
+        params=lambda x, y, id, **_: {
             "script": r"\Cluster\Cluster.AuroraScript$",
             "taskId": "bins",
             "format": "js",
             "updateOnly": "true",
-            "query": self._query,
-        }
-        r = s.get(
-            "https://wlnk.statmap.co.uk/map/Cluster.svc/getpage",
-            headers=HEADERS,
-            params=params,
-        )
-        r.raise_for_status()
+            "query": f"x={x};y={y};id={id}",
+        },
+        headers={
+            "user-agent": "Mozilla/5.0",
+            "referer": "https://www.west-lindsey.gov.uk/",
+        },
+        # The page is a JavaScript file whose HTML sits in an escaped string
+        # literal (<, \", \r\n): unescape it so the markup can be parsed.
+        encoding="unicode-escape",
+    )
 
-        soup: BeautifulSoup = BeautifulSoup(
-            r.content.decode("unicode-escape"), "html.parser"
-        )
+    parse = parsers.HtmlLabelledDates(
+        "li.auroraListItem li",
+        label="span",
+        date=":scope",
+        date_pattern=r"(\d{1,2}/\d{1,2})",
+        all_dates=True,
+    )
 
-        list_item = soup.find("li", {"class": "auroraListItem"})
-        lis = list_item.find_all("li")
-
-        entries: list = []
-        for li in lis:
-            details = re.findall(REGEX, li.text.split(".")[0])
-            if len(details) > 0:
-                flattened: list = [item for sublist in details for item in sublist]
-                waste_type: str = flattened[0]
-                waste_dates = self.append_year(flattened[1:])
-                for dt in waste_dates:
-                    entries.append(
-                        Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
-                    )
-
-        return entries
+    transform = RowTransformer(
+        parse_date=date_parsers.DateParserNextWeekday("%d/%m"),
+        type_value_map=_TYPE_MAP,
+    )

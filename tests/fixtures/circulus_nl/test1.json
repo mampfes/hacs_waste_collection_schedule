@@ -1,0 +1,44 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "POST https://mijn.circulus.nl/register/zipcode.json 0aa993a7a9",
+      "method": "POST",
+      "url": "https://mijn.circulus.nl/register/zipcode.json",
+      "final_url": "https://mijn.circulus.nl/register/zipcode.json",
+      "body": "{\"body\":[[\"number\",\"1\"],[\"zipCode\",\"7206AC\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 29 Sep 2026 20:00:47 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "vary": "Accept-Encoding",
+        "access-control-allow-origin": "https://www.circulus.nl",
+        "set-cookie": "CB_FLASH=success=U+bent+succesvol+ingelogd.; Path=/; HTTPOnly, CB_ERRORS=; Max-Age=0; Expires=Tue, 29 Sep 2026 20:00:47 GMT; Path=/; HTTPOnly, rememberme=; Max-Age=0; Expires=Tue, 29 Sep 2026 20:00:47 GMT; Path=/, CB_SESSION=1924f7e315af8fa9968b234232909fe1e0aaba1c-street=De+Moesmate&selectedHouseNumber=1&selectedZipCode=7206AC&municipality=Zutphen&___TS=1791316847694&arisId=2000173344&residence=ZUTPHEN&selectedHouseType=0; Max-Age=604800; Expires=Tue, 06 Oct 2026 20:00:47 GMT; Path=/; HTTPOnly",
+        "cache-control": "no-cache",
+        "x-robots-tag": "noindex, nofollow, nosnippet, noarchive",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJmbGFzaE1lc3NhZ2UiOiIiLCJzaG93VXJsIjoiaHR0cHM6Ly93d3cuY2lyY3VsdXMubmwvYXBpL3Zpc2l0b3IucGhwP2FkZHJlc3NcdTAwM2REZStNb2VzbWF0ZVx1MDAyNmNpdHlcdTAwM2RaVVRQSEVOXHUwMDI2bXVuaWNpcGFsaXR5XHUwMDNkWnV0cGhlblx1MDAyNnJlZGlyZWN0XHUwMDNkaHR0cHMlM0ElMkYlMkZtaWpuLmNpcmN1bHVzLm5sJTNBNDQzJTJGZGllbnN0ZW4lMkZcdTAwMjZzdHJlZXRudW1iZXJcdTAwM2QxXHUwMDI2emlwY29kZVx1MDAzZDcyMDZBQyIsImN1c3RvbURhdGEiOnsibnVtYmVyIjoiMSIsInppcENvZGUiOiI3MjA2QUMiLCJzdHJlZXQiOiJEZSBNb2VzbWF0ZSIsImFkZHJlc3NUeXBlIjoiSCIsIm11bmljaXBhbGl0eSI6Ilp1dHBoZW4iLCJkZXNpZ25hdGlvbkNvZGUiOiIxNCIsImFyaXNJZCI6IjIwMDAxNzMzNDQiLCJyZXNpZGVuY2UiOiJaVVRQSEVOIn19"
+    },
+    {
+      "key": "GET https://mijn.circulus.nl/afvalkalender.json 099f05b480",
+      "method": "GET",
+      "url": "https://mijn.circulus.nl/afvalkalender.json",
+      "final_url": "https://mijn.circulus.nl/afvalkalender.json?from=2026-09-29&till=2027-09-29",
+      "body": "{\"params\":[[\"from\",\"2026-09-29\"],[\"till\",\"2027-09-29\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 29 Sep 2026 20:00:47 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "vary": "Accept-Encoding",
+        "set-cookie": "CB_FLASH=; Max-Age=0; Expires=Tue, 29 Sep 2026 20:00:47 GMT; Path=/; HTTPOnly, CB_ERRORS=; Max-Age=0; Expires=Tue, 29 Sep 2026 20:00:47 GMT; Path=/; HTTPOnly, CB_SESSION=d458b99d7a0129ec763bbc91e4a1f440392460b1-street=De+Moesmate&selectedHouseNumber=1&selectedZipCode=7206AC&municipality=Zutphen&___TS=1791316847932&arisId=2000173344&residence=ZUTPHEN&selectedHouseType=0; Max-Age=604800; Expires=Tue, 06 Oct 2026 20:00:47 GMT; Path=/; HTTPOnly",
+        "cache-control": "no-cache",
+        "x-robots-tag": "noindex, nofollow, nosnippet, noarchive",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJmbGFzaE1lc3NhZ2UiOiIiLCJjdXN0b21EYXRhIjp7InJlc3BvbnNlIjp7ImhvbGlkYXlzIjpbeyJkYXRlIjoiSmFuIDEsIDIwMjYsIDEyOjAwOjAwIEFNIiwiZW50aXR5U3RhdHVzIjoiRU5BQkxFRCIsInZlcnNpb24iOjAsImVudGl0eUNyZWF0ZWQiOiJBcHIgMTYsIDIwMjUsIDk6NDM6MjAgQU0iLCJpZCI6NjV9LHsiZGF0ZSI6IkFwciA2LCAyMDI2LCAxMjowMDowMCBBTSIsImVudGl0eVN0YXR1cyI6IkVOQUJMRUQiLCJ2ZXJzaW9uIjowLCJlbnRpdHlDcmVhdGVkIjoiRGVjIDEsIDIwMjUsIDg6MzI6MzcgQU0iLCJpZCI6Njd9LHsiZGF0ZSI6IkFwciAyNywgMjAyNiwgMTI6MDA6MDAgQU0iLCJlbnRpdHlTdGF0dXMiOiJFTkFCTEVEIiwidmVyc2lvbiI6MCwiZW50aXR5Q3JlYXRlZCI6IkRlYyAxLCAyMDI1LCA4OjMyOjM3IEFNIiwiaWQiOjY4fSx7ImRhdGUiOiJNYXkgMTQsIDIwMjYsIDEyOjAwOjAwIEFNIiwiZW50aXR5U3RhdHVzIjoiRU5BQkxFRCIsInZlcnNpb24iOjAsImVudGl0eUNyZWF0ZWQiOiJEZWMgMSwgMjAyNSwgODozMjozNyBBTSIsImlkIjo2OX0seyJkYXRlIjoiTWF5IDI1LCAyMDI2LCAxMjowMDowMCBBTSIsImVudGl0eVN0YXR1cyI6IkVOQUJMRUQiLCJ2ZXJzaW9uIjowLCJlbnRpdHlDcmVhdGVkIjoiRGVjIDEsIDIwMjUsIDg6MzI6MzcgQU0iLCJpZCI6NzB9LHsiZGF0ZSI6IkRlYyAyNSwgMjAyNiwgMTI6MDA6MDAgQU0iLCJlbnRpdHlTdGF0dXMiOiJFTkFCTEVEIiwidmVyc2lvbiI6MCwiZW50aXR5Q3JlYXRlZCI6IkRlYyAxLCAyMDI1LCA4OjMyOjM3IEFNIiwiaWQiOjcxfSx7ImRhdGUiOiJEZWMgMjYsIDIwMjYsIDEyOjAwOjAwIEFNIiwiZW50aXR5U3RhdHVzIjoiRU5BQkxFRCIsInZlcnNpb24iOjAsImVudGl0eUNyZWF0ZWQiOiJEZWMgMSwgMjAyNSwgODozMjozNyBBTSIsImlkIjo3Mn0seyJkYXRlIjoiSmFuIDEsIDIwMjcsIDEyOjAwOjAwIEFNIiwiZW50aXR5U3RhdHVzIjoiRU5BQkxFRCIsInZlcnNpb24iOjAsImVudGl0eUNyZWF0ZWQiOiJEZWMgMSwgMjAyNSwgODozMjozNyBBTSIsImlkIjo3M31dLCJnYXJiYWdlIjpbeyJjb2RlIjoiQkVTVEFGUiIsImRhdGVzIjpbIjIwMjYtMTAtMDYiLCIyMDI2LTEwLTIwIiwiMjAyNi0xMS0wMyIsIjIwMjYtMTEtMTciLCIyMDI2LTEyLTAxIiwiMjAyNi0xMi0xNSIsIjIwMjYtMTItMjkiLCIyMDI3LTAxLTEyIiwiMjAyNy0wMS0yNiJdfSx7ImNvZGUiOiJHRlQiLCJkYXRlcyI6WyIyMDI2LTEwLTAxIiwiMjAyNi0xMC0xNSIsIjIwMjYtMTAtMjkiLCIyMDI2LTExLTEyIiwiMjAyNi0xMS0yNiIsIjIwMjYtMTItMTAiLCIyMDI2LTEyLTI0IiwiMjAyNy0wMS0wNyIsIjIwMjctMDEtMjEiXX0seyJjb2RlIjoiUEFQIiwiZGF0ZXMiOlsiMjAyNi0xMC0wOCIsIjIwMjYtMTEtMDUiLCIyMDI2LTEyLTAzIiwiMjAyNi0xMi0zMSIsIjIwMjctMDEtMjgiXX0seyJjb2RlIjoiUE1EIiwiZGF0ZXMiOlsiMjAyNi0xMC0wNSIsIjIwMjYtMTAtMTkiLCIyMDI2LTExLTAyIiwiMjAyNi0xMS0xNiIsIjIwMjYtMTEtMzAiLCIyMDI2LTEyLTE0IiwiMjAyNi0xMi0yOCIsIjIwMjctMDEtMTEiLCIyMDI3LTAxLTI1Il19LHsiY29kZSI6IlJFU1QiLCJkYXRlcyI6WyIyMDI2LTEwLTIyIiwiMjAyNi0xMS0xOSIsIjIwMjYtMTItMTciLCIyMDI3LTAxLTE0Il19XX0sImlkIjoxMjMsInN0YXR1cyI6MX19"
+    }
+  ]
+}
