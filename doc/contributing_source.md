@@ -4,10 +4,10 @@
 
 There are two ways to write a source:
 
-1. **The `BaseSource` pipeline (recommended for new sources).** You declare which standard, reusable steps to use (retrieve, parse, preprocess, transform). For most providers there is no source-specific code at all: the whole source is class attributes. This is the platform described in this guide.
+1. **The `BaseSource` pipeline (required for new sources).** You declare which standard, reusable steps to use (retrieve, parse, preprocess, transform). For most providers there is no source-specific code at all: the whole source is class attributes. This is the platform described in this guide.
 2. **The legacy module-level contract.** A module that defines `TITLE`, `URL`, `TEST_CASES` and a `Source` class with a hand-written `fetch()`. Around 600 existing sources use this style and it remains fully supported. See [Legacy module-level sources](#legacy-module-level-sources) at the end.
 
-Both styles produce the same `Collection` data and live in the same folder. New contributions should prefer the pipeline because it removes most of the boilerplate (no `fetch()`, no per-source icon map, no manual date parsing) and reuses tested components.
+Both styles produce the same `Collection` data and live in the same folder. **New sources must use the pipeline; new legacy-style sources are no longer accepted.** Existing legacy sources stay supported, and bug fixes to them do not require a conversion. The pipeline removes most of the boilerplate because it removes most of the boilerplate (no `fetch()`, no per-source icon map, no manual date parsing) and reuses tested components.
 
 ## Files required for a new service provider
 
