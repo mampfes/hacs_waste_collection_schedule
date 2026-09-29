@@ -627,7 +627,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "values": "Waarden",
         "verify_ssl": "SSL verifiëren",
         "version": "Versie",
-        "village": "Dorp",
+        "village": "Dorp",  # codespell:ignore dorp
         "voivodship": "Woiwodschap",
         "weekdays": "Wekdagen",
         "zipCode": "Postcode",

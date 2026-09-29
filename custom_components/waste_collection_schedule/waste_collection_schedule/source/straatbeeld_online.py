@@ -90,7 +90,7 @@ PARAM_DESCRIPTIONS = {
         "postal_code": "Nederlandse postcode, bijv. 4926CW",
         "house_number": "Huisnummer, bijv. 28",
         "house_letter": (
-            "Huisletter of toevoeging, indien van toepassing (optioneel, "
+            "Huisletter of toevoeging, indien van toepassing (optioneel, "  # codespell:ignore indien
             "alleen nodig als meerdere adressen dezelfde postcode en "
             "huisnummer delen)"
         ),

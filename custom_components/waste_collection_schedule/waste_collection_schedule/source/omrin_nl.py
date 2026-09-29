@@ -100,7 +100,7 @@ PARAM_DESCRIPTIONS = {
     "nl": {
         "postal_code": "Nederlandse postcode, bijvoorbeeld 3851MA.",
         "house_number": "Numeriek huisnummer.",
-        "suffix": "Huisnummertoevoeging, indien van toepassing.",
+        "suffix": "Huisnummertoevoeging, indien van toepassing.",  # codespell:ignore indien
     },
 }
 
