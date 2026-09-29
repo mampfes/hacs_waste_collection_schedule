@@ -4239,22 +4239,30 @@ If you already have enough information for your municipality/region, you are ver
 - [Berg](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/berg/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [Boden](/doc/source/edpevent_se.md) / boden.se
 - [Borlänge Energi](/doc/source/borlange_energi_se.md) / borlange-energi.se/avfall-och-atervinning/sophamtning
+- [Borås](/doc/source/avfallsapp_se.md) / boras.se
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
 - [Bräcke](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/bracke/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
+- [Dala Vatten och Avfall](/doc/source/avfallsapp_se.md) / dalavatten.se
 - [Danderyds kommun](/doc/source/edpevent_se.md) / danderyd.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
+- [Finspång](/doc/source/avfallsapp_se.md) / finspang.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Hedemora Energi](/doc/source/hedemora_energi_se.md) / hedemoraenergi.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda
 - [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
 - [Härjedalen](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/harjedalen/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [Hässleholm Miljö](/doc/source/hassleholm_miljo_se.md) / hassleholmmiljo.se
+- [Håbo](/doc/source/avfallsapp_se.md) / habo.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
+- [Kil](/doc/source/avfallsapp_se.md) / kil.se
+- [Kinda](/doc/source/avfallsapp_se.md) / kinda.se
 - [Kiruna - Tekniska Verken](/doc/source/edpevent_se.md) / tekniskaverkenikiruna.se
+- [Knivsta](/doc/source/avfallsapp_se.md) / knivsta.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
+- [Kungsbacka](/doc/source/avfallsapp_se.md) / kungsbacka.se
 - [Kungsbacka kommun](/doc/source/kungsbacka_se.md) / sjalvservice.kungsbacka.se
 - [Kungälvs kommun Avfallshantering](/doc/source/kungalv_se.md) / kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
@@ -4300,7 +4308,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
+- [Vafab Miljö](/doc/source/avfallsapp_se.md) / vafabmiljo.se
 - [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
+- [Vallentuna](/doc/source/avfallsapp_se.md) / vallentuna.se
 - [Vatten och Miljöresurs](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se
 - [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
@@ -4309,6 +4319,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Värmdö Sophämtning](/doc/source/varmdo_se.md) / varmdo.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
 - [Älvsbyns Energi](/doc/source/alvsbyns_energi_se.md) / alvsbynsenergi.se
+- [Åtvidaberg](/doc/source/avfallsapp_se.md) / atvidaberg.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 - [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
 - [Östersunds kommun](/doc/source/ostersund_se.md) / ostersund.se

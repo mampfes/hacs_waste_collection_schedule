@@ -30417,6 +30417,14 @@
       "id": "borlange_energi_se"
     },
     {
+      "title": "Bor\u00e5s",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "boras"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Bor\u00e5s Energi och Milj\u00f6",
       "module": "edpevent_se",
       "default_params": {
@@ -30431,6 +30439,14 @@
         "municipality": "bracke"
       },
       "id": "vattenmiljoresurs_se"
+    },
+    {
+      "title": "Dala Vatten och Avfall",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "dalavatten"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Danderyds kommun",
@@ -30459,6 +30475,14 @@
       "module": "fev_se",
       "default_params": {},
       "id": "fev_se"
+    },
+    {
+      "title": "Finsp\u00e5ng",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "finspang"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "G\u00e4strike \u00c5tervinnare",
@@ -30501,10 +30525,34 @@
       "id": "hassleholm_miljo_se"
     },
     {
+      "title": "H\u00e5bo",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "habo"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "J\u00f6nk\u00f6ping - June Avfall & Milj\u00f6",
       "module": "juneavfall_se",
       "default_params": {},
       "id": "juneavfall_se"
+    },
+    {
+      "title": "Kil",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "kil"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
+      "title": "Kinda",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "kinda"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Kiruna - Tekniska Verken",
@@ -30513,6 +30561,14 @@
         "service_provider": "kiruna-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Knivsta",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "knivsta"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Kretslopp Sydost",
@@ -30527,6 +30583,14 @@
       "module": "renhallningen_kristianstad_se",
       "default_params": {},
       "id": "renhallningen_kristianstad_se"
+    },
+    {
+      "title": "Kungsbacka",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "kungsbacka"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Kungsbacka kommun",
@@ -30834,11 +30898,27 @@
     },
     {
       "title": "Vafab Milj\u00f6",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "vafab"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
+      "title": "Vafab Milj\u00f6",
       "module": "edpevent_se",
       "default_params": {
         "service_provider": "vafabmiljo"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Vallentuna",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "vallentuna"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "Vatten och Milj\u00f6resurs",
@@ -30891,6 +30971,14 @@
       "module": "alvsbyns_energi_se",
       "default_params": {},
       "id": "alvsbyns_energi_se"
+    },
+    {
+      "title": "\u00c5tvidaberg",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "atvidaberg"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "\u00d6krab Soph\u00e4mntning",
