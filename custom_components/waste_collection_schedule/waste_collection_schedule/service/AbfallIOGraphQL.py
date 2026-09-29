@@ -209,7 +209,15 @@ class AbfallIoGraphQLRetriever(RetrieverFunc):
             )
         id_house_number = str(params["idHouseNumber"])
         waste_types = params.get("wasteTypes")
-        waste_types = [str(w) for w in waste_types] if waste_types else None
+        if isinstance(waste_types, str):
+            # The UI stores the text field as "79, 212, 213".
+            waste_types = [
+                x.strip() for x in waste_types.split(",") if x.strip()
+            ] or None
+        elif waste_types:
+            waste_types = [str(w) for w in waste_types]
+        else:
+            waste_types = None
         session = source.session
 
         r = session.get(INIT_URL, params={"key": key}, headers=HEADERS)
