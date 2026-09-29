@@ -24,6 +24,8 @@ Provides:
     a no-match input should have been
   - WebMapLayer: resolve a layer URL from the web map that publishes it, for a
     council that republishes its data under a new service name each year
+  - ArcGisWebMapExpression: attach a web map's Arcade expression (a cycle's
+    anchor dates, a holiday delay) to the records that depend on it
   - geocoded_params(): geocode an address into the query params of an ordinary
     (non-ArcGIS) endpoint, for a provider keyed by a point
   - ArcGisZoneParser / point_in_polygon(): match a geocoded address against a
@@ -391,6 +393,89 @@ class WebMapLayer:
         r = requests.get(self.item_data_url, params={"f": "json"}, timeout=self.timeout)
         r.raise_for_status()
         return str(r.json()["operationalLayers"][self.index]["url"])
+
+
+def _find_expression(node: Any, title: str) -> str | None:
+    """Depth-first search of web map JSON for the Arcade expression named ``title``."""
+    if isinstance(node, dict):
+        if node.get("title") == title and isinstance(node.get("expression"), str):
+            return str(node["expression"])
+        children: Iterable[Any] = node.values()
+    elif isinstance(node, list):
+        children = node
+    else:
+        return None
+    for child in children:
+        found = _find_expression(child, title)
+        if found is not None:
+            return found
+    return None
+
+
+class ArcGisWebMapExpression(Preprocessor[Any, Any]):
+    """Attach a web map's Arcade expression to the records that depend on it.
+
+    Some councils keep their schedule rules (a cycle's anchor date, a holiday
+    delay) not in a layer's attributes but in an Arcade expression of the public
+    web map, which computes the "next pickup" pop-up text. That expression is
+    live provider data, so reading it beats hard-coding the dates, and it is one
+    request the source should not hand-roll. This stage fetches the web map item
+    data once per fetch and appends the expression text to each
+    ``(label, attributes)`` record, turning it into ``(label, attributes,
+    expression)`` for a later ``describe`` to parse::
+
+        preprocess = Compose(
+            ArcGisWebMapExpression(WEBMAP_DATA_URL, "Recycle Pick up Days",
+                                   labels=("Recycling",)),
+            RecurrenceExpander(_describe),
+        )
+
+    Records whose label is not in ``labels`` get ``None`` and cause no request,
+    so a stream that does not need the expression keeps working if the web map
+    changes.
+
+    Args:
+        item_data_url: the web map item's ``/data`` URL.
+        title: the expression's ``title`` in the web map's popup definitions.
+        labels: the record labels that need the expression; ``None`` for all.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        item_data_url: str,
+        title: str,
+        *,
+        labels: Iterable[Any] | None = None,
+        timeout: int = 30,
+    ):
+        self.item_data_url = item_data_url
+        self.title = title
+        self.labels = None if labels is None else tuple(labels)
+        self.timeout = timeout
+
+    def _needs(self, label: Any) -> bool:
+        return self.labels is None or label in self.labels
+
+    def __call__(
+        self, records: Any, source: BaseSource | None = None
+    ) -> list[tuple[Any, dict[str, Any], str | None]]:
+        rows = list(records)
+        expression: str | None = None
+        if any(self._needs(label) for label, _ in rows):
+            r = requests.get(
+                self.item_data_url, params={"f": "json"}, timeout=self.timeout
+            )
+            r.raise_for_status()
+            expression = _find_expression(r.json(), self.title)
+            if expression is None:
+                raise ArcGisError(
+                    f"web map has no Arcade expression titled {self.title!r}"
+                )
+        return [
+            (label, attrs, expression if self._needs(label) else None)
+            for label, attrs in rows
+        ]
 
 
 def feature_query(
