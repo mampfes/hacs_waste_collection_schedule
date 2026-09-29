@@ -1,73 +1,66 @@
 import json
-from datetime import datetime
+from datetime import date
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Renfrewshire Council"
-DESCRIPTION = "Source for renfrewshire.gov.uk services for Renfrewshire"
-URL = "https://renfrewshire.gov.uk/"
-API_URL = "https://www.renfrewshire.gov.uk/bins-and-recycling/bin-collection/bin-collection-calendar/check-your-bin-collection-day/view/"
-
-TEST_CASES = {
-    "Test_001": {"postcode": "PA12 4JU", "uprn": "123033059"},
-    "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
-    "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
-}
-
-ICON_MAP = {
-    "Grey": Icons.GENERAL_WASTE,
-    "Brown": Icons.ORGANIC,
-    "Green": Icons.GLASS,
-    "Blue": Icons.EVENT,
-}
+_API_URL = (
+    "https://www.renfrewshire.gov.uk/bins-and-recycling/bin-collection/"
+    "bin-collection-calendar/check-your-bin-collection-day/view/"
+)
 
 
-class Source:
-    def __init__(self, postcode, uprn):
-        self._postcode = postcode
-        self._uprn = str(uprn)
+def _rounds(script, source) -> list:
+    """(date, colour) rows from the calendar JSON embedded in the page.
 
-    def fetch(self):
-        url = API_URL + self._uprn
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0"
+    The JSON maps each date to the council's bins, an empty one being ``null``.
+    """
+    calendar = json.loads(script.string)
+    return [
+        (date.fromisoformat(day), bin_["ShortName"])
+        for day, bins in calendar.items()
+        for bin_ in bins.values()
+        if bin_ is not None
+    ]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Renfrewshire Council"
+    DESCRIPTION = "Source for renfrewshire.gov.uk services for Renfrewshire"
+    URL = "https://renfrewshire.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "PA12 4JU", "uprn": "123033059"},
+        "Test_002": {"postcode": "PA12 4AJ", "uprn": "123034174"},
+        "Test_003": {"postcode": "PA2 9JB", "uprn": "123046497"},
+    }
+
+    PARAMS = (uprn(),)
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.GLASS,
+        wt.PAPER,
+    ]
+
+    retrieve = HttpGetRetriever(url=lambda uprn, **_: f"{_API_URL}{uprn}")
+    parse = HtmlParser("script#collections-data", require=["script#collections-data"])
+    preprocess = ExplodeList(_rounds)
+    transform = ICSTransformer(
+        type_value_map={
+            "Grey": wt.GENERAL_WASTE,
+            "Brown": wt.ORGANIC,
+            "Green": wt.GLASS,
+            "Blue": wt.PAPER,
         }
-
-        r = requests.get(url, headers=headers)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        collections_data = soup.find(
-            "script", {"type": "application/json", "id": "collections-data"}
-        )
-
-        entries = []
-
-        if not collections_data:
-            raise Exception("Failed to get bin collection data")
-        try:
-            # Get the text content and parse JSON
-            binData = json.loads(collections_data.string.strip())
-        except json.JSONDecodeError as e:
-            raise Exception("JSON Decode Failed with: " + str(e)) from e
-
-        for date_str, bins in binData.items():
-            date = datetime.fromisoformat(date_str).date()
-
-            for _bin_name, details in bins.items():
-                if details is None:
-                    continue  # skip empty bins
-
-                collection_type = details["ShortName"]  # e.g. "Blue", "Brown", "Grey"
-
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type),
-                    )
-                )
-
-        return entries
+    )
