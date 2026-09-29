@@ -77,9 +77,9 @@ class CalendarParser(Parser["list[dict[str, str]]"]):
         response.raise_for_status()
         name = response_shape.source_name(source)
         # The calendar is escaped HTML inside the envelope's result element; the
-        # HTML parser decodes the entities and lowercases the tag names.
-        envelope = BeautifulSoup(response.text, "html.parser")
-        result = envelope.find("getroundcalendarforuprnresult")
+        # XML parser decodes the entities.
+        envelope = BeautifulSoup(response.text, "xml")
+        result = envelope.find("getRoundCalendarForUPRNResult")
         page = BeautifulSoup(result.get_text() if result else "", "html.parser")
         months = page.select("div#NewCalendar table")
         response_shape.expect(
