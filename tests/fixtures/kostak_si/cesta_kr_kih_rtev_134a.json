@@ -1,0 +1,77 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://uod.kostak.si/Controller.php cd9dabfccd",
+      "method": "GET",
+      "url": "https://uod.kostak.si/Controller.php",
+      "final_url": "https://uod.kostak.si/Controller.php?find=Cesta+kr%C5%A1kih+%C5%BErtev+134A",
+      "body": "{\"params\":[[\"find\",\"Cesta kr\u0161kih \u017ertev 134A\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Wed, 30 Sep 2026 19:10:24 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "W3siVVJOSUtfU0lGUkEiOiIxOCIsInN0cmVldF9uYW1lIjoiQ0VTVEEgS1JcdTAxNjBLSUggXHUwMTdkUlRFViIsImxvY2F0aW9uX2huIjoiMTM0IiwibG9jYXRpb25faG5hIjoiQSIsInNldHRfbmFtZSI6IktSXHUwMTYwS08iLCJkYW5fTUtPIjoiTUtPIFRPUiAyIiwiZGFuX0VNQiI6IkVNQiBcdTAxMGNFVCIsImRhbl9CSU8iOiJCSU8gUEVUIn1d"
+    },
+    {
+      "key": "GET https://uod.kostak.si/Controller.php 474de8953e",
+      "method": "GET",
+      "url": "https://uod.kostak.si/Controller.php",
+      "final_url": "https://uod.kostak.si/Controller.php?getDates=MKO+TOR+2",
+      "body": "{\"params\":[[\"getDates\",\"MKO TOR 2\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Wed, 30 Sep 2026 19:10:24 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "W3siaWQiOiIzMjMiLCJkYXR1bSI6IjEzXC8xMFwvMjAyNiIsImRhbiI6IlR1ZXNkYXkiLCJvZHZveiI6Ik1LTyBUT1IgMiIsIkRUIjoiMjAyNi0xMC0xMyJ9LHsiaWQiOiIzNDciLCJkYXR1bSI6IjAzXC8xMVwvMjAyNiIsImRhbiI6IlR1ZXNkYXkiLCJvZHZveiI6Ik1LTyBUT1IgMiIsIkRUIjoiMjAyNi0xMS0wMyJ9LHsiaWQiOiIzNzMiLCJkYXR1bSI6IjI0XC8xMVwvMjAyNiIsImRhbiI6IlR1ZXNkYXkiLCJvZHZveiI6Ik1LTyBUT1IgMiIsIkRUIjoiMjAyNi0xMS0yNCJ9LHsiaWQiOiIzOTIiLCJkYXR1bSI6IjE1XC8xMlwvMjAyNiIsImRhbiI6IlR1ZXNkYXkiLCJvZHZveiI6Ik1LTyBUT1IgMiIsIkRUIjoiMjAyNi0xMi0xNSJ9XQ=="
+    },
+    {
+      "key": "GET https://uod.kostak.si/Controller.php 72facfd14b",
+      "method": "GET",
+      "url": "https://uod.kostak.si/Controller.php",
+      "final_url": "https://uod.kostak.si/Controller.php?getDates=EMB+%C4%8CET",
+      "body": "{\"params\":[[\"getDates\",\"EMB \u010cET\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Wed, 30 Sep 2026 19:10:24 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "W3siaWQiOiIzMTgiLCJkYXR1bSI6IjA4XC8xMFwvMjAyNiIsImRhbiI6IlRodXJzZGF5Iiwib2R2b3oiOiJFTUIgXHUwMTBjRVQiLCJEVCI6IjIwMjYtMTAtMDgifSx7ImlkIjoiMzM0IiwiZGF0dW0iOiIyMlwvMTBcLzIwMjYiLCJkYW4iOiJUaHVyc2RheSIsIm9kdm96IjoiRU1CIFx1MDEwY0VUIiwiRFQiOiIyMDI2LTEwLTIyIn0seyJpZCI6IjM1MSIsImRhdHVtIjoiMDVcLzExXC8yMDI2IiwiZGFuIjoiVGh1cnNkYXkiLCJvZHZveiI6IkVNQiBcdTAxMGNFVCIsIkRUIjoiMjAyNi0xMS0wNSJ9LHsiaWQiOiIzNjgiLCJkYXR1bSI6IjE5XC8xMVwvMjAyNiIsImRhbiI6IlRodXJzZGF5Iiwib2R2b3oiOiJFTUIgXHUwMTBjRVQiLCJEVCI6IjIwMjYtMTEtMTkifSx7ImlkIjoiMzgxIiwiZGF0dW0iOiIwM1wvMTJcLzIwMjYiLCJkYW4iOiJUaHVyc2RheSIsIm9kdm96IjoiRU1CIFx1MDEwY0VUIiwiRFQiOiIyMDI2LTEyLTAzIn0seyJpZCI6IjM5NCIsImRhdHVtIjoiMTdcLzEyXC8yMDI2IiwiZGFuIjoiVGh1cnNkYXkiLCJvZHZveiI6IkVNQiBcdTAxMGNFVCIsIkRUIjoiMjAyNi0xMi0xNyJ9LHsiaWQiOiI0MDciLCJkYXR1bSI6IjMxXC8xMlwvMjAyNiIsImRhbiI6IlRodXJzZGF5Iiwib2R2b3oiOiJFTUIgXHUwMTBjRVQiLCJEVCI6IjIwMjYtMTItMzEifV0="
+    },
+    {
+      "key": "GET https://uod.kostak.si/Controller.php 907778f7be",
+      "method": "GET",
+      "url": "https://uod.kostak.si/Controller.php",
+      "final_url": "https://uod.kostak.si/Controller.php?getDates=BIO+PET",
+      "body": "{\"params\":[[\"getDates\",\"BIO PET\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Wed, 30 Sep 2026 19:10:24 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "W3siaWQiOiIzMTAiLCJkYXR1bSI6IjAyXC8xMFwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMC0wMiJ9LHsiaWQiOiIzMTkiLCJkYXR1bSI6IjA5XC8xMFwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMC0wOSJ9LHsiaWQiOiIzMjciLCJkYXR1bSI6IjE2XC8xMFwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMC0xNiJ9LHsiaWQiOiIzMzUiLCJkYXR1bSI6IjIzXC8xMFwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMC0yMyJ9LHsiaWQiOiIzNDQiLCJkYXR1bSI6IjMwXC8xMFwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMC0zMCJ9LHsiaWQiOiIzNTIiLCJkYXR1bSI6IjA2XC8xMVwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMS0wNiJ9LHsiaWQiOiIzNjAiLCJkYXR1bSI6IjEzXC8xMVwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMS0xMyJ9LHsiaWQiOiIzNjkiLCJkYXR1bSI6IjIwXC8xMVwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMS0yMCJ9LHsiaWQiOiIzNzciLCJkYXR1bSI6IjI3XC8xMVwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMS0yNyJ9LHsiaWQiOiIzOTAiLCJkYXR1bSI6IjExXC8xMlwvMjAyNiIsImRhbiI6IkZyaWRheSIsIm9kdm96IjoiQklPIFBFVCIsIkRUIjoiMjAyNi0xMi0xMSJ9LHsiaWQiOiI0MDIiLCJkYXR1bSI6IjI0XC8xMlwvMjAyNiIsImRhbiI6IlRodXJzZGF5Iiwib2R2b3oiOiJCSU8gUEVUIiwiRFQiOiIyMDI2LTEyLTI0In1d"
+    }
+  ]
+}
