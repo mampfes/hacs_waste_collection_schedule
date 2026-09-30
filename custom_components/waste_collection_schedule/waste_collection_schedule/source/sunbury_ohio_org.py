@@ -1,80 +1,77 @@
+import datetime
 import re
-from datetime import datetime, timedelta
+from typing import Any, ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, recurrence, response_shape
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.preprocessors import Compose
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Village of Sunbury, Ohio"
-DESCRIPTION = "Source for Village of Sunbury, Ohio"
-URL = "https://www.sunburyohio.org"
-TEST_CASES: dict[str, dict] = {"TEST": {}}
-ICON_MAP = {
-    "Waste": Icons.GENERAL_WASTE,
-}
-COUNTRY = "us"
-DAYS = {
-    "MONDAY": MO,
-    "TUESDAY": TU,
-    "WEDNESDAY": WE,
-    "THURSDAY": TH,
-    "FRIDAY": FR,
-    "SATURDAY": SA,
-    "SUNDAY": SU,
-}
-
-API_URL = "https://lws-c16afd.webflow.io/service-guidelines/village-of-sunbury"
-
-DATE_RE = re.compile(r"\d{1,2}/\d{1,2}/\d{2}")
+_DATE_RE = re.compile(r"\d{1,2}/\d{1,2}/\d{2}")
+_PARSE_HOLIDAY = date_parsers.for_format("%m/%d/%y")
+_WASTE = "Waste"
+_WEEKS = 52
 
 
-class Source:
-    def __init__(self):
-        pass
+def _schedule(
+    tags: list[Tag], source: "BaseSource | None" = None
+) -> list[tuple[datetime.date, str]]:
+    """Weekly collection on the published weekday, pushed one day later when a
+    holiday falls earlier in the same Monday-Sunday week."""
+    day_tag = next(
+        (t for t in tags if "serviceguidelines_highight" in t.get("class", [])), None
+    )
+    weekday = recurrence.weekday(day_tag.get_text(strip=True)) if day_tag else None
+    response_shape.expect(
+        weekday is not None,
+        source_name=response_shape.source_name(source),
+        detail="collection weekday not found",
+    )
 
-    def fetch(self):
-        s = requests.Session()
+    holidays: list[datetime.date] = []
+    for tag in tags:
+        if "holiday_cell" not in tag.get("class", []):
+            continue
+        match = _DATE_RE.search(tag.get_text())
+        if match:
+            try:
+                holidays.append(_PARSE_HOLIDAY(match.group()))
+            except ValueError:
+                continue
 
-        r = s.get(API_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+    assert weekday is not None
+    rows = []
+    for day in recurrence.recurring(
+        recurrence.next_weekday(weekday), recurrence.WEEKLY, _WEEKS
+    ):
+        week_start = day - datetime.timedelta(days=day.weekday())
+        if any(week_start <= holiday < day for holiday in holidays):
+            day += datetime.timedelta(days=1)
+        rows.append((day, _WASTE))
+    return rows
 
-        # extract collection day and generate weekly dates
-        collection_day_el = soup.find("div", {"class": "serviceguidelines_highight"})
-        collection_day = DAYS[collection_day_el.text.strip().upper()]
-        start_date = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
-        collection_dates = list(
-            rrule(
-                freq=WEEKLY,
-                dtstart=start_date,
-                byweekday=collection_day,
-                count=52,
-            )
-        )
 
-        # extract holiday dates from all holiday cells by matching date patterns
-        holidays = []
-        for cell in soup.find_all("div", {"class": "holiday_cell"}):
-            match = DATE_RE.search(cell.text)
-            if match:
-                try:
-                    holidays.append(datetime.strptime(match.group(), "%m/%d/%y"))
-                except ValueError:
-                    continue
+@final
+class Source(BaseSource):
+    TITLE = "Village of Sunbury, Ohio"
+    DESCRIPTION = "Source for Village of Sunbury, Ohio"
+    URL = "https://www.sunburyohio.org"
+    COUNTRY = "us"
+    API_URL = "https://lws-c16afd.webflow.io/service-guidelines/village-of-sunbury"
+    RAISE_ON_EMPTY = True
 
-        # adjust collection dates: shift +1 day if a holiday falls earlier in the same week
-        entries = []
-        for day in collection_dates:
-            week_start = day - timedelta(days=day.weekday())
-            shift_needed = any(week_start <= holiday < day for holiday in holidays)
-            date = (day + timedelta(days=1)).date() if shift_needed else day.date()
-            entries.append(
-                Collection(
-                    date=date,
-                    t="Waste",
-                    icon=ICON_MAP.get("Waste"),
-                )
-            )
+    TEST_CASES: ClassVar[dict[str, dict[str, Any]]] = {"TEST": {}}
 
-        return entries
+    PARAMS = ()
+
+    WASTE_TYPES: ClassVar[list[wt.WasteType]] = [wt.GENERAL_WASTE]
+
+    parse = HtmlParser(
+        "div.serviceguidelines_highight, div.holiday_cell",
+        require=["div.serviceguidelines_highight"],
+    )
+    preprocess = Compose(_schedule)
+    transform = RowTransformer(type_value_map={_WASTE: wt.GENERAL_WASTE})
