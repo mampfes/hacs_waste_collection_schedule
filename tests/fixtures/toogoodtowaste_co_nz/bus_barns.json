@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://www.toogoodtowaste.co.nz/_designs/integrations/address-finder/addressdata.json a3f0600334",
+      "method": "GET",
+      "url": "https://www.toogoodtowaste.co.nz/_designs/integrations/address-finder/addressdata.json",
+      "final_url": "https://www.toogoodtowaste.co.nz/_designs/integrations/address-finder/addressdata.json?query=493+Muritai+Road+EASTBOURNE",
+      "body": "{\"params\":[[\"query\",\"493 Muritai Road EASTBOURNE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Wed, 30 Sep 2026 16:46:08 GMT",
+        "content-type": "application/json",
+        "cf-ray": "a434b3b98ff2c805-DUS",
+        "cf-cache-status": "HIT",
+        "age": "18",
+        "cache-control": "max-age=0, s-maxage=900, public",
+        "expires": "Wed, 30 Sep 2026 17:00:50 GMT",
+        "server": "cloudflare",
+        "x-slug": "hutt-city-council",
+        "x-cdn-cached-at": "1790786751",
+        "x-cdn-expires-at": "1790787651",
+        "x-cdn-original-ttl": "900",
+        "x-cdn-stale-error-expires-at": "1790788551",
+        "x-cdn-stale-expires-at": "1790787711",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "set-cookie": "dxp-sessionid=1c797e56-eb5d-4474-806e-9193e08ebf01;Max-Age=1800;Secure;HttpOnly;Path=/, __cf_bm=znSs.hmxWZeECzk6lmIrRvjloZIj1sE5PO_VC1YQ3yE-1790786768.8861084-1.0.1.1-k49hAiO7Cbjalv5P5mi1JI63mtZvxFds79En5_MVQ7bOtRiAzTOeIgLsSDRJmHZej5rCIV72sOrFYPgJuValxiMl8K4Q81ggeGRL5O7TaDbMV2YkjI_xIi2.3Mv75J8D; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.toogoodtowaste.co.nz; Expires=Wed, 30 Sep 2026 17:16:08 GMT",
+        "content-encoding": "br",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3siYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiMi80OTMgTXVyaXRhaSBSb2FkIEVBU1RCT1VSTkUiLCJjb2xsZWN0aW9uX3pvbmUiOiIxIiwiYmluX2xpc3QiOiJbXCJyZWRcIixcImJsdWVcIl0iLCJjb2xsZWN0aW9uX2RheSI6Ik1vbmRheSIsImhvdXNlX25vIjoiNDkzIiwiY29sbGVjdGlvbl9tZXNzYWdlIjoiUGxlYXNlIHB1dCBvdXQgeW91ciByZWQgYmluIGFuZCBibHVlIGNyYXRlLiIsImdyZWVuX2NvbGxlY3Rpb25fem9uZSI6IjEiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTAtMDUiLCJkYXlfem9uZSI6Ik1vbmRheSBab25lIDEifX0seyJhdHRyaWJ1dGVzIjp7ImFkZHJlc3MiOiI0OTMgTXVyaXRhaSBSb2FkIEVBU1RCT1VSTkUiLCJjb2xsZWN0aW9uX3pvbmUiOiIxIiwiYmluX2xpc3QiOiJbXCJyZWRcIixcImJsdWVcIl0iLCJjb2xsZWN0aW9uX2RheSI6Ik1vbmRheSIsImhvdXNlX25vIjoiNDkzIiwiY29sbGVjdGlvbl9tZXNzYWdlIjoiUGxlYXNlIHB1dCBvdXQgeW91ciByZWQgYmluIGFuZCBibHVlIGNyYXRlLiIsImdyZWVuX2NvbGxlY3Rpb25fem9uZSI6IjEiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTAtMDUiLCJkYXlfem9uZSI6Ik1vbmRheSBab25lIDEifX0seyJhdHRyaWJ1dGVzIjp7ImFkZHJlc3MiOiIxLzQ5MyBNdXJpdGFpIFJvYWQgRUFTVEJPVVJORSIsImNvbGxlY3Rpb25fem9uZSI6IjEiLCJiaW5fbGlzdCI6IltcInJlZFwiLFwiYmx1ZVwiXSIsImNvbGxlY3Rpb25fZGF5IjoiTW9uZGF5IiwiaG91c2Vfbm8iOiI0OTMiLCJjb2xsZWN0aW9uX21lc3NhZ2UiOiJQbGVhc2UgcHV0IG91dCB5b3VyIHJlZCBiaW4gYW5kIGJsdWUgY3JhdGUuIiwiZ3JlZW5fY29sbGVjdGlvbl96b25lIjoiMSIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMC0wNSIsImRheV96b25lIjoiTW9uZGF5IFpvbmUgMSJ9fSx7ImF0dHJpYnV0ZXMiOnsiYWRkcmVzcyI6IjMvNDkzIE11cml0YWkgUm9hZCBFQVNUQk9VUk5FIiwiY29sbGVjdGlvbl96b25lIjoiMSIsImJpbl9saXN0IjoiW1wicmVkXCIsXCJibHVlXCJdIiwiY29sbGVjdGlvbl9kYXkiOiJNb25kYXkiLCJob3VzZV9ubyI6IjQ5MyIsImNvbGxlY3Rpb25fbWVzc2FnZSI6IlBsZWFzZSBwdXQgb3V0IHlvdXIgcmVkIGJpbiBhbmQgYmx1ZSBjcmF0ZS4iLCJncmVlbl9jb2xsZWN0aW9uX3pvbmUiOiIxIiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEwLTA1IiwiZGF5X3pvbmUiOiJNb25kYXkgWm9uZSAxIn19XQ=="
+    }
+  ]
+}
