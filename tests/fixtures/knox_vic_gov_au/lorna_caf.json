@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://www.knox.vic.gov.au/rubbish-collection/autocomplete/find 16c522838a",
+      "method": "GET",
+      "url": "https://www.knox.vic.gov.au/rubbish-collection/autocomplete/find",
+      "final_url": "https://www.knox.vic.gov.au/rubbish-collection/autocomplete/find?q=1053+Burwood+Highway%2C+FERNTREE+GULLY+VIC+3156",
+      "body": "{\"params\":[[\"q\",\"1053 Burwood Highway, FERNTREE GULLY VIC 3156\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Wed, 30 Sep 2026 16:46:39 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "cache-control": "must-revalidate, no-cache, private",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "content-language": "en",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 11 (https://www.drupal.org)",
+        "strict-transport-security": "max-age=63072000",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)",
+        "x-varnish": "441406569",
+        "age": "0",
+        "via": "1.1 varnish (Varnish/6.6)",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "gzip",
+        "cf-ray": "a434b4748d35b99a-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3sidmFsdWUiOiI2NDA2OCIsImxhYmVsIjoiMTA1MyBCdXJ3b29kIEhpZ2h3YXksIEZFUk5UUkVFIEdVTExZIFZJQyAzMTU2In1d"
+    },
+    {
+      "key": "GET https://www.knox.vic.gov.au/rubbish-collection/find 9f6208a148",
+      "method": "GET",
+      "url": "https://www.knox.vic.gov.au/rubbish-collection/find",
+      "final_url": "https://www.knox.vic.gov.au/rubbish-collection/find?address=64068",
+      "body": "{\"params\":[[\"address\",\"64068\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Wed, 30 Sep 2026 16:46:40 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "cache-control": "must-revalidate, no-cache, private",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "content-language": "en",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 11 (https://www.drupal.org)",
+        "strict-transport-security": "max-age=63072000",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)",
+        "x-varnish": "428265781",
+        "age": "0",
+        "via": "1.1 varnish (Varnish/6.6)",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "gzip",
+        "cf-ray": "a434b47bda8ab99a-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJjb2xsZWN0aW9uX2RheSI6IldlZWtseSBjb2xsZWN0aW9uIG9uIFdlZG5lc2RheSIsInJ1YmJpc2hfZGF0ZSI6Ik5leHQgY29sbGVjdGlvbiBpcyBcdTAwM0NzcGFuXHUwMDNFMzAgU2VwdGVtYmVyIDIwMjZcdTAwM0NcL3NwYW5cdTAwM0UiLCJyZWN5Y2xpbmdfZGF0ZSI6Ik5leHQgY29sbGVjdGlvbiBpcyBcdTAwM0NzcGFuXHUwMDNFMDcgT2N0b2JlciAyMDI2XHUwMDNDXC9zcGFuXHUwMDNFIiwid2FzdGVfY29sbGVjdGlvbl9kYXkiOiJGb3J0bmlnaHRseSBjb2xsZWN0aW9uIG9uIFdlZG5lc2RheSIsImdyZWVuX2RhdGUiOiJOZXh0IGNvbGxlY3Rpb24gaXMgXHUwMDNDc3Bhblx1MDAzRTA3IE9jdG9iZXIgMjAyNlx1MDAzQ1wvc3Bhblx1MDAzRSJ9"
+    }
+  ]
+}
