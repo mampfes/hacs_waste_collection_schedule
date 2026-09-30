@@ -1,8 +1,8 @@
-# Västblekinge Miljö AB (VMAB)
+# VMAB
 
-Support for schedules provided by [Västblekinge Miljö AB (VMAB)](https://vmab.se/privat/vmabs-tomningskalender/), serving the municipalities of Karlshamn, Sölvesborg, and Olofström in Blekinge, Sweden.
+Support for schedules provided by [VMAB](https://vmab.se).
 
-Note that this calendar service only applies to customers with "Fyrfack" bins (regular residential houses). It does not work for apartment buildings or municipal/state service locations.
+Source for Västblekinge Miljö AB waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -19,8 +19,6 @@ waste_collection_schedule:
 **street_address**  
 *(string) (required)*
 
-The street address including city, separated by a comma.
-
 ## Example
 
 ```yaml
@@ -28,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: vmab_se
       args:
-        street_address: Rosenborgsvägen 35, Karlshamn
+        street_address: "Rosenborgsv\xE4gen 35, Karlshamn"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the address to the house with waste collection. The address can be looked up at [vmab.se/privat/vmabs-tomningskalender](https://vmab.se/privat/vmabs-tomningskalender/).
+Enter your street address and city, separated by a comma, exactly as they appear when you search for your address on https://vmab.se/privat/vmabs-tomningskalender, e.g. `Rosenborgsvägen 35, Karlshamn`. Only houses with the four-slot bins (Max 1 and Max 2) are covered, not apartment buildings.

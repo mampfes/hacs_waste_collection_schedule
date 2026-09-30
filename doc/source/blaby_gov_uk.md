@@ -1,6 +1,8 @@
 # Blaby District Council
 
-Support for schedules provided by [Blaby District Council](https://my.blaby.gov.uk/collections), serving the Blaby district, UK.
+Support for schedules provided by [Blaby District Council](https://my.blaby.gov.uk/collections).
+
+Recycling and refuse collection dates for Blaby District Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: blaby_gov_uk
       args:
-        uprn: "100030395499"
+        uprn: 100030407500
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy wasy of finding your UPRN is to search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.
+Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/).

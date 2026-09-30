@@ -1,6 +1,8 @@
 # Village of Sunbury, Ohio
 
-Support for schedules provided by [Village of Sunbury, Ohio](https://www.sunburyohio.org), served by Local Waste Services.
+Support for schedules provided by [Village of Sunbury, Ohio](https://www.sunburyohio.org).
+
+Source for Village of Sunbury, Ohio
 
 ## Configuration via configuration.yaml
 
@@ -8,12 +10,11 @@ Support for schedules provided by [Village of Sunbury, Ohio](https://www.sunbury
 waste_collection_schedule:
   sources:
     - name: sunbury_ohio_org
-      args: {}
 ```
 
 ### Configuration Variables
 
-No configuration variables are required. This source covers the entire Village of Sunbury.
+No configuration arguments are required.
 
 ## Example
 
@@ -21,5 +22,4 @@ No configuration variables are required. This source covers the entire Village o
 waste_collection_schedule:
   sources:
     - name: sunbury_ohio_org
-      args: {}
 ```

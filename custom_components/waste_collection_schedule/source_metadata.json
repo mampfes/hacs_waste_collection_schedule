@@ -496,7 +496,9 @@
   },
   "knox_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knox_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as it appears on [Find my bin days](https://www.knox.vic.gov.au/our-services/bins-rubbish-and-recycling/find-my-bin-days), e.g. '1053 Burwood Highway, FERNTREE GULLY VIC 3156'. The first match is used."
+    },
     "urls": {}
   },
   "lakemac_nsw_gov_au": {
@@ -527,7 +529,9 @@
   },
   "liverpool_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_nsw_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as listed in the Liverpool City Council open data set, e.g. '600 Kurrajong Road, Carnes Hill, NSW 2171'."
+    },
     "urls": {}
   },
   "logan_qld_gov_au": {
@@ -896,7 +900,9 @@
   },
   "wyndham_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyndham_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address exactly as the council's [myWyndham](https://digital.wyndham.vic.gov.au/myWyndham/) search suggests it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'."
+    },
     "urls": {}
   },
   "yarra_ranges_vic_gov_au": {
@@ -3590,7 +3596,9 @@
   },
   "tbv_velbert_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tbv_velbert_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Straße und Hausnummer so eingeben, wie sie im Abfallkalender auf tbv-velbert.de/abfall gesucht werden, z. B. 'Am Lindenkamp 33'."
+    },
     "urls": {}
   },
   "team_orange_de": {
@@ -4272,7 +4280,9 @@
   },
   "toogoodtowaste_co_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toogoodtowaste_co_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address exactly as the address finder on [toogoodtowaste.co.nz](https://www.toogoodtowaste.co.nz/) shows it, e.g. '30 Laings Road HUTT CENTRAL' (street in title case, suburb in capitals)."
+    },
     "urls": {}
   },
   "mpdc_govt_nz": {
@@ -4715,7 +4725,9 @@
   },
   "mojiodpadki_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md",
-    "howto": {},
+    "howto": {
+      "en": "Search your address at https://www.mojiodpadki.si/urniki/urniki-odvoza-odpadkov. The UPRN is the last part of the address of the schedule page (`.../urniki-odvoza-odpadkov/s/<uprn>`)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -4815,7 +4827,9 @@
   },
   "gastrikeatervinnare_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street name with house number and your city exactly as shown on https://gastrikeatervinnare.se/ when you search for your collection days."
+    },
     "urls": {}
   },
   "hedemora_energi_se": {
@@ -4945,7 +4959,9 @@
   },
   "miljoteknik_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/miljoteknik_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address and city separated by a comma, as they appear when you search for your address on http://www.fyrfackronneby.se/hamtningskalender/, e.g. 'Hjortsbergavägen 16, Johannishus'."
+    },
     "urls": {}
   },
   "samiljo_se": {
@@ -5016,7 +5032,9 @@
   },
   "vmab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmab_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address and city, separated by a comma, exactly as they appear when you search for your address on https://vmab.se/privat/vmabs-tomningskalender, e.g. `Rosenborgsvägen 35, Karlshamn`. Only houses with the four-slot bins (Max 1 and Max 2) are covered, not apartment buildings."
+    },
     "urls": {}
   },
   "varmdo_se": {
@@ -5454,7 +5472,7 @@
   "blaby_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blaby_gov_uk.md",
     "howto": {
-      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
     },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
@@ -5488,7 +5506,9 @@
   },
   "west_norfolk_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_norfolk_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5516,7 +5536,9 @@
   },
   "bradford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bradford_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5658,11 +5680,9 @@
   "chelmsford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chelmsford_gov_uk.md",
     "howto": {
-      "en": "You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details."
+      "en": "You can find your collection round (e.g. Tuesday A) by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details."
     },
-    "urls": {
-      "url_www_chelmsford_gov_uk_bins_and_recycling_check_your_collection_day": "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day"
-    }
+    "urls": {}
   },
   "cheltenham_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheltenham_gov_uk.md",
@@ -7182,7 +7202,9 @@
   },
   "stockport_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockport_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7248,7 +7270,9 @@
   },
   "tameside_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tameside_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your UPRN, which you can find at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7355,7 +7379,9 @@
   },
   "uttlesford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uttlesford_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://bins.uttlesford.gov.uk/ and look up your address. The house value is the `house` parameter of the results page address (`collections.php?house=29142-Tuesday`)."
+    },
     "urls": {}
   },
   "valeofglamorgan_gov_uk": {
@@ -7844,7 +7870,9 @@
   },
   "roundrocktexas_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the name of your neighborhood as the City of Round Rock lists it (for example Apache Oaks or Windy Park). Recycling is collected every two weeks and trash weekly, on the weekday of your neighborhood's recycling zone."
+    },
     "urls": {}
   },
   "seattle_gov": {

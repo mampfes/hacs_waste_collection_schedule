@@ -1,35 +1,30 @@
 # BCP Council
 
-Support for schedules provided by [BCP Council](https://www.bcpcouncil.gov.uk/), serving Bournemouth, Christchurch and Poole UK.
+Support for schedules provided by [BCP Council](https://bcpportal.bcpcouncil.gov.uk).
+
+Bin collection data for Bournemouth, Christchurch and Poole Council, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bcp_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
+## Example
 
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bcp_gov_uk
       args:
-        uprn: "10001085438"
+        uprn: 10013449141
 ```
-
-
-#### How to get the source argument
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-
-
