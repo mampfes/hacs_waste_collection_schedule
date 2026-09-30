@@ -1,146 +1,122 @@
-from datetime import date, datetime
+import datetime
+from typing import ClassVar, final
 from urllib.parse import urlencode
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import Tag
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street_address
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Sjöbo kommun"
-DESCRIPTION = "Source for Sjöbo kommun waste collection."
-URL = "https://www.sjobo.se"
-TEST_CASES = {
-    "Kommunhuset": {"address": "Gamla torg 10", "city": "Sjöbo"},
-}
+API = "https://webbservice.indecta.se/kunder/sjobo/kalender/basfiler/onlinekalender.php"
 
-ICON_MAP = {
-    "FF1": Icons.GENERAL_WASTE,
-    "FF1-H": Icons.GENERAL_WASTE,
-    "FF2": Icons.GENERAL_WASTE,
-    "FF2-H": Icons.GENERAL_WASTE,
-    "MoR": Icons.GENERAL_WASTE,
-    "MoR-H": Icons.GENERAL_WASTE,
-    "FG": Icons.GLASS,
-    "FG-H": Icons.GLASS,
-    "OFG": Icons.GLASS,
-    "OFG-H": Icons.GLASS,
-    "RST": Icons.GENERAL_WASTE,
-    "RST-H": Icons.GENERAL_WASTE,
-    "KOM": Icons.BIO_KITCHEN,
-    "KOM-H": Icons.BIO_KITCHEN,
-    "MAT": Icons.BIO_KITCHEN,
-    "MAT-H": Icons.BIO_KITCHEN,
-    "MEF": Icons.RECYCLING,
-    "MEF-H": Icons.RECYCLING,
-    "PAF": Icons.PAPER,
-    "PAF-H": Icons.PAPER,
-    "PLF": Icons.RECYCLING,
-    "PLF-H": Icons.RECYCLING,
-    "ToP": Icons.NEWSPAPER,
-    "ToP-H": Icons.NEWSPAPER,
-    "TRG": Icons.ORGANIC,
-    "TRG-H": Icons.ORGANIC,
-}
-
-MONTH_MAP = {
-    "Januari": 1,
-    "Februari": 2,
-    "Mars": 3,
-    "April": 4,
-    "Maj": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "Augusti": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "December": 12,
-}
-
-BIN_TYPE_TO_TEXT = {
+# The calendar page is a table per month; each day is a small table with the day
+# number in a `styleDayHit` cell and one empty cell per collection, whose class
+# is the bin code. A code ending in `-H` is the same bin in a holiday week.
+_BIN_TEXT = {
     "FF1": "Matavfall, restavfall, metallförpackningar och tidningar",
-    "FF1-H": "Matavfall, restavfall, metallförpackningar och tidningar",
-    "FF2": "Pappersförpackningar, plastförpackningar (hårda & mjuka), ofärgade och färgade glasförpackningar samt batterier och ljuskällor i batteriboxen",
-    "FF2-H": "Pappersförpackningar, plastförpackningar (hårda & mjuka), ofärgade och färgade glasförpackningar samt batterier och ljuskällor i batteriboxen",
+    "FF2": (
+        "Pappersförpackningar, plastförpackningar (hårda & mjuka), ofärgade och "
+        "färgade glasförpackningar samt batterier och ljuskällor i batteriboxen"
+    ),
     "MoR": "Matavfall och Restavfall",
-    "MoR-H": "Matavfall och Restavfall",
     "FG": "Färgade glasförpackningar",
-    "FG-H": "Färgade glasförpackningar",
     "OFG": "Ofärgade glasförpackningar",
-    "OFG-H": "Ofärgade glasförpackningar",
     "RST": "Restavfall",
-    "RST-H": "Restavfall",
     "KOM": "Kompost",
-    "KOM-H": "Kompost",
     "MAT": "Matavfall",
-    "MAT-H": "Matavfall",
     "MEF": "Metallförpackningar",
-    "MEF-H": "Metallförpackningar",
     "PAF": "Pappersförpackningar",
-    "PAF-H": "Pappersförpackningar",
     "PLF": "Plastförpackningar (hårda och mjuka)",
-    "PLF-H": "Plastförpackningar (hårda och mjuka)",
     "ToP": "Tidningar och Papper",
-    "ToP-H": "Tidningar och Papper",
     "TRG": "Trädgårdsavfall",
-    "TRG-H": "Trädgårdsavfall",
 }
 
+# FF1, FF2 and MoR each combine several waste types in one bin.
+_TYPE_MAP = {
+    _BIN_TEXT["FF1"]: wt.OTHER,
+    _BIN_TEXT["FF2"]: wt.OTHER,
+    _BIN_TEXT["MoR"]: wt.OTHER,
+    _BIN_TEXT["FG"]: wt.GLASS,
+    _BIN_TEXT["OFG"]: wt.GLASS,
+    _BIN_TEXT["RST"]: wt.GENERAL_WASTE,
+    _BIN_TEXT["KOM"]: wt.ORGANIC,
+    _BIN_TEXT["MAT"]: wt.FOOD_WASTE,
+    _BIN_TEXT["MEF"]: wt.RECYCLABLES,
+    _BIN_TEXT["PAF"]: wt.PAPER,
+    _BIN_TEXT["PLF"]: wt.RECYCLABLES,
+    _BIN_TEXT["ToP"]: wt.PAPER,
+    _BIN_TEXT["TRG"]: wt.GARDEN_WASTE,
+}
 
-class Source:
-    def __init__(self, address: str, city: str) -> None:
-        self._address: str = address
-        self._city: str = city
+_MARKER = ", ".join(f"td.{code}, td.{code}-H" for code in _BIN_TEXT)
 
-    def fetch(self) -> list[Collection]:
-        params = urlencode(
-            {"hsG": self._address, "hsO": self._city}, encoding="iso-8859-1"
-        )
-        r = requests.get(
-            "https://webbservice.indecta.se/kunder/sjobo/kalender/basfiler/onlinekalender.php",
-            params=params,
-        )
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        entries = []
-        for bin_type, translation in BIN_TYPE_TO_TEXT.items():
-            bins = soup.find_all("td", {"class": bin_type})
-            for bin_ in bins:
-                date_ = self._find_date(bin_)
-                icon = ICON_MAP.get(bin_type)
-                if bin_type.endswith("-H"):
-                    translation = (
-                        "Varning: helgvecka. "  # codespell:ignore varning
-                        + translation
-                    )
+def _code(cell: Tag) -> str:
+    return next(c for c in cell["class"] if c.removesuffix("-H") in _BIN_TEXT)
 
-                entries.append(Collection(date=date_, t=translation, icon=icon))
 
-        return entries
+def _date(cell: Tag) -> datetime.date:
+    """The date of the day table the marker cell sits in."""
+    month_table = cell.find_parent("table", {"class": "styleMonth"})
+    month_name, year = month_table.find("td", {"class": "styleMonthName"}).text.split(
+        " - "
+    )
+    day_table = cell.find_parent("table")
+    day_cell = day_table.find("td", {"class": "styleDayHit"}) or day_table.find(
+        "td", {"style": "styleDayHit"}
+    )
+    # The first day of each week also carries a week-number label (`v.2`) in the
+    # same cell, so read the day from the div holding just the digits.
+    day = next(
+        div.get_text(strip=True)
+        for div in reversed(day_cell.find_all("div"))
+        if div.get_text(strip=True).isdigit()
+    )
+    return datetime.date(int(year), recurrence.month(month_name) or 0, int(day))
 
-    @staticmethod
-    def _find_date(bin: Tag) -> date:
-        wrapper = bin.find_parent("table", {"class": "styleMonth"})
-        year_month = wrapper.find("td", {"class": "styleMonthName"})
-        month, year = year_month.text.split(" - ")
 
-        table = bin.find_parent("table")
-        cell = table.find("td", {"class": "styleDayHit"})
-        if not cell:
-            # workaround for a programmer error
-            cell = table.find("td", {"style": "styleDayHit"})
-        # The first day of each week also carries a week-number label
-        # (`<div>v.2</div>`) in the same cell, so `cell.text` runs the label and
-        # the day together ("v.25" for Monday the 5th). Read the day from the
-        # div that holds just the digits instead.
-        day = next(
-            (
-                div.get_text(strip=True)
-                for div in reversed(cell.find_all("div"))
-                if div.get_text(strip=True).isdigit()
-            ),
-            cell.text,
-        )
+@final
+class Source(BaseSource):
+    TITLE = "Sjöbo kommun"
+    DESCRIPTION = "Source for Sjöbo kommun waste collection."
+    URL = "https://www.sjobo.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+    ]
 
-        date_str = f"{year} {int(MONTH_MAP[month]):02d} {int(day):02d}"
-        return datetime.strptime(date_str, "%Y %m %d").date()
+    TEST_CASES: ClassVar[dict] = {
+        "Kommunhuset": {"address": "Gamla torg 10", "city": "Sjöbo"},
+    }
+
+    PARAMS = (street_address("address"), city("city"))
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address and city as they appear in the calendar "
+            "search on https://www.sjobo.se. Collections in a holiday week are "
+            "marked 'Helgvecka' in the description."
+        ),
+    }
+
+    retrieve = retrievers.HttpGetRetriever(
+        url=lambda address, city, **_: (
+            f"{API}?" + urlencode({"hsG": address, "hsO": city}, encoding="iso-8859-1")
+        ),
+    )
+    parse = parsers.HtmlParser(_MARKER)
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda cell: _BIN_TEXT[_code(cell).removesuffix("-H")],
+        description_getter=lambda cell: (
+            "Helgvecka" if _code(cell).endswith("-H") else None
+        ),
+        type_value_map=_TYPE_MAP,
+    )
