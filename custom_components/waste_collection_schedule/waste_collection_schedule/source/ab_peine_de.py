@@ -7,7 +7,9 @@ module only declares the municipality's base URL and the German-to-canonical
 waste-type map, so there is no ``retrieve`` override, no manual request params
 and no ICON_MAP.
 
-Peine-Kernstadt (the implicit default when Ort is omitted) needs no refid, but
+The street is optional: every municipality except Peine-Kernstadt has one shared
+schedule, so ``ort`` alone is enough there (#7099). Peine-Kernstadt (the
+implicit default when Ort is omitted) needs a street, and needs no refid, but
 every other municipality does, dynamically, from the "Ort auswählen" dropdown
 on the Abfuhrtermine page: ``refid_page_url`` covers that, and is only
 consulted when the user actually gives an Ort (#7351), so existing
@@ -54,6 +56,7 @@ class Source(BaseSource):
             "strasse": "Osterriehe",
             "ort": "Broistedt",
         },
+        "Bettmar (Ort only)": {"ort": "Bettmar"},
         "Vechelde (Hauptort)": {
             "strasse": "alle Straßen",
             "ort": "Vechelde (Hauptort)",
@@ -65,7 +68,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        street("strasse"),
+        street("strasse", optional=True),
         district("ort", optional=True),
     )
 
