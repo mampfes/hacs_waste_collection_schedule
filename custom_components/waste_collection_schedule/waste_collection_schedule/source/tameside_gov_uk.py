@@ -1,83 +1,82 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Tameside Metropolitan Borough Council"
-DESCRIPTION = "Source for tameside.gov.uk, Tameside Metropolitan Borough Council, UK"
-URL = "https://www.tameside.gov.uk"
-TEST_CASES = {
-    "Test_001": {"postcode": "M34 6AG", "uprn": "100011601683"},
-    "Test_002": {"postcode": "ol5 9jl", "uprn": "100011548952"},
-    "Test_003": {"postcode": "SK148JP", "uprn": 100011573345},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
-    "origin": "https://public.tameside.gov.uk",
-    "referrer": "https://public.tameside.gov.uk/forms/bin-dates.asp",
-}
 API_URL = "https://public.tameside.gov.uk/forms/bin-dates.asp"
-ICON_MAP = {
-    "GREEN BIN": Icons.GENERAL_WASTE,
-    "BROWN BIN": Icons.BIO_KITCHEN,
-    "BLUE BIN": Icons.NEWSPAPER,
-    "BLACK BIN": Icons.GLASS,
-}
-REGEX = r"(st|nd|rd|th)"
 
 
-class Source:
-    def __init__(self, postcode=None, uprn=None):
-        self._postcode = postcode.upper().strip().replace(" ", "")
-        self._uprn = str(uprn)
+def _postcode(value) -> str:
+    return str(value).upper().strip().replace(" ", "")
 
-    def fetch(self):
 
-        s = requests.Session()
-        # Get session cookies
-        r = s.get(API_URL, headers=HEADERS)
+def _date(img) -> str:
+    """The calendar is a table per year, a row per month and a cell per day."""
+    year = img.find_parent("fieldset", class_="year").find("h3").get_text(strip=True)
+    month = img.find_parent("tr", class_="month").find("td", class_="month")
+    day = img.find_parent("td", class_="day").find("div", class_="day")
+    # "14th": the suffix sits in its own span.
+    return f"{next(day.strings).strip()} {month.get_text(strip=True)} {year}"
 
-        # Get collection schedule
-        address = self._uprn + "-" + self._postcode
-        payload = {
-            "F03_I01_SelectAddress": address,
+
+def _label(img) -> str:
+    """``brown_bin_Icon`` -> ``Brown bin``."""
+    return img["alt"].replace("_Icon", "").replace("_", " ").capitalize()
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Tameside Metropolitan Borough Council"
+    DESCRIPTION = (
+        "Source for tameside.gov.uk, Tameside Metropolitan Borough Council, UK"
+    )
+    URL = "https://www.tameside.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.PAPER, wt.OTHER]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "M34 6AG", "uprn": "100011601683"},
+        "Test_002": {"postcode": "ol5 9jl", "uprn": "100011548952"},
+        "Test_003": {"postcode": "SK148JP", "uprn": 100011573345},
+    }
+
+    PARAMS = (postcode(), uprn())
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode and your UPRN, which you can find at "
+            "[FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+        ),
+    }
+
+    retrieve = retrievers.Request(
+        API_URL,
+        method="POST",
+        data=lambda postcode, uprn, **_: {
+            "F03_I01_SelectAddress": f"{uprn}-{_postcode(postcode)}",
             "AdvanceSearch": "Continue",
-            "F01_I02_Postcode": self._postcode,
+            "F01_I02_Postcode": _postcode(postcode),
             "F01_I03_Street": "",
             "F01_I04_Town": "",
             "history": ",1,3,",
-        }
-        r = s.post(API_URL, headers=HEADERS, data=payload)
-        soup = BeautifulSoup(r.text, "html.parser")
+        },
+    )
 
-        # Reconstruct dates and extract bins
-        entries = []
-        years = soup.find_all("fieldset", {"class": "year"})
-        for year in years:
-            y = year.find("h3").text
+    parse = parsers.HtmlParser("fieldset.year img.binIcon")
 
-            months = year.find_all("tr", {"class": "month"})
-            for month in months:
-                m = month.find("td", {"class": "month"}).text
-                m = m
-
-                days = month.find_all("td", {"class": "day"})
-                for day in days:
-                    d = re.sub(REGEX, "", day.text)
-                    dt = d + m + y
-                    dt = datetime.strptime(dt, "%d%B%Y").date()
-
-                    bins = day.find_all("img", alt=True)
-                    for bin in bins:
-                        b = bin.get("alt").replace("_Icon", "").replace("_", " ")
-                        entries.append(
-                            Collection(
-                                date=dt,
-                                t=b,
-                                icon=ICON_MAP.get(b.upper()),
-                            )
-                        )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map={
+            "Green bin": wt.GENERAL_WASTE,
+            "Blue bin": wt.PAPER,
+            "Brown bin": wt.OTHER,
+            "Black bin": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )
