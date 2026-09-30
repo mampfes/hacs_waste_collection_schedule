@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getlocation 0f70d2910c",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getlocation",
+      "final_url": "https://bins.azurewebsites.net/api/getlocation?postcode=LU2+9DF",
+      "body": "{\"params\":[[\"postcode\",\"LU2 9DF\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:40 GMT",
+        "server": "Kestrel",
+        "set-cookie": "ARRAffinity=8ac4b606df73b18f5404e956edbe42116b1fc5ec1aa02ff19a9cf2b06ff2874e;Path=/;HttpOnly;Secure;Domain=bins.azurewebsites.net, ARRAffinitySameSite=8ac4b606df73b18f5404e956edbe42116b1fc5ec1aa02ff19a9cf2b06ff2874e;Path=/;HttpOnly;SameSite=None;Secure;Domain=bins.azurewebsites.net",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUG9zdGNvZGUiOiJMVTI5REYiLCJXYXJkQ29kZSI6IkUwNTAxNDc1MSIsIkxBQ29kZSI6IkUwNjAwMDAzMiIsIkxhdGl0dWRlIjo1MS44OTI4LCJMb25naXR1ZGUiOi0wLjM4Nzg2Nn1d"
+    },
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getaddress 16aa36410f",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getaddress",
+      "final_url": "https://bins.azurewebsites.net/api/getaddress?postcode=LU29DF",
+      "body": "{\"params\":[[\"postcode\",\"LU29DF\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:40 GMT",
+        "server": "Kestrel",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUHJlbWlzZUlEIjo1MzQ3MywiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjE1IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1NzEyMCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjE3IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1MzQ3NCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjE5IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1MzQ3NSwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjIxIiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1MzQ3NiwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjIzIiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1MzQ3NywiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjI1IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjo1NzEyMSwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjI3IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjoxMDQ2MjQsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiI0IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjoxMDQ2MjUsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiI2IiwiU3RyZWV0IjoiTUFSU0hBTEwgUk9BRCIsIkxvY2FsaXR5IjoiXHUwMDAwIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIlRvd24iOiJMVVRPTiIsIlBvc3Rjb2RlIjoiTFUyIDlERiJ9LHsiUHJlbWlzZUlEIjoyMTAzNCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjIiLCJTdHJlZXQiOiJNQVJTSEFMTCBST0FEIiwiTG9jYWxpdHkiOiJcdTAwMDAiLCJMb2NhbEF1dGhvcml0eSI6Ikx1dG9uIiwiVG93biI6IkxVVE9OIiwiUG9zdGNvZGUiOiJMVTIgOURGIn1d"
+    },
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getcollections 7b9bf5b863",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getcollections",
+      "final_url": "https://bins.azurewebsites.net/api/getcollections?premisesid=53476&localauthority=Luton",
+      "body": "{\"params\":[[\"localauthority\",\"Luton\"],[\"premisesid\",\"53476\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:40 GMT",
+        "server": "Kestrel",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUHJlbWlzZUlEIjo1MzQ3NiwiQmluVHlwZSI6IkdMQVNTIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wMSJ9LHsiUHJlbWlzZUlEIjo1MzQ3NiwiQmluVHlwZSI6IlJFQ1lDTElORyIsIkxvY2FsQXV0aG9yaXR5IjoiTHV0b24iLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDEifSx7IlByZW1pc2VJRCI6NTM0NzYsIkJpblR5cGUiOiJSRVNJRFVBTCIsIkxvY2FsQXV0aG9yaXR5IjoiTHV0b24iLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDgifSx7IlByZW1pc2VJRCI6NTM0NzYsIkJpblR5cGUiOiJHTEFTUyIsIkxvY2FsQXV0aG9yaXR5IjoiTHV0b24iLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMTUifSx7IlByZW1pc2VJRCI6NTM0NzYsIkJpblR5cGUiOiJSRUNZQ0xJTkciLCJMb2NhbEF1dGhvcml0eSI6Ikx1dG9uIiwiQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTE1In0seyJQcmVtaXNlSUQiOjUzNDc2LCJCaW5UeXBlIjoiUkVTSURVQUwiLCJMb2NhbEF1dGhvcml0eSI6Ikx1dG9uIiwiQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTIyIn0seyJQcmVtaXNlSUQiOjUzNDc2LCJCaW5UeXBlIjoiUkVDWUNMSU5HIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0yOSJ9LHsiUHJlbWlzZUlEIjo1MzQ3NiwiQmluVHlwZSI6IkdMQVNTIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0yOSJ9LHsiUHJlbWlzZUlEIjo1MzQ3NiwiQmluVHlwZSI6IlJFU0lEVUFMIiwiTG9jYWxBdXRob3JpdHkiOiJMdXRvbiIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMS0wNSJ9XQ=="
+    }
+  ]
+}
