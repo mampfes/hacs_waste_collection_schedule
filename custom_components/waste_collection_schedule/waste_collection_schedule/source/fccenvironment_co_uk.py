@@ -1,166 +1,84 @@
-import datetime
-from urllib.parse import urlparse
+from typing import ClassVar, final
 
-import requests
-import urllib3
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, uprn
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.FccEnvironment import (
+    SERVICES,
+    FccEnvironmentParser,
+    FccEnvironmentRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-# With verify=True the POST fails due to a SSLCertVerificationError.
-# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# This line suppresses the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-TITLE = "FCC Environment"
-DESCRIPTION = """
-    Consolidated source for waste collection services for ~60 local authorities.
-    Currently supports:
-    West Devon (Generic Provider)
-    South Hams (Generic Provider)
-    Market Harborough (Custom Provider)
-    """
-URL = "https://fccenvironment.co.uk"
-EXTRA_INFO = [
-    {
-        "title": "Harborough District Council",
-        "url": "https://harborough.gov.uk",
-        "default_params": {"region": "harborough"},
-    },
-    {
-        "title": "South Hams District Council",
-        "url": "https://southhams.gov.uk/",
-        "default_params": {"region": "southhams"},
-    },
-    {
-        "title": "West Devon Borough Council",
-        "url": "https://www.westdevon.gov.uk/",
-        "default_params": {"region": "westdevon"},
-    },
-]
-
-TEST_CASES = {
-    "14_LE16_9QX": {"uprn": "100030491624"},  # region omitted to test default values
-    "4_LE16_9QX": {"uprn": "100030491614", "region": "harborough"},
-    "16_LE16_7NA": {"uprn": "100030493289", "region": "harborough"},
-    "10_LE16_8ER": {"uprn": "200001136341", "region": "harborough"},
-    "9_PL20_7SH": {"uprn": "10001326315", "region": "westdevon"},
-    "3_PL20_7RY": {"uprn": "10001326041", "region": "westdevon"},
-    "2_PL21_9BN": {"uprn": "100040279446", "region": "southhams"},
-    "4_SL21_0HZ": {"uprn": "100040281987", "region": "southhams"},
-}
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
+_TYPE_MAP = {
+    "non-recyclable waste": wt.GENERAL_WASTE,
+    "refuse": wt.GENERAL_WASTE,
+    "recycling": wt.RECYCLABLES,
+    "garden": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, uprn: str, region: str = "harborough") -> None:
-        self.uprn = uprn
-        self.region = region
+@final
+class Source(BaseSource):
+    TITLE = "FCC Environment"
+    DESCRIPTION = (
+        "Consolidated source for waste collection services for ~60 local "
+        "authorities. Currently supports: West Devon (Generic Provider), "
+        "South Hams (Generic Provider), Market Harborough (Custom Provider)"
+    )
+    URL = "https://fccenvironment.co.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def getcollectiondetails(self, endpoint: str) -> list[Collection]:
-        domain = urlparse(endpoint).netloc
-        session = requests.Session()
-        cookies = session.get(f"https://{domain}/", verify=False)
-        response = session.post(
-            endpoint,
-            headers={
-                "x-requested-with": "XMLHttpRequest",
-            },
-            data={
-                "fcc_session_token": cookies.cookies["fcc_session_cookie"],
-                "uprn": self.uprn,
-            },
-            verify=False,
-        )
-        results: dict[str, datetime.date] = {}
-        for item in response.json()["binCollections"]["tile"]:
-            try:
-                soup = BeautifulSoup(item[0], "html.parser")
-                date = parser.parse(
-                    soup.find_all("b")[2].text.split(",")[1].strip()
-                ).date()
-                service = soup.text.split("\n")[0]
-            except parser._parser.ParserError:
-                continue
+    REGIONS = (
+        region(
+            "Harborough District Council",
+            url="https://harborough.gov.uk",
+            region="harborough",
+        ),
+        region(
+            "South Hams District Council",
+            url="https://southhams.gov.uk/",
+            region="southhams",
+        ),
+        region(
+            "West Devon Borough Council",
+            url="https://www.westdevon.gov.uk/",
+            region="westdevon",
+        ),
+    )
 
-            """
-            Handle duplication before creating the list of Collections
-            """
-            for type in ICON_MAP:
-                if type in service:
-                    if type in results:
-                        if date < results[type]:
-                            results[type] = date
-                    else:
-                        results[type] = date
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        entries = []
-        for result in results:
-            entries.append(
-                Collection(
-                    date=results[result],
-                    t=result,
-                    icon=ICON_MAP.get(result),
-                )
-            )
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "14_LE16_9QX": {"uprn": "100030491624"},  # region omitted: default value
+        "4_LE16_9QX": {"uprn": "100030491614", "region": "harborough"},
+        "16_LE16_7NA": {"uprn": "100030493289", "region": "harborough"},
+        "10_LE16_8ER": {"uprn": "200001136341", "region": "harborough"},
+        "9_PL20_7SH": {"uprn": "10001326315", "region": "westdevon"},
+        "3_PL20_7RY": {"uprn": "10001326041", "region": "westdevon"},
+        "2_PL21_9BN": {"uprn": "100040279446", "region": "southhams"},
+        "4_SL21_0HZ": {"uprn": "100040281987", "region": "southhams"},
+    }
 
-    def harborough(self) -> list[Collection]:
-        _icons = {
-            "NON-RECYCLABLE WASTE BIN COLLECTION": "mdi:trash-can",
-            "RECYCLING COLLECTION": "mdi:recycle",
-            "GARDEN WASTE COLLECTION": "mdi:leaf",
-        }  # Custom icons to avoid a breaking change
-        r = requests.post(
-            "https://harborough.fccenvironment.co.uk/detail-address",
-            data={"Uprn": self.uprn},
-            verify=False,
-        )
-        soup = BeautifulSoup(r.text, "html.parser")
-        services_div = soup.find(
-            "div",
-            attrs={"class": "blocks block-your-next-scheduled-bin-collection-days"},
-        )
-        services = services_div.find_all("li") if services_div else []  # type: ignore[union-attr]
-        entries = []
-        for service in services:
-            for type in _icons:
-                if type.lower() in service.text.lower():
-                    try:
-                        date = parser.parse(
-                            service.find(
-                                "span", attrs={"class": "pull-right"}
-                            ).text.strip()
-                        ).date()
-                    except parser._parser.ParserError:
-                        continue
+    PARAMS = (
+        uprn(),
+        dropdown("region", list(SERVICES), default="harborough"),
+    )
 
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=type,
-                            icon=_icons[type.upper()],
-                        )
-                    )
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) "
+            "and choose your council as the region (harborough, southhams or "
+            "westdevon; Harborough is the default)."
+        ),
+    }
 
-    def fetch(self) -> list[Collection]:
-        if self.region == "harborough":
-            return self.harborough()
-        if self.region == "westdevon":
-            return self.getcollectiondetails(
-                endpoint="https://westdevon.fccenvironment.co.uk/ajaxprocessor/getcollectiondetails"
-            )
-        if self.region == "southhams":
-            return self.getcollectiondetails(
-                endpoint="https://waste.southhams.gov.uk/mycollections/getcollectiondetails"
-            )
-        return []
+    retrieve = FccEnvironmentRetriever()
+    parse = FccEnvironmentParser(_TYPE_MAP)
+    transform = RowTransformer(type_value_map=_TYPE_MAP)
