@@ -1,98 +1,149 @@
-import json
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup as bs
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.preprocessors import Compose
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-# Ronneby Miljöteknik, Blekinge Sweden
+# The public page http://www.fyrfackronneby.se/hamtningskalender/ embeds an
+# iframe from kalender.fyrfackronneby.se, which is the actual service. An
+# address search returns an id that the calendar request needs, and the
+# calendar then comes back as a page whose script holds the events of a
+# fullCalendar widget:
 #
-# The public URL is http://www.fyrfackronneby.se/hamtningskalender/
-# However, this uses an iframe from https://kalender.fyrfackronneby.se which is the
-# actual service providing the bin data.
+#   { title: 'Kärl 1 –  373 liter: Mat, Brännbart, färgat glas, tidningar.', start: '2023-09-12' },
 #
-# One first has to do a search since they put an ID in the list of
-# search results which is required when sending the request to get the
-# bin data. The data then comes injected into a script tag as it's
-# normally used to build a browsable calendar for easy viewing.
-#
-# Bins in this municipality have four types of waste each, and each
-# house has 2 bins, example raw data for the two bins:
-#
-# { title: 'Kärl 1 –  373 liter: Mat, Brännbart, färgat glas, tidningar.', start: '2023-09-12' },
-# { title: 'Kärl 2 –  373 liter: Plast, pappersförpackningar, ofärgat glas, metall.', start: '2023-09-05' },
-#
-# The API will return about a years worth of bin collection dates
-# and only the dates will change, title remains the same for the two
-# bins. First one being Food, Burnables, Colored glass and Newspapers,
-# and the second is Plastics, Cardboard, Non-colored glass and Metal.
-#
-# Note: This API does not apply for apartment buildings, municipal/state
-# services or similar types of buildings as those do not have the same
-# types of bins as regular houses. There is currently no known API for
-# those bins, only for the so called "Fyrfack" bins (meaning four slots).
-#
+# Only the text after the colon names the waste; the bin size in front of it
+# varies. The API covers the so called "Fyrfack" (four slot) bins of ordinary
+# houses, not apartment buildings or municipal properties.
+API = "https://kalender.fyrfackronneby.se"
 
-TITLE = "Ronneby Miljöteknik"
-DESCRIPTION = "Source for Ronneby Miljöteknik waste collection."
-URL = "http://www.fyrfackronneby.se"
-TEST_CASES = {"Home": {"street_address": "Hjortsbergavägen 16, Johannishus"}}
-
-API_URL = "http://www.fyrfackronneby.se/hamtningskalender/"
+# Only single-line events count: the page also carries a commented-out
+# multi-line "Title 1" / "Title 2" sample.
+_EVENT_RE = re.compile(r"\{ title: '([^']*)', start: '([^']*)' \}")
 
 
-class Source:
-    def __init__(self, street_address):
-        addr_parts = street_address.split(",")
-        self._street_address = addr_parts[0]
-        self._city = addr_parts[1].lstrip()
+def _split_address(street_address: str) -> tuple[str, str]:
+    """The address is given as "<street>, <city>"."""
+    street, _, city = str(street_address).partition(",")
+    if not city.strip():
+        raise SourceArgumentNotFound("street_address", street_address)
+    return street.strip(), city.strip()
 
-    def fetch(self):
-        data = {"search_address": self._street_address}
-        headers = {
-            "Accept-Encoding": "identity",
-            "Accept": "*/*",
-            "Accept-Language": "sv-SE,sv;q=0.9",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        }
-        response = requests.post(
-            "https://kalender.fyrfackronneby.se/search_suggestions.php",
-            data=data,
-            headers=headers,
+
+def _pickup_id(response, *keys, street_address: str, **_) -> str:
+    """The id of the search hit matching both the street and the city."""
+    street, city = _split_address(street_address)
+    soup = BeautifulSoup(response.text, "html.parser")
+    hits = []
+    for item in soup.select("li[id]"):
+        address = item.select_one("span.address")
+        place = item.select_one("span.city")
+        if address is None or place is None:
+            continue
+        hits.append(
+            f"{address.get_text().strip()}, {place.get_text().strip()}",
         )
+        if address.get_text() == street and place.get_text() == city:
+            return str(item["id"])
+    raise SourceArgumentNotFoundWithSuggestions("street_address", street_address, hits)
 
-        soup = bs(response.text, "html.parser")
-        pickup_id = False
-        for el_addr in soup.find_all("span", attrs={"class": "address"}):
-            if el_addr.string == self._street_address:
-                for el_addr_sib in el_addr.next_siblings:
-                    if el_addr_sib.name == "span" and el_addr_sib.string == self._city:
-                        pickup_id = el_addr.parent["id"]
-                        break
-                if pickup_id:
-                    break
-        if not pickup_id:
-            return []
 
-        data = {
-            "chosen_address": f"{self._street_address} {self._city}",
+def _events(text: str, source) -> list[dict]:
+    """One record per calendar event, labelled with the text after the colon."""
+    return [
+        {"date": start, "label": title.partition(":")[2].strip() or title.strip()}
+        for title, start in _EVENT_RE.findall(text)
+    ]
+
+
+# Labels as they appear after the colon. Several waste streams share one bin.
+_PACKAGING = [wt.RECYCLABLES, wt.PAPER, wt.GLASS]
+_TYPE_MAP: dict = {
+    "Mat, Brännbart, färgat glas, tidningar.": [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+    ],
+    "Plast, pappersförpackningar, ofärgat glas, metall.": _PACKAGING,
+    "Brännbart avfall": wt.GENERAL_WASTE,
+    "Restavfall": wt.GENERAL_WASTE,
+    "Komposterbart avfall": wt.ORGANIC,
+    "Färgat glas": wt.GLASS,
+    "Ofärgat glas": wt.GLASS,
+    "Metallförpackningar": wt.RECYCLABLES,
+    "Plastförpackningar": wt.RECYCLABLES,
+    "Pappersförpackningar": wt.PAPER,
+    "Tidningar/returpapper": wt.PAPER,
+}
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Ronneby Miljöteknik"
+    DESCRIPTION = "Source for Ronneby Miljöteknik waste collection."
+    URL = "http://www.fyrfackronneby.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+        wt.FOOD_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Home": {"street_address": "Hjortsbergavägen 16, Johannishus"},
+    }
+
+    PARAMS = (street_address("street_address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address and city separated by a comma, as they "
+            "appear when you search for your address on "
+            "http://www.fyrfackronneby.se/hamtningskalender/, e.g. "
+            "'Hjortsbergavägen 16, Johannishus'."
+        ),
+    }
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{API}/search_suggestions.php",
+                method="POST",
+                data=lambda street_address, **_: {
+                    "search_address": _split_address(street_address)[0]
+                },
+                pick=_pickup_id,
+            ),
+        ),
+        url=f"{API}/get_data.php",
+        method="POST",
+        data=lambda pickup_id, street_address, **_: {
+            "chosen_address": " ".join(_split_address(street_address)),
             "chosen_address_pickupid": pickup_id,
-        }
-        response = requests.post(
-            "https://kalender.fyrfackronneby.se/get_data.php",
-            data=data,
-            headers=headers,
-        )
-
-        entries = []
-        for entry in re.findall(r"{.title:[^}]+}", response.text):
-            json_entry = json.loads(
-                re.sub(r"(title|start):", r'"\1":', entry.replace("'", '"'))
-            )
-            # Same icon always, due to two bins both being various recycled things
-            icon = "mdi:recycle"
-            waste_type = json_entry["title"].split(":")[1].lstrip()
-            pickup_date = datetime.fromisoformat(json_entry["start"]).date()
-            entries.append(Collection(date=pickup_date, t=waste_type, icon=icon))
-        return entries
+        },
+        headers={"Accept-Language": "sv-SE,sv;q=0.9"},
+        raise_for_status=True,
+    )
+    parse = parsers.TextParser()
+    preprocess = Compose(_events)
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="label",
+        type_value_map=_TYPE_MAP,
+        carry_raw_label=True,
+    )

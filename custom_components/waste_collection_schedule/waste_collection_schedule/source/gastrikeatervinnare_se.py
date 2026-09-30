@@ -1,97 +1,118 @@
-from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-
-TITLE = "Gästrike Återvinnare"
-DESCRIPTION = "Source for Gästrike Återvinnare waste collection"
-URL = "https://gastrikeatervinnare.se/"
-COUNTRY = "se"
-API_URL = "https://gastrikeatervinnare.se/wp-admin/admin-ajax.php"
-TEST_CASES = {
-    "Groceries Årsunda": {"street": "Nedre Vägen 52", "city": "Årsunda"},
-    "Police Sandviken": {"street": "Bryggargatan 6", "city": "Sandviken"},
-    "Police Gävle": {"street": "Södra Centralgatan 1", "city": "Gävle"},
-    "Library Ockelbo": {"street": "Södra Åsgatan 30D", "city": "Ockelbo"},
-    "Storgatan Gävle (plastic and paper bins)": {
-        "street": "Storgatan 10",
-        "city": "Gävle",
-    },
-}
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Blandat": Icons.GENERAL_WASTE,
-    "Pappersförpackningar": Icons.PAPER,
-    "Plastförpackningar": Icons.PLASTIC_PACKAGING,
-    "Trädgårdsavfall": Icons.GARDEN,
-}
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, street, city):
-        self._street = street.strip().lower()
-        self._city = city.strip().lower()
+def _pickup_rows(response, source=None) -> list:
+    """The ``pickup-row`` elements of the search hit matching street and city.
 
-    def fetch(self):
-        data = {"action": "pickup_search", "query": self._street}
-        response = requests.post(API_URL, data=data)
-        response.encoding = "UTF-8"
-        soup = BeautifulSoup(response.text, "html.parser")
-        addresses = soup.find_all("p", attrs={"class": "pickup-adress"})
-        infos = soup.find_all("div", attrs={"class": "pickup-types"})
+    The search answers one ``pickup-item`` per place with that street name
+    ("Storgatan 10, Gävle"), each listing its next two dates per round.
+    """
+    wanted_street = str(source.params["street"]).strip().lower()
+    wanted_city = str(source.params["city"]).strip().lower()
+    response.encoding = "utf-8"
+    soup = BeautifulSoup(response.text, "html.parser")
 
-        cities = []
-        streets = []
+    streets: list[str] = []
+    cities: list[str] = []
+    for item in soup.select("div.pickup-item"):
+        address = item.select_one("p.pickup-adress")
+        locality = address.select_one("span.pickup-locality") if address else None
+        if address is None or locality is None:
+            continue
+        item_street = address.get_text().split(",")[0].strip().lower()
+        item_city = locality.get_text().strip().lower()
+        streets.append(item_street)
+        cities.append(item_city)
+        if item_street == wanted_street and item_city == wanted_city:
+            return item.select("div.pickup-types div.pickup-row")
 
-        for addressTag, info in zip(addresses, infos, strict=False):
-            street = addressTag.text.split(",")[0].strip().lower()
-            city = (
-                addressTag.find("span", attrs={"class": "pickup-locality"})
-                .text.strip()
-                .lower()
-            )
-            streets.append(street)
-            cities.append(city)
-            if street == self._street and city == self._city:
-                return self.get_entries(info)
+    if not streets:
+        raise SourceArgumentNotFound("street", wanted_street)
+    if wanted_street in streets:
+        raise SourceArgumentNotFoundWithSuggestions("city", wanted_city, cities)
+    raise SourceArgumentNotFoundWithSuggestions("street", wanted_street, streets)
 
-        matching_streets = [s for s in streets if self._street == s]
-        if streets == []:
-            raise SourceArgumentNotFound("street", self._street)
-        if len(matching_streets) > 0:
-            raise SourceArgumentNotFoundWithSuggestions("city", self._city, cities)
-        raise SourceArgumentNotFoundWithSuggestions("street", self._street, streets)
 
-    def get_entries(self, info):
-        entries = []
-        waste_types_info = info.find_all("div", attrs={"class": "pickup-row"})
+def _type(row) -> str:
+    """The round, named by the second CSS class of the row ("pickup-row matavfall")."""
+    return row["class"][1].capitalize()
 
-        for waste_type_info in waste_types_info:
-            waste_type = waste_type_info["class"][1].capitalize()
-            pickup_date = self.get_date(waste_type_info)
-            icon = ICON_MAP.get(waste_type)
-            entries.append(Collection(date=pickup_date, t=waste_type, icon=icon))
 
-        return entries
+def _date(row) -> str:
+    """The date text ("fredag 2/10"), reduced to "2/10"."""
+    return row.select_one("div.pickup-time").find_all("span")[1].get_text().split()[1]
 
-    def get_date(self, waste_type_info):
-        pickup_date = (
-            waste_type_info.find("div", attrs={"class": "pickup-time"})
-            .find_all("span")[1]
-            .text.split(" ")[1]
-        )
 
-        today = date.today()
-        pickup_date_day = int(pickup_date.split("/")[0])
-        pickup_date_month = int(pickup_date.split("/")[1])
-        pickup_date_year = today.year
-        if pickup_date_month < today.month:
-            pickup_date_year = pickup_date_year + 1
+@final
+class Source(BaseSource):
+    TITLE = "Gästrike Återvinnare"
+    DESCRIPTION = "Source for Gästrike Återvinnare waste collection"
+    URL = "https://gastrikeatervinnare.se/"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
 
-        return date(pickup_date_year, pickup_date_month, int(pickup_date_day))
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.OTHER,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Groceries Årsunda": {"street": "Nedre Vägen 52", "city": "Årsunda"},
+        "Police Sandviken": {"street": "Bryggargatan 6", "city": "Sandviken"},
+        "Police Gävle": {"street": "Södra Centralgatan 1", "city": "Gävle"},
+        "Library Ockelbo": {"street": "Södra Åsgatan 30D", "city": "Ockelbo"},
+        "Storgatan Gävle (plastic and paper bins)": {
+            "street": "Storgatan 10",
+            "city": "Gävle",
+        },
+    }
+
+    PARAMS = (street(), city())
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street name with house number and your city exactly as "
+            "shown on https://gastrikeatervinnare.se/ when you search for your "
+            "collection days."
+        ),
+    }
+
+    retrieve = HttpPostRetriever(
+        "https://gastrikeatervinnare.se/wp-admin/admin-ajax.php",
+        data=lambda street, **_: {
+            "action": "pickup_search",
+            "query": str(street).strip().lower(),
+        },
+    )
+    parse = staticmethod(_pickup_rows)
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_type,
+        parse_date=date_parsers.next_weekday("%d/%m"),
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Blandat": wt.OTHER,
+            "Pappersförpackningar": wt.PAPER,
+            "Tidningar": wt.PAPER,
+            "Plastförpackningar": wt.RECYCLABLES,
+            "Trädgårdsavfall": wt.GARDEN_WASTE,
+        },
+        carry_raw_label=True,
+    )

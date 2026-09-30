@@ -1,93 +1,63 @@
-import datetime
-import re
+from typing import ClassVar, final
+from urllib.parse import urljoin
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Marktgemeinde Kaltenleutgeben"
-DESCRIPTION = "Waste collection schedule for Marktgemeinde Kaltenleutgeben, Austria."
-URL = "https://www.kaltenleutgeben.gv.at"
-COUNTRY = "at"
-
-TEST_CASES: dict[str, dict] = {
-    # The Kaltenleutgeben waste calendar publishes a single town-wide schedule,
-    # so no address is required.
-    "Kaltenleutgeben": {},
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.transformers import HtmlTransformer
 
 OVERVIEW_URL = "https://www.kaltenleutgeben.gv.at/Muellkalender_NEU"
 
-HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-_DATE_RE = re.compile(r"\d{2}\.\d{2}\.\d{4}")
+def _detail_urls(response, *keys, **_) -> list[str]:
+    """Every row of the overview table links to the detail page of one waste type."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    return [
+        urljoin(OVERVIEW_URL, anchor["href"])
+        for anchor in soup.select("table.ris_table tr a[href]")
+    ]
 
-ICON_MAP = {
-    "Restmüll 770l und 1.100l Gefäße": Icons.GENERAL_WASTE,
-    "Restmüll 80l und 120 l Gefäße": Icons.GENERAL_WASTE,
-    "Biomüll": Icons.ORGANIC,
-}
+
+def _type(item) -> str:
+    """The heading of the detail page the date belongs to."""
+    return item.find_parent("form").select_one("h1").get_text(strip=True)
 
 
-class Source:
-    def __init__(self) -> None:
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Marktgemeinde Kaltenleutgeben"
+    DESCRIPTION = (
+        "Waste collection schedule for Marktgemeinde Kaltenleutgeben, Austria."
+    )
+    URL = "https://www.kaltenleutgeben.gv.at"
+    COUNTRY = "at"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC]
 
-        r = session.get(OVERVIEW_URL, headers=HEADERS, timeout=30)
-        r.raise_for_status()
-        r.encoding = r.apparent_encoding or "utf-8"
-        overview = BeautifulSoup(r.text, "html.parser")
+    # The waste calendar publishes a single town-wide schedule, so no address
+    # is required.
+    TEST_CASES: ClassVar[dict] = {"Kaltenleutgeben": {}}
 
-        # Each row of the overview table links to a detail page for one waste
-        # type. The overview table itself only shows the validity period of
-        # each calendar, not the individual collection dates.
-        links: dict[str, str] = {}
-        table = overview.find("table", class_="ris_table")
-        if table is not None:
-            for row in table.find_all("tr"):
-                anchor = row.find("a")
-                if anchor is None or not anchor.get("href"):
-                    continue
-                waste_type = anchor.get_text(strip=True)
-                href = anchor["href"]
-                if href.startswith("http"):
-                    url = href
-                else:
-                    url = "https://www.kaltenleutgeben.gv.at/" + href.lstrip("/")
-                links[waste_type] = url
+    PARAMS = ()
 
-        entries: list[Collection] = []
-        for waste_type, url in links.items():
-            entries.extend(self._fetch_detail(session, waste_type, url))
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(OVERVIEW_URL, pick=_detail_urls),
+        targets=lambda source, urls: urls,
+    )
 
-        if not entries:
-            raise ValueError("Could not find any collection events.")
+    parse = parsers.EachResponse(
+        parsers.HtmlParser("span.ris_kal_dateitem", require=["h1"])
+    )
 
-        return sorted(entries, key=lambda c: c.date)
-
-    def _fetch_detail(
-        self, session: requests.Session, waste_type: str, url: str
-    ) -> list[Collection]:
-        r = session.get(url, headers=HEADERS, timeout=30)
-        r.raise_for_status()
-        r.encoding = r.apparent_encoding or "utf-8"
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        th = soup.find("th", string=lambda s: bool(s) and "Termine" in s)
-        if th is None:
-            return []
-        td = th.find_next_sibling("td")
-        if td is None:
-            return []
-
-        icon = ICON_MAP.get(waste_type)
-        entries = []
-        for match in _DATE_RE.finditer(td.get_text(" ", strip=True)):
-            collection_date = datetime.datetime.strptime(
-                match.group(), "%d.%m.%Y"
-            ).date()
-            entries.append(Collection(date=collection_date, t=waste_type, icon=icon))
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda item: item.get_text(strip=True).split(",")[-1].strip(),
+        type_getter=_type,
+        type_value_map={
+            "Restmüll 770l und 1.100l Gefäße": wt.GENERAL_WASTE,
+            "Restmüll 80l und 120 l Gefäße": wt.GENERAL_WASTE,
+            "Biomüll": wt.ORGANIC,
+        },
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+    )

@@ -1,93 +1,90 @@
-import datetime
-import logging
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "TBV Velbert"
-DESCRIPTION = "Source script for tbv-velbert.de, germany"
-URL = "https://www.tbv-velbert.de"
-TEST_CASES = {
-    "Lindenkamp": {"street": "Am Lindenkamp 33"},
-    "Rathaus": {"street": "Thomasstraße 1"},
-}
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.transformers import RowTransformer
 
 API_BASE = "https://www.tbv-velbert.de"
-API_URL = f"{API_BASE}/abfall"
-HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-ICON_MAP = {
-    "Restmüll-Gefäß": Icons.GENERAL_WASTE,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Bio-Tonne": Icons.ORGANIC,
-    "Papier-Tonne": Icons.PAPER,
+SEARCH_FIELD = "tx_tbvabfall_strassensuche[suchbegriff]"
+
+_TYPE_MAP = {
+    "Restmüll-Gefäß": wt.GENERAL_WASTE,
+    "Gelbe Tonne": wt.RECYCLABLES,
+    "Bio-Tonne": wt.ORGANIC,
+    "Papier-Tonne": wt.PAPER,
 }
 
-_LOGGER = logging.getLogger(__name__)
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
+def _search_form(response, *keys, **_) -> tuple[str, dict[str, str]]:
+    """The street-search form: its action URL and its hidden fields.
+
+    TYPO3 signs the form (``cHash`` in the action, ``__trustedProperties`` and
+    ``__referrer`` hashes in the hidden fields), so it is replayed as served.
+    """
+    form = BeautifulSoup(response.text, "html.parser").select_one(
+        "div.tx-tbvabfall form"
+    )
+    action = form.get("action") if form is not None else None
+    if form is None or not isinstance(action, str):
+        raise ValueError("Could not find the street search form.")
+    fields = {
+        str(tag["name"]): str(tag["value"])
+        for tag in form.select("input")
+        if tag.get("name") and tag.get("value")
     }
-}
+    return (API_BASE + action if action.startswith("/") else action), fields
 
 
-class Source:
-    def __init__(self, street):
-        self._street = street
+@final
+class Source(BaseSource):
+    TITLE = "TBV Velbert"
+    DESCRIPTION = "Source script for tbv-velbert.de, germany"
+    URL = "https://www.tbv-velbert.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        session = requests.Session()
-        s = session.get(API_URL, headers=HEADERS)
-        s.raise_for_status()
-        soup = BeautifulSoup(s.text, "html.parser")
-        form = soup.select_one("div.tx-tbvabfall form")
-        if not form:
-            raise ValueError("Could not find form in the response.")
-        form_data = {}
-        action = form.get("action")
-        if not isinstance(action, str):
-            raise ValueError("Form action is not a string.")
-        if action.startswith("/"):
-            action = API_BASE + action
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+    ]
 
-        for input in form.select("input"):
-            name = input.get("name")
-            value = input.get("value")
-            if name and value:
-                form_data[name] = value
+    TEST_CASES: ClassVar[dict] = {
+        "Lindenkamp": {"street": "Am Lindenkamp 33"},
+        "Rathaus": {"street": "Thomasstraße 1"},
+    }
 
-        form_data["tx_tbvabfall_strassensuche[suchbegriff]"] = self._street
-        r = requests.post(
-            action,
-            headers=HEADERS,
-            data=form_data,
-        )
-        _LOGGER.debug(
-            f"Fetching waste schedule for '{self._street}' returned status: {r.status_code}."
-        )
-        r.raise_for_status()
+    PARAMS = (street(),)
 
-        parser = BeautifulSoup(r.text, "html.parser")
-        content_block = parser.find("div", class_="right-side")
-        elements = content_block.find_all(["strong", "span"])
-        _LOGGER.debug(f"Found {len(elements)} elements in request.")
+    HOWTO: ClassVar[dict] = {
+        "de": (
+            "Straße und Hausnummer so eingeben, wie sie im Abfallkalender auf "
+            "tbv-velbert.de/abfall gesucht werden, z. B. 'Am Lindenkamp 33'."
+        ),
+    }
 
-        entries = []
-        for i in range(0, len(elements), 2):
-            waste_type = elements[i].get_text()[0:-1]  # strip trailing colon
-            waste_dates = (
-                elements[i + 1].get_text().split(":")[1]
-            )  # get dates after colon
-            waste_dates = waste_dates.strip().split(" ")  # convert to list
-            waste_dates[:] = [w for w in waste_dates if w]  # remove empty strings
-            for d in waste_dates:
-                entries.append(
-                    Collection(
-                        datetime.datetime.strptime(d, "%d.%m.%Y").date(),
-                        waste_type,
-                        ICON_MAP.get(waste_type),
-                    )
-                )
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(retrievers.Lookup(f"{API_BASE}/abfall", pick=_search_form),),
+        url=lambda form, **_: form[0],
+        method="POST",
+        data=lambda form, street, **_: {**form[1], SEARCH_FIELD: street},
+        raise_for_status=True,
+    )
 
-        return entries
+    # Only the result column: the page below it carries a holiday-shift
+    # notice whose dates are not collections.
+    parse = parsers.HtmlParser("div.right-side")
+
+    preprocess = preprocessors.Compose(
+        lambda blocks, source: " ".join(block.get_text(" ") for block in blocks),
+        preprocessors.TextGroupedDates(
+            keys=_TYPE_MAP,
+            date_pattern=r"(?P<day>\d{2})\.(?P<month>\d{2})\.(?P<year>\d{4})",
+        ),
+    )
+
+    transform = RowTransformer(type_value_map=_TYPE_MAP)

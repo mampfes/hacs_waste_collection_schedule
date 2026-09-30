@@ -1,94 +1,94 @@
-import logging
-from datetime import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Knox City Council"
-DESCRIPTION = "Source for Knox City Council rubbish collection."
-URL = "https://www.knox.vic.gov.au/"
-TEST_CASES = {
-    "Lorna Café": {"street_address": "1053 Burwood Highway, FERNTREE GULLY VIC 3156"},
-    "Country Cob Bakery": {"street_address": "951 Mountain Highway, BORONIA VIC 3155"},
-}
+API = "https://www.knox.vic.gov.au/rubbish-collection"
 
-_LOGGER = logging.getLogger(__name__)
-
-
-class WasteType:
-    def __init__(self, name, icon, display_name):
-        self.name = name
-        self.icon = icon
-        self.display_name = display_name
-
-
-# Define waste types
-WASTE_TYPES = {
-    "green": WasteType("green", "mdi:leaf", "Food and garden"),
-    "rubbish": WasteType("rubbish", "mdi:trash-can", "Rubbish"),
-    "recycling": WasteType("recycling", "mdi:recycle", "Recycling"),
+_TYPE_MAP = {
+    "green": wt.GARDEN_WASTE,
+    "rubbish": wt.GENERAL_WASTE,
+    "recycling": wt.RECYCLABLES,
 }
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+def _pick_address_id(response, *keys, street_address, **_) -> str:
+    """The autocomplete answers ``[{"value": id, "label": address}, ...]``; take the top hit."""
+    hits = response.json()
+    if not isinstance(hits, list) or not hits:
+        raise SourceArgumentNotFound("street_address", street_address)
+    return hits[0]["value"]
 
-    def fetch(self):
-        def extract_date(date_str):
-            date_str = date_str.replace("<span>", "")
-            date_str = date_str.replace("</span>", "")
-            date_str = date_str.replace("Next collection is ", "")
-            date_obj = datetime.strptime(date_str, "%d %B %Y").date()
-            return date_obj
 
-        session = requests.Session()
+def _services(record, source) -> list[dict]:
+    """One row per ``<type>_date`` field: ``"Next collection is <span>30 September 2026</span>"``."""
+    rows = []
+    for key, value in record.items():
+        if key.endswith("_date") and value:
+            date = re.sub(r"<[^>]+>|Next collection is", "", value).strip()
+            rows.append({"type": key.removesuffix("_date"), "date": date})
+    return rows
 
-        response = session.get(
-            "https://www.knox.vic.gov.au/our-services/bins-rubbish-and-recycling/find-my-bin-days"
-        )
-        response.raise_for_status()
 
-        response = session.get(
-            "https://www.knox.vic.gov.au/rubbish-collection/autocomplete/find",
-            params={"q": self._street_address},
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            not isinstance(addressSearchApiResults, list)
-            or len(addressSearchApiResults) < 1
-        ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on https://www.knox.vic.gov.au/our-services/bins-rubbish-and-recycling/find-my-bin-days"
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Knox City Council"
+    DESCRIPTION = "Source for Knox City Council rubbish collection."
+    URL = "https://www.knox.vic.gov.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        addressSearchTopHit = addressSearchApiResults[0]
-        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        geolocationid = addressSearchTopHit["value"]
-        _LOGGER.debug("Geolocationid: %s", geolocationid)
+    TEST_CASES: ClassVar[dict] = {
+        "Lorna Café": {
+            "street_address": "1053 Burwood Highway, FERNTREE GULLY VIC 3156"
+        },
+        "Country Cob Bakery": {
+            "street_address": "951 Mountain Highway, BORONIA VIC 3155"
+        },
+    }
 
-        response = session.get(
-            "https://www.knox.vic.gov.au/rubbish-collection/find",
-            params={"address": geolocationid},
-        )
-        response.raise_for_status()
+    PARAMS = (street_address("street_address"),)
 
-        rubbishCollectionApiResult = response.json()
-        _LOGGER.debug("Rubblish Collection API result: %s", rubbishCollectionApiResult)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as it appears on "
+            "[Find my bin days](https://www.knox.vic.gov.au/our-services/bins-rubbish-and-recycling/find-my-bin-days), "
+            "e.g. '1053 Burwood Highway, FERNTREE GULLY VIC 3156'. The first "
+            "match is used."
+        ),
+    }
 
-        entries = []
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/autocomplete/find",
+                params=lambda street_address, **_: {"q": street_address},
+                pick=_pick_address_id,
+            ),
+        ),
+        url=f"{API}/find",
+        params=lambda key, **_: {"address": key},
+    )
 
-        dateString = "_date"
-        for key, value in rubbishCollectionApiResult.items():
-            if key.endswith(dateString):
-                name = key.replace(dateString, "")
-                waste_type = (
-                    WASTE_TYPES[name].display_name if name in WASTE_TYPES else name
-                )
-                date = extract_date(value)
-                icon = WASTE_TYPES[name].icon if name in WASTE_TYPES else None
-                entries.append(Collection(date=date, t=waste_type, icon=icon))
+    parse = parsers.JsonParser()
 
-        return entries
+    preprocess = ExplodeList(_services)
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d %B %Y"),
+    )

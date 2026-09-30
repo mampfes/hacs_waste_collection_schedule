@@ -1,28 +1,14 @@
-import logging
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "BCP Council"
-DESCRIPTION = "Bin collection data for Bournemouth, Christchurch and Poole Council, UK"
-URL = "https://bcpportal.bcpcouncil.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": 10013449141},
-    "Test_002": {"uprn": "10001085438"},
-    "Test_003": {"uprn": "100040567667"},
-}
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Food Waste": Icons.BIO_KITCHEN,
-}
-
-API_URL = "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection/"
+PAGE_URL = "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection/"
 
 API_URL_REGEX = re.compile(
     r'function fetchBinCollectionData.*?const response = await fetch\("(.*?)"',
@@ -30,55 +16,58 @@ API_URL_REGEX = re.compile(
 )
 
 
-class Source:
-    """Fetches bin collection data for BCP Council using the Logic App endpoint."""
+def _pick_api_url(response, *_, **__) -> str:
+    """The portal page embeds the (signed) Logic App endpoint its script posts to."""
+    match = API_URL_REGEX.search(response.text)
+    if not match:
+        raise ValueError("Could not find API URL in the response.")
+    return match.group(1)
 
-    def __init__(self, uprn: str):
-        self._uprn = uprn
 
-    def fetch(self):
-        r = requests.get(API_URL)
-        r.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "BCP Council"
+    DESCRIPTION = (
+        "Bin collection data for Bournemouth, Christchurch and Poole Council, UK"
+    )
+    URL = "https://bcpportal.bcpcouncil.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        api_url = API_URL_REGEX.search(r.text)
-        if not api_url:
-            raise ValueError("Could not find API URL in the response.")
-        api_url = api_url.group(1)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        _LOGGER.debug("Requesting bin data for UPRN: %s", self._uprn)
-        headers = {
-            "Content-Type": "application/json",
-            "User-Agent": "HomeAssistant-BCP/1.0",
-        }
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 10013449141},
+        "Test_002": {"uprn": "10001085438"},
+        "Test_003": {"uprn": "100040567667"},
+    }
 
-        payload = {"uprn": self._uprn}
+    PARAMS = (uprn(),)
 
-        try:
-            response = requests.post(api_url, headers=headers, json=payload)
-            response.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            raise Exception(
-                f"BCP API request failed: {e} (status: {response.status_code})"
-            ) from e
+    retrieve = retrievers.Request(
+        lambda api_url, **_: api_url,
+        method="POST",
+        json=lambda api_url, **params: {"uprn": params["uprn"]},
+        before=(retrievers.Lookup(PAGE_URL, pick=_pick_api_url),),
+    )
 
-        bin_data = response.json().get("data", [])
-        if not bin_data:
-            _LOGGER.warning("No collection data returned for UPRN %s", self._uprn)
+    parse = parsers.JsonParser("data")
 
-        entries = []
+    preprocess = ExplodeList("scheduleDateRange", into="date")
 
-        for bin in bin_data:
-            bin_type = bin.get("wasteContainerUsageTypeDescription", "Unknown")
-            date_list = bin.get("scheduleDateRange", [])
-            icon = ICON_MAP.get(bin_type, "mdi:delete-empty")
-
-            for date_str in date_list:
-                try:
-                    collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                    entries.append(
-                        Collection(date=collection_date, t=bin_type, icon=icon)
-                    )
-                except ValueError:
-                    _LOGGER.error("Invalid date format: %s", date_str)
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="wasteContainerUsageTypeDescription",
+        type_value_map={
+            "Rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Food waste": wt.FOOD_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )

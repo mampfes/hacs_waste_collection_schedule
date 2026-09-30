@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records 49f8dbda41",
+      "method": "GET",
+      "url": "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records",
+      "final_url": "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records?where=gisaddress+like+%22600+Kurrajong+Road%2C+Carnes+Hill%2C+NSW+2171%22&limit=100",
+      "body": "{\"params\":[[\"limit\",\"100\"],[\"where\",\"gisaddress like \\\"600 Kurrajong Road, Carnes Hill, NSW 2171\\\"\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Wed, 30 Sep 2026 16:46:20 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4996",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-10-01 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJ0b3RhbF9jb3VudCI6IDEsICJyZXN1bHRzIjogW3siZ2lzYWRkcmVzcyI6ICJDQVJORVMgSElMTCBDT01NVU5JVFkgUFJFQ0lOQ1QgNjAwIEtVUlJBSk9ORyBST0FEIENBUk5FUyBISUxMICBOU1cgIDIxNzEiLCAibm9fc2VydmljZXMiOiBudWxsLCAib3JnYW5pY2JpbnF0eSI6IG51bGwsICJyZWN5Y2xlYmlucXR5IjogbnVsbCwgInNlcnZpY2VkYXkiOiAiVEhVUlNEQVkgQiIsICJzZXJ2aWNld2VlayI6ICJaT05FIEIiLCAiZ2FyYmFnZWJpbl9zaXplIjogbnVsbCwgImdhcmJhZ2ViaW5fd2VlazEiOiAiMjAyNS0wNy0wMyIsICJnYXJiYWdlYmluX3dlZWsyIjogIjIwMjUtMDctMTAiLCAiZ2FyYmFnZWJpbl9kYXkiOiAiVGh1cnNkYXkiLCAiZ2FyYmFnZWJpbl9zY2hlZHVsZSI6IDcsICJvcmdhbmljYmluX3NpemUiOiBudWxsLCAib3JnYW5pY2Jpbl93ZWVrMSI6ICIyMDI1LTA3LTAzIiwgIm9yZ2FuaWNiaW5fd2VlazIiOiAiMjAyNS0wNy0xMCIsICJvcmdhbmljYmluX2RheSI6ICJUaHVyc2RheSIsICJvcmdhbmljYmluX3NjaGVkdWxlIjogNywgInJlY3ljbGViaW5fc2l6ZSI6IG51bGwsICJyZWN5Y2xlYmluX3dlZWsxIjogIjIwMjUtMDctMDMiLCAicmVjeWNsZWJpbl93ZWVrMiI6ICIyMDI1LTA3LTE3IiwgInJlY3ljbGViaW5fZGF5IjogIlRodXJzZGF5IiwgInJlY3ljbGViaW5fc2NoZWR1bGUiOiAxNCwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluIjogbnVsbCwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluX2RheSI6IG51bGwsICJleHRyYWZlc3RpdmVfcmVjeWNsZWJpbl9zY2hlZHVsZSI6IG51bGwsICJnYXJiYWdlYmluX3NjaGVkdWxlX2ZyZXF1ZW5jeSI6ICJ3ZWVrbHkiLCAib3JnYW5pY2Jpbl9zY2hlZHVsZV9mcmVxdWVuY3kiOiAid2Vla2x5IiwgInJlY3ljbGViaW5fc2NoZWR1bGVfZnJlcXVlbmN5IjogImZvcnRuaWdodGx5In1dfQ=="
+    },
+    {
+      "key": "GET https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records c51c9443f9",
+      "method": "GET",
+      "url": "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records",
+      "final_url": "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records?where=gisaddress+%3D+%22CARNES+HILL+COMMUNITY+PRECINCT+600+KURRAJONG+ROAD+CARNES+HILL++NSW++2171%22&limit=1",
+      "body": "{\"params\":[[\"limit\",\"1\"],[\"where\",\"gisaddress = \\\"CARNES HILL COMMUNITY PRECINCT 600 KURRAJONG ROAD CARNES HILL  NSW  2171\\\"\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Wed, 30 Sep 2026 16:46:21 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4995",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-10-01 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJ0b3RhbF9jb3VudCI6IDEsICJyZXN1bHRzIjogW3siZ2lzYWRkcmVzcyI6ICJDQVJORVMgSElMTCBDT01NVU5JVFkgUFJFQ0lOQ1QgNjAwIEtVUlJBSk9ORyBST0FEIENBUk5FUyBISUxMICBOU1cgIDIxNzEiLCAibm9fc2VydmljZXMiOiBudWxsLCAib3JnYW5pY2JpbnF0eSI6IG51bGwsICJyZWN5Y2xlYmlucXR5IjogbnVsbCwgInNlcnZpY2VkYXkiOiAiVEhVUlNEQVkgQiIsICJzZXJ2aWNld2VlayI6ICJaT05FIEIiLCAiZ2FyYmFnZWJpbl9zaXplIjogbnVsbCwgImdhcmJhZ2ViaW5fd2VlazEiOiAiMjAyNS0wNy0wMyIsICJnYXJiYWdlYmluX3dlZWsyIjogIjIwMjUtMDctMTAiLCAiZ2FyYmFnZWJpbl9kYXkiOiAiVGh1cnNkYXkiLCAiZ2FyYmFnZWJpbl9zY2hlZHVsZSI6IDcsICJvcmdhbmljYmluX3NpemUiOiBudWxsLCAib3JnYW5pY2Jpbl93ZWVrMSI6ICIyMDI1LTA3LTAzIiwgIm9yZ2FuaWNiaW5fd2VlazIiOiAiMjAyNS0wNy0xMCIsICJvcmdhbmljYmluX2RheSI6ICJUaHVyc2RheSIsICJvcmdhbmljYmluX3NjaGVkdWxlIjogNywgInJlY3ljbGViaW5fc2l6ZSI6IG51bGwsICJyZWN5Y2xlYmluX3dlZWsxIjogIjIwMjUtMDctMDMiLCAicmVjeWNsZWJpbl93ZWVrMiI6ICIyMDI1LTA3LTE3IiwgInJlY3ljbGViaW5fZGF5IjogIlRodXJzZGF5IiwgInJlY3ljbGViaW5fc2NoZWR1bGUiOiAxNCwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluIjogbnVsbCwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluX2RheSI6IG51bGwsICJleHRyYWZlc3RpdmVfcmVjeWNsZWJpbl9zY2hlZHVsZSI6IG51bGwsICJnYXJiYWdlYmluX3NjaGVkdWxlX2ZyZXF1ZW5jeSI6ICJ3ZWVrbHkiLCAib3JnYW5pY2Jpbl9zY2hlZHVsZV9mcmVxdWVuY3kiOiAid2Vla2x5IiwgInJlY3ljbGViaW5fc2NoZWR1bGVfZnJlcXVlbmN5IjogImZvcnRuaWdodGx5In1dfQ=="
+    }
+  ]
+}

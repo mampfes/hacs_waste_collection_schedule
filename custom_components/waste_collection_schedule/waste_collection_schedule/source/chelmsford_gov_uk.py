@@ -1,85 +1,72 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Chelmsford City Council"
-DESCRIPTION = "Source for Chelmsford City Council, UK"
-URL = "https://www.chelmsford.gov.uk/"
-COUNTRY = "uk"
-TEST_CASES = {
-    "Test_001": {"collection_round": "Tuesday A"},
-    "Test_002": {"collection_round": "Thursday B"},
-}
+_MONTHS = (
+    "January|February|March|April|May|June|July|August|September|October|"
+    "November|December"
+)
 
-ICON_MAP = {
-    "food waste": Icons.BIO_KITCHEN,
-    "black bin": Icons.GENERAL_WASTE,
-    "brown bin": Icons.BIO_KITCHEN,
-    "green box": Icons.GLASS,
-    "paper sack": Icons.PAPER,
-    "card sack": Icons.PAPER,
-    "plastic and cartons bag": Icons.PLASTIC_PACKAGING,
-}
-
-# ### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.",
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "collection_round": "Collection round identifier (e.g. Tuesday A). You can find yours by going to https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.",
-    },
+_TYPE_MAP = {
+    "food waste": wt.FOOD_WASTE,
+    "black bin": wt.GENERAL_WASTE,
+    "brown bin": wt.GARDEN_WASTE,
+    "green box": wt.GLASS,
+    "paper sack": wt.PAPER,
+    "card sack": wt.PAPER,
+    "plastic and cartons bag": wt.RECYCLABLES,
 }
 
 
-class Source:
-    def __init__(self, collection_round):
-        self._collection_round = collection_round
+@final
+class Source(BaseSource):
+    TITLE = "Chelmsford City Council"
+    DESCRIPTION = "Source for Chelmsford City Council, UK"
+    URL = "https://www.chelmsford.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        url = f"https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day/{self._collection_round.lower().replace(' ', '-')}-collection-calendar/"
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-        r = requests.get(url)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"collection_round": "Tuesday A"},
+        "Test_002": {"collection_round": "Thursday B"},
+    }
 
-        soup = BeautifulSoup(r.content, "html.parser")
+    PARAMS = (text_field("collection_round", "Collection round"),)
 
-        divs = soup.find_all("div", class_="textcontent")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your collection round (e.g. Tuesday A) by visiting "
+            "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day "
+            "and entering in your address details."
+        ),
+    }
 
-        entries = []
-
-        for div in divs:
-            heading_items = div.find_all(["h2"])
-            list_items = div.find_all(["ul", "ol"])
-
-            for list in list_items:
-                items = list.find_all("li")
-                for item in items:
-                    it = item.get_text(strip=True)
-                    date_str, items = it.split(":")
-                    _day, date, month = date_str.split()
-
-                    year = None
-                    for h in heading_items:
-                        heading = h.get_text(strip=True)
-                        if month in heading:
-                            year = heading.split()[1]
-                            break
-
-                    date = datetime.strptime(
-                        f"{date} {month} {year}", "%d %B %Y"
-                    ).date()
-                    for i in items.split(","):
-                        waste_type = i.strip()
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=waste_type.title(),
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda collection_round, **_: (
+            "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day/"
+            f"{collection_round.lower().replace(' ', '-')}-collection-calendar/"
+        ),
+    )
+    parse = parsers.HtmlTextParser(separator="\n", collapse_whitespace=False)
+    # The page lists "<Month> <year>" headings, each followed by
+    # "Tuesday 6 October: food waste, black bin, ..." lines.
+    preprocess = preprocessors.TextDatedBlocks(
+        block_pattern=r"(?m)^\s*\w+day\s+(?P<day>\d{1,2})\s+(?P<month>[A-Za-z]+):\s*(?P<labels>[^\n]+)",
+        label_separator=r",",
+        year_pattern=rf"(?m)^\s*(?:{_MONTHS})\s+(\d{{4}})\s*$",
+    )
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
