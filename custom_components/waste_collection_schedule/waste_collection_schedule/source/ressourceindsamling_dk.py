@@ -100,16 +100,16 @@ class Source:
         _LOGGER.info("Fetching data from waste2x.dk")
         # Use Copenhagen timezone to handle DST correctly
         
-        tz = zoneinfo.ZoneInfo("Europe/Copenhagen")
-        now = datetime.datetime.now(tz)
-        start_date = now.strftime("%Y-%m-%dT%H:%M:%S.000%z")
-        end_date = (now + datetime.timedelta(days=31)).strftime("%Y-%m-%dT%H:%M:%S.000%z")
+        # Format 2026-09-28T22%3A00%3A00.000Z
+        dateTimeFormat = "%Y-%m-%dT%H%%3A%M%%3A%S.000%z"
+        now = datetime.datetime.now(datetime.timezone.utc)
+        start_date = now.strftime(dateTimeFormat)
+        end_date = (now + datetime.timedelta(days=31)).strftime(dateTimeFormat)
+ 
         
-        # Format timezone with colon (e.g., +01:00 instead of +0100)
-        start_date = start_date[:-2] + ":" + start_date[-2:]
-        end_date = end_date[:-2] + ":" + end_date[-2:]
-
         url = f"{API_URL}/{customer_Id}/{start_date}/{end_date}"
+
+        _LOGGER.warning(f"Request URL: {url}")
         response = requests.get(url, headers=headers, timeout=30)
         _LOGGER.debug(f"Services response status: {response.status_code}")
         _LOGGER.debug(f"Services response: {response.text}")
