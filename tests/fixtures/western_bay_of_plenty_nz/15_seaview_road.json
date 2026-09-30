@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "POST https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressSearch2 78f289803e",
+      "method": "POST",
+      "url": "https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressSearch2",
+      "final_url": "https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressSearch2",
+      "body": "{\"body\":[[\"term\",\"15 Seaview Road\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Wed, 30 Sep 2026 19:22:54 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "vary": "Accept-Encoding, Origin",
+        "x-robots-tag": "noindex",
+        "link": "<https://kerbsidecollective.co.nz/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "allow": "POST",
+        "access-control-allow-origin": "https://kerbsidecollective.co.nz",
+        "access-control-allow-methods": "OPTIONS, GET, POST, PUT, PATCH, DELETE",
+        "access-control-allow-credentials": "true",
+        "x-frame-options": "sameorigin",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "content-encoding": "br"
+      },
+      "content_b64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c29hcDpFbnZlbG9wZSB4bWxuczpzb2FwPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeG1sbnM6eHNkPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSI+PHNvYXA6Qm9keT48QWRkcmVzc1NlYXJjaFJlc3BvbnNlIHhtbG5zPSJodHRwOi8vcmVmdXNld2Vic2VydmljZS53ZXN0ZXJuYmF5Z292dC5uei8iPjxBZGRyZXNzU2VhcmNoUmVzdWx0PjxBZGRyZXNzU2VhcmNoUmVzdWx0PjxWYWx1YXRpb25JZD4wNTA2MSowNDgqMDAqPC9WYWx1YXRpb25JZD48U3RhdHVzPkw8L1N0YXR1cz48SG91c2VObz4xNTwvSG91c2VObz48VW5pdCAvPjxSb2FkPlNFQVZJRVcgUk9BRDwvUm9hZD48TG9jYXRpb25UZXh0PjE1IFNFQVZJRVcgUk9BRDwvTG9jYXRpb25UZXh0PjxDb21tZW50cyAvPjxBcmVhPjM2NDwvQXJlYT48TGVnYWxEZXNjPkxvdCA4IEJsb2NrIElJSSBEZXBvc2l0ZWQgUGxhbiAxNzE5NzwvTGVnYWxEZXNjPjxJbXByb3ZlbWVudHM+RFdHIE9CIE9JPC9JbXByb3ZlbWVudHM+PFJhdGluZ0NhdGVnb3J5PlJFUzwvUmF0aW5nQ2F0ZWdvcnk+PC9BZGRyZXNzU2VhcmNoUmVzdWx0PjwvQWRkcmVzc1NlYXJjaFJlc3VsdD48L0FkZHJlc3NTZWFyY2hSZXNwb25zZT48L3NvYXA6Qm9keT48L3NvYXA6RW52ZWxvcGU+"
+    },
+    {
+      "key": "POST https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressInfo2 b59ee2f7e8",
+      "method": "POST",
+      "url": "https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressInfo2",
+      "final_url": "https://kerbsidecollective.co.nz/wp-json/wbop/v1/addressInfo2",
+      "body": "{\"body\":[[\"term\",\"05061*048*00*\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Wed, 30 Sep 2026 19:22:55 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "vary": "Accept-Encoding, Origin",
+        "x-robots-tag": "noindex",
+        "link": "<https://kerbsidecollective.co.nz/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "allow": "POST",
+        "access-control-allow-origin": "https://kerbsidecollective.co.nz",
+        "access-control-allow-methods": "OPTIONS, GET, POST, PUT, PATCH, DELETE",
+        "access-control-allow-credentials": "true",
+        "x-frame-options": "sameorigin",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "content-encoding": "br"
+      },
+      "content_b64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c29hcDpFbnZlbG9wZSB4bWxuczpzb2FwPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeG1sbnM6eHNkPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSI+PHNvYXA6Qm9keT48R2V0UmVmdXNlSW5mb3JtYXRpb25CeVZhbHVhdGlvblJlc3BvbnNlIHhtbG5zPSJodHRwOi8vcmVmdXNld2Vic2VydmljZS53ZXN0ZXJuYmF5Z292dC5uei8iPjxHZXRSZWZ1c2VJbmZvcm1hdGlvbkJ5VmFsdWF0aW9uUmVzdWx0PjxWYWx1YXRpb25Gb3VuZD50cnVlPC9WYWx1YXRpb25Gb3VuZD48U2VydmljZVpvbmU+VXJiYW48L1NlcnZpY2Vab25lPjxTZXJ2aWNlQ29ubmVjdGlvbkxpc3Q+PFNlcnZpY2VDb25uZWN0aW9uPjxDb2xsZWN0aW9uQ3ljbGVObz4xPC9Db2xsZWN0aW9uQ3ljbGVObz48U2VydmljZUNvbm5lY3Rpb25JZD45ODI3OTwvU2VydmljZUNvbm5lY3Rpb25JZD48VmFsdWF0aW9uSWQ+MDUwNjEqMDQ4KjAwKjwvVmFsdWF0aW9uSWQ+PFNlcnZpY2VJZD5VcmJhbjwvU2VydmljZUlkPjxXZWVrRGF5PjI8L1dlZWtEYXk+PEFzc2lzdGVkU2VydmljZT5mYWxzZTwvQXNzaXN0ZWRTZXJ2aWNlPjxBYnNlbnRlZVNlcnZpY2U+ZmFsc2U8L0Fic2VudGVlU2VydmljZT48U3RhcnREYXRlPjIwMjEtMDctMDFUMDA6MDA6MDA8L1N0YXJ0RGF0ZT48QWRkcmVzcz4xNSBTRUFWSUVXIFJPQUQ8L0FkZHJlc3M+PExhdD4tMzcuMzk2ODwvTGF0PjxMb25nPjE3NS45MzYwMzU8L0xvbmc+PEJpbkluZm8+PEJpbj48QmluVHlwZT5SdWJiaXNoPC9CaW5UeXBlPjxGcmVxdWVuY3k+dzwvRnJlcXVlbmN5PjxOZXh0UGlja3VwRGF0ZT4yMDI2LTEwLTA1VDAwOjAwOjAwPC9OZXh0UGlja3VwRGF0ZT48Q2FwYWNpdHlMaXRyZXM+MTQwPC9DYXBhY2l0eUxpdHJlcz48Q29sb3VyPlJlZDwvQ29sb3VyPjxSZWNlcHRhY2xlVHlwZT5CaW48L1JlY2VwdGFjbGVUeXBlPjxGdW5kaW5nPlBheSBhcyB5b3UgdGhyb3c8L0Z1bmRpbmc+PC9CaW4+PEJpbj48QmluVHlwZT5NaXhlZCBSZWN5Y2xpbmc8L0JpblR5cGU+PEZyZXF1ZW5jeT5mPC9GcmVxdWVuY3k+PE5leHRQaWNrdXBEYXRlPjIwMjYtMTAtMDVUMDA6MDA6MDA8L05leHRQaWNrdXBEYXRlPjxDYXBhY2l0eUxpdHJlcz4yNDA8L0NhcGFjaXR5TGl0cmVzPjxDb2xvdXI+WWVsbG93PC9Db2xvdXI+PFJlY2VwdGFjbGVUeXBlPkJpbjwvUmVjZXB0YWNsZVR5cGU+PEZ1bmRpbmc+UmF0ZXM8L0Z1bmRpbmc+PC9CaW4+PEJpbj48QmluVHlwZT5HbGFzczwvQmluVHlwZT48RnJlcXVlbmN5PmY8L0ZyZXF1ZW5jeT48TmV4dFBpY2t1cERhdGU+MjAyNi0xMC0xMlQwMDowMDowMDwvTmV4dFBpY2t1cERhdGU+PENhcGFjaXR5TGl0cmVzPjQ1PC9DYXBhY2l0eUxpdHJlcz48Q29sb3VyPkJsdWU8L0NvbG91cj48UmVjZXB0YWNsZVR5cGU+Q3JhdGU8L1JlY2VwdGFjbGVUeXBlPjxGdW5kaW5nPlJhdGVzPC9GdW5kaW5nPjwvQmluPjxCaW4+PEJpblR5cGU+Rm9vZDwvQmluVHlwZT48RnJlcXVlbmN5Pnc8L0ZyZXF1ZW5jeT48TmV4dFBpY2t1cERhdGU+MjAyNi0xMC0wNVQwMDowMDowMDwvTmV4dFBpY2t1cERhdGU+PENhcGFjaXR5TGl0cmVzPjIzPC9DYXBhY2l0eUxpdHJlcz48Q29sb3VyPkxpbWU8L0NvbG91cj48UmVjZXB0YWNsZVR5cGU+QmluPC9SZWNlcHRhY2xlVHlwZT48RnVuZGluZz5SYXRlczwvRnVuZGluZz48L0Jpbj48L0JpbkluZm8+PC9TZXJ2aWNlQ29ubmVjdGlvbj48L1NlcnZpY2VDb25uZWN0aW9uTGlzdD48TGVnYWxEZXNjcmlwdGlvbj5Mb3QgOCBCbG9jayBJSUkgRGVwb3NpdGVkIFBsYW4gMTcxOTc8L0xlZ2FsRGVzY3JpcHRpb24+PFJhdGluZ0NhdGVnb3J5PlJFUzwvUmF0aW5nQ2F0ZWdvcnk+PC9HZXRSZWZ1c2VJbmZvcm1hdGlvbkJ5VmFsdWF0aW9uUmVzdWx0PjwvR2V0UmVmdXNlSW5mb3JtYXRpb25CeVZhbHVhdGlvblJlc3BvbnNlPjwvc29hcDpCb2R5Pjwvc29hcDpFbnZlbG9wZT57IkdldFJlZnVzZUluZm9ybWF0aW9uQnlWYWx1YXRpb25SZXNwb25zZSI6eyJHZXRSZWZ1c2VJbmZvcm1hdGlvbkJ5VmFsdWF0aW9uUmVzdWx0Ijp7IlZhbHVhdGlvbkZvdW5kIjoidHJ1ZSIsIlNlcnZpY2Vab25lIjoiVXJiYW4iLCJTZXJ2aWNlQ29ubmVjdGlvbkxpc3QiOnsiU2VydmljZUNvbm5lY3Rpb24iOnsiQ29sbGVjdGlvbkN5Y2xlTm8iOiIxIiwiU2VydmljZUNvbm5lY3Rpb25JZCI6Ijk4Mjc5IiwiVmFsdWF0aW9uSWQiOiIwNTA2MSowNDgqMDAqIiwiU2VydmljZUlkIjoiVXJiYW4iLCJXZWVrRGF5IjoiMiIsIkFzc2lzdGVkU2VydmljZSI6ImZhbHNlIiwiQWJzZW50ZWVTZXJ2aWNlIjoiZmFsc2UiLCJTdGFydERhdGUiOiIyMDIxLTA3LTAxVDAwOjAwOjAwIiwiQWRkcmVzcyI6IjE1IFNFQVZJRVcgUk9BRCIsIkxhdCI6Ii0zNy4zOTY4IiwiTG9uZyI6IjE3NS45MzYwMzUiLCJCaW5JbmZvIjp7IkJpbiI6W3siQmluVHlwZSI6IlJ1YmJpc2giLCJGcmVxdWVuY3kiOiJ3IiwiTmV4dFBpY2t1cERhdGUiOiIyMDI2LTEwLTA1VDAwOjAwOjAwIiwiQ2FwYWNpdHlMaXRyZXMiOiIxNDAiLCJDb2xvdXIiOiJSZWQiLCJSZWNlcHRhY2xlVHlwZSI6IkJpbiIsIkZ1bmRpbmciOiJQYXkgYXMgeW91IHRocm93In0seyJCaW5UeXBlIjoiTWl4ZWQgUmVjeWNsaW5nIiwiRnJlcXVlbmN5IjoiZiIsIk5leHRQaWNrdXBEYXRlIjoiMjAyNi0xMC0wNVQwMDowMDowMCIsIkNhcGFjaXR5TGl0cmVzIjoiMjQwIiwiQ29sb3VyIjoiWWVsbG93IiwiUmVjZXB0YWNsZVR5cGUiOiJCaW4iLCJGdW5kaW5nIjoiUmF0ZXMifSx7IkJpblR5cGUiOiJHbGFzcyIsIkZyZXF1ZW5jeSI6ImYiLCJOZXh0UGlja3VwRGF0ZSI6IjIwMjYtMTAtMTJUMDA6MDA6MDAiLCJDYXBhY2l0eUxpdHJlcyI6IjQ1IiwiQ29sb3VyIjoiQmx1ZSIsIlJlY2VwdGFjbGVUeXBlIjoiQ3JhdGUiLCJGdW5kaW5nIjoiUmF0ZXMifSx7IkJpblR5cGUiOiJGb29kIiwiRnJlcXVlbmN5IjoidyIsIk5leHRQaWNrdXBEYXRlIjoiMjAyNi0xMC0wNVQwMDowMDowMCIsIkNhcGFjaXR5TGl0cmVzIjoiMjMiLCJDb2xvdXIiOiJMaW1lIiwiUmVjZXB0YWNsZVR5cGUiOiJCaW4iLCJGdW5kaW5nIjoiUmF0ZXMifV19fX0sIkxlZ2FsRGVzY3JpcHRpb24iOiJMb3QgOCBCbG9jayBJSUkgRGVwb3NpdGVkIFBsYW4gMTcxOTciLCJSYXRpbmdDYXRlZ29yeSI6IlJFUyJ9fX0="
+    }
+  ]
+}

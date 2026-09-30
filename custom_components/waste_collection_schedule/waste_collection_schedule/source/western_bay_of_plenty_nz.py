@@ -1,195 +1,120 @@
 import json
-from datetime import datetime
-from xml.etree import ElementTree
+import re
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Western Bay of Plenty District Council"
-DESCRIPTION = "Source script for Western Bay of Plenty District Council kerbside collections via kerbsidecollective.co.nz"
-URL = "https://kerbsidecollective.co.nz/"
-TEST_CASES = {
-    "15 Seaview Road": {"address": "15 Seaview Road"},
-    "50 Ocean View Road": {"address": "50 Ocean View Road"},
+_API_URL = "https://kerbsidecollective.co.nz/wp-json/wbop/v1"
+_HEADERS = {
+    "Referer": "https://kerbsidecollective.co.nz/",
+    "Origin": "https://kerbsidecollective.co.nz",
 }
 
-API_URL = "https://kerbsidecollective.co.nz/wp-json/wbop/v1"
-REQUEST_TIMEOUT = 10
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Mixed Recycling": Icons.RECYCLING,
-    "Glass": Icons.GLASS,
-    "Food": Icons.BIO_KITCHEN,
-    "Garden": Icons.GARDEN,
-}
 
-# XML namespace used in the SOAP responses
-_NS = {"r": "http://refusewebservice.westernbaygovt.nz/"}
-
-ADDRESS_SEARCH_URL = f"{API_URL}/addressSearch2"
-ADDRESS_INFO_URL = f"{API_URL}/addressInfo2"
-
-
-def _extract_json(raw: str) -> dict:
-    """Extract and return the JSON portion from the addressInfo2 endpoint response.
-
-    The endpoint returns SOAP XML followed by a JSON object.
-    """
-    idx = raw.find("{")
-    if idx < 0:
-        raise Exception("No JSON payload found in addressInfo2 response")
-    return json.loads(raw[idx:])
-
-
-class Source:
-    def __init__(self, address: str) -> None:
-        self._address: str = address.strip()
-        self._session: requests.Session = requests.Session()
-        self._session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/125.0.0.0 Safari/537.36"
-                ),
-                "Accept": "*/*",
-                "Referer": "https://kerbsidecollective.co.nz/",
-                "Origin": "https://kerbsidecollective.co.nz",
-            }
+def _pick_valuation_id(response: Any, *_: Any, address: str, **__: Any) -> str:
+    """The ValuationId of the first address the SOAP search answer lists."""
+    match = re.search(r"<ValuationId>([^<]+)</ValuationId>", response.text)
+    if match is None:
+        raise SourceArgumentNotFound(
+            "address",
+            address,
+            "make sure it matches an address in the Western Bay of Plenty district",
         )
+    return match.group(1)
 
-    def fetch(self) -> list[Collection]:
-        valuation_id = self.get_address_detail()
-        bins = self.get_waste_pickup_dates(valuation_id)
-        return self.parse_waste_pickup_dates(bins)
 
-    def get_address_detail(self) -> str:
-        """Look up the address via addressSearch2 and return its ValuationId."""
-        resp = self._session.post(
-            ADDRESS_SEARCH_URL,
-            data={"term": self._address},
-            timeout=REQUEST_TIMEOUT,
+class _BinsParser(Parser["list[dict[str, Any]]"]):
+    """The bins of the JSON object that follows the SOAP envelope in the reply."""
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> "list[dict[str, Any]]":
+        text = response.text
+        start = text.find("{")
+        if start < 0:
+            raise ValueError("No JSON payload found in addressInfo2 response")
+        result = (
+            json.loads(text[start:])
+            .get("GetRefuseInformationByValuationResponse", {})
+            .get("GetRefuseInformationByValuationResult", {})
         )
-        resp.raise_for_status()
-
-        # Response is XML; parse it
-        root = ElementTree.fromstring(  # nosec B314
-            resp.text.split("}{")[0] if "}{" in resp.text else resp.text
-        )
-
-        # Handle the SOAP envelope wrapping — filter to only individual
-        # result elements (skip the container <AddressSearchResult> wrapper
-        # which has no ValuationId).
-        results = [
-            r
-            for r in root.findall(".//r:AddressSearchResult", _NS)
-            if r.findtext("r:ValuationId", default="", namespaces=_NS)
-        ]
-        if not results:
-            raise Exception(
-                f"Address not found: '{self._address}'  — "
-                "make sure it matches an address in the Western Bay of Plenty district"
-            )
-
-        # Return the first result
-        return results[0].findtext("r:ValuationId", default="", namespaces=_NS)
-
-    def get_waste_pickup_dates(self, valuation_id: str) -> list:
-        """Call addressInfo2 with a ValuationId and return the bin list."""
-        resp = self._session.post(
-            ADDRESS_INFO_URL,
-            data={"term": valuation_id},
-            timeout=REQUEST_TIMEOUT,
-        )
-        resp.raise_for_status()
-
-        data = _extract_json(resp.text)
-
-        result = data.get("GetRefuseInformationByValuationResponse", {}).get(
-            "GetRefuseInformationByValuationResult", {}
-        )
-
         if result.get("ValuationFound") != "true":
-            raise Exception(
-                f"No waste collection data found for ValuationId {valuation_id}"
+            raise SourceArgumentNotFound(
+                "address",
+                source.params.get("address", "") if source else "",
+                "no waste collection data found for this address",
             )
-
         connection = result.get("ServiceConnectionList", {}).get(
             "ServiceConnection", {}
         )
-
-        bin_info = connection.get("BinInfo", {})
-        bins = bin_info.get("Bin", [])
-
-        # If there is only one bin the API returns a dict instead of a list
+        bins = connection.get("BinInfo", {}).get("Bin", [])
+        # A single bin comes back as an object rather than a list.
         if isinstance(bins, dict):
             bins = [bins]
-
-        return bins
-
-    @staticmethod
-    def parse_waste_pickup_dates(bins: list) -> list[Collection]:
-        entries: list[Collection] = []
-        for b in bins:
-            bin_type = b.get("BinType", "Unknown")
-            next_date_str = b.get("NextPickupDate", "")
-            if not next_date_str:
-                continue
-
-            pickup_date = datetime.fromisoformat(next_date_str).date()
-            icon = ICON_MAP.get(bin_type)
-
-            entries.append(
-                Collection(
-                    date=pickup_date,
-                    t=bin_type,
-                    icon=icon,
-                )
-            )
-        return entries
+        return [b for b in bins if b.get("NextPickupDate")]
 
 
-if __name__ == "__main__":
-    import argparse
-    import sys
-    from pathlib import Path
+@final
+class Source(BaseSource):
+    TITLE = "Western Bay of Plenty District Council"
+    DESCRIPTION = "Source script for Western Bay of Plenty District Council kerbside collections via kerbsidecollective.co.nz"
+    URL = "https://kerbsidecollective.co.nz/"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.FOOD_WASTE,
+    ]
 
-    # Ensure the local package is importable when running directly
-    try:
-        from waste_collection_schedule import Collection
-    except ModuleNotFoundError:
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    TEST_CASES: ClassVar[dict] = {
+        "15 Seaview Road": {"address": "15 Seaview Road"},
+        "50 Ocean View Road": {"address": "50 Ocean View Road"},
+    }
 
-    parser = argparse.ArgumentParser(
-        description="Fetch Western Bay of Plenty kerbside collection dates"
+    PARAMS = (street_address("address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as it appears on kerbsidecollective.co.nz, "
+            "e.g. '15 Seaview Road'."
+        ),
+    }
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{_API_URL}/addressSearch2",
+                method="POST",
+                data=lambda address, **_: {"term": address.strip()},
+                headers=_HEADERS,
+                pick=_pick_valuation_id,
+            ),
+        ),
+        url=f"{_API_URL}/addressInfo2",
+        method="POST",
+        data=lambda valuation_id, **_: {"term": valuation_id},
+        headers=_HEADERS,
+        raise_for_status=True,
     )
-    parser.add_argument("address", nargs="+", help="Address to look up")
-    parser.add_argument(
-        "--debug", action="store_true", help="Enable HTTP debug logging"
+    parse = _BinsParser()
+    transform = JsonTransformer(
+        date_key="NextPickupDate",
+        type_key="BinType",
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        type_value_map={
+            "Rubbish": wt.GENERAL_WASTE,
+            "Mixed Recycling": wt.RECYCLABLES,
+            "Glass": wt.GLASS,
+            "Food": wt.FOOD_WASTE,
+            "Garden": wt.GARDEN_WASTE,
+        },
     )
-    args = parser.parse_args()
-    address = " ".join(args.address).strip()
-
-    src = Source(address)
-
-    if args.debug:
-        import logging
-
-        logging.basicConfig(level=logging.DEBUG)
-        logging.getLogger("urllib3").setLevel(logging.DEBUG)
-
-    try:
-        collections = src.fetch()
-    except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
-        raise SystemExit(1) from e
-
-    if not collections:
-        print("No collections found for the provided address.")
-        raise SystemExit(0)
-
-    for c in collections:
-        date_str = getattr(c, "date", None)
-        type_str = getattr(c, "t", None) or getattr(c, "type", None)
-        icon_str = getattr(c, "icon", None)
-        print(f"{date_str}  {type_str}  {icon_str or ''}")
