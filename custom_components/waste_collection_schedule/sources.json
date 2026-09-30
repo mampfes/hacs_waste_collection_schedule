@@ -30307,6 +30307,12 @@
       "id": "komunala_kranj_si"
     },
     {
+      "title": "Kostak Kr\u0161ko",
+      "module": "kostak_si",
+      "default_params": {},
+      "id": "kostak_si"
+    },
+    {
       "title": "Moji odpadki, Ljubljana",
       "module": "mojiodpadki_si",
       "default_params": {},

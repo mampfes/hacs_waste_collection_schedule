@@ -21859,6 +21859,29 @@
           "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City')."
         }
       },
+      "args_kostak_si": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
+        }
+      },
+      "reconfigure_kostak_si": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Your full address."
+        }
+      },
       "args_mojiodpadki_si": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -4212,6 +4212,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
 - [Komenda](/doc/ics/publicus_si.md) / komenda.si
 - [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
+- [Kostak Krško](/doc/source/kostak_si.md) / kostak.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
 - [Pivka](/doc/ics/publicus_si.md) / pivka.si
 - [Postojna](/doc/ics/publicus_si.md) / postojna.si

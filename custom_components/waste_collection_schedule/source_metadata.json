@@ -4723,6 +4723,14 @@
     },
     "urls": {}
   },
+  "kostak_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kostak_si.md",
+    "howto": {
+      "en": "Search for your address at https://uod.kostak.si/ and enter it as street name, house number and optional house number suffix, for example 'Senuše 3' or 'Cesta krških žrtev 134A'.",
+      "sl": "Naslov poiščite na https://uod.kostak.si/ in ga vnesite kot ulica, hišna številka in morebitna dodatna oznaka, na primer 'Senuše 3' ali 'Cesta krških žrtev 134A'."
+    },
+    "urls": {}
+  },
   "mojiodpadki_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mojiodpadki_si.md",
     "howto": {
