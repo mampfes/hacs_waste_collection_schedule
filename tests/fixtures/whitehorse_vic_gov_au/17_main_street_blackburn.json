@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://map.whitehorse.vic.gov.au/weave/services/v1/index/search d76a397ce2",
+      "method": "GET",
+      "url": "https://map.whitehorse.vic.gov.au/weave/services/v1/index/search",
+      "final_url": "https://map.whitehorse.vic.gov.au/weave/services/v1/index/search?start=0&limit=1000&indexes=index.property&type=EXACT&crs=EPSG%3A3857&query=17+main+street+blackburn",
+      "body": "{\"params\":[[\"crs\",\"EPSG:3857\"],[\"indexes\",\"index.property\"],[\"limit\",\"1000\"],[\"query\",\"17 main street blackburn\"],[\"start\",\"0\"],[\"type\",\"EXACT\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "set-cookie": "JSESSIONID=node01rjo7zk6k94uun3lqyaj886n24619.node0; Path=/weave;HttpOnly;SameSite=Lax",
+        "x-powered-by": "Weave, ARR/3.0",
+        "date": "Wed, 30 Sep 2026 19:23:55 GMT",
+        "content-length": "583",
+        "strict-transport-security": "max-age=31536000; preload"
+      },
+      "content_b64": "eyJ0b3RhbCI6MiwicmVzdWx0cyI6W3siZW52ZWxvcGUiOnsibWF4eSI6LTQ1NTQyOTUuOTE3LCJtYXh4IjoxLjYxNTgwODY4MTFFNywibWlueCI6MS42MTU4MDIwNzE5RTcsIm1pbnkiOi00NTU0MzIyLjE3LCJjcnMiOiJFUFNHOjM4NTcifSwiY2VudHJvaWQiOnsieSI6LTQ1NTQzMDkuMDQ1LCJ4IjoxLjYxNTgwNTM3NjRFNywiY3JzIjoiRVBTRzozODU3In0sImlkIjoiMzA2MDIwNyIsImluZGV4IjoxLCJlbnRpdHkiOiJseXJfdmljbWFwX3Byb3BlcnR5IiwiZGlzcGxheTEiOiIxNyBNYWluIFN0cmVldCBCTEFDS0JVUk4ifSx7ImVudmVsb3BlIjp7Im1heHkiOi00NTU1NTM5LjUxMiwibWF4eCI6MS42MTU3ODUwMjhFNywibWlueCI6MS42MTU3NzA5NzI2RTcsIm1pbnkiOi00NTU1NTc0LjY3NywiY3JzIjoiRVBTRzozODU3In0sImNlbnRyb2lkIjp7InkiOi00NTU1NTU3LjE0NSwieCI6MS42MTU3NzgxMTQxRTcsImNycyI6IkVQU0c6Mzg1NyJ9LCJpZCI6IjQ1MzUwMzYyOCIsImluZGV4IjoyLCJlbnRpdHkiOiJseXJfdmljbWFwX3Byb3BlcnR5IiwiZGlzcGxheTEiOiIxNy8xMDQgTWFpbiBTdHJlZXQgQkxBQ0tCVVJOIn1dfQ=="
+    },
+    {
+      "key": "GET https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds 4e6cd3a565",
+      "method": "GET",
+      "url": "https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds",
+      "final_url": "https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds?entityId=lyr_vicmap_property&datadefinition=dd_whm_property_waste&ids=3060207&outCrs=EPSG%3A3857&returnCentroid=false",
+      "body": "{\"params\":[[\"datadefinition\",\"dd_whm_property_waste\"],[\"entityId\",\"lyr_vicmap_property\"],[\"ids\",\"3060207\"],[\"outCrs\",\"EPSG:3857\"],[\"returnCentroid\",\"false\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "x-powered-by": "Weave, ARR/3.0",
+        "date": "Wed, 30 Sep 2026 19:23:55 GMT",
+        "content-length": "486",
+        "strict-transport-security": "max-age=31536000; preload"
+      },
+      "content_b64": "eyJ0eXBlIjoiRmVhdHVyZUNvbGxlY3Rpb24iLCJmZWF0dXJlcyI6W3sidHlwZSI6IkZlYXR1cmUiLCJpZCI6IjMwNjAyMDciLCJnZW9tZXRyeSI6eyJ0eXBlIjoiTXVsdGlQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbW1sxLjYxNTgwODY2NDU1NzIzMzhFNywtNDU1NDMwNC4yOTAzMDI4NDddLFsxLjYxNTgwMjM3ODgzNzUyMzRFNywtNDU1NDI5NC42NjQxMzc4MjhdLFsxLjYxNTgwMjA4ODM2ODU2ODZFNywtNDU1NDMxMy44MDA2MTg1OThdLFsxLjYxNTgwODM3NDA0MjQ2NzRFNywtNDU1NDMyMy40MjM2MzYxMTJdLFsxLjYxNTgwODY2NDU1NzIzMzhFNywtNDU1NDMwNC4yOTAzMDI4NDddXV1dfSwicHJvcGVydGllcyI6eyJkZF93aG1fcHJvcGVydHlfd2FzdGUiOlt7Il9pZCI6IjMwNjAyMDciLCJjb2xsZWN0aW9uRGF5IjoiTW9uZGF5Iiwid2VlayI6MiwibmV4dFJlY3ljbGUiOiIxMiBPY3QgMjAyNiIsIm5leHRHT0JTIjoiMDUgT2N0IDIwMjYifV19fV19"
+    }
+  ]
+}

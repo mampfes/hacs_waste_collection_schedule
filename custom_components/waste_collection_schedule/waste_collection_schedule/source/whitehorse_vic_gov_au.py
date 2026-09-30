@@ -1,163 +1,136 @@
-import logging
 import re
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Whitehorse City Counfil"
-DESCRIPTION = "Source for Whitehorse City Counfil."
-URL = "https://www.whitehorse.vic.gov.au"
-TEST_CASES = {
-    "17 Main Street BLACKBURN": {"address": "17 Main Street BLACKBURN"},
-    "6/16 Ashted Road": {"address": "6/16 Ashted Road"},
-}
-
-ICON_MAP = {
-    "Household": Icons.GENERAL_WASTE,
-    "GOBS": Icons.ORGANIC,
-    "Recycle": Icons.RECYCLING,
-}
-
-
-SEARCH_URL = "https://map.whitehorse.vic.gov.au/weave/services/v1/index/search"
-BIN_REQUEST_URL = (
-    "https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds"
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    ExplodeList,
+    WeekdayRecurrence,
 )
+from waste_collection_schedule.transformers import ICSTransformer
 
-# opening or closing tag
-HTML_TAG_REGEX = re.compile(r"</?.*?>")
+API = "https://map.whitehorse.vic.gov.au/weave/services/v1"
+
+_HTML_TAG = re.compile(r"</?.*?>")
+_JSON = {"Accept": "application/json"}
+
+_parse_next = date_parsers.for_format("%d %b %Y")
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address.lower().strip()
-        self._address_id = None
+def _pick_property(response, *keys, street_address, **_) -> str:
+    """One hit is taken as is; several must include the exact address."""
+    results = response.json().get("results") or []
+    if not results:
+        raise SourceArgumentNotFound("street_address", street_address)
+    if len(results) == 1:
+        return results[0]["id"]
+    wanted = street_address.lower().strip()
+    for result in results:
+        if _HTML_TAG.sub("", result["display1"]).lower().strip() == wanted:
+            return result["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_address", street_address, [r["display1"] for r in results]
+    )
 
-    def _matches_address(self, address: str) -> bool:
-        return self._address == re.sub(HTML_TAG_REGEX, "", address).lower().strip()
 
-    def _fetch_address_id(self) -> None:
-        args: dict[str, str | int] = {
-            "start": 0,
-            "limit": 1000,
-            "indexes": "index.property",
-            "type": "EXACT",
-            "crs": "EPSG:3857",
-            "query": self._address,
-        }
+def _waste_maps(record, source) -> list[dict]:
+    return (record.get("properties") or {}).get("dd_whm_property_waste") or []
 
-        # get json file
-        r = requests.get(SEARCH_URL, params=args)
-        r.raise_for_status()
 
-        data = r.json()
+def _date(value):
+    """A ``"12 Aug 2024"`` text, or ``None`` for one that is not a date."""
+    try:
+        return _parse_next(value)
+    except ValueError:
+        return None
 
-        if "results" not in data or not data["results"]:
-            raise ValueError("Could not find address")
 
-        self._address_id = None
-        if len(data["results"]) == 1:
-            self._address_id = data["results"][0]["id"]
-        else:
-            for address in data["results"]:
-                if self._matches_address(address["display1"]):
-                    self._address_id = address["id"]
-                    break
+_NEXT_DATES = DateFields(
+    fields={"nextRecycle": "Recycle", "nextGOBS": "GOBS"}, parse_date=_date
+)
+_WEEKLY_HOUSEHOLD = WeekdayRecurrence(day="collectionDay", keys="Household", count=10)
 
-        if not self._address_id:
-            raise SourceArgumentNotFoundWithSuggestions(
-                argument="address",
-                value=self._address,
-                suggestions=[address["display1"] for address in data["results"]],
-            )
 
-    def fetch(self) -> list[Collection]:
-        """Get address ID if not set and fetch collections, tries to get address ID again if using old ID and get_collections fails."""
-        fresh_id = False
-        if not self._address_id:
-            self._fetch_address_id()
-            fresh_id = True
+def _rows(records, source):
+    """The dated bins, then the weekly household bin projected from its weekday."""
+    records = list(records)
+    yield from _NEXT_DATES(records, source)
+    yield from _WEEKLY_HOUSEHOLD(records, source)
 
-        try:
-            return self._get_collections()
-        except Exception:
-            if fresh_id:
-                raise
-            self._fetch_address_id()
-            return self._get_collections()
 
-    def _get_house_hold_waste(self, weekday: str) -> list[Collection]:
-        today = date.today()
+@final
+class Source(BaseSource):
+    TITLE = "Whitehorse City Council"
+    DESCRIPTION = "Source for Whitehorse City Council rubbish collection."
+    URL = "https://www.whitehorse.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        next_match: date | None = None
-        for i in range(7):
-            if (today + timedelta(days=i)).strftime("%A").lower() == weekday.lower():
-                next_match = today + timedelta(days=i)
-        if not next_match:
-            raise ValueError("Invalid weekday")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        return [
-            Collection(
-                date=next_match + timedelta(weeks=i),
-                t="Household",
-                icon=ICON_MAP.get("Household"),
-            )
-            for i in range(10)
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "17 Main Street BLACKBURN": {"street_address": "17 Main Street BLACKBURN"},
+        "6/16 Ashted Road": {"street_address": "6/16 Ashted Road"},
+    }
 
-    def _get_collections(self) -> list[Collection]:
-        if not self._address_id:
-            raise ValueError("Address ID is not set")
+    PARAMS = (street_address("street_address"),)
 
-        args2: dict[str, str | list[str]] = {
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as the council's "
+            "[map](https://map.whitehorse.vic.gov.au) property search lists it, "
+            "e.g. '17 Main Street BLACKBURN'. If several properties match, the "
+            "address must match one of them exactly."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/index/search",
+                params=lambda street_address, **_: {
+                    "start": 0,
+                    "limit": 1000,
+                    "indexes": "index.property",
+                    "type": "EXACT",
+                    "crs": "EPSG:3857",
+                    "query": street_address.lower().strip(),
+                },
+                headers=_JSON,
+                pick=_pick_property,
+            ),
+        ),
+        url=f"{API}/feature/getFeaturesByIds",
+        params=lambda property_id, **_: {
             "entityId": "lyr_vicmap_property",
-            "datadefinition": [
-                "dd_whm_property_waste",
-            ],
-            "ids": self._address_id,
+            "datadefinition": "dd_whm_property_waste",
+            "ids": property_id,
             "outCrs": "EPSG:3857",
             "returnCentroid": "false",
-        }
-        r = requests.get(BIN_REQUEST_URL, params=args2)
-        r.raise_for_status()
-        data = r.json()
-        entries = []
-        for features in data["features"]:
-            waste_list: dict[str, str] = features.get("properties", {}).get(
-                "dd_whm_property_waste", []
-            )
-            if not waste_list:
-                continue
-            for waste_map in waste_list:
-                try:
-                    entries.extend(
-                        self._get_house_hold_waste(waste_map.get("collectionDay", ""))
-                    )
-                except ValueError:
-                    _LOGGER.warning(
-                        "Could not get household waste for weekday '%s'",
-                        waste_map.get("collectionDay", ""),
-                    )
-                for key, value in waste_map.items():
-                    if not key.lower().startswith("next"):
-                        continue
-                    bin_type = key.removeprefix("next").strip()
+        },
+        headers=_JSON,
+    )
 
-                    try:
-                        # value format like: 12 Aug 2024
-                        date_ = datetime.strptime(value, "%d %b %Y").date()
-                    except ValueError:
-                        _LOGGER.warning("Could not parse date %s", value)
-                        continue
+    parse = parsers.JsonParser("features")
 
-                    icon = ICON_MAP.get(bin_type)
+    preprocess = Compose(ExplodeList(_waste_maps), _rows)
 
-                    entries.append(Collection(date=date_, t=bin_type, icon=icon))
-
-        return entries
+    transform = ICSTransformer(
+        type_value_map={
+            "Household": wt.GENERAL_WASTE,
+            "GOBS": wt.GARDEN_WASTE,
+            "Recycle": wt.RECYCLABLES,
+        },
+    )
