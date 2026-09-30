@@ -1,103 +1,110 @@
-import json
-from datetime import datetime, timedelta
+import datetime
+from functools import lru_cache
+from typing import Any, ClassVar, final
 
-import requests
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, YEARLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    HolidayShift,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Round Rock Texas"
-DESCRIPTION = "Source for bin collection services for Round Rock, Texas"
-URL = "https://www.roundrocktexas.gov/"
-COUNTRY = "us"
-TEST_CASES = {
-    "Apache Oaks": {"neighborhood": "Apache Oaks"},
-    "Mayfield Ranch": {"neighborhood": "Mayfield Ranch"},
-    "Windy Park": {"neighborhood": "Windy Park"},
-}
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Trash": Icons.GENERAL_WASTE,
-}
-DAYS = {
-    "Monday": MO,
-    "Tuesday": TU,
-    "Wednesday": WE,
-    "Thursday": TH,
-    "Friday": FR,
-    "Saturday": SA,
-    "Sunday": SU,
-}
-HOLIDAYS = {  # website indicates collections falling on these days will be shifted by 1 day
-    "Thanksgiving": next(
-        iter(rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now()))
-    ).date(),  # 4th Thursday in November
-    "Christmas Day": next(
-        iter(rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now()))
-    ).date(),  # 25th December
-    "New Years Day": next(
-        iter(rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now()))
-    ).date(),  # 1st January
-}
+BASE_URL = "https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling"
+ZONES_URL = f"{BASE_URL}/garbagerecyclingzones.json"
+DAYS_URL = f"{BASE_URL}/garbagerecyclingdays.json"
+
+RECYCLING = "Recycling"
+TRASH = "Trash"
+
+# Collections falling on these days are moved back by one day (per the city).
+_SHIFTED_HOLIDAYS = ("Thanksgiving", "Christmas", "New Year")
 
 
-class Source:
-    def __init__(self, neighborhood: str):
-        self._area = neighborhood
-
-    def check_holidays(self, dt):
-        for _, holiday in enumerate(HOLIDAYS):
-            if dt == HOLIDAYS[holiday]:
-                dt += timedelta(days=1)
-        return dt
-
-    def fetch(self):
-        today = datetime.now()
-        s = requests.Session()
-
-        # get recycling zone - determines which day of the week collections are made
-        r = s.get(
-            "https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingzones.json"
-        )
-        r.raise_for_status()
-        areas = json.loads(r.text)
-        for _idx, area in enumerate(areas):
-            if self._area.upper() == area["Neighborhood Name"].upper():
-                recycling_zone = area["Recycling Zone"]
-
-        entries = []
-
-        # get recycling schedules - collections are every 2 weeks
-        r = s.get(
-            "https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingdays.json"
-        )
-        r.raise_for_status()
-        recycling_schedule = json.loads(r.text)
-        for _idx, zone in enumerate(recycling_schedule):
-            if recycling_zone == zone["Recycling Zone"]:
-                end_date = datetime.strptime(zone["Date"], "%Y-%m-%d")
-                dt = datetime.strptime(zone["Date"], "%Y-%m-%d").date()
-                dt = self.check_holidays(dt)
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(zone["Date"], "%Y-%m-%d").date(),
-                        t="Recycling",
-                        icon=ICON_MAP.get("Recycling"),
-                    )
-                )
-
-        # generate weekly trash schedule - occur weekly, the same week day as recycling collections
-        trash_day = recycling_zone.split(" ")[0]
-        trash_dates = list(
-            rrule(WEEKLY, byweekday=DAYS[trash_day], dtstart=today, until=end_date)
-        )
-        for _idx, item in enumerate(trash_dates):
-            item = self.check_holidays(item.date())
-            entries.append(
-                Collection(
-                    date=item,
-                    t="Trash",
-                    icon=ICON_MAP.get("Trash"),
-                )
+def _neighborhoods(records: list[dict[str, Any]], source) -> dict[str, Any]:
+    """Both JSON files (concatenated) -> ``{neighborhood: (zone, recycling dates)}``."""
+    zone_dates: dict[str, list[datetime.date]] = {}
+    for record in records:
+        if "Date" in record:
+            zone_dates.setdefault(record["Recycling Zone"], []).append(
+                datetime.date.fromisoformat(record["Date"])
             )
+    return {
+        record["Neighborhood Name"]: (
+            record["Recycling Zone"],
+            zone_dates.get(record["Recycling Zone"], []),
+        )
+        for record in records
+        if "Neighborhood Name" in record
+    }
 
-        return entries
+
+def _describe(record, source):
+    """Recycling on the published dates; weekly trash on the zone's weekday."""
+    zone, dates = record
+    for collection_date in dates:
+        yield Schedule(RECYCLING, collection_date)
+    weekday = recurrence.weekday(zone.split(" ")[0])
+    if weekday is not None and dates:
+        yield Schedule(TRASH, recurrence.next_weekday(weekday), until=max(dates))
+
+
+@lru_cache(maxsize=8)
+def _holidays(year: int) -> dict[datetime.date, str]:
+    return recurrence.us_federal_holidays(year, observed=False)
+
+
+def _adjust(collection_date: datetime.date, key: str, source) -> datetime.date:
+    name = _holidays(collection_date.year).get(collection_date, "")
+    if any(holiday in name for holiday in _SHIFTED_HOLIDAYS):
+        return collection_date + datetime.timedelta(days=1)
+    return collection_date
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Round Rock Texas"
+    DESCRIPTION = "Source for bin collection services for Round Rock, Texas"
+    URL = "https://www.roundrocktexas.gov/"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Apache Oaks": {"neighborhood": "Apache Oaks"},
+        "Mayfield Ranch": {"neighborhood": "Mayfield Ranch"},
+        "Windy Park": {"neighborhood": "Windy Park"},
+    }
+
+    PARAMS = (text_field("neighborhood", "Neighborhood"),)
+
+    WASTE_TYPES: ClassVar[list[wt.WasteType]] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the name of your neighborhood as the City of Round Rock "
+            "lists it (for example Apache Oaks or Windy Park). Recycling is "
+            "collected every two weeks and trash weekly, on the weekday of "
+            "your neighborhood's recycling zone."
+        ),
+    }
+
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, context: (ZONES_URL, DAYS_URL)
+    )
+    parse = parsers.EachResponse(parsers.JsonParser())
+    preprocess = Compose(
+        ArgumentLookup(_neighborhoods, argument="neighborhood"),
+        RecurrenceExpander(_describe),
+        HolidayShift(_adjust),
+    )
+    transform = ICSTransformer(
+        type_value_map={TRASH: wt.GENERAL_WASTE, RECYCLING: wt.RECYCLABLES}
+    )
