@@ -1,142 +1,89 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Rova"
-DESCRIPTION = "Source for Rova waste collection in the Netherlands."
-URL = "https://www.rova.nl"
-COUNTRY = "nl"
-
-TEST_CASES = {
-    "Lemele Lemelerweg 44": {
-        "postalcode": "8148PC",
-        "house_number": "44",
-    },
-    "Hardenberg Stationsstraat 1": {
-        "postalcode": "7721AA",
-        "house_number": "1",
-        "addition": "",
-    },
-}
-
-ICON_MAP = {
-    "Gft": Icons.BIO_KITCHEN,
-    "Pmd": Icons.RECYCLING,
-    "Restafval": Icons.GENERAL_WASTE,
-    "Papier": Icons.PAPER,
-    "Glas": Icons.GLASS,
-    "Textiel": Icons.TEXTILE,
-    "Kerstboom": Icons.CHRISTMAS_TREE,
-    "Snoeiafval": Icons.GARDEN,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postalcode": "Postal code",
-        "house_number": "House number",
-        "addition": "Addition",
-    },
-    "nl": {
-        "postalcode": "Postcode",
-        "house_number": "Huisnummer",
-        "addition": "Toevoeging",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postalcode": "Dutch postal code (4 digits + 2 letters, e.g. 8148PC)",
-        "house_number": "House number",
-        "addition": "House letter or addition (optional, only needed when multiple addresses share the same postal code and house number)",
-    },
-    "nl": {
-        "postalcode": "Nederlandse postcode (4 cijfers + 2 letters, bijv. 8148PC)",
-        "house_number": "Huisnummer",
-        "addition": "Huisletter of toevoeging (optioneel, alleen nodig als meerdere adressen dezelfde postcode en huisnummer delen)",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Use the same postal code and house number you would enter at "
-        "https://www.rova.nl/afvalkalender. If your address has a letter or "
-        "addition, provide it in the 'addition' field."
-    ),
-    "nl": (
-        "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
-        "https://www.rova.nl/afvalkalender. Als je adres een letter of "
-        "toevoeging heeft, geef deze dan in het 'addition'-veld."
-    ),
-}
-
-API_URL = "https://www.rova.nl/api/waste-calendar/year"
+_API_URL = "https://www.rova.nl/api/waste-calendar/year"
 
 
-class Source:
-    def __init__(self, postalcode: str, house_number: str | int, addition: str = ""):
-        self._postalcode = str(postalcode).replace(" ", "").upper()
-        self._house_number = str(house_number).strip()
-        self._addition = str(addition or "").strip()
+def _query(
+    year: int,
+    _context,
+    *,
+    postalcode,
+    house_number,
+    addition="",
+    **_,
+) -> dict:
+    return {
+        "postalcode": str(postalcode).replace(" ", "").upper(),
+        "houseNumber": str(house_number).strip(),
+        "addition": str(addition or "").strip(),
+        "year": year,
+    }
 
-    def fetch(self) -> list[Collection]:
-        now = datetime.now()
-        year = now.year
-        entries = []
-        exception = None
 
-        try:
-            entries = self._get_collections(year)
-        except Exception as e:
-            if now.month != 12:
-                raise
-            exception = e
+@final
+class Source(BaseSource):
+    TITLE = "Rova"
+    DESCRIPTION = "Source for Rova waste collection in the Netherlands."
+    URL = "https://www.rova.nl"
+    COUNTRY = "nl"
+    RAISE_ON_EMPTY = True
 
-        if now.month != 12:
-            return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Use the same postal code and house number you would enter at "
+            "https://www.rova.nl/afvalkalender. If your address has a letter or "
+            "addition, provide it in the 'addition' field."
+        ),
+        "nl": (
+            "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
+            "https://www.rova.nl/afvalkalender. Als je adres een letter of "
+            "toevoeging heeft, geef deze dan in het 'addition'-veld."
+        ),
+    }
 
-        # In December also fetch next year
-        year += 1
-        try:
-            return entries + self._get_collections(year)
-        except Exception:
-            if exception:
-                raise exception from None
-            return entries
+    WASTE_TYPES: ClassVar[list] = [wt.ORGANIC, wt.RECYCLABLES]
 
-    def _get_collections(self, year: int) -> list[Collection]:
-        params = {
-            "postalcode": self._postalcode,
-            "houseNumber": self._house_number,
-            "addition": self._addition,
-            "year": year,
-        }
+    TEST_CASES: ClassVar[dict] = {
+        "Lemele Lemelerweg 44": {
+            "postalcode": "8148PC",
+            "house_number": "44",
+        },
+        "Hardenberg Stationsstraat 1": {
+            "postalcode": "7721AA",
+            "house_number": "1",
+            "addition": "",
+        },
+    }
 
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
+    PARAMS = (
+        postcode(postcode_field="postalcode", house_field="house_number"),
+        text_field("addition", "Addition", default=""),
+    )
 
-        if not data:
-            raise SourceArgumentNotFound(
-                "postalcode",
-                self._postalcode,
-                "no waste calendar found for this address — please check postal code, house number and addition",
-            )
+    retrieve = retrievers.YearlyRetriever(
+        fetch=retrievers.Request(_API_URL, params=_query),
+    )
 
-        entries = []
-        for item in data:
-            date_str = item.get("date", "")
-            waste_type = item.get("wasteType", {})
-            title = waste_type.get("title", "")
-            if not date_str or not title:
-                continue
+    parse = parsers.EachResponse(parsers.JsonParser())
 
-            # API returns ISO datetime strings like "2026-01-12T00:00:00Z"
-            collection_date = datetime.fromisoformat(
-                date_str.replace("Z", "+00:00")
-            ).date()
-            icon = ICON_MAP.get(title)
-            entries.append(Collection(date=collection_date, t=title, icon=icon))
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=lambda record: (record.get("wasteType") or {}).get("title"),
+        type_value_map={
+            "gft": wt.ORGANIC,
+            "pmd": wt.RECYCLABLES,
+            "restafval": wt.GENERAL_WASTE,
+            "papier": wt.PAPER,
+            "glas": wt.GLASS,
+            "textiel": wt.TEXTILES,
+            "snoeiafval": wt.GARDEN_WASTE,
+            "kerstboom": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )
