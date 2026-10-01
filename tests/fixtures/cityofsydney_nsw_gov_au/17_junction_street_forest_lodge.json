@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://cos-bin-collection-widget.netlify.app/api/search d6166494cd",
+      "method": "GET",
+      "url": "https://cos-bin-collection-widget.netlify.app/api/search",
+      "final_url": "https://cos-bin-collection-widget.netlify.app/api/search?address=17+Junction+Street%2C+Forest+Lodge",
+      "body": "{\"params\":[[\"address\",\"17 Junction Street, Forest Lodge\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "1",
+        "cache-control": "no-cache",
+        "cache-status": "\"Netlify Durable\"; fwd=bypass, \"Netlify Edge\"; fwd=miss; fwd-status=200",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Thu, 01 Oct 2026 14:30:36 GMT",
+        "netlify-vary": "query",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-nf-request-id": "01M3VXZMPQ693SCANANCYQ8D9N"
+      },
+      "content_b64": "eyJtYXRjaGluZ1Byb3BlcnRpZXMiOlt7InByb3BlcnR5S2V5Ijo1MTk0NDMsInNwYXRpYWxLZXkiOjUxOTQ0MywiZnVsbEFkZHJlc3MiOiIxNyBKdW5jdGlvbiBTdHJlZXQsIEZvcmVzdCBMb2RnZSJ9XX0="
+    },
+    {
+      "key": "GET https://cos-bin-collection-widget.netlify.app/api/property/519443/bins-collection ",
+      "method": "GET",
+      "url": "https://cos-bin-collection-widget.netlify.app/api/property/519443/bins-collection",
+      "final_url": "https://cos-bin-collection-widget.netlify.app/api/property/519443/bins-collection",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "1",
+        "cache-control": "no-cache",
+        "cache-status": "\"Netlify Durable\"; fwd=bypass, \"Netlify Edge\"; fwd=miss; fwd-status=200",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Thu, 01 Oct 2026 14:30:37 GMT",
+        "netlify-vary": "query",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-nf-request-id": "01M3VXZNCZ34HWA7B413G9WCPM"
+      },
+      "content_b64": "eyJiaW5zIjpbeyJyb3VuZENvZGUiOiJXQVMiLCJyb3VuZERlc2NyaXB0aW9uIjoiV2FzdGUiLCJjb2xsZWN0aW9uRnJlcXVlbmN5IjoiMSIsImNvbGxlY3Rpb25EYXlzIjoiVHVlc2RheSIsIm5leHRQaWNrdXBEYXRlIjoiVHVlc2RheSAwNi8xMC8yMDI2IiwicGlja3VwRGF0ZUFmdGVyTmV4dCI6IlR1ZXNkYXkgMTMvMTAvMjAyNiJ9LHsicm91bmRDb2RlIjoiUkNZIiwicm91bmREZXNjcmlwdGlvbiI6IlJlY3ljbGluZyIsImNvbGxlY3Rpb25GcmVxdWVuY3kiOiIxIiwiY29sbGVjdGlvbkRheXMiOiJUdWVzZGF5IiwibmV4dFBpY2t1cERhdGUiOiJUdWVzZGF5IDA2LzEwLzIwMjYiLCJwaWNrdXBEYXRlQWZ0ZXJOZXh0IjoiVHVlc2RheSAxMy8xMC8yMDI2In0seyJyb3VuZENvZGUiOiJHUkUiLCJyb3VuZERlc2NyaXB0aW9uIjoiR3JlZW4gV2FzdGUiLCJjb2xsZWN0aW9uRnJlcXVlbmN5IjoiRm9ydG5pZ2h0IDEiLCJjb2xsZWN0aW9uRGF5cyI6IlR1ZXNkYXkiLCJuZXh0UGlja3VwRGF0ZSI6IlR1ZXNkYXkgMTMvMTAvMjAyNiIsInBpY2t1cERhdGVBZnRlck5leHQiOiJUdWVzZGF5IDI3LzEwLzIwMjYifV19"
+    }
+  ]
+}
