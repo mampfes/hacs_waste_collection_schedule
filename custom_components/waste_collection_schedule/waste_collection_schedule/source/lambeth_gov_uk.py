@@ -1,128 +1,71 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "London Borough of Lambeth"
-DESCRIPTION = "Source for London Borough of Lambeth"
-URL = "https://www.lambeth.gov.uk/"
-
-TEST_CASES = {
-    "Sternhold Avenue": {"uprn": "100021893293"},
-    "Sibella Road": {"uprn": "100021889496"},
-    "Hoadly Road": {"uprn": "100021852695"},
+_TYPE_MAP = {
+    "Domestic Food Collection Service": wt.FOOD_WASTE,
+    "Domestic Recycling Collection Service": wt.RECYCLABLES,
+    "Domestic Refuse Collection Service": wt.GENERAL_WASTE,
+    "Domestic Garden Collection Service": wt.GARDEN_WASTE,
 }
 
-API_URL = "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn"
 
-ICON_MAP = {
-    "Domestic Food Collection Service": Icons.BIO_KITCHEN,
-    "Domestic Recycling Collection Service": Icons.GENERAL_WASTE,
-    "Domestic Refuse Collection Service": Icons.GENERAL_WASTE,
-    "Domestic Garden Collection Service": Icons.GARDEN,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Property UPRN (Unique Property Reference Number)",
-    },
-    "de": {
-        "uprn": "UPRN der Immobilie",
-    },
-    "it": {
-        "uprn": "UPRN della proprietà",
-    },
-    "fr": {
-        "uprn": "UPRN du bien",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Find your UPRN at https://www.findmyaddress.co.uk/",
-    },
-    "de": {
-        "uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/",
-    },
-    "it": {
-        "uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/",
-    },
-    "fr": {
-        "uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/",
-    },
-}
-
-# Strict allowlist of valid waste collection services
-ALLOWED_SERVICES = set(ICON_MAP.keys())
+def _is_collection(record, source) -> bool:
+    """A scheduled collection of a published service (ended services have no next date)."""
+    return bool(record.get("NextCollectionDate")) and (
+        record.get("ServiceDescription") in _TYPE_MAP
+    )
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Lambeth"
+    DESCRIPTION = "Source for London Borough of Lambeth"
+    URL = "https://www.lambeth.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        payload = {
-            "uprn": self._uprn,
+    TEST_CASES: ClassVar[dict] = {
+        "Sternhold Avenue": {"uprn": "100021893293"},
+        "Sibella Road": {"uprn": "100021889496"},
+        "Hoadly Road": {"uprn": "100021852695"},
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": "Find your UPRN at https://www.findmyaddress.co.uk/",
+    }
+
+    retrieve = retrievers.Request(
+        "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn",
+        method="POST",
+        json=lambda uprn, **_: {
+            "uprn": str(uprn),
             "includeEventTypes": False,
             "includeFlags": True,
-        }
+        },
+    )
 
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Content-Type": "application/json",
-        }
+    parse = parsers.JsonParser("SiteServices")
 
-        try:
-            response = requests.post(
-                API_URL,
-                json=payload,
-                headers=headers,
-                timeout=30,
-            )
-            response.raise_for_status()
-        except requests.Timeout:
-            raise Exception("API request timed out") from None
-        except requests.RequestException as e:
-            raise Exception(f"API request failed: {e}") from e
+    preprocess = RowFilter(_is_collection)
 
-        try:
-            data = response.json()
-        except ValueError:
-            raise Exception("Invalid JSON response") from None
-
-        services = data.get("SiteServices")
-        if not services:
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        entries = []
-
-        for item in services:
-            service_name = item.get("ServiceDescription")
-            next_date_str = item.get("NextCollectionDate")
-
-            if not service_name or not next_date_str:
-                continue
-
-            if service_name not in ALLOWED_SERVICES:
-                continue
-
-            try:
-                collection_date = datetime.datetime.strptime(
-                    next_date_str, "%d/%m/%Y"
-                ).date()
-            except ValueError:
-                continue
-
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=service_name,
-                    icon=ICON_MAP.get(service_name, "mdi:trash-can"),
-                )
-            )
-
-        if not entries:
-            raise Exception("No valid waste collection entries found")
-
-        return entries
+    transform = JsonTransformer(
+        date_key="NextCollectionDate",
+        type_key="ServiceDescription",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
