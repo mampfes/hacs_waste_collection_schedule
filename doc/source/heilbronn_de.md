@@ -1,6 +1,8 @@
 # Heilbronn Entsorgungsbetriebe
 
-Support for schedules provided by [heilbronn.de](https://www.heilbronn.de/).
+Support for schedules provided by [Heilbronn Entsorgungsbetriebe](https://heilbronn.de).
+
+Source for city of Heilbronn, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -17,13 +19,13 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **plz**  
-*(integer | integer) (required)*
+*(string) (required)*
 
 **strasse**  
 *(string) (required)*
 
 **hausnr**  
-*(string | integer) (required)*
+*(string) (optional)*
 
 ## Example
 
@@ -39,4 +41,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Use your PLZ, street and house number. You can check if [Abfuhrtermine Heilbronn](https://abfallwirtschaft.heilbronn.de/abfuhrtermine) shows correct values, then use exactly the same spelling for your configuration.
+Enter the postcode and street as they appear in the city of Heilbronn's waste calendar. The house number is only required for streets whose collection districts differ by house number.

@@ -277,7 +277,9 @@
   },
   "melbourne_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melbourne_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Pick the location of your property on the map. The collection zone of the City of Melbourne that contains it is used."
+    },
     "urls": {}
   },
   "melvillecity_com_au": {
@@ -2540,7 +2542,10 @@
   },
   "monaloga_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monaloga_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie Ihre Straße so ein, wie sie im Online-Abfallkalender aufgeführt ist. Ergänzen Sie die PLZ, falls der Straßenname mehrfach vorkommt.",
+      "en": "Enter your street as listed at https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php. Add the postcode (PLZ) if the street name occurs in several postcodes."
+    },
     "urls": {}
   },
   "ics_awista_starnberg_de": {
@@ -2552,7 +2557,10 @@
   },
   "awlneuss_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awlneuss_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie entweder den genauen Straßennamen (street_name) oder den Straßencode (street_code) zusammen mit der Hausnummer (building_number) an.",
+      "en": "Enter either the exact street name (street_name) or the street code (street_code), together with the house number (building_number)."
+    },
     "urls": {}
   },
   "awm_muenchen_de": {
@@ -2969,7 +2977,10 @@
   },
   "heilbronn_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heilbronn_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Gib PLZ und Straße so an, wie sie im Abfallkalender der Stadt Heilbronn stehen. Die Hausnummer ist nur bei Straßen nötig, in denen sich die Abfuhrbezirke je Hausnummer unterscheiden.",
+      "en": "Enter the postcode and street as they appear in the city of Heilbronn's waste calendar. The house number is only required for streets whose collection districts differ by house number."
+    },
     "urls": {}
   },
   "ics_heinz_entsorgung_de": {
@@ -3142,7 +3153,10 @@
   },
   "landkreis_rhoen_grabfeld": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_rhoen_grabfeld.md",
-    "howto": {},
+    "howto": {
+      "de": "Gib die Stadt, den Markt oder die Gemeinde (`city`) und/oder den Ortsteil (`district`) so an, wie sie auf https://www.abfallinfo-rhoen-grabfeld.de/ aufgeführt sind. Ohne Angabe werden die Termine des gesamten Landkreises geliefert.",
+      "en": "Enter the municipality (`city`) and/or the village (`district`) exactly as listed on https://www.abfallinfo-rhoen-grabfeld.de/. Leave both empty to get the collections of the whole district."
+    },
     "urls": {}
   },
   "abfall_lro_de": {
@@ -3985,8 +3999,8 @@
   "montecospa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montecospa_it.md",
     "howto": {
-      "en": "Visit https://www.montecospa.it/it/servizi-evoluti?cta=calendario , click your address on the map, and note the municipality and zone shown in the results panel.",
-      "it": "Visita https://www.montecospa.it/it/servizi-evoluti?cta=calendario , clicca sul tuo indirizzo sulla mappa e annota il comune e la zona mostrati nel pannello dei risultati."
+      "en": "Visit https://www.montecospa.it/it/servizi-evoluti?cta=calendario , click your address on the map, and note the municipality (exactly as listed on the Monteco website, e.g. 'Lecce') and the zone shown in the results panel (e.g. 'zona_centro_storico'). The user type is 'Domestica' (default) or 'Non domestica'.",
+      "it": "Visita https://www.montecospa.it/it/servizi-evoluti?cta=calendario , clicca sul tuo indirizzo sulla mappa e annota il comune (esattamente come indicato sul sito Monteco, es. 'Lecce') e la zona mostrata nel pannello dei risultati (es. 'zona_centro_storico'). Il tipo utenza è 'Domestica' (predefinito) oppure 'Non domestica'."
     },
     "urls": {}
   },
@@ -4535,7 +4549,9 @@
   },
   "pronatura_bydgoszcz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pronatura_bydgoszcz_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street name and building number in Bydgoszcz as they appear in the Pronatura schedule. Neither is case-sensitive."
+    },
     "urls": {}
   },
   "eko_tom_pl": {
@@ -4902,7 +4918,7 @@
   "kungsbacka_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kungsbacka_se.md",
     "howto": {
-      "en": "Enter the street name and house number as shown on the [Kungsbacka self-service portal](https://sjalvservice.kungsbacka.se/oversikt/flow/4587). Swedish characters (ä, å, ö) are supported."
+      "en": "Enter the street name and house number as shown on the [Kungsbacka self-service portal](https://sjalvservice.kungsbacka.se/oversikt/flow/4587), e.g. `Lundaväg 14` or `Lundaväg 14 Särö`. Swedish characters (ä, å, ö) are supported."
     },
     "urls": {}
   },
@@ -5084,7 +5100,9 @@
   },
   "vmeab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmeab_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your city and your street address with the house number, as you would on https://www.vmeab.se/tjanster/avfall--atervinning/min-sophamtning/, e.g. city `Odensvi` and street `Ringsfall 1`."
+    },
     "urls": {}
   },
   "alvsbyns_energi_se": {
@@ -6300,7 +6318,9 @@
   },
   "hinckley_bosworth_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hinckley_bosworth_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6484,7 +6504,9 @@
   },
   "lambeth_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lambeth_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/"
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7069,7 +7091,7 @@
   "sefton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sefton_gov_uk.md",
     "howto": {
-      "en": "Using a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page.Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen.e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
+      "en": "Using a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page. Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen. e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
     },
     "urls": {}
   },
@@ -7346,7 +7368,9 @@
   },
   "telford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telford_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and the house name or number exactly as the council lists it (e.g. '126')."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7523,7 +7547,9 @@
   },
   "west_dunbartonshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/west_dunbartonshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN by searching your address on https://www.findmyaddress.co.uk/ or by opening the West Dunbartonshire bin collection day page: the UPRN is the number in the page address after `uprn=`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

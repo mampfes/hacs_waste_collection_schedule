@@ -1,10 +1,8 @@
-# Pronatura Bydgoszcz
+# Bydgoszcz Pronatura
 
-Support for schedules provided by [Pronatura Bydgoszcz](http://www.pronatura.bydgoszcz.pl/), serving Bydgoszcz, Poland.
+Support for schedules provided by [Bydgoszcz Pronatura](http://www.pronatura.bydgoszcz.pl/).
 
-There are other companies providing garbage collection services in Bydgoszcz (Remondis and Corimp) but this source does not support them.
-
-To check which provider you have, visit this page at [Czysta Bydgoszcz](https://www.czystabydgoszcz.pl/odpady-komunalne/podzial-na-sektory/).
+Source for Bydgoszcz city garbage collection by Pronatura
 
 ## Configuration via configuration.yaml
 
@@ -17,11 +15,13 @@ waste_collection_schedule:
         street_number: STREET_NUMBER
 ```
 
+### Configuration Variables
+
 **street_name**  
 *(string) (required)*
 
 **street_number**  
-*(string|integer) (required)*
+*(string) (required)*
 
 ## Example
 
@@ -30,6 +30,10 @@ waste_collection_schedule:
   sources:
     - name: pronatura_bydgoszcz_pl
       args:
-        street_name: JÓZEFA SOWIŃSKIEGO
-        street_number: 22A
+        street_name: LEGNICKA
+        street_number: 1
 ```
+
+## How to get the source arguments
+
+Enter your street name and building number in Bydgoszcz as they appear in the Pronatura schedule. Neither is case-sensitive.

@@ -1,6 +1,8 @@
 # City of Melbourne
 
-Support for schedules provided by [City of Melbourne](https://www.melbourne.vic.gov.au/), Victoria, Australia.
+Support for schedules provided by [City of Melbourne](https://www.melbourne.vic.gov.au).
+
+Source for City of Melbourne waste collection schedules.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: melbourne_vic_gov_au
       args:
-        lat: LATITUDE
-        lon: LONGITUDE
+        lat: LAT
+        lon: LON
 ```
 
 ### Configuration Variables
 
-**lat**
+**lat**  
 *(float) (required)*
 
-Your latitude, as a decimal number (e.g. `-37.826`).
-
-**lon**
+**lon**  
 *(float) (required)*
-
-Your longitude, as a decimal number (e.g. `144.946`).
 
 ## Example
 
@@ -32,14 +30,10 @@ waste_collection_schedule:
   sources:
     - name: melbourne_vic_gov_au
       args:
-        lat: -37.82597212079299
-        lon: 144.946122910589
+        lat: -37.78888528182715
+        lon: 144.94807224053946
 ```
 
 ## How to get the source arguments
 
-Find your latitude and longitude using [Google Maps](https://www.google.com/maps) or any mapping service. Right-click on your property and select "What's here?" to see the coordinates.
-
-The City of Melbourne has six collection zones, each with weekly general waste and recycling collections on a set day of the week (Monday through Friday). Enter the coordinates of your property and the source will automatically determine which zone you are in.
-
-You can verify your collection zone on the [City of Melbourne garbage collection zones dataset](https://data.melbourne.vic.gov.au/explore/dataset/garbage-collection-zones/).
+Pick the location of your property on the map. The collection zone of the City of Melbourne that contains it is used.

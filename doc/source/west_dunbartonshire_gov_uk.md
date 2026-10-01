@@ -1,32 +1,34 @@
 # West Dunbartonshire Council
 
-Support for schedules provided by [West Dunbartonshire Council](https://www.west-dunbarton.gov.uk), serving West Dunbartonshire district in Scotland, UK.
+Support for schedules provided by [West Dunbartonshire Council](https://www.west-dunbarton.gov.uk).
+
+Source for waste collection services from West Dunbartonshire Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: west_dunbartonshire_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
-
-#### How to find your `UPRN`
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-Otherwise you can inspect the web address on the West Dunbartonshire Council website, after entering your details, the UPRN will be found in the url. Eg `https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day/?uprn=129003614` is a UPRN of `129003614`.
-
 ## Example
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: west_dunbartonshire_gov_uk
       args:
-        uprn: 129003614
+        uprn: '129040292'
 ```
+
+## How to get the source arguments
+
+Find your UPRN by searching your address on https://www.findmyaddress.co.uk/ or by opening the West Dunbartonshire bin collection day page: the UPRN is the number in the page address after `uprn=`.
