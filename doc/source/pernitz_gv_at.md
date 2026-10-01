@@ -1,6 +1,8 @@
 # Marktgemeinde Pernitz
 
-Support for waste collection schedules provided by [Marktgemeinde Pernitz](https://www.pernitz.gv.at), Austria.
+Support for schedules provided by [Marktgemeinde Pernitz](https://www.pernitz.gv.at).
+
+Source for Marktgemeinde Pernitz, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -14,12 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**rayon**
-*(integer) (required)*
-
-The general waste (Restmüll) collection zone, `1` or `2`, that your street belongs to. Biomass (Biotonne), yellow bag (Gelber Sack), yellow container (Gelber Container) and paper collection dates are the same for both zones.
-
-Check <https://www.pernitz.gv.at/muellabfuhr/> under "Definition Rayon 1" / "Definition Rayon 2" for the list of streets belonging to each zone.
+**rayon**  
+*(string) (required)*
 
 ## Example
 
@@ -33,6 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Open <https://www.pernitz.gv.at/muellabfuhr/>, expand "Definition Rayon 1" and "Definition Rayon 2" and find your street to determine which zone (`1` or `2`) to use for `rayon`.
-
-Note: the "Abholung von Restmüll und gelbem Sack vom Waxeneck" special collection (a small number of addresses in the Waxeneck area) is not currently supported by this source.
+The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at https://pernitz.gv.at/verwaltung/wertstoffsammelstelle-und-muellabfuhr/ to determine your zone.

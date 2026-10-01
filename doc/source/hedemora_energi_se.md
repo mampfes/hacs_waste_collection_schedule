@@ -1,22 +1,26 @@
 # Hedemora Energi
 
-Support for schedules provided by [Hedemora Energi](https://www.hedemoraenergi.se/), serving Hedemora, Sweden.
+Support for schedules provided by [Hedemora Energi](https://www.hedemoraenergi.se/).
+
+Source for Hedemora Energi waste collection schedules, Sweden.
 
 ## Configuration via configuration.yaml
 
+### Using pickup_id
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hedemora_energi_se
       args:
         pickup_id: PICKUP_ID
 ```
 
-Alternatively, the source can search for the pickup ID from an address:
+### Using address
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hedemora_energi_se
       args:
         address: ADDRESS
@@ -25,33 +29,35 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **pickup_id**  
-*(String) (optional)*
-
-Hedemora Energi pickup ID. This is the recommended configuration because it skips address lookup.
+*(string) (alternative)*
 
 **address**  
-*(String) (optional)*
+*(string) (alternative)*
 
-Address to search for. Required only when `pickup_id` is not provided. The address must match exactly one result.
+Provide one of: `pickup_id` or `address`.
 
 ## Example
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: hedemora_energi_se
-      args:
-        pickup_id: "1392000"
-```
+### Using pickup_id
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hedemora_energi_se
       args:
-        address: Åsgatan 28
+        pickup_id: '1392000'
 ```
 
-## How to get the source argument
+### Using address
 
-Use `pickup_id` if you know it. Otherwise, enter your street address as shown in Hedemora Energi's fetch planner. If the address search returns multiple matches, use a more specific address or configure the source with `pickup_id`.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: hedemora_energi_se
+      args:
+        address: "\xC5sgatan 28"
+```
+
+## How to get the source arguments
+
+Use `pickup_id` if known. Otherwise enter the exact address as shown in Hedemora Energi's fetch planner search.

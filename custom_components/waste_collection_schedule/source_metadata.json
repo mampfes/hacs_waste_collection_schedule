@@ -103,6 +103,11 @@
     },
     "urls": {}
   },
+  "recyclecoach_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
+    "howto": {},
+    "urls": {}
+  },
   "cairns_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cairns_qld_gov_au.md",
     "howto": {
@@ -418,11 +423,6 @@
     "howto": {
       "en": "Enter your street address including suburb (e.g. '57 Arbornine Road Glenwood'). Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day"
     },
-    "urls": {}
-  },
-  "recyclecoach_com": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
-    "howto": {},
     "urls": {}
   },
   "goldcoast_qld_gov_au": {
@@ -808,7 +808,9 @@
   },
   "hawkesbury_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hawkesbury_nsw_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the suburb, street name (abbreviations such as 'St' or 'Rd' are expanded), house number and postcode of your property."
+    },
     "urls": {}
   },
   "thehills_nsw_gov_au": {
@@ -1235,10 +1237,11 @@
   },
   "pernitz_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pernitz_gv_at.md",
-    "howto": {},
-    "urls": {
-      "url_www_pernitz_gv_at_muellabfuhr": "https://www.pernitz.gv.at/muellabfuhr/."
-    }
+    "howto": {
+      "de": "Der Restmüll-Abfuhrbezirk (Rayon), 1 oder 2, zu dem Ihre Straße gehört. Die Straßenliste finden Sie unter https://pernitz.gv.at/verwaltung/wertstoffsammelstelle-und-muellabfuhr/.",
+      "en": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at https://pernitz.gv.at/verwaltung/wertstoffsammelstelle-und-muellabfuhr/ to determine your zone."
+    },
+    "urls": {}
   },
   "schlierbach_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schlierbach_at.md",
@@ -1537,8 +1540,8 @@
   "mirabel_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mirabel_ca.md",
     "howto": {
-      "en": "You can find your collection zone number using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
-      "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte"
+      "en": "You can find your collection zone number (1 to 8) using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+      "fr": "Vous pouvez trouver votre numéro de zone de collecte (1 à 8) sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte"
     },
     "urls": {}
   },
@@ -1576,8 +1579,8 @@
   "gmrmatawinie_qc_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmrmatawinie_qc_ca.md",
     "howto": {
-      "en": "Find your sector on the <a href=\"https://gmrmatawinie.org/calendriers-collectes/\" target=\"_blank\">MRC Matawinie collection calendar</a>.",
-      "fr": "Trouvez votre secteur sur la <a href=\"https://gmrmatawinie.org/calendriers-collectes/\" target=\"_blank\">carte des collectes de la MRC Matawinie</a>."
+      "en": "Find your sector on the MRC Matawinie collection calendar at https://gmrmatawinie.org/calendriers-collectes/ and select it from the list.",
+      "fr": "Trouvez votre secteur sur la carte des collectes de la MRC Matawinie (https://gmrmatawinie.org/calendriers-collectes/) et sélectionnez-le dans la liste."
     },
     "urls": {}
   },
@@ -1811,7 +1814,10 @@
   },
   "renoweb_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renoweb_dk.md",
-    "howto": {},
+    "howto": {
+      "da": "Brug navnet paa din kommune som `municipality` (f.eks. `Esbjerg`, `Aalborg`, `Rødovre`) og din adresse som `address`, f.eks. `Torvegade 3, 6700 Esbjerg` eller blot `Torvegade 3`.",
+      "en": "Use the name of your municipality as `municipality` (e.g. `Esbjerg`, `Aalborg`, `Rødovre`) and your address as `address`, e.g. `Torvegade 3, 6700 Esbjerg` or just `Torvegade 3`. Only municipalities served by RenoWeb's public API are supported: aabenraa, aalborg, billund, bornholm, brondby, bronderslev, dragoer, egedal, esbjerg, fredensborg, gentofte, glostrup, hjorring, jammerbugt, kerteminde, mariagerfjord, randers, rodovre, samsoe, sonderborg, svendborg, varde, vordingborg."
+    },
     "urls": {}
   },
   "ressourceindsamling_dk": {
@@ -3914,7 +3920,10 @@
   },
   "cidiu_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the town served by CIDIU (e.g. Collegno), the street name without the number, and the street number.",
+      "it": "Inserisci il comune servito da CIDIU (ad esempio Collegno), il nome della via senza il numero civico e il numero civico."
+    },
     "urls": {}
   },
   "comune_digital_it": {
@@ -4022,8 +4031,8 @@
   "abfalltransport_li": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfalltransport_li.md",
     "howto": {
-      "de": "Wählen Sie Ihre Gemeinde aus der Liste und den Abfalltyp ('kehricht', 'gruenabfuhr' oder 'all'). Besuchen Sie https://www.ezv.li/abfallentsorgung/abfallkalender/ für den Kalender.",
-      "en": "Select your municipality from the list and choose a waste type ('kehricht', 'gruenabfuhr', or 'all'). Visit https://www.ezv.li/abfallentsorgung/abfallkalender/ to see the schedule."
+      "de": "Geben Sie Ihre Gemeinde in Kleinbuchstaben ein (balzers, triesen, triesenberg, vaduz, schaan, planken, gamprin-bendern, ruggell, mauren-schaanwald, eschen-nendeln oder schellenberg). Der Abfalltyp ist optional: 'kehricht' (Standard), 'gruenabfuhr', 'all' oder eine komma-separierte Liste. Den Kalender finden Sie unter https://www.ezv.li/abfallentsorgung/abfallkalender/.",
+      "en": "Enter your municipality in lower case (balzers, triesen, triesenberg, vaduz, schaan, planken, gamprin-bendern, ruggell, mauren-schaanwald, eschen-nendeln or schellenberg). The waste type is optional: 'kehricht' (default), 'gruenabfuhr', 'all' or a comma-separated list. See https://www.ezv.li/abfallentsorgung/abfallkalender/ for the schedule."
     },
     "urls": {}
   },
@@ -4379,7 +4388,9 @@
   },
   "bir_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bir_no.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name and the house number as written on bir.no/adressesoek. A house letter can be given in its own field or as part of the house number (for example 13B)."
+    },
     "urls": {}
   },
   "fosenrenovasjon_no": {
@@ -4830,7 +4841,9 @@
   },
   "borlange_energi_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/borlange_energi_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your pickup address as it appears in the 'När kommer sopbilen?' search on the [Borlänge Energi waste page](https://www.borlange-energi.se/avfall-och-atervinning/sophamtning), e.g. `Mats Knuts Väg 100`."
+    },
     "urls": {}
   },
   "roslagsvatten_se": {
@@ -4920,10 +4933,8 @@
   "msva_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/msva_se.md",
     "howto": {
-      "de": "Geben Sie die vollständige Adresse für ein Grundstück in der Gemeinde Sundsvall ein. Die API unterstützt nur Sundsvall (Gemeindecode 2281) — Adressen in Timrå und Nordanstig werden nicht abgedeckt.",
-      "en": "Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281) — Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se.",
-      "fr": "Saisissez l'adresse complète d'une propriété dans la commune de Sundsvall. L'API ne prend en charge que Sundsvall (code communal 2281) ; les adresses de Timrå et Nordanstig ne sont pas couvertes.",
-      "it": "Inserire l'indirizzo completo di una proprietà nel comune di Sundsvall. L'API supporta solo Sundsvall (codice comunale 2281); gli indirizzi di Timrå e Nordanstig non sono coperti."
+      "de": "Geben Sie die vollständige Adresse für ein Grundstück in der Gemeinde Sundsvall ein. Die API unterstützt nur Sundsvall (Gemeindecode 2281); Adressen in Timrå und Nordanstig werden nicht abgedeckt. Zusatzinformation ist eine Hauskennung, z.B. 'A'; leer lassen, falls nicht zutreffend.",
+      "en": "Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281); Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se. Additional information is a house letter or unit identifier, e.g. 'A'; leave it empty if not applicable."
     },
     "urls": {}
   },
@@ -6650,10 +6661,10 @@
   "neath_port_talbot_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neath_port_talbot_gov_uk.md",
     "howto": {
-      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details, or by searching for your address at https://uprn.uk/. The council's site asks for the postcode before the property, so both are needed. Collection dates are only given for the next two weeks."
     },
     "urls": {
-      "url_uprn_uk": "https://uprn.uk/"
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
   "newforest_gov_uk": {

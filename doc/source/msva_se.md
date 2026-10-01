@@ -1,12 +1,14 @@
 # Mittsverige Vatten & Avfall
 
-Support for schedules provided by [Mittsverige Vatten & Avfall (MSVA)](https://www.msva.se/) for addresses in Sundsvall kommun, Sweden. Data is fetched from the open API hosted at `api.sundsvall.se` (municipality code `2281`). Addresses in Timrå and Nordanstig are not supported by this API.
+Support for schedules provided by [Mittsverige Vatten & Avfall](https://www.msva.se).
+
+Source for Mittsverige Vatten & Avfall (MSVA) waste collection schedule, Sundsvall kommun.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: msva_se
       args:
         street: STREET
@@ -18,38 +20,34 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street**
-*(String) (required)* — Street name without house number, e.g. `Västra Radiogatan`.
+**street**  
+*(string) (required)*
 
-**house_number**
-*(String) (required)* — House number, e.g. `18`.
+**house_number**  
+*(string) (required)*
 
-**postal_code**
-*(String) (required)* — 5-digit Swedish postal code, e.g. `85461`.
+**postal_code**  
+*(string) (required)*
 
-**city**
-*(String) (optional, default: `Sundsvall`)* — Locality within Sundsvall kommun.
+**city**  
+*(string) (optional)*
 
-**additional_information**
-*(String) (optional)* — House letter or unit identifier, e.g. `A`.
+**additional_information**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: msva_se
       args:
-        street: Västra Radiogatan
-        house_number: 18
-        postal_code: 85461
+        street: "V\xE4stra Radiogatan"
+        house_number: '18'
+        postal_code: '85461'
         city: Sundsvall
 ```
 
 ## How to get the source arguments
 
-Use the same address you would enter on the MSVA site at <https://www.msva.se/>. The API is documented at <https://api.sundsvall.se/Garbage/api-docs>.
-
-## Notes
-
-The API returns only the next pickup day, which covers two waste types: food waste (matavfall, collected every pickup) plus one rotating type — residual (restavfall), paper (pappersförpackningar) or plastic (plastförpackningar) — on a 6-week cycle. Home Assistant refreshes the source periodically, so the next pair appears after each pickup.
+Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281); Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se. Additional information is a house letter or unit identifier, e.g. 'A'; leave it empty if not applicable.

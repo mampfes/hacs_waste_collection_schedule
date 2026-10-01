@@ -185,6 +185,15 @@
       "id": "byron_nsw_gov_au"
     },
     {
+      "title": "Byron Shire Council (NSW)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BYSC",
+        "project_id": "592"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Cairns Regional Council",
       "module": "cairns_qld_gov_au",
       "default_params": {},

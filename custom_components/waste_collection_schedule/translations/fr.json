@@ -530,6 +530,36 @@
         },
         "data_description": {}
       },
+      "args_recyclecoach_com": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "district_id": "ID de district",
+          "project_id": "Project Id",
+          "state": "État",
+          "street": "Rue",
+          "zone_id": "ID de zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_recyclecoach_com": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "district_id": "ID de district",
+          "project_id": "Project Id",
+          "state": "État",
+          "street": "Rue",
+          "zone_id": "ID de zone"
+        },
+        "data_description": {}
+      },
       "args_cairns_qld_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -1711,36 +1741,6 @@
         "data_description": {
           "address": "Votre adresse complète."
         }
-      },
-      "args_recyclecoach_com": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "district_id": "ID de district",
-          "project_id": "Project Id",
-          "state": "État",
-          "street": "Rue",
-          "zone_id": "ID de zone"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_recyclecoach_com": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "district_id": "ID de district",
-          "project_id": "Project Id",
-          "state": "État",
-          "street": "Rue",
-          "zone_id": "ID de zone"
-        },
-        "data_description": {}
       },
       "args_goldcoast_qld_gov_au": {
         "title": "Configurer la Source",
@@ -3200,13 +3200,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "houseNo": "Numéro civique",
+          "houseNo": "Numéro",
           "postCode": "Code postal",
           "street": "Rue",
-          "suburb": "Suburb"
+          "suburb": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "houseNo": "Votre numéro de rue.",
+          "postCode": "Votre code postal.",
+          "street": "Le nom de votre rue.",
+          "suburb": "Votre ville ou village."
         }
       },
       "reconfigure_hawkesbury_nsw_gov_au": {
@@ -3214,12 +3218,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "houseNo": "Numéro civique",
+          "houseNo": "Numéro",
           "postCode": "Code postal",
           "street": "Rue",
-          "suburb": "Suburb"
+          "suburb": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "houseNo": "Votre numéro de rue.",
+          "postCode": "Votre code postal.",
+          "street": "Le nom de votre rue.",
+          "suburb": "Votre ville ou village."
+        }
       },
       "args_thehills_nsw_gov_au": {
         "title": "Configurer la Source",
@@ -6401,11 +6410,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "zone": "Zone de collecte"
+          "zone": "ID de zone"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "zone": "Numéro de la zone de collecte"
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_mirabel_ca": {
@@ -6413,11 +6421,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "zone": "Zone de collecte"
+          "zone": "ID de zone"
         },
-        "data_description": {
-          "zone": "Numéro de la zone de collecte"
-        }
+        "data_description": {}
       },
       "args_montreal_ca": {
         "title": "Configurer la Source",
@@ -6528,11 +6534,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city_id": "Secteur"
+          "city_id": "ID de ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "city_id": "Sélectionnez votre secteur dans la liste"
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_gmrmatawinie_qc_ca": {
@@ -6540,11 +6545,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city_id": "Secteur"
+          "city_id": "ID de ville"
         },
-        "data_description": {
-          "city_id": "Sélectionnez votre secteur dans la liste"
-        }
+        "data_description": {}
       },
       "args_villagebonconseil_ca": {
         "title": "Configurer la Source",
@@ -7477,10 +7480,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_renoweb_dk": {
@@ -7489,9 +7494,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_ressourceindsamling_dk": {
         "title": "Configurer la Source",
@@ -13030,7 +13038,8 @@
           "strasse": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "strasse": "Le nom de votre rue."
         }
       },
       "reconfigure_kirchlengern_de": {
@@ -13040,7 +13049,9 @@
           "calendar_title": "Titre du Calendrier",
           "strasse": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "strasse": "Le nom de votre rue."
+        }
       },
       "args_kriftel_de": {
         "title": "Configurer la Source",
@@ -17988,10 +17999,13 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
           "street": "Rue",
-          "street_number": "Numéro de rue"
+          "street_number": "Numéro"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "street": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_cidiu_it": {
@@ -18001,9 +18015,13 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
           "street": "Rue",
-          "street_number": "Numéro de rue"
+          "street_number": "Numéro"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "street": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_comune_digital_it": {
         "title": "Configurer la Source",
@@ -18140,12 +18158,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "street": "Rue",
           "town": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue.",
+          "town": "Votre ville ou village."
         }
       },
       "reconfigure_ilrifiutologo_it": {
@@ -18153,11 +18174,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "street": "Rue",
           "town": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue.",
+          "town": "Votre ville ou village."
+        }
       },
       "args_irenambiente_it": {
         "title": "Configurer la Source",
@@ -18364,11 +18389,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
-          "waste_type": "Waste Type"
+          "municipality": "Commune",
+          "waste_type": "Types de déchets"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "waste_type": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "reconfigure_abfalltransport_li": {
@@ -18376,10 +18403,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
-          "waste_type": "Waste Type"
+          "municipality": "Commune",
+          "waste_type": "Types de déchets"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "waste_type": "Filtre facultatif : les types de déchets à inclure."
+        }
       },
       "args_ecoapp_ecoservice_lt": {
         "title": "Configurer la Source",
@@ -19186,12 +19216,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
-          "house_number": "Numéro civique",
-          "postalcode": "Postalcode"
+          "addition": "Addition",
+          "house_number": "Numéro",
+          "postalcode": "Code postal"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "postalcode": "Votre code postal."
         }
       },
       "reconfigure_rova_nl": {
@@ -19199,11 +19231,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
-          "house_number": "Numéro civique",
-          "postalcode": "Postalcode"
+          "addition": "Addition",
+          "house_number": "Numéro",
+          "postalcode": "Code postal"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "postalcode": "Votre code postal."
+        }
       },
       "args_saver_nl": {
         "title": "Configurer la Source",
@@ -19841,12 +19876,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_letter": "Lettre de maison",
-          "house_number": "Numéro civique",
-          "street_name": "Nom de rue"
+          "house_letter": "House Letter",
+          "house_number": "Numéro",
+          "street_name": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "street_name": "Le nom de votre rue."
         }
       },
       "reconfigure_bir_no": {
@@ -19854,11 +19891,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_letter": "Lettre de maison",
-          "house_number": "Numéro civique",
-          "street_name": "Nom de rue"
+          "house_letter": "House Letter",
+          "house_number": "Numéro",
+          "street_name": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "street_name": "Le nom de votre rue."
+        }
       },
       "args_fosenrenovasjon_no": {
         "title": "Configurer la Source",
@@ -21428,7 +21468,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "place_id": "Place Id"
+          "place_id": "ID d'emplacement"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -21439,7 +21479,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "place_id": "Place Id"
+          "place_id": "ID d'emplacement"
         },
         "data_description": {}
       },
@@ -21692,10 +21732,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "pickup_address": "Pickup Address"
+          "pickup_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "pickup_address": "Votre adresse complète."
         }
       },
       "reconfigure_borlange_energi_se": {
@@ -21703,9 +21744,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "pickup_address": "Pickup Address"
+          "pickup_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "pickup_address": "Votre adresse complète."
+        }
       },
       "args_roslagsvatten_se": {
         "title": "Configurer la Source",
@@ -21787,10 +21830,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "pickup_id": "Pickup Id"
+          "pickup_id": "ID d'emplacement"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_hedemora_energi_se": {
@@ -21799,9 +21843,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "pickup_id": "Pickup Id"
+          "pickup_id": "ID d'emplacement"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_hudiksvall_se": {
         "title": "Configurer la Source",
@@ -22026,7 +22072,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "additional_information": "Informations complémentaires",
+          "additional_information": "Additional Information",
           "city": "Ville",
           "house_number": "Numéro",
           "postal_code": "Code postal",
@@ -22034,11 +22080,10 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "additional_information": "Lettre ou identifiant supplémentaire, ex. 'A'. Laisser vide si non applicable.",
-          "city": "Localité dans la commune de Sundsvall. Par défaut : 'Sundsvall'.",
-          "house_number": "Numéro de maison, ex. '18'.",
-          "postal_code": "Code postal suédois à cinq chiffres, ex. '85461'.",
-          "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'."
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "postal_code": "Votre code postal.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_msva_se": {
@@ -22046,18 +22091,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "additional_information": "Informations complémentaires",
+          "additional_information": "Additional Information",
           "city": "Ville",
           "house_number": "Numéro",
           "postal_code": "Code postal",
           "street": "Rue"
         },
         "data_description": {
-          "additional_information": "Lettre ou identifiant supplémentaire, ex. 'A'. Laisser vide si non applicable.",
-          "city": "Localité dans la commune de Sundsvall. Par défaut : 'Sundsvall'.",
-          "house_number": "Numéro de maison, ex. '18'.",
-          "postal_code": "Code postal suédois à cinq chiffres, ex. '85461'.",
-          "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'."
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "postal_code": "Votre code postal.",
+          "street": "Le nom de votre rue."
         }
       },
       "args_molndal_se": {
@@ -28091,7 +28135,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_neath_port_talbot_gov_uk": {
@@ -28102,7 +28148,10 @@
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newforest_gov_uk": {
         "title": "Configurer la Source",
@@ -30215,11 +30264,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "postcode": "Code postal"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal."
         }
       },
       "reconfigure_tandridge_gov_uk": {
@@ -30227,10 +30278,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "postcode": "Code postal"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal."
+        }
       },
       "args_teignbridge_gov_uk": {
         "title": "Configurer la Source",

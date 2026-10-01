@@ -1,6 +1,8 @@
 # Il Rifiutologo
 
-Support for schedules provided by [Gruppo Hera](https://www.gruppohera.it/offerte-e-servizi/casa/ambiente), all schedules are provided by the platform [Il Rifiutologo](https://www.ilrifiutologo.it/casa_rifiutologo).
+Support for schedules provided by [Il Rifiutologo](https://ilrifiutologo.it).
+
+Source for ilrifiutologo.it
 
 ## Configuration via configuration.yaml
 
@@ -9,24 +11,21 @@ waste_collection_schedule:
   sources:
     - name: ilrifiutologo_it
       args:
-        town: Comune
-        street: Indirizzo
-        house_number: Civico
+        town: TOWN
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **town**  
-*(String) (required)*  
-City name
+*(string) (required)*
 
 **street**  
-*(String) (required)*  
-Street name without house number
+*(string) (required)*
 
 **house_number**  
-*(Integer | String) (required)*  
-House number
+*(string) (required)*
 
 ## Example
 
@@ -36,10 +35,6 @@ waste_collection_schedule:
     - name: ilrifiutologo_it
       args:
         town: Faenza
-        street: Via Augusto Righi
-        house_number: 6
+        street: VIA AUGUSTO RIGHI
+        house_number: '6'
 ```
-
-## How to get the source argument
-
-If you have any problem finding your address search it on [Il Rifiutologo](https://www.ilrifiutologo.it/casa_rifiutologo) and then copy it and paste it in your configs as it is.

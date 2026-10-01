@@ -1,6 +1,8 @@
-# Mirabel
+# Mirabel (QC)
 
-Waste collection schedules provided by [Collectes et écocentres](https://mirabel.ca/collectes).
+Support for schedules provided by [Mirabel (QC)](https://mirabel.ca/collectes).
+
+Source script for mirabel.ca/collectes
 
 ## Configuration via configuration.yaml
 
@@ -13,22 +15,9 @@ waste_collection_schedule:
 ```
 
 ### Configuration Variables
-* **zone** *(string or int) (required)*
 
-**Accepted values:**
-- `1`
-- `2`
-- `3`
-- `4`
-- `5`
-- `6`
-- `7`
-- `8`
-
-**How do I find my zone number?**
-
-* Visit https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte
-* Use the search function to display your zone number
+**zone**  
+*(string) (required)*
 
 ## Example
 
@@ -39,3 +28,7 @@ waste_collection_schedule:
       args:
         zone: 1
 ```
+
+## How to get the source arguments
+
+You can find your collection zone number (1 to 8) using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte
