@@ -1,145 +1,81 @@
-import logging
-from datetime import datetime, timedelta
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from dateutil.rrule import FR, MO, MONTHLY, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.retrievers import Request
+from waste_collection_schedule.transformers import ICSTransformer
 
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Malta"
-DESCRIPTION = "Nation wide collection schedule for Malta"
-URL = "https://www.wastecollection.mt/"
-
-TEST_CASES: dict[str, dict] = {"test": {}}
-
-
-ICON_MAP = {
-    "Mixed": Icons.GENERAL_WASTE,
-    "Recycled": Icons.RECYCLING,
-    "Organic": Icons.ORGANIC,
-    "glass": Icons.GLASS,
+_TYPE_MAP = {
+    "Mixed waste (black bag)": wt.GENERAL_WASTE,
+    "Organic waste (white bag)": wt.ORGANIC,
+    "Recycled waste (Grey or green bag)": wt.RECYCLABLES,
+    "glass bottles": wt.GLASS,
 }
 
-
-API_URL = "https://www.wastecollection.mt/"
-
-DAYS = {
-    "monday": MO,
-    "tuesday": TU,
-    "wednesday": WE,
-    "thursday": TH,
-    "friday": FR,
-    "saturday": SA,
-    "sunday": SU,
-}
-
-TIMING_WORDS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "last": -1}
+_ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "last": -1}
+_FLOWTEXT = re.compile(r"^The collection of (?P<label>.+?) will\b(?P<rest>.*)", re.I)
+_WEEKS = 53
+_MONTHS = 12
 
 
-class Source:
-    def __init__(self):
-        pass
+def _rows(records, source):
+    """One ``(date, label)`` row per collection the page's paragraphs announce.
 
-    @staticmethod
-    def _parse_normal(tag: Tag) -> tuple[str | None, rrule | None]:
-        dtstart = datetime.now()
-        dtstop = datetime.now() + timedelta(days=365)
-        strong = tag.select_one("strong")
-        if not strong:
-            return None, None
-
-        weekday_str = strong.text.strip()
-        weekday = DAYS.get(weekday_str.strip(":").lower())
-        if not weekday:
-            return None, None
-
-        bin_type_str = tag.text.split(":")[1].strip()
-
-        return bin_type_str, rrule(
-            WEEKLY, byweekday=weekday, dtstart=dtstart, until=dtstop
-        )
-
-    @staticmethod
-    def _parse_flowtext(tag: Tag) -> tuple[str | None, rrule | None]:
-        dtstart = datetime.now()
-        dtstop = datetime.now() + timedelta(days=365)
-
-        text = tag.text.strip()
-        if not text.lower().startswith("the collection") or text.lower().startswith(
-            "the collection times timetable"
-        ):
-            return None, None
-
-        words = text.split()
-
-        type_start = False
-        shedule_start = False
-        bin_type_str = ""
-        weekday = None
-        timings = []
-        for word in words:
-            word = word.strip()
-            if word == "of" and not shedule_start:
-                type_start = True
+    Two forms: "<b>Tuesday:</b> Mixed waste (black bag)" (every week) and
+    "The collection of glass bottles will be carried out on every first and
+    third Friday of the month." (monthly, on the named weeks).
+    """
+    for p in records:
+        strong = p.find("strong")
+        if strong:
+            weekday = recurrence.weekday(strong.get_text().strip().strip(":"))
+            _, _, label = p.get_text().partition(":")
+            label = label.replace(" only", "").strip()
+            if weekday is None or not label:
                 continue
-            if word == "will":
-                type_start = False
-                shedule_start = True
-                continue
-            if type_start:
-                bin_type_str += word + " "
-                continue
-            if word in TIMING_WORDS:
-                timings.append(TIMING_WORDS[word])
-                continue
-            if word.lower() in DAYS:
-                weekday = DAYS[word.lower()]
-                continue
-
-        bin_type_str = bin_type_str.strip()
-
-        if weekday and timings and bin_type_str:
-            # RRULE Every timing'th weekday of the month
-            return bin_type_str, rrule(
-                MONTHLY,
-                byweekday=weekday,
-                bysetpos=timings,
-                dtstart=dtstart,
-                until=dtstop,
-            )
-
-        _LOGGER.warning("Failed to parse flowtext,", text)
-        return None, None
-
-    def fetch(self) -> list[Collection]:
-        rules: dict[str, list[rrule]] = {}
-        r = requests.get(API_URL)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        for p in soup.select("p"):
-            if p.find("strong"):
-                bin_type, rule = self._parse_normal(p)
-            else:
-                bin_type, rule = self._parse_flowtext(p)
-
-            if bin_type and rule:
-                rules[bin_type] = [*rules.get(bin_type, []), rule]
+            for day in recurrence.recurring(
+                recurrence.next_weekday(weekday), recurrence.WEEKLY, _WEEKS
+            ):
+                yield day, label
             continue
+        found = _FLOWTEXT.match(p.get_text().strip())
+        if not found or found["label"].lower().startswith("times"):
+            continue
+        words = re.findall(r"[a-z]+", found["rest"].lower())
+        weekday = next(
+            (w for w in map(recurrence.weekday, words) if w is not None), None
+        )
+        weeks = [_ORDINALS[w] for w in words if w in _ORDINALS]
+        label = found["label"].replace(" only", "").strip()
+        if weekday is None:
+            continue
+        for n in weeks:
+            for day in recurrence.monthly_nth_weekdays(weekday, n, _MONTHS):
+                yield day, label
 
-        entries = []
-        for bin_type, rule_list in rules.items():
-            bin_type = bin_type.replace(" only", "")
-            for rule in rule_list:
-                for dt in rule:
-                    entries.append(
-                        Collection(
-                            date=dt.date(),
-                            t=bin_type,
-                            icon=ICON_MAP.get(bin_type.split()[0]),
-                        )
-                    )
-        return entries
+
+@final
+class Source(BaseSource):
+    TITLE = "Malta"
+    DESCRIPTION = "Nation wide collection schedule for Malta"
+    URL = "https://www.wastecollection.mt/"
+    COUNTRY = "mt"
+
+    TEST_CASES: ClassVar[dict] = {"test": {}}
+
+    PARAMS = ()
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.GLASS,
+    ]
+
+    retrieve = Request("https://www.wastecollection.mt/")
+    parse = HtmlParser("p")
+    preprocess = staticmethod(_rows)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
