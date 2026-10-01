@@ -1208,8 +1208,15 @@ class AppAbfallplusRetriever(RetrieverFunc):
     (no Cloudflare), so browser impersonation is not needed here.
     """
 
+    def __init__(self, *, app_id: str | None = None):
+        """Bind a provider's app ID, or read it from the source's parameters."""
+        self._app_id = app_id
+
     def __call__(self, source: "BaseSource") -> requests.Response:
-        client = _client_from_params(source.params)
+        params = dict(source.params)
+        if self._app_id is not None:
+            params["app_id"] = self._app_id
+        client = _client_from_params(params)
         response = client.walk_to_struktur()
         # The parser needs the subtitle hints gathered during the walk.
         source._appabfallplus_client = client  # type: ignore[attr-defined]

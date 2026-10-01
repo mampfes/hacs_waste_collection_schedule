@@ -121,7 +121,7 @@ def test_offline_replay(module_name, case_slug, path):
     # served from a cassette. Keep it active for live requests.
     throttle = (
         patch("waste_collection_schedule.service.AppAbfallplusDe.time.sleep")
-        if module_name == "app_abfallplus_de"
+        if module_name in {"app_abfallplus_de", "ahe_de"}
         else nullcontext()
     )
     with cassette.replaying(path), throttle:

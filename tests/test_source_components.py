@@ -1671,3 +1671,23 @@ def test_deduplicate_key_collapses_unhashable_repeats() -> None:
     kept = list(Deduplicate(key=lambda job: (job["day"], job["bin"]))(jobs))
 
     assert [job["id"] for job in kept] == [1, 3]
+
+
+@pytest.mark.parametrize("fixed_app_id", [None, "de.abfallplus.ahe"])
+def test_abfallplus_retriever_binds_app_without_mutating_source(fixed_app_id):
+    from types import SimpleNamespace
+
+    from waste_collection_schedule.service.AppAbfallplusDe import AppAbfallplusRetriever
+
+    params = {"app_id": "generic.app", "city": "Wetter", "hnr": 1}
+    source = SimpleNamespace(params=params.copy())
+    with patch(
+        "waste_collection_schedule.service.AppAbfallplusDe._client_from_params"
+    ) as factory:
+        client = factory.return_value
+        response = AppAbfallplusRetriever(app_id=fixed_app_id)(source)
+
+    factory.assert_called_once_with({**params, "app_id": fixed_app_id or "generic.app"})
+    assert source.params == params
+    assert source._appabfallplus_client is client
+    assert response is client.walk_to_struktur.return_value
