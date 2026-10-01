@@ -2,7 +2,6 @@ import datetime
 import json
 import logging
 import urllib.parse
-import zoneinfo
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -105,18 +104,13 @@ class Source:
         customer_Id = response_data["items"][0]["customerId"]
 
         _LOGGER.info("Fetching data from waste2x.dk")
-        # Use Copenhagen timezone to handle DST correctly
+        # UTC time format with URL encoding for colon (%3A) and milliseconds (.000Z)
 
-        tz = zoneinfo.ZoneInfo("Europe/Copenhagen")
-        now = datetime.datetime.now(tz)
-        start_date = now.strftime("%Y-%m-%dT%H:%M:%S.000%z")
-        end_date = (now + datetime.timedelta(days=31)).strftime(
-            "%Y-%m-%dT%H:%M:%S.000%z"
-        )
-
-        # Format timezone with colon (e.g., +01:00 instead of +0100)
-        start_date = start_date[:-2] + ":" + start_date[-2:]
-        end_date = end_date[:-2] + ":" + end_date[-2:]
+        # Format example: 2026-09-28T22%3A00%3A00.000Z
+        dateTimeFormat = "%Y-%m-%dT%H%%3A%M%%3A%S.000%z"
+        now = datetime.datetime.now(datetime.timezone.utc)
+        start_date = now.strftime(dateTimeFormat)
+        end_date = (now + datetime.timedelta(days=31)).strftime(dateTimeFormat)
 
         url = f"{API_URL}/{customer_Id}/{start_date}/{end_date}"
         response = requests.get(url, headers=headers, timeout=30)
