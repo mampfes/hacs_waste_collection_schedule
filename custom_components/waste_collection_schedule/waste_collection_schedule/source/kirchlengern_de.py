@@ -1,86 +1,48 @@
-"""Source for Gemeinde Kirchlengern, Germany, waste collection."""
+"""Gemeinde Kirchlengern (kirchlengern.de).
 
-from datetime import date, datetime
+Composes: :class:`~waste_collection_schedule.retrievers.FanOutRetriever`. The
+municipality's "Abfallkalender" form lists the streets in a ``<select>``; picking
+one reloads the form with the years it can export. The street id and the year
+list resolve once (``prepare``), then each year is one ICS export
+(``/output/abfall_export.php``), which ``EachResponse`` hands to the shared ICS
+parser.
 
-import requests
+The export serves its summaries double-encoded (UTF-8 read as ISO-8859-15 and
+encoded to UTF-8 again) and wraps every title as ``_KI <type>: Kirchlengern``;
+``_tidy`` repairs both before the type map is consulted. The three "Restmüll ...
+Deckel" variants map to one type, so ``carry_raw_label`` keeps the lid colour in
+the description.
+"""
+
+import datetime
+from typing import ClassVar, final
+
 from bs4 import BeautifulSoup
-from icalendar import Calendar
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Gemeinde Kirchlengern"
-DESCRIPTION = "Source for Gemeinde Kirchlengern, Germany, waste collection."
-URL = "https://www.kirchlengern.de"
-COUNTRY = "de"
-
-TEST_CASES = {
-    "Alter Postweg": {"strasse": "Alter Postweg"},
-    "Am Bahnhof": {"strasse": "Am Bahnhof"},
-    "Alter Markt": {"strasse": "Alter Markt"},
-}
-
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter your street name exactly as it appears in the waste calendar tool "
-        "on the Kirchlengern website "
-        "(Bürgerservice → Abfallkalender/Abfallberatung). If the street is not "
-        "found, the error message lists all valid street names."
-    ),
-    "de": (
-        "Geben Sie Ihren Straßennamen genau so ein, wie er im Abfallkalender-Tool "
-        "auf der Webseite der Gemeinde Kirchlengern erscheint "
-        "(Bürgerservice → Abfallkalender/Abfallberatung). Wird die Straße nicht "
-        "gefunden, listet die Fehlermeldung alle gültigen Straßennamen auf."
-    ),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"strasse": "Street"},
-    "de": {"strasse": "Straße"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"strasse": "Street name, e.g. 'Alter Postweg'."},
-    "de": {"strasse": "Straßenname, z.B. 'Alter Postweg'."},
-}
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Gelbe Säcke": Icons.PLASTIC_PACKAGING,
-    "Elektroschrott": Icons.ELECTRONICS,
-    "Sondermüll": Icons.HAZARDOUS,
-    "Sperrmüll": Icons.BULKY,
-    "Hausratsammlung": Icons.BULKY,
-}
-
-BASE_URL = "https://www.kirchlengern.de"
-SELECT_URL = (
-    f"{BASE_URL}/Bürgerservice/Abfallkalender-Abfallberatung/index.php"
+_BASE_URL = "https://www.kirchlengern.de"
+_FORM_URL = (
+    f"{_BASE_URL}/Bürgerservice/Abfallkalender-Abfallberatung/index.php"
     "?set=fix&ort=393.2&call=sfm&La=1&sNavID=3158.35&mNavID=3158.3"
     "&ffmod=abf&ffsm=1"
 )
-ICS_URL = f"{BASE_URL}/output/abfall_export.php"
+_ICS_URL = f"{_BASE_URL}/output/abfall_export.php"
+_HEADERS = {"Referer": f"{_BASE_URL}/"}
 
-HEADERS = {
-    "Referer": f"{BASE_URL}/",
-    "User-Agent": "Mozilla/5.0",
-}
-
-SUMMARY_PREFIX = "_KI "
-SUMMARY_SUFFIX = ": Kirchlengern"
+_SUMMARY_PREFIX = "_KI "
+_SUMMARY_SUFFIX = ": Kirchlengern"
 
 
 def _fix_encoding(text: str, encoding: str) -> str:
-    """Repair double-encoded text.
+    """Repair text that was UTF-8 encoded, then encoded again as ``encoding``.
 
-    The provider serves text that was UTF-8 encoded once and then encoded again
-    as ``encoding``. Re-encoding the string with that encoding and decoding it as
-    UTF-8 restores the original characters. If the round-trip fails (i.e. the text
-    was already correct), the original string is returned unchanged.
+    A round-trip that fails means the text was already correct, so it is
+    returned unchanged.
     """
     try:
         return text.encode(encoding).decode("utf-8")
@@ -88,112 +50,139 @@ def _fix_encoding(text: str, encoding: str) -> str:
         return text
 
 
-def _match_icon(waste_type: str):
-    for key, icon in ICON_MAP.items():
-        if key in waste_type:
-            return icon
-    return None
+def _clean(label: str) -> str:
+    label = _fix_encoding(label, "iso-8859-15")
+    if label.startswith(_SUMMARY_PREFIX):
+        label = label[len(_SUMMARY_PREFIX) :]
+    if label.endswith(_SUMMARY_SUFFIX):
+        label = label[: -len(_SUMMARY_SUFFIX)]
+    return label.strip()
 
 
-class Source:
-    def __init__(self, strasse: str):
-        self._strasse: str = strasse
+def _tidy(records, source=None):
+    for day, label in records:
+        yield day, _clean(label)
 
-    def _get_street_id(self, session: requests.Session) -> str:
-        r = session.get(SELECT_URL, headers=HEADERS)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
-        select = soup.find("select", {"name": "strasse"})
-        streets: dict[str, str] = {}
-        if select:
-            for option in select.find_all("option"):
-                value = option.get("value")
-                label = _fix_encoding(option.text.strip(), "latin-1")
-                if not value or not label:
-                    continue
+
+def _street_id(response, *, strasse: str, **_) -> str:
+    select = BeautifulSoup(response.content, "html.parser").find(
+        "select", {"name": "strasse"}
+    )
+    streets: dict[str, str] = {}
+    if select:
+        for option in select.find_all("option"):
+            value = option.get("value")
+            label = _fix_encoding(option.text.strip(), "latin-1")
+            if value and label:
                 streets[label] = value
+    for label, value in streets.items():
+        if label.lower() == strasse.strip().lower():
+            return value
+    raise SourceArgumentNotFoundWithSuggestions(
+        "strasse", strasse, sorted(streets.keys())
+    )
 
-        for label, value in streets.items():
-            if label.lower() == self._strasse.strip().lower():
-                return value
 
-        raise SourceArgumentNotFoundWithSuggestions(
-            "strasse", self._strasse, sorted(streets.keys())
-        )
+def _years(response, street_id: str, **_) -> list[str]:
+    select = BeautifulSoup(response.content, "html.parser").find(
+        "select", {"name": "vJ"}
+    )
+    years: list[str] = []
+    if select:
+        for option in select.find_all("option"):
+            value = (option.get("value") or "").strip()
+            if value.isdigit():
+                years.append(value)
+    return years
 
-    def _get_years(self, session: requests.Session, street_id: str) -> list[str]:
-        r = session.get(SELECT_URL, headers=HEADERS, params={"strasse": street_id})
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
-        select = soup.find("select", {"name": "vJ"})
-        years: list[str] = []
-        if select:
-            for option in select.find_all("option"):
-                value = (option.get("value") or "").strip()
-                if value.isdigit():
-                    years.append(value)
-        return years
 
-    def _fetch_year(
-        self, session: requests.Session, street_id: str, year: str
-    ) -> list[tuple]:
-        r = session.get(
-            ICS_URL,
-            headers=HEADERS,
-            params={
+def _targets(source, context) -> list[str]:
+    """The exportable years, or the current one when the form lists none."""
+    _, years = context
+    return years or [str(datetime.datetime.now().year)]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Gemeinde Kirchlengern"
+    DESCRIPTION = "Source for Gemeinde Kirchlengern, Germany, waste collection."
+    URL = _BASE_URL
+    COUNTRY = "de"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street name exactly as it appears in the waste calendar "
+            "tool on the Kirchlengern website "
+            "(Bürgerservice → Abfallkalender/Abfallberatung). If the street is not "
+            "found, the error message lists all valid street names."
+        ),
+        "de": (
+            "Geben Sie Ihren Straßennamen genau so ein, wie er im "
+            "Abfallkalender-Tool auf der Webseite der Gemeinde Kirchlengern "
+            "erscheint (Bürgerservice → Abfallkalender/Abfallberatung). Wird die "
+            "Straße nicht gefunden, listet die Fehlermeldung alle gültigen "
+            "Straßennamen auf."
+        ),
+    }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.ELECTRONICS,
+        wt.HAZARDOUS,
+        wt.BULKY_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Alter Postweg": {"strasse": "Alter Postweg"},
+        "Am Bahnhof": {"strasse": "Am Bahnhof"},
+        "Alter Markt": {"strasse": "Alter Markt"},
+    }
+
+    PARAMS = (street(field="strasse"),)
+
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Chain(
+            retrievers.Lookup(_FORM_URL, headers=_HEADERS, pick=_street_id),
+            retrievers.Lookup(
+                _FORM_URL,
+                params=lambda street_id, **_: {"strasse": street_id},
+                headers=_HEADERS,
+                pick=_years,
+            ),
+        ),
+        targets=_targets,
+        fetch=retrievers.Request(
+            _ICS_URL,
+            headers=_HEADERS,
+            params=lambda year, context, **_: {
                 "csv_export": "1",
                 "mode": "vcal",
                 "ort": "393.2",
-                "strasse": street_id,
+                "strasse": context[0],
                 "vtyp": "2",
                 "vMo": "01",
                 "vJ": year,
                 "bMo": "12",
             },
-        )
-        r.raise_for_status()
-
-        results: list[tuple] = []
-        calendar = Calendar.from_ical(r.text)
-        for event in calendar.walk("VEVENT"):
-            start = event.get("DTSTART")
-            summary = event.get("SUMMARY")
-            if start is None or summary is None:
-                continue
-            day = start.dt
-            if isinstance(day, datetime):
-                day = day.date()
-            if not isinstance(day, date):
-                continue
-
-            waste_type = _fix_encoding(str(summary), "iso-8859-15")
-            if waste_type.startswith(SUMMARY_PREFIX):
-                waste_type = waste_type[len(SUMMARY_PREFIX) :]
-            if waste_type.endswith(SUMMARY_SUFFIX):
-                waste_type = waste_type[: -len(SUMMARY_SUFFIX)]
-            waste_type = waste_type.strip()
-
-            results.append((day, waste_type))
-        return results
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-
-        street_id = self._get_street_id(session)
-        years = self._get_years(session, street_id)
-        if not years:
-            years = [str(datetime.now().year)]
-
-        seen: set = set()
-        entries: list[Collection] = []
-        for year in years:
-            for day, waste_type in self._fetch_year(session, street_id, year):
-                key = (day, waste_type)
-                if key in seen:
-                    continue
-                seen.add(key)
-                entries.append(
-                    Collection(day, waste_type, icon=_match_icon(waste_type))
-                )
-
-        return entries
+        ),
+    )
+    parse = parsers.EachResponse(parsers.IcsParser())
+    preprocess = preprocessors.Compose(_tidy, preprocessors.Deduplicate())
+    transform = ICSTransformer(
+        carry_raw_label=True,
+        type_value_map={
+            "Restmüll blauer Deckel (4-wöchentlich)": wt.GENERAL_WASTE,
+            "Restmüll gelber Deckel (4-wöchentlich)": wt.GENERAL_WASTE,
+            "Restmüll grauer Deckel (2-wöchentlich)": wt.GENERAL_WASTE,
+            "Biotonne (braune Tonne)": wt.ORGANIC,
+            "Papier (grüne Tonne)": wt.PAPER,
+            "Gelbe Säcke": wt.RECYCLABLES,
+            "Elektroschrott": wt.ELECTRONICS,
+            "Sondermüll": wt.HAZARDOUS,
+            "Sperrmüll und Baumschnitt": wt.BULKY_WASTE,
+            "Hausratsammlung": wt.BULKY_WASTE,
+        },
+    )
