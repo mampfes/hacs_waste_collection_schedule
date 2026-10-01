@@ -26,6 +26,7 @@ class Source(JumomindSource):
         wt.RECYCLABLES,
         wt.ORGANIC,
         wt.PAPER,
+        wt.HAZARDOUS,
     ]
 
     REGIONS = (region("Rhein-Hunsrück Entsorgung (RHE)", url=URL),)

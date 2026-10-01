@@ -70,5 +70,6 @@ class Source(BaseSource):
             "Bio": wt.ORGANIC,
             "Papier": wt.PAPER,
             "Sperrmüll": wt.BULKY_WASTE,
+            "Weihnachtsbaumabholung": wt.GARDEN_WASTE,
         },
     )

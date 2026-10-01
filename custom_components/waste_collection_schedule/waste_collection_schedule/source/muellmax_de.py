@@ -32,6 +32,7 @@ _TYPE_VALUE_MAP = {
     "wertstoff": wt.RECYCLABLES,
     "grünabfall": wt.GARDEN_WASTE,
     "schadstoff": wt.HAZARDOUS,
+    "glas": wt.GLASS,
 }
 
 
@@ -39,8 +40,10 @@ def _clean(label: str) -> str:
     text = label.lower()
     if "restmüll" in text or "restabfall" in text:
         return "restmüll"
-    if "bioabfall" in text or "biotonne" in text:
+    if "bioabfall" in text or "biotonne" in text or "bio-tonne" in text:
         return "bioabfall"
+    if "glas" in text:
+        return "glas"
     if "altpapier" in text or "papier" in text:
         return "altpapier"
     if "wertstoff" in text or "gelb" in text or "verpack" in text:

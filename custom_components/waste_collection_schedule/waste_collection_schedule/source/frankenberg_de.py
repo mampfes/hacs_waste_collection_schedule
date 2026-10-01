@@ -57,6 +57,7 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [
         wt.HAZARDOUS,
         wt.ORGANIC,
+        wt.PAPER,
         wt.RECYCLABLES,
     ]
 

@@ -69,6 +69,7 @@ TYPE_VALUE_MAP = {
     "makulatura": wt.PAPER,
     "szkło": wt.GLASS,
     "szkło opakowaniowe": wt.GLASS,
+    "tworzywa": wt.RECYCLABLES,
     "metale i tworzywa": wt.RECYCLABLES,
     "metale i tworzywa sztuczne": wt.RECYCLABLES,
     "tworzywa sztuczne i metale": wt.RECYCLABLES,
@@ -81,6 +82,7 @@ TYPE_VALUE_MAP = {
     # key must match the label it actually sends.
     "odpady wielkogabrytowe": wt.BULKY_WASTE,
     "wielkogabaryty": wt.BULKY_WASTE,
+    "wielkogabaryty i zseie": wt.BULKY_WASTE,
     "gabaryty": wt.BULKY_WASTE,
     "choinki": wt.GARDEN_WASTE,
     "drzewka świąteczne": wt.GARDEN_WASTE,

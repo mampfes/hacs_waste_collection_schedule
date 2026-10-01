@@ -14,6 +14,8 @@ _TYPE_MAP = {
     "Papierabfuhr": wt.PAPER,
     "Grobsperrgut": wt.BULKY_WASTE,
     "Häckseldienst": wt.GARDEN_WASTE,
+    "Metallabfuhr": wt.OTHER,
+    "Unbrennbares": wt.OTHER,
 }
 
 
@@ -30,6 +32,7 @@ class Source(BaseSource):
         wt.PAPER,
         wt.BULKY_WASTE,
         wt.GARDEN_WASTE,
+        wt.OTHER,
     ]
 
     TEST_CASES: ClassVar[dict] = {

@@ -132,7 +132,11 @@ class Source(BaseSource):
 
     retrieve = AppAbfallplusRetriever()
     parse = AppAbfallplusParser()
-    transform = JsonTransformer(date_key="date", type_key="category")
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="category",
+        type_value_map={"Schad- und Problemstoffannahme": wt.HAZARDOUS},
+    )
 
     @staticmethod
     def REGIONS() -> list[Region]:
