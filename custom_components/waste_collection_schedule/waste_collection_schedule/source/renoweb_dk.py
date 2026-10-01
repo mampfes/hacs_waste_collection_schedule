@@ -1,23 +1,20 @@
-"""Support for Renoweb waste collection schedule."""
-
-import logging
 import re
-from datetime import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, street_address
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "RenoWeb"
-DESCRIPTION = "RenoWeb collections"
-URL = "https://renoweb.dk"
-COUNTRY = "dk"
-
-API_URL = "https://servicesgh.renoweb.dk/v1_13/{endpoint}"
+API_URL = "https://servicesgh.renoweb.dk/v1_13"
 
 # Public application key used by RenoWeb's own "Mit Affald" app. This grants the
 # same anonymous, read-only access the app itself uses; it is not a per-user
@@ -61,23 +58,6 @@ MUNICIPALITY_CODES = {
     "vordingborg": "0390",
 }
 
-TEST_CASES = {
-    "Esbjerg": {
-        "municipality": "Esbjerg",
-        "address": "Torvegade 3, 6700 Esbjerg",
-    },
-    "Aalborg": {
-        "municipality": "Aalborg",
-        "address": "Hasserisvej 97",
-    },
-    "Rødovre": {
-        "municipality": "Rødovre",
-        "address": "Rødovre Parkvej 150",
-    },
-}
-
-_LOGGER = logging.getLogger("waste_collection_schedule.renoweb_dk")
-
 ADDRESS_PATTERN = re.compile(
     r"^\s*(?P<street>.+?)\s+(?P<house_number>\d+)\s*(?P<letter>[A-Za-z]?)"
     r"\s*(?:,\s*(?P<zipcode>\d{4})\b.*)?\s*$"
@@ -86,141 +66,260 @@ ADDRESS_PATTERN = re.compile(
 DANISH_TRANSLITERATION = str.maketrans({"æ": "ae", "ø": "o", "å": "aa"})
 
 
-def _normalize_municipality(municipality: str) -> str:
-    return municipality.strip().lower().translate(DANISH_TRANSLITERATION)
-
-
-class Source:
-    """Source class for RenoWeb."""
-
-    def __init__(self, municipality: str, address: str):
-        _LOGGER.debug(
-            "Source.__init__(); municipality=%s, address=%s", municipality, address
+def _municipality_code(municipality: str) -> str:
+    key = municipality.strip().lower().translate(DANISH_TRANSLITERATION)
+    if key not in MUNICIPALITY_CODES:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "municipality", municipality, sorted(MUNICIPALITY_CODES)
         )
+    return MUNICIPALITY_CODES[key]
 
-        key = _normalize_municipality(municipality)
-        if key not in MUNICIPALITY_CODES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "municipality",
-                municipality,
-                sorted(MUNICIPALITY_CODES.keys()),
-            )
-        self._municipality_code = MUNICIPALITY_CODES[key]
 
-        match = ADDRESS_PATTERN.match(address)
-        if not match:
-            raise SourceArgumentException(
-                "address",
-                f"Could not parse address '{address}', "
-                "expected e.g. 'Torvegade 3, 6700 Esbjerg' or 'Torvegade 3'",
-            )
-
-        self._street = match.group("street").strip()
-        self._house_number = match.group("house_number").strip()
-        self._letter = (match.group("letter") or "").strip()
-        self._zipcode = match.group("zipcode")
-
-        self._session = requests.Session()
-        self._session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) "
-                "Gecko/20100101 Firefox/115.0",
-                "Accept-Encoding": "gzip",
-            }
+def _parse_address(address: str) -> re.Match:
+    match = ADDRESS_PATTERN.match(address)
+    if not match:
+        raise SourceArgumentException(
+            "address",
+            f"Could not parse address '{address}', "
+            "expected e.g. 'Torvegade 3, 6700 Esbjerg' or 'Torvegade 3'",
         )
+    return match
 
-    def _get(self, endpoint: str, **params) -> dict:
-        params["apikey"] = API_KEY
-        params["municipalitycode"] = self._municipality_code
-        response = self._session.get(API_URL.format(endpoint=endpoint), params=params)
-        response.raise_for_status()
-        return response.json()
 
-    def _get_road_id(self) -> int:
-        data = self._get("GetJSONRoad.aspx", roadname=self._street)
-        roads = data.get("list") or []
+def _road_id(response, municipality: str, address: str, **_: Any) -> int:
+    match = _parse_address(address)
+    street = match.group("street").strip()
+    zipcode = match.group("zipcode")
 
-        if self._zipcode:
-            roads = [r for r in roads if f"({self._zipcode})" in r.get("name", "")]
+    roads = response.json().get("list") or []
+    if zipcode:
+        roads = [r for r in roads if f"({zipcode})" in r.get("name", "")]
 
-        if not roads:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._street, [])
-
-        if len(roads) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "address",
-                self._street,
-                [r["name"] for r in roads],
-            )
-
-        return roads[0]["id"]
-
-    def _get_address_id(self) -> int:
-        road_id = self._get_road_id()
-        data = self._get(
-            "GetJSONAdress.aspx",
-            roadid=road_id,
-            streetBuildingIdentifier=self._house_number,
+    if not roads:
+        raise SourceArgumentNotFoundWithSuggestions("address", street, [])
+    if len(roads) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "address", street, [r["name"] for r in roads]
         )
-        addresses = data.get("list") or []
+    return roads[0]["id"]
 
-        # Prefer the main entrance (no floor/suite) matching the given letter
-        # (or no letter at all), so a plain "<street> <number>" address doesn't
-        # become ambiguous just because the building also has flats.
-        main_addresses = [
-            a
-            for a in addresses
-            if not a.get("floor")
-            and not a.get("suite")
-            and str(a.get("letter", "")).lower() == self._letter.lower()
-        ]
-        if main_addresses:
-            addresses = main_addresses
 
-        if not addresses:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                f"{self._street} {self._house_number}{self._letter}",
-                [],
-            )
+def _address_id(response, road_id: int, municipality: str, address: str, **_: Any):
+    match = _parse_address(address)
+    letter = (match.group("letter") or "").strip()
+    label = f"{match.group('street').strip()} {match.group('house_number')}{letter}"
 
-        if len(addresses) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "address",
-                f"{self._street} {self._house_number}{self._letter}",
-                [a["presentationString"] for a in addresses],
-            )
+    addresses = response.json().get("list") or []
 
-        return addresses[0]["id"]
+    # Prefer the main entrance (no floor/suite) matching the given letter
+    # (or no letter at all), so a plain "<street> <number>" address doesn't
+    # become ambiguous just because the building also has flats.
+    main_addresses = [
+        a
+        for a in addresses
+        if not a.get("floor")
+        and not a.get("suite")
+        and str(a.get("letter", "")).lower() == letter.lower()
+    ]
+    if main_addresses:
+        addresses = main_addresses
 
-    def fetch(self) -> list[Collection]:
-        """Fetch data from RenoWeb."""
-        _LOGGER.debug("Source.fetch()")
-
-        address_id = self._get_address_id()
-
-        data = self._get(
-            "GetJSONContainerList.aspx",
-            adressId=address_id,
-            fullinfo=1,
-            supportsSharedEquipment=0,
+    if not addresses:
+        raise SourceArgumentNotFoundWithSuggestions("address", label, [])
+    if len(addresses) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "address", label, [a["presentationString"] for a in addresses]
         )
+    return addresses[0]["id"]
 
-        entries: list[Collection] = []
-        for entry in data.get("list") or []:
-            timestamp = entry.get("nextpickupdatetimestamp")
-            if not timestamp:
-                # No regular collection scheduled for this container (e.g. an
-                # order-only service), skip it.
-                continue
 
-            date = datetime.fromtimestamp(int(timestamp)).date()
-            waste_type = entry.get("module", {}).get("fractionname") or entry["name"]
-            entries.append(Collection(date=date, t=waste_type))
+def _fraction(record: dict) -> str:
+    return str(record.get("module", {}).get("fractionname") or record["name"])
 
-        if not entries:
-            raise SourceArgumentException(
-                "address", "No waste schemes found, check address"
-            )
 
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "RenoWeb"
+    DESCRIPTION = "RenoWeb collections"
+    URL = "https://renoweb.dk"
+    COUNTRY = "dk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Esbjerg": {
+            "municipality": "Esbjerg",
+            "address": "Torvegade 3, 6700 Esbjerg",
+        },
+        "Aalborg": {
+            "municipality": "Aalborg",
+            "address": "Hasserisvej 97",
+        },
+        "Rødovre": {
+            "municipality": "Rødovre",
+            "address": "Rødovre Parkvej 150",
+        },
+    }
+
+    PARAMS = (
+        municipality("municipality"),
+        street_address("address"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Use the name of your municipality as `municipality` (e.g. "
+            "`Esbjerg`, `Aalborg`, `Rødovre`) and your address as `address`, "
+            "e.g. `Torvegade 3, 6700 Esbjerg` or just `Torvegade 3`. Only "
+            "municipalities served by RenoWeb's public API are supported: "
+            + ", ".join(sorted(MUNICIPALITY_CODES))
+            + "."
+        ),
+        "da": (
+            "Brug navnet paa din kommune som `municipality` (f.eks. `Esbjerg`, "
+            "`Aalborg`, `Rødovre`) og din adresse som `address`, f.eks. "
+            "`Torvegade 3, 6700 Esbjerg` eller blot `Torvegade 3`."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.HAZARDOUS,
+        wt.TEXTILES,
+        wt.ELECTRONICS,
+        wt.OTHER,
+    ]
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{API_URL}/GetJSONRoad.aspx",
+                params=lambda municipality, address, **_: {
+                    "roadname": _parse_address(address).group("street").strip(),
+                    "municipalitycode": _municipality_code(municipality),
+                    "apikey": API_KEY,
+                },
+                pick=_road_id,
+            ),
+            Lookup(
+                f"{API_URL}/GetJSONAdress.aspx",
+                params=lambda road_id, municipality, address, **_: {
+                    "roadid": road_id,
+                    "streetBuildingIdentifier": _parse_address(address).group(
+                        "house_number"
+                    ),
+                    "municipalitycode": _municipality_code(municipality),
+                    "apikey": API_KEY,
+                },
+                pick=_address_id,
+            ),
+        ),
+        url=f"{API_URL}/GetJSONContainerList.aspx",
+        params=lambda road_id, address_id, municipality, **_: {
+            "adressId": address_id,
+            "fullinfo": 1,
+            "supportsSharedEquipment": 0,
+            "municipalitycode": _municipality_code(municipality),
+            "apikey": API_KEY,
+        },
+        raise_for_status=True,
+    )
+    parse = JsonParser("list")
+    # Containers without a regular collection (order-only services) carry an
+    # empty timestamp; the transformer skips records without a date.
+    transform = JsonTransformer(
+        date_key="nextpickupdatetimestamp",
+        type_key=_fraction,
+        parse_date=date_parsers.from_epoch(),
+        carry_raw_label=True,
+        type_value_map={
+            # Residual / combined residual + food rounds
+            "Rest": wt.GENERAL_WASTE,
+            "Restaffald": wt.GENERAL_WASTE,
+            "Dagrenovation": wt.GENERAL_WASTE,
+            "Industri Restaffald": wt.GENERAL_WASTE,
+            "Småt brændbart": wt.GENERAL_WASTE,
+            "Rest/Mad": wt.GENERAL_WASTE,
+            "Rest/madaffald": wt.GENERAL_WASTE,
+            "Rest-/madaffald": wt.GENERAL_WASTE,
+            "Rest-/Madaffald": wt.GENERAL_WASTE,
+            "Rest- og madaffald": wt.GENERAL_WASTE,
+            "Mad- og restaffald": wt.GENERAL_WASTE,
+            "Mad-/ og restaffald": wt.GENERAL_WASTE,
+            "Mad/Rest": wt.GENERAL_WASTE,
+            "Mad_Rest": wt.GENERAL_WASTE,
+            "Energibeholder (mad/rest)": wt.GENERAL_WASTE,
+            "Rest + plast/MDK": wt.GENERAL_WASTE,
+            # Food and garden
+            "Madaffald": wt.FOOD_WASTE,
+            "Haveaffald": wt.GARDEN_WASTE,
+            "Frivillig Haveaffald": wt.GARDEN_WASTE,
+            "Juletræ": wt.GARDEN_WASTE,
+            "Juletræer": wt.GARDEN_WASTE,
+            # Paper and glass
+            "Papir": wt.PAPER,
+            "Pap": wt.PAPER,
+            "Papir, pap": wt.PAPER,
+            "Papir/Pap": wt.PAPER,
+            "Pap/Papir": wt.PAPER,
+            "Papir/pap": wt.PAPER,
+            "Industri Papir/pap": wt.PAPER,
+            "Glas": wt.GLASS,
+            "Glas/Metal": wt.GLASS,
+            "Metal/glas": wt.GLASS,
+            "Metal, glas": wt.GLASS,
+            # Combined and mixed recyclables
+            "Genbrug": wt.RECYCLABLES,
+            "Genanvendeligt": wt.RECYCLABLES,
+            "Genbrugsbeholder": wt.RECYCLABLES,
+            "Genbrugsspand": wt.RECYCLABLES,
+            "Genbrug - PMDK/MG": wt.RECYCLABLES,
+            "Genbrug PP": wt.RECYCLABLES,
+            "Ressourcebeholder (pap/papir og glas/metal)": wt.RECYCLABLES,
+            "Metal": wt.RECYCLABLES,
+            "Jern": wt.RECYCLABLES,
+            "Plast": wt.RECYCLABLES,
+            "Plast-Metal": wt.RECYCLABLES,
+            "Plast/ Metal": wt.RECYCLABLES,
+            "Plast/metal": wt.RECYCLABLES,
+            "Industri Plast/metal": wt.RECYCLABLES,
+            "Plast, MDK": wt.RECYCLABLES,
+            "Plast+MDK": wt.RECYCLABLES,
+            "Plast+MDK/Papir": wt.RECYCLABLES,
+            "Plast, MDK/ metal, glas": wt.RECYCLABLES,
+            "Plast & mad- og drikkekartoner": wt.RECYCLABLES,
+            "Plast/Drikkekarton": wt.RECYCLABLES,
+            "Plast/MDK/Metal": wt.RECYCLABLES,
+            "Plast/Mad-&Drikkekartoner": wt.RECYCLABLES,
+            "Plast/Mad-&Drikkekartoner/Papir/Pap": wt.RECYCLABLES,
+            "Plast/Metal/Mad- & drikkekartoner": wt.RECYCLABLES,
+            "Plast/Papir": wt.RECYCLABLES,
+            "Plast_Metal_Papir": wt.RECYCLABLES,
+            "Papir/Plast og kartoner": wt.RECYCLABLES,
+            "Papir/pap + glas/metal": wt.RECYCLABLES,
+            "Papir og pap/Glas": wt.RECYCLABLES,
+            "Glas-Papir": wt.RECYCLABLES,
+            # Bulky, hazardous, textiles, electronics
+            "Storskrald": wt.BULKY_WASTE,
+            "Storskrald - Kræver tilmelding": wt.BULKY_WASTE,
+            "Miljøkasse": wt.HAZARDOUS,
+            "Miljøboks": wt.HAZARDOUS,
+            "Farligt affald": wt.HAZARDOUS,
+            "Industri Batterier": wt.HAZARDOUS,
+            "Tekstilaffald": wt.TEXTILES,
+            "Småt elektronik": wt.ELECTRONICS,
+            "Industri Småt elektronik": wt.ELECTRONICS,
+            # Local names whose contents cannot be verified
+            "Energispand": wt.OTHER,
+            "Genbrugsbilen": wt.OTHER,
+            "Nedgravede": wt.OTHER,
+            "Beholderværksted": wt.OTHER,
+            "Porcelæn": wt.OTHER,
+            "Industri Flasker": wt.OTHER,
+        },
+    )

@@ -1,0 +1,62 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://servicesgh.renoweb.dk/v1_13/GetJSONRoad.aspx 06b07f72c0",
+      "method": "GET",
+      "url": "https://servicesgh.renoweb.dk/v1_13/GetJSONRoad.aspx",
+      "final_url": "https://servicesgh.renoweb.dk/v1_13/GetJSONRoad.aspx?roadname=Torvegade&municipalitycode=0561&apikey=479D40F4-B3E1-4038-9130-76453188C74C",
+      "body": "{\"params\":[[\"apikey\",\"479D40F4-B3E1-4038-9130-76453188C74C\"],[\"municipalitycode\",\"0561\"],[\"roadname\",\"Torvegade\"]]}",
+      "status": 200,
+      "encoding": "iso-8859-1",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=iso-8859-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Thu, 01 Oct 2026 09:56:15 GMT",
+        "content-length": "107"
+      },
+      "content_b64": "eyJzdGF0dXMiOnsiaWQiOjAsInN0YXR1cyI6bnVsbCwibXNnIjoiT2sifSwibGlzdCI6W3siaWQiOjE5MTYsIm5hbWUiOiJUb3J2ZWdhZGUgKDY3MDApIiwiZnVsbGxpc3QiOnRydWV9XX0="
+    },
+    {
+      "key": "GET https://servicesgh.renoweb.dk/v1_13/GetJSONAdress.aspx 9f1e703307",
+      "method": "GET",
+      "url": "https://servicesgh.renoweb.dk/v1_13/GetJSONAdress.aspx",
+      "final_url": "https://servicesgh.renoweb.dk/v1_13/GetJSONAdress.aspx?roadid=1916&streetBuildingIdentifier=3&municipalitycode=0561&apikey=479D40F4-B3E1-4038-9130-76453188C74C",
+      "body": "{\"params\":[[\"apikey\",\"479D40F4-B3E1-4038-9130-76453188C74C\"],[\"municipalitycode\",\"0561\"],[\"roadid\",\"1916\"],[\"streetBuildingIdentifier\",\"3\"]]}",
+      "status": 200,
+      "encoding": "iso-8859-1",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=iso-8859-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Thu, 01 Oct 2026 09:56:15 GMT",
+        "content-length": "366"
+      },
+      "content_b64": "eyJzdGF0dXMiOnsiaWQiOjAsInN0YXR1cyI6bnVsbCwibXNnIjoiT2sifSwibGlzdCI6W3siaWQiOjcwNTA4LCJzdHJlZXRuYW1lIjoiVG9ydmVnYWRlIiwic3RyZWV0Y29kZSI6Ijg3NTEiLCJwb3N0YWxjb2RlIjoiNjcwMCIsImRpc3RyaWN0TmFtZSI6IkVzYmplcmciLCJzdHJlZXRCdWlsZGluZ0lkZW50aWZpZXIiOjMsImxldHRlciI6IiIsImZsb29yIjoiIiwic3VpdGUiOiIiLCJwcm9wZXJ0eW51bWJlciI6IjE3NjIxMyIsInByZXNlbnRhdGlvblN0cmluZyI6IlRvcnZlZ2FkZSAzLCA2NzAwIEVzYmplcmciLCJ4Y29vcmQiOiI0NjUzMjksNjciLCJ5Y29vcmQiOiI2MTQ2NjU2LDkiLCJmdWxsbGlzdCI6dHJ1ZSwiZGlzdGFuY2UiOi0xfV19"
+    },
+    {
+      "key": "GET https://servicesgh.renoweb.dk/v1_13/GetJSONContainerList.aspx 7740c69e26",
+      "method": "GET",
+      "url": "https://servicesgh.renoweb.dk/v1_13/GetJSONContainerList.aspx",
+      "final_url": "https://servicesgh.renoweb.dk/v1_13/GetJSONContainerList.aspx?adressId=70508&fullinfo=1&supportsSharedEquipment=0&municipalitycode=0561&apikey=479D40F4-B3E1-4038-9130-76453188C74C",
+      "body": "{\"params\":[[\"adressId\",\"70508\"],[\"apikey\",\"479D40F4-B3E1-4038-9130-76453188C74C\"],[\"fullinfo\",\"1\"],[\"municipalitycode\",\"0561\"],[\"supportsSharedEquipment\",\"0\"]]}",
+      "status": 200,
+      "encoding": "iso-8859-1",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=iso-8859-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Thu, 01 Oct 2026 09:56:15 GMT",
+        "content-length": "2895"
+      },
+      "content_b64": "eyJzdGF0dXMiOnsiaWQiOjAsInN0YXR1cyI6bnVsbCwibXNnIjoiT2sifSwibGlzdCI6W3siaWQiOjE5MDUzOCwicndhZHJpZCI6NzA1MDgsImN1c3RvbWVyaWQiOjIzMTc5LCJuYW1lIjoiVPhtbmluZ3NkYWcgZm9yIGhhdmVhZmZhbGQiLCJjb3VudCI6IjEiLCJtb2R1bGUiOnsiaWQiOjMsIm5hbWUiOiJIYXZlYWZmYWxkIiwiZnJhY3Rpb25uYW1lIjoiSGF2ZWFmZmFsZCJ9LCJmcmFjdGlvbmlkIjo3LCJuZXh0cGlja3VwZGF0ZSI6IlRvcnNkYWcgZC4gMDgtMTAtMjAyNiIsIm5leHRwaWNrdXBkYXRldGltZXN0YW1wIjoiMTc5MTQxNzYwMCIsInBpY2t1cGRhdGVzIjoiRXNiamVyZyBNaWR0YnkgMiAtIGhhdmVhZmZhbGQiLCJkaXN0cmljdCI6IiIsInZlaGljbGUiOiIiLCJyb3V0ZSI6IiIsImNsZWFuaW5nZGF0ZSI6IiIsImJhcmNvZGUiOiIiLCJyYXRlIjoiIiwiaW52b2ljYWRyZXNzaWQiOjcwNTA4fSx7ImlkIjoyNzMyMDIsInJ3YWRyaWQiOjcwNTA4LCJjdXN0b21lcmlkIjoyMzE3OSwibmFtZSI6Ik1pbGr4a2Fzc2UiLCJjb3VudCI6IjEiLCJtb2R1bGUiOnsiaWQiOjIsIm5hbWUiOiJHZW5icnVnIiwiZnJhY3Rpb25uYW1lIjoiTWlsavhrYXNzZSJ9LCJmcmFjdGlvbmlkIjo0NCwibmV4dHBpY2t1cGRhdGUiOiJPbnNkYWcgZC4gMjEtMTAtMjAyNiIsIm5leHRwaWNrdXBkYXRldGltZXN0YW1wIjoiMTc5MjU0MDgwMCIsInBpY2t1cGRhdGVzIjoiQnkgOCIsImRpc3RyaWN0IjoiIiwidmVoaWNsZSI6IiIsInJvdXRlIjoiIiwiY2xlYW5pbmdkYXRlIjoiIiwiYmFyY29kZSI6IiIsInJhdGUiOiIiLCJpbnZvaWNhZHJlc3NpZCI6NzA1MDh9LHsiaWQiOjM3NzMyNywicndhZHJpZCI6NzA1MDgsImN1c3RvbWVyaWQiOjIzMTc5LCJuYW1lIjoiU3RvcnQgR2VuYnJ1ZyIsImNvdW50IjoiMSIsIm1vZHVsZSI6eyJpZCI6MiwibmFtZSI6IkdlbmJydWciLCJmcmFjdGlvbm5hbWUiOiJTdG9ydCBHZW5icnVnIn0sImZyYWN0aW9uaWQiOjQ3LCJuZXh0cGlja3VwZGF0ZSI6IiIsIm5leHRwaWNrdXBkYXRldGltZXN0YW1wIjoiIiwicGlja3VwZGF0ZXMiOiJTdG9ydCBHZW5icnVnLCBCZXN0aWwgYWZoZW50bmluZyIsImRpc3RyaWN0IjoiNDAiLCJ2ZWhpY2xlIjoiIiwicm91dGUiOiJTdG9ydCBHZW5icnVnIiwiY2xlYW5pbmdkYXRlIjoiIiwiYmFyY29kZSI6IiIsInJhdGUiOiIiLCJpbnZvaWNhZHJlc3NpZCI6NzA1MDh9LHsiaWQiOjQ0MjQ1NCwicndhZHJpZCI6NzA1MDgsImN1c3RvbWVyaWQiOjIzMTc5LCJuYW1lIjoiSnVsZXRy5iIsImNvdW50IjoiMSIsIm1vZHVsZSI6eyJpZCI6MywibmFtZSI6IkhhdmVhZmZhbGQiLCJmcmFjdGlvbm5hbWUiOiJKdWxldHLmIn0sImZyYWN0aW9uaWQiOjQ4LCJuZXh0cGlja3VwZGF0ZSI6IiIsIm5leHRwaWNrdXBkYXRldGltZXN0YW1wIjoiIiwicGlja3VwZGF0ZXMiOiJFc2JqZXJnIE1pZHRieSAyIC0gSnVsZXRy5iIsImRpc3RyaWN0IjoiIiwidmVoaWNsZSI6IiIsInJvdXRlIjoiSnVsZXRy5iIsImNsZWFuaW5nZGF0ZSI6IiIsImJhcmNvZGUiOiIiLCJyYXRlIjoiIiwiaW52b2ljYWRyZXNzaWQiOjcwNTA4fSx7ImlkIjo3ODc2NjQsInJ3YWRyaWQiOjcwNTA4LCJjdXN0b21lcmlkIjoyMzE3OSwibmFtZSI6Ik1hZC9SZXN0YWZmYWxkLCAyNDBMIChCeW1pZHRlKSIsImNvdW50IjoiMSIsIm1vZHVsZSI6eyJpZCI6MSwibmFtZSI6Ik1hZC0gb2cgUmVzdGFmZmFsZCIsImZyYWN0aW9ubmFtZSI6Ik1hZC0gb2cgUmVzdGFmZmFsZCJ9LCJmcmFjdGlvbmlkIjo1MywibmV4dHBpY2t1cGRhdGUiOiJUaXJzZGFnIGQuIDA2LTEwLTIwMjYiLCJuZXh0cGlja3VwZGF0ZXRpbWVzdGFtcCI6IjE3OTEyNDQ4MDAiLCJwaWNrdXBkYXRlcyI6IlRpcnNkYWciLCJkaXN0cmljdCI6IiIsInZlaGljbGUiOiIiLCJyb3V0ZSI6IkVMIC0gcmVzdC1tYWQiLCJjbGVhbmluZ2RhdGUiOiIiLCJiYXJjb2RlIjoiIiwicmF0ZSI6eyJpZCI6MjkzOTQ0LCJyd2FkcmlkIjo3MDUwOCwiY3VzdG9tZXJpZCI6MjMxNzksIm5hbWUiOiJNYWQvUmVzdGFmZmFsZCwgMjQwIEwgKEJ5bWlkdGUpIiwibW9kdWxlIjoiTWFkLSBvZyBSZXN0YWZmYWxkIiwiY291bnQiOjEsInVuaXRwcmljZSI6MTc2MiwicHJpc2V5ZWFyIjoxNzYyfSwiaW52b2ljYWRyZXNzaWQiOjcwNTA4fSx7ImlkIjo3ODczMzgsInJ3YWRyaWQiOjcwNTA4LCJjdXN0b21lcmlkIjoyMzE3OSwibmFtZSI6IkdlbmJydWdzc3BhbmQsIDI0MEwgKDItZGVsdCkiLCJjb3VudCI6IjEiLCJtb2R1bGUiOnsiaWQiOjIsIm5hbWUiOiJHZW5icnVnIiwiZnJhY3Rpb25uYW1lIjoiR2VuYnJ1ZyJ9LCJmcmFjdGlvbmlkIjo2LCJuZXh0cGlja3VwZGF0ZSI6Ik9uc2RhZyBkLiAyMS0xMC0yMDI2IiwibmV4dHBpY2t1cGRhdGV0aW1lc3RhbXAiOiIxNzkyNTQwODAwIiwicGlja3VwZGF0ZXMiOiJCeSA4IiwiZGlzdHJpY3QiOiIiLCJ2ZWhpY2xlIjoiIiwicm91dGUiOiJHZW5icnVnIDQiLCJjbGVhbmluZ2RhdGUiOiIiLCJiYXJjb2RlIjoiIiwicmF0ZSI6IiIsImludm9pY2FkcmVzc2lkIjo3MDUwOH0seyJpZCI6Nzg4MjQzLCJyd2FkcmlkIjo3MDUwOCwiY3VzdG9tZXJpZCI6MjMxNzksIm5hbWUiOiJQYXBpci9QYXBzcGFuZCwgMjQwTCIsImNvdW50IjoiMSIsIm1vZHVsZSI6eyJpZCI6NCwibmFtZSI6IlBhcGlyIiwiZnJhY3Rpb25uYW1lIjoiUGFwaXIifSwiZnJhY3Rpb25pZCI6MywibmV4dHBpY2t1cGRhdGUiOiJPbnNkYWcgZC4gMjEtMTAtMjAyNiIsIm5leHRwaWNrdXBkYXRldGltZXN0YW1wIjoiMTc5MjU0MDgwMCIsInBpY2t1cGRhdGVzIjoiQnkgOCIsImRpc3RyaWN0IjoiIiwidmVoaWNsZSI6IiIsInJvdXRlIjoiUGFwaXIgMSIsImNsZWFuaW5nZGF0ZSI6IiIsImJhcmNvZGUiOiIiLCJyYXRlIjoiIiwiaW52b2ljYWRyZXNzaWQiOjcwNTA4fV19"
+    }
+  ]
+}
