@@ -1,31 +1,11 @@
-from datetime import datetime
-from typing import Literal, TypedDict
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import area_id
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-
-class Zone(TypedDict):
-    id: int
-
-
-TITLE = "Mirabel (QC)"
-DESCRIPTION = "Source script for mirabel.ca/collectes"
-URL = "https://mirabel.ca/collectes"
-COUNTRY = "ca"
-
-TEST_CASES = {
-    "Mirabel-en-Haut": {"zone": 1},
-    "Saint-Antoine": {"zone": 2},
-    "Sainte-Monique": {"zone": 3},
-    "Domaine-Vert Nord": {"zone": 4},
-    "Saint-Janvier": {"zone": 5},
-    "Saint-Augustin": {"zone": 6},
-    "Saint-Canut": {"zone": 7},
-    "St-Benoit": {"zone": 8},
-}
-
+from waste_collection_schedule.transformers import JsonTransformer
 
 EVENT_QUERY = """
 query eventTypes($month: Int, $year: Int, $zoneId: Int) {
@@ -53,42 +33,8 @@ query eventTypes($month: Int, $year: Int, $zoneId: Int) {
 }
 """
 
-API_URL = "https://mviv2.mirabel.ca/graphql"
-
-
-ICON_MAP = {
-    "dechets": Icons.GENERAL_WASTE,
-    "recyclage": Icons.RECYCLING,
-    "composte": Icons.ORGANIC,  # codespell:ignore composte
-    "encombrants": Icons.BULKY,
-}
-
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your collection zone number using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
-    "fr": "Vous pouvez trouver votre numéro de zone de collecte sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "Collection zone number",
-    },
-    "fr": {
-        "zone": "Numéro de la zone de collecte",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "zone": "Collection zone number",
-    },
-    "fr": {
-        "zone": "Zone de collecte",
-    },
-}
-
-# The id differ a bit from the zone official zone number.
-_ZONE_INFO = {
+# The API zone ids differ a bit from the official zone numbers.
+_ZONE_IDS = {
     "1": 121,
     "2": 122,
     "3": 123,
@@ -99,54 +45,67 @@ _ZONE_INFO = {
     "8": 128,
 }
 
-ZONE_LITERALS = Literal[tuple(_ZONE_INFO.keys())]
 
-ZONES: dict[str, Zone] = {name: {"id": zid} for name, zid in _ZONE_INFO.items()}
+def _zone_id(zone, **_) -> int:
+    key = str(zone).strip()
+    if key not in _ZONE_IDS:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "zone", zone, suggestions=list(_ZONE_IDS)
+        )
+    return _ZONE_IDS[key]
 
 
-class Source:
-    def __init__(self, zone: ZONE_LITERALS):  # type: ignore
-        zone = str(zone)
-        if zone not in ZONES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "zone", zone, suggestions=ZONES.keys()
-            )
-        self._id = ZONES[zone]["id"]
+@final
+class Source(BaseSource):
+    TITLE = "Mirabel (QC)"
+    DESCRIPTION = "Source script for mirabel.ca/collectes"
+    URL = "https://mirabel.ca/collectes"
+    COUNTRY = "ca"
 
-    def fetch(self) -> list[Collection]:
+    WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Mirabel-en-Haut": {"zone": 1},
+        "Saint-Antoine": {"zone": 2},
+        "Sainte-Monique": {"zone": 3},
+        "Domaine-Vert Nord": {"zone": 4},
+        "Saint-Janvier": {"zone": 5},
+        "Saint-Augustin": {"zone": 6},
+        "Saint-Canut": {"zone": 7},
+        "St-Benoit": {"zone": 8},
+    }
 
-        with requests.Session() as session:
-            session.headers.update({"Content-Type": "application/json"})
-            r = session.post(
-                API_URL,
-                json={
-                    "query": EVENT_QUERY,
-                    "variables": {"zoneId": self._id},
-                },
-                timeout=15,
-            )
-            try:
-                r.raise_for_status()
-            except requests.HTTPError as e:
-                raise RuntimeError(
-                    f"Failed to fetch collections for zone '{self._id}': {e}"
-                ) from e
+    PARAMS = (area_id("zone"),)
 
-            payload = r.json()
-            graphql_errors = payload.get("errors")
-            if graphql_errors:
-                raise RuntimeError(f"GraphQL errors: {graphql_errors}")
-            events = payload.get("data", {}).get("events", {}).get("nodes") or []
-            for event in events:
-                event_type = event.get("type")
-                entries.append(
-                    Collection(
-                        date=datetime.fromisoformat(event.get("date")).date(),
-                        t=event_type.get("text"),
-                        icon=ICON_MAP.get(event_type.get("slug")),
-                    )
-                )
+    HOWTO: ClassVar[dict] = {
+        "en": "You can find your collection zone number (1 to 8) using the webpage: https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+        "fr": "Vous pouvez trouver votre numéro de zone de collecte (1 à 8) sur l'adresse suivante : https://mirabel.ca/services/services-en-ligne/trouver-ma-zone-de-collecte",
+    }
 
-        return entries
+    retrieve = retrievers.HttpPostRetriever(
+        "https://mviv2.mirabel.ca/graphql",
+        json=lambda zone, **_: {
+            "query": EVENT_QUERY,
+            "variables": {"zoneId": _zone_id(zone)},
+        },
+        timeout=15,
+    )
+
+    parse = parsers.JsonParser("data", "events", "nodes")
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=lambda event: event["type"]["slug"],
+        type_value_map={
+            "dechets": wt.GENERAL_WASTE,
+            "recyclage": wt.RECYCLABLES,
+            "composte": wt.ORGANIC,  # codespell:ignore composte
+            "encombrants": wt.BULKY_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )
