@@ -2644,13 +2644,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "pid": "Pid",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
-          "suburb": "Suburb"
+          "street_name": "Rue",
+          "street_number": "Numéro",
+          "suburb": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue.",
+          "suburb": "Votre ville ou village."
         }
       },
       "reconfigure_nawma_sa_gov_au": {
@@ -2658,12 +2660,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "pid": "Pid",
-          "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
-          "suburb": "Suburb"
+          "street_name": "Rue",
+          "street_number": "Numéro",
+          "suburb": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue.",
+          "suburb": "Votre ville ou village."
+        }
       },
       "args_nwrrr_com_au": {
         "title": "Configurer la Source",
@@ -3420,7 +3425,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_whitehorse_vic_gov_au": {
@@ -3430,7 +3436,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_whittlesea_vic_gov_au": {
         "title": "Configurer la Source",
@@ -5748,10 +5756,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "locality": "Locality"
+          "locality": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "locality": "Votre ville ou village."
         }
       },
       "reconfigure_bep_environnement_be": {
@@ -5759,9 +5768,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "locality": "Locality"
+          "locality": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "locality": "Votre ville ou village."
+        }
       },
       "args_ics_eupen_be": {
         "title": "Configurer la Source",
@@ -6696,17 +6707,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "language": "Langue",
-          "locality": "Municipalité",
-          "province_or_state": "Province/État",
-          "street_number_and_name": "Numéro et nom de rue"
+          "locality": "Commune",
+          "street_number_and_name": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "language": "Code de langue pour les types de collecte (défaut: fr, supporté: en, fr)",
-          "locality": "Nom de la municipalité (ex. 'Métabetchouan-Lac-à-la-Croix')",
-          "province_or_state": "Province ou état (défaut: QC)",
-          "street_number_and_name": "Numéro et nom de rue (ex. '1201 16e Chemin')"
+          "locality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street_number_and_name": "Votre adresse complète."
         }
       },
       "reconfigure_rmrlac_qc_ca": {
@@ -6714,16 +6721,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "language": "Langue",
-          "locality": "Municipalité",
-          "province_or_state": "Province/État",
-          "street_number_and_name": "Numéro et nom de rue"
+          "locality": "Commune",
+          "street_number_and_name": "Adresse"
         },
         "data_description": {
-          "language": "Code de langue pour les types de collecte (défaut: fr, supporté: en, fr)",
-          "locality": "Nom de la municipalité (ex. 'Métabetchouan-Lac-à-la-Croix')",
-          "province_or_state": "Province ou état (défaut: QC)",
-          "street_number_and_name": "Numéro et nom de rue (ex. '1201 16e Chemin')"
+          "locality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street_number_and_name": "Votre adresse complète."
         }
       },
       "args_ics_vsj_ca": {
@@ -8158,11 +8161,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de la voie"
+          "street_name": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "street_name": "Nom de votre voie, tel qu'il apparaît dans le portail open data (ex : 'Avenue Henri Guillaumet')"
+          "street_name": "Le nom de votre rue."
         }
       },
       "reconfigure_toulouse_metropole_fr": {
@@ -8170,10 +8173,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_name": "Nom de la voie"
+          "street_name": "Rue"
         },
         "data_description": {
-          "street_name": "Nom de votre voie, tel qu'il apparaît dans le portail open data (ex : 'Avenue Henri Guillaumet')"
+          "street_name": "Le nom de votre rue."
         }
       },
       "args_ics": {
@@ -9229,7 +9232,8 @@
           "city": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village."
         }
       },
       "reconfigure_abfall_kyffhaeuser_de": {
@@ -9239,7 +9243,9 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village."
+        }
       },
       "args_aw_harburg_de": {
         "title": "Configurer la Source",
@@ -19704,7 +19710,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_tauranga_govt_nz": {
@@ -19714,7 +19721,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_waikato_district_council_govt_nz": {
         "title": "Configurer la Source",
@@ -19792,7 +19801,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_western_bay_of_plenty_nz": {
@@ -19802,7 +19812,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_avfallsor_no": {
         "title": "Configurer la Source",
@@ -20347,12 +20359,14 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
           "city": "Ville",
-          "english": "English",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète.",
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue."
         }
       },
       "reconfigure_moje_odpady_pl": {
@@ -20362,11 +20376,14 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
           "city": "Ville",
-          "english": "English",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète.",
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue."
+        }
       },
       "args_bochnia_gmina_pl": {
         "title": "Configurer la Source",
@@ -22271,7 +22288,9 @@
           "city": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète.",
+          "city": "Votre ville ou village."
         }
       },
       "reconfigure_sjobo_se": {
@@ -22282,7 +22301,10 @@
           "address": "Adresse",
           "city": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète.",
+          "city": "Votre ville ou village."
+        }
       },
       "args_srvatervinning_se": {
         "title": "Configurer la Source",
@@ -22408,7 +22430,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_uddevallaenergi_se": {
@@ -22418,7 +22441,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_uppsalavatten_se": {
         "title": "Configurer la Source",
@@ -23739,7 +23764,11 @@
           "town": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "street": "Le nom de votre rue.",
+          "town": "Votre ville ou village."
         }
       },
       "reconfigure_apps_imactivate_com": {
@@ -23752,7 +23781,12 @@
           "street": "Rue",
           "town": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "street": "Le nom de votre rue.",
+          "town": "Votre ville ou village."
+        }
       },
       "args_ardsandnorthdown_gov_uk": {
         "title": "Configurer la Source",
@@ -25861,7 +25895,9 @@
           "postcode": "Code postal"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète.",
+          "postcode": "Votre code postal."
         }
       },
       "reconfigure_eastlothian_gov_uk": {
@@ -25872,7 +25908,10 @@
           "address": "Adresse",
           "postcode": "Code postal"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète.",
+          "postcode": "Votre code postal."
+        }
       },
       "args_east_northamptonshire_gov_uk": {
         "title": "Configurer la Source",
@@ -26229,12 +26268,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "region": "Région",
+          "region": "Region",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_fccenvironment_co_uk": {
@@ -26242,11 +26281,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "region": "Région",
+          "region": "Region",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_fenland_gov_uk": {
@@ -27764,12 +27803,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "housenameornumber": "Numéro civique",
+          "housenameornumber": "Numéro",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "housenameornumber": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_medway_gov_uk": {
@@ -27777,11 +27819,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "housenameornumber": "Numéro civique",
+          "housenameornumber": "Numéro",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "housenameornumber": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_melton_gov_uk": {
         "title": "Configurer la Source",

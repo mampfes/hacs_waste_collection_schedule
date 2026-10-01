@@ -659,7 +659,9 @@
   },
   "nawma_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawma_sa_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street, suburb and optionally the house number as they appear on the [NAWMA collection day lookup](https://www.nawma.sa.gov.au/)."
+    },
     "urls": {}
   },
   "nwrrr_com_au": {
@@ -859,7 +861,9 @@
   },
   "whitehorse_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/whitehorse_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as the council's [map](https://map.whitehorse.vic.gov.au) property search lists it, e.g. '17 Main Street BLACKBURN'. If several properties match, the address must match one of them exactly."
+    },
     "urls": {}
   },
   "whittlesea_vic_gov_au": {
@@ -1396,7 +1400,8 @@
   "bep_environnement_be": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md",
     "howto": {
-      "en": "Go to the \"https://www.bep-environnement.be\" website if you're unsure about your locality."
+      "en": "Go to the \"https://www.bep-environnement.be\" website if you're unsure about your locality.",
+      "fr": "Consultez le site \"https://www.bep-environnement.be\" si vous avez un doute sur le nom de votre localité."
     },
     "urls": {}
   },
@@ -1621,8 +1626,8 @@
   "rmrlac_qc_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rmrlac_qc_ca.md",
     "howto": {
-      "en": "Enter your street number and name along with your municipality.",
-      "fr": "Entrez votre numéro et nom de rue ainsi que votre municipalite."
+      "en": "Enter your street number and name along with your municipality, e.g. '1201 16e Chemin' in 'Métabetchouan-Lac-à-la-Croix'.",
+      "fr": "Entrez votre numéro et nom de rue ainsi que votre municipalité, p. ex. '1201 16e Chemin' à 'Métabetchouan-Lac-à-la-Croix'."
     },
     "urls": {}
   },
@@ -1755,7 +1760,10 @@
   },
   "affaldonline_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affaldonline_dk.md",
-    "howto": {},
+    "howto": {
+      "da": "Find din adresse i adressesøgningen hos dit affaldsselskab paa AffaldOnline og kopier adressens `values`-streng (adskilt af |). Brug nøglen for dit affaldsselskab som `municipality`.",
+      "en": "Open the address search of your waste company on the AffaldOnline platform, select your address and copy the raw `values` string of the address (pipe separated, e.g. `Nørregade|1||||5970|Ærøskøbing|1228262|448776|0`). Use the municipality key of your waste company as `municipality`."
+    },
     "urls": {}
   },
   "kalundborg_dk": {
@@ -2174,9 +2182,7 @@
       "de": "Besuchen Sie https://abfall-kyffhaeuser.de/kalender/, öffnen Sie den Filter 'Ort' und verwenden Sie den dort angezeigten Namen exakt als 'city'-Parameter. Größere Orte (Bad Frankenhausen, Sondershausen, Artern) sind in mehrere Abfuhrtouren ('Tour 1', 'Tour 2', ...) aufgeteilt - bitte prüfen Sie Ihren Abfuhrkalender/-bescheid oder fragen Sie bei der Abfallwirtschaft Kyffhäuserkreis nach, welche Tour für Ihre Straße zuständig ist. Bei unbekannten oder mehrdeutigen Namen listet die Fehlermeldung alle gültigen Ortsnamen auf.",
       "en": "Visit https://abfall-kyffhaeuser.de/kalender/, open the 'Ort' filter and use the exact place name shown there as the 'city' argument. Larger towns (Bad Frankenhausen, Sondershausen, Artern) are split into several collection tours ('Tour 1', 'Tour 2', ...) - check your bin / waste collection notice or ask the Kyffhäuserkreis waste department which tour serves your street. If you enter an unknown or ambiguous name, the resulting error message will list the valid place names."
     },
-    "urls": {
-      "url_abfall_kyffhaeuser_de_kalender": "https://abfall-kyffhaeuser.de/kalender/"
-    }
+    "urls": {}
   },
   "aw_harburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md",
@@ -4337,7 +4343,9 @@
   },
   "tauranga_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tauranga_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as you would on the council's [when to put your bins out](https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out) page."
+    },
     "urls": {}
   },
   "waikato_district_council_govt_nz": {
@@ -4359,7 +4367,9 @@
   },
   "western_bay_of_plenty_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/western_bay_of_plenty_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as it appears on kerbsidecollective.co.nz, e.g. '15 Seaview Road'."
+    },
     "urls": {}
   },
   "avfallsor_no": {
@@ -4488,7 +4498,9 @@
   },
   "moje_odpady_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moje_odpady_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the city as listed in the Moje Odpady app. If several cities share the name, also enter the voivodeship (for example 'woj. mazowieckie'). Cities that are split into streets additionally need the address (street) and, where the street has several entries, the house number."
+    },
     "urls": {}
   },
   "bochnia_gmina_pl": {
@@ -4979,7 +4991,9 @@
   },
   "sjobo_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sjobo_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address and city as they appear in the calendar search on https://www.sjobo.se. Collections in a holiday week are marked 'Helgvecka' in the description."
+    },
     "urls": {}
   },
   "srvatervinning_se": {
@@ -5014,7 +5028,7 @@
   "uddevallaenergi_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uddevallaenergi_se.md",
     "howto": {
-      "en": "Search for your address on the Uddevalla Energi waste collection webpage and enter it exactly as shown, including the town."
+      "en": "Search for your address on the Uddevalla Energi waste collection webpage and enter it exactly as shown, including the town, e.g. `Fjällvägen 11, Ljungskile`."
     },
     "urls": {}
   },
@@ -5188,7 +5202,10 @@
   },
   "seuzach_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seuzach_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Seuzach veröffentlicht einen einzigen gemeindeweiten Abfallkalender, daher ist kein Argument erforderlich.",
+      "en": "Seuzach publishes a single municipality-wide collection calendar, so no address or other argument is required."
+    },
     "urls": {}
   },
   "ics_wuerenlos_ch": {
@@ -5979,7 +5996,9 @@
   },
   "eastlothian_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastlothian_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your address as it appears in the address dropdown on https://www.eastlothian.gov.uk/waste-collection-schedule after searching for your postcode, e.g. '4 Laing Loan, Wallyford'. The postcode at the end of the entry may be left out."
+    },
     "urls": {}
   },
   "east_northamptonshire_gov_uk": {
@@ -6084,7 +6103,9 @@
   },
   "fccenvironment_co_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fccenvironment_co_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and choose your council as the region (harborough, southhams or westdevon; Harborough is the default)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6535,9 +6556,11 @@
   "medway_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/medway_gov_uk.md",
     "howto": {
-      "en": "Find your UPRN by entering your postcode at https://www.medway.gov.uk/homepage/45/check_collection_day. Alternatively provide your postcode and house name/number."
+      "en": "Find your UPRN by entering your postcode at https://www.medway.gov.uk/homepage/45/check_collection_day. Alternatively provide your postcode and house name/number exactly as shown on the Medway website (e.g. '194-198')."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "melton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melton_gov_uk.md",

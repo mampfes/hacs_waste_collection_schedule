@@ -2638,13 +2638,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "pid": "Pid",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
+          "street_name": "Gade",
+          "street_number": "Husnummer",
+          "suburb": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_name": "Dit gadenavn",
+          "street_number": "Dit husnummer",
+          "suburb": "Din by"
         }
       },
       "reconfigure_nawma_sa_gov_au": {
@@ -2652,12 +2654,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "pid": "Pid",
-          "street_name": "Street Name",
-          "street_number": "Street Number",
-          "suburb": "Suburb"
+          "street_name": "Gade",
+          "street_number": "Husnummer",
+          "suburb": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Dit gadenavn",
+          "street_number": "Dit husnummer",
+          "suburb": "Din by"
+        }
       },
       "args_nwrrr_com_au": {
         "title": "Konfigurer Kilde",
@@ -3411,10 +3416,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_whitehorse_vic_gov_au": {
@@ -3422,9 +3428,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_whittlesea_vic_gov_au": {
         "title": "Konfigurer Kilde",
@@ -5742,10 +5750,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "locality": "Locality"
+          "locality": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "locality": "Din by"
         }
       },
       "reconfigure_bep_environnement_be": {
@@ -5753,9 +5762,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "locality": "Locality"
+          "locality": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "locality": "Din by"
+        }
       },
       "args_ics_eupen_be": {
         "title": "Konfigurer Kilde",
@@ -6663,13 +6674,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "language": "Language",
-          "locality": "Locality",
-          "province_or_state": "Province Or State",
-          "street_number_and_name": "Street Number And Name"
+          "locality": "Kommune",
+          "street_number_and_name": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "locality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street_number_and_name": "Din fulde adresse"
         }
       },
       "reconfigure_rmrlac_qc_ca": {
@@ -6677,12 +6688,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "language": "Language",
-          "locality": "Locality",
-          "province_or_state": "Province Or State",
-          "street_number_and_name": "Street Number And Name"
+          "locality": "Kommune",
+          "street_number_and_name": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "locality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street_number_and_name": "Din fulde adresse"
+        }
       },
       "args_ics_vsj_ca": {
         "title": "Konfigurer Kilde",
@@ -8045,10 +8057,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_name": "Street Name"
+          "street_name": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_name": "Dit gadenavn"
         }
       },
       "reconfigure_toulouse_metropole_fr": {
@@ -8056,9 +8069,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_name": "Street Name"
+          "street_name": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Dit gadenavn"
+        }
       },
       "args_ics": {
         "title": "Konfigurer Kilde",
@@ -9110,10 +9125,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City"
+          "city": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by"
         }
       },
       "reconfigure_abfall_kyffhaeuser_de": {
@@ -9121,9 +9137,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City"
+          "city": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by"
+        }
       },
       "args_aw_harburg_de": {
         "title": "Konfigurer Kilde",
@@ -19565,10 +19583,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_tauranga_govt_nz": {
@@ -19576,9 +19595,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_waikato_district_council_govt_nz": {
         "title": "Konfigurer Kilde",
@@ -19653,10 +19674,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_western_bay_of_plenty_nz": {
@@ -19664,9 +19686,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_avfallsor_no": {
         "title": "Konfigurer Kilde",
@@ -20209,14 +20233,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City",
-          "english": "English",
-          "house_number": "House Number",
+          "address": "Adresse",
+          "city": "By",
+          "house_number": "Husnummer",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse",
+          "city": "Din by",
+          "house_number": "Dit husnummer"
         }
       },
       "reconfigure_moje_odpady_pl": {
@@ -20224,13 +20250,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City",
-          "english": "English",
-          "house_number": "House Number",
+          "address": "Adresse",
+          "city": "By",
+          "house_number": "Husnummer",
           "voivodeship": "Voivodeship"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse",
+          "city": "Din by",
+          "house_number": "Dit husnummer"
+        }
       },
       "args_bochnia_gmina_pl": {
         "title": "Konfigurer Kilde",
@@ -22110,11 +22139,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City"
+          "address": "Adresse",
+          "city": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse",
+          "city": "Din by"
         }
       },
       "reconfigure_sjobo_se": {
@@ -22122,10 +22153,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City"
+          "address": "Adresse",
+          "city": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse",
+          "city": "Din by"
+        }
       },
       "args_srvatervinning_se": {
         "title": "Konfigurer Kilde",
@@ -22248,10 +22282,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_uddevallaenergi_se": {
@@ -22259,9 +22294,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_uppsalavatten_se": {
         "title": "Konfigurer Kilde",
@@ -23563,13 +23600,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
-          "street": "Street",
-          "town": "Town"
+          "street": "Gade",
+          "town": "By"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "street": "Dit gadenavn",
+          "town": "Din by"
         }
       },
       "reconfigure_apps_imactivate_com": {
@@ -23577,12 +23618,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
-          "street": "Street",
-          "town": "Town"
+          "street": "Gade",
+          "town": "By"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "street": "Dit gadenavn",
+          "town": "Din by"
+        }
       },
       "args_ardsandnorthdown_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -25687,11 +25733,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse",
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_eastlothian_gov_uk": {
@@ -25699,10 +25747,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
+          "address": "Adresse",
           "postcode": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse",
+          "postcode": "Dit postnummer"
+        }
       },
       "args_east_northamptonshire_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -26064,7 +26115,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_fccenvironment_co_uk": {
@@ -26076,7 +26127,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_fenland_gov_uk": {
@@ -27585,12 +27636,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "housenameornumber": "Husnavn eller nummer",
+          "housenameornumber": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "housenameornumber": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_medway_gov_uk": {
@@ -27598,11 +27652,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "housenameornumber": "Husnavn eller nummer",
+          "housenameornumber": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "housenameornumber": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_melton_gov_uk": {
         "title": "Konfigurer Kilde",

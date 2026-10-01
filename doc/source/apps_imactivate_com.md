@@ -1,65 +1,45 @@
 # Apps by imactivate
 
-Support for schedules provided by [Apps by imactivate](https://imactivate.com), serving multiple, UK.
+Support for schedules provided by [Apps by imactivate](https://imactivate.com/).
 
-Known to work with:
-
-- Leeds Bins (<https://play.google.com/store/apps/details?id=com.imactivate.bins>)
-- Rotherham Bins (<https://play.google.com/store/apps/details?id=com.imactivate.rotherhambinsrelease>)
-- Luton Bins (<https://play.google.com/store/apps/details?id=com.imactivate.lutonbins>)
-- Fenland Bins (<https://play.google.com/store/apps/details?id=com.imactivate.fenlandbins>)
+Source for Apps by imactivate.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: apps_imactivate_com
       args:
+        street: STREET
+        number: NUMBER
         postcode: POSTCODE
         town: TOWN
-        street: STREET
-        number: "NUMBER"        
 ```
 
 ### Configuration Variables
 
-**postcode**  
-*(String) (required)*
-
-**town**  
-*(String) (required)*
-
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **number**  
-*(String | Integer) (required)*
+*(string) (required)*
+
+**postcode**  
+*(string) (required)*
+
+**town**  
+*(string) (required)*
 
 ## Example
 
-### Leeds
-
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: apps_imactivate_com
       args:
-        postcode: LS6 2SE
+        postcode: LS62SE
         town: Leeds
         street: sharp mews
         number: 2
-```
-
-### Fenland
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: apps_imactivate_com
-      args:
-        postcode: PE158RD
-        town: March
-        street: Creek Road
-        number: "90"        
 ```

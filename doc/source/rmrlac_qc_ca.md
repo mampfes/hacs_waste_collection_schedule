@@ -1,6 +1,8 @@
 # RMR Lac-Saint-Jean (QC)
 
-Support for schedules provided by [Régie des matières résiduelles du Lac-Saint-Jean](https://calendrier.rmrlac.qc.ca/calendrier-de-collectes).
+Support for schedules provided by [RMR Lac-Saint-Jean (QC)](https://calendrier.rmrlac.qc.ca).
+
+Source script for RMR Lac-Saint-Jean waste collection
 
 ## Configuration via configuration.yaml
 
@@ -9,10 +11,8 @@ waste_collection_schedule:
   sources:
     - name: rmrlac_qc_ca
       args:
-        street_number_and_name: "1201 16e Chemin"
-        locality: "Métabetchouan-Lac-à-la-Croix"
-        province_or_state: "QC"
-        language: "fr"
+        street_number_and_name: STREET_NUMBER_AND_NAME
+        locality: LOCALITY
 ```
 
 ### Configuration Variables
@@ -20,23 +20,20 @@ waste_collection_schedule:
 **street_number_and_name**  
 *(string) (required)*
 
-Your street number and name (e.g. `"1201 16e Chemin"`).
-
 **locality**  
 *(string) (required)*
 
-Your municipality name (e.g. `"Métabetchouan-Lac-à-la-Croix"`).
+## Example
 
-**province_or_state**  
-*(string) (optional, default: `"QC"`)*
-Province or state code.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: rmrlac_qc_ca
+      args:
+        street_number_and_name: 1201 16e Chemin
+        locality: "M\xE9tabetchouan-Lac-\xE0-la-Croix"
+```
 
-**language**  
-*(string) (optional, default: `"en"`)*
-Language code for collection type names. Supported: `en` (Garbage/Recycling/Organic), `fr` (Déchets/Recyclage/Matières organiques).
+## How to get the source arguments
 
-## How to find your arguments
-
-1. Visit [Calendrier de collectes](https://calendrier.rmrlac.qc.ca/calendrier-de-collectes).
-2. Search for your address (e.g. `"1201 16e Chemin"`).
-3. Note your street number and name as well as your municipality name.
+Enter your street number and name along with your municipality, e.g. '1201 16e Chemin' in 'Métabetchouan-Lac-à-la-Croix'.
