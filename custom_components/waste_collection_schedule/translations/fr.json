@@ -10230,13 +10230,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "city": "Ville",
-          "hnr": "Numéro civique",
+          "bezirk": "Quartier",
+          "city": "Commune",
+          "hnr": "Numéro",
           "strasse": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "hnr": "Votre numéro de rue.",
+          "strasse": "Le nom de votre rue."
         }
       },
       "reconfigure_ahe_de": {
@@ -10244,12 +10248,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "city": "Ville",
-          "hnr": "Numéro civique",
+          "bezirk": "Quartier",
+          "city": "Commune",
+          "hnr": "Numéro",
           "strasse": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "hnr": "Votre numéro de rue.",
+          "strasse": "Le nom de votre rue."
+        }
       },
       "args_ahk_heidekreis_de": {
         "title": "Configurer la Source",

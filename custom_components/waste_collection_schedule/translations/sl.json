@@ -10133,13 +10133,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bezirk": "Okrožje",
-          "city": "Mesto",
+          "bezirk": "Naselje",
+          "city": "Občina",
           "hnr": "Hišna številka",
           "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Vaše naselje ali del občine.",
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "hnr": "Vaša hišna številka.",
+          "strasse": "Ime vaše ulice."
         }
       },
       "reconfigure_ahe_de": {
@@ -10147,12 +10151,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bezirk": "Okrožje",
-          "city": "Mesto",
+          "bezirk": "Naselje",
+          "city": "Občina",
           "hnr": "Hišna številka",
           "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Vaše naselje ali del občine.",
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "hnr": "Vaša hišna številka.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_ahk_heidekreis_de": {
         "title": "Configure Source",

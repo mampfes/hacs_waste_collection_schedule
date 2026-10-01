@@ -10418,12 +10418,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "city": "City",
+          "city": "Municipality",
           "hnr": "House Number",
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Your district or part of the municipality.",
+          "city": "The name of your municipality, as shown on the provider's website.",
+          "hnr": "Your house number.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_ahe_de": {
@@ -10432,11 +10436,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "city": "City",
+          "city": "Municipality",
           "hnr": "House Number",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Your district or part of the municipality.",
+          "city": "The name of your municipality, as shown on the provider's website.",
+          "hnr": "Your house number.",
+          "strasse": "Your street name."
+        }
       },
       "args_ahk_heidekreis_de": {
         "title": "Configure Source",

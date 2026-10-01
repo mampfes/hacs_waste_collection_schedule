@@ -10136,12 +10136,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Distrikt",
-          "city": "City",
+          "city": "Kommune",
           "hnr": "Husnummer",
           "strasse": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "bezirk": "Dit distrikt eller del af kommunen",
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "hnr": "Dit husnummer",
+          "strasse": "Dit gadenavn"
         }
       },
       "reconfigure_ahe_de": {
@@ -10150,11 +10154,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Distrikt",
-          "city": "City",
+          "city": "Kommune",
           "hnr": "Husnummer",
           "strasse": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Dit distrikt eller del af kommunen",
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "hnr": "Dit husnummer",
+          "strasse": "Dit gadenavn"
+        }
       },
       "args_ahk_heidekreis_de": {
         "title": "Konfigurer Kilde",

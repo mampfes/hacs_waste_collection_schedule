@@ -10175,13 +10175,17 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "bezirk": "Bezirk",
-          "city": "Città",
-          "hnr": "Hnr",
-          "strasse": "Strasse"
+          "bezirk": "Quartiere",
+          "city": "Comune",
+          "hnr": "Numero civico",
+          "strasse": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "bezirk": "Il vostro quartiere o parte del comune.",
+          "city": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "hnr": "Il vostro numero civico.",
+          "strasse": "Il nome della vostra via."
         }
       },
       "reconfigure_ahe_de": {
@@ -10189,12 +10193,17 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "bezirk": "Bezirk",
-          "city": "Città",
-          "hnr": "Hnr",
-          "strasse": "Strasse"
+          "bezirk": "Quartiere",
+          "city": "Comune",
+          "hnr": "Numero civico",
+          "strasse": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Il vostro quartiere o parte del comune.",
+          "city": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "hnr": "Il vostro numero civico.",
+          "strasse": "Il nome della vostra via."
+        }
       },
       "args_ahk_heidekreis_de": {
         "title": "Configurazione Sorgente",
