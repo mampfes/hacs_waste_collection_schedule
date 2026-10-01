@@ -2,9 +2,11 @@
 
 [Source URL](https://rotorua.maps.arcgis.com/apps/webappviewer/index.html?id=7176f71a4ca34c16aa7dc7f942b919d5)
 
-[API URL](https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query)
+[API URL](https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query)
 
 This source provides waste collection schedules for Rotorua Lakes Council. It uses the Rotorua Lakes Council's GIS API to fetch waste collection schedules based on the provided address.
+
+Returned collection types are `Rubbish`, `Recycling` and `FOGO` (food and garden organics, collected weekly in serviced areas from 1 October 2026).
 
 ## Configuration via `configuration.yaml`
 

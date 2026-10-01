@@ -1,8 +1,8 @@
 import datetime
 import logging
+import re
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
@@ -11,13 +11,22 @@ TITLE = "Rotorua Lakes Council"
 DESCRIPTION = "Source for Rotorua Lakes Council"
 URL = "https://www.rotorualakescouncil.nz"
 API_URL = (
-    "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
+    "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query"
 )
 ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+    "FOGO": Icons.ORGANIC,
 }
 HEADERS = {"User-Agent": "waste-collection-schedule"}
+
+# RubbishCollection3/4 hold the next two collections under the FOGO schedule
+# introduced on 1 October 2026. RubbishCollection1/2 hold the legacy schedule.
+SCHEDULE_FIELDS = ("RubbishCollection3", "RubbishCollection4")
+
+# e.g. "Monday 05/10/2026 Recycling and FOGO"
+#      "Wednesday 07/10/2026 Recycling and Rubbish (and FOGO for food premises)"
+ENTRY_REGEX = re.compile(r"^\s*\w+\s+(\d{1,2}/\d{1,2}/\d{4})\s+(.+?)\s*$")
 
 TEST_CASES = {
     "Test1": {"address": "1061 Haupapa Street"},
@@ -63,8 +72,8 @@ class Source:
             "geometry": f"{lon},{lat}",
             "inSR": 4326,
             "spatialRel": "esriSpatialRelIntersects",
-            "outFields": "OBJECTID,Name,Collection,Day,FN,Label1,Label2",
-            "outSR": 4326,
+            "outFields": ",".join(("OBJECTID", "Name", "Day", *SCHEDULE_FIELDS)),
+            "returnGeometry": "false",
         }
         try:
             response = requests.get(API_URL, params=params, timeout=10)
@@ -76,51 +85,38 @@ class Source:
         entries = []
         for feature in data.get("features", []):
             attributes = feature.get("attributes", {})
-            schedule_html = attributes.get("Collection", "")
+            for field in SCHEDULE_FIELDS:
+                value = (attributes.get(field) or "").strip()
+                match = ENTRY_REGEX.match(value)
+                if not match:
+                    if value:
+                        _LOGGER.debug("Skipping non-date schedule value: %s", value)
+                    continue
 
-            if not schedule_html:
-                _LOGGER.warning(f"No schedule HTML found in attributes: {attributes}")
-                continue
+                date_str, types_str = match.groups()
+                try:
+                    date = datetime.datetime.strptime(date_str, "%d/%m/%Y").date()
+                except ValueError:
+                    _LOGGER.error("Date parsing error for value: %s", date_str)
+                    continue
 
-            soup = BeautifulSoup(schedule_html, "html.parser")
-            list_items = soup.find_all("li")
+                # Drop notes such as "(and FOGO for food premises)" and "only"
+                types_str = re.sub(r"\(.*?\)", "", types_str)
+                types_str = types_str.strip().removesuffix("only").strip()
 
-            if not list_items:
-                _LOGGER.warning(
-                    f"No list items found in schedule HTML: {schedule_html}"
-                )
-                continue
-
-            for item in list_items:
-                collection_type_tag = item.find("b")
-                collection_type_text = (
-                    collection_type_tag.get_text().strip()
-                    if collection_type_tag
-                    else "Unknown"
-                )
-                collection_type_text = collection_type_text.removesuffix("only").strip()
-
-                br_tag = item.find("br")
-                if br_tag and br_tag.next_sibling:
-                    date_str = br_tag.next_sibling.strip()
-
-                    try:
-                        date = datetime.datetime.strptime(
-                            date_str, "%A %d %b %Y"
-                        ).date()
-                    except ValueError:
-                        _LOGGER.error(f"Date parsing error for value: {date_str}")
+                for bin_type in types_str.split(" and "):
+                    bin_type = bin_type.strip()
+                    if not bin_type:
                         continue
-
-                    for bin_type in collection_type_text.split(" and "):
-                        bin_type = bin_type.strip().capitalize()
-                        entries.append(
-                            Collection(
-                                date=date,
-                                t=bin_type,
-                                icon=ICON_MAP.get(bin_type),
-                            )
+                    if bin_type.upper() != "FOGO":
+                        bin_type = bin_type.capitalize()
+                    entries.append(
+                        Collection(
+                            date=date,
+                            t=bin_type,
+                            icon=ICON_MAP.get(bin_type),
                         )
+                    )
 
         if not entries:
             raise ValueError(
