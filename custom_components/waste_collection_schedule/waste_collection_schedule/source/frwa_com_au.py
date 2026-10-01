@@ -1,144 +1,152 @@
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, house_number, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = (
-    "Fleurieu Regional Waste Authority"  # Title will show up in README.md and info.md
-)
-DESCRIPTION = (
-    "Source script for fleurieuregionalwasteauthority.com.au"  # Describe your source
-)
-URL = "https://fleurieuregionalwasteauthority.com.au"  # Insert url to service homepage. URL will show up in README.md and info.md
-
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Victor Harbor": {
-        "name_or_number": "42",
-        "street": "WISHART CRESCENT",
-        "district": "ENCOUNTER BAY",
-    },
-    "Yankalilla": {
-        "name_or_number": "12",
-        "street": "Wallman Street",
-        "district": "Yankalilla",
-    },
-    "Kangaroo Island": {
-        "name_or_number": "3",
-        "street": "Flinders Grove",
-        "district": "Island Beach",
-    },
-    "Alexandrina": {
-        "name_or_number": "10",
-        "street": "Jacobs Street",
-        "district": "Goolwa South",
-    },
-}
-
-API_URLS = {
-    "HOME": "https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads",
-    "SEARCH": "https://fleurieuregionalwasteauthority.com.au/wp-admin/admin-ajax.php",
-}
-ICON_MAP = {
-    "Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green Waste": Icons.GARDEN,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Referer": "https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads",
-}
-EXTRA_INFO = [
-    {"title": "Kangaroo Island Council", "url": "https://www.kangarooisland.sa.gov.au"},
-    {
-        "title": "District Council of Yankalilla",
-        "url": "https://www.yankalilla.sa.gov.au",
-    },
-    {"title": "City of Victor Harbor", "url": "https://www.victor.sa.gov.au"},
-    {"title": "Alexandrina Council", "url": "https://www.alexandrina.sa.gov.au"},
-]
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.",
-}
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-        "street": "The street name of the property, as displayed on the FRWA web site.",
-        "district": "The district name of the property, as displayed on the FRWA web site.",
-    },
-}
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-        "street": "The street name of the property, as displayed on the FRWA web site.",
-        "district": "The district name of the property, as displayed on the FRWA web site.",
-    },
-}
+HOME = "https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads"
+AJAX = "https://fleurieuregionalwasteauthority.com.au/wp-admin/admin-ajax.php"
+HEADERS = {"Referer": HOME}
 
 
-class Source:
-    def __init__(
-        self, name_or_number=int | str, street=str, district=str
-    ):  # argX correspond to the args dict in the source configuration
-        self._name_or_number = str(name_or_number).upper()
-        self._street = street.upper()
-        self._district = district.upper()
-        self._id: str = None
+def _pick_nonce(response, **_) -> str:
+    """The page embeds the WordPress ajax nonce as ``"ajax_nonce":"<token>"``."""
+    match = re.search(r'"ajax_nonce"\s*:\s*"([^"]+)"', response.text)
+    if not match:
+        raise ValueError("Unable to find ajax_nonce on the FRWA website")
+    return match.group(1)
 
-    def fetch(self):
 
-        s = requests.Session()
+def _pick_property_id(response, nonce, name_or_number, street, district, **_) -> str:
+    """Take the hit whose number matches and whose label holds street and district."""
+    number = str(name_or_number).upper()
+    street_name = street.upper()
+    district_name = district.upper()
+    found = None
+    for item in response.json():
+        label = item["label"]
+        if (
+            number == item["street_no"]
+            and street_name in label
+            and district_name in label
+        ):
+            found = item["id"]
+    if found is None:
+        raise SourceArgumentNotFound(
+            "street", f"{number} {street_name} in {district_name}"
+        )
+    return found
 
-        # get security token
-        r = s.get(API_URLS["HOME"], headers=HEADERS)
-        match = re.search(r'"ajax_nonce"\s*:\s*"([^"]+)"', r.text)
-        if not match:
-            raise Exception("Unable to find ajax_nonce on FRWA website")
-        token = match.group(1)
 
-        # get unique ID from street search
-        params = {
-            "term": f"{self._name_or_number} {self._street}",
-            "action": "autocomplete_search",
-            "security": token,
-        }
-        street_json = s.get(API_URLS["SEARCH"], params=params, headers=HEADERS).json()
-        for item in street_json:
-            if (
-                self._name_or_number == item["street_no"]
-                and self._street in item["label"]
-                and self._district in item["label"]
-            ):
-                self._id = item["id"]
-        if self._id is None:
-            raise Exception(
-                f"Unable to find an street match for {self._name_or_number} {self._street} in {self._district}"
-            )
+def _next_date(block) -> str | None:
+    for row in block.select("table tr"):
+        cells = row.find_all("td")
+        if cells and cells[0].get_text(strip=True) == "Next Collection Date:":
+            return cells[1].get_text(strip=True)
+    return None
 
-        # retrieve schedule
-        params = {
-            "id": self._id,
+
+@final
+class Source(BaseSource):
+    TITLE = "Fleurieu Regional Waste Authority"
+    DESCRIPTION = "Source script for fleurieuregionalwasteauthority.com.au"
+    URL = "https://fleurieuregionalwasteauthority.com.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    REGIONS = (
+        region("Kangaroo Island Council", url="https://www.kangarooisland.sa.gov.au"),
+        region(
+            "District Council of Yankalilla", url="https://www.yankalilla.sa.gov.au"
+        ),
+        region("City of Victor Harbor", url="https://www.victor.sa.gov.au"),
+        region("Alexandrina Council", url="https://www.alexandrina.sa.gov.au"),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Victor Harbor": {
+            "name_or_number": "42",
+            "street": "WISHART CRESCENT",
+            "district": "ENCOUNTER BAY",
+        },
+        "Yankalilla": {
+            "name_or_number": "12",
+            "street": "Wallman Street",
+            "district": "Yankalilla",
+        },
+        "Kangaroo Island": {
+            "name_or_number": "3",
+            "street": "Flinders Grove",
+            "district": "Island Beach",
+        },
+        "Alexandrina": {
+            "name_or_number": "10",
+            "street": "Jacobs Street",
+            "district": "Goolwa South",
+        },
+    }
+
+    PARAMS = (
+        house_number("name_or_number"),
+        street("street"),
+        district("district"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit [FRWA collection calendar]"
+            "(https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads) "
+            "and search for your street. Use the name/number, street name and "
+            "district name as they appear when your collection schedule is "
+            "being displayed."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(HOME, headers=HEADERS, pick=_pick_nonce),
+            retrievers.Lookup(
+                AJAX,
+                headers=HEADERS,
+                params=lambda nonce, name_or_number, street, **_: {
+                    "term": f"{str(name_or_number).upper()} {street.upper()}",
+                    "action": "autocomplete_search",
+                    "security": nonce,
+                },
+                pick=_pick_property_id,
+            ),
+        ),
+        url=AJAX,
+        method="POST",
+        headers=HEADERS,
+        params=lambda nonce, property_id, **_: {
+            "id": property_id,
             "action": "fetch_bin_collection",
-        }
-        r = s.post(API_URLS["SEARCH"], params=params, headers=HEADERS)
-        soup = BeautifulSoup(r.content, "html.parser")
+        },
+    )
 
-        # extract collections
-        entries = []
-        for block in soup.select("div.coll-main-wrap"):
-            waste_type = block.find("h6").get_text(strip=True).split(" Collection")[0]
-            next_date = None
-            for row in block.select("table tr"):
-                label = row.find_all("td")[0].get_text(strip=True)
-                if label == "Next Collection Date:":
-                    next_date = row.find_all("td")[1].get_text(strip=True)
-            entries.append(
-                Collection(
-                    date=datetime.strptime(next_date, "%d %B %Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
+    parse = parsers.HtmlParser("div.coll-main-wrap")
 
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_next_date,
+        type_getter=lambda block: (
+            block.find("h6").get_text(strip=True).split(" Collection")[0]
+        ),
+        type_value_map={
+            "Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Green Waste": wt.GARDEN_WASTE,
+        },
+        parse_date=date_parsers.for_format("%d %B %Y"),
+    )
