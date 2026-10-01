@@ -1,43 +1,27 @@
-import datetime as dt
-import json
-import logging
+import datetime
 import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    postcode,
+    street,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "The Hawkesbury City Council, Sydney"
-DESCRIPTION = "Source for Hawkesbury City Council, Sydney, Australia waste collection."
-URL = "https://www.hawkesbury.nsw.gov.au/"
-TEST_CASES = {
-    "south windsor, 539a George Street": {
-        "suburb": "south windsor",
-        "street": "George Street",
-        "houseNo": 539,
-        "postCode": 2756,
-    },
-    "Windsor, catherine street 7": {
-        "suburb": "Windsor",
-        "street": "catherine st",
-        "houseNo": 7,
-        "postCode": 2756,
-    },
-    "Kurrajong, Bells Line Of Road 1052 ": {
-        "suburb": "Kurrajong HILLS",
-        "street": "Bells Line Of Road",
-        "houseNo": 1052,
-        "postCode": 2758,
-    },
-}
-API_URL = "https://data.hawkesbury.nsw.gov.au/api"
-_LOGGER = logging.getLogger(__name__)
-ICON_MAP = {
-    "DOMESTIC": Icons.GENERAL_WASTE,
-    "RECYCLE": Icons.RECYCLING,
-    "ORGANIC": Icons.ORGANIC,
-}
-STREETNAMES = {
+API_URL = "https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/"
+
+# The council's address register spells street types out in full.
+_STREET_TYPES = {
     "Av": "Avenue",
     "Cct": "Circuit",
     "Cr": "Crescent",
@@ -53,79 +37,110 @@ STREETNAMES = {
     "St": "Street",
     "Tce": "Terrace",
 }
+_BINS = ("garbagebin", "recyclebin", "organicbin")
+_DAYS_AHEAD = 365
 
 
-class Source:
-    def __init__(self, suburb, street, houseNo, postCode):
-        self._suburb = suburb.upper()
-        self._street = street
-        self._houseNo = str(houseNo)
-        self._url = API_URL
-        self._postCode = postCode
-
-    def get_data(self, bin_prefix: str, fields) -> list[Collection]:
-        entries: list[Collection] = []
-
-        frequency = int(fields.get(f"{bin_prefix}_schedule", 0))
-        if frequency == 0:
-            return entries
-
-        base_string = fields.get(
-            f"{bin_prefix}_week1", dt.datetime.min.strftime("%Y-%m-%d")
-        )
-        basedate = parse_date_field(base_string)
-
-        # Get number of days between basedate and a year from now
-        days = ((dt.datetime.now() + dt.timedelta(days=365)) - basedate).days
-
-        date_list = [basedate + dt.timedelta(days=x) for x in range(0, days, frequency)]
-        name = bin_prefix.replace("bin", "").title()
-        for dateStr in date_list:
-            entries.append(Collection(dateStr.date(), name, ICON_MAP.get(name.upper())))
-        return entries
-
-    def fetch(self):
-        # check address values are not abbreviated
-        address = self._street
-        for key in STREETNAMES:
-            regex = rf"\b{key.lower()}\b"
-            address = re.sub(
-                pattern=regex, repl=STREETNAMES[key], string=address.lower()
-            )
-
-        # get list of suburbs
-        r = requests.get(
-            f"{self._url}/records/1.0/search/",
-            params={
-                "sort": "gisaddress",
-                "refine.gisaddress": f"{self._houseNo} {address.title()} {self._suburb} NSW {self._postCode}",
-                "rows": 1,
-                "dataset": "bin-collection-days",
-                "timezone": "Australia/Sydney",
-                "lang": "en",
-            },
-        )
-        data = json.loads(r.text)
-
-        # Check if house record was found
-        if len(data["records"]) == 0:
-            raise SourceArgumentNotFound("houseNo", self._houseNo)
-
-        # get collection schedule
-        record = data["records"][-1]
-        garbagebin_entries = self.get_data("garbagebin", record["fields"])
-        recyclebin_entries = self.get_data("recyclebin", record["fields"])
-        organicbin_entries = self.get_data("organicbin", record["fields"])
-        entries = garbagebin_entries + recyclebin_entries + organicbin_entries
-
-        return entries
+def _gis_address(suburb, street, houseNo, postCode, **_) -> str:
+    """The register key: ``<no> <Street Name> <SUBURB> NSW <postcode>``."""
+    name = street.lower()
+    for short, full in _STREET_TYPES.items():
+        name = re.sub(rf"\b{short.lower()}\b", full, name)
+    return f"{houseNo} {name.title()} {suburb.upper()} NSW {postCode}"
 
 
-def parse_date_field(date_string):
-    formats = ["%Y-%m-%d %H:%M:%S", "%Y-%m-%d"]
-    for fmt in formats:
-        try:
-            return dt.datetime.strptime(date_string, fmt)
-        except ValueError:
+def _query(suburb, street, houseNo, postCode, **_) -> dict:
+    return {
+        "sort": "gisaddress",
+        "refine.gisaddress": _gis_address(suburb, street, houseNo, postCode),
+        "rows": 1,
+        "dataset": "bin-collection-days",
+        "timezone": "Australia/Sydney",
+        "lang": "en",
+    }
+
+
+def _property(response, source) -> list[dict]:
+    """The fields of the property's record (a miss is a wrong house number)."""
+    records = response["records"]
+    if not records:
+        raise SourceArgumentNotFound("houseNo", source.params["houseNo"])
+    return [records[-1]["fields"]]
+
+
+def _schedules(fields, source):
+    """One recurring series per bin: a base date and a cadence in days."""
+    for name in _BINS:
+        frequency = int(fields.get(f"{name}_schedule", 0))
+        base = fields.get(f"{name}_week1")
+        if frequency == 0 or not base:
             continue
-    raise ValueError(f"Unrecognized date format: {date_string}")
+        yield Schedule(
+            name,
+            date_parsers.auto(base),
+            datetime.timedelta(days=frequency),
+            _DAYS_AHEAD // frequency + 1,
+            anchor=True,
+        )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "The Hawkesbury City Council, Sydney"
+    DESCRIPTION = (
+        "Source for Hawkesbury City Council, Sydney, Australia waste collection."
+    )
+    URL = "https://www.hawkesbury.nsw.gov.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "south windsor, 539a George Street": {
+            "suburb": "south windsor",
+            "street": "George Street",
+            "houseNo": 539,
+            "postCode": 2756,
+        },
+        "Windsor, catherine street 7": {
+            "suburb": "Windsor",
+            "street": "catherine st",
+            "houseNo": 7,
+            "postCode": 2756,
+        },
+        "Kurrajong, Bells Line Of Road 1052 ": {
+            "suburb": "Kurrajong HILLS",
+            "street": "Bells Line Of Road",
+            "houseNo": 1052,
+            "postCode": 2758,
+        },
+    }
+
+    PARAMS = (
+        city("suburb"),
+        street("street"),
+        postcode("postCode", "houseNo"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the suburb, street name (abbreviations such as 'St' or "
+            "'Rd' are expanded), house number and postcode of your property."
+        ),
+    }
+
+    retrieve = retrievers.Request(API_URL, params=_query)
+    parse = parsers.JsonParser()
+    preprocess = Compose(_property, RecurrenceExpander(_schedules))
+    transform = ICSTransformer(
+        type_value_map={
+            "garbagebin": wt.GENERAL_WASTE,
+            "recyclebin": wt.RECYCLABLES,
+            "organicbin": wt.ORGANIC,
+        }
+    )

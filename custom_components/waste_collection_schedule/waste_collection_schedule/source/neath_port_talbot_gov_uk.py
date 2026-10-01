@@ -1,236 +1,126 @@
-from __future__ import annotations
-
-import datetime
 import re
-from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Neath Port Talbot Council"
-DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
 URL = "https://www.npt.gov.uk/"
+FORM_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
+_HEADERS = {"Referer": FORM_URL, "Origin": URL.rstrip("/")}
+
+# "Thursday, 23 October (Today)" with a non-breaking space: only day and month.
+_DAY_MONTH_RE = re.compile(r"(\d{1,2})\s+([A-Za-z]+)")
 
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
+def _tokens(response, *_, **__) -> dict:
+    """The anti-forgery fields every step of the form must post back."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    found = {}
+    for name in ("__RequestVerificationToken", "ufprt"):
+        element = soup.find("input", {"name": name})
+        if element is None or not element.get("value"):
+            raise ValueError(f"Failed to find {name} in the bin day finder form.")
+        found[name] = str(element["value"])
+    return found
 
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
+def _date_text(link) -> str:
+    """The date heading ("Thursday, 23 October") above the card's row."""
+    row = link.find_parent("div", class_="alert")
+    heading = row.find_previous_sibling("h2") if row is not None else None
+    text = " ".join(heading.get_text().split()) if heading is not None else ""
+    match = _DAY_MONTH_RE.search(text)
+    if match is None:
+        raise ValueError(f"No date in heading {text!r}")
+    return f"{match.group(1)} {match.group(2)}"
 
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "The postcode of the address to look up (e.g., SA11 1AB).",
-        "uprn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section.",
-    }
-}
+@final
+class Source(BaseSource):
+    TITLE = "Neath Port Talbot Council"
+    DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
+    URL = URL
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-
-TEST_CASES = {
-    "Test_001": {
-        "postcode": "SA11 3HW",
-        "uprn": 100100601042,
-    },
-    "Test_002": {
-        "postcode": "SA11 3HY",
-        "uprn": "100100599841",
-    },
-    "Test_003": {
-        "postcode": "SA11 3DY",
-        "uprn": "100100600279",
-    },
-}
-
-
-ICON_MAP = {
-    "Plastic / Tins / Cans": Icons.PLASTIC_PACKAGING,
-    "Cardboard, Cartons and Paper": Icons.PAPER,
-    "Glass": Icons.GLASS,
-    "Food Waste": Icons.BIO_KITCHEN,
-    "Batteries": Icons.BATTERY,
-    "General Household Rubbish": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-}
-
-
-class FailedToFindTokensError(Exception): ...
-
-
-class FailedToFindCollections(Exception): ...
-
-
-_DAY_MONTH_RE = re.compile(
-    r"(?i)^\s*(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\w*,?\s*(\d{1,2})\s*([A-Za-z]+)\s*$"
-)
-
-
-@dataclass(frozen=True)
-class Tokens:
-    request_verification_token: str | None
-    ufprt: str | None
-
-
-class Source:
-    """
-    Neath Port Talbot Council waste collection source.
-
-    The Neath Port Talbot Council website is built in a way that makes it very difficult to scrape waste collection
-    data.
-    Collection dates are only given for the next two weeks from the current date.
-    Unfortunately, the user must submit their postcode even if they already know their UPRN.
-
-    This source implementation works by simulating the multi-step form submission process that a user would go
-    through on the website:
-        1. Load the initial page to obtain necessary tokens.
-        2. Submit the postcode to get the list of addresses.
-        3. Submit the UPRN to get the waste collection schedule.
-
-    Finally, the waste collection schedule is parsed from the resulting HTML page.
-    """
-
-    _BASE_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
-    _HEADERS: ClassVar = {
-        "User-Agent": "Mozilla/5.0",
-        "Referer": _BASE_URL,
-        "Origin": URL,
-    }
-
-    def __init__(self, uprn: str | int, postcode: str) -> None:
-        self._uprn = str(uprn).zfill(12)
-        self._postcode = postcode
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(self._HEADERS)
-
-        # First, make an initial GET request to obtain the necessary tokens.
-        initial_request = session.get(self._BASE_URL, timeout=20)
-        initial_request.raise_for_status()
-
-        # Step 1: Submit the postcode to get the address list / UPRNs.
-        # Note that even if we already know the UPRN, we still need to go through this step.
-        fetch_addresses_payload = {
-            **_base_post_payload(initial_request.text),
-            "PostCode": self._postcode,
-            "action": "Find address",
-        }
-        fetch_addresses_request = session.post(
-            self._BASE_URL, data=fetch_addresses_payload, timeout=20
-        )
-        fetch_addresses_request.raise_for_status()
-
-        # Step 2: Submit the UPRN to get the waste collection schedule.
-        fetch_collections_payload = {
-            **_base_post_payload(fetch_addresses_request.text),
-            "Address": self._uprn,
-            "action": "Show my bin days",
-        }
-        fetch_collections_request = session.post(
-            self._BASE_URL, data=fetch_collections_payload, timeout=20
-        )
-        fetch_collections_request.raise_for_status()
-
-        # Step 3: Parse the waste collection schedule from the response HTML.
-        return _parse_collections_from_page_source(fetch_collections_request.text)
-
-
-def _base_post_payload(raw_html: str) -> dict[str, str | None]:
-    tokens = _extract_tokens(raw_html)
-    return {
-        "__RequestVerificationToken": tokens.request_verification_token,
-        "ufprt": tokens.ufprt,
-    }
-
-
-def _extract_tokens(raw_html: str) -> Tokens:
-    soup = BeautifulSoup(raw_html, "html.parser")
-
-    try:
-        request_verification_token = soup.find(
-            "input", {"name": "__RequestVerificationToken"}
-        )[
-            "value"  # type: ignore[index]
-        ]
-    except TypeError as e:
-        raise FailedToFindTokensError(
-            "Failed to find __RequestVerificationToken in HTML."
-        ) from e
-
-    try:
-        ufprt = soup.find("input", {"name": "ufprt"})["value"]  # type: ignore[index]
-    except TypeError as e:
-        raise FailedToFindTokensError("Failed to find ufprt in HTML.") from e
-
-    return Tokens(
-        request_verification_token=(
-            str(request_verification_token) if request_verification_token else None
-        ),
-        ufprt=str(ufprt) if ufprt else None,
-    )
-
-
-def _parse_collections_from_page_source(raw_html: str) -> list[Collection]:
-    soup = BeautifulSoup(raw_html, "html.parser")
-    root = soup.find(id="contentInner")
-
-    # Find all date headers (they are <h2> containing e.g. "Thursday, 23 October").
-    headers = [
-        h
-        for h in root.find_all("h2")
-        if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+        wt.FOOD_WASTE,
+        wt.OTHER,
     ]
 
-    collections: list = []
-    for h2 in headers:
-        collection_date = _collection_date_from_header(h2.get_text())
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "SA11 3HW", "uprn": 100100601042},
+        "Test_002": {"postcode": "SA11 3HY", "uprn": "100100599841"},
+        "Test_003": {"postcode": "SA11 3DY", "uprn": "100100600279"},
+    }
 
-        for sib in h2.next_siblings:
-            name = sib.name
-            if not name:
-                continue
+    PARAMS = (postcode(), uprn())
 
-            if name == "h2":
-                # We've finished iterating this date's collections, so break to loop to the next date header.
-                break
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "An easy way to discover your Unique Property Reference Number (UPRN) "
+            "is by going to https://www.findmyaddress.co.uk/ and entering in your "
+            "address details, or by searching for your address at "
+            "https://uprn.uk/. The council's site asks for the postcode before "
+            "the property, so both are needed. Collection dates are only given "
+            "for the next two weeks."
+        ),
+    }
 
-            cards = sib.find_all(class_="card") or []
-            for card in cards:
-                a = card.find("a")
-                if not a:
-                    continue
+    # The site is a three-page form: the form page, the postcode submitted for
+    # the address list, the chosen property submitted for the bin days. Each
+    # page carries the anti-forgery tokens the next submission must send back.
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(FORM_URL, pick=_tokens, headers=_HEADERS),
+            retrievers.Lookup(
+                FORM_URL,
+                method="POST",
+                headers=_HEADERS,
+                data=lambda tokens, postcode, **_: {
+                    **tokens,
+                    "PostCode": postcode,
+                    "action": "Find address",
+                },
+                pick=_tokens,
+            ),
+        ),
+        url=FORM_URL,
+        method="POST",
+        headers=_HEADERS,
+        data=lambda first, tokens, uprn, **_: {
+            **tokens,
+            "Address": str(uprn).zfill(12),
+            "action": "Show my bin days",
+        },
+        raise_for_status=True,
+    )
 
-                type_text = _clean_text(a.get_text())
-                if not type_text:
-                    continue
+    parse = parsers.HtmlParser(
+        "#contentInner div.bin-card > div.card-body > a", require=["#contentInner"]
+    )
 
-                collections.append(
-                    Collection(
-                        date=collection_date,
-                        t=type_text,
-                        icon=ICON_MAP.get(type_text),
-                    )
-                )
-
-    if not collections:
-        raise FailedToFindCollections("No waste collection entries found on page.")
-
-    return collections
-
-
-def _collection_date_from_header(raw_html: str) -> datetime.date:
-    """Parse a datetime from a header like 'Thursday, 23 October'."""
-    return parser.parse(_clean_text(raw_html), dayfirst=True, fuzzy=True).date()
-
-
-def _clean_text(s: str) -> str:
-    return " ".join(s.replace("\xa0", " ").split())
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=lambda link: " ".join(link.get_text().split()),
+        parse_date=date_parsers.nearest_year("%d %B"),
+        carry_raw_label=True,
+        type_value_map={
+            "General Household Rubbish": wt.GENERAL_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Plastic / Tins / Cans": wt.RECYCLABLES,
+            "Cardboard, Cartons and Paper": wt.PAPER,
+            "Glass": wt.GLASS,
+            "Food Waste": wt.FOOD_WASTE,
+            "Batteries": wt.OTHER,
+        },
+    )

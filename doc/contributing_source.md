@@ -367,6 +367,7 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | WhatBinDay (AU) | `WhatBinDayRetriever` / `WhatBinDayParser` | The WhatBinDay app backend shared by several AU councils; a device-key-keyed session (`DeviceKeyStore`). |
 | Sepan (PL) | `SepanRetriever`, `SepanReportParser` / `SepanPositionalReportParser` | Polish Sepan waste portals; a month-name or positional HTML report table. |
 | Junker app (IT) | `JunkerRetriever` / `JunkerParser` | The Junker app backend shared by several Italian municipalities. |
+| Junker street zones (IT) | `JunkerStreetRetriever`, `find_zone` + `JunkerParser` | Junker municipalities that list one zone per street or street-number range (CIDIU's towns): the street and house number are matched against the zone names (ranges, parity, exceptions), then that zone's calendar is read. |
 | A Region (CH) | `ARegionRetriever` / `ARegionIcsParser` | Swiss "A Region" ICS-based calendars. |
 | Ecoharmonogram (PL) | `EcoharmonogramClient`, `EcoharmonogramRetriever` / `EcoharmonogramParser` | Polish Ecoharmonogram portals; town/street lookup then a schedule fetch. |
 | Cloud9 apps (UK) | `Cloud9Retriever` / `Cloud9Parser` | The Cloud9 apps backend shared by several UK councils; address-based lookup. |

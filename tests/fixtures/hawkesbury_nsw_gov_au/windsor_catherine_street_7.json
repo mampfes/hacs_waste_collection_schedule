@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/ 7ae37dff3b",
+      "method": "GET",
+      "url": "https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/",
+      "final_url": "https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/?sort=gisaddress&refine.gisaddress=7+Catherine+Street+WINDSOR+NSW+2756&rows=1&dataset=bin-collection-days&timezone=Australia%2FSydney&lang=en",
+      "body": "{\"params\":[[\"dataset\",\"bin-collection-days\"],[\"lang\",\"en\"],[\"refine.gisaddress\",\"7 Catherine Street WINDSOR NSW 2756\"],[\"rows\",\"1\"],[\"sort\",\"gisaddress\"],[\"timezone\",\"Australia/Sydney\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Thu, 01 Oct 2026 09:53:48 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4988",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-10-02 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJuaGl0cyI6IDEsICJwYXJhbWV0ZXJzIjogeyJkYXRhc2V0IjogImJpbi1jb2xsZWN0aW9uLWRheXMiLCAibGFuZyI6ICJlbiIsICJyb3dzIjogMSwgInN0YXJ0IjogMCwgInNvcnQiOiBbImdpc2FkZHJlc3MiXSwgInJlZmluZSI6IHsiZ2lzYWRkcmVzcyI6ICI3IENhdGhlcmluZSBTdHJlZXQgV0lORFNPUiBOU1cgMjc1NiJ9LCAiZm9ybWF0IjogImpzb24iLCAidGltZXpvbmUiOiAiQXVzdHJhbGlhL1N5ZG5leSJ9LCAicmVjb3JkcyI6IFt7ImRhdGFzZXRpZCI6ICJiaW4tY29sbGVjdGlvbi1kYXlzIiwgInJlY29yZGlkIjogImUxMWJmMWVkZDMzY2NjMzI3NTlhZjVmMjQ3ZWI0YjQwZTU2ZmQwOTUiLCAiZmllbGRzIjogeyJvcmdhbmljYmluX3NjaGVkdWxlX2ZyZXF1ZW5jeSI6ICJmb3J0bmlnaHRseSIsICJvcmdhbmljYmluX3dlZWsxIjogIjIwMjMtMTEtMTQgMDA6MDA6MDAiLCAicmVjeWNsZWJpbl9zaXplIjogIjI0MEwiLCAicHJvcGVydHlfbm8iOiAiMTM3MCIsICJnYXJiYWdlYmluX2RheSI6ICJUdWVzZGF5IiwgIm9yZ2FuaWNiaW5fd2VlazIiOiAiMjAyMy0xMS0yOCAwMDowMDowMCIsICJyZWN5Y2xlYmluX2RheSI6ICJUdWVzZGF5IiwgInNlcnZpY2V3ZWVrIjogIkFyZWEgMSIsICJnYXJiYWdlYmluX3NpemUiOiAiMjQwTCIsICJyZWN5Y2xlYmluX3NjaGVkdWxlIjogIjE0IiwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluIjogIjIwMjYtMTItMjIiLCAiZ2FyYmFnZWJpbl93ZWVrMiI6ICIyMDIzLTExLTE0IiwgIm9yZ2FuaWNiaW5fc2l6ZSI6ICJNYW5kYXRvcnkiLCAib3JnYW5pY2Jpbl9kYXkiOiAiVHVlc2RheSIsICJleHRyYWZlc3RpdmVfcmVjeWNsZWJpbl9zY2hlZHVsZSI6IDAuMCwgImdhcmJhZ2ViaW5fd2VlazEiOiAiMjAyMy0xMS0wNyIsICJyZWN5Y2xlYmluX3NjaGVkdWxlX2ZyZXF1ZW5jeSI6ICJmb3J0bmlnaHRseSIsICJnYXJiYWdlYmluX3NjaGVkdWxlX2ZyZXF1ZW5jeSI6ICJ3ZWVrbHkiLCAib3JnYW5pY2Jpbl9zY2hlZHVsZSI6ICIxNCIsICJnaXNhZGRyZXNzIjogIjcgQ2F0aGVyaW5lIFN0cmVldCBXSU5EU09SIE5TVyAyNzU2IiwgImdhcmJhZ2ViaW5fc2NoZWR1bGUiOiAiNyIsICJyZWN5Y2xlYmluX3dlZWsyIjogIjIwMjMtMTEtMjEiLCAic2VydmljZWRheSI6ICJUdWVzZGF5IiwgInJlY3ljbGViaW5fd2VlazEiOiAiMjAyMy0xMS0wNyIsICJleHRyYWZlc3RpdmVfcmVjeWNsZWJpbl9kYXkiOiAiVHVlc2RheSJ9LCAicmVjb3JkX3RpbWVzdGFtcCI6ICIyMDI2LTA4LTI3VDExOjQyOjU0LjE4MSsxMDowMCJ9XSwgImZhY2V0X2dyb3VwcyI6IFt7Im5hbWUiOiAiZ2lzYWRkcmVzcyIsICJmYWNldHMiOiBbeyJuYW1lIjogIjcgQ2F0aGVyaW5lIFN0cmVldCBXSU5EU09SIE5TVyAyNzU2IiwgImNvdW50IjogMSwgInN0YXRlIjogInJlZmluZWQiLCAicGF0aCI6ICI3IENhdGhlcmluZSBTdHJlZXQgV0lORFNPUiBOU1cgMjc1NiJ9XX1dfQ=="
+    }
+  ]
+}

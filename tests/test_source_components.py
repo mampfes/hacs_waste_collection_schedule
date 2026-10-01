@@ -1566,9 +1566,9 @@ _CIDIU_ZONES = [
 
 
 def _cidiu_zone(street, number):
-    module = _get_module("cidiu_it")
-    source = module.Source(street=street, street_number=number, city="x")
-    return {i: n for n, i in _CIDIU_ZONES}[source._find_zone(_CIDIU_ZONES)]
+    from waste_collection_schedule.service.junker_street import find_zone
+
+    return {i: n for n, i in _CIDIU_ZONES}[find_zone(street, number, _CIDIU_ZONES)]
 
 
 def test_cidiu_it_matches_zone_by_range_parity_and_exception() -> None:
@@ -1603,46 +1603,16 @@ def test_cidiu_it_reports_unmatched_addresses() -> None:
         SourceArgAmbiguousWithSuggestions,
         SourceArgumentNotFoundWithSuggestions,
     )
+    from waste_collection_schedule.service.junker_street import find_zone
 
-    module = _get_module("cidiu_it")
     with pytest.raises(SourceArgumentNotFoundWithSuggestions):
         _cidiu_zone("VIA INESISTENTE", 1)
     with pytest.raises(SourceArgumentNotFoundWithSuggestions):
         _cidiu_zone("CORSO SUSA", 400)
     with pytest.raises(SourceArgAmbiguousWithSuggestions):
-        module.Source(street="VIA VERDI", street_number=7, city="x")._find_zone(
-            [("VIA VERDI da 1 a 10", 1), ("VIA VERDI da 5 a 15", 2)]
+        find_zone(
+            "VIA VERDI", 7, [("VIA VERDI da 1 a 10", 1), ("VIA VERDI da 5 a 15", 2)]
         )
-
-
-def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
-    module = _get_module("cidiu_it")
-    from waste_collection_schedule import Icons
-
-    calls = []
-
-    def _fetch_junker(self, area=None):
-        calls.append(area)
-        if area is None:
-            return "zones", _CIDIU_ZONES
-        return "events", [
-            {"date": "2026-01-01", "vbin_desc": "General waste collection"},
-            {"date": "2026-01-02", "vbin_desc": "Glass/Cans"},
-            {"date": "2026-01-03", "vbin_desc": "Something new"},
-        ]
-
-    with patch.object(module.Source, "_fetch_junker", _fetch_junker):
-        entries = module.Source(
-            street="CORSO SUSA", street_number=124, city="Rivoli"
-        ).fetch()
-
-    assert calls == [None, 3]
-    assert [e.type for e in entries] == [
-        "Indifferenziato",
-        "Vetro e lattine",
-        "Something new",
-    ]
-    assert entries[1].icon == Icons.GLASS
 
 
 def test_tommekalender_parser_uses_upstream_year_across_new_year() -> None:

@@ -1,114 +1,66 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "PUP Saubermacher"
-DESCRIPTION = "Source for PUP Saubermacher."
-URL = "https://www.pup-saubermacher.si/"
-TEST_CASES = {
-    "Sostanj 1": {"place_id": 412177},
-    "Sostanj 2": {"place_id": 100911},
-}
 
-BIN_TYPES = {
-    "M": "Mesani",
-    "B": "Bioloski",
-    "E": "Embalaza",
-}
-ICON_MAP = {
-    "M": Icons.GENERAL_WASTE,
-    "B": Icons.ORGANIC,
-    "E": Icons.RECYCLING,
-}
+def _heading(li) -> str:
+    """The bin heading above a date, without its colour suffix.
 
-# Headings used on the schedule page, mapped to the bin type they announce.
-# The headings carry a suffix describing the bin colour, so they are matched
-# by prefix.
-WASTE_TYPE_PREFIXES = {
-    "Mešana embalaža": "E",
-    "Mešani komunalni odpadki": "M",
-    "Biološki odpadki": "B",
-}
+    Headings read "Mešana embalaža (zabojnik z rumenim pokrovom)": the part in
+    brackets only describes the bin.
+    """
+    return li.find_previous("b").get_text(strip=True).split(" (")[0]
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov",
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "place_id": "Place ID (Odjemno mesto)",
+
+@final
+class Source(BaseSource):
+    TITLE = "PUP Saubermacher"
+    DESCRIPTION = "Source for PUP Saubermacher."
+    URL = "https://www.pup-saubermacher.si/"
+    COUNTRY = "si"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Sostanj 1": {"place_id": 412177},
+        "Sostanj 2": {"place_id": 100911},
     }
-}
 
-BASE_URL = "https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov"
+    PARAMS = (location_id("place_id"),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your place_id (Odjemno mesto number) on your monthly PUP bill, "
+            "or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov"
+        ),
+    }
 
-class Source:
-    def __init__(self, place_id: int):
-        self._place_id: int = place_id
+    retrieve = retrievers.Request(
+        "https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov",
+        params=lambda place_id, **_: {"q": place_id},
+        encoding="utf-8",
+    )
 
-    def fetch(self) -> list[Collection]:
-        args = {
-            "q": self._place_id,
-        }
+    # Each bin is a bold heading followed by a list of "16.09.2026 sreda" dates.
+    parse = parsers.HtmlParser("b + br + ul > li")
 
-        response = requests.get(BASE_URL, params=args)
-        response.encoding = "utf-8"
-        response.raise_for_status()
-
-        content = BeautifulSoup(response.text, "html.parser")
-
-        data = self.parse_to_obj(content)
-
-        if not data:
-            raise SourceArgumentNotFound("place_id", self._place_id)
-
-        entries = []
-
-        for item in data:
-            type_char = item["type"]
-
-            for date_info in item["dates"]:
-                date = self.get_date(date_info)
-
-                if date is not None:
-                    entries.append(
-                        Collection(date, BIN_TYPES[type_char], ICON_MAP[type_char])
-                    )
-
-        return entries
-
-    def parse_to_obj(self, content):
-        data = []
-
-        for b_tag in content.find_all("b"):
-            type_char = self.get_type(b_tag.get_text(strip=True))
-
-            if type_char is None:
-                continue
-
-            ul_tag = b_tag.find_next("ul")
-
-            if ul_tag:
-                dates = [li.get_text(strip=True) for li in ul_tag.find_all("li")]
-                data.append({"type": type_char, "dates": dates})
-
-        return data
-
-    def get_type(self, title):
-        for prefix, type_char in WASTE_TYPE_PREFIXES.items():
-            if title.startswith(prefix):
-                return type_char
-        return None
-
-    def get_date(self, date_info):
-        # List items look like "16.09.2026 sreda"; anything without a leading
-        # date (e.g. an empty or explanatory entry) is skipped.
-        date_str = date_info.split(" ")[0].strip()
-
-        try:
-            return datetime.strptime(date_str, "%d.%m.%Y").date()
-        except ValueError:
-            return None
+    transform = HtmlTransformer(
+        date_getter=lambda li: li.get_text(strip=True).split(" ")[0],
+        type_getter=_heading,
+        type_value_map={
+            "Mešana embalaža": wt.RECYCLABLES,
+            "Mešani komunalni odpadki": wt.GENERAL_WASTE,
+            "Biološki odpadki": wt.ORGANIC,
+        },
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+        skip_unparseable_dates=True,
+    )
