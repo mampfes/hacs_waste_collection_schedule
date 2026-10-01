@@ -486,6 +486,15 @@ def compare(a, b, remove_space=False):
     return a.lower().strip() == b.lower().strip()
 
 
+def _new_client_id() -> str:
+    """A fresh client identity for one AbfallPlus wizard session.
+
+    Kept as its own seam so offline replay can hand back the recorded identity
+    without patching ``uuid.uuid4`` process-wide.
+    """
+    return str(uuid.uuid4())
+
+
 class AppAbfallplusDe:
     def __init__(
         self,
@@ -504,7 +513,7 @@ class AppAbfallplusDe:
         hnr_id=None,
         session=None,
     ):
-        self._client = str(uuid.uuid4())
+        self._client = _new_client_id()
 
         self._app_id = app_id
         # Run on the shared source.session when one is provided (BaseSource
@@ -1208,8 +1217,15 @@ class AppAbfallplusRetriever(RetrieverFunc):
     (no Cloudflare), so browser impersonation is not needed here.
     """
 
+    def __init__(self, *, app_id: str | None = None):
+        """Bind a provider's app ID, or read it from the source's parameters."""
+        self._app_id = app_id
+
     def __call__(self, source: "BaseSource") -> requests.Response:
-        client = _client_from_params(source.params)
+        params = dict(source.params)
+        if self._app_id is not None:
+            params["app_id"] = self._app_id
+        client = _client_from_params(params)
         response = client.walk_to_struktur()
         # The parser needs the subtitle hints gathered during the walk.
         source._appabfallplus_client = client  # type: ignore[attr-defined]
