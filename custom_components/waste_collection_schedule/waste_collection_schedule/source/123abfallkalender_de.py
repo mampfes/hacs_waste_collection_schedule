@@ -1,109 +1,16 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from icalendar import Calendar
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "123abfallkalender"
-DESCRIPTION = "Source script for 123abfallkalender.de (Ebsdorfergrund)"
-URL = "https://www.123abfallkalender.de/"
+_BASE = "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund"
 
-EXTRA_INFO = [
-    {
-        "title": "Beltershausen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/1-beltershausen",
-        "default_params": {
-            "district": "Beltershausen",
-        },
-    },
-    {
-        "title": "Dreihausen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/2-dreihausen",
-        "default_params": {
-            "district": "Dreihausen",
-        },
-    },
-    {
-        "title": "Ebsdorf",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/3-ebsdorf",
-        "default_params": {
-            "district": "Ebsdorf",
-        },
-    },
-    {
-        "title": "Frauenberg",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/4-frauenberg",
-        "default_params": {
-            "district": "Frauenberg",
-        },
-    },
-    {
-        "title": "Hachborn",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/5-hachborn",
-        "default_params": {
-            "district": "Hachborn",
-        },
-    },
-    {
-        "title": "Heskem",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/6-heskem",
-        "default_params": {
-            "district": "Heskem",
-        },
-    },
-    {
-        "title": "Ilschhausen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/7-ilschhausen",
-        "default_params": {
-            "district": "Ilschhausen",
-        },
-    },
-    {
-        "title": "Leidenhofen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/8-leidenhofen",
-        "default_params": {
-            "district": "Leidenhofen",
-        },
-    },
-    {
-        "title": "Mölln",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln",
-        "default_params": {
-            "district": "Mölln",
-        },
-    },
-    {
-        "title": "Rauischholzhausen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/10-rauischholzhausen",
-        "default_params": {
-            "district": "Rauischholzhausen",
-        },
-    },
-    {
-        "title": "Roßberg",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/11-rossberg",
-        "default_params": {
-            "district": "Roßberg",
-        },
-    },
-    {
-        "title": "Wermertshausen",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/12-wermertshausen",
-        "default_params": {
-            "district": "Wermertshausen",
-        },
-    },
-    {
-        "title": "Wittelsberg",
-        "url": "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/13-wittelsberg",
-        "default_params": {
-            "district": "Wittelsberg",
-        },
-    },
-]
-
-SUPPORTED_DISTRICTS = {
+# District name -> slug of its calendar page.
+_DISTRICTS = {
     "Beltershausen": "1-beltershausen",
     "Dreihausen": "2-dreihausen",
     "Ebsdorf": "3-ebsdorf",
@@ -119,79 +26,52 @@ SUPPORTED_DISTRICTS = {
     "Wittelsberg": "13-wittelsberg",
 }
 
-TEST_CASES = {
-    "Beltershausen": {"district": "Beltershausen"},
-    "Dreihausen": {"district": "Dreihausen"},
-    "Ebsdorf": {"district": "Ebsdorf"},
-    "Frauenberg": {"district": "Frauenberg"},
-    "Hachborn": {"district": "Hachborn"},
-    "Heskem": {"district": "Heskem"},
-    "Ilschhausen": {"district": "Ilschhausen"},
-    "Leidenhofen": {"district": "Leidenhofen"},
-    "Mölln": {"district": "Mölln"},
-    "Rauischholzhausen": {"district": "Rauischholzhausen"},
-    "Roßberg": {"district": "Roßberg"},
-    "Wermertshausen": {"district": "Wermertshausen"},
-    "Wittelsberg": {"district": "Wittelsberg"},
-}
 
-API_URL = "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund"
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Altpapier": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "MR Sondermüll": Icons.HAZARDOUS,
-    "EBS Sondermüll": Icons.HAZARDOUS,
-    "Praxis GmbH": Icons.HAZARDOUS,
-}
+@final
+class Source(BaseSource):
+    TITLE = "123abfallkalender"
+    DESCRIPTION = "Source script for 123abfallkalender.de (Ebsdorfergrund)"
+    URL = "https://www.123abfallkalender.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your district from the list.",
-    "de": "Wählen Sie Ihren Ortsteil aus der Liste.",
-}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.HAZARDOUS,
+        wt.OTHER,
+    ]
 
-PARAM_DESCRIPTIONS = {"en": {"district": "District"}, "de": {"district": "Ortsteil"}}
+    TEST_CASES: ClassVar[dict] = {name: {"district": name} for name in _DISTRICTS}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "district": "District",
-    },
-    "de": {
-        "district": "Ortsteil",
-    },
-}
+    PARAMS = (dropdown("district", list(_DISTRICTS)),)
 
+    REGIONS = tuple(
+        region(name, url=f"{_BASE}/{slug}", district=name)
+        for name, slug in _DISTRICTS.items()
+    )
 
-class Source:
-    def __init__(self, district: str):
-        if district not in SUPPORTED_DISTRICTS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "district", district, list(SUPPORTED_DISTRICTS.keys())
-            )
-        self._slug = SUPPORTED_DISTRICTS[district]
+    HOWTO: ClassVar[dict] = {
+        "en": "Select your district from the list.",
+        "de": "Wählen Sie Ihren Ortsteil aus der Liste.",
+    }
 
-    def fetch(self) -> list[Collection]:
-        url = f"{API_URL}/{self._slug}.ics?alert=never"
-
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        cal = Calendar.from_ical(r.content)
-
-        entries = []
-
-        for event in cal.walk("VEVENT"):
-            summary = str(event.get("SUMMARY", "Unbekannt"))
-            date = event.get("DTSTART").dt
-            if isinstance(date, datetime.datetime):
-                date = date.date()
-            entries.append(
-                Collection(
-                    date=date, t=summary, icon=ICON_MAP.get(summary, "mdi:trash-can")
-                )
-            )
-
-        if not entries:
-            raise Exception(f"No entries for district {self._slug}")
-
-        return entries
+    retrieve = retrievers.Request(
+        lambda district, **_: f"{_BASE}/{_DISTRICTS[district]}.ics",
+        params={"alert": "never"},
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": wt.GENERAL_WASTE,
+            "Biomüll": wt.ORGANIC,
+            "Altpapier": wt.PAPER,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "MR Sondermüll": wt.HAZARDOUS,
+            "EBS Sondermüll": wt.HAZARDOUS,
+            "Praxis GmbH": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

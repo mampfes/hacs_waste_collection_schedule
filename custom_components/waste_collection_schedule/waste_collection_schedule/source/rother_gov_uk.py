@@ -1,112 +1,82 @@
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-import urllib3
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import HtmlTransformer
 
-# With verify=True the POST fails due to a SSLCertVerificationError.
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-TITLE = "Rother District Council"
-DESCRIPTION = "Source for Rother District Council."
-URL = "https://www.rother.gov.uk"
-TEST_CASES = {
-    "Test_01": {"uprn": 10002653856},
-    "Test_02": {"uprn": 100060102891},
-}
+_PREFIX = "find-my-nearest-bindays-"
 
 
-ICON_MAP = {
-    "refuse": Icons.GENERAL_WASTE,
-    "garden": Icons.GARDEN,
-    "recycling": Icons.RECYCLING,
-}
+def _date_text(span: Tag) -> str:
+    """ "Tuesday 6th October" without its ordinal suffix and without a year."""
+    return re.sub(r"(\d)(st|nd|rd|th)", r"\1", span.get_text().strip())
 
 
-API_URL = "https://www.rother.gov.uk/wp-admin/admin-ajax.php"
+def _bin_type(span: Tag) -> str:
+    """The service is named by the span's class, ``find-my-nearest-bindays-refuse``."""
+    for name in span.get("class") or []:
+        if name.startswith(_PREFIX) and name != f"{_PREFIX}date":
+            return name[len(_PREFIX) :]
+    return ""
 
 
-HEADERS = {
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "User-Agent": "Mozilla/5.0",
-}
+@final
+class Source(BaseSource):
+    TITLE = "Rother District Council"
+    DESCRIPTION = "Source for Rother District Council."
+    URL = "https://www.rother.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+    TEST_CASES: ClassVar[dict] = {
+        "Test_01": {"uprn": 10002653856},
+        "Test_02": {"uprn": 100060102891},
+    }
 
-    def fetch(self):
-        data = {"action": "get_address_data", "uprn": self._uprn}
+    PARAMS = (uprn("uprn"),)
 
-        r = requests.post(API_URL, headers=HEADERS, data=data, timeout=10, verify=False)
-        r.raise_for_status()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Your UPRN is shown on https://www.rother.gov.uk once you look up "
+            "your address under 'Your bin days'; you can also find it on "
+            "https://www.findmyaddress.co.uk/."
+        ),
+    }
 
-        # Response is JSON with fields: success(boolean) and data (string containing HTML fragment)
-        bin_collection_data = r.json()
-        self.__validate_response(bin_collection_data)
+    retrieve = retrievers.Request(
+        "https://www.rother.gov.uk/wp-admin/admin-ajax.php",
+        method="POST",
+        data=lambda uprn, **_: {"action": "get_address_data", "uprn": uprn},
+        timeout=10,
+    )
 
-        soup = BeautifulSoup(bin_collection_data["data"], "html.parser")
+    # The answer is JSON, {"success": bool, "data": "<html fragment>"}. A garden
+    # waste subscription not taken out shows a "Sign up" link instead of a date.
+    parse = parsers.HtmlParser(
+        "span.find-my-nearest-bindays-date",
+        from_json_key="data",
+    )
 
-        entries = []
-        for bin_type in ICON_MAP:
-            date_span = soup.find("span", class_=f"find-my-nearest-bindays-{bin_type}")
-            if date_span:
-                date_str = date_span.text.strip()
-
-                if date_str.startswith("Sign up"):
-                    # Garden waste requires a subscription and may not be available for all
-                    continue
-
-                parsed_collection_date = datetime.strptime(
-                    self.__remove_ordinal_indicators(date_str), "%A %d %B"
-                )
-
-                # The returned bin day does not include the year
-                collection_year = self.__resolve_bin_collection_year(
-                    parsed_collection_date.month
-                )
-
-                parsed_collection_date = parsed_collection_date.replace(
-                    year=collection_year
-                )
-
-                icon = ICON_MAP.get(bin_type)
-                entries.append(
-                    Collection(
-                        date=parsed_collection_date.date(), t=bin_type, icon=icon
-                    )
-                )
-
-        if not entries:
-            raise Exception("Unable to find any bin collection schedules")
-
-        return entries
-
-    def __validate_response(self, bin_collection_data):
-        if "success" not in bin_collection_data or "data" not in bin_collection_data:
-            raise Exception("Rother Disctrict Council returned an invalid response")
-
-        if not bin_collection_data["success"]:
-            raise Exception(
-                "Rother Disctrict Council returned a non-successful response"
-            )
-
-    def __remove_ordinal_indicators(self, original_str: str) -> str:
-        return re.sub(r"(\d)(st|nd|rd|th)", r"\1", original_str)
-
-    def __resolve_bin_collection_year(self, collection_month: int) -> int:
-        today = datetime.now()
-        collection_year = today.year
-
-        # Collection date is in previous year
-        if collection_month == 12 and today.month == 1:
-            collection_year -= 1
-
-        # Collection date is in the next year
-        elif collection_month == 1 and today.month == 12:
-            collection_year += 1
-
-        return collection_year
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=_bin_type,
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        type_value_map={
+            "refuse": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "food": wt.FOOD_WASTE,
+            "garden": wt.GARDEN_WASTE,
+        },
+        skip_unparseable_dates=True,
+    )
