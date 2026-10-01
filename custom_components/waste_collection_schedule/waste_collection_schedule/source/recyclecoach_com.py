@@ -81,6 +81,7 @@ ICON_MAP = {
     "Compost Yard Open Saturday": Icons.EVENT,
     "Compost Yard Open Wednesday": Icons.EVENT,
     "3 Bags of Waste": Icons.GENERAL_WASTE,
+    "Red Landfill": Icons.GENERAL_WASTE,
 }
 
 EXTRA_INFO = [
@@ -277,6 +278,12 @@ EXTRA_INFO = [
             "project_id": "657",
             "district_id": "GLENORCHY",
         },
+    },
+    {
+        "title": "Byron Shire Council (NSW)",
+        "url": "https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules",
+        "country": "au",
+        "default_params": {"project_id": "592", "district_id": "BYSC"},
     },
     {
         "title": "Toronto (ON) - Circular Materials",
@@ -482,6 +489,11 @@ TEST_CASES = {
         "district_id": "BLO",
         "project_id": "621",
         "zone_id": "zone-z11025",
+    },
+    "Byron Shire Council, NSW, Australia": {
+        "street": "120 Jonson St, Byron Bay",
+        "project_id": "592",
+        "district_id": "BYSC",
     },
     "Carleton Place, ON, Canada": {
         "street": "175 Bridge St",

@@ -2,6 +2,18 @@
 
 Support for schedules provided by [Byron Shire Council](https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules).
 
+**Deprecation notice**: Byron Shire Council's bin lookup runs on the Recycle Coach platform, so this source is deprecated and will be removed in the next major release. Please switch to the shared [Recycle Coach source](recyclecoach_com.md) (`recyclecoach_com`) with `project_id: "592"` and `district_id: "BYSC"`:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: recyclecoach_com
+      args:
+        street: "120 Jonson St, Byron Bay"
+        project_id: "592"
+        district_id: "BYSC"
+```
+
 ## Configuration via configuration.yaml
 
 ```yaml
