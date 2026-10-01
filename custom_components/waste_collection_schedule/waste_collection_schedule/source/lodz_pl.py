@@ -1,143 +1,118 @@
 import json
-import logging
 import re
-from datetime import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
-    SourceArgumentRequired,
-)
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, integer, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Łódź"
-DESCRIPTION = "Source for Łódź city garbage collection"
-URL = "https://kartalodzianina.pl"
-TEST_CASES = {
-    "Podchorążych 1 (Letniskowa)": {
-        "street": "Podchorążych",
-        "house_number": "1",
-        "building_type": 3,
-    },
-    "Piotrkowska 104 (Wielorodzinna)": {
-        "street": "Piotrkowska",
-        "house_number": "104",
-        "building_type": 2,
-    },
-    "Partyzantów 1 (Jednorodzinna)": {
-        "street": "Partyzantów",
-        "house_number": "1",
-        "building_type": 1,
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-ICON_MAP = {
-    "Szkło": Icons.GLASS,
-    "Papier": Icons.PAPER,
-    "Metale i tworzywa sztuczne": Icons.METAL,
-    "Resztkowe": Icons.GENERAL_WASTE,
-    "Mokre Bio": Icons.ORGANIC,
-}
+_NO_SCHEDULE = "Brak dostępnego harmonogramu dla wskazanego adresu"
+_EVENTS = re.compile(r"events:\s*(\[.*?\])\s*,\s*eventDidMount", re.DOTALL)
 
 
-class Source:
-    def __init__(self, street: str, house_number: str, building_type: int = 1):
-        """Initialize the source.
+def _events(page: str, source: Any = None) -> list[dict]:
+    """The FullCalendar ``events: [...]`` array embedded in the page's script."""
+    params = getattr(source, "params", None) or {}
+    address = (
+        f"{params.get('street')} {params.get('house_number')} "
+        f"({params.get('building_type')})"
+    )
+    if _NO_SCHEDULE in page:
+        raise SourceArgumentNotFound("street/house_number/building_type", address)
+    match = _EVENTS.search(page)
+    if not match:
+        raise SourceArgumentNotFound(
+            "street/house_number/building_type",
+            address,
+            "Page retrieved, but calendar data (JSON) was not found.",
+        )
+    return [e for e in json.loads(match.group(1)) if e.get("title") and e.get("start")]
 
-        :param street: Street name (e.g., "Adwentowicza")
-        :param house_number: House number (e.g., "1", "2a")
-        :param building_type: Building type: 1 (single-family), 2 (multi-family), 3 (summer house). Default is 1.
-        """
-        self.street = street
-        self.house_number = str(house_number)
-        self.building_type = building_type
 
-    def fetch(self) -> list[Collection]:
-        # Validate required arguments
-        if not self.street:
-            raise SourceArgumentRequired("street", "A street name is required")
-        if not self.house_number:
-            raise SourceArgumentRequired("house_number", "A house number is required")
-        if str(self.building_type) not in ["1", "2", "3"]:
-            raise SourceArgumentException(
-                "building_type",
-                f"Invalid value '{self.building_type}': Must be 1 (single-family), 2 (multi-family), or 3 (summer house).",
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Łódź"
+    DESCRIPTION = "Source for Łódź city garbage collection"
+    URL = "https://kartalodzianina.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-        # GET request parameters for the Karta Łodzianina API
-        params: dict[str, str | int] = {
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Podchorążych 1 (Letniskowa)": {
+            "street": "Podchorążych",
+            "house_number": "1",
+            "building_type": 3,
+        },
+        "Piotrkowska 104 (Wielorodzinna)": {
+            "street": "Piotrkowska",
+            "house_number": "104",
+            "building_type": 2,
+        },
+        "Partyzantów 1 (Jednorodzinna)": {
+            "street": "Partyzantów",
+            "house_number": "1",
+            "building_type": 1,
+        },
+    }
+
+    PARAMS = (
+        street("street"),
+        house_number("house_number"),
+        integer("building_type", "Building type", default=1),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street name and house number as on kartalodzianina.pl "
+            "(e.g. 'Piotrkowska' and '104'). building_type is 1 for a "
+            "single-family house (default), 2 for a multi-family building or 3 "
+            "for a summer house."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(
+        url="https://kartalodzianina.pl/wywoz-odpadow",
+        params=lambda street, house_number, building_type, **_: {
             "iframe": "",
             "actionPerformedWyszukajTyp": "",
             "odpad": "",
-            "ulica": self.street,
-            "nrDomu": self.house_number,
+            "ulica": street,
+            "nrDomu": str(house_number),
             "idMiejscowosci": "undefined",
-            "rodzajZabudowy": self.building_type,
-        }
+            "rodzajZabudowy": building_type,
+        },
+        timeout=30,
+    )
 
-        try:
-            response = requests.get(f"{URL}/wywoz-odpadow", params=params, timeout=30)
-            response.raise_for_status()
-            html_content = response.text
-        except requests.RequestException as e:
-            raise ValueError(f"Error fetching data from Łódź API: {e}") from e
+    parse = parsers.TextParser()
 
-        # Check if the address exists in the database
-        if "Brak dostępnego harmonogramu dla wskazanego adresu" in html_content:
-            # Raise predefined custom exception with details
-            raise SourceArgumentNotFound(
-                "street/house_number/building_type",
-                f"{self.street} {self.house_number} ({self.building_type})",
-            )
+    preprocess = staticmethod(_events)
 
-        # Extracting the JSON array hidden in the JavaScript code (FullCalendar library)
-        # Using re.DOTALL so the regex works across multiple lines
-        pattern = r"events:\s*(\[.*?\])\s*,\s*eventDidMount"
-        match = re.search(pattern, html_content, re.DOTALL)
-
-        if not match:
-            raise SourceArgumentNotFound(
-                "Page retrieved, but calendar data (JSON) was not found."
-            )
-
-        json_data = match.group(1)
-
-        try:
-            events = json.loads(json_data)
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Error parsing the JSON schedule: {e}") from e
-
-        entries = []
-
-        # Iterate over each extracted event
-        for event in events:
-            waste_type = event.get("title")
-            date_str = event.get("start")
-
-            if not waste_type or not date_str:
-                continue
-
-            try:
-                # The date format in JSON is always YYYY-MM-DD
-                event_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-
-                entries.append(
-                    Collection(
-                        date=event_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                    )
-                )
-            except ValueError:
-                _LOGGER.warning(f"Ignored invalid date format: {date_str}")
-
-        if not entries:
-            raise SourceArgumentExceptionMultiple(
-                ["street", "house_number", "building_type"],
-                f"No collection dates found for {self.street} {self.house_number} ({self.building_type}) (calendar returned no usable events).",
-            )
-        return entries
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="title",
+        type_value_map={
+            "Szkło": wt.GLASS,
+            "Papier": wt.PAPER,
+            "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+            "Resztkowe": wt.GENERAL_WASTE,
+            "Mokre Bio": wt.ORGANIC,
+            "Gabaryty": wt.BULKY_WASTE,
+            "Odpady zielone": wt.GARDEN_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )
