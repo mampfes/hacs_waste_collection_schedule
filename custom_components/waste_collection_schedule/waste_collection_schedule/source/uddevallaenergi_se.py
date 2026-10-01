@@ -21,19 +21,19 @@ _HEADERS = {
 _SIZE_PREFIX = re.compile(r"^\s*\d+\s*l\s+", re.IGNORECASE)
 
 
-def _plant_number(response, *, street_address: str, **_) -> str:
+def _plant_number(response, *, address: str, **_) -> str:
     """The plant number of the hit whose address equals the configured one."""
     hits = [
         hit
         for hit in response.json()
         if not hit.get("is_key") and hit.get("address") and hit.get("plant_number")
     ]
-    wanted = street_address.strip().casefold()
+    wanted = address.strip().casefold()
     for hit in hits:
         if hit["address"].strip().casefold() == wanted:
             return hit["plant_number"]
     raise SourceArgumentNotFoundWithSuggestions(
-        "street_address", street_address, [hit["address"] for hit in hits]
+        "address", address, [hit["address"] for hit in hits]
     )
 
 
@@ -48,10 +48,10 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [wt.OTHER]
 
     TEST_CASES: ClassVar[dict] = {
-        "Fjällvägen 11, Ljungskile": {"street_address": "Fjällvägen 11, Ljungskile"},
+        "Fjällvägen 11, Ljungskile": {"address": "Fjällvägen 11, Ljungskile"},
     }
 
-    PARAMS = (street_address("street_address"),)
+    PARAMS = (street_address("address"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -65,9 +65,7 @@ class Source(BaseSource):
         steps=(
             Lookup(
                 f"{_API}/v2/address-flat",
-                params=lambda street_address, **_: {
-                    "address": street_address.split(",")[0]
-                },
+                params=lambda address, **_: {"address": address.split(",")[0]},
                 headers=_HEADERS,
                 pick=_plant_number,
             ),

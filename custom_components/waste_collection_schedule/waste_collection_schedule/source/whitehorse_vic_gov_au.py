@@ -25,19 +25,19 @@ _JSON = {"Accept": "application/json"}
 _parse_next = date_parsers.for_format("%d %b %Y")
 
 
-def _pick_property(response, *keys, street_address, **_) -> str:
+def _pick_property(response, *keys, address, **_) -> str:
     """One hit is taken as is; several must include the exact address."""
     results = response.json().get("results") or []
     if not results:
-        raise SourceArgumentNotFound("street_address", street_address)
+        raise SourceArgumentNotFound("address", address)
     if len(results) == 1:
         return results[0]["id"]
-    wanted = street_address.lower().strip()
+    wanted = address.lower().strip()
     for result in results:
         if _HTML_TAG.sub("", result["display1"]).lower().strip() == wanted:
             return result["id"]
     raise SourceArgumentNotFoundWithSuggestions(
-        "street_address", street_address, [r["display1"] for r in results]
+        "address", address, [r["display1"] for r in results]
     )
 
 
@@ -81,11 +81,11 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
-        "17 Main Street BLACKBURN": {"street_address": "17 Main Street BLACKBURN"},
-        "6/16 Ashted Road": {"street_address": "6/16 Ashted Road"},
+        "17 Main Street BLACKBURN": {"address": "17 Main Street BLACKBURN"},
+        "6/16 Ashted Road": {"address": "6/16 Ashted Road"},
     }
 
-    PARAMS = (street_address("street_address"),)
+    PARAMS = (street_address("address"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
@@ -100,13 +100,13 @@ class Source(BaseSource):
         steps=(
             retrievers.Lookup(
                 f"{API}/index/search",
-                params=lambda street_address, **_: {
+                params=lambda address, **_: {
                     "start": 0,
                     "limit": 1000,
                     "indexes": "index.property",
                     "type": "EXACT",
                     "crs": "EPSG:3857",
-                    "query": street_address.lower().strip(),
+                    "query": address.lower().strip(),
                 },
                 headers=_JSON,
                 pick=_pick_property,

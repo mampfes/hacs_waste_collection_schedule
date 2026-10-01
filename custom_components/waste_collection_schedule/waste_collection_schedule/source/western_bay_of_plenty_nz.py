@@ -7,7 +7,7 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.parsers import TextParser
 from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -30,35 +30,28 @@ def _pick_valuation_id(response: Any, *_: Any, address: str, **__: Any) -> str:
     return match.group(1)
 
 
-class _BinsParser(Parser["list[dict[str, Any]]"]):
+def _bins(text: str, source: "BaseSource | None" = None) -> "list[dict[str, Any]]":
     """The bins of the JSON object that follows the SOAP envelope in the reply."""
-
-    def __call__(
-        self, response: Any, source: "BaseSource | None" = None
-    ) -> "list[dict[str, Any]]":
-        text = response.text
-        start = text.find("{")
-        if start < 0:
-            raise ValueError("No JSON payload found in addressInfo2 response")
-        result = (
-            json.loads(text[start:])
-            .get("GetRefuseInformationByValuationResponse", {})
-            .get("GetRefuseInformationByValuationResult", {})
+    start = text.find("{")
+    if start < 0:
+        raise ValueError("No JSON payload found in addressInfo2 response")
+    result = (
+        json.loads(text[start:])
+        .get("GetRefuseInformationByValuationResponse", {})
+        .get("GetRefuseInformationByValuationResult", {})
+    )
+    if result.get("ValuationFound") != "true":
+        raise SourceArgumentNotFound(
+            "address",
+            source.params.get("address", "") if source else "",
+            "no waste collection data found for this address",
         )
-        if result.get("ValuationFound") != "true":
-            raise SourceArgumentNotFound(
-                "address",
-                source.params.get("address", "") if source else "",
-                "no waste collection data found for this address",
-            )
-        connection = result.get("ServiceConnectionList", {}).get(
-            "ServiceConnection", {}
-        )
-        bins = connection.get("BinInfo", {}).get("Bin", [])
-        # A single bin comes back as an object rather than a list.
-        if isinstance(bins, dict):
-            bins = [bins]
-        return [b for b in bins if b.get("NextPickupDate")]
+    connection = result.get("ServiceConnectionList", {}).get("ServiceConnection", {})
+    bins = connection.get("BinInfo", {}).get("Bin", [])
+    # A single bin comes back as an object rather than a list.
+    if isinstance(bins, dict):
+        bins = [bins]
+    return [b for b in bins if b.get("NextPickupDate")]
 
 
 @final
@@ -105,7 +98,8 @@ class Source(BaseSource):
         headers=_HEADERS,
         raise_for_status=True,
     )
-    parse = _BinsParser()
+    parse = TextParser()
+    preprocess = staticmethod(_bins)
     transform = JsonTransformer(
         date_key="NextPickupDate",
         type_key="BinType",
