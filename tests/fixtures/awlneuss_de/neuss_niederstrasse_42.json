@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://buergerportal.awl-neuss.de/api/v1/calendar 78981b012e",
+      "method": "GET",
+      "url": "https://buergerportal.awl-neuss.de/api/v1/calendar",
+      "final_url": "https://buergerportal.awl-neuss.de/api/v1/calendar?streetNum=6810&homeNummber=42&startMonth=2026&isTreeMonthRange=false&isYear=true",
+      "body": "{\"params\":[[\"homeNummber\",\"42\"],[\"isTreeMonthRange\",\"false\"],[\"isYear\",\"true\"],[\"startMonth\",\"2026\"],[\"streetNum\",\"6810\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Thu, 01 Oct 2026 19:46:48 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "X-Requested-With,Authorization,content-type,X-Source,Content-Type",
+        "access-control-allow-methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+        "access-control-allow-origin": "http://localhost:3001",
+        "etag": "W/\"753-0q9ysUCHIpxr3i0w5wKNijEo2xs\"",
+        "x-powered-by": "Express",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "speculation-rules": "\"/cdn-cgi/speculation\"",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=S6ukzLnTjZK7SvuC208DlFCGIey1uSy9uFHLj%2BpQn9JVXzyLtF30CjGv25whSVkYoSaSLJ9QZIi05W%2BQb2ug3mlLgI72sEscr%2BmGPr%2FXAZ%2FNh4K8jpGE9nIClgMpm35Ow9CfxpVb5L39e0Jg%2Fg%3D%3D\"}]}",
+        "content-encoding": "zstd",
+        "server": "cloudflare",
+        "cf-ray": "a43df9b67f3a6a89-DUS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyIwLTIwMjYiOnsiMiI6WyJicmF1biJdLCI2IjpbImdyYXUiXSwiMTMiOlsicGluayIsImdyYXUiXSwiMTQiOlsiYmxhdSIsImdlbGIiXSwiMTUiOlsiYnJhdW4iXSwiMjAiOlsiZ3JhdSJdLCIyNyI6WyJncmF1IiwicGluayJdLCIyOCI6WyJnZWxiIl0sIjI5IjpbImJyYXVuIl19LCIxLTIwMjYiOnsiMyI6WyJncmF1Il0sIjEwIjpbImdyYXUiLCJwaW5rIl0sIjExIjpbImJsYXUiLCJnZWxiIl0sIjEyIjpbImJyYXVuIl0sIjE4IjpbImdyYXUiXSwiMjQiOlsiZ3JhdSIsInBpbmsiXSwiMjUiOlsiZ2VsYiJdLCIyNiI6WyJicmF1biJdfSwiMi0yMDI2Ijp7IjMiOlsiZ3JhdSJdLCIxMCI6WyJwaW5rIiwiZ3JhdSJdLCIxMSI6WyJibGF1IiwiZ2VsYiJdLCIxMiI6WyJicmF1biJdLCIxNyI6WyJncmF1Il0sIjI0IjpbImdyYXUiLCJwaW5rIl0sIjI1IjpbImdlbGIiXSwiMjYiOlsiYnJhdW4iXSwiMzAiOlsiZ3JhdSJdfSwiMy0yMDI2Ijp7IjgiOlsiZ3JhdSIsInBpbmsiXSwiOSI6WyJnZWxiIiwiYmxhdSJdLCIxMCI6WyJicmF1biJdLCIxNCI6WyJncmF1Il0sIjIxIjpbImdyYXUiLCJwaW5rIl0sIjIyIjpbImdlbGIiXSwiMjMiOlsiYnJhdW4iXSwiMjgiOlsiZ3JhdSJdfSwiNC0yMDI2Ijp7IjUiOlsiZ3JhdSIsInBpbmsiXSwiNiI6WyJibGF1IiwiZ2VsYiJdLCI3IjpbImJyYXVuIl0sIjEyIjpbImdyYXUiXSwiMTkiOlsiZ3JhdSIsInBpbmsiXSwiMjAiOlsiZ2VsYiJdLCIyMSI6WyJicmF1biJdLCIyNyI6WyJncmF1Il19LCI1LTIwMjYiOnsiMiI6WyJwaW5rIiwiZ3JhdSJdLCIzIjpbImJsYXUiLCJnZWxiIl0sIjUiOlsiYnJhdW4iXSwiOSI6WyJncmF1Il0sIjE2IjpbInBpbmsiLCJncmF1Il0sIjE3IjpbImdlbGIiXSwiMTgiOlsiYnJhdW4iXSwiMjMiOlsiZ3JhdSJdLCIzMCI6WyJncmF1IiwicGluayJdfSwiNi0yMDI2Ijp7IjEiOlsiZ2VsYiIsImJsYXUiXSwiMiI6WyJicmF1biJdLCI3IjpbImdyYXUiXSwiMTQiOlsicGluayIsImdyYXUiXSwiMTUiOlsiZ2VsYiJdLCIxNiI6WyJicmF1biJdLCIyMSI6WyJncmF1Il0sIjI4IjpbImdyYXUiLCJwaW5rIl0sIjI5IjpbImdlbGIiLCJibGF1Il0sIjMwIjpbImJyYXVuIl19LCI3LTIwMjYiOnsiNCI6WyJncmF1Il0sIjExIjpbImdyYXUiLCJwaW5rIl0sIjEyIjpbImdlbGIiXSwiMTMiOlsiYnJhdW4iXSwiMTgiOlsiZ3JhdSJdLCIyNSI6WyJncmF1IiwicGluayJdLCIyNiI6WyJnZWxiIiwiYmxhdSJdLCIyNyI6WyJicmF1biJdfSwiOC0yMDI2Ijp7IjIiOlsiZ3JhdSJdLCI4IjpbImdyYXUiLCJwaW5rIl0sIjkiOlsiZ2VsYiJdLCIxMCI6WyJicmF1biJdLCIxNSI6WyJncmF1Il0sIjIyIjpbInBpbmsiLCJncmF1Il0sIjIzIjpbImJsYXUiLCJnZWxiIl0sIjI0IjpbImJyYXVuIl0sIjI5IjpbImdyYXUiXX0sIjktMjAyNiI6eyI2IjpbInBpbmsiLCJncmF1Il0sIjciOlsiZ2VsYiJdLCI4IjpbImJyYXVuIl0sIjEzIjpbImdyYXUiXSwiMjAiOlsicGluayIsImdyYXUiXSwiMjEiOlsiZ2VsYiIsImJsYXUiXSwiMjIiOlsiYnJhdW4iXSwiMjciOlsiZ3JhdSJdfSwiMTAtMjAyNiI6eyIzIjpbInBpbmsiLCJncmF1Il0sIjQiOlsiZ2VsYiJdLCI1IjpbImJyYXVuIl0sIjEwIjpbImdyYXUiXSwiMTciOlsiZ3JhdSIsInBpbmsiXSwiMTgiOlsiYmxhdSIsImdlbGIiXSwiMTkiOlsiYnJhdW4iXSwiMjQiOlsiZ3JhdSJdfSwiMTEtMjAyNiI6eyIxIjpbImdyYXUiLCJwaW5rIl0sIjIiOlsiZ2VsYiJdLCIzIjpbImJyYXVuIl0sIjgiOlsiZ3JhdSJdLCIxNSI6WyJwaW5rIiwiZ3JhdSJdLCIxNiI6WyJibGF1IiwiZ2VsYiJdLCIxNyI6WyJicmF1biJdLCIyMSI6WyJncmF1Il0sIjI5IjpbImdyYXUiLCJwaW5rIl0sIjMwIjpbImdlbGIiXSwiMzEiOlsiYnJhdW4iXX19"
+    }
+  ]
+}
