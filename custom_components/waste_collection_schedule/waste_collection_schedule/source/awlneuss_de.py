@@ -1,117 +1,123 @@
 import datetime
-import json
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    house_number,
+    street,
+    text_field,
 )
-
-TITLE = "AWL Neuss"  # Title will show up in README.md and info.md
-DESCRIPTION = (
-    "Source for Bürgerportal AWL Neuss waste collection."  # Describe your source
-)
-URL = "https://buergerportal.awl-neuss.de/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Neuss, Theodor-Heuss-Platz 13": {"street_code": 8650, "building_number": 13},
-    "Neuss, Niederstrasse 42": {"street_code": 6810, "building_number": 42},
-    "Neuss, Bahnhofstrasse 67": {
-        "street_name": "Bahnhofstrasse",
-        "building_number": 67,
-    },
-    "Neuss, Bismarckstrasse 52": {
-        "street_name": "Bismarckstrasse",
-        "building_number": 52,
-    },
-    "Neuss, Karlsstrasse 1 (5200)": {"street_code": "5200", "building_number": 1},
-}
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import RowTransformer
 
 API_URL = "https://buergerportal.awl-neuss.de/api/v1/calendar"
-ICON_MAP = {
-    "grau": Icons.GENERAL_WASTE,
-    "pink": Icons.GENERAL_WASTE,
-    "braun": Icons.ORGANIC,
-    "blau": Icons.PAPER,
-    "gelb": Icons.RECYCLING,
-}
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "building_number": "Hausnummer",
-        "street_name": "Straßenname",
-        "street_code": "Straßencode",
+def _street_code(response, **params):
+    """The street number of the configured street name."""
+    streets = response.json()
+    name = params["street_name"]
+    for item in streets:
+        if item["strasseBezeichnung"] == name:
+            return item["strasseNummer"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_name", name, [item["strasseBezeichnung"] for item in streets]
+    )
+
+
+def _given_street_code(**params):
+    return params.get("street_code")
+
+
+def _rows(data, source=None) -> list[tuple[datetime.date, str]]:
+    """Flatten ``{"<month 0-11>-<year>": {"<day>": [colour, ...]}}`` into rows."""
+    rows = []
+    for key, days in data.items():
+        month, year = (int(part) for part in key.split("-"))
+        for day, colours in days.items():
+            date = datetime.date(year, month + 1, int(day))
+            rows.extend((date, colour) for colour in colours)
+    return rows
+
+
+@final
+class Source(BaseSource):
+    TITLE = "AWL Neuss"
+    DESCRIPTION = "Source for Bürgerportal AWL Neuss waste collection."
+    URL = "https://buergerportal.awl-neuss.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Neuss, Theodor-Heuss-Platz 13": {"street_code": 8650, "building_number": 13},
+        "Neuss, Niederstrasse 42": {"street_code": 6810, "building_number": 42},
+        "Neuss, Bahnhofstrasse 67": {
+            "street_name": "Bahnhofstrasse",
+            "building_number": 67,
+        },
+        "Neuss, Bismarckstrasse 52": {
+            "street_name": "Bismarckstrasse",
+            "building_number": 52,
+        },
+        "Neuss, Karlsstrasse 1 (5200)": {"street_code": "5200", "building_number": 1},
     }
-}
 
+    PARAMS = (
+        alternatives(
+            [street("street_name")],
+            [text_field("street_code", "Street code")],
+        ),
+        house_number("building_number"),
+    )
 
-class Source:
-    def __init__(
-        self,
-        building_number: int,
-        street_name: str | None = None,
-        street_code: int | None = None,
-    ):
-        self._street_name: str | None = street_name
-        self._street_code: int | None = street_code
-        self._building_number: int = building_number
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter either the exact street name (street_name) or the street code "
+            "(street_code), together with the house number (building_number)."
+        ),
+        "de": (
+            "Geben Sie entweder den genauen Straßennamen (street_name) oder den "
+            "Straßencode (street_code) zusammen mit der Hausnummer "
+            "(building_number) an."
+        ),
+    }
 
-        if not self._street_name and not self._street_code:
-            raise SourceArgumentExceptionMultiple(
-                ["street_name", "street_code"],
-                "Please provide either street_name or street_code",
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        # get street code if not set with street
-        if self._street_code is None:
-            t = requests.get(API_URL + "/townarea-streets")
-            data_street = json.loads(t.text)
-
-            street_list = []
-            for item in data_street:
-                if item["strasseBezeichnung"] == self._street_name:
-                    street_list.append(item)
-
-            if len(street_list) == 0:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street_name",
-                    self._street_name,
-                    suggestions=[item["strasseBezeichnung"] for item in data_street],
-                )
-            self._street_code = street_list[0]["strasseNummer"]
-
-        args = {
-            "streetNum": self._street_code,
-            "homeNummber": self._building_number,
-        }
-
-        now = datetime.datetime.now()
-        args["startMonth"] = now.year
-        args["isTreeMonthRange"] = "false"
-        args["isYear"] = "true"
-
-        # get json file
-        r = requests.get(API_URL, params=args)
-
-        data = json.loads(r.text)
-
-        entries = []  # List that holds collection schedule
-        for key, value in data.items():
-            month_year: list[str] = key.split("-")
-            month: int = int(month_year[0]) + 1
-            year: int = int(month_year[1])
-
-            for dayValue, wastes in value.items():
-                day: int = int(dayValue)
-                for waste in wastes:
-                    entries.append(
-                        Collection(
-                            date=datetime.date(year, month, day),  # Collection date
-                            t=waste,  # Collection type
-                            icon=ICON_MAP.get(waste),  # Collection icon
-                        )
-                    )
-
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API_URL}/townarea-streets",
+                given=_given_street_code,
+                pick=_street_code,
+            ),
+        ),
+        url=API_URL,
+        params=lambda resolved_code, *, building_number, **_: {
+            "streetNum": resolved_code,
+            "homeNummber": building_number,
+            "startMonth": datetime.datetime.now().year,
+            "isTreeMonthRange": "false",
+            "isYear": "true",
+        },
+    )
+    parse = parsers.JsonParser()
+    preprocess = staticmethod(_rows)
+    transform = RowTransformer(
+        type_value_map={
+            "grau": wt.GENERAL_WASTE,
+            "pink": wt.GENERAL_WASTE,
+            "braun": wt.ORGANIC,
+            "blau": wt.PAPER,
+            "gelb": wt.RECYCLABLES,
+        },
+        carry_raw_label=True,
+    )

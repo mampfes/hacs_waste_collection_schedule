@@ -1,123 +1,129 @@
-import json
-import random
-from datetime import date, datetime, timedelta
+import datetime
+import re
+from typing import ClassVar, final
+from urllib.parse import urlencode
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Vale of Glamorgan Council"
-DESCRIPTION = "Source for Vale of Glamorgan Council."
-URL = "https://valeofglamorgan.gov.uk/"
-TEST_CASES = {
-    "CF62 7JP": {"uprn": 64003486},
-    "CF32 0PW": {"uprn": 64017161},
-}
+_API_URL = "https://myvale.valeofglamorgan.gov.uk/getdata.aspx"
 
-
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Food": Icons.BIO_KITCHEN,
-    "Garden": Icons.GARDEN,
-    "Paper": Icons.PAPER,
-    "Recycle": Icons.RECYCLING,
-}
-
-WEEKDAYS = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-]
-
-API_URL = "https://myvale.valeofglamorgan.gov.uk/getdata.aspx"
+# Recycling and food are collected every week on the weekday the API names; the
+# council publishes no dates for them, so ten weeks are projected.
+_WEEKS = 10
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+def _api_params(uprn, **_) -> dict:
+    return {
+        "RequestType": "LocalInfo",
+        "ms": "ValeOfGlamorgan/AllMaps",
+        "group": "Waste|new_refuse",
+        "uid": uprn,
+    }
 
-    def __get_collection(
-        self, session: requests.Session, calendar_url: str, bin_type: str
-    ) -> list[Collection]:
-        r = session.get(calendar_url)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        entries = []
-        for tr in soup.select("table tr"):
-            tds = tr.select("td")
-            if len(tds) != 2:
-                continue
 
-            months = tds[0].text.strip()
-            days = tds[1].text.strip().replace("and", ",").split(",")
-            for day in days:
-                day = day.strip()
-                if not day.isdigit():
-                    continue
-                dt = datetime.strptime(f"{day} {months}", "%d %B %Y").date()
-                entries.append(Collection(date=dt, t=bin_type, icon=ICON_MAP[bin_type]))
-        return entries
+def _api_record(response, source=None) -> list:
+    """The one record of waste details the API holds for the property."""
+    return [response.json()["Results"]["waste"]]
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
 
-        timestamp = str(int(datetime.now().timestamp() * 1000))
-        random_callback_number = str(
-            random.randint(10000000000000000000, 99999999999999999999)
+def _calendar_urls(response, **params) -> dict:
+    """The waste details for the property; an unknown UPRN is answered with text."""
+    try:
+        return _api_record(response)[0]
+    except (ValueError, KeyError, TypeError):
+        raise SourceArgumentNotFound(
+            "uprn", params["uprn"], "no property found for this UPRN."
+        ) from None
+
+
+def _targets(source, waste) -> list[str]:
+    """The API response again (for the weekday) and each published calendar."""
+    urls = [f"{_API_URL}?{urlencode(_api_params(**source.params))}"]
+    for key in ("residual_calendar_url", "green_calendar_url"):
+        if waste.get(key):
+            urls.append(waste[key])
+    return urls
+
+
+def _rows(records, source):
+    """``(date, label)`` rows from the weekday record and the calendar tables.
+
+    The API record names the weekday of the weekly recycling and food round. Each
+    calendar page is a table whose header row names the bin and whose body rows
+    give a month and the days in it ("2 and 23"; "Book and request" for months
+    without a service).
+    """
+    label = None
+    for record in records:
+        if isinstance(record, dict):
+            name = record["recycling_food"]
+            weekday = recurrence.weekday(name)
+            if weekday is None:
+                raise ValueError(f"Unknown recycling_food: {name}")
+            first = recurrence.next_weekday(weekday)
+            for date in recurrence.recurring(first, recurrence.WEEKLY, _WEEKS):
+                yield date, "Recycling"
+                yield date, "Food"
+            continue
+        if record.select_one("th"):
+            label = record.select("th")[-1].get_text(strip=True)
+            continue
+        cells = record.select("td")
+        if label is None or len(cells) != 2:
+            continue
+        parts = cells[0].get_text(strip=True).split()
+        month = recurrence.month(parts[0]) if len(parts) == 2 else None
+        if month is None or not parts[1].isdigit():
+            continue
+        for day in re.split(r"\s*(?:,|and)\s*", cells[1].get_text(strip=True)):
+            if day.isdigit():
+                yield datetime.date(int(parts[1]), month, int(day)), label
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Vale of Glamorgan Council"
+    DESCRIPTION = "Source for Vale of Glamorgan Council."
+    URL = "https://valeofglamorgan.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "CF62 7JP": {"uprn": 64003486},
+        "CF32 0PW": {"uprn": 64017161},
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+    ]
+
+    PARAMS = (uprn("uprn"),)
+
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(_API_URL, params=_api_params, pick=_calendar_urls),
+        targets=_targets,
+        fetch=retrievers.Request(lambda target, waste, **_: target),
+    )
+    parse = parsers.EachResponse(
+        parsers.ByBodyPrefix(
+            {"{": _api_record},
+            default=parsers.HtmlParser("table tr"),
         )
-        params = {
-            "RequestType": "LocalInfo",
-            "ms": "ValeOfGlamorgan/AllMaps",
-            "group": "Waste|new_refuse",
-            "type": "jsonp",
-            "callback": "AddressInfoCallback",
-            "uid": self._uprn,
-            "import": f"jQuery{random_callback_number}_{timestamp}",
-            "_": timestamp,
+    )
+    preprocess = staticmethod(_rows)
+    transform = ICSTransformer(
+        type_value_map={
+            "Recycling": wt.RECYCLABLES,
+            "Food": wt.FOOD_WASTE,
+            "Black bag collection date": wt.GENERAL_WASTE,
+            "Garden waste collection date": wt.GARDEN_WASTE,
         }
-
-        # get json file
-        r = session.get(API_URL, params=params)
-        r.raise_for_status()
-        text = r.text
-        text = text.replace("AddressInfoCallback(", "").rstrip(");")
-        data = json.loads(text)["Results"]["waste"]
-
-        entries: list[Collection] = []
-        recycling_food = data["recycling_food"]
-        if recycling_food not in WEEKDAYS:
-            raise ValueError(f"Unknown recycling_food: {recycling_food}")
-
-        next_recycling_food = date.today()
-        while next_recycling_food.weekday() != WEEKDAYS.index(recycling_food):
-            next_recycling_food += timedelta(days=1)
-
-        entries.extend(
-            Collection(
-                date=next_recycling_food + timedelta(weeks=i),
-                t="Recycling",
-                icon=ICON_MAP["Recycle"],
-            )
-            for i in range(10)
-        )
-        entries.extend(
-            Collection(
-                date=next_recycling_food + timedelta(weeks=i),
-                t="Food",
-                icon=ICON_MAP["Food"],
-            )
-            for i in range(10)
-        )
-
-        entries.extend(
-            self.__get_collection(session, data["residual_calendar_url"], "Trash")
-        )
-        entries.extend(
-            self.__get_collection(session, data["green_calendar_url"], "Garden")
-        )
-
-        return entries
+    )

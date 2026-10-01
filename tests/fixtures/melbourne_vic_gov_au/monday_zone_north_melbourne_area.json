@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/garbage-collection-zones/records 401074199c",
+      "method": "GET",
+      "url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/garbage-collection-zones/records",
+      "final_url": "https://data.melbourne.vic.gov.au/api/explore/v2.1/catalog/datasets/garbage-collection-zones/records?limit=1&select=rub_name%2Crec_name%2Crub_day%2Crec_day%2Crub_weeks%2Crec_weeks%2Crub_start%2Crec_start&where=intersects%28geo_shape%2C+geom%27POINT%28144.94807224053946+-37.78888528182715%29%27%29",
+      "body": "{\"params\":[[\"limit\",\"1\"],[\"select\",\"rub_name,rec_name,rub_day,rec_day,rub_weeks,rec_weeks,rub_start,rec_start\"],[\"where\",\"intersects(geo_shape, geom'POINT(144.94807224053946 -37.78888528182715)')\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Thu, 01 Oct 2026 19:46:05 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "9989",
+        "x-ratelimit-limit": "10000",
+        "x-ratelimit-reset": "2026-10-02 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJ0b3RhbF9jb3VudCI6IDEsICJyZXN1bHRzIjogW3sicnViX25hbWUiOiAiR2VuZXJhbCB3YXN0ZSIsICJyZWNfbmFtZSI6ICJSZWN5Y2xpbmciLCAicnViX2RheSI6ICJNb25kYXkiLCAicmVjX2RheSI6ICJNb25kYXkiLCAicnViX3dlZWtzIjogIjEiLCAicmVjX3dlZWtzIjogIjEiLCAicnViX3N0YXJ0IjogIjIwMTUvMDkvMjEiLCAicmVjX3N0YXJ0IjogIjIwMTUvMDkvMjEifV19"
+    }
+  ]
+}

@@ -1,122 +1,120 @@
-import datetime
 import json
 import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, postcode, uprn
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Telford and Wrekin Council"
-DESCRIPTION = "Source for telford.gov.uk, Telford and Wrekin Council, UK"
-URL = "https://www.telford.gov.uk"
+API = "https://dac.telford.gov.uk/BinDayFinder/Find"
 
-TEST_CASES = {
-    "10 Long Row Drive, Lawley": {"uprn": "000452097493"},
-    "126 Dunsheath, Telford": {"post_code": "TF3 2DA", "name_number": "126"},
-    "11 Pinewoods, Telford": {"post_code": "TF10 9LN", "name_number": "11"},
+_TYPE_MAP = {
+    "Red Top Container": wt.GENERAL_WASTE,
+    "Purple / Blue Containers": wt.RECYCLABLES,
+    "Green Container": wt.GARDEN_WASTE,
+    "Silver Containers": wt.FOOD_WASTE,
 }
 
-API_URLS = {
-    "address_search": "https://dac.telford.gov.uk/BinDayFinder/Find/PostcodeSearch",
-    "collection": "https://dac.telford.gov.uk/BinDayFinder/Find/PropertySearch",
-}
 
-# Map the names to icons
-ICON_MAP = {
-    "Red Top Container": Icons.GENERAL_WASTE,
-    "Purple / Blue Containers": Icons.RECYCLING,
-    "Green Container": Icons.ORGANIC,
-    "Silver Containers": Icons.BIO_KITCHEN,
-}
+def _pick_uprn(response, *keys, post_code=None, name_number=None, **_) -> str:
+    """The postcode search answers a JSON document held inside a JSON string."""
+    if response.status_code == 500:
+        raise SourceArgumentException(
+            "post_code",
+            "Postcode is not in the correct format or service is unavailable",
+        )
+    response.raise_for_status()
+    properties = json.loads(response.json())["properties"]
+    if not properties:
+        raise SourceArgumentNotFound("post_code", post_code)
+    wanted = str(name_number).strip().lower()
+    for prop in properties:
+        if prop["PrimaryName"].lower() == wanted:
+            return prop["UPRN"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "name_number", name_number, [prop["PrimaryName"] for prop in properties]
+    )
 
-# Path to the images provided by the council for the containers
-IMAGEPATH = "https://dac.telford.gov.uk/BinDayFinder/Content/BinIcons/"
+
+def _decode(response, source=None) -> list:
+    """The collection reply is a JSON string holding the JSON document."""
+    return json.loads(response)["bincollections"]
 
 
-class Source:
-    def __init__(self, post_code=None, name_number=None, uprn=None):
-        self._post_code = post_code
-        self._name_number = name_number
-        self._uprn = uprn
+def _date(record, source) -> str:
+    """ "Wednesday 14th October" without its ordinal suffix."""
+    return re.sub(r"(\d)(st|nd|rd|th)", r"\1", record["nextDate"])
 
-    def fetch(self):
-        if not self._uprn:
-            # look up the UPRN for the address
 
-            params = {"postcode": self._post_code}
-            r = requests.get(API_URLS["address_search"], params=params)
-            if r.status_code == 500:
-                raise SourceArgumentException(
-                    "post_code",
-                    "Postcode is not in the correct format or service is unavailable",
-                )
+@final
+class Source(BaseSource):
+    TITLE = "Telford and Wrekin Council"
+    DESCRIPTION = "Source for telford.gov.uk, Telford and Wrekin Council, UK"
+    URL = "https://www.telford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-            r.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-            # Required to parse the returned JSON
-            addresses = json.loads(r.json())
-            if len(addresses["properties"]) == 0:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+    TEST_CASES: ClassVar[dict] = {
+        "10 Long Row Drive, Lawley": {"uprn": "000452097493"},
+        "126 Dunsheath, Telford": {"post_code": "TF3 2DA", "name_number": "126"},
+        "11 Pinewoods, Telford": {"post_code": "TF10 9LN", "name_number": "11"},
+    }
 
-            for property in addresses["properties"]:
-                if property["PrimaryName"].lower() == self._name_number.lower():
-                    self._uprn = property["UPRN"]
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [postcode("post_code", "name_number")],
+        ),
+    )
 
-            if not self._uprn:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "name_number",
-                    self._name_number,
-                    [property["PrimaryName"] for property in addresses["properties"]],
-                )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter either your UPRN (available from "
+            "[FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your "
+            "postcode and the house name or number exactly as the council lists "
+            "it (e.g. '126')."
+        ),
+    }
 
-        # Get the collection information
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/PostcodeSearch",
+                params=lambda post_code=None, **_: {"postcode": post_code},
+                given=lambda uprn=None, **_: uprn,
+                pick=_pick_uprn,
+                raise_for_status=False,
+            ),
+        ),
+        url=f"{API}/PropertySearch",
+        params=lambda key, **_: {"uprn": key},
+    )
 
-        params = {"uprn": self._uprn}
+    parse = parsers.JsonParser()
 
-        r = requests.get(API_URLS["collection"], params=params)
+    preprocess = Compose(
+        _decode,
+        ExplodeList(_date, into="date"),
+    )
 
-        r.raise_for_status()
-
-        x = json.loads(r.json())
-        collections = x["bincollections"]
-
-        entries = []
-
-        if collections:
-            for collection in collections:
-                # Parse the data as the council JSON API returns no year for the collections
-                # and so it needs to be calculated to format the date correctly
-
-                today = datetime.date.today()
-                year = today.year
-
-                # Remove nd,rd,th,st from the date so it can be parsed
-
-                datestring = (
-                    re.sub(r"(\d)(st|nd|rd|th)", r"\1", collection["nextDate"])
-                    + " "
-                    + str(year)
-                )
-
-                date = datetime.datetime.strptime(datestring, "%A %d %B %Y").date()
-
-                # Calculate the year. As we only get collections 2 weeks in advance we can assume the current
-                # year unless the month is January in December where it will be next year
-
-                if (date.month == 1) and (today.month == 12):
-                    date = date.replace(year=year + 1)
-
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection["name"],
-                        icon=ICON_MAP.get(collection["name"]),
-                        picture=IMAGEPATH + collection["imageURL"],
-                    )
-                )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="name",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+    )
