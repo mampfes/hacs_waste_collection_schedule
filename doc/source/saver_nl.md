@@ -1,6 +1,8 @@
 # Saver
 
-Support for schedules provided by [Saver](https://saver.nl/afvalkalender), the waste collector for the West-Brabant region in the Netherlands. Covers Roosendaal, Halderberge, Bergen op Zoom, Rucphen, Zundert, Steenbergen, and Woensdrecht.
+Support for schedules provided by [Saver](https://saver.nl).
+
+Source for Saver waste collection in West-Brabant (Roosendaal, Halderberge, Bergen op Zoom, Rucphen, Zundert, Steenbergen, Woensdrecht).
 
 ## Configuration via configuration.yaml
 
@@ -10,26 +12,20 @@ waste_collection_schedule:
     - name: saver_nl
       args:
         postcode: POSTCODE
-        huisnummer: HOUSE_NUMBER
-        toevoeging: ADDITION  # optional
+        huisnummer: HUISNUMMER
+        toevoeging: TOEVOEGING
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Dutch postal code (4 digits + 2 letters), e.g. `4702AA`. Spaces are accepted and stripped.
+**huisnummer**  
+*(string) (required)*
 
-**huisnummer**
-*(string | integer) (required)*
-
-House number.
-
-**toevoeging**
+**toevoeging**  
 *(string) (optional)*
-
-House letter or addition (e.g. `a`, `bs`). Only required when more than one address shares the same `postcode` + `huisnummer`.
 
 ## Example
 
@@ -38,10 +34,10 @@ waste_collection_schedule:
   sources:
     - name: saver_nl
       args:
-        postcode: "4702AA"
-        huisnummer: "1"
+        postcode: 4702AA
+        huisnummer: 1
 ```
 
 ## How to get the source arguments
 
-Use the same postcode and house number you would enter at <https://saver.nl/afvalkalender>. If the calendar lookup shows multiple matching addresses, set `toevoeging` to the letter or addition shown there.
+Use the same postcode and house number you would enter at https://saver.nl/afvalkalender. If your address has a letter or addition (e.g. '5a'), provide the letter/addition in the 'toevoeging' argument.

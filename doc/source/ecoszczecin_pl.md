@@ -1,6 +1,8 @@
 # EcoSzczecin
 
-Support for waste collection schedules in Szczecin, Poland, provided by [ecoszczecin.pl](https://ecoszczecin.pl).
+Support for schedules provided by [EcoSzczecin](https://ecoszczecin.pl).
+
+Source for waste collection schedules in Szczecin, Poland, provided by ecoszczecin.pl.
 
 ## Configuration via configuration.yaml
 
@@ -9,23 +11,17 @@ waste_collection_schedule:
   sources:
     - name: ecoszczecin_pl
       args:
-        street: "TCZEWSKA"
-        house_number: "7A"
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**street**
-*(String) (required)* Street name in Szczecin, as shown on ecoszczecin.pl. Not case-sensitive.
+**street**  
+*(string) (required)*
 
-**house_number**
-*(String) (required)* House number for the given street, as shown on ecoszczecin.pl.
-
-## How to get the source arguments
-
-1. Open <https://ecoszczecin.pl/harmonogramy/> in your browser.
-2. Step through the address selection UI — choose your street, then your house number.
-3. Copy the `street` and `house_number` values exactly as displayed in the dropdown lists.
+**house_number**  
+*(string) (required)*
 
 ## Example
 
@@ -34,6 +30,10 @@ waste_collection_schedule:
   sources:
     - name: ecoszczecin_pl
       args:
-        street: "Aleja Piastów"
-        house_number: "1"
+        street: TCZEWSKA
+        house_number: 7A
 ```
+
+## How to get the source arguments
+
+Open https://ecoszczecin.pl/harmonogramy/, choose your street and house number from the dropdowns, and enter their values as shown. The street is not case-sensitive.

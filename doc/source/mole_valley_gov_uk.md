@@ -1,9 +1,8 @@
 # Mole Valley District Council
 
-Support for schedules provided by [Mole Valley District Council](https://www.molevalley.gov.uk/waste-recycling/calendar-collection-day/), serving Mole Valley, Surrey, UK.
+Support for schedules provided by [Mole Valley District Council](https://www.molevalley.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new East Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
+Source for molevalley.gov.uk services for Mole Valley District Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -13,20 +12,16 @@ waste_collection_schedule:
     - name: mole_valley_gov_uk
       args:
         postcode: POSTCODE
-        house_number: HOUSE_NUMBER_OR_NAME
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Your property's postcode, e.g. `KT22 9BG`.
-
-**house_number**
+**house_number**  
 *(string) (required)*
-
-Your house number or name, e.g. `17` or `Rose Cottage`.
 
 ## Example
 
@@ -35,16 +30,10 @@ waste_collection_schedule:
   sources:
     - name: mole_valley_gov_uk
       args:
-        postcode: "RH4 1LX"
-        house_number: "79"
+        postcode: RH4 1BT
+        house_number: '44'
 ```
 
-## Notes
+## How to get the source arguments
 
-This source returns only the **next** scheduled collection date for each waste type. Dates are updated automatically by the council's system as each collection passes.
-
-Waste types supported:
-- Refuse (black bin)
-- Recycling (green bin)
-- Garden Waste (brown lid) — only if subscribed to the garden waste service
-- Food Waste
+Enter your postcode and house number or name (e.g. 17 or Rose Cottage). You can verify your address at https://myproperty.molevalley.gov.uk/molevalley/

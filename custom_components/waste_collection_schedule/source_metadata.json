@@ -93,7 +93,9 @@
   },
   "bundaberg_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bundaberg_qld_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street number and street name (without the street type, e.g. 'Maynard' for Maynard Street), and the suburb in capitals, e.g. 'AVENELL HEIGHTS'. Without a suburb the first matching address is used. General waste is collected weekly and recycling fortnightly."
+    },
     "urls": {}
   },
   "byron_nsw_gov_au": {
@@ -364,7 +366,7 @@
   "cityofsydney_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cityofsydney_nsw_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '17 Junction Street, Forest Lodge'), as it would appear on https://www.cityofsydney.nsw.gov.au/waste-recycling-services/find-my-bin-collection-day"
+      "en": "Enter your street address including suburb (e.g. '17 Junction Street, Forest Lodge'), as it would appear on the council's [find my bin collection day](https://www.cityofsydney.nsw.gov.au/waste-recycling-services/find-my-bin-collection-day) page."
     },
     "urls": {}
   },
@@ -2892,8 +2894,8 @@
   "ismaning_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ismaning_de.md",
     "howto": {
-      "de": "Geben Sie Ihre Straße ein. Wenn die Straße eine Hausnummer benötigt, wird diese im nächsten Schritt als Auswahl abgefragt.",
-      "en": "Enter your street. If the street requires a house number, it is offered as a selection in the next step."
+      "de": "Geben Sie Ihre Straße ein. Wenn die Straße eine Hausnummer benötigt, geben Sie diese ebenfalls an (nur für Straßen erforderlich, die in Hausnummernbereiche unterteilt sind; ansonsten leer lassen).",
+      "en": "Enter your street. If the street requires a house number, enter it as well (only needed for streets that are split into house-number ranges; leave empty otherwise)."
     },
     "urls": {}
   },
@@ -3373,7 +3375,10 @@
   },
   "sector27_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sector27_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Wähle Datteln, Marl oder Oer-Erkenschwick und gib die Straße so ein, wie sie auf https://muellkalender.sector27.de aufgeführt ist (bei geteilten Straßen mit Hausnummernbereich, z. B. 'Ahsener Straße 113 - 161 (ungerade)').",
+      "en": "Choose Datteln, Marl or Oer-Erkenschwick and enter your street exactly as it is listed on https://muellkalender.sector27.de (for split streets including the house number range, e.g. 'Ahsener Straße 113 - 161 (ungerade)')."
+    },
     "urls": {}
   },
   "ics_siegen_stadt_de": {
@@ -4548,7 +4553,7 @@
   "ecoszczecin_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoszczecin_pl.md",
     "howto": {
-      "en": "Open https://ecoszczecin.pl/harmonogramy/, choose your street and house number from the dropdowns, and copy their values exactly as shown."
+      "en": "Open https://ecoszczecin.pl/harmonogramy/, choose your street and house number from the dropdowns, and enter their values as shown. The street is not case-sensitive."
     },
     "urls": {}
   },
@@ -5438,7 +5443,9 @@
   },
   "barnsley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/barnsley_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5736,7 +5743,9 @@
   },
   "cheshire_east_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheshire_east_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and house number or name."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6640,7 +6649,7 @@
   "mole_valley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mole_valley_gov_uk.md",
     "howto": {
-      "en": "Enter your postcode and house number or name. You can verify your address at https://myproperty.molevalley.gov.uk/molevalley/"
+      "en": "Enter your postcode and house number or name (e.g. 17 or Rose Cottage). You can verify your address at https://myproperty.molevalley.gov.uk/molevalley/"
     },
     "urls": {}
   },
@@ -6994,7 +7003,9 @@
   },
   "rother_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rother_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Your UPRN is shown on https://www.rother.gov.uk once you look up your address under 'Your bin days'; you can also find it on https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7086,7 +7097,7 @@
   "slough_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/slough_gov_uk.md",
     "howto": {
-      "en": "Search for your street at https://www.slough.gov.uk/bin-collections and note the number from the URL of your matching result (e.g. /directory-record/34771/...). Use that number as record_id, or pass the exact street name as the street argument."
+      "en": "Search for your street at https://www.slough.gov.uk/bin-collections and note the number from the URL of your matching result (for example 34771 from /directory-record/34771/...). Use that number as the directory record ID, or give the exact street name as listed in the directory instead (for example 'Knolton Way, Montgomery Place'). Use one of the two, not both."
     },
     "urls": {}
   },
