@@ -486,6 +486,15 @@ def compare(a, b, remove_space=False):
     return a.lower().strip() == b.lower().strip()
 
 
+def _new_client_id() -> str:
+    """A fresh client identity for one AbfallPlus wizard session.
+
+    Kept as its own seam so offline replay can hand back the recorded identity
+    without patching ``uuid.uuid4`` process-wide.
+    """
+    return str(uuid.uuid4())
+
+
 class AppAbfallplusDe:
     def __init__(
         self,
@@ -504,7 +513,7 @@ class AppAbfallplusDe:
         hnr_id=None,
         session=None,
     ):
-        self._client = str(uuid.uuid4())
+        self._client = _new_client_id()
 
         self._app_id = app_id
         # Run on the shared source.session when one is provided (BaseSource

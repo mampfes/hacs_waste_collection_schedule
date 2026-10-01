@@ -34,7 +34,8 @@ so the cassette stops replaying. A clock-derived value is safe, because replay
 freezes the clock to the recording date, but a nonce or a uuid is not
 (``EcoHarmonogramPL`` sends a fresh ``randrange`` hex as ``clientId``). Keep the
 comparison strict. For AbfallPlus, replay supplies the recorded handshake's
-client UUIDs to its UUID factory; every request still has to match in full.
+client UUIDs to the service's ``_new_client_id`` seam; every request still has
+to match in full.
 """
 
 from __future__ import annotations
@@ -586,11 +587,13 @@ def replaying(path: str):
                 if body is not None:
                     values = dict(json.loads(body).get("body", []))
                     if "client" in values:
-                        client_ids.append(UUID(values["client"]))
+                        client_ids.append(str(UUID(values["client"])))
             if client_ids:
+                # Patch the service's own seam, not uuid.uuid4: the uuid module
+                # is shared, so patching it would hand these IDs to any caller.
                 stack.enter_context(
                     patch(
-                        "waste_collection_schedule.service.AppAbfallplusDe.uuid.uuid4",
+                        "waste_collection_schedule.service.AppAbfallplusDe._new_client_id",
                         side_effect=client_ids,
                     )
                 )

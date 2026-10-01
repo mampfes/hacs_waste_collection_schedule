@@ -310,36 +310,45 @@ def test_abfallplus_replay_restores_recorded_client_ids_and_pins_app(tmp_path):
             os.path.dirname(__file__), "../custom_components/waste_collection_schedule"
         ),
     )
-    original = uuid.uuid4
-    ids = [uuid.UUID(int=1), uuid.UUID(int=2)]
+    from waste_collection_schedule.service import AppAbfallplusDe
+
+    original = AppAbfallplusDe._new_client_id
+    original_uuid4 = uuid.uuid4
+    ids = [str(uuid.UUID(int=1)), str(uuid.UUID(int=2))]
     url = "https://app.abfallplus.de/config.xml"
     interactions = [
         _interaction(
             url=url,
             body=cassette._body(
-                {"data": {"app_id": "de.abfallplus.ahe", "client": str(client_id)}}
+                {"data": {"app_id": "de.abfallplus.ahe", "client": client_id}}
             ),
         )
         for client_id in ids
     ]
     path = _cassette(tmp_path, *interactions)
     with cassette.replaying(path):
+        # Only the service's seam is patched; uuid4 stays random for everyone.
+        assert uuid.uuid4 is original_uuid4
         for expected in ids:
-            client_id = uuid.uuid4()
+            client_id = AppAbfallplusDe._new_client_id()
             assert client_id == expected
             assert (
                 requests.post(
-                    url, data={"app_id": "de.abfallplus.ahe", "client": str(client_id)}
+                    url, data={"app_id": "de.abfallplus.ahe", "client": client_id}
                 ).text
                 == "ok"
             )
-    assert uuid.uuid4 is original
+    assert AppAbfallplusDe._new_client_id is original
 
     with cassette.replaying(path):
         with pytest.raises(
             AssertionError, match="recorded request body does not match"
         ):
             requests.post(
-                url, data={"app_id": "wrong.app", "client": str(uuid.uuid4())}
+                url,
+                data={
+                    "app_id": "wrong.app",
+                    "client": AppAbfallplusDe._new_client_id(),
+                },
             )
-    assert uuid.uuid4 is original
+    assert AppAbfallplusDe._new_client_id is original
