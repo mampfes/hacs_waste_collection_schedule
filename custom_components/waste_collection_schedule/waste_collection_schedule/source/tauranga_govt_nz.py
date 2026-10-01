@@ -1,162 +1,128 @@
 import json
-from datetime import datetime
-from urllib.parse import quote, urlencode
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.response_shape import ResponseShapeError
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Tauranga City Council"
-DESCRIPTION = "Source script for Tauranga City Council"
-URL = "https://www.tauranga.govt.nz/"
-TEST_CASES = {
-    "121 Castlewold Drive": {"address": "121 Castlewold Drive"},
-    "70 Santa Monica Drive": {"address": " 70 Santa Monica Drive"},
-    "21 Wells Avenue": {"address": " 21 Wells Avenue"},
-}
-
-API_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Glass": Icons.GLASS,
-    "Garden waste": Icons.GARDEN,
-    "Food scraps": Icons.METAL,
-}
+PAGE_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
+ADDRESS_URL = "https://www.tauranga.govt.nz/Services/SearchService.asmx/DoRIDStreetPredictiveSearch"
 
 
-class Source:
-    def __init__(self, address: str) -> None:
-        self._address: str = address
-        self._session: requests.Session = requests.Session()
+def _address_key(response, *keys, address, **_) -> tuple[str, str]:
+    """The first predictive-search hit, as its ``(First, Second)`` pair."""
+    hits = response.json().get("d") or []
+    if not hits:
+        raise SourceArgumentNotFound("address", address)
+    hit = json.loads(hits[0])
+    return hit["First"], hit["Second"]
 
-    ADDRESS_URL = "https://www.tauranga.govt.nz/Services/SearchService.asmx/DoRIDStreetPredictiveSearch"
-    WASTE_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 
-    def fetch(self):
-        addr_1, addr_2 = self.get_address_detail()
-        form_data = self.generate_form_data(addr_1, addr_2)
-        waste_response = self.get_waste_pickup_dates(form_data)
+def _form(response, *keys, **_) -> dict[str, str]:
+    """The page's ASP.NET form, with the address fields filled in.
 
-        return self.parse_waste_pickup_dates(waste_response)
-
-    def get_address_detail(self) -> tuple[str, str]:
-        address_response = self._session.post(
-            self.ADDRESS_URL,
-            json={"prefixText": self._address, "count": 12, "contextKey": "test"},
-            headers={"Content-Type": "application/json; charset=UTF-8"},
-        ).json()
-
-        if len(address_response.get("d")) == 0:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # Parse address data from initial request
-        address_dict = json.loads(address_response.get("d")[0])
-        addr_1 = address_dict.get("First")
-        addr_2 = address_dict.get("Second")
-
-        return addr_1, addr_2
-
-    def get_waste_pickup_dates(self, form_data: str) -> requests.Response:
-        pickup_date_response = self._session.post(
-            self.WASTE_URL,
-            data=form_data,
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-            },
+    The DNN module id in the field names changes, so the two address fields
+    are found by name rather than hardcoded.
+    """
+    addr_1, addr_2 = keys[0]
+    soup = BeautifulSoup(response.text, "html.parser")
+    form = {
+        tag["name"]: tag.get("value", "")
+        for tag in soup.find_all("input")
+        if tag.get("name") and tag.get("type") != "text"
+    }
+    address_field = soup.find(
+        "input",
+        attrs={"id": lambda x: x and "CollectionDaysSAP" in x and "Address" in x},
+    )
+    hidden_field = soup.find(
+        "input",
+        attrs={"id": lambda x: x and "CollectionDaysSAP" in x and "hdnValue" in x},
+    )
+    if address_field is None or hidden_field is None:
+        raise ResponseShapeError(
+            "tauranga_govt_nz", "no CollectionDaysSAP form fields on the page"
         )
+    form[address_field["name"]] = addr_1  # type: ignore[index]
+    form[hidden_field["name"]] = f"{addr_1}||{addr_2}"  # type: ignore[index]
+    return form
 
-        return pickup_date_response
 
-    def generate_form_data(self, addr_1: str, addr_2: str) -> str:
-        state_response = self._session.get(self.WASTE_URL)
-        soup = BeautifulSoup(state_response.content, "html.parser")
-        view_state = soup.find("input", attrs={"id": "__VIEWSTATE"})["value"]  # type: ignore[index]
-        view_state_generator = soup.find("input", attrs={"id": "__VIEWSTATEGENERATOR"})[  # type: ignore[index]
-            "value"  # type: ignore[index]
-        ]
-        dnn_variable = soup.find("input", attrs={"id": "__dnnVariable"})["value"]  # type: ignore[index]
-        request_verification_token = soup.find(
-            "input", attrs={"name": "__RequestVerificationToken"}
-        )[
-            "value"  # type: ignore[index]
-        ]
-        event_validation = soup.find("input", attrs={"id": "__EVENTVALIDATION"})[  # type: ignore[index]
-            "value"  # type: ignore[index]
-        ]
+@final
+class Source(BaseSource):
+    TITLE = "Tauranga City Council"
+    DESCRIPTION = "Source script for Tauranga City Council"
+    URL = "https://www.tauranga.govt.nz/"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-        # Discover the DNN form field names dynamically so the source
-        # keeps working when the ctr module ID changes on the server.
-        addr_input = soup.find(
-            "input",
-            attrs={
-                "id": lambda x: (
-                    x and "CollectionDaysSAP" in str(x) and "Address" in str(x)
-                )
-            },
-        )
-        hdn_input = soup.find(
-            "input",
-            attrs={
-                "id": lambda x: (
-                    x and "CollectionDaysSAP" in str(x) and "hdnValue" in str(x)
-                )
-            },
-        )
-        if not addr_input or not hdn_input:
-            raise Exception("Could not find CollectionDaysSAP form fields on the page")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        form_data = {
-            addr_input["name"]: addr_1,  # type: ignore[index]
-            hdn_input["name"]: f"{addr_1}||{addr_2}",  # type: ignore[index]
-            "__VIEWSTATE": view_state,
-            "__VIEWSTATEGENERATOR": view_state_generator,
-            "__EVENTVALIDATION": event_validation,
-            "__dnnVariable": dnn_variable,
-            "__RequestVerificationToken": request_verification_token,
-        }
+    TEST_CASES: ClassVar[dict] = {
+        "121 Castlewold Drive": {"address": "121 Castlewold Drive"},
+        "70 Santa Monica Drive": {"address": "70 Santa Monica Drive"},
+        "21 Wells Avenue": {"address": "21 Wells Avenue"},
+    }
 
-        encoded_form_data = urlencode(form_data, quote_via=quote)  # type: ignore[arg-type]
+    PARAMS = (street_address(),)
 
-        return encoded_form_data
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as you would on the council's "
+            "[when to put your bins out](https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out) page."
+        ),
+    }
 
-    def parse_waste_pickup_dates(
-        self, pickup_date_response: requests.Response
-    ) -> list[Collection]:
-        soup = BeautifulSoup(pickup_date_response.text, "html.parser")
-        bin_type_containers = soup.find_all("div", class_="binTypeContainer")
+    # Resolve the address with the predictive search, read the page's ASP.NET
+    # form state, then post the form back with the address filled in.
+    retrieve = retrievers.Request(
+        PAGE_URL,
+        method="POST",
+        data=lambda key, form, **_: form,
+        before=(
+            retrievers.Lookup(
+                ADDRESS_URL,
+                method="POST",
+                json=lambda address, **_: {
+                    "prefixText": address,
+                    "count": 12,
+                    "contextKey": "test",
+                },
+                pick=_address_key,
+            ),
+            retrievers.Lookup(PAGE_URL, pick=_form),
+        ),
+    )
 
-        entries = []
+    # One block per date; a block lists each bin type it covers. Blocks for a
+    # service the household is not subscribed to read "Not subscribed" and
+    # carry no date, so the date pattern skips them.
+    parse = parsers.HtmlLabelledDates(
+        "div.binTypeContainer",
+        label="div.binTypeText p:has(span.dot)",
+        date="h5",
+        date_pattern=r"(\w+ \d{1,2} \w+)",
+        all_labels=True,
+    )
 
-        for container in bin_type_containers:
-            date = container.find("h5").text.strip()
-            bin_types = [
-                item.text
-                for item in container.find_all("p")
-                if item.find("span", class_="dot")
-            ]
-            if date == "Not subscribed":
-                continue  # Skip waste types that aren't being paid for/subscribed to.
-            current_date = datetime.now()
-            pickup_datetime = datetime.strptime(date, "%A %d %B")
-
-            if current_date.month == 12 and pickup_datetime.month == 1:
-                # Date responses have no year, handle adding a year and also year end/new year collections
-                pickup_date = pickup_datetime.replace(
-                    year=datetime.now().year + 1
-                ).date()
-
-            else:
-                pickup_date = pickup_datetime.replace(year=datetime.now().year).date()
-
-            for bin_type in bin_types:
-                entries.append(
-                    Collection(
-                        date=pickup_date,
-                        t=bin_type,
-                        icon=ICON_MAP.get(bin_type),
-                    )
-                )
-
-        return entries
+    transform = RowTransformer(
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        type_value_map={
+            "Rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Glass": wt.GLASS,
+            "Garden waste": wt.GARDEN_WASTE,
+            "Food scraps": wt.FOOD_WASTE,
+        },
+    )

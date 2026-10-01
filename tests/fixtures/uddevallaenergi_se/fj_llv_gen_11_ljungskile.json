@@ -1,0 +1,66 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://app.uddevallaenergi.se/wp-json/app/v2/address-flat df474824b3",
+      "method": "GET",
+      "url": "https://app.uddevallaenergi.se/wp-json/app/v2/address-flat",
+      "final_url": "https://app.uddevallaenergi.se/wp-json/app/v2/address-flat?address=Fj%C3%A4llv%C3%A4gen+11",
+      "body": "{\"params\":[[\"address\",\"Fj\u00e4llv\u00e4gen 11\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "x-powered-by": "PHP/8.2.33",
+        "x-wp-doingitwrong": "register_rest_route (sedan 5.5.0; Definitionen av REST API-rutten <code>app/v1/rc-open</code> saknar det obligatoriska argumentet <code>permission_callback</code>. Anv\u00e4nd <code>__return_true</code> som tillst\u00e5nd till \u00e5teranrop f\u00f6r REST API-rutter som \u00e4r avsedda att vara offentliga.)",
+        "content-type": "application/json; charset=UTF-8",
+        "x-robots-tag": "noindex",
+        "link": "<https://app.uddevallaenergi.se/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Accept, Content-Type, Cache-Control, Pragma, Origin, User-Agent, X-App-Language, X-App-Identifier, X-App-Version",
+        "allow": "GET",
+        "vary": "Origin,Accept-Encoding",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "x-litespeed-cache-control": "no-cache",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "content-length": "140",
+        "content-encoding": "br",
+        "date": "Wed, 30 Sep 2026 19:23:53 GMT",
+        "server": "LiteSpeed",
+        "alt-svc": "h3=\":443\"; ma=2592000, h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "W3sia2V5IjoiRiIsImlzX2tleSI6dHJ1ZX0seyJwbGFudF9udW1iZXIiOiJHaVJ3TlIxdTQ3eXducmd1MkV0RGRqZ08wMGtPTHMyK2c3eGNaNUVGV3NFPSIsImFkZHJlc3MiOiJGalx1MDBlNGxsdlx1MDBlNGdlbiAxMSwgTGp1bmdza2lsZSIsInppcF9jaXR5IjoiTGp1bmdza2lsZSJ9XQ=="
+    },
+    {
+      "key": "GET https://app.uddevallaenergi.se/wp-json/app/v1/next-pickup-web 33277b9ebd",
+      "method": "GET",
+      "url": "https://app.uddevallaenergi.se/wp-json/app/v1/next-pickup-web",
+      "final_url": "https://app.uddevallaenergi.se/wp-json/app/v1/next-pickup-web?plant_number=GiRwNR1u47ywnrgu2EtDdjgO00kOLs2%2Bg7xcZ5EFWsE%3D",
+      "body": "{\"params\":[[\"plant_number\",\"GiRwNR1u47ywnrgu2EtDdjgO00kOLs2+g7xcZ5EFWsE=\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "x-powered-by": "PHP/8.2.33",
+        "x-wp-doingitwrong": "register_rest_route (sedan 5.5.0; Definitionen av REST API-rutten <code>app/v1/rc-open</code> saknar det obligatoriska argumentet <code>permission_callback</code>. Anv\u00e4nd <code>__return_true</code> som tillst\u00e5nd till \u00e5teranrop f\u00f6r REST API-rutter som \u00e4r avsedda att vara offentliga.)",
+        "content-type": "application/json; charset=UTF-8",
+        "x-robots-tag": "noindex",
+        "link": "<https://app.uddevallaenergi.se/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Accept, Content-Type, Cache-Control, Pragma, Origin, User-Agent, X-App-Language, X-App-Identifier, X-App-Version",
+        "allow": "GET",
+        "vary": "Origin,Accept-Encoding",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "x-litespeed-cache-control": "no-cache",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "content-length": "168",
+        "content-encoding": "br",
+        "date": "Wed, 30 Sep 2026 19:23:53 GMT",
+        "server": "LiteSpeed"
+      },
+      "content_b64": "W3sidHlwZSI6IjM3MCBsIGtcdTAwZTRybCAyIiwiYWRkcmVzcyI6IkZqXHUwMGU0bGx2XHUwMGU0Z2VuIDExICIsInBpY2t1cF9kYXRlIjoiMjAyNi0xMC0wNSIsImZvcm1hdHRlZCI6IjUgb2t0IDIwMjYiLCJoYXNfZGV2aWF0aW5nX2RhdGUiOmZhbHNlLCJtZXNzYWdlIjoiIiwid2Vla190eXBlIjoiT3JkaW5hcmllIn0seyJ0eXBlIjoiMzcwIGwga1x1MDBlNHJsIDEiLCJhZGRyZXNzIjoiRmpcdTAwZTRsbHZcdTAwZTRnZW4gMTEgIiwicGlja3VwX2RhdGUiOiIyMDI2LTEwLTEyIiwiZm9ybWF0dGVkIjoiMTIgb2t0IDIwMjYiLCJoYXNfZGV2aWF0aW5nX2RhdGUiOmZhbHNlLCJtZXNzYWdlIjoiIiwid2Vla190eXBlIjoiT3JkaW5hcmllIn1d"
+    }
+  ]
+}

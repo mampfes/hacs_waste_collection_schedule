@@ -1,117 +1,98 @@
-import datetime
-from html.parser import HTMLParser
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, house_number, street
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "North Adelaide Waste Management Authority"
-DESCRIPTION = (
-    "Source for nawma.sa.gov.au (Salisbury, Playford, and Gawler South Australia)."
-)
-URL = "https://www.nawma.sa.gov.au"
-TEST_CASES = {
-    "128 Bridge Road": {
-        "street_number": "128",
-        "street_name": "Bridge Road",
-        "suburb": "Pooraka",
-    },  # Monday
-    "226 Bridge Road": {
-        "street_number": "226",
-        "street_name": "Bridge Road",
-        "suburb": "Pooraka",
-    },  # Monday reverse
-    "Whites Road": {"street_name": "Whites Road", "suburb": "Paralowie"},  # Tuesday
-    "Hazel Avenue": {
-        "street_name": "Hazel Avenue",
-        "suburb": "Angle Vale",
-    },  # Wednesday
-    "155 Murray St": {
-        "street_name": "Murray Street (sec between Ayers and the railway line",
-        "suburb": "Gawler",
-    },  # Thursday
-    "Edward Crescent": {
-        "street_name": "Edward Crescent",
-        "suburb": "Evanston Park",
-    },  # Friday
-}
-
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+_LID = re.compile(r"\s*-\s*\w+-lid bin\s*$", re.IGNORECASE)
 
 
-class CollectionResultsParser(HTMLParser):
-    """Parser for the collection results <div> element returned by the API."""
-
-    def __init__(self):
-        super().__init__()
-        self._entries = []
-
-        self._current_type = None
-
-        # State machine
-        self._in_entry = False
-        self._read_type = True
-        self._cell_count = 0
-
-    @property
-    def entries(self):
-        return self._entries
-
-    def handle_starttag(self, tag, attrs):
-        attrs_dict = dict(attrs)
-        if tag == "div" and attrs_dict.get("class") == "coll-content":
-            self._in_entry = True
-            self._cell_count = 0
-        elif tag == "h6" and self._in_entry:
-            self._read_type = True
-        elif tag == "td":
-            self._cell_count = self._cell_count + 1
-
-    def handle_endtag(self, tag):
-        if tag == "div":
-            self._in_entry = False
-
-    def handle_data(self, data):
-        if self._read_type:
-            self._current_type = data
-            self._read_type = False
-
-        elif self._in_entry and self._cell_count == 6:
-            date = datetime.datetime.strptime(data.strip(), "%d %B %Y").date()
-
-            icon = "mdi:trash-can"
-            if "yellow" in self._current_type:
-                icon = "mdi:recycle"
-            elif "green" in self._current_type:
-                icon = "mdi:leaf"
-
-            self._entries.append(Collection(date, self._current_type, icon))
-
-            # We're finished with this entry
-            self._in_entry = False
+def _next_collection(block) -> str:
+    """The date cell following the "Next Collection:" label."""
+    for row in block.select("tr"):
+        cells = row.select("td")
+        if len(cells) == 2 and "next collection" in cells[0].get_text().lower():
+            return cells[1].get_text(strip=True)
+    return ""
 
 
-class Source:
-    def __init__(self, street_name, suburb, street_number="", pid="2444"):
-        self._street_number = street_number  # Optional
-        self.street_name = street_name
-        self._suburb = suburb
-        self._pid = pid  # Not really sure what this is!
+@final
+class Source(BaseSource):
+    TITLE = "North Adelaide Waste Management Authority"
+    DESCRIPTION = (
+        "Source for nawma.sa.gov.au (Salisbury, Playford, and Gawler South Australia)."
+    )
+    URL = "https://www.nawma.sa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        params = {
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "128 Bridge Road": {
+            "street_number": "128",
+            "street_name": "Bridge Road",
+            "suburb": "Pooraka",
+        },  # Monday
+        "226 Bridge Road": {
+            "street_number": "226",
+            "street_name": "Bridge Road",
+            "suburb": "Pooraka",
+        },  # Monday reverse
+        "Whites Road": {"street_name": "Whites Road", "suburb": "Paralowie"},  # Tuesday
+        "Hazel Avenue": {
+            "street_name": "Hazel Avenue",
+            "suburb": "Angle Vale",
+        },  # Wednesday
+        "155 Murray St": {
+            "street_name": "Murray Street (sec between Ayers and the railway line",
+            "suburb": "Gawler",
+        },  # Thursday
+        "Edward Crescent": {
+            "street_name": "Edward Crescent",
+            "suburb": "Evanston Park",
+        },  # Friday
+    }
+
+    PARAMS = (
+        house_number("street_number", optional=True),
+        street("street_name"),
+        city("suburb"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street, suburb and optionally the house number as they "
+            "appear on the [NAWMA collection day lookup](https://www.nawma.sa.gov.au/)."
+        ),
+    }
+
+    retrieve = HttpPostRetriever(
+        url="https://www.nawma.sa.gov.au/wp-admin/admin-ajax.php",
+        data=lambda street_name, suburb, street_number=None, **_: {
             "action": "collection_day",
-            "street_no": self._street_number,
-            "street": self.street_name,
-            "area": self._suburb,
-            "pid": self._pid,
-        }
-
-        r = requests.post(
-            "http://www.nawma.sa.gov.au/wp-admin/admin-ajax.php",
-            headers=HEADERS,
-            data=params,  # The parameters are sent as the body of the post
-        )
-
-        p = CollectionResultsParser()
-        p.feed(r.text)
-        return p.entries
+            "street_no": street_number or "",
+            "street": street_name,
+            "area": suburb,
+            "pid": "2444",
+        },
+    )
+    parse = parsers.HtmlParser("div.coll-content")
+    transform = HtmlTransformer(
+        date_getter=_next_collection,
+        type_getter=lambda block: block.select_one("h6").get_text(strip=True),
+        clean=lambda label: _LID.sub("", label),
+        type_value_map={
+            "general household waste": wt.GENERAL_WASTE,
+            "household recycling": wt.RECYCLABLES,
+            "food organics and garden organics (fogo)": wt.ORGANIC,
+        },
+    )

@@ -1,228 +1,205 @@
-from datetime import datetime
+from typing import ClassVar, NamedTuple, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    house_number,
+    street_address,
+    text_field,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.retrievers import Lookup, Request
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "App Moje Odpady"
-DESCRIPTION = "Source for App Moje Odpady."
-URL = "https://moje-odpady.pl/"
-TEST_CASES = {
-    "Aleksandr\u00f3w woj. \u015bl\u0105skie": {
-        "city": "Aleksandr\u00f3w",
-        "voivodeship": "woj. \u015bl\u0105skie",
-    },
-    "with address and house_number": {
-        "city": "BASZKÓWKA",
-        "voivodeship": "woj. mazowieckie",
-        "address": "ANTONÓWKI",
-        "house_number": "Pozosta\u0142e",
-    },
-    "english bin types": {
-        "city": "Marcin\u00f3w",
-        "voivodeship": "woj. \u0142\u00f3dzkie",
-        "english": True,
-    },
-}
+_API = "https://waste24.net/client/api/mywaste/v2"
 
 
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bio": Icons.ORGANIC,
-    "Paper": Icons.PAPER,
-    "Recycle": Icons.RECYCLING,
-}
+class _Area(NamedTuple):
+    org: int
+    name: str
+    has_addresses: bool
 
 
-API_URL = "https://waste24.net/client/api/mywaste/v2/location_cities.php"
-
-
-def make_comparable(text: str) -> str:
+def _comparable(text: str) -> str:
     return text.lower().replace(" ", "").replace(".", "")
 
 
-class Source:
-    def __init__(
-        self,
-        city: str,
-        voivodeship: str | None = None,
-        address: str | None = None,
-        house_number: str | None = None,
-        english: bool = False,
-    ):
-        self._city: str = make_comparable(city)
-        self._voivodeship: str | None = (
-            make_comparable(voivodeship) if voivodeship else None
+def _city(response, *keys, city, voivodeship=None, **_) -> _Area:
+    rows = response.json()
+    matches = [row for row in rows if _comparable(row["cityName"]) == _comparable(city)]
+    if not matches:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "city", city, [row["cityName"] for row in rows]
         )
-        self._address: str | None = make_comparable(address) if address else None
-        self._house_number: str | None = (
-            make_comparable(house_number) if house_number else None
-        )
-        self._english: bool = english
-
-        self._org_number: int | None = None
-        self._real_city_name: str | None = None
-        self._real_address: str | None = None
-        self._real_house_number: str | None = None
-
-    def _fetch_house_number(self):
-        payload = {
-            "org": self._org_number,
-            "city": self._real_city_name,
-            "address": self._real_address,
-        }
-        r = requests.post(
-            "https://waste24.net/client/api/mywaste/v2/location_addresses_nr.php",
-            json=payload,
-        )
-        r.raise_for_status()
-        data = r.json()
-        if len(data) == 0:
-            return
-        if len(data) == 1:
-            self._real_house_number = data[0]["addressNr"]
-            return
-
-        if self._house_number is None:
-            SourceArgumentRequiredWithSuggestions(
-                "house_number",
-                "House number is required for this address",
-                [a["nr"] for a in data],
-            )
-
-        self._real_house_number = None
-        for house_number in data:
-            if make_comparable(house_number["addressNr"]) == self._house_number:
-                self._real_house_number = house_number["addressNr"]
-                break
-
-        if self._real_house_number is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number",
-                self._house_number,
-                [a["nr"] for a in data],
-            )
-
-    def _fetch_address(self):
-        payload = {"org": self._org_number, "city": self._real_city_name}
-        r = requests.post(
-            "https://waste24.net/client/api/mywaste/v2/location_addresses.php",
-            json=payload,
-        )
-        r.raise_for_status()
-
-        data = r.json()
-        if self._address is None:
+    if len(matches) > 1:
+        voivodeships = [row["voivodeship"] for row in matches]
+        if not voivodeship:
             raise SourceArgumentRequiredWithSuggestions(
-                "address",
-                "Address is required for this city",
-                [a["addressName"] for a in data],
-            )
-
-        countOfChilds = None
-
-        for address in data:
-            if make_comparable(address["addressName"]) == self._address:
-                self._real_address = address["addressName"]
-                break
-        if self._real_address is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [a["addressName"] for a in data],
-            )
-
-        if countOfChilds:
-            self._fetch_house_number()
-
-    def fetch_area(self):
-        r = requests.post(
-            "https://waste24.net/client/api/mywaste/v2/location_cities.php"
-        )
-        r.raise_for_status()
-
-        data = r.json()
-        city_matches = []
-
-        for city in data:
-            if make_comparable(city["cityName"]) == self._city:
-                city_matches.append(city)
-
-        if not city_matches:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city",
-                self._city,
-                [c["cityName"] for c in data],
-            )
-
-        self._org_number = None
-        self._real_city_name = None
-        countOfChilds = None
-
-        if len(city_matches) == 1:
-            self._org_number = city_matches[0]["org"]
-            self._real_city_name = city_matches[0]["cityName"]
-            countOfChilds = city_matches[0]["countOfChilds"]
-        else:
-            if self._voivodeship is None:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "voivodeship",
-                    "Voivodeship is required as there are multiple cities with the same name",
-                    [c["voivodeship"] for c in city_matches],
-                )
-            for city in city_matches:
-                if make_comparable(city["voivodeship"]) == self._voivodeship:
-                    self._org_number = city["org"]
-                    self._real_city_name = city["cityName"]
-                    countOfChilds = city["countOfChilds"]
-                    break
-        if self._org_number is None:
-            raise SourceArgumentNotFoundWithSuggestions(
                 "voivodeship",
-                self._voivodeship,
-                [c["voivodeship"] for c in city_matches],
+                "Voivodeship is required as there are multiple cities with the same name",
+                voivodeships,
             )
+        matches = [
+            row
+            for row in matches
+            if _comparable(row["voivodeship"]) == _comparable(voivodeship)
+        ]
+        if not matches:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "voivodeship", voivodeship, voivodeships
+            )
+    row = matches[0]
+    return _Area(row["org"], row["cityName"], bool(row["countOfChilds"]))
 
-        if countOfChilds:
-            self._fetch_address()
 
-    def _get_scheduele(self) -> list[Collection]:
-        payload = {
-            "org": self._org_number,
-            "city": self._real_city_name,
-            "address": self._real_address or "",
-            "addressNr": self._real_house_number or "",
-        }
-        r = requests.post(
-            "https://waste24.net/client/api/mywaste/v2/schedule_list.php", json=payload
+def _address(response, area, *keys, address=None, **_) -> str:
+    names = [row["addressName"] for row in response.json()]
+    if not address:
+        raise SourceArgumentRequiredWithSuggestions(
+            "address", "Address is required for this city", names
         )
-        r.raise_for_status()
-        data = r.json()
-        entries = []
-        for collection in data:
-            date_ = datetime.strptime(collection["data"], "%Y-%m-%d").date()
-            for containers in collection["containers"]:
-                bin_type = containers["containerName"]
-                if self._english:
-                    bin_type = (
-                        containers.get("containerNameEn", bin_type).strip() or bin_type
-                    )
-                entries.append(Collection(date_, bin_type, ICON_MAP.get(bin_type)))
-        return entries
+    for name in names:
+        if _comparable(name) == _comparable(address):
+            return name
+    raise SourceArgumentNotFoundWithSuggestions("address", address, names)
 
-    def fetch(self) -> list[Collection]:
-        fresh_params = False
-        if self._org_number is None:
-            self.fetch_area()
-        try:
-            return self._get_scheduele()
-        except Exception:
-            if fresh_params:
-                raise
-            fresh_params = True
-            self.fetch_area()
-            return self._get_scheduele()
+
+def _number(response, area, matched_address, *keys, house_number=None, **_) -> str:
+    numbers = [row["addressNr"] for row in response.json()]
+    if not numbers:
+        return ""
+    if len(numbers) == 1:
+        return numbers[0]
+    if not house_number:
+        raise SourceArgumentRequiredWithSuggestions(
+            "house_number", "House number is required for this address", numbers
+        )
+    for number in numbers:
+        if _comparable(number) == _comparable(house_number):
+            return number
+    raise SourceArgumentNotFoundWithSuggestions("house_number", house_number, numbers)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "App Moje Odpady"
+    DESCRIPTION = "Source for App Moje Odpady."
+    URL = "https://moje-odpady.pl/"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Aleksandrów woj. śląskie": {
+            "city": "Aleksandrów",
+            "voivodeship": "woj. śląskie",
+        },
+        "with address and house_number": {
+            "city": "BASZKÓWKA",
+            "voivodeship": "woj. mazowieckie",
+            "address": "ANTONÓWKI",
+            "house_number": "Pozostałe",
+        },
+        "Marcinów woj. łódzkie": {
+            "city": "Marcinów",
+            "voivodeship": "woj. łódzkie",
+        },
+    }
+
+    PARAMS = (
+        city("city"),
+        text_field("voivodeship", label="Voivodeship", optional=True),
+        street_address("address", optional=True),
+        house_number("house_number", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the city as listed in the Moje Odpady app. If several cities share "
+            "the name, also enter the voivodeship (for example 'woj. mazowieckie'). "
+            "Cities that are split into streets additionally need the address "
+            "(street) and, where the street has several entries, the house number."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.ELECTRONICS,
+        wt.BULKY_WASTE,
+        wt.TEXTILES,
+        wt.OTHER,
+    ]
+
+    retrieve = Request(
+        f"{_API}/schedule_list.php",
+        method="POST",
+        before=(
+            Lookup(f"{_API}/location_cities.php", method="POST", pick=_city),
+            Lookup(
+                f"{_API}/location_addresses.php",
+                method="POST",
+                json=lambda area, **_: {"org": area.org, "city": area.name},
+                when=lambda area, **_: area.has_addresses,
+                pick=_address,
+            ),
+            Lookup(
+                f"{_API}/location_addresses_nr.php",
+                method="POST",
+                json=lambda area, matched_address, **_: {
+                    "org": area.org,
+                    "city": area.name,
+                    "address": matched_address,
+                },
+                when=lambda area, matched_address, **_: matched_address is not None,
+                pick=_number,
+            ),
+        ),
+        json=lambda area, matched_address, matched_number, **_: {
+            "org": area.org,
+            "city": area.name,
+            "address": matched_address or "",
+            "addressNr": matched_number or "",
+        },
+    )
+    parse = JsonParser()
+    preprocess = ExplodeList("containers", into="container")
+    transform = JsonTransformer(
+        date_key="data",
+        type_key=lambda record: record["container"]["containerName"],
+        type_value_map={
+            "Zmieszane": wt.GENERAL_WASTE,
+            "Zmieszane (Worek czarny)": wt.GENERAL_WASTE,
+            "Biodegradowalne": wt.ORGANIC,
+            "Biodegradowalne (Worek brązowy)": wt.ORGANIC,
+            "Bioodpady komunalne": wt.ORGANIC,
+            "Bioodpad z roślin": wt.ORGANIC,
+            "Papier i tektura": wt.PAPER,
+            "Papier i tektura (Worek niebieski)": wt.PAPER,
+            "Szkło": wt.GLASS,
+            "Szkło (Worek zielony)": wt.GLASS,
+            "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+            "Metale i tworzywa sztuczne (Worek żółty)": wt.RECYCLABLES,
+            "Tworzywa Sztuczne": wt.RECYCLABLES,
+            "Elektroodpady": wt.ELECTRONICS,
+            "Gabaryty": wt.BULKY_WASTE,
+            "Wielkogabarytowe": wt.BULKY_WASTE,
+            "Odzież i tekstylia": wt.TEXTILES,
+            "Odpady problematyczne": wt.HAZARDOUS,
+            # no canonical type: kept under their own label
+            "Opony": wt.OTHER,
+            "Popiół": wt.OTHER,
+            "Popiół i żużel": wt.OTHER,
+            "Opłaty": wt.OTHER,
+            "Zbiórka objazdowa": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

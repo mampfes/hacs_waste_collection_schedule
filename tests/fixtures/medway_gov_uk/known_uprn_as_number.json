@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://api.medway.gov.uk/api/waste/getwasteday/100062390963 ",
+      "method": "GET",
+      "url": "https://api.medway.gov.uk/api/waste/getwasteday/100062390963",
+      "final_url": "https://api.medway.gov.uk/api/waste/getwasteday/100062390963",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "access-control-allow-origin": "https://www.medway.gov.uk",
+        "x-aspnet-version": "4.0.30319",
+        "date": "Wed, 30 Sep 2026 19:22:08 GMT",
+        "content-length": "64"
+      },
+      "content_b64": "eyJkYXkiOiJXZWRuZXNkYXkiLCJuZXh0Q29sbGVjdGlvbiI6IjIwMjYtMDktMzBUMDA6MDA6MDArMDE6MDAifQ=="
+    }
+  ]
+}

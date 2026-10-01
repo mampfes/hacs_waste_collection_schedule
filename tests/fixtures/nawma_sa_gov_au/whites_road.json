@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "POST https://www.nawma.sa.gov.au/wp-admin/admin-ajax.php e146823807",
+      "method": "POST",
+      "url": "https://www.nawma.sa.gov.au/wp-admin/admin-ajax.php",
+      "final_url": "https://www.nawma.sa.gov.au/wp-admin/admin-ajax.php",
+      "body": "{\"body\":[[\"action\",\"collection_day\"],[\"area\",\"Paralowie\"],[\"pid\",\"2444\"],[\"street\",\"Whites Road\"],[\"street_no\",\"\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "x-robots-tag": "noindex",
+        "x-content-type-options": "nosniff",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self';",
+        "vary": "Accept-Encoding,User-Agent",
+        "content-encoding": "gzip",
+        "content-length": "610",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Wed, 30 Sep 2026 19:22:59 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "PGRpdiBjbGFzcz0nY29sbGVjdGlvbi1yZXN1bHQtaW5uZXInPjxkaXYgY2xhc3M9J2xvYWRlci13cmFwJz4KICAgICAgICAgICAgICAgICAgICAgICAgPGltZyBzcmM9aHR0cHM6Ly93d3cubmF3bWEuc2EuZ292LmF1L3dwLWNvbnRlbnQvdGhlbWVzL25hd21hL2Fzc2V0cy9pbWFnZXMvbG9hZGluZy5naWY+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+PGRpdiBjbGFzcz0nY29sbC1tYWluLXdyYXAnPgoJCQkgICAgCSAJPGZpZ3VyZT48aW1nIHNyYz1odHRwczovL3d3dy5uYXdtYS5zYS5nb3YuYXUvd3AtY29udGVudC91cGxvYWRzLzIwMjAvMDQvUmVkLUxpZGRlZC1CaW4uc3ZnPjwvZmlndXJlPgoJCQkgICAgCSAJPGRpdiBjbGFzcz0nY29sbC1jb250ZW50Jz4KCQkJICAgIAkgCTxoNj5HZW5lcmFsIEhvdXNlaG9sZCBXYXN0ZSAtIHJlZC1saWQgYmluPC9oNj4KCQkJICAgICAgICAJPHRhYmxlIGNlbGxzcGFjaW5nPScxMCc+CgkJCQkJCQk8dHI+CgkJCQkJCQkJPHRkPkZyZXF1ZW5jeTo8L3RkPgoJCQkJCQkJCTx0ZD5XZWVrbHk8L3RkPgoJCQkJCQkJPC90cj4KCQkJCQkJCTx0cj4KCQkJCQkJCQk8dGQ+Q29sbGVjdGlvbiBEYXk6PC90ZD4KCQkJCQkJCQk8dGQ+VHVlc2RheTwvdGQ+CgkJCQkJCQk8L3RyPgoJCQkJCQkJPHRyPgoJCQkJCQkJCTx0ZD5OZXh0IENvbGxlY3Rpb246PC90ZD4KCQkJCQkJCQk8dGQ+PHNwYW4gY2xhc3M9J29ubHktbW9iaWxlJz48L3NwYW4+PHN0cm9uZz42IE9jdG9iZXIgMjAyNjwvc3Ryb25nPjwvdGQ+CgkJCQkJCQk8L3RyPgoJCQkgICAgICAgIAk8L3RhYmxlPgoJCQkgICAgICAgIAk8L2Rpdj4KCQkJICAgICAgICA8L2Rpdj48ZGl2IGNsYXNzPSdjb2xsLW1haW4td3JhcCc+CgkJCSAgICAJIAk8ZmlndXJlPjxpbWcgc3JjPWh0dHBzOi8vd3d3Lm5hd21hLnNhLmdvdi5hdS93cC1jb250ZW50L3VwbG9hZHMvMjAyMC8wNC9HcmVlbi1MaWRkZWQtQmluLnN2Zz48L2ZpZ3VyZT4KCQkJICAgIAkgCTxkaXYgY2xhc3M9J2NvbGwtY29udGVudCc+CgkJCSAgICAJIAk8aDY+Rm9vZCBPcmdhbmljcyBhbmQgR2FyZGVuIE9yZ2FuaWNzIChGT0dPKSAtIGdyZWVuLWxpZCBiaW48L2g2PgoJCQkgICAgICAgIAk8dGFibGUgY2VsbHNwYWNpbmc9JzEwJz4KCQkJCQkJCTx0cj4KCQkJCQkJCQk8dGQ+RnJlcXVlbmN5OjwvdGQ+CgkJCQkJCQkJPHRkPkZvcnRuaWdodGx5PC90ZD4KCQkJCQkJCTwvdHI+CgkJCQkJCQk8dHI+CgkJCQkJCQkJPHRkPkNvbGxlY3Rpb24gRGF5OjwvdGQ+CgkJCQkJCQkJPHRkPlR1ZXNkYXk8L3RkPgoJCQkJCQkJPC90cj4KCQkJCQkJCTx0cj4KCQkJCQkJCQk8dGQ+TmV4dCBDb2xsZWN0aW9uOjwvdGQ+CgkJCQkJCQkJPHRkPjxzcGFuIGNsYXNzPSdvbmx5LW1vYmlsZSc+PC9zcGFuPjxzdHJvbmc+NiBPY3RvYmVyIDIwMjY8L3N0cm9uZz48L3RkPgoJCQkJCQkJPC90cj4KCQkJICAgICAgICAJPC90YWJsZT4KCQkJICAgICAgICAJPC9kaXY+CgkJCSAgICAgICAgPC9kaXY+PGRpdiBjbGFzcz0nY29sbC1tYWluLXdyYXAnPgoJCSAgICAJIAk8ZmlndXJlPjxpbWcgc3JjPWh0dHBzOi8vd3d3Lm5hd21hLnNhLmdvdi5hdS93cC1jb250ZW50L3VwbG9hZHMvMjAyMC8wNC9ZZWxsb3ctTGlkZGVkLUJpbi5zdmc+PC9maWd1cmU+CgkJICAgIAkgCTxkaXYgY2xhc3M9J2NvbGwtY29udGVudCc+CgkJICAgIAkgCTxoNj5Ib3VzZWhvbGQgUmVjeWNsaW5nIC0geWVsbG93LWxpZCBiaW48L2g2PgoJCSAgICAgICAgCTx0YWJsZSBjZWxsc3BhY2luZz0nMTAnPgoJCQkJCQk8dHI+CgkJCQkJCQk8dGQ+RnJlcXVlbmN5OjwvdGQ+CgkJCQkJCQk8dGQ+Rm9ydG5pZ2h0bHk8L3RkPgoJCQkJCQk8L3RyPgoJCQkJCQk8dHI+CgkJCQkJCQk8dGQ+Q29sbGVjdGlvbiBEYXk6PC90ZD4KCQkJCQkJCTx0ZD5UdWVzZGF5PC90ZD4KCQkJCQkJPC90cj4KCQkJCQkJPHRyPgoJCQkJCQkJPHRkPk5leHQgQ29sbGVjdGlvbjo8L3RkPgoJCQkJCQkJPHRkPjxzcGFuIGNsYXNzPSdvbmx5LW1vYmlsZSc+PC9zcGFuPjxzdHJvbmc+MTMgT2N0b2JlciAyMDI2PC9zdHJvbmc+PC90ZD4KCQkJCQkJPC90cj4KCQkgICAgICAgIAk8L3RhYmxlPgoJCSAgICAgICAgCTwvZGl2PgoJCSAgICAgICAgPC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0ncGRmLWJsb2NrJz48YSBocmVmPWh0dHBzOi8vd3d3Lm5hd21hLnNhLmdvdi5hdS93cC1jb250ZW50L3VwbG9hZHMvMjAyNS8wMS9OQVdNQS1Db2xsZWN0aW9uLUNhbGVuZGFyLTIwMjYtQ2l0eS1vZi1TYWxpc2J1cnktV2Vlay0xLnBkZiB0YXJnZXQ9J19ibGFuayc+TkFXTUEgQ29sbGVjdGlvbiBDYWxlbmRhciAyMDI2IC0gQ2l0eSBvZiBTYWxpc2J1cnkgV2VlayAxPC9hPjwvZGl2Pg=="
+    }
+  ]
+}

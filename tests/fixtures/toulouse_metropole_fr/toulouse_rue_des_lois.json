@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-des-ordures-menageres/records 5b784dc48f",
+      "method": "GET",
+      "url": "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-des-ordures-menageres/records",
+      "final_url": "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-des-ordures-menageres/records?limit=20&refine=libelle_voie%3A%22Rue+des+Lois%22&select=libelle_voie%2Cinfobulle_pdi%2Cflux",
+      "body": "{\"params\":[[\"limit\",\"20\"],[\"refine\",\"libelle_voie:\\\"Rue des Lois\\\"\"],[\"select\",\"libelle_voie,infobulle_pdi,flux\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Wed, 30 Sep 2026 19:23:32 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "19941",
+        "x-ratelimit-limit": "20000",
+        "x-ratelimit-reset": "2026-10-01 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "fr-fr",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJ0b3RhbF9jb3VudCI6IDQsICJyZXN1bHRzIjogW3sibGliZWxsZV92b2llIjogIlJ1ZSBkZXMgTG9pcyIsICJpbmZvYnVsbGVfcGRpIjogIjcgam91cnMgLyA3IiwgImZsdXgiOiAiT3JkdXJlIG1cdTAwZTluYWdcdTAwZThyZSJ9LCB7ImxpYmVsbGVfdm9pZSI6ICJSdWUgZGVzIExvaXMiLCAiaW5mb2J1bGxlX3BkaSI6ICI3IGpvdXJzIC8gNyIsICJmbHV4IjogIk9yZHVyZSBtXHUwMGU5bmFnXHUwMGU4cmUifSwgeyJsaWJlbGxlX3ZvaWUiOiAiUnVlIGRlcyBMb2lzIiwgImluZm9idWxsZV9wZGkiOiAiNyBqb3VycyAvIDciLCAiZmx1eCI6ICJPcmR1cmUgbVx1MDBlOW5hZ1x1MDBlOHJlIn0sIHsibGliZWxsZV92b2llIjogIlJ1ZSBkZXMgTG9pcyIsICJpbmZvYnVsbGVfcGRpIjogIjcgam91cnMgLyA3IiwgImZsdXgiOiAiT3JkdXJlIG1cdTAwZTluYWdcdTAwZThyZSJ9XX0="
+    },
+    {
+      "key": "GET https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-selective/records 5b784dc48f",
+      "method": "GET",
+      "url": "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-selective/records",
+      "final_url": "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/dechets-collecte-selective/records?limit=20&refine=libelle_voie%3A%22Rue+des+Lois%22&select=libelle_voie%2Cinfobulle_pdi%2Cflux",
+      "body": "{\"params\":[[\"limit\",\"20\"],[\"refine\",\"libelle_voie:\\\"Rue des Lois\\\"\"],[\"select\",\"libelle_voie,infobulle_pdi,flux\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Wed, 30 Sep 2026 19:23:32 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "19940",
+        "x-ratelimit-limit": "20000",
+        "x-ratelimit-reset": "2026-10-01 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "fr-fr",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJ0b3RhbF9jb3VudCI6IDAsICJyZXN1bHRzIjogW119"
+    }
+  ]
+}
