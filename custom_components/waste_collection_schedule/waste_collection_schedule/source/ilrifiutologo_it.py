@@ -1,172 +1,115 @@
 import datetime
-import logging
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, house_number, street
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Il Rifiutologo"
-DESCRIPTION = "Source for ilrifiutologo.it"
-URL = "https://ilrifiutologo.it"
-COUNTRY = "it"
-TEST_CASES = {
-    "Test1": {"town": "Faenza", "street": "VIA AUGUSTO RIGHI", "house_number": "6"},
-    "Test2": {"town": "Faenza", "street": "VIA AUGUSTO RIGHI", "house_number": 1},
-}
-
-API_URL = "https://www.ilrifiutologo.it/ajax/archivio_ilrifiutologo_ajax.php"
-API_URL_BACKEND = "https://webapp-ambiente.gruppohera.it/rifiutologo/rifiutologoweb"
-HEADERS = {
-    "Accept": "*/*",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
-    "Host": "www.ilrifiutologo.it",
-    "Origin": "https://www.ilrifiutologo.it",
-    "Referer": "http://www.ilrifiutologo.it/casa_rifiutologo/",
-    "X-Requested-With": "XMLHttpRequest",
-}
-
-ICON_MAP = {
-    "Lattine": Icons.GLASS,
-    "Plastica": Icons.GLASS,
-    "Indifferenziato": Icons.GENERAL_WASTE,
-    "Vetro": Icons.GLASS,
-    "Organico": Icons.BIO_KITCHEN,
-    "Sfalci e potature": Icons.GARDEN,
-    "Pannolini/Pannoloni": Icons.GENERAL_WASTE,
-    "Carta e cartone": Icons.PAPER,
-}
-
-_LOGGER = logging.getLogger(__name__)
+_API = "https://webapp-ambiente.gruppohera.it/rifiutologo/rifiutologoweb"
 
 
-class Source:
-    def __init__(
-        self, town: str, street: str, house_number: int | str
-    ):  # argX correspond to the args dict in the source configuration
-        self.comune_id = None
-        self.inirizzo_id = None
-        self.civico_id = None
-
-        comuni = api_get_request(relative_path="/getComuni.php")
-        _LOGGER.debug(
-            "getComuni.php: %d s - %s - %s",
-            comuni.elapsed.total_seconds(),
-            comuni.status_code,
-            comuni.reason,
-        )
-
-        if comuni.status_code != 200 or not isinstance(comuni.json(), list):
-            raise Exception("Errore durante il recupero dei comuni")
-
-        for citta in comuni.json():
-            if citta.get("name").upper() == town.upper():
-                self.comune_id = citta.get("id", "")
-                break
-        if self.comune_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "town", town, [city.get("name") for city in comuni.json()]
-            )
-
-        indirizzi = api_get_request(
-            relative_path="/getIndirizzi.php", params={"idComune": self.comune_id}
-        )
-        _LOGGER.debug(
-            "getIndirizzi.php: %d s - %s - %s",
-            indirizzi.elapsed.total_seconds(),
-            indirizzi.status_code,
-            indirizzi.reason,
-        )
-
-        if indirizzi.status_code != 200 or not isinstance(indirizzi.json(), list):
-            raise Exception("Errore durante il recupero degli indirizzi")
-
-        for strada in indirizzi.json():
-            if strada.get("indirizzo") == street.upper():
-                self.inirizzo_id = strada.get("id", "")
-                break
-        if self.inirizzo_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                street,
-                [street.get("indirizzo") for street in indirizzi.json()],
-            )
-
-        numeri_civici = api_get_request(
-            relative_path="/getNumeriCivici.php",
-            params={"idComune": self.comune_id, "idIndirizzo": self.inirizzo_id},
-        )
-        _LOGGER.debug(
-            "getNumeriCivici.php: %d s - %s - %s",
-            numeri_civici.elapsed.total_seconds(),
-            numeri_civici.status_code,
-            numeri_civici.reason,
-        )
-
-        if numeri_civici.status_code != 200 or not isinstance(
-            numeri_civici.json(), list
-        ):
-            raise Exception("Errore durante il recupero dei numeri civici")
-
-        for civico in numeri_civici.json():
-            if civico.get("numeroCivico") == str(house_number):
-                self.civico_id = civico.get("id", "")
-                break
-
-        if self.civico_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number",
-                house_number,
-                [number.get("numeroCivico") for number in numeri_civici.json()],
-            )
-
-    def fetch(self):
-        r = api_get_request(
-            relative_path="/getCalendarioPap.php",
-            params={
-                "idComune": self.comune_id,
-                "idIndirizzo": self.inirizzo_id,
-                "idCivico": self.civico_id,
-                "isBusiness": "0",
-                "date": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-                "giorniDaMostrare": 31,
-            },
-        )
-        _LOGGER.debug(
-            "getCalendarioPap.php: %d s - %s - %s",
-            r.elapsed.total_seconds(),
-            r.status_code,
-            r.reason,
-        )
-
-        if r.status_code != 200 or not isinstance(r.json(), dict):
-            raise Exception("Errore durante il recupero del calendario")
-
-        calendar = r.json().get("calendario", [])
-
-        entries = []
-
-        for entry in calendar:
-            for event in entry.get("conferimenti", []):
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(
-                            entry.get("data"), "%Y-%m-%dT%H:%M:%S+00:00"
-                        ).date(),
-                        t=event.get("macroprodotto").get("descrizione"),
-                        icon=ICON_MAP.get(
-                            event.get("macroprodotto").get("descrizione")
-                        ),
-                    )
-                )
-
-        return entries
+def _pick_town(response, *, town, **_):
+    towns = response.json()
+    for entry in towns:
+        if entry.get("name").upper() == str(town).upper():
+            return entry.get("id", "")
+    raise SourceArgumentNotFoundWithSuggestions(
+        "town", town, [entry.get("name") for entry in towns]
+    )
 
 
-def api_get_request(relative_path, params=None):
-    _LOGGER.info("%s [GET] params: %s", relative_path, params)
-    return requests.get(
-        url=API_URL_BACKEND + relative_path,
-        params=params,
+def _pick_street(response, town_id, *, street, **_):
+    streets = response.json()
+    for entry in streets:
+        if entry.get("indirizzo") == str(street).upper():
+            return entry.get("id", "")
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street", street, [entry.get("indirizzo") for entry in streets]
+    )
+
+
+def _pick_number(response, town_id, street_id, *, house_number, **_):
+    numbers = response.json()
+    for entry in numbers:
+        if entry.get("numeroCivico") == str(house_number):
+            return entry.get("id", "")
+    raise SourceArgumentNotFoundWithSuggestions(
+        "house_number", house_number, [entry.get("numeroCivico") for entry in numbers]
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Il Rifiutologo"
+    DESCRIPTION = "Source for ilrifiutologo.it"
+    URL = "https://ilrifiutologo.it"
+    COUNTRY = "it"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.OTHER,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test1": {"town": "Faenza", "street": "VIA AUGUSTO RIGHI", "house_number": "6"},
+        "Test2": {"town": "Faenza", "street": "VIA AUGUSTO RIGHI", "house_number": 1},
+    }
+
+    PARAMS = (city("town"), street("street"), house_number("house_number"))
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(f"{_API}/getComuni.php", pick=_pick_town),
+            retrievers.Lookup(
+                f"{_API}/getIndirizzi.php",
+                params=lambda town_id, **_: {"idComune": town_id},
+                pick=_pick_street,
+            ),
+            retrievers.Lookup(
+                f"{_API}/getNumeriCivici.php",
+                params=lambda town_id, street_id, **_: {
+                    "idComune": town_id,
+                    "idIndirizzo": street_id,
+                },
+                pick=_pick_number,
+            ),
+        ),
+        url=f"{_API}/getCalendarioPap.php",
+        params=lambda town_id, street_id, number_id, **_: {
+            "idComune": town_id,
+            "idIndirizzo": street_id,
+            "idCivico": number_id,
+            "isBusiness": "0",
+            "date": datetime.date.today().strftime("%Y-%m-%dT00:00:00"),
+            "giorniDaMostrare": 31,
+        },
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("calendario")
+    # One calendar entry per day, each holding that day's collections.
+    preprocess = preprocessors.ExplodeList("conferimenti", into="conferimento")
+    transform = JsonTransformer(
+        date_key="data",
+        type_key=lambda record: record["conferimento"]["macroprodotto"]["descrizione"],
+        type_value_map={
+            "Indifferenziato": wt.GENERAL_WASTE,
+            "Plastica": wt.RECYCLABLES,
+            "Lattine": wt.RECYCLABLES,
+            "Vetro": wt.GLASS,
+            "Organico": wt.ORGANIC,
+            "Sfalci e potature": wt.GARDEN_WASTE,
+            "Carta e cartone": wt.PAPER,
+            "Pannolini/Pannoloni": wt.OTHER,
+        },
+        carry_raw_label=True,
     )
