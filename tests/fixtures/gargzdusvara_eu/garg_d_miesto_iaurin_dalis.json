@@ -1,0 +1,110 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "POST https://www.gargzdusvara.eu/ajax.php 506230d19e",
+      "method": "POST",
+      "url": "https://www.gargzdusvara.eu/ajax.php",
+      "final_url": "https://www.gargzdusvara.eu/ajax.php",
+      "body": "{\"body\":[[\"action\",\"getDataAll\"],[\"lang\",\"lt\"],[\"location\",\"Garg\u017ed\u0173 m. - Au\u0161rupio g., Garg\u017edupio g., Lenktoji g., Lyros g., Palangos g., Rasos g., Saula\u017eoli\u0173 g., Vytenio g., Volung\u0117s g., \u017dibu\u010di\u0173 g.\"],[\"module\",\"Atliekos\"],[\"type\",\"komunalines\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "set-cookie": "CMSSESSIDac02630f=f378feonpgc9q98186pgreofav; path=/; secure; HttpOnly; SameSite=lax",
+        "expires": "Thu, 01 Oct 2026 23:21:35 GMT",
+        "last-modified": "Mon, 19 Feb 2024 11:56:40 GMT",
+        "access-control-allow-origin": "https://www.gargzdusvara.eu",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "cache-control": "private, max-age=35316000, must-revalidate",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1",
+        "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' ytimg.com *.ytimg.com youtube.com *.youtube.com www.bing.com  *.jsdelivr.net t.ssl.ak.dynamic.tiles.virtualearth.net dev.virtualearth.net placeimg.com data: www.googletagmanager.com maps.googleapis.com fonts.gstatic.com connect.facebook.net www.facebook.com www.google-analytics.com cdnjs.cloudflare.com www.googleapis.com www.gstatic.com maps.gstatic.com www.google.com www.google.lt stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' *.jsdelivr.net maps.gstatic.com www.googleapis.com fonts.googleapis.com www.bing.com   dev.virtualearth.net; frame-ancestors 'self'",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-type": "text/html",
+        "date": "Thu, 01 Oct 2026 20:21:35 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "eyJzdGF0dXMiOnRydWUsInJldHVybiI6eyJtaW4iOiIyMDI2LTAxLTAxIiwibWF4IjoiMjAyNi0xMi0yMSIsImRhdGVzIjp7IjIwMjYtMTItMjEiOjEsIjIwMjYtMTItMDciOjEsIjIwMjYtMTEtMjMiOjEsIjIwMjYtMTEtMDkiOjEsIjIwMjYtMTAtMjYiOjEsIjIwMjYtMTAtMTIiOjEsIjIwMjYtMDktMjgiOjEsIjIwMjYtMDktMTQiOjEsIjIwMjYtMDgtMzEiOjEsIjIwMjYtMDgtMTciOjEsIjIwMjYtMDgtMDMiOjEsIjIwMjYtMDctMjAiOjEsIjIwMjYtMDctMDYiOjEsIjIwMjYtMDYtMjIiOjEsIjIwMjYtMDYtMDgiOjEsIjIwMjYtMDUtMjUiOjEsIjIwMjYtMDUtMTEiOjEsIjIwMjYtMDQtMjciOjEsIjIwMjYtMDQtMTMiOjEsIjIwMjYtMDMtMzAiOjEsIjIwMjYtMDMtMTYiOjEsIjIwMjYtMDMtMDIiOjEsIjIwMjYtMDItMTYiOjEsIjIwMjYtMDItMDIiOjEsIjIwMjYtMDEtMTkiOjEsIjIwMjYtMDEtMDUiOjF9fX0="
+    },
+    {
+      "key": "POST https://www.gargzdusvara.eu/ajax.php 079cc21127",
+      "method": "POST",
+      "url": "https://www.gargzdusvara.eu/ajax.php",
+      "final_url": "https://www.gargzdusvara.eu/ajax.php",
+      "body": "{\"body\":[[\"action\",\"getDataAll\"],[\"lang\",\"lt\"],[\"location\",\"Garg\u017ed\u0173 m. - Au\u0161rupio g., Garg\u017edupio g., Lenktoji g., Lyros g., Palangos g., Rasos g., Saula\u017eoli\u0173 g., Vytenio g., Volung\u0117s g., \u017dibu\u010di\u0173 g.\"],[\"module\",\"Atliekos\"],[\"type\",\"plastikas_popietius\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "expires": "Thu, 01 Oct 2026 23:21:35 GMT",
+        "last-modified": "Mon, 19 Feb 2024 11:56:40 GMT",
+        "access-control-allow-origin": "https://www.gargzdusvara.eu",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "cache-control": "private, max-age=35316000, must-revalidate",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1",
+        "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' ytimg.com *.ytimg.com youtube.com *.youtube.com www.bing.com  *.jsdelivr.net t.ssl.ak.dynamic.tiles.virtualearth.net dev.virtualearth.net placeimg.com data: www.googletagmanager.com maps.googleapis.com fonts.gstatic.com connect.facebook.net www.facebook.com www.google-analytics.com cdnjs.cloudflare.com www.googleapis.com www.gstatic.com maps.gstatic.com www.google.com www.google.lt stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' *.jsdelivr.net maps.gstatic.com www.googleapis.com fonts.googleapis.com www.bing.com   dev.virtualearth.net; frame-ancestors 'self'",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-type": "text/html",
+        "date": "Thu, 01 Oct 2026 20:21:35 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "eyJzdGF0dXMiOmZhbHNlfQ=="
+    },
+    {
+      "key": "POST https://www.gargzdusvara.eu/ajax.php 9ecb4c5018",
+      "method": "POST",
+      "url": "https://www.gargzdusvara.eu/ajax.php",
+      "final_url": "https://www.gargzdusvara.eu/ajax.php",
+      "body": "{\"body\":[[\"action\",\"getDataAll\"],[\"lang\",\"lt\"],[\"location\",\"Garg\u017ed\u0173 m. - Au\u0161rupio g., Garg\u017edupio g., Lenktoji g., Lyros g., Palangos g., Rasos g., Saula\u017eoli\u0173 g., Vytenio g., Volung\u0117s g., \u017dibu\u010di\u0173 g.\"],[\"module\",\"Atliekos\"],[\"type\",\"stiklas\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "expires": "Thu, 01 Oct 2026 23:21:35 GMT",
+        "last-modified": "Mon, 19 Feb 2024 11:56:40 GMT",
+        "access-control-allow-origin": "https://www.gargzdusvara.eu",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "cache-control": "private, max-age=35316000, must-revalidate",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1",
+        "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' ytimg.com *.ytimg.com youtube.com *.youtube.com www.bing.com  *.jsdelivr.net t.ssl.ak.dynamic.tiles.virtualearth.net dev.virtualearth.net placeimg.com data: www.googletagmanager.com maps.googleapis.com fonts.gstatic.com connect.facebook.net www.facebook.com www.google-analytics.com cdnjs.cloudflare.com www.googleapis.com www.gstatic.com maps.gstatic.com www.google.com www.google.lt stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' *.jsdelivr.net maps.gstatic.com www.googleapis.com fonts.googleapis.com www.bing.com   dev.virtualearth.net; frame-ancestors 'self'",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-type": "text/html",
+        "date": "Thu, 01 Oct 2026 20:21:35 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "eyJzdGF0dXMiOmZhbHNlfQ=="
+    },
+    {
+      "key": "POST https://www.gargzdusvara.eu/ajax.php 4233e25282",
+      "method": "POST",
+      "url": "https://www.gargzdusvara.eu/ajax.php",
+      "final_url": "https://www.gargzdusvara.eu/ajax.php",
+      "body": "{\"body\":[[\"action\",\"getDataAll\"],[\"lang\",\"lt\"],[\"location\",\"Garg\u017ed\u0173 m. - Au\u0161rupio g., Garg\u017edupio g., Lenktoji g., Lyros g., Palangos g., Rasos g., Saula\u017eoli\u0173 g., Vytenio g., Volung\u0117s g., \u017dibu\u010di\u0173 g.\"],[\"module\",\"Atliekos\"],[\"type\",\"zaliosios\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "expires": "Thu, 01 Oct 2026 23:21:36 GMT",
+        "last-modified": "Mon, 19 Feb 2024 11:56:40 GMT",
+        "access-control-allow-origin": "https://www.gargzdusvara.eu",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "cache-control": "private, max-age=35316000, must-revalidate",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1",
+        "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' ytimg.com *.ytimg.com youtube.com *.youtube.com www.bing.com  *.jsdelivr.net t.ssl.ak.dynamic.tiles.virtualearth.net dev.virtualearth.net placeimg.com data: www.googletagmanager.com maps.googleapis.com fonts.gstatic.com connect.facebook.net www.facebook.com www.google-analytics.com cdnjs.cloudflare.com www.googleapis.com www.gstatic.com maps.gstatic.com www.google.com www.google.lt stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' *.jsdelivr.net maps.gstatic.com www.googleapis.com fonts.googleapis.com www.bing.com   dev.virtualearth.net; frame-ancestors 'self'",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-type": "text/html",
+        "date": "Thu, 01 Oct 2026 20:21:36 GMT",
+        "server": "Apache"
+      },
+      "content_b64": "eyJzdGF0dXMiOmZhbHNlfQ=="
+    }
+  ]
+}

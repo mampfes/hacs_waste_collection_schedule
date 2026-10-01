@@ -1,113 +1,119 @@
 import difflib
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.date_parsers import for_format
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Gargždų švara"
-DESCRIPTION = (
-    "Source for VšĮ 'Gargždų švara' waste collection schedules "
-    "(Klaipėda district municipality, Lithuania)."
-)
-URL = "https://www.gargzdusvara.eu"
-COUNTRY = "lt"
-TEST_CASES = {
-    "Klemiškės I k.": {"location": "Klemiškės I k."},
-    "Gargždų miesto šiaurinė dalis": {
-        "location": "Gargždų m. - Aušrupio g., Gargždupio g., Lenktoji g., Lyros g., "
-        "Palangos g., Rasos g., Saulažolių g., Vytenio g., Volungės g., Žibučių g."
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "location": (
-            "The exact location/street-group name as shown in the 'Pasirinkite "
-            "vietovę' (select location) dropdown on "
-            "https://www.gargzdusvara.eu/atlieku-isvezimo-grafikai/ after picking "
-            "any waste type first (e.g. 'Klemiškės I k.'). Must match exactly, "
-            "including Lithuanian diacritics."
-        ),
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "location": "Location",
-    },
-}
+from waste_collection_schedule.retrievers import FanOutRetriever, Request, Suggestions
+from waste_collection_schedule.transformers import RowTransformer
 
 _API_URL = "https://www.gargzdusvara.eu/ajax.php"
 
-# API type code -> (Lithuanian display label, icon)
-_WASTE_TYPES = {
-    "komunalines": ("Komunalinės", Icons.GENERAL_WASTE),
-    "plastikas_popietius": ("Plastikas-popierius", Icons.RECYCLING),
-    "stiklas": ("Stiklas", Icons.GLASS),
-    "zaliosios": ("Žaliosios", Icons.ORGANIC),
-}
+# The API serves one schedule per waste type, selected by this code.
+_TYPE_CODES = ("komunalines", "plastikas_popietius", "stiklas", "zaliosios")
 
-ICON_MAP = dict(_WASTE_TYPES.values())
+# One list of valid locations per waste type; a location can exist for only some.
+_LOCATION_LISTS = tuple(
+    Suggestions(
+        _API_URL,
+        method="POST",
+        data={"action": "getLocations", "module": "Atliekos", "value": code},
+        pick=lambda response, **_: (response.json().get("return") or {}).keys(),
+        fallback=[],
+    )
+    for code in _TYPE_CODES
+)
 
 
-class Source:
-    def __init__(self, location: str):
-        self._location = location
+def _dates(responses, source) -> list[tuple[str, str]]:
+    """Pair each waste type's dates with its code; a type with no schedule has none.
 
-    def _fetch_locations(self, session: requests.Session, type_code: str) -> set:
-        r = session.post(
-            _API_URL,
-            data={"action": "getLocations", "module": "Atliekos", "value": type_code},
-        )
-        r.raise_for_status()
-        data = r.json()
+    ``responses`` arrive in ``_TYPE_CODES`` order. When no type knows the location
+    the argument is wrong, and the valid locations are offered.
+    """
+    rows: list[tuple[str, str]] = []
+    matched_any_type = False
+    for code, response in zip(_TYPE_CODES, responses, strict=True):
+        data = response.json()
         if not data.get("status"):
-            return set()
-        return set(data.get("return", {}).keys())
+            continue
+        matched_any_type = True
+        rows.extend(
+            (date, code) for date in (data.get("return") or {}).get("dates") or {}
+        )
+    if not matched_any_type:
+        location = source.params["location"]
+        known = sorted({name for lst in _LOCATION_LISTS for name in lst(source)})
+        raise SourceArgumentNotFoundWithSuggestions(
+            "location",
+            location,
+            difflib.get_close_matches(location, known, n=5, cutoff=0.5),
+        )
+    return rows
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
 
-        entries: list[Collection] = []
-        matched_any_type = False
+@final
+class Source(BaseSource):
+    TITLE = "Gargždų švara"
+    DESCRIPTION = (
+        "Source for VšĮ 'Gargždų švara' waste collection schedules "
+        "(Klaipėda district municipality, Lithuania)."
+    )
+    URL = "https://www.gargzdusvara.eu"
+    COUNTRY = "lt"
 
-        for type_code, (label, icon) in _WASTE_TYPES.items():
-            r = session.post(
-                _API_URL,
-                data={
-                    "action": "getDataAll",
-                    "module": "Atliekos",
-                    "lang": "lt",
-                    "location": self._location,
-                    "type": type_code,
-                },
-            )
-            r.raise_for_status()
-            data = r.json()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+    ]
 
-            if not data.get("status"):
-                # This waste type has no schedule for the given location.
-                continue
+    TEST_CASES: ClassVar[dict] = {
+        "Klemiškės I k.": {"location": "Klemiškės I k."},
+        "Gargždų miesto šiaurinė dalis": {
+            "location": "Gargždų m. - Aušrupio g., Gargždupio g., Lenktoji g., "
+            "Lyros g., Palangos g., Rasos g., Saulažolių g., Vytenio g., "
+            "Volungės g., Žibučių g."
+        },
+    }
 
-            matched_any_type = True
-            dates = (data.get("return") or {}).get("dates") or {}
-            for date_str in dates:
-                try:
-                    date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                except ValueError:
-                    continue
-                entries.append(Collection(date=date, t=label, icon=icon))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the exact location/street-group name as shown in the "
+            "'Pasirinkite vietovę' (select location) dropdown on "
+            "https://www.gargzdusvara.eu/atlieku-isvezimo-grafikai/ after picking "
+            "any waste type first (e.g. 'Klemiškės I k.'). It must match exactly, "
+            "including Lithuanian diacritics."
+        ),
+    }
 
-        if not matched_any_type:
-            all_locations: set = set()
-            for type_code in _WASTE_TYPES:
-                all_locations |= self._fetch_locations(session, type_code)
-            suggestions = difflib.get_close_matches(
-                self._location, sorted(all_locations), n=5, cutoff=0.5
-            )
-            raise SourceArgumentNotFoundWithSuggestions(
-                "location", self._location, suggestions
-            )
+    PARAMS = (text_field("location", "Location"),)
 
-        return entries
+    retrieve = FanOutRetriever(
+        targets=lambda source, context: _TYPE_CODES,
+        fetch=Request(
+            _API_URL,
+            method="POST",
+            data=lambda code, context, location, **_: {
+                "action": "getDataAll",
+                "module": "Atliekos",
+                "lang": "lt",
+                "location": location,
+                "type": code,
+            },
+        ),
+    )
+    parse = staticmethod(_dates)
+    transform = RowTransformer(
+        parse_date=for_format("%Y-%m-%d"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "komunalines": wt.GENERAL_WASTE,
+            "plastikas_popietius": wt.RECYCLABLES,
+            "stiklas": wt.GLASS,
+            "zaliosios": wt.GARDEN_WASTE,
+        },
+    )
