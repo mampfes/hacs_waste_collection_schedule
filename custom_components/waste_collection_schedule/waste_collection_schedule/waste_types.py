@@ -37,6 +37,8 @@ class WasteType:
     # Known labels/synonyms per language, used by resolve(). Unambiguous only:
     # avoid region-ambiguous labels (e.g. "green bin") that map differently.
     aliases: dict[str, list[str]] = field(default_factory=dict)
+    # Should this WasteType be used for automatic resolution by name?
+    auto_resolve: bool = True
 
 
 # Display language for WasteType names. Defaults to English for standalone
@@ -480,6 +482,7 @@ METAL = WasteType(
         "sl": ["likati", "pločevinke"],
         "da": ["jern", "dåser", "aluminium"],
     },
+    auto_resolve=False
 )
 
 PLASTIC = WasteType(
@@ -508,6 +511,7 @@ PLASTIC = WasteType(
         "sl": ["plastični pladnji", "plastične vrečke", "plastična folija"],
         "da": ["plastbakker", "plastikposer", "plastfolie"],
     },
+    auto_resolve=False
 )
 
 CARTONS = WasteType(
@@ -547,6 +551,7 @@ CARTONS = WasteType(
         ],
         "da": ["mælkekartoner", "juicekartoner", "kartoner"],
     },
+    auto_resolve=False
 )
 
 OTHER = WasteType(
@@ -562,6 +567,7 @@ OTHER = WasteType(
         "sl": "Drugo",
         "da": "Andet",
     },
+    auto_resolve=False
 )
 
 ALL_TYPES = [
@@ -591,13 +597,17 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
+    WasteType's with the auto_resolve flag unset, will also be excluded.
+    As these are intended to be defined by the source itself, to avoid
+    conflicts with other types, and to avoid conflicts with the vocabulary.
+
     OTHER is excluded (it's only used when a source maps to it explicitly).
     First definition wins on collisions, with a warning, so the vocabulary stays
     unambiguous.
     """
     index: dict[str, WasteType] = {}
     for waste_type in ALL_TYPES:
-        if waste_type is OTHER:
+        if not waste_type.auto_resolve:
             continue
         labels = list(waste_type.names.values())
         for synonyms in waste_type.aliases.values():
