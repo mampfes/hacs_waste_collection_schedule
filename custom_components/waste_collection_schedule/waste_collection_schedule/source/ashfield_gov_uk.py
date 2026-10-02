@@ -1,126 +1,118 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    house_number,
+    postcode,
+    text_field,
+    uprn,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Ashfield District Council"
-DESCRIPTION = "Source for ashfield.gov.uk, Ashfield District Council, UK"
-URL = "https://www.ashfield.gov.uk"
-TEST_CASES = {
-    "11 Maun View Gardens, Sutton-in-Ashfield": {"uprn": 10001336299},
-    "101 Main Street, Huthwaite": {"post_code": "NG17 2LQ", "uprn": "100031253415"},
-    "1 Acacia Avenue, Kirkby-in-Ashfield": {"post_code": "NG17 9BH", "number": "1"},
-    "Council Offices, Kirkby-in-Ashfield": {
-        "post_code": "NG178ZA",
-        "name": "COUNCIL OFFICES",
-    },
-}
+API = "https://www.ashfield.gov.uk/api/address"
 
-API_URLS = {
-    "address_search": "https://www.ashfield.gov.uk/api/address/search/{postcode}",
-    "collection": "https://www.ashfield.gov.uk/api/address/collections/{uprn}",
-}
-
-ICON_MAP = {
-    "Residual Waste Collection Service": Icons.GENERAL_WASTE,
-    "Domestic Recycling Collection Service": Icons.GENERAL_WASTE,
-    "Domestic Glass Collection Service": Icons.GLASS,
-    "Garden Waste Collection Service": Icons.GARDEN,
-}
-
-NAMES = {
-    "Residual Waste Collection Service": "Red (rubbish)",
-    "Domestic Recycling Collection Service": "Green (recycling)",
-    "Domestic Glass Collection Service": "Blue (glass)",
-    "Garden Waste Collection Service": "Brown (garden)",
+_TYPE_MAP = {
+    "Residual Waste Collection Service": wt.GENERAL_WASTE,
+    "Domestic Recycling Collection Service": wt.RECYCLABLES,
+    "Domestic Glass Collection Service": wt.GLASS,
+    "Garden Waste Collection Service": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, post_code=None, number=None, name=None, uprn=None):
-        self._post_code = post_code
-        self._number = number
-        self._name = name
-        self._uprn = uprn
+def _pick_uprn(response, *keys, post_code, number=None, name=None, **_) -> str:
+    """The address search answers ``{"results": [{"DPA": {...}}, ...]}``."""
+    addresses = response.json()["results"]
+    if not addresses:
+        raise SourceArgumentNotFound("post_code", post_code)
 
-    def fetch(self):
-        if not self._uprn:
-            if not self._post_code:
-                raise ValueError("post_code is required when uprn is not provided")
-            if not (self._name or self._number):
-                raise ValueError(
-                    "Either name or number must be provided when uprn is not provided"
-                )
-            # look up the UPRN for the address
-            q = str(API_URLS["address_search"]).format(postcode=self._post_code)
-            r = requests.get(q, timeout=30)
-            r.raise_for_status()
-            addresses = r.json()["results"]
+    dpas = [x.get("DPA") or {} for x in addresses]
+    if name:
+        wanted = name.casefold()
+        matching = [
+            d for d in dpas if (d.get("BUILDING_NAME") or "").casefold() == wanted
+        ]
+    else:
+        matching = [d for d in dpas if d.get("BUILDING_NUMBER") == str(number)]
 
-            if not addresses:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+    for dpa in matching:
+        if dpa.get("UPRN"):
+            return str(int(dpa["UPRN"]))
 
-            matching = []
-            if self._name:
-                name_cf = self._name.casefold()
-                for x in addresses:
-                    dpa = x.get("DPA") or {}
-                    building_name = dpa.get("BUILDING_NAME")
-                    if building_name and building_name.casefold() == name_cf:
-                        matching.append(x)
-            elif self._number:
-                for x in addresses:
-                    dpa = x.get("DPA") or {}
-                    if dpa.get("BUILDING_NUMBER") == self._number:
-                        matching.append(x)
+    raise SourceArgumentNotFoundWithSuggestions(
+        "name" if name else "number",
+        name or number,
+        [
+            f"{d.get('BUILDING_NUMBER', '')} {d.get('BUILDING_NAME', '')}".strip()
+            for d in dpas
+        ],
+    )
 
-            if matching:
-                first_dpa = matching[0].get("DPA") or {}
-                uprn_value = first_dpa.get("UPRN")
-                if uprn_value:
-                    self._uprn = int(uprn_value)
 
-            if not self._uprn:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    argument=(
-                        "name"
-                        if self._name
-                        else "number"
-                        if self._number
-                        else "post_code"
-                    ),
-                    value=self._name or self._number or self._post_code,
-                    suggestions=[
-                        f"{(x.get('DPA') or {}).get('BUILDING_NUMBER', '')} {(x.get('DPA') or {}).get('BUILDING_NAME', '')}".strip()
-                        for x in addresses
-                    ],
-                )
-        else:
-            # Ensure UPRN is an integer
-            self._uprn = int(self._uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Ashfield District Council"
+    DESCRIPTION = "Source for ashfield.gov.uk, Ashfield District Council, UK"
+    URL = "https://www.ashfield.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        q = str(API_URLS["collection"]).format(uprn=self._uprn)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+    ]
 
-        r = requests.get(q, timeout=30)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "11 Maun View Gardens, Sutton-in-Ashfield": {"uprn": 10001336299},
+        "101 Main Street, Huthwaite": {"uprn": "100031253415"},
+        "1 Acacia Avenue, Kirkby-in-Ashfield": {"post_code": "NG17 9BH", "number": "1"},
+        "Council Offices, Kirkby-in-Ashfield": {
+            "post_code": "NG178ZA",
+            "name": "COUNCIL OFFICES",
+        },
+    }
 
-        collections = r.json()["collections"]
-        entries = []
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [postcode("post_code"), house_number("number")],
+            [postcode("post_code"), text_field("name", "House name")],
+        ),
+    )
 
-        if collections:
-            for collection in collections:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(
-                            collection["date"], "%d/%m/%Y %H:%M:%S"
-                        ).date(),
-                        t=NAMES.get(collection["service"], collection["service"]),
-                        icon=ICON_MAP.get(collection["service"]),
-                    )
-                )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter either your UPRN (available from "
+            "[FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your "
+            "postcode and either your house number (`number`) or your building "
+            "name (`name`)."
+        ),
+    }
 
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                lambda post_code=None, **_: f"{API}/search/{post_code}",
+                given=lambda uprn=None, **_: uprn,
+                pick=_pick_uprn,
+            ),
+        ),
+        url=lambda key, **_: f"{API}/collections/{int(key)}",
+    )
+
+    parse = parsers.JsonParser("collections")
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="service",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
+    )
