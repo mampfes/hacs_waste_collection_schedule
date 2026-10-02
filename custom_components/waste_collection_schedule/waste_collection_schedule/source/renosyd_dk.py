@@ -28,6 +28,9 @@ class Source(BaseSource):
         wt.PAPER,
         wt.RECYCLABLES,
         wt.TEXTILES,
+        wt.PLASTIC,
+        wt.METAL,
+        wt.CARTONS,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -58,9 +61,9 @@ class Source(BaseSource):
             "Glas": wt.GLASS,
             "Papir": wt.PAPER,
             "Pap": wt.PAPER,
-            "Plast": wt.RECYCLABLES,
-            "Metal": wt.RECYCLABLES,
-            "Mad- og drikkekartoner": wt.RECYCLABLES,
+            "Plast": wt.PLASTIC,
+            "Metal": wt.METAL,
+            "Mad- og drikkekartoner": wt.CARTONS,
             "Tekstilaffald": wt.TEXTILES,
         },
         carry_raw_label=True,

@@ -37,6 +37,8 @@ class WasteType:
     # Known labels/synonyms per language, used by resolve(). Unambiguous only:
     # avoid region-ambiguous labels (e.g. "green bin") that map differently.
     aliases: dict[str, list[str]] = field(default_factory=dict)
+    # Should this WasteType be used for automatic resolution by name?
+    auto_resolve: bool = True
 
 
 # Display language for WasteType names. Defaults to English for standalone
@@ -452,6 +454,57 @@ TEXTILES = WasteType(
     },
 )
 
+METAL = WasteType(
+    id="metal",
+    icon="mdi:nail",
+    color="#C2C8CC",
+    names={
+        "en": "Metal",
+        "de": "Metall",
+        "it": "Metallo",
+        "fr": "Métal",
+        "nl": "Metaal",
+        "sl": "Kovina",
+        "da": "Metal",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+PLASTIC = WasteType(
+    id="plastic",
+    icon="mdi:recycle-variant",
+    color="#3587BD",
+    names={
+        "en": "Plastic",
+        "de": "Plastik",
+        "it": "Plastica",
+        "fr": "Plastique",
+        "nl": "Plastic",
+        "sl": "Plastika",
+        "da": "Plastik",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+CARTONS = WasteType(
+    id="cartons",
+    icon="mdi:recycle-variant",
+    color="#5D9B75",
+    names={
+        "en": "Food and beverage cartons",
+        "de": "Lebensmittel- und Getränkekartons",
+        "it": "Cartoni per alimenti e bevande",
+        "fr": "Briques alimentaires et boissons",
+        "nl": "Drank- en voedselkartons",
+        "sl": "Kartonska embalaža za živila in pijače",
+        "da": "Mad- og drikkekartoner",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
 OTHER = WasteType(
     id="other",
     icon="mdi:calendar",
@@ -459,12 +512,13 @@ OTHER = WasteType(
     names={
         "en": "Other",
         "de": "Sonstiges",
-        "fr": "Autres",
         "it": "Altro",
+        "fr": "Autres",
         "nl": "Overig",
         "sl": "Drugo",
         "da": "Andet",
     },
+    auto_resolve=False,
 )
 
 ALL_TYPES = [
@@ -479,6 +533,9 @@ ALL_TYPES = [
     HAZARDOUS,
     ELECTRONICS,
     TEXTILES,
+    METAL,
+    PLASTIC,
+    CARTONS,
     OTHER,
 ]
 
@@ -491,13 +548,17 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
+    WasteType's with the auto_resolve flag unset, will be excluded from the index.
+    These are intended to be explicitly used by the source itself, to avoid
+    conflicts with other types.
+
     OTHER is excluded (it's only used when a source maps to it explicitly).
     First definition wins on collisions, with a warning, so the vocabulary stays
     unambiguous.
     """
     index: dict[str, WasteType] = {}
     for waste_type in ALL_TYPES:
-        if waste_type is OTHER:
+        if not waste_type.auto_resolve:
             continue
         labels = list(waste_type.names.values())
         for synonyms in waste_type.aliases.values():
