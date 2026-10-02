@@ -1,146 +1,66 @@
-import datetime
-import json
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-TITLE = "Seattle Public Utilities"
-DESCRIPTION = "Source for Seattle Public Utilities waste collection."
-URL = "https://myutilities.seattle.gov"
-COUNTRY = "us"
-TEST_CASES = {
-    "City Hall": {"street_address": "600 4th Ave"},
-    "Ballard Builders": {"street_address": "7022 12th Ave NW"},
-    "Carmona Court": {"street_address": "1127 17th Ave E"},
-    "2111 E John St": {
-        "street_address": "2111 E John St",
-        "prem_code": "DRMGcnGxUEg+gu8pN8vesQ==",
-    },
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address, text_field
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.service.SeattleUtilities import SeattleUtilitiesRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-def get_service_icon(service_name):
-    switcher = {"Garbage": "trash-can", "Recycle": "recycle", "Food/Yard Waste": "leaf"}
-    return switcher.get(service_name, "trash-can")
+@final
+class Source(BaseSource):
+    TITLE = "Seattle Public Utilities"
+    DESCRIPTION = "Source for Seattle Public Utilities waste collection."
+    URL = "https://myutilities.seattle.gov"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
 
-class Source:
-    def __init__(self, street_address, prem_code=None):
-        self._street_address = street_address
-        self._prem_code = prem_code
+    TEST_CASES: ClassVar[dict] = {
+        "City Hall": {"street_address": "600 4th Ave"},
+        "Ballard Builders": {"street_address": "7022 12th Ave NW"},
+        "Carmona Court": {"street_address": "1127 17th Ave E"},
+        "2111 E John St": {
+            "street_address": "2111 E John St",
+            "prem_code": "DRMGcnGxUEg+gu8pN8vesQ==",
+        },
+    }
 
-    def fetch(self):
+    PARAMS = (
+        street_address("street_address"),
+        text_field("prem_code", "Premise code", optional=True),
+    )
 
-        # Mimicking the same API calls the calendar lookup page uses:
-        # 1. find account code
-        # 2. find account ID for a given address
-        # 3. get token (uses basic auth and the customerID = guest
-        # 4. get account summary
-        # 5. get calendar
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street address of the property, e.g. '600 4th Ave'. "
+            "If the address lookup picks the wrong property, enter its premise "
+            "code (the `premCode` the calendar lookup page at "
+            "https://myutilities.seattle.gov/eportal/#/accountlookup/calendar "
+            "receives for your address) as well."
+        ),
+    }
 
-        # step 1 - Look up premCode if it wasn't explicitly provided
-        if self._prem_code is None:
-            find_address_payload = {
-                "address": {"addressLine1": self._street_address, "city": "", "zip": ""}
-            }
+    retrieve = SeattleUtilitiesRetriever()
 
-            r = requests.post(
-                "https://myutilities.seattle.gov/rest/serviceorder/findaddress",
-                json=find_address_payload,
-            )
+    parse = parsers.JsonParser("services")
 
-            address_info = json.loads(r.text)
-            prem_code = address_info["address"][0]["premCode"]
-        else:
-            prem_code = self._prem_code
+    preprocess = ExplodeList("dates", into="date")
 
-        # step 2
-        find_account_payload = {"address": {"premCode": prem_code}}
-
-        r = requests.post(
-            "https://myutilities.seattle.gov/rest/serviceorder/findAccount",
-            json=find_account_payload,
-        )
-
-        account_info = json.loads(r.text)
-        account_number = account_info["account"]["accountNumber"]
-
-        # step 3
-        token_payload = {
-            "grant_type": "password",
-            "username": "guest",
-            "password": "guest",
-        }
-
-        r = requests.post(
-            "https://myutilities.seattle.gov/rest/auth/guest", data=token_payload
-        )
-
-        token_info = json.loads(r.text)
-        token = token_info["access_token"]
-
-        headers = {"Authorization": f"Bearer {token}"}
-
-        # step 4
-        swsummary_payload = {
-            "customerId": "guest",
-            "accountContext": {
-                "accountNumber": account_number,
-                "personId": None,
-                "companyCd": None,
-                "serviceAddress": None,
-            },
-        }
-
-        r = requests.post(
-            "https://myutilities.seattle.gov/rest/guest/swsummary",
-            json=swsummary_payload,
-            headers=headers,
-        )
-
-        summary_info = json.loads(r.text)
-        # the description property in each service in swServices it's either 'Garbage', 'Recycle', or 'Food/Yard Waste'
-
-        swServices = summary_info["accountSummaryType"]["swServices"][0]["services"]
-        personId = summary_info["accountContext"]["personId"]
-        companyCd = summary_info["accountContext"]["companyCd"]
-
-        # step 5
-        waste_calendar_payload = {
-            "customerId": "guest",
-            "accountContext": {
-                "accountNumber": account_number,
-                "personId": personId,
-                "companyCd": companyCd,
-            },
-            "servicePoints": [],
-        }
-
-        # fill out payload
-        for service in swServices:
-            waste_calendar_payload["servicePoints"].append(service["servicePointId"])
-
-        r = requests.post(
-            "https://myutilities.seattle.gov/rest/solidwastecalendar",
-            json=waste_calendar_payload,
-            headers=headers,
-        )
-
-        calendar_info = json.loads(r.text)
-
-        # output
-        entries = []
-
-        for service in swServices:
-            name = service["description"]
-            servicePointId = service["servicePointId"]
-
-            for collection_date in calendar_info["calendar"][servicePointId]:
-                next_date = datetime.datetime.strptime(
-                    collection_date, "%m/%d/%Y"
-                ).date()
-                service_icon = "mdi:" + get_service_icon(name)
-
-                entries.append(Collection(date=next_date, t=name, icon=service_icon))
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="description",
+        parse_date=date_parsers.for_format("%m/%d/%Y"),
+        type_value_map={
+            "Garbage": wt.GENERAL_WASTE,
+            "Recycle": wt.RECYCLABLES,
+            "Food/Yard Waste": wt.ORGANIC,
+        },
+    )
