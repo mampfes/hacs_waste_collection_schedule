@@ -79,6 +79,11 @@ PARAM_TRANSLATIONS = {
         "house_number": "Numero civico",
         "suffix": "Suffisso del numero civico",
     },
+    "nl": {
+        "postcode": "Postcode",
+        "house_number": "Huisnummer",
+        "suffix": "Huisnummertoevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -101,6 +106,11 @@ PARAM_DESCRIPTIONS = {
         "postcode": "CAP olandese, ad es. 3131VX",
         "house_number": "Numero civico, ad es. 3",
         "suffix": "Suffisso opzionale del numero civico, ad es. A",
+    },
+    "nl": {
+        "postcode": "Nederlandse postcode, bijv. 3131VX",
+        "house_number": "Huisnummer, bijv. 3",
+        "suffix": "Optionele huisnummertoevoeging, bijv. A",
     },
 }
 

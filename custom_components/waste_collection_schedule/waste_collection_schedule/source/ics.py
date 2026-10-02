@@ -130,6 +130,21 @@ PARAM_TRANSLATIONS = {
         "headers": "Headers",
         "impersonate": "Zu imitierender Browser (z.B. 'chrome'), um TLS-Fingerprinting-WAFs zu passieren",
     },
+    "nl": {
+        "url": "URL",
+        "file": "Bestand",
+        "offset": "Verschuiving",
+        "params": "Parameters",
+        "year_field": "Jaarveld",
+        "method": "Methode",
+        "regex": "Reguliere expressie",
+        "title_template": "Titelsjabloon",
+        "split_at": "Splitsen bij",
+        "version": "(Verouderd) Versie, heeft geen effect meer",
+        "verify_ssl": "SSL-certificaat verifiëren",
+        "headers": "Headers",
+        "impersonate": "Te imiteren browser (bijv. 'chrome') om WAF's met TLS-fingerprinting te omzeilen",
+    },
 }
 
 
