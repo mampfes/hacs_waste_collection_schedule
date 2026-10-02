@@ -1,131 +1,144 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Dacorum Borough Council"
-DESCRIPTION = "Source for Dacorum Borough Council."
-URL = "https://www.dacorum.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"postcode": "HP1 1AB", "uprn": 200004054631},
-    "Test_002": {"postcode": "HP4 2EZ", "uprn": "100081111531"},
-    "Test_003": {
-        "postcode": "HP23 6BE",
-        "uprn": "100080716575",
-    },
-}
-
-ICON_MAP = {
-    "grey bin": Icons.GENERAL_WASTE,
-    "grey bin and kerbside caddy": Icons.GENERAL_WASTE,
-    "kerbside caddy": Icons.BIO_KITCHEN,
-    "blue bin": Icons.RECYCLING,
-    "blue bin and kerbside caddy": Icons.RECYCLING,
-    "green bin": Icons.ORGANIC,
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://webapps.dacorum.gov.uk/bincollections/"
-FORM_ARG_IDS = [
-    "__VIEWSTATE",
-    "__EVENTVALIDATION",
-    "btnFindAddr",
-    "txtBxPCode",
-    "lstBxAddrList",
-    "MainContent_btnGetSchedules",
-]
+
+# The ASP.NET control names behind the page's element ids.
+_POSTCODE_FIELD = "ctl00$MainContent$txtBxPCode"
+_FIND_BUTTON = "ctl00$MainContent$btnFindAddr"
+_ADDRESS_FIELD = "ctl00$MainContent$lstBxAddrList"
+_SCHEDULE_BUTTON = "ctl00$MainContent$btnGetSchedules"
 
 
-class Source:
-    def __init__(self, postcode: str, uprn: str | int):
-        self._postcode: str = postcode.strip()
-        self._uprn: str = str(uprn)
+def _hidden_inputs(response) -> dict[str, str]:
+    """The ASP.NET state fields (viewstate, event validation) of the page."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    return {
+        str(tag["name"]): str(tag.get("value", ""))
+        for tag in soup.find_all("input", {"type": "hidden"})
+        if tag.get("name")
+    }
 
-    def _get_form_args(self, soup: BeautifulSoup) -> dict[str, str]:
-        return {
-            i.get("name"): i.get("value")
-            for i in soup.find_all(["input", "select"])
-            if i.get("id") in FORM_ARG_IDS
-        }
 
-    def _parse_address_list(self, select_element: Tag) -> dict[str, str]:
-        uprn_addresses = {}
-        for row in select_element.children:
-            # Ensure child element is a Tag
-            if isinstance(row, Tag):
-                # Extract uprn from address line
-                row_value = row.get("value", "")
-                row_parts = row_value.split(";")
-                if len(row_parts) == 2:
-                    uprn_addresses[row_parts[1]] = row_value
+def _search_form(response, *keys, postcode, **_) -> dict[str, str]:
+    """The form body of the postcode search, built from the landing page."""
+    return {
+        **_hidden_inputs(response),
+        _POSTCODE_FIELD: postcode.strip(),
+        _FIND_BUTTON: "Find me",
+    }
 
-        return uprn_addresses
 
-    def _parse_collection_entry(self, div: Tag) -> Collection | None:
-        # bin types are in strong tags
-        for strong in div.find_all("strong"):
-            bin_type = strong.get_text(strip=True)
-            # skip any non-bin finds
-            if "bin" not in bin_type.lower():
-                continue
-            # Find the nearest following cell containing a date
-            date_cell = strong.find_parent("div").find_next(
-                "div", string=lambda s: s and "Next collection on" in s
-            )
-            if date_cell:
-                collection_date = date_cell.find_next("div").get_text(strip=True)
-            # set bin icon
-            bin_type_icon = ICON_MAP.get(bin_type.lower())
-            # try and add the collection details
-            try:
-                dt = datetime.strptime(collection_date, "%a, %d %b %Y").date()
-                return Collection(date=dt, t=bin_type, icon=bin_type_icon)
-            except ValueError:
-                return None
-        return None
+def _pick_address(response, search_form, *, postcode, uprn, **_) -> dict[str, str]:
+    """The form body choosing the address whose option value ends in the UPRN."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    select = soup.find(id="lstBxAddrList")
+    if not isinstance(select, Tag):
+        raise SourceArgumentNotFound("postcode", postcode.strip())
+    wanted = str(uprn).strip()
+    labels = []
+    for option in select.find_all("option"):
+        value = str(option.get("value", ""))
+        parts = value.split(";")
+        if len(parts) != 2:
+            continue
+        labels.append(f"{parts[1]} ({parts[0].strip()})")
+        if parts[1] == wanted:
+            return {
+                **_hidden_inputs(response),
+                _POSTCODE_FIELD: postcode.strip(),
+                _ADDRESS_FIELD: value,
+                _SCHEDULE_BUTTON: "Continue",
+            }
+    raise SourceArgumentNotFoundWithSuggestions("uprn", wanted, labels)
 
-    def fetch(self) -> list[Collection]:
-        # Start a session and fetch state args
-        session = requests.Session()
-        r = session.get(API_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        postcode_input = soup.find(id="txtBxPCode")
-        if postcode_input is None:
-            raise Exception("Postcode input tag not found")
 
-        # Fetch addresses for postcode
-        postcode_input["value"] = self._postcode
-        r = session.post(API_URL, data=self._get_form_args(soup))
-        soup = BeautifulSoup(r.text, features="html.parser")
-        address_input = soup.find(id="lstBxAddrList")
-        if address_input is None:
-            raise Exception("Address input tag not found")
+def _date(heading: Tag) -> str:
+    """The first date of the "Next collection on:" table following a bin heading."""
+    table = heading.find_next_sibling("div")
+    if not isinstance(table, Tag):
+        raise ValueError("no schedule table after the bin heading")
+    return table.find_all("div")[2].get_text(strip=True)
 
-        # Find address value for uprn
-        addresses = self._parse_address_list(address_input)
-        if self._uprn not in addresses:
-            raise Exception(
-                f"uprn '{self._uprn}' not found for postcode '{self._postcode}'"
-            )
-        address_input["value"] = addresses[self._uprn]
 
-        # Find collections for address
-        r = session.post(API_URL, data=self._get_form_args(soup))
-        soup = BeautifulSoup(r.text, features="html.parser")
-        collection_content = soup.find("div", id="MainContent_updPnl")
-        if collection_content is None:
-            raise Exception("MainContent_updPnl tag not found")
+def _bin(heading: Tag) -> str:
+    return heading.get_text(strip=True)
 
-        # Parse entries into collections
-        collections = []
-        entries = collection_content.findChildren("div", recursive=False)
-        for e in entries:
-            c = self._parse_collection_entry(e)
-            if c is not None:
-                collections.append(c)
 
-        return collections
+@final
+class Source(BaseSource):
+    TITLE = "Dacorum Borough Council"
+    DESCRIPTION = "Source for Dacorum Borough Council."
+    URL = "https://www.dacorum.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "HP1 1AB", "uprn": 200004054631},
+        "Test_002": {"postcode": "HP4 2EZ", "uprn": "100081111531"},
+        "Test_003": {
+            "postcode": "HP23 6BE",
+            "uprn": "100080716575",
+        },
+    }
+
+    PARAMS = (postcode(), uprn())
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode and your UPRN. Find your UPRN at "
+            "https://www.findmyaddress.co.uk/ or by searching for your address "
+            "on the council's [bin collections page](https://webapps.dacorum.gov.uk/bincollections/)."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(API_URL, pick=_search_form),
+            retrievers.Lookup(
+                API_URL,
+                method="POST",
+                data=lambda search_form, **_: search_form,
+                pick=_pick_address,
+            ),
+        ),
+        url=API_URL,
+        method="POST",
+        data=lambda search_form, selected, **_: selected,
+        raise_for_status=True,
+    )
+
+    parse = parsers.HtmlParser(
+        "#MainContent_updPnl div:has(> strong)",
+        require=["#MainContent_updPnl"],
+    )
+
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_bin,
+        type_value_map={
+            "Grey bin": wt.GENERAL_WASTE,
+            "Grey bin and kerbside caddy": wt.GENERAL_WASTE,
+            "Blue bin": wt.RECYCLABLES,
+            "Blue bin and kerbside caddy": wt.RECYCLABLES,
+            "Green bin": wt.GARDEN_WASTE,
+            "Kerbside caddy": wt.FOOD_WASTE,
+        },
+        parse_date=date_parsers.for_format("%a, %d %b %Y"),
+    )
