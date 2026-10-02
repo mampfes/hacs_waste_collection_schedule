@@ -15044,7 +15044,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street": "Street name as shown in the Monheim am Rhein waste calendar."
+          "street": "Your street name."
         }
       },
       "reconfigure_monheim_de": {
@@ -15055,7 +15055,7 @@
           "street": "Street"
         },
         "data_description": {
-          "street": "Street name as shown in the Monheim am Rhein waste calendar."
+          "street": "Your street name."
         }
       },
       "args_mywastewatcher_de": {

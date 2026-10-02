@@ -14858,7 +14858,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname wie im digitalen Abfallkalender Monheim am Rhein angegeben."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_monheim_de": {
@@ -14869,7 +14869,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "street": "Straßenname wie im digitalen Abfallkalender Monheim am Rhein angegeben."
+          "street": "Ihr Straßenname."
         }
       },
       "args_mywastewatcher_de": {
