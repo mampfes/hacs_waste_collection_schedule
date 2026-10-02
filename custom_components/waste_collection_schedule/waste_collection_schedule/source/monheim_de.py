@@ -1,53 +1,14 @@
-from datetime import date
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Monheim am Rhein"
-DESCRIPTION = (
-    "Source for Monheim am Rhein waste collection (Stadt Monheim am Rhein, NRW)."
-)
-URL = "https://www.monheim.de"
-COUNTRY = "de"
-
-TEST_CASES = {
-    "Marderstraße": {"street": "Marderstraße"},
-    "Ackerweg": {"street": "Ackerweg"},
-    "Rheinpromenade": {"street": "Rheinpromenade"},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"street": "Street"},
-    "de": {"street": "Straße"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name as shown in the Monheim am Rhein waste calendar.",
-    },
-    "de": {
-        "street": "Straßenname wie im digitalen Abfallkalender Monheim am Rhein angegeben.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Open https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender and pick your street; use the exact spelling shown there.",
-    "de": "Öffnen Sie https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender und wählen Sie Ihre Straße; verwenden Sie die genaue Schreibweise.",
-}
-
-ICON_MAP = {
-    "Wertstoffhof": Icons.RECYCLING,
-    "Schadstoff Mobil": Icons.HAZARDOUS,
-    "Grünabfälle": Icons.GARDEN,
-    "zusätzliche Grünabgabe": Icons.GARDEN,
-    "Spülung und Leerung der Biotonnen": Icons.BIO_KITCHEN,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Braune Tonne": Icons.BIO_KITCHEN,
-    "Blaue Tonne": Icons.PAPER,
-    "Spülung und Leerung der Restmülltonnen": Icons.GENERAL_WASTE,
-}
+STREETS_URL = "https://www.monheim.de/?type=1106181"
+DATES_URL = "https://www.monheim.de/?type=1106182"
 
 GARBAGE_TYPE_MAP = {
     "0": "Spülung und Leerung der Restmülltonnen",
@@ -62,59 +23,105 @@ GARBAGE_TYPE_MAP = {
     "9": "zusätzliche Grünabgabe",
 }
 
-STREETS_URL = "https://www.monheim.de/?type=1106181"
-DATES_URL = "https://www.monheim.de/?type=1106182"
+_REST_CLEANING = wt.preserved(GARBAGE_TYPE_MAP["0"])
+_RECYCLING_CENTRE = wt.preserved(GARBAGE_TYPE_MAP["1"])
+_BIO_CLEANING = wt.preserved(GARBAGE_TYPE_MAP["4"])
 
 
-class Source:
-    def __init__(self, street: str):
-        self._street = street
+def _datasets(responses, source):
+    return [parsers.JsonParser()(response, source) for response in responses]
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(STREETS_URL, timeout=30)
-        r.raise_for_status()
-        streets = r.json().get("streets", [])
 
-        match = next(
-            (s for s in streets if s["streetname"].lower() == self._street.lower()),
-            None,
+def _events(datasets, source):
+    """Join the street index and calendar, retaining events for all districts."""
+    streets = datasets[0].get("streets", [])
+    name = source.params["street"]
+    match = next(
+        (item for item in streets if item["streetname"].lower() == name.lower()),
+        None,
+    )
+    if match is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", name, [item["streetname"] for item in streets]
         )
-        if match is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                self._street,
-                [s["streetname"] for s in streets],
-            )
-
-        district = str(match["district"])
-
-        r = requests.get(DATES_URL, timeout=30)
-        r.raise_for_status()
-        collectiondates = r.json().get("collectiondates", [])
-
-        entries: list[Collection] = []
-        for record in collectiondates:
-            record_districts = [
-                d.strip() for d in record.get("districts", "").split(",") if d.strip()
+    district = str(match["district"])
+    records = datasets[1].get("collectiondates", [])
+    return [
+        record
+        for record in records
+        if not (
+            districts := [
+                part.strip()
+                for part in record.get("districts", "").split(",")
+                if part.strip()
             ]
-            # Empty districts means the record applies to all streets (e.g. Wertstoffhof)
-            if record_districts and district not in record_districts:
-                continue
+        )
+        or district in districts
+    ]
 
-            garbage_id = str(record.get("garbageTypes", ""))
-            waste_type = GARBAGE_TYPE_MAP.get(garbage_id, garbage_id)
 
-            try:
-                collection_date = date.fromisoformat(record["dateOfCollection"])
-            except (KeyError, ValueError):
-                continue
+def _type_label(record):
+    type_id = str(record.get("garbageTypes", ""))
+    return GARBAGE_TYPE_MAP.get(type_id, type_id)
 
-            entries.append(
-                Collection(
-                    collection_date,
-                    waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
 
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "Monheim am Rhein"
+    DESCRIPTION = (
+        "Source for Monheim am Rhein waste collection (Stadt Monheim am Rhein, NRW)."
+    )
+    URL = "https://www.monheim.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Marderstraße": {"street": "Marderstraße"},
+        "Ackerweg": {"street": "Ackerweg"},
+        "Rheinpromenade": {"street": "Rheinpromenade"},
+    }
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"street": "__unknown_street__"},
+    }
+    PARAMS = (street("street"),)
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": "Open https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender and pick your street; use the exact spelling shown there.",
+        "de": "Öffnen Sie https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender und wählen Sie Ihre Straße; verwenden Sie die genaue Schreibweise.",
+    }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
+        _REST_CLEANING,
+        _RECYCLING_CENTRE,
+        _BIO_CLEANING,
+    ]
+
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, context: (STREETS_URL, DATES_URL),
+        fetch=retrievers.Request(lambda target, context, **_: target),
+    )
+    parse = staticmethod(_datasets)
+    preprocess = staticmethod(_events)
+    transform = JsonTransformer(
+        date_key="dateOfCollection",
+        type_key=_type_label,
+        type_value_map={
+            GARBAGE_TYPE_MAP["0"]: _REST_CLEANING,
+            GARBAGE_TYPE_MAP["1"]: _RECYCLING_CENTRE,
+            GARBAGE_TYPE_MAP["2"]: wt.HAZARDOUS,
+            GARBAGE_TYPE_MAP["3"]: wt.GARDEN_WASTE,
+            GARBAGE_TYPE_MAP["4"]: _BIO_CLEANING,
+            GARBAGE_TYPE_MAP["5"]: wt.RECYCLABLES,
+            GARBAGE_TYPE_MAP["6"]: wt.GENERAL_WASTE,
+            GARBAGE_TYPE_MAP["7"]: wt.ORGANIC,
+            GARBAGE_TYPE_MAP["8"]: wt.PAPER,
+            GARBAGE_TYPE_MAP["9"]: wt.GARDEN_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        skip_unparseable_dates=True,
+        carry_raw_label=True,
+    )
