@@ -483,6 +483,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/torridge_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/tower_hamlets_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/townsville_qld_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/trafford_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/tunbridgewells_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ubzzw_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/unley_sa_gov_au.py",
