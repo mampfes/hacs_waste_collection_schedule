@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://mapping.manningham.vic.gov.au/weave/services/v1/index/search 526341b3bd",
+      "method": "GET",
+      "url": "https://mapping.manningham.vic.gov.au/weave/services/v1/index/search",
+      "final_url": "https://mapping.manningham.vic.gov.au/weave/services/v1/index/search?start=0&limit=10&indexes=index.ManCC_propertylayer&type=EXACT&crs=EPSG%3A28355&query=9%2F114-116+James+Street",
+      "body": "{\"params\":[[\"crs\",\"EPSG:28355\"],[\"indexes\",\"index.ManCC_propertylayer\"],[\"limit\",\"10\"],[\"query\",\"9/114-116 James Street\"],[\"start\",\"0\"],[\"type\",\"EXACT\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "464",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET,PUT,POST,DELETE,OPTIONS",
+        "access-control-allow-origin": "*",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:19:08 GMT",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "set-cookie": "JSESSIONID=node0yqfe7ox3yrl411ukzw0lqu9ag160511.node0; Path=/weave; Secure; SameSite=None",
+        "x-powered-by": "Weave, ARR/3.0, ASP.NET, ASP.NET"
+      },
+      "content_b64": "eyJ0b3RhbCI6MSwicmVzdWx0cyI6W3siZW52ZWxvcGUiOnsibWF4WCI6MzM1MTUwLjA4NiwibWF4WSI6NTgxOTQ2Ny4zNTgsIm1pblgiOjMzNTE0Mi45NTcsIm1pblkiOjU4MTk0NDkuMjQ0LCJjcnMiOiJFUFNHOjI4MzU1In0sImNlbnRyb2lkIjp7IngiOjMzNTE0Ni42MjEsInkiOjU4MTk0NTcuNzc3LCJjcnMiOiJFUFNHOjI4MzU1In0sImlkIjoiNDUwMDczIiwiaW5kZXgiOjEsImVudGl0eSI6Ik1hbkNDX3Byb3BfbGF5ZXIiLCJkaXNwbGF5MiI6IiIsImRpc3BsYXkxIjoiPHNwYW4gY2xhc3M9J2luZGV4LWhsJz45PC9zcGFuPi88c3BhbiBjbGFzcz0naW5kZXgtaGwnPjExNDwvc3Bhbj4tPHNwYW4gY2xhc3M9J2luZGV4LWhsJz4xMTY8L3NwYW4+IDxzcGFuIGNsYXNzPSdpbmRleC1obCc+SmFtZXM8L3NwYW4+IDxzcGFuIGNsYXNzPSdpbmRleC1obCc+U3RyZWV0PC9zcGFuPiwgVEVNUExFU1RPV0UgMzEwNiJ9XX0="
+    },
+    {
+      "key": "GET https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds e002371d11",
+      "method": "GET",
+      "url": "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds",
+      "final_url": "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds?outCrs=EPSG%3A28355&datadefinition=dd_ManCC_prop_layer_index&datadefinition=dd_ManCC_Property_WasteCollection&entityId=ManCC_prop_layer&ids=450073",
+      "body": "{\"params\":[[\"datadefinition\",\"dd_ManCC_Property_WasteCollection\"],[\"datadefinition\",\"dd_ManCC_prop_layer_index\"],[\"entityId\",\"ManCC_prop_layer\"],[\"ids\",\"450073\"],[\"outCrs\",\"EPSG:28355\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "1114",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET,PUT,POST,DELETE,OPTIONS",
+        "access-control-allow-origin": "*",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:19:08 GMT",
+        "x-powered-by": "Weave, ARR/3.0, ASP.NET, ASP.NET"
+      },
+      "content_b64": "eyJ0eXBlIjoiRmVhdHVyZUNvbGxlY3Rpb24iLCJmZWF0dXJlcyI6W3sidHlwZSI6IkZlYXR1cmUiLCJpZCI6IjQ1MDA3MyIsImdlb21ldHJ5Ijp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWzMzNTE0NS4yNDY2MDAwMDAyLDU4MTk0NjcuMzU4MjAwMDAxXSxbMzM1MTQyLjk1Njg5OTk5OTY0LDU4MTk0NDkuOTc1MV0sWzMzNTE0OC41MTIwMDAwMDEwNCw1ODE5NDQ5LjI0NDJdLFszMzUxNTAuMDg1NzAwMDAxNTcsNTgxOTQ2MS4xNzYxXSxbMzM1MTQ4LjU5MDMwMDAwMDMsNTgxOTQ2MS4zNzMwOTk5OTk1XSxbMzM1MTQ5LjMwOTk5OTk5OTYsNTgxOTQ2Ni44MjMyXSxbMzM1MTQ1LjI0NjYwMDAwMDIsNTgxOTQ2Ny4zNTgyMDAwMDFdXV19LCJwcm9wZXJ0aWVzIjp7ImRkX01hbkNDX3Byb3BfbGF5ZXJfaW5kZXgiOlt7IkFkZHJlc3MiOiI5LzExNC0xMTYgSmFtZXMgU3RyZWV0IiwiU3VidXJiIjoiVEVNUExFU1RPV0UiLCJBZGRyZXNzRnVsbCI6IjkvMTE0LTExNiBKYW1lcyBTdHJlZXQiLCJfaWQiOjQ1MDA3MywiUG9zdGNvZGUiOiIzMTA2ICAiLCJQcm9wZXJ0eUlEIjo0NTAwNzN9XSwiZGRfTWFuQ0NfUHJvcGVydHlfV2FzdGVDb2xsZWN0aW9uIjpbeyJNYW5DQ19HYXJkZW5fQmluX0ltYWdlIjoiaHR0cHM6Ly9tYXBwaW5nLm1hbm5pbmdoYW0udmljLmdvdi5hdS9jdXN0b20vbWFubmluZ2hhbS9iaW4tZ2FyZGVuLnBuZyIsIk1hbkNDX0dhcmJhZ2VfQmluX0ltYWdlIjoiaHR0cHM6Ly9tYXBwaW5nLm1hbm5pbmdoYW0udmljLmdvdi5hdS9jdXN0b20vbWFubmluZ2hhbS9iaW4tZ2FyYmFnZS5wbmciLCJNYW5DQ19SZWN5Y2xlX0Jpbl9JbWFnZSI6Imh0dHBzOi8vbWFwcGluZy5tYW5uaW5naGFtLnZpYy5nb3YuYXUvY3VzdG9tL21hbm5pbmdoYW0vYmluLXJlY3ljbGluZy5wbmciLCJNYW5DQ19XYXN0ZV9EYXlfV2VlayI6IlR1ZXNkYXkgMSIsIk1hbkNDX0dhcmRlbl9XYXN0ZV9EYXkiOiJUdWVzZGF5IiwiTWFuQ0NfUmVjeWNsaW5nX0RheSI6IjA2IE9jdCAyMDI2IiwiX2lkIjoiNDUwMDczIiwiTWFuQ0NfQ29sbGVjdGlvbl9EYXlfQXJlYSI6IlR1ZXNkYXkgKEFyZWEgMSkiLCJNYW5DQ19Db2xsZWN0aW9uX0RheSI6IjEzIE9jdCAyMDI2In1dfX1dfQ=="
+    }
+  ]
+}
