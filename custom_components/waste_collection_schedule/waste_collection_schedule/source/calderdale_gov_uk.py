@@ -1,164 +1,81 @@
-import logging
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-)
-
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Calderdale Council"
-DESCRIPTION = "Source for calderdale.gov.uk services for Calderdale Council, UK."
-URL = "https://www.calderdale.gov.uk"
-TEST_CASES = {
-    "Test_1": {"postcode": "OL14 7BX", "uprn": "010010152783"},
-    "Test_2": {"postcode": "HX1 3UZ", "uprn": "010006741170"},
-}
-
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Waste": Icons.GENERAL_WASTE,
-    "Garden waste": Icons.GARDEN,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://www.calderdale.gov.uk/environment/waste/household-collections/collectiondayfinder.jsp"
 
 
-class Source:
-    def __init__(self, postcode: str, uprn: str | int):
-        self._postcode = postcode
-        self._uprn = str(uprn).zfill(12)
+def _label(row) -> str:
+    """The bin's name, in bold in the first cell."""
+    return row.find("td").find("strong").get_text(strip=True)
 
-    def fetch(self) -> list[Collection]:
-        # Make POST request to get collection schedule
-        data = {
-            "postcode": self._postcode,
-            "uprn": self._uprn,
+
+def _next_date(row) -> str | None:
+    """ "Friday 9 October 2026 will be your next collection." in the third cell."""
+    for paragraph in row.find_all("td")[2].find_all("p"):
+        if "will be your next collection" in paragraph.get_text():
+            return paragraph.find("strong").get_text(strip=True)
+    return None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Calderdale Council"
+    DESCRIPTION = "Source for calderdale.gov.uk services for Calderdale Council, UK."
+    URL = "https://www.calderdale.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES, wt.GENERAL_WASTE]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_1": {"postcode": "OL14 7BX", "uprn": "010010152783"},
+        "Test_2": {"postcode": "HX1 3UZ", "uprn": "010006741170"},
+    }
+
+    PARAMS = (postcode(), uprn())
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering your address details. Leading zeros may be left out."
+        ),
+    }
+
+    retrieve = HttpPostRetriever(
+        API_URL,
+        data=lambda postcode, uprn, **_: {
+            "postcode": postcode,
+            "uprn": str(uprn).zfill(12),
             "gdprTerms": "Yes",
             "privacynoticeid": "323",
             "find": "Show me my collection days",
-        }
+        },
+    )
 
-        response = requests.post(API_URL, data=data)
-        response.raise_for_status()
+    # The finder answers an unknown UPRN with a page that does not name the address.
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser("table#collection tr"),
+        argument="uprn",
+        contains="Currently showing collection days for:",
+        hint=(
+            "check that the postcode and UPRN match, and that "
+            "calderdale.gov.uk's collection day finder is available"
+        ),
+    )
 
-        # Calderdale redirects the finder to a notice page while it is down for
-        # maintenance, and to new.calderdale.gov.uk since the site move. Landing
-        # anywhere but the finder means there is nothing to parse, and saying so
-        # beats blaming a UPRN that is very probably correct.
-        if not response.url.startswith(API_URL):
-            raise ValueError(
-                "Calderdale's collection day finder is not answering at the "
-                f"moment (it redirected to {response.url}). This is the "
-                "council's own service being unavailable, not a problem with "
-                "your address; please try again later."
-            )
-
-        # Parse HTML response
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        # Find the collection table
-        collection_table = soup.find("table", {"id": "collection"})
-        if not collection_table:
-            # Check if address was found - if table is missing, likely invalid UPRN
-            address_check = soup.find(
-                "p",
-                string=lambda text: (
-                    text and "Currently showing collection days for:" in text
-                ),
-            )
-            if not address_check:
-                raise SourceArgumentNotFound(
-                    "uprn",
-                    self._uprn,
-                    "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
-                )
-            raise Exception("Could not find collection schedule table in response")
-
-        entries = []
-
-        # Process each row (skip header row)
-        rows = collection_table.find("tbody").find_all("tr")
-        _LOGGER.debug(f"Found {len(rows)} rows in collection table")
-
-        for row in rows[1:]:  # Skip header row
-            cells = row.find_all("td")
-            if len(cells) < 3:
-                _LOGGER.debug(f"Skipping row with {len(cells)} cells")
-                continue
-
-            # Extract waste type from first cell
-            waste_type_cell = cells[0]
-            waste_type_strong = waste_type_cell.find("strong")
-            if not waste_type_strong:
-                _LOGGER.debug("No strong tag found in waste type cell")
-                continue
-            waste_type = waste_type_strong.text.strip()
-            _LOGGER.debug(f"Processing waste type: {waste_type}")
-
-            # Extract next collection date from third cell
-            collection_info_cell = cells[2]
-
-            # Find all paragraphs and check their text content
-            collection_paragraphs = collection_info_cell.find_all("p")
-            next_collection_p = None
-            for p in collection_paragraphs:
-                if "will be your next collection" in p.get_text():
-                    next_collection_p = p
-                    break
-
-            if next_collection_p:
-                _LOGGER.debug(f"Found collection text: {next_collection_p.get_text()}")
-                # Extract date from text like "Monday 15 December 2025 will be your next collection."
-                date_match = re.search(
-                    r"(\w+\s+\d{1,2}\s+\w+\s+\d{4})", next_collection_p.get_text()
-                )
-                if date_match:
-                    date_str = date_match.group(1)
-                    _LOGGER.debug(f"Extracted date string: {date_str}")
-                    # Parse date - format is like "Monday 15 December 2025"
-                    # Remove day name and parse
-                    date_parts = date_str.split()
-                    if len(date_parts) >= 4:
-                        # Reconstruct without day name: "15 December 2025"
-                        date_str_clean = (
-                            f"{date_parts[1]} {date_parts[2]} {date_parts[3]}"
-                        )
-                        try:
-                            collection_date = datetime.strptime(
-                                date_str_clean, "%d %B %Y"
-                            ).date()
-
-                            entries.append(
-                                Collection(
-                                    date=collection_date,
-                                    t=waste_type,
-                                    icon=ICON_MAP.get(waste_type),
-                                )
-                            )
-                            _LOGGER.debug(
-                                f"Added collection: {collection_date} - {waste_type}"
-                            )
-                        except ValueError as e:
-                            # Skip if date parsing fails
-                            _LOGGER.warning(
-                                f"Failed to parse date '{date_str_clean}': {e}"
-                            )
-                            continue
-                    else:
-                        _LOGGER.debug(f"Date parts insufficient: {date_parts}")
-                else:
-                    _LOGGER.debug(f"No date match in: {next_collection_p.get_text()}")
-            else:
-                _LOGGER.debug("No 'next collection' paragraph found in cell")
-
-        if not entries:
-            _LOGGER.error("No collection dates found in response")
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        _LOGGER.debug(f"Successfully found {len(entries)} collection entries")
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_next_date,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        type_value_map={
+            "Recycling": wt.RECYCLABLES,
+            "Waste": wt.GENERAL_WASTE,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )
