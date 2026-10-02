@@ -72,6 +72,8 @@ class Source(BaseSource):
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [wt.ORGANIC, wt.RECYCLABLES, wt.GENERAL_WASTE]
+
     TEST_CASES: ClassVar[dict] = {
         "Australind (south of Paris Road)": {
             "suburb": "Australind (south of Paris Road)",
