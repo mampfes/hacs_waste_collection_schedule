@@ -60,6 +60,12 @@ PARAM_TRANSLATIONS = {
         "house_number": "House number",
         "house_letter": "House letter/addition",
     },
+    "nl": {
+        "municipality": "Gemeente",
+        "postal_code": "Postcode",
+        "house_number": "Huisnummer",
+        "house_letter": "Huisletter/toevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -74,6 +80,19 @@ PARAM_DESCRIPTIONS = {
             "House letter or addition, if applicable (optional, only "
             "needed when multiple addresses share the same postal code "
             "and house number)"
+        ),
+    },
+    "nl": {
+        "municipality": (
+            "Subdomein van de afvalkalender van je gemeente, bijv. "
+            "'drimmelen' voor https://drimmelen.afvalkalender.straatbeeld.online"
+        ),
+        "postal_code": "Nederlandse postcode, bijv. 4926CW",
+        "house_number": "Huisnummer, bijv. 28",
+        "house_letter": (
+            "Huisletter of toevoeging, indien van toepassing (optioneel, alleen "
+            "nodig als meerdere adressen dezelfde postcode en hetzelfde "
+            "huisnummer hebben)"
         ),
     },
 }

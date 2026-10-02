@@ -38,6 +38,11 @@ PARAM_TRANSLATIONS = {
         "house_number": "House number",
         "addition": "Addition",
     },
+    "nl": {
+        "postalcode": "Postcode",
+        "house_number": "Huisnummer",
+        "addition": "Toevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -45,6 +50,11 @@ PARAM_DESCRIPTIONS = {
         "postalcode": "Dutch postal code (4 digits + 2 letters, e.g. 8148PC)",
         "house_number": "House number",
         "addition": "House letter or addition (optional, only needed when multiple addresses share the same postal code and house number)",
+    },
+    "nl": {
+        "postalcode": "Nederlandse postcode (4 cijfers + 2 letters, bijv. 8148PC)",
+        "house_number": "Huisnummer",
+        "addition": "Huisletter of toevoeging (optioneel, alleen nodig als meerdere adressen dezelfde postcode en hetzelfde huisnummer hebben)",
     },
 }
 
