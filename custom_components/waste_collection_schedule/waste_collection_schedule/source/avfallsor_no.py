@@ -1,133 +1,118 @@
-import datetime
 import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Avfall Sør, Kristiansand"
-DESCRIPTION = "Source for Avfall Sør, Kristiansand."
-URL = "https://avfallsor.no/"
-TEST_CASES = {
-    "Auglandslia 1, Kristiansand": {"address": "Auglandslia 1, Kristiansand"},
-    "Auglandslia 1 (without city)": {"address": "Auglandslia 1"},
-}
+_API = "https://avfallsor.no/wp-json"
 
-# Maps fraksjonId to English waste type names
-# fraksjonId is the stable provider identifier
-FRAKSJON_ID_MAP = {
-    "9011": "Residual",  # Restavfall
-    "1111": "Bio",  # Bioavfall
-    "2499": {
-        # This fraksjonId maps to multiple waste types depending on fraksjon field
-        "Papp og papir": "Paper",
-        "Plastemballasje": "Plastic",
-    },
-    "1322": {
-        # This fraksjonId contains multiple waste types
-        "Glass- og metallemballasje": ["Glass", "Metal"],
-    },
-}
-
-ICON_MAP = {
-    "Residual": Icons.GENERAL_WASTE,
-    "Bio": Icons.ORGANIC,
-    "Paper": Icons.PAPER,
-    "Plastic": Icons.PLASTIC_PACKAGING,
-    "Glass": Icons.GLASS,
-    "Metal": Icons.METAL,
+# The provider's own fraction names (Norwegian).
+_TYPE_MAP = {
+    "Restavfall": wt.GENERAL_WASTE,
+    "Bioavfall": wt.FOOD_WASTE,
+    "Papp og papir": wt.PAPER,
+    "Plastemballasje": wt.RECYCLABLES,
+    "Glassemballasje": wt.GLASS,
+    # No canonical metal type: kept as OTHER, shown with the provider's label.
+    "Metallemballasje": wt.OTHER,
 }
 
 
-API_URL = "https://avfallsor.no/wp-json/addresses/v1/address"
+def _split_round(record, source) -> list:
+    """One round collects glass and metal packaging together: one record each."""
+    if record.get("fraksjon") == "Glass- og metallemballasje":
+        return [
+            {**record, "fraksjon": "Glassemballasje"},
+            {**record, "fraksjon": "Metallemballasje"},
+        ]
+    return [record]
 
 
-def _normalize(s: str) -> str:
-    return s.lower().replace(" ", "").replace(",", "").replace(".", "").casefold()
+def _normalize(text: str) -> str:
+    return text.lower().replace(" ", "").replace(",", "").replace(".", "").casefold()
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address
+def _property_id(response, *keys, address, **_) -> str:
+    """Pick the property id off the matching address's ``href``.
 
-    def fetch(self) -> list[Collection]:
-        # The API does prefix matching on the street+number part; strip any city suffix
-        # before the first comma so the lookup works regardless of whether the user
-        # included a city name (e.g. "Auglandslia 1" vs "Auglandslia 1, Kristiansand").
-        lookup_term = self._address.split(",")[0].strip()
-        args = {"lookup_term": lookup_term}
+    The label includes the city ("Auglandslia 1, Kristiansand"), the value
+    does not, so an address given with or without the city both match.
+    """
+    matches = response.json()
+    wanted = _normalize(address)
+    for match in matches:
+        if wanted in (_normalize(match["label"]), _normalize(match.get("value", ""))):
+            found = re.search(r"/([0-9a-f-]{36})/?$", match["href"])
+            if not found:
+                raise ValueError(
+                    f"Could not extract propertyId from href: {match['href']}"
+                )
+            return found.group(1)
+    raise SourceArgumentNotFoundWithSuggestions(
+        "address", address, [match["label"] for match in matches]
+    )
 
-        r = requests.get(API_URL, params=args)
-        r.raise_for_status()
-        matches = r.json()
-        href: str | None = None
 
-        addr_norm = _normalize(self._address)
-        for match in matches:
-            # Primary: exact match on the full label (includes city) — handles the case
-            # where the user supplied the city in their address string.
-            if _normalize(match["label"]) == addr_norm:
-                href = match["href"]
-                break
-            # Fallback: match on the value field (street + number only, no city) —
-            # handles the case where the user omitted the city name.
-            if _normalize(match.get("value", "")) == addr_norm:
-                href = match["href"]
-                break
+@final
+class Source(BaseSource):
+    TITLE = "Avfall Sør, Kristiansand"
+    DESCRIPTION = "Source for Avfall Sør, Kristiansand."
+    URL = "https://avfallsor.no/"
+    COUNTRY = "no"
+    RAISE_ON_EMPTY = True
 
-        if not href:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [match["label"] for match in matches],
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.OTHER,
+    ]
 
-        # Extract propertyId from href
-        match = re.search(r"/([0-9a-f-]{36})/?$", href)
-        if not match:
-            raise ValueError(f"Could not extract propertyId from href: {href}")
-        property_id = match.group(1)
+    TEST_CASES: ClassVar[dict] = {
+        "Auglandslia 1, Kristiansand": {"address": "Auglandslia 1, Kristiansand"},
+        "Auglandslia 1 (without city)": {"address": "Auglandslia 1"},
+    }
 
-        api_url = f"https://avfallsor.no/wp-json/pickup-calendar/v1/collections/property-id/{property_id}"
-        r = requests.get(api_url)
-        r.raise_for_status()
-        data = r.json()
+    PARAMS = (street_address("address"),)
 
-        entries = []
-        today = datetime.date.today()
-        for collection in data.get("collections", []):
-            date_str = collection.get("dateIndex")
-            if not date_str:
-                continue
-            try:
-                date = datetime.date.fromisoformat(date_str)
-            except ValueError:
-                continue
-            if date < today:
-                continue
-            for item in collection.get("items", []):
-                fraksjon_id = item.get("fraksjonId")
-                fraksjon = item.get("fraksjon")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as shown on [avfallsor.no](https://avfallsor.no/) "
+            "(Finn hentedag), e.g. 'Auglandslia 1, Kristiansand'. The city may be "
+            "left out."
+        ),
+    }
 
-                # Look up English waste type name using fraksjonId
-                mapping = FRAKSJON_ID_MAP.get(fraksjon_id)
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{_API}/addresses/v1/address",
+                # The API prefix-matches street and number; drop any city suffix.
+                params=lambda address, **_: {
+                    "lookup_term": address.split(",")[0].strip()
+                },
+                pick=_property_id,
+            ),
+        ),
+        url=lambda property_id, **_: (
+            f"{_API}/pickup-calendar/v1/collections/property-id/{property_id}"
+        ),
+    )
 
-                # Handle nested mappings for fraksjonIds with multiple waste types
-                if isinstance(mapping, dict):
-                    # Lookup by both fraksjonId and fraksjon name
-                    waste_type_value = mapping.get(fraksjon)
-                    if isinstance(waste_type_value, list):
-                        waste_types = waste_type_value
-                    else:
-                        waste_types = [waste_type_value] if waste_type_value else []
-                else:
-                    # Single waste type for this fraksjonId
-                    waste_types = [mapping] if mapping else []
+    parse = parsers.JsonParser("collections")
 
-                # Create collection entries for each waste type
-                for waste_type in waste_types:
-                    if waste_type:
-                        icon = ICON_MAP.get(waste_type)
-                        entries.append(Collection(date=date, t=waste_type, icon=icon))
+    preprocess = Compose(ExplodeList("items"), ExplodeList(_split_round))
 
-        return entries
+    transform = JsonTransformer(
+        date_key="dato",
+        type_key="fraksjon",
+        type_value_map=_TYPE_MAP,
+        carry_raw_label=True,
+    )
