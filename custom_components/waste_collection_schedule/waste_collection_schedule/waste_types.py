@@ -467,22 +467,8 @@ METAL = WasteType(
         "sl": "Kovina",
         "da": "Metal",
     },
-    aliases={
-        "en": [
-            "iron",
-            "cans",
-        ],
-        "de": [
-            "eisen",
-            "dosen",  # codespell:ignore dosen
-        ],
-        "it": ["ferro", "lattine"],
-        "fr": ["fer", "boîtes de conserve"],
-        "nl": ["ijzer", "blikjes"],
-        "sl": ["likati", "pločevinke"],
-        "da": ["jern", "dåser", "aluminium"],
-    },
-    auto_resolve=False
+    aliases={},
+    auto_resolve=False,
 )
 
 PLASTIC = WasteType(
@@ -498,20 +484,8 @@ PLASTIC = WasteType(
         "sl": "Plastika",
         "da": "Plastik",
     },
-    aliases={
-        "en": ["plastic trays", "plastic bags", "plastic film"],
-        "de": ["kunststoffschalen", "plastikbeutel", "plastikfolie"],
-        "it": [
-            "vaschette di plastica",
-            "sacchetti di plastica",
-            "pellicola di plastica",
-        ],
-        "fr": ["barquettes en plastique", "sacs en plastique", "film plastique"],
-        "nl": ["plastic bakjes", "plastic zakken", "plasticfolie"],
-        "sl": ["plastični pladnji", "plastične vrečke", "plastična folija"],
-        "da": ["plastbakker", "plastikposer", "plastfolie"],
-    },
-    auto_resolve=False
+    aliases={},
+    auto_resolve=False,
 )
 
 CARTONS = WasteType(
@@ -527,31 +501,8 @@ CARTONS = WasteType(
         "sl": "Kartonska embalaža za živila in pijače",
         "da": "Mad- og drikkekartoner",
     },
-    aliases={
-        "en": ["food cartons", "beverage cartons"],
-        "de": ["milchkartons", "saftkartons", "lebensmittelkartons", "getränkekartons"],
-        "it": [
-            "cartoni del latte",
-            "cartoni per bevande",
-            "cartoni per alimenti",
-            "cartoni per bevande",
-        ],
-        "fr": [
-            "briques de lait",
-            "briques alimentaires",
-            "briques de jus",  # codespell:ignore jus
-            "briques de boissons",
-        ],
-        "nl": ["melkpakken", "sapkartons", "drankkartons", "voedselkartons"],
-        "sl": [
-            "kartoni za mleko",
-            "kartoni za sok",
-            "kartoni za pijače",
-            "kartoni za živila",
-        ],
-        "da": ["mælkekartoner", "juicekartoner", "kartoner"],
-    },
-    auto_resolve=False
+    aliases={},
+    auto_resolve=False,
 )
 
 OTHER = WasteType(
@@ -567,7 +518,7 @@ OTHER = WasteType(
         "sl": "Drugo",
         "da": "Andet",
     },
-    auto_resolve=False
+    auto_resolve=False,
 )
 
 ALL_TYPES = [
@@ -597,9 +548,9 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
-    WasteType's with the auto_resolve flag unset, will also be excluded.
-    As these are intended to be defined by the source itself, to avoid
-    conflicts with other types, and to avoid conflicts with the vocabulary.
+    WasteType's with the auto_resolve flag unset, will be excluded from the index.
+    These are intended to be explicitly used by the source itself, to avoid
+    conflicts with other types.
 
     OTHER is excluded (it's only used when a source maps to it explicitly).
     First definition wins on collisions, with a warning, so the vocabulary stays
