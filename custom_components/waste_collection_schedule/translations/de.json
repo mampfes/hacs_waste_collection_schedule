@@ -8326,14 +8326,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Gemeinde",
-          "range_selector": "Bereichs-Schlüssel (erweitert)",
+          "range_selector": "Bereichs-ID",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Name der Gemeinde, z. B. 'Radolfzell' oder 'Konstanz'.",
-          "range_selector": "Nur nötig, wenn Ihre Straße in mehrere Abfuhrbereiche unterteilt ist. Zunächst leer lassen; die Fehlermeldung listet die für Ihre Straße gültigen Werte auf, falls einer benötigt wird.",
-          "street": "Straßenname (nur erforderlich für Gemeinden mit straßengenauen Abfuhrterminen, z. B. Karlsruhe, Konstanz, Radolfzell, Singen (Hohentwiel), Stockach)."
+          "city": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_muellmann_app_de": {
@@ -8342,13 +8341,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Gemeinde",
-          "range_selector": "Bereichs-Schlüssel (erweitert)",
+          "range_selector": "Bereichs-ID",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Name der Gemeinde, z. B. 'Radolfzell' oder 'Konstanz'.",
-          "range_selector": "Nur nötig, wenn Ihre Straße in mehrere Abfuhrbereiche unterteilt ist. Zunächst leer lassen; die Fehlermeldung listet die für Ihre Straße gültigen Werte auf, falls einer benötigt wird.",
-          "street": "Straßenname (nur erforderlich für Gemeinden mit straßengenauen Abfuhrterminen, z. B. Karlsruhe, Konstanz, Radolfzell, Singen (Hohentwiel), Stockach)."
+          "city": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "args_ics_alp_lup_de": {
@@ -10292,13 +10290,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Abholbereich",
-          "commune": "Gemeinde (Slug)"
+          "area": "Ortsteil",
+          "commune": "Gemeinde"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "area": "Der Name des Abholbereichs (z. B. 'Breitenborn'). Leer lassen, wenn die Gemeinde nur einen Bereich hat.",
-          "commune": "Der URL-Slug der Gemeinde auf heimat-info.de (z. B. 'gruendau'). Zu finden in der URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+          "area": "Ihr Ortsteil oder Stadtteil.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_heimat_info_de": {
@@ -10306,12 +10304,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Abholbereich",
-          "commune": "Gemeinde (Slug)"
+          "area": "Ortsteil",
+          "commune": "Gemeinde"
         },
         "data_description": {
-          "area": "Der Name des Abholbereichs (z. B. 'Breitenborn'). Leer lassen, wenn die Gemeinde nur einen Bereich hat.",
-          "commune": "Der URL-Slug der Gemeinde auf heimat-info.de (z. B. 'gruendau'). Zu finden in der URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+          "area": "Ihr Ortsteil oder Stadtteil.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "args_ajl_mbh_de": {
@@ -10319,11 +10317,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Straße (nur bei Orten mit mehreren Abholbereichen nötig)",
-          "town": "Ort"
+          "street": "Straße",
+          "town": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname.",
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_ajl_mbh_de": {
@@ -10331,10 +10331,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Straße (nur bei Orten mit mehreren Abholbereichen nötig)",
-          "town": "Ort"
+          "street": "Straße",
+          "town": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ihr Straßenname.",
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_ics_alba_bs_de": {
         "title": "Quelle konfigurieren",
@@ -15786,7 +15789,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname wie auf {url_www_geilenkirchen_de_rathaus_online_dienstleistungen_und_andere_angebote_abfallkalender} angezeigt, z. B. 'Aldenhovener Strasse'."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_geilenkirchen_de": {
@@ -15797,7 +15800,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "street": "Straßenname wie auf {url_www_geilenkirchen_de_rathaus_online_dienstleistungen_und_andere_angebote_abfallkalender} angezeigt, z. B. 'Aldenhovener Strasse'."
+          "street": "Ihr Straßenname."
         }
       },
       "args_gemuenden_wohra_de": {
@@ -17420,13 +17423,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Gemeinde",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ortsname (z.B. 'Bad Schwartau')",
-          "street": "Straßenname (bei einigen Orten nicht erforderlich)"
+          "city": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_zvo_com": {
@@ -17434,12 +17437,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Gemeinde",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Ortsname (z.B. 'Bad Schwartau')",
-          "street": "Straßenname (bei einigen Orten nicht erforderlich)"
+          "city": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "args_zakb_de": {

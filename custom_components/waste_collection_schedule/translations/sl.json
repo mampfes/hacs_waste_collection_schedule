@@ -8234,12 +8234,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Mesto",
-          "range_selector": "Range Selector",
+          "city": "Občina",
+          "range_selector": "ID območja",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_muellmann_app_de": {
@@ -8247,11 +8249,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Mesto",
-          "range_selector": "Range Selector",
+          "city": "Občina",
+          "range_selector": "ID območja",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ics_alp_lup_de": {
         "title": "Configure Source",
@@ -10194,11 +10199,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "commune": "Commune"
+          "area": "Naselje",
+          "commune": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area": "Vaše naselje ali del občine.",
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_heimat_info_de": {
@@ -10206,10 +10213,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "commune": "Commune"
+          "area": "Naselje",
+          "commune": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "area": "Vaše naselje ali del občine.",
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_ajl_mbh_de": {
         "title": "Configure Source",
@@ -10217,10 +10227,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Ulica",
-          "town": "Mesto"
+          "town": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice.",
+          "town": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_ajl_mbh_de": {
@@ -10229,9 +10241,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Ulica",
-          "town": "Mesto"
+          "town": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice.",
+          "town": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_ics_alba_bs_de": {
         "title": "Configure Source",
@@ -15642,7 +15657,8 @@
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_geilenkirchen_de": {
@@ -15652,7 +15668,9 @@
           "calendar_title": "Calendar Title",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice."
+        }
       },
       "args_gemuenden_wohra_de": {
         "title": "Configure Source",
@@ -17264,11 +17282,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Mesto",
+          "city": "Občina",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_zvo_com": {
@@ -17276,10 +17296,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Mesto",
+          "city": "Občina",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_zakb_de": {
         "title": "Configure Source",

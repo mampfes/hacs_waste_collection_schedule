@@ -2378,9 +2378,7 @@
       "de": "Öffnen Sie https://www.heimat-info.de, suchen Sie Ihre Gemeinde und navigieren Sie zum Abfallkalender. Der Gemeinde-Slug ist der Teil der URL nach '/gemeinden/'. Falls der Kalender mehrere Abholbereiche zeigt, wählen Sie Ihren aus der Liste.",
       "en": "Open https://www.heimat-info.de, search for your commune, and navigate to Abfallkalender. The commune slug is the part of the URL after '/gemeinden/'. If the calendar shows multiple collection areas, pick yours from the list."
     },
-    "urls": {
-      "url_www_heimat_info_de_gemeinden__slug__abfallkalender": "https://www.heimat-info.de/gemeinden/<slug>/abfallkalender."
-    }
+    "urls": {}
   },
   "ajl_mbh_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ajl_mbh_de.md",
@@ -3444,9 +3442,7 @@
       "de": "Besuchen Sie den Abfallkalender unter https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ und nutzen Sie dort die Straßensuche, um die genaue Schreibweise Ihrer Straße zu finden (Straßen werden mit 'strasse' statt 'straße' geschrieben). Verwenden Sie diesen genauen Namen als 'street'-Parameter. Wird der eingegebene Name nicht gefunden oder trifft auf mehrere Straßen zu, listet die Fehlermeldung die passendsten Treffer auf.",
       "en": "Visit the collection calendar at https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ and use the street search box there to find the exact spelling of your street (streets are spelled with 'strasse', not 'straße'). Use that exact name as the 'street' argument. If the name you enter cannot be found, or matches more than one street, the resulting error message lists the closest matches."
     },
-    "urls": {
-      "url_www_geilenkirchen_de_rathaus_online_dienstleistungen_und_andere_angebote_abfallkalender": "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/"
-    }
+    "urls": {}
   },
   "gemuenden_wohra_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemuenden_wohra_de.md",

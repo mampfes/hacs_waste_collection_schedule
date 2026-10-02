@@ -8331,12 +8331,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "range_selector": "Range Selector",
+          "city": "Commune",
+          "range_selector": "ID de zone",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_muellmann_app_de": {
@@ -8344,11 +8346,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "range_selector": "Range Selector",
+          "city": "Commune",
+          "range_selector": "ID de zone",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_ics_alp_lup_de": {
         "title": "Configurer la Source",
@@ -10291,11 +10296,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "area": "Zone",
+          "area": "Quartier",
           "commune": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "area": "Votre quartier ou partie de la commune.",
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_heimat_info_de": {
@@ -10303,10 +10310,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "area": "Zone",
+          "area": "Quartier",
           "commune": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "area": "Votre quartier ou partie de la commune.",
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_ajl_mbh_de": {
         "title": "Configurer la Source",
@@ -10314,10 +10324,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street": "Rue",
-          "town": "Ville"
+          "town": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue.",
+          "town": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_ajl_mbh_de": {
@@ -10326,9 +10338,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "street": "Rue",
-          "town": "Ville"
+          "town": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Le nom de votre rue.",
+          "town": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_ics_alba_bs_de": {
         "title": "Configurer la Source",
@@ -15739,7 +15754,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_geilenkirchen_de": {
@@ -15749,7 +15765,9 @@
           "calendar_title": "Titre du Calendrier",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Le nom de votre rue."
+        }
       },
       "args_gemuenden_wohra_de": {
         "title": "Configurer la Source",
@@ -17361,11 +17379,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
+          "city": "Commune",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_zvo_com": {
@@ -17373,10 +17393,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
+          "city": "Commune",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_zakb_de": {
         "title": "Configurer la Source",

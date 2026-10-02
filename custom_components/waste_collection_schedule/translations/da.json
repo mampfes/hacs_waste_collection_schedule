@@ -8236,12 +8236,14 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "range_selector": "Range Selector",
-          "street": "Street"
+          "city": "Kommune",
+          "range_selector": "Område-ID",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_muellmann_app_de": {
@@ -8249,11 +8251,14 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "range_selector": "Range Selector",
-          "street": "Street"
+          "city": "Kommune",
+          "range_selector": "Område-ID",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn"
+        }
       },
       "args_ics_alp_lup_de": {
         "title": "Konfigurer Kilde",
@@ -10196,11 +10201,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Area",
-          "commune": "Commune"
+          "area": "Distrikt",
+          "commune": "Kommune"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "area": "Dit distrikt eller del af kommunen",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
       "reconfigure_heimat_info_de": {
@@ -10208,21 +10215,26 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Area",
-          "commune": "Commune"
+          "area": "Distrikt",
+          "commune": "Kommune"
         },
-        "data_description": {}
+        "data_description": {
+          "area": "Dit distrikt eller del af kommunen",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
       },
       "args_ajl_mbh_de": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street",
-          "town": "Town"
+          "street": "Gade",
+          "town": "Kommune"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn",
+          "town": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
       "reconfigure_ajl_mbh_de": {
@@ -10230,10 +10242,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street",
-          "town": "Town"
+          "street": "Gade",
+          "town": "Kommune"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Dit gadenavn",
+          "town": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
       },
       "args_ics_alba_bs_de": {
         "title": "Konfigurer Kilde",
@@ -15641,10 +15656,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street"
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_geilenkirchen_de": {
@@ -15652,9 +15668,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street"
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
       },
       "args_gemuenden_wohra_de": {
         "title": "Konfigurer Kilde",
@@ -17266,11 +17284,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "Kommune",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_zvo_com": {
@@ -17278,10 +17298,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "Kommune",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn"
+        }
       },
       "args_zakb_de": {
         "title": "Konfigurer Kilde",
