@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://heimatinfo-api-platform.azurewebsites.net/communes/gruendau/garbagepickupareas ",
+      "method": "GET",
+      "url": "https://heimatinfo-api-platform.azurewebsites.net/communes/gruendau/garbagepickupareas",
+      "final_url": "https://heimatinfo-api-platform.azurewebsites.net/communes/gruendau/garbagepickupareas",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-length": "832",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 02 Oct 2026 06:14:34 GMT",
+        "server": "Kestrel",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000"
+      },
+      "content_b64": "W3siaWQiOiJmMzJjNDZjMi00MDNlLTQ4NDQtYThmMy0wM2NlMDRkNGRhOTYiLCJjb21tdW5lSWQiOiIyOTg5YzM5My1mNWE1LTRiOTgtYmQ1OS01MDE5MzZmYThlMmYiLCJuYW1lIjoiTGllYmxvcyJ9LHsiaWQiOiIzOWViODUwNy0zZTc4LTQ3YzMtODExZS1lNTBlZmE3OWE2NzEiLCJjb21tdW5lSWQiOiIyOTg5YzM5My1mNWE1LTRiOTgtYmQ1OS01MDE5MzZmYThlMmYiLCJuYW1lIjoiUm90aGVuYmVyZ2VuIn0seyJpZCI6ImRjMzVlZmM4LWQ0YTQtNDM5OC1iY2M5LTU0MmI3NDQyZmM2MCIsImNvbW11bmVJZCI6IjI5ODljMzkzLWY1YTUtNGI5OC1iZDU5LTUwMTkzNmZhOGUyZiIsIm5hbWUiOiJNaXR0ZWwtR3LDvG5kYXUifSx7ImlkIjoiNDQ1NzYxYjEtOTVjNi00ZTUwLThmYzctOTVjNTkxOTY0MTA5IiwiY29tbXVuZUlkIjoiMjk4OWMzOTMtZjVhNS00Yjk4LWJkNTktNTAxOTM2ZmE4ZTJmIiwibmFtZSI6Ik5pZWRlcmdyw7xuZGF1In0seyJpZCI6ImNmZDJlYzIyLTllOWYtNDUwYy1hZmQxLThlYmY5ODFmNTU5ZCIsImNvbW11bmVJZCI6IjI5ODljMzkzLWY1YTUtNGI5OC1iZDU5LTUwMTkzNmZhOGUyZiIsIm5hbWUiOiJIYWluLUdyw7xuZGF1In0seyJpZCI6IjJhMjdkNTlkLTg3YTEtNDk4Mi04ZjA0LWFkNDRmMWMyM2U1YSIsImNvbW11bmVJZCI6IjI5ODljMzkzLWY1YTUtNGI5OC1iZDU5LTUwMTkzNmZhOGUyZiIsIm5hbWUiOiJCcmVpdGVuYm9ybiJ9LHsiaWQiOiI2MGU3ZDkzMS0zYjUyLTQwMTYtODBiZC00MjRiZjU2NWUwYTUiLCJjb21tdW5lSWQiOiIyOTg5YzM5My1mNWE1LTRiOTgtYmQ1OS01MDE5MzZmYThlMmYiLCJuYW1lIjoiR2V0dGVuYmFjaCJ9XQ=="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'area' with the value '', you may want to use one of the following: ['Lieblos', 'Rothenbergen', 'Mittel-Gr\u00fcndau', 'Niedergr\u00fcndau', 'Hain-Gr\u00fcndau', 'Breitenborn', 'Gettenbach']"
+  }
+}
