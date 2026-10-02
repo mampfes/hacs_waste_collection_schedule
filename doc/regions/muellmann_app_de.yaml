@@ -1,0 +1,50 @@
+- title: Aach
+  url: https://aach.muellmann-app.de/
+  city: Aach
+- title: Allensbach
+  url: https://allensbach.muellmann-app.de/
+  city: Allensbach
+- title: Bodman-Ludwigshafen
+  url: https://bodman.muellmann-app.de/
+  city: Bodman-Ludwigshafen
+- title: Gailingen am Hochrhein
+  url: https://gailingen.muellmann-app.de/
+  city: Gailingen am Hochrhein
+- title: Hohenfels
+  url: https://hohenfels.muellmann-app.de/
+  city: Hohenfels
+- title: Karlsruhe
+  url: https://karlsruhe.muellmann-app.de/
+  city: Karlsruhe
+  street: REPLACE_WITH_YOUR_STREET
+- title: Konstanz
+  url: https://konstanz.muellmann-app.de/
+  city: Konstanz
+  street: REPLACE_WITH_YOUR_STREET
+- title: Moos
+  url: https://moos.muellmann-app.de/
+  city: Moos
+- title: Mühlhausen-Ehingen
+  url: https://muehlhausen.muellmann-app.de/
+  city: Mühlhausen-Ehingen
+- title: Mühlingen
+  url: https://muehlingen.muellmann-app.de/
+  city: Mühlingen
+- title: Orsingen-Nenzingen
+  url: https://orsingen.muellmann-app.de/
+  city: Orsingen-Nenzingen
+- title: Radolfzell am Bodensee
+  url: https://radolfzell.muellmann-app.de/
+  city: Radolfzell
+  street: REPLACE_WITH_YOUR_STREET
+- title: Reichenau
+  url: https://reichenau.muellmann-app.de/
+  city: Reichenau
+- title: Singen (Hohentwiel)
+  url: https://singenah.muellmann-app.de/
+  city: Singen (Hohentwiel)
+  street: REPLACE_WITH_YOUR_STREET
+- title: Stockach
+  url: https://stockach.muellmann-app.de/
+  city: Stockach
+  street: REPLACE_WITH_YOUR_STREET
