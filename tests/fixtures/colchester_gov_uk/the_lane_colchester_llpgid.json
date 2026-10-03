@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "GET https://new-llpg-app.azurewebsites.net/api/calendar/7cd96a3d-6027-e711-80fa-5065f38b56d1 ",
+      "method": "GET",
+      "url": "https://new-llpg-app.azurewebsites.net/api/calendar/7cd96a3d-6027-e711-80fa-5065f38b56d1",
+      "final_url": "https://new-llpg-app.azurewebsites.net/api/calendar/7cd96a3d-6027-e711-80fa-5065f38b56d1",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "374",
+        "cache-control": "no-cache",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 07:46:53 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ARRAffinity=0f0eac9025c535aa027b3d037b337eec6b27b4947463810f5ef9458235c67a5d;Path=/;HttpOnly;Secure;Domain=new-llpg-app.azurewebsites.net, ARRAffinitySameSite=0f0eac9025c535aa027b3d037b337eec6b27b4947463810f5ef9458235c67a5d;Path=/;HttpOnly;SameSite=None;Secure;Domain=new-llpg-app.azurewebsites.net",
+        "vary": "Accept-Encoding",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJXZWVrcyI6W3siUm93cyI6eyJUaHVyc2RheSI6W3siTmFtZSI6IkdsYXNzIiwiUmVwb3J0YWJsZUJlY2F1c2VXZWVrbHlFeGVtcHRpb24iOmZhbHNlfSx7Ik5hbWUiOiJNaXhlZCByZWN5Y2xpbmciLCJSZXBvcnRhYmxlQmVjYXVzZVdlZWtseUV4ZW1wdGlvbiI6ZmFsc2V9LHsiTmFtZSI6IkZvb2Qgd2FzdGUiLCJSZXBvcnRhYmxlQmVjYXVzZVdlZWtseUV4ZW1wdGlvbiI6ZmFsc2V9XX0sIldlZWtPbmUiOnRydWV9LHsiUm93cyI6eyJUaHVyc2RheSI6W3siTmFtZSI6Ik5vbi1yZWN5Y2xhYmxlIHJ1YmJpc2giLCJSZXBvcnRhYmxlQmVjYXVzZVdlZWtseUV4ZW1wdGlvbiI6ZmFsc2V9LHsiTmFtZSI6IkZvb2Qgd2FzdGUiLCJSZXBvcnRhYmxlQmVjYXVzZVdlZWtseUV4ZW1wdGlvbiI6ZmFsc2V9XX0sIldlZWtPbmUiOmZhbHNlfV0sIkRhdGVzT2ZGaXJzdENvbGxlY3Rpb25EYXlzIjp7IlRodXJzZGF5IjoiMjAyNi0xMC0wMVQwMDowMDowMCJ9LCJUb2RheSI6IjIwMjYtMTAtMDNUMDg6NDY6NTMuNjkxMzA5NCIsIkFkZHJlc3NOYW1lIjoiMTYgVGhlIExhbmUgIiwiUG9zdENvZGUiOiJDTzUgOE5UIn0="
+    }
+  ]
+}
