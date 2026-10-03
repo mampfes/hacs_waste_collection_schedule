@@ -2,7 +2,7 @@
 
 Harmonogram wywozu odpadów komunalnych dla Gminy Bochnia (woj. małopolskie), w tym miejscowości Baczków, Damienice, Krzyżanowice, Proszówki i pozostałych sołectw.
 
-Website: [http://bochnia-gmina.pl/p,3,harmonogram-wywozu-odpadow-komunalnych-i-zasady-segregacji](http://bochnia-gmina.pl/p,3,harmonogram-wywozu-odpadow-komunalnych-i-zasady-segregacji)
+Website: [https://bochnia-gmina.pl/strefa-mieszkanca/gospodarka-odpadami/1-harmonogramm-odbioru-smieci-_angielika/](https://bochnia-gmina.pl/strefa-mieszkanca/gospodarka-odpadami/1-harmonogramm-odbioru-smieci-_angielika/)
 
 ## Configuration via configuration.yaml
 
