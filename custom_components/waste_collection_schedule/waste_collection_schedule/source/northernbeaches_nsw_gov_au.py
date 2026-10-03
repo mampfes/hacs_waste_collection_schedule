@@ -1,185 +1,128 @@
 import re
-from datetime import date, timedelta
+from collections.abc import Iterable
+from typing import ClassVar, Literal, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Northern Beaches Council (NSW)"
-DESCRIPTION = "Source for Northern Beaches Council waste collection."
-URL = "https://www.northernbeaches.nsw.gov.au"
-TEST_CASES = {
-    "Manly": {"address": "25 Pittwater Road MANLY"},
-    "Brookvale": {"address": "25 Old Pittwater Road BROOKVALE"},
-    "Dee Why": {"address": "10 Howard Avenue DEE WHY"},
-}
+API = "https://pubapp.northernbeaches.nsw.gov.au/waste"
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Organics": Icons.GARDEN,
-}
+# "Wednesday, 8 April": the next service, without a year.
+_NEXT_DATE = re.compile(r"<strong>\w+day,?\s+(\d{1,2}\s+\w+)</strong>")
+# The calendar link ends in the weekday and the fortnightly zone: ".../ThursdayB.pdf".
+_ZONE = re.compile(r"bin-collection-days/\w+([AB])\.pdf")
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'.",
-}
+_parse_next_date = date_parsers.nearest_year("%d %B")
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your street address including suburb in uppercase, e.g. '25 Pittwater Road MANLY'.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-SEARCH_URL = "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx"
-SCHEDULE_URL = "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx"
-HEADERS = {"User-Agent": "Mozilla/5.0"}
-
-MONTH_MAP = {
-    "january": 1,
-    "february": 2,
-    "march": 3,
-    "april": 4,
-    "may": 5,
-    "june": 6,
-    "july": 7,
-    "august": 8,
-    "september": 9,
-    "october": 10,
-    "november": 11,
-    "december": 12,
-}
+# Weekly collections for about six months, as the legacy source projected.
+_WEEKS = 26
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address
+def _pick_property(response, *keys, address, **_) -> str:
+    """The autocomplete answers ``[{"id": ..., "value": address}, ...]``."""
+    results = response.json()
+    if not results:
+        raise SourceArgumentNotFound("address", address)
+    for result in results:
+        if result["value"].lower() == address.lower():
+            return result["id"]
+    if len(results) == 1:
+        return results[0]["id"]
+    raise SourceArgAmbiguousWithSuggestions(
+        "address", address, [result["value"] for result in results]
+    )
 
-    def fetch(self) -> list[Collection]:
-        # Step 1: Search for address via autocomplete endpoint
-        r = requests.get(
-            SEARCH_URL,
-            params={"term": self._address},
-            headers=HEADERS,
-            timeout=15,
-        )
-        r.raise_for_status()
-        results = r.json()
 
-        if not results:
-            raise SourceArgumentNotFound("address", self._address)
+def _record(page: str, source: "BaseSource | None" = None) -> list[str]:
+    return [page]
 
-        # Try exact match first (case-insensitive)
-        property_id = None
-        for result in results:
-            if result["value"].lower() == self._address.lower():
-                property_id = result["id"]
-                break
 
-        if property_id is None:
-            if len(results) == 1:
-                # Single result - use it
-                property_id = results[0]["id"]
-            else:
-                # Multiple matches, none exact - provide suggestions
-                suggestions = [entry["value"] for entry in results]
-                raise SourceArgAmbiguousWithSuggestions(
-                    "address", self._address, suggestions
-                )
+def _describe(page: str, source: "BaseSource | None" = None) -> Iterable[Schedule]:
+    """General waste weekly; recycling and garden organics on alternate weeks.
 
-        # Step 2: Get collection schedule HTML
-        r = requests.post(
-            SCHEDULE_URL,
-            data={"property": property_id},
-            headers=HEADERS,
-            timeout=15,
-        )
-        r.raise_for_status()
-        html = r.text
+    The page names only the next service day. Which of the two fortnightly
+    streams falls on which ISO-week parity is the zone letter of the calendar
+    link: zone B has recycling on even weeks, zone A on odd weeks.
+    """
+    found = _NEXT_DATE.search(page)
+    if not found:
+        return
+    start = _parse_next_date(found.group(1))
+    zone = _ZONE.search(page)
+    recycling: Literal["even", "odd"] = "even" if zone and zone[1] == "B" else "odd"
+    garden: Literal["even", "odd"] = "odd" if recycling == "even" else "even"
+    yield Schedule("General Waste", start, recurrence.WEEKLY, _WEEKS)
+    yield Schedule(
+        "Recycling", start, recurrence.WEEKLY, _WEEKS, iso_week_parity=recycling
+    )
+    yield Schedule(
+        "Garden Organics", start, recurrence.WEEKLY, _WEEKS, iso_week_parity=garden
+    )
 
-        if "ERROR" in html:
-            raise Exception(
-                f"Northern Beaches API returned an error for property {property_id}"
-            )
 
-        # Step 3: Parse next collection date from HTML
-        # Format: <strong>Wednesday, 8 April</strong>
-        date_match = re.search(r"<strong>\w+day,?\s+(\d{1,2})\s+(\w+)</strong>", html)
-        if not date_match:
-            raise Exception("Could not parse collection date from response")
+@final
+class Source(BaseSource):
+    TITLE = "Northern Beaches Council (NSW)"
+    DESCRIPTION = "Source for Northern Beaches Council waste collection."
+    URL = "https://www.northernbeaches.nsw.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        day_num = int(date_match.group(1))
-        month_name = date_match.group(2).lower()
-        month_num = MONTH_MAP.get(month_name)
-        if not month_num:
-            raise Exception(f"Unknown month in response: {date_match.group(2)}")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        today = date.today()
-        try:
-            next_date = date(today.year, month_num, day_num)
-        except ValueError as e:
-            raise Exception(
-                f"Invalid date in response: {day_num} {date_match.group(2)}"
-            ) from e
+    TEST_CASES: ClassVar[dict] = {
+        "Manly": {"address": "25 Pittwater Road MANLY"},
+        "Brookvale": {"address": "25 Old Pittwater Road BROOKVALE"},
+        "Dee Why": {"address": "10 Howard Avenue DEE WHY"},
+    }
 
-        # If the parsed date is far in the past, it must be next year
-        if next_date < today - timedelta(days=30):
-            next_date = date(today.year + 1, month_num, day_num)
+    PARAMS = (street_address("address"),)
 
-        # Step 4: Detect A/B zone from the PDF calendar link.
-        # The API response contains a link like ".../ThursdayB.pdf" which
-        # encodes the collection zone. B zones have the opposite fortnightly
-        # alternation from A zones.
-        zone_match = re.search(r"bin-collection-days/\w+([AB])\.pdf", html)
-        is_b_zone = zone_match and zone_match.group(1) == "B"
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as shown on the Northern Beaches Council "
+            "website, including the suburb in uppercase, e.g. "
+            "'25 Pittwater Road MANLY'."
+        ),
+    }
 
-        # Step 5: Generate collection entries for ~6 months.
-        # Northern Beaches pattern:
-        #   - General Waste: weekly
-        #   - Recycling & Garden Organics: fortnightly, alternating weeks
-        # Use ISO week number as a stable anchor for the alternation:
-        #   B zones: even ISO weeks = Recycling, odd = Garden Organics
-        #   A zones: even ISO weeks = Garden Organics, odd = Recycling
-        entries: list[Collection] = []
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/waste.ashx",
+                params=lambda address, **_: {"term": address},
+                pick=_pick_property,
+            ),
+        ),
+        url=f"{API}/wastesearch.ashx",
+        method="POST",
+        data=lambda key, **_: {"property": key},
+    )
 
-        for week in range(26):
-            d = next_date + timedelta(weeks=week)
-            iso_week = d.isocalendar()[1]
-            even_week = iso_week % 2 == 0
+    parse = parsers.TextParser()
 
-            entries.append(
-                Collection(
-                    date=d,
-                    t="General Waste",
-                    icon=ICON_MAP.get("General Waste"),
-                )
-            )
+    preprocess = Compose(_record, RecurrenceExpander(_describe))
 
-            recycling_week = even_week if is_b_zone else not even_week
-
-            if recycling_week:
-                entries.append(
-                    Collection(
-                        date=d,
-                        t="Recycling",
-                        icon=ICON_MAP.get("Recycling"),
-                    )
-                )
-            else:
-                entries.append(
-                    Collection(
-                        date=d,
-                        t="Garden Organics",
-                        icon=ICON_MAP.get("Garden Organics"),
-                    )
-                )
-
-        return entries
+    transform = ICSTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Organics": wt.GARDEN_WASTE,
+        },
+    )
