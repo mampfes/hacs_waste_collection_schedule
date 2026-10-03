@@ -175,6 +175,7 @@ waste_collection_schedule:
       date_template: DATE_TEMPLATE
       add_days_to: ADD_DAYS_TO
       event_index: EVENT_INDEX
+      unique_types: false
       types:
         - Waste Type 1
         - Waste Type 2
@@ -191,7 +192,24 @@ waste_collection_schedule:
 | date_template | string | optional | Uses Home Assistant templating to format the dates appearing within the _more info_ popup information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | add_days_to | boolean | optional | Adds a `daysTo` attribute to the source entity state containing the number of days to  the next collection |
 | event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
+| unique_types | boolean | optional | Keep only the next collection of each waste type when selecting the sensor state and building upcoming lists. Default is `false`. See [one upcoming collection per type](#one-upcoming-collection-per-type). |
 | types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used `alias` in the customize section of the sources configuration. |
+
+### One upcoming collection per type
+
+Enable `unique_types` to keep frequent collections from filling a limited list before less frequent types appear. For example, if the upcoming dates contain General waste, Paper, General waste, then Glass, this option produces General waste, Paper, then Glass.
+
+```yaml
+waste_collection_schedule:
+  sensors:
+    - name: Next collection of each type
+      unique_types: true
+      count: 3
+```
+
+The same option is available as **Show each waste type once** when creating or editing a sensor in the UI. It is off by default.
+
+Date and type filters apply first. The remaining events are sorted by date, and only the earliest event of each type is kept. Types use their customized names, so matching names from multiple sources are treated as the same type. `event_index` selects from the remaining dates for the sensor state and `upcoming` details. With `details_format: upcoming`, different types on the same date share one entry, and `count` limits those dates. With `generic`, `count` limits individual events; as before, `event_index` does not filter this details list. The `appointment_types` details already show one date per type and keep their existing behavior.
 
 ## Options for _details_format_ parameter
 
