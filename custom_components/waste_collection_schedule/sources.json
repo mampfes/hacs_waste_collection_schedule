@@ -28413,6 +28413,12 @@
       "id": "omrin_nl"
     },
     {
+      "title": "CleanProfs",
+      "module": "cleanprofs_nl",
+      "default_params": {},
+      "id": "cleanprofs_nl"
+    },
+    {
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
