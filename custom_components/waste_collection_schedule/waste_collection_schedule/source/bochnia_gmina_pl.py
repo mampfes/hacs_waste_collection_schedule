@@ -1,54 +1,31 @@
 import datetime
-import io
 import re
 import urllib.parse
+from collections.abc import Iterator
+from typing import ClassVar, final
 
-import pypdf
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import config_params, lookups
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.parsers import PdfTextParser
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Gmina Bochnia"
-DESCRIPTION = "Source for Gmina Bochnia waste collection schedule (Poland)"
-URL = "http://bochnia-gmina.pl"
-COUNTRY = "pl"
-SOURCE_CODEOWNERS = ["@Sairento-92"]
+MIXED_WASTE = "Odpady zmieszane i segregowane"
+BULKY_WASTE = "Gabaryty i niebezpieczne"
 
-TEST_CASES = {
-    "Baczkow": {"town": "Baczków"},
-    "Proszowki": {"town": "Proszówki"},
-    "Lapczyca": {"town": "Łapczyca"},
-}
+# Heading that introduces the bulky / hazardous waste dates in the PDF.
+_BULKY_HEADING = "Odpady wielkogabarytowe"
 
-ICON_MAP = {
-    "Odpady zmieszane i segregowane": Icons.GENERAL_WASTE,
-    "Gabaryty i niebezpieczne": Icons.BULKY,
-}
+_UPLOADS_URL = "https://bochnia-gmina.pl/wp-content/uploads/"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter the name of the town in Gmina Bochnia (e.g. Baczków, Damienice, Proszówki, Łapczyca, etc.).",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "town": "Name of the village/town in Gmina Bochnia",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "town": "Town / Village",
-    },
-}
-
-PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
-
-TOWNS_PDF_MAP = {
+# Several villages share one PDF; each village is listed under the file the
+# municipality publishes it in.
+_TOWNS_PDF_MAP = {
     "Baczków": "Baczkow.pdf",
     "Bessów": "Bessow.pdf",
-    "Bogucice": "Bogucice.pdf",
+    "Bogucice": "Bessow.pdf",
     "Brzeźnica": "Brzeznica.pdf",
     "Buczyna": "Buczyna.pdf",
     "Cerekiew": "Cerekiew.pdf",
@@ -56,7 +33,7 @@ TOWNS_PDF_MAP = {
     "Cikowice": "Cikowice.pdf",
     "Damienice": "Damienice.pdf",
     "Dąbrowica": "Dabrowica.pdf",
-    "Gawłów": "Gawlow.pdf",
+    "Gawłów": "Slomka.pdf",
     "Gierczyce": "Gierczyce.pdf",
     "Gorzków": "Gorzkow.pdf",
     "Grabina": "Grabina.pdf",
@@ -65,121 +42,123 @@ TOWNS_PDF_MAP = {
     "Majkowice": "Majkowice.pdf",
     "Moszczenica": "Moszczenica.pdf",
     "Nieprześnia": "Nieprzesnia.pdf",
-    "Nieszkowice Małe": "Nieszkowice male.pdf",
-    "Nieszkowice Wielkie": "Nieszkowice wielkie.pdf",
-    "Ostrów Szlachecki": "Ostrow szlachecki.pdf",
+    "Nieszkowice Małe": "Chelm.pdf",
+    "Nieszkowice Wielkie": "Pogwizdow.pdf",
+    "Ostrów Szlachecki": "Slomka.pdf",
     "Pogwizdów": "Pogwizdow.pdf",
     "Proszówki": "Proszowki.pdf",
     "Siedlec": "Siedlec.pdf",
     "Słomka": "Slomka.pdf",
     "Stanisławice": "Stanislawice.pdf",
     "Stradomka": "Stradomka.pdf",
-    "Wola Nieszkowska": "Wola nieszkowska.pdf",
+    "Wola Nieszkowska": "Pogwizdow.pdf",
     "Zatoka": "Zatoka.pdf",
     "Zawada": "Zawada.pdf",
 }
 
-EXTRA_INFO = [
-    {"title": town, "default_params": {"town": town}} for town in TOWNS_PDF_MAP
-]
-
-MIXED_WASTE = "Odpady zmieszane i segregowane"
-BULKY_WASTE = "Gabaryty i niebezpieczne"
-
-# heading that introduces the bulky / hazardous waste dates in the PDF
-BULKY_HEADING = "Odpady wielkogabarytowe"
+_PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
 
 
-def normalize(text: str) -> str:
-    return text.translate(PL_TRANS).lower().strip()
+def _fold(value: object) -> str:
+    """Match a village regardless of case, whitespace and Polish diacritics."""
+    return lookups.normalize_text(str(value).translate(_PL_TRANS))
 
 
-TOWNS_BY_NORMALIZED_NAME = {normalize(name): name for name in TOWNS_PDF_MAP}
+def _pdf_url(town: str, **_) -> str:
+    pdf_file = lookups.resolve(_TOWNS_PDF_MAP, town, argument="town", normalize=_fold)
+    return _UPLOADS_URL + urllib.parse.quote(pdf_file)
 
 
-class Source:
-    def __init__(self, town: str = "Baczków"):
-        self._town = town
+def _month_days(table: str) -> list[list[int]]:
+    """Day numbers per month from the "zmieszane" row.
 
-    def fetch(self) -> list[Collection]:
-        town = TOWNS_BY_NORMALIZED_NAME.get(normalize(self._town))
-        if town is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "town", self._town, sorted(TOWNS_PDF_MAP.keys())
-            )
+    A month's days wrap over several extracted lines; a trailing comma means the
+    month continues with the next token, anything else closes it.
+    """
+    row = table.split("Worek:")[0].replace("\n", " ")
+    months: list[list[int]] = []
+    current: list[int] = []
+    for token in row.split():
+        days = [
+            int(n) for n in re.findall(r"\b(\d{1,2})\b", token) if 1 <= int(n) <= 31
+        ]
+        if not days:
+            continue
+        current.extend(days)
+        if token.endswith(","):
+            continue
+        months.append(current)
+        current = []
+        if len(months) == 12:
+            break
+    if current and len(months) < 12:
+        months.append(current)
+    return months
 
-        pdf_file = TOWNS_PDF_MAP[town]
-        url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
 
-        reader = pypdf.PdfReader(io.BytesIO(r.content))
-        text = reader.pages[0].extract_text() or ""
-        if not text.strip():
-            raise ValueError(
-                f"No text could be extracted from PDF for town '{self._town}'."
-            )
+def _rows(text: str, source: object = None) -> Iterator[tuple[datetime.date, str]]:
+    year_match = re.search(r"\b(20\d{2})\b", text)
+    year = int(year_match.group(1)) if year_match else datetime.date.today().year
 
-        # 1. Year of the schedule
-        year_match = re.search(r"\b(20\d{2})\b", text)
-        year = int(year_match.group(1)) if year_match else datetime.date.today().year
+    # Bulky / hazardous dates ("LUTY (27.02.2026)") follow the bulky heading.
+    heading = text.find(_BULKY_HEADING)
+    bulky_text = text[heading:] if heading != -1 else text
+    for day, month, bulky_year in re.findall(
+        r"(\d{1,2})\.(\d{1,2})\.(\d{4})", bulky_text
+    ):
+        try:
+            yield datetime.date(int(bulky_year), int(month), int(day)), BULKY_WASTE
+        except ValueError:
+            continue
 
-        entries: list[Collection] = []
-
-        # 2. Bulky / hazardous dates (e.g. "LUTY (27.02.2026)"), listed below the
-        #    bulky waste heading.
-        heading_pos = text.find(BULKY_HEADING)
-        bulky_text = text[heading_pos:] if heading_pos != -1 else text
-        for d_str, m_str, y_str in re.findall(
-            r"(\d{1,2})\.(\d{1,2})\.(\d{4})", bulky_text
-        ):
+    # Monthly collection table: one run of day numbers per month.
+    table = re.search(
+        r"zmieszane\s+(?:20\d{2})?\s*(.*?)\s*" + re.escape(_BULKY_HEADING),
+        text,
+        re.DOTALL | re.IGNORECASE,
+    )
+    for month, days in enumerate(_month_days(table.group(1) if table else text), 1):
+        for day in days:
             try:
-                date = datetime.date(int(y_str), int(m_str), int(d_str))
+                yield datetime.date(year, month, day), MIXED_WASTE
             except ValueError:
                 continue
-            entries.append(Collection(date=date, t=BULKY_WASTE, icon=Icons.BULKY))
 
-        # 3. Monthly collection dates table
-        table_match = re.search(
-            r"zmieszane\s+(?:20\d{2})?\s*(.*?)\s*" + re.escape(BULKY_HEADING),
-            text,
-            re.DOTALL | re.IGNORECASE,
-        )
-        table_text = table_match.group(1) if table_match else text
 
-        zmieszane_part = table_text.split("Worek:")[0].strip().replace("\n", " ")
-        raw_tokens = [t.strip() for t in zmieszane_part.split() if t.strip()]
+@final
+class Source(BaseSource):
+    TITLE = "Gmina Bochnia"
+    DESCRIPTION = "Source for Gmina Bochnia waste collection schedule (Poland)"
+    URL = "https://bochnia-gmina.pl"
+    COUNTRY = "pl"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@Sairento-92"]
+    RAISE_ON_EMPTY = True
 
-        month_days: list[list[int]] = []
-        cur_month: list[int] = []
+    REGIONS = tuple(region(town, town=town) for town in _TOWNS_PDF_MAP)
 
-        for tok in raw_tokens:
-            nums = [
-                int(n) for n in re.findall(r"\b(\d{1,2})\b", tok) if 1 <= int(n) <= 31
-            ]
-            if not nums:
-                continue
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.BULKY_WASTE]
 
-            cur_month.extend(nums)
-            if tok.endswith(","):
-                continue
-            month_days.append(cur_month)
-            cur_month = []
-            if len(month_days) == 12:
-                break
+    TEST_CASES: ClassVar[dict] = {
+        "Baczkow": {"town": "Baczków"},
+        "Proszowki": {"town": "Proszówki"},
+        "Lapczyca": {"town": "Łapczyca"},
+    }
 
-        if cur_month and len(month_days) < 12:
-            month_days.append(cur_month)
+    PARAMS = (config_params.city(field="town"),)
 
-        for m_idx, days in enumerate(month_days):
-            month = m_idx + 1
-            for d in days:
-                try:
-                    date = datetime.date(year, month, d)
-                except ValueError:
-                    continue
-                entries.append(
-                    Collection(date=date, t=MIXED_WASTE, icon=Icons.GENERAL_WASTE)
-                )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the name of the town in Gmina Bochnia "
+            "(e.g. Baczków, Damienice, Proszówki, Łapczyca, etc.)."
+        ),
+    }
 
-        return entries
+    retrieve = HttpGetRetriever(url=_pdf_url)
+    parse = PdfTextParser(min_chars=100)
+    preprocess = staticmethod(_rows)
+    transform = ICSTransformer(
+        type_value_map={
+            MIXED_WASTE: wt.GENERAL_WASTE,
+            BULKY_WASTE: wt.BULKY_WASTE,
+        }
+    )
