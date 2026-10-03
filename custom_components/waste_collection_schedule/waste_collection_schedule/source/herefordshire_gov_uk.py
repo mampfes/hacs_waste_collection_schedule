@@ -1,190 +1,125 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Herefordshire City Council"
-DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
-URL = "https://herefordshire.gov.uk"
-TEST_CASES = {
-    "houseNumber": {"post_code": "hr49js", "number": "52"},
-    "uprn": {"post_code": "hr49js", "number": "200002607460"},
-}
+ADDRESS_API = "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address"
+COLLECTION_URL = (
+    "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day"
+)
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "post_code": "Postcode of the property, e.g. HR4 9JS",
-        "number": (
-            "House number, house name, or UPRN (Unique Property Reference "
-            "Number) of the property. If your property only has a name and "
-            "no number, enter the name; if it is still not found, the error "
-            "message will list the full addresses found for your postcode "
-            "so you can copy the UPRN or exact wording from there."
+
+def _pick_uprn(response, *keys, post_code, number, **_) -> str:
+    """The lookup answers the OS places of the postcode, each with an ``LPI`` block.
+
+    ``number`` is a house number (``PAO_START_NUMBER``), a house name
+    (``PAO_TEXT``, or ``SAO_TEXT`` for a named flat) or the UPRN itself.
+    """
+    addresses = response.json()
+    results = addresses.get("results")
+    if addresses.get("error") or not results:
+        raise SourceArgumentNotFound("post_code", post_code)
+
+    entered = str(number).strip()
+    target = entered.lower()
+
+    def exact(lpi: dict) -> bool:
+        return any(
+            lpi.get(field) is not None and str(lpi[field]).strip().lower() == target
+            for field in ("UPRN", "PAO_TEXT", "PAO_START_NUMBER", "SAO_TEXT")
+        )
+
+    matches = [x for x in results if exact(x["LPI"])]
+    # A house name that is not cleanly isolated into PAO_TEXT / SAO_TEXT is
+    # still found in the full address.
+    if not matches and len(target) >= 3:
+        matches = [
+            x
+            for x in results
+            if x["LPI"].get("ADDRESS") and target in str(x["LPI"]["ADDRESS"]).lower()
+        ]
+    if not matches:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "number",
+            entered,
+            sorted({x["LPI"]["ADDRESS"] for x in results if x["LPI"].get("ADDRESS")}),
+        )
+    return matches[0]["LPI"]["UPRN"]
+
+
+def _label(li) -> str:
+    """The service heading above the list, "General rubbish - black bin" -> "General rubbish"."""
+    heading = li.find_parent("ul").find_previous_sibling("h3")
+    return heading.get_text(strip=True).split(" - ")[0]
+
+
+def _date_text(li) -> str:
+    """ "Wednesday 7 October 2026 (next collection)" -> the date."""
+    return li.get_text(strip=True).split("(")[0].strip()
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Herefordshire City Council"
+    DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
+    URL = "https://herefordshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
+
+    TEST_CASES: ClassVar[dict] = {
+        "houseNumber": {"post_code": "hr49js", "number": "52"},
+        "uprn": {"post_code": "hr49js", "number": "200002607460"},
+    }
+
+    PARAMS = (postcode("post_code", "number"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the postcode and the house number, house name or UPRN "
+            "(Unique Property Reference Number) of the property. If your "
+            "property only has a name and no number, enter the name; if it is "
+            "still not found, the error message lists the full addresses found "
+            "for your postcode so you can copy the UPRN or exact wording from "
+            "there."
         ),
-    },
-}
+    }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "post_code": "Postcode",
-        "number": "House Number / Name / UPRN",
-    },
-}
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                ADDRESS_API,
+                params=lambda post_code, **_: {
+                    "postcode": post_code,
+                    "type": "standard",
+                },
+                pick=_pick_uprn,
+            ),
+        ),
+        url=COLLECTION_URL,
+        params=lambda key, **_: {"blpu_uprn": key},
+    )
 
-API_URLS = {
-    "address_search": "https://trsewmllv7.execute-api.eu-west-2.amazonaws.com/dev/address",
-    "collection": "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day",  # ?blpu_uprn=200002607454",
-}
-HEADER = {"user-agent": "Mozilla/5.0"}
-ICON_MAP = {
-    "General": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-}
+    # Every list item under a service heading; the calendar link and the
+    # bin-size list share the markup and are skipped for lack of a date.
+    parse = parsers.HtmlParser("#binCollectionDetails > ul > li")
 
-_LOGGER = logging.getLogger(__name__)
-
-
-class Source:
-    def __init__(self, post_code: str, number: str):
-        self._post_code = post_code
-        # keep the value exactly as entered (only trim whitespace) so error
-        # messages show the user's own input; all matching below is done
-        # case-insensitively.
-        self._number = str(number).strip()
-
-    def fetch(self):
-        # fetch location id
-        r = requests.get(
-            API_URLS["address_search"],
-            headers=HEADER,
-            params={"postcode": self._post_code, "type": "standard"},
-        )
-        r.raise_for_status()
-        addresses = r.json()
-        if (
-            (addresses.get("error"))
-            or "results" not in addresses
-            or len(addresses["results"]) == 0
-        ):
-            raise SourceArgumentNotFound("post_code", self._post_code)
-
-        results = addresses["results"]
-
-        # `number` may be a classic house number (PAO_START_NUMBER), a house
-        # name (PAO_TEXT for named properties, or SAO_TEXT for named
-        # sub-units such as flats), or the property's UPRN directly -
-        # accepting the UPRN lets users bypass name/number matching entirely
-        # when they already know it (e.g. from findmyaddress.co.uk).
-        target = self._number.lower()
-
-        def matches_exact(lpi: dict) -> bool:
-            for field in ("UPRN", "PAO_TEXT", "PAO_START_NUMBER", "SAO_TEXT"):
-                value = lpi.get(field)
-                if value is not None and str(value).strip().lower() == target:
-                    return True
-            return False
-
-        address_ids = [x for x in results if matches_exact(x["LPI"])]
-
-        # Fall back to a substring match against the full address string.
-        # This helps house-name-only properties whose name is not cleanly
-        # isolated into PAO_TEXT/SAO_TEXT (e.g. extra punctuation/spacing).
-        if not address_ids and len(target) >= 3:
-            address_ids = [
-                x
-                for x in results
-                if x["LPI"].get("ADDRESS")
-                and target in str(x["LPI"]["ADDRESS"]).lower()
-            ]
-
-        if len(address_ids) == 0:
-            # Show the full address strings (rather than bare fragments) so
-            # users without a house number can identify their property and
-            # either enter its house name verbatim or its UPRN instead.
-            suggestions = sorted(
-                {
-                    x["LPI"]["ADDRESS"]
-                    for x in results
-                    if x["LPI"].get("ADDRESS") is not None
-                }
-            )
-            raise SourceArgumentNotFoundWithSuggestions(
-                "number", self._number, suggestions
-            )
-
-        q = str(API_URLS["collection"])
-        r = requests.get(
-            q, headers=HEADER, params={"blpu_uprn": address_ids[0]["LPI"]["UPRN"]}
-        )
-        r.raise_for_status()
-
-        # --- Updated DOM parsing (site changed) ---
-        soup = BeautifulSoup(r.text, "html.parser")
-        container = soup.find(id="binCollectionDetails")
-        if not container:
-            # fall back to legacy wrapper if council reverts
-            legacy = soup.find(id="wasteCollectionDates")
-            if not legacy:
-                raise Exception(
-                    "Could not find bin collection section on the council page (IDs changed)."
-                )
-            container = legacy
-
-        # Extract first <li> date under each heading
-        def first_li_after_heading(heading_keyword: str) -> list[str]:
-            # find <h3> that contains the keyword, then take first <li> in the next <ul>
-            resulsts = []
-            for h3 in container.find_all("h3"):
-                title = h3.get_text(strip=True).lower()
-                if heading_keyword.lower() in title:
-                    ul = h3.find_next_sibling("ul")
-                    if ul:
-                        lis = ul.find_all("li")
-                        for li in lis:
-                            # strip any "(next collection)" etc.
-                            text = li.get_text(strip=True)
-                            cut = text.find("(")
-                            resulsts.append(
-                                text[:cut].strip() if cut != -1 else text.strip()
-                            )
-            return resulsts
-
-        sections = (
-            ("General", "General rubbish", first_li_after_heading("general rubbish")),
-            ("Recycling", "Recycling", first_li_after_heading("recycling")),
-            ("Garden", "Garden", first_li_after_heading("garden waste")),
-        )
-
-        entries = []
-        for icon_key, waste_type, date_strs in sections:
-            for date_str in date_strs:
-                try:
-                    date = datetime.strptime(date_str, "%A %d %B %Y").date()
-                except ValueError:
-                    # Not every heading lists dates. Properties without a garden
-                    # waste subscription get a link to the calendar instead, so
-                    # skip anything that is not a date rather than failing.
-                    _LOGGER.debug(
-                        "Skipping non-date entry under %s: %r", waste_type, date_str
-                    )
-                    continue
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=waste_type,
-                        icon=ICON_MAP[icon_key],
-                    ),
-                )
-        if not entries:
-            raise Exception(
-                "No collection dates found for this address, make sure there are any concrete collection dates listed on the website for this address."
-            )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "General rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )
