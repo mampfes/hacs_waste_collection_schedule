@@ -1,188 +1,150 @@
+import datetime
 import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
-)
-
-WEEKDAYS = {
-    "monday": MO,
-    "tuesday": TU,
-    "wednesday": WE,
-    "thursday": TH,
-    "friday": FR,
-    "saturday": SA,
-    "sunday": SU,
-}
-
-TITLE = "Thurrock"
-DESCRIPTION = "Source for Thurrock."
-URL = "https://www.thurrock.gov.uk/"
-TEST_CASES = {
-    "Camden Close Chadwell St Mary": {
-        "street": "Camden Close",
-        "town": "Chadwell St Mary",
-    },
-    "Abberton Way West Thurrock (street starting with A)": {
-        "street": "Abberton Way",
-        "town": "West Thurrock",
-    },
-}
-
-
-ICON_MAP = {
-    "Brown": Icons.ORGANIC,
-    "Blue": Icons.PAPER,
-    "Green": Icons.RECYCLING,
-    "Grey": Icons.RECYCLING,
-    "Green/Grey": Icons.RECYCLING,
-}
-
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import Compose, SplitLabels
+from waste_collection_schedule.transformers import ICSTransformer
 
 # Streets beginning with A use the base URL (no letter suffix).
 # All other letters append "-<letter>" to the base URL.
 STREETS_BASE_URL = (
     "https://www.thurrock.gov.uk/household-bin-collection-days/street-names"
 )
-API_URL = "https://www.thurrock.gov.uk/bindays"
+BINDAYS_URL = "https://www.thurrock.gov.uk/bindays"
 
-# Matches both ASCII hyphen-minus (-) and Unicode en-dash (–) with optional surrounding whitespace.
-DATE_RANGE_RE = re.compile(r"\s*[-–—]\s*")
-# Matches " and " or " / " (with optional extra whitespace) as bin-type separators.
-BIN_SPLIT_RE = re.compile(r"\s*/\s*|\s+and\s+")
+# ASCII hyphen-minus, en-dash or em-dash between the two ends of a week.
+_DATE_RANGE = re.compile(r"^(?P<start>\d+ [A-Za-z]+)\s*[-–—]\s*(?P<end>\d+ [A-Za-z]+)$")
 
 
-class Source:
-    def __init__(self, street: str, town: str):
-        self._street: str = street
-        self._town: str = town
-        self._day: weekday | None = None
-        self._round: str | None = None
+def _streets_url(street: str, **_) -> str:
+    first = street.strip()[:1].lower()
+    return STREETS_BASE_URL if first in ("", "a") else f"{STREETS_BASE_URL}-{first}"
 
-    def _streets_url(self) -> str:
-        first = self._street[0].lower()
-        if first == "a":
-            return STREETS_BASE_URL
-        return f"{STREETS_BASE_URL}-{first}"
 
-    def fetch_day(self):
-        if len(self._street) == 0:
-            raise SourceArgumentRequired(
-                "street",
-                "Please provide a street name",
-            )
-        r = requests.get(self._streets_url(), verify=False)
-        r.raise_for_status()
-        soup = BeautifulSoup(
-            r.text.replace("&nbsp;", " ").replace("\xa0", " "), "html.parser"
-        )
-        table = soup.select_one("table")
-        if not table:
-            raise Exception("street, town Table not found")
-        towns = []
-        streets = []
-        day_str = None
-        town_match = False
-        street_match = False
+def _cells(row) -> list[str]:
+    return [cell.get_text().replace("\xa0", " ").strip() for cell in row.find_all("td")]
 
-        for row in table.select("tr")[1:]:
-            cells = row.select("td")
-            if len(cells) != 3:
-                continue
-            # Use rsplit to handle street names that contain ", " (e.g. parenthetical notes)
-            parts = cells[0].text.strip().rsplit(", ", 1)
-            if len(parts) != 2:
-                continue
-            street, town = parts
 
-            towns.append(town.strip().casefold())
-            streets.append(street.strip().casefold())
-            if self._street.casefold() in street.casefold():
-                street_match = True
-            if self._town.casefold() in town.casefold():
-                town_match = True
-            if street_match and town_match:
-                day_str = cells[1].text.strip()
-                self._round = cells[2].text.strip()
-                break
-        if not day_str:
-            if town_match:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street",
-                    self._street,
-                    streets,
-                )
+def _week(text: str, today: datetime.date) -> tuple[datetime.date, datetime.date]:
+    """A week such as "28 September - 2 October" (the page gives no year)."""
+    match = _DATE_RANGE.match(text)
+    if match is None:
+        raise ValueError(f"Cannot parse date range: {text!r}")
+    start = datetime.datetime.strptime(f"{match['start']} {today.year}", "%d %B %Y")
+    end = datetime.datetime.strptime(f"{match['end']} {today.year}", "%d %B %Y")
+    # A week straddling New Year (30 December - 3 January).
+    if start.month == 12 and end.month == 1:
+        end = end.replace(year=start.year + 1)
+    return start.date(), end.date()
+
+
+def _days(records, source):
+    """One (date, bin colours) row per collection of this street's round.
+
+    ``records`` are the rows of the street list (street and town, collection
+    weekday, round) followed by the rows of the borough-wide week table (week,
+    bins of round A, bins of round B).
+    """
+    wanted_street = str(source.params["street"]).casefold()
+    wanted_town = str(source.params["town"]).casefold()
+    streets: list[str] = []
+    towns: list[str] = []
+    household: tuple[int, int] | None = None
+    weeks: list[list[str]] = []
+    for row in records:
+        cells = _cells(row)
+        if len(cells) != 3:
+            continue
+        if _DATE_RANGE.match(cells[0]):
+            weeks.append(cells)
+            continue
+        # The street may itself contain ", " (a parenthetical note).
+        parts = cells[0].rsplit(", ", 1)
+        weekday = recurrence.weekday(cells[1])
+        if len(parts) != 2 or weekday is None or cells[2] not in ("A", "B"):
+            continue
+        name, town = (part.strip().casefold() for part in parts)
+        streets.append(parts[0].strip())
+        towns.append(parts[1].strip())
+        if household is None and wanted_street in name and wanted_town in town:
+            household = (weekday, 1 if cells[2] == "A" else 2)
+
+    if household is None:
+        if any(wanted_town in town.casefold() for town in towns):
             raise SourceArgumentNotFoundWithSuggestions(
-                "town",
-                self._town,
-                towns,
+                "street", source.params["street"], streets
             )
+        raise SourceArgumentNotFoundWithSuggestions(
+            "town", source.params["town"], sorted(set(towns))
+        )
 
-        if day_str.lower() not in WEEKDAYS:
-            raise Exception(f"Day ({day_str}) not a valid weekday")
-        self._day = WEEKDAYS[day_str.lower()]
+    weekday, column = household
+    today = datetime.date.today()
+    for cells in weeks:
+        start, end = _week(cells[0], today)
+        day = recurrence.next_weekday(weekday, on_or_after=start)
+        if day <= end:
+            yield day, cells[column]
 
-    def parse_date_range(self, range_str: str) -> tuple[date, date]:
-        """Parse a date range such as '18 May - 22 May' or '25 May – 29 May'."""
-        now = datetime.now()
-        parts = DATE_RANGE_RE.split(range_str.strip())
-        if len(parts) != 2:
-            raise ValueError(f"Cannot parse date range: {range_str!r}")
-        start_str, end_str = parts
-        start_date = datetime.strptime(
-            start_str.strip() + f" {now.year}", "%d %B %Y"
-        ).date()
-        end_date = datetime.strptime(
-            end_str.strip() + f" {now.year}", "%d %B %Y"
-        ).date()
-        # Handle a range that straddles a year boundary (e.g. 30 Dec - 3 Jan)
-        if start_date.month == 12 and end_date.month == 1:
-            end_date = end_date.replace(year=start_date.year + 1)
-        return start_date, end_date
 
-    def fetch(self) -> list[Collection]:
-        if self._day is None or self._round is None:
-            self.fetch_day()
-            assert self._day is not None
-            assert self._round is not None
+@final
+class Source(BaseSource):
+    TITLE = "Thurrock"
+    DESCRIPTION = "Source for Thurrock."
+    URL = "https://www.thurrock.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        r = requests.get(API_URL, verify=False)
-        r.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-        soup = BeautifulSoup(r.text.replace("\xa0", " "), "html.parser")
-        table = soup.select_one("table")
-        if not table:
-            raise Exception("Collection table not found")
+    TEST_CASES: ClassVar[dict] = {
+        "Camden Close Chadwell St Mary": {
+            "street": "Camden Close",
+            "town": "Chadwell St Mary",
+        },
+        "Abberton Way West Thurrock (street starting with A)": {
+            "street": "Abberton Way",
+            "town": "West Thurrock",
+        },
+    }
 
-        entries = []
+    PARAMS = (street(), city("town"))
 
-        for tr in table.select("tr")[1:]:
-            cells = tr.select("td")
-            if len(cells) != 3:
-                raise Exception("Invalid table format")
-            start_date, end_date = self.parse_date_range(cells[0].text.strip())
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street name and town exactly as listed on "
+            "https://www.thurrock.gov.uk/household-bin-collection-days "
+            "(e.g. street 'Camden Close', town 'Chadwell St Mary')."
+        ),
+    }
 
-            bin_text = cells[(1 if self._round == "A" else 2)].text.strip()
-            bins = [b.strip() for b in BIN_SPLIT_RE.split(bin_text) if b.strip()]
-
-            for bin_type in bins:
-                for col_date in rrule(
-                    WEEKLY,
-                    dtstart=start_date,
-                    until=end_date,
-                    byweekday=self._day,
-                ):
-                    entries.append(
-                        Collection(
-                            date=col_date.date(),
-                            t=bin_type,
-                            icon=ICON_MAP.get(bin_type),
-                        )
-                    )
-
-        return entries
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, context: [
+            _streets_url(**source.params),
+            BINDAYS_URL,
+        ],
+        fetch=retrievers.Request(lambda url, context, **_: url),
+    )
+    parse = parsers.EachResponse(parsers.HtmlParser("table tr"))
+    preprocess = Compose(
+        _days,
+        SplitLabels(r"\s*/\s*|\s+and\s+"),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Grey": wt.GENERAL_WASTE,
+            "Green": wt.RECYCLABLES,
+            "Blue": wt.PAPER,
+            "Brown": wt.GARDEN_WASTE,
+        },
+    )
