@@ -37,6 +37,13 @@ class WasteType:
     # Known labels/synonyms per language, used by resolve(). Unambiguous only:
     # avoid region-ambiguous labels (e.g. "green bin") that map differently.
     aliases: dict[str, list[str]] = field(default_factory=dict)
+    # Whether resolve() may match this type's names and aliases. False makes
+    # it source-mapped: a source only gets it through its own type_value_map.
+    # Use False when a label is context-dependent (e.g. "Plastic" is the whole
+    # recycling round for one provider and a separate plastic-only round for
+    # another), so adding the type cannot change what resolve() returns for
+    # existing sources.
+    auto_resolve: bool = True
 
 
 # Display language for WasteType names. Defaults to English for standalone
@@ -452,6 +459,67 @@ TEXTILES = WasteType(
     },
 )
 
+# METAL, PLASTIC and CARTONS are source-mapped (auto_resolve=False) and carry
+# no aliases (#7604). They exist for providers that collect these materials as
+# separate rounds, e.g. Danish municipalities, which sort them as separate
+# fractions nationwide. Precedence: RECYCLABLES stays the default. A provider
+# with one recycling round is RECYCLABLES even if it labels that round
+# "Plastic"; a mixed round (plastic + metal + cartons) is RECYCLABLES; cartons
+# collected with paper are PAPER. Map to a specific type only when that
+# material is a collection of its own, e.g. RECYCLABLES + METAL for a mixed
+# round plus a separate metal round, or PLASTIC + METAL when both are
+# collected separately. METAL is packaging metal (cans, tins), not scrap.
+METAL = WasteType(
+    id="metal",
+    icon="mdi:nail",
+    color="#C2C8CC",
+    names={
+        "en": "Metal",
+        "de": "Metall",
+        "it": "Metallo",
+        "fr": "Métal",
+        "nl": "Metaal",
+        "sl": "Kovina",
+        "da": "Metal",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+PLASTIC = WasteType(
+    id="plastic",
+    icon="mdi:recycle-variant",
+    color="#3587BD",
+    names={
+        "en": "Plastic",
+        "de": "Plastik",
+        "it": "Plastica",
+        "fr": "Plastique",
+        "nl": "Plastic",
+        "sl": "Plastika",
+        "da": "Plastik",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+CARTONS = WasteType(
+    id="cartons",
+    icon="mdi:recycle-variant",
+    color="#5D9B75",
+    names={
+        "en": "Food and beverage cartons",
+        "de": "Lebensmittel- und Getränkekartons",
+        "it": "Cartoni per alimenti e bevande",
+        "fr": "Briques alimentaires et boissons",
+        "nl": "Drank- en voedselkartons",
+        "sl": "Kartonska embalaža za živila in pijače",
+        "da": "Mad- og drikkekartoner",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
 OTHER = WasteType(
     id="other",
     icon="mdi:calendar",
@@ -465,6 +533,7 @@ OTHER = WasteType(
         "sl": "Drugo",
         "da": "Andet",
     },
+    auto_resolve=False,
 )
 
 ALL_TYPES = [
@@ -479,6 +548,9 @@ ALL_TYPES = [
     HAZARDOUS,
     ELECTRONICS,
     TEXTILES,
+    METAL,
+    PLASTIC,
+    CARTONS,
     OTHER,
 ]
 
@@ -491,13 +563,16 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
-    OTHER is excluded (it's only used when a source maps to it explicitly).
+    Types with ``auto_resolve=False`` are excluded: a source reaches them only
+    by mapping to them explicitly, so their names cannot collide with labels
+    other types already resolve. OTHER is one of them (it's only used when a
+    source maps to it explicitly), as are METAL, PLASTIC and CARTONS.
     First definition wins on collisions, with a warning, so the vocabulary stays
     unambiguous.
     """
     index: dict[str, WasteType] = {}
     for waste_type in ALL_TYPES:
-        if waste_type is OTHER:
+        if not waste_type.auto_resolve:
             continue
         labels = list(waste_type.names.values())
         for synonyms in waste_type.aliases.values():

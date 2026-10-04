@@ -10,7 +10,9 @@ from waste_collection_schedule.transformers import JsonTransformer
 
 # One record per container, each carrying its planned emptyings, each naming
 # the fractions collected. A split bin empties two fractions of one type on
-# the same day (metal and plastic).
+# the same day (paper and cardboard both map to PAPER). Plastic, metal and
+# food/drink cartons are separate fractions in Denmark, so they map to their
+# own types rather than RECYCLABLES (#7604).
 
 
 @final
@@ -26,8 +28,10 @@ class Source(BaseSource):
         wt.FOOD_WASTE,
         wt.GLASS,
         wt.PAPER,
-        wt.RECYCLABLES,
         wt.TEXTILES,
+        wt.PLASTIC,
+        wt.METAL,
+        wt.CARTONS,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -58,9 +62,9 @@ class Source(BaseSource):
             "Glas": wt.GLASS,
             "Papir": wt.PAPER,
             "Pap": wt.PAPER,
-            "Plast": wt.RECYCLABLES,
-            "Metal": wt.RECYCLABLES,
-            "Mad- og drikkekartoner": wt.RECYCLABLES,
+            "Plast": wt.PLASTIC,
+            "Metal": wt.METAL,
+            "Mad- og drikkekartoner": wt.CARTONS,
             "Tekstilaffald": wt.TEXTILES,
         },
         carry_raw_label=True,

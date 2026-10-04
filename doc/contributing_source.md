@@ -312,7 +312,7 @@ Do not carry a private weekday or month dict in your source. Use these shared, m
 
 ## Waste types and icons
 
-Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The twelve canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS`, `TEXTILES` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
+Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The fifteen canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS`, `TEXTILES`, `METAL`, `PLASTIC`, `CARTONS` and `OTHER`. `METAL`, `PLASTIC`, `CARTONS` and `OTHER` are *source-mapped* (`auto_resolve=False`): `resolve()` never returns them, so a source only gets them by listing a label in its own `type_value_map`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
 
 **Import the module, not the names:**
 
@@ -341,6 +341,19 @@ The label is **never** silently collapsed to `OTHER`. An unknown label is preser
 Prefer the first wherever the label generalises: a map entry helps one source, an alias helps all of them. `LABELS_AWAITING_VOCABULARY` in that test is the backlog as it stood when the gate went in; it only shrinks, and nothing may be added to it.
 
 **Two rules the `TEXTILES` entry needed, and the shape they share.** German `Altkleider` is strictly a subset of `Wertstoffe`, so both `TEXTILES` and `RECYCLABLES` are defensible for a clothing round and one provider had picked each. The precedence is: a label that names clothing or textiles specifically is `TEXTILES`; `RECYCLABLES` is for a label naming the mixed stream. Italian is worse, because the obvious name is a false friend: `tessili sanitari` means nappies and hygiene absorbents, which is residual waste, so the type is named `Abiti usati` rather than `Tessili` and neither `tessili` nor `tessili sanitari` is an alias. Both rules exist because a word looked like it meant one thing in one language, and a vocabulary entry that reads as a coin flip will be got wrong. Write the rule down in the entry when you add one (#7097).
+
+**When to use `METAL`, `PLASTIC` or `CARTONS` instead of `RECYCLABLES`.** `RECYCLABLES` stays the default. The specific types are for providers that collect that material as a round of its own, so that two separate collections do not merge into one sensor (#7604):
+
+| the provider collects | map to |
+|---|---|
+| one recycling round, even if it is labelled "Plastic" or "Metal" | `RECYCLABLES` |
+| one mixed round (plastic, metal, cartons, ...) | `RECYCLABLES` |
+| a mixed round plus a separate metal (or plastic) round | `RECYCLABLES` + `METAL` (or `PLASTIC`) |
+| plastic and metal as separate rounds | `PLASTIC` + `METAL` |
+| cartons with paper | `PAPER` |
+| cartons as a round of their own | `CARTONS` |
+
+`METAL` is packaging metal (cans, tins), not scrap metal. These types have no aliases and are not resolved from a bare label, because a label like "Plastic" means the whole recycling round for one provider and a plastic-only round for another; making them auto-resolve would change the type existing sources report. Set `auto_resolve=False` on any new type whose names collide with labels another type already resolves.
 
 Mapping to `None` is a declared loss, which is the opposite of an unresolved label. Draw the line at whether the entry is a collection: a dated, limited-window drop-off (a container day, a hazardous-waste round) is one, and a permanent facility's ordinary opening hours is not.
 

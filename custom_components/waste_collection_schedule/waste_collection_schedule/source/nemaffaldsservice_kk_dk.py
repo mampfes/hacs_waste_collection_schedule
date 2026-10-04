@@ -82,7 +82,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Nørrebrogade 10": {"address": "Nørrebrogade 10"},
         "Amagerbrogade 10": {"address": "Amagerbrogade 10"},
-        "Rådhuspladsen 1": {"address": "Rådhuspladsen 1"},
+        "Østerbrogade 100": {"address": "Østerbrogade 100"},
     }
 
     PARAMS = (street_address(),)
@@ -123,6 +123,7 @@ class Source(BaseSource):
     )
 
     parse = parsers.IcsParser()
+
     transform = ICSTransformer(
         type_value_map={
             "Restaffald": wt.GENERAL_WASTE,
@@ -131,12 +132,12 @@ class Source(BaseSource):
             "Papir": wt.PAPER,
             "Pap": wt.PAPER,
             "Glas": wt.GLASS,
-            "Metal": wt.RECYCLABLES,
-            "Plast": wt.RECYCLABLES,
+            "Metal": wt.METAL,
+            "Plast": wt.PLASTIC,
             "Elektronik": wt.ELECTRONICS,
             "Farligt affald": wt.HAZARDOUS,
             "Tekstil": wt.TEXTILES,
             "Storskrald": wt.BULKY_WASTE,
             "Haveaffald": wt.GARDEN_WASTE,
-        }
+        },
     )
