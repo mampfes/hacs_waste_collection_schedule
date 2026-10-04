@@ -157,7 +157,7 @@ def test_explicit_dates_infer_year():
 
 
 def test_page_url_accepts_display_name():
-    assert cm._page_url("Lèves").endswith("/leves-collecte")
+    assert cm._page_url("Lèves").endswith("/leves-collecte")  # codespell:ignore leves
 
 
 def test_page_url_unknown_commune_raises_with_suggestions():
@@ -318,7 +318,7 @@ def test_adjust_ascension_thursday():
 
 
 def test_adjust_weekend_holiday_does_not_move_weekday_collection():
-    # Assomption 2026-08-15 (Saturday) and Toussaint 2026-11-01 (Sunday).
+    # Assomption 2026-08-15 (Saturday) and Toussaint 2026-11-01 (Sunday).  # codespell:ignore assomption
     assert _adjust(date(2026, 8, 14)) == date(2026, 8, 14)
     assert _adjust(date(2026, 8, 17)) == date(2026, 8, 17)
     assert _adjust(date(2026, 10, 30)) == date(2026, 10, 30)

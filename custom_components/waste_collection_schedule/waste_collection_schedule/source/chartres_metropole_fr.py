@@ -23,6 +23,7 @@ provider-specific parts are the paragraph reader and the holiday adjustment.
 import re
 import unicodedata
 from datetime import date, timedelta
+from functools import cache
 from typing import Any, ClassVar, final
 
 import holidays
@@ -93,7 +94,7 @@ COMMUNES: dict[str, str] = {
     "Jouy": "jouy",
     "La Bourdinière-Saint-Loup": "la-bourdiniere-saint-loup",
     "Le Coudray": "le-coudray",
-    "Lèves": "leves",
+    "Lèves": "leves",  # codespell:ignore leves
     "Lucé": "luce",
     "Luisant": "luisant",
     "Maintenon": "maintenon",
@@ -304,19 +305,17 @@ def _describe(tag: Any, source: Any = None) -> Any:
             )
 
 
-def _france_holidays(source: Any, year: int) -> Any:
-    cached = getattr(source, "_chartres_holidays", None)
-    if cached is None:
-        cached = holidays.France(years=range(year - 1, year + 2))
-        source._chartres_holidays = cached
-    return cached
+@cache
+def _france_holidays() -> Any:
+    # The holidays calendar expands lazily to any year that is looked up.
+    return holidays.France()
 
 
 def _adjust(collection_date: date, key: str, source: Any = None) -> date | None:
     """Postpone a regular collection that follows a holiday in the same week."""
     if key == BULKY_KEY:
         return collection_date
-    fr_holidays = _france_holidays(source, collection_date.year)
+    fr_holidays = _france_holidays()
     monday = collection_date - timedelta(days=collection_date.weekday())
     for offset in range(7):
         candidate = monday + timedelta(days=offset)
