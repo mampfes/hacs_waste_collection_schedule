@@ -12,7 +12,7 @@ from waste_collection_schedule.exceptions import (
 
 TITLE = "Gmina Bochnia"
 DESCRIPTION = "Source for Gmina Bochnia waste collection schedule (Poland)"
-URL = "http://bochnia-gmina.pl"
+URL = "https://bochnia-gmina.pl"
 COUNTRY = "pl"
 SOURCE_CODEOWNERS = ["@Sairento-92"]
 
@@ -48,7 +48,7 @@ PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELN
 TOWNS_PDF_MAP = {
     "Baczków": "Baczkow.pdf",
     "Bessów": "Bessow.pdf",
-    "Bogucice": "Bogucice.pdf",
+    "Bogucice": "Bogucice-1.pdf",
     "Brzeźnica": "Brzeznica.pdf",
     "Buczyna": "Buczyna.pdf",
     "Cerekiew": "Cerekiew.pdf",
@@ -56,7 +56,7 @@ TOWNS_PDF_MAP = {
     "Cikowice": "Cikowice.pdf",
     "Damienice": "Damienice.pdf",
     "Dąbrowica": "Dabrowica.pdf",
-    "Gawłów": "Gawlow.pdf",
+    "Gawłów": "Gawlow-1.pdf",
     "Gierczyce": "Gierczyce.pdf",
     "Gorzków": "Gorzkow.pdf",
     "Grabina": "Grabina.pdf",
@@ -65,16 +65,16 @@ TOWNS_PDF_MAP = {
     "Majkowice": "Majkowice.pdf",
     "Moszczenica": "Moszczenica.pdf",
     "Nieprześnia": "Nieprzesnia.pdf",
-    "Nieszkowice Małe": "Nieszkowice male.pdf",
-    "Nieszkowice Wielkie": "Nieszkowice wielkie.pdf",
-    "Ostrów Szlachecki": "Ostrow szlachecki.pdf",
+    "Nieszkowice Małe": "Nieszkowice-Male.pdf",
+    "Nieszkowice Wielkie": "Nieszkowice-Wielkie.pdf",
+    "Ostrów Szlachecki": "Ostrow-Szlachecki.pdf",
     "Pogwizdów": "Pogwizdow.pdf",
     "Proszówki": "Proszowki.pdf",
     "Siedlec": "Siedlec.pdf",
     "Słomka": "Slomka.pdf",
     "Stanisławice": "Stanislawice.pdf",
     "Stradomka": "Stradomka.pdf",
-    "Wola Nieszkowska": "Wola nieszkowska.pdf",
+    "Wola Nieszkowska": "Wola-Nieszkowska.pdf",
     "Zatoka": "Zatoka.pdf",
     "Zawada": "Zawada.pdf",
 }
@@ -109,7 +109,7 @@ class Source:
             )
 
         pdf_file = TOWNS_PDF_MAP[town]
-        url = f"http://bochnia-gmina.pl/container/{urllib.parse.quote(pdf_file)}"
+        url = f"https://bochnia-gmina.pl/wp-content/uploads/{urllib.parse.quote(pdf_file)}"
         r = requests.get(url, timeout=30)
         r.raise_for_status()
 
