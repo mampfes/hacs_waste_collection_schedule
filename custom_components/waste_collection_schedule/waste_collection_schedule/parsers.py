@@ -1553,6 +1553,149 @@ class PdfTextParser(Parser[str]):
         return text
 
 
+class PdfTextFragment(NamedTuple):
+    """One positioned text fragment extracted from a PDF page."""
+
+    page: int
+    text: str
+    x: float
+    y: float
+
+
+class PdfVector(NamedTuple):
+    """One vector path from a PDF page, including its bounding box and colours."""
+
+    page: int
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    stroke_color: tuple[float, ...] | None
+    fill_color: tuple[float, ...] | None
+
+
+class PdfDocumentLayout(NamedTuple):
+    """A PDF's text plus positioned fragments and vector paths."""
+
+    text: str
+    fragments: tuple[PdfTextFragment, ...]
+    vectors: tuple[PdfVector, ...]
+
+
+def _pdf_color(value: Any) -> tuple[float, ...] | None:
+    """Normalise pdfminer colour values to a numeric tuple when possible."""
+    if isinstance(value, (int, float)):
+        return (float(value),)
+    if not isinstance(value, (list, tuple)):
+        return None
+    try:
+        return tuple(float(component) for component in value)
+    except (TypeError, ValueError):
+        return None
+
+
+class PdfLayoutParser(Parser[PdfDocumentLayout]):
+    """Extract positioned text and vector paths from a PDF (no OCR).
+
+    Use this for a text-layer calendar whose collection type is encoded by a
+    coloured vector marker beside each printed date. ``PdfTextParser`` is
+    preferable when plain text is sufficient, and ``PdfTableParser`` when only
+    text coordinates are needed. This parser combines pypdf's text-matrix
+    positions with pdfminer's vector-path geometry so a short provider-specific
+    preprocessor can associate each date with its marker.
+
+    Args:
+        min_fragments: minimum positioned text fragments expected.
+        min_vectors: minimum vector paths expected.
+    """
+
+    def __init__(
+        self,
+        *,
+        min_fragments: "int | None" = None,
+        min_vectors: "int | None" = None,
+    ):
+        self.min_fragments = min_fragments
+        self.min_vectors = min_vectors
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> PdfDocumentLayout:
+        from io import BytesIO
+
+        from pdfminer.high_level import extract_pages
+        from pdfminer.layout import LTContainer, LTCurve, LTItem
+        from pypdf import PdfReader
+
+        content = response.content
+        fragments: list[PdfTextFragment] = []
+        page_text: list[str] = []
+
+        for page_no, page in enumerate(PdfReader(BytesIO(content)).pages):
+
+            def collect_text(text, _cm, tm, _font, _font_size, page_number=page_no):
+                cleaned = " ".join(text.split())
+                if cleaned:
+                    fragments.append(
+                        PdfTextFragment(
+                            page=page_number,
+                            text=cleaned,
+                            x=float(tm[4]),
+                            y=float(tm[5]),
+                        )
+                    )
+
+            page_text.append(page.extract_text(visitor_text=collect_text) or "")
+
+        def walk(item: LTItem) -> Iterable[LTItem]:
+            yield item
+            if isinstance(item, LTContainer):
+                for child in item:
+                    yield from walk(child)
+
+        vectors: list[PdfVector] = []
+        for page_no, layout in enumerate(extract_pages(BytesIO(content))):
+            for item in walk(layout):
+                if not isinstance(item, LTCurve):
+                    continue
+                vectors.append(
+                    PdfVector(
+                        page=page_no,
+                        x0=float(item.x0),
+                        y0=float(item.y0),
+                        x1=float(item.x1),
+                        y1=float(item.y1),
+                        stroke_color=_pdf_color(getattr(item, "stroking_color", None)),
+                        fill_color=_pdf_color(
+                            getattr(item, "non_stroking_color", None)
+                        ),
+                    )
+                )
+
+        text = "\n".join(page_text)
+        source_name = response_shape.source_name(source)
+        if self.min_fragments is not None:
+            response_shape.expect(
+                len(fragments) >= self.min_fragments,
+                source_name=source_name,
+                detail=(
+                    f"PDF yielded {len(fragments)} positioned text fragments, "
+                    f"under {self.min_fragments}"
+                ),
+                raw=text[:500],
+            )
+        if self.min_vectors is not None:
+            response_shape.expect(
+                len(vectors) >= self.min_vectors,
+                source_name=source_name,
+                detail=(
+                    f"PDF yielded {len(vectors)} vector paths, under {self.min_vectors}"
+                ),
+                raw=text[:500],
+            )
+        return PdfDocumentLayout(text, tuple(fragments), tuple(vectors))
+
+
 class PdfWord(NamedTuple):
     """A run of text on a PDF page with its horizontal span (PDF points)."""
 

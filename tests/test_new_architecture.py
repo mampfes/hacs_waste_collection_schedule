@@ -6155,6 +6155,60 @@ class TestPdfTableParser:
             self._run(pages, min_words=5)
 
 
+class TestPdfLayoutParser:
+    """PdfLayoutParser exposes positioned pypdf text and pdfminer vectors."""
+
+    class _FakePdfPage:
+        def extract_text(self, visitor_text=None):
+            if visitor_text is not None:
+                visitor_text(" January 2026 ", None, [1, 0, 0, 1, 12, 34], None, 10)
+            return "January 2026"
+
+    class _FakeReader:
+        def __init__(self, _stream):
+            self.pages = [TestPdfLayoutParser._FakePdfPage()]
+
+    class _FakeContainer(list):
+        pass
+
+    class _FakeCurve:
+        x0, y0, x1, y1 = 10, 20, 19, 29
+        stroking_color = (0.1, 0.2, 0.3)
+        non_stroking_color = (0.4, 0.5, 0.6, 0.7)
+
+    def _run(self, **kwargs):
+        from waste_collection_schedule.parsers import PdfLayoutParser
+
+        layout = self._FakeContainer([self._FakeCurve()])
+        with (
+            patch("pypdf.PdfReader", self._FakeReader),
+            patch("pdfminer.high_level.extract_pages", return_value=[layout]),
+            patch("pdfminer.layout.LTContainer", self._FakeContainer),
+            patch("pdfminer.layout.LTCurve", self._FakeCurve),
+        ):
+            return PdfLayoutParser(**kwargs)(SimpleNamespace(content=b"%PDF-"))
+
+    def test_returns_text_fragments_and_vector_geometry(self):
+        layout = self._run(min_fragments=1, min_vectors=1)
+        assert layout.text == "January 2026"
+        assert layout.fragments[0] == (0, "January 2026", 12.0, 34.0)
+        assert layout.vectors[0] == (
+            0,
+            10.0,
+            20.0,
+            19.0,
+            29.0,
+            (0.1, 0.2, 0.3),
+            (0.4, 0.5, 0.6, 0.7),
+        )
+
+    def test_minimum_counts_flag_changed_pdf(self):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        with pytest.raises(ResponseShapeError):
+            self._run(min_vectors=2)
+
+
 class TestIcsRepairs:
     """Unconditional repairs applied to every feed before it is converted."""
 
