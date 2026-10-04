@@ -1033,8 +1033,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Aigrefeuille-sur-Maine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Aingeray](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Alfortville](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
+- [Allones](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Ambarès-et-Lagrave](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Amilly](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Andilly](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ansauville](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1043,12 +1045,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Autouillet](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Avrainville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Ayguemorte-les-Graves](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Bailleau-L’Évêque](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Baldersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bantzenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Barjouville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Battenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bazoches-sur-Guyonne](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Beautiran](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Behoust](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Berchères-les-Pierres](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Berchères-Saint-Germain](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Berrwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Betton](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Beynes](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1057,14 +1063,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Bois-de-Haye](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Boissy-Saint-Léger](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Boissy-sans-Avoir](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Boisville-la-Saint-Père](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bollwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Boncé](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bonneuil-sur-Marne](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux Métropole](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Boucq](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Bouglainval](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bourgbarré](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Boussay](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Bouvron](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Briconville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bruebach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bruges](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bruley](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1080,44 +1090,67 @@ If you already have enough information for your municipality/region, you are ver
 - [Castres-Gironde](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Cesson-Sévigné](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Chalampé](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Challet](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Champhol](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Champseru](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Chantepie](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Charmes-la-Côte](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Chartainvilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Chartres](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Chartres - Plateau de Rechèvres](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Chartres hypercentre et basse-ville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Chartres Métropole](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Chartres-de-Bretagne](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Chaudeney-sur-Moselle](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Chauffours](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Chavagne](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Chennevières-sur-Marne](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Chevaigné](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Choloy-Ménillot](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Château-Thébaud](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
+- [Cintray](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Cintré](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Clayes](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Clisson](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Clisson Sèvre et Maine Agglo](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Clisson, rue Saint-Antoine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
+- [Clévilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Coeur d'Yvelines](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Coltainville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
+- [Corancez](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Corps-Nuds](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Créteil](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
+- [Dammarie et Bois-de-Mivoye](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Dangers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Denonville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Dietwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Domgermain](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Dommartin-lès-Toul](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Domèvre-en-Haye](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Dreux Agglomération](/doc/source/publidata_fr.md) / dreux-agglomeration.fr
 - [Dunkerque Grand Littoral](/doc/source/publidata_fr.md) / mesinfosdechets.cud.fr
+- [Ermenonville-la-Grande](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Eschentzwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Eysines](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Feldkirch](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Flaxlanden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Flexanville](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Fontenay-sur-Eure](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Fontenoy-sur-Moselle](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Foug](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Francheville](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Francourville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Fresnay-le-Comte](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Fresnay-le-Gilmert](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Galfingue](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Galluis](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Gambais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Garancières](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Gasville-Oisème](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Gellainville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Gondreville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Gorges](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Goupillières](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1137,12 +1170,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Haute-Goulaine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Heimsbrunn](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Hombourg](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Houville-la-Branche](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Houx](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Illzach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Isle Saint-Georges](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Jaillon](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Jouars-Pontchartrain](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Jouy](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Kingersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [L'Hermitage](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [La Bourdinière-Saint-Loup](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [La Brède](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [La Chapelle-Chaussée](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [La Chapelle-des-Fougeretz](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -1159,6 +1196,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lay-Saint-Rémy](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Le Bouscat](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Cotentin](/doc/source/publidata_fr.md) / dechets.lecotentin.fr
+- [Le Coudray](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Le Haillan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Havre Seine Métropole](/doc/source/publidata_fr.md) / tripratik.lehavreseinemetropole.fr
 - [Le Plessis-Trévise](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
@@ -1169,8 +1207,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Les Mesnuls](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Limeil-Brévannes](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Lucey](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Lucé](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Luisant](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Lutterbach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Lèves](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Léognan](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Maintenon](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Mainvilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Maisdon-sur-Sèvre - zone 1](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Maisdon-sur-Sèvre - zone 2](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
@@ -1181,14 +1224,20 @@ If you already have enough information for your municipality/region, you are ver
 - [Mareil-le-Guyon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Martignas-sur-Jalle](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Martillac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Meslay-le-Grenet](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Meslay-le-Vidame](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Mignières](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Millemont](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Miniac-sous-Bécherel](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Minorville](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Mittainvilliers-Vérigny](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Moinville-la-Jeulin](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Monnières](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Montfort-l'Amaury](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Montgermont](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Montpellier Méditerranée Métropole](/doc/source/data_montpellier3m_fr.md) / data.montpellier3m.fr
 - [Montri](/doc/source/montri_fr.md) / montri.fr
+- [Morancez](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Mordelles](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Morschwiller-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Mulhouse](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1204,10 +1253,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Nogent-le-Phaye](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Nogent-sur-Eure](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Noiseau](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Nouvoitou](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Noviant-aux-Prés](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Noyal-Châtillon-sur-Seiche](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [Oinville-sous-Auneau](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Ollé](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Orgères](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Orléans Métropole](/doc/source/publidata_fr.md) / triermondechet.orleans-metropole.fr
 - [Ormesson-sur-Marne](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
@@ -1220,7 +1273,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Petit-Landau](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Pfastatt](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Pierre-la-Treiche](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Poisvilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Pont-Péan](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [Prunay-le-Gillon](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Publidata generic source](/doc/source/publidata_fr.md) / publidata.io/fr
 - [Pulversheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Reiningue](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1240,6 +1295,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Richwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Riedisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Rixheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Roinville-sous-Auneau](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Romillé](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Royaumeix](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Rueil-Malmaison](/doc/source/rueil_malmaison_fr.md) / rueil-malmaison.fr
@@ -1247,7 +1303,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
 - [Saint-Armel](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Saint-Aubin-de-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Aubin-des-Bois](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Erblon](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [Saint-Georges-sur-Eure](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Germain-de-la-Grange](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saint-Gilles](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Saint-Grégoire](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -1257,13 +1315,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Saint-Louis-de-Montferrand](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Lumine-de-Clisson - Zone A](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Lumine-de-Clisson - Zone B](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
+- [Saint-Léger-des-Aubées](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-en-Jalles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Prest](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Rémy-l'Honoré](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saint-Selve](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Sulpice-la-Forêt](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Saint-Vincent-de-Paul](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Sandarville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Santeuil](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Sanzey](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Saucats](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saulx-Marchais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1276,6 +1338,7 @@ If you already have enough information for your municipality/region, you are ver
 - [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
 - [SIVOM Rive Droite](/doc/source/publidata_fr.md) / sivom-rivedroite.fr
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
+- [Sours](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [St-Fiacre-sur-Maine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1283,6 +1346,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Theuville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Thivars](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Thiverval-Grignon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Thoiry](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Thorigné-Fouillard](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -1290,11 +1355,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
 - [Tremblecourt](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Trondes](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Umpeau](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Ungersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr
 - [ValDem](/doc/source/publidata_fr.md) / valdem.fr
 - [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
 - [Valodev 18](/doc/source/publidata_fr.md) / valodev18.fr/la-collecte-des-vos-dechets
+- [Ver-lès-Chartres](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Vern-sur-Seiche](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
 - [Vezin-le-Coquet](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -1305,6 +1372,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Villey-Saint-Étienne](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Villiers-le-Mahieu](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Villiers-Saint-Frédéric](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Vitray-en-Beauce](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Voise](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Wittelsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Wittenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Zillisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -4857,6 +4926,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
 - [Torbay Council](/doc/source/torbay_council_gov_uk.md) / torbay.gov.uk
 - [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk
+- [Trafford Council](/doc/source/trafford_gov_uk.md) / trafford.gov.uk/BinCollections
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
 - [Uttlesford District Council](/doc/source/uttlesford_gov_uk.md) / uttlesford.gov.uk

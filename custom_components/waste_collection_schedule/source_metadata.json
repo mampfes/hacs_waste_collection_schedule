@@ -1888,6 +1888,14 @@
     "howto": {},
     "urls": {}
   },
+  "chartres_metropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chartres_metropole_fr.md",
+    "howto": {
+      "en": "Visit https://www.chartres-metropole.fr/dechets/collectes, find your commune and use the name as displayed there. Set 'secteur' only if you know you are on the bin ('bacs') or bag ('sacs') round; leave it empty to receive both.",
+      "fr": "Rendez-vous sur https://www.chartres-metropole.fr/dechets/collectes, recherchez votre commune et utilisez le nom affiché. Renseignez 'secteur' uniquement si vous savez relever du secteur bacs ou sacs ; laissez vide pour recevoir les deux."
+    },
+    "urls": {}
+  },
   "opendata_bordeauxmetropole_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md",
     "howto": {},
@@ -7437,6 +7445,13 @@
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
+  },
+  "trafford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/trafford_gov_uk.md",
+    "howto": {
+      "en": "Enter the postcode and the full address returned by Trafford Council. Submit part of the address once to receive matching suggestions. Enable garden waste only if the green bin displays a valid paid permit; food waste is collected from green bins without a permit."
+    },
+    "urls": {}
   },
   "tunbridgewells_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tunbridgewells_gov_uk.md",

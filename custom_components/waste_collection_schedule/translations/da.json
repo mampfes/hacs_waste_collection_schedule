@@ -7712,6 +7712,31 @@
         },
         "data_description": {}
       },
+      "args_chartres_metropole_fr": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_chartres_metropole_fr": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -30560,6 +30585,35 @@
         },
         "data_description": {
           "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_trafford_gov_uk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "garden_waste": "Garden Waste",
+          "postcode": "Postnummer"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse",
+          "postcode": "Dit postnummer"
+        }
+      },
+      "reconfigure_trafford_gov_uk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "garden_waste": "Garden Waste",
+          "postcode": "Postnummer"
+        },
+        "data_description": {
+          "address": "Din fulde adresse",
+          "postcode": "Dit postnummer"
         }
       },
       "args_tunbridgewells_gov_uk": {

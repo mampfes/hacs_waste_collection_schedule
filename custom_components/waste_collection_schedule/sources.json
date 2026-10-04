@@ -6151,6 +6151,14 @@
       "id": "sudestavenir_fr"
     },
     {
+      "title": "Allones",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Allones"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Ambar\u00e8s-et-Lagrave",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6165,6 +6173,14 @@
         "city": "Amb\u00e8s"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Amilly",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Amilly"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Andilly",
@@ -6229,6 +6245,14 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Bailleau-L\u2019\u00c9v\u00eaque",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Bailleau-L\u2019\u00c9v\u00eaque"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Baldersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6243,6 +6267,14 @@
         "commune": "Bantzenheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Barjouville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Barjouville"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Battenheim",
@@ -6275,6 +6307,22 @@
         "commune": "Behoust"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Berch\u00e8res-les-Pierres",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Berch\u00e8res-les-Pierres"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Berch\u00e8res-Saint-Germain",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Berch\u00e8res-Saint-Germain"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Berrwiller",
@@ -6341,12 +6389,28 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Boisville-la-Saint-P\u00e8re",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Boisville-la-Saint-P\u00e8re"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Bollwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Bollwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Bonc\u00e9",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Bonc\u00e9"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Bonneuil-sur-Marne",
@@ -6379,6 +6443,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Bouglainval",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Bouglainval"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Bourgbarr\u00e9",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6401,6 +6473,14 @@
         "commune": "Bouvron"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Briconville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Briconville"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Bruebach",
@@ -6523,6 +6603,30 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Challet",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Challet"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Champhol",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Champhol"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Champseru",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Champseru"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Chantepie",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6539,6 +6643,44 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Chartainvilliers",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Chartainvilliers"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Chartres",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Chartres"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Chartres - Plateau de Rech\u00e8vres",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Chartres - Plateau de Rech\u00e8vres"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Chartres hypercentre et basse-ville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Chartres hypercentre et basse-ville"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Chartres M\u00e9tropole",
+      "module": "chartres_metropole_fr",
+      "default_params": {},
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Chartres-de-Bretagne",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6553,6 +6695,14 @@
         "commune": "Chaudeney-sur-Moselle"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Chauffours",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Chauffours"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Chavagne",
@@ -6603,6 +6753,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Cintray",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Cintray"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Cintr\u00e9",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6641,10 +6799,26 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Cl\u00e9villiers",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Cl\u00e9villiers"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Coeur d'Yvelines",
       "module": "coeur_yvelines_fr",
       "default_params": {},
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Coltainville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Coltainville"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Communaut\u00e9 de Communes de Montesquieu",
@@ -6661,6 +6835,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Corancez",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Corancez"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Corps-Nuds",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6675,6 +6857,30 @@
         "commune": "Cr\u00e9teil"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Dammarie et Bois-de-Mivoye",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Dammarie et Bois-de-Mivoye"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Dangers",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Dangers"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Denonville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Denonville"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Dietwiller",
@@ -6725,6 +6931,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ermenonville-la-Grande",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Ermenonville-la-Grande"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Eschentzwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6765,6 +6979,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Fontenay-sur-Eure",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Fontenay-sur-Eure"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Fontenoy-sur-Moselle",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6787,6 +7009,30 @@
         "commune": "Francheville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Francourville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Francourville"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Fresnay-le-Comte",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Fresnay-le-Comte"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Fresnay-le-Gilmert",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Fresnay-le-Gilmert"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Galfingue",
@@ -6819,6 +7065,22 @@
         "commune": "Garanci\u00e8res"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Gasville-Ois\u00e8me",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Gasville-Ois\u00e8me"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Gellainville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Gellainville"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Gondreville",
@@ -6969,6 +7231,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Houville-la-Branche",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Houville-la-Branche"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Houx",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Houx"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Illzach",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7001,6 +7279,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Jouy",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Jouy"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Kingersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7015,6 +7301,14 @@
         "commune": "L'Hermitage"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "La Bourdini\u00e8re-Saint-Loup",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "La Bourdini\u00e8re-Saint-Loup"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "La Br\u00e8de",
@@ -7145,6 +7439,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Coudray",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Le Coudray"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Le Haillan",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -7225,6 +7527,22 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Luc\u00e9",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Luc\u00e9"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Luisant",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Luisant"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Lutterbach",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7233,12 +7551,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "L\u00e8ves",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "L\u00e8ves"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "L\u00e9ognan",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "L\u00e9ognan"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Maintenon",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Maintenon"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Mainvilliers",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Mainvilliers"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Mairie de Mamirolle",
@@ -7319,6 +7661,30 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Meslay-le-Grenet",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Meslay-le-Grenet"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Meslay-le-Vidame",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Meslay-le-Vidame"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Migni\u00e8res",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Migni\u00e8res"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Millemont",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -7341,6 +7707,22 @@
         "commune": "Minorville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Mittainvilliers-V\u00e9rigny",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Mittainvilliers-V\u00e9rigny"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Moinville-la-Jeulin",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Moinville-la-Jeulin"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Monni\u00e8res",
@@ -7377,6 +7759,14 @@
       "module": "montri_fr",
       "default_params": {},
       "id": "montri_fr"
+    },
+    {
+      "title": "Morancez",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Morancez"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Mordelles",
@@ -7492,6 +7882,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Nogent-le-Phaye",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Nogent-le-Phaye"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Nogent-sur-Eure",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Nogent-sur-Eure"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Noiseau",
       "module": "sudestavenir_fr",
       "default_params": {
@@ -7522,6 +7928,22 @@
         "commune": "Noyal-Ch\u00e2tillon-sur-Seiche"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Oinville-sous-Auneau",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Oinville-sous-Auneau"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Oll\u00e9",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Oll\u00e9"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Org\u00e8res",
@@ -7620,12 +8042,28 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Poisvilliers",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Poisvilliers"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Pont-P\u00e9an",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Pont-P\u00e9an"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Prunay-le-Gillon",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Prunay-le-Gillon"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Publidata generic source",
@@ -7776,6 +8214,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Roinville-sous-Auneau",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Roinville-sous-Auneau"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Romill\u00e9",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -7830,12 +8276,28 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-Aubin-des-Bois",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Saint-Aubin-des-Bois"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Saint-Erblon",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Saint-Erblon"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Saint-Georges-sur-Eure",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Saint-Georges-sur-Eure"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Saint-Germain-de-la-Grange",
@@ -7910,6 +8372,14 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Saint-L\u00e9ger-des-Aub\u00e9es",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Saint-L\u00e9ger-des-Aub\u00e9es"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Saint-Morillon",
       "module": "cc-montesquieu_fr",
       "default_params": {
@@ -7932,6 +8402,14 @@
         "city": "Saint-M\u00e9dard-en-Jalles"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Prest",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Saint-Prest"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Saint-R\u00e9my-l'Honor\u00e9",
@@ -7964,6 +8442,22 @@
         "city": "Saint-Vincent-de-Paul"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Sandarville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Sandarville"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Santeuil",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Santeuil"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Sanzey",
@@ -8054,6 +8548,14 @@
       "id": "sivom_rivedroite_fr"
     },
     {
+      "title": "Sours",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Sours"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "St-Fiacre-sur-Maine",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -8106,6 +8608,22 @@
       "module": "terrestouloises_com",
       "default_params": {},
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Theuville",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Theuville"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Thivars",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Thivars"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Thiverval-Grignon",
@@ -8162,6 +8680,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Umpeau",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Umpeau"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
       "title": "Ungersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -8200,6 +8726,14 @@
         "instance_id": 1619
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Ver-l\u00e8s-Chartres",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Ver-l\u00e8s-Chartres"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Vern-sur-Seiche",
@@ -8280,6 +8814,22 @@
         "commune": "Villiers-Saint-Fr\u00e9d\u00e9ric"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Vitray-en-Beauce",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Vitray-en-Beauce"
+      },
+      "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Voise",
+      "module": "chartres_metropole_fr",
+      "default_params": {
+        "commune": "Voise"
+      },
+      "id": "chartres_metropole_fr"
     },
     {
       "title": "Wittelsheim",
@@ -34556,6 +35106,12 @@
       "module": "torridge_gov_uk",
       "default_params": {},
       "id": "torridge_gov_uk"
+    },
+    {
+      "title": "Trafford Council",
+      "module": "trafford_gov_uk",
+      "default_params": {},
+      "id": "trafford_gov_uk"
     },
     {
       "title": "Tunbridge Wells",

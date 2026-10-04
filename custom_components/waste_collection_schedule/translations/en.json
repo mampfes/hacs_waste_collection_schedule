@@ -7935,6 +7935,31 @@
           "street": "Your street name"
         }
       },
+      "args_chartres_metropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "secteur": "Collection sector"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_chartres_metropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "secteur": "Collection sector"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -31372,6 +31397,35 @@
         },
         "data_description": {
           "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_trafford_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "garden_waste": "Paid garden-waste permit",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "postcode": "Your postcode."
+        }
+      },
+      "reconfigure_trafford_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "garden_waste": "Paid garden-waste permit",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "args_tunbridgewells_gov_uk": {

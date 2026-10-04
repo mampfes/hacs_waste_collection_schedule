@@ -7712,6 +7712,31 @@
         },
         "data_description": {}
       },
+      "args_chartres_metropole_fr": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "commune": "Gemeente",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "reconfigure_chartres_metropole_fr": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "commune": "Gemeente",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -30583,6 +30608,35 @@
         },
         "data_description": {
           "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_trafford_gov_uk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "garden_waste": "Garden Waste",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres.",
+          "postcode": "Uw postcode."
+        }
+      },
+      "reconfigure_trafford_gov_uk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "garden_waste": "Garden Waste",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "Uw volledige adres.",
+          "postcode": "Uw postcode."
         }
       },
       "args_tunbridgewells_gov_uk": {
