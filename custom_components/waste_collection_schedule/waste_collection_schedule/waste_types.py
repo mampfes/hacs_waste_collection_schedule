@@ -37,7 +37,12 @@ class WasteType:
     # Known labels/synonyms per language, used by resolve(). Unambiguous only:
     # avoid region-ambiguous labels (e.g. "green bin") that map differently.
     aliases: dict[str, list[str]] = field(default_factory=dict)
-    # Should this WasteType be used for automatic resolution by name?
+    # Whether resolve() may match this type's names and aliases. False makes
+    # it source-mapped: a source only gets it through its own type_value_map.
+    # Use False when a label is context-dependent (e.g. "Plastic" is the whole
+    # recycling round for one provider and a separate plastic-only round for
+    # another), so adding the type cannot change what resolve() returns for
+    # existing sources.
     auto_resolve: bool = True
 
 
@@ -454,6 +459,16 @@ TEXTILES = WasteType(
     },
 )
 
+# METAL, PLASTIC and CARTONS are source-mapped (auto_resolve=False) and carry
+# no aliases (#7604). They exist for providers that collect these materials as
+# separate rounds, e.g. Danish municipalities, which sort them as separate
+# fractions nationwide. Precedence: RECYCLABLES stays the default. A provider
+# with one recycling round is RECYCLABLES even if it labels that round
+# "Plastic"; a mixed round (plastic + metal + cartons) is RECYCLABLES; cartons
+# collected with paper are PAPER. Map to a specific type only when that
+# material is a collection of its own, e.g. RECYCLABLES + METAL for a mixed
+# round plus a separate metal round, or PLASTIC + METAL when both are
+# collected separately. METAL is packaging metal (cans, tins), not scrap.
 METAL = WasteType(
     id="metal",
     icon="mdi:nail",
@@ -512,8 +527,8 @@ OTHER = WasteType(
     names={
         "en": "Other",
         "de": "Sonstiges",
-        "it": "Altro",
         "fr": "Autres",
+        "it": "Altro",
         "nl": "Overig",
         "sl": "Drugo",
         "da": "Andet",
@@ -548,11 +563,10 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
-    WasteType's with the auto_resolve flag unset, will be excluded from the index.
-    These are intended to be explicitly used by the source itself, to avoid
-    conflicts with other types.
-
-    OTHER is excluded (it's only used when a source maps to it explicitly).
+    Types with ``auto_resolve=False`` are excluded: a source reaches them only
+    by mapping to them explicitly, so their names cannot collide with labels
+    other types already resolve. OTHER is one of them (it's only used when a
+    source maps to it explicitly), as are METAL, PLASTIC and CARTONS.
     First definition wins on collisions, with a warning, so the vocabulary stays
     unambiguous.
     """

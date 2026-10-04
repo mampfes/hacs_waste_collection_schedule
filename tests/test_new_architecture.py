@@ -209,6 +209,50 @@ class TestWasteTypeResolution:
 
         assert wt.resolve("Other") is not wt.OTHER
 
+    def test_source_mapped_types_are_not_resolvable(self):
+        """METAL, PLASTIC and CARTONS are reached only via type_value_map (#7604).
+
+        "Plastic" is the whole recycling round for some providers and a
+        plastic-only round for others, so resolve() cannot decide from the
+        label alone. Adding these types must not change what existing
+        sources resolve: "Plastic" still resolves to RECYCLABLES.
+        """
+        from waste_collection_schedule import waste_types as wt
+
+        for waste_type in (wt.METAL, wt.PLASTIC, wt.CARTONS, wt.OTHER):
+            assert waste_type.auto_resolve is False
+            assert waste_type.aliases == {}, (
+                f"{waste_type.id} is source-mapped; aliases would never be used"
+            )
+            for name in waste_type.names.values():
+                assert wt.resolve(name) is not waste_type, (
+                    f"{name!r} must not auto-resolve to {waste_type.id}"
+                )
+        assert wt.resolve("Plastic") is wt.RECYCLABLES
+
+    def test_every_type_is_named_in_every_supported_language(self):
+        from waste_collection_schedule import waste_types as wt
+
+        for waste_type in wt.ALL_TYPES:
+            missing = set(wt.SUPPORTED_LANGUAGES) - set(waste_type.names)
+            assert not missing, f"{waste_type.id} has no name for {sorted(missing)}"
+
+    def test_vocabulary_has_no_ambiguous_labels(self, caplog):
+        """No two auto-resolved types claim the same normalised label.
+
+        _build_index() keeps the first definition and logs a warning on a
+        collision, which would surface on every Home Assistant start.
+        """
+        import logging
+
+        from waste_collection_schedule import waste_types as wt
+
+        with caplog.at_level(logging.WARNING, logger=wt.__name__):
+            wt._build_index()
+        assert not [r for r in caplog.records if "Ambiguous" in r.getMessage()], (
+            caplog.text
+        )
+
 
 class TestCollection:
     """Collection(date, waste_type) — new-style primary interface."""
@@ -8105,7 +8149,6 @@ CASES_AWAITING_CASSETTE = {
     "junker_app::san_giovanni_teatino_zona_a",
     "junker_app::scalea",
     "junker_app::unione_dei_comuni_di_valmalenco_boroneddu",
-    "nemaffaldsservice_kk_dk::r_dhuspladsen_1",
     "oberndorf_schwanenstadt_at::bergstra_e_5",
     "wellington_govt_nz::chelsea_st",
 }
