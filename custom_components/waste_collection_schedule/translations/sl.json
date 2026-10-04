@@ -1161,10 +1161,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_manningham_vic_gov_au": {
@@ -1172,9 +1173,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_melbourne_vic_gov_au": {
         "title": "Configure Source",
@@ -2238,10 +2241,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_mansfield_vic_gov_au": {
@@ -2249,9 +2253,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_maribyrnong_vic_gov_au": {
         "title": "Configure Source",
@@ -2707,7 +2713,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_northernbeaches_nsw_gov_au": {
@@ -2717,7 +2724,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_orange_nsw_gov_au": {
         "title": "Configure Source",
@@ -6834,10 +6843,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_toronto_ca": {
@@ -6845,9 +6855,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_ics_valleyfiled_qc_ca": {
         "title": "Configure Source",
@@ -19588,7 +19600,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_napier_govt_nz": {
@@ -19598,7 +19611,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_npdc_govt_nz": {
         "title": "Configure Source",
@@ -20428,7 +20443,8 @@
           "town": "Mesto"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "town": "Vaše mesto ali kraj."
         }
       },
       "reconfigure_bochnia_gmina_pl": {
@@ -20438,7 +20454,9 @@
           "calendar_title": "Calendar Title",
           "town": "Mesto"
         },
-        "data_description": {}
+        "data_description": {
+          "town": "Vaše mesto ali kraj."
+        }
       },
       "args_ecoharmonogram_pl": {
         "title": "Configure Source",
@@ -22643,7 +22661,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_alvsbyns_energi_se": {
@@ -22653,7 +22672,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_okrab_se": {
         "title": "Configure Source",
@@ -22686,7 +22707,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_ostersund_se": {
@@ -22696,7 +22718,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_a_region_ch": {
         "title": "Configure Source",
@@ -23938,7 +23962,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_ashford_gov_uk": {
@@ -23950,7 +23975,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_iapp_itouchvision_com": {
@@ -23983,11 +24009,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "council": "Svet",
+          "council": "Council",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_babergh_midsuffolk_gov_uk": {
@@ -23995,10 +24022,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "council": "Svet",
+          "council": "Council",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_barnsley_gov_uk": {
         "title": "Configure Source",
@@ -24214,7 +24243,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_birmingham_gov_uk": {
@@ -24226,7 +24256,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_blaby_gov_uk": {
@@ -24745,7 +24776,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_calderdale_gov_uk": {
@@ -24757,7 +24789,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_greater_cambridge_waste_org": {
@@ -25275,12 +25308,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house": "Hiša",
+          "house": "Hišna številka",
           "llpgid": "Llpgid",
           "postcode": "Poštna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_colchester_gov_uk": {
@@ -25288,11 +25323,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house": "Hiša",
+          "house": "Hišna številka",
           "llpgid": "Llpgid",
           "postcode": "Poštna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "house": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
+        }
       },
       "args_conwy_gov_uk": {
         "title": "Configure Source",
@@ -26288,10 +26326,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "road_name": "Ime ceste"
+          "road_name": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Vaša poštna številka.",
+          "road_name": "Ime vaše ulice."
         }
       },
       "reconfigure_fareham_gov_uk": {
@@ -26300,9 +26340,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "road_name": "Ime ceste"
+          "road_name": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Vaša poštna številka.",
+          "road_name": "Ime vaše ulice."
+        }
       },
       "args_fccenvironment_co_uk": {
         "title": "Configure Source",
@@ -26832,11 +26875,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Številka",
+          "number": "Hišna številka",
           "post_code": "Poštna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Vaša hišna številka.",
+          "post_code": "Vaša poštna številka."
         }
       },
       "reconfigure_herefordshire_gov_uk": {
@@ -26844,10 +26889,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Številka",
+          "number": "Hišna številka",
           "post_code": "Poštna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Vaša hišna številka.",
+          "post_code": "Vaša poštna številka."
+        }
       },
       "args_highpeak_gov_uk": {
         "title": "Configure Source",
@@ -27415,7 +27463,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hackney_gov_uk": {
@@ -27426,7 +27476,10 @@
           "postcode": "Poštna številka",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_harrow_gov_uk": {
         "title": "Configure Source",
@@ -27482,7 +27535,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hillingdon_gov_uk": {
@@ -27492,7 +27546,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_hounslow_gov_uk": {
         "title": "Configure Source",
@@ -28093,7 +28149,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_monmouthshire_gov_uk": {
@@ -28103,7 +28160,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_moray_gov_uk": {
         "title": "Configure Source",
@@ -28403,7 +28462,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_north_norfolk_gov_uk": {
@@ -28413,7 +28473,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_northnorthants_gov_uk": {
         "title": "Configure Source",
@@ -29167,10 +29229,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "uprn": "UPRN"
+          "uprn": "Uprn"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_rochford_gov_uk": {
@@ -29179,9 +29242,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "uprn": "UPRN"
+          "uprn": "Uprn"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Vaša poštna številka."
+        }
       },
       "args_rother_gov_uk": {
         "title": "Configure Source",
@@ -30114,7 +30179,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_stroud_gov_uk": {
@@ -30126,7 +30192,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_sunderland_gov_uk": {
@@ -30505,7 +30572,9 @@
           "town": "Mesto"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice.",
+          "town": "Vaše mesto ali kraj."
         }
       },
       "reconfigure_thurrock_gov_uk": {
@@ -30516,7 +30585,10 @@
           "street": "Ulica",
           "town": "Mesto"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice.",
+          "town": "Vaše mesto ali kraj."
+        }
       },
       "args_tmbc_gov_uk": {
         "title": "Configure Source",
@@ -30780,7 +30852,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_wandsworth_gov_uk": {
@@ -30790,7 +30863,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_warrington_gov_uk": {
         "title": "Configure Source",
@@ -31355,10 +31430,13 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov",
           "postcode": "Poštna številka",
-          "property": "Nepremičnina"
+          "property": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov.",
+          "postcode": "Vaša poštna številka.",
+          "property": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_wokingham_gov_uk": {
@@ -31368,9 +31446,13 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov",
           "postcode": "Poštna številka",
-          "property": "Nepremičnina"
+          "property": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov.",
+          "postcode": "Vaša poštna številka.",
+          "property": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_wolverhampton_gov_uk": {
         "title": "Configure Source",
@@ -31471,12 +31553,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_cutomer": "Šifra stranke",
           "street": "Ulica",
           "town": "Mesto"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice.",
+          "town": "Vaše mesto ali kraj."
         }
       },
       "reconfigure_wyreforestdc_gov_uk": {
@@ -31484,11 +31568,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_cutomer": "Šifra stranke",
           "street": "Ulica",
           "town": "Mesto"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice.",
+          "town": "Vaše mesto ali kraj."
+        }
       },
       "args_abilene_tx_us": {
         "title": "Configure Source",
@@ -31952,7 +32039,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_talgov_com": {
@@ -31962,7 +32050,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_communitywastedisposal_com": {
         "title": "Configure Source",
@@ -32433,11 +32523,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "prem_code": "Koda objekta",
-          "street_address": "Ulični naslov"
+          "prem_code": "Prem Code",
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_seattle_gov": {
@@ -32445,10 +32536,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "prem_code": "Koda objekta",
-          "street_address": "Ulični naslov"
+          "prem_code": "Prem Code",
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_ics_trashdaynow_com": {
         "title": "Configure Source",

@@ -1,0 +1,39 @@
+# Thurrock
+
+Support for schedules provided by [Thurrock](https://www.thurrock.gov.uk/).
+
+Source for Thurrock.
+
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: thurrock_gov_uk
+      args:
+        street: STREET
+        town: TOWN
+```
+
+### Configuration Variables
+
+**street**  
+*(string) (required)*
+
+**town**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: thurrock_gov_uk
+      args:
+        street: Camden Close
+        town: Chadwell St Mary
+```
+
+## How to get the source arguments
+
+Enter your street name and town exactly as listed on https://www.thurrock.gov.uk/household-bin-collection-days (e.g. street 'Camden Close', town 'Chadwell St Mary').
