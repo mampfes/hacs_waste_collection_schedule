@@ -1,160 +1,113 @@
+import datetime
 import re
-from datetime import date
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Bolsover District Council"
-DESCRIPTION = "Source for Bolsover District Council, UK."
-URL = "https://www.bolsover.gov.uk"
-
-TEST_CASES = {
-    "Calendar A, Wednesday": {"calendar": "a", "collection_day": "wednesday"},
-    "Calendar B, Thursday": {"calendar": "b", "collection_day": "thursday"},
-}
+from waste_collection_schedule.recurrence import month as month_number
+from waste_collection_schedule.transformers import RowTransformer
 
 VALID_CALENDARS = ["a", "b"]
+
+# The weekday columns of every month table, after the "Bin" column.
 VALID_DAYS = ["tuesday", "wednesday", "thursday", "friday"]
 
-DAY_COLUMNS = {
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-}
 
-ICON_MAP = {
-    "Black": Icons.GENERAL_WASTE,
-    "Burgundy": Icons.RECYCLING,
-    "Green": Icons.ORGANIC,
-}
-
-MONTHS = {
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Check your bin calendar letter (A or B) and collection day (Tuesday–Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "calendar": "Your bin calendar letter: 'a' or 'b'.",
-        "collection_day": "Your collection day: tuesday, wednesday, thursday, or friday.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "calendar": "Calendar",
-        "collection_day": "Collection Day",
-    },
-}
-
-
-def _get_icon(bin_type: str) -> str | None:
-    for key, icon in ICON_MAP.items():
-        if key.lower() in bin_type.lower():
-            return icon
-    return None
-
-
-class Source:
-    def __init__(self, calendar: str, collection_day: str):
-        self._calendar = calendar.strip().lower()
-        self._collection_day = collection_day.strip().lower()
-
-        if self._calendar not in VALID_CALENDARS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "calendar", self._calendar, suggestions=VALID_CALENDARS
-            )
-        if self._collection_day not in VALID_DAYS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "collection_day", self._collection_day, suggestions=VALID_DAYS
-            )
-
-    def fetch(self) -> list[Collection]:
-        r = requests.get(
-            f"https://www.bolsover.gov.uk/waste-bins-recycling/bin-calendar-{self._calendar}",
-            impersonate="chrome124",
-            timeout=30,
+def _calendar_url(calendar: str, **_) -> str:
+    calendar = str(calendar).strip().lower()
+    if calendar not in VALID_CALENDARS:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "calendar", calendar, suggestions=VALID_CALENDARS
         )
-        r.raise_for_status()
+    return f"https://www.bolsover.gov.uk/waste-bins-recycling/bin-calendar-{calendar}"
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        col_idx = DAY_COLUMNS[self._collection_day]
 
-        entries: list[Collection] = []
+def _rows(tables, source) -> list[tuple[datetime.date, str]]:
+    """One ``(date, bin)`` row per bin of the configured weekday, per month table.
 
-        for table in soup.find_all("table"):
-            headers = [
-                th.text.strip().lower()
-                for th in table.find("tr").find_all(["th", "td"])
-            ]
+    Each month is a table ("Bin", "Tuesday" .. "Friday") under an ``h2`` naming
+    the month and year; a cell is the day of the month. A round of several bins
+    reads "Green / Burgundy". Tables that are not month calendars are skipped.
+    """
+    day = str(source.params["collection_day"]).strip().lower()
+    if day not in VALID_DAYS:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "collection_day", day, suggestions=VALID_DAYS
+        )
+    column = VALID_DAYS.index(day) + 1
 
-            # Skip non-collection tables (e.g. Christmas amendments)
-            if "bin" not in headers[0].lower() if headers else True:
+    rows: list[tuple[datetime.date, str]] = []
+    for table in tables:
+        trs = table.find_all("tr")
+        header = [c.get_text(strip=True).lower() for c in trs[0].find_all(["th", "td"])]
+        if not header or header[0] != "bin":
+            continue
+        heading = table.find_previous("h2")
+        match = heading and re.match(r"(\w+)\s+(\d{4})", heading.get_text(strip=True))
+        month = match and month_number(match.group(1))
+        if not match or not month:
+            continue
+        year = int(match.group(2))
+
+        for tr in trs[1:]:
+            cells = [c.get_text(strip=True) for c in tr.find_all(["td", "th"])]
+            if len(cells) <= column:
                 continue
-
-            # Find the month heading before this table
-            heading = table.find_previous("h2")
-            if not heading:
+            # A cell may carry an annotation such as "(No collection)".
+            text = re.sub(r"\(.*?\)", "", cells[column]).strip()
+            if not text.isdigit():
                 continue
-
-            match = re.match(r"(\w+)\s+(\d{4})", heading.text.strip())
-            if not match:
+            try:
+                collected = datetime.date(year, month, int(text))
+            except ValueError:
                 continue
+            for label in cells[0].split("/"):
+                if label.strip():
+                    rows.append((collected, label.strip()))
+    return rows
 
-            month_name, year_str = match.groups()
-            if month_name not in MONTHS:
-                continue
 
-            month = MONTHS[month_name]
-            year = int(year_str)
+@final
+class Source(BaseSource):
+    TITLE = "Bolsover District Council"
+    DESCRIPTION = "Source for Bolsover District Council, UK."
+    URL = "https://www.bolsover.gov.uk"
+    COUNTRY = "uk"
 
-            for row in table.find_all("tr")[1:]:
-                cells = [td.text.strip() for td in row.find_all(["td", "th"])]
-                if len(cells) <= col_idx:
-                    continue
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-                bin_label = cells[0]
-                if "no collection" in bin_label.lower():
-                    continue
+    TEST_CASES: ClassVar[dict] = {
+        "Calendar A, Wednesday": {"calendar": "a", "collection_day": "wednesday"},
+        "Calendar B, Thursday": {"calendar": "b", "collection_day": "thursday"},
+    }
 
-                day_str = cells[col_idx]
-                # Strip annotations like "(No collection)"
-                day_str = re.sub(r"\(.*?\)", "", day_str).strip()
-                if not day_str or not day_str.isdigit():
-                    continue
+    PARAMS = (
+        dropdown("calendar", VALID_CALENDARS, label="Calendar"),
+        dropdown("collection_day", VALID_DAYS, label="Collection Day"),
+    )
 
-                day = int(day_str)
-                try:
-                    collection_date = date(year, month, day)
-                except ValueError:
-                    continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Check your bin calendar letter (A or B) and collection day "
+            "(Tuesday to Friday) on the Bolsover website at "
+            "https://www.bolsover.gov.uk/services/b/bins-and-recycling/."
+        ),
+    }
 
-                # Split combined bin types like "Green / Burgundy" or "Burgundy / Black"
-                bin_types = [b.strip() for b in bin_label.split("/")]
-                for bt in bin_types:
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=bt,
-                            icon=_get_icon(bt),
-                        )
-                    )
-
-        return entries
+    retrieve = retrievers.HttpGetRetriever(url=_calendar_url)
+    parse = parsers.HtmlParser("table")
+    preprocess = staticmethod(_rows)
+    transform = RowTransformer(
+        type_value_map={
+            "Black": wt.GENERAL_WASTE,
+            "Burgundy": wt.RECYCLABLES,
+            "Green": wt.GARDEN_WASTE,
+        },
+    )

@@ -1,186 +1,129 @@
-from datetime import date, datetime
-from typing import Any
-from urllib.parse import quote_plus
+import re
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Mansfield Shire Council"
-DESCRIPTION = "Source for Mansfield Shire Council rubbish collection."
-URL = "https://www.mansfield.vic.gov.au"
-TEST_CASES = {
-    "Mansfield Zoo": {
-        "street_address": "1064 Mansfield-Woods Point Road MANSFIELD VIC 3722"
-    },
-    "Ambulance Station": {"street_address": "3 Curia Street MANSFIELD VIC 3722"},
-}
+API = "https://www.mansfield.vic.gov.au"
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green Bin": Icons.GARDEN,
-}
+_DATE = re.compile(r"\d{2}/\d{2}/\d{4}")
 
 
-def _normalise_address(value: str) -> str:
-    return " ".join(value.split())
+def _normalise(value: str) -> str:
+    return " ".join(value.split()).lower()
 
 
-def _looks_like_date_text(text: str) -> bool:
-    text = text.strip()
-    if not text:
-        return False
-    if "/" in text:
-        return True
-    return any(
-        text.startswith(prefix)
-        for prefix in ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+def _pick_address(response, *keys, street_address, **_) -> str:
+    """The autocomplete answers ``[{"value": address, ...}, ...]``.
+
+    The council stores its addresses with doubled spaces ("3 Curia Street
+    MANSFIELD  VIC  3722"), and the schedule only answers to that exact spelling.
+    """
+    hits = [
+        hit["value"]
+        for hit in response.json()
+        if isinstance(hit, dict) and hit.get("value")
+    ]
+    wanted = _normalise(street_address)
+    for hit in hits:
+        if _normalise(hit) == wanted:
+            return hit
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_address", street_address, [" ".join(hit.split()) for hit in hits]
     )
 
 
-def _parse_date(text: str) -> date | None:
-    text = text.strip()
-    for fmt in ("%a %d/%m/%Y", "%A %d/%m/%Y", "%d/%m/%Y"):
-        try:
-            return datetime.strptime(text, fmt).date()
-        except ValueError:
-            continue
-    return None
+def _services(command, source) -> list[dict]:
+    """One row per service of the schedule HTML an ``insert`` command carries."""
+    if not isinstance(command, dict) or command.get("command") != "insert":
+        return []
+    html = command.get("data")
+    if not isinstance(html, str):
+        return []
+    rows = []
+    for heading in BeautifulSoup(html, "html.parser").find_all("h4"):
+        info = heading.find_next_sibling("div", class_="info")
+        match = _DATE.search(info.get_text(" ", strip=True)) if info else None
+        if match:
+            rows.append({"type": heading.get_text(" ", strip=True), "date": match[0]})
+    return rows
 
 
-def _resolve_icon(label: str) -> Any | None:
-    if not label:
-        return None
-    lowered = label.lower()
-    for keyword, icon in ICON_MAP.items():
-        if keyword.lower() in lowered:
-            return icon
-    return None
+@final
+class Source(BaseSource):
+    TITLE = "Mansfield Shire Council"
+    DESCRIPTION = "Source for Mansfield Shire Council rubbish collection."
+    URL = "https://www.mansfield.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
+    TEST_CASES: ClassVar[dict] = {
+        "Mansfield Zoo": {
+            "street_address": "1064 Mansfield-Woods Point Road MANSFIELD VIC 3722"
+        },
+        "Ambulance Station": {"street_address": "3 Curia Street MANSFIELD VIC 3722"},
+    }
 
-    def _autocomplete(self, query: str, session: requests.Session) -> list[str]:
-        url = f"{URL}/views-autocomplete-filters/waste_schedule/block_1/formatted_address/0?q={quote_plus(query)}"
-        headers = {
-            "Accept": "application/json",
-            "User-Agent": "python-requests",
-            "Referer": f"{URL}/waste-schedule",
-        }
-        try:
-            r = session.get(url, headers=headers, timeout=15)
-            r.raise_for_status()
-            data = r.json()
-            values: list[str] = []
-            for item in data:
-                if isinstance(item, dict) and item.get("value"):
-                    values.append(item["value"])
-                elif isinstance(item, str):
-                    values.append(item)
-            return values
-        except Exception:
-            return []
+    PARAMS = (street_address("street_address"),)
 
-    def _find_formatted_address(self, session: requests.Session) -> str | None:
-        queries = [self._street_address]
-        parts = self._street_address.split()
-        if parts:
-            queries.append(parts[0])
-            if len(parts) > 1:
-                queries.append(parts[0] + " " + parts[1])
-        for q in queries:
-            candidates = self._autocomplete(q, session)
-            if candidates:
-                target = _normalise_address(self._street_address)
-                for c in candidates:
-                    if _normalise_address(c).lower() == target.lower():
-                        return c
-                return candidates[0]
-        return None
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search your address on the "
+            "[Mansfield Shire Council bin day page](https://www.mansfield.vic.gov.au/community/residents/waste-recycling/check-my-bin-day) "
+            "and enter it as shown in the autocomplete result, e.g. "
+            "'3 Curia Street MANSFIELD VIC 3722'."
+        ),
+    }
 
-    def fetch(self) -> list[Collection]:
-        with requests.Session() as s:
-            fmt_addr = self._find_formatted_address(s)
-            use_addr = fmt_addr or self._street_address
-            addr = quote_plus(use_addr)
-            ajax_url = (
-                f"{URL}/views/ajax?_wrapper_format=drupal_ajax&view_name=waste_schedule"
-                f"&view_display_id=block_1&view_args=&view_path=%2Fnode%2F96"
-                f"&view_base_path=waste-schedule&formatted_address={addr}"
-            )
-            headers = {
-                "Accept": "application/json",
-                "User-Agent": "python-requests",
-                "Referer": f"{URL}/waste-schedule",
-                "X-Requested-With": "XMLHttpRequest",
-            }
-            r = s.get(ajax_url, headers=headers, timeout=30)
-            r.raise_for_status()
-            try:
-                payload = r.json()
-            except ValueError:
-                payload = []
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/views-autocomplete-filters/waste_schedule/block_1/formatted_address/0",
+                # The autocomplete finds nothing for a whole address (it holds
+                # doubled spaces); the street number and first word do find it.
+                params=lambda street_address, **_: {
+                    "q": " ".join(street_address.split()[:2])
+                },
+                headers={"Accept": "application/json"},
+                pick=_pick_address,
+            ),
+        ),
+        url=f"{API}/views/ajax",
+        params=lambda key, **_: {
+            "_wrapper_format": "drupal_ajax",
+            "view_name": "waste_schedule",
+            "view_display_id": "block_1",
+            "view_args": "",
+            "view_path": "/node/96",
+            "view_base_path": "waste-schedule",
+            "formatted_address": key,
+        },
+        headers={"Accept": "application/json", "X-Requested-With": "XMLHttpRequest"},
+    )
 
-        html_parts: list[str] = []
-        for entry in payload:
-            if isinstance(entry, dict) and entry.get("command") == "insert":
-                data = entry.get("data")
-                if isinstance(data, str) and data:
-                    html_parts.append(data)
-        html = "\n".join(html_parts)
-        if not html:
-            return []
+    parse = parsers.JsonParser()
 
-        soup = BeautifulSoup(html, "html.parser")
-        entries: list[Collection] = []
+    preprocess = ExplodeList(_services)
 
-        for h4 in soup.find_all("h4"):
-            waste_type = h4.get_text(" ", strip=True)
-            if not waste_type:
-                continue
-
-            date_text = None
-            info = h4.find_next("div", class_="info")
-            if info:
-                for p in info.select("p"):
-                    text = p.get_text(" ", strip=True)
-                    if _looks_like_date_text(text):
-                        date_text = text
-                        break
-
-            if not date_text:
-                for sibling in h4.find_next_siblings():
-                    if getattr(sibling, "name", None) == "div" and sibling.select_one(
-                        "p"
-                    ):
-                        for p in sibling.select("p"):
-                            text = p.get_text(" ", strip=True)
-                            if _looks_like_date_text(text):
-                                date_text = text
-                                break
-                        if date_text:
-                            break
-                    elif getattr(sibling, "name", None) == "p":
-                        text = sibling.get_text(" ", strip=True)
-                        if _looks_like_date_text(text):
-                            date_text = text
-                            break
-
-            if not date_text:
-                continue
-
-            collection_date = _parse_date(date_text)
-            if collection_date is None:
-                continue
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=waste_type,
-                    icon=_resolve_icon(waste_type),
-                )
-            )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "General waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Green Bin": wt.GARDEN_WASTE,
+        },
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )

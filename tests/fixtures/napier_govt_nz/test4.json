@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php e81cb6dc0b",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=14+Cobden+Road&council=shared&type=address",
+      "body": "{\"params\":[[\"council\",\"shared\"],[\"search\",\"14 Cobden Road\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "112",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:13:02 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "W3siaWQiOiIxMTA5MzgtMTE0NDM2IiwicmFfdW5pcXVlX2lkIjoiMTE0NDM2Iiwic3VmaV9pZCI6IjExMDkzOCIsInZhbHVhdGlvbl9pZCI6IjA5ODgwNjAwMDAiLCJ2YWx1ZSI6IjE0IENvYmRlbiBSb2FkICgwOTg4MDYwMDAwKSJ9XQ=="
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php 0f0378b313",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php?v=0988060000&s=110938&r=114436",
+      "body": "{\"params\":[[\"r\",\"114436\"],[\"s\",\"110938\"],[\"v\",\"0988060000\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "412",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:13:03 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjE0IENvYmRlbiBSb2FkXCI+XG5cdDxoMj5Db2xsZWN0aW9uIGRheXM8XC9oMj5cblx0PHA+QmVsb3cgYXJlIHRoZSBydWJiaXNoIGFuZCByZWN5Y2xpbmcgY29sbGVjdGlvbiBkYXlzIGZvciA8c3Ryb25nPjE0IENvYmRlbiBSb2FkPFwvc3Ryb25nPi48XC9wPlxuXHQ8dGFibGUgd2lkdGg9XCIxMDAlXCI+XG5cdFx0PHRoZWFkPlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGggd2lkdGg9XCIxMDAlXCI+UnViYmlzaCBjb2xsZWN0aW9uPFwvdGg+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90aGVhZD5cblx0XHQ8dGJvZHk+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0ZD5FdmVyeSBGcmlkYXkgLSBPdXQgYnkgN2FtPFwvdGQ+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90Ym9keT5cblx0PFwvdGFibGU+XG5cdDx0YWJsZSB3aWR0aD1cIjEwMCVcIj5cblx0XHQ8dGhlYWQ+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0aCB3aWR0aD1cIjEwMCVcIj5SZWN5Y2xpbmcgY29sbGVjdGlvbjxcL3RoPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGhlYWQ+XG5cdFx0PHRib2R5PlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGQ+RXZlcnkgVGh1cnNkYXkgLSBPdXQgYnkgN2FtPFwvdGQ+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90Ym9keT5cblx0PFwvdGFibGU+XG5cdDxwPk1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhpcyBwcm9wZXJ0eSBjYW4gYmUgZm91bmQgb24gdGhlIDxhIGhyZWY9XCJcL3NlcnZpY2VzXC9wcm9wZXJ0aWVzLWFuZC1yYXRlc1wvbXktcHJvcGVydHlcLz9yaWQ9MTEwOTM4LTExNDQzNlwiPk15IFByb3BlcnR5PFwvYT4gcGFnZS48XC9wPlxuPFwvZGl2PiIsImpzIjoiIn0="
+    }
+  ]
+}

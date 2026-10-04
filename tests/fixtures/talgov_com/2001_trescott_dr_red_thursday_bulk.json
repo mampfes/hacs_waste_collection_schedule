@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "GET https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx e8056ced45",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx?address=2001+Trescott+Dr",
+      "body": "{\"params\":[[\"address\",\"2001 Trescott Dr\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "85",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjIwMDEgVHJlc2NvdHQgRHIgIiwiY3VzdG9tZXJudW1iZXIiOiIxMDAwMzM2NTkiLCJzZXJ2aWNlaWQiOiJTMDMyNzY0MSJ9XQ=="
+    },
+    {
+      "key": "GET https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx d043975d8c",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx?customernumber=100033659&serviceid=S0327641",
+      "body": "{\"params\":[[\"customernumber\",\"100033659\"],[\"serviceid\",\"S0327641\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "207",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjIwMDEgVHJlc2NvdHQgRHIgIiwicGlja3VwbW9uZGF5IjoiTm8iLCJwaWNrdXB0dWVzZGF5IjoiTm8iLCJwaWNrdXB3ZWRuZXNkYXkiOiJObyIsInBpY2t1cHRodXJzZGF5IjoiTm8iLCJwaWNrdXBmcmlkYXkiOiJZZXMiLCJwaWNrdXBzYXR1cmRheSI6Ik5vIiwicGlja3Vwc3VuZGF5IjoiTm8iLCJ5d19idWxrIjoiUmVkIFRodXJzZGF5In1d"
+    }
+  ]
+}

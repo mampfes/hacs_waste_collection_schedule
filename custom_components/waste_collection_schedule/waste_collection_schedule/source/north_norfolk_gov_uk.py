@@ -1,154 +1,144 @@
-import json
-from datetime import date, datetime, timedelta
-from time import sleep
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "North Norfolk District Council"
-DESCRIPTION = "Source for waste collection services for North Norfolk District Council"
-URL = "https://www.north-norfolk.gov.uk/"
+FORMS = "https://forms.north-norfolk.gov.uk/xforms"
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
+def _token(response) -> str:
+    """The anti-forgery token the next form post must carry."""
+    return BeautifulSoup(response.content, "html.parser").find(
+        "input", {"name": "__RequestVerificationToken"}
+    )["value"]
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+def _landing(response, **_):
+    """The landing page (its URL after the redirect) and its token."""
+    return response.url, _token(response)
+
+
+def _strongs(item) -> list:
+    """A collection list item carries bin, weekday and date as three <strong>."""
+    return item.find_all("strong")
+
+
+def _date(item) -> str | None:
+    # A property that does not subscribe to a collection has an empty item.
+    strongs = _strongs(item)
+    return strongs[2].get_text() if len(strongs) >= 3 else None
+
+
+def _label(item) -> str:
+    return _strongs(item)[0].get_text()
+
+
+def _address_form(response, landing, search_token, **_) -> dict:
+    """The council's own record of the property, as the address form wants it."""
+    found = response.json()
+    return {
+        "__RequestVerificationToken": search_token,
+        "SearchPostcode": found["postcode"],
+        "Address": found["uprn"],
+        "GisUprn": found["uprn"],
+        "GisUsrn": found["bS7666USRN"],
+        "GisTownName": found["townName"],
+        "GisPostTown": found["postTown"],
+        "GisPostCode": found["postcode"],
+        "GisAddress": found["locAddress1BS7666"],
+        "Address1": "",
+        "Address2": "",
+        "Address3": "",
+        "Address4": "",
+        "Postcode": "",
+        "LocalSearch": "True",
+        "DisableManualEntry": "True",
+        "ComponentMode": "False",
+        "IsDirty": "True",
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+@final
+class Source(BaseSource):
+    TITLE = "North Norfolk District Council"
+    DESCRIPTION = (
+        "Source for waste collection services for North Norfolk District Council"
+    )
+    URL = "https://www.north-norfolk.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100090878875"},
+        "Test_002": {"uprn": 100090883974},
+        "Test_003": {"uprn": "100090880632"},
     }
-}
 
-TEST_CASES = {
-    "Test_001": {
-        "uprn": "100090878875",
-    },
-    "Test_002": {
-        "uprn": 100090883974,
-    },
-    "Test_003": {
-        "uprn": "100090880632",
-    },
-}
+    PARAMS = (uprn(),)
 
-ICON_MAP = {
-    "Grey bin": Icons.GENERAL_WASTE,
-    "Green bin": Icons.RECYCLING,
-    "Brown bin": Icons.BIO_KITCHEN,
-}
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "An easy way to discover your Unique Property Reference Number (UPRN) "
+            "is by going to https://www.findmyaddress.co.uk/ and entering in your "
+            "address details."
+        ),
+    }
 
+    # Launch the journey, confirm its landing page, look the property up by UPRN
+    # and post the result to the address form, which answers with the schedule.
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(f"{FORMS}/Launch/New/BinDaysJourney", pick=_landing),
+            retrievers.Lookup(
+                lambda landing, **_: landing[0],
+                method="POST",
+                data=lambda landing, **_: {
+                    "__RequestVerificationToken": landing[1],
+                    "Confirm": "true",
+                    "BusinessName": "",
+                    "IsDirty": "False",
+                    "Journey": "BinDaysJourney",
+                },
+                pick=lambda response, *keys, **_: _token(response),
+            ),
+            retrievers.Lookup(
+                f"{FORMS}/AddressSearch/GetAddressForUprn",
+                params=lambda *keys, uprn, **_: {
+                    "uprn": str(uprn),
+                    "localAddress": "True",
+                },
+                pick=lambda response, landing, search_token, **_: _address_form(
+                    response, landing, search_token
+                ),
+            ),
+        ),
+        url=f"{FORMS}/Address/Show/CollectionAddress",
+        method="POST",
+        data=lambda landing, search_token, form, **_: form,
+        raise_for_status=True,
+    )
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+    # Every <li> of the page; only the schedule items carry three <strong>.
+    parse = parsers.HtmlParser("li")
 
-    def append_year(self, d: str) -> date:
-        # Website doesn't return the year.
-        # Append the current year, and then check to see if the date is in the past.
-        # If it is, increment the year by 1.
-        today: date = datetime.now().date()
-        year: int = today.year
-        dt: date = datetime.strptime(f"{d} {year!s}", "%A %d %B %Y").date()
-        if (dt - today) < timedelta(days=-31):
-            dt = dt.replace(year=dt.year + 1)
-        return dt
-
-    def fetch(self):
-        sleep(1)  # prevents test case failures due to query rate
-
-        s = requests.Session()
-
-        # Step 1: Launch the BinDaysJourney to start a session
-        r = s.get(
-            "https://forms.north-norfolk.gov.uk/xforms/Launch/New/BinDaysJourney",
-            headers=HEADERS,
-        )
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-        token: str = soup.find("input", {"name": "__RequestVerificationToken"}).get(
-            "value"
-        )
-
-        # Step 2: Confirm the landing page to proceed to address search
-        r = s.post(
-            r.url,
-            headers=HEADERS,
-            data={
-                "__RequestVerificationToken": token,
-                "Confirm": "true",
-                "BusinessName": "",
-                "IsDirty": "False",
-                "Journey": "BinDaysJourney",
-            },
-        )
-        soup = BeautifulSoup(r.content, "html.parser")
-        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
-
-        payload: dict = {
-            "__RequestVerificationToken": token,
-        }
-
-        # use uprn to get address details
-        params: dict = {"uprn": self._uprn, "localAddress": "True"}
-        r = s.get(
-            "https://forms.north-norfolk.gov.uk/xforms/AddressSearch/GetAddressForUprn",
-            params=params,
-            headers=HEADERS,
-        )
-        r_json: dict = json.loads(r.content)
-
-        payload.update(
-            {
-                "SearchPostcode": r_json["postcode"],
-                "Address": r_json["uprn"],
-                "GisUprn": r_json["uprn"],
-                "GisUsrn": r_json["bS7666USRN"],
-                "GisTownName": r_json["townName"],
-                "GisPostTown": r_json["postTown"],
-                "GisPostCode": r_json["postcode"],
-                "GisAddress": r_json["locAddress1BS7666"],
-                "Address1": "",
-                "Address2": "",
-                "Address3": "",
-                "Address4": "",
-                "Postcode": "",
-                "LocalSearch": "True",
-                "DisableManualEntry": "True",
-                "ComponentMode": "False",
-                "IsDirty": "True",
-            }
-        )
-
-        # get collection schedule
-        r = s.post(
-            "https://forms.north-norfolk.gov.uk/xforms/Address/Show/CollectionAddress",
-            headers=HEADERS,
-            data=payload,
-        )
-
-        entries: list = []
-
-        soup = BeautifulSoup(r.content, "html.parser")
-        li: list = soup.find_all("li")
-        for item in li:
-            details: list = item.find_all("strong")
-            try:
-                entries.append(
-                    Collection(
-                        date=self.append_year(details[2].text),
-                        t=str(details[0].text),
-                        icon=ICON_MAP.get(details[0].text),
-                    )
-                )
-            except IndexError:  # empty list is returned if property doesn't subscribe to that collection
-                continue
-
-        return entries
+    # The page names the day and month but not the year.
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_label,
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        type_value_map={
+            "Grey bin": wt.GENERAL_WASTE,
+            "Green bin": wt.RECYCLABLES,
+            "Brown bin": wt.GARDEN_WASTE,
+        },
+    )

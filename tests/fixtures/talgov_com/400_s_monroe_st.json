@@ -1,0 +1,101 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "GET https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx dd7911bc7b",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx?address=400+S+Monroe+St",
+      "body": "{\"params\":[[\"address\",\"400 S Monroe St\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "334",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjM0MDAgUyBNb25yb2UgU3QgIiwiY3VzdG9tZXJudW1iZXIiOiIxMDAzMzY2NDYiLCJzZXJ2aWNlaWQiOiJTMDI2MjQxMyJ9LHsiYWRkcmVzcyI6IjQwMCBTIE1vbnJvZSBTdCAiLCJjdXN0b21lcm51bWJlciI6IjEwMDExNjYzOCIsInNlcnZpY2VpZCI6IlMwNDMzMDUwIn0seyJhZGRyZXNzIjoiNDAwIFMgTW9ucm9lIFN0ICIsImN1c3RvbWVybnVtYmVyIjoiMTAwMTE2NjM4Iiwic2VydmljZWlkIjoiUzA0MzU2NjQifSx7ImFkZHJlc3MiOiI0MDAgUyBNb25yb2UgU3QgIiwiY3VzdG9tZXJudW1iZXIiOiIxMDAxMTY2MzgiLCJzZXJ2aWNlaWQiOiJTMDQzMjgyNCJ9XQ=="
+    },
+    {
+      "key": "GET https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx 3d5fb5cad1",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx?customernumber=100116638&serviceid=S0433050",
+      "body": "{\"params\":[[\"customernumber\",\"100116638\"],[\"serviceid\",\"S0433050\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "196",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjQwMCBTIE1vbnJvZSBTdCAiLCJwaWNrdXBtb25kYXkiOiJZZXMiLCJwaWNrdXB0dWVzZGF5IjoiTm8iLCJwaWNrdXB3ZWRuZXNkYXkiOiJZZXMiLCJwaWNrdXB0aHVyc2RheSI6Ik5vIiwicGlja3VwZnJpZGF5IjoiWWVzIiwicGlja3Vwc2F0dXJkYXkiOiJObyIsInBpY2t1cHN1bmRheSI6Ik5vIiwieXdfYnVsayI6IiJ9XQ=="
+    },
+    {
+      "key": "GET https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx e71bd4cfbc",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx?customernumber=100116638&serviceid=S0435664",
+      "body": "{\"params\":[[\"customernumber\",\"100116638\"],[\"serviceid\",\"S0435664\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "196",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjQwMCBTIE1vbnJvZSBTdCAiLCJwaWNrdXBtb25kYXkiOiJObyIsInBpY2t1cHR1ZXNkYXkiOiJZZXMiLCJwaWNrdXB3ZWRuZXNkYXkiOiJZZXMiLCJwaWNrdXB0aHVyc2RheSI6Ik5vIiwicGlja3VwZnJpZGF5IjoiWWVzIiwicGlja3Vwc2F0dXJkYXkiOiJObyIsInBpY2t1cHN1bmRheSI6Ik5vIiwieXdfYnVsayI6IiJ9XQ=="
+    },
+    {
+      "key": "GET https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx 452a932939",
+      "method": "GET",
+      "url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx",
+      "final_url": "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx?customernumber=100116638&serviceid=S0432824",
+      "body": "{\"params\":[[\"customernumber\",\"100116638\"],[\"serviceid\",\"S0432824\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "198",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-type": "application/jsonp; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:47:14 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=157680000",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjQwMCBTIE1vbnJvZSBTdCAiLCJwaWNrdXBtb25kYXkiOiJZZXMiLCJwaWNrdXB0dWVzZGF5IjoiWWVzIiwicGlja3Vwd2VkbmVzZGF5IjoiWWVzIiwicGlja3VwdGh1cnNkYXkiOiJZZXMiLCJwaWNrdXBmcmlkYXkiOiJZZXMiLCJwaWNrdXBzYXR1cmRheSI6Ik5vIiwicGlja3Vwc3VuZGF5IjoiTm8iLCJ5d19idWxrIjoiIn1d"
+    }
+  ]
+}

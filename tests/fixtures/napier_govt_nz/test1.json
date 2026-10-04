@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php 4646464d14",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=4+Sheehan+Street&council=shared&type=address",
+      "body": "{\"params\":[[\"council\",\"shared\"],[\"search\",\"4 Sheehan Street\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "115",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:12:59 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "W3siaWQiOiIxMTI4NDMtMTIwNDIyIiwicmFfdW5pcXVlX2lkIjoiMTIwNDIyIiwic3VmaV9pZCI6IjExMjg0MyIsInZhbHVhdGlvbl9pZCI6IjA5NzcwMDcwMDAiLCJ2YWx1ZSI6IjQgU2hlZWhhbiBTdHJlZXQgKDA5NzcwMDcwMDApIn1d"
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php 4be92ec747",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php?v=0977007000&s=112843&r=120422",
+      "body": "{\"params\":[[\"r\",\"120422\"],[\"s\",\"112843\"],[\"v\",\"0977007000\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "411",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:13:00 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjQgU2hlZWhhbiBTdHJlZXRcIj5cblx0PGgyPkNvbGxlY3Rpb24gZGF5czxcL2gyPlxuXHQ8cD5CZWxvdyBhcmUgdGhlIHJ1YmJpc2ggYW5kIHJlY3ljbGluZyBjb2xsZWN0aW9uIGRheXMgZm9yIDxzdHJvbmc+NCBTaGVlaGFuIFN0cmVldDxcL3N0cm9uZz4uPFwvcD5cblx0PHRhYmxlIHdpZHRoPVwiMTAwJVwiPlxuXHRcdDx0aGVhZD5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRoIHdpZHRoPVwiMTAwJVwiPlJ1YmJpc2ggY29sbGVjdGlvbjxcL3RoPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGhlYWQ+XG5cdFx0PHRib2R5PlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGQ+RXZlcnkgTW9uZGF5IC0gT3V0IGJ5IDdhbTxcL3RkPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGJvZHk+XG5cdDxcL3RhYmxlPlxuXHQ8dGFibGUgd2lkdGg9XCIxMDAlXCI+XG5cdFx0PHRoZWFkPlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGggd2lkdGg9XCIxMDAlXCI+UmVjeWNsaW5nIGNvbGxlY3Rpb248XC90aD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3RoZWFkPlxuXHRcdDx0Ym9keT5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRkPkV2ZXJ5IEZyaWRheSAtIE91dCBieSA3YW08XC90ZD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3Rib2R5PlxuXHQ8XC90YWJsZT5cblx0PHA+TW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGlzIHByb3BlcnR5IGNhbiBiZSBmb3VuZCBvbiB0aGUgPGEgaHJlZj1cIlwvc2VydmljZXNcL3Byb3BlcnRpZXMtYW5kLXJhdGVzXC9teS1wcm9wZXJ0eVwvP3JpZD0xMTI4NDMtMTIwNDIyXCI+TXkgUHJvcGVydHk8XC9hPiBwYWdlLjxcL3A+XG48XC9kaXY+IiwianMiOiIifQ=="
+    }
+  ]
+}

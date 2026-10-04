@@ -1,0 +1,300 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "POST https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/property/opensearch db1ce43719",
+      "method": "POST",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/property/opensearch",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/property/opensearch",
+      "body": "{\"body\":{\"Filters\":[{\"Filter\":\"attributes_premisesBlpuClass\",\"Include\":true,\"StringMatch\":\"Prefix\",\"Value\":\"R\"}],\"Postcode\":\"E8 4LL\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "806",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:21 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ARRAffinity=e6634875fad8e9bcb43fa5225fbf37b21e36c6d4839748cf7076a5722cd7a884;Path=/;HttpOnly;Secure;Domain=waste-api-hackney-live.ieg4.net, ARRAffinitySameSite=e6634875fad8e9bcb43fa5225fbf37b21e36c6d4839748cf7076a5722cd7a884;Path=/;HttpOnly;SameSite=None;Secure;Domain=waste-api-hackney-live.ieg4.net",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJhZGRyZXNzU3VtbWFyaWVzIjpbeyJzdW1tYXJ5IjoiICAgICAgMTIxICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2ViMCIsInVwcm4iOiIxMDAwMjEwNTg5MTQiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxMjMgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWIzIiwidXBybiI6IjEwMDAyMTA1ODkxNyIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDEyNSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlYjYiLCJ1cHJuIjoiMTAwMDIxMDU4OTIwIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTI5ICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2ViYSIsInVwcm4iOiIxMDAwMjEwNTg5MjciLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxMzEgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3Zjg3ZDlkIiwidXBybiI6IjEwMDA4MzAwNjYwIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTM3ICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VjMiIsInVwcm4iOiIxMDAwMjEwNTg5MzgiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxMzkgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWM0IiwidXBybiI6IjEwMDAyMTA1ODk0MCIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE0MSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlYzYiLCJ1cHJuIjoiMTAwMDIxMDU4OTQyIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTQzICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VjOCIsInVwcm4iOiIxMDAwMjEwNTg5NDQiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNDUgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWM5IiwidXBybiI6IjEwMDAyMTA1ODk0NyIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE0NyAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlY2IiLCJ1cHJuIjoiMTAwMDIxMDU4OTQ5Iiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTQ5ICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VjYyIsInVwcm4iOiIxMDAwMjEwNTg5NTAiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNTEgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWNlIiwidXBybiI6IjEwMDAyMTA1ODk1MiIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE1MyAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlZDAiLCJ1cHJuIjoiMTAwMDIxMDU4OTU0Iiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTU1ICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VkMiIsInVwcm4iOiIxMDAwMjEwNTg5NTYiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNTcgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWQ0IiwidXBybiI6IjEwMDAyMTA1ODk1OCIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE1OSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlZDUiLCJ1cHJuIjoiMTAwMDIxMDU4OTYxIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTYxICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VkNyIsInVwcm4iOiIxMDAwMjEwNTg5NjMiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNjMgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWQ4IiwidXBybiI6IjEwMDAyMTA1ODk2NCIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE2NSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlZDkiLCJ1cHJuIjoiMTAwMDIxMDU4OTY1Iiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTY3ICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VkYSIsInVwcm4iOiIxMDAwMjEwNTg5NjYiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNjkgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWRiIiwidXBybiI6IjEwMDAyMTA1ODk2NyIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IiAgICAgIDE3MSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOGNlZGMiLCJ1cHJuIjoiMTAwMDIxMDU4OTY4Iiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiICAgICAgMTczICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2VkZCIsInVwcm4iOiIxMDAwMjEwNTg5NjkiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiIgICAgICAxNzUgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3ZjhjZWRlIiwidXBybiI6IjEwMDAyMTA1ODk3MCIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IkZsYXQgQSAgICAgIDEyNyAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmYTQ4ZDgiLCJ1cHJuIjoiMTAwMDIxMDU4OTIzIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiRmxhdCBBICAgICAgMTMzICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2ZhNDhkZCIsInVwcm4iOiIxMDAwMjEwNTg5MzQiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiJGbGF0IEEgICAgICAxMzUgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3Zjk2MWQzIiwidXBybiI6IjEwMDA4Mjk1NTQ4Iiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiRmxhdCBBICAgICAgMTczICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y5NTEzNiIsInVwcm4iOiIxMDAwODI2MjgzMSIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IkZsYXQgQiAgICAgIDEyNyAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmYThiZmQiLCJ1cHJuIjoiMTAwMDIzMDE2NjAyIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiRmxhdCBCICAgICAgMTMzICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2ZhOGJmYyIsInVwcm4iOiIxMDAwMjMwMTY2MDAiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfSx7InN1bW1hcnkiOiJGbGF0IEIgICAgICAxMzUgICAgIE1pZGRsZXRvbiBSb2FkICBFOCA0TEwiLCJwb3N0Y29kZSI6IkU4IDRMTCIsInN5c3RlbUlkIjoiNWY4OThkNDc5MDQ3OGMwMDY3Zjk2MWQ0IiwidXBybiI6IjEwMDA4Mjk1NTUwIiwic2l0ZUFkZHJlc3MyIjpudWxsLCJzaXRlVG93biI6bnVsbH0seyJzdW1tYXJ5IjoiRmxhdCBCICAgICAgMTczICAgICBNaWRkbGV0b24gUm9hZCAgRTggNExMIiwicG9zdGNvZGUiOiJFOCA0TEwiLCJzeXN0ZW1JZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y5NTEzNSIsInVwcm4iOiIxMDAwODI2MjgzMCIsInNpdGVBZGRyZXNzMiI6bnVsbCwic2l0ZVRvd24iOm51bGx9LHsic3VtbWFyeSI6IkZsYXQgQyAgICAgIDEzNSAgICAgTWlkZGxldG9uIFJvYWQgIEU4IDRMTCIsInBvc3Rjb2RlIjoiRTggNExMIiwic3lzdGVtSWQiOiI1Zjg5OGQ0NzkwNDc4YzAwNjdmOTYxZDUiLCJ1cHJuIjoiMTAwMDgyOTU1NTIiLCJzaXRlQWRkcmVzczIiOm51bGwsInNpdGVUb3duIjpudWxsfV19"
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getproperty/5f898d4790478c0067f8ceb0 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getproperty/5f898d4790478c0067f8ceb0",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getproperty/5f898d4790478c0067f8ceb0",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:22 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJpZCI6IjVmODk4ZDQ3OTA0NzhjMDA2N2Y4Y2ViMCIsInBhcmVudElkIjpudWxsLCJwYXJlbnRVUFJOIjpudWxsLCJhZGRyZXNzU3VtbWFyeSI6IiAgICAgIDEyMSAgICAgTWlkZGxldG9uIFJvYWQgTG9uZG9uIEU4IDRMTCIsImFkZHJlc3NMaW5lMSI6bnVsbCwiYWRkcmVzc0xpbmUyIjpudWxsLCJhZGRyZXNzTGluZTMiOm51bGwsImFkZHJlc3NMaW5lNCI6bnVsbCwicG9zdENvZGUiOiJFOCA0TEwiLCJsb25naXR1ZGUiOi0wLjA2Njg2NTM4MjQ5MDMxOTQ0LCJsYXRpdHVkZSI6NTEuNTQwNTE5NDQ1MTQ1MDY1LCJ1cHJuIjoiMTAwMDIxMDU4OTE0IiwiY29tbXVuYWwiOmZhbHNlLCJ1c3JuIjpudWxsLCJwcm92aWRlclNwZWNpZmljRmllbGRzIjp7ImF0dHJpYnV0ZXNfd2FzdGVDb250YWluZXJzQXNzaWduYWJsZVdhc3RlQ29udGFpbmVycyI6IjVmYTU1YzU4NmI0ZmI1MDA2NTBjYzBkNiw1ZmFlYTFhMTA4YzY0MDAwNjcyYTlhMjMsNWZiMjc2NDM2NTQxZTEwMDY5YjU5M2I3LDVmYjJkMjc2NTQxNWViMDA2NjQxOGQyOSIsImF0dHJpYnV0ZXNfbmxwZ1ByZW1pc2VzU2VydmljZVR5cGUiOiI1ZjliZWE2MmExOThkZDAwNjRlMDJiY2UifSwid2FzdGVDb250YWluZXJzQXNzaWduYWJsZVdhc3RlQ29udGFpbmVycyI6bnVsbCwibHBnUHJlbWlzZXNTZXJ2aWNlVHlwZSI6bnVsbCwibHBnUHJlbWlzZXNGbGFzaFRpbWVCYW5kIjpudWxsfQ=="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fa55c586b4fb500650cc0d6 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fa55c586b4fb500650cc0d6",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fa55c586b4fb500650cc0d6",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "235",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:22 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJpZCI6IjVmYTU1YzU4NmI0ZmI1MDA2NTBjYzBkNiIsImJpblR5cGUiOiI1Zjg5YmVhMTI2YjU1NTAwNjc1ZjRkMDgiLCJzdWJUaXRsZSI6IlJlY3ljbGluZyBTYWNrICIsImNvbGxlY3Rpb24iOiJMaXZlIiwiZGlzYWJsZWQiOmZhbHNlfQ=="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fa55c586b4fb500650cc0d6 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fa55c586b4fb500650cc0d6",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fa55c586b4fb500650cc0d6",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:22 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJzY2hlZHVsZUNvZGVXb3JrZmxvd0lEcyI6WyJ3b3JrZmxvd3NfdGVzdFdvcmtmbG93Um91bmRUaHVyc181ZjkxYmFlNThkYWUwNDAwNjZjNzEzOGIiXX0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:22 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJ0cmlnZ2VyIjp7ImRhdGVzIjpbIjIwMjQtMTItMDVUMDI6MjA6MDBaIiwiMjAyNC0xMi0xMlQwMjoyMDowMFoiLCIyMDI0LTEyLTE5VDAyOjIwOjAwWiIsIjIwMjQtMTItMjhUMDI6MjA6MDBaIiwiMjAyNS0wMS0wM1QwMjoyMDowMFoiLCIyMDI1LTAxLTA5VDAyOjIwOjAwWiIsIjIwMjUtMDEtMTZUMDI6MjA6MDBaIiwiMjAyNS0wMS0yM1QwMjoyMDowMFoiLCIyMDI1LTAxLTMwVDAyOjIwOjAwWiIsIjIwMjUtMDItMDZUMDI6MjA6MDBaIiwiMjAyNS0wMi0xM1QwMjoyMDowMFoiLCIyMDI1LTAyLTIwVDAyOjIwOjAwWiIsIjIwMjUtMDItMjdUMDI6MjA6MDBaIiwiMjAyNS0wMy0wNlQwMjoyMDowMFoiLCIyMDI1LTAzLTEzVDAyOjIwOjAwWiIsIjIwMjUtMDMtMjBUMDI6MjA6MDBaIiwiMjAyNS0wMy0yN1QwMjoyMDowMFoiLCIyMDI1LTA0LTAzVDAxOjIwOjAwWiIsIjIwMjUtMDQtMTBUMDE6MjA6MDBaIiwiMjAyNS0wNC0xN1QwMToyMDowMFoiLCIyMDI1LTA0LTI0VDAxOjIwOjAwWiIsIjIwMjUtMDUtMDFUMDE6MjA6MDBaIiwiMjAyNS0wNS0wOFQwMToyMDowMFoiLCIyMDI1LTA1LTE1VDAxOjIwOjAwWiIsIjIwMjUtMDUtMjJUMDE6MjA6MDBaIiwiMjAyNS0wNS0yOVQwMToyMDowMFoiLCIyMDI1LTA2LTA1VDAxOjIwOjAwWiIsIjIwMjUtMDYtMTJUMDE6MjA6MDBaIiwiMjAyNS0wNi0xOVQwMToyMDowMFoiLCIyMDI1LTA2LTI2VDAxOjIwOjAwWiIsIjIwMjUtMDctMDNUMDE6MjA6MDBaIiwiMjAyNS0wNy0xMFQwMToyMDowMFoiLCIyMDI1LTA3LTE3VDAxOjIwOjAwWiIsIjIwMjUtMDctMjRUMDE6MjA6MDBaIiwiMjAyNS0wNy0zMVQwMToyMDowMFoiLCIyMDI1LTA4LTA3VDAxOjIwOjAwWiIsIjIwMjUtMDgtMTRUMDE6MjA6MDBaIiwiMjAyNS0wOC0yMVQwMToyMDowMFoiLCIyMDI1LTA4LTI4VDAxOjIwOjAwWiIsIjIwMjUtMDktMDRUMDE6MjA6MDBaIiwiMjAyNS0wOS0xMVQwMToyMDowMFoiLCIyMDI1LTA5LTE4VDAxOjIwOjAwWiIsIjIwMjUtMDktMjVUMDE6MjA6MDBaIiwiMjAyNS0xMC0wMlQwMToyMDowMFoiLCIyMDI1LTEwLTA5VDAxOjIwOjAwWiIsIjIwMjUtMTAtMTZUMDE6MjA6MDBaIiwiMjAyNS0xMC0yM1QwMToyMDowMFoiLCIyMDI1LTEwLTMwVDAyOjIwOjAwWiIsIjIwMjUtMTEtMDZUMDI6MjA6MDBaIiwiMjAyNS0xMS0xM1QwMjoyMDowMFoiLCIyMDI1LTExLTIwVDAyOjIwOjAwWiIsIjIwMjUtMTEtMjdUMDI6MjA6MDBaIiwiMjAyNS0xMi0wNFQwMjoyMDowMFoiLCIyMDI1LTEyLTExVDAyOjIwOjAwWiIsIjIwMjUtMTItMThUMDI6MjA6MDBaIiwiMjAyNS0xMi0yN1QwMjoyMDowMFoiLCIyMDI2LTAxLTAyVDAyOjIwOjAwWiIsIjIwMjYtMDEtMDhUMDI6MjA6MDBaIiwiMjAyNi0wMS0xNVQwMjoyMDowMFoiLCIyMDI2LTAxLTIyVDAyOjIwOjAwWiIsIjIwMjYtMDEtMjlUMDI6MjA6MDBaIiwiMjAyNi0wMi0wNVQwMjoyMDowMFoiLCIyMDI2LTAyLTEyVDAyOjIwOjAwWiIsIjIwMjYtMDItMTlUMDI6MjA6MDBaIiwiMjAyNi0wMi0yNlQwMjoyMDowMFoiLCIyMDI2LTAzLTA1VDAyOjIwOjAwWiIsIjIwMjYtMDMtMTJUMDI6MjA6MDBaIiwiMjAyNi0wMy0xOVQwMjoyMDowMFoiLCIyMDI2LTAzLTI2VDAyOjIwOjAwWiIsIjIwMjYtMDQtMDNUMDE6MjA6MDBaIiwiMjAyNi0wNC0wOVQwMToyMDowMFoiLCIyMDI2LTA0LTE2VDAxOjIwOjAwWiIsIjIwMjYtMDQtMjNUMDE6MjA6MDBaIiwiMjAyNi0wNC0zMFQwMToyMDowMFoiLCIyMDI2LTA1LTA3VDAxOjIwOjAwWiIsIjIwMjYtMDUtMTRUMDE6MjA6MDBaIiwiMjAyNi0wNS0yMVQwMToyMDowMFoiLCIyMDI2LTA1LTI4VDAxOjIwOjAwWiIsIjIwMjYtMDYtMDRUMDE6MjA6MDBaIiwiMjAyNi0wNi0xMVQwMToyMDowMFoiLCIyMDI2LTA2LTE4VDAxOjIwOjAwWiIsIjIwMjYtMDYtMjVUMDE6MjA6MDBaIiwiMjAyNi0wNy0wMlQwMToyMDowMFoiLCIyMDI2LTA3LTA5VDAxOjIwOjAwWiIsIjIwMjYtMDctMTZUMDE6MjA6MDBaIiwiMjAyNi0wNy0yM1QwMToyMDowMFoiLCIyMDI2LTA3LTMwVDAxOjIwOjAwWiIsIjIwMjYtMDgtMDZUMDE6MjA6MDBaIiwiMjAyNi0wOC0xM1QwMToyMDowMFoiLCIyMDI2LTA4LTIwVDAxOjIwOjAwWiIsIjIwMjYtMDgtMjdUMDE6MjA6MDBaIiwiMjAyNi0wOS0wM1QwMToyMDowMFoiLCIyMDI2LTA5LTEwVDAxOjIwOjAwWiIsIjIwMjYtMDktMTdUMDE6MjA6MDBaIiwiMjAyNi0wOS0yNFQwMToyMDowMFoiLCIyMDI2LTEwLTAxVDAxOjIwOjAwWiIsIjIwMjYtMTAtMDhUMDE6MjA6MDBaIiwiMjAyNi0xMC0xNVQwMToyMDowMFoiLCIyMDI2LTEwLTIyVDAxOjIwOjAwWiIsIjIwMjYtMTAtMjlUMDI6MjA6MDBaIiwiMjAyNi0xMS0wNVQwMjoyMDowMFoiXSwiZGlzY3JpbWluYXRvciI6IlRpbWVDYWxlbmRhclRyaWdnZXIifSwibmFtZSI6IkRXX1JvdW5kIFRodXJzIn0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5faea1a108c64000672a9a23 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5faea1a108c64000672a9a23",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5faea1a108c64000672a9a23",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "239",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:24 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJpZCI6IjVmYWVhMWExMDhjNjQwMDA2NzJhOWEyMyIsImJpblR5cGUiOiI1Zjk2YjQ1NWUzNjY3MzAwNjQyMGM1MjkiLCJzdWJUaXRsZSI6IkZvb2QgQ2FkZHkgKFNtYWxsKSAiLCJjb2xsZWN0aW9uIjoiTGl2ZSIsImRpc2FibGVkIjpmYWxzZX0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5faea1a108c64000672a9a23 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5faea1a108c64000672a9a23",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5faea1a108c64000672a9a23",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "196",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:24 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJzY2hlZHVsZUNvZGVXb3JrZmxvd0lEcyI6WyJ3b3JrZmxvd3NfdGVzdFdvcmtmbG93Um91bmRUaHVyc181ZjkxYmFlNThkYWUwNDAwNjZjNzEzOGIiXX0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_testWorkflowRoundThurs_5f91bae58dae040066c7138b",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "645",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:24 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJ0cmlnZ2VyIjp7ImRhdGVzIjpbIjIwMjQtMTItMDVUMDI6MjA6MDBaIiwiMjAyNC0xMi0xMlQwMjoyMDowMFoiLCIyMDI0LTEyLTE5VDAyOjIwOjAwWiIsIjIwMjQtMTItMjhUMDI6MjA6MDBaIiwiMjAyNS0wMS0wM1QwMjoyMDowMFoiLCIyMDI1LTAxLTA5VDAyOjIwOjAwWiIsIjIwMjUtMDEtMTZUMDI6MjA6MDBaIiwiMjAyNS0wMS0yM1QwMjoyMDowMFoiLCIyMDI1LTAxLTMwVDAyOjIwOjAwWiIsIjIwMjUtMDItMDZUMDI6MjA6MDBaIiwiMjAyNS0wMi0xM1QwMjoyMDowMFoiLCIyMDI1LTAyLTIwVDAyOjIwOjAwWiIsIjIwMjUtMDItMjdUMDI6MjA6MDBaIiwiMjAyNS0wMy0wNlQwMjoyMDowMFoiLCIyMDI1LTAzLTEzVDAyOjIwOjAwWiIsIjIwMjUtMDMtMjBUMDI6MjA6MDBaIiwiMjAyNS0wMy0yN1QwMjoyMDowMFoiLCIyMDI1LTA0LTAzVDAxOjIwOjAwWiIsIjIwMjUtMDQtMTBUMDE6MjA6MDBaIiwiMjAyNS0wNC0xN1QwMToyMDowMFoiLCIyMDI1LTA0LTI0VDAxOjIwOjAwWiIsIjIwMjUtMDUtMDFUMDE6MjA6MDBaIiwiMjAyNS0wNS0wOFQwMToyMDowMFoiLCIyMDI1LTA1LTE1VDAxOjIwOjAwWiIsIjIwMjUtMDUtMjJUMDE6MjA6MDBaIiwiMjAyNS0wNS0yOVQwMToyMDowMFoiLCIyMDI1LTA2LTA1VDAxOjIwOjAwWiIsIjIwMjUtMDYtMTJUMDE6MjA6MDBaIiwiMjAyNS0wNi0xOVQwMToyMDowMFoiLCIyMDI1LTA2LTI2VDAxOjIwOjAwWiIsIjIwMjUtMDctMDNUMDE6MjA6MDBaIiwiMjAyNS0wNy0xMFQwMToyMDowMFoiLCIyMDI1LTA3LTE3VDAxOjIwOjAwWiIsIjIwMjUtMDctMjRUMDE6MjA6MDBaIiwiMjAyNS0wNy0zMVQwMToyMDowMFoiLCIyMDI1LTA4LTA3VDAxOjIwOjAwWiIsIjIwMjUtMDgtMTRUMDE6MjA6MDBaIiwiMjAyNS0wOC0yMVQwMToyMDowMFoiLCIyMDI1LTA4LTI4VDAxOjIwOjAwWiIsIjIwMjUtMDktMDRUMDE6MjA6MDBaIiwiMjAyNS0wOS0xMVQwMToyMDowMFoiLCIyMDI1LTA5LTE4VDAxOjIwOjAwWiIsIjIwMjUtMDktMjVUMDE6MjA6MDBaIiwiMjAyNS0xMC0wMlQwMToyMDowMFoiLCIyMDI1LTEwLTA5VDAxOjIwOjAwWiIsIjIwMjUtMTAtMTZUMDE6MjA6MDBaIiwiMjAyNS0xMC0yM1QwMToyMDowMFoiLCIyMDI1LTEwLTMwVDAyOjIwOjAwWiIsIjIwMjUtMTEtMDZUMDI6MjA6MDBaIiwiMjAyNS0xMS0xM1QwMjoyMDowMFoiLCIyMDI1LTExLTIwVDAyOjIwOjAwWiIsIjIwMjUtMTEtMjdUMDI6MjA6MDBaIiwiMjAyNS0xMi0wNFQwMjoyMDowMFoiLCIyMDI1LTEyLTExVDAyOjIwOjAwWiIsIjIwMjUtMTItMThUMDI6MjA6MDBaIiwiMjAyNS0xMi0yN1QwMjoyMDowMFoiLCIyMDI2LTAxLTAyVDAyOjIwOjAwWiIsIjIwMjYtMDEtMDhUMDI6MjA6MDBaIiwiMjAyNi0wMS0xNVQwMjoyMDowMFoiLCIyMDI2LTAxLTIyVDAyOjIwOjAwWiIsIjIwMjYtMDEtMjlUMDI6MjA6MDBaIiwiMjAyNi0wMi0wNVQwMjoyMDowMFoiLCIyMDI2LTAyLTEyVDAyOjIwOjAwWiIsIjIwMjYtMDItMTlUMDI6MjA6MDBaIiwiMjAyNi0wMi0yNlQwMjoyMDowMFoiLCIyMDI2LTAzLTA1VDAyOjIwOjAwWiIsIjIwMjYtMDMtMTJUMDI6MjA6MDBaIiwiMjAyNi0wMy0xOVQwMjoyMDowMFoiLCIyMDI2LTAzLTI2VDAyOjIwOjAwWiIsIjIwMjYtMDQtMDNUMDE6MjA6MDBaIiwiMjAyNi0wNC0wOVQwMToyMDowMFoiLCIyMDI2LTA0LTE2VDAxOjIwOjAwWiIsIjIwMjYtMDQtMjNUMDE6MjA6MDBaIiwiMjAyNi0wNC0zMFQwMToyMDowMFoiLCIyMDI2LTA1LTA3VDAxOjIwOjAwWiIsIjIwMjYtMDUtMTRUMDE6MjA6MDBaIiwiMjAyNi0wNS0yMVQwMToyMDowMFoiLCIyMDI2LTA1LTI4VDAxOjIwOjAwWiIsIjIwMjYtMDYtMDRUMDE6MjA6MDBaIiwiMjAyNi0wNi0xMVQwMToyMDowMFoiLCIyMDI2LTA2LTE4VDAxOjIwOjAwWiIsIjIwMjYtMDYtMjVUMDE6MjA6MDBaIiwiMjAyNi0wNy0wMlQwMToyMDowMFoiLCIyMDI2LTA3LTA5VDAxOjIwOjAwWiIsIjIwMjYtMDctMTZUMDE6MjA6MDBaIiwiMjAyNi0wNy0yM1QwMToyMDowMFoiLCIyMDI2LTA3LTMwVDAxOjIwOjAwWiIsIjIwMjYtMDgtMDZUMDE6MjA6MDBaIiwiMjAyNi0wOC0xM1QwMToyMDowMFoiLCIyMDI2LTA4LTIwVDAxOjIwOjAwWiIsIjIwMjYtMDgtMjdUMDE6MjA6MDBaIiwiMjAyNi0wOS0wM1QwMToyMDowMFoiLCIyMDI2LTA5LTEwVDAxOjIwOjAwWiIsIjIwMjYtMDktMTdUMDE6MjA6MDBaIiwiMjAyNi0wOS0yNFQwMToyMDowMFoiLCIyMDI2LTEwLTAxVDAxOjIwOjAwWiIsIjIwMjYtMTAtMDhUMDE6MjA6MDBaIiwiMjAyNi0xMC0xNVQwMToyMDowMFoiLCIyMDI2LTEwLTIyVDAxOjIwOjAwWiIsIjIwMjYtMTAtMjlUMDI6MjA6MDBaIiwiMjAyNi0xMS0wNVQwMjoyMDowMFoiXSwiZGlzY3JpbWluYXRvciI6IlRpbWVDYWxlbmRhclRyaWdnZXIifSwibmFtZSI6IkRXX1JvdW5kIFRodXJzIn0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb276436541e10069b593b7 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb276436541e10069b593b7",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb276436541e10069b593b7",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "245",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:24 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJpZCI6IjVmYjI3NjQzNjU0MWUxMDA2OWI1OTNiNyIsImJpblR5cGUiOiI2NTljMzAzZmE4MGNjMmJiMmNlODI2MjciLCJzdWJUaXRsZSI6IkdXX1doZWVsZWQgQmluIDE0MGwgIiwiY29sbGVjdGlvbiI6IkxpdmUiLCJkaXNhYmxlZCI6ZmFsc2V9"
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb276436541e10069b593b7 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb276436541e10069b593b7",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb276436541e10069b593b7",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "205",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:25 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJzY2hlZHVsZUNvZGVXb3JrZmxvd0lEcyI6WyJ3b3JrZmxvd3NfZFdGb3J0bmlnaHRseVRodXJzV2VlazFfNWZlNDdlNmYxOTMzZjEwMDY1NzhkMzU3Il19"
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_dWFortnightlyThursWeek1_5fe47e6f1933f1006578d357 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_dWFortnightlyThursWeek1_5fe47e6f1933f1006578d357",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_dWFortnightlyThursWeek1_5fe47e6f1933f1006578d357",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "491",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:25 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJ0cmlnZ2VyIjp7ImRhdGVzIjpbIjIwMjQtMTItMTJUMDI6MjA6MDBaIiwiMjAyNC0xMi0yOFQwMjoyMDowMFoiLCIyMDI1LTAxLTA5VDAyOjIwOjAwWiIsIjIwMjUtMDEtMjNUMDI6MjA6MDBaIiwiMjAyNS0wMi0wNlQwMjoyMDowMFoiLCIyMDI1LTAyLTIwVDAyOjIwOjAwWiIsIjIwMjUtMDMtMDZUMDI6MjA6MDBaIiwiMjAyNS0wMy0yMFQwMjoyMDowMFoiLCIyMDI1LTA0LTAzVDAxOjIwOjAwWiIsIjIwMjUtMDQtMTdUMDE6MjA6MDBaIiwiMjAyNS0wNS0wMVQwMToyMDowMFoiLCIyMDI1LTA1LTE1VDAxOjIwOjAwWiIsIjIwMjUtMDUtMjlUMDE6MjA6MDBaIiwiMjAyNS0wNi0xMlQwMToyMDowMFoiLCIyMDI1LTA2LTI2VDAxOjIwOjAwWiIsIjIwMjUtMDctMTBUMDE6MjA6MDBaIiwiMjAyNS0wNy0yNFQwMToyMDowMFoiLCIyMDI1LTA4LTA3VDAxOjIwOjAwWiIsIjIwMjUtMDgtMjFUMDE6MjA6MDBaIiwiMjAyNS0wOS0wNFQwMToyMDowMFoiLCIyMDI1LTA5LTE4VDAxOjIwOjAwWiIsIjIwMjUtMTAtMDJUMDE6MjA6MDBaIiwiMjAyNS0xMC0xNlQwMToyMDowMFoiLCIyMDI1LTEwLTMwVDAyOjIwOjAwWiIsIjIwMjUtMTEtMTNUMDI6MjA6MDBaIiwiMjAyNS0xMS0yN1QwMjoyMDowMFoiLCIyMDI1LTEyLTExVDAyOjIwOjAwWiIsIjIwMjUtMTItMjdUMDI6MjA6MDBaIiwiMjAyNi0wMS0wOFQwMjoyMDowMFoiLCIyMDI2LTAxLTIyVDAyOjIwOjAwWiIsIjIwMjYtMDItMDVUMDI6MjA6MDBaIiwiMjAyNi0wMi0xOVQwMjoyMDowMFoiLCIyMDI2LTAzLTA1VDAyOjIwOjAwWiIsIjIwMjYtMDMtMTlUMDI6MjA6MDBaIiwiMjAyNi0wNC0wMlQwMToyMDowMFoiLCIyMDI2LTA0LTE2VDAxOjIwOjAwWiIsIjIwMjYtMDQtMzBUMDE6MjA6MDBaIiwiMjAyNi0wNS0xNFQwMToyMDowMFoiLCIyMDI2LTA1LTI4VDAxOjIwOjAwWiIsIjIwMjYtMDYtMTFUMDE6MjA6MDBaIiwiMjAyNi0wNi0yNVQwMToyMDowMFoiLCIyMDI2LTA3LTA5VDAxOjIwOjAwWiIsIjIwMjYtMDctMjNUMDE6MjA6MDBaIiwiMjAyNi0wOC0wNlQwMToyMDowMFoiLCIyMDI2LTA4LTIwVDAxOjIwOjAwWiIsIjIwMjYtMDktMDNUMDE6MjA6MDBaIiwiMjAyNi0wOS0xN1QwMToyMDowMFoiLCIyMDI2LTEwLTAxVDAxOjIwOjAwWiIsIjIwMjYtMTAtMTVUMDE6MjA6MDBaIiwiMjAyNi0xMC0yOVQwMjoyMDowMFoiLCIyMDI2LTExLTEyVDAyOjIwOjAwWiJdLCJkaXNjcmltaW5hdG9yIjoiVGltZUNhbGVuZGFyVHJpZ2dlciJ9LCJuYW1lIjoiRFdfRm9ydG5pZ2h0bHlfVGh1cnNfV2VlazIgR2FyZGVuIn0="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb2d2765415eb0066418d29 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb2d2765415eb0066418d29",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/5fb2d2765415eb0066418d29",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "242",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:25 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJpZCI6IjVmYjJkMjc2NTQxNWViMDA2NjQxOGQyOSIsImJpblR5cGUiOiI1Zjk2YjhmY2UzNjY3MzAwNjQyMGNhMWYiLCJzdWJUaXRsZSI6IldoZWVsZWQgQmluICgxODBsdHIpICIsImNvbGxlY3Rpb24iOiJMaXZlIiwiZGlzYWJsZWQiOmZhbHNlfQ=="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb2d2765415eb0066418d29 ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb2d2765415eb0066418d29",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/5fb2d2765415eb0066418d29",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "206",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:25 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJzY2hlZHVsZUNvZGVXb3JrZmxvd0lEcyI6WyJ3b3JrZmxvd3NfZm9ydG5pZ2h0bHlUaHVyc1dlZWsxUmVmdXNlXzVmZjVjYmExMWVhYjRiMDA2NTBmMzZkZSJdfQ=="
+    },
+    {
+      "key": "GET https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_fortnightlyThursWeek1Refuse_5ff5cba11eab4b00650f36de ",
+      "method": "GET",
+      "url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_fortnightlyThursWeek1Refuse_5ff5cba11eab4b00650f36de",
+      "final_url": "https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/workflows_fortnightlyThursWeek1Refuse_5ff5cba11eab4b00650f36de",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "481",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 05:38:26 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "vary": "Accept-Encoding",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJ0cmlnZ2VyIjp7ImRhdGVzIjpbIjIwMjQtMTItMDVUMDI6MjA6MDBaIiwiMjAyNC0xMi0xOVQwMjoyMDowMFoiLCIyMDI1LTAxLTAzVDAyOjIwOjAwWiIsIjIwMjUtMDEtMTZUMDI6MjA6MDBaIiwiMjAyNS0wMS0zMFQwMjoyMDowMFoiLCIyMDI1LTAyLTEzVDAyOjIwOjAwWiIsIjIwMjUtMDItMjdUMDI6MjA6MDBaIiwiMjAyNS0wMy0xM1QwMjoyMDowMFoiLCIyMDI1LTAzLTI3VDAyOjIwOjAwWiIsIjIwMjUtMDQtMTBUMDE6MjA6MDBaIiwiMjAyNS0wNC0yNFQwMToyMDowMFoiLCIyMDI1LTA1LTA4VDAxOjIwOjAwWiIsIjIwMjUtMDUtMjJUMDE6MjA6MDBaIiwiMjAyNS0wNi0wNVQwMToyMDowMFoiLCIyMDI1LTA2LTE5VDAxOjIwOjAwWiIsIjIwMjUtMDctMDNUMDE6MjA6MDBaIiwiMjAyNS0wNy0xN1QwMToyMDowMFoiLCIyMDI1LTA3LTMxVDAxOjIwOjAwWiIsIjIwMjUtMDgtMTRUMDE6MjA6MDBaIiwiMjAyNS0wOC0yOFQwMToyMDowMFoiLCIyMDI1LTA5LTExVDAxOjIwOjAwWiIsIjIwMjUtMDktMjVUMDE6MjA6MDBaIiwiMjAyNS0xMC0wOVQwMToyMDowMFoiLCIyMDI1LTEwLTIzVDAxOjIwOjAwWiIsIjIwMjUtMTEtMDZUMDI6MjA6MDBaIiwiMjAyNS0xMS0yMFQwMjoyMDowMFoiLCIyMDI1LTEyLTA0VDAyOjIwOjAwWiIsIjIwMjUtMTItMThUMDI6MjA6MDBaIiwiMjAyNi0wMS0wMlQwMjoyMDowMFoiLCIyMDI2LTAxLTE1VDAyOjIwOjAwWiIsIjIwMjYtMDEtMjlUMDI6MjA6MDBaIiwiMjAyNi0wMi0xMlQwMjoyMDowMFoiLCIyMDI2LTAyLTI2VDAyOjIwOjAwWiIsIjIwMjYtMDMtMTJUMDI6MjA6MDBaIiwiMjAyNi0wMy0yNlQwMjoyMDowMFoiLCIyMDI2LTA0LTA5VDAxOjIwOjAwWiIsIjIwMjYtMDQtMjNUMDE6MjA6MDBaIiwiMjAyNi0wNS0wN1QwMToyMDowMFoiLCIyMDI2LTA1LTIxVDAxOjIwOjAwWiIsIjIwMjYtMDYtMDRUMDE6MjA6MDBaIiwiMjAyNi0wNi0xOFQwMToyMDowMFoiLCIyMDI2LTA3LTAyVDAxOjIwOjAwWiIsIjIwMjYtMDctMTZUMDE6MjA6MDBaIiwiMjAyNi0wNy0zMFQwMToyMDowMFoiLCIyMDI2LTA4LTEzVDAxOjIwOjAwWiIsIjIwMjYtMDgtMjdUMDE6MjA6MDBaIiwiMjAyNi0wOS0xMFQwMToyMDowMFoiLCIyMDI2LTA5LTI0VDAxOjIwOjAwWiIsIjIwMjYtMTAtMDhUMDE6MjA6MDBaIiwiMjAyNi0xMC0yMlQwMToyMDowMFoiLCIyMDI2LTExLTA1VDAyOjIwOjAwWiJdLCJkaXNjcmltaW5hdG9yIjoiVGltZUNhbGVuZGFyVHJpZ2dlciJ9LCJuYW1lIjoiRm9ydG5pZ2h0bHlfVGh1cnNfV2VlazFfUmVmdXNlIn0="
+    }
+  ]
+}
