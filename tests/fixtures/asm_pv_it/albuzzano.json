@@ -1,0 +1,91 @@
+{
+  "recorded_at": "2026-10-04",
+  "interactions": [
+    {
+      "key": "GET https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities ",
+      "method": "GET",
+      "url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities",
+      "final_url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "Authorization, Content-Type, zone-id",
+        "access-control-allow-methods": "*",
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link, Link",
+        "allow": "GET",
+        "content-encoding": "br",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Sun, 04 Oct 2026 20:26:11 GMT",
+        "link": "<https://api.asm.easyeco.prod.emberware.it/wp-json/>; rel=\"https://api.w.org/\"",
+        "server": "nginx",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "PHP/7.4.33, PleskLin",
+        "x-robots-tag": "noindex"
+      },
+      "content_b64": "W3siaWQiOjE0Miwic2x1ZyI6ImFsYnV6emFubyIsIm5hbWUiOiJBbGJ1enphbm8iLCJ6aXAiOiIifSx7ImlkIjoyMzcsInNsdWciOiJiYWRpYS1wYXZlc2UiLCJuYW1lIjoiQmFkaWEgUGF2ZXNlIiwiemlwIjoiIn0seyJpZCI6MTQzLCJzbHVnIjoiYmF0dHVkYSIsIm5hbWUiOiJCYXR0dWRhIiwiemlwIjoiIn0seyJpZCI6MTQ0LCJzbHVnIjoiYmVyZWd1YXJkbyIsIm5hbWUiOiJCZXJlZ3VhcmRvIiwiemlwIjoiIn0seyJpZCI6MTQ2LCJzbHVnIjoiYm9ybmFzY28iLCJuYW1lIjoiQm9ybmFzY28iLCJ6aXAiOiIifSx7ImlkIjoyNTMsInNsdWciOiJjYXZhLW1hbmFyYSIsIm5hbWUiOiJDYXZhIE1hbmFyYSIsInppcCI6IiJ9LHsiaWQiOjE0Nywic2x1ZyI6ImNlcmFub3ZhIiwibmFtZSI6IkNlcmFub3ZhIiwiemlwIjoiIn0seyJpZCI6MTQ4LCJzbHVnIjoiY2VydG9zYS1kaS1wYXZpYSIsIm5hbWUiOiJDZXJ0b3NhIGRpIFBhdmlhIiwiemlwIjoiIn0seyJpZCI6MjQyLCJzbHVnIjoiY29zdGEtZGVpLW5vYmlsaSIsIm5hbWUiOiJDb3N0YSBkZWkgbm9iaWxpIiwiemlwIjoiIn0seyJpZCI6MTQ5LCJzbHVnIjoiY3VyYS1jYXJwaWduYW5vIiwibmFtZSI6IkN1cmEgQ2FycGlnbmFubyIsInppcCI6IiJ9LHsiaWQiOjE1MSwic2x1ZyI6ImxhcmRpcmFnbyIsIm5hbWUiOiJMYXJkaXJhZ28iLCJ6aXAiOiIifSx7ImlkIjoxNTIsInNsdWciOiJtYXJjaWduYWdvIiwibmFtZSI6Ik1hcmNpZ25hZ28iLCJ6aXAiOiIifSx7ImlkIjoxNTMsInNsdWciOiJtYXJ6YW5vIiwibmFtZSI6Ik1hcnphbm8iLCJ6aXAiOiIifSx7ImlkIjoxNTQsInNsdWciOiJtZXp6YW5hLXJhYmF0dG9uZSIsIm5hbWUiOiJNZXp6YW5hIFJhYmF0dG9uZSIsInppcCI6IiJ9LHsiaWQiOjI0Niwic2x1ZyI6Im1vbnRpY2VsbGkiLCJuYW1lIjoiTW9udGljZWxsaSIsInppcCI6IiJ9LHsiaWQiOjE0MSwic2x1ZyI6InBhdmlhIiwibmFtZSI6IlBhdmlhIiwiemlwIjoiIn0seyJpZCI6MjUwLCJzbHVnIjoicGlldmUtcG9ydG8tbW9yb25lIiwibmFtZSI6IlBpZXZlIFBvcnRvIE1vcm9uZSIsInppcCI6IiJ9LHsiaWQiOjE1NSwic2x1ZyI6InJvbmNhcm8iLCJuYW1lIjoiUm9uY2FybyIsInppcCI6IiJ9LHsiaWQiOjE1Niwic2x1ZyI6InNhbi1tYXJ0aW5vLXNpY2NvbWFyaW8iLCJuYW1lIjoiU2FuIE1hcnRpbm8gU2ljY29tYXJpbyIsInppcCI6IiJ9LHsiaWQiOjI0OCwic2x1ZyI6InNhbi16ZW5vbmUtYWwtcG8iLCJuYW1lIjoiU2FuIFplbm9uZSBhbCBQbyIsInppcCI6IiJ9LHsiaWQiOjE1Nywic2x1ZyI6InNhbnRhbGVzc2lvLWNvbi12aWFsb25lIiwibmFtZSI6IlNhbnQnQWxlc3NpbyBjb24gVmlhbG9uZSIsInppcCI6IiJ9LHsiaWQiOjIzMCwic2x1ZyI6InNvbW1vIiwibmFtZSI6IlNvbW1vIiwiemlwIjoiIn0seyJpZCI6MTU5LCJzbHVnIjoidG9ycmUtZGlzb2xhIiwibmFtZSI6IlRvcnJlIEQnSXNvbGEiLCJ6aXAiOiIifSx7ImlkIjoxNjAsInNsdWciOiJ0cmF2YWNvLXNpY2NvbWFyaW8iLCJuYW1lIjoiVHJhdmFjXHUwMGYyIFNpY2NvbWFyaW8iLCJ6aXAiOiIifSx7ImlkIjoxNjEsInNsdWciOiJ0cml2b2x6aW8iLCJuYW1lIjoiVHJpdm9semlvIiwiemlwIjoiIn0seyJpZCI6MTYyLCJzbHVnIjoidHJvdm8iLCJuYW1lIjoiVHJvdm8iLCJ6aXAiOiIifSx7ImlkIjoxNjMsInNsdWciOiJ2YWxsZS1zYWxpbWJlbmUiLCJuYW1lIjoiVmFsbGUgU2FsaW1iZW5lIiwiemlwIjoiIn0seyJpZCI6MTY0LCJzbHVnIjoidmVsbGV6em8tYmVsbGluaSIsIm5hbWUiOiJWZWxsZXp6byBCZWxsaW5pIiwiemlwIjoiIn0seyJpZCI6MjQ0LCJzbHVnIjoiemVyYm8iLCJuYW1lIjoiWmVyYm8iLCJ6aXAiOiIifSx7ImlkIjoyNjIsInNsdWciOiJ6ZXJib2xvIiwibmFtZSI6IlplcmJvbFx1MDBmMiIsInppcCI6IiJ9XQ=="
+    },
+    {
+      "key": "GET https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities/142/streets d2e5e166a1",
+      "method": "GET",
+      "url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities/142/streets",
+      "final_url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities/142/streets?search=Tutte+le+vie",
+      "body": "{\"params\":[[\"search\",\"Tutte le vie\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "Authorization, Content-Type, zone-id",
+        "access-control-allow-methods": "*",
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link, Link",
+        "allow": "GET",
+        "content-encoding": "br",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Sun, 04 Oct 2026 20:26:14 GMT",
+        "link": "<https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/municipalities?search=Tutte+le+vie&context=street&page=1>; rel=\"next\"",
+        "server": "nginx",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "PHP/7.4.33, PleskLin",
+        "x-robots-tag": "noindex",
+        "x-wp-total": "1",
+        "x-wp-totalpages": "1"
+      },
+      "content_b64": "W3siaWQiOjQ1MDksInNsdWciOiJ0dXR0ZS1sZS12aWUtYWxidXp6YW5vIiwidGl0bGUiOnsicmVuZGVyZWQiOiJUdXR0ZSBsZSB2aWUifSwiem9uZS1pZCI6MTcxfV0="
+    },
+    {
+      "key": "GET https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/garbage-collections ",
+      "method": "GET",
+      "url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/garbage-collections",
+      "final_url": "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1/garbage-collections",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "Authorization, Content-Type, zone-id",
+        "access-control-allow-methods": "*",
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link, Link",
+        "allow": "GET",
+        "content-encoding": "br",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Sun, 04 Oct 2026 20:26:16 GMT",
+        "link": "<https://api.asm.easyeco.prod.emberware.it/wp-json/>; rel=\"https://api.w.org/\"",
+        "server": "nginx",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "PHP/7.4.33, PleskLin",
+        "x-robots-tag": "noindex"
+      },
+      "content_b64": "W3siaWQiOjEwMTg1MjU0LCJkYXRlIjoiMjAyNi0xMC0wNSIsImNvbnRhaW5lci10eXBlIjp7ImlkIjo3LCJ0aXRsZSI6IlVtaWRvIChTY2FydG8gb3JnYW5pY28gZGkgY3VjaW5hKSIsImljb24iOiJodHRwczpcL1wvYXBpLmFzbS5lYXN5ZWNvLnByb2QuZW1iZXJ3YXJlLml0XC9hcHBcL3VwbG9hZHNcLzIwMjRcLzA3XC9pY291bWlkbzEwMC5wbmciLCJnYXJiYWdlLWNlbnRlciI6ZmFsc2V9LCJkZXNjcmlwdGlvbiI6IkVzcG9ycmUgaSByaWZpdXRpIGFsbFx1MjAxOWVzdGVybm8gZGFsbGUgb3JlIDIyOjAwIGRlbCBnaW9ybm8gcHJlY2VkZW50ZSBhbGxlIDA2OjAwIGRlbCBnaW9ybm8gZGkgcmFjY29sdGEuIEVzcG9ycmUgaSByaWZpdXRpIGVudHJvIGxlIG9yZSAwNjowMCBkZWwgbWF0dGlubyIsInpvbmUtaWQiOjE3MX0seyJpZCI6MTAxNzYyNzcsImRhdGUiOiIyMDI2LTEwLTA3IiwiY29udGFpbmVyLXR5cGUiOnsiaWQiOjIyNywidGl0bGUiOiJNdWx0aW1hdGVyaWFsZSBsZWdnZXJvIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuYXNtLmVhc3llY28ucHJvZC5lbWJlcndhcmUuaXRcL2FwcFwvdXBsb2Fkc1wvMjAyNFwvMDdcL2ljb3BsYXN0aWNhMTAwLnBuZyIsImdhcmJhZ2UtY2VudGVyIjpmYWxzZX0sImRlc2NyaXB0aW9uIjoiRXNwb3JyZSBpIHJpZml1dGkgYWxsXHUyMDE5ZXN0ZXJubyBkYWxsZSBvcmUgMjI6MDAgZGVsIGdpb3JubyBwcmVjZWRlbnRlIGFsbGUgMDY6MDAgZGVsIGdpb3JubyBkaSByYWNjb2x0YS4gRXNwb3JyZSBpIHJpZml1dGkgZW50cm8gbGUgb3JlIDA2OjAwIGRlbCBtYXR0aW5vIiwiem9uZS1pZCI6MTcxfSx7ImlkIjoxMDE4NTMwMiwiZGF0ZSI6IjIwMjYtMTAtMDgiLCJjb250YWluZXItdHlwZSI6eyJpZCI6NywidGl0bGUiOiJVbWlkbyAoU2NhcnRvIG9yZ2FuaWNvIGRpIGN1Y2luYSkiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5hc20uZWFzeWVjby5wcm9kLmVtYmVyd2FyZS5pdFwvYXBwXC91cGxvYWRzXC8yMDI0XC8wN1wvaWNvdW1pZG8xMDAucG5nIiwiZ2FyYmFnZS1jZW50ZXIiOmZhbHNlfSwiZGVzY3JpcHRpb24iOiJFc3BvcnJlIGkgcmlmaXV0aSBhbGxcdTIwMTllc3Rlcm5vIGRhbGxlIG9yZSAyMjowMCBkZWwgZ2lvcm5vIHByZWNlZGVudGUgYWxsZSAwNjowMCBkZWwgZ2lvcm5vIGRpIHJhY2NvbHRhLiBFc3BvcnJlIGkgcmlmaXV0aSBlbnRybyBsZSBvcmUgMDY6MDAgZGVsIG1hdHRpbm8iLCJ6b25lLWlkIjoxNzF9LHsiaWQiOjEwMTg1NDEzLCJkYXRlIjoiMjAyNi0xMC0xMCIsImNvbnRhaW5lci10eXBlIjp7ImlkIjo0LCJ0aXRsZSI6IlNlY2NvIG5vbiByaWNpY2xhYmlsZSAoaW5kaWZmZXJlbnppYXRvKSIsImljb24iOiJodHRwczpcL1wvYXBpLmFzbS5lYXN5ZWNvLnByb2QuZW1iZXJ3YXJlLml0XC9hcHBcL3VwbG9hZHNcLzIwMjRcLzA3XC9pY29zZWNjbzEwMC5wbmciLCJnYXJiYWdlLWNlbnRlciI6ZmFsc2V9LCJkZXNjcmlwdGlvbiI6IkVzcG9ycmUgaSByaWZpdXRpIGFsbFx1MjAxOWVzdGVybm8gZGFsbGUgb3JlIDIyOjAwIGRlbCBnaW9ybm8gcHJlY2VkZW50ZSBhbGxlIDA2OjAwIGRlbCBnaW9ybm8gZGkgcmFjY29sdGEuIEVzcG9ycmUgaSByaWZpdXRpIGVudHJvIGxlIG9yZSAwNjowMCBkZWwgbWF0dGlubyIsInpvbmUtaWQiOjE3MX0seyJpZCI6MTAxODU0MjYsImRhdGUiOiIyMDI2LTEwLTEyIiwiY29udGFpbmVyLXR5cGUiOnsiaWQiOjcsInRpdGxlIjoiVW1pZG8gKFNjYXJ0byBvcmdhbmljbyBkaSBjdWNpbmEpIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuYXNtLmVhc3llY28ucHJvZC5lbWJlcndhcmUuaXRcL2FwcFwvdXBsb2Fkc1wvMjAyNFwvMDdcL2ljb3VtaWRvMTAwLnBuZyIsImdhcmJhZ2UtY2VudGVyIjpmYWxzZX0sImRlc2NyaXB0aW9uIjoiRXNwb3JyZSBpIHJpZml1dGkgYWxsXHUyMDE5ZXN0ZXJubyBkYWxsZSBvcmUgMjI6MDAgZGVsIGdpb3JubyBwcmVjZWRlbnRlIGFsbGUgMDY6MDAgZGVsIGdpb3JubyBkaSByYWNjb2x0YS4gRXNwb3JyZSBpIHJpZml1dGkgZW50cm8gbGUgb3JlIDA2OjAwIGRlbCBtYXR0aW5vIiwiem9uZS1pZCI6MTcxfSx7ImlkIjoxMDE3NjIzOCwiZGF0ZSI6IjIwMjYtMTAtMTMiLCJjb250YWluZXItdHlwZSI6eyJpZCI6MjUyLCJ0aXRsZSI6IlZlcmRlIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuYXNtLmVhc3llY28ucHJvZC5lbWJlcndhcmUuaXRcL2FwcFwvdXBsb2Fkc1wvMjAyNFwvMDdcL2ljb3ZlcmRlMTAwLnBuZyIsImdhcmJhZ2UtY2VudGVyIjpmYWxzZX0sImRlc2NyaXB0aW9uIjoiRXNwb3JyZSBpIHJpZml1dGkgYWxsXHUyMDE5ZXN0ZXJubyBkYWxsZSBvcmUgMjI6MDAgZGVsIGdpb3JubyBwcmVjZWRlbnRlIGFsbGUgMDY6MDAgZGVsIGdpb3JubyBkaSByYWNjb2x0YS4gRXNwb3JyZSBpIHJpZml1dGkgZW50cm8gbGUgb3JlIDA2OjAwIGRlbCBtYXR0aW5vIiwiem9uZS1pZCI6MTcxfSx7ImlkIjoxMDE4NTQ2NCwiZGF0ZSI6IjIwMjYtMTAtMTQiLCJjb250YWluZXItdHlwZSI6eyJpZCI6MTAsInRpdGxlIjoiQ2FydGEgLSBDYXJ0b25lIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuYXNtLmVhc3llY28ucHJvZC5lbWJlcndhcmUuaXRcL2FwcFwvdXBsb2Fkc1wvMjAyNFwvMDdcL2ljb2NhcnRhMTAwLnBuZyIsImdhcmJhZ2UtY2VudGVyIjpmYWxzZX0sImRlc2NyaXB0aW9uIjoiRXNwb3JyZSBpIHJpZml1dGkgYWxsXHUyMDE5ZXN0ZXJubyBkYWxsZSBvcmUgMjI6MDAgZGVsIGdpb3JubyBwcmVjZWRlbnRlIGFsbGUgMDY6MDAgZGVsIGdpb3JubyBkaSByYWNjb2x0YS4gRXNwb3JyZSBpIHJpZml1dGkgZW50cm8gbGUgb3JlIDA2OjAwIGRlbCBtYXR0aW5vIiwiem9uZS1pZCI6MTcxfSx7ImlkIjoxMDE4NTQ5MSwiZGF0ZSI6IjIwMjYtMTAtMTUiLCJjb250YWluZXItdHlwZSI6eyJpZCI6NywidGl0bGUiOiJVbWlkbyAoU2NhcnRvIG9yZ2FuaWNvIGRpIGN1Y2luYSkiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5hc20uZWFzeWVjby5wcm9kLmVtYmVyd2FyZS5pdFwvYXBwXC91cGxvYWRzXC8yMDI0XC8wN1wvaWNvdW1pZG8xMDAucG5nIiwiZ2FyYmFnZS1jZW50ZXIiOmZhbHNlfSwiZGVzY3JpcHRpb24iOiJFc3BvcnJlIGkgcmlmaXV0aSBhbGxcdTIwMTllc3Rlcm5vIGRhbGxlIG9yZSAyMjowMCBkZWwgZ2lvcm5vIHByZWNlZGVudGUgYWxsZSAwNjowMCBkZWwgZ2lvcm5vIGRpIHJhY2NvbHRhLiBFc3BvcnJlIGkgcmlmaXV0aSBlbnRybyBsZSBvcmUgMDY6MDAgZGVsIG1hdHRpbm8iLCJ6b25lLWlkIjoxNzF9LHsiaWQiOjEwMTg1NTQxLCJkYXRlIjoiMjAyNi0xMC0xNiIsImNvbnRhaW5lci10eXBlIjp7ImlkIjoxMiwidGl0bGUiOiJJbmdvbWJyYW50aSBlIFJBRUUiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5hc20uZWFzeWVjby5wcm9kLmVtYmVyd2FyZS5pdFwvYXBwXC91cGxvYWRzXC8yMDI0XC8wN1wvaWNvaW5nb21icmFudGkxMDAucG5nIiwiZ2FyYmFnZS1jZW50ZXIiOmZhbHNlfSwiZGVzY3JpcHRpb24iOiJQcmV2aW8gYXBwdW50YW1lbnRvIHRlbGVmb25pY28gY2hpYW1hbmRvIGlsIG51bWVybyB2ZXJkZSA4MDAuMTkzLjg5MC5cclxuRXNwb3JyZSBpIHJpZml1dGkgYWxsXHUyMDE5ZXN0ZXJubyBkYWxsZSBvcmUgMjI6MDAgZGVsIGdpb3JubyBwcmVjZWRlbnRlIGFsbGUgMDY6MDAgZGVsIGdpb3JubyBkaSByYWNjb2x0YS4gRXNwb3JyZSBpIHJpZml1dGkgZW50cm8gbGUgb3JlIDA2OjAwIGRlbCBtYXR0aW5vIiwiem9uZS1pZCI6MTcxfSx7ImlkIjoxMDE4NTU0MiwiZGF0ZSI6IjIwMjYtMTAtMTciLCJjb250YWluZXItdHlwZSI6eyJpZCI6NCwidGl0bGUiOiJTZWNjbyBub24gcmljaWNsYWJpbGUgKGluZGlmZmVyZW56aWF0bykiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5hc20uZWFzeWVjby5wcm9kLmVtYmVyd2FyZS5pdFwvYXBwXC91cGxvYWRzXC8yMDI0XC8wN1wvaWNvc2VjY28xMDAucG5nIiwiZ2FyYmFnZS1jZW50ZXIiOmZhbHNlfSwiZGVzY3JpcHRpb24iOiJFc3BvcnJlIGkgcmlmaXV0aSBhbGxcdTIwMTllc3Rlcm5vIGRhbGxlIG9yZSAyMjowMCBkZWwgZ2lvcm5vIHByZWNlZGVudGUgYWxsZSAwNjowMCBkZWwgZ2lvcm5vIGRpIHJhY2NvbHRhLiBFc3BvcnJlIGkgcmlmaXV0aSBlbnRybyBsZSBvcmUgMDY6MDAgZGVsIG1hdHRpbm8iLCJ6b25lLWlkIjoxNzF9XQ=="
+    }
+  ]
+}
