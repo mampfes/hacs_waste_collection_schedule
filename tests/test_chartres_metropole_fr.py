@@ -5,6 +5,10 @@ HTTP round-trip, but they can only assert that the replay yields *valid*
 collections. The date arithmetic the provider's prose implies — ISO-week parity,
 the April-November garden window, "Nth weekday of even months" and the
 bank-holiday shift — is exercised here instead, with no network access.
+
+This file is intentionally not added to pytest.ini; run it explicitly with:
+
+    python -m pytest tests/test_chartres_metropole_fr.py -q
 """
 
 import os
