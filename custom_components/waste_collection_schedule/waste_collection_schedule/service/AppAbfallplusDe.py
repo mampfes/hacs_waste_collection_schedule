@@ -494,6 +494,7 @@ class AppAbfallplusDe:
         self._needs_subtitle: list[str] = []
         # every street entry with the selected name (the provider can split one street by house number)
         self._street_matches: list[dict] = []
+        self._ids_before_street = (kommune_id, bezirk_id)
 
     def _request(
         self,
@@ -808,6 +809,7 @@ class AppAbfallplusDe:
         matches = [s for s in streets if compare(s["name"], self._strasse_search)]
         if matches:
             self._street_matches = matches
+            self._ids_before_street = (self._kommune_id, self._bezirk_id)
             self._use_street(matches[0])
             return
         street_names = [s["name"] for s in streets]
@@ -865,24 +867,24 @@ class AppAbfallplusDe:
             )
         if self._find_hnr(hnrs, self._hnr_search):
             return
+        # fall back to "Alle Hausnummern" if the specific house number is not found
+        if self._find_hnr(hnrs, "Alle Hausnummern"):
+            return
         # the provider can list one street several times, each entry with part
         # of the house numbers: look for the number in the other entries too
-        first_street = self._strasse_id
-        others = [s for s in self._street_matches if s["id"] != first_street]
+        selected = self._strasse_id
+        others = [s for s in self._street_matches if s["id"] != selected]
         all_names = [hnr["name"] for hnr in hnrs]
         for street in others:
+            self._kommune_id, self._bezirk_id = self._ids_before_street
             self._use_street(street)
             other_hnrs = self.get_hnrs()
             if self._find_hnr(other_hnrs, self._hnr_search):
                 return
             all_names += [hnr["name"] for hnr in other_hnrs]
         if others:
-            self._use_street(
-                next(s for s in self._street_matches if s["id"] == first_street)
-            )
-        # fall back to "Alle Hausnummern" if the specific house number is not found
-        if self._find_hnr(hnrs, "Alle Hausnummern"):
-            return
+            self._kommune_id, self._bezirk_id = self._ids_before_street
+            self._use_street(self._street_matches[0])
         raise SourceArgumentNotFoundWithSuggestions("hnr", self._hnr_search, all_names)
 
     def _find_hnr(self, hnrs: list[dict], name: str) -> bool:

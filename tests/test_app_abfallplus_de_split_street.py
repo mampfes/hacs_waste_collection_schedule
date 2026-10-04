@@ -84,3 +84,19 @@ def test_alle_hausnummern_fallback_still_applies():
     app = FakeApp([street("s1")], {"s1": ["Alle Hausnummern"]})
     select(app, "7")
     assert app._hnr == "s1-Alle Hausnummern"
+
+
+def test_alle_hausnummern_of_the_first_entry_wins_over_other_entries():
+    streets = [street("s1"), street("s2")]
+    app = FakeApp(streets, {"s1": ["Alle Hausnummern"], "s2": ["7"]})
+    select(app, "7")
+    assert app._strasse_id == "s1"
+    assert app._hnr == "s1-Alle Hausnummern"
+
+
+def test_ids_of_a_tried_entry_do_not_leak_into_the_next_one():
+    streets = [street("s1"), {**street("s2"), "id_kommune": "k2"}, street("s3")]
+    app = FakeApp(streets, {"s1": ["1"], "s2": ["2"], "s3": ["3"]}, kommune_id="k0")
+    select(app, "3")
+    assert app._strasse_id == "s3"
+    assert app._kommune_id == "k0"
