@@ -91,20 +91,18 @@ def test_normalize(value, expected):
     assert cm._normalize(value) == expected
 
 
-@pytest.mark.parametrize("value", ["bacs", "bac", "BACS", "bacs "])
-def test_coerce_secteur_bacs(value):
-    assert cm._coerce_secteur(value) == "bacs"
+def test_secteur_is_an_optional_dropdown():
+    (param,) = [p for p in cm.Source.PARAMS if "secteur" in p.fields]
+    assert param.widget == "select"
+    assert param.options == ["bacs", "sacs"]
+    assert param.required is False
 
 
-@pytest.mark.parametrize("value", ["sacs", "sac", "Sacs"])
-def test_coerce_secteur_sacs(value):
-    assert cm._coerce_secteur(value) == "sacs"
-
-
-def test_coerce_secteur_rejects_unknown():
-    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as exc:
-        cm._coerce_secteur("side")
-    assert list(exc.value.suggestions) == ["bacs", "sacs"]
+@pytest.mark.parametrize("value", ["bacs", "BACS", "bacs "])
+def test_describe_normalises_secteur(value):
+    assert {s.key for s in _schedules(LEVES_PARAGRAPHS[0], secteur=value)} == {
+        "Ordures ménagères (bacs)"
+    }
 
 
 def test_weekdays_preserve_order_and_deduplicate():

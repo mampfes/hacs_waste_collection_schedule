@@ -29,7 +29,7 @@ import holidays
 from waste_collection_schedule import parsers, recurrence, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import municipality, text_field
+from waste_collection_schedule.config_params import dropdown, municipality
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -165,14 +165,6 @@ def _normalize(value: str) -> str:
 _SLUG_BY_COMMUNE = {_normalize(name): slug for name, slug in COMMUNES.items()}
 
 
-def _coerce_secteur(value: Any) -> str:
-    """Normalise the optional ``secteur`` value, rejecting anything else."""
-    key = _normalize(str(value))
-    if key not in _SECTEUR_ALIASES:
-        raise SourceArgumentNotFoundWithSuggestions("secteur", value, ["bacs", "sacs"])
-    return _SECTEUR_ALIASES[key]
-
-
 def _weekdays(normalized_body: str) -> list[int]:
     """The weekdays named in a French "mardi et vendredi" style field."""
     result: list[int] = []
@@ -228,6 +220,10 @@ def _describe(tag: Any, source: Any = None) -> Any:
     today = date.today()
     horizon = today + timedelta(weeks=HORIZON_WEEKS)
     secteur = source.params.get("secteur") if source is not None else None
+    if secteur:
+        # The config flow offers the canonical values; normalise defensively.
+        secteur = _normalize(secteur)
+        secteur = _SECTEUR_ALIASES.get(secteur, secteur)
 
     if normalized.startswith("ordures menageres"):
         if "depot en conteneur" in normalized:
@@ -365,9 +361,7 @@ class Source(BaseSource):
 
     PARAMS = (
         municipality(field="commune"),
-        text_field(
-            "secteur", "Collection sector", optional=True, coerce=_coerce_secteur
-        ),
+        dropdown("secteur", ["bacs", "sacs"], label="Collection sector", optional=True),
     )
 
     HOWTO: ClassVar[dict] = {
