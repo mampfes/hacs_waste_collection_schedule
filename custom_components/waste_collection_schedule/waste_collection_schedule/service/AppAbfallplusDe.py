@@ -492,6 +492,9 @@ class AppAbfallplusDe:
         self._strasse_id = strasse_id
 
         self._needs_subtitle: list[str] = []
+        # every street entry with the selected name (the provider can split one street by house number)
+        self._street_matches: list[dict] = []
+        self._ids_before_street = (kommune_id, bezirk_id)
 
     def _request(
         self,
@@ -803,19 +806,24 @@ class AppAbfallplusDe:
                 [s["name"] for s in streets],
             )
 
-        for street in streets:
-            if compare(street["name"], self._strasse_search):
-                self._f_id_strasse = self._strasse_id = street["id"]
-                if street["id_kommune"] is not None:
-                    self._kommune_id = street["id_kommune"]
-                if street["id_beirk"] is not None:
-                    self._bezirk_id = street["id_beirk"]
-                self._hnrs = street["hrns"]
-                return
+        matches = [s for s in streets if compare(s["name"], self._strasse_search)]
+        if matches:
+            self._street_matches = matches
+            self._ids_before_street = (self._kommune_id, self._bezirk_id)
+            self._use_street(matches[0])
+            return
         street_names = [s["name"] for s in streets]
         raise SourceArgumentNotFoundWithSuggestions(
             "strasse", self._strasse_search, street_names
         )
+
+    def _use_street(self, street: dict) -> None:
+        self._f_id_strasse = self._strasse_id = street["id"]
+        if street["id_kommune"] is not None:
+            self._kommune_id = street["id_kommune"]
+        if street["id_beirk"] is not None:
+            self._bezirk_id = street["id_beirk"]
+        self._hnrs = street["hrns"]
 
     def get_hrn_needed(self) -> bool:
         return self._hnrs
@@ -857,22 +865,36 @@ class AppAbfallplusDe:
                 "multiple house numbers found, please specify one",
                 [hnr["name"] for hnr in hnrs],
             )
-        for hnr in hnrs:
-            if compare(hnr["name"], self._hnr_search, remove_space=True):
-                self._hnr = hnr["id"]
-                if hnr["f_id_strasse"] is not None:
-                    self._f_id_strasse = hnr["f_id_strasse"]
-                return
+        if self._find_hnr(hnrs, self._hnr_search):
+            return
         # fall back to "Alle Hausnummern" if the specific house number is not found
+        if self._find_hnr(hnrs, "Alle Hausnummern"):
+            return
+        # the provider can list one street several times, each entry with part
+        # of the house numbers: look for the number in the other entries too
+        selected = self._strasse_id
+        others = [s for s in self._street_matches if s["id"] != selected]
+        all_names = [hnr["name"] for hnr in hnrs]
+        for street in others:
+            self._kommune_id, self._bezirk_id = self._ids_before_street
+            self._use_street(street)
+            other_hnrs = self.get_hnrs()
+            if self._find_hnr(other_hnrs, self._hnr_search):
+                return
+            all_names += [hnr["name"] for hnr in other_hnrs]
+        if others:
+            self._kommune_id, self._bezirk_id = self._ids_before_street
+            self._use_street(self._street_matches[0])
+        raise SourceArgumentNotFoundWithSuggestions("hnr", self._hnr_search, all_names)
+
+    def _find_hnr(self, hnrs: list[dict], name: str) -> bool:
         for hnr in hnrs:
-            if compare(hnr["name"], "Alle Hausnummern", remove_space=True):
+            if compare(hnr["name"], name, remove_space=True):
                 self._hnr = hnr["id"]
                 if hnr["f_id_strasse"] is not None:
                     self._f_id_strasse = hnr["f_id_strasse"]
-                return
-        raise SourceArgumentNotFoundWithSuggestions(
-            "hnr", self._hnr_search, [hnr["name"] for hnr in hnrs]
-        )
+                return True
+        return False
 
     def select_all_waste_types(self):
         data = {
