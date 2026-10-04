@@ -73,8 +73,10 @@ class CollectionDayRetriever(RetrieverFunc):
         uprn = str(source.params[self.uprn]).strip()
 
         # Not source.session: see the module docstring. Verification stays on.
-        session = cffi_requests.Session()
+        with cffi_requests.Session() as session:
+            return self._walk(session, postcode, uprn)
 
+    def _walk(self, session: Any, postcode: str, uprn: str) -> Any:
         response = session.get(self.url, timeout=self.timeout)
         response.raise_for_status()
         form = _inputs(BeautifulSoup(response.text, "html.parser"))
