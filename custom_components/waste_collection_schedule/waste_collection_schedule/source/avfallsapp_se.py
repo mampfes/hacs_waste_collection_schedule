@@ -116,7 +116,7 @@ SERVICE_PROVIDERS = {
     "sigtuna": {
         "title": "Sigtuna (Sivab)",
         "url": "https://www.sivab.se/",
-        "api_url": "https://sigtuna.avfallsappen.se/wp-json/nova/v1/",
+        "api_url": "https://sigtuna.avfallsapp.se/wp-json/nova/v1/",
         "supports_registration": True,
         "requires_token": False,
     },
