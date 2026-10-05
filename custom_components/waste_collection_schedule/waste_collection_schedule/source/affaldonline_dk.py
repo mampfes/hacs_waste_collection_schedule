@@ -119,7 +119,7 @@ class Source(BaseSource):
             "municipality": "aeroe",
             "city": "Ærøskøbing",
             "street": "Nørregade|5970|Ærøskøbing",
-            "values": "Nørregade|1||||5970|Ærøskøbing|4162588|448776|0",
+            "values": "Nørregade|1||||5970|Ærøskøbing|4214342|448776|0",
         },
         "assens": {
             "municipality": "assens",

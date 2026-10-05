@@ -84,7 +84,9 @@
           "f_abfallarten": "Afvalsoorten",
           "hpid": "Homepage-ID",
           "key": "API-sleutel",
+          "municipality": "Gemeente",
           "ort": "Wijk",
+          "split_bins": "Containers opsplitsen in fracties",
           "realmid": "Realm-ID",
           "wasteTypes": "Afvalsoorten"
         },
