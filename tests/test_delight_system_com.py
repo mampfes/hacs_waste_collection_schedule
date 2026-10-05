@@ -16,6 +16,7 @@ sys.path.append(
 )
 
 from waste_collection_schedule.exceptions import (  # isort:skip
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
@@ -76,8 +77,8 @@ def resolve(area_name):
     return delight_system_com._resolve_area_id(None, "city", area_name, "en")
 
 
-def suggestions_for(area_name):
-    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as exc:
+def suggestions_for(area_name, error=SourceArgAmbiguousWithSuggestions):
+    with pytest.raises(error) as exc:
         resolve(area_name)
     return exc.value.suggestions
 
@@ -175,7 +176,10 @@ def test_repeated_ban_name_is_not_resolved_to_the_first_block(area_tree):
 
 def test_unknown_name_suggests_the_top_level(area_tree):
     area_tree["tree"] = WARDS
-    assert suggestions_for("梅田") == ["北区", "都島区"]
+    assert suggestions_for("梅田", SourceArgumentNotFoundWithSuggestions) == [
+        "北区",
+        "都島区",
+    ]
 
 
 def test_empty_area_name_lists_the_top_level(area_tree, monkeypatch):

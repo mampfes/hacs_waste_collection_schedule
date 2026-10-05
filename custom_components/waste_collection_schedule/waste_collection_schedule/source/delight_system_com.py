@@ -5,6 +5,7 @@ import unicodedata
 import requests
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -305,9 +306,10 @@ def _resolve_leaf_name(tree: _AreaTree, area_name: str) -> str:
         return matches[0][1]
 
     if matches:
-        suggestions = [_join_path(path) for path, _ in matches]
-    else:
-        suggestions = [name for name, _ in tree.children(())]
+        raise SourceArgAmbiguousWithSuggestions(
+            "area_name", area_name, [_join_path(path) for path, _ in matches]
+        )
+    suggestions = [name for name, _ in tree.children(())]
     raise SourceArgumentNotFoundWithSuggestions("area_name", area_name, suggestions)
 
 
@@ -341,7 +343,7 @@ def _resolve_area_id(
                 suggestions.extend(
                     _join_path((*path, name)) for name, _ in tree.children(path)
                 )
-        raise SourceArgumentNotFoundWithSuggestions("area_name", area_name, suggestions)
+        raise SourceArgAmbiguousWithSuggestions("area_name", area_name, suggestions)
 
     return _resolve_leaf_name(tree, area_name)
 
