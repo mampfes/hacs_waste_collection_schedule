@@ -13,6 +13,7 @@ SUPPORTED = {
     "Villefranche-sur-Mer",
 }
 
+
 class Source(WasteCollectionScheduleSource):
     TITLE = "Nice Côte d'Azur (FR)"
     DESCRIPTION = "Collection schedules published by Métropole Nice Côte d'Azur."
