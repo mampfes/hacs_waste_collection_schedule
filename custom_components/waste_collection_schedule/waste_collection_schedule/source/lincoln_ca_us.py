@@ -5,16 +5,18 @@ point layer, which carries each address's collection weekday and, for green
 waste, a Blue or Yellow week. Garbage ("One & Done") is weekly on that day;
 green waste is the same weekday every other week.
 
-Blue/Yellow -> ISO-week parity: the layer gives only the colour. The city's
-printed 2026 calendar colours every week, and all 53 match Blue = odd ISO week,
-Yellow = even (the city services holidays, so nothing shifts). Mapping a zone
-label onto a parity follows northernbeaches_nsw_gov_au. Open question: 2026 has
-53 ISO weeks, so parity makes the weeks of 2026-12-28 (wk53) and 2027-01-04
-(wk1) both Blue, where strict alternation would make the latter Yellow. If the
-2027 calendar shows strict alternation, switch green waste to an anchored
-FORTNIGHTLY Schedule from a documented Blue Monday (as moretonbay_qld_gov_au).
+Blue/Yellow weeks: the layer gives only the colour. The city's printed 2026
+calendar colours every week, and Blue and Yellow strictly alternate through all
+53 of them (the city services holidays, so nothing shifts); its legend says a
+street's colour "remains the same each year". Green waste is therefore an
+anchored fortnight from a Blue Monday (as moretonbay_qld_gov_au), which keeps
+alternating across year ends. ISO-week parity would match 2026 too (Blue = odd
+week) but would repeat Blue across 2026's 53rd week into 2027-01-04; the 2027
+calendar was not yet published when this was written, so strict alternation is
+assumed. If the City instead restarts by ISO week, use Schedule(iso_week_parity=).
 """
 
+import datetime
 import re
 from collections.abc import Iterator
 from typing import Any, ClassVar, final
@@ -45,8 +47,10 @@ _FEATURE_URL = (
 )
 _WEEKS_AHEAD = 26
 
-# RouteWeek coded-value domain: 1 = Blue, 2 = Yellow (see module docstring).
-_GREEN_WASTE_PARITY = {1: "odd", 2: "even"}
+# The Monday starting a Blue week on the City's 2026 service calendar.
+_BLUE_WEEK_MONDAY = datetime.date(2026, 1, 12)
+# RouteWeek coded-value domain: 1 = Blue, 2 = Yellow; weeks after the Blue one.
+_WEEK_OFFSET = {1: 0, 2: 1}
 
 
 def _split(street_address: str) -> tuple[int, list[str]] | None:
@@ -109,14 +113,14 @@ def _describe(record: dict[str, Any], source: Any) -> Iterator[Schedule]:
         return
     start = recurrence.next_weekday(weekday)
     yield Schedule("One & Done", start, recurrence.WEEKLY, _WEEKS_AHEAD)
-    parity = _GREEN_WASTE_PARITY.get(record.get("RouteWeek"))  # type: ignore[arg-type]
-    if record.get("Res_GW_Allowed") == 1 and parity:
+    offset = _WEEK_OFFSET.get(record.get("RouteWeek"))  # type: ignore[arg-type]
+    if record.get("Res_GW_Allowed") == 1 and offset is not None:
         yield Schedule(
             "Green Waste",
-            start,
-            recurrence.WEEKLY,
-            _WEEKS_AHEAD,
-            iso_week_parity=parity,
+            _BLUE_WEEK_MONDAY + datetime.timedelta(days=weekday, weeks=offset),
+            recurrence.FORTNIGHTLY,
+            _WEEKS_AHEAD // 2,
+            anchor=True,
         )
 
 
