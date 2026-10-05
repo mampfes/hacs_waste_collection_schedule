@@ -54,13 +54,13 @@ FRACTION_MAP: dict[int, wt.WasteType] = {
     43: wt.FOOD_WASTE,  # Madaffald"
     46: wt.GLASS,  # Glas
     47: wt.PAPER,  # Papir
-    50: wt.preserved("Metal"),  # Drikkedåser
-    51: wt.preserved("Metal"),  # Metal
-    53: wt.preserved("Metal"),  # Metal
+    50: wt.METAL,  # Drikkedåser
+    51: wt.METAL,  # Metal
+    53: wt.METAL,  # Metal
     54: wt.GARDEN_WASTE,  # Haveaffald
     58: wt.PAPER,  # Pap
-    59: wt.preserved("Drink cartons"),  # Drikke kartoner
-    72: wt.preserved("Plastic"),  # Plast
+    59: wt.CARTONS,  # Drikke kartoner
+    72: wt.PLASTIC,  # Plast
     78: wt.GENERAL_WASTE,  # Restaffald
     80: wt.GENERAL_WASTE,  # Restaffald
     81: wt.BULKY_WASTE,  # Storskrald
