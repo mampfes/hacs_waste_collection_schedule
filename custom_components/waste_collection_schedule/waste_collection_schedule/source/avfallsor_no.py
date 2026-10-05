@@ -16,10 +16,10 @@ _TYPE_MAP = {
     "Restavfall": wt.GENERAL_WASTE,
     "Bioavfall": wt.FOOD_WASTE,
     "Papp og papir": wt.PAPER,
-    "Plastemballasje": wt.RECYCLABLES,
+    # Plastic packaging is a round of its own, so it maps to PLASTIC.
+    "Plastemballasje": wt.PLASTIC,
     "Glassemballasje": wt.GLASS,
-    # No canonical metal type: kept as OTHER, shown with the provider's label.
-    "Metallemballasje": wt.OTHER,
+    "Metallemballasje": wt.METAL,
 }
 
 
@@ -70,9 +70,9 @@ class Source(BaseSource):
         wt.GENERAL_WASTE,
         wt.FOOD_WASTE,
         wt.PAPER,
-        wt.RECYCLABLES,
+        wt.PLASTIC,
         wt.GLASS,
-        wt.OTHER,
+        wt.METAL,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -114,5 +114,4 @@ class Source(BaseSource):
         date_key="dato",
         type_key="fraksjon",
         type_value_map=_TYPE_MAP,
-        carry_raw_label=True,
     )
