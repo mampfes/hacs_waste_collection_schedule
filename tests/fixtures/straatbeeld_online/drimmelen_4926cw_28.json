@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-05",
+  "interactions": [
+    {
+      "key": "POST https://api.straatbeeld.online/v1/waste-calendar 1b32c84203",
+      "method": "POST",
+      "url": "https://api.straatbeeld.online/v1/waste-calendar",
+      "final_url": "https://api.straatbeeld.online/v1/waste-calendar",
+      "body": "{\"body\":{\"house_letter\":null,\"house_number\":\"28\",\"postal_code\":\"4926CW\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding, Origin",
+        "cache-control": "no-cache, private",
+        "date": "Mon, 05 Oct 2026 20:11:16 GMT",
+        "x-ratelimit-limit": "300",
+        "x-ratelimit-remaining": "297",
+        "permissions-policy": "accelerometer=(self), ambient-light-sensor=(self), attribution-reporting=*, autoplay=(self), bluetooth=(self), browsing-topics=*, camera=(self), compute-pressure=(self), cross-origin-isolated=(self), display-capture=(self), document-domain=*, encrypted-media=(self), fullscreen=(self), gamepad=(self), geolocation=(self), gyroscope=(self), hid=(self), identity-credentials-get=(self), idle-detection=(self), local-fonts=(self), magnetometer=(self), microphone=(self), midi=(self), otp-credentials=(self), payment=(self), picture-in-picture=*, publickey-credentials-create=(self), publickey-credentials-get=(self), screen-wake-lock=(self), serial=(self), speaker-selection=(self), storage-access=*, usb=(self), web-share=(self), window-management=(self), xr-spatial-tracking=(self)",
+        "x-content-type-options": "nosniff, nosniff",
+        "x-download-options": "noopen",
+        "x-frame-options": "sameorigin, SAMEORIGIN",
+        "x-permitted-cross-domain-policies": "none",
+        "referrer-policy": "no-referrer",
+        "cross-origin-embedder-policy": "unsafe-none",
+        "cross-origin-opener-policy": "unsafe-none",
+        "cross-origin-resource-policy": "cross-origin",
+        "access-control-allow-origin": "https://drimmelen.afvalkalender.straatbeeld.online",
+        "access-control-allow-credentials": "true",
+        "access-control-expose-headers": "Content-Disposition",
+        "x-xss-protection": "1; mode=block",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJhZGRyZXNzIjp7InBvc3RhbF9jb2RlIjoiNDkyNkNXIiwiaG91c2VfbnVtYmVyIjoiMjgiLCJob3VzZV9sZXR0ZXIiOiIifSwiY29sbGVjdGlvbnMiOnsiMjAyNiI6eyJPa3RvYmVyIjpbeyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTAtMDgiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjgiLCJtb250aCI6Im9rdG9iZXIifSwiZGF0YSI6W3sibmFtZSI6ImdmdCIsImRpc3BsYXlfbmFtZSI6IkdGVCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLWdmdC5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTEwLTA5IiwiZGF5X3RleHQiOiJWcmlqZGFnIiwiZGF5IjoiOSIsIm1vbnRoIjoib2t0b2JlciJ9LCJkYXRhIjpbeyJuYW1lIjoicGFwaWVyIiwiZGlzcGxheV9uYW1lIjoiUGFwaWVyIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuc3RyYWF0YmVlbGQub25saW5lXC9zdG9yYWdlXC9pbWFnZXNcL3dhc3RlLXR5cGUtcGFwZXIuc3ZnIn1dfSx7ImRhdGUiOnsiZm9ybWF0dGVkIjoiMjAyNi0xMC0xNSIsImRheV90ZXh0IjoiRG9uZGVyZGFnIiwiZGF5IjoiMTUiLCJtb250aCI6Im9rdG9iZXIifSwiZGF0YSI6W3sibmFtZSI6InBiZCIsImRpc3BsYXlfbmFtZSI6IlBsYXN0aWMgYWZ2YWwiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1wbGFzdGljLnN2ZyJ9LHsibmFtZSI6InJlc3QiLCJkaXNwbGF5X25hbWUiOiJSZXN0YWZ2YWwiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1yZXNpZHVhbC5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTEwLTIyIiwiZGF5X3RleHQiOiJEb25kZXJkYWciLCJkYXkiOiIyMiIsIm1vbnRoIjoib2t0b2JlciJ9LCJkYXRhIjpbeyJuYW1lIjoiZ2Z0IiwiZGlzcGxheV9uYW1lIjoiR0ZUIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuc3RyYWF0YmVlbGQub25saW5lXC9zdG9yYWdlXC9pbWFnZXNcL3dhc3RlLXR5cGUtZ2Z0LnN2ZyJ9XX0seyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTAtMjkiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjI5IiwibW9udGgiOiJva3RvYmVyIn0sImRhdGEiOlt7Im5hbWUiOiJwYmQiLCJkaXNwbGF5X25hbWUiOiJQbGFzdGljIGFmdmFsIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuc3RyYWF0YmVlbGQub25saW5lXC9zdG9yYWdlXC9pbWFnZXNcL3dhc3RlLXR5cGUtcGxhc3RpYy5zdmcifV19XSwiTm92ZW1iZXIiOlt7ImRhdGUiOnsiZm9ybWF0dGVkIjoiMjAyNi0xMS0wNSIsImRheV90ZXh0IjoiRG9uZGVyZGFnIiwiZGF5IjoiNSIsIm1vbnRoIjoibm92ZW1iZXIifSwiZGF0YSI6W3sibmFtZSI6ImdmdCIsImRpc3BsYXlfbmFtZSI6IkdGVCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLWdmdC5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTExLTA2IiwiZGF5X3RleHQiOiJWcmlqZGFnIiwiZGF5IjoiNiIsIm1vbnRoIjoibm92ZW1iZXIifSwiZGF0YSI6W3sibmFtZSI6InBhcGllciIsImRpc3BsYXlfbmFtZSI6IlBhcGllciIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLXBhcGVyLnN2ZyJ9XX0seyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTEtMTIiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjEyIiwibW9udGgiOiJub3ZlbWJlciJ9LCJkYXRhIjpbeyJuYW1lIjoicGJkIiwiZGlzcGxheV9uYW1lIjoiUGxhc3RpYyBhZnZhbCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLXBsYXN0aWMuc3ZnIn0seyJuYW1lIjoicmVzdCIsImRpc3BsYXlfbmFtZSI6IlJlc3RhZnZhbCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLXJlc2lkdWFsLnN2ZyJ9XX0seyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTEtMTkiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjE5IiwibW9udGgiOiJub3ZlbWJlciJ9LCJkYXRhIjpbeyJuYW1lIjoiZ2Z0IiwiZGlzcGxheV9uYW1lIjoiR0ZUIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuc3RyYWF0YmVlbGQub25saW5lXC9zdG9yYWdlXC9pbWFnZXNcL3dhc3RlLXR5cGUtZ2Z0LnN2ZyJ9XX0seyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTEtMjYiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjI2IiwibW9udGgiOiJub3ZlbWJlciJ9LCJkYXRhIjpbeyJuYW1lIjoicGJkIiwiZGlzcGxheV9uYW1lIjoiUGxhc3RpYyBhZnZhbCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLXBsYXN0aWMuc3ZnIn1dfV0sIkRlY2VtYmVyIjpbeyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTItMDMiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjMiLCJtb250aCI6ImRlY2VtYmVyIn0sImRhdGEiOlt7Im5hbWUiOiJnZnQiLCJkaXNwbGF5X25hbWUiOiJHRlQiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1nZnQuc3ZnIn1dfSx7ImRhdGUiOnsiZm9ybWF0dGVkIjoiMjAyNi0xMi0wNCIsImRheV90ZXh0IjoiVnJpamRhZyIsImRheSI6IjQiLCJtb250aCI6ImRlY2VtYmVyIn0sImRhdGEiOlt7Im5hbWUiOiJwYXBpZXIiLCJkaXNwbGF5X25hbWUiOiJQYXBpZXIiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1wYXBlci5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTEyLTEwIiwiZGF5X3RleHQiOiJEb25kZXJkYWciLCJkYXkiOiIxMCIsIm1vbnRoIjoiZGVjZW1iZXIifSwiZGF0YSI6W3sibmFtZSI6InBiZCIsImRpc3BsYXlfbmFtZSI6IlBsYXN0aWMgYWZ2YWwiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1wbGFzdGljLnN2ZyJ9LHsibmFtZSI6InJlc3QiLCJkaXNwbGF5X25hbWUiOiJSZXN0YWZ2YWwiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1yZXNpZHVhbC5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTEyLTE3IiwiZGF5X3RleHQiOiJEb25kZXJkYWciLCJkYXkiOiIxNyIsIm1vbnRoIjoiZGVjZW1iZXIifSwiZGF0YSI6W3sibmFtZSI6ImdmdCIsImRpc3BsYXlfbmFtZSI6IkdGVCIsImljb24iOiJodHRwczpcL1wvYXBpLnN0cmFhdGJlZWxkLm9ubGluZVwvc3RvcmFnZVwvaW1hZ2VzXC93YXN0ZS10eXBlLWdmdC5zdmcifV19LHsiZGF0ZSI6eyJmb3JtYXR0ZWQiOiIyMDI2LTEyLTI0IiwiZGF5X3RleHQiOiJEb25kZXJkYWciLCJkYXkiOiIyNCIsIm1vbnRoIjoiZGVjZW1iZXIifSwiZGF0YSI6W3sibmFtZSI6InBiZCIsImRpc3BsYXlfbmFtZSI6IlBsYXN0aWMgYWZ2YWwiLCJpY29uIjoiaHR0cHM6XC9cL2FwaS5zdHJhYXRiZWVsZC5vbmxpbmVcL3N0b3JhZ2VcL2ltYWdlc1wvd2FzdGUtdHlwZS1wbGFzdGljLnN2ZyJ9XX0seyJkYXRlIjp7ImZvcm1hdHRlZCI6IjIwMjYtMTItMzEiLCJkYXlfdGV4dCI6IkRvbmRlcmRhZyIsImRheSI6IjMxIiwibW9udGgiOiJkZWNlbWJlciJ9LCJkYXRhIjpbeyJuYW1lIjoiZ2Z0IiwiZGlzcGxheV9uYW1lIjoiR0ZUIiwiaWNvbiI6Imh0dHBzOlwvXC9hcGkuc3RyYWF0YmVlbGQub25saW5lXC9zdG9yYWdlXC9pbWFnZXNcL3dhc3RlLXR5cGUtZ2Z0LnN2ZyJ9XX1dfX0sImZpcnN0IjoiZG9uZGVyZGFnIDggb2t0b2JlciB3b3JkZW4gR0ZUIGFmdmFsIG9wZ2VoYWFsZC4ifQ=="
+    }
+  ]
+}
