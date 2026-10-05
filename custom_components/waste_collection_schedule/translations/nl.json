@@ -4522,11 +4522,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "municipality": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_gojer_at": {
@@ -4534,10 +4536,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "municipality": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Bron configureren",
@@ -11763,13 +11768,16 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
-          "client": "Klant",
+          "city": "Plaats",
+          "client": "Client",
           "district": "Wijk",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -11777,12 +11785,16 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
-          "client": "Klant",
+          "city": "Plaats",
+          "client": "Client",
           "district": "Wijk",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_cederbaum_de": {
         "title": "Bron configureren",
@@ -17987,7 +17999,9 @@
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -17998,7 +18012,10 @@
           "municipality": "Gemeente",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_cidiu_it": {
         "title": "Bron configureren",
@@ -20012,7 +20029,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_him_as": {
@@ -20022,7 +20040,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_hra_no": {
         "title": "Bron configureren",
@@ -20935,13 +20955,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Gemeente",
+          "miejscowosc": "Plaats",
+          "numer_domu": "Huisnummer",
+          "ulica": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "gmina": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "miejscowosc": "Uw stad of dorp.",
+          "numer_domu": "Uw huisnummer.",
+          "ulica": "Uw straatnaam."
         }
       },
       "reconfigure_koma_pl": {
@@ -20949,12 +20973,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Gemeente",
+          "miejscowosc": "Plaats",
+          "numer_domu": "Huisnummer",
+          "ulica": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "miejscowosc": "Uw stad of dorp.",
+          "numer_domu": "Uw huisnummer.",
+          "ulica": "Uw straatnaam."
+        }
       },
       "args_sepan_remondis_pl": {
         "title": "Bron configureren",

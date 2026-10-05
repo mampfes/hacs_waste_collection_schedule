@@ -4568,11 +4568,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "municipality": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_gojer_at": {
@@ -4580,10 +4582,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "municipality": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Quelle konfigurieren",
@@ -11867,13 +11872,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "client": "Client",
           "district": "Ortsteil",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -11881,12 +11889,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
+          "city": "Stadt",
           "client": "Client",
           "district": "Ortsteil",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_cederbaum_de": {
         "title": "Quelle konfigurieren",
@@ -18145,7 +18157,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -18156,7 +18170,10 @@
           "municipality": "Gemeinde",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_cidiu_it": {
         "title": "Quelle konfigurieren",
@@ -20154,7 +20171,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_him_as": {
@@ -20164,7 +20182,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_hra_no": {
         "title": "Quelle konfigurieren",
@@ -21096,13 +21116,17 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Gemeinde",
+          "miejscowosc": "Stadt",
+          "numer_domu": "Hausnummer",
+          "ulica": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "gmina": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "miejscowosc": "Ihre Stadt oder Gemeinde.",
+          "numer_domu": "Ihre Hausnummer.",
+          "ulica": "Ihr Straßenname."
         }
       },
       "reconfigure_koma_pl": {
@@ -21110,12 +21134,17 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Gemeinde",
+          "miejscowosc": "Stadt",
+          "numer_domu": "Hausnummer",
+          "ulica": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "miejscowosc": "Ihre Stadt oder Gemeinde.",
+          "numer_domu": "Ihre Hausnummer.",
+          "ulica": "Ihr Straßenname."
+        }
       },
       "args_sepan_remondis_pl": {
         "title": "Quelle konfigurieren",

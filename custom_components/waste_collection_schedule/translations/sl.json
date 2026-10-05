@@ -4524,7 +4524,9 @@
           "municipality": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_gojer_at": {
@@ -4535,7 +4537,10 @@
           "city": "Mesto",
           "municipality": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Configure Source",
@@ -11762,12 +11767,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "client": "Stranka",
-          "district": "Okrožje",
+          "client": "Client",
+          "district": "Naselje",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -11776,11 +11784,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "client": "Stranka",
-          "district": "Okrožje",
+          "client": "Client",
+          "district": "Naselje",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_cederbaum_de": {
         "title": "Configure Source",
@@ -17985,7 +17997,9 @@
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -17996,7 +18010,10 @@
           "municipality": "Občina",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_cidiu_it": {
         "title": "Configure Source",
@@ -19987,7 +20004,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_him_as": {
@@ -19997,7 +20015,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_hra_no": {
         "title": "Configure Source",
@@ -20910,13 +20930,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
+          "gmina": "Občina",
+          "miejscowosc": "Mesto",
+          "numer_domu": "Hišna številka",
           "ulica": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "gmina": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "miejscowosc": "Vaše mesto ali kraj.",
+          "numer_domu": "Vaša hišna številka.",
+          "ulica": "Ime vaše ulice."
         }
       },
       "reconfigure_koma_pl": {
@@ -20924,12 +20948,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
+          "gmina": "Občina",
+          "miejscowosc": "Mesto",
+          "numer_domu": "Hišna številka",
           "ulica": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "miejscowosc": "Vaše mesto ali kraj.",
+          "numer_domu": "Vaša hišna številka.",
+          "ulica": "Ime vaše ulice."
+        }
       },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",

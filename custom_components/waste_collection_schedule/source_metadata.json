@@ -1120,7 +1120,10 @@
   },
   "gojer_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gojer_at.md",
-    "howto": {},
+    "howto": {
+      "de": "Wähle Gemeinde und Ort auf https://www.gojer.at/service/abfuhrkalender.html und trage beide Namen so ein, wie sie dort angezeigt werden.",
+      "en": "Select your municipality and town on https://www.gojer.at/service/abfuhrkalender.html and enter both names as shown there."
+    },
     "urls": {}
   },
   "baden_umweltverbaende_at": {
@@ -2684,7 +2687,10 @@
   },
   "muellabfuhr_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellabfuhr_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Wähle den Landkreis bzw. die Stadt (`client`) und gib Ort, Ortsteil und Straße so an, wie sie im Abfallkalender auf https://portal.muellabfuhr-deutschland.de/ stehen. Ortsteil und Straße sind nur nötig, wenn der Ort weiter unterteilt ist.",
+      "en": "Enter the district or city (`client`) and the place, district and street as they appear in the waste calendar on https://portal.muellabfuhr-deutschland.de/. District and street are only needed if the place is subdivided further."
+    },
     "urls": {}
   },
   "cederbaum_de": {
@@ -3943,7 +3949,8 @@
   "asm_pv_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/asm_pv_it.md",
     "howto": {
-      "en": "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ and pick your municipality and street from the search. Use the same values here. For small municipalities served by a single zone, use 'Tutte le vie' as the street."
+      "en": "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ and pick your municipality and street from the search. Use the same values here. For small municipalities served by a single zone, use 'Tutte le vie' as the street.",
+      "it": "Apri https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ e scegli il tuo comune e la tua via nella ricerca. Usa gli stessi valori qui. Per i piccoli comuni serviti da un'unica zona, usa 'Tutte le vie' come via."
     },
     "urls": {}
   },
@@ -4660,7 +4667,7 @@
   "koma_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koma_pl.md",
     "howto": {
-      "en": "Open https://koma.pl/harmonogram-odpadow/ and step through the dropdowns (Wybierz Miasto -> miejscowość -> ulica -> numer domu) to find the exact spelling of your gmina, town, street and house number."
+      "en": "Open https://koma.pl/harmonogram-odpadow/ and step through the dropdowns (Wybierz Miasto -> miejscowość -> ulica -> numer domu) to find the exact spelling of your commune (gmina), town, street and house number. Leave the street empty for towns without streets."
     },
     "urls": {}
   },

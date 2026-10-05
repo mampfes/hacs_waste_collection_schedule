@@ -4651,7 +4651,9 @@
           "municipality": "Municipality"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_gojer_at": {
@@ -4662,7 +4664,10 @@
           "city": "City",
           "municipality": "Municipality"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Configure Source",
@@ -12051,7 +12056,10 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -12064,7 +12072,11 @@
           "district": "District",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
+        }
       },
       "args_cederbaum_de": {
         "title": "Configure Source",
@@ -18370,8 +18382,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
-          "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'."
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -18383,8 +18395,8 @@
           "street": "Street"
         },
         "data_description": {
-          "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
-          "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'."
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
         }
       },
       "args_cidiu_it": {
@@ -20428,7 +20440,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address as shown on the HIM tømmekalender address search."
+          "address": "Your full address."
         }
       },
       "reconfigure_him_as": {
@@ -20439,7 +20451,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Address as shown on the HIM tømmekalender address search."
+          "address": "Your full address."
         }
       },
       "args_hra_no": {
@@ -21415,17 +21427,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gmina": "Commune (gmina)",
-          "miejscowosc": "Town",
-          "numer_domu": "House number",
+          "gmina": "Municipality",
+          "miejscowosc": "City",
+          "numer_domu": "House Number",
           "ulica": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "gmina": "Name of the commune (gmina) as listed on koma.pl.",
-          "miejscowosc": "Name of the town/village.",
-          "numer_domu": "House number.",
-          "ulica": "Street name (leave empty for towns without streets)."
+          "gmina": "The name of your municipality, as shown on the provider's website.",
+          "miejscowosc": "Your city or town.",
+          "numer_domu": "Your house number.",
+          "ulica": "Your street name."
         }
       },
       "reconfigure_koma_pl": {
@@ -21433,16 +21445,16 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "gmina": "Commune (gmina)",
-          "miejscowosc": "Town",
-          "numer_domu": "House number",
+          "gmina": "Municipality",
+          "miejscowosc": "City",
+          "numer_domu": "House Number",
           "ulica": "Street"
         },
         "data_description": {
-          "gmina": "Name of the commune (gmina) as listed on koma.pl.",
-          "miejscowosc": "Name of the town/village.",
-          "numer_domu": "House number.",
-          "ulica": "Street name (leave empty for towns without streets)."
+          "gmina": "The name of your municipality, as shown on the provider's website.",
+          "miejscowosc": "Your city or town.",
+          "numer_domu": "Your house number.",
+          "ulica": "Your street name."
         }
       },
       "args_sepan_remondis_pl": {

@@ -4529,10 +4529,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_gojer_at": {
@@ -4541,9 +4543,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Configurer la Source",
@@ -11860,11 +11865,14 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
           "client": "Client",
-          "district": "District",
+          "district": "Quartier",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "district": "Votre quartier ou partie de la commune.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -11874,10 +11882,14 @@
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
           "client": "Client",
-          "district": "District",
+          "district": "Quartier",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "district": "Votre quartier ou partie de la commune.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_cederbaum_de": {
         "title": "Configurer la Source",
@@ -18091,11 +18103,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -18103,10 +18117,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
+          "municipality": "Commune",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_cidiu_it": {
         "title": "Configurer la Source",
@@ -20104,7 +20121,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_him_as": {
@@ -20114,7 +20132,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_hra_no": {
         "title": "Configurer la Source",
@@ -21027,13 +21047,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Commune",
+          "miejscowosc": "Ville",
+          "numer_domu": "Numéro",
+          "ulica": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "gmina": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "miejscowosc": "Votre ville ou village.",
+          "numer_domu": "Votre numéro de rue.",
+          "ulica": "Le nom de votre rue."
         }
       },
       "reconfigure_koma_pl": {
@@ -21041,12 +21065,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Commune",
+          "miejscowosc": "Ville",
+          "numer_domu": "Numéro",
+          "ulica": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "miejscowosc": "Votre ville ou village.",
+          "numer_domu": "Votre numéro de rue.",
+          "ulica": "Le nom de votre rue."
+        }
       },
       "args_sepan_remondis_pl": {
         "title": "Configurer la Source",

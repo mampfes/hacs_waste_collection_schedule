@@ -4538,10 +4538,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "municipality": "Municipality"
+          "municipality": "Comune"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_gojer_at": {
@@ -4550,9 +4552,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "municipality": "Municipality"
+          "municipality": "Comune"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
       },
       "args_baden_umweltverbaende_at": {
         "title": "Configurazione Sorgente",
@@ -11804,12 +11809,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "client": "Cliente",
-          "district": "Distretto",
-          "street": "Strada"
+          "client": "Client",
+          "district": "Quartiere",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_muellabfuhr_de": {
@@ -11818,11 +11826,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "client": "Cliente",
-          "district": "Distretto",
-          "street": "Strada"
+          "client": "Client",
+          "district": "Quartiere",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_cederbaum_de": {
         "title": "Configurazione Sorgente",
@@ -18064,7 +18076,9 @@
           "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_asm_pv_it": {
@@ -18075,7 +18089,10 @@
           "municipality": "Comune",
           "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_cidiu_it": {
         "title": "Configurazione Sorgente",
@@ -20076,7 +20093,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_him_as": {
@@ -20086,7 +20104,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_hra_no": {
         "title": "Configurazione Sorgente",
@@ -20999,13 +21019,17 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Comune",
+          "miejscowosc": "Città",
+          "numer_domu": "Numero civico",
+          "ulica": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "gmina": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "miejscowosc": "La vostra città o paese.",
+          "numer_domu": "Il vostro numero civico.",
+          "ulica": "Il nome della vostra via."
         }
       },
       "reconfigure_koma_pl": {
@@ -21013,12 +21037,17 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
-          "numer_domu": "Numer Domu",
-          "ulica": "Ulica"
+          "gmina": "Comune",
+          "miejscowosc": "Città",
+          "numer_domu": "Numero civico",
+          "ulica": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "miejscowosc": "La vostra città o paese.",
+          "numer_domu": "Il vostro numero civico.",
+          "ulica": "Il nome della vostra via."
+        }
       },
       "args_sepan_remondis_pl": {
         "title": "Configurazione Sorgente",
