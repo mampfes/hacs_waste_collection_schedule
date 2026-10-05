@@ -1879,6 +1879,14 @@
       "url_www_insee_fr": "https://www.insee.fr"
     }
   },
+  "larochelle_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/larochelle_fr.md",
+    "howto": {
+      "en": "Select your municipality, or for La Rochelle, Châtelaillon-Plage and the sectors L to O, your collection sector. Find it on the map: https://opendata.agglo-larochelle.fr/visualisation/map/?id=dechet_-_prochaines_dates_de_collecte",
+      "fr": "Sélectionnez votre commune ou, pour La Rochelle, Châtelaillon-Plage et les secteurs L à O, votre secteur de collecte. Retrouvez-le sur la carte : https://opendata.agglo-larochelle.fr/visualisation/map/?id=dechet_-_prochaines_dates_de_collecte"
+    },
+    "urls": {}
+  },
   "clissonsevremaine_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/clissonsevremaine_fr.md",
     "howto": {

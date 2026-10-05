@@ -1030,6 +1030,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Acigné](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Agglo d'Agen](/doc/source/publidata_fr.md) / agglo-agen.net/vie-quotidienne/collecte-et-traitement-des-dechets/particuliers/calendriers-et-informations-collecte
+- [Agglomération de La Rochelle](/doc/source/larochelle_fr.md) / agglo-larochelle.fr
 - [Aigrefeuille-sur-Maine](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Aingeray](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Alfortville](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
