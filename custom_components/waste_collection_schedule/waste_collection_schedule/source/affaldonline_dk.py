@@ -13,9 +13,10 @@ from waste_collection_schedule.config_params import (
     cascading_select,
     municipality,
 )
+from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.AffaldOnlineDk import (
     AffaldOnlineDkParser,
-    AffaldOnlineDkRetriever,
     discover_choices,
 )
 
@@ -67,6 +68,25 @@ FRACTION_MAP: dict[int, wt.WasteType] = {
     89: wt.FOOD_WASTE,  # Madaffald
 }
 
+# Client IDs identifying each municipality on the API
+CLIENT_ID_LOOKUP = {
+    "aeroe": "db765a2f-3f50-4abd-a738-3825813fedcb",
+    "assens": "afd912a2-44b3-402f-9e13-5aeb701ce143",
+    "favrskov": "dffcc5b6-b9ee-478d-82e2-030123485f7e",
+    "fanoe": "af7badab-508b-43fa-87dc-162347b288f3",
+    "fredericia": "dea6ff86-2ee9-4e7a-8fce-76dcb5625714",
+    "ffv": "ceca5978-6380-4ff8-ac28-9b6505457da8",
+    "holbaek": "017efd06-ac42-4b36-8a70-ab309162e988",
+    "langeland": "be8a9420-a9ae-42e6-83f2-eda5ec3fa29f",
+    "middelfart": "17F02B8B-7743-4FA6-8646-74F59436AED1",
+    "morsoe": "0199b7d2-bbae-46a5-a726-293c9236f4e5",
+    "nyborg": "4571D02F-602C-485A-8961-466EAA2B7B04",
+    "silkeborg": "eea63ff1-96fd-4288-b96e-83100ebbc378",
+    "rebild": "cb3ddc8c-900a-43ce-ac88-ec7587db4db3",
+    "vejle": "209cb669-e2e8-4c9b-8048-8287db51a61e",
+    "viborg": "4EBB900C-088E-475F-83ED-B087F4AD07BA",
+}
+
 # The distinct canonical types FRACTION_MAP resolves to. classify() may also
 # emit a dynamic wt.preserved() label for a combined bin, but that is exempt
 # from declaration (see tests/test_declared_waste_types.py).
@@ -74,6 +94,14 @@ _DECLARED_WASTE_TYPES = sorted(
     FRACTION_MAP.values(),
     key=lambda w: w.id,
 )
+
+
+def _address_id(values: str) -> str:
+    # The address id is the last two values of the raw "|"-separated string.
+    parts = values.split("|")
+    if len(parts) < 2:
+        raise SourceArgumentException("values", "Provided values is not valid")
+    return "|".join(parts[-2:])
 
 
 class Source(BaseSource):
@@ -202,7 +230,20 @@ class Source(BaseSource):
         """Options for one cascade level given the levels chosen so far."""
         return discover_choices(field, selections)
 
-    retrieve = AffaldOnlineDkRetriever()
+    retrieve = HttpGetRetriever(
+        url="https://www.affaldonline.dk/api/address/collections",
+        params=lambda values, **_: {
+            "groupBy": "date",
+            "addressId": _address_id(values),
+        },
+        headers=lambda municipality, **_: {
+            "X-Client-Provider": CLIENT_ID_LOOKUP[municipality],
+            "X-Client-Type": "Kunde app",
+            "X-Client-OS": "android",
+            "X-Client-Version": "9999",  # Needs to be higher than the current version.
+        },
+    )
+
     parse = AffaldOnlineDkParser()
 
     def classify(self, record):
