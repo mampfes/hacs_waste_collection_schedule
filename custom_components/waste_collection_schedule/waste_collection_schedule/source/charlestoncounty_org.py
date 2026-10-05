@@ -1,99 +1,65 @@
-from datetime import date, datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
 )
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Charleston County, SC"
-DESCRIPTION = "Source for Charleston County, SC residential curbside recycling."
-URL = (
-    "https://www.charlestoncounty.org/departments/environmental-management/recycle.php"
-)
-COUNTRY = "us"
+_FEATURE_URL = "https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0"
 
-TEST_CASES = {
-    "Downtown Charleston": {"address": "123 Coming St, Charleston, SC 29403"},
-    "Johns Island": {"address": "2758 August Rd, Johns Island, SC 29455"},
-}
-
-SOURCE_CODEOWNERS = ["@dmkjr"]
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including city, state, and ZIP code.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-FEATURE_URL = "https://services.arcgis.com/jR9eNCjAkxwH2nLe/arcgis/rest/services/Curbside_Recycling_Days/FeatureServer/0"
-DATE_FORMAT = "%B %d"
-
-# The county publishes only the next exact pickup date; recycling then
-# recurs on a fixed biweekly cadence, so project that many further pickups.
-PICKUPS_AHEAD = 13
+# The county publishes only the next pickup, without a year ("October 02");
+# recycling then recurs every two weeks.
+_PICKUPS_AHEAD = 13
 
 
-def _parse_next_pickup(value: str) -> date:
-    """Parse the yearless next-pickup date published by Charleston County."""
-    today = date.today()
-    parsed = datetime.strptime(value.strip(), DATE_FORMAT).date()
+def _describe(record, source):
+    value = (record.get("PickupDate") or "").strip()
+    if not value:
+        return
+    try:
+        parsed = datetime.datetime.strptime(value, "%B %d").date()
+    except ValueError:
+        return
+    today = datetime.date.today()
     pickup = parsed.replace(year=today.year)
-
-    # A January pickup published in December belongs to the next calendar year.
-    if pickup < today and (today - pickup).days > 30:
+    # A January pickup published in December belongs to the next year.
+    if (today - pickup).days > 30:
         pickup = pickup.replace(year=today.year + 1)
-
-    # The layer is normally updated before each collection. If it is briefly
-    # stale after a pickup, retain its official biweekly cadence.
-    while pickup < today:
-        pickup += timedelta(weeks=2)
-
-    return pickup
+    # A layer briefly stale after a pickup keeps its fortnightly cadence.
+    yield Schedule(
+        "Recycling", pickup, recurrence.FORTNIGHTLY, _PICKUPS_AHEAD, anchor=True
+    )
 
 
-def _next_n_dates(start: date, n: int, delta: timedelta) -> list[date]:
-    """Project ``n`` further dates from ``start`` at a fixed ``delta`` cadence."""
-    return [start + i * delta for i in range(n)]
+@final
+class Source(BaseSource):
+    TITLE = "Charleston County, SC"
+    DESCRIPTION = "Source for Charleston County, SC residential curbside recycling."
+    URL = "https://www.charlestoncounty.org/departments/environmental-management/recycle.php"
+    COUNTRY = "us"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@dmkjr"]
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Downtown Charleston": {"address": "123 Coming St, Charleston, SC 29403"},
+        "Johns Island": {"address": "2758 August Rd, Johns Island, SC 29455"},
+    }
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    PARAMS = (street_address(),)
 
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-            features = query_feature_layer(
-                FEATURE_URL,
-                geometry=location,
-                out_fields="PickupDate",
-            )
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the full street address including city, state, and ZIP code.",
+    }
 
-        pickup_date = (features[0].get("PickupDate") or "").strip()
-        if not pickup_date:
-            raise SourceArgumentNotFound("address", self._address)
-
-        try:
-            next_pickup = _parse_next_pickup(pickup_date)
-        except ValueError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        return [
-            Collection(
-                date=pickup,
-                t="Recycling",
-                icon=Icons.RECYCLING,
-            )
-            for pickup in _next_n_dates(next_pickup, PICKUPS_AHEAD, timedelta(weeks=2))
-        ]
+    retrieve = ArcGisFeatureRetriever(_FEATURE_URL, out_fields="PickupDate")
+    parse = ArcGisFeatureParser(argument="address")
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map={"Recycling": wt.RECYCLABLES})

@@ -54,7 +54,7 @@ class Source(BaseSource):
             "app_id": "de.k4systems.abfallappfds",
             "city": "Horb am Neckar",
             "strasse": "Marktplatz",
-            "hnr": "1%7C%7C1004335001",
+            "hnr": 1,
         },
         "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
             "app_id": "de.k4systems.abfallappnf",
@@ -132,7 +132,11 @@ class Source(BaseSource):
 
     retrieve = AppAbfallplusRetriever()
     parse = AppAbfallplusParser()
-    transform = JsonTransformer(date_key="date", type_key="category")
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="category",
+        type_value_map={"Schad- und Problemstoffannahme": wt.HAZARDOUS},
+    )
 
     @staticmethod
     def REGIONS() -> list[Region]:

@@ -11,6 +11,7 @@ happens in the same release as the deprecation.
 | Item | Kind | Deprecated in | Replacement | Target removal | Ref |
 |---|---|---|---|---|---|
 | `newcastle_gov_uk` | source | 2.30.0 | shared ReCollect ICS source (area `NewcastleUponTyneUK`) | next major | [#6753](https://github.com/mampfes/hacs_waste_collection_schedule/pull/6753) |
+| `byron_nsw_gov_au` | source | 3.0.0 | shared `recyclecoach_com` source (`project_id: 592`, `district_id: BYSC`) | next major | n/a |
 
 When you deprecate something, add a row here, log a one-time runtime warning in
 the source, add a `Deprecated` entry to `CHANGELOG.md`, and point the source's

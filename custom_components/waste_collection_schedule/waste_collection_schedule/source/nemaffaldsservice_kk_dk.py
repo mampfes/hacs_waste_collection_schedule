@@ -24,7 +24,7 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://nemaffaldsservice.kk.dk"
@@ -37,14 +37,10 @@ _TOKEN_RE = re.compile(
 )
 
 
-def _resolve_address(source, keys: tuple) -> str:
-    """Validate the address against the provider's own autocomplete."""
-    address = source.params["address"]
-    suggestions_r = source.session.get(_ADDRESS_LOOKUP_URL, params={"term": address})
-    suggestions_r.raise_for_status()
-
+def _pick_address(response, address: str, **_) -> str:
+    """The provider's own autocomplete label for the configured address."""
     labels = []
-    for suggestion in suggestions_r.json() or []:
+    for suggestion in response.json() or []:
         if not suggestion.get("fullAdress"):
             continue
         label = suggestion.get("label", "")
@@ -55,34 +51,20 @@ def _resolve_address(source, keys: tuple) -> str:
     raise SourceArgumentNotFoundWithSuggestions("address", address, labels)
 
 
-def _resolve_token(source, keys: tuple) -> str:
-    """Scrape the CSRF token the search POST has to carry."""
-    home_r = source.session.get(_BASE_URL)
-    home_r.raise_for_status()
-    token_match = _TOKEN_RE.search(home_r.text)
+def _pick_token(response, *keys, address: str, **_) -> str:
+    """The CSRF token the search POST has to carry, off the homepage."""
+    token_match = _TOKEN_RE.search(response.text)
     if token_match is None:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "address", source.params["address"], []
-        )
+        raise SourceArgumentNotFoundWithSuggestions("address", address, [])
     return token_match.group(1)
 
 
-def _resolve_customer_id(source, keys: tuple) -> str:
-    """POST the search; the redirect's query string carries the customer id."""
-    matched_address, token = keys
-    search_r = source.session.post(
-        _CUSTOMER_LOOKUP_URL,
-        data={
-            "SearchTerm": matched_address,
-            "__RequestVerificationToken": token,
-        },
-    )
-    search_r.raise_for_status()
-
-    customer_id = parse_qs(urlparse(str(search_r.url)).query).get("customerId")
+def _pick_customer_id(response, matched_address, token, *, address: str, **_) -> str:
+    """The customer id the search redirected to, off the final URL."""
+    customer_id = parse_qs(urlparse(str(response.url)).query).get("customerId")
     if not customer_id:
         raise SourceArgumentNotFoundWithSuggestions(
-            "address", source.params["address"], [matched_address]
+            "address", address, [matched_address]
         )
     return customer_id[0]
 
@@ -100,7 +82,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Nørrebrogade 10": {"address": "Nørrebrogade 10"},
         "Amagerbrogade 10": {"address": "Amagerbrogade 10"},
-        "Rådhuspladsen 1": {"address": "Rådhuspladsen 1"},
+        "Østerbrogade 100": {"address": "Østerbrogade 100"},
     }
 
     PARAMS = (street_address(),)
@@ -119,12 +101,29 @@ class Source(BaseSource):
     }
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_address, _resolve_token, _resolve_customer_id),
+        steps=(
+            Lookup(
+                _ADDRESS_LOOKUP_URL,
+                params=lambda address, **_: {"term": address},
+                pick=_pick_address,
+            ),
+            Lookup(_BASE_URL, pick=_pick_token),
+            Lookup(
+                _CUSTOMER_LOOKUP_URL,
+                method="POST",
+                data=lambda matched_address, token, **_: {
+                    "SearchTerm": matched_address,
+                    "__RequestVerificationToken": token,
+                },
+                pick=_pick_customer_id,
+            ),
+        ),
         url=_CALENDAR_URL,
         params=lambda *keys, **_: {"customerId": keys[-1]},
     )
 
     parse = parsers.IcsParser()
+
     transform = ICSTransformer(
         type_value_map={
             "Restaffald": wt.GENERAL_WASTE,
@@ -133,12 +132,12 @@ class Source(BaseSource):
             "Papir": wt.PAPER,
             "Pap": wt.PAPER,
             "Glas": wt.GLASS,
-            "Metal": wt.RECYCLABLES,
-            "Plast": wt.RECYCLABLES,
+            "Metal": wt.METAL,
+            "Plast": wt.PLASTIC,
             "Elektronik": wt.ELECTRONICS,
             "Farligt affald": wt.HAZARDOUS,
-            "Tekstil": wt.RECYCLABLES,
+            "Tekstil": wt.TEXTILES,
             "Storskrald": wt.BULKY_WASTE,
             "Haveaffald": wt.GARDEN_WASTE,
-        }
+        },
     )

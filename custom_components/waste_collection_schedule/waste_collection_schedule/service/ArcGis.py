@@ -22,6 +22,10 @@ Provides:
     reading the matched property's centroid as the query point
   - ArcGisDistinctValues: the distinct values of one field, for suggesting what
     a no-match input should have been
+  - WebMapLayer: resolve a layer URL from the web map that publishes it, for a
+    council that republishes its data under a new service name each year
+  - ArcGisWebMapExpression: attach a web map's Arcade expression (a cycle's
+    anchor dates, a holiday delay) to the records that depend on it
   - geocoded_params(): geocode an address into the query params of an ordinary
     (non-ArcGIS) endpoint, for a provider keyed by a point
   - ArcGisZoneParser / point_in_polygon(): match a geocoded address against a
@@ -43,7 +47,7 @@ from __future__ import annotations
 
 import json
 import logging
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping
 from datetime import date, timedelta
 from typing import TYPE_CHECKING, Any, TypedDict
 
@@ -349,6 +353,131 @@ def geocoded_params(
 # --------------------------------------------------------------------------- #
 
 
+#: A layer URL, or a zero-argument callable resolving it at fetch time (see
+#: :class:`WebMapLayer`).
+LayerUrl = str | Callable[[], str]
+
+
+def _layer_url(feature_url: LayerUrl) -> str:
+    return feature_url() if callable(feature_url) else feature_url
+
+
+class WebMapLayer:
+    """Resolve a layer URL from the web map that publishes it.
+
+    Some councils republish their collection data each year as a new hosted
+    service whose name carries the publish date
+    (``.../Adresspunkter_med_sophamtningsinfo_20260218/FeatureServer/0``), and
+    repoint their public web map at it. Hard-coding the service URL breaks at
+    every refresh; the web map's item data is the stable address. Pass an
+    instance wherever a layer URL is taken::
+
+        LAYER = WebMapLayer("https://.../sharing/rest/content/items/<id>/data")
+        retrieve = ArcGisFeatureRetriever(LAYER, where=...)
+
+    Each call reads the item data afresh, so a fetch always queries the layer the
+    web map currently shows.
+
+    Args:
+        item_data_url: the web map item's ``/data`` URL.
+        index: which of the map's ``operationalLayers`` holds the data.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(self, item_data_url: str, *, index: int = 0, timeout: int = 30):
+        self.item_data_url = item_data_url
+        self.index = index
+        self.timeout = timeout
+
+    def __call__(self) -> str:
+        r = requests.get(self.item_data_url, params={"f": "json"}, timeout=self.timeout)
+        r.raise_for_status()
+        return str(r.json()["operationalLayers"][self.index]["url"])
+
+
+def _find_expression(node: Any, title: str) -> str | None:
+    """Depth-first search of web map JSON for the Arcade expression named ``title``."""
+    if isinstance(node, dict):
+        if node.get("title") == title and isinstance(node.get("expression"), str):
+            return str(node["expression"])
+        children: Iterable[Any] = node.values()
+    elif isinstance(node, list):
+        children = node
+    else:
+        return None
+    for child in children:
+        found = _find_expression(child, title)
+        if found is not None:
+            return found
+    return None
+
+
+class ArcGisWebMapExpression(Preprocessor[Any, Any]):
+    """Attach a web map's Arcade expression to the records that depend on it.
+
+    Some councils keep their schedule rules (a cycle's anchor date, a holiday
+    delay) not in a layer's attributes but in an Arcade expression of the public
+    web map, which computes the "next pickup" pop-up text. That expression is
+    live provider data, so reading it beats hard-coding the dates, and it is one
+    request the source should not hand-roll. This stage fetches the web map item
+    data once per fetch and appends the expression text to each
+    ``(label, attributes)`` record, turning it into ``(label, attributes,
+    expression)`` for a later ``describe`` to parse::
+
+        preprocess = Compose(
+            ArcGisWebMapExpression(WEBMAP_DATA_URL, "Recycle Pick up Days",
+                                   labels=("Recycling",)),
+            RecurrenceExpander(_describe),
+        )
+
+    Records whose label is not in ``labels`` get ``None`` and cause no request,
+    so a stream that does not need the expression keeps working if the web map
+    changes.
+
+    Args:
+        item_data_url: the web map item's ``/data`` URL.
+        title: the expression's ``title`` in the web map's popup definitions.
+        labels: the record labels that need the expression; ``None`` for all.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        item_data_url: str,
+        title: str,
+        *,
+        labels: Iterable[Any] | None = None,
+        timeout: int = 30,
+    ):
+        self.item_data_url = item_data_url
+        self.title = title
+        self.labels = None if labels is None else tuple(labels)
+        self.timeout = timeout
+
+    def _needs(self, label: Any) -> bool:
+        return self.labels is None or label in self.labels
+
+    def __call__(
+        self, records: Any, source: BaseSource | None = None
+    ) -> list[tuple[Any, dict[str, Any], str | None]]:
+        rows = list(records)
+        expression: str | None = None
+        if any(self._needs(label) for label, _ in rows):
+            r = requests.get(
+                self.item_data_url, params={"f": "json"}, timeout=self.timeout
+            )
+            r.raise_for_status()
+            expression = _find_expression(r.json(), self.title)
+            if expression is None:
+                raise ArcGisError(
+                    f"web map has no Arcade expression titled {self.title!r}"
+                )
+        return [
+            (label, attrs, expression if self._needs(label) else None)
+            for label, attrs in rows
+        ]
+
+
 def feature_query(
     feature_url: str,
     *,
@@ -360,6 +489,7 @@ def feature_query(
     result_record_count: int | None = None,
     count_only: bool = False,
     timeout: int = 20,
+    headers: Mapping[str, str] | None = None,
 ) -> Response:
     """GET a FeatureServer ``/query`` and return the *raw* Response (unparsed).
 
@@ -386,6 +516,9 @@ def feature_query(
             field list and ``returnGeometry`` are then left off the request,
             since a count carries neither.
         timeout: request timeout in seconds.
+        headers: extra request headers, for a layer behind a proxy that checks
+            where the request comes from (an ArcGIS Online ``utility.arcgis.com``
+            proxy answers 403 without its web map's ``Referer``).
     """
     params: dict[str, Any] = {}
     if not count_only:
@@ -410,8 +543,9 @@ def feature_query(
         params["resultRecordCount"] = result_record_count
     if count_only:
         params["returnCountOnly"] = "true"
+    extra: dict[str, Any] = {"headers": dict(headers)} if headers else {}
     return requests.get(
-        f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout
+        f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout, **extra
     )
 
 
@@ -464,7 +598,8 @@ class ArcGisFeatureRetriever(RetrieverFunc):
     a ``retrieve`` of its own.
 
     Args:
-        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
+        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``),
+            or a callable resolving it per fetch (see :class:`WebMapLayer`).
         address: ``source.params`` field with the address, or a callable.
         where: SQL where clause (string) or a callable returning one.
         out_fields: Comma-separated field names, or ``"*"`` for all.
@@ -472,11 +607,16 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         timeout: Request timeout in seconds.
         point: callable resolved against ``**source.params`` returning the
             ``{"x": lon, "y": lat}`` query point, bypassing the geocoder.
+        headers: extra request headers for the layer query (see
+            :func:`feature_query`).
+        result_record_count: cap on the features returned, e.g. ``1`` where
+            every match of a clause (the units of one building) carries the
+            same schedule and only one should be projected.
     """
 
     def __init__(
         self,
-        feature_url: str,
+        feature_url: LayerUrl,
         address: str | Callable[..., str] | None = "address",
         where: str | Callable[..., str] | None = None,
         out_fields: str = "*",
@@ -484,6 +624,8 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         timeout: int = 20,
         *,
         point: Callable[..., dict[str, Any]] | None = None,
+        headers: Mapping[str, str] | None = None,
+        result_record_count: int | None = None,
     ):
         self.feature_url = feature_url
         self.address = None if where is not None or point is not None else address
@@ -492,24 +634,30 @@ class ArcGisFeatureRetriever(RetrieverFunc):
         self.in_sr = in_sr
         self.timeout = timeout
         self.point = point
+        self.headers = headers
+        self.result_record_count = result_record_count
 
     def __call__(self, source: BaseSource) -> Response:
         if self.where is not None:
             where = self.where(**source.params) if callable(self.where) else self.where
             return feature_query(
-                self.feature_url,
+                _layer_url(self.feature_url),
                 where=where,
                 out_fields=self.out_fields,
+                result_record_count=self.result_record_count,
                 timeout=self.timeout,
+                headers=self.headers,
             )
 
         location = _locate(source, self.address, self.point)
         return feature_query(
-            self.feature_url,
+            _layer_url(self.feature_url),
             geometry=location,
             out_fields=self.out_fields,
             in_sr=self.in_sr,
+            result_record_count=self.result_record_count,
             timeout=self.timeout,
+            headers=self.headers,
         )
 
 
@@ -614,50 +762,65 @@ class ArcGisDistinctValues:
     not-found error the user actually needs to see.
 
     Args:
-        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
+        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``),
+            or a callable resolving it (see :class:`WebMapLayer`).
         field: Field whose distinct values are offered.
-        where: SQL clause narrowing the candidates (default: every feature).
+        where: SQL clause narrowing the candidates (default: every feature), or
+            a callable resolved against ``**source.params``, to suggest only
+            the values close to what the user typed.
         order_by: ``orderByFields`` for the query; defaults to ``field``.
+        limit: cap on the suggestions returned.
         timeout: Request timeout in seconds.
     """
 
     def __init__(
         self,
-        feature_url: str,
+        feature_url: LayerUrl,
         field: str,
         *,
-        where: str = "1=1",
+        where: str | Callable[..., str] = "1=1",
         order_by: str | None = None,
+        limit: int | None = None,
         timeout: int = 30,
     ):
         self.feature_url = feature_url
         self.field = field
         self.where = where
         self.order_by = order_by or field
+        self.limit = limit
         self.timeout = timeout
 
     def __call__(self, source: BaseSource | None = None) -> list[str]:
         try:
+            where = (
+                self.where(**(source.params if source is not None else {}))
+                if callable(self.where)
+                else self.where
+            )
+            params: dict[str, Any] = {
+                "where": where,
+                "outFields": self.field,
+                "returnGeometry": "false",
+                "returnDistinctValues": "true",
+                "orderByFields": self.order_by,
+                "f": "json",
+            }
+            if self.limit is not None:
+                params["resultRecordCount"] = self.limit
             response = requests.get(
-                f"{self.feature_url.rstrip('/')}/query",
-                params={
-                    "where": self.where,
-                    "outFields": self.field,
-                    "returnGeometry": "false",
-                    "returnDistinctValues": "true",
-                    "orderByFields": self.order_by,
-                    "f": "json",
-                },
+                f"{_layer_url(self.feature_url).rstrip('/')}/query",
+                params=params,
                 timeout=self.timeout,
             )
             response.raise_for_status()
-            return sorted(
+            values = sorted(
                 {
                     feature["attributes"][self.field]
                     for feature in response.json().get("features", [])
                     if feature.get("attributes", {}).get(self.field)
                 }
             )
+            return values[: self.limit] if self.limit is not None else values
         except Exception:
             _LOGGER.debug("Could not list distinct %s values", self.field)
             return []
@@ -942,6 +1105,8 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
             a later layer's answer as if it were the first.
         argument: with ``first_match``, the ``source.params`` field to blame
             when no layer matched. Leave unset to return no responses.
+        headers: extra request headers for every layer query (see
+            :func:`feature_query`).
     """
 
     def __init__(
@@ -958,6 +1123,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         count_only: bool = False,
         first_match: bool = False,
         argument: str | None = None,
+        headers: Mapping[str, str] | None = None,
     ):
         # Normalise to (label, url, out_fields) triples.
         self.layers: list[tuple[Any, str, str]] = []
@@ -979,6 +1145,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         self.count_only = count_only
         self.first_match = first_match
         self.argument = argument
+        self.headers = headers
 
     def _where_for(self, label: Any, params: dict[str, Any]) -> str | None:
         if callable(self.where):
@@ -1023,6 +1190,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
                     in_sr=self.in_sr,
                     count_only=self.count_only,
                     timeout=self.timeout,
+                    headers=self.headers,
                 )
                 response.raise_for_status()
             except requests.RequestException as err:

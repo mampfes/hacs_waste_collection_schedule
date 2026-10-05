@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.hull.gov.uk/ajax/bin-collection 244c703a69",
+      "method": "GET",
+      "url": "https://www.hull.gov.uk/ajax/bin-collection",
+      "final_url": "https://www.hull.gov.uk/ajax/bin-collection?bindate=21095794",
+      "body": "{\"params\":[[\"bindate\",\"21095794\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 26 Sep 2026 20:30:47 GMT",
+        "content-type": "application/json",
+        "server": "Web Server",
+        "cache-control": "max-age=0, must-revalidate, private",
+        "expires": "Sat, 26 Sep 2026 20:30:47 GMT",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=2592000",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "W1t7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0wOS0yOSIsImNvbGxlY3Rpb25fdHlwZSI6IkJsYWNrIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTA5LTI5IiwiY29sbGVjdGlvbl90eXBlIjoiQnJvd24gQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTAtMDYiLCJjb2xsZWN0aW9uX3R5cGUiOiJCbHVlIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEwLTA2IiwiY29sbGVjdGlvbl90eXBlIjoiQnJvd24gQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTAtMTMiLCJjb2xsZWN0aW9uX3R5cGUiOiJCbGFjayBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMC0xMyIsImNvbGxlY3Rpb25fdHlwZSI6IkJyb3duIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEwLTIwIiwiY29sbGVjdGlvbl90eXBlIjoiQmx1ZSBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMC0yMCIsImNvbGxlY3Rpb25fdHlwZSI6IkJyb3duIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEwLTI3IiwiY29sbGVjdGlvbl90eXBlIjoiQmxhY2sgQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTAtMjciLCJjb2xsZWN0aW9uX3R5cGUiOiJCcm93biBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMS0wMyIsImNvbGxlY3Rpb25fdHlwZSI6IkJsdWUgQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTEtMDMiLCJjb2xsZWN0aW9uX3R5cGUiOiJCcm93biBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMS0xMCIsImNvbGxlY3Rpb25fdHlwZSI6IkJsYWNrIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTExLTEwIiwiY29sbGVjdGlvbl90eXBlIjoiQnJvd24gQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTEtMTciLCJjb2xsZWN0aW9uX3R5cGUiOiJCbHVlIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTExLTE3IiwiY29sbGVjdGlvbl90eXBlIjoiQnJvd24gQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTEtMjQiLCJjb2xsZWN0aW9uX3R5cGUiOiJCbGFjayBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMS0yNCIsImNvbGxlY3Rpb25fdHlwZSI6IkJyb3duIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEyLTAxIiwiY29sbGVjdGlvbl90eXBlIjoiQmx1ZSBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMi0wMSIsImNvbGxlY3Rpb25fdHlwZSI6IkJyb3duIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEyLTA4IiwiY29sbGVjdGlvbl90eXBlIjoiQmxhY2sgQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTItMDgiLCJjb2xsZWN0aW9uX3R5cGUiOiJCcm93biBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMi0xNSIsImNvbGxlY3Rpb25fdHlwZSI6IkJsdWUgQmluIn0seyJ1cHJuIjoiMjEwOTU3OTQiLCJuZXh0X2NvbGxlY3Rpb25fZGF0ZSI6IjIwMjYtMTItMTUiLCJjb2xsZWN0aW9uX3R5cGUiOiJCcm93biBCaW4ifSx7InVwcm4iOiIyMTA5NTc5NCIsIm5leHRfY29sbGVjdGlvbl9kYXRlIjoiMjAyNi0xMi0yMiIsImNvbGxlY3Rpb25fdHlwZSI6IkJsYWNrIEJpbiJ9LHsidXBybiI6IjIxMDk1Nzk0IiwibmV4dF9jb2xsZWN0aW9uX2RhdGUiOiIyMDI2LTEyLTIyIiwiY29sbGVjdGlvbl90eXBlIjoiQnJvd24gQmluIn1dXQ=="
+    }
+  ]
+}

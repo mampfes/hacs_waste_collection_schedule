@@ -78,7 +78,7 @@ WASTE_TYPES = [
     ("enc_u_jour", "enu_typ_co", "Encombrants"),
 ]
 
-CSV_URL = "https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv"
+CSV_URL = "https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv"  # codespell:ignore ressources
 
 # data.montpellier3m.fr serves an incomplete TLS chain: it sends only the leaf
 # certificate (CN=*.montpellier3m.fr) and omits the GlobalSign intermediate that
@@ -141,7 +141,7 @@ PARAM_DESCRIPTIONS = {
         "commune": "Commune name in capitals, e.g. 'MONTPELLIER', 'LATTES'. Helps when a street name appears in multiple communes.",
     },
     "fr": {
-        "street_name": "Nom complet de la rue, ex : 'Rue Parlier' ou 'Avenue de Montpellier'",
+        "street_name": "Nom complet de la rue, ex : 'Rue Parlier' ou 'Avenue de Montpellier'",  # codespell:ignore complet
         "house_number": "Numéro de maison (facultatif mais recommandé)",
         "commune": "Nom de la commune en majuscules, ex : 'MONTPELLIER', 'LATTES'. Utile si la rue existe dans plusieurs communes.",
     },

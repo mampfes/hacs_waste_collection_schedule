@@ -1,111 +1,108 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
-)
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, postcode, uprn
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.transformers import HtmlTransformer
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+API = "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax"
 
-TITLE = "Cheshire East Council"
-DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
-URL = "https://cheshireeast.gov.uk"
-TEST_CASES = {
-    "houseUPRN-VerifyTrue": {"uprn": "100010132073", "verify": True},
-    "houseUPRN-VerifyFalse": {"uprn": "100010132073", "verify": False},
-    "houseAddress-VerifyTrue": {
-        "postcode": "WA16 0AY",
-        "name_number": "3",
-        "verify": True,
-    },
-    "houseAddress-VerifyFalse": {
-        "postcode": "WA16 0AY",
-        "name_number": "3",
-        "verify": False,
-    },
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Mixed Recycling": Icons.RECYCLING,
-    "Garden Waste": Icons.GARDEN,
+_TYPE_MAP = {
+    "general waste": wt.GENERAL_WASTE,
+    "mixed recycling": wt.RECYCLABLES,
+    "garden waste": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, uprn=None, postcode=None, name_number=None, verify=True):
-        self._uprn = uprn
-        self._postcode = postcode
-        self._name_number = name_number
-        self._verify = verify
-
-    def fetch(self):
-        session = requests.Session()
-
-        if self._postcode and self._name_number:
-            # Lookup postcode and number to get UPRN
-            params = {
-                "postcode": self._postcode,
-                "propertyname": self._name_number,
-            }
-            r = session.get(
-                "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/Search",
-                params=params,
-                verify=self._verify,
-            )
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, features="html.parser")
-            s = soup.find("a", attrs={"class": "get-job-details"})
-
-            if s is None or s["data-uprn"] is None:
-                raise SourceArgumentExceptionMultiple(
-                    ["postcode", "name_number"], "address not found"
-                )
-            self._uprn = s["data-uprn"]
-
-        if self._uprn is None:
-            raise SourceArgumentException(
-                "uprn",
-                "uprn not set but required if postcode and name_number are not set",
-            )
-
-        params = {"uprn": self._uprn}
-        r = session.get(
-            "https://online.cheshireeast.gov.uk/MyCollectionDay/SearchByAjax/GetBartecJobList",
-            params=params,
-            verify=self._verify,
+def _pick_uprn(response, *keys, postcode, name_number, **_) -> str:
+    """The first matching address carries its UPRN as ``data-uprn``."""
+    link = BeautifulSoup(response.text, "html.parser").find(
+        "a", attrs={"class": "get-job-details"}
+    )
+    if link is None or not link.get("data-uprn"):
+        raise SourceArgumentNotFound(
+            "name_number", f"{name_number}, {postcode}", "address not found"
         )
-        r.raise_for_status()
+    return str(link["data-uprn"])
 
-        soup = BeautifulSoup(r.text, features="html.parser")
-        s = soup.find_all("td", attrs={"class": "visible-cell"})
 
-        entries = []
+def _labels(cell) -> list:
+    return cell.find_all("label")
 
-        for cell in s:
-            labels = cell.find_all("label")
-            if labels:
-                date = datetime.strptime(labels[1].text, "%d/%m/%Y").date()
 
-                if "general waste" in labels[2].text.lower():
-                    type = "General Waste"
-                elif "mixed recycling" in labels[2].text.lower():
-                    type = "Mixed Recycling"
-                elif "garden waste" in labels[2].text.lower():
-                    type = "Garden Waste"
-                else:
-                    type = "Unknown"
+def _date(cell) -> str | None:
+    """Only a cell with its three labels (day, date, service) is a collection."""
+    labels = _labels(cell)
+    return labels[1].text if len(labels) > 2 else None
 
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=type,
-                        icon=ICON_MAP.get(type),
-                    )
-                )
 
-        return entries
+def _type(cell) -> str:
+    """A service is named like "Empty Standard General Waste"."""
+    text = _labels(cell)[2].text
+    for key in _TYPE_MAP:
+        if key in text.lower():
+            return key
+    return text
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Cheshire East Council"
+    DESCRIPTION = "Source for cheshireeast.gov.uk services for Cheshire East"
+    URL = "https://cheshireeast.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "houseUPRN": {"uprn": "100010132073"},
+        "houseAddress": {"postcode": "WA16 0AY", "name_number": "3"},
+    }
+
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [postcode("postcode", "name_number")],
+        ),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter either your UPRN (available from "
+            "[FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your "
+            "postcode and house number or name."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/Search",
+                params=lambda postcode=None, name_number=None, **_: {
+                    "postcode": postcode,
+                    "propertyname": name_number,
+                },
+                given=lambda uprn=None, **_: uprn,
+                pick=_pick_uprn,
+            ),
+        ),
+        url=f"{API}/GetBartecJobList",
+        params=lambda key, **_: {"uprn": key},
+    )
+
+    parse = parsers.HtmlParser("td.visible-cell")
+
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_type,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map=_TYPE_MAP,
+    )

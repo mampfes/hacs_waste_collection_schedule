@@ -1,92 +1,60 @@
-import logging
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Stockport Council"
-DESCRIPTION = "Source for bin collection services for Stockport Council, UK.\n Refactored with thanks from the Manchester equivalent"
-URL = "https://stockport.gov.uk"
-TEST_CASES = {
-    "domestic": {"uprn": "100011460157"},
+_TYPE_MAP = {
+    "Black bin": wt.GENERAL_WASTE,
+    "Blue bin": wt.PAPER,
+    "Brown bin": wt.RECYCLABLES,
+    "Green bin": wt.ORGANIC,
 }
 
-ICON_MAP = {
-    "Black bin": Icons.GENERAL_WASTE,
-    "Blue bin": Icons.RECYCLING,
-    "Brown bin": Icons.BIO_KITCHEN,
-    "Green bin": Icons.ORGANIC,
-}
 
-# Regex pattern to match dates like "Thursday, 14 May 2026" or "14 May 2026"
-DATE_PATTERN = re.compile(r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})", re.IGNORECASE)
+@final
+class Source(BaseSource):
+    TITLE = "Stockport Council"
+    DESCRIPTION = "Source for bin collection services for Stockport Council, UK.\n Refactored with thanks from the Manchester equivalent"
+    URL = "https://stockport.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-_LOGGER = logging.getLogger(__name__)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "domestic": {"uprn": "100011460157"},
+    }
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+    PARAMS = (uprn(),)
 
-    def fetch(self):
-        headers = {
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/137.0 Safari/537.36"
-            )
-        }
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+        ),
+    }
 
-        r = requests.get(
-            f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}",
-            headers=headers,
-            timeout=30,
-        )
+    retrieve = retrievers.Request(
+        lambda uprn, **_: (
+            f"https://myaccount.stockport.gov.uk/bin-collections/show/{uprn}"
+        ),
+    )
 
-        soup = BeautifulSoup(r.text, features="html.parser")
+    parse = parsers.HtmlLabelledDates(
+        "div.service-item",
+        label="h3",
+        date=":scope",
+        date_pattern=r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})",
+    )
 
-        # Find all bin service items
-        bins = soup.find_all("div", {"class": re.compile(r"service-item")})
-
-        entries = []
-        for bin_div in bins:
-            # Find the bin name from h3 element
-            h3 = bin_div.find("h3")
-            if not h3:
-                continue
-
-            bin_name = h3.get_text(strip=True)
-            if "bin" not in bin_name.lower():
-                continue
-
-            # Normalize bin name to title case (e.g., "Black bin")
-            bin_name = bin_name.capitalize()
-
-            # Search for a date pattern within this bin's section
-            bin_text = bin_div.get_text()
-            date_match = DATE_PATTERN.search(bin_text)
-
-            if date_match:
-                date_string = date_match.group(1)
-                try:
-                    bin_date = datetime.strptime(date_string, "%d %B %Y").date()
-                    entries.append(
-                        Collection(
-                            date=bin_date,
-                            t=bin_name,
-                            icon=ICON_MAP.get(bin_name),
-                        )
-                    )
-                except ValueError as e:
-                    _LOGGER.warning(
-                        "Could not parse date '%s' for %s: %s",
-                        date_string,
-                        bin_name,
-                        e,
-                    )
-            else:
-                _LOGGER.warning("No date found for %s", bin_name)
-
-        return entries
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map=_TYPE_MAP,
+    )

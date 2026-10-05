@@ -1,169 +1,83 @@
-import datetime
-import logging
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFound,
-)
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-_LOGGER = logging.getLogger(__name__)
 
-TITLE = "Wandsworth Council"
-DESCRIPTION = "Source for Wandsworth Council for the London Borough of Wandsworth, UK."
-URL = "https://www.wandsworth.gov.uk"
+def _date_text(collection) -> str | None:
+    """The date of ``Next: Thursday 8 October 2026`` / ``Previous: ... Completed 9.53am``."""
+    match = re.search(r"\d{1,2} [A-Za-z]+ \d{4}", collection.get_text(" ", strip=True))
+    return match.group(0) if match else None
 
-COUNTRY = "uk"
 
-TEST_CASES = {
-    "100022659217": {"uprn": 100022659217},
-    "100022611611": {"uprn": 100022611611},
-    "10091501435": {"uprn": "10091501435"},
-}
+def _service(collection) -> str:
+    """The ``<h4>`` heading naming the service the ``div.collections`` block belongs to."""
+    heading = collection.find_parent("div", class_="collections").find_previous_sibling(
+        "h4"
+    )
+    return heading.get_text(strip=True)
 
-API_URL = "https://www.wandsworth.gov.uk/my-property/"
 
-ICON_MAP = {
-    "Food waste": Icons.BIO_KITCHEN,
-    "Recycling": Icons.RECYCLING,
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Rubbish/Garden waste": Icons.GARDEN,
-    "Small electrical items": Icons.ELECTRONICS,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Wandsworth Council"
+    DESCRIPTION = (
+        "Source for Wandsworth Council for the London Borough of Wandsworth, UK."
+    )
+    URL = "https://www.wandsworth.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
-}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.ELECTRONICS,
+    ]
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    TEST_CASES: ClassVar[dict] = {
+        "100022659217": {"uprn": 100022659217},
+        "100022611611": {"uprn": 100022611611},
+        "10091501435": {"uprn": "10091501435"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting "
+            "[Find My Address](https://www.findmyaddress.co.uk) and entering "
+            "your address details."
+        ),
     }
-}
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-GB,en;q=0.5",
-    "Referer": "https://www.wandsworth.gov.uk",
-}
+    # The Wandsworth site can be slow, hence the long timeout.
+    retrieve = HttpGetRetriever(
+        "https://www.wandsworth.gov.uk/my-property/",
+        params=lambda uprn, **_: {"UPRN": uprn, "propertyidentified": "Select"},
+        timeout=90,
+    )
 
+    # One div.collection per "Next:" / "Previous:" date, under the h4 of its service.
+    parse = HtmlParser("div.collections div.collection")
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-        if not self._uprn.isdigit():
-            raise SourceArgumentException("uprn", "UPRN must be numeric")
-
-    def fetch(self) -> list[Collection]:
-
-        try:
-            # Wandsworth site can be slow; using a 90s timeout to avoid false failures
-            r = requests.get(
-                API_URL,
-                params={"UPRN": self._uprn, "propertyidentified": "Select"},
-                headers=HEADERS,
-                timeout=90,
-            )
-
-            r.raise_for_status()
-
-        # Check for Website Errors
-        except requests.RequestException as e:
-            raise SourceArgumentException(
-                "uprn", "Wandsworth Council website unreachable"
-            ) from e
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Check for unexpected page My Property H1
-        if not soup.find("h1", string="My Property"):
-            raise SourceArgumentException(
-                "uprn", "Unexpected page content from Wandsworth Council"
-            )
-
-        # Check if UPRN is correct by if Results Div is returned
-        if not soup.find("div", id="result"):
-            raise SourceArgumentException(
-                "uprn",
-                f"UPRN {self._uprn} is invalid or outside the Wandsworth Council area. Make sure your address returns entries on the council website: {API_URL}",
-            )
-
-        # Find the heading for the Rubbish & Recycling section
-        rubbish_heading = soup.find(
-            "h3", string=lambda text: text and "Rubbish and recycling" in text
-        )
-
-        if rubbish_heading:
-            # Look for the next <p> sibling immediately after the heading
-            next_p = rubbish_heading.find_next_sibling("p")
-
-            # Check to see if source data currently unavailable
-            if next_p and "currently unavailable" in next_p.get_text():
-                raise SourceArgumentException(
-                    "uprn", "Source data currently unavailable."
-                )
-
-        entries = []
-
-        waste_headings = soup.find_all("h4", class_="collection-heading")
-
-        for waste_heading in waste_headings:
-            # Get Waste Type from Heading Name
-            waste_type = waste_heading.get_text(strip=True)
-
-            #  Navigate to Next Div
-            collections = waste_heading.find_next_sibling("div", class_="collections")
-
-            if not collections:
-                continue
-
-            for collection in collections.find_all("div", class_="collection"):
-                # Remove Strong Element
-                strong = collection.find("strong")
-                if strong:
-                    strong.extract()
-
-                # Remove Completed Badge
-                badge = collection.find("span", class_="badge")
-                if badge:
-                    badge.extract()
-
-                # Extracted Date String
-                date_str = collection.get_text(strip=True)
-
-                # Format Date String
-                try:
-                    collection_date = datetime.datetime.strptime(
-                        date_str, "%A %d %B %Y"
-                    ).date()
-
-                except ValueError:
-                    _LOGGER.warning(
-                        "Source date format not recognised. Unable to parse %s date: %r",
-                        waste_type,
-                        date_str,
-                    )
-                    continue
-
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                    )
-                )
-
-        if not entries:
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=_service,
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "Food waste": wt.FOOD_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Rubbish": wt.GENERAL_WASTE,
+            "Rubbish/Garden waste": [wt.GENERAL_WASTE, wt.GARDEN_WASTE],
+            "Small electrical items": wt.ELECTRONICS,
+        },
+    )

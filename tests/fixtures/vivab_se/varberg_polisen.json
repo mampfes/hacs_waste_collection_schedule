@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/SearchAdress e75fe1217c",
+      "method": "POST",
+      "url": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/SearchAdress",
+      "final_url": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"\u00d6stra L\u00e5nggatan 5\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "293",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:59 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyLDlnN0cmEgTMOlbmdnYXRhbiA1LCBWQVJCRVJHICgxNzUxMDEwMSkiLCLDlnN0cmEgTMOlbmdnYXRhbiA1MCwgVkFSQkVSRyAoOTAxMzA5MDEpIiwiw5ZzdHJhIEzDpW5nZ2F0YW4gNTIgQSwgVmFyYmVyZyAoOTAxMzEzMDMpIiwiw5ZzdHJhIGzDpW5nZ2F0YW4gNTIgQiwgVkFSQkVSRyAoOTAxMzEzMDEpIiwiw5ZzdHJhIEzDpW5nZ2F0YW4gNTgsIFZBUkJFUkcgKDg1MTMwNTAxKSIsIsOWc3RyYSBMw6VuZ2dhdGFuIDU5LCBWQVJCRVJHICg5MDMxMjUwMSkiXX0="
+    },
+    {
+      "key": "GET https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/GetWastePickupSchedule acd8869aad",
+      "method": "GET",
+      "url": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/GetWastePickupSchedule?address=%C3%96stra+L%C3%A5nggatan+5%2C+VARBERG+%2817510101%29",
+      "body": "{\"params\":[[\"address\",\"\u00d6stra L\u00e5nggatan 5, VARBERG (17510101)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2179",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:00 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiSHVzaMOlbGwiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ii4iLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiIuIiwiQmluVHlwZSI6eyJDb2RlIjoiS8Okcmw2NjBMIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjQuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IlZlcmtzYW1oZXQgNjYwIHZlY2tvdMO2bW5pbmcgc2VwYXJhdCBtYXRhdmZhbGxza8OkcmwiLCJCaW5UeXBlIjp7IkNvZGUiOiJLw6RybDY2MEwiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjUyLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6bnVsbCwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjpudWxsLCJXYXN0ZVR5cGUiOiJIdXNow6VsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJWSDY2MC41MiBNQVRBViIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJIVVNIIiwiRGVzaWduYXRpb24iOiJWZXJrc2FtaGV0IDY2MCB2ZWNrb3TDtm1uaW5nIHNlcGFyYXQgbWF0YXZmYWxsc2vDpHJsIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo2ODg2MzQsIkRlc2NyaXB0aW9uIjoiVmVya3NhbWhldCA2NjAgdmVja290w7ZtbmluZyBzZXBhcmF0IG1hdGF2ZmFsbHNrw6RybCIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNTQ4NzE2NDAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjE3NTEwMTAxIn0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiTWF0IiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJEdW1teSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkR1bW15IiwiQmluVHlwZSI6eyJDb2RlIjoiS8OkcmwxNDBMIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IlZlcmtzYW1oZXQgMTQwIGwgbWF0YXZmYWxsc2vDpHJsIHZlY2tvdMO2bW5pbmciLCJCaW5UeXBlIjp7IkNvZGUiOiJLw6RybDE0MEwiLCJTaXplIjoxNDAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjUyLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6bnVsbCwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjpudWxsLCJXYXN0ZVR5cGUiOiJNYXQiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiVkgxNDAuNTIgQlJVTlQiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiTUFUIiwiRGVzaWduYXRpb24iOiJWZXJrc2FtaGV0IDE0MCBsIG1hdGF2ZmFsbHNrw6RybCB2ZWNrb3TDtm1uaW5nIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo2OTYzMDcsIkRlc2NyaXB0aW9uIjoiVmVya3NhbWhldCAxNDAgbCBtYXRhdmZhbGxza8OkcmwgdmVja290w7ZtbmluZyIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNjgwMzAwMDAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjE3NTEwMTAxIn1dfQ=="
+    }
+  ]
+}

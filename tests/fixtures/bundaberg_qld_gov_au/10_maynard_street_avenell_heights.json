@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php 426dbbe825",
+      "method": "GET",
+      "url": "https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php",
+      "final_url": "https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php?q=10+Maynard",
+      "body": "{\"params\":[[\"q\",\"10 Maynard\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Thu, 01 Oct 2026 14:52:12 GMT",
+        "server": "Apache",
+        "x-xss-protection": "1;  mode=block",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "104",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "content_b64": "PGRpdiBpZD0nMTAgTWF5bmFyZCBTVCBBVkVORUxMIEhFSUdIVFMsNCw0LEInIG9uY2xpY2s9IHNlbGVjdEFkZHJlc3ModGhpcy5pZCk+MTAgTWF5bmFyZCBTVCBBVkVORUxMIEhFSUdIVFM8L2Rpdj4="
+    }
+  ]
+}

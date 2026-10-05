@@ -1,49 +1,16 @@
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
-    IntraMapsError,
-    IntraMapsSearchError,
-    MapsClient,
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
     MapsClientConfig,
-    extract_panel_fields,
 )
-
-TITLE = "City of Port Phillip"
-DESCRIPTION = "Source for City of Port Phillip waste collection."
-URL = "https://www.portphillip.vic.gov.au"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "9 Spray Street Elwood": {"address": "9 Spray Street Elwood"},
-    "99A Bridport Street Albert Park": {"address": "99A Bridport Street Albert Park"},
-    "1 Beach Street Port Melbourne": {"address": "1 Beach Street Port Melbourne"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "FOGO": Icons.BIO_KITCHEN,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
-    "(e.g. '9 Spray Street Elwood'). "
-    "Search at https://www.portphillip.vic.gov.au/council-services/waste-recycling-and-rubbish/bins-and-collection-services",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '9 Spray Street Elwood')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+from waste_collection_schedule.transformers import ICSTransformer
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://copp.spatial.t1cloud.com",
@@ -55,53 +22,59 @@ INTRAMAPS_CONFIG = MapsClientConfig(
     selection_layer_filter="a6b80f49-ccbc-4b7c-8560-c1c15ac6164c",
 )
 
-WEEKDAYS = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
+# The "Bin Collection" column is a weekday name, e.g. "Wednesday". The council
+# collects general waste, recycling and FOGO together, once a week, on that day.
+_BINS = {
+    "General Waste": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "FOGO": wt.ORGANIC,
 }
+_WEEKS = 26
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+def _describe(record, source):
+    if record.get("column") != "Bin Collection":
+        return
+    weekday = recurrence.weekday(record.get("value", "").strip())
+    if weekday is None:
+        return
+    start = recurrence.next_weekday(weekday)
+    for key in _BINS:
+        yield Schedule(key, start, recurrence.WEEKLY, _WEEKS)
 
-    def fetch(self) -> list[Collection]:
-        try:
-            with MapsClient(INTRAMAPS_CONFIG) as client:
-                result = client.select_address(self._address)
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
 
-        response = result["response"]
-        if not isinstance(response, dict):
-            raise IntraMapsError("Unexpected response format from IntraMaps")
+@final
+class Source(BaseSource):
+    TITLE = "City of Port Phillip"
+    DESCRIPTION = "Source for City of Port Phillip waste collection."
+    URL = "https://www.portphillip.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
 
-        fields = extract_panel_fields(response)
-        if not fields:
-            raise SourceArgumentNotFound("address", self._address)
+    TEST_CASES: ClassVar[dict] = {
+        "9 Spray Street Elwood": {"address": "9 Spray Street Elwood"},
+        "99A Bridport Street Albert Park": {
+            "address": "99A Bridport Street Albert Park"
+        },
+        "1 Beach Street Port Melbourne": {"address": "1 Beach Street Port Melbourne"},
+    }
 
-        # "Bin Collection" is a weekday name, e.g. "Wednesday". The council
-        # collects general waste, recycling and FOGO bins together, once a
-        # week, on the same day.
-        bin_day = fields.get("Bin Collection", "").strip()
-        weekday = WEEKDAYS.get(bin_day.lower())
-        if weekday is None:
-            raise SourceArgumentNotFound("address", self._address)
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"address": "99 Nowhere Street Elwood"},
+    }
 
-        today = datetime.now().date()
-        days_ahead = (weekday - today.weekday()) % 7
-        next_date = today + timedelta(days=days_ahead)
+    PARAMS = (street_address(),)
 
-        entries: list[Collection] = []
-        for waste_type, icon in ICON_MAP.items():
-            entries.extend(
-                Collection(date=next_date + timedelta(weeks=i), t=waste_type, icon=icon)
-                for i in range(26)
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address including suburb (e.g. '9 Spray Street "
+            "Elwood'). Search at https://www.portphillip.vic.gov.au/"
+            "council-services/waste-recycling-and-rubbish/bins-and-collection-services"
+        ),
+    }
 
-        return entries
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG)
+    parse = IntraMapsPanelParser()
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_BINS)

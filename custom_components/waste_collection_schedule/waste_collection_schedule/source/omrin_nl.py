@@ -84,14 +84,24 @@ PARAM_TRANSLATIONS = {
         "postal_code": "Postcode",
         "house_number": "House number",
         "suffix": "House number suffix",
-    }
+    },
+    "nl": {
+        "postal_code": "Postcode",
+        "house_number": "Huisnummer",
+        "suffix": "Huisnummertoevoeging",
+    },
 }
 PARAM_DESCRIPTIONS = {
     "en": {
         "postal_code": "Dutch postcode, for example 3851MA.",
         "house_number": "Numeric house number.",
         "suffix": "House number suffix, if applicable.",
-    }
+    },
+    "nl": {
+        "postal_code": "Nederlandse postcode, bijvoorbeeld 3851MA.",
+        "house_number": "Numeriek huisnummer.",
+        "suffix": "Huisnummertoevoeging, indien van toepassing.",  # codespell:ignore indien
+    },
 }
 
 

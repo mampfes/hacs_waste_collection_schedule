@@ -1,93 +1,86 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "MZV Hegau"
-DESCRIPTION = "Source for mzvhegau.de services for MZV Hegau, Germany."
-URL = "https://www.mzvhegau.de"
-COUNTRY = "de"
-TEST_CASES = {
-    "Engen": {"city": "Engen"},
-    "Gai (Gailingen)": {"city": "Gai"},
-    "GM (Gottmadingen)": {"city": "GM"},
-}
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Papier": Icons.PAPER,
-    "Grünschnitt": Icons.GARDEN,
-    "Christbaum": Icons.CHRISTMAS_TREE,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"city": "City"},
-    "de": {"city": "Stadt/Gemeinde"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "Your city or municipality shorthand, e.g. Engen, Gai, GM.",
-    },
-    "de": {
-        "city": "Ihre Stadt oder Gemeinde (Kürzel), z.B. Engen, Gai, GM.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your city/municipality shorthand in the MZV Hegau service area.",
-    "de": "Stadt/Gemeinde-Kürzel im MZV Hegau Verbandsgebiet eingeben.",
-}
-
-API_URL = "https://www.mzvhegau.de/wp-admin/admin-post.php?action=mzv_ics_download&slug={city}&whole_year=1&format=text"
-PICKUPS_URL = "https://www.mzvhegau.de/wp-json/flexia/v2/pickups"
-
-DATE_RE = re.compile(r"^(\d{2}\.\d{2}\.\d{4}):\s*(.+)$")
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city
+from waste_collection_schedule.preprocessors import TextDatedBlocks
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-class Source:
-    def __init__(self, city: str):
-        self._city = city.strip()
+def _strip_emoji(label: str) -> str:
+    """A round without its pictogram prefix: "🗞️ Papier" -> "Papier"."""
+    while label and not label[0].isalpha():
+        label = label[1:].strip()
+    return label
 
-    def _get_suggestions(self) -> list[str]:
-        try:
-            r = requests.get(PICKUPS_URL, timeout=10)
-            r.raise_for_status()
-            data = r.json()
-            return [entry["shorthand"] for entry in data if "shorthand" in entry]
-        except Exception:
-            return []
 
-    def fetch(self) -> list[Collection]:
-        url = API_URL.format(city=self._city)
-        r = requests.get(url, timeout=10)
-        r.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "MZV Hegau"
+    DESCRIPTION = "Source for mzvhegau.de services for MZV Hegau, Germany."
+    URL = "https://www.mzvhegau.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-        if "Ungültiger Ort" in r.text:
-            suggestions = self._get_suggestions()
-            raise SourceArgumentNotFoundWithSuggestions("city", self._city, suggestions)
+    TEST_CASES: ClassVar[dict] = {
+        "Engen": {"city": "Engen"},
+        "Gai (Gailingen)": {"city": "Gai"},
+        "GM (Gottmadingen)": {"city": "GM"},
+    }
 
-        entries = []
-        for line in r.text.splitlines():
-            m = DATE_RE.match(line.strip())
-            if not m:
-                continue
-            date_str, rest = m.group(1), m.group(2)
-            date = datetime.strptime(date_str, "%d.%m.%Y").date()
+    PARAMS = (city(),)
 
-            # Some lines have multiple collections separated by ", "
-            for part in rest.split(", "):
-                part = part.strip()
-                # Strip leading emoji characters and whitespace
-                while part and not part[0].isalpha():
-                    part = part[1:].strip()
-                if not part:
-                    continue
-                icon = ICON_MAP.get(part)
-                entries.append(Collection(date=date, t=part, icon=icon))
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your city/municipality shorthand in the MZV Hegau service area, e.g. Engen, Gai, GM.",
+        "de": "Stadt/Gemeinde-Kürzel im MZV Hegau Verbandsgebiet eingeben, z.B. Engen, Gai, GM.",
+    }
 
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.mzvhegau.de/wp-admin/admin-post.php",
+        params=lambda city, **_: {
+            "action": "mzv_ics_download",
+            "slug": city.strip(),
+            "whole_year": "1",
+            "format": "text",
+        },
+    )
+    # An unknown shorthand answers "Ungültiger Ort (Slug)." with HTTP 200.
+    parse = parsers.ArgumentGuard(
+        parsers.TextParser(),
+        argument="city",
+        contains="Abholtermine",
+        suggestions=retrievers.Suggestions(
+            "https://www.mzvhegau.de/wp-json/flexia/v2/pickups",
+            pick=lambda response, **_: [
+                entry["shorthand"] for entry in response.json() if "shorthand" in entry
+            ],
+        ),
+    )
+    # "29.09.2026: 🌱 Biomüll, 🗞️ Papier", one line per collection day.
+    preprocess = TextDatedBlocks(
+        block_pattern=(
+            r"(?m)^(?P<day>\d{2})\.(?P<month>\d{2})\.(?P<year>\d{4}):"
+            r"[ \t]*(?P<labels>.+)$"
+        ),
+        label_separator=r",",
+        normalise=_strip_emoji,
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": wt.GENERAL_WASTE,
+            "Biomüll": wt.ORGANIC,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Grünschnitt": wt.GARDEN_WASTE,
+            "Christbaum": wt.GARDEN_WASTE,
+        }
+    )

@@ -1,90 +1,65 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Heinz-Entsorgung (Landkreis Freising)"
-DESCRIPTION = "Source for Heinz-Entsorgung (Landkreis Freising) waste collection."
-URL = "https://abfallkalender.heinz-entsorgung.de/"
-TEST_CASES = {
-    "Test_Freising": {
-        "param": "yesJWYk53alJXaiMiOMJWYk53alJXagMnRlJXapNmbicCLvJnciQiOBJGblxncoNXYzVWZi4CLzJHdhJ3clNjIioWTv93c0Nici4CLqJWYyhjIiojMyASN9J"
+
+@final
+class Source(BaseSource):
+    TITLE = "Heinz-Entsorgung (Landkreis Freising)"
+    DESCRIPTION = "Source for Heinz-Entsorgung (Landkreis Freising) waste collection."
+    URL = "https://abfallkalender.heinz-entsorgung.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_Freising": {
+            "param": "yesJWYk53alJXaiMiOMJWYk53alJXagMnRlJXapNmbicCLvJnciQiOBJGblxncoNXYzVWZi4CLzJHdhJ3clNjIioWTv93c0Nici4CLqJWYyhjIiojMyASN9J"
+        },
     }
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": """To get the required parameter:
-1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser
-2. Open the browser's Developer Tools (F12)
-3. Go to the 'Network' tab
-4. Select your location (Ort) and street (Straße)
-5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'
-6. Copy the 'param' value from the URL query string
-7. Use this value as the 'param' argument
+    PARAMS = (text_field("param", "Location parameter"),)
 
-Note: The parameter is encrypted and specific to your location and street selection.
-""",
-    "de": """So erhalten Sie den erforderlichen Parameter:
-1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser
-2. Öffnen Sie die Entwicklertools des Browsers (F12)
-3. Gehen Sie zum Tab 'Netzwerk'
-4. Wählen Sie Ihren Ort und Ihre Straße aus
-5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'
-6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge
-7. Verwenden Sie diesen Wert als 'param'-Argument
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://abfallkalender.heinz-entsorgung.de/ with the browser's "
+            "developer tools (F12, Network tab), select your town and street, and "
+            "copy the 'param' value of the request to "
+            "api-enttermine.heinz-entsorgung.net/termine."
+        ),
+        "de": (
+            "Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ mit den "
+            "Entwicklertools des Browsers (F12, Tab Netzwerk), wählen Sie Ort und "
+            "Straße und kopieren Sie den 'param'-Wert der Anfrage an "
+            "api-enttermine.heinz-entsorgung.net/termine."
+        ),
+    }
 
-Hinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.
-""",
-}
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "BIO": Icons.ORGANIC,
-    "Papier": Icons.PAPER,
-    "Problemmüll": Icons.HAZARDOUS,
-    "Sperrmüll": Icons.BULKY,
-}
-
-API_URL = "https://api-enttermine.heinz-entsorgung.net/termine"
-
-
-class Source:
-    def __init__(self, param: str):
-        self._param = param
-
-    def fetch(self) -> list[Collection]:
-        # Make API request
-        r = requests.get(API_URL, params={"param": self._param})
-        r.raise_for_status()
-
-        data = json.loads(r.text)
-
-        entries = []
-        for item in data:
-            date_str = item.get("termin")
-            if not date_str:
-                continue
-
-            # Parse date (format: YYYY-MM-DD)
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-
-            # Get waste type
-            waste_type = item.get("fraktion", "Unknown")
-
-            # Get additional info if available
-            zusatz = item.get("zusatz", "")
-            if zusatz:
-                waste_type = f"{waste_type} ({zusatz})"
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.split(" (")[0], "mdi:trash-can"),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://api-enttermine.heinz-entsorgung.net/termine",
+        params=lambda param, **_: {"param": param},
+    )
+    parse = parsers.JsonParser()
+    transform = JsonTransformer(
+        date_key="termin",
+        type_key="fraktion",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        # The note ("nur 240", a bin size) is kept on the collection.
+        description_key="zusatz",
+        type_value_map={
+            "BIO": wt.ORGANIC,
+            "RM": wt.GENERAL_WASTE,
+            "PPK": wt.PAPER,
+            "GS": wt.RECYCLABLES,
+        },
+    )

@@ -1,6 +1,8 @@
-# Mairie de mamirolle
+# Mairie de Mamirolle
 
-Support for Mamirolle communal website in France
+Support for schedules provided by [Mairie de Mamirolle](http://mamirolle.info/).
+
+Source script for mamirolle.info
 
 ## Configuration via configuration.yaml
 
@@ -9,9 +11,15 @@ waste_collection_schedule:
   sources:
     - name: mamirolle_info
 ```
-## Sensor setup
 
-There are following types of garbage parsed:
+### Configuration Variables
 
-- Poubelle grise
-- Poubelle jaune
+No configuration arguments are required.
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: mamirolle_info
+```

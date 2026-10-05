@@ -1,115 +1,55 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "West Dunbartonshire Council"
-DESCRIPTION = "Source for waste collection services from West Dunbartonshire Council"
-URL = "https://www.west-dunbarton.gov.uk"
-TEST_CASES = {
-    "2/2 26 Kilbowie Road, Clydebank": {
-        "house_number": "2/2 26",
-        "street": "Kilbowie Road",
-        "town": "Clydebank",
-        "uprn": "129040292",
-    },
-    "6A Victoria Street, Dumbarton": {
-        "house_number": "6A",
-        "street": "Victoria Street",
-        "town": "Dumbarton",
-        "uprn": "129033978",
-    },
-    "8 Clairinsh, Balloch": {
-        "house_number": "8",
-        "street": "Clairinsh",
-        "town": "Balloch",
-        "uprn": "129491488",
-    },
-    "Rowan Lea, Gartocharn": {
-        "house_number": "Rowan Lea",
-        "street": "Stirling Road",
-        "town": "Gartocharn",
-        "uprn": "129490987",
-    },
-    "20 35 Risk Street, Dumbarton": {
-        "house_number": "20 35",
-        "street": "Risk Street",
-        "town": "Dumbarton",
-        "uprn": "129003614",
-    },
-}
-
-API_URL = "https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day"
-ICON_MAP = {
-    "BLACK": Icons.GENERAL_WASTE,
-    "BLUE": Icons.RECYCLING,
-    "BROWN": Icons.ORGANIC,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-_LOGGER = logging.getLogger(__name__)
+@final
+class Source(BaseSource):
+    TITLE = "West Dunbartonshire Council"
+    DESCRIPTION = (
+        "Source for waste collection services from West Dunbartonshire Council"
+    )
+    URL = "https://www.west-dunbarton.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "2/2 26 Kilbowie Road, Clydebank": {"uprn": "129040292"},
+        "6A Victoria Street, Dumbarton": {"uprn": "129033978"},
+        "8 Clairinsh, Balloch": {"uprn": "129491488"},
+        "Rowan Lea, Gartocharn": {"uprn": "129490987"},
+        "20 35 Risk Street, Dumbarton": {"uprn": "129003614"},
+    }
 
-class Source:
-    def __init__(self, house_number=None, uprn=None, street=None, town=None):
-        self._uprn = str(uprn)
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES, wt.ORGANIC, wt.GENERAL_WASTE]
 
-    def fetch(self):
+    PARAMS = (uprn(),)
 
-        s = requests.Session()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN by searching your address on https://www.findmyaddress.co.uk/ "
+            "or by opening the West Dunbartonshire bin collection day page: the UPRN "
+            "is the number in the page address after `uprn=`."
+        ),
+    }
 
-        if self._uprn:
-            # GET request returns page containing links to separate collection schedules
-            params = {"uprn": self._uprn}
-            r = s.get(API_URL, params=params, headers=HEADERS)
-            r.raise_for_status()
-            responseContent = r.text
-            soup = BeautifulSoup(responseContent, "html.parser")
-
-            # For each next-date class get the text within the date-string class
-            schedule_details = soup.findAll("div", {"class": "round-info"})
-
-            # Extract links to collection schedule pages and iterate through the pages
-            entries = []
-            for item in schedule_details:
-                schedule_date = item.find("span", {"class": "date-string"}).text.strip()
-                schedule_type = item.find("div", {"class": "round-name"}).text.strip()
-                # Format is 22 March 2023 - convert to date
-                collection_date = datetime.strptime(schedule_date, "%d %B %Y").date()
-
-                # If the type contains "Blue bin or bag" or "Blue" then set the type to "BLUE"
-                if "bag" in schedule_type.lower() or "blue" in schedule_type.lower():
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t="BLUE",
-                            icon=ICON_MAP.get("BLUE"),
-                        )
-                    )
-
-                # If the type contains "caddy" or "brown" then set the type to "BROWN"
-                if "caddy" in schedule_type.lower() or "brown" in schedule_type.lower():
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t="BROWN",
-                            icon=ICON_MAP.get("BROWN"),
-                        )
-                    )
-
-                # If the type contains "Non-Recyclable" then set the type to "BLACK", compare in lowecase
-                if "non-recyclable" in schedule_type.lower():
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t="BLACK",
-                            icon=ICON_MAP.get("BLACK"),
-                        )
-                    )
-
-            return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    parse = parsers.HtmlParser("div.round-info")
+    transform = HtmlTransformer(
+        date_getter=lambda el: el.select_one("span.date-string").get_text(strip=True),
+        type_getter=lambda el: el.select_one("div.round-name").get_text(strip=True),
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map={
+            "Blue": wt.RECYCLABLES,
+            "Brown Bin": wt.ORGANIC,
+            "Non-Recyclable": wt.GENERAL_WASTE,
+        },
+    )

@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 1d3d040a6d",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=126+Church+Street+Parramatta&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"126 Church Street Parramatta\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:26 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "236",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"c13b75ce\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTI2IENodXJjaCBTdHJlZXQsIFBhcnJhbWF0dGEsIFN5ZG5leSwgTmV3IFNvdXRoIFdhbGVzLCAyMTUwIiwibG9jYXRpb24iOnsieCI6MTUxLjAwNDEyNDc3MzIwMywieSI6LTMzLjgxODIyNjgyMTYzNn0sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6MTUxLjAwMzEyNDc3MzIwMywieW1pbiI6LTMzLjgxOTIyNjgyMTYzNiwieG1heCI6MTUxLjAwNTEyNDc3MzIwMywieW1heCI6LTMzLjgxNzIyNjgyMTYzNn19XX0="
+    },
+    {
+      "key": "GET https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/CoP_Garbage_Recyle_July2021/FeatureServer/0/query 552ca4f02b",
+      "method": "GET",
+      "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/CoP_Garbage_Recyle_July2021/FeatureServer/0/query",
+      "final_url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/CoP_Garbage_Recyle_July2021/FeatureServer/0/query?outFields=DAY%2CWEEK&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+151.004124773203%2C+%22y%22%3A+-33.818226821636%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 151.004124773203, \\\"y\\\": -33.818226821636}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"DAY,WEEK\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:27 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "291",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Mon, 19 Jul 2021 01:35:48 GMT",
+        "ETag": "sd1233_-2121655739",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h06c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080727Z-16dd9bcdcdbrpklthC1DTT72ms00000005sg000000000n37",
+        "x-esri-query-request-units": "3",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=3;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "4fcd21872151da6b",
+        "X-ArcGIS-Instance": "hkmzlsa5v00000M",
+        "Request-Context": "appId=cid-v1:3e91b07b-c431-4e18-b74c-dc5ab3a0cdf7",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080727Z-16dd9bcdcdbrpklthC1DTT72ms00000005sg000000000n37",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "PRIVATE_NOSTORE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjI4MzU2LCJsYXRlc3RXa2lkIjoyODM1Nn0sImZpZWxkcyI6W3sibmFtZSI6IkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEQVkiLCJzcWxUeXBlIjoic3FsVHlwZU90aGVyIiwibGVuZ3RoIjoyMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6IldFRUsiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV0VFSyIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjIwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJEQVkiOiJUdWVzZGF5IiwiV0VFSyI6IkFyZWEgMiJ9fV19"
+    }
+  ]
+}

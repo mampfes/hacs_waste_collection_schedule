@@ -1,6 +1,8 @@
-# Kungälvs kommun avfallshantering
+# Kungälvs kommun Avfallshantering
 
-Support for schedules provided by [Kungälvs kommun](https://www.kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall/), serving the municipality of Kungälv, Sweden.
+Support for schedules provided by [Kungälvs kommun Avfallshantering](https://www.kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall/).
+
+Source script for kungalv.se
 
 ## Configuration via configuration.yaml
 
@@ -14,8 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_address**
-*(string) (required)* : Street address including the city where the waste is picked up.
+**street_address**  
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: kungalv_se
       args:
-        street_address: Dämmevägen 11, Kungälv
+        street_address: "Komministergatan 4, Kung\xE4lv"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the street address of the property with waste collection. You can verify your address works by checking the [Kungälv customer portal](https://minasidor-va-avfall.kungalv.se/FutureWeb) or using the Kungälv Avfall app.
+Enter your street address as the provider's own address search lists it, including the locality.

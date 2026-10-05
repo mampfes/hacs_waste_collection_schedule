@@ -1,33 +1,34 @@
-# Richmondshire District Council
+# North Yorkshire Council - Richmondshire
 
-Support for schedules provided by [Richmondshire District Council](https://www.richmondshire.gov.uk/bins-and-recycling/), serving North Yorkshire, UK.
+Support for schedules provided by [North Yorkshire Council - Richmondshire](https://northyorks.gov.uk).
+
+Source for North Yorkshire Council - Richmondshire.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: richmondshire_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_IDENTIFICATION_NUMBER
-
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**UPRN**  
-*(integer) (required)*
+**uprn**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: richmondshire_gov_uk
       args:
-        uprn: 200001767082
+        uprn: 100050441864
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details. Or you can visit the Richmondshire page and use the address search. Right-click your entry in the house dropdown, choose Inspect, and copy the UPRN from the value.
+Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Richmondshire/results/100050441864`.

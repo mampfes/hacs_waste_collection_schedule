@@ -1,0 +1,44 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup c826a88854",
+      "method": "GET",
+      "url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup",
+      "final_url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup?fields=Thirlmere+Way+THIRLMERE+NSW",
+      "body": "{\"params\":[[\"fields\",\"Thirlmere Way THIRLMERE NSW\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:32 GMT",
+        "content-type": "application/json",
+        "content-length": "150",
+        "x-amzn-requestid": "5f5d89e3-4715-4517-8700-8b35a0d26f55",
+        "access-control-allow-origin": "*",
+        "content-encoding": "gzip",
+        "x-amz-apigw-id": "EYE5PHcwywMEJXA=",
+        "x-amzn-trace-id": "Root=1-6ab981d4-1487f81d70013ed02939e995"
+      },
+      "content_b64": "W1t7Im5hbWUiOiJQcm9wZXJ0eUFkZHJlc3MiLCJjYXB0aW9uIjoiUHJvcGVydHlBZGRyZXNzIiwidmFsdWUiOiJUaGlybG1lcmUgV2F5IFRISVJMTUVSRSBOU1cifSx7Im5hbWUiOiJQYXJjZWxObyIsImNhcHRpb24iOiJQYXJjZWxObyIsInZhbHVlIjoiMTU2MTgifV0sW3sibmFtZSI6IlByb3BlcnR5QWRkcmVzcyIsImNhcHRpb24iOiJQcm9wZXJ0eUFkZHJlc3MiLCJ2YWx1ZSI6IlRoaXJsbWVyZSBXYXkgVEhJUkxNRVJFIE5TVyJ9LHsibmFtZSI6IlBhcmNlbE5vIiwiY2FwdGlvbiI6IlBhcmNlbE5vIiwidmFsdWUiOiIxNTYxOSJ9XSxbeyJuYW1lIjoiUHJvcGVydHlBZGRyZXNzIiwiY2FwdGlvbiI6IlByb3BlcnR5QWRkcmVzcyIsInZhbHVlIjoiVGhpcmxtZXJlIFdheSBUSElSTE1FUkUgTlNXIn0seyJuYW1lIjoiUGFyY2VsTm8iLCJjYXB0aW9uIjoiUGFyY2VsTm8iLCJ2YWx1ZSI6IjE1NjMyIn1dLFt7Im5hbWUiOiJQcm9wZXJ0eUFkZHJlc3MiLCJjYXB0aW9uIjoiUHJvcGVydHlBZGRyZXNzIiwidmFsdWUiOiJUaGlybG1lcmUgV2F5IFRISVJMTUVSRSBOU1cifSx7Im5hbWUiOiJQYXJjZWxObyIsImNhcHRpb24iOiJQYXJjZWxObyIsInZhbHVlIjoiMjExMTgifV0sW3sibmFtZSI6IlByb3BlcnR5QWRkcmVzcyIsImNhcHRpb24iOiJQcm9wZXJ0eUFkZHJlc3MiLCJ2YWx1ZSI6IlRoaXJsbWVyZSBXYXkgVEhJUkxNRVJFIE5TVyJ9LHsibmFtZSI6IlBhcmNlbE5vIiwiY2FwdGlvbiI6IlBhcmNlbE5vIiwidmFsdWUiOiIyMjY1OCJ9XSxbeyJuYW1lIjoiUHJvcGVydHlBZGRyZXNzIiwiY2FwdGlvbiI6IlByb3BlcnR5QWRkcmVzcyIsInZhbHVlIjoiVGhpcmxtZXJlIFdheSBUSElSTE1FUkUgTlNXIn0seyJuYW1lIjoiUGFyY2VsTm8iLCJjYXB0aW9uIjoiUGFyY2VsTm8iLCJ2YWx1ZSI6IjI0Nzg5In1dXQ=="
+    },
+    {
+      "key": "GET https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup ea66727b86",
+      "method": "GET",
+      "url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup",
+      "final_url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup?fields=15618",
+      "body": "{\"params\":[[\"fields\",\"15618\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:32 GMT",
+        "content-type": "application/json",
+        "content-length": "703",
+        "x-amzn-requestid": "e9d5cd94-8222-4ce8-a9a5-9c2ed160ddb0",
+        "access-control-allow-origin": "*",
+        "x-amz-apigw-id": "EYE5TE_jywMEE3A=",
+        "x-amzn-trace-id": "Root=1-6ab981d4-22d226ef12c4cbb82f2e9e36"
+      },
+      "content_b64": "W1t7Im5hbWUiOiJwYXJjZWxfbm8iLCJjYXB0aW9uIjoicGFyY2VsIG5vIiwidmFsdWUiOiIxNTYxOCJ9LHsibmFtZSI6Ildhc3RlIFNlcnZpY2UiLCJjYXB0aW9uIjoiV2FzdGUgU2VydmljZSIsInZhbHVlIjoiUmVzaWRlbnRpYWwifSx7Im5hbWUiOiJXYXN0ZSBQaWNrdXAiLCJjYXB0aW9uIjoiV2FzdGUgUGlja3VwIiwidmFsdWUiOiJUaHVyc2RheSJ9LHsibmFtZSI6Ildhc3RlTmV4dFBpY2t1cFR5cGUxIiwiY2FwdGlvbiI6Ildhc3RlTmV4dFBpY2t1cFR5cGUxIiwidmFsdWUiOiJUaHVyc2RheSwgMDggT2N0b2JlciAyMDI2LCBHYXJiYWdlIGFuZCBSZWN5Y2xpbmcifSx7Im5hbWUiOiJXYXN0ZU5leHRQaWNrdXBUeXBlMiIsImNhcHRpb24iOiJXYXN0ZU5leHRQaWNrdXBUeXBlMiIsInZhbHVlIjoiVGh1cnNkYXksIDAxIE9jdG9iZXIgMjAyNiwgR2FyYmFnZSBhbmQgR2FyZGVuIE9yZ2FuaWNzIn0seyJuYW1lIjoiV2FzdGUgUnVuIiwiY2FwdGlvbiI6Ildhc3RlIFJ1biIsInZhbHVlIjoiV2VlayBCIn0seyJuYW1lIjoiTGFzdCBjbGVhbiB1cCBkYXRlIiwiY2FwdGlvbiI6Ikxhc3QgY2xlYW4gdXAgZGF0ZSIsInZhbHVlIjoiMDkgTWFyIDIwMjYifSx7Im5hbWUiOiJOZXh0IGNsZWFuIHVwIGRhdGUiLCJjYXB0aW9uIjoiTmV4dCBjbGVhbiB1cCBkYXRlIiwidmFsdWUiOiJCb29rYWJsZSBjbGVhbi11cCBub3cgYXZhaWxhYmxlIn1dXQ=="
+    }
+  ]
+}

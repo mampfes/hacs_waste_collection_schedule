@@ -1,61 +1,33 @@
-from datetime import date, timedelta
+import datetime
+from datetime import date
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    HolidayShift,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "City of Tea Tree Gully"
-DESCRIPTION = "Source for City of Tea Tree Gully waste collection."
-URL = "https://www.teatreegully.sa.gov.au"
-COUNTRY = "au"
+_ZONE_URL = "https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4"
 
-TEST_CASES = {
-    "Erica Street": {"address": "4 Erica Street, Tea Tree Gully"},
-    "Smart Road": {"address": "1 Smart Road, Modbury"},
-}
+# Sunday 5 Jan 2025 starts a "Week A"; zone A recycles in week A, and organics
+# go out on the other week. General waste is weekly.
+_WEEK_A_SUNDAY = datetime.date(2025, 1, 5)
+_WEEKS_AHEAD = 26
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Organics": Icons.ORGANIC,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address (e.g. '4 Erica Street, Tea Tree Gully'). "
-    "Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '4 Erica Street, Tea Tree Gully')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-GEOCODE_URL = "https://utility.arcgis.com/usrsvcs/servers/5c770a0bb67f4b8d893e21dccad13b70/rest/services/World/GeocodeServer/findAddressCandidates"
-ZONE_URL = "https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4/query"
-
-# Reference: Monday 5 Jan 2025 = Week A
-REF_DATE = date(2025, 1, 5)
-
-# JS-style day numbering (Sunday=0) used for offset from reference date
-WEEKDAY_OFFSET = {
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-    "Saturday": 6,
-    "Sunday": 0,
-}
-
-# Public holidays where collection shifts to the next day (from functions.js)
-HOLIDAYS = {
+# The council's own list of days on which collection moves to the next day
+# (from its bin-day page's functions.js).
+_HOLIDAYS = {
     date(2025, 1, 1),
     date(2025, 1, 2),
     date(2025, 1, 3),
@@ -79,111 +51,69 @@ HOLIDAYS = {
 }
 
 
-def _adjust_holiday(d: date) -> date:
-    """Shift collection date forward by one day if it falls on a holiday."""
-    if d in HOLIDAYS:
-        return d + timedelta(days=1)
-    return d
+def _describe(record, source):
+    weekday = recurrence.weekday((record.get("Collection") or "").strip())
+    if weekday is None:
+        return
+    week_a = _WEEK_A_SUNDAY + datetime.timedelta(days=(weekday + 1) % 7)
+    week_b = week_a + datetime.timedelta(weeks=1)
+    recycling, organics = (
+        (week_a, week_b) if record.get("Week") == "A" else (week_b, week_a)
+    )
+    fortnights = _WEEKS_AHEAD // 2
+    yield Schedule(
+        "General Waste", week_a, recurrence.WEEKLY, _WEEKS_AHEAD, anchor=True
+    )
+    yield Schedule(
+        "Recycling", recycling, recurrence.FORTNIGHTLY, fortnights, anchor=True
+    )
+    yield Schedule(
+        "Organics", organics, recurrence.FORTNIGHTLY, fortnights, anchor=True
+    )
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+def _after_holiday(collection_date, key, source):
+    return collection_date + datetime.timedelta(
+        days=1 if collection_date in _HOLIDAYS else 0
+    )
 
-    def fetch(self) -> list[Collection]:
-        # Step 1: Geocode address
-        r = requests.get(
-            GEOCODE_URL,
-            params={
-                "SingleLine": self._address,
-                "forStorage": "false",
-                "maxLocations": "6",
-                "outFields": "*",
-                "outSR": '{"wkid":4326}',
-                "f": "json",
-            },
-            headers={
-                "Referer": "https://survey123.arcgis.com/",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        candidates = r.json().get("candidates", [])
-        if not candidates:
-            raise SourceArgumentNotFound("address", self._address)
 
-        location = candidates[0]["location"]
+@final
+class Source(BaseSource):
+    TITLE = "City of Tea Tree Gully"
+    DESCRIPTION = "Source for City of Tea Tree Gully waste collection."
+    URL = "https://www.teatreegully.sa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
 
-        # Step 2: Query waste collection zone
-        r = requests.get(
-            ZONE_URL,
-            params={
-                "where": "1=1",
-                "geometry": f'{{"x": {location["x"]}, "y": {location["y"]}}}',
-                "geometryType": "esriGeometryPoint",
-                "inSR": "4326",
-                "spatialRel": "esriSpatialRelIntersects",
-                "outFields": "Collection,Week",
-                "returnGeometry": "false",
-                "resultRecordCount": "1",
-                "f": "json",
-            },
-            headers={
-                "Referer": "https://survey123.arcgis.com/",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        features = r.json().get("features", [])
-        if not features:
-            raise SourceArgumentNotFound("address", self._address)
+    TEST_CASES: ClassVar[dict] = {
+        "Erica Street": {"address": "4 Erica Street, Tea Tree Gully"},
+        "Smart Road": {"address": "1 Smart Road, Modbury"},
+    }
 
-        attrs = features[0]["attributes"]
-        collection_day = attrs["Collection"]
-        week_letter = attrs["Week"]
+    PARAMS = (street_address(),)
 
-        day_offset = WEEKDAY_OFFSET.get(collection_day)
-        if day_offset is None:
-            raise SourceArgumentNotFound("address", self._address)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address with suburb (e.g. '4 Erica Street, Tea "
+            "Tree Gully'). Search at "
+            "https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days"
+        ),
+    }
 
-        # Step 3: Generate collection dates
-        # JS-style offsets from REF_DATE (Monday Jan 5, 2025)
-        week_a_start = REF_DATE + timedelta(days=day_offset)
-        week_b_start = REF_DATE + timedelta(days=7 + day_offset)
-
-        # Determine which fortnightly week gets recycling vs organics
-        if week_letter == "A":
-            recycling_start = week_a_start
-        else:
-            recycling_start = week_b_start
-
-        # Find next collection day from today (using Python weekday)
-        py_weekday = (day_offset - 1) % 7  # convert JS Sunday=0 to Python Monday=0
-        today = date.today()
-        days_until = (py_weekday - today.weekday() + 7) % 7
-        next_day = today + timedelta(days=days_until)
-
-        entries = []
-        for i in range(26):  # ~6 months of weekly collections
-            collection_date = next_day + timedelta(weeks=i)
-            adjusted = _adjust_holiday(collection_date)
-
-            # General Waste: every week
-            entries.append(
-                Collection(
-                    date=adjusted, t="General Waste", icon=ICON_MAP["General Waste"]
-                )
-            )
-
-            # Check if this is a recycling or organics week
-            days_from_recycling = (collection_date - recycling_start).days
-            if days_from_recycling % 14 == 0:
-                entries.append(
-                    Collection(date=adjusted, t="Recycling", icon=ICON_MAP["Recycling"])
-                )
-            else:
-                entries.append(
-                    Collection(date=adjusted, t="Organics", icon=ICON_MAP["Organics"])
-                )
-
-        return entries
+    retrieve = ArcGisFeatureRetriever(
+        _ZONE_URL,
+        address=lambda address, **_: f"{address}, South Australia",
+        out_fields="Collection,Week",
+        result_record_count=1,
+    )
+    parse = ArcGisFeatureParser(argument="address")
+    preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_after_holiday))
+    transform = ICSTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Organics": wt.ORGANIC,
+        }
+    )

@@ -9,7 +9,7 @@ from waste_collection_schedule.config_params import (
     house_number,
     text_field,
 )
-from waste_collection_schedule.field_terms import DISTRICT, STREET
+from waste_collection_schedule.field_terms import DISTRICT, REGION, STREET
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.EcoHarmonogramPL import (
     SUPPORTED_APPS,
@@ -69,6 +69,7 @@ TYPE_VALUE_MAP = {
     "makulatura": wt.PAPER,
     "szkło": wt.GLASS,
     "szkło opakowaniowe": wt.GLASS,
+    "tworzywa": wt.RECYCLABLES,
     "metale i tworzywa": wt.RECYCLABLES,
     "metale i tworzywa sztuczne": wt.RECYCLABLES,
     "tworzywa sztuczne i metale": wt.RECYCLABLES,
@@ -81,6 +82,7 @@ TYPE_VALUE_MAP = {
     # key must match the label it actually sends.
     "odpady wielkogabrytowe": wt.BULKY_WASTE,
     "wielkogabaryty": wt.BULKY_WASTE,
+    "wielkogabaryty i zseie": wt.BULKY_WASTE,
     "gabaryty": wt.BULKY_WASTE,
     "choinki": wt.GARDEN_WASTE,
     "drzewka świąteczne": wt.GARDEN_WASTE,
@@ -250,6 +252,12 @@ class Source(BaseSource):
             "street": "Mszańska",
             "house_number": "16",
         },
+        "Ramiszów (region Nowy Ramiszów)": {
+            "town": "Ramiszów",
+            "house_number": "200",
+            "additional_sides_matcher": "Zabudowa jednorodzinna",
+            "region": "Nowy Ramiszów",
+        },
     }
 
     PARAMS = (
@@ -258,6 +266,7 @@ class Source(BaseSource):
         house_number("house_number"),
         text_field("district", term=DISTRICT, default=""),
         text_field("additional_sides_matcher", "Additional Sides Matcher", default=""),
+        text_field("region", term=REGION, default=""),
         text_field("community", "Community", default=""),
         dropdown("app", [a for a in SUPPORTED_APPS if a], label="App", optional=True),
         dropdown("language", list(SUPPORTED_LANGUAGES), label="Language", default="pl"),

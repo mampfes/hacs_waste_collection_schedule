@@ -1,51 +1,48 @@
 # AHE Ennepe-Ruhr-Kreis
 
-Support for schedules provided by [AHE Ennepe-Ruhr-Kreis](https://ahe.de), serving Ennepe-Ruhr-Kreis, Germany.
+Support for schedules provided by [AHE Ennepe-Ruhr-Kreis](https://ahe.de).
+
+Source for AHE Ennepe-Ruhr-Kreis.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ahe_de
       args:
-        city: STADT
-        strasse: STRAßE
-        hnr: HAUSNUMMER
+        city: CITY
+        bezirk: BEZIRK
+        strasse: STRASSE
+        hnr: HNR
 ```
 
 ### Configuration Variables
 
-**city**
-*(String) (required)*
+**city**  
+*(string) (optional)*
 
-City name. Supported cities: Breckerfeld, Ennepetal, Gevelsberg, Hagen, Hattingen, Herdecke, Schwelm, Sprockhövel, Wetter, Witten.
+**bezirk**  
+*(string) (optional)*
 
-**strasse**
-*(String) (required)*
+**strasse**  
+*(string) (optional)*
 
-**hnr**
-*(String | Integer) (optional)*
-
-**bezirk**
-*(String) (optional)*
-
-Required for some streets that are divided into named districts.
+**hnr**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ahe_de
       args:
         city: Wetter
-        strasse: Ahornstraße
-        hnr: 1
+        strasse: "Ahornstra\xDFe"
+        hnr: Alle Hausnummern
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit [https://ahe.de/abfallkalender/](https://ahe.de/abfallkalender/) and select your city and street.
-
-> **Migration note (from pre-July 2026 config):** The old `plz` (postal code) parameter is no longer supported. Replace it with `city` (city name, e.g. `Wetter`, `Herdecke`).
+Visit [https://ahe.de/abfallkalender/](https://ahe.de/abfallkalender/) and select your city and street. Use the exact city name as the `city` parameter (e.g. `Wetter`, `Herdecke`, `Gevelsberg`).

@@ -5,13 +5,14 @@ declarative and `SOURCES_WITH_LEGACY_STEP_OVERRIDES` is an empty set.
 
 **And then it turned out the count was measuring the wrong thing.** #7139 found
 that "fully declarative" meant "no step *method* and no step *class*", so 28 of
-those 263 sources still issue the provider's HTTP from a module-level function
-handed to a component. `tools/arch_coverage.py` now reports that as its own
-line, and `SOURCES_HAND_ROLLING_RETRIEVAL` in `tests/test_new_architecture.py`
-is the register. Zero on the old measure still stands; it just means less than
-it read as. Whoever picks this up next should decide whether the second number
-is the campaign's business or a successor's, because clearing it means new
-components rather than moved code.
+those 263 sources still issued the provider's HTTP from a module-level function
+handed to a component. `tools/arch_coverage.py` reports that as its own line,
+and `SOURCES_HAND_ROLLING_RETRIEVAL` in `tests/test_new_architecture.py` was the
+register. **That second count reached zero on 2026-09-26**, with new components
+rather than moved code: declared requests (`retrievers.Request`, `Lookup`,
+`Chain`, `Suggestions`) leaving only a pure `pick` in each source, and
+`service/Abfallkalender.py`'s `AbfallkalenderRetriever` for the one vendor
+module two sources share.
 
 This file said to delete it at zero. Do not delete it yet, and do not keep it as
 it stands. Most of it is scaffolding that has served its purpose, but four
@@ -164,6 +165,16 @@ loosening the matcher. Check for a nonce, a uuid or a wall-clock stamp in the
 request before re-recording, and if there is one, leave the cassette alone and
 say so.
 
+For `AppAbfallplusDe` specifically, deriving the id from the configuration was
+tried (2026-09-25, while migrating `ahe_de`) and does **not** work: the backend
+keeps wizard state per client id, and a second fetch with the same id fails with
+a 404 on the wizard's `kommune/` step, every time, while a fresh `uuid4` succeeds. A
+date-derived id fails the same way on the second fetch of a day. So the value
+must stay unique per session, which means no request body of this platform can
+be pinned until the harness can control it (for example by freezing the clock
+while recording, so a clock-derived id replays). `ahe_de` stays legacy until
+then.
+
 `ecoharmonogram_pl` is the second one found, so this is a shape rather than a
 one-off: `EcoHarmonogramPL` puts `hex(randrange(...))` in every POST as
 `clientId`, and its 14 cassettes (88 interactions) cannot be pinned until the
@@ -222,11 +233,9 @@ each one gives:
 
 | Failure seen | Sources | Where it is tracked |
 |---|---|---|
-| Cannot connect to host (curl 7), connect timeout on `regioentsorgung.de` | `bielefeld_de`, `erlangen_hoechstadt_de`, `regioentsorgung_de` | #7051 |
 | 403 Forbidden from `gis1.fuquay-varina.org`, not a network block | `fuquay_varina_nc_us` | #7052 |
 | DNS does not resolve `arcgis.fredrikstad.kommune.no` | `fredrikstad_no` | #7055 |
 | Connect timeout to `geoweb.shawinigan.ca` | `shawinigan_ca` | #7056 |
-| Stale test data, not a geo-block: the recorded `url` key returns no collections, and the `Rohrbach` case passes no `url` at all | `data_umweltprofis_at` | #7095 |
 
 Add any new finding to the matching issue rather than starting a new one, and
 say which failure you saw. "Connect timeout to `<host>`" is useful to a

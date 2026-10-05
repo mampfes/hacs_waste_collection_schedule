@@ -1,58 +1,64 @@
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id, street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "Banyule City Council"
-DESCRIPTION = "Source for Banyule City Council rubbish collection."
-URL = "https://www.banyule.vic.gov.au"
-TEST_CASES = {
-    "Monday A": {"street_address": "6 Mandall Avenue, IVANHOE"},
-    "Monday A Geolocation ID": {
-        "geolocation_id": "486d9d83-8377-4709-987f-4627beaa0ac8"
-    },
-    "Monday B": {"street_address": "10 Burke Road North, IVANHOE EAST"},
-    "Thursday A": {"street_address": "255 St Helena Road, GREENSBOROUGH"},
-    "Thursday B": {"street_address": "35 Para Road, MONTMORENCY"},
-}
-
-ICON_MAP = {
-    "green waste": Icons.GARDEN,
-    "recycling": Icons.RECYCLING,
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.banyule.vic.gov.au",
-    use_curl_cffi=True,
-    impersonate="chrome124",
-    warm_up_url="https://www.banyule.vic.gov.au/Waste-environment/Waste-recycling/Bin-collection-services",
-    warm_up_before="wasteservices",
-    icon_keywords=ICON_MAP,
-    # Without an explicit Accept header the search endpoint returns XML
-    # instead of JSON.
-    headers={"Accept": "application/json"},
-)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(
-        self,
-        street_address: str | None = None,
-        geolocation_id: str | None = None,
-    ):
-        if street_address is None and geolocation_id is None:
-            raise SourceArgumentExceptionMultiple(
-                ["street_address", "geolocation_id"],
-                "Either street_address or geolocation_id must have a value",
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Banyule City Council"
+    DESCRIPTION = "Source for Banyule City Council rubbish collection."
+    URL = "https://www.banyule.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        self._street_address = street_address
-        self._geolocation_id = geolocation_id
-        self._client = OpenCitiesClient(_CONFIG)
+    TEST_CASES: ClassVar[dict] = {
+        "Monday A": {"street_address": "6 Mandall Avenue, IVANHOE"},
+        "Monday A Geolocation ID": {
+            "geolocation_id": "486d9d83-8377-4709-987f-4627beaa0ac8"
+        },
+        "Monday B": {"street_address": "10 Burke Road North, IVANHOE EAST"},
+        "Thursday A": {"street_address": "255 St Helena Road, GREENSBOROUGH"},
+        "Thursday B": {"street_address": "35 Para Road, MONTMORENCY"},
+    }
 
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(
-            address=self._street_address, geolocation_id=self._geolocation_id
-        )
+    PARAMS = (
+        street_address(field="street_address", optional=True),
+        location_id(field="geolocation_id", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": "Visit the [Banyule City Council bin collection "
+        "services](https://www.banyule.vic.gov.au/Waste-environment/Waste-recycling/Bin-collection-services) "
+        "page and search for your address. The street address should exactly "
+        "match the address shown in the autocomplete result. For unlisted "
+        "addresses use an adjacent listed address. Alternatively give the "
+        "Location ID, the council's geolocation ID. It skips the address lookup "
+        "and takes precedence when both are given. To find it, open your "
+        "browser's developer tools (F12, Network tab), select your address on "
+        "the page above and look for the request "
+        "`https://www.banyule.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=<ID>&ocsvclang=en-AU`. "
+        "The value after `geolocationid=` is your Location ID."
+    }
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.banyule.vic.gov.au",
+        address="street_address",
+        geolocation_id="geolocation_id",
+        warm_up_url="https://www.banyule.vic.gov.au/Waste-environment/Waste-recycling/Bin-collection-services",
+        warm_up_before="wasteservices",
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+    )

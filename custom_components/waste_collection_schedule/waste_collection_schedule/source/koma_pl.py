@@ -1,144 +1,123 @@
 import urllib.parse
-from datetime import datetime
+from typing import ClassVar, final
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import config_params, date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "KOMA"
-DESCRIPTION = "Source for KOMA waste collection (e.g. Nowy Dwór Gdański, Poland)."
-URL = "https://koma.pl"
-COUNTRY = "pl"
+API_URL = "https://bok.koma.pl/api"
 
-API_URL = "https://bok.koma.pl"
-
-TEST_CASES = {
-    "Nowy Dwór Gdański, Kanałowa 5": {
-        "gmina": "Nowy Dwór Gdański",
-        "miejscowosc": "Nowy Dwór Gdański",
-        "ulica": "Kanałowa",
-        "numer_domu": "5",
-    },
-    "Nowy Dwór Gdański, Kanałowa 4/1": {
-        "gmina": "Nowy Dwór Gdański",
-        "miejscowosc": "Nowy Dwór Gdański",
-        "ulica": "Kanałowa",
-        "numer_domu": "4/1",
-    },
-}
-
-ICON_MAP = {
-    "Zmieszane": Icons.GENERAL_WASTE,
-    "Bio": Icons.ORGANIC,
-    "Odpady zielone": Icons.GARDEN,
-    "Papier": Icons.PAPER,
-    "Szkło": Icons.GLASS,
-    "Metale i tworzywa sztuczne": Icons.RECYCLING,
-    "Gabaryty": Icons.BULKY,
-    "Elektro": Icons.ELECTRONICS,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Open https://koma.pl/harmonogram-odpadow/ and step through the dropdowns "
-        "(Wybierz Miasto -> miejscowość -> ulica -> numer domu) to find the exact "
-        "spelling of your gmina, town, street and house number."
-    ),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "gmina": "Commune (gmina)",
-        "miejscowosc": "Town",
-        "ulica": "Street",
-        "numer_domu": "House number",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "gmina": "Name of the commune (gmina) as listed on koma.pl.",
-        "miejscowosc": "Name of the town/village.",
-        "ulica": "Street name (leave empty for towns without streets).",
-        "numer_domu": "House number.",
-    },
+# Every label the portal lists for a property. "Metale i tworzywa sztuczne"
+# (metals and plastics) is one mixed round, so it is RECYCLABLES.
+_TYPE_MAP = {
+    "Zmieszane": wt.GENERAL_WASTE,
+    "Bio": wt.ORGANIC,
+    "Odpady zielone": wt.GARDEN_WASTE,
+    "Papier": wt.PAPER,
+    "Szkło": wt.GLASS,
+    "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "Gabaryty": wt.BULKY_WASTE,
+    "Elektro": wt.ELECTRONICS,
 }
 
 
-class Source:
-    def __init__(
-        self, gmina: str, miejscowosc: str, numer_domu: str | int, ulica: str = ""
-    ):
-        self._gmina = str(gmina).strip()
-        self._miejscowosc = str(miejscowosc).strip()
-        self._ulica = str(ulica).strip()
-        self._numer_domu = str(numer_domu).strip()
+def _properties_url(gmina: str, miejscowosc: str, ulica: str | None = None, **_) -> str:
+    # The API's "prefix" path segment equals the gmina name.
+    segments = ["posesje", gmina, gmina, miejscowosc]
+    if ulica:
+        segments.append(ulica)
+    return API_URL + "/" + "/".join(urllib.parse.quote(s.strip()) for s in segments)
 
-    def _get_json(self, session, path_segments, params=None):
-        url = (
-            API_URL
-            + "/"
-            + "/".join(urllib.parse.quote(segment) for segment in path_segments)
-        )
-        response = session.get(url, params=params, timeout=30)
-        response.raise_for_status()
-        return response.json()
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
+def _pick_property(response, *keys, miejscowosc, ulica=None, numer_domu, **_) -> str:
+    """The lookup answers one entry per building; take the one with this house number."""
+    properties = response.json()
+    if not properties:
+        if ulica:
+            raise SourceArgumentNotFound("ulica", ulica)
+        raise SourceArgumentNotFound("miejscowosc", miejscowosc)
+    wanted = str(numer_domu).strip().casefold()
+    for entry in properties:
+        if str(entry.get("numer_domu")).strip().casefold() == wanted:
+            return entry["numer_posesji"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "numer_domu",
+        numer_domu,
+        sorted({str(entry.get("numer_domu")) for entry in properties}),
+    )
 
-        # The API "prefix" path segment equals the gmina name.
-        prefix = self._gmina
 
-        # 1. Resolve the property id (numer_posesji) for the given house number.
-        posesje_path = ["api", "posesje", prefix, self._gmina, self._miejscowosc]
-        if self._ulica:
-            posesje_path.append(self._ulica)
-        properties = self._get_json(session, posesje_path)
+@final
+class Source(BaseSource):
+    TITLE = "KOMA"
+    DESCRIPTION = "Source for KOMA waste collection (e.g. Nowy Dwór Gdański, Poland)."
+    URL = "https://koma.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-        if not properties:
-            if self._ulica:
-                streets = self._get_json(
-                    session, ["api", "ulice", prefix, self._gmina, self._miejscowosc]
-                )
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "ulica",
-                    self._ulica,
-                    sorted({s["ulica"] for s in streets if s.get("ulica")}),
-                )
-            raise SourceArgumentNotFoundWithSuggestions(
-                "miejscowosc", self._miejscowosc, []
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.ELECTRONICS,
+    ]
 
-        match = next(
-            (
-                p
-                for p in properties
-                if str(p.get("numer_domu")).strip().casefold()
-                == self._numer_domu.casefold()
+    TEST_CASES: ClassVar[dict] = {
+        "Nowy Dwór Gdański, Kanałowa 5": {
+            "gmina": "Nowy Dwór Gdański",
+            "miejscowosc": "Nowy Dwór Gdański",
+            "ulica": "Kanałowa",
+            "numer_domu": "5",
+        },
+        "Nowy Dwór Gdański, Kanałowa 4/1": {
+            "gmina": "Nowy Dwór Gdański",
+            "miejscowosc": "Nowy Dwór Gdański",
+            "ulica": "Kanałowa",
+            "numer_domu": "4/1",
+        },
+    }
+
+    PARAMS = (
+        config_params.municipality(field="gmina"),
+        config_params.city(field="miejscowosc"),
+        config_params.street(field="ulica", optional=True),
+        config_params.house_number(field="numer_domu"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://koma.pl/harmonogram-odpadow/ and step through the "
+            "dropdowns (Wybierz Miasto -> miejscowość -> ulica -> numer domu) to "
+            "find the exact spelling of your commune (gmina), town, street and "
+            "house number. Leave the street empty for towns without streets."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _properties_url,
+                pick=_pick_property,
             ),
-            None,
-        )
-        if match is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "numer_domu",
-                self._numer_domu,
-                sorted({str(p.get("numer_domu")) for p in properties}),
-            )
+        ),
+        url=f"{API_URL}/apiharmonogram",
+        params=lambda key, gmina, **_: {"value": f"{gmina.strip()}/{key}"},
+    )
 
-        # 2. Fetch the schedule for the resolved property.
-        schedule = self._get_json(
-            session,
-            ["api", "apiharmonogram"],
-            {"value": f"{prefix}/{match['numer_posesji']}"},
-        )
+    parse = parsers.JsonParser("odbior")
 
-        entries: list[Collection] = []
-        for collection in schedule.get("odbior", []):
-            try:
-                day = datetime.strptime(collection["data"], "%Y-%m-%d").date()
-            except (ValueError, KeyError):
-                continue
-            waste_type = collection.get("typ", "")
-            entries.append(Collection(day, waste_type, icon=ICON_MAP.get(waste_type)))
-        return entries
+    transform = JsonTransformer(
+        date_key="data",
+        type_key="typ",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        skip_unparseable_dates=True,
+    )

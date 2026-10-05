@@ -1,9 +1,8 @@
 # Rochford District Council
 
-Support for waste collection schedules provided by [Rochford District Council](https://www.rochford.gov.uk), Essex, UK.
+Support for schedules provided by [Rochford District Council](https://www.rochford.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new South East Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for Rochford District Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -18,27 +17,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-The postcode of the property (e.g. `SS4 1AS`).
-
-**uprn**
+**uprn**  
 *(string) (required)*
-
-The composite ward code and UPRN of the property, separated by a hyphen
-(e.g. `E05010853-10014203194`). Note this is **not** the bare UPRN — the
-ward prefix is required.
-
-## How to find your `uprn`
-
-1. Go to [https://www.rochford.gov.uk/bins-and-collections](https://www.rochford.gov.uk/bins-and-collections).
-2. Enter your postcode and press **Find**.
-3. An address dropdown appears. Select your address.
-4. Open your browser's page source / developer tools and inspect the
-   `<select name="uprn">` element. The `value` attribute of your selected
-   `<option>` is the composite ward-UPRN you need, e.g.
-   `E05010853-10014203194`.
 
 ## Example
 
@@ -47,14 +30,10 @@ waste_collection_schedule:
   sources:
     - name: rochford_gov_uk
       args:
-        postcode: "SS4 1AS"
-        uprn: "E05010853-10014203194"
+        postcode: SS4 1AS
+        uprn: E05010853-10014203194
 ```
 
-## Bin types returned
+## How to get the source arguments
 
-| Provider description | Returned type     | Icon                  |
-|----------------------|-------------------|-----------------------|
-| Compost              | `Compost`         | `Icons.GARDEN`        |
-| Recyclables          | `Recyclables`     | `Icons.RECYCLING`     |
-| Non-recyclables      | `Non-recyclables` | `Icons.GENERAL_WASTE` |
+Go to https://www.rochford.gov.uk/bins-and-collections and enter your postcode, then press 'Find'. Open the address dropdown that appears and select your address. The 'uprn' is the value of the selected option in that dropdown: a composite of the ward code and UPRN separated by a hyphen, e.g. 'E05010853-10014203194'. You can read it from the page's HTML source (the <option value> attribute).

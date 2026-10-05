@@ -1,213 +1,180 @@
-from datetime import datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, postcode, text_field
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
-    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    ExplodeList,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Colchester City Council"
-DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
-URL = "https://colchester.gov.uk"
-COUNTRY = "uk"
-TEST_CASES = {
-    "Church Road, Colchester (llpgid)": {
-        "llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"
-    },
-    "The Lane, Colchester (llpgid)": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
-    "16 The Lane, CO5 8NT": {"postcode": "CO5 8NT", "house": "16"},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "house": "House number or name",
-        "llpgid": "LLPG ID",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "UK postcode for the address, e.g. 'CO5 8NT'.",
-        "house": "House number or name as shown in the council's address picker, e.g. '16' or 'The Old Forge'.",
-        "llpgid": "(Advanced) Direct LLPG GUID taken from the recycling calendar URL. Provide this OR postcode + house.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter your UK postcode and the house number or name as it appears in the "
-        "Colchester recycling calendar address picker at "
-        "https://www.colchester.gov.uk/your-recycling-calendar/. "
-        "Advanced users may instead supply 'llpgid' (the GUID from the calendar URL "
-        "after selecting an address)."
-    ),
-}
-
-# The provider's calendar feed renamed two streams in mid-2026:
-#   "Black bags" -> "Non-recyclable rubbish"
-#   "Paper/card" -> "Mixed recycling"
-# Map both legacy and current names to a single canonical label so the source
-# is stable across the rollout, and (for the two renamed streams) bypass the
-# default .title() casing so labels match the provider's sentence-case feed.
-NAME_MAP = {
-    "Black bags": "Non-recyclable rubbish",
-    "Non-recyclable rubbish": "Non-recyclable rubbish",
-    "Paper/card": "Mixed recycling",
-    "Mixed recycling": "Mixed recycling",
-}
-
-ICON_MAP = {
-    "Black bags": Icons.GENERAL_WASTE,
-    "Non-recyclable rubbish": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Paper/card": Icons.RECYCLING,
-    "Mixed recycling": Icons.RECYCLING,
-    "Garden waste": Icons.GARDEN,
-    "Food waste": Icons.BIO_KITCHEN,
-}
-
-CALENDAR_API = "https://new-llpg-app.azurewebsites.net/api/calendar/{llpgid}"
+CALENDAR_API = "https://new-llpg-app.azurewebsites.net/api/calendar"
 ADDRESS_API = "https://www.colchester.gov.uk/_api/new_llpgs"
 
+# The calendar API answers XML unless JSON is asked for.
+_JSON = {"Accept": "application/json"}
 
-def _normalise_postcode(postcode: str) -> str:
-    # The address API matches on the postcode in "OUTWARD INWARD" form (single
-    # space before the last three characters). Any other spacing returns no
-    # results, even though the picker on the website tolerates it.
+# The provider renamed two streams in mid-2026 ("Black bags" -> "Non-recyclable
+# rubbish", "Paper/card" -> "Mixed recycling"); both spellings are accepted.
+_TYPE_MAP = {
+    "Black bags": wt.GENERAL_WASTE,
+    "Non-recyclable rubbish": wt.GENERAL_WASTE,
+    "Paper/card": wt.RECYCLABLES,
+    "Mixed recycling": wt.RECYCLABLES,
+    "Glass": wt.GLASS,
+    "Garden waste": wt.GARDEN_WASTE,
+    "Food waste": wt.FOOD_WASTE,
+}
+
+
+def _postcode(postcode: str) -> str:
+    """The address API only matches "OUTWARD INWARD" (one space before the last three)."""
     compact = "".join(str(postcode).split()).upper()
     if len(compact) < 4:
         return compact
     return f"{compact[:-3]} {compact[-3:]}"
 
 
-class Source:
-    def __init__(
-        self,
-        llpgid: str | None = None,
-        postcode: str | None = None,
-        house: str | None = None,
-    ):
-        if llpgid:
-            self._llpgid: str | None = llpgid
-            self._postcode: str | None = None
-            self._house: str | None = None
-        elif postcode and house is not None and str(house).strip():
-            self._llpgid = None
-            self._postcode = _normalise_postcode(postcode)
-            self._house = str(house).strip()
-        else:
-            raise SourceArgumentExceptionMultiple(
-                ["postcode", "house"],
-                "Provide either 'llpgid', or both 'postcode' and 'house'.",
-            )
+def _llpgid(response, *keys, postcode, house, **_) -> str:
+    addresses = response.json().get("value", [])
+    if not addresses:
+        raise SourceArgumentNotFound("postcode", _postcode(postcode))
 
-    def fetch(self):
-        if self._llpgid is None:
-            # Resolve once and cache so subsequent polls only hit the calendar API.
-            self._llpgid = self._resolve_llpgid()
+    target = str(house).strip().casefold()
 
-        r = requests.get(CALENDAR_API.format(llpgid=self._llpgid), timeout=30)
-        r.raise_for_status()
-        data = r.json()
+    def paon(a) -> str:
+        return (a.get("new_paon") or "").strip().casefold()
 
-        entries = []
+    def name(a) -> str:
+        return (a.get("new_name") or "").strip().casefold()
 
-        for weeks in data["Weeks"]:
-            rows = weeks["Rows"]
-            for key in iter(rows):
-                for day in rows[key]:
-                    try:
-                        # Colchester.gov.uk provide their rubbish collection information in the format of a 2-week
-                        # cycle. These weeks represent 'Blue' weeks and 'Green' weeks (Traditionally, non-recyclables
-                        # and recyclable weeks). The way the JSON response represents this is by specifying the
-                        # `DatesOfFirstCollectionDays`, the first collection day of the cycle, and having a boolean
-                        # `WeekOne` field in each week representing if it's the first week of the cycle, a 'Blue' week,
-                        # or the second, a 'Green' week. If the week is not `WeekOne`, a 'Blue' week,  then 7 days need
-                        # to be added to the `DatesOfFirstCollectionDays` date to provide the correct 'Green' week
-                        # collection date.
-                        date = datetime.strptime(
-                            data["DatesOfFirstCollectionDays"][key], "%Y-%m-%dT%H:%M:%S"
-                        )
-                        if not weeks["WeekOne"]:
-                            date = date + timedelta(days=7)
-                        name = NAME_MAP.get(day["Name"], day["Name"].title())
-                        icon = ICON_MAP.get(day["Name"])
-                        if date > datetime.now():
-                            entries.append(
-                                Collection(
-                                    date=date.date(),
-                                    t=name,
-                                    icon=icon,
-                                )
-                            )
-                        # As Colchester.gov.uk only provides the current collection cycle, the next must be extrapolated
-                        # from the current week. This is the same method the website uses to display further collection
-                        # weeks.
-                        entries.append(
-                            Collection(
-                                date=date.date() + timedelta(days=14),
-                                t=name,
-                                icon=icon,
-                            )
-                        )
-                    except ValueError:
-                        pass  # ignore date conversion failure for not scheduled collections
+    def label(a) -> str:
+        return (a.get("new_name") or "").strip()
 
-        return entries
-
-    def _resolve_llpgid(self) -> str:
-        assert self._postcode is not None and self._house is not None
-        r = requests.get(
-            ADDRESS_API,
-            params={
-                "$select": "new_llpgid,new_paon,new_street,new_postcoide,new_name",
-                "$filter": f"(new_postcoide eq '{self._postcode}')",
-            },
-            headers={"Accept": "application/json"},
-            timeout=30,
-        )
-        r.raise_for_status()
-        addresses = r.json().get("value", [])
-        if not addresses:
-            raise SourceArgumentNotFound("postcode", self._postcode)
-
-        target = self._house.casefold()
-
-        exact = [
-            a
-            for a in addresses
-            if (a.get("new_paon") or "").strip().casefold() == target
-            or (a.get("new_name") or "").strip().casefold() == target
-        ]
-        if len(exact) == 1:
-            return exact[0]["new_llpgid"]
-        if len(exact) > 1:
+    exact = [a for a in addresses if target in (paon(a), name(a))]
+    partial = [a for a in addresses if target in paon(a) or target in name(a)]
+    for matches in (exact, partial):
+        if len(matches) == 1:
+            return matches[0]["new_llpgid"]
+        if len(matches) > 1:
             raise SourceArgAmbiguousWithSuggestions(
-                "house",
-                self._house,
-                sorted({(a.get("new_name") or "").strip() for a in exact}),
+                "house", house, sorted({label(a) for a in matches})
             )
+    raise SourceArgumentNotFoundWithSuggestions(
+        "house", house, sorted({label(a) for a in addresses if label(a)})
+    )
 
-        substr = [
-            a
-            for a in addresses
-            if target in (a.get("new_paon") or "").casefold()
-            or target in (a.get("new_name") or "").casefold()
-        ]
-        if len(substr) == 1:
-            return substr[0]["new_llpgid"]
-        if len(substr) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "house",
-                self._house,
-                sorted({(a.get("new_name") or "").strip() for a in substr}),
-            )
 
-        suggestions = sorted(
-            {(a.get("new_name") or "").strip() for a in addresses if a.get("new_name")}
-        )
-        raise SourceArgumentNotFoundWithSuggestions("house", self._house, suggestions)
+def _entries(calendar, source) -> list[dict]:
+    """One ``{name, date}`` per service per week of the two-week cycle.
+
+    ``DatesOfFirstCollectionDays`` holds the first collection day of the cycle
+    for each weekday; the second ("green") week is seven days later, which the
+    response flags with ``WeekOne: false``. A weekday with no date is a day
+    nothing is collected on.
+    """
+    first_days = calendar["DatesOfFirstCollectionDays"]
+    entries = []
+    for week in calendar["Weeks"]:
+        for weekday, services in week["Rows"].items():
+            first = first_days.get(weekday)
+            if not first:
+                continue
+            date = datetime.datetime.strptime(first, "%Y-%m-%dT%H:%M:%S").date()
+            if not week["WeekOne"]:
+                date += datetime.timedelta(days=7)
+            entries.extend({"name": s["Name"], "date": date} for s in services)
+    return entries
+
+
+def _describe(entry, source):
+    """The site shows one cycle only: this one, extrapolated by a fortnight."""
+    yield Schedule(
+        entry["name"],
+        entry["date"],
+        recurrence.FORTNIGHTLY,
+        count=2,
+        not_before=datetime.date.today(),
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Colchester City Council"
+    DESCRIPTION = (
+        "Source for Colchester.gov.uk services for the borough of Colchester, UK."
+    )
+    URL = "https://colchester.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Church Road, Colchester (llpgid)": {
+            "llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"
+        },
+        "The Lane, Colchester (llpgid)": {
+            "llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"
+        },
+        "16 The Lane, CO5 8NT": {"postcode": "CO5 8NT", "house": "16"},
+    }
+
+    PARAMS = (
+        alternatives(
+            [text_field("llpgid", "LLPG ID")],
+            [postcode("postcode", "house")],
+        ),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your UK postcode and the house number or name as it appears "
+            "in the address picker of the "
+            "[Colchester recycling calendar](https://www.colchester.gov.uk/your-recycling-calendar/). "
+            "Advanced users may instead supply 'llpgid' (the GUID in the "
+            "calendar URL after selecting an address)."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                ADDRESS_API,
+                params=lambda postcode=None, **_: {
+                    "$select": "new_llpgid,new_paon,new_street,new_postcoide,new_name",
+                    "$filter": f"(new_postcoide eq '{_postcode(postcode or '')}')",
+                },
+                headers=_JSON,
+                given=lambda llpgid=None, **_: llpgid or None,
+                pick=_llpgid,
+            ),
+        ),
+        url=lambda key, **_: f"{CALENDAR_API}/{key}",
+        headers=_JSON,
+        raise_for_status=True,
+    )
+
+    parse = parsers.JsonParser()
+
+    preprocess = Compose(
+        ExplodeList(_entries),
+        RecurrenceExpander(_describe),
+    )
+
+    transform = RowTransformer(type_value_map=_TYPE_MAP)

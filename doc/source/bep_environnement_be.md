@@ -1,6 +1,8 @@
-# BEP Environnement
+# Bep-Environnement
 
-Support for schedules provided by [bep-environnement.be](https://www.bep-environnement.be/).
+Support for schedules provided by [Bep-Environnement](https://www.bep-environnement.be).
+
+Source for Bep Environnement garbage collection
 
 ## Configuration via configuration.yaml
 
@@ -12,22 +14,21 @@ waste_collection_schedule:
         locality: LOCALITY
 ```
 
-The arguments can be found in the URL after visiting the [the calendar](https://www.bep-environnement.be/). Type your *Postal Code* or *City Name* then select the **Locality**. This is the value you have to give in argument.
-
 ### Configuration Variables
 
-**locality**
-*(string)*
-Name of your Locality (Localité).
+**locality**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
-# URL: https://www.bep-environnement.be/
-
 waste_collection_schedule:
   sources:
     - name: bep_environnement_be
       args:
-        locality: "Dinant"
+        locality: Dinant
 ```
+
+## How to get the source arguments
+
+Go to the "https://www.bep-environnement.be" website if you're unsure about your locality.

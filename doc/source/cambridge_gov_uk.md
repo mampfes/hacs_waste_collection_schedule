@@ -1,36 +1,35 @@
-# Cambridge City Council
+# Cambridge City Council (Deprecated)
 
-**This source has been deprecated. Please use the [Greater Cambridge Waste](./greater_cambridge_waste_org.md) source.**
+Support for schedules provided by [Cambridge City Council (Deprecated)](https://cambridge.gov.uk).
 
-Support for schedules provided by [Cambridge City Council](https://www.cambridge.gov.uk/check-when-your-bin-will-be-emptied), serving Cambridge (UK) and part of Cambridgeshire.
+Source for cambridge.gov.uk services for Cambridge and part of Cambridgeshire
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cambridge_gov_uk
       args:
         post_code: POST_CODE
         number: NUMBER
-
 ```
 
 ### Configuration Variables
 
-**POST_CODE**  
+**post_code**  
 *(string) (required)*
 
-**NUMBER**  
+**number**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cambridge_gov_uk
       args:
-        post_code: "CB13JD"
-        number: "37"
+        post_code: CB13JD
+        number: 37
 ```

@@ -1,117 +1,125 @@
+"""AWISTA LOGISTIK Stadt Remscheid (Monaloga online calendar).
+
+Three requests, as in the legacy source: the year form (answered with the street
+dropdown), then the chosen street's form, answered with a table of dated rows
+("Montag, 05. Oktober 2026").
+"""
+
+import re
 from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "AWISTA LOGISTIK Stadt Remscheid"
-DESCRIPTION = "Source for AWISTA LOGISTIK Stadt Remscheid."
-URL = "https://www.monaloga.de/"
-TEST_CASES = {
-    "Adolf-Clarenbach-Straße 42899": {
-        "street": "Adolf-Clarenbach-Straße",
-        "plz": 42899,
-    },
-    "Alte Wendung": {"street": "Alte Wendung"},
-}
-
-
-ICON_MAP = {
-    "Leichtverpackungen": Icons.RECYCLING,
-}
-
-GERMAN_MONTHS = {
-    "Januar": 1,
-    "Februar": 2,
-    "März": 3,
-    "April": 4,
-    "Mai": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "August": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "Dezember": 12,
-}
-
+from waste_collection_schedule import recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street, text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.field_terms import POSTCODE
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php"
 
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "plz": "PLZ",
-        "street": "Straße",
-    },
-    "en": {
-        "plz": "ZIP",
-        "street": "Street",
-    },
-}
+_DATE = re.compile(r"(\d{1,2})\.\s*(\w+)\s+(\d{4})")
 
 
-class Source:
-    def __init__(self, street: str, plz: str | int | None = None):
-        self._street: str = street
-        self._plz: str | None = str(plz).strip() if plz else None
+def _form(year: int, **extra: str) -> dict:
+    return {
+        "sessionid": "",
+        "form_ident_source": "1",
+        "year": year,
+        "next": "Suchen",
+        **extra,
+    }
 
-    def fetch(self):
-        args = {
-            "form_ident": ["1", "0"],
-            "sessionid": "",
-            "form_ident_source": "1",
-            "year": datetime.now().year,
-            "next": "Suchen",
-        }
 
-        # get json file
-        r = requests.post(API_URL, data=args)
-        r.raise_for_status()
+def _street_value(response, street: str, plz=None, **_) -> str:
+    """The ``a_street`` form value of the first dropdown option that matches."""
+    options = BeautifulSoup(response.text, "html.parser").select(
+        "select[name=a_street] option"
+    )
+    wanted = street.lower().strip()
+    zip_code = str(plz).strip() if plz else None
+    for option in options:
+        name = option.text.split("(")[0].lower().strip()
+        if name == wanted and (not zip_code or zip_code in option.text):
+            return str(option["value"]) + "|" + street.strip()
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street",
+        f"{street} ({plz})" if plz else street,
+        sorted({o.text.strip() for o in options}),
+    )
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        select = soup.find("select", {"name": "a_street"})
-        options = select.find_all("option")
-        street_id = None
 
-        street_search = self._street.lower().strip()
+def _date(row) -> date:
+    text = row.find_all("td")[0].get_text().split(",")[-1]
+    match = _DATE.search(text)
+    month = recurrence.month(match.group(2)) if match else None
+    if match is None or month is None:
+        raise ValueError(f"cannot read date: {text!r}")
+    return date(int(match.group(3)), month, int(match.group(1)))
 
-        for option in options:
-            street_name = option.text.split("(")[0].lower().strip()
-            if street_name == street_search and (
-                not self._plz or self._plz in option.text
-            ):
-                street_id = option["value"]
-                break
-        if street_id is None:
-            raise ValueError(
-                f"Street PLZ combination not found: {self._street} with {self._plz}"
-            )
 
-        args["form_ident"] = "1"
-        args["a_street"] = street_id + "|" + self._street.strip()
+@final
+class Source(BaseSource):
+    TITLE = "AWISTA LOGISTIK Stadt Remscheid"
+    DESCRIPTION = "Source for AWISTA LOGISTIK Stadt Remscheid."
+    URL = "https://www.monaloga.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES]
 
-        r = requests.post(API_URL, args)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Adolf-Clarenbach-Straße 42899": {
+            "street": "Adolf-Clarenbach-Straße",
+            "plz": 42899,
+        },
+        "Alte Wendung": {"street": "Alte Wendung"},
+    }
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        data = soup.find("div", {"id": "tab1"})
-        data = data.find("table")
+    PARAMS = (
+        street(),
+        text_field(
+            "plz",
+            term=POSTCODE,
+            optional=True,
+            coerce=lambda value: str(value).strip(),
+        ),
+    )
 
-        rows = data.find_all("tr")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street as listed at "
+            "https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php. "
+            "Add the postcode (PLZ) if the street name occurs in several postcodes."
+        ),
+        "de": (
+            "Geben Sie Ihre Straße so ein, wie sie im Online-Abfallkalender "
+            "aufgeführt ist. Ergänzen Sie die PLZ, falls der Straßenname "
+            "mehrfach vorkommt."
+        ),
+    }
 
-        entries = []
-        for row in rows:
-            cols = row.find_all("td")
-            bin_type = cols[-1].text.strip()
-            date_str = cols[0].text.split(",")[-1].strip()
-
-            date_parts = date_str.split(" ")
-            day = int(date_parts[0].strip(".").strip())
-            month = GERMAN_MONTHS[date_parts[1].strip()]
-            year = int(date_parts[2].strip())
-            d = date(year=year, month=month, day=day)
-            icon = ICON_MAP.get(bin_type.lower())  # Collection icon
-            entries.append(Collection(date=d, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                API_URL,
+                method="POST",
+                data=lambda **_: _form(datetime.now().year, form_ident="0"),
+                pick=_street_value,
+            ),
+        ),
+        url=API_URL,
+        method="POST",
+        data=lambda street_value, **_: _form(
+            datetime.now().year, form_ident="1", a_street=street_value
+        ),
+        raise_for_status=True,
+    )
+    parse = HtmlParser("#tab1 table tr")
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda row: row.find_all("td")[-1].get_text().strip(),
+        type_value_map={"Leichtverpackungen": wt.RECYCLABLES},
+    )

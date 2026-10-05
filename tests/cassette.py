@@ -32,10 +32,10 @@ puts a value in its request that changes from run to run cannot be pinned: the
 recorded body holds the value from recording day and will never be sent again,
 so the cassette stops replaying. A clock-derived value is safe, because replay
 freezes the clock to the recording date, but a nonce or a uuid is not
-(``AppAbfallplusDe`` sends a fresh ``uuid4`` in its POST body, and
-``EcoHarmonogramPL`` a fresh ``randrange`` hex as ``clientId``). That is a
-defect in the source, not in this matcher: make the value deterministic rather
-than loosening the comparison.
+(``EcoHarmonogramPL`` sends a fresh ``randrange`` hex as ``clientId``). Keep the
+comparison strict. For AbfallPlus, replay supplies the recorded handshake's
+client UUIDs to the service's ``_new_client_id`` seam; every request still has
+to match in full.
 """
 
 from __future__ import annotations
@@ -47,7 +47,9 @@ import json
 import os
 import threading
 from typing import Any
+from unittest.mock import patch
 from urllib.parse import parse_qsl, urlencode
+from uuid import UUID
 
 import curl_cffi.requests as _cffi
 import requests
@@ -573,7 +575,29 @@ def replaying(path: str):
     _requests_sessions.Session.request = requests_request_wrapper  # type: ignore[method-assign]
     _requests_sessions.Session.send = send_wrapper  # type: ignore[method-assign]
     try:
-        with freeze_time(cassette["recorded_at"]):
+        with contextlib.ExitStack() as stack:
+            # Replay the client identities from the AbfallPlus handshake. The
+            # full request body remains pinned, including app and address IDs;
+            # production clients still get a fresh identity for each wizard.
+            client_ids = []
+            for interaction in interactions:
+                if interaction["url"] != "https://app.abfallplus.de/config.xml":
+                    continue
+                body = interaction.get("body")
+                if body is not None:
+                    values = dict(json.loads(body).get("body", []))
+                    if "client" in values:
+                        client_ids.append(str(UUID(values["client"])))
+            if client_ids:
+                # Patch the service's own seam, not uuid.uuid4: the uuid module
+                # is shared, so patching it would hand these IDs to any caller.
+                stack.enter_context(
+                    patch(
+                        "waste_collection_schedule.service.AppAbfallplusDe._new_client_id",
+                        side_effect=client_ids,
+                    )
+                )
+            stack.enter_context(freeze_time(cassette["recorded_at"]))
             yield
     finally:
         _cffi.Session.request = orig_cffi_request  # type: ignore[method-assign]

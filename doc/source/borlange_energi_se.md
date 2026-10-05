@@ -1,10 +1,10 @@
 # Borlänge Energi
 
+Support for schedules provided by [Borlänge Energi](https://www.borlange-energi.se/avfall-och-atervinning/sophamtning).
+
 Waste collection schedule for Borlänge, Sweden
 
-## Configuration
-
-To use this integration, you need to provide your waste collection pickup address.
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
@@ -17,24 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **pickup_address**  
-*(String) (required)*
+*(string) (required)*
 
-### How to find your `pickup_address`
-
-1. Visit the Borlänge Energi waste collection website:
-   https://www.borlange-energi.se/avfall-och-atervinning/sophamtning
-
-2. Enter your address in the address search field.
-
-3. Use the address exactly as shown on the website, including correct spelling
-   and house number (e.g. `Mats Knuts Väg 100`).
-
-### Example YAML Configuration
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: borlange_energi_se
       args:
-        pickup_address: "Mats Knuts Väg 100"
+        pickup_address: "Mats Knuts V\xE4g 100"
 ```
+
+## How to get the source arguments
+
+Enter your pickup address as it appears in the 'När kommer sopbilen?' search on the [Borlänge Energi waste page](https://www.borlange-energi.se/avfall-och-atervinning/sophamtning), e.g. `Mats Knuts Väg 100`.

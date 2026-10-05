@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/fraksjoner ",
+      "method": "GET",
+      "url": "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/fraksjoner",
+      "final_url": "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/fraksjoner",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 28 Sep 2026 20:54:44 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, RenovasjonAppKey, Kommunenr, X-WAAPI-TOKEN",
+        "access-control-allow-origin": "*",
+        "cache-control": "no-cache,no-store",
+        "content-encoding": "gzip",
+        "set-cookie": "ARRAffinity=97397c6b264df1ce7044749fe97d8a273ee9a34843c1fab8a3c81c0a6a7c8dec;Path=/;HttpOnly;Secure;Domain=norkartrenovasjon.azurewebsites.net, ARRAffinitySameSite=97397c6b264df1ce7044749fe97d8a273ee9a34843c1fab8a3c81c0a6a7c8dec;Path=/;HttpOnly;SameSite=None;Secure;Domain=norkartrenovasjon.azurewebsites.net",
+        "vary": "Accept-Encoding",
+        "content-length": "475",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siSWQiOjEsIk5hdm4iOiJSZXN0YXZmYWxsIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6MSwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzEucG5nIn0seyJJZCI6MiwiTmF2biI6IlBhcGlyIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6NiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzYucG5nIn0seyJJZCI6MTMsIk5hdm4iOiJQYXBwIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6NiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzYucG5nIn0seyJJZCI6MTYsIk5hdm4iOiJHcm92YXZmYWxsIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6bnVsbCwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjpudWxsfSx7IklkIjoxOSwiTmF2biI6IkhlbnRlYXZzdGFuZCIsIklrb24iOiJodHRwOi8va29tdGVrc2t5Lm5vcmthcnQubm8vTWluUmVub3Zhc2pvbi5BcGkvSWtvbmVyL2JydXNoLnBuZyIsIk5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWQiOm51bGwsIk5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6bnVsbH0seyJJZCI6MjAsIk5hdm4iOiJNYXRhdmZhbGwiLCJJa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL01pblJlbm92YXNqb24uQXBpL0lrb25lci9icnVzaC5wbmciLCJOb3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjoyLCJOb3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOiJodHRwczovL2t0dGplbmVzdGUubm9ya2FydC5uby9BdmZhbGxzc3ltYm9sZXIvMi5wbmcifSx7IklkIjozOCwiTmF2biI6IlBhcGlyLCBwYXBwIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6NiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzYucG5nIn0seyJJZCI6MzksIk5hdm4iOiJIZXJtZXRpa2stIG9nIGdsYXNzZW1iYWxsYXNqZSIsIklrb24iOiJodHRwOi8va29tdGVrc2t5Lm5vcmthcnQubm8vTWluUmVub3Zhc2pvbi5BcGkvSWtvbmVyL2JydXNoLnBuZyIsIk5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWQiOjUsIk5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6Imh0dHBzOi8va3R0amVuZXN0ZS5ub3JrYXJ0Lm5vL0F2ZmFsbHNzeW1ib2xlci81LnBuZyJ9LHsiSWQiOjczLCJOYXZuIjoiUGxhc3RlbWJhbGxhc2plIiwiSWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9NaW5SZW5vdmFzam9uLkFwaS9Ja29uZXIvYnJ1c2gucG5nIiwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6NCwiTm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzQucG5nIn1d"
+    },
+    {
+      "key": "GET https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/tommekalender?gatenavn=%C3%85smarkvegen&husnr=111&gatekode=6530 ",
+      "method": "GET",
+      "url": "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/tommekalender?gatenavn=%C3%85smarkvegen&husnr=111&gatekode=6530",
+      "final_url": "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server=https://komteksky.norkart.no/MinRenovasjon.Api/api/tommekalender?gatenavn=%C3%85smarkvegen&husnr=111&gatekode=6530",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 28 Sep 2026 20:54:44 GMT",
+        "server": "Microsoft-IIS/10.0",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, RenovasjonAppKey, Kommunenr, X-WAAPI-TOKEN",
+        "access-control-allow-origin": "*",
+        "cache-control": "no-cache,no-store",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "content-length": "239",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "W3siRnJha3Nqb25JZCI6MSwiVG9tbWVkYXRvZXIiOlsiMjAyNi0wOS0yOVQwMDowMDowMCIsIjIwMjYtMTAtMjhUMDA6MDA6MDAiXX0seyJGcmFrc2pvbklkIjoyMCwiVG9tbWVkYXRvZXIiOlsiMjAyNi0wOS0yOVQwMDowMDowMCIsIjIwMjYtMTAtMTNUMDA6MDA6MDAiXX0seyJGcmFrc2pvbklkIjozOSwiVG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0wMVQwMDowMDowMCIsIjIwMjYtMTItMTFUMDA6MDA6MDAiXX0seyJGcmFrc2pvbklkIjo3MywiVG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0wMVQwMDowMDowMCIsIjIwMjYtMTEtMDZUMDA6MDA6MDAiXX0seyJGcmFrc2pvbklkIjozOCwiVG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0xM1QwMDowMDowMCIsIjIwMjYtMTEtMTFUMDA6MDA6MDAiXX1d"
+    }
+  ]
+}

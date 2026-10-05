@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.mackay.qld.gov.au/api/v1/myarea/search c6228cb33c",
+      "method": "GET",
+      "url": "https://www.mackay.qld.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mackay.qld.gov.au/api/v1/myarea/search?keywords=184+Hay+Point+Road+Alligator+Creek&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"184 Hay Point Road Alligator Creek\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "261",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:38 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=53, origin; dur=870, ak_p; desc=\"1790185538022_386904797_165023103_92337_18111_4_9_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=7A2FE7DD219679947AA9422C610F5478~000000000000000000000000000000~YAAQ3bIPFxV7PLOgAQAAnoVfzwEkRhJymVRRvjVg2DnoRTq5Ce4KP+wsxW4v1ikqmkhVtjtSLRbbfeQBcp9A/VejWhA2Ex7XzHyDAUnQy3jCWLx7JJqECo/RWSruBeEjtORAUT9C1wkqXD6C6YlJuZm+ByJnxP4sXcQRoOf6guYlbf/Gw6qUItDHpayEAekbk667/5w75u1wGaE7YSmAVNfEdMzh5sfP/frZbXJC0+YWTF1iCLjnVmvUWVLFcBoKZWYXb+g/YAJxR9gEwLUa9SElHw4kj87FQymKI13Qe79jPcZf5FaOyUq0E0+1VDdpbKVFZDQyBZ3XvDZ46D+lKQhYS6wEcqW9lSBSrlK+HgDDbYmBKHA10bDUWo+q/GaFLmVnMPWF0EZZOUuxXFMcbsATX9Ht; Domain=.mackay.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:38 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI4YWVmMmVkNi1hZGViLTQyMjItYTFlYS01YjQ1OWEzNmNiNWQiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjE4NCBIYXkgUG9pbnQgUm9hZCBBTExJR0FUT1IgQ1JFRUsgIFFMRCAgNDc0MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiTWFja2F5IFJlZ2lvbiIsIkRpc3RhbmNlIjowLCJTY29yZSI6MzQuMDExMjMsIkxhdExvbiI6Wy0yMS4zMjQzMDEyOCwxNDkuMjEwMjg3OF19XSwiT2Zmc2V0IjowLCJMaW1pdCI6MSwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices 1b48a34420",
+      "method": "GET",
+      "url": "https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=8aef2ed6-adeb-4222-a1ea-5b459a36cb5d&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"8aef2ed6-adeb-4222-a1ea-5b459a36cb5d\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "340",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:40 GMT",
+        "set-cookie": "ASP.NET_SessionId=vun00uf0ke0xggkqygyq31x1; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1021, ak_p; desc=\"1790185538982_386904797_165023766_102123_21396_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUdWUgMjkvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSByZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJlY3ljbGluZ1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VDb2xsZWN0ZWQgZm9ydG5pZ2h0bHkuIFx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVHVlIDI5LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

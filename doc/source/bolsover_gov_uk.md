@@ -1,8 +1,29 @@
 # Bolsover District Council
 
-Support for schedules provided by [Bolsover District Council](https://www.bolsover.gov.uk), UK.
+Support for schedules provided by [Bolsover District Council](https://www.bolsover.gov.uk).
+
+Source for Bolsover District Council, UK.
 
 ## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bolsover_gov_uk
+      args:
+        calendar: CALENDAR
+        collection_day: COLLECTION_DAY
+```
+
+### Configuration Variables
+
+**calendar**  
+*(string) (required)*
+
+**collection_day**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -13,21 +34,6 @@ waste_collection_schedule:
         collection_day: wednesday
 ```
 
-### Configuration Variables
+## How to get the source arguments
 
-**calendar** *(string) (required)*: Your bin calendar letter. Available values: `a`, `b`.
-
-**collection_day** *(string) (required)*: Your collection day. Available values: `tuesday`, `wednesday`, `thursday`, `friday`.
-
-Find your calendar and collection day at [https://www.bolsover.gov.uk/services/b/bins-and-recycling/](https://www.bolsover.gov.uk/services/b/bins-and-recycling/).
-
-## Example
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: bolsover_gov_uk
-      args:
-        calendar: "b"
-        collection_day: "thursday"
-```
+Check your bin calendar letter (A or B) and collection day (Tuesday to Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/.

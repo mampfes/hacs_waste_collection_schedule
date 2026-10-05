@@ -1,132 +1,102 @@
 from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Ville de Saguenay"
-DESCRIPTION = "Source for ville.saguenay.ca waste collection calendar"
-URL = "https://ville.saguenay.ca"
-TEST_CASES = {
-    "Test 8773": {"batiment": 8773},
+_CALENDAR_URL = "https://ville.saguenay.ca/collecte_calendrier"
+
+# The calendar marks a day with ``collecte-type-N``; one day may carry several.
+_TYPES = {
+    "collecte-type-1": "Ordures",
+    "collecte-type-2": "Recyclage",
+    "collecte-type-3": "Compostage",
 }
 
-ICON_MAP = {
-    "Ordures": Icons.GENERAL_WASTE,
-    "Recyclage": Icons.RECYCLING,
-    "Compostage": Icons.ORGANIC,
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "batiment": "Building ID",
-    },
-    "de": {
-        "batiment": "Gebäude-ID",
-    },
-    "it": {
-        "batiment": "ID edificio",
-    },
-    "fr": {
-        "batiment": "Numéro de bâtiment",
-    },
-}
+def _rows(response, source) -> list[tuple[date, str]]:
+    """One ``(date, label)`` row per marked day of the page's calendar.
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "batiment": "Building ID (cle_batiment) from the AJAX request payload",
-    },
-    "de": {
-        "batiment": "Gebäude-ID (cle_batiment) aus dem AJAX-Anfrage-Payload",
-    },
-    "it": {
-        "batiment": "ID edificio (cle_batiment) dal payload della richiesta AJAX",
-    },
-    "fr": {
-        "batiment": "Numéro de bâtiment (cle_batiment) dans la requête AJAX",
-    },
-}
+    The year is only in the page title ("Calendrier des matières résiduelles
+    2026"); each month is an ``<article class="month-N">`` of day articles.
+    """
+    soup = BeautifulSoup(response.text, "html.parser")
+    title = soup.find("h1")
+    if title is None:
+        raise ValueError("Could not find page title to extract year")
+    year = int(title.text.strip().split()[-1])
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "1. Go to https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes "
-        "2. Open your browser's developer tools (F12) and go to the Network tab "
-        "3. Enter your address in the search field "
-        "4. Look for a request named 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) "
-        "5. In the Payload tab, copy the value of 'cle_batiment' "
-        "6. Use this number as the batiment parameter"
-    ),
-    "fr": (
-        "1. Allez à https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes "
-        "2. Ouvrez les outils de développement de votre navigateur (F12) et allez à l'onglet Réseau "
-        "3. Entrez votre adresse dans le champ de recherche "
-        "4. Cherchez une requête nommée 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) "
-        "5. Dans l'onglet Payload, copiez la valeur de 'cle_batiment' "
-        "6. Utilisez ce numéro comme paramètre batiment"
-    ),
-}
-
-URL_TEMPLATE = "https://ville.saguenay.ca/collecte_calendrier?batiment={batiment}&annee_suivante={next_year}"
+    rows = []
+    for month in range(1, 13):
+        month_article = soup.find("article", class_=f"month-{month}")
+        if month_article is None:
+            continue
+        for day_article in month_article.find_all("article"):
+            classes = day_article.get("class", [])
+            span = day_article.find("span")
+            if span is None or not span.text.strip():
+                continue
+            for css_class, label in _TYPES.items():
+                if css_class in classes:
+                    rows.append((date(year, month, int(span.text.strip())), label))
+    return rows
 
 
-class Source:
-    def __init__(self, batiment: int):
-        self._batiment = batiment
+@final
+class Source(BaseSource):
+    TITLE = "Ville de Saguenay"
+    DESCRIPTION = "Source for ville.saguenay.ca waste collection calendar"
+    URL = "https://ville.saguenay.ca"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        entries = []
-        for next_year in (0, 1):
-            url = URL_TEMPLATE.format(batiment=self._batiment, next_year=next_year)
-            r = requests.get(url)
-            r.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
 
-            soup = BeautifulSoup(r.text, "html.parser")
+    TEST_CASES: ClassVar[dict] = {
+        "Test 8773": {"batiment": 8773},
+    }
 
-            # Extract year from title: "Calendrier des matières résiduelles 2026"
-            title = soup.find("h1")
-            if title is None:
-                raise ValueError("Could not find page title to extract year")
-            year = int(title.text.strip().split()[-1])
+    PARAMS = (location_id("batiment"),)
 
-            # Iterate through each month (month-1 to month-12)
-            for month_num in range(1, 13):
-                month_article = soup.find("article", class_=f"month-{month_num}")
-                if month_article is None:
-                    continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "1. Go to https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes "
+            "2. Open your browser's developer tools (F12) and go to the Network tab "
+            "3. Enter your address in the search field "
+            "4. Look for a request named 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) "
+            "5. In the Payload tab, copy the value of 'cle_batiment' "
+            "6. Use this number as the batiment parameter"
+        ),
+        "fr": (
+            "1. Allez à https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes "
+            "2. Ouvrez les outils de développement de votre navigateur (F12) et allez à l'onglet Réseau "
+            "3. Entrez votre adresse dans le champ de recherche "
+            "4. Cherchez une requête nommée 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) "
+            "5. Dans l'onglet Payload, copiez la valeur de 'cle_batiment' "
+            "6. Utilisez ce numéro comme paramètre batiment"
+        ),
+    }
 
-                for article in month_article.find_all("article"):
-                    classes = article.get("class", [])
-                    if not any(c.startswith("collecte-type-") for c in classes):
-                        continue
-
-                    span = article.find("span")
-                    if span is None:
-                        continue
-                    day_text = span.text.strip()
-                    if not day_text:
-                        continue
-                    day = int(day_text)
-
-                    types = []
-                    if "collecte-type-1" in classes:
-                        types.append("Ordures")
-                    if "collecte-type-2" in classes:
-                        types.append("Recyclage")
-                    if "collecte-type-3" in classes:
-                        types.append("Compostage")
-
-                    collection_date = date(year, month_num, day)
-                    for waste_type in types:
-                        entries.append(
-                            Collection(
-                                date=collection_date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-        if not entries:
-            raise SourceArgumentNotFound("batiment", self._batiment)
-
-        return entries
+    # Current year, then next year's calendar.
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, context: (0, 1),
+        fetch=retrievers.Request(
+            _CALENDAR_URL,
+            params=lambda next_year, context, batiment, **_: {
+                "batiment": batiment,
+                "annee_suivante": next_year,
+            },
+        ),
+    )
+    parse = parsers.EachResponse(_rows)
+    transform = ICSTransformer(
+        type_value_map={
+            "Ordures": wt.GENERAL_WASTE,
+            "Recyclage": wt.RECYCLABLES,
+            "Compostage": wt.ORGANIC,
+        }
+    )

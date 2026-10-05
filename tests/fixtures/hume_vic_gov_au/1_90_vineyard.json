@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.hume.vic.gov.au/api/v1/myarea/search 1426c38806",
+      "method": "GET",
+      "url": "https://www.hume.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.hume.vic.gov.au/api/v1/myarea/search?keywords=1%2F90+Vineyard+Road+Sunbury+3429",
+      "body": "{\"params\":[[\"keywords\",\"1/90 Vineyard Road Sunbury 3429\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "225",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:14 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=22, origin; dur=297, ak_p; desc=\"1790185514518_1752388124_1578439074_31920_33390_4_12_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=F369BCA55826E9BDB6808B02ED489ABF~000000000000000000000000000000~YAAQHFJzaPSd7oOgAQAAhCdfzwGZCulfQoZwboRcgJ3nwpSj1HcKM4Bb30hWQfSwwZZcfkaZtmp5q51ERu3uMwrObsAGU73iSw6KOZ4UwP3/Hce2pfSMTkxZI0GAiPMLWG1TZCV97S2laknZ5CdInVuKI52lA/DfxNqmpvLBeczvIvtqGVvdfbBmccnYOljy7msNEU57yoponj+IZcusvfr6zF14XIvI6TpjPbJsBOgmZmKrQOYeaowYwBt7yknz7K+qxRXcClqxXxXpXvKk8BXHgEBXs3rPy2bdLXTuUll78TQz1IkrSY66JGSl/awV8tvo62rIIy3jleUxM7XV1rk7lknRIx0GVAJhCf3NYkCwJzMsIoQYXLgvkLSVLLFM0o6qa0lR92uTdGVnlYdTVSUTVQ==; Domain=.hume.vic.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:14 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJmNDkwNDc1Yy0yZTcyLTQ0MGQtYTJjMS05ZGM2YTRjMjYyMWIiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEvNjUgVklORVlBUkQgUkQsIFNVTkJVUlkgMzQyOSIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiSmFja3NvbnMgSGlsbCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MTkuNTQ1MDYsIkxhdExvbiI6bnVsbH1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.hume.vic.gov.au/ocapi/Public/myarea/wasteservices a2fd6b5b3a",
+      "method": "GET",
+      "url": "https://www.hume.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.hume.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=f490475c-2e72-440d-a2c1-9dc6a4c2621b&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"f490475c-2e72-440d-a2c1-9dc6a4c2621b\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "567",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:15 GMT",
+        "set-cookie": "ASP.NET_SessionId=vzvzycwwfyj3n1qvfxcgzshs; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=383, ak_p; desc=\"1790185514892_1752388124_1578439454_38219_37568_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdhcmJhZ2VcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlR2FyYmFnZSBiaW5zIGFyZSBjb2xsZWN0ZWQgb24gdGhlIHNhbWUgZGF5IGVhY2ggd2Vlay5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cIi9SZXNpZGVudHMvSGVhbHRoLVdhc3RlLWFuZC10aGUtRW52aXJvbm1lbnQvV2FzdGUvV2hhdC1ydWJiaXNoLWdvZXMtaW4tbXktYmluI2FuY2hvcl8xNjkzMjcyNjExMjE3XCIgdGFyZ2V0PVwiXCJcdTAwM2VXaGF0IGdvZXMgaW4gbXkgZ2FyYmFnZSBiaW4/XHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgV2VkIDMwLzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlUmVjeWNsaW5nIGJpbnMgYXJlIGNvbGxlY3RlZCBvbiB0aGUgc2FtZSBkYXkgZWFjaCBmb3J0bmlnaHQuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvUmVzaWRlbnRzL0hlYWx0aC1XYXN0ZS1hbmQtdGhlLUVudmlyb25tZW50L1dhc3RlL1doYXQtcnViYmlzaC1nb2VzLWluLW15LWJpbiNhbmNob3JfMTY5MzI3MjY0ODMxOFwiIHRhcmdldD1cIlwiXHUwMDNlV2hhdCBnb2VzIGluIG15IHJlY3ljbGluZyBiaW4/XHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgV2VkIDMwLzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUZvb2QgYW5kIGdhcmRlblx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VGb29kIGFuZCBnYXJkZW4gYmlucyBhcmUgY29sbGVjdGVkIGZvcnRuaWdodGx5IG9uIHRoZSBhbHRlcm5hdGUgd2VlayB0byB5b3VyIHJlY3ljbGluZyBiaW4uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvUmVzaWRlbnRzL0hlYWx0aC1XYXN0ZS1hbmQtdGhlLUVudmlyb25tZW50L1dhc3RlL1doYXQtcnViYmlzaC1nb2VzLWluLW15LWJpbiNhbmNob3JfMTY5MzI3NDE2NDkwM1wiIHRhcmdldD1cIlwiXHUwMDNlV2hhdCBnb2VzIGluIG15IGZvb2QgYW5kIGdhcmRlbiBiaW4/XHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgV2VkIDcvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

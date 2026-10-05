@@ -1,13 +1,14 @@
 # Tandridge District Council
 
-Support for schedules provided by [Tandridge District
-Council](https://www.tandridge.gov.uk), serving the Tandridge District, Surrey, UK.
+Support for schedules provided by [Tandridge District Council](https://www.tandridge.gov.uk).
+
+Source for Tandridge District Council, UK, waste collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tandridge_gov_uk
       args:
         postcode: POSTCODE
@@ -26,15 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tandridge_gov_uk
       args:
-        postcode: "RH8 0PG"
-        house_number: "14A"
+        postcode: RH8 0PG
+        house_number: 14A
 ```
 
 ## How to get the source arguments
 
-1. Go to <https://tdcws01.tandridge.gov.uk/TDCWebAppsPublic/tfaBranded/408>, enter your postcode, and select your address from the dropdown.
-2. Your postcode is the first argument.
-3. Your house number/name is the second argument — use it exactly as it appears at the start of your address in the dropdown (e.g. `14A`).
+Enter your postcode and your house number/name exactly as it appears when you look up your address at https://tdcws01.tandridge.gov.uk/TDCWebAppsPublic/tfaBranded/408 (e.g. '14A').

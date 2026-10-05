@@ -299,3 +299,56 @@ def test_the_http_stacks_are_restored_after_an_expected_exception(tmp_path):
         with cassette.recording(path, "2026-01-01", expect_exception=_Rejected):
             raise _Rejected("no such address")
     assert requests.Session.request is original
+
+
+def test_abfallplus_replay_restores_recorded_client_ids_and_pins_app(tmp_path):
+    import uuid
+
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(__file__), "../custom_components/waste_collection_schedule"
+        ),
+    )
+    from waste_collection_schedule.service import AppAbfallplusDe
+
+    original = AppAbfallplusDe._new_client_id
+    original_uuid4 = uuid.uuid4
+    ids = [str(uuid.UUID(int=1)), str(uuid.UUID(int=2))]
+    url = "https://app.abfallplus.de/config.xml"
+    interactions = [
+        _interaction(
+            url=url,
+            body=cassette._body(
+                {"data": {"app_id": "de.abfallplus.ahe", "client": client_id}}
+            ),
+        )
+        for client_id in ids
+    ]
+    path = _cassette(tmp_path, *interactions)
+    with cassette.replaying(path):
+        # Only the service's seam is patched; uuid4 stays random for everyone.
+        assert uuid.uuid4 is original_uuid4
+        for expected in ids:
+            client_id = AppAbfallplusDe._new_client_id()
+            assert client_id == expected
+            assert (
+                requests.post(
+                    url, data={"app_id": "de.abfallplus.ahe", "client": client_id}
+                ).text
+                == "ok"
+            )
+    assert AppAbfallplusDe._new_client_id is original
+
+    with cassette.replaying(path):
+        with pytest.raises(
+            AssertionError, match="recorded request body does not match"
+        ):
+            requests.post(
+                url,
+                data={
+                    "app_id": "wrong.app",
+                    "client": AppAbfallplusDe._new_client_id(),
+                },
+            )
+    assert AppAbfallplusDe._new_client_id is original

@@ -113,6 +113,13 @@ SERVICE_PROVIDERS = {
         "requires_token": False,
         "app_version": "2.1.3",
     },
+    "sigtuna": {
+        "title": "Sigtuna (Sivab)",
+        "url": "https://www.sivab.se/",
+        "api_url": "https://sigtuna.avfallsappen.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
     "teknikivast": {
         "title": "Teknik i Väst (Arvika/Eda)",
         "url": "https://teknikivast.se",
@@ -129,6 +136,83 @@ SERVICE_PROVIDERS = {
         "requires_token": False,
         # Public client token shipped inside the Nodra app, not a user secret.
         "app_token": "U2lXIFK6e8mVI1kU8V0F9TDpWXhwx3QwsL2t36rZPc8PPtKXmhker6nze73chWyX",
+    },
+    "atvidaberg": {
+        "title": "Åtvidaberg",
+        "url": "https://www.atvidaberg.se/",
+        "api_url": "https://atvidaberg.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "boras": {
+        "title": "Borås",
+        "url": "https://www.boras.se/",
+        "api_url": "https://boras.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "finspang": {
+        "title": "Finspång",
+        "url": "https://www.finspang.se/",
+        "api_url": "https://finspang.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "habo": {
+        "title": "Håbo",
+        "url": "https://www.habo.se/",
+        "api_url": "https://habo.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "kil": {
+        "title": "Kil",
+        "url": "https://www.kil.se/",
+        "api_url": "https://kil.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "kinda": {
+        "title": "Kinda",
+        "url": "https://www.kinda.se/",
+        "api_url": "https://kinda.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "knivsta": {
+        "title": "Knivsta",
+        "url": "https://www.knivsta.se/",
+        "api_url": "https://knivsta.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "kungsbacka": {
+        "title": "Kungsbacka",
+        "url": "https://www.kungsbacka.se/",
+        "api_url": "https://kungsbacka.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "vallentuna": {
+        "title": "Vallentuna",
+        "url": "https://www.vallentuna.se/",
+        "api_url": "https://vallentuna.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "dalavatten": {
+        "title": "Dala Vatten och Avfall",
+        "url": "https://www.dalavatten.se/",
+        "api_url": "https://dalavatten.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+    },
+    "vafab": {
+        "title": "Vafab Miljö",
+        "url": "https://www.vafabmiljo.se/",
+        "api_url": "https://vafab.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
     },
 }
 
@@ -399,6 +483,10 @@ class Source:
                     _LOGGER.debug(
                         "Skipping entry with unexpected date format: %s", pickup_date
                     )
+                    continue
+
+                # Some providers (e.g. Kil) use 1000-01-01 as "no pickup" placeholder
+                if pickup_date.year < 2000:
                     continue
 
                 icon = ICON_MAP.get(waste_type, Icons.GENERAL_WASTE)

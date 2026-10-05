@@ -1,117 +1,69 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.field_terms import POSTCODE
+from waste_collection_schedule.service.LocalGovWasteCollection import (
+    CollectionDaysParser,
+    uprn_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Wirral Council"
-DESCRIPTION = "Source for wirral.gov.uk services for Wirral Council, UK."
-URL = "https://wirral.gov.uk"
-TEST_CASES = {
-    "Elm Avenue, Upton": {
-        "postcode": "CH49 4NP",
-        "address_value": "000042037487",
-    },
-}
-ICON_MAP = {
-    "Green bin": Icons.GENERAL_WASTE,
-    "Grey bin": Icons.RECYCLING,
-    "Brown bin": Icons.BIO_KITCHEN,
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Go to https://www.wirral.gov.uk/bincal_dev/ and enter "
-        "your postcode. Right-click on your address in the dropdown "
-        "and select 'Inspect' to find the 12-digit option value. "
-        "Use that as the address_value parameter."
-    ),
-}
+@final
+class Source(BaseSource):
+    TITLE = "Wirral Council"
+    DESCRIPTION = "Source for wirral.gov.uk services for Wirral Council, UK."
+    URL = "https://wirral.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your postcode, e.g. CH49 4NP.",
-        "address_value": (
-            "The 12-digit address value from the dropdown "
-            "on the Wirral bin calendar page."
+    TEST_CASES: ClassVar[dict] = {
+        "Elm Avenue, Upton": {
+            "postcode": "CH49 4NP",
+            "address_value": "000042037487",
+        },
+        "Vernon Avenue, Seacombe (with food waste)": {
+            "postcode": "CH44 7ES",
+            "address_value": "42119794",
+        },
+    }
+
+    # The postcode is no longer needed; it stays optional so existing
+    # configurations keep working.
+    PARAMS = (
+        text_field("address_value", "Address value (UPRN)"),
+        text_field("postcode", term=POSTCODE, optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Go to https://www.wirral.gov.uk/bins-and-recycling/bin-collection-dates, "
+            "enter your postcode and select your address. The number at the end of "
+            "the resulting web address (.../view/42119794) is your address value."
         ),
     }
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "address_value": "Address Value",
-    }
-}
-
-BIN_URL = "https://www.wirral.gov.uk/bincal_dev/"
-DATE_REGEX = r"(\w+ \d{1,2} \w+ \d{4})"
-
-
-class Source:
-    def __init__(self, postcode: str, address_value: str):
-        self._postcode = postcode.strip()
-        self._address_value = address_value.strip()
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-
-        # Step 1: GET initial page
-        r = session.get(BIN_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Collect form data
-        data = self._extract_inputs(soup)
-        data["ctl00$MainContent$Postcode"] = self._postcode
-        data["ctl00$MainContent$LookupPostcode"] = "Look Up"
-
-        # Step 2: POST postcode
-        r = session.post(BIN_URL, data=data)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Step 3: Select address and find rounds
-        data = self._extract_inputs(soup)
-        data.pop("ctl00$MainContent$LookupPostcode", None)
-        data["ctl00$MainContent$addressDropDown"] = self._address_value
-        data["ctl00$MainContent$FindRounds"] = "Find collection rounds"
-
-        r = session.post(BIN_URL, data=data)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Parse bin rows
-        entries = []
-        for row in soup.select("div.binRow"):
-            h2 = row.find("h2")
-            strong = row.find("strong")
-            if not h2 or not strong:
-                continue
-
-            bin_type = h2.get_text(strip=True)
-            date_text = strong.get_text(strip=True).rstrip(".")
-            match = re.search(DATE_REGEX, date_text)
-            if not match:
-                continue
-
-            entries.append(
-                Collection(
-                    date=datetime.strptime(match.group(1), "%A %d %B %Y").date(),
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type),
-                )
-            )
-
-        return entries
-
-    @staticmethod
-    def _extract_inputs(soup: BeautifulSoup) -> dict:
-        data = {}
-        for inp in soup.find_all("input"):
-            name = inp.get("name")
-            if name:
-                data[name] = inp.get("value", "")
-        return data
+    retrieve = uprn_retriever(
+        "https://www.wirral.gov.uk/bins-and-recycling/bin-collection-dates",
+        "address_value",
+        # Older values were zero-padded to twelve digits; the site wants the
+        # plain UPRN.
+        normalise=lambda value: value.lstrip("0"),
+    )
+    parse = CollectionDaysParser()
+    transform = RowTransformer(
+        type_value_map={
+            "Green non-recyclable": wt.GENERAL_WASTE,
+            "Grey recycling": wt.RECYCLABLES,
+            "Grey food waste": wt.FOOD_WASTE,
+            "Brown garden waste": wt.GARDEN_WASTE,
+        },
+    )

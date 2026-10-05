@@ -1,185 +1,132 @@
 from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import field_terms, regions, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
 )
-
-TITLE = "ZVO Entsorgung - Zweckverband Ostholstein"
-DESCRIPTION = "Source for ZVO waste collection schedule in Ostholstein, Germany."
-URL = "https://www.zvo.com"
-COUNTRY = "de"
+from waste_collection_schedule.transformers import RowTransformer
 
 API_URL = "https://www.zvo.com/api/wastecollection"
 
-TEST_CASES = {
-    "Bad Schwartau, Lindenstraße": {
-        "city": "Bad Schwartau",
-        "street": "Lindenstraße",
-    },
-    "Curau (no street)": {
-        "city": "Curau",
-    },
-}
 
-EXTRA_INFO = [
-    {
-        "title": "ZVO Abfuhrkalender",
-        "url": "https://www.zvo.com/abfuhrkalender2026",
-        "country": "de",
-    },
-]
-
-ICON_MAP = {
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Papiertonne": Icons.PAPER,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your city and street at https://www.zvo.com/abfuhrkalender2026. "
-    "Some smaller towns do not require a street.",
-    "de": "Finden Sie Ihren Ort und Ihre Straße unter https://www.zvo.com/abfuhrkalender2026. "
-    "Einige kleinere Orte benötigen keine Straße.",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City",
-        "street": "Street",
-    },
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "City name (e.g. 'Bad Schwartau')",
-        "street": "Street name (optional for some cities)",
-    },
-    "de": {
-        "city": "Ortsname (z.B. 'Bad Schwartau')",
-        "street": "Straßenname (bei einigen Orten nicht erforderlich)",
-    },
-}
+def _city_id(response, *, city, **_):
+    cities = response.json()
+    for item in cities:
+        if item["name"].casefold() == city.casefold():
+            return item["id"]
+    suggestions = [
+        item["name"] for item in cities if city.casefold() in item["name"].casefold()
+    ]
+    if suggestions:
+        raise SourceArgumentNotFoundWithSuggestions("city", city, suggestions)
+    raise SourceArgumentNotFound("city", city)
 
 
-class Source:
-    def __init__(self, city: str, street: str = ""):
-        if not city:
-            raise SourceArgumentRequired("city", "A city name is required")
-        self._city = city.strip()
-        self._street = street.strip() if street else ""
+def _street_id(response, *_, street, **kwargs):
+    streets = response.json()
+    for item in streets:
+        if item["name"].casefold() == street.casefold():
+            return item["id"]
+    if streets:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", street, [item["name"] for item in streets]
+        )
+    raise SourceArgumentNotFound("street", street)
 
-    @staticmethod
-    def _get_cities() -> list[dict]:
-        r = requests.get(f"{API_URL}/cities", timeout=30)
-        r.raise_for_status()
-        return r.json()
 
-    @staticmethod
-    def _get_streets(city_id: int) -> list[dict]:
-        r = requests.post(f"{API_URL}/streets", json={"city": city_id}, timeout=30)
-        r.raise_for_status()
-        return r.json()
+def _latest(response, *_, city, **kwargs):
+    collections = response.json()
+    if not collections:
+        raise SourceArgumentNotFound("city", city)
+    return max(collections, key=lambda item: item["tstamp"])
 
-    @staticmethod
-    def _get_collections(city_id: int, street_id: int) -> list[dict]:
-        r = requests.post(
+
+def _events(response, city_id, street_id, collection, **_):
+    cutoff = date.today().replace(month=1, day=1)
+    rows = []
+    for item in response.json():
+        collection_date = datetime.strptime(
+            item["collect_date"]["date"], "%Y-%m-%d %H:%M:%S.%f"
+        ).date()
+        if collection_date < cutoff:
+            continue
+        labels = ["Gelbe Tonne", "Biotonne", "Restmülltonne"]
+        if item["color"] == collection["color"]:
+            labels.append("Papiertonne")
+        rows.extend((collection_date, label) for label in labels)
+    return rows
+
+
+@final
+class Source(BaseSource):
+    TITLE = "ZVO Entsorgung - Zweckverband Ostholstein"
+    DESCRIPTION = "Source for ZVO waste collection schedule in Ostholstein, Germany."
+    URL = "https://www.zvo.com"
+    COUNTRY = "de"
+    TEST_CASES: ClassVar[dict] = {
+        "Bad Schwartau, Lindenstraße": {
+            "city": "Bad Schwartau",
+            "street": "Lindenstraße",
+        },
+        "Curau (no street)": {"city": "Curau"},
+    }
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": "Find your city and street at https://www.zvo.com/abfuhrkalender2026. Some "
+        "smaller towns do not require a street.",
+        "de": "Finden Sie Ihren Ort und Ihre Straße unter "
+        "https://www.zvo.com/abfuhrkalender2026. Einige kleinere Orte benötigen keine "
+        "Straße.",
+    }
+    RAISE_ON_EMPTY = True
+
+    PARAMS = (
+        text_field("city", term=field_terms.MUNICIPALITY),
+        text_field("street", term=field_terms.STREET, optional=True),
+    )
+    REGIONS = regions.from_yaml("zvo_com", country="country")
+    ERROR_TEST_CASES: ClassVar[dict] = {"Unknown city": {"city": "__unknown_city__"}}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+    ]
+    retrieve = retrievers.Chain(
+        retrievers.Lookup(f"{API_URL}/cities", pick=_city_id),
+        retrievers.Lookup(
+            f"{API_URL}/streets",
+            method="POST",
+            json=lambda city_id, **_: {"city": city_id},
+            pick=_street_id,
+            given=lambda *_, street=None, **kwargs: 0 if not street else None,
+        ),
+        retrievers.Lookup(
             f"{API_URL}/wastecollection",
-            json={"street": street_id, "city": city_id},
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.json()
-
-    @staticmethod
-    def _get_dates(collection_id: int) -> list[dict]:
-        r = requests.post(
+            method="POST",
+            json=lambda city_id, street_id, **_: {"city": city_id, "street": street_id},
+            pick=_latest,
+        ),
+        retrievers.Lookup(
             f"{API_URL}/wastecollectiondates",
-            json={"collection": collection_id},
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.json()
-
-    def fetch(self) -> list[Collection]:
-        # Step 1: Resolve city
-        cities = self._get_cities()
-        city_match = None
-        for c in cities:
-            if c["name"].lower() == self._city.lower():
-                city_match = c
-                break
-        if city_match is None:
-            suggestions = [
-                c["name"] for c in cities if self._city.lower() in c["name"].lower()
-            ]
-            if suggestions:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "city", self._city, suggestions
-                )
-            raise SourceArgumentNotFound("city", self._city)
-
-        city_id = city_match["id"]
-
-        # Step 2: Resolve street (optional)
-        street_id = 0
-        if self._street:
-            streets = self._get_streets(city_id)
-            street_match = None
-            for s in streets:
-                if s["name"].lower() == self._street.lower():
-                    street_match = s
-                    break
-            if street_match is None:
-                suggestions = [s["name"] for s in streets]
-                if suggestions:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "street", self._street, suggestions
-                    )
-                raise SourceArgumentNotFound("street", self._street)
-            street_id = street_match["id"]
-
-        # Step 3: Get collection schedule
-        collections = self._get_collections(city_id, street_id)
-        if not collections:
-            raise SourceArgumentNotFound("city", self._city)
-
-        latest = max(collections, key=lambda x: x["tstamp"])
-        collection_color = latest["color"]
-
-        # Step 4: Get dates (API returns full history, filter to recent/future)
-        dates = self._get_dates(latest["id"])
-        cutoff = date.today().replace(month=1, day=1)
-
-        entries = []
-        for item in dates:
-            date_str = item["collect_date"]["date"]
-            dt = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S.%f").date()
-
-            if dt < cutoff:
-                continue
-
-            # Every collection date: Gelbe Tonne + Biotonne + Restmülltonne
-            entries.append(
-                Collection(date=dt, t="Gelbe Tonne", icon=ICON_MAP["Gelbe Tonne"])
-            )
-            entries.append(Collection(date=dt, t="Biotonne", icon=ICON_MAP["Biotonne"]))
-            entries.append(
-                Collection(date=dt, t="Restmülltonne", icon=ICON_MAP["Restmülltonne"])
-            )
-
-            # Dates matching collection color also get Papiertonne
-            if item["color"] == collection_color:
-                entries.append(
-                    Collection(date=dt, t="Papiertonne", icon=ICON_MAP["Papiertonne"])
-                )
-
-        return entries
+            method="POST",
+            json=lambda city_id, street_id, collection, **_: {
+                "collection": collection["id"]
+            },
+            pick=_events,
+        ),
+    )
+    parse = staticmethod(lambda keys, source: keys[-1])
+    transform = RowTransformer(
+        type_value_map={
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Biotonne": wt.ORGANIC,
+            "Restmülltonne": wt.GENERAL_WASTE,
+            "Papiertonne": wt.PAPER,
+        },
+        carry_raw_label=True,
+    )

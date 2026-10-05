@@ -1,6 +1,8 @@
 # City of Gosnells
 
-Support for schedules provided by the [City of Gosnells](https://www.gosnells.wa.gov.au/City-Services/Waste-and-Recycling/Find-your-waste-collection-dates), Western Australia.
+Support for schedules provided by [City of Gosnells](https://www.gosnells.wa.gov.au/).
+
+Source for City of Gosnells, Western Australia.
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-Your street address as it appears on the City of Gosnells website, e.g. `15 Mackay Crescent GOSNELLS 6110`.
 
 ## Example
 
@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: gosnells_wa_gov_au
       args:
-        address: "15 Mackay Crescent GOSNELLS 6110"
+        address: 15 Mackay Crescent GOSNELLS 6110
 ```
 
 ## How to get the source arguments

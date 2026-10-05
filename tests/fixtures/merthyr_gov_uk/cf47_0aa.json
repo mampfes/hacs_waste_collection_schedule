@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-24",
+  "interactions": [
+    {
+      "key": "POST https://www.merthyr.gov.uk/umbraco/Surface/BinDaySurface/GetCollectionDay 704e15f0b8",
+      "method": "POST",
+      "url": "https://www.merthyr.gov.uk/umbraco/Surface/BinDaySurface/GetCollectionDay",
+      "final_url": "https://www.merthyr.gov.uk/umbraco/Surface/BinDaySurface/GetCollectionDay",
+      "body": "{\"body\":[[\"postcode\",\"CF47 0AA\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/html; charset=utf-8",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "date": "Wed, 23 Sep 2026 22:09:06 GMT",
+        "content-length": "634"
+      },
+      "content_b64": "DQogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9J2NvbGxlY3Rpb24tcmVzdWx0cyc+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCgkJCQkgICAgICAgIDxoND5Db2xsZWN0aW9uIGRheXMgZm9yIENGNDcgMEFBPC9oND4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxoNT5UaGlzIGlzIHdlZWsgPHN0cm9uZz50d288L3N0cm9uZz48L2g1Pg0KICAgICAgICAgICAgICAgICAgICAgICAgPGhyIC8+DQogICAgICAgICAgICAgICAgICAgICAgICA8cD5Zb3VyIHJlY3ljbGluZyBjb2xsZWN0aW9uIGRheSBpcyA8c3Ryb25nPkZyaWRheTwvc3Ryb25nPiBldmVyeSB3ZWVrLjwvcD4NCiAgICAgICAgICAgICAgICAgICAgICAgIDxwPllvdXIgaG91c2Vob2xkIHdhc3RlIGNvbGxlY3Rpb24gZGF5IGlzIDxzdHJvbmc+RnJpZGF5PC9zdHJvbmc+IGluIHdlZWsgPHN0cm9uZz5vbmU8L3N0cm9uZz4uPC9wPg0KICAgICAgICAgICAgICAgICAgICAgICAgPHA+WW91ciBnYXJkZW4gd2FzdGUgY29sbGVjdGlvbiBkYXkgaXMgPHN0cm9uZz5GcmlkYXk8L3N0cm9uZz4gaW4gd2VlayA8c3Ryb25nPnR3bzwvc3Ryb25nPi48L3A+DQoJCQkgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgICAgIA=="
+    }
+  ]
+}

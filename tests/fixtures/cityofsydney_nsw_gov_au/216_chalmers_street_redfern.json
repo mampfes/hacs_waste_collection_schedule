@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://cos-bin-collection-widget.netlify.app/api/search 36538aff72",
+      "method": "GET",
+      "url": "https://cos-bin-collection-widget.netlify.app/api/search",
+      "final_url": "https://cos-bin-collection-widget.netlify.app/api/search?address=216+Chalmers+Street%2C+Redfern",
+      "body": "{\"params\":[[\"address\",\"216 Chalmers Street, Redfern\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "1",
+        "cache-control": "no-cache",
+        "cache-status": "\"Netlify Durable\"; fwd=bypass, \"Netlify Edge\"; fwd=miss; fwd-status=200",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Thu, 01 Oct 2026 14:30:39 GMT",
+        "netlify-vary": "query",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-nf-request-id": "01M3VXZPKXZ24RFGG633Z04SFF"
+      },
+      "content_b64": "eyJtYXRjaGluZ1Byb3BlcnRpZXMiOlt7InByb3BlcnR5S2V5IjoxNzYwMzcsInNwYXRpYWxLZXkiOjE3NjAzNywiZnVsbEFkZHJlc3MiOiIyMTYgQ2hhbG1lcnMgU3RyZWV0LCBSZWRmZXJuIn1dfQ=="
+    },
+    {
+      "key": "GET https://cos-bin-collection-widget.netlify.app/api/property/176037/bins-collection ",
+      "method": "GET",
+      "url": "https://cos-bin-collection-widget.netlify.app/api/property/176037/bins-collection",
+      "final_url": "https://cos-bin-collection-widget.netlify.app/api/property/176037/bins-collection",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "1",
+        "cache-control": "no-cache",
+        "cache-status": "\"Netlify Durable\"; fwd=bypass, \"Netlify Edge\"; fwd=miss; fwd-status=200",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Thu, 01 Oct 2026 14:30:40 GMT",
+        "netlify-vary": "query",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-nf-request-id": "01M3VXZR32PYP6VPW516JJ659H"
+      },
+      "content_b64": "eyJiaW5zIjpbeyJyb3VuZENvZGUiOiJXQVMiLCJyb3VuZERlc2NyaXB0aW9uIjoiV2FzdGUiLCJjb2xsZWN0aW9uRnJlcXVlbmN5IjoiMSIsImNvbGxlY3Rpb25EYXlzIjoiV2VkbmVzZGF5IiwibmV4dFBpY2t1cERhdGUiOiJXZWRuZXNkYXkgMDcvMTAvMjAyNiIsInBpY2t1cERhdGVBZnRlck5leHQiOiJXZWRuZXNkYXkgMTQvMTAvMjAyNiJ9LHsicm91bmRDb2RlIjoiUkNZIiwicm91bmREZXNjcmlwdGlvbiI6IlJlY3ljbGluZyIsImNvbGxlY3Rpb25GcmVxdWVuY3kiOiIxIiwiY29sbGVjdGlvbkRheXMiOiJXZWRuZXNkYXkiLCJuZXh0UGlja3VwRGF0ZSI6IldlZG5lc2RheSAwNy8xMC8yMDI2IiwicGlja3VwRGF0ZUFmdGVyTmV4dCI6IldlZG5lc2RheSAxNC8xMC8yMDI2In0seyJyb3VuZENvZGUiOiJHUkUiLCJyb3VuZERlc2NyaXB0aW9uIjoiR3JlZW4gV2FzdGUiLCJjb2xsZWN0aW9uRnJlcXVlbmN5IjoiRm9ydG5pZ2h0IDIiLCJjb2xsZWN0aW9uRGF5cyI6IldlZG5lc2RheSIsIm5leHRQaWNrdXBEYXRlIjoiV2VkbmVzZGF5IDA3LzEwLzIwMjYiLCJwaWNrdXBEYXRlQWZ0ZXJOZXh0IjoiV2VkbmVzZGF5IDIxLzEwLzIwMjYifV19"
+    }
+  ]
+}

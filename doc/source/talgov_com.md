@@ -1,6 +1,8 @@
 # City of Tallahassee
 
-Support for schedules provided by [City of Tallahassee, FL](https://www.talgov.com/you/swslookup), covering weekly garbage/recycling collection and the biweekly Red/Blue Bulky Items/Yard Waste collection.
+Support for schedules provided by [City of Tallahassee](https://www.talgov.com/you/swslookup).
+
+Source for City of Tallahassee, FL waste, recycling and bulky item/yard waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Waste Management Pick Up Schedule lookup](https://www.talgov.com/you/swslookup) page, start typing your address in the "Enter an Address" field, and pick your address from the autocomplete list. Use the address exactly as it appears in that list (e.g. `400 S Monroe St`).
+Enter the street address as shown in the City of Tallahassee [solid waste lookup](https://www.talgov.com/you/swslookup), e.g. '400 S Monroe St'.

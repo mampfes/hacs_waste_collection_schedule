@@ -1,6 +1,8 @@
-# Müllabfuhr-Deutschland
+# Müllabfuhr Deutschland
 
-Support for schedules provided by [muellabfuhr-deutschland](https://portal.muellabfuhr-deutschland.de/).
+Support for schedules provided by [Müllabfuhr Deutschland](https://portal.muellabfuhr-deutschland.de/).
+
+Source for Müllabfuhr, Germany
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,10 @@ waste_collection_schedule:
   sources:
     - name: muellabfuhr_de
       args:
-        client: CLIENT_NAME
-        city: CITY_NAME
+        client: CLIENT
+        city: CITY
+        district: DISTRICT
+        street: STREET
 ```
 
 ### Configuration Variables
@@ -19,13 +23,13 @@ waste_collection_schedule:
 *(string) (required)*
 
 **city**  
-*(string) (optional)*
+*(string) (required)*
 
 **district**  
-*(string) (optional) not supported by all clients*
+*(string) (optional)*
 
 **street**  
-*(string) (optional) not supported by all clients*
+*(string) (optional)*
 
 ## Example
 
@@ -34,33 +38,10 @@ waste_collection_schedule:
   sources:
     - name: muellabfuhr_de
       args:
-        client: "Landkreis Hildburghausen"
-        city: "Gompertshausen"
-```
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: muellabfuhr_de
-      args:
-        client: Saalekreis
-        city: kabelsketal
-        district: Großkugel
-        street: Am markt
-```
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: muellabfuhr_de
-      args:
-        client: saalekreis
-        city: Kabelsketal
-        district: kleinkugel
+        client: Landkreis hildburghausen
+        city: Gompertshausen
 ```
 
 ## How to get the source arguments
 
-Go to [muellabfuhr-deutschland](https://portal.muellabfuhr-deutschland.de/)
-first copy the name of the client.
-second copy the name of the `city`/area (, `district` and `street` if provided)
+Enter the district or city (`client`) and the place, district and street as they appear in the waste calendar on https://portal.muellabfuhr-deutschland.de/. District and street are only needed if the place is subdivided further.

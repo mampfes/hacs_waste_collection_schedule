@@ -206,7 +206,7 @@ PARAM_DESCRIPTIONS = {
         "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti "
         "domestici (Kehricht) secondo il piano zonale comunale — "
         "'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per "
-        "tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su "
+        "tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su "  # codespell:ignore tre
         "kreuzlingen.ch (dalla pagina principale: 'Wir für Sie' → "
         "'Entsorgung') mostra quali strade appartengono a quale zona.",
     },
@@ -220,7 +220,7 @@ PARAM_DESCRIPTIONS = {
         "zone. Les noms de zones figurent à gauche de la grille des dates "
         "dans le plan de votre commune sur kvatg.ch (depuis la page "
         "d'accueil : 'Für Private' → 'Entsorgungspläne') — une valeur "
-        "invalide affiche la liste des noms valides.",
+        "invalide affiche la liste des noms valides.",  # codespell:ignore invalide
         "kehricht_zone": "Uniquement pour Kreuzlingen : zone de collecte des "
         "ordures ménagères (Kehricht) selon le plan de zones de la ville — "
         "'Süd & Tägerwilen', 'Nord und Ost' ou 'Zentrum'. Laisser vide pour "

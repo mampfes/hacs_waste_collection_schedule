@@ -1,203 +1,132 @@
-from datetime import date, timedelta
-from urllib.parse import quote
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Westminster City Council"
-DESCRIPTION = "Source for Westminster City Council (London, UK) bin collections."
-URL = "https://www.westminster.gov.uk"
-COUNTRY = "uk"
+# The recurring weekly schedule has no end date; project 53 weeks (a year) ahead.
+_WEEKS = 53
 
-API_URL = (
-    "https://transact.westminster.gov.uk/env/streetreport.aspx?Street=NA&USRN={usrn}"
-)
-
-TEST_CASES = {
-    "Shirland Mews (short street)": {"usrn": "8400172"},
-    "Shirland Road (long street)": {"usrn": 8400243},
-}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
-}
-
-SOURCE_CODEOWNERS = ["@parmymansam"]
-
-# The recurring weekly schedule has no end date; project this far ahead.
-_HORIZON_DAYS = 365
-
-# Waste type for the rubbish panel (that table has no per-row type column).
-RUBBISH_TYPE = "Residential rubbish and commercial waste"
-
-ICON_MAP = {
-    "Residential rubbish and commercial waste": Icons.GENERAL_WASTE,
-    "Food Recycling Collection": Icons.BIO_KITCHEN,
-    "Recycling Collection": Icons.RECYCLING,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "You need the USRN (Unique Street Reference Number) for your street. Find it "
-        "by searching your street on https://www.findmyaddress.co.uk or by inspecting "
-        "the USRN value in the URL of Westminster's own street-report search at "
-        "https://transact.westminster.gov.uk/env/streetreport.aspx"
-    ),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "usrn": "USRN",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "usrn": "Unique Street Reference Number (USRN) for your street.",
-    },
-}
-
-_WEEKDAYS = {
-    "mon": 0,
-    "tue": 1,
-    "wed": 2,
-    "thu": 3,
-    "fri": 4,
-    "sat": 5,
-    "sun": 6,
-}
+# The rubbish panel's table has no per-row type column.
+_RUBBISH_TYPE = "Residential rubbish and commercial waste"
 
 
-def _parse_days(text: str) -> set[int]:
-    """Expand a day cell (e.g. 'Tue, Fri', 'Mon-Fri') into weekday() indices."""
-    text = text.replace("\xa0", " ")
+def _weekday(abbreviation: str) -> int | None:
+    """Weekday index of an English three-letter abbreviation ("Tue"), or None."""
+    found = {
+        index
+        for name, index in recurrence.WEEKDAYS.items()
+        if name.startswith(abbreviation[:3].lower())
+    }
+    return found.pop() if len(found) == 1 else None
+
+
+def _days(text: str) -> set[int]:
+    """Expand a day cell ("Tue, Fri", "Mon - Fri") into weekday() indices."""
     result: set[int] = set()
-    for token in text.split(","):
+    for token in text.replace("\xa0", " ").split(","):
         token = token.strip().lower()
         if not token:
             continue
         if "-" in token:
-            start, _, end = token.partition("-")
-            s = _WEEKDAYS.get(start.strip()[:3])
-            e = _WEEKDAYS.get(end.strip()[:3])
-            if s is None or e is None:
+            first, _, last = token.partition("-")
+            start = _weekday(first.strip())
+            end = _weekday(last.strip())
+            if start is None or end is None:
                 continue
-            if s <= e:
-                result.update(range(s, e + 1))
+            if start <= end:
+                result.update(range(start, end + 1))
             else:  # wrap-around range, e.g. Sat-Mon
-                result.update(range(s, 7))
-                result.update(range(e + 1))
-        else:
-            v = _WEEKDAYS.get(token[:3])
-            if v is not None:
-                result.add(v)
+                result.update(range(start, 7))
+                result.update(range(end + 1))
+        elif (day := _weekday(token)) is not None:
+            result.add(day)
     return result
 
 
-def _get_icon(waste_type: str) -> Icons | None:
-    """Return the mapped Icons member for a waste type, or None if unmapped."""
-    return ICON_MAP.get(waste_type)
+def _describe(table, source):
+    """One weekly series per (service, weekday) of a rubbish or recycling table."""
+    rows = table.find_all("tr")
+    if not rows:
+        return
+    columns = {
+        cell.get_text(strip=True).lower(): i
+        for i, cell in enumerate(rows[0].find_all(["th", "td"]))
+    }
+    is_rubbish = table.find_parent("div", id="pnlrubbishcollection") is not None
+    service = columns.get("service description")
+    series: set[tuple[str, int]] = set()
+    for row in rows[1:]:
+        cells = row.find_all(["td", "th"])
+        # A row whose cell count differs from the header cannot be aligned
+        # positionally with the columns: skip it rather than read a wrong one.
+        if len(cells) != len(columns):
+            continue
+        if is_rubbish:
+            label = _RUBBISH_TYPE
+        elif service is not None:
+            label = cells[service].get_text(strip=True)
+        else:
+            continue
+        if not label:
+            continue
+        days: set[int] = set()
+        for name in ("week days", "weekend days"):
+            if (index := columns.get(name)) is not None:
+                days |= _days(cells[index].get_text())
+        series.update((label, day) for day in days)
+    for label, day in sorted(series):
+        yield Schedule(label, recurrence.next_weekday(day), recurrence.WEEKLY, _WEEKS)
 
 
-def _column_index(table) -> dict[str, int]:
-    """Map lowercased header-cell text -> column index for a table's first row."""
-    header = table.find("tr")
-    cols: dict[str, int] = {}
-    if header is None:
-        return cols
-    for i, cell in enumerate(header.find_all(["th", "td"])):
-        cols[cell.get_text(strip=True).lower()] = i
-    return cols
+@final
+class Source(BaseSource):
+    TITLE = "Westminster City Council"
+    DESCRIPTION = "Source for Westminster City Council (London, UK) bin collections."
+    URL = "https://www.westminster.gov.uk"
+    COUNTRY = "uk"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@parmymansam"]
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "Shirland Mews (short street)": {"usrn": "8400172"},
+        "Shirland Road (long street)": {"usrn": 8400243},
+    }
 
-def _data_rows(table):
-    """All rows after the header row."""
-    return table.find_all("tr")[1:]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You need the USRN (Unique Street Reference Number) for your street. Find it "
+            "by searching your street on https://www.findmyaddress.co.uk or by inspecting "
+            "the USRN value in the URL of Westminster's own street-report search at "
+            "https://transact.westminster.gov.uk/env/streetreport.aspx"
+        ),
+    }
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-def _days_from_row(cells, cols) -> set[int]:
-    """Union of Week Days + Weekend Days cells for one row."""
-    days: set[int] = set()
-    for key in ("week days", "weekend days"):
-        idx = cols.get(key)
-        if idx is not None and idx < len(cells):
-            days |= _parse_days(cells[idx].get_text())
-    return days
+    PARAMS = (text_field("usrn", "USRN", coerce=str),)
 
-
-def _extract_pairs(soup) -> set[tuple[str, int]]:
-    """Parse the rubbish + recycling panels into deduped (waste_type, weekday) pairs."""
-    pairs: set[tuple[str, int]] = set()
-
-    rubbish = soup.find("div", id="pnlrubbishcollection")
-    if rubbish is not None:
-        table = rubbish.find("table")
-        if table is not None:
-            cols = _column_index(table)
-            for row in _data_rows(table):
-                cells = row.find_all(["td", "th"])
-                # A row with a different cell count than the header (e.g. a
-                # merged/omitted cell) can't be trusted to align positionally
-                # with `cols` — skip it rather than silently reading the
-                # wrong column.
-                if len(cells) != len(cols):
-                    continue
-                for weekday in _days_from_row(cells, cols):
-                    pairs.add((RUBBISH_TYPE, weekday))
-
-    recycling = soup.find("div", id="pnlrecyclingcollections")
-    if recycling is not None:
-        table = recycling.find("table")
-        if table is not None:
-            cols = _column_index(table)
-            sd = cols.get("service description")
-            for row in _data_rows(table):
-                cells = row.find_all(["td", "th"])
-                if len(cells) != len(cols):
-                    continue
-                if sd is None or sd >= len(cells):
-                    continue
-                waste_type = cells[sd].get_text(strip=True)
-                if not waste_type:
-                    continue
-                for weekday in _days_from_row(cells, cols):
-                    pairs.add((waste_type, weekday))
-
-    return pairs
-
-
-class Source:
-    def __init__(self, usrn):
-        self._usrn = str(usrn)
-
-    def fetch(self) -> list[Collection]:
-        response = requests.get(
-            API_URL.format(usrn=quote(self._usrn)), headers=HEADERS, timeout=30
-        )
-        response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, "html.parser")
-        pairs = _extract_pairs(soup)
-        if not pairs:
-            raise SourceArgumentNotFound(
-                "usrn",
-                f"No collections found for USRN '{self._usrn}'. Check the USRN is correct.",
-            )
-
-        today = date.today()
-        horizon_end = today + timedelta(days=_HORIZON_DAYS)
-
-        entries: list[Collection] = []
-        for waste_type, weekday in sorted(pairs):
-            offset = (weekday - today.weekday()) % 7
-            collection_date = today + timedelta(days=offset)
-            icon = _get_icon(waste_type)
-            while collection_date <= horizon_end:
-                entries.append(
-                    Collection(date=collection_date, t=waste_type, icon=icon)
-                )
-                collection_date += timedelta(days=7)
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://transact.westminster.gov.uk/env/streetreport.aspx",
+        params=lambda usrn, **_: {"Street": "NA", "USRN": usrn},
+    )
+    parse = parsers.HtmlParser(
+        "#pnlrubbishcollection table, #pnlrecyclingcollections table"
+    )
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(
+        type_value_map={
+            _RUBBISH_TYPE: wt.GENERAL_WASTE,
+            "Food Recycling Collection": wt.FOOD_WASTE,
+            "Recycling Collection": wt.RECYCLABLES,
+        },
+        carry_raw_label=True,
+    )

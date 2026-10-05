@@ -1,86 +1,57 @@
-import logging
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Newcastle Under Lyme Borough Council"
-DESCRIPTION = (
-    "Source for waste collection services for Newcastle Under Lyme Borough Council"
-)
-URL = "https://www.newcastle-staffs.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": 100031744129},
-    "Test_002": {"uprn": "100031726082"},
-    "Test_003": {"uprn": 100031736973},
-    "Test_004": {"uprn": "200004602766"},
-}
-ICON_MAP = {
-    "Household Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Food Waste": Icons.BIO_KITCHEN,
-    "Garden Waste": Icons.GARDEN,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+# One row per date ("Tuesday 29 September", no year) listing its bins as
+# lines of the second cell.
 
 
-_LOGGER = logging.getLogger(__name__)
+@final
+class Source(BaseSource):
+    TITLE = "Newcastle Under Lyme Borough Council"
+    DESCRIPTION = (
+        "Source for waste collection services for Newcastle Under Lyme Borough Council"
+    )
+    URL = "https://www.newcastle-staffs.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 100031744129},
+        "Test_002": {"uprn": "100031726082"},
+        "Test_003": {"uprn": 100031736973},
+        "Test_004": {"uprn": "200004602766"},
+    }
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+    PARAMS = (uprn(),)
 
-    def fetch(self):
-        today = datetime.now().date()
-        year = today.year
-
-        s = requests.Session()
-        r = s.get(
-            f"https://www.newcastle-staffs.gov.uk/homepage/97/check-your-bin-day?uprn={self._uprn}",
-            headers=HEADERS,
-        )
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        rows = []
-        for tr in soup.findAll("tr"):
-            cells = []
-            for cell in tr.findAll("td"):
-                cells.append(cell)
-            rows.append(cells)
-        rows.pop(0)  # get rid of empty table header
-
-        schedule = []  # [date, waste type]
-        for row in rows:
-            for cell in row:
-                if row.index(cell) == 0:
-                    # Source doesn't include the year, so assume all dates are for the current year
-                    dt = datetime.strptime(cell.text + str(year), "%A %d %B%Y").date()
-                    # If date in more than 4 weeks in the past, assume it's near the year end and increment to next year
-                    if (dt - today) < timedelta(days=-31):
-                        dt = dt.replace(year=dt.year + 1)
-                else:
-                    bins = (
-                        str(cell)
-                        .replace("\n", "")
-                        .replace("<td>", "")
-                        .replace("</td>", "")
-                        .split("<br/>")
-                    )
-                    for bin in bins[:-1]:
-                        schedule.append([dt, bin.strip()])
-
-        entries = []
-        for pickup in schedule:
-            entries.append(
-                Collection(
-                    date=pickup[0],
-                    t=pickup[1],
-                    icon=ICON_MAP.get(pickup[1]),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.newcastle-staffs.gov.uk/homepage/97/check-your-bin-day",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    parse = parsers.HtmlLabelledDates(
+        "tr",
+        label="td:nth-of-type(2)",
+        date="td:nth-of-type(1)",
+        label_separator="\n",
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Household Rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food Waste": wt.FOOD_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

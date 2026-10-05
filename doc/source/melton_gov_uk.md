@@ -1,18 +1,21 @@
 # Melton Borough Council
 
-Support for schedules provided by [Melton Borough Council](https://www.melton.gov.uk/waste-and-recycling/), serving Melton District, UK.
+Support for schedules provided by [Melton Borough Council](https://www.melton.gov.uk/).
+
+Source for waste collection services for Melton Borough Council, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: melton_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -20,13 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: melton_gov_uk
       args:
-        uprn: "100030544791"
+        uprn: '100030544791'
 ```
-
-## How to find your `UPRN`
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-`

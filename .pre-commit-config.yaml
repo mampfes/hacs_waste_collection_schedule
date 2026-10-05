@@ -12,7 +12,7 @@ repos:
       - id: ruff-format
         files: ^(custom_components|script|tests)/.+\.py$|^[^/]+\.py$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.2
+    rev: v2.4.3
     hooks:
       - id: codespell
         args:

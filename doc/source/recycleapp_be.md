@@ -1,6 +1,8 @@
 # Recycle!
 
-Support for schedules provided by [Recycle / recycleapp.be](https://www.recycleapp.be/).
+Support for schedules provided by [Recycle!](https://www.recycleapp.be).
+
+Source for RecycleApp.be
 
 ## Configuration via configuration.yaml
 
@@ -9,31 +11,25 @@ waste_collection_schedule:
   sources:
     - name: recycleapp_be
       args:
-        postcode: POST_CODE
         street: STREET
         house_number: HOUSE_NUMBER
+        postcode: POSTCODE
         add_events: ADD_EVENTS
 ```
 
-The source arguments are simply the values of the form elements on the homepage.
-
 ### Configuration Variables
 
-**postcode**  
-*(int)*
-Postal Code.
-
 **street**  
-*(string)*
-Street name.
+*(string) (required)*
 
 **house_number**  
-*(int)*
-House number
+*(string) (required)*
+
+**postcode**  
+*(string) (required)*
 
 **add_events**  
-*(boolean)*
-Add events (e.g. Repair Cafe) in addition to waste collections.
+*(string) (optional)*
 
 ## Example
 
@@ -42,7 +38,11 @@ waste_collection_schedule:
   sources:
     - name: recycleapp_be
       args:
-        postcode: 1140
-        street: Bazellaan
-        house_number: 1
+        postcode: 3001
+        street: Waversebaan
+        house_number: 276
 ```
+
+## How to get the source arguments
+
+Enter the postcode, street and house number as on https://www.recycleapp.be. Disable add_events to leave out events such as collection-point openings.

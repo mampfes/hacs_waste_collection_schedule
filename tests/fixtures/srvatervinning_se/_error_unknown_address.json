@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.srvatervinning.se/rest-api/core/sewagePickup/search 0da1336268",
+      "method": "GET",
+      "url": "https://www.srvatervinning.se/rest-api/core/sewagePickup/search",
+      "final_url": "https://www.srvatervinning.se/rest-api/core/sewagePickup/search?query=Nowhere+999&city=",
+      "body": "{\"params\":[[\"city\",\"\"],[\"query\",\"Nowhere 999\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "set-cookie": "JSESSIONID=204745E5C978D5E690F8E196BB88D43A; Path=/; Secure; HttpOnly; SameSite=None, SiteVisionLTM=!oAhE/JlcB3gBMvbPSLFiqGj8wo3l/nKYw8FeOAoSvxYZ7VcDXTEy0P1KVkgSuB2kkexp7me2M1o=; path=/; Httponly; Secure; SameSite=None",
+        "vary": "accept-encoding",
+        "content-encoding": "gzip",
+        "content-type": "application/json;charset=UTF-8",
+        "transfer-encoding": "chunked",
+        "date": "Sat, 26 Sep 2026 20:48:23 GMT"
+      },
+      "content_b64": "eyJtdWx0aXBsZUFkZHJlc3NlcyI6ZmFsc2UsImN1c3RvbWVyQWRkcmVzc2VzIjpbXSwicmVzdWx0cyI6W10sIml0ZW1zUGVyUGFnZSI6MTB9"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value 'Nowhere 999', no collections found, please check this value is correct."
+  }
+}

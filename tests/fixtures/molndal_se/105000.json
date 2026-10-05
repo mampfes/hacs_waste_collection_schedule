@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule c5c284bee5",
+      "method": "GET",
+      "url": "https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://future.molndal.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=%28105000%29",
+      "body": "{\"params\":[[\"address\",\"(105000)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "2291",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:52 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "nginx",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDEiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiRnlyZmFja3Nrw6RybCAxIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJUb3JzZGFnIGrDpG1uIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlRvcnNkYWcgasOkbW4gdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIzNzAgbCBLw6RybCBmw7ZyIEZ5cmZhY2tza8OkcmwgMSBtZWQgdMO2bW5pbmcgVmFyYW5uYW4gdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwIiwiU2l6ZSI6MzcwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkgyMCIsIldhc3RlVHlwZSI6IkZ5cmZhY2tza8OkcmwgMSIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJLMzcwRkYxIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IkhVU0giLCJEZXNpZ25hdGlvbiI6IkvDpHJsIDM3MCBsLCBGeXJmYWNrIEvDpHJsIDEiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjc2ODMsIkRlc2NyaXB0aW9uIjoiMSBzdCAzNzAgbCBrw6RybCBmw7ZyIGZ5cmZhY2tza8OkcmwgMSBtZWQgdMO2bW5pbmcgdG9yc2RhZyBqw6RtbiB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoOTQ2NTA4NDAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjEwNTAwMCJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTEwLTA4IiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlVHlwZSI6IkZ5cmZhY2tza8OkcmwgMiIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVG9yc2RhZyB1ZGRhIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlRvcnNkYWcgdWRkYSB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwIiwiU2l6ZSI6MzcwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjM3MCBsIEvDpHJsIGbDtnIgRnlyZmFja3Nrw6RybCAyIG1lZCB0w7ZtbmluZyBWYXJhbm5hbiB2ZWNrYSIsIkJpblR5cGUiOnsiQ29kZSI6IkszNzAiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlZhcmFubmFuIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDIwIiwiV2FzdGVUeXBlIjoiRnlyZmFja3Nrw6RybCAyIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IkszNzBGRjIiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiS8OkcmwgMzcwIGwsIEZ5cmZhY2sgS8OkcmwgMiIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6Njg1MDQsIkRlc2NyaXB0aW9uIjoiMSBzdCAzNzAgbCBrw6RybCBmw7ZyIGZ5cmZhY2tza8OkcmwgMiBtZWQgdMO2bW5pbmcgdG9yc2RhZyB1ZGRhIHZlY2thICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNDY3MzI0MDAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjEwNTAwMCJ9XX0="
+    }
+  ]
+}

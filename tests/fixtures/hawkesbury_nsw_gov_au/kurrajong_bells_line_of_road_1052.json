@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/ b3b7d4b57f",
+      "method": "GET",
+      "url": "https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/",
+      "final_url": "https://data.hawkesbury.nsw.gov.au/api/records/1.0/search/?sort=gisaddress&refine.gisaddress=1052+Bells+Line+Of+Road+KURRAJONG+HILLS+NSW+2758&rows=1&dataset=bin-collection-days&timezone=Australia%2FSydney&lang=en",
+      "body": "{\"params\":[[\"dataset\",\"bin-collection-days\"],[\"lang\",\"en\"],[\"refine.gisaddress\",\"1052 Bells Line Of Road KURRAJONG HILLS NSW 2758\"],[\"rows\",\"1\"],[\"sort\",\"gisaddress\"],[\"timezone\",\"Australia/Sydney\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Thu, 01 Oct 2026 09:53:49 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4987",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-10-02 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJuaGl0cyI6IDEsICJwYXJhbWV0ZXJzIjogeyJkYXRhc2V0IjogImJpbi1jb2xsZWN0aW9uLWRheXMiLCAibGFuZyI6ICJlbiIsICJyb3dzIjogMSwgInN0YXJ0IjogMCwgInNvcnQiOiBbImdpc2FkZHJlc3MiXSwgInJlZmluZSI6IHsiZ2lzYWRkcmVzcyI6ICIxMDUyIEJlbGxzIExpbmUgT2YgUm9hZCBLVVJSQUpPTkcgSElMTFMgTlNXIDI3NTgifSwgImZvcm1hdCI6ICJqc29uIiwgInRpbWV6b25lIjogIkF1c3RyYWxpYS9TeWRuZXkifSwgInJlY29yZHMiOiBbeyJkYXRhc2V0aWQiOiAiYmluLWNvbGxlY3Rpb24tZGF5cyIsICJyZWNvcmRpZCI6ICI4ZGZjMDA3ZWY4MTIzODRmZGVjNjYyNWNhZTM5NTM3OWFhNDIxZjhjIiwgImZpZWxkcyI6IHsib3JnYW5pY2Jpbl9zY2hlZHVsZV9mcmVxdWVuY3kiOiAiZm9ydG5pZ2h0bHkiLCAib3JnYW5pY2Jpbl93ZWVrMSI6ICIyMDIzLTExLTA2IDAwOjAwOjAwIiwgInJlY3ljbGViaW5fc2l6ZSI6ICIyNDBMIiwgInByb3BlcnR5X25vIjogIjIxODIyIiwgImdhcmJhZ2ViaW5fZGF5IjogIk1vbmRheSIsICJvcmdhbmljYmluX3dlZWsyIjogIjIwMjMtMTEtMjAgMDA6MDA6MDAiLCAicmVjeWNsZWJpbl9kYXkiOiAiTW9uZGF5IiwgInNlcnZpY2V3ZWVrIjogIkFyZWEgMiIsICJnYXJiYWdlYmluX3NpemUiOiAiMjQwTCIsICJyZWN5Y2xlYmluX3NjaGVkdWxlIjogIjE0IiwgImV4dHJhZmVzdGl2ZV9yZWN5Y2xlYmluIjogIjIwMjYtMTItMjgiLCAiZ2FyYmFnZWJpbl93ZWVrMiI6ICIyMDIzLTExLTEzIiwgIm9yZ2FuaWNiaW5fc2l6ZSI6ICJPcHRpb25hbCIsICJvcmdhbmljYmluX2RheSI6ICJNb25kYXkiLCAiZXh0cmFmZXN0aXZlX3JlY3ljbGViaW5fc2NoZWR1bGUiOiAwLjAsICJnYXJiYWdlYmluX3dlZWsxIjogIjIwMjMtMTEtMDYiLCAicmVjeWNsZWJpbl9zY2hlZHVsZV9mcmVxdWVuY3kiOiAiZm9ydG5pZ2h0bHkiLCAiZ2FyYmFnZWJpbl9zY2hlZHVsZV9mcmVxdWVuY3kiOiAid2Vla2x5IiwgIm9yZ2FuaWNiaW5fc2NoZWR1bGUiOiAiMTQiLCAiZ2lzYWRkcmVzcyI6ICIxMDUyIEJlbGxzIExpbmUgT2YgUm9hZCBLVVJSQUpPTkcgSElMTFMgTlNXIDI3NTgiLCAiZ2FyYmFnZWJpbl9zY2hlZHVsZSI6ICI3IiwgInJlY3ljbGViaW5fd2VlazIiOiAiMjAyMy0xMS0yNyIsICJzZXJ2aWNlZGF5IjogIk1vbmRheSIsICJyZWN5Y2xlYmluX3dlZWsxIjogIjIwMjMtMTEtMTMiLCAiZXh0cmFmZXN0aXZlX3JlY3ljbGViaW5fZGF5IjogIk1vbmRheSJ9LCAicmVjb3JkX3RpbWVzdGFtcCI6ICIyMDI2LTA4LTI3VDExOjQyOjU0LjE4MSsxMDowMCJ9XSwgImZhY2V0X2dyb3VwcyI6IFt7Im5hbWUiOiAiZ2lzYWRkcmVzcyIsICJmYWNldHMiOiBbeyJuYW1lIjogIjEwNTIgQmVsbHMgTGluZSBPZiBSb2FkIEtVUlJBSk9ORyBISUxMUyBOU1cgMjc1OCIsICJjb3VudCI6IDEsICJzdGF0ZSI6ICJyZWZpbmVkIiwgInBhdGgiOiAiMTA1MiBCZWxscyBMaW5lIE9mIFJvYWQgS1VSUkFKT05HIEhJTExTIE5TVyAyNzU4In1dfV19"
+    }
+  ]
+}

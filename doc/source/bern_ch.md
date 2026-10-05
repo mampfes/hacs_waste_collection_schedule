@@ -1,10 +1,12 @@
 # Entsorgung + Recycling Stadt Bern
 
-Support for schedules provided by [Entsorgung + Recycling Stadt Bern (ERB)](https://www.bern.ch/themen/umwelt-natur-und-energie/abfall-und-recycling), serving the city of Bern, Switzerland.
+Support for schedules provided by [Entsorgung + Recycling Stadt Bern](https://www.bern.ch/themen/umwelt-natur-und-energie/abfall-und-recycling).
 
-Collections are read from the city's public iCalendar feed and cover Hauskehricht (household waste), Grünabfuhr (organic waste, kitchen and garden combined) and Altpapiersammlung (paper).
+Source for waste collection in the city of Bern, Switzerland.
 
 ## Configuration via configuration.yaml
+
+### Using strasse and hnr
 
 ```yaml
 waste_collection_schedule:
@@ -13,29 +15,34 @@ waste_collection_schedule:
       args:
         strasse: STRASSE
         hnr: HNR
-        key: KEY  # optional
+```
+
+### Using key
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bern_ch
+      args:
+        key: KEY
 ```
 
 ### Configuration Variables
 
-**strasse**
-*(string) (required if `key` is not set)*
+**strasse**  
+*(string) (alternative)*
 
-Street name exactly as listed on the [ERB collection-dates page](https://bernentsorgung.glue.ch/erb/web/index), e.g. `Bundesplatz`. Spaces and umlauts are kept as shown; multi-word names are usually hyphenated (e.g. `Von-Werdt-Passage`).
+**hnr**  
+*(string) (alternative)*
 
-**hnr**
-*(string or integer) (required if `key` is not set)*
+**key**  
+*(string) (alternative)*
 
-House number, e.g. `1`. Numbers with a letter suffix are written without a space, e.g. `3a`. The suffix is matched case-insensitively, so `3a` and `3A` both work.
-
-**key**
-*(string) (optional)*
-
-The address key from your personal iCalendar link. If set, `strasse` and `hnr` are ignored and the key is used directly.
-
-This is an escape hatch: the source normally derives the key itself, but if ERB ever changes how the key is built, you can paste the key from your own link and keep working without waiting for a new release.
+Provide one of: `strasse` + `hnr` or `key`.
 
 ## Example
+
+### Using strasse and hnr
 
 ```yaml
 waste_collection_schedule:
@@ -46,7 +53,7 @@ waste_collection_schedule:
         hnr: 1
 ```
 
-Using the key directly instead:
+### Using key
 
 ```yaml
 waste_collection_schedule:
@@ -58,25 +65,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Open the [ERB collection-dates page](https://bernentsorgung.glue.ch/erb/web/index) and start typing your street into the search field. Pick your address from the suggestion list — that is the exact spelling to use for `strasse` and `hnr`.
-
-If the address search does not find your street, or you would rather pin the address permanently, use the `key` argument instead:
-
-1. Search for your address on the page above.
-2. Click **Import iKalender**.
-3. Copy the `key` parameter out of the resulting link:
-
-   ```text
-   https://bernentsorgung.glue.ch/erb/web/ical?key=DC46354136EE5531B312A864FA2C4604
-                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   ```
-
-4. Use that value as the `key` argument.
-
-## Notes
-
-The feed covers the current calendar year only, so the number of returned collections shrinks as the year goes on. ERB publishes the next year's dates in December.
-
-Public holidays are already excluded by the service and are therefore not reported as collection days.
-
-The number of collections differs by address: collection weekdays vary by district, and Altpapiersammlung is weekly in some streets and fortnightly in others.
+Enter street and house number as shown on https://bernentsorgung.glue.ch/erb/web/index, e.g. street 'Bundesplatz' and house number '1'. House numbers with a suffix are written as '3a'. Alternatively, paste the key from the iCalendar link (…/ical?key=…) directly into the 'key' field.

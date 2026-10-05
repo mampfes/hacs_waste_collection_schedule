@@ -1,43 +1,39 @@
 # Staffordshire Moorlands District Council
 
-Support for schedules provided by [Staffordshire Moorlands District Council](https://www.staffsmoorlands.gov.uk/article/6911/Find-your-bin-day), serving the Staffordshire Moorlands district, UK.
+Support for schedules provided by [Staffordshire Moorlands District Council](https://www.staffsmoorlands.gov.uk).
+
+Source for waste collection services for Staffordshire Moorlands District Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: staffsmoorlands_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Your property postcode, e.g. `ST8 7EA`.
-
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN).
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: staffsmoorlands_gov_uk
       args:
-        postcode: "ST8 7EA"
-        uprn: "10010602737"
+        postcode: ST8 7EA
+        uprn: '10010602737'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-Visit <https://www.staffsmoorlands.gov.uk/findyourbinday>, enter your postcode and look at the address dropdown — the value associated with your address is your UPRN.
-
-Alternatively, use <https://www.findmyaddress.co.uk/> and enter your address details.
+Your UPRN can be found by searching your postcode at https://www.staffsmoorlands.gov.uk/findyourbinday (which redirects to the council's Public Dashboard) and selecting your address. The value shown in the address dropdown is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/

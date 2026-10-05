@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.kiama.nsw.gov.au/ocapi/Public/myarea/wasteservices 7dd254fde5",
+      "method": "GET",
+      "url": "https://www.kiama.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.kiama.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=0d96e409-7a81-4ccb-a0d8-d8435e066182&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"0d96e409-7a81-4ccb-a0d8-d8435e066182\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "553",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:20 GMT",
+        "set-cookie": "ASP.NET_SessionId=dcf3xrsazdcjyx3kaj4pd122; path=/; secure; HttpOnly; SameSite=None, ak_bmsc=DC97487E585AE7A687B336E0254F1157~000000000000000000000000000000~YAAQBFJzaPyzhJWgAQAAHjxfzwFwr11HvMGnMjBmxRJbnzVOl0+qGB7aEP+MNZgrFiZqKgueqvaXYX5A3QV3ElL2ZYa+H102HmJIjBNky9A7n/ee6v/i0Bg9/ecaaOZabYg1pWfHjRd/7psHzZQvNQcsXHed4ECjcf3XxWSh6w2idkFkiBOPeJujhus1f3N/lDnpZCn2+tqjHu7D6PTlDIwClOvneIERyyudj1N2Zj2XCl9sr58LEIQ2rjl6Q79eBVtDWNQboN5Fy+3l/5KKc+ni5xfOT6mTJA7svvo2KOwxWXz/GoowYqa9gUmJDdljmFNZGs5l+sRUkUU0YvvjerqgiNELa3/YH0VrXXaBO4oVsIs43U0YR6gq4A2QhCGwES+9xVGnRwVmJEO76dHo/83i8g==; Domain=.kiama.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:19 GMT; Max-Age=7199; HttpOnly",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=902, ak_p; desc=\"1790185519218_1752388100_1161120611_90236_18656_4_18_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy00XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVVyYmFuIGdhcmJhZ2VcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5Llx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDUvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VVcmJhbiByZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5Llx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVVyYmFuIGZvb2QgXHUwMDI2IGdhcmRlbiBvcmdhbmljc1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VDb2xsZWN0ZWQgd2Vla2x5Llx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2Ugem9uZS1jb2xsZWN0aW9uIGRhdGUtYXBwcm94IGl0ZW0tM1wiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVpvbmUgMSBDb2xsZWN0aW9uIENhbGVuZGFyXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVlvdXIgd2FzdGUgc2VydmljZSBpcyBpbiBab25lIDEuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvZmlsZXMvc2hhcmVkYXNzZXRzL3B1YmxpYy92LzEvc2VydmljZXMvd2FzdGUvY29sbGVjdGlvbi1jYWxlbmRhcnMvMjAyNi0yNy9rbWNfYTRfd2FzdGVfY2FsZW5kYXJfMjYtMjdfem9uZV8wMS5wZGZcIiB0YXJnZXQ9XCJcIlx1MDAzZURvd25sb2FkIHlvdXIgWm9uZSAxIGNhbGVuZGFyIChQREYpXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgXHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

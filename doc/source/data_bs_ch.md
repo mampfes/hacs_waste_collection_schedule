@@ -1,6 +1,8 @@
 # Basel-Stadt
 
-Support for schedules provided by [data.bs.ch](https://data.bs.ch), Switzerland.
+Support for schedules provided by [Basel-Stadt](https://data.bs.ch).
+
+Source for waste collection schedule of Basel-Stadt, Switzerland.
 
 ## Configuration via configuration.yaml
 
@@ -9,14 +11,13 @@ waste_collection_schedule:
   sources:
     - name: data_bs_ch
       args:
-        zone: B
+        zone: ZONE
 ```
 
 ### Configuration Variables
 
-**zone** *(string) (required)*: Your waste collection zone. Available values: `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `GUF`.
-
-Find your zone on the [Basel-Stadt zone map](https://map.geo.bs.ch/?lang=de&baselayer_ref=Grundkarte%20farbig&map_x=2611169.25&map_y=1267226.5&map_zoom=5&tree_group_layers_Abfuhrzonen_Basel=AF_AbfuhrzoneGemeindeBasel&tree_groups=Abfuhrzonen_Basel).
+**zone**  
+*(string) (required)*
 
 ## Example
 
@@ -25,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: data_bs_ch
       args:
-        zone: "B"
+        zone: A
 ```
+
+## How to get the source arguments
+
+Your waste collection zone (A-H or GUF).

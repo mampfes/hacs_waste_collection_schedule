@@ -29,7 +29,7 @@ ICON_MAP = {
     "SHK": Icons.BIO_KITCHEN,
     "SHPA": Icons.PAPER,
     "SHPL": Icons.PLASTIC_PACKAGING,
-    "SHS": Icons.GLASS,
+    "SHS": Icons.GLASS,  # codespell:ignore shs
     "NO": Icons.HAZARDOUS,
     "SKOL": Icons.GENERAL_WASTE,
     "SKOS": Icons.GENERAL_WASTE,

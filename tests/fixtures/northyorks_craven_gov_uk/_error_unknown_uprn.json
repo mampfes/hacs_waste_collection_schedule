@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "POST https://www.northyorks.gov.uk/bin-calendar/Craven/results/1/ajax 7d97accbf0",
+      "method": "POST",
+      "url": "https://www.northyorks.gov.uk/bin-calendar/Craven/results/1/ajax",
+      "final_url": "https://www.northyorks.gov.uk/bin-calendar/Craven/results/1/ajax?_wrapper_format=drupal_ajax",
+      "body": "{\"params\":[[\"_wrapper_format\",\"drupal_ajax\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "x-drupal-ajax-token": "1",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "cache-control": "must-revalidate, no-cache, private",
+        "date": "Sat, 26 Sep 2026 14:43:37 GMT",
+        "content-language": "en",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 10 (https://www.drupal.org)",
+        "content-security-policy-report-only": "default-src 'self'; connect-src 'self' https://www.google-analytics.com; font-src 'self' https://use.fontawesome.com https://fonts.gstatic.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; img-src 'self' https://www.google-analytics.com https://cookie-cdn.cookiecontrol.com; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cc.cdn.civiccomputing.com https://cookie-cdn.cookiecontrol.com https://cdn.botframework.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://maps.googleapis.com https://platform.twitter.com https://unpkg.com maps.google.com; script-src-attr 'self'; script-src-elem 'self' https://www.googletagmanager.com https://cdn.botframework.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://maps.googleapis.com https://platform.twitter.com https://unpkg.com maps.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cc.cdn.civiccomputing.com https://cookie-cdn.cookiecontrol.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com https://use.fontawesome.com; style-src-attr 'self' 'unsafe-inline'; style-src-elem 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com https://use.fontawesome.com; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 3f309afe37d854da2eb973ba0e31d032.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P1",
+        "x-amz-cf-id": "VbIDoWosn4liWUjvtQtuLCeJvOpq6LRmiUYRp6EAiIj7O0jkzmh5Mw==",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "W3siY29tbWFuZCI6InNldHRpbmdzIiwic2V0dGluZ3MiOnsiYWpheFBhZ2VTdGF0ZSI6eyJ0aGVtZSI6Im5vcnRoeW9ya3NfYmFzZSIsImxpYnJhcmllcyI6ImVKeEx5c3lMVDA3TVNjMUxTU3pTVDBMaUFBQl9VZ25VIn0sImNzcCI6eyJub25jZSI6IjZSdEFEVDlib0U3SXM1QllUU1dBQ0EifSwicGx1cmFsRGVsaW1pdGVyIjoiXHUwMDAzIiwidXNlciI6eyJ1aWQiOjAsInBlcm1pc3Npb25zSGFzaCI6ImJhYzgzNmM2ODEwNTZjY2Y2ZDJhYzA4OGFiYTYwNGFiNjM4ZjRhZjEyNzYwMWQ5OTJjZmYzMGI2OTU4OTgxYzgifX0sIm1lcmdlIjp0cnVlfSx7ImNvbW1hbmQiOiJhZGRfY3NzIiwiZGF0YSI6W3sicmVsIjoic3R5bGVzaGVldCIsIm1lZGlhIjoiYWxsIiwiaHJlZiI6IlwvbW9kdWxlc1wvY3VzdG9tXC9iaW5fY2FsZW5kYXJcL2Nzc1wvYmluX2NhbGVuZGFyLmNzcz90bHc1bDMifSx7InJlbCI6InN0eWxlc2hlZXQiLCJtZWRpYSI6InByaW50IiwiaHJlZiI6IlwvbW9kdWxlc1wvY3VzdG9tXC9iaW5fY2FsZW5kYXJcL2Nzc1wvcHJpbnQuY3NzP3RsdzVsMyJ9XX0seyJjb21tYW5kIjoiaW5zZXJ0IiwibWV0aG9kIjoicmVwbGFjZVdpdGgiLCJzZWxlY3RvciI6IiNpbml0LXJlc3VsdHMtY29udGFpbmVyIiwiZGF0YSI6IlxuXG5cblxuXG4gICAgICBcdTAwM0NkaXYgY2xhc3M9XHUwMDIyY29udGFpbmVyLWZsdWlkIHJlbW92ZS1wYWRkaW5nXHUwMDIyXHUwMDNFXG4gICAgICBcdTAwM0Niclx1MDAzRVxuICAgICAgXHUwMDNDaDJcdTAwM0VXZSBjb3VsZG5cdTIwMTl0IGZpbmQgeW91ciB3YXN0ZSBjb2xsZWN0aW9uIGRhdGVzXHUwMDNDXC9oMlx1MDAzRVxuICAgICAgXHUwMDNDaHIgc3R5bGU9XHUwMDIyY29sb3I6ICNkYmRkZGZcdTAwMjJcdTAwM0VcbiAgICAgIFx1MDAzQ3BcdTAwM0VUaGVyZSB3YXMgYSBwcm9ibGVtIG1hdGNoaW5nIHlvdXIgYWRkcmVzcyB0byB0aGUgd2FzdGUgY29sbGVjdGlvbiBkYXRlcy5cdTAwM0NcL3BcdTAwM0VcbiAgICAgIFx1MDAzQ3BcdTAwM0VJZiB0aGUgcHJvcGVydHkgaXMgYSBidXNpbmVzcywgXHUwMDNDYSBocmVmPVx1MDAyMmh0dHBzOlwvXC93d3cubm9ydGh5b3Jrcy5nb3YudWtcL2JpbnMtcmVjeWNsaW5nLWFuZC13YXN0ZVwvY29tbWVyY2lhbC13YXN0ZS1hbmQtcmVjeWNsaW5nLXNlcnZpY2VzXHUwMDIyIGNsYXNzPVx1MDAyMmhpZ2hsaWdodFx1MDAyMlx1MDAzRXBsZWFzZSB2aXNpdCBvdXIgY29tbWVyY2lhbCB3YXN0ZSBpbmZvcm1hdGlvbiBwYWdlc1x1MDAzQ1wvYVx1MDAzRS5cdTAwM0NcL3BcdTAwM0VcbiAgICAgIFx1MDAzQ3BcdTAwM0VJZiB5b3VyIHByb3BlcnR5IGlzIGRvbWVzdGljIG9yIHJlc2lkZW50aWFsLCBcdTAwM0NhIGhyZWY9XHUwMDIyaHR0cHM6XC9cL3d3dy5ub3J0aHlvcmtzLmdvdi51a1wvY29udGFjdC11c1wvZW5xdWlyeVwvMTY2NDZcdTAwMjIgY2xhc3M9XHUwMDIyaGlnaGxpZ2h0XHUwMDIyXHUwMDNFeW91IHNob3VsZCBjb250YWN0IHVzIHRvIHJlcG9ydCBhIHByb2JsZW0gd2l0aCB5b3VyIGJpbiBjb2xsZWN0aW9uIGRhdGVzXHUwMDNDXC9hXHUwMDNFLlxuICAgICAgICBZb3VcdTAwMjdsbCBuZWVkIHRvIHRlbGwgdXMgdGhlIGV4YWN0IGFkZHJlc3Mgb2YgeW91ciBwcm9wZXJ0eS5cdTAwM0NcL3BcdTAwM0VcbiAgICAgIFx1MDAzQ2JyXHUwMDNFXG4gICAgICBcdTAwM0NwIHN0eWxlPVx1MDAyMmZvbnQtc2l6ZTogMjVweDsgaGVpZ2h0OiA1NnB4O1x1MDAyMlx1MDAzRVx1MDAzQ2EgaHJlZj1cdTAwMjJcL2Jpbi1jYWxlbmRhclwvbG9va3VwXHUwMDIyIGNsYXNzPVx1MDAyMmhpZ2hsaWdodFx1MDAyMlx1MDAzRUJhY2tcdTAwM0NcL2FcdTAwM0VcdTAwM0NcL3BcdTAwM0VcbiAgICBcdTAwM0NcL2Rpdlx1MDAzRVxuICAgIFx1MDAzQ1wvZGl2XHUwMDNFXG4iLCJzZXR0aW5ncyI6bnVsbH1d"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'uprn' with the value '1', look your property up at https://www.northyorks.gov.uk/bin-calendar/lookup; the UPRN is the number at the end of the results page's URL"
+  }
+}

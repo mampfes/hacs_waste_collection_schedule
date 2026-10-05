@@ -1,106 +1,82 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.service.AbfallnaviDe import (
+    AbfallnaviParser,
+    AbfallnaviRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Tonnenticker Pro"
-DESCRIPTION = "Source for Tonnenticker Pro (RegioIT) waste collection schedules."
-URL = "https://www.regioit.de"
-COUNTRY = "de"
-
-API_BASE = "https://krwaf-abfallapp.regioit.de/abfall-app-krwaf/rest"
-
-TEST_CASES = {
-    "Steinhagen - Waldbadstrasse": {
-        "city": "Steinhagen",
-        "street": "Waldbadstra\u00dfe (Bahnhofstr. bis Rote Erde)",
-    },
-    "Warendorf - Agnes-Miegel-Weg": {
-        "city": "Warendorf",
-        "street": "Agnes-Miegel-Weg",
-    },
-}
-
-ICON_MAP = {
-    "restabfall": Icons.GENERAL_WASTE,
-    "bioabfall": Icons.BIO_KITCHEN,
-    "papiertonne": Icons.PAPER,
-    "altpapier": Icons.PAPER,
-    "gelbe tonne": Icons.PLASTIC_PACKAGING,
-    "gelber sack": Icons.PLASTIC_PACKAGING,
-    "sperr": Icons.BULKY,
-    "schadstoff": Icons.HAZARDOUS,
-    "wertstoff": Icons.RECYCLING,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "Municipality name (e.g. 'Steinhagen', 'Warendorf')",
-        "street": "Street name — use exact spelling from the provider's calendar",
-    },
-    "de": {
-        "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
-        "street": "Straßenname — genaue Schreibweise des Anbieters verwenden",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"city": "City", "street": "Street"},
-    "de": {"city": "Ort", "street": "Straße"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your municipality, then use the exact street name shown in the Tonnenticker Pro app or the provider's website.",
-    "de": "Wählen Sie Ihren Ort und verwenden Sie den genauen Straßennamen aus der Tonnenticker Pro App oder der Website des Anbieters.",
-}
+# Tonnenticker Pro is the regio iT AbfallNavi app of the "krwaf" service (AWG
+# Kreis Warendorf and GEG Kreis Gütersloh), the same platform abfallnavi_de
+# covers. The service id is pinned here, so only city and street are asked for.
+_SERVICE = "krwaf"
 
 
-class Source:
-    def __init__(self, city: str, street: str):
-        self._city = city.strip()
-        self._street = street.strip()
+@final
+class Source(BaseSource):
+    TITLE = "Tonnenticker Pro"
+    DESCRIPTION = "Source for Tonnenticker Pro (RegioIT) waste collection schedules."
+    URL = "https://www.regioit.de"
+    COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.OTHER,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        orte = requests.get(f"{API_BASE}/orte", timeout=30).json()
-        ort = next(
-            (o for o in orte if o["name"].casefold() == self._city.casefold()), None
-        )
-        if ort is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, [o["name"] for o in orte]
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Steinhagen - Waldbadstrasse": {
+            "city": "Steinhagen",
+            "street": "Waldbadstraße (Bahnhofstr. bis Rote Erde)",
+        },
+        "Warendorf - Agnes-Miegel-Weg": {
+            "city": "Warendorf",
+            "street": "Agnes-Miegel-Weg",
+        },
+    }
 
-        strassen = requests.get(
-            f"{API_BASE}/orte/{ort['id']}/strassen", timeout=30
-        ).json()
-        strasse = next(
-            (s for s in strassen if s["name"].casefold() == self._street.casefold()),
-            None,
-        )
-        if strasse is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, [s["name"] for s in strassen]
-            )
+    # An unknown street is reported against the "street" field, with the
+    # city's streets as suggestions.
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"city": "Warendorf", "street": "Keine Straße"},
+    }
 
-        fraktionen = requests.get(
-            f"{API_BASE}/strassen/{strasse['id']}/fraktionen", timeout=30
-        ).json()
-        fraktion_map = {f["id"]: f["name"] for f in fraktionen}
+    PARAMS = (city(), street())
 
-        termine = requests.get(
-            f"{API_BASE}/strassen/{strasse['id']}/termine", timeout=30
-        ).json()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Select your municipality, then use the street name shown in the "
+            "Tonnenticker Pro app or on the provider's website."
+        ),
+        "de": (
+            "Wählen Sie Ihren Ort und verwenden Sie den Straßennamen aus der "
+            "Tonnenticker Pro App oder von der Website des Anbieters."
+        ),
+    }
 
-        entries = []
-        for termin in termine:
-            date = datetime.date.fromisoformat(termin["datum"])
-            fraktion_id = termin["bezirk"]["fraktionId"]
-            waste_type = fraktion_map.get(fraktion_id, f"Fraktion {fraktion_id}")
-            icon = next(
-                (v for k, v in ICON_MAP.items() if k in waste_type.lower()),
-                Icons.GENERAL_WASTE,
-            )
-            entries.append(Collection(date=date, t=waste_type, icon=icon))
-
-        return entries
+    retrieve = AbfallnaviRetriever(city="city", street="street", service_id=_SERVICE)
+    parse = AbfallnaviParser()
+    # Standard labels resolve via the shared vocabulary; these are AWG's own.
+    # The provider's label is kept as the description, so the several paper
+    # collectors and the residual-waste rhythms stay distinguishable.
+    transform = ICSTransformer(
+        type_value_map={
+            "Komposttonne": wt.ORGANIC,
+            "Restabfall 1,1 cbm": wt.GENERAL_WASTE,
+            "Restabfall 1,1 cbm 2-wöchentlich": wt.GENERAL_WASTE,
+            "Altpapier-Sammlung AWG": wt.PAPER,
+            "Altpapier-Sammlung Kolping Warendorf": wt.PAPER,
+            "Altpapier-Sammlung Kolping Freckenhorst": wt.PAPER,
+            # a mobile document-shredding appointment, not a bin
+            "Aktenvernichter": wt.OTHER,
+            # the recycling centre's opening days, not a collection
+            "Wertstoffhof": None,
+        },
+        carry_raw_label=True,
+    )

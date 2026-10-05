@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://api2.hcc.govt.nz/FightTheLandFill/get_Collection_Dates f0b0713263",
+      "method": "GET",
+      "url": "https://api2.hcc.govt.nz/FightTheLandFill/get_Collection_Dates",
+      "final_url": "https://api2.hcc.govt.nz/FightTheLandFill/get_Collection_Dates?address_string=1+Hamilton+Parade",
+      "body": "{\"params\":[[\"address_string\",\"1 Hamilton Parade\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 26 Sep 2026 20:48:14 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "request-context": "appId=cid-v1:66dab058-c93c-4b62-a774-364561f29ae4",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-azure-ref": "20260926T204814Z-166978f957djj26ghC1FRArnq80000000t3g0000000006v0",
+        "x-fd-int-roxy-purgeid": "0",
+        "x-cache-info": "L2_T2",
+        "x-cache": "TCP_REMOTE_HIT"
+      },
+      "content_b64": "W3siQWRkcmVzcyI6IjEgSGFtaWx0b24gUGFyYWRlIiwiUmVkQmluIjoiMjAyNi0xMC0wMVQwMDowMDowMCIsIlllbGxvd0JpbiI6IjIwMjYtMTAtMDhUMDA6MDA6MDAiLCJDb2xsZWN0aW9uV2VlayI6MSwiQ29sbGVjdGlvbkRheSI6NH1d"
+    }
+  ]
+}

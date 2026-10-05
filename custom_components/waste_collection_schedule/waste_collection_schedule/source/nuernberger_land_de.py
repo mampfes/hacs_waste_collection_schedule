@@ -2,7 +2,7 @@
 
 Demonstrates: the plain-vanilla ICS shape plus one extended ``IcsParser``
 option — a single static GET keyed by an opaque location id, with
-``split_at="/"`` because one VEVENT covers several bin types separated by
+``split_at`` because one VEVENT covers several bin types separated by
 "/". HttpGetRetriever + the extended IcsParser + ICSTransformer do all the
 work; this module only supplies the URL template and the waste-type map.
 """
@@ -59,13 +59,17 @@ class Source(BaseSource):
         extract=_group_prefixed_id,
         schedule_url=lambda key, **_: f"{_API_URL}/ical?id={key}&filter={_FILTER}",
     )
-    parse = parsers.IcsParser(split_at="/")
+    # Only the combined rounds ("Restmüll/Biotonne") are several bins in one
+    # event. A "Giftmobil <village>/<stop>" title is a single hazardous-waste
+    # pickup whose second part names where the van stands, so it stays whole.
+    parse = parsers.IcsParser(split_at=r"(?<=Restmüll)/|(?<=Papier)/")
     transform = ICSTransformer(
+        clean=lambda label: "Giftmobil" if label.startswith("Giftmobil") else label,
         type_value_map={
             "Restmüll": wt.GENERAL_WASTE,
             "Biotonne": wt.ORGANIC,
             "Gelber Sack": wt.RECYCLABLES,
             "Papier": wt.PAPER,
             "Giftmobil": wt.HAZARDOUS,
-        }
+        },
     )

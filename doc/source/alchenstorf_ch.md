@@ -1,6 +1,8 @@
-# Alchenstorf, CH
+# Alchenstorf
 
-Support for schedules provided by [https://www.alchenstorf.ch/abfalldaten](https://www.alchenstorf.ch/abfalldaten).
+Support for schedules provided by [Alchenstorf](https://www.alchenstorf.ch).
+
+Source for 'Alchenstorf, CH'
 
 ## Configuration via configuration.yaml
 
@@ -8,13 +10,11 @@ Support for schedules provided by [https://www.alchenstorf.ch/abfalldaten](https
 waste_collection_schedule:
   sources:
     - name: alchenstorf_ch
-      args: {}
 ```
 
 ### Configuration Variables
 
-*(no args required)*
-but use args as shown in example.
+No configuration arguments are required.
 
 ## Example
 
@@ -22,5 +22,4 @@ but use args as shown in example.
 waste_collection_schedule:
   sources:
     - name: alchenstorf_ch
-      args: {}
 ```

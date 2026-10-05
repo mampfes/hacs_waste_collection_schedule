@@ -1,88 +1,76 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Blaby District Council"
-DESCRIPTION = "Recycling and refuse collection dates for Blaby District Council, UK."
-URL = "https://my.blaby.gov.uk/collections"
-
-TEST_CASES = {
-    "Test_001": {"uprn": 100030407500},
-    "Test_002": {"uprn": "100030395499"},
-    "Test_003": {"uprn": "010001238216"},
+_TYPE_MAP = {
+    "Refuse": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden": wt.GARDEN_WASTE,
+    "Food waste": wt.FOOD_WASTE,
 }
 
-REGEX = r"\d{2}/\d{2}/\d{4}"
 
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food waste": Icons.BIO_KITCHEN,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Blaby District Council"
+    DESCRIPTION = (
+        "Recycling and refuse collection dates for Blaby District Council, UK."
+    )
+    URL = "https://my.blaby.gov.uk/collections"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 100030407500},
+        "Test_002": {"uprn": "100030395499"},
+        "Test_003": {"uprn": "010001238216"},
     }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+        ),
     }
-}
 
+    # The property is remembered in the session: the first request selects it,
+    # the collections page then shows it.
+    retrieve = retrievers.Request(
+        "https://my.blaby.gov.uk/collections",
+        before=(
+            retrievers.Lookup(
+                "https://my.blaby.gov.uk/set-location.php",
+                params=lambda uprn, **_: {
+                    "ref": str(uprn).zfill(12),
+                    "redirect": "collections",
+                },
+                allow_redirects=False,
+                pick=lambda response, *keys, **_: None,
+            ),
+        ),
+    )
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn).zfill(12)
+    parse = parsers.HtmlLabelledDates(
+        "span.box-item",
+        label="h2",
+        date="strong",
+        date_pattern=r"(\d{2}/\d{2}/\d{4})",
+        all_dates=True,
+    )
 
-    def fetch(self):
-        session = requests.Session(impersonate="chrome124")
-
-        r = session.get(
-            "https://my.blaby.gov.uk/set-location.php",
-            params={"ref": self._uprn, "redirect": "collections"},
-            timeout=30,
-        )
-        r.raise_for_status()
-
-        r = session.get(
-            "https://my.blaby.gov.uk/collections",
-            timeout=30,
-        )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        entries = []
-
-        for h2 in soup.find_all("h2"):
-            bin_type = h2.get_text(strip=True)
-
-            if bin_type not in ICON_MAP:
-                continue
-
-            content = []
-            for sib in h2.next_siblings:
-                if getattr(sib, "name", None) == "h2":
-                    break
-                if hasattr(sib, "get_text"):
-                    content.append(sib.get_text(" ", strip=True))
-
-            text = " ".join(content)
-            for d in re.findall(REGEX, text):
-                entries.append(
-                    Collection(
-                        t=bin_type,
-                        date=datetime.strptime(d, "%d/%m/%Y").date(),
-                        icon=ICON_MAP[bin_type],
-                    )
-                )
-
-        return entries
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map=_TYPE_MAP,
+    )

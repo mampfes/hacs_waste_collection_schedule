@@ -1,6 +1,8 @@
 # Seattle Public Utilities
 
-Support for schedules provided by [Seattle Public Utilities](https://myutilities.seattle.gov/eportal/#/accountlookup/calendar), serving the city of Seattle, WA, USA.
+Support for schedules provided by [Seattle Public Utilities](https://myutilities.seattle.gov).
+
+Source for Seattle Public Utilities waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -31,8 +33,6 @@ waste_collection_schedule:
         street_address: 600 4th Ave
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The street_address argument is simply the house mailing address. Road type (eg. St, Ave) and cardinal direction if applicable (eg. N/S/NW) are required, so "501 23rd Ave" and "501 23rd Ave E" will give different results.
-
-If the service cannot be identified based on street address alone (in some multi-family houses, etc), a `prem_code` can be extracted by inspecting the "findAccount" call when looking up your service on the Collection Calendar.
+Enter the street address of the property, e.g. '600 4th Ave'. If the address lookup picks the wrong property, enter its premise code (the `premCode` the calendar lookup page at https://myutilities.seattle.gov/eportal/#/accountlookup/calendar receives for your address) as well.

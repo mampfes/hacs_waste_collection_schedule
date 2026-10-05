@@ -1,78 +1,67 @@
-import datetime
-import json
+from typing import ClassVar, final
 from urllib.parse import quote
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    DefaultPreprocessor,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "City of Pittsburgh"
-DESCRIPTION = "Source for PGH.ST services for the city of Pittsburgh, PA, USA."
-URL = "https://www.pgh.st"
-COUNTRY = "us"
-TEST_CASES = {
-    "Pittsburgh, Negley": {
-        "house_number": 800,
-        "street_name": "Negley",
-        "zipcode": 15232,
+_parse = date_parsers.for_format("%m-%d-%Y")
+
+
+def _url(house_number, street_name, zipcode, **_) -> str:
+    street_name = quote(str(street_name).replace(".", "").strip())
+    return f"https://pgh.st/locate/{house_number}/{street_name}/{zipcode}"
+
+
+@final
+class Source(BaseSource):
+    TITLE = "City of Pittsburgh"
+    DESCRIPTION = "Source for PGH.ST services for the city of Pittsburgh, PA, USA."
+    URL = "https://www.pgh.st"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Pittsburgh, Negley": {
+            "house_number": 800,
+            "street_name": "Negley",
+            "zipcode": 15232,
+        },
     }
-}
 
+    PARAMS = (house_number(), street("street_name"), text_field("zipcode", "ZIP code"))
 
-class Source:
-    def __init__(self, house_number, street_name, zipcode):
-        self._house_number = house_number
-        self._street_name = street_name.replace(".", "").strip()
-        self._zipcode = zipcode
-
-    def fetch(self):
-        # get json file
-        r = requests.get(
-            f"https://pgh.st/locate/{self._house_number}/{quote(self._street_name)}/{self._zipcode}"
-        )
-
-        # extract data from json
-        data = json.loads(r.text)
-
-        # create entries for trash, recycling, and yard waste
-        entries = []
-
-        try:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        data[0]["next_pickup_date"], "%m-%d-%Y"
-                    ).date(),
-                    t="Trash",
-                    icon="mdi:trash-can",
-                )
-            )
-        except ValueError:
-            pass  # ignore date conversion failure for not scheduled collections
-
-        try:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        data[0]["next_recycling_date"], "%m-%d-%Y"
-                    ).date(),
-                    t="Recycling",
-                    icon="mdi:recycle",
-                )
-            )
-        except ValueError:
-            pass  # ignore date conversion failure for not scheduled collections
-
-        try:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        data[0]["next_yard_date"], "%m-%d-%Y"
-                    ).date(),
-                    t="Yard Waste",
-                    icon="mdi:leaf",
-                )
-            )
-        except ValueError:
-            pass  # ignore date conversion failure for not scheduled collections
-
-        return entries
+    retrieve = HttpGetRetriever(url=_url)
+    # The first match carries the next date of each stream in its own field.
+    parse = parsers.JsonParser(0)
+    preprocess = Compose(
+        DefaultPreprocessor(),
+        DateFields(
+            fields={
+                "next_pickup_date": "Trash",
+                "next_recycling_date": "Recycling",
+                "next_yard_date": "Yard Waste",
+            },
+            parse_date=lambda value: _parse(value) if value else None,
+        ),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Trash": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Yard Waste": wt.GARDEN_WASTE,
+        }
+    )

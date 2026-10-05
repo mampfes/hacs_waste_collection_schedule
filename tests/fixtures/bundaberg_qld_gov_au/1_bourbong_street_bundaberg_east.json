@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php d10b34e66b",
+      "method": "GET",
+      "url": "https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php",
+      "final_url": "https://microapps.bundaberg.qld.gov.au/bin_dates/livesearch.php?q=1+Bourbong",
+      "body": "{\"params\":[[\"q\",\"1 Bourbong\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Thu, 01 Oct 2026 14:52:13 GMT",
+        "server": "Apache",
+        "x-xss-protection": "1;  mode=block",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "126",
+        "content-type": "text/html; charset=UTF-8"
+      },
+      "content_b64": "PGRpdiBpZD0nMSBCb3VyYm9uZyBTVCBCVU5EQUJFUkcgQ0VOVFJBTCw0LDQsQicgb25jbGljaz0gc2VsZWN0QWRkcmVzcyh0aGlzLmlkKT4xIEJvdXJib25nIFNUIEJVTkRBQkVSRyBDRU5UUkFMPC9kaXY+PGRpdiBpZD0nMSBCb3VyYm9uZyBTVCBCVU5EQUJFUkcgQ0VOVFJBTCw0LDQsQicgb25jbGljaz1zZWxlY3RBZGRyZXNzKHRoaXMuaWQpPjEgQm91cmJvbmcgU1QgQlVOREFCRVJHIENFTlRSQUw8L2Rpdj48ZGl2IGlkPScxIEJvdXJib25nIFNUIEJVTkRBQkVSRyBFQVNULDUsNSxCJyBvbmNsaWNrPXNlbGVjdEFkZHJlc3ModGhpcy5pZCk+MSBCb3VyYm9uZyBTVCBCVU5EQUJFUkcgRUFTVDwvZGl2Pg=="
+    }
+  ]
+}

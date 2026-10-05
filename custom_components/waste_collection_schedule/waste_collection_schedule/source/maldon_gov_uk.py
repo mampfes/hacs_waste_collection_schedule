@@ -1,70 +1,53 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Maldon District Council"
-
-DESCRIPTION = "Source for www.maldon.gov.uk services for Maldon, UK"
-
-URL = "https://www.maldon.gov.uk/"
-
-TEST_CASES = {
-    "test 1": {"uprn": "200000917928"},
-    "test 2": {"uprn": 100091258454},
-}
-
-API_URL = "https://maldon.suez.co.uk/maldon/ServiceSummary?uprn="
-
-ICON_MAP = {
-    "Refuse Collection": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green": Icons.ORGANIC,
-    "Food": Icons.BIO_KITCHEN,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Maldon District Council"
+    DESCRIPTION = "Source for www.maldon.gov.uk services for Maldon, UK"
+    URL = "https://www.maldon.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def _extract_dates(self, text):
-        # parse both dates and return the future one
-        dates = re.findall(r"\d{2}/\d{2}/\d{4}", text)
-        return [datetime.strptime(date, "%d/%m/%Y").date() for date in dates]
+    TEST_CASES: ClassVar[dict] = {
+        "test 1": {"uprn": "200000917928"},
+        "test 2": {"uprn": 100091258454},
+    }
 
-    def fetch(self):
-        entries = []
+    PARAMS = (uprn(),)
 
-        session = requests.Session()
-
-        r = session.get(f"{API_URL}{self._uprn}")
-        soup = BeautifulSoup(r.text, features="html.parser")
-        collections = soup.find_all("div", {"class": "panel-default"})
-
-        if not collections:
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        for collection in collections:
-            # check is a collection row
-            title = collection.find("h2", {"class": "panel-title"}).text.strip()
-
-            if (
-                title == "Other Services"
-                or "You are not currently subscribed" in collection.text
-            ):
-                continue
-
-            for date in self._extract_dates(collection.text):
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=title,
-                        icon=ICON_MAP.get(title),
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://maldon.suez.co.uk/maldon/ServiceSummary",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    # One panel per service, carrying its last and next collection.
+    parse = parsers.HtmlLabelledDates(
+        "div.panel-default",
+        label="h2.panel-title",
+        date=".panel-body",
+        date_pattern=r"\d{2}/\d{2}/\d{4}",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Refuse Collection": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Food Waste Collection": wt.FOOD_WASTE,
+            "Other Services": None,
+        },
+    )

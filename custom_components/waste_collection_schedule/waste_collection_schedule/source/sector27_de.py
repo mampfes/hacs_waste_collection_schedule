@@ -1,162 +1,163 @@
+"""Sector 27 Müllkalender (muellkalender.sector27.de), Kreis Recklinghausen.
+
+Each town has an ``idCity`` and a ``licenseKey`` that the public calendar
+widget ships with; they are kept here because the fetch needs them. A street
+name resolves to a street id (``searchForStreets``), and ``fetchPickups`` then
+answers one calendar year per request, rolling into next year from September.
+Both endpoints answer JSONP (``callbackFunc({...});``), which ``_jsonp``
+unwraps.
+"""
+
 import datetime
 import json
 import re
+from typing import ClassVar, final
+from zoneinfo import ZoneInfo
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
-DESCRIPTION = "Source for Muellkalender in Kreis RE."
-URL = "https://muellkalender.sector27.de"
-TEST_CASES = {
-    "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},
-    "Datteln Im Overkamp": {"city": "Datteln", "street": "Im Overkamp"},
-    "Datteln range street": {
-        "city": "Datteln",
-        "street": "Ahsener Straße 113 - 161 (ungerade)",
-    },
-    "Marl": {"city": "Marl", "street": "Ahornweg"},
-    "Oer-Erkenschick": {"city": "Oer-Erkenschwick", "street": "An der Zechenbahn"},
-}
+_BASE_URL = "https://muellkalender.sector27.de/web"
 
-CITIES = {
+_CITIES = {
     "Datteln": {"idCity": 9, "licenseKey": "DTTLN20137REKE382EHSE"},
     "Marl": {"idCity": 3, "licenseKey": "MRL3102HBBUHENWIP"},
     "Oer-Erkenschwick": {"idCity": 8, "licenseKey": "OSC1115KREHDFESEK"},
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-    },
-}
+_TZ = ZoneInfo("Europe/Berlin")
+_JSONP_RE = re.compile(r"callbackFunc\((.*)\);", re.DOTALL)
 
 
-class Source:
-    def __init__(self, city, street):
-        self._city = city
-        self._street = street
-
-    def getviewYearRange(self):
-        yRange = []
-
-        now = datetime.datetime.now()
-
-        month = now.month
-        year = now.year
-
-        d = datetime.datetime(year, 1, 1, hour=12)
-
-        yRange.append(int(datetime.datetime.timestamp(d)))
-
-        # in november & december always fetch next year also
-        if month > 8:
-            d = datetime.datetime(year + 1, 1, 1, hour=12)
-            yRange.append(int(datetime.datetime.timestamp(d)))
-
-        return yRange
-
-    def _lookup_street_id(self, city):
-        """Resolve a street name to its sector27 street id.
-
-        The upstream ``searchForStreets`` endpoint appears to truncate the
-        result list after a handful of matches, so searching with the first
-        whitespace-separated token of the street name fails when the street
-        starts with a generic German article/preposition such as ``Im``,
-        ``Am``, ``An``, ``Auf``, ``Zum`` and the distinctive word is the
-        second one (e.g. ``"Im Overkamp"``).
-
-        To be robust we try each distinct token of the configured street and
-        look for an exact, case-insensitive, whitespace-stripped match in
-        any of the responses. The first match wins. Only if no token yields
-        a match do we surface a ``SourceArgumentNotFound(WithSuggestions)``
-        error.
-        """
-        if not self._street:
-            raise SourceArgumentNotFound("street", self._street)
-
-        target = self._street.strip().casefold()
-        # Preserve first-occurrence order while dropping duplicates.
-        tokens: list[str] = []
-        for token in self._street.split():
-            if token and token not in tokens:
-                tokens.append(token)
-
-        suggestions: dict[str, None] = {}
-
-        for token in tokens:
-            params = {
-                "idCity": city["idCity"],
-                "licenseKey": city["licenseKey"],
-                "searchFor": token,
-            }
-            r = requests.get(
-                "https://muellkalender.sector27.de/web/searchForStreets",
-                params=params,
-                headers=HEADERS,
-            )
-            r.raise_for_status()
-            entries = json.loads(extractJson(r.text))
-
-            for entry in entries:
-                name = entry.get("name", "").strip()
-                if not name:
-                    continue
-                suggestions[name] = None
-                if name.casefold() == target:
-                    return entry["id"]
-
-        if suggestions:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, list(suggestions.keys())
-            )
-        raise SourceArgumentNotFound("street", self._street)
-
-    def fetch(self):
-        city = CITIES.get(self._city)
-        if city is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, list(CITIES.keys())
-            )
-
-        street_id = self._lookup_street_id(city)
-
-        args = {
-            "licenseKey": city["licenseKey"],
-            "cityId": city["idCity"],
-            "streetId": street_id,
-            "viewrange": "yearRange",
-        }
-
-        entries = []
-
-        for dt in self.getviewYearRange():
-            args["viewdate"] = dt
-
-            r = requests.get(
-                "https://muellkalender.sector27.de/web/fetchPickups",
-                params=args,
-                headers=HEADERS,
-            )
-            r.raise_for_status()
-            data = json.loads(extractJson(r.text))
-
-            for ts, pickups in data["pickups"].items():
-                for pickup in pickups:
-                    type = pickup["label"]
-                    pickupdate = datetime.date.fromtimestamp(int(ts))
-                    entries.append(Collection(pickupdate, type))
-
-        return entries
+def _jsonp(text: str):
+    match = _JSONP_RE.fullmatch(text.strip())
+    return json.loads(match.group(1) if match else text)
 
 
-def extractJson(text):
-    m = re.fullmatch(r"callbackFunc\((.*)\);", text)
-    return m.group(1) if m else text
+def _city(city: str) -> dict:
+    if city not in _CITIES:
+        raise SourceArgumentNotFoundWithSuggestions("city", city, list(_CITIES))
+    return _CITIES[city]
+
+
+def _search_term(street: str) -> str:
+    """The street without a house-number range ("Ahsener Straße 113 - 161 (ungerade)").
+
+    The search matches a substring and answers at most ten streets; a range
+    suffix makes it match nothing, so it is cut at the first " -", " (" or ";".
+    """
+    return re.split(r"\s+[-(;]", street.strip())[0]
+
+
+def _street_params(*, city: str, street: str, **_) -> dict:
+    return {**_city(city), "searchFor": _search_term(street)}
+
+
+def _pick_street(response, *, street: str, **_) -> int:
+    target = street.strip().casefold()
+    names: list[str] = []
+    for entry in _jsonp(response.text):
+        name = entry.get("name", "").strip()
+        if name.casefold() == target:
+            return entry["id"]
+        if name:
+            names.append(name)
+    if names:
+        raise SourceArgumentNotFoundWithSuggestions("street", street, names)
+    raise SourceArgumentNotFound("street", street)
+
+
+def _pickup_params(year: int, street_id: int, *, city: str, **_) -> dict:
+    # Noon (Berlin time, whatever the host's zone) on 1 January: the widget's "yearRange" view date.
+    view_date = int(datetime.datetime(year, 1, 1, 12, tzinfo=_TZ).timestamp())
+    return {
+        "licenseKey": _city(city)["licenseKey"],
+        "cityId": _city(city)["idCity"],
+        "streetId": street_id,
+        "viewrange": "yearRange",
+        "viewdate": view_date,
+    }
+
+
+def _pickups(response, source=None) -> list:
+    """Flatten ``{"pickups": {"<timestamp>": [{"label", "pickupDate"}, ...]}}``."""
+    return [
+        pickup
+        for pickups in _jsonp(response.text)["pickups"].values()
+        for pickup in pickups
+    ]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
+    DESCRIPTION = "Source for Muellkalender in Kreis RE."
+    URL = "https://muellkalender.sector27.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},
+        "Datteln Im Overkamp": {"city": "Datteln", "street": "Im Overkamp"},
+        "Datteln range street": {
+            "city": "Datteln",
+            "street": "Ahsener Straße 113 - 161 (ungerade)",
+        },
+        "Marl": {"city": "Marl", "street": "Ahornweg"},
+        "Oer-Erkenschick": {
+            "city": "Oer-Erkenschwick",
+            "street": "An der Zechenbahn",
+        },
+    }
+
+    PARAMS = (city("city"), street("street"))
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Choose Datteln, Marl or Oer-Erkenschwick and enter your street "
+            "exactly as it is listed on https://muellkalender.sector27.de "
+            "(for split streets including the house number range, e.g. "
+            "'Ahsener Straße 113 - 161 (ungerade)')."
+        ),
+        "de": (
+            "Wähle Datteln, Marl oder Oer-Erkenschwick und gib die Straße so "
+            "ein, wie sie auf https://muellkalender.sector27.de aufgeführt ist "
+            "(bei geteilten Straßen mit Hausnummernbereich, z. B. "
+            "'Ahsener Straße 113 - 161 (ungerade)')."
+        ),
+    }
+
+    retrieve = retrievers.YearlyRetriever(
+        prepare=retrievers.Lookup(
+            f"{_BASE_URL}/searchForStreets",
+            params=_street_params,
+            pick=_pick_street,
+        ),
+        fetch=retrievers.Request(
+            f"{_BASE_URL}/fetchPickups",
+            params=_pickup_params,
+        ),
+        # The widget asks for next year too from September on.
+        rollover_month=9,
+    )
+    parse = parsers.EachResponse(_pickups)
+
+    transform = JsonTransformer(
+        date_key="pickupDate",
+        type_key="label",
+        parse_date=date_parsers.for_format("%Y-%m-%d %H:%M:%S"),
+    )

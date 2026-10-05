@@ -22,7 +22,7 @@ ICON_MAP = {
     "RECYCLING": Icons.RECYCLING,
     "BLACK": Icons.GENERAL_WASTE,
     "BULKY": Icons.BULKY,
-    "RE-USE": Icons.BULKY,
+    "RE-USE": Icons.BULKY,  # codespell:ignore
 }
 
 REGEX_DATE = r"\(([0-9]{10})"

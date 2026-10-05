@@ -1,141 +1,186 @@
+import datetime
 import logging
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import address, boolean
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Recycle!"
-DESCRIPTION = "Source for RecycleApp.be"
-URL = "https://www.recycleapp.be"
-TEST_CASES = {
-    "1140 Evere, Bazellaan 1": {
-        "postcode": 1140,
-        "street": "Bazellaan",
-        "house_number": 1,
-    },
-    "3001, Waversebaan 276 with events": {
-        "postcode": 3001,
-        "street": "Waversebaan",
-        "house_number": 276,
-    },
-    "3001, Waversebaan 276 without events": {
-        "postcode": 3001,
-        "street": "Waversebaan",
-        "house_number": 276,
-        "add_events": False,
-    },
-    "1400, Rue de namur 1 with events": {
-        "postcode": 1400,
-        "street": "Rue de namur",
-        "house_number": 1,
-        "add_events": True,
-    },
-    "3200 Th. De Beckerstraat 1": {
-        "postcode": 3200,
-        "street": "Th. De Beckerstraat",
-        "house_number": 1,
-    },
-    "9180 Lokeren, Abelendreef 1": {
-        "postcode": 9180,
-        "street": "Abelendreef",
-        "house_number": 1,
-    },
-    "8700 Abeelstraat 1": {
-        "postcode": 8700,
-        "street": "Abeelstraat",
-        "house_number": 1,
-    },
-}
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 _LOGGER = logging.getLogger(__name__)
 
+_API = "https://api.fostplus.be/recyclecms/public/v1"
+_HEADERS = {"x-consumer": "recycleapp.be", "User-Agent": ""}
 
-class Source:
-    def __init__(self, postcode, street, house_number, add_events=True):
-        self._postcode = postcode
-        # Steet search does not work with . in the street name and with the chars in front of the .
-        self._street = street
-        self._steet_search = street.split(".")[-1]
-        self._house_number = house_number
-        self._add_events = add_events
 
-    def fetch(self):
-        url = "https://api.fostplus.be/recyclecms/public/v1"
-        headers = {
-            "x-consumer": "recycleapp.be",
-            "User-Agent": "",
-        }
+def _zipcode_id(response, postcode, **_):
+    items = [i for i in response.json()["items"] if i["available"]]
+    if not items:
+        raise SourceArgumentNotFound("postcode", postcode)
+    return items[0]["id"]
 
-        params = {"q": self._postcode}
-        r = requests.get(f"{url}/zipcodes", params=params, headers=headers)
-        r.raise_for_status()
-        items = r.json()["items"]
-        if len(items) == 0:
-            raise SourceArgumentNotFound("postcode", self._postcode)
 
-        for item in items:
-            error = None
-            if not item["available"]:
-                continue
-            zipcodeId = item["id"]
-            try:
-                entries = self._fetch_zipcode(zipcodeId, url, headers)
-                if entries:
-                    return entries
-            except SourceArgumentNotFound as e:
-                error = e
+def _street_id(response, zipcode_id, street, **_):
+    items = response.json()["items"]
+    if not items:
+        raise SourceArgumentNotFound("street", street)
+    for item in items:
+        if item["name"].lower().strip() == street.lower().strip():
+            return item["id"]
+    _LOGGER.warning(
+        "No exact street match found, using first result: %s", items[0]["name"]
+    )
+    return items[0]["id"]
 
-        if error:
-            raise error
-        raise Exception(
-            "No data found for the postcode"
-            + (", tired multiple zipcode, entries" if len(items) > 1 else "")
-        )
 
-    def _fetch_zipcode(
-        self, zipcodeId: str, url: str, headers: dict[str, str]
-    ) -> list[Collection]:
-        params = {"q": self._steet_search, "zipcodes": zipcodeId}
-        r = requests.post(f"{url}/streets", params=params, headers=headers)
-        r.raise_for_status()
+def _keep(record, source):
+    if "exception" in record and "replacedBy" in record["exception"]:
+        return False
+    if record["type"] == "event":
+        return bool(source.params.get("add_events", True))
+    return record["type"] == "collection"
 
-        streetId = None
-        items = r.json()["items"]
-        if len(items) == 0:
-            raise SourceArgumentNotFound("street", self._street)
-        for item in items:
-            if item["name"].lower().strip() == self._street.lower().strip():
-                streetId = item["id"]
-        if streetId is None:
-            _LOGGER.warning(
-                f"No exact street match found, using first result: {r.json()['items'][0]['name']}"
-            )
-            streetId = items[0]["id"]
 
-        now = datetime.now()
-        fromDate = now.strftime("%Y-%m-%d")
-        untilDate = (now + timedelta(days=365)).strftime("%Y-%m-%d")
-        params = {
-            "zipcodeId": zipcodeId,
-            "streetId": streetId,
-            "houseNumber": self._house_number,
-            "fromDate": fromDate,
-            "untilDate": untilDate,
-            #            "size":100,
-        }
-        r = requests.get(f"{url}/collections", params=params, headers=headers)
-        r.raise_for_status()
+_EVENT = "Event"
 
-        entries = []
-        for item in r.json()["items"]:
-            if "exception" in item and "replacedBy" in item["exception"]:
-                continue
 
-            date = datetime.strptime(item["timestamp"], "%Y-%m-%dT%H:%M:%S.000Z").date()
-            if item["type"] == "collection":
-                entries.append(Collection(date, item["fraction"]["name"]["en"]))
-            elif item["type"] == "event" and self._add_events:
-                entries.append(Collection(date, item["event"]["title"]["en"]))
+def _label(record):
+    if record["type"] == "event":
+        return _EVENT
+    return record["fraction"]["name"]["en"]
 
-        return entries
+
+def _description(record):
+    if record["type"] == "event":
+        return record["event"]["title"]["en"]
+    return None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Recycle!"
+    DESCRIPTION = "Source for RecycleApp.be"
+    URL = "https://www.recycleapp.be"
+    COUNTRY = "be"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+        wt.OTHER,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "3001, Waversebaan 276 with events": {
+            "postcode": 3001,
+            "street": "Waversebaan",
+            "house_number": 276,
+        },
+        "3001, Waversebaan 276 without events": {
+            "postcode": 3001,
+            "street": "Waversebaan",
+            "house_number": 276,
+            "add_events": False,
+        },
+        "1400, Rue de namur 1 with events": {
+            "postcode": 1400,
+            "street": "Rue de namur",
+            "house_number": 1,
+            "add_events": True,
+        },
+        "3200 Th. De Beckerstraat 1": {
+            "postcode": 3200,
+            "street": "Th. De Beckerstraat",
+            "house_number": 1,
+        },
+        "9180 Lokeren, Abelendreef 1": {
+            "postcode": 9180,
+            "street": "Abelendreef",
+            "house_number": 1,
+        },
+        "8700 Abeelstraat 1": {
+            "postcode": 8700,
+            "street": "Abeelstraat",
+            "house_number": 1,
+        },
+    }
+
+    PARAMS = (
+        address(),
+        boolean("add_events", "Add events", default=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the postcode, street and house number as on "
+            "https://www.recycleapp.be. Disable add_events to leave out "
+            "events such as collection-point openings."
+        ),
+    }
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{_API}/zipcodes",
+                params=lambda postcode, **_: {"q": postcode},
+                headers=_HEADERS,
+                pick=_zipcode_id,
+            ),
+            # The street search fails on the part of a name in front of a "."
+            Lookup(
+                f"{_API}/streets",
+                method="POST",
+                params=lambda zipcode_id, street, **_: {
+                    "q": street.split(".")[-1],
+                    "zipcodes": zipcode_id,
+                },
+                headers=_HEADERS,
+                pick=_street_id,
+            ),
+        ),
+        url=f"{_API}/collections",
+        params=lambda zipcode_id, street_id, house_number, **_: {
+            "zipcodeId": zipcode_id,
+            "streetId": street_id,
+            "houseNumber": house_number,
+            "fromDate": datetime.date.today().isoformat(),
+            "untilDate": (
+                datetime.date.today() + datetime.timedelta(days=365)
+            ).isoformat(),
+            # the API pages at 20 items by default and rejects sizes above 200
+            "size": 200,
+        },
+        headers=_HEADERS,
+    )
+    parse = JsonParser("items")
+    preprocess = RowFilter(_keep)
+    transform = JsonTransformer(
+        date_key="timestamp",
+        type_key=_label,
+        # an event carries its title as the description
+        description_key=_description,
+        carry_raw_label=True,
+        type_value_map={
+            "Huisvuil": wt.GENERAL_WASTE,
+            "Huisvuil DifTar": wt.GENERAL_WASTE,
+            "Déchets ménagers résiduels": wt.GENERAL_WASTE,
+            "Gft": wt.ORGANIC,
+            "Gft-DifTar": wt.ORGANIC,
+            "Groente, fruit- en tuinafval": wt.ORGANIC,
+            "Paper-cardboard": wt.PAPER,
+            "PMD": wt.RECYCLABLES,
+            "Grofvuil (op afroep)": wt.BULKY_WASTE,
+            "Snoeihout": wt.GARDEN_WASTE,
+            "Snoeihout op aanvraag": wt.GARDEN_WASTE,
+            "Tegeltaxi Leuven": wt.OTHER,
+            _EVENT: wt.OTHER,
+        },
+    )

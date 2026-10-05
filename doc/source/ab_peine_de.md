@@ -18,7 +18,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **strasse**  
-*(string) (required)*
+*(string) (optional)*
 
 **ort**  
 *(string) (optional)*

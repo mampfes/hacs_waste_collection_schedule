@@ -1,0 +1,117 @@
+{
+  "recorded_at": "2026-09-24",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 03fcbf0b32",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=100+N+Andrews+Ave%2C+Fort+Lauderdale%2C+FL+33301&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"100 N Andrews Ave, Fort Lauderdale, FL 33301\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Wed, 23 Sep 2026 22:52:09 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "227",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"52350fe1\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTAwIE4gQW5kcmV3cyBBdmUsIEZvcnQgTGF1ZGVyZGFsZSwgRmxvcmlkYSwgMzMzMDEiLCJsb2NhdGlvbiI6eyJ4IjotODAuMTQzMzk5OTkzMDI0LCJ5IjoyNi4xMjM2ODc5ODYzNDJ9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOi04MC4xNDQzOTk5OTMwMjQsInltaW4iOjI2LjEyMjY4Nzk4NjM0MiwieG1heCI6LTgwLjE0MjM5OTk5MzAyNCwieW1heCI6MjYuMTI0Njg3OTg2MzQyfX1dfQ=="
+    },
+    {
+      "key": "GET https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/7/query eb4e751bdc",
+      "method": "GET",
+      "url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/7/query",
+      "final_url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/7/query?outFields=SCHEDULE%2CMONDAY%2CTUESDAY%2CWEDNESDAY%2CTHURSDAY%2CFRIDAY%2CSATURDAY%2CSUNDAY%2CWEEKONE%2CWEEKTWO%2CWEEKTHREE%2CWEEKFOUR&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.143399993024%2C+%22y%22%3A+26.123687986342%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.143399993024, \\\"y\\\": 26.123687986342}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"SCHEDULE,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY,WEEKONE,WEEKTWO,WEEKTHREE,WEEKFOUR\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "2c9a7f8c",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Wed, 23 Sep 2026 22:52:08 GMT",
+        "Content-Length": "417"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTkFNRSIsImZpZWxkQWxpYXNlcyI6eyJTQ0hFRFVMRSI6IlNjaGVkdWxlIiwiTU9OREFZIjoiTW9uZGF5IiwiVFVFU0RBWSI6IlR1ZXNkYXkiLCJXRURORVNEQVkiOiJXZWRuZXNkYXkiLCJUSFVSU0RBWSI6IlRodXJzZGF5IiwiRlJJREFZIjoiRnJpZGF5IiwiU0FUVVJEQVkiOiJTYXR1cmRheSIsIlNVTkRBWSI6IlN1bmRheSIsIldFRUtPTkUiOiJXZWVrIE9uZSIsIldFRUtUV08iOiJXZWVrIFR3byIsIldFRUtUSFJFRSI6IldlZWsgVGhyZWUiLCJXRUVLRk9VUiI6IldlZWsgRm91ciJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJTQ0hFRFVMRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik1PTkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJNb25kYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlRVRVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHVlc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VETkVTREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZG5lc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVEhVUlNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVGh1cnNkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IkZSSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGcmlkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlNBVFVSREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNhdHVyZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJTVU5EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU3VuZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLT05FIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgT25lIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVFdPIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgVHdvIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVEhSRUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBUaHJlZSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VFS0ZPVVIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBGb3VyIiwibGVuZ3RoIjo1fV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlNDSEVEVUxFIjoiV2Vla2x5IiwiTU9OREFZIjoiTm8iLCJUVUVTREFZIjoiTm8iLCJXRURORVNEQVkiOiJZZXMiLCJUSFVSU0RBWSI6Ik5vIiwiRlJJREFZIjoiTm8iLCJTQVRVUkRBWSI6IlllcyIsIlNVTkRBWSI6Ik5vIiwiV0VFS09ORSI6IlllcyIsIldFRUtUV08iOiJZZXMiLCJXRUVLVEhSRUUiOiJZZXMiLCJXRUVLRk9VUiI6IlllcyJ9fV19"
+    },
+    {
+      "key": "GET https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/8/query eb4e751bdc",
+      "method": "GET",
+      "url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/8/query",
+      "final_url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/8/query?outFields=SCHEDULE%2CMONDAY%2CTUESDAY%2CWEDNESDAY%2CTHURSDAY%2CFRIDAY%2CSATURDAY%2CSUNDAY%2CWEEKONE%2CWEEKTWO%2CWEEKTHREE%2CWEEKFOUR&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.143399993024%2C+%22y%22%3A+26.123687986342%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.143399993024, \\\"y\\\": 26.123687986342}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"SCHEDULE,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY,WEEKONE,WEEKTWO,WEEKTHREE,WEEKFOUR\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "975fe642",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Wed, 23 Sep 2026 22:52:10 GMT",
+        "Content-Length": "422"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJTQ0hFRFVMRSI6IlNjaGVkdWxlIiwiTU9OREFZIjoiTW9uZGF5IiwiVFVFU0RBWSI6IlR1ZXNkYXkiLCJXRURORVNEQVkiOiJXZWRuZXNkYXkiLCJUSFVSU0RBWSI6IlRodXJzZGF5IiwiRlJJREFZIjoiRnJpZGF5IiwiU0FUVVJEQVkiOiJTYXR1cmRheSIsIlNVTkRBWSI6IlN1bmRheSIsIldFRUtPTkUiOiJXZWVrIE9uZSIsIldFRUtUV08iOiJXZWVrIFR3byIsIldFRUtUSFJFRSI6IldlZWsgVGhyZWUiLCJXRUVLRk9VUiI6IldlZWsgRm91ciJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJTQ0hFRFVMRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik1PTkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJNb25kYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlRVRVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHVlc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VETkVTREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZG5lc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVEhVUlNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVGh1cnNkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IkZSSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGcmlkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlNBVFVSREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNhdHVyZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJTVU5EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU3VuZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLT05FIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgT25lIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVFdPIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgVHdvIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVEhSRUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBUaHJlZSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VFS0ZPVVIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBGb3VyIiwibGVuZ3RoIjo1fV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlNDSEVEVUxFIjoiV2Vla2x5IiwiTU9OREFZIjoiTm8iLCJUVUVTREFZIjoiTm8iLCJXRURORVNEQVkiOiJObyIsIlRIVVJTREFZIjoiTm8iLCJGUklEQVkiOiJObyIsIlNBVFVSREFZIjoiWWVzIiwiU1VOREFZIjoiTm8iLCJXRUVLT05FIjoiWWVzIiwiV0VFS1RXTyI6IlllcyIsIldFRUtUSFJFRSI6IlllcyIsIldFRUtGT1VSIjoiWWVzIn19XX0="
+    },
+    {
+      "key": "GET https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/9/query eb4e751bdc",
+      "method": "GET",
+      "url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/9/query",
+      "final_url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/9/query?outFields=SCHEDULE%2CMONDAY%2CTUESDAY%2CWEDNESDAY%2CTHURSDAY%2CFRIDAY%2CSATURDAY%2CSUNDAY%2CWEEKONE%2CWEEKTWO%2CWEEKTHREE%2CWEEKFOUR&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.143399993024%2C+%22y%22%3A+26.123687986342%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.143399993024, \\\"y\\\": 26.123687986342}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"SCHEDULE,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY,WEEKONE,WEEKTWO,WEEKTHREE,WEEKFOUR\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "83463f06",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Wed, 23 Sep 2026 22:52:08 GMT",
+        "Content-Length": "417"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTkFNRSIsImZpZWxkQWxpYXNlcyI6eyJTQ0hFRFVMRSI6IlNjaGVkdWxlIiwiTU9OREFZIjoiTW9uZGF5IiwiVFVFU0RBWSI6IlR1ZXNkYXkiLCJXRURORVNEQVkiOiJXZWRuZXNkYXkiLCJUSFVSU0RBWSI6IlRodXJzZGF5IiwiRlJJREFZIjoiRnJpZGF5IiwiU0FUVVJEQVkiOiJTYXR1cmRheSIsIlNVTkRBWSI6IlN1bmRheSIsIldFRUtPTkUiOiJXZWVrIE9uZSIsIldFRUtUV08iOiJXZWVrIFR3byIsIldFRUtUSFJFRSI6IldlZWsgVGhyZWUiLCJXRUVLRk9VUiI6IldlZWsgRm91ciJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJTQ0hFRFVMRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik1PTkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJNb25kYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlRVRVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHVlc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VETkVTREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZG5lc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVEhVUlNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVGh1cnNkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IkZSSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGcmlkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlNBVFVSREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNhdHVyZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJTVU5EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU3VuZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLT05FIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgT25lIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVFdPIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgVHdvIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVEhSRUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBUaHJlZSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VFS0ZPVVIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBGb3VyIiwibGVuZ3RoIjo1fV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlNDSEVEVUxFIjoiTW9udGhseSIsIk1PTkRBWSI6Ik5vIiwiVFVFU0RBWSI6Ik5vIiwiV0VETkVTREFZIjoiTm8iLCJUSFVSU0RBWSI6IlllcyIsIkZSSURBWSI6Ik5vIiwiU0FUVVJEQVkiOiJObyIsIlNVTkRBWSI6Ik5vIiwiV0VFS09ORSI6Ik5vIiwiV0VFS1RXTyI6IlllcyIsIldFRUtUSFJFRSI6Ik5vIiwiV0VFS0ZPVVIiOiJObyJ9fV19"
+    },
+    {
+      "key": "GET https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/10/query eb4e751bdc",
+      "method": "GET",
+      "url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/10/query",
+      "final_url": "https://gis.fortlauderdale.gov/arcgis/rest/services/MyGovernmentServices/MyGovernmentServices/MapServer/10/query?outFields=SCHEDULE%2CMONDAY%2CTUESDAY%2CWEDNESDAY%2CTHURSDAY%2CFRIDAY%2CSATURDAY%2CSUNDAY%2CWEEKONE%2CWEEKTWO%2CWEEKTHREE%2CWEEKFOUR&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-80.143399993024%2C+%22y%22%3A+26.123687986342%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -80.143399993024, \\\"y\\\": 26.123687986342}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"SCHEDULE,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY,WEEKONE,WEEKTWO,WEEKTHREE,WEEKFOUR\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "acfd1270",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Wed, 23 Sep 2026 22:52:10 GMT",
+        "Content-Length": "419"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJTQ0hFRFVMRSI6IlNjaGVkdWxlIiwiTU9OREFZIjoiTW9uZGF5IiwiVFVFU0RBWSI6IlR1ZXNkYXkiLCJXRURORVNEQVkiOiJXZWRuZXNkYXkiLCJUSFVSU0RBWSI6IlRodXJzZGF5IiwiRlJJREFZIjoiRnJpZGF5IiwiU0FUVVJEQVkiOiJTYXR1cmRheSIsIlNVTkRBWSI6IlN1bmRheSIsIldFRUtPTkUiOiJXZWVrIE9uZSIsIldFRUtUV08iOiJXZWVrIFR3byIsIldFRUtUSFJFRSI6IldlZWsgVGhyZWUiLCJXRUVLRk9VUiI6IldlZWsgRm91ciJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJTQ0hFRFVMRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik1PTkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJNb25kYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlRVRVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHVlc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VETkVTREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZG5lc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVEhVUlNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVGh1cnNkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IkZSSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGcmlkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlNBVFVSREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNhdHVyZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJTVU5EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU3VuZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLT05FIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgT25lIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVFdPIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZWsgVHdvIiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRUVLVEhSRUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBUaHJlZSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VFS0ZPVVIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VlayBGb3VyIiwibGVuZ3RoIjo1fV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlNDSEVEVUxFIjoiV2Vla2x5IiwiTU9OREFZIjoiTm8iLCJUVUVTREFZIjoiTm8iLCJXRURORVNEQVkiOiJZZXMiLCJUSFVSU0RBWSI6Ik5vIiwiRlJJREFZIjoiTm8iLCJTQVRVUkRBWSI6Ik5vIiwiU1VOREFZIjoiTm8iLCJXRUVLT05FIjoiWWVzIiwiV0VFS1RXTyI6IlllcyIsIldFRUtUSFJFRSI6IlllcyIsIldFRUtGT1VSIjoiWWVzIn19XX0="
+    }
+  ]
+}

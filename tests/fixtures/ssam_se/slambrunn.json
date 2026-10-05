@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/SearchAdress ae2b8f1ccf",
+      "method": "POST",
+      "url": "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Svanebro Ormesberga, \u00d6r\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "67",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:09 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJTdmFuZWJybyBPcm1lc2JlcmdhLCDDlnIgKDI1MjQ3KSJdfQ=="
+    },
+    {
+      "key": "GET https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 821d70a494",
+      "method": "GET",
+      "url": "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://edpfuture.ssam.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Svanebro+Ormesberga%2C+%C3%96r+%2825247%29",
+      "body": "{\"params\":[[\"address\",\"Svanebro Ormesberga, \u00d6r (25247)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "3475",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:10 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDIiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiRk5JMSIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVMO2bW5pbmcgdmFyYW5uYW4gdmVja2EgZnJlZGFnIGrDpG1uIHZlY2thIGhlbMOlciIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlTDtm1uaW5nIHZhcmFubmFuIHZlY2thIGZyZWRhZyBqw6RtbiB2ZWNrYSBoZWzDpXIiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwRk5JMSIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiJGeXJmYWNrIEvDpHJsIDEgMzcwIGwgMjYgdMO2bW5pbmdhciAwLTUgbSBkcmFnYXZzdMOlbmQiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwRk5JMSIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiZW5saWd0IGvDtnJsaXN0YSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IktMIiwiV2FzdGVUeXBlIjoiRk5JMSIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJWw4RIVksxRjM3MEsyNktBIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IkhVU0giLCJEZXNpZ25hdGlvbiI6IkZ5cmZhY2sgS8OkcmwgMSAzNzAgbCAyNiB0w7ZtbmluZ2FyIDAtNSBtIGRyYWdhdnN0w6VuZCIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6NDQ3MzMsIkRlc2NyaXB0aW9uIjoiRnlyZmFjayBLw6RybCAxIDM3MCBsIDI2IHTDtm1uaW5nYXIgMC01IG0gZHJhZ2F2c3TDpW5kIiwiU3RhcnREYXRlIjoiXC9EYXRlKDE1NDYyOTcyMDAwMDApXC8iLCJTdG9wRGF0ZSI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJCdWlsZGluZ0lEIjoiMjUyNDcifSx7IkJpbkRpcmVjdGlvbiI6bnVsbCwiTmV4dFdhc3RlUGlja3VwIjoiMjAyNi0xMC0xNiIsIldhc3RlUGlja3Vwc1BlclllYXIiOjEzLCJXYXN0ZVR5cGUiOiJGTkkyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJUw7ZtbmluZyB2YXIgZmrDpHJkZSB2ZWNrYSBmcmVkYWcgaGVsw6VyIHYgMiw2LDEwIG9zdiIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlTDtm1uaW5nIHZhciBmasOkcmRlIHZlY2thIGZyZWRhZyBoZWzDpXIgdiAyLDYsMTAgb3N2IiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MEZOSTIiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiRnlyZmFjayBLw6RybCAyIDM3MCBsIDEzIHTDtm1uaW5nYXIgMC01IG0gZHJhZ2F2c3TDpW5kIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MEZOSTIiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjEzLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6ImVubGlndCBrw7ZybGlzdGEiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJLTCIsIldhc3RlVHlwZSI6IkZOSTIiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiVsOESFZLMkYzNzBLMTNLQSIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJIVVNIIiwiRGVzaWduYXRpb24iOiJGeXJmYWNrIEvDpHJsIDIgMzcwIGwgMTMgdMO2bW5pbmdhciAwLTUgbSBkcmFnYXZzdMOlbmQiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjIwODg2MSwiRGVzY3JpcHRpb24iOiJGeXJmYWNrIEvDpHJsIDIgMzcwIGwgMTMgdMO2bW5pbmdhciAwLTUgbSBkcmFnYXZzdMOlbmQiLCJTdGFydERhdGUiOiJcL0RhdGUoMTU0NjI5NzIwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIyNTI0NyJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiJGZWIgMjAyNyIsIldhc3RlUGlja3Vwc1BlclllYXIiOjEsIldhc3RlVHlwZSI6IlNsYW0iLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IkZlYnJ1YXJpIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiRmVicnVhcmkiLCJCaW5UeXBlIjp7IkNvZGUiOiJTTEFNMyIsIlNpemUiOjMuMDAsIlVuaXQiOiJLQk0iLCJDb250YWluZXJUeXBlIjoiU2xhbWJydW5uIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiU2xhbWJydW5uIG1heCAzIGtibSBvYmxpZ2F0b3Jpc2sgdMO2bW4iLCJCaW5UeXBlIjp7IkNvZGUiOiJTTEFNMyIsIlNpemUiOjMuMDAsIlVuaXQiOiJLQk0iLCJDb250YWluZXJUeXBlIjoiU2xhbWJydW5uIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjEsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiMSBnZ3IgcGVyIMOlciIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IsOFMDFHR1IiLCJXYXN0ZVR5cGUiOiJTbGFtIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IlbDhFNMQU0zIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IlNMQU0iLCJEZXNpZ25hdGlvbiI6IlNsYW1icnVubiBtYXggMyBrYm0gb2JsaWdhdG9yaXNrIHTDtm1uIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo2Mjg1NSwiRGVzY3JpcHRpb24iOiJTbGFtYnJ1bm4gbWF4IDMga2JtIG9ibGlnYXRvcmlzayB0w7ZtbiIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNTQ2Mjk3MjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjI1MjQ3In1dfQ=="
+    }
+  ]
+}

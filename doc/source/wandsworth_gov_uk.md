@@ -1,6 +1,8 @@
 # Wandsworth Council
 
-Support for schedules provided by [Wandsworth Council](https://www.wandsworth.gov.uk/my-property/) for the London Borough of Wandsworth, UK.
+Support for schedules provided by [Wandsworth Council](https://www.wandsworth.gov.uk).
+
+Source for Wandsworth Council for the London Borough of Wandsworth, UK.
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: wandsworth_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: wandsworth_gov_uk
       args:
-        uprn: "100022659217"
+        uprn: 100022659217
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk) and entering your address details.
+You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details.

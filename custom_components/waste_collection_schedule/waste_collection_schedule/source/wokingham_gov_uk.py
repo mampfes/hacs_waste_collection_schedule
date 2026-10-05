@@ -1,161 +1,68 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    street_address,
+    uprn,
+)
+from waste_collection_schedule.service.DrupalWasteForm import (
+    WasteCardsParser,
+    WasteFormRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Wokingham Borough Council"
-DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
-URL = "https://wokingham.gov.uk"
 API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day"
-TEST_CASES = {
-    "Test_001": {"postcode": "RG40 1GE", "property": "10032935729"},
-    "Test_002": {"postcode": "RG413BP", "property": "14007633"},
-    "Test_003": {"postcode": "rg41 1ph", "property": 14040037},
-    "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
-    "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
-}
-ICON_MAP = {
-    "HOUSEHOLD WASTE": Icons.GENERAL_WASTE,
-    "GARDEN WASTE": Icons.GARDEN,
-    "RECYCLING": Icons.RECYCLING,
-    "FOOD WASTE": Icons.BIO_KITCHEN,
-}
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
-    "Content-Type": "application/x-www-form-urlencoded",
-    "Host": "www.wokingham.gov.uk",
-    "Origin": "https://www.wokingham.gov.uk",
-    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day",
-}
 
 
-class Source:
-    def __init__(self, postcode=None, property=None, address=None):
-        self._postcode = postcode
-        self._property = property
-        self._address = address
+@final
+class Source(BaseSource):
+    TITLE = "Wokingham Borough Council"
+    DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
+    URL = "https://wokingham.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-    def get_form_id(self, txt: str) -> str:
-        soup = BeautifulSoup(txt, "html.parser")
-        x = soup.find("input", {"name": "form_build_id"})
-        id = x.get("value")
-        return id
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "RG40 1GE", "property": "10032935729"},
+        "Test_002": {"postcode": "RG413BP", "property": "14007633"},
+        "Test_003": {"postcode": "rg41 1ph", "property": 14040037},
+        "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
+        "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
+    }
 
-    def match_address(self, lst: list, addr: str) -> str:
-        for item in lst:
-            if addr in item.text.replace(",", ""):
-                a = item.get("value")
-        return a
+    PARAMS = (
+        postcode(),
+        alternatives([uprn("property")], [street_address()]),
+    )
 
-    def fetch(self):
-        s = requests.Session()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode together with either the first line of your "
+            "address (e.g. '16 Davy Close'; the first address on the council's "
+            "list that contains it is used) or the property number, which is the "
+            "UPRN. To find it, open "
+            "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day, "
+            "look up your postcode and read the value of your address's "
+            "<option> in the page source, e.g. 10032935729 for "
+            "'32, SAMBORNE DRIVE, WOKINGHAM'."
+        ),
+    }
 
-        # Attempt to get Christmas & New Year schedule adjustments.
-        # The URL may not exist outside the holiday season; skip gracefully if unavailable.
-        revised_schedules: dict = {}
-        try:
-            r = s.get(
-                "https://www.wokingham.gov.uk/rubbish-and-recycling/christmas-bin-day-changes",
-                timeout=10,
-            )
-            if r.ok:
-                soup = BeautifulSoup(r.content, "html.parser")
-                trs: list = soup.find_all("tr")
-                for tr in trs:
-                    tds: list = tr.find_all("td")
-                    if tds:
-                        revised_schedules.update(
-                            {tds[0].text: tds[1].text.split(" (")[0]}
-                        )
-                # get rid of dates where there is no adjustment
-                revised_schedules = {
-                    k: v for k, v in revised_schedules.items() if v != "Normal"
-                }
-                # reformat dates to make comparison easier
-                revised_schedules = {
-                    datetime.strptime(k, "%A %d %B %Y").strftime(
-                        "%d/%m/%Y"
-                    ): datetime.strptime(v, "%A %d %B %Y").strftime("%d/%m/%Y")
-                    for k, v in revised_schedules.items()
-                }
-        except Exception:
-            pass
-
-        # Now get the regular collection schedule
-
-        # Load page to generate token needed for subsequent query
-        r = s.get(API_URL)
-        form_id = self.get_form_id(r.text)
-
-        # Perform postcode search to generate token needed for following query
-        self._postcode = str(self._postcode.upper().strip().replace(" ", ""))
-        payload = {
-            "postcode_search": self._postcode,
-            "op": "Find Address",
-            "form_build_id": form_id,
-            "form_id": "waste_collection_api_form",
-        }
-        r = s.post(
-            API_URL,
-            headers=HEADERS,
-            data=payload,
-        )
-        form_id = self.get_form_id(r.text)
-
-        # Use address to get an ID if property wasn't supplied. Assumes first match is correct.
-        if self._property is None:
-            soup = BeautifulSoup(r.text, "html.parser")
-            dropdown = soup.find("div", {"class": "form-item__dropdown"})
-            addresses = dropdown.find_all("option")
-            self._address = self._address.upper()
-            self._property = self.match_address(addresses, self._address)
-        else:
-            self._property = str(self._property)
-
-        # Now get the regular collection schedule
-        payload = {
-            "postcode_search": self._postcode,
-            "address_options": self._property,
-            "op": "Show collection dates",
-            "form_build_id": form_id,
-            "form_id": "waste_collection_api_form",
-        }
-        r = s.post(
-            API_URL,
-            headers=HEADERS,
-            data=payload,
-        )
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        entries = []
-
-        # Extract the collection schedules
-        cards = soup.find_all("div", {"class": "card--waste"})
-        for card in cards:
-            # Cope with waste suffixed with (week 1) or (week 2)
-            waste_type = card.find("h3").text.split("(")[0].strip()
-            waste_date = card.find("span").text.strip().split()[-1]
-            try:
-                waste_date = datetime.strptime(waste_date, "%d/%m/%Y").strftime(
-                    "%d/%m/%Y"
-                )
-            except ValueError:
-                # occurs if next collections date shows as "No collection"
-                continue
-
-            # check to see if waste date is impacted by the Christmas & New Year adjustments
-            for item in revised_schedules:
-                if item == waste_date:
-                    waste_date = revised_schedules[item]
-                    break
-
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type.upper()),
-                )
-            )
-
-        return entries
+    retrieve = WasteFormRetriever(API_URL)
+    parse = WasteCardsParser()
+    transform = RowTransformer(
+        type_value_map={
+            "Household waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden waste": wt.GARDEN_WASTE,
+            "Food waste": wt.FOOD_WASTE,
+        },
+    )

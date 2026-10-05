@@ -1,39 +1,39 @@
 # AWISTA LOGISTIK Stadt Remscheid
 
-Support for schedules provided by [AWISTA LOGISTIK Stadt Remscheid](https://www.monaloga.de/), serving Remscheid, Germany.
+Support for schedules provided by [AWISTA LOGISTIK Stadt Remscheid](https://www.monaloga.de/).
+
+Source for AWISTA LOGISTIK Stadt Remscheid.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: monaloga_de
       args:
         street: STREET
-        plz: "PLZ"
-        
+        plz: PLZ
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **plz**  
-*(String | Integer) (optional)*  
-*The postal code of the address only use this if the street on the website shows a PLZ*
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: monaloga_de
       args:
-        street: Adolf-Clarenbach-Straße
-        plz: "42899" 
+        street: "Adolf-Clarenbach-Stra\xDFe"
+        plz: 42899
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your address using [https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php](https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php) and write them exactly like on the web page.
+Enter your street as listed at https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php. Add the postcode (PLZ) if the street name occurs in several postcodes.

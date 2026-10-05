@@ -1,62 +1,71 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import area_id
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Shellharbour City Council"
-DESCRIPTION = "Source script for shellharbourwaste.com.au"
-URL = "https://shellharbourwaste.com.au"
-COUNTRY = "au"
-TEST_CASES = {"TestName1": {"zoneID": "Monday A"}, "TestName2": {"zoneID": "Friday A"}}
-
-API_URL = "https://www.shellharbourwaste.com.au/waste-collection"
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-}
+API_URL = "https://www.shellharbourwaste.com.au/wp-json/rb_co/v1/get-waste-url"
 
 
-def findUrl(zoneID, session):
-    # Take Zone ID and find url to parse
-    r = session.get(
-        f"https://www.shellharbourwaste.com.au/wp-json/rb_co/v1/get-waste-url?zone={zoneID}"
+def _page_url(response, *keys, **_) -> str:
+    """The zone lookup answers ``{"url": ".../zone-1a/", "title": "Monday A"}``."""
+    return response.json()["url"]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Shellharbour City Council"
+    DESCRIPTION = "Source script for shellharbourwaste.com.au"
+    URL = "https://shellharbourwaste.com.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "TestName1": {"zoneID": "Monday A"},
+        "TestName2": {"zoneID": "Friday A"},
+    }
+
+    PARAMS = (area_id("zoneID"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your collection zone as shown on "
+            "https://www.shellharbourwaste.com.au/find-my-bin-day/ "
+            "(e.g. 'Monday A')."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                API_URL,
+                params=lambda zoneID, **_: {"zone": zoneID},
+                pick=_page_url,
+            ),
+        ),
+        url=lambda page_url, **_: page_url,
+        headers={"Referer": "https://www.shellharbourwaste.com.au/find-my-bin-day/"},
     )
-    r.raise_for_status()
-    d = r.json()
-    return d["url"]
 
+    parse = parsers.HtmlParser("div.waste-block__content")
 
-class Source:
-    def __init__(self, zoneID):
-        self._zoneID = zoneID
-
-    def fetch(self):
-        session = requests.Session(impersonate="chrome")
-        pageurl = findUrl(self._zoneID, session)
-        r = session.get(
-            pageurl,
-            headers={
-                "Referer": "https://www.shellharbourwaste.com.au/find-my-bin-day/"
-            },
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
-        collections = soup.select("div.waste-block__content")
-        entries = []
-        for entry in collections:
-            waste_type = entry.find("h3", class_="waste-block__title").text.strip()
-            # Strip trailing bin-colour hint, e.g. "General Waste (Red lid)" -> "General Waste"
-            waste_type = waste_type.split(" (")[0]
-            date_string = entry.find("time", class_="waste-block__time").text.strip()
-            pickupdate = datetime.strptime(date_string, "%d/%m/%Y")
-            entries.append(
-                Collection(
-                    date=pickupdate.date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda el: el.find("time", class_="waste-block__time").text.strip(),
+        type_getter=lambda el: el.find("h3", class_="waste-block__title").text.strip(),
+        # Strip the trailing bin-colour hint, "General Waste (Red lid)"
+        clean=lambda label: label.split(" (")[0],
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Recycling": wt.RECYCLABLES,
+        },
+    )

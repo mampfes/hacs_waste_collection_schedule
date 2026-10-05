@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100030987514/2026-09-27/2026-11-08 ",
+      "method": "GET",
+      "url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100030987514/2026-09-27/2026-11-08",
+      "final_url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100030987514/2026-09-27/2026-11-08",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:21 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "cache-control": "must-revalidate, no-cache, private",
+        "content-language": "en",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "traceresponse": "00-18d948b7ddf49057588a81a019964363-bda4e8c1dbf8fdf3-01",
+        "vary": "Origin",
+        "x-content-type-options": "nosniff",
+        "x-debug-info": "eyJyZXRyaWVzIjowfQ==",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "x-frame-options": "SAMEORIGIN",
+        "x-generator": "Drupal 10 (https://www.drupal.org)",
+        "x-platform-server": "i-970bb6a5ee9d4a73b1cda4206d21599d, i-970bb6a5ee9d4a73b1cda4206d21599d",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "br",
+        "server": "cloudflare",
+        "cf-ray": "a41d62ca6ff149b9-AMS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3siaWQiOjk3OTU4NDE4LCJ0aXRsZSI6IkVtcHR5IENCQyBCaW4gRm9vZCBDYWRkeSAoZXh0ZXJpb3IpIDIzbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MDgwOTE5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5Nzk1MDAwMiwidGl0bGUiOiJFbXB0eSBDQkMgQmluIFJlY3ljbGluZyAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkwODA5MTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMTkyLDE5MiwxOTIpIiwidGV4dENvbG9yIjoicmdiKDAsMCwwKSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk4MDA5NTQ4LCJ0aXRsZSI6IkVtcHR5IENCQyBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkxNDEzOTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk3OTk2NTQ3LCJ0aXRsZSI6IkVtcHR5IENCQyBCaW4gRm9vZCBDYWRkeSAoZXh0ZXJpb3IpIDIzbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MTQxMzk5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5ODAxNTI1OCwidGl0bGUiOiJFbXB0eSBDQkMgQmluIEZvb2QgQ2FkZHkgKGV4dGVyaW9yKSAyM2wiLCJzdWJqZWN0IjoiVGhpcyBQcmVtaXNlcyIsInN0YXJ0IjoiXC9EYXRlKDE3OTIwMTg3OTkwMDApXC8iLCJlbmQiOm51bGwsImxpbmsiOiIiLCJjb2xvciI6InJnYigxOTIsMTkyLDE5MikiLCJ0ZXh0Q29sb3IiOiJyZ2IoMCwwLDApIiwiY29tcGxldGUiOmZhbHNlLCJ1cmwiOiIjIn0seyJpZCI6OTgwMTE0NjgsInRpdGxlIjoiRW1wdHkgQ0JDIEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MjAxODc5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5ODA1NjI2OSwidGl0bGUiOiJFbXB0eSBDQkMgQmluIFJlZnVzZSBiaW4gMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5MjYyMzU5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDAsMCwwKSIsInRleHRDb2xvciI6InJnYigyNTUsMjU1LDI1NSkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5ODAzNjYxOSwidGl0bGUiOiJFbXB0eSBDQkMgQmluIEZvb2QgQ2FkZHkgKGV4dGVyaW9yKSAyM2wiLCJzdWJqZWN0IjoiVGhpcyBQcmVtaXNlcyIsInN0YXJ0IjoiXC9EYXRlKDE3OTI2MjM1OTkwMDApXC8iLCJlbmQiOm51bGwsImxpbmsiOiIiLCJjb2xvciI6InJnYigxOTIsMTkyLDE5MikiLCJ0ZXh0Q29sb3IiOiJyZ2IoMCwwLDApIiwiY29tcGxldGUiOmZhbHNlLCJ1cmwiOiIjIn0seyJpZCI6OTgwNzc2NzYsInRpdGxlIjoiRW1wdHkgQ0JDIEJpbiBGb29kIENhZGR5IChleHRlcmlvcikgMjNsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzkzMjMxOTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMTkyLDE5MiwxOTIpIiwidGV4dENvbG9yIjoicmdiKDAsMCwwKSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk4MDY5MzA3LCJ0aXRsZSI6IkVtcHR5IENCQyBCaW4gUmVjeWNsaW5nIDI0MGwiLCJzdWJqZWN0IjoiVGhpcyBQcmVtaXNlcyIsInN0YXJ0IjoiXC9EYXRlKDE3OTMyMzE5OTkwMDApXC8iLCJlbmQiOm51bGwsImxpbmsiOiIiLCJjb2xvciI6InJnYigxOTIsMTkyLDE5MikiLCJ0ZXh0Q29sb3IiOiJyZ2IoMCwwLDApIiwiY29tcGxldGUiOmZhbHNlLCJ1cmwiOiIjIn0seyJpZCI6OTgxMjQwMDIsInRpdGxlIjoiRW1wdHkgQ0JDIEJpbiBSZWZ1c2UgYmluIDI0MGwiLCJzdWJqZWN0IjoiVGhpcyBQcmVtaXNlcyIsInN0YXJ0IjoiXC9EYXRlKDE3OTM4MzY3OTkwMDApXC8iLCJlbmQiOm51bGwsImxpbmsiOiIiLCJjb2xvciI6InJnYigwLDAsMCkiLCJ0ZXh0Q29sb3IiOiJyZ2IoMjU1LDI1NSwyNTUpIiwiY29tcGxldGUiOmZhbHNlLCJ1cmwiOiIjIn0seyJpZCI6OTgxNTEyODQsInRpdGxlIjoiRW1wdHkgQ0JDIEJpbiBSZWN5Y2xpbmcgMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5NDQ0MTU5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDE5MiwxOTIsMTkyKSIsInRleHRDb2xvciI6InJnYigwLDAsMCkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5ODE5MjI0MywidGl0bGUiOiJFbXB0eSBDQkMgQmluIFJlZnVzZSBiaW4gMjQwbCIsInN1YmplY3QiOiJUaGlzIFByZW1pc2VzIiwic3RhcnQiOiJcL0RhdGUoMTc5NTA0NjM5OTAwMClcLyIsImVuZCI6bnVsbCwibGluayI6IiIsImNvbG9yIjoicmdiKDAsMCwwKSIsInRleHRDb2xvciI6InJnYigyNTUsMjU1LDI1NSkiLCJjb21wbGV0ZSI6ZmFsc2UsInVybCI6IiMifSx7ImlkIjo5ODIwNjgwMCwidGl0bGUiOiJFbXB0eSBDQkMgQmluIFJlY3ljbGluZyAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzk1NjUxMTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMTkyLDE5MiwxOTIpIiwidGV4dENvbG9yIjoicmdiKDAsMCwwKSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9LHsiaWQiOjk4MjU1NTA5LCJ0aXRsZSI6IkVtcHR5IENCQyBCaW4gUmVmdXNlIGJpbiAyNDBsIiwic3ViamVjdCI6IlRoaXMgUHJlbWlzZXMiLCJzdGFydCI6IlwvRGF0ZSgxNzk2MjU1OTk5MDAwKVwvIiwiZW5kIjpudWxsLCJsaW5rIjoiIiwiY29sb3IiOiJyZ2IoMCwwLDApIiwidGV4dENvbG9yIjoicmdiKDI1NSwyNTUsMjU1KSIsImNvbXBsZXRlIjpmYWxzZSwidXJsIjoiIyJ9XQ=="
+    }
+  ]
+}

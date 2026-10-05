@@ -1,6 +1,8 @@
 # Perth and Kinross Council
 
-Support for schedules provided by [Perth and Kinross Council](https://www.pkc.gov.uk), UK.
+Support for schedules provided by [Perth and Kinross Council](https://www.pkc.gov.uk).
+
+Source for Perth and Kinross Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -14,16 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN).
-
-## How to find your UPRN
-
-1. Visit the [Perth and Kinross bin collection dates page](https://my.pkc.gov.uk/AchieveForms/?form_uri=sandbox-publish://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa/AF-Stage-9fa33e2e-4c1b-4963-babf-4348ab8154bc/definition.json) and search for your address using your street name or postcode.
-2. Select your address from the dropdown list, then right-click it and choose `Inspect` (or `Inspect Element`) — the selected `<option>` element's `value` attribute is your UPRN.
-3. Alternatively, look up your address at [findmyaddress.co.uk](https://www.findmyaddress.co.uk/).
 
 ## Example
 
@@ -32,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: pkc_gov_uk
       args:
-        uprn: "124022910"
+        uprn: '124022910'
 ```
+
+## How to get the source arguments
+
+Find your UPRN by searching for your address at https://my.pkc.gov.uk/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa/AF-Stage-9fa33e2e-4c1b-4963-babf-4348ab8154bc/definition.json&process=1&process_uri=sandbox-processes://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa&process_id=AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa or at https://www.findmyaddress.co.uk/.

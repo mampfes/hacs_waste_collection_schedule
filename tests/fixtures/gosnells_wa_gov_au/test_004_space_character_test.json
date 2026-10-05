@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.gosnells.wa.gov.au/api/v1/myarea/search 3a61ccb11b",
+      "method": "GET",
+      "url": "https://www.gosnells.wa.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.gosnells.wa.gov.au/api/v1/myarea/search?keywords=4A+Turley+Court+LANGFORD+6147",
+      "body": "{\"params\":[[\"keywords\",\"4A Turley Court LANGFORD 6147\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "254",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:57 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=16, origin; dur=299, ak_p; desc=\"1790185497434_1752388108_800158581_31481_21043_5_12_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=A0982C455F516166C3B8E742A2098CED~000000000000000000000000000000~YAAQDFJzaJTUVaigAQAAuORezwGBSUzMe3Kg4pKZTG4vQvaycJ2XgL0wyOsYymwMTuQTqlm67W+snR4ytgozwaido6AgoqIgVEnU38KQUmb0vKJy5bDWgkxV9ij8c8kvjNcdxsKiZUBht48P7ebRJQHTsLqtr578gXWTgHvYqLGwd06NS0OyCS4rcgtTlUZ0AutBrU8OEuipERdRqsdv/4x1WcgPw9axzGc6Yb6OdFG81CwVx+BoCU5sBEOrolzD5/iSc49PaBb3Xq2lH+qC8vMqegrmo8BHGpCLqJ82+iAIDPN8CjNwM9n+iCLlFSe6plorQLDUV3lv6sauIItIWh2zoQHPv6uKtPpRl4wG/SgnvFLpy/+Zwsf7v5e6xJtDa9UAT10VRNy9aH5ptI0zXJoBG3cf+w==; Domain=.gosnells.wa.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:57 GMT; Max-Age=7200; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiIzZGMxZDEyMi1lZTIwLTQ1NzAtOTk4OS1mYTc1MTQ1ODg1NGUiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjRBIFR1cmxleSBDb3VydCBMQU5HRk9SRCBXQSA2MTQ3IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJDaXR5IG9mIEdvc25lbGxzIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyNC4zMjAyNjcsIkxhdExvbiI6Wy0zMi4wNDEzNDcxOCwxMTUuOTM5MTI5NzFdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MX0="
+    },
+    {
+      "key": "GET https://www.gosnells.wa.gov.au/ocapi/Public/myarea/wasteservices 9e7051851f",
+      "method": "GET",
+      "url": "https://www.gosnells.wa.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.gosnells.wa.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=3dc1d122-ee20-4570-9989-fa751458854e&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"3dc1d122-ee20-4570-9989-fa751458854e\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "468",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:58 GMT",
+        "set-cookie": "ASP.NET_SessionId=p1wpkxyejirrv5k5k01h1lwp; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=396, ak_p; desc=\"1790185497790_1752388108_800159289_39587_15447_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy01XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHJlY3ljbGluZyBkYXRlLXByZWNpc2UgaXRlbS0wXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVJlY3ljbGUgQmluIFBpY2sgVXBcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFRodSAxLzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGRhdGUtYXBwcm94IGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUJ1bGsgSnVua1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VWZXJnZSBDb2xsZWN0aW9uIDIwMjYtMjAyN1x1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgUGlja3VwIHN0YXJ0aW5nIGZyb20gMXN0IEZlYi5cclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlRG9tZXN0aWMgQmluIFBpY2sgVXBcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFRodSAyNC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtYXBwcm94IGl0ZW0tM1wiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIFdhc3RlIDFcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlVmVyZ2UgQ29sbGVjdGlvbiAyMDI2XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBQaWNrdXAgc3RhcnRpbmcgZnJvbSAxN3RoIEF1Zy5cclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtYXBwcm94IGl0ZW0tNFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIFdhc3RlIDJcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlVmVyZ2UgQ29sbGVjdGlvbiAyMDI3XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBQaWNrdXAgc3RhcnRpbmcgZnJvbSAyMm5kIE1hci5cclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

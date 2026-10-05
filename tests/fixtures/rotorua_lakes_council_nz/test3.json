@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 3d3c036375",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=17+Tihi+road%2C+Rotorua%2C+New+Zealand&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"17 Tihi road, Rotorua, New Zealand\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Mon, 28 Sep 2026 23:51:04 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "233",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"3c3029dd\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTcgVGloaSBSb2FkLCBTcHJpbmdmaWVsZCwgUm90b3J1YSwgQmF5IG9mIFBsZW50eSwgMzAxNSIsImxvY2F0aW9uIjp7IngiOjE3Ni4yMjg1OTkyMTEzMDgsInkiOi0zOC4xNjA5NTE4MzUxNzh9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOjE3Ni4yMjc1OTkyMTEzMDgsInltaW4iOi0zOC4xNjE5NTE4MzUxNzgsInhtYXgiOjE3Ni4yMjk1OTkyMTEzMDgsInltYXgiOi0zOC4xNTk5NTE4MzUxNzh9fV19"
+    },
+    {
+      "key": "GET https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query e164335cbb",
+      "method": "GET",
+      "url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query",
+      "final_url": "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/160/query?outFields=RubbishCollection4%2CRubbishCollection3%2CRubbishCollection2%2CRubbishCollection1&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+176.228599211308%2C+%22y%22%3A+-38.160951835178%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 176.228599211308, \\\"y\\\": -38.160951835178}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"RubbishCollection4,RubbishCollection3,RubbishCollection2,RubbishCollection1\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "256",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"9421a7de\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|KyLWaD_krE5qY-_GVUW8yA==|J9Om-ylp4hLq2yOsxVRzJzPrq7WeWkaTmMJd0_MK; Max-Age=60; Expires=Mon, 28 Sep 2026 23:52:04 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Mon, 28 Sep 2026 23:51:04 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiTmFtZSIsImZpZWxkQWxpYXNlcyI6eyJSdWJiaXNoQ29sbGVjdGlvbjQiOiJSdWJiaXNoQ29sbGVjdGlvbjQiLCJSdWJiaXNoQ29sbGVjdGlvbjMiOiJSdWJiaXNoQ29sbGVjdGlvbjMiLCJSdWJiaXNoQ29sbGVjdGlvbjIiOiJSdWJiaXNoQ29sbGVjdGlvbjIiLCJSdWJiaXNoQ29sbGVjdGlvbjEiOiJSdWJiaXNoQ29sbGVjdGlvbjEifSwiZmllbGRzIjpbeyJuYW1lIjoiUnViYmlzaENvbGxlY3Rpb240IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJ1YmJpc2hDb2xsZWN0aW9uNCIsImxlbmd0aCI6MTcxfSx7Im5hbWUiOiJSdWJiaXNoQ29sbGVjdGlvbjMiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUnViYmlzaENvbGxlY3Rpb24zIiwibGVuZ3RoIjoxNzF9LHsibmFtZSI6IlJ1YmJpc2hDb2xsZWN0aW9uMiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJSdWJiaXNoQ29sbGVjdGlvbjIiLCJsZW5ndGgiOjE3MX0seyJuYW1lIjoiUnViYmlzaENvbGxlY3Rpb24xIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJ1YmJpc2hDb2xsZWN0aW9uMSIsImxlbmd0aCI6MTcxfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlJ1YmJpc2hDb2xsZWN0aW9uNCI6IlR1ZXNkYXkgMTMvMTAvMjAyNiBSZWN5Y2xpbmcgYW5kIEZPR08iLCJSdWJiaXNoQ29sbGVjdGlvbjMiOiJUdWVzZGF5IDA2LzEwLzIwMjYgUnViYmlzaCBhbmQgRk9HTyIsIlJ1YmJpc2hDb2xsZWN0aW9uMiI6IiAiLCJSdWJiaXNoQ29sbGVjdGlvbjEiOiJUdWVzZGF5IDI5LzA5LzIwMjYgUmVjeWNsaW5nIGFuZCBSdWJiaXNoIn19XX0="
+    }
+  ]
+}

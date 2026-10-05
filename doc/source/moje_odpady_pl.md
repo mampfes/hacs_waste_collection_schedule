@@ -1,62 +1,47 @@
 # App Moje Odpady
 
-Support for schedules provided by [App Moje Odpady](https://moje-odpady.pl/), serving multiple municipalities, Poland.
+Support for schedules provided by [App Moje Odpady](https://moje-odpady.pl/).
 
-<https://play.google.com/store/apps/details?id=com.mojeodpady>
+Source for App Moje Odpady.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: moje_odpady_pl
       args:
         city: CITY
-        voivodeship: VPICODESHIP (województwo)
-        
+        voivodeship: VOIVODESHIP
+        address: ADDRESS
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **city**  
-*(String) (required)*
+*(string) (required)*
 
 **voivodeship**  
-*(String) (optional)* needed if there are multiple cities with the same name
+*(string) (optional)*
 
 **address**  
-*(String) (optional)* only needed if the app asks for an address
+*(string) (optional)*
 
 **house_number**  
-*(String) (optional)* rarely needed, only if the app asks for a house number
-
-**english**  
-*(String) (optional)* if set to "true" the app will return the schedule in English
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: moje_odpady_pl
       args:
-        city: Aleksandrów
-        voivodeship: woj. śląskie
-        english: False # optional parameter
+        city: "Aleksandr\xF3w"
+        voivodeship: "woj. \u015Bl\u0105skie"
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: moje_odpady_pl
-      args:
-        city: BASZKÓWKA
-        voivodeship: woj. mazowieckie
-        address: ANTONÓWKI
-        house_number: Pozostałe
-        english: False # optional parameter
-```
+## How to get the source arguments
 
-## How to get the source argument
-
-The parameters can be found by using the app ([GooglePlay](https://play.google.com/store/apps/details?id=com.mojeodpady&hl=pl), [AppStore](https://apps.apple.com/pl/app/waste-collection-schedule/id1248697353)) and checking the address input form.
+Enter the city as listed in the Moje Odpady app. If several cities share the name, also enter the voivodeship (for example 'woj. mazowieckie'). Cities that are split into streets additionally need the address (street) and, where the street has several entries, the house number.

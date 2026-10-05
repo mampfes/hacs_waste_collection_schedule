@@ -1,0 +1,87 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates cdb2722a34",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=12+Badgery+Street%2C+Willow+Vale+NSW+2575&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"12 Badgery Street, Willow Vale NSW 2575\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:51 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "245",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"9246d49e\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTIgQmFkZ2VyeSBTdHJlZXQsIFdpbGxvdyBWYWxlLCBCb3dyYWwgLSBNaXR0YWdvbmcsIE5ldyBTb3V0aCBXYWxlcywgMjU3NSIsImxvY2F0aW9uIjp7IngiOjE1MC40NzExMzE0NTI1NzksInkiOi0zNC40MzEyOTMxNzU3NTd9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOjE1MC40NzAxMzE0NTI1NzksInltaW4iOi0zNC40MzIyOTMxNzU3NTcsInhtYXgiOjE1MC40NzIxMzE0NTI1NzksInltYXgiOi0zNC40MzAyOTMxNzU3NTd9fV19"
+    },
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/1/query 46155b4688",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/1/query",
+      "final_url": "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/1/query?outFields=Bin%2CBinDate%2CBinZoneLabel&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+150.471131452579%2C+%22y%22%3A+-34.431293175757%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 150.471131452579, \\\"y\\\": -34.431293175757}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Bin,BinDate,BinZoneLabel\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "146",
+        "Connection": "keep-alive",
+        "Date": "Sat, 26 Sep 2026 08:06:52 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Access-Control-Allow-Origin": "https://wscweb.maps.arcgis.com",
+        "Access-Control-Allow-Credentials": "true",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "ETag": "\"60a870d9\"",
+        "Content-Encoding": "gzip",
+        "Vary": "Origin",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 77318b1ceb75cd7c1031b6ddc9d265f6.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAD55-P9",
+        "X-Amz-Cf-Id": "2KPuchtAb33VNvNtKkBJkqEoo6-M_d5hGej9hlYsgWGXLQuX1o0H0g=="
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEXzEiLCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjc4NTYsImxhdGVzdFdraWQiOjc4NTZ9LCJmZWF0dXJlcyI6W119"
+    },
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/2/query 46155b4688",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/2/query",
+      "final_url": "https://utility.arcgis.com/usrsvcs/servers/f69ab833f6164175ae4e6e752d109cdb/rest/services/BinDay/BinDayZones1/FeatureServer/2/query?outFields=Bin%2CBinDate%2CBinZoneLabel&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+150.471131452579%2C+%22y%22%3A+-34.431293175757%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 150.471131452579, \\\"y\\\": -34.431293175757}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Bin,BinDate,BinZoneLabel\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "274",
+        "Connection": "keep-alive",
+        "Date": "Sat, 26 Sep 2026 08:06:53 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Access-Control-Allow-Origin": "https://wscweb.maps.arcgis.com",
+        "Access-Control-Allow-Credentials": "true",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "ETag": "\"1341c85\"",
+        "Content-Encoding": "gzip",
+        "Vary": "Origin",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 1ae744582b6105b6f02e8971c5c713be.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAD55-P9",
+        "X-Amz-Cf-Id": "U4qyjm4Egi9UtSaCDIHpFQSOIKrjCw19nd8oYx0xlhki5lDXvI8zKg=="
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEXzEiLCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjc4NTYsImxhdGVzdFdraWQiOjc4NTZ9LCJmaWVsZHMiOlt7Im5hbWUiOiJCaW4iLCJhbGlhcyI6IkJpbiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiQmluRGF0ZSIsImFsaWFzIjoiQmluRGF0ZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlRGF0ZSIsImxlbmd0aCI6OH0seyJuYW1lIjoiQmluWm9uZUxhYmVsIiwiYWxpYXMiOiJCaW5ab25lTGFiZWwiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImxlbmd0aCI6NTB9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiQmluIjoiUmVkWWVsbG93IiwiQmluRGF0ZSI6MTc5MDYwNDAwMDAwMCwiQmluWm9uZUxhYmVsIjoiVFVFU0RBWSBXRUVLIEIifX1dfQ=="
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.hobartcity.com.au/api/v1/myarea/search 294a7188af",
+      "method": "GET",
+      "url": "https://www.hobartcity.com.au/api/v1/myarea/search",
+      "final_url": "https://www.hobartcity.com.au/api/v1/myarea/search?keywords=151+AUGUSTA+ROAD%2C+LENAH+VALLEY+7008",
+      "body": "{\"params\":[[\"keywords\",\"151 AUGUSTA ROAD, LENAH VALLEY 7008\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "223",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:00 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=17, origin; dur=851, ak_p; desc=\"1790185499661_1752388100_1161091041_86797_30202_4_12_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=25545A932D563A1E6BABCF4379FC6EBD~000000000000000000000000000000~YAAQBFJzaECuhJWgAQAAne9ezwFLw3ITE8SARWHKcOSF03MkXk6rNJwFOHycDx8NqTRW+DPke3UWrju2JWpAfF2ZfYB/2C4btPgTSmaTgfZQS9ZV87E/ncAYXGcGM5s1CdYNJ0vi26Kr07eOx9IK/IIlB08pigT/1YYntuVA0GCnlXJG7yREKVikkVH9zZcXIK73dOxrdO180WQiYQ4HDKNQED6m3GNA+pX0i6UIeIESQ0plaH9acedtE5bsE4jIZuVMgdOq0/ru8ynJbJfU6pnfJPE5I7K3GZMKD++9czxnszpFidKoq3A8ufORrqpz8hExaANwUQ5C558UUU4fGQGJ4rCqdEljdYhPVNDc3oiNKl0yUaN987Bq425ulPc4LmZcwWPaaEKm0l7WsXW/eDuhbrY=; Domain=.hobartcity.com.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:59 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJhZjM1Nzk3NC02ZjM5LTRkZmEtOTVlZS1jYTNiNTk4Nzc4NjgiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjE1MSBBVUdVU1RBIFJPQUQsIExFTkFIIFZBTExFWSA3MDA4IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJIb2JhcnQiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjI2LjMwNzAzLCJMYXRMb24iOm51bGx9XSwiT2Zmc2V0IjowLCJMaW1pdCI6MTAsIlRvdGFsIjoxfQ=="
+    },
+    {
+      "key": "GET https://www.hobartcity.com.au/ocapi/Public/myarea/wasteservices 4a02f17cf1",
+      "method": "GET",
+      "url": "https://www.hobartcity.com.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.hobartcity.com.au/ocapi/Public/myarea/wasteservices?geolocationid=af357974-6f39-4dfa-95ee-ca3b59877868&ocsvclang=en-AU&pageLink=%2F%24720cfbd8-df7e-4b88-bf92-e218d51ee173%24%2FResidents%2FWaste-and-recycling%2FWhen-is-my-bin-collected",
+      "body": "{\"params\":[[\"geolocationid\",\"af357974-6f39-4dfa-95ee-ca3b59877868\"],[\"ocsvclang\",\"en-AU\"],[\"pageLink\",\"/$720cfbd8-df7e-4b88-bf92-e218d51ee173$/Residents/Waste-and-recycling/When-is-my-bin-collected\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "571",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:01 GMT",
+        "set-cookie": "ASP.NET_SessionId=2sod35aqxjk5x0dqhwumyt4f; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1120, ak_p; desc=\"1790185500584_1752388100_1161092630_111946_21066_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlQmluIGNvbGxlY3Rpb25cdTAwM2MvaDJcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwiZ3JpZCB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHRzIHJlc3VsdHMtNFwiXHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBnZW5lcmFsLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTBcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSdWJiaXNoXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuIFlvdXIgbmV4dCBjb2xsZWN0aW9uIGlzOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBZb3VyIG5leHQgY29sbGVjdGlvbiBpczpcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFRodSAxLzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTJcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VGT0dPL0dyZWVuIHdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseS4gWW91ciBuZXh0IGNvbGxlY3Rpb24gaXM6XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMjQvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBjYWxlbmRhciBkYXRlLWFwcHJveCBpdGVtLTNcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VDb2xsZWN0aW9uIHpvbmU6IFRodXJzZGF5IChXZWVrIDIpXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVx1MDAzY2Rpdlx1MDAzZURvd25sb2FkIHlvdXIgY2FsZW5kYXI6XHUwMDNjL2Rpdlx1MDAzZVxuXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiL2ZpbGVzL2Fzc2V0cy9wdWJsaWMyL3YvMS9zZXJ2aWNlcy9yZWN5Y2xpbmctYW5kLXJ1YmJpc2gvYmluLWNhbGVuZGFycy9iaW4tY2FsZW5kYXItMjAyNi13ZWVrLTItdGh1cnNkYXkucGRmXCIgY2xhc3M9XCJkb2N1bWVudCBleHQtcGRmIG9wZW5zLWluLW5ldy10YWJcIiB0YXJnZXQ9XCJfYmxhbmtcIlx1MDAzZVRodXJzZGF5IChXZWVrIDIpIGJpbiBjYWxlbmRhclx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgXHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

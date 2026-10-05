@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://api-2.tewkesbury.gov.uk/incab/rounds/100120544973/next-collection ",
+      "method": "GET",
+      "url": "https://api-2.tewkesbury.gov.uk/incab/rounds/100120544973/next-collection",
+      "final_url": "https://api-2.tewkesbury.gov.uk/incab/rounds/100120544973/next-collection",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 18:12:56 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "861",
+        "x-amzn-requestid": "79fe6b2c-c050-4046-82a3-cf4b4ced3cb0",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+        "x-amz-apigw-id": "EXtqaFThLPEEYuQ=",
+        "access-control-allow-methods": "POST, OPTIONS, GET, PUT",
+        "x-amzn-trace-id": "Root=1-6ab95ca8-37a31a4a040eb36f031f67e2;Parent=53bf220b155b116f;Sampled=0;Lineage=2:44a827eb:0",
+        "access-control-allow-credentials": "true"
+      },
+      "content_b64": "ewogICAgImZvb2QiOiB7CiAgICAgICAgIm5hcnJvd0FjY2Vzc1JvdW5kIjogZmFsc2UsCiAgICAgICAgIm5leHRDb2xsZWN0aW9uRGF0ZSI6ICIyMDI2LTA5LTI5VDAxOjAwOjAwLjAwMFoiLAogICAgICAgICJmb3JtYXR0ZWROZXh0Q29sbGVjdGlvbkRhdGUiOiAiVHVlc2RheSAyOSBTZXB0ZW1iZXIiLAogICAgICAgICJyb3VuZEluZm9ybWF0aW9uIjogIlR1ZVciCiAgICB9LAogICAgImdhcmRlbiI6IHsKICAgICAgICAibmFycm93QWNjZXNzUm91bmQiOiBmYWxzZSwKICAgICAgICAibmV4dENvbGxlY3Rpb25EYXRlIjogIjIwMjYtMDktMjlUMDE6MDA6MDAuMDAwWiIsCiAgICAgICAgImZvcm1hdHRlZE5leHRDb2xsZWN0aW9uRGF0ZSI6ICJUdWVzZGF5IDI5IFNlcHRlbWJlciIsCiAgICAgICAgInJvdW5kSW5mb3JtYXRpb24iOiAiVHVlMSIKICAgIH0sCiAgICAicmVjeWNsaW5nIjogewogICAgICAgICJuYXJyb3dBY2Nlc3NSb3VuZCI6IGZhbHNlLAogICAgICAgICJuZXh0Q29sbGVjdGlvbkRhdGUiOiAiMjAyNi0xMC0wNlQwMTowMDowMC4wMDBaIiwKICAgICAgICAiZm9ybWF0dGVkTmV4dENvbGxlY3Rpb25EYXRlIjogIlR1ZXNkYXkgMDYgT2N0b2JlciIsCiAgICAgICAgInJvdW5kSW5mb3JtYXRpb24iOiAiVHVlMiIKICAgIH0sCiAgICAicmVmdXNlIjogewogICAgICAgICJuYXJyb3dBY2Nlc3NSb3VuZCI6IGZhbHNlLAogICAgICAgICJuZXh0Q29sbGVjdGlvbkRhdGUiOiAiMjAyNi0wOS0yOVQwMTowMDowMC4wMDBaIiwKICAgICAgICAiZm9ybWF0dGVkTmV4dENvbGxlY3Rpb25EYXRlIjogIlR1ZXNkYXkgMjkgU2VwdGVtYmVyIiwKICAgICAgICAicm91bmRJbmZvcm1hdGlvbiI6ICJUdWUxIgogICAgfQp9"
+    }
+  ]
+}

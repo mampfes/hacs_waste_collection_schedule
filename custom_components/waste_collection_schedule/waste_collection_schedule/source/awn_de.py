@@ -97,8 +97,13 @@ class Source(BaseSource):
     parse = parsers.IcsParser()
     # Derived by replaying the cassettes. A bare pass-through transformer has
     # no type_value_map, so the auto-derived set is empty; the shared
-    # vocabulary resolves only the hazardous-waste pickup. The feed's own
-    # German labels (Restmuell, Bioenergietonne, ...) are kept as
-    # ``preserved:`` ids, which are not declarable.
-    WASTE_TYPES: ClassVar[list] = [wt.HAZARDOUS]
+    # vocabulary resolves the feed's own German labels (Restmuell,
+    # Bioenergietonne, Verpackungstonne, ...).
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
     transform = ICSTransformer()

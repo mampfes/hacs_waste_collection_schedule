@@ -1,62 +1,57 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "City of San Diego"
-DESCRIPTION = "Source for the City of San Diego."
-URL = "https://www.sandiego.gov/"
-COUNTRY = "us"
-TEST_CASES = {
-    "Test_001": {"id": "a4Ot0000000fEYZEA2"},
-    "Test_002": {"id": "a4Ot0000001EEsyEAG"},
-    "Test_003": {"id": "a4Ot0000000eANbEAM"},
-}
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Organics": Icons.ORGANIC,
-    "Recyclables": Icons.RECYCLING,
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url.",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "id": "The unique identifier for your properties collection schedule",
+
+@final
+class Source(BaseSource):
+    TITLE = "City of San Diego"
+    DESCRIPTION = "Source for the City of San Diego."
+    URL = "https://www.sandiego.gov/"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"id": "a4Ot0000000fEYZEA2"},
+        "Test_002": {"id": "a4Ot0000001EEsyEAG"},
+        "Test_003": {"id": "a4Ot0000000eANbEAM"},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "id": "The unique identifier for your properties collection schedule",
+
+    PARAMS = (text_field("id", "Collection schedule id"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search your address on https://getitdone.sandiego.gov/apex/CollectionMapLookup, "
+            "click 'Bookmarkable Page', and copy the id from the schedule page's URL."
+        ),
     }
-}
 
-
-class Source:
-    def __init__(self, id: str):
-        self._id: str = id
-
-    def fetch(self):
-        s = requests.Session()
-
-        r = s.get(f"https://getitdone.sandiego.gov/CollectionDetail?id={self._id}")
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.content, "html.parser")
-        columns = soup.find_all("div", {"class": "four columns"})
-
-        entries = []
-        for item in columns[1:]:
-            waste_type = item.find("h3").text
-            waste_date = re.search(r"(\d+/\d+/\d+)", item.text)
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date.group(1), "%m/%d/%Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://getitdone.sandiego.gov/CollectionDetail",
+        params=lambda id, **_: {"id": id},
+    )
+    parse = parsers.HtmlLabelledDates(
+        "div.four.columns:has(h3)",
+        label="h3",
+        date="p.date",
+        parse_date=date_parsers.for_format("%m/%d/%Y"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Trash": wt.GENERAL_WASTE,
+            "Recyclables": wt.RECYCLABLES,
+            "Organic Waste": wt.ORGANIC,
+            "Greens": wt.ORGANIC,
+            "Organics": wt.ORGANIC,
+        },
+    )

@@ -1,54 +1,51 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Stadtwerke Rösrath"
-DESCRIPTION = " Source for 'Stadtwerke Rösrath'."
-URL = "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"
-TEST_CASES = {"Ahornweg": {"street": "Ahornweg"}}
-
-_LOGGER = logging.getLogger(__name__)
-
-ICON_MAP = {
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Restmülltonne 60l": Icons.GENERAL_WASTE,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Papiertonne": Icons.PAPER,
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, street):
-        self.street = street
+@final
+class Source(BaseSource):
+    TITLE = "Stadtwerke Rösrath"
+    DESCRIPTION = "Source for 'Stadtwerke Rösrath'."
+    URL = "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GENERAL_WASTE,
+        wt.HAZARDOUS,
+    ]
 
-    def fetch(self):
-        form = {
-            "street": self.street,
-        }
-        header = {
+    TEST_CASES: ClassVar[dict] = {"Ahornweg": {"street": "Ahornweg"}}
+
+    PARAMS = (street(),)
+
+    retrieve = HttpPostRetriever(
+        url="https://www.stadtwerke-roesrath.de/wp-admin/admin-ajax.php",
+        params={"action": "binalarm_filter"},
+        data=lambda street, **_: {"street": street},
+        headers={
             "referer": "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"
-        }
-        r = requests.post(
-            "https://www.stadtwerke-roesrath.de/wp-admin/admin-ajax.php?action=binalarm_filter",
-            data=form,
-            headers=header,
-        )
-        r.raise_for_status()
-
-        data = r.json()
-
-        if len(data) == 0:
-            raise SourceArgumentNotFound("street", self.street)
-
-        entries = []
-        for item in data:
-            date = datetime.strptime(item["start"], "%Y-%m-%d").date()
-            typ = item["title"]
-            icon = ICON_MAP.get(typ)
-            entries.append(Collection(date, typ, icon))
-
-        return entries
+        },
+    )
+    parse = parsers.JsonParser()
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="title",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Restmülltonne": wt.GENERAL_WASTE,
+            "Restmülltonne 60l": wt.GENERAL_WASTE,
+            "Biotonne": wt.ORGANIC,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Papiertonne": wt.PAPER,
+            "Schadstoffmobil": wt.HAZARDOUS,
+        },
+    )

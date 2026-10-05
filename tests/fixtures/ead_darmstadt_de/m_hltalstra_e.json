@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/ f0f0111a1e",
+      "method": "GET",
+      "url": "https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/",
+      "final_url": "https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/?type=742394&street=M%C3%BChltalstra%C3%9Fe",
+      "body": "{\"params\":[[\"street\",\"M\u00fchltalstra\u00dfe\"],[\"type\",\"742394\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sat, 26 Sep 2026 20:48:13 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "587",
+        "content-language": "de",
+        "cache-control": "private, no-store, max-age=0",
+        "strict-transport-security": "max-age=31536000",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin",
+        "expires": "Sat, 26 Sep 2026 20:48:12 GMT",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-ua-compatible": "IE=edge",
+        "age": "0",
+        "accept-ranges": "bytes",
+        "content-security-policy": "default-src 'self' https: data: ; script-src 'self' https: 'unsafe-eval' 'unsafe-inline' ; style-src self https: 'unsafe-inline'",
+        "permissions-policy": "encrypted-media=(self), keyboard-map=(self), sync-xhr=(self)"
+      },
+      "content_b64": "eyIwMi4wMS4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwNi4wMS4yMDI2IjpbIldFVCJdLCIwNy4wMS4yMDI2IjpbIkJJTyJdLCIwOC4wMS4yMDI2IjpbIlJNMSJdLCIwOS4wMS4yMDI2IjpbIlBQSyJdLCIxNS4wMS4yMDI2IjpbIlJNMSIsIlJNMiJdLCIyMC4wMS4yMDI2IjpbIldFVCJdLCIyMS4wMS4yMDI2IjpbIkJJTyJdLCIyMi4wMS4yMDI2IjpbIlJNMSJdLCIyMy4wMS4yMDI2IjpbIlBQSyJdLCIyOS4wMS4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwMy4wMi4yMDI2IjpbIldFVCJdLCIwNC4wMi4yMDI2IjpbIkJJTyJdLCIwNS4wMi4yMDI2IjpbIlJNMSJdLCIwNi4wMi4yMDI2IjpbIlBQSyJdLCIxMi4wMi4yMDI2IjpbIlJNMSIsIlJNMiJdLCIxNy4wMi4yMDI2IjpbIldFVCJdLCIxOC4wMi4yMDI2IjpbIkJJTyJdLCIxOS4wMi4yMDI2IjpbIlJNMSJdLCIyMC4wMi4yMDI2IjpbIlBQSyJdLCIyNi4wMi4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwMy4wMy4yMDI2IjpbIldFVCJdLCIwNC4wMy4yMDI2IjpbIkJJTyJdLCIwNS4wMy4yMDI2IjpbIlJNMSJdLCIwNi4wMy4yMDI2IjpbIlBQSyJdLCIxMi4wMy4yMDI2IjpbIlJNMSIsIlJNMiJdLCIxNy4wMy4yMDI2IjpbIldFVCJdLCIxOC4wMy4yMDI2IjpbIkJJTyJdLCIxOS4wMy4yMDI2IjpbIlJNMSJdLCIyMC4wMy4yMDI2IjpbIlBQSyJdLCIyNi4wMy4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIyNy4wMy4yMDI2IjpbIldFVCJdLCIzMS4wMy4yMDI2IjpbIkJJTyJdLCIwMS4wNC4yMDI2IjpbIlJNMSJdLCIwMi4wNC4yMDI2IjpbIlBQSyJdLCIxMC4wNC4yMDI2IjpbIlJNMSIsIlJNMiJdLCIxMS4wNC4yMDI2IjpbIldFVCJdLCIxNS4wNC4yMDI2IjpbIkJJTyJdLCIxNi4wNC4yMDI2IjpbIlJNMSJdLCIxNy4wNC4yMDI2IjpbIlBQSyJdLCIyMy4wNC4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIyNC4wNC4yMDI2IjpbIldFVCJdLCIyOC4wNC4yMDI2IjpbIkJJTyJdLCIyOS4wNC4yMDI2IjpbIlJNMSJdLCIzMC4wNC4yMDI2IjpbIlBQSyJdLCIwNi4wNS4yMDI2IjpbIkJJTyJdLCIwNy4wNS4yMDI2IjpbIlJNMSIsIlJNMiJdLCIwOC4wNS4yMDI2IjpbIldFVCJdLCIxMy4wNS4yMDI2IjpbIkJJTyJdLCIxNS4wNS4yMDI2IjpbIlJNMSJdLCIxNi4wNS4yMDI2IjpbIlBQSyJdLCIyMC4wNS4yMDI2IjpbIkJJTyJdLCIyMS4wNS4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIyMi4wNS4yMDI2IjpbIldFVCJdLCIyOC4wNS4yMDI2IjpbIkJJTyJdLCIyOS4wNS4yMDI2IjpbIlJNMSJdLCIzMC4wNS4yMDI2IjpbIlBQSyJdLCIwMy4wNi4yMDI2IjpbIkJJTyJdLCIwNS4wNi4yMDI2IjpbIlJNMSIsIlJNMiJdLCIwNi4wNi4yMDI2IjpbIldFVCJdLCIxMC4wNi4yMDI2IjpbIkJJTyJdLCIxMS4wNi4yMDI2IjpbIlJNMSJdLCIxMi4wNi4yMDI2IjpbIlBQSyJdLCIxNy4wNi4yMDI2IjpbIkJJTyJdLCIxOC4wNi4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIxOS4wNi4yMDI2IjpbIldFVCJdLCIyNC4wNi4yMDI2IjpbIkJJTyJdLCIyNS4wNi4yMDI2IjpbIlJNMSJdLCIyNi4wNi4yMDI2IjpbIlBQSyJdLCIwMS4wNy4yMDI2IjpbIkJJTyJdLCIwMi4wNy4yMDI2IjpbIlJNMSIsIlJNMiJdLCIwMy4wNy4yMDI2IjpbIldFVCJdLCIwOS4wNy4yMDI2IjpbIkJJTyJdLCIxMC4wNy4yMDI2IjpbIlJNMSJdLCIxMS4wNy4yMDI2IjpbIlBQSyJdLCIxNS4wNy4yMDI2IjpbIkJJTyJdLCIxNi4wNy4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIxNy4wNy4yMDI2IjpbIldFVCJdLCIyMi4wNy4yMDI2IjpbIkJJTyJdLCIyMy4wNy4yMDI2IjpbIlJNMSJdLCIyNC4wNy4yMDI2IjpbIlBQSyJdLCIyOS4wNy4yMDI2IjpbIkJJTyJdLCIzMC4wNy4yMDI2IjpbIlJNMSIsIlJNMiJdLCIzMS4wNy4yMDI2IjpbIldFVCJdLCIwNS4wOC4yMDI2IjpbIkJJTyJdLCIwNi4wOC4yMDI2IjpbIlJNMSJdLCIwNy4wOC4yMDI2IjpbIlBQSyJdLCIxMi4wOC4yMDI2IjpbIkJJTyJdLCIxMy4wOC4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIxNC4wOC4yMDI2IjpbIldFVCJdLCIxOS4wOC4yMDI2IjpbIkJJTyJdLCIyMC4wOC4yMDI2IjpbIlJNMSJdLCIyMS4wOC4yMDI2IjpbIlBQSyJdLCIyNi4wOC4yMDI2IjpbIkJJTyJdLCIyNy4wOC4yMDI2IjpbIlJNMSIsIlJNMiJdLCIyOC4wOC4yMDI2IjpbIldFVCJdLCIwMi4wOS4yMDI2IjpbIkJJTyJdLCIwMy4wOS4yMDI2IjpbIlJNMSJdLCIwNC4wOS4yMDI2IjpbIlBQSyJdLCIwOS4wOS4yMDI2IjpbIkJJTyJdLCIxMC4wOS4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIxMS4wOS4yMDI2IjpbIldFVCJdLCIxNi4wOS4yMDI2IjpbIkJJTyJdLCIxNy4wOS4yMDI2IjpbIlJNMSJdLCIxOC4wOS4yMDI2IjpbIlBQSyJdLCIyMy4wOS4yMDI2IjpbIkJJTyJdLCIyNC4wOS4yMDI2IjpbIlJNMSIsIlJNMiJdLCIyNS4wOS4yMDI2IjpbIldFVCJdLCIzMC4wOS4yMDI2IjpbIkJJTyJdLCIwMS4xMC4yMDI2IjpbIlJNMSJdLCIwMi4xMC4yMDI2IjpbIlBQSyJdLCIwOC4xMC4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwOS4xMC4yMDI2IjpbIldFVCJdLCIxNC4xMC4yMDI2IjpbIkJJTyJdLCIxNS4xMC4yMDI2IjpbIlJNMSJdLCIxNi4xMC4yMDI2IjpbIlBQSyJdLCIyMi4xMC4yMDI2IjpbIlJNMSIsIlJNMiJdLCIyMy4xMC4yMDI2IjpbIldFVCJdLCIyOC4xMC4yMDI2IjpbIkJJTyJdLCIyOS4xMC4yMDI2IjpbIlJNMSJdLCIzMC4xMC4yMDI2IjpbIlBQSyJdLCIwNS4xMS4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwNi4xMS4yMDI2IjpbIldFVCJdLCIxMS4xMS4yMDI2IjpbIkJJTyJdLCIxMi4xMS4yMDI2IjpbIlJNMSJdLCIxMy4xMS4yMDI2IjpbIlBQSyJdLCIxOS4xMS4yMDI2IjpbIlJNMSIsIlJNMiJdLCIyMC4xMS4yMDI2IjpbIldFVCJdLCIyNS4xMS4yMDI2IjpbIkJJTyJdLCIyNi4xMS4yMDI2IjpbIlJNMSJdLCIyNy4xMS4yMDI2IjpbIlBQSyJdLCIwMy4xMi4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdLCIwNC4xMi4yMDI2IjpbIldFVCJdLCIwOS4xMi4yMDI2IjpbIkJJTyJdLCIxMC4xMi4yMDI2IjpbIlJNMSJdLCIxMS4xMi4yMDI2IjpbIlBQSyJdLCIxNy4xMi4yMDI2IjpbIlJNMSIsIlJNMiJdLCIxOC4xMi4yMDI2IjpbIldFVCJdLCIyMi4xMi4yMDI2IjpbIkJJTyJdLCIyMy4xMi4yMDI2IjpbIlJNMSJdLCIyNC4xMi4yMDI2IjpbIlBQSyJdLCIzMS4xMi4yMDI2IjpbIlJNMSIsIlJNMiIsIlJNNCJdfQ=="
+    }
+  ]
+}

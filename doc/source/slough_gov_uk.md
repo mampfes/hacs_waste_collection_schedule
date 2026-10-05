@@ -1,44 +1,63 @@
 # Slough Borough Council
 
-Support for schedules provided by [Slough Borough Council](https://www.slough.gov.uk), serving Slough, UK.
+Support for schedules provided by [Slough Borough Council](https://www.slough.gov.uk).
+
+Source for slough.gov.uk services for Slough Borough Council.
 
 ## Configuration via configuration.yaml
 
+### Using record_id
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: slough_gov_uk
       args:
         record_id: RECORD_ID
 ```
 
-### Configuration Variables
-
-**record_id**
-*(Integer) (optional)*
-
-The numeric ID from the Slough bin directory URL (e.g. `34771` from `/directory-record/34771/...`). Use this **or** `street`, not both.
-
-**street**
-*(String) (optional)*
-
-The name of your street as listed in the Slough bin directory (e.g. `Knolton Way, Montgomery Place`). Use this **or** `record_id`, not both.
-
-## Example
+### Using street
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
+    - name: slough_gov_uk
+      args:
+        street: STREET
+```
+
+### Configuration Variables
+
+**record_id**  
+*(string) (alternative)*
+
+**street**  
+*(string) (alternative)*
+
+Provide one of: `record_id` or `street`.
+
+## Example
+
+### Using record_id
+
+```yaml
+waste_collection_schedule:
+  sources:
     - name: slough_gov_uk
       args:
         record_id: 34771
 ```
 
-## How to find your `record_id`
+### Using street
 
-1. Go to [https://www.slough.gov.uk/bin-collections](https://www.slough.gov.uk/bin-collections)
-2. Enter your street name in the search box
-3. Click the matching result — the URL will look like `/directory-record/34771/knolton-way-montgomery-place`
-4. The number (e.g. `34771`) is your `record_id`
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: slough_gov_uk
+      args:
+        street: Knolton Way, Montgomery Place
+```
 
-Alternatively, pass your street name exactly as shown in the search results using the `street` argument.
+## How to get the source arguments
+
+Search for your street at https://www.slough.gov.uk/bin-collections and note the number from the URL of your matching result (for example 34771 from /directory-record/34771/...). Use that number as the directory record ID, or give the exact street name as listed in the directory instead (for example 'Knolton Way, Montgomery Place'). Use one of the two, not both.

@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentException",
+    "message": "Address not supported, should end with a locality within the Varberg or Falkenberg municipality (e.g. 'Varberg', 'Veddige', 'Tv\u00e5\u00e5ker', 'Falkenberg', 'Ullared', 'Vessigebro')"
+  }
+}

@@ -1,198 +1,154 @@
 import re
 from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
-
-TITLE = "AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH"
-DESCRIPTION = (
-    "Source for AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH, Germany."
-)
-URL = "https://www.ajl-mbh.de"
-COUNTRY = "de"
-
-TEST_CASES = {
-    "Biederitz (no street)": {"town": "Biederitz"},
-    "Burg, Fliederweg": {"town": "Burg", "street": "Fliederweg"},
-    "Biederitz by ID": {"town": 98},
-    "Burg by ID with street ID": {"town": 154, "street": 313},
-}
-
-ICON_MAP = {
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Papier": Icons.PAPER,
-    "Biomüll": Icons.ORGANIC,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Sperrmüll": Icons.BULKY,
-    "Schadstoffmobil": Icons.HAZARDOUS,
-    "Weihnachtsbaum": Icons.CHRISTMAS_TREE,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "town": "Town",
-        "street": "Street (only needed for towns with multiple collection zones)",
-    },
-    "de": {
-        "town": "Ort",
-        "street": "Straße (nur bei Orten mit mehreren Abholbereichen nötig)",
-    },
-}
+from waste_collection_schedule import field_terms, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import RowTransformer
 
 BASE_URL = "https://www.ajl-mbh.de/abfallkalender/entsorgungstermine"
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
+
+def _argument(value):
+    return value if isinstance(value, int) else str(value).strip()
+
+
+def _streets(root):
+    result = {}
+    for option in root.select("select#street option"):
+        value = option.get("value", "")
+        if value and value != "-1" and value.isdigit():
+            result[option.get_text(strip=True)] = int(value)
+    return result
+
+
+def _match(options, field, value):
+    for label, identifier in options.items():
+        if label.casefold() == value.casefold():
+            return identifier
+    raise SourceArgumentNotFoundWithSuggestions(field, value, list(options))
+
+
+def _town_id(response, *, town, **_):
+    root = BeautifulSoup(response.text, "html.parser")
+    towns = {}
+    for anchor in root.select("a.stadtbutton"):
+        match = re.search(r"town=(\d+)", anchor.get("href", ""))
+        name = anchor.get("name", "").strip()
+        if match and name:
+            towns[name] = int(match[1])
+    return _match(towns, "town", town)
+
+
+def _street_id(response, *_, street, **kwargs):
+    return _match(
+        _streets(BeautifulSoup(response.text, "html.parser")), "street", street
     )
-}
 
 
-def _fetch_towns() -> dict[str, int]:
-    """Return a mapping of town name → town ID from the base page."""
-    r = requests.get(BASE_URL, headers=HEADERS, timeout=30)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    towns: dict[str, int] = {}
-    for a in soup.find_all("a", class_="stadtbutton"):
-        href = a.get("href", "")
-        m = re.search(r"town=(\d+)", href)
-        name = a.get("name", "").strip()
-        if m and name:
-            towns[name] = int(m.group(1))
-    return towns
+def _calendar_params(town_id, street_id=None, **_):
+    params = {"year": date.today().year, "town": town_id}
+    if street_id is not None:
+        params["street"] = street_id
+    return params
 
 
-def _fetch_streets(town_id: int, year: int) -> dict[str, int]:
-    """Return a mapping of street name → street ID for the given town."""
-    r = requests.get(
-        BASE_URL,
-        params={"year": year, "town": town_id},
-        headers=HEADERS,
-        timeout=30,
-    )
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    streets: dict[str, int] = {}
-    select = soup.find("select", id="street")
-    if select:
-        for option in select.find_all("option"):
-            val = option.get("value", "")
-            label = option.get_text(strip=True)
-            if val and val != "-1" and label:
+def _events(roots, source):
+    root = roots[0]
+    heading = root.select_one("h2.ajl-green")
+    year_match = re.search(r"\d{4}", heading.get_text()) if heading else None
+    year = int(year_match[0]) if year_match else date.today().year
+    calendar = root.select_one("div#calenderview")
+    if calendar is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", str(source.params.get("street")), list(_streets(root))
+        )
+    rows = []
+    for category in calendar.select("div.cat"):
+        inner = category.find("div", class_=re.compile(r"^cat-"))
+        heading = inner.find("h3") if inner else None
+        if heading is None:
+            continue
+        for day in inner.select(".dayprint"):
+            match = re.search(r"(\d{1,2})\.(\d{2})\.", day.get_text(strip=True))
+            if match:
                 try:
-                    streets[label] = int(val)
+                    collection_date = date(year, int(match[2]), int(match[1]))
                 except ValueError:
-                    pass
-    return streets
+                    continue
+                rows.append((collection_date, heading.get_text(strip=True)))
+    return rows
 
 
-class Source:
-    def __init__(
-        self,
-        town: str | int,
-        street: str | int | None = None,
-    ):
-        self._town = town
-        self._street = street
+@final
+class Source(BaseSource):
+    TITLE = "AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH"
+    DESCRIPTION = (
+        "Source for AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH, Germany."
+    )
+    URL = "https://www.ajl-mbh.de"
+    COUNTRY = "de"
+    TEST_CASES: ClassVar[dict] = {
+        "Biederitz (no street)": {"town": "Biederitz"},
+        "Burg, Fliederweg": {"town": "Burg", "street": "Fliederweg"},
+        "Biederitz by ID": {"town": 98},
+        "Burg by ID with street ID": {"town": 154, "street": 313},
+    }
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        today = date.today()
-        year = today.year
-
-        # Resolve town ID
-        if isinstance(self._town, int):
-            town_id = self._town
-        else:
-            towns = _fetch_towns()
-            # Case-insensitive fallback
-            match = towns.get(self._town)
-            if match is None:
-                # Try case-insensitive
-                lower_map = {k.lower(): v for k, v in towns.items()}
-                match = lower_map.get(self._town.lower())
-            if match is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "town",
-                    self._town,
-                    list(towns.keys()),
-                )
-            town_id = match
-
-        # Resolve street ID (if provided)
-        street_id: int | None = None
-        if self._street is not None:
-            if isinstance(self._street, int):
-                street_id = self._street
-            else:
-                streets = _fetch_streets(town_id, year)
-                match_s = streets.get(self._street)
-                if match_s is None:
-                    lower_map_s = {k.lower(): v for k, v in streets.items()}
-                    match_s = lower_map_s.get(self._street.lower())
-                if match_s is None:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "street",
-                        self._street,
-                        list(streets.keys()),
-                    )
-                street_id = match_s
-
-        # Fetch calendar page
-        params: dict[str, int | str] = {"year": year, "town": town_id}
-        if street_id is not None:
-            params["street"] = street_id
-
-        r = requests.get(BASE_URL, params=params, headers=HEADERS, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Extract year from heading (e.g. "Abholtermine 2026 für …")
-        cal_year = year
-        heading = soup.find("h2", class_="ajl-green")
-        if heading:
-            m = re.search(r"(\d{4})", heading.get_text())
-            if m:
-                cal_year = int(m.group(1))
-
-        # Find the calenderview div
-        cal_div = soup.find("div", id="calenderview")
-        if cal_div is None:
-            # Town requires a street selection — no data available at town level
-            streets = _fetch_streets(town_id, year)
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                str(self._street),
-                list(streets.keys()),
-            )
-
-        entries: list[Collection] = []
-        for cat_div in cal_div.find_all("div", class_="cat"):
-            # The inner div has a class like cat-gelb, cat-papier, etc.
-            inner = cat_div.find("div", class_=re.compile(r"^cat-"))
-            if inner is None:
-                continue
-            h3 = inner.find("h3")
-            if h3 is None:
-                continue
-            waste_type = h3.get_text(strip=True)
-            icon = ICON_MAP.get(waste_type)
-
-            for day_div in inner.find_all("div", class_="dayprint"):
-                text = day_div.get_text(strip=True)
-                # Format: "Mo 19.01." → day=19, month=01
-                dm = re.search(r"(\d{1,2})\.(\d{2})\.", text)
-                if dm:
-                    try:
-                        d = date(cal_year, int(dm.group(2)), int(dm.group(1)))
-                        entries.append(Collection(d, waste_type, icon=icon))
-                    except ValueError:
-                        pass
-
-        return entries
+    PARAMS = (
+        text_field("town", term=field_terms.MUNICIPALITY, coerce=_argument),
+        text_field("street", term=field_terms.STREET, optional=True, coerce=_argument),
+    )
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown town": {"town": "__unknown_town__"},
+        "Street required": {"town": "Burg"},
+    }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.BULKY_WASTE,
+        wt.HAZARDOUS,
+        wt.GARDEN_WASTE,
+    ]
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                BASE_URL,
+                pick=_town_id,
+                given=lambda town, **_: town if isinstance(town, int) else None,
+            ),
+            retrievers.Lookup(
+                BASE_URL,
+                params=_calendar_params,
+                pick=_street_id,
+                given=lambda *_, street=None, **kwargs: (
+                    street if isinstance(street, int) else None
+                ),
+                when=lambda *_, street=None, **kwargs: street is not None,
+            ),
+        ),
+        url=BASE_URL,
+        params=_calendar_params,
+        raise_for_status=True,
+    )
+    parse = parsers.HtmlParser("html")
+    preprocess = staticmethod(_events)
+    transform = RowTransformer(
+        type_value_map={
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Biomüll": wt.ORGANIC,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Sperrmüll": wt.BULKY_WASTE,
+            "Schadstoffmobil": wt.HAZARDOUS,
+            "Weihnachtsbaum": wt.GARDEN_WASTE,
+        },
+        carry_raw_label=True,
+    )

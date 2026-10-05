@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php ef64817038",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=603+Marine+Parade&council=shared&type=address",
+      "body": "{\"params\":[[\"council\",\"shared\"],[\"search\",\"603 Marine Parade\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "117",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:13:02 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "W3siaWQiOiIxMDUyNzctMTE1MTc0IiwicmFfdW5pcXVlX2lkIjoiMTE1MTc0Iiwic3VmaV9pZCI6IjEwNTI3NyIsInZhbHVhdGlvbl9pZCI6IjA5OTEwMjk3MDAiLCJ2YWx1ZSI6IjYwMyBNYXJpbmUgUGFyYWRlICgwOTkxMDI5NzAwKSJ9XQ=="
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php 8cbd1b395d",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php?v=0991029700&s=105277&r=115174",
+      "body": "{\"params\":[[\"r\",\"115174\"],[\"s\",\"105277\"],[\"v\",\"0991029700\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "414",
+        "content-encoding": "gzip",
+        "content-type": "application/json",
+        "date": "Fri, 02 Oct 2026 12:13:02 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjYwMyBNYXJpbmUgUGFyYWRlXCI+XG5cdDxoMj5Db2xsZWN0aW9uIGRheXM8XC9oMj5cblx0PHA+QmVsb3cgYXJlIHRoZSBydWJiaXNoIGFuZCByZWN5Y2xpbmcgY29sbGVjdGlvbiBkYXlzIGZvciA8c3Ryb25nPjYwMyBNYXJpbmUgUGFyYWRlPFwvc3Ryb25nPi48XC9wPlxuXHQ8dGFibGUgd2lkdGg9XCIxMDAlXCI+XG5cdFx0PHRoZWFkPlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGggd2lkdGg9XCIxMDAlXCI+UnViYmlzaCBjb2xsZWN0aW9uPFwvdGg+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90aGVhZD5cblx0XHQ8dGJvZHk+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0ZD5FdmVyeSBUdWVzZGF5IC0gT3V0IGJ5IDdhbTxcL3RkPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGJvZHk+XG5cdDxcL3RhYmxlPlxuXHQ8dGFibGUgd2lkdGg9XCIxMDAlXCI+XG5cdFx0PHRoZWFkPlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGggd2lkdGg9XCIxMDAlXCI+UmVjeWNsaW5nIGNvbGxlY3Rpb248XC90aD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3RoZWFkPlxuXHRcdDx0Ym9keT5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRkPkV2ZXJ5IE1vbmRheSAtIE91dCBieSA3YW08XC90ZD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3Rib2R5PlxuXHQ8XC90YWJsZT5cblx0PHA+TW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGlzIHByb3BlcnR5IGNhbiBiZSBmb3VuZCBvbiB0aGUgPGEgaHJlZj1cIlwvc2VydmljZXNcL3Byb3BlcnRpZXMtYW5kLXJhdGVzXC9teS1wcm9wZXJ0eVwvP3JpZD0xMDUyNzctMTE1MTc0XCI+TXkgUHJvcGVydHk8XC9hPiBwYWdlLjxcL3A+XG48XC9kaXY+IiwianMiOiIifQ=="
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031540175 ",
+      "method": "GET",
+      "url": "https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031540175",
+      "final_url": "https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031540175",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "date": "Sat, 26 Sep 2026 20:30:56 GMT",
+        "content-length": "1092"
+      },
+      "content_b64": "ew0KICAidXBybiI6ICIxMDAwMzE1NDAxNzUiLA0KICAiYWRkcmVzcyI6ICJGTEFUIDEgMSBET1VHTEFTIFJPQUQiLA0KICAicG9zdGNvZGUiOiAiTkc3IDFOVyIsDQogICJiaW5UeXBlcyI6IFsNCiAgICAiQ29tbXVuYWxSZWN5Y2xpbmciLA0KICAgICJXYXN0ZSIsDQogICAgIkdhcmRlbiINCiAgXSwNCiAgIm5leHRDb2xsZWN0aW9ucyI6IFsNCiAgICB7DQogICAgICAiY29sbGVjdGlvblR5cGUiOiAiUmVjeWNsaW5nIiwNCiAgICAgICJjb2xsZWN0aW9uRGF0ZSI6ICIyMDI2LTA5LTMwVDA3OjAwOjAwIiwNCiAgICAgICJjb2xsZWN0aW9uRGF5IjogIldlZG5lc2RheSINCiAgICB9LA0KICAgIHsNCiAgICAgICJjb2xsZWN0aW9uVHlwZSI6ICJXYXN0ZSIsDQogICAgICAiY29sbGVjdGlvbkRhdGUiOiAiMjAyNi0xMC0wN1QwNzowMDowMCIsDQogICAgICAiY29sbGVjdGlvbkRheSI6ICJXZWRuZXNkYXkiDQogICAgfSwNCiAgICB7DQogICAgICAiY29sbGVjdGlvblR5cGUiOiAiR2FyZGVuIiwNCiAgICAgICJjb2xsZWN0aW9uRGF0ZSI6ICIyNjUwLTAxLTE2VDAwOjAwOjAwIiwNCiAgICAgICJjb2xsZWN0aW9uRGF5IjogIldlZG5lc2RheSINCiAgICB9DQogIF0sDQogICJoYXNXYXN0ZSI6IHRydWUsDQogICJoYXNSZWN5Y2xpbmciOiB0cnVlLA0KICAiaGFzR2FyZGVuIjogdHJ1ZSwNCiAgImhhc0Zvb2QiOiBmYWxzZSwNCiAgImlzQ29tbXVuYWwiOiB0cnVlLA0KICAibmV4dEJpbklzV2FzdGUiOiBmYWxzZSwNCiAgIm5leHRCaW5Jc1JlY3ljbGluZyI6IHRydWUsDQogICJuZXh0QmluSXNHYXJkZW4iOiBmYWxzZSwNCiAgIm5leHRCaW5Jc0Zvb2QiOiBmYWxzZSwNCiAgInJlY3ljbGluZ1dlZWsiOiAiUmVjeWNsaW5nIFdlZWsgQiIsDQogICJuZXh0Q29sbGVjdGlvblR5cGUiOiAiUmVjeWNsaW5nIiwNCiAgIm5leHRDb2xsZWN0aW9uRGF0ZSI6ICIyMDI2LTA5LTMwVDA3OjAwOjAwIiwNCiAgIm9sZFN0eWxlQ2F0ZWdvcnlGb3JNeVByb3BlcnR5IjogImRyeXJlYyIsDQogICJjb2xsZWN0aW9uRGF5IjogIldlZG5lc2RheSIsDQogICJjYWxlbmRhckRheSI6ICJXZWRuZXNkYXkiLA0KICAiY29udGV4dEpvYnMiOiBudWxsDQp9"
+    }
+  ]
+}

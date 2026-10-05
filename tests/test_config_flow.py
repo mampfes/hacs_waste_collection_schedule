@@ -1,7 +1,9 @@
 import asyncio
 import calendar  # noqa: F401 — must import stdlib calendar FIRST
 import importlib
+import json
 import os
+import re
 import sys
 import types
 
@@ -231,6 +233,48 @@ def test_an_entry_stored_before_the_fix_still_loads() -> None:
     shell = SourceShell.create("koppl_at", {}, {"kwargs": ""})
 
     assert shell is not None
+
+
+def test_pipeline_sources_supply_the_url_placeholders_their_form_uses() -> None:
+    # The generated translations rewrite a URL in a PARAMS description (e.g.
+    # field_terms' UPRN help) to a {url_*} placeholder. Home Assistant's
+    # frontend fails to render the field if the flow doesn't supply a value.
+    translations = os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "custom_components",
+        "waste_collection_schedule",
+        "translations",
+        "en.json",
+    )
+    with open(translations, encoding="utf-8") as f:
+        steps = json.load(f)["config"]["step"]
+
+    flow = WasteCollectionConfigFlow()
+    checked = 0
+    missing = {}
+    for step, strings in steps.items():
+        if not step.startswith("args_"):
+            continue
+        needed = set(re.findall(r"\{(url_\w+)\}", json.dumps(strings)))
+        if not needed:
+            continue
+        source = step.removeprefix("args_")
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{source}"
+            )
+        except ImportError:
+            continue
+        if not _is_new_style_source(module.Source):
+            continue
+        checked += 1
+        unsupplied = needed - set(flow._get_description_placeholders(source))
+        if unsupplied:
+            missing[source] = sorted(unsupplied)
+
+    assert checked, "no pipeline source uses a {url_*} placeholder any more"
+    assert not missing
 
 
 # --- #7444: the customize selection offers the provider's original labels ----
@@ -503,7 +547,7 @@ def test_the_confirmation_step_is_translated() -> None:
     base = Path(__file__).resolve().parent.parent / (
         "custom_components/waste_collection_schedule/translations"
     )
-    for lang in ("en", "de", "fr", "it", "nl", "sl"):
+    for lang in ("en", "de", "fr", "it", "nl", "sl", "da"):
         step = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
         step = step["config"]["step"]["cascade_confirm"]
         assert step["description"] == "{cascade_summary}"
@@ -928,7 +972,7 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
     base = Path(__file__).resolve().parent.parent / (
         "custom_components/waste_collection_schedule/translations"
     )
-    for lang in ("en", "de", "fr", "it", "nl", "sl"):
+    for lang in ("en", "de", "fr", "it", "nl", "sl", "da"):
         labels = json.loads((base / f"{lang}.json").read_text(encoding="utf-8"))
         labels = labels["config"]["step"]["cascade_confirm"]["data"]
         missing = sorted(extras - set(labels))

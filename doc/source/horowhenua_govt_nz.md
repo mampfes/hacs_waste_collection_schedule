@@ -1,6 +1,8 @@
 # Horowhenua District Council
 
-Support for schedules provided by [Horowhenua District Council Kerbside Rubbish & Recycling Services](https://www.horowhenua.govt.nz/Services/Home-Property/Rubbish-Recycling/Kerbside-Rubbish-Recycling-Services).
+Support for schedules provided by [Horowhenua District Council](https://www.horowhenua.govt.nz/).
+
+Source for Horowhenua District Council Rubbish & Recycling collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,24 +11,24 @@ waste_collection_schedule:
   sources:
     - name: horowhenua_govt_nz
       args:
-        post_code: POST_CODE
-        town: TOWN
         street_name: STREET_NAME
         street_number: STREET_NUMBER
+        post_code: POST_CODE
+        town: TOWN
 ```
 
 ### Configuration Variables
-
-**post_code**  
-*(string) (required)*
-
-**town**  
-*(string) (required)*
 
 **street_name**  
 *(string) (required)*
 
 **street_number**  
+*(string) (required)*
+
+**post_code**  
+*(string) (required)*
+
+**town**  
 *(string) (required)*
 
 ## Example
@@ -36,12 +38,8 @@ waste_collection_schedule:
   sources:
     - name: horowhenua_govt_nz
       args:
-        post_code: 4814
-        town: Foxton
-        street_name: State Highway 1
-        street_number: 18
+        post_code: '4821'
+        town: Shannon
+        street_name: Bryce Street
+        street_number: '55'
 ```
-
-## How to get the source arguments
-
-Visit the [Horowhenua District Council Waste and Recycling - Check my rubbish and recycling collection dates](https://www.horowhenua.govt.nz/Services/Home-Property/Rubbish-Recycling/Check-my-rubbish-and-recycling-collection-date) page and search for your address. The arguments should exactly match the results shown for Post Code, Town, Street and number portion of the Property.

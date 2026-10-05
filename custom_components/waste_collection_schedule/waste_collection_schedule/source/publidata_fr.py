@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from dateutil.rrule import (
+    DAILY,
     FR,
     MO,
     MONTHLY,
@@ -81,6 +82,18 @@ TEST_CASES = {
         "insee_code": "18279",
         "instance_id": 1619,
     },
+    "CASA Sophia Antipolis, Antibes (individual)": {
+        "address": "10 rue de la République",
+        "insee_code": "06004",
+        "instance_id": 1398,
+        "public_type": "individual_housing",
+    },
+    "CASA Sophia Antipolis, Valbonne (collective)": {
+        "address": "10 rue Albert Einstein",
+        "insee_code": "06152",
+        "instance_id": 1398,
+        "public_type": "collective_housing",
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -136,11 +149,11 @@ TEST_CASES = {
     # "insee_code": "62193",
     # "instance_id": 679,
     # },
-    # "Métropole Européenne de Lille, Lille": {
-    # "address": "34 Place Augustin Laurent",
-    # "insee_code": "59350",
-    # "instance_id": 876,
-    # },
+    "Métropole Européenne de Lille, Provin": {  # codespell:ignore provin
+        "address": "Rue Pierre Maille",
+        "insee_code": "59477",
+        "instance_id": 876,
+    },
     # "Valcobreizh, Irodouër": {
     # "address": "1 rue de Rennes",
     # "insee_code": "35135",
@@ -354,6 +367,11 @@ EXTRA_INFO = [
         "url": "https://valodev18.fr/la-collecte-des-vos-dechets/",
         "default_params": {"instance_id": 1619},
     },
+    {
+        "title": "CA Sophia Antipolis",
+        "url": "https://www.agglo-sophiaantipolis.fr/vivre-et-habiter/gerer-ses-dechets",
+        "default_params": {"instance_id": 1398},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {
@@ -495,13 +513,28 @@ class Source:
         for hit in hits:
             source = hit.get("_source", {})
             if source.get("metas", {}).get("sectorization") == "single":
-                garbage_type = source.get("metas", {}).get("garbage_types", [""])[0]
-                if garbage_type:
-                    result.setdefault(garbage_type, {"schedules": []})
-                    result[garbage_type]["schedules"].extend(
-                        source.get("schedules", [])
-                    )
+                self._add_hit(result, source)
+
+        if not result:
+            # Some instances never report a "single" sectorization hit for the
+            # address (e.g. areas only covered by "multi" hits). Fall back to
+            # every hit, each grouped under its own waste type.
+            for hit in hits:
+                self._add_hit(result, hit.get("_source", {}))
+
+        if not result:
+            _LOGGER.warning(
+                "Publidata returned %d hits but none with a waste type", len(hits)
+            )
         return result
+
+    @staticmethod
+    def _add_hit(result, source):
+        garbage_types = source.get("metas", {}).get("garbage_types") or []
+        garbage_type = garbage_types[0] if garbage_types else None
+        if garbage_type:
+            result.setdefault(garbage_type, {"schedules": []})
+            result[garbage_type]["schedules"].extend(source.get("schedules") or [])
 
     def _is_week_day(self, input_string):
         return any(day in input_string for day in _CALENDAR_DAY_VERY_ABBR)
@@ -751,17 +784,26 @@ class Source:
             kwargs.update(self._parse_date_range(date_range, default_year))
 
         parts = opening_hours.split()
+        has_rule_part = False
         while parts:
             part = parts.pop(0)
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
+                has_rule_part = True
             elif part.startswith(
                 ("off", '"')
             ):  # schedule should be of type "closed" or "closing_exception", or part should be a comment
                 continue
             else:
                 kwargs.update(self._parse_part(part))
+                has_rule_part = True
+
+        # A bare date range such as 'Nov 29-Dec 31 off "Fermeture"' covers every
+        # day of the range. Left as MONTHLY, the exclusion rule only hit one day
+        # per month and seasonal collections kept showing during closures.
+        if not has_rule_part and self._has_date_range(schedule["opening_hours"]):
+            kwargs["freq"] = DAILY
 
         # Create the rrule
         rule = rrule(**kwargs)
@@ -806,11 +848,15 @@ class Source:
                         err,
                     )
                     continue
+            # Never hand Collection a None/empty type (#5127).
+            label = LABEL_MAP.get(waste_type) or (
+                waste_type.capitalize() if waste_type else "Autre"
+            )
             for entry in my_rruleset:
                 entries.append(
                     Collection(
                         entry.date(),
-                        LABEL_MAP.get(waste_type, waste_type.capitalize()),
+                        label,
                         icon=ICON_MAP.get(waste_type),
                     )
                 )

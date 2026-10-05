@@ -16,10 +16,9 @@ declaration. That fallback is gone (#7028) and such a source now derives an
 empty list, which is the honest answer. Declaring the whole catalogue is therefore
 a deliberate act, and still wrong, so it is still flagged.
 
-This module replays every recorded cassette (offline, deterministic — the same
-machinery as ``test_offline_fixtures``) through the source's ``fetch()`` and
-asserts that every returned ``waste_type.id`` is one the source declares,
-ignoring ``preserved:`` ids (an intentionally kept unknown label).
+The cassette replay in ``test_offline_fixtures`` invokes this module's
+declaration gate on the returned collections, without fetching every case twice.
+It ignores ``preserved:`` ids (intentionally kept unknown labels).
 
 Only new-style pipeline sources (those subclassing ``BaseSource``) are gated;
 legacy ``fetch()`` sources have no canonical vocabulary to check. Generic-engine
@@ -33,8 +32,6 @@ import calendar  # noqa: F401 - import stdlib calendar before the package path
 import os
 import sys
 from collections import defaultdict
-
-import pytest
 
 sys.path.insert(
     0,
@@ -149,31 +146,16 @@ def _violations(cls, results):
     return uses_all_types_fallback, undeclared
 
 
-@pytest.mark.parametrize(
-    "module_name,case_slug,path",
-    _FIXTURES,
-    ids=[f"{m}::{c}" for m, c, _ in _FIXTURES],
-)
-def test_returned_waste_types_are_declared(module_name, case_slug, path):
-    cls = _source_class(module_name)
-    if not _is_gated(module_name, cls):
-        pytest.skip(f"{module_name}: not a gated new-style pipeline source")
-    if module_name in ALLOWLIST:
-        pytest.skip(f"{module_name}: known WASTE_TYPES debt (allowlisted, #6935)")
-
-    args = _resolve_case(cls, case_slug)
-    assert args is not None, (
-        f"cassette {module_name}/{case_slug} has no matching TEST_CASE"
-    )
-
-    with cassette.replaying(path):
-        results = cls(**args).fetch()
+def assert_returned_waste_types_declared(module_name, case_slug, cls, results):
+    """Check a pipeline source's declared vocabulary against replayed results."""
+    if not _is_gated(module_name, cls) or module_name in ALLOWLIST:
+        return
 
     uses_all_types_fallback, undeclared = _violations(cls, results)
     assert not uses_all_types_fallback, (
-        f"{module_name}: WASTE_TYPES equals the whole ALL_TYPES catalogue, "
-        f"which is not a real declaration — declare the specific types this "
-        f"source produces"
+        f"{module_name}::{case_slug}: WASTE_TYPES equals the whole ALL_TYPES catalogue, "
+        "which is not a real declaration — declare the specific types this "
+        "source produces"
     )
     assert not undeclared, (
         f"{module_name}::{case_slug}: returned undeclared waste types: "
@@ -184,7 +166,7 @@ def test_returned_waste_types_are_declared(module_name, case_slug, path):
 # ---------------------------------------------------------------------------
 # STATIC (cassette-free) gate — closes the blind spot in #7029.
 #
-# The cassette replay above can only judge a source it actually exercises, so a
+# The cassette replay in test_offline_fixtures can only judge a source it exercises, so a
 # gated pipeline source with NO cassette is never run and stays invisible to it.
 # This check needs no cassette: it imports every gated pipeline source and flags
 # any whose declared ``WASTE_TYPES`` is the whole ``ALL_TYPES`` catalogue. It is

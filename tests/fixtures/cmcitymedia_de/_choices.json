@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET http://slim.cmcitymedia.de/v1/415/waste/41500/districts ",
+      "method": "GET",
+      "url": "http://slim.cmcitymedia.de/v1/415/waste/41500/districts",
+      "final_url": "http://slim.cmcitymedia.de/v1/415/waste/41500/districts",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 20:29:54 GMT",
+        "server": "Apache",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Accept-Encoding, Content-Type, Origin, Accept-Language, User-Agent, Authorization",
+        "access-control-allow-methods": "POST, GET, OPTIONS, DELETE, PUT, HEAD, TRACE, PATCH, ACCEPT",
+        "access-control-allow-credentials": "true",
+        "content-length": "571",
+        "content-type": "application/json"
+      },
+      "content_b64": "eyJyZXN1bHQiOlt7Im1ldGEiOnsicm93cyI6IjEwIn19LHsiaXRlbXMiOlt7ImlkIjoiMTM2NiIsIm5hbWUiOiJCZXppcmsgQTogQWhyZG9yZiJ9LHsiaWQiOiIxMzY3IiwibmFtZSI6IkJlemlyayBCOiBBaHJoXHUwMGZjdHRlIn0seyJpZCI6IjEzNjgiLCJuYW1lIjoiQmV6aXJrIEM6IEFsZW5kb3JmLCBEb2xsZW5kb3JmLCBIXHUwMGZjbmdlcnNkb3JmLFxuUmlwc2RvcmYsIFdhbGRvcmYifSx7ImlkIjoiMTM2OSIsIm5hbWUiOiJCZXppcmsgRDogQmxhbmtlbmhlaW0sIEZyZWlsaW5nZW4ifSx7ImlkIjoiMTM3MCIsIm5hbWUiOiJCZXppcmsgRTogQmxhbmtlbmhlaW1lcmRvcmYsIE5vbm5lbmJhY2gifSx7ImlkIjoiMTM3MSIsIm5hbWUiOiJCZXppcmsgRjogTGluZHdlaWxlciwgUm9ociJ9LHsiaWQiOiIxMzcyIiwibmFtZSI6IkJlemlyayBHOiBMb21tZXJzZG9yZiJ9LHsiaWQiOiIxMzczIiwibmFtZSI6IkJlemlyayBIOiBNXHUwMGZjbGhlaW0ifSx7ImlkIjoiMTM3NCIsIm5hbWUiOiJCZXppcmsgSTogUmVldHoifSx7ImlkIjoiMTM3NSIsIm5hbWUiOiJCZXppcmsgSjogVWVkZWxob3ZlbiJ9XX1dfQ=="
+    }
+  ],
+  "widget": "cascading_select",
+  "fields": [
+    "district"
+  ],
+  "context": {
+    "hpid": 415
+  },
+  "expected": {
+    "district": 1371
+  }
+}

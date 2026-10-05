@@ -1,65 +1,58 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Eastleigh Borough Council"
-DESCRIPTION = "Source for Eastleigh Borough Council."
-URL = "https://eastleigh.gov.uk"
-TEST_CASES = {
-    "100060319000": {"uprn": 100060319000},
-    "100060300958": {"uprn": "100060300958"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-ICON_MAP = {
-    "Paper": Icons.PAPER,
-    "household": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "food": Icons.BIO_KITCHEN,
-    "glass": Icons.GLASS,
-    "garden": Icons.GARDEN,
-}
+def _date(term) -> str:
+    # The dd after each dt holds a <time datetime="YYYY-MM-DD">; a dd without
+    # one (the bulky-item service's description) raises and skips the row.
+    return term.find_next_sibling("dd").select_one("time")["datetime"]
 
 
-API_URL = "https://eastleigh.gov.uk/waste-bins-and-recycling/collection-dates/your-waste-bin-and-recycling-collections"
+@final
+class Source(BaseSource):
+    TITLE = "Eastleigh Borough Council"
+    DESCRIPTION = "Source for Eastleigh Borough Council."
+    URL = "https://eastleigh.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "100060319000": {"uprn": 100060319000},
+        "100060300958": {"uprn": "100060300958"},
+    }
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+    PARAMS = (uprn(),)
 
-    def fetch(self):
-        session = requests.Session(impersonate="chrome")
-        args = {"uprn": self._uprn}
-
-        # get json file
-        r = session.get(API_URL, params=args)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        dls = soup.find_all("dl")
-
-        entries = []
-
-        for dl in dls:
-            dts = dl.findAll("dt")
-            for dt in dts:
-                dd = dt.find_next_sibling("dd")
-                if not dd:
-                    continue
-
-                try:
-                    # Mon, 29 Apr 2024
-                    date = datetime.strptime(dd.text.strip(), "%a, %d %b %Y").date()
-                except ValueError:
-                    continue
-
-                icon = ICON_MAP.get(
-                    dt.text.strip().split(" ")[0].lower()
-                )  # Collection icon
-                type = dt.text
-                entries.append(Collection(date=date, t=type, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=(
+            "https://eastleigh.gov.uk/waste-bins-and-recycling/collection-dates/"
+            "your-waste-bin-and-recycling-collections"
+        ),
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    parse = parsers.HtmlParser("dl dt")
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda term: term.get_text(strip=True),
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Household Waste Bin": wt.GENERAL_WASTE,
+            "Recycling Bin": wt.RECYCLABLES,
+            "Food Waste Bin": wt.FOOD_WASTE,
+            "Glass Box and Batteries": wt.GLASS,
+            "Garden Waste Bin": wt.GARDEN_WASTE,
+        },
+    )

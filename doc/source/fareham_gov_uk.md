@@ -1,42 +1,39 @@
-# Fareham Council
+# Fareham Borough Council
 
-Support for schedules provided by Fareham Council, serving Fareham, Hampshire, UK.
+Support for schedules provided by [Fareham Borough Council](https://www.fareham.gov.uk).
 
-The fareham gov uk website does not return all future collection dates, only the next upcoming one. You can test different addresses at <https://www.fareham.gov.uk/internetlookups/search.aspx?list=DomesticBinCollections2025on>.
-
-Credit to Fareham Borough Council for all data fetched from their API.
-
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new South East Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for fareham.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fareham_gov_uk
       args:
-        road_name: Road name
-        postcode: Post code
+        road_name: ROAD_NAME
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
 **road_name**  
-_(string) (required)_  
-The name of the road the house is on. You can include an optional house number (for example `22 street`).
+*(string) (required)*
 
 **postcode**  
-_(string) (required)_  
-The post code for the house
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fareham_gov_uk
       args:
         road_name: Hunts pond road
         postcode: PO14 4PL
 ```
+
+## How to get the source arguments
+
+Enter your postcode and your road name as listed by the council, optionally with your house number in front (e.g. '203 Segensworth road'). Without a house number the collections of all matching properties on the road are combined.

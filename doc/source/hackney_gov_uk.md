@@ -1,6 +1,8 @@
 # London Borough of Hackney
 
-Support for schedules provided by [London Borough of Hackney](https://www.hackney.gov.uk/), serving Hackney, London, UK.
+Support for schedules provided by [London Borough of Hackney](https://www.hackney.gov.uk/).
+
+Source for London Borough of Hackney Council waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,17 +11,17 @@ waste_collection_schedule:
   sources:
     - name: hackney_gov_uk
       args:
-        uprn: "UPRN"
-        postcode: "Postcode"
+        uprn: UPRN
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 **postcode**  
-_(String) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -28,10 +30,10 @@ waste_collection_schedule:
   sources:
     - name: hackney_gov_uk
       args:
-        uprn: "5061647"
-        postcode: "E8 4LL"
+        uprn: '100021058914'
+        postcode: E8 4LL
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and enter it together with the postcode of the property.

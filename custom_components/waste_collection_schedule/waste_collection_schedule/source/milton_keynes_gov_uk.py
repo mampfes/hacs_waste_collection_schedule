@@ -1,110 +1,75 @@
-# modified version of bexley_gov_uk.py
+from typing import ClassVar, final
 
-from datetime import datetime
-from time import time_ns
-
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Milton Keynes council"
-DESCRIPTION = "Source for Milton Keynes council."
-URL = "milton-keynes.gov.uk"
-TEST_CASES = {
-    "North Row, Central": {"uprn": 25032037},
-    "Adelphi Street, Campbell Park": {"uprn": 25044504},
-}
-
-
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLE": Icons.RECYCLING,
-    "RECYCLING": Icons.RECYCLING,
-    "FOOD": Icons.BIO_KITCHEN,
-    "GARDEN": Icons.GARDEN,
-}
-
-
-SITE_URL = (
-    "https://mycouncil.milton-keynes.gov.uk/service/Waste_Collection_Round_Checker"
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowFieldsPreprocessor,
+    AchieveFormsRowsParser,
+    LookupStep,
 )
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+from waste_collection_schedule.transformers import RowTransformer
+
+_HOSTNAME = "mycouncil.milton-keynes.gov.uk"
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Milton Keynes council"
+    DESCRIPTION = "Source for Milton Keynes council."
+    URL = "milton-keynes.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
 
-    def fetch(self):
-        s = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "North Row, Central": {"uprn": 25032037},
+        "Adelphi Street, Campbell Park": {"uprn": 25044504},
+    }
 
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        s.get(
-            "https://mycouncil.milton-keynes.gov.uk/apibroker/domain/mycouncil.milton-keynes.gov.uk",
-            params={
-                "_": timestamp,
-            },
-            headers=HEADERS,
-        )
+    PARAMS = (uprn(),)
 
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://mycouncil.milton-keynes.gov.uk/authapi/isauthenticated",
-            params={
-                "uri": "https://mycouncil.milton-keynes.gov.uk/service/Waste_Collection_Round_Checker",
-                "hostname": "mycouncil.milton-keynes.gov.uk",
-                "withCredentials": "true",
-            },
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
 
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {"formValues": {"Section 1": {"uprnCore": {"value": self._uprn}}}}
-        schedule_request = s.post(
-            "https://mycouncil.milton-keynes.gov.uk/apibroker/runLookup",
-            headers=HEADERS,
-            params={
-                # "id": "61320b2acf8a3",
-                "id": "64d9feda3a507",
-                "repeat_against": "",
-                "noRetry": "false",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AF-Renderer::Self",
-                "_": str(timestamp),
-                "sid": str(sid),
-            },
-            json=payload,
-        )
-
-        rowdata = schedule_request.json()["integration"]["transformed"]["rows_data"]
-
-        # Extract bin types and next collection dates
-        entries = []
-        for _index, item in rowdata.items():
-            # print(item)
-            bin_type = item["AssetTypeName"]
-            icon = None
-
-            for key, icon_name in ICON_MAP.items():
-                if (
-                    key in item["AssetTypeName"].upper()
-                    or key in item["TaskTypeName"].upper()
-                    or key in item["ServiceName"].upper()
-                ):
-                    icon = icon_name
-                    break
-
-            dates = [
-                datetime.strptime(item["NextInstance"], "%Y-%m-%d").date(),
-                datetime.strptime(item["LastInstance"], "%Y-%m-%d").date(),
-            ]
-            for date in dates:
-                entries.append(
-                    Collection(t=bin_type, date=date, icon=icon),
-                )
-        return entries
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        initial_url=f"https://{_HOSTNAME}/service/Waste_Collection_Round_Checker",
+        skip_landing_page=True,
+        auth_test_url=f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}",
+        steps=[
+            LookupStep(
+                "64d9feda3a507",
+                form_values=lambda ctx, source: {
+                    "uprnCore": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # One row per container, with its last and its next collection. The
+    # container names vary by property ("Red Plastic Sacks", "1100L Refuse
+    # (Black)"); the service name is the stable label. Two sack colours of the
+    # recycling service collected on one day are one collection.
+    preprocess = AchieveFormsRowFieldsPreprocessor(
+        date_field=("NextInstance", "LastInstance"),
+        label_fields=("ServiceName",),
+        dedupe=True,
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Communal Refuse Collection": wt.GENERAL_WASTE,
+            "Domestic Refuse Collection": wt.GENERAL_WASTE,
+            "Communal Recycling Collection": wt.RECYCLABLES,
+            "Domestic Recycling Collection": wt.RECYCLABLES,
+            "Food and Garden": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )

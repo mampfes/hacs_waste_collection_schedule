@@ -6,58 +6,44 @@ Source for Umweltprofis
 
 ## Configuration via configuration.yaml
 
-### Using url
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: data_umweltprofis_at
       args:
-        url: URL
-```
-
-### Using xmlurl
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: data_umweltprofis_at
-      args:
-        xmlurl: XMLURL
+        district: DISTRICT
+        city: CITY
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**url**  
-*(string) (alternative)*
+**district**  
+*(string) (required)*
 
-**xmlurl**  
-*(string) (alternative)*
+**city**  
+*(string) (required)*
 
-Provide one of: `url` or `xmlurl`.
+**street**  
+*(string) (required)*
+
+**house_number**  
+*(string) (required)*
 
 ## Example
 
-### Using url
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: data_umweltprofis_at
       args:
-        url: https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1
-```
-
-### Using xmlurl
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: data_umweltprofis_at
-      args:
-        xmlurl: https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle
+        district: Rohrbach
+        city: "Aigen-Schl\xE4gl"
+        street: Almesbergerweg
+        house_number: '1'
 ```
 
 ## How to get the source arguments
 
-You need to generate your personal XML link before you can start using this source. Go to https://data.umweltprofis.at/opendata/AppointmentService/index.aspx and fill out the form. At the end, step 6 gives you a link to an XML file. Copy this link and use it as the XML URL.
+Enter your address exactly as it is offered at https://www.umweltprofis.at/allgemein/module/wann_wird_mein_abfall_abgeholt.html: district (Bezirk), municipality, street and house number. Where a type is offered at several intervals (for example Restabfall 2- or 4-weekly), the first one the page lists is used.

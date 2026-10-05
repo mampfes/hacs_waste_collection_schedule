@@ -1,6 +1,8 @@
 # ZVO Entsorgung - Zweckverband Ostholstein
 
-Support for schedules provided by [ZVO](https://www.zvo.com), serving the Ostholstein district in Schleswig-Holstein, Germany.
+Support for schedules provided by [ZVO Entsorgung - Zweckverband Ostholstein](https://www.zvo.com).
+
+Source for ZVO waste collection schedule in Ostholstein, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -15,15 +17,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city**
+**city**  
 *(string) (required)*
 
-The city/town name as shown on the ZVO website.
-
-**street**
+**street**  
 *(string) (optional)*
-
-The street name. Not required for smaller towns that have a single collection schedule.
 
 ## Example
 
@@ -32,10 +30,10 @@ waste_collection_schedule:
   sources:
     - name: zvo_com
       args:
-        city: "Bad Schwartau"
-        street: "Lindenstraße"
+        city: Bad Schwartau
+        street: "Lindenstra\xDFe"
 ```
 
-## How to find your city and street
+## How to get the source arguments
 
-Search for your address at the [ZVO Abfuhrkalender](https://www.zvo.com/abfuhrkalender2026).
+Find your city and street at https://www.zvo.com/abfuhrkalender2026. Some smaller towns do not require a street.

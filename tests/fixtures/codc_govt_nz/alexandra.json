@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://environz-api.azurewebsites.net/api/codc/nextservicedate f675e1f875",
+      "method": "GET",
+      "url": "https://environz-api.azurewebsites.net/api/codc/nextservicedate",
+      "final_url": "https://environz-api.azurewebsites.net/api/codc/nextservicedate?code=bPLjJjgubEyQ3ruJqjhFenL1SoHCTzNEVGoLY5MJpP9AAzFuj8pSzA%3D%3D&address=5+Campbell+Street+Alexandra&endDate=29%2F09%2F2027&postcode=",
+      "body": "{\"params\":[[\"address\",\"5 Campbell Street Alexandra\"],[\"code\",\"bPLjJjgubEyQ3ruJqjhFenL1SoHCTzNEVGoLY5MJpP9AAzFuj8pSzA==\"],[\"endDate\",\"29/09/2027\"],[\"postcode\",\"\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 29 Sep 2026 18:50:35 GMT",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "request-context": "appId=cid-v1:fdcd12c0-e104-4c3b-af4b-d568f87657bc"
+      },
+      "content_b64": "eyJyb3V0ZVJFQyI6eyIyNiI6IjEzLzEwLzIwMjYiLCIyNyI6IjI3LzEwLzIwMjYiLCIyOCI6IjEwLzExLzIwMjYiLCIyOSI6IjI0LzExLzIwMjYiLCIzMCI6IjA4LzEyLzIwMjYiLCIzMSI6IjIyLzEyLzIwMjYiLCIzMiI6IjA1LzAxLzIwMjciLCIzMyI6IjE5LzAxLzIwMjciLCIzNCI6IjAyLzAyLzIwMjciLCIzNSI6IjE2LzAyLzIwMjciLCIzNiI6IjAyLzAzLzIwMjciLCIzNyI6IjE2LzAzLzIwMjciLCIzOCI6IjMwLzAzLzIwMjciLCIzOSI6IjEzLzA0LzIwMjciLCI0MCI6IjI3LzA0LzIwMjciLCI0MSI6IjExLzA1LzIwMjciLCI0MiI6IjI1LzA1LzIwMjciLCI0MyI6IjA4LzA2LzIwMjciLCI0NCI6IjIyLzA2LzIwMjciLCI0NSI6IjA2LzA3LzIwMjciLCI0NiI6IjIwLzA3LzIwMjciLCI0NyI6IjAzLzA4LzIwMjciLCI0OCI6IjE3LzA4LzIwMjciLCI0OSI6IjMxLzA4LzIwMjciLCI1MCI6IjE0LzA5LzIwMjciLCI1MSI6IjI4LzA5LzIwMjcifSwicm91dGVSRUYiOnsiMCI6IjA2LzEwLzIwMjYiLCIxIjoiMjAvMTAvMjAyNiIsIjIiOiIwMy8xMS8yMDI2IiwiMyI6IjE3LzExLzIwMjYiLCI0IjoiMDEvMTIvMjAyNiIsIjUiOiIxNS8xMi8yMDI2IiwiNiI6IjI5LzEyLzIwMjYiLCI3IjoiMTIvMDEvMjAyNyIsIjgiOiIyNi8wMS8yMDI3IiwiOSI6IjA5LzAyLzIwMjciLCIxMCI6IjIzLzAyLzIwMjciLCIxMSI6IjA5LzAzLzIwMjciLCIxMiI6IjIzLzAzLzIwMjciLCIxMyI6IjA2LzA0LzIwMjciLCIxNCI6IjIwLzA0LzIwMjciLCIxNSI6IjA0LzA1LzIwMjciLCIxNiI6IjE4LzA1LzIwMjciLCIxNyI6IjAxLzA2LzIwMjciLCIxOCI6IjE1LzA2LzIwMjciLCIxOSI6IjI5LzA2LzIwMjciLCIyMCI6IjEzLzA3LzIwMjciLCIyMSI6IjI3LzA3LzIwMjciLCIyMiI6IjEwLzA4LzIwMjciLCIyMyI6IjI0LzA4LzIwMjciLCIyNCI6IjA3LzA5LzIwMjciLCIyNSI6IjIxLzA5LzIwMjcifSwicm91dGVGT0QiOm51bGwsInJvdXRlR0xBIjp7IjEwNCI6IjEzLzEwLzIwMjYiLCIxMDUiOiIxMC8xMS8yMDI2IiwiMTA2IjoiMDgvMTIvMjAyNiIsIjEwNyI6IjA1LzAxLzIwMjciLCIxMDgiOiIwMi8wMi8yMDI3IiwiMTA5IjoiMDIvMDMvMjAyNyIsIjExMCI6IjMwLzAzLzIwMjciLCIxMTEiOiIyNy8wNC8yMDI3IiwiMTEyIjoiMjUvMDUvMjAyNyIsIjExMyI6IjIyLzA2LzIwMjciLCIxMTQiOiIyMC8wNy8yMDI3IiwiMTE1IjoiMTcvMDgvMjAyNyIsIjExNiI6IjE0LzA5LzIwMjcifSwicm91dGVHUk4iOm51bGwsInJvdXRlT1JHIjp7IjUyIjoiMDYvMTAvMjAyNiIsIjUzIjoiMTMvMTAvMjAyNiIsIjU0IjoiMjAvMTAvMjAyNiIsIjU1IjoiMjcvMTAvMjAyNiIsIjU2IjoiMDMvMTEvMjAyNiIsIjU3IjoiMTAvMTEvMjAyNiIsIjU4IjoiMTcvMTEvMjAyNiIsIjU5IjoiMjQvMTEvMjAyNiIsIjYwIjoiMDEvMTIvMjAyNiIsIjYxIjoiMDgvMTIvMjAyNiIsIjYyIjoiMTUvMTIvMjAyNiIsIjYzIjoiMjIvMTIvMjAyNiIsIjY0IjoiMjkvMTIvMjAyNiIsIjY1IjoiMDUvMDEvMjAyNyIsIjY2IjoiMTIvMDEvMjAyNyIsIjY3IjoiMTkvMDEvMjAyNyIsIjY4IjoiMjYvMDEvMjAyNyIsIjY5IjoiMDIvMDIvMjAyNyIsIjcwIjoiMDkvMDIvMjAyNyIsIjcxIjoiMTYvMDIvMjAyNyIsIjcyIjoiMjMvMDIvMjAyNyIsIjczIjoiMDIvMDMvMjAyNyIsIjc0IjoiMDkvMDMvMjAyNyIsIjc1IjoiMTYvMDMvMjAyNyIsIjc2IjoiMjMvMDMvMjAyNyIsIjc3IjoiMzAvMDMvMjAyNyIsIjc4IjoiMDYvMDQvMjAyNyIsIjc5IjoiMTMvMDQvMjAyNyIsIjgwIjoiMjAvMDQvMjAyNyIsIjgxIjoiMjcvMDQvMjAyNyIsIjgyIjoiMDQvMDUvMjAyNyIsIjgzIjoiMTEvMDUvMjAyNyIsIjg0IjoiMTgvMDUvMjAyNyIsIjg1IjoiMjUvMDUvMjAyNyIsIjg2IjoiMDEvMDYvMjAyNyIsIjg3IjoiMDgvMDYvMjAyNyIsIjg4IjoiMTUvMDYvMjAyNyIsIjg5IjoiMjIvMDYvMjAyNyIsIjkwIjoiMjkvMDYvMjAyNyIsIjkxIjoiMDYvMDcvMjAyNyIsIjkyIjoiMTMvMDcvMjAyNyIsIjkzIjoiMjAvMDcvMjAyNyIsIjk0IjoiMjcvMDcvMjAyNyIsIjk1IjoiMDMvMDgvMjAyNyIsIjk2IjoiMTAvMDgvMjAyNyIsIjk3IjoiMTcvMDgvMjAyNyIsIjk4IjoiMjQvMDgvMjAyNyIsIjk5IjoiMzEvMDgvMjAyNyIsIjEwMCI6IjA3LzA5LzIwMjciLCIxMDEiOiIxNC8wOS8yMDI3IiwiMTAyIjoiMjEvMDkvMjAyNyIsIjEwMyI6IjI4LzA5LzIwMjcifSwibWVzc2FnZSI6bnVsbH0="
+    }
+  ]
+}

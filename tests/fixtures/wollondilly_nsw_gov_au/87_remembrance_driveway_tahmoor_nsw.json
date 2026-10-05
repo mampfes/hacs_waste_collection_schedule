@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup c4c153eed2",
+      "method": "GET",
+      "url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup",
+      "final_url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_address_lookup?fields=87+Remembrance+Driveway+TAHMOOR+NSW",
+      "body": "{\"params\":[[\"fields\",\"87 Remembrance Driveway TAHMOOR NSW\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:30 GMT",
+        "content-type": "application/json",
+        "content-length": "161",
+        "x-amzn-requestid": "9c534abe-32f3-470b-b16a-2db19d306921",
+        "access-control-allow-origin": "*",
+        "x-amz-apigw-id": "EYE4_GgrywMEpRA=",
+        "x-amzn-trace-id": "Root=1-6ab981d2-0f975d63438862b47ee22954"
+      },
+      "content_b64": "W1t7Im5hbWUiOiJQcm9wZXJ0eUFkZHJlc3MiLCJjYXB0aW9uIjoiUHJvcGVydHlBZGRyZXNzIiwidmFsdWUiOiI4NyBSZW1lbWJyYW5jZSBEcml2ZXdheSBUQUhNT09SIE5TVyJ9LHsibmFtZSI6IlBhcmNlbE5vIiwiY2FwdGlvbiI6IlBhcmNlbE5vIiwidmFsdWUiOiIxMDAyOSJ9XV0="
+    },
+    {
+      "key": "GET https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup f458fc83e9",
+      "method": "GET",
+      "url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup",
+      "final_url": "https://yokqi4ofx1.execute-api.ap-southeast-2.amazonaws.com/Live/wcc_details_lookup?fields=10029",
+      "body": "{\"params\":[[\"fields\",\"10029\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 20:51:31 GMT",
+        "content-type": "application/json",
+        "content-length": "730",
+        "x-amzn-requestid": "1229ddf1-f2bc-464f-98df-13aba0c286fe",
+        "access-control-allow-origin": "*",
+        "x-amz-apigw-id": "EYE5EF_IywMECfQ=",
+        "x-amzn-trace-id": "Root=1-6ab981d3-0ac15f9b01e8bd7b27c209ed"
+      },
+      "content_b64": "W1t7Im5hbWUiOiJwYXJjZWxfbm8iLCJjYXB0aW9uIjoicGFyY2VsIG5vIiwidmFsdWUiOiIxMDAyOSJ9LHsibmFtZSI6Ildhc3RlIFNlcnZpY2UiLCJjYXB0aW9uIjoiV2FzdGUgU2VydmljZSIsInZhbHVlIjoiQ29tbWVyY2lhbCJ9LHsibmFtZSI6Ildhc3RlIFBpY2t1cCIsImNhcHRpb24iOiJXYXN0ZSBQaWNrdXAiLCJ2YWx1ZSI6IlRodXJzZGF5In0seyJuYW1lIjoiV2FzdGVOZXh0UGlja3VwVHlwZTEiLCJjYXB0aW9uIjoiV2FzdGVOZXh0UGlja3VwVHlwZTEiLCJ2YWx1ZSI6IlRodXJzZGF5LCAwMSBPY3RvYmVyIDIwMjYsIEdhcmJhZ2UgYW5kIFJlY3ljbGluZyJ9LHsibmFtZSI6Ildhc3RlTmV4dFBpY2t1cFR5cGUyIiwiY2FwdGlvbiI6Ildhc3RlTmV4dFBpY2t1cFR5cGUyIiwidmFsdWUiOiJUaHVyc2RheSwgMDggT2N0b2JlciAyMDI2LCBHYXJiYWdlIGFuZCBHYXJkZW4gT3JnYW5pY3MifSx7Im5hbWUiOiJXYXN0ZSBSdW4iLCJjYXB0aW9uIjoiV2FzdGUgUnVuIiwidmFsdWUiOiJXZWVrIEEifSx7Im5hbWUiOiJMYXN0IGNsZWFuIHVwIGRhdGUiLCJjYXB0aW9uIjoiTGFzdCBjbGVhbiB1cCBkYXRlIiwidmFsdWUiOiJDb21tZXJjaWFsIC0gbm8gc2VydmljZSBlbnRpdGxlbWVudCJ9LHsibmFtZSI6Ik5leHQgY2xlYW4gdXAgZGF0ZSIsImNhcHRpb24iOiJOZXh0IGNsZWFuIHVwIGRhdGUiLCJ2YWx1ZSI6IkNvbW1lcmNpYWwgLSBubyBzZXJ2aWNlIGVudGl0bGVtZW50In1dXQ=="
+    }
+  ]
+}

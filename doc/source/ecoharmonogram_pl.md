@@ -16,6 +16,7 @@ waste_collection_schedule:
         house_number: HOUSE_NUMBER
         district: DISTRICT
         additional_sides_matcher: ADDITIONAL_SIDES_MATCHER
+        region: REGION
         community: COMMUNITY
         app: APP
         language: LANGUAGE
@@ -41,6 +42,9 @@ waste_collection_schedule:
 *(string) (optional)*
 
 **additional_sides_matcher**  
+*(string) (optional)*
+
+**region**  
 *(string) (optional)*
 
 **community**  

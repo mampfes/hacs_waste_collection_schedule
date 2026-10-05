@@ -1,112 +1,137 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, district
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Landkreis Rhön Grabfeld"
-DESCRIPTION = "Source for Landkreis Rhön Grabfeld in Germany. Uses service by offizium."
-URL = "https://www.abfallinfo-rhoen-grabfeld.de/"
-COUNTRY = "de"
-TEST_CASES = {
-    "City only": {"city": "Ostheim"},
-    "City + District": {"city": "Ostheim", "district": "Oberwaldbehrungen"},
-    "District only": {"district": "Oberwaldbehrungen"},
-    "empty": {},
-}
-
-API_URL = "https://aht1gh-api.sqronline.de/api/modules/abfall/webshow"
-
-EVENT_BLACKLIST = [
-    "Wertstoffhof Mellrichstadt",
-    "Wertstoffhof Bad Königshofen",
-    "Wertstoffzentrum Bad Neustadt",
-    "Wertstoffsammelstelle Ostheim",
-    "Wertstoffsammelstelle Bischofsheim",
-]
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Bio": Icons.ORGANIC,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Papier": Icons.PAPER,
-    "Problemmüll": Icons.HAZARDOUS,
-}
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Stadt, Markt, Gemeinde",
-        "district": "Ort, Ortsteil",
+# Recycling centres and collection points are listed beside the bins in the
+# provider's "special" types; they are opening days, not collections.
+_NOT_COLLECTIONS = frozenset(
+    {
+        "Wertstoffhof Mellrichstadt",
+        "Wertstoffhof Bad Königshofen",
+        "Wertstoffzentrum Bad Neustadt",
+        "Wertstoffsammelstelle Ostheim",
+        "Wertstoffsammelstelle Bischofsheim",
     }
-}
+)
 
 
-class Source:
-    def __init__(self, city: str | None = None, district: str | None = None):
-        self._city = city
-        self._district = district
+def _events(data, source):
+    """The feed's events narrowed to the configured city and district.
 
-    def fetch(self):
-        r = requests.get(
-            API_URL,
-            params={"module_division_uuid": "fde08d95-111b-11ef-bbd4-b2fd53c2005a"},
-        )
+    One response carries the whole district's lookup tables (``mdiv.config``)
+    and every event; the city and district names are resolved to ids here and
+    each event's type id is replaced by its name.
+    """
+    config = data["mdiv"]["config"]
+    city_name = source.params.get("city")
+    district_name = source.params.get("district")
 
-        r.raise_for_status()
+    city_id = None
+    area_id = None
 
-        city_id = None
-        area_id = None
+    if city_name is not None:
+        for entry in config["cities"]:
+            if entry["name"] == city_name:
+                city_id = int(entry["id"])
+                break
+        if city_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", city_name, [c["name"] for c in config["cities"]]
+            )
 
-        json = r.json()
-        config = json["mdiv"]["config"]
+    if district_name is not None:
+        for area in config["areas"]:
+            if area["name"] == district_name and (
+                city_id is None or int(area["city_id"]) == city_id
+            ):
+                area_id = int(area["id"])
+                break
+        if area_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "district", district_name, [a["name"] for a in config["areas"]]
+            )
 
-        if self._city is not None:
-            # determine city id
-            for city in config["cities"]:
-                if city["name"] == self._city:
-                    city_id = int(city["id"])
-                    break
-            if city_id is None:
-                cities = [city["name"] for city in config["cities"]]
-                raise SourceArgumentNotFoundWithSuggestions("city", self._city, cities)
+    names = {
+        int(t["id"]): t["name"]
+        for group in ("normal", "special")
+        for t in config["abfall_types"][group]
+    }
 
-        if self._district is not None:
-            # determine district id
-            for area in config["areas"]:
-                if area["name"] == self._district and (
-                    int(area["city_id"]) == city_id or city_id is None
-                ):
-                    area_id = int(area["id"])
-                    break
-            if area_id is None:
-                districts = [area["name"] for area in config["areas"]]
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "district", self._district, districts
-                )
+    for event in data["abfall_dates"]:
+        name = names.get(event["abfall_type_id"])
+        if name is None or name in _NOT_COLLECTIONS:
+            continue
+        if city_id is not None and city_id != event["abfall_city_id"]:
+            continue
+        if area_id is not None and area_id != event["abfall_area_id"]:
+            continue
+        yield {"date": event["date"], "type": name}
 
-        # determine trash types
-        trash_types_map_id_to_name = {}
-        for t in config["abfall_types"]["normal"]:
-            trash_types_map_id_to_name[int(t["id"])] = t["name"]
-        for t in config["abfall_types"]["special"]:
-            trash_types_map_id_to_name[int(t["id"])] = t["name"]
 
-        entries = []
-        for event in json["abfall_dates"]:
-            trash_type = trash_types_map_id_to_name.get(event["abfall_type_id"])
-            # filter out Sammelstellen, Wertstoffhof and Wertstoffzentrum
-            if trash_type is not None and trash_type not in EVENT_BLACKLIST:
-                # filter by city and district if provided
-                if (city_id is None or city_id == event["abfall_city_id"]) and (
-                    area_id is None or area_id == event["abfall_area_id"]
-                ):
-                    entries.append(
-                        Collection(
-                            date=datetime.datetime.fromisoformat(event["date"]).date(),
-                            t=trash_type,
-                            icon=ICON_MAP.get(trash_type, "mdi:trash-can"),
-                        )
-                    )
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Rhön Grabfeld"
+    DESCRIPTION = (
+        "Source for Landkreis Rhön Grabfeld in Germany. Uses service by offizium."
+    )
+    URL = "https://www.abfallinfo-rhoen-grabfeld.de/"
+    COUNTRY = "de"
 
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "City only": {"city": "Ostheim"},
+        "City + District": {"city": "Ostheim", "district": "Oberwaldbehrungen"},
+        "District only": {"district": "Oberwaldbehrungen"},
+    }
+
+    PARAMS = (
+        city("city", optional=True),
+        district("district", optional=True),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.HAZARDOUS,
+    ]
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the municipality (`city`) and/or the village (`district`) "
+            "exactly as listed on https://www.abfallinfo-rhoen-grabfeld.de/. "
+            "Leave both empty to get the collections of the whole district."
+        ),
+        "de": (
+            "Gib die Stadt, den Markt oder die Gemeinde (`city`) und/oder den "
+            "Ortsteil (`district`) so an, wie sie auf "
+            "https://www.abfallinfo-rhoen-grabfeld.de/ aufgeführt sind. Ohne "
+            "Angabe werden die Termine des gesamten Landkreises geliefert."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(
+        url="https://aht1gh-api.sqronline.de/api/modules/abfall/webshow",
+        params=lambda **_: {
+            "module_division_uuid": "fde08d95-111b-11ef-bbd4-b2fd53c2005a"
+        },
+    )
+    parse = parsers.JsonParser()
+    preprocess = staticmethod(_events)
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "Restmüll": wt.GENERAL_WASTE,
+            "Bio": wt.ORGANIC,
+            "Gelbe Tonne": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Problemmüll": wt.HAZARDOUS,
+        },
+    )

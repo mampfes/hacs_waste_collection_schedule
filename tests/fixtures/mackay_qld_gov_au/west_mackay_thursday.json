@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.mackay.qld.gov.au/api/v1/myarea/search 6ec4983c63",
+      "method": "GET",
+      "url": "https://www.mackay.qld.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mackay.qld.gov.au/api/v1/myarea/search?keywords=115+Nebo+Road+West+Mackay&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"115 Nebo Road West Mackay\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "253",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:35 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=70, origin; dur=879, ak_p; desc=\"1790185534097_386904782_79008565_94941_16837_4_15_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=DDE09B32B24C005BB8C42EECD5C9A4A7~000000000000000000000000000000~YAAQzrIPF6bAasWgAQAAaHZfzwGvmT2LjWoMIvQrYVgC2w2sYpn8XkNIfCzA7bNlSQbs1xT5hJc58MLSoLQsLWgwZT7sdCJc3xAxFBV2Ykp6ZUqPCAkqa1Jh3PhJwNqdNqi1Ch1HbyQqTMSe3RX8S/nVLU6BeGfJOsE+UAAMo0itx/EOKJ6T2R6IYLy8+d30ChMA+zZ8tL/R0dwGyhsoFc1F+VA4cdBAmiRcqfc7BaKAi5ERQjO6ePrFIyekoFGmgmKPmz/4PXLLifcAj/0nLzgPFGKmQG1/gqZ2Tq1q+M92W/fnIB3dttUGwSsJyKj7EMxvY3/nWhytw70wuvFyvVaculxT4Z4uXnEGP97R6IWNIAbYBAbfRZwLMC0ZUo0de3bdugtOya+OQfAa52BslgTddRLT; Domain=.mackay.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:34 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJlZjliNGVkZi04NGI1LTRlYzUtODNjMi04MDI4YmM5ZmYwY2MiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjExNSBOZWJvIFJvYWQgV0VTVCBNQUNLQVkgIFFMRCAgNDc0MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiTWFja2F5IFJlZ2lvbiIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjUuNTc0ODI1LCJMYXRMb24iOlstMjEuMTUzNjg5MTQsMTQ5LjE2NzEwOTZdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEsIlRvdGFsIjoxfQ=="
+    },
+    {
+      "key": "GET https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices db47d96499",
+      "method": "GET",
+      "url": "https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.mackay.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=ef9b4edf-84b5-4ec5-83c2-8028bc9ff0cc&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"ef9b4edf-84b5-4ec5-83c2-8028bc9ff0cc\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "341",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:36 GMT",
+        "set-cookie": "ASP.NET_SessionId=gzcve4uqciu301j3si3wzaoo; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=948, ak_p; desc=\"1790185535087_386904782_79009046_94736_14555_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMjQvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSByZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJlY3ljbGluZ1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VDb2xsZWN0ZWQgZm9ydG5pZ2h0bHkuIFx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgIn0="
+    }
+  ]
+}

@@ -1,15 +1,8 @@
 # Landkreis Rhön Grabfeld
 
-Support for schedules provided by [AbfallInfo Rhön Grabfeld](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker), serving the rural district of Rhön Grabfeld.
+Support for schedules provided by [Landkreis Rhön Grabfeld](https://www.abfallinfo-rhoen-grabfeld.de/).
 
-API in the background is provided by Offizium.
-
-Possibles types are:
-- Restmüll
-- Bio
-- Gelbe Tonne
-- Papier
-- Problemmüll
+Source for Landkreis Rhön Grabfeld in Germany. Uses service by offizium.
 
 ## Configuration via configuration.yaml
 
@@ -18,39 +11,28 @@ waste_collection_schedule:
   sources:
     - name: landkreis_rhoen_grabfeld
       args:
-        district: DISTRICT
         city: CITY
+        district: DISTRICT
 ```
 
 ### Configuration Variables
 
-**district** and **city** can be used independently, they can also be omitted to get the calendar for the whole rural district.
+**city**  
+*(string) (optional)*
 
-**district**
-*(string)*
-
-**street**
-*(string)*
+**district**  
+*(string) (optional)*
 
 ## Example
 
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: landkreis_rhoen_grabfeld
       args:
-        district: "Oberwaldbehrungen"
+        city: Ostheim
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: landkreis_rhoen_grabfeld
-      args:
-        city: "Ostheim"
-```
+## How to get the source arguments
 
-## How to get the source argument
-
-The city and district names used by the API are the same as in the "Stadt, Markt, Gemeinde" and "Ort, Ortsteil" dropdowns on the [collection alarm website](https://www.abfallinfo-rhoen-grabfeld.de/service/abfuhr-wecker).
+Enter the municipality (`city`) and/or the village (`district`) exactly as listed on https://www.abfallinfo-rhoen-grabfeld.de/. Leave both empty to get the collections of the whole district.

@@ -1,71 +1,58 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Lund Waste Collection"
-DESCRIPTION = "Source for Lund waste collection services, Sweden."
-URL = "https://eservice431601.lund.se"
-TEST_CASES = {
-    "Lokföraregatan 7": {"street_address": "Lokföraregatan 7, LUND (19120)"},
-    "Annedalsvägen 2 B": {"street_address": "Annedalsvägen 2 B, LUND (39037)"},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Plastförpacknin": Icons.RECYCLING,
-    "Tidningar": Icons.NEWSPAPER,
-    "Metallförpackni": Icons.METAL,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Ofärgat Glas": Icons.GLASS,
-    "Färgat Glas": Icons.GLASS,
-}
+_API_URL = "https://eservice431601.lund.se/Lund/FutureWeb/SimpleWastePickup"
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+@final
+class Source(BaseSource):
+    TITLE = "Lund Waste Collection"
+    DESCRIPTION = "Source for Lund waste collection services, Sweden."
+    URL = "https://eservice431601.lund.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        s = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "Lokföraregatan 7": {"street_address": "Lokföraregatan 7, LUND (19120)"},
+        "Stora Södergatan 10": {"street_address": "Stora Södergatan 10, LUND (26232)"},
+        "Search without id": {"street_address": "Lokföraregatan 7"},
+    }
 
-        # Search for the address ID
-        search_payload = {"searchText": self._street_address.split("(")[0].strip()}
-        search_response = s.post(
-            "https://eservice431601.lund.se/Lund/FutureWeb/SimpleWastePickup/SearchAdress",
-            json=search_payload,
-            headers=HEADERS,
-        )
-        search_data = json.loads(search_response.text)
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"street_address": "Ingen gata 999"},
+    }
 
-        # Check if the search was successful
-        if not search_data.get("Succeeded", False):
-            raise ValueError(f"Search for address failed for {self._street_address}.")
+    PARAMS = (street_address("street_address"),)
 
-        address_id = search_data["Buildings"][0] if search_data["Buildings"] else None
-        if not address_id:
-            raise ValueError(f"Failed to get address ID for {self._street_address}.")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as the provider's own address search lists "
+            "it; the building id in brackets, e.g. 'Lokföraregatan 7, LUND "
+            "(19120)', skips the search."
+        ),
+    }
 
-        # Retrieve waste collection schedule
-        schedule_url = f"https://eservice431601.lund.se/Lund/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address={address_id}"
-        schedule_response = s.get(schedule_url, headers=HEADERS)
-        schedule_data = json.loads(schedule_response.text)
-
-        entries = []
-        for service in schedule_data.get("RhServices", []):
-            waste_type = service.get("WasteType", "")
-
-            next_pickup = service.get("NextWastePickup", "")
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
-
-            entries.append(
-                Collection(
-                    date=next_pickup_date, t=waste_type, icon=ICON_MAP.get(waste_type)
-                )
-            )
-
-        return entries
+    retrieve = EdpFutureWebRetriever(_API_URL)
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )

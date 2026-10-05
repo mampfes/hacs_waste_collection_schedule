@@ -1,6 +1,8 @@
-# City of Winnipeg
+# Winnipeg (MB)
 
-Support for schedules provided by [City of Winnipeg My Utility](https://myutility.winnipeg.ca).
+Support for schedules provided by [Winnipeg (MB)](https://myutility.winnipeg.ca).
+
+Source script for https://myutility.winnipeg.ca Use the same address as that works on the website under 'Find your collection day'
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: myutility_winnipeg_ca
       args:
-        address: STREET_ADDRESS
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **address**  
-*(string) (required) (all capitals)*
+*(string) (required)*
 
 ## Example
 
@@ -27,6 +29,6 @@ waste_collection_schedule:
         address: 123 EASY ST
 ```
 
-## How to verify that your address works
+## How to get the source arguments
 
-Visit the [My Utility Winnipeg](https://myutility.winnipeg.ca) page and search for your address under the 'Find your collection day'. Note that the address should be in all capital letters. The street type (crescent, way, landing should be a 2 letter abbreviation only i.e. CR, WY, LD). Do not append the city name or postal code.
+Use the same address that works on https://myutility.winnipeg.ca under 'Find your collection day'.

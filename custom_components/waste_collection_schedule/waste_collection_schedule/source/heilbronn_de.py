@@ -1,125 +1,148 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    house_number,
+    postcode,
+    street,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Heilbronn Entsorgungsbetriebe"
-DESCRIPTION = "Source for city of Heilbronn, Germany."
-URL = "https://heilbronn.de"
-TEST_CASES = {
-    "Rosenau": {
-        "plz": 74072,
-        "strasse": "Rosenau",
-        "hausnr": 33,
-    },
-    "Biberach": {
-        "strasse": "Kehrhüttenstraße",
-        "plz": 74078,
-        "hausnr": "90",
-    },
-    "Klingenberg:": {
-        "strasse": "Wittumhalde",
-        "plz": "74081",
-        "hausnr": 75,
-    },
-    "Klingenberg (hausnr as string):": {
-        "strasse": "Wittumhalde",
-        "plz": "74081",
-        "hausnr": "75",
-    },
-    "Rosenbergstraße 53": {
-        "strasse": "Rosenbergstraße",
-        "plz": "74074",
-        "hausnr": "50",
-    },
-    "Rosenbergstraße 41": {
-        "strasse": "Rosenbergstraße",
-        "plz": "74072",
-        "hausnr": "41",
-    },
-}
+API = "https://api.heilbronn.de/garbage-calendar"
 
-ICON_MAP = {
-    "residual": Icons.GENERAL_WASTE,
-    "bio": Icons.ORGANIC,
-    "green": Icons.ORGANIC,
-    "light-packaging": Icons.RECYCLING,
-    "paper": Icons.PAPER,
-    "paper-bundle": Icons.PAPER,
-    "christmastree": Icons.CHRISTMAS_TREE,
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "plz": "PLZ",
-        "strasse": "Straße",
-        "hausnr": "Hausnummer",
-    },
-    "en": {
-        "plz": "Zip Code",
-        "strasse": "Street",
-        "hausnr": "House number",
-    },
+_TYPE_MAP = {
+    "residual": wt.GENERAL_WASTE,
+    "residual_2": wt.GENERAL_WASTE,
+    "residual_4": wt.GENERAL_WASTE,
+    "residual_big_1": wt.GENERAL_WASTE,
+    "residual_big_2": wt.GENERAL_WASTE,
+    "residual_big_1_2": wt.GENERAL_WASTE,
+    "residual_big_1_3": wt.GENERAL_WASTE,
+    "bio": wt.ORGANIC,
+    "bio_1": wt.ORGANIC,
+    "bio_2": wt.ORGANIC,
+    "green": wt.GARDEN_WASTE,
+    "light-packaging": wt.RECYCLABLES,
+    "paper": wt.PAPER,
+    "paper-bundle": wt.PAPER,
+    "paper_big_1": wt.PAPER,
+    "paper_big_2": wt.PAPER,
+    "paper_big_4": wt.PAPER,
+    "christmastree": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, plz: int, strasse: str, hausnr: str | int | None = None):
-        self._plz: str = str(plz)
-        self._strasse: str = strasse
-        self._hausnr: str | None = str(hausnr) if hausnr else None
-
-    def fetch(self):
-        r = requests.get(
-            "https://api.heilbronn.de/garbage-calendar?method=get&datatype=districts"
+def _districts(response, *keys, plz, strasse, hausnr=None, **_) -> list[str]:
+    """The collection districts of an address: ``{plz: {street: {number: {...}}}}``."""
+    data = response.json()["data"]
+    streets = data.get(str(plz))
+    if streets is None:
+        raise SourceArgumentNotFoundWithSuggestions("plz", plz, list(data))
+    numbers = streets.get(strasse)
+    if numbers is None:
+        raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, list(streets))
+    number = str(hausnr) if hausnr else None
+    if "*" in numbers:
+        # The whole street shares one set of districts.
+        entry = numbers["*"]
+    elif not number:
+        raise SourceArgumentRequiredWithSuggestions(
+            "hausnr", "is required for this street", suggestions=list(numbers)
         )
-        r.raise_for_status()
-        data = r.json()
+    elif number not in numbers:
+        raise SourceArgumentNotFoundWithSuggestions("hausnr", number, list(numbers))
+    else:
+        entry = numbers[number]
+    # One code per waste stream; "city" and "district" are labels, not codes.
+    return sorted({v for k, v in entry.items() if k not in ("city", "district")})
 
-        street = data["data"][self._plz][self._strasse]
-        if not self._hausnr or "*" in street:
-            if "*" not in street:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "hausnr",
-                    "is required for this street",
-                    suggestions=street.keys(),
-                )
-                raise ValueError(
-                    f"Street {self._strasse} needs to be configured with a house number, available house numbers: {list(street.keys())}"
-                )
-            districts: dict = street["*"]
-        else:
-            if self._hausnr not in street:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "hausnr",
-                    self._hausnr,
-                    suggestions=street.keys(),
-                )
-            districts: dict = street[self._hausnr]
 
-        # filter waste type
-        collection_keys = {
-            value for key, value in districts.items() if key not in ("city", "district")
-        }
+def _rows(responses, source=None) -> list[dict]:
+    """One row per date of ``{district: {round: {timestamp: "YYYY-MM-DD"}}}``."""
+    return [
+        {"type": round_name, "date": date}
+        for response in responses
+        for rounds in response.json()["data"].values()
+        for round_name, dates in rounds.items()
+        for date in dates.values()
+    ]
 
-        r = requests.get(
-            "https://api.heilbronn.de/garbage-calendar?method=get&datatype=pickupdates"
-        )
-        r.raise_for_status()
-        pickupDates = r.json()
 
-        entries = []
+@final
+class Source(BaseSource):
+    TITLE = "Heilbronn Entsorgungsbetriebe"
+    DESCRIPTION = "Source for city of Heilbronn, Germany."
+    URL = "https://heilbronn.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-        for valueDistrict in collection_keys:
-            value = pickupDates["data"][valueDistrict]
-            for collection_type, collection_dates in value.items():
-                for value2 in collection_dates.values():
-                    date = datetime.strptime(value2, "%Y-%m-%d").date()
-                    entry = collection_type
-                    icon = ICON_MAP.get(entry.split("_")[0].lower())
-                    entries.append(Collection(date, entry, icon))
-        return entries
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Rosenau": {"plz": 74072, "strasse": "Rosenau", "hausnr": 33},
+        "Biberach": {"strasse": "Kehrhüttenstraße", "plz": 74078, "hausnr": "90"},
+        "Rosenbergstraße 50": {
+            "strasse": "Rosenbergstraße",
+            "plz": "74074",
+            "hausnr": "50",
+        },
+    }
+
+    PARAMS = (
+        postcode("plz"),
+        street("strasse"),
+        house_number("hausnr", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "de": (
+            "Gib PLZ und Straße so an, wie sie im Abfallkalender der Stadt "
+            "Heilbronn stehen. Die Hausnummer ist nur bei Straßen nötig, in "
+            "denen sich die Abfuhrbezirke je Hausnummer unterscheiden."
+        ),
+        "en": (
+            "Enter the postcode and street as they appear in the city of "
+            "Heilbronn's waste calendar. The house number is only required for "
+            "streets whose collection districts differ by house number."
+        ),
+    }
+
+    # The address resolves to one collection district per waste stream; the
+    # pickup dates are then fetched for each of those districts.
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(
+            API,
+            params={"method": "get", "datatype": "districts"},
+            pick=_districts,
+        ),
+        targets=lambda source, districts: districts,
+        fetch=retrievers.Request(
+            API,
+            params=lambda district, districts, **_: {
+                "method": "get",
+                "datatype": "pickupdates",
+                "district": district,
+            },
+        ),
+    )
+
+    parse = staticmethod(_rows)
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=_TYPE_MAP,
+        carry_raw_label=True,
+    )

@@ -48,7 +48,7 @@ waste_collection_schedule:
         - type: Waste
           alias: Ordures
         - type: Food
-          alias: Composte
+          alias: Composte  # codespell:ignore composte
         - type: Recycling
           alias: Recyclage
         - type: Green

@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 61135ea0f7",
+      "method": "GET",
+      "url": "https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=%280107806309%29",
+      "body": "{\"params\":[[\"address\",\"(0107806309)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2220",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:40 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=15552001; includeSubDomains; preload",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjgiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiTcOlbmRhZyB2YXJqZSB2ZWNrYSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik3DpW5kYWcgdmFyamUgdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjY2MCBMIEvDpHJsIGbDtnIgUmVzdGF2ZmFsbCBtZWQgdMO2bW5pbmcgNTIgZ2dyL8OlciIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjUyLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IjUyIGdnci/DpXIiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJTT1A1MiIsIldhc3RlVHlwZSI6IlJlc3RhdmZhbGwiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiQlY2NjAiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiUmVzdGF2ZmFsbCB2ZWNrb2jDpG10biA2NjAgbCIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6MTI3Mzg0LCJEZXNjcmlwdGlvbiI6IjEgc3QgNjYwIEwga8OkcmwgZsO2ciByZXN0YXZmYWxsIG1lZCB0w7ZtbmluZyBtw6VuZGFnIHZhcmplIHZlY2thIiwiU3RhcnREYXRlIjoiXC9EYXRlKDEyOTE1OTAwMDAwMDApXC8iLCJTdG9wRGF0ZSI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJCdWlsZGluZ0lEIjoiMDEwNzgwNjMwOSJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTA5LTI4IiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTA0LCJXYXN0ZVR5cGUiOiJNYXRhdmZhbGwiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IjEwNCBnZ3Ivw6VyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiMTA0IGdnci/DpXIiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjE0MCBMIEvDpHJsIGbDtnIgTWF0YXZmYWxsIG1lZCB0w7ZtbmluZyAxMDQgZ2dyL8OlciIsIkJpblR5cGUiOnsiQ29kZSI6IksxNDAiLCJTaXplIjoxNDAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjEwNCwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiIxMDQgZ2dyL8OlciIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IlNPUDEwNCIsIldhc3RlVHlwZSI6Ik1hdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJLMjE0MCIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJIVVNIIiwiRGVzaWduYXRpb24iOiJNYXRhdmZhbGwgMiBnZ3IvdmVja2EgMTQwIGwiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjMwNTQyOSwiRGVzY3JpcHRpb24iOiIxIHN0IDE0MCBMIGvDpHJsIGbDtnIgbWF0YXZmYWxsIG1lZCB0w7ZtbmluZyAxMDQgZ2dyL8OlciIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNzAxNzMwODAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjAxMDc4MDYzMDkifV19"
+    }
+  ]
+}

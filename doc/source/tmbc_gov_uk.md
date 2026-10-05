@@ -1,16 +1,18 @@
-# Tonbridge & Malling Borough Council
+# Tonbridge and Malling Borough Council
 
-Support for schedules provided by [Tonbridge and Malling Borough Council](https://www.tmbc.gov.uk/xfp/form/167), serving Tonbridge and Malling, UK.
+Support for schedules provided by [Tonbridge and Malling Borough Council](https://www.tmbc.gov.uk).
+
+Tonbridge and Malling Borough Council, UK - Waste Collection
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tmbc_gov_uk
       args:
-        post_code: Post Code
-        address: Address
+        post_code: POST_CODE
+        address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -25,13 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: tmbc_gov_uk
       args:
-        post_code: "ME19 6NE"
-        address: "138 High Street"
+        address: 138 High Street
+        post_code: ME19 6NE
 ```
 
-## How to verify that your address works
+## How to get the source arguments
 
-Visit [tmbc.gov.uk](https://www.tmbc.gov.uk/xfp/form/167) page and search for your address. The string you select as Address (only starts with is checked, so you can stop after the street) should match exactly your address parameter.
+Enter your postcode, and the start of your address as the council's bin collection form lists it (e.g. '138 High Street').

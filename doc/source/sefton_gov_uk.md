@@ -1,18 +1,19 @@
 # Sefton Council
 
-Support for schedules provided by [Sefton Council](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/), serving the
-district of Sefton, UK.
+Support for schedules provided by [Sefton Council](https://www.sefton.gov.uk/).
+
+Source for Sefton Council, UK
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sefton_gov_uk
       args:
-        postcode: Postcode
-        streetname: Streetname
-        house_number_or_name: House number or name
+        postcode: POSTCODE
+        streetname: STREETNAME
+        house_number_or_name: HOUSE_NUMBER_OR_NAME
 ```
 
 ### Configuration Variables
@@ -20,24 +21,24 @@ waste_collection_schedule:
 **postcode**  
 *(string) (required)*
 
-**streetname**
+**streetname**  
 *(string) (required)*
 
-**house_number_or_name**
+**house_number_or_name**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sefton_gov_uk
       args:
-        postcode: "L20 6GF"
-        streetname: "Ken Mews"
-        house_number_or_name: "1"
+        house_number_or_name: '1'
+        streetname: Ken Mews
+        postcode: L20 6GF
 ```
 
-## How to find the values for arguments above
+## How to get the source arguments
 
-Go to the Sefton "When is my Bin Collection Day?" page - the postcode and streetname arguments are the same values you'd enter on the first page of the form. The House Number or Name value is the string/number that appears before the streetname in the dropdown on the second page - e.g. if the dropdown shows "1A Liverpool Road" you should enter "1A" as your House Number or Name value.
+Using a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page. Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen. e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_.

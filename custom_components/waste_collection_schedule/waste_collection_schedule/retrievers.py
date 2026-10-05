@@ -245,21 +245,19 @@ class LookupChainRetriever(_BaseRetriever):
     folded into one request.
 
     Each entry in ``steps`` is a ``callable(source, keys) -> key``, where
-    ``keys`` is the tuple of ids resolved so far. The step issues whatever
-    requests it needs through ``source.session`` and raises
+    ``keys`` is the tuple of ids resolved so far, raising
     ``SourceArgumentNotFound*`` / ``SourceArgAmbiguous*`` for a level that did
-    not resolve. The step owns its request rather than the retriever templating
-    it because these lookups vary too much to template: one level is a POST with
-    form data, the next a GET with query params, each with its own matching and
-    normalisation rules.
+    not resolve. Declare it as a :class:`Lookup`: the level's request as
+    configuration (one level a POST with form data, the next a GET with query
+    params) and a ``pick`` that only reads the reply, which is where each
+    level's own matching and normalisation rules go.
 
-    Where the step goes matters. Written as a function in the source module it
-    is a retriever that the next provider on the same platform cannot reach, and
-    ``def`` rather than ``class`` does not change that:
-    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates it and
-    ``SOURCES_HAND_ROLLING_RETRIEVAL`` is the backlog (#7139). Put a step for a
-    platform more than one provider runs in that platform's module under
-    ``service/`` and pass it from there.
+    What a step must not be is a function in the source module that issues the
+    request itself. That is a retriever the next provider on the same platform
+    cannot reach, and ``def`` rather than ``class`` does not change that:
+    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates it (#7139). A
+    platform's own multi-request conversation belongs in its ``service/``
+    module (``service/Abfallkalender.py``'s ``AbfallkalenderRetriever``).
 
     A key is whatever the next request needs, not necessarily an id. A level
     that yields several values at once returns them together (verl_de reads a
@@ -273,7 +271,14 @@ class LookupChainRetriever(_BaseRetriever):
     the source's params. It is a GET by default::
 
         retrieve = retrievers.LookupChainRetriever(
-            steps=(_resolve_municipality, _resolve_street),
+            steps=(
+                retrievers.Lookup(f"{API}/municipalities", pick=_municipality_id),
+                retrievers.Lookup(
+                    f"{API}/streets",
+                    params=lambda municipality_id, **_: {"GemeindeID": municipality_id},
+                    pick=_street_id,
+                ),
+            ),
             url=f"{API}/content.php",
             params=lambda municipality_id, street_id, **_: {
                 "GemeindeID": municipality_id,
@@ -285,7 +290,7 @@ class LookupChainRetriever(_BaseRetriever):
     which is just as common on the German municipal platforms::
 
         retrieve = retrievers.LookupChainRetriever(
-            steps=(_resolve_street,),
+            steps=(retrievers.Lookup(STREETS_URL, pick=_street_id),),
             url=CALENDAR_URL,
             method="POST",
             data=lambda street_id, house_number, **_: {
@@ -393,15 +398,17 @@ class FanOutRetriever(_BaseRetriever):
     parser reads one::
 
         retrieve = retrievers.FanOutRetriever(
-            prepare=_resolve_area,
-            targets=lambda source, area: _feed_urls(source, area),
+            prepare=retrievers.Lookup(AREA_URL, params=..., pick=_feed_urls),
+            targets=lambda source, feed_urls: feed_urls,
+            fetch=retrievers.Request(lambda url, feed_urls, **_: url),
         )
         parse = parsers.EachResponse(parsers.IcsParser())
 
     As with :class:`YearlyRetriever`, ``prepare`` and ``fetch`` are retrieval:
-    for a platform with more than one provider they belong in its ``service/``
-    module rather than in the source
-    (``test_pipeline_sources_do_not_hand_roll_retrieval``, #7139).
+    declare them (a :class:`Lookup` or :class:`Chain` of them, a
+    :class:`Request`) rather than writing them as functions in the source
+    module, which ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates
+    (#7139). ``targets`` only lists what ``prepare`` found; it issues nothing.
 
     Args:
         targets: ``callable(source, context) -> Sequence`` listing what to
@@ -1431,17 +1438,27 @@ class YearlyRetriever(_BaseRetriever):
     parser reads one year::
 
         retrieve = retrievers.YearlyRetriever(
-            prepare=_resolve_ids,
-            fetch=_calendar_for_year,
+            prepare=retrievers.Chain(
+                retrievers.Lookup(STREETS_URL, params=..., pick=_street_id),
+                retrievers.Lookup(NUMBERS_URL, params=..., pick=_number_id),
+            ),
+            fetch=retrievers.Request(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda year, ids, **_: {"jahr": year, "id": ids[-1]},
+            ),
             refresh_on_failure=True,
         )
         parse = parsers.EachResponse(parsers.IcsParser())
 
-    ``prepare`` and ``fetch`` are retrieval, wherever they are written. Defining
-    them in the source module puts the provider's HTTP conversation where the
-    next provider on the same platform cannot reuse it, which is what
-    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates (#7139): for a
-    platform with more than one provider they belong in its ``service/`` module.
+    ``prepare`` and ``fetch`` are retrieval, wherever they are written. Declare
+    them as above rather than as functions in the source module, which puts the
+    provider's HTTP conversation where the next provider on the same platform
+    cannot reuse it and is what ``test_pipeline_sources_do_not_hand_roll_retrieval``
+    gates (#7139). A platform's whole conversation is a component in its
+    ``service/`` module: ``service/Abfallkalender.py``'s
+    ``AbfallkalenderRetriever`` is this retriever, configured once for the
+    vendor module every deployment runs.
 
     Args:
         fetch: ``callable(source, year, context) -> Response``; issues the
@@ -1498,6 +1515,409 @@ class YearlyRetriever(_BaseRetriever):
                 raise
             context = self.prepare(source)
             return self._all_years(source, context)
+
+
+class JsonIndexLookup:
+    """Resolve a user-supplied name to an id from an index the provider publishes.
+
+    Many providers answer "which towns (streets, districts) are there?" with a
+    JSON list of ``{"name": ..., "id": ...}`` rows, and the calendar request
+    wants the id. This fetches that list, matches the configured name against it
+    (case- and whitespace-insensitive, via :func:`lookups.resolve`) and raises
+    the argument error listing every name the index holds when nothing matches.
+
+    It is a lookup step, usable wherever one is taken: as
+    :class:`YearlyRetriever`'s ``prepare`` or as a :class:`LookupChainRetriever`
+    step::
+
+        retrieve = retrievers.YearlyRetriever(
+            prepare=retrievers.JsonIndexLookup(INDEX_URL, argument="town", items=("towns",)),
+            fetch=retrievers.YearUrl("https://example.org/{year}/{key}.json"),
+        )
+
+    Args:
+        url: the index URL.
+        argument: the ``source.params`` field holding the name, blamed on a miss.
+        items: path of keys leading to the list of rows (empty for a bare list).
+        name: the row field holding the name to match.
+        key: the row field holding the id to return.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        url: str,
+        *,
+        argument: str,
+        items: Sequence[str | int] = (),
+        name: str = "name",
+        key: str = "id",
+        timeout: int = 30,
+    ):
+        self.url = url
+        self.argument = argument
+        self.items = tuple(items)
+        self.name = name
+        self.key = key
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, keys: tuple = ()) -> Any:
+        from waste_collection_schedule import lookups
+
+        response = source.session.get(self.url, timeout=self.timeout)
+        response.raise_for_status()
+        rows: Any = response.json()
+        for item in self.items:
+            rows = rows[item]
+        mapping = {str(row[self.name]): row[self.key] for row in rows}
+        return lookups.resolve(
+            mapping, source.params.get(self.argument), argument=self.argument
+        )
+
+
+class YearUrl:
+    """:class:`YearlyRetriever` ``fetch`` that GETs one URL per year.
+
+    The template is formatted with ``year``, ``key`` (whatever ``prepare``
+    returned, e.g. a :class:`JsonIndexLookup` id) and the source's params::
+
+        fetch=retrievers.YearUrl("https://example.org/{year}/calendar-{key}.json")
+
+    An error status raises, which is how a year the provider has not published
+    yet (a 404) is skipped by the rollover fetch.
+
+    Args:
+        template: the URL template.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(self, template: str, *, timeout: int = 30):
+        self.template = template
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, year: int, context: Any) -> Response:
+        url = self.template.format(year=year, key=context, **source.params)
+        response = source.session.get(url, timeout=self.timeout)
+        response.raise_for_status()
+        return response
+
+
+def _with(value: Any, args: tuple, params: Mapping[str, Any]) -> Any:
+    """A declared request field: a literal, or ``callable(*args, **params)``."""
+    return value(*args, **params) if callable(value) else value
+
+
+class Request(_BaseRetriever):
+    """One HTTP request, declared rather than written.
+
+    The lookup and fan-out components hand a request to a callback: a
+    :class:`YearlyRetriever` ``fetch``, a :class:`FanOutRetriever` ``fetch``, a
+    :class:`LookupChainRetriever` step. Written as a function in the source
+    module, that callback is a retriever the next provider cannot reach, and
+    ``test_pipeline_sources_do_not_hand_roll_retrieval`` gates it (#7139). This
+    is the same request as configuration: what to send, with the source keeping
+    only the provider knowledge of which values go where.
+
+    Every field is a literal or a ``callable(*args, **source.params)``, where
+    ``args`` are whatever the calling component passes after the source: the
+    year and the prepared context for a :class:`YearlyRetriever` ``fetch``, the
+    target and context for a :class:`FanOutRetriever` ``fetch``. Name those
+    positional arguments apart from the source's own parameters: a callable
+    taking ``street_number`` positionally fails with "multiple values" when
+    ``street_number`` is also a configured param::
+
+        retrieve = retrievers.YearlyRetriever(
+            prepare=retrievers.Lookup(STREETS_URL, pick=_street_id, ...),
+            fetch=retrievers.Request(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda year, street_id, **_: {"jahr": year, "strasse": street_id},
+            ),
+        )
+
+    Some requests can only be addressed once another has answered: a per-year
+    download token, a link scraped off the page that lists it. ``before`` runs
+    those :class:`Lookup` steps first, each one's result appended to ``args``
+    for the steps after it and for this request's own fields.
+
+    Args:
+        url: the request URL.
+        method: ``"GET"`` (default) or ``"POST"``.
+        params: query string.
+        data: form body (``method="POST"`` only).
+        json: JSON body (``method="POST"`` only).
+        headers: request headers.
+        cookies: cookies sent with this request, on top of the session's.
+        allow_redirects: follow redirects (default). Off for a provider that
+            hands its answer back in the redirect itself.
+        before: :class:`Lookup` steps run first, see above.
+        when: optional ``callable(*args, **source.params) -> bool``, checked
+            once ``before`` has run. When it is False no request is made and
+            the call returns ``None``, which a :class:`FanOutRetriever` drops:
+            a target that has nothing for this household (a published year
+            the address is not listed in) rather than a failed fetch.
+        retry_if: optional ``callable(response) -> bool``. A response it
+            flags is requested once more, in the same session: for a page that
+            answers the first hit with an interstitial or consent overlay and
+            the real content on the second.
+        encoding: forced on the response before its ``.text`` is read.
+        raise_for_status: raise on an error status (default). Off for a
+            provider whose error status is itself the answer a ``pick`` reads.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str,
+        *,
+        method: str = "GET",
+        params: Callable[..., ParamsType] | ParamsType = None,
+        data: Callable[..., Any] | Any = None,
+        json: Callable[..., JsonType] | JsonType = None,
+        headers: Callable[..., HeadersType] | HeadersType = None,
+        cookies: Callable[..., Mapping[str, str] | None]
+        | Mapping[str, str]
+        | None = None,
+        allow_redirects: bool = True,
+        before: Sequence[Callable[[BaseSource, tuple], Any]] = (),
+        when: Callable[..., bool] | None = None,
+        retry_if: Callable[[Response], bool] | None = None,
+        encoding: str | None = None,
+        raise_for_status: bool = True,
+        timeout: int = 30,
+    ):
+        if method.upper() not in ("GET", "POST"):
+            raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
+        if (data is not None or json is not None) and method.upper() != "POST":
+            raise ValueError("Request data/json requires method='POST'")
+        self.url = url
+        self.method = method.upper()
+        self.params = params
+        self.data = data
+        self.json = json
+        self.headers = headers
+        self.cookies = cookies
+        self.allow_redirects = allow_redirects
+        self.before = tuple(before)
+        self.when = when
+        self.retry_if = retry_if
+        self.encoding = encoding
+        self.raise_for_status = raise_for_status
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource, *args: Any) -> Any:
+        """The response, or ``None`` when ``when`` ruled the request out."""
+        for step in self.before:
+            args = (*args, step(source, args))
+        if self.when is not None and not self.when(*args, **source.params):
+            return None
+        response = self._send(source, args)
+        if self.retry_if is not None and self.retry_if(response):
+            response = self._send(source, args)
+        if self.encoding is not None:
+            response.encoding = self.encoding
+        return response
+
+    def _send(self, source: BaseSource, args: tuple) -> Response:
+        params = source.params
+        kwargs: dict[str, Any] = {
+            "params": _with(self.params, args, params),
+            "headers": _with(self.headers, args, params),
+            "cookies": _with(self.cookies, args, params),
+            "allow_redirects": self.allow_redirects,
+            "timeout": self.timeout,
+        }
+        url = _with(self.url, args, params)
+        if self.method == "POST":
+            response = source.session.post(
+                url,
+                data=_with(self.data, args, params),
+                json=_with(self.json, args, params),
+                **kwargs,
+            )
+        else:
+            response = source.session.get(url, **kwargs)
+        if self.raise_for_status:
+            response.raise_for_status()
+        return response
+
+
+def detached_source(params: Mapping[str, Any] | None = None) -> BaseSource:
+    """A stand-in source, for issuing declared requests before any Source exists.
+
+    ``get_choices`` / ``get_parent_choices`` fill the config flow's dropdowns
+    at config-flow time, when there is no Source and so no ``source.session``.
+    Handing the same :class:`Request` objects the fetch uses this stand-in
+    (a fresh browser-impersonating session, and ``params`` as the source's
+    params) keeps the dropdowns and the fetch reading the provider through one
+    declaration::
+
+        @classmethod
+        def get_choices(cls, parent_value: str) -> list[str]:
+            response = _STREETS(retrievers.detached_source(), parent_value)
+            return _street_names(response)
+    """
+    from types import SimpleNamespace
+
+    from curl_cffi import requests as cffi_requests
+
+    return cast(
+        "BaseSource",
+        SimpleNamespace(
+            session=cffi_requests.Session(impersonate="chrome"),
+            params=dict(params or {}),
+        ),
+    )
+
+
+class Lookup:
+    """A lookup step: one declared :class:`Request`, then a pure ``pick``.
+
+    The step every address-resolving component takes (a
+    :class:`LookupChainRetriever` step, a :class:`YearlyRetriever` or
+    :class:`FanOutRetriever` ``prepare``, a :class:`Request` ``before``), with
+    the request declared and only the reading left to the source. ``pick`` sees
+    the response and never issues a request of its own, so what stays in the
+    source module is provider knowledge (which field holds the id, how names
+    compare) rather than a retriever (#7139)::
+
+        retrieve = retrievers.LookupChainRetriever(
+            steps=(
+                retrievers.Lookup(f"{API}/city/all", pick=_city_id),
+                retrievers.Lookup(
+                    lambda city_id, **_: f"{API}/street/filter/{city_id}",
+                    pick=_street_id,
+                ),
+            ),
+            url=lambda city_id, street_id, **_: f"{API}/pickup/{street_id}/ics",
+        )
+
+    :class:`JsonIndexLookup` is the fully configured special case of this, for
+    a provider whose index is a plain JSON list of names and ids.
+
+    Args:
+        url: the lookup URL, as for :class:`Request`. Every request field is
+            called as ``callable(*keys, **source.params)``, ``keys`` being the
+            ids resolved by the steps before this one. Or a whole
+            :class:`Request`, for one the source also issues elsewhere (a
+            ``get_choices`` walking the same cascade at config-flow time).
+        pick: ``callable(response, *keys, **source.params) -> key``. Raises
+            ``SourceArgumentNotFound*`` / ``SourceArgAmbiguous*`` for a value
+            that did not resolve.
+        given: optional ``callable(*keys, **source.params) -> key | None``. A
+            key it returns is used as-is and no request is made: the user
+            supplied the id directly, or already knows the answer.
+        when: optional ``callable(*keys, **source.params) -> bool``. When it
+            is False the step makes no request and resolves to ``None``: an
+            optional level the user left out.
+        **request: the remaining :class:`Request` arguments (``method``,
+            ``params``, ``data``, ``json``, ``headers``, ``cookies``,
+            ``allow_redirects``, ``encoding``, ``raise_for_status``,
+            ``timeout``).
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str | Request,
+        *,
+        pick: Callable[..., Any],
+        given: Callable[..., Any] | None = None,
+        when: Callable[..., bool] | None = None,
+        **request: Any,
+    ):
+        if isinstance(url, Request):
+            if request:
+                raise ValueError("Lookup takes a Request or its arguments, not both")
+            self.request = url
+        else:
+            self.request = Request(url, **request)
+        self.pick = pick
+        self.given = given
+        self.when = when
+
+    def __call__(self, source: BaseSource, keys: Sequence[Any] = ()) -> Any:
+        keys = tuple(keys)
+        if self.given is not None:
+            value = self.given(*keys, **source.params)
+            if value is not None:
+                return value
+        if self.when is not None and not self.when(*keys, **source.params):
+            return None
+        return self.pick(self.request(source, *keys), *keys, **source.params)
+
+
+class Chain:
+    """Several lookup steps run as one, resolving to the tuple of their keys.
+
+    :class:`LookupChainRetriever` runs its steps itself, but the
+    :class:`YearlyRetriever` and :class:`FanOutRetriever` ``prepare`` is a
+    single callable. This runs an address resolution that takes more than one
+    lookup there, each step seeing the keys resolved before it::
+
+        prepare=retrievers.Chain(
+            retrievers.Lookup(STREETS_URL, pick=_street_id),
+            retrievers.Lookup(NUMBERS_URL, params=..., pick=_number_id),
+        )
+
+    The prepared context is then the ``(street_id, number_id)`` tuple.
+    """
+
+    def __init__(self, *steps: Callable[[BaseSource, tuple], Any]):
+        if not steps:
+            raise ValueError("Chain requires at least one step")
+        self.steps = steps
+
+    def __call__(self, source: BaseSource, keys: Sequence[Any] = ()) -> tuple:
+        resolved = tuple(keys)
+        for step in self.steps:
+            resolved = (*resolved, step(source, resolved))
+        return resolved
+
+
+class Suggestions:
+    """The "did you mean" list for a bad argument, fetched from the provider.
+
+    The ``suggestions`` hook of ``parsers.ArgumentGuard``,
+    ``preprocessors.RequireRecords`` and ``service.ICS.IcsFeedsParser``: called
+    only on the error path, it asks the provider which values it does know.
+    ``pick`` reads them off the response::
+
+        suggestions=retrievers.Suggestions(
+            INDEX_URL, pick=lambda response, **_: response.json()["names"]
+        )
+
+    Args:
+        url: as for :class:`Request`, with fields called as
+            ``callable(**source.params)``.
+        pick: ``callable(response, **source.params) -> Iterable[str]``.
+        fallback: what to answer when the request or ``pick`` fails. ``None``
+            (default) lets the error through, which the argument guards turn
+            into a plain not-found; pass ``[]`` for a hook whose caller does
+            not catch.
+        **request: the remaining :class:`Request` arguments.
+    """
+
+    def __init__(
+        self,
+        url: Callable[..., str] | str,
+        *,
+        pick: Callable[..., Iterable[str]],
+        fallback: Sequence[str] | None = None,
+        **request: Any,
+    ):
+        self.request = Request(url, **request)
+        self.pick = pick
+        self.fallback = fallback
+
+    def __call__(self, source: BaseSource | None) -> list[str]:
+        if source is None:
+            return list(self.fallback or [])
+        try:
+            return list(self.pick(self.request(source), **source.params))
+        except Exception:
+            if self.fallback is None:
+                raise
+            return list(self.fallback)
 
 
 def submit_page_form(

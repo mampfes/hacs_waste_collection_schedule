@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://dac.telford.gov.uk/BinDayFinder/Find/PropertySearch 95c479bb07",
+      "method": "GET",
+      "url": "https://dac.telford.gov.uk/BinDayFinder/Find/PropertySearch",
+      "final_url": "https://dac.telford.gov.uk/BinDayFinder/Find/PropertySearch?uprn=000452097493",
+      "body": "{\"params\":[[\"uprn\",\"000452097493\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "content-security-policy": "default-src 'self'; connect-src *; font-src *; frame-src *; img-src * data:; media-src *; object-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';",
+        "referrer-policy": "strict-origin",
+        "date": "Thu, 01 Oct 2026 19:26:40 GMT",
+        "content-length": "1325"
+      },
+      "content_b64": "IntcInN1Y2Nlc3NcIjp0cnVlLFwiZXJyb3JtZXNzYWdlXCI6XCJcIixcImJpbmNvbGxlY3Rpb25zXCI6W3tcIm5hbWVcIjpcIlB1cnBsZSAvIEJsdWUgQ29udGFpbmVyc1wiLFwiZGVzY3JpcHRpb25cIjpcIldlZG5lc2RheSBldmVyeSBvdGhlciB3ZWVrXCIsXCJsYXN0RGF0ZVwiOlwiV2VkbmVzZGF5IDMwdGggU2VwdGVtYmVyXCIsXCJpc0xhc3REYXRlQWRqdXN0ZWRcIjp0cnVlLFwibmV4dERhdGVcIjpcIldlZG5lc2RheSAxNHRoIE9jdG9iZXJcIixcImlzTmV4dERhdGVBZGp1c3RlZFwiOnRydWUsXCJpc1RvZGF5XCI6ZmFsc2UsXCJpc0Fzc2lzdGVkXCI6ZmFsc2UsXCJpbWFnZVVSTFwiOlwicmVjeWNsaW5nLWNvbnRhaW5lcnMucG5nXCJ9LHtcIm5hbWVcIjpcIlJlZCBUb3AgQ29udGFpbmVyXCIsXCJkZXNjcmlwdGlvblwiOlwiV2VkbmVzZGF5IGV2ZXJ5IG90aGVyIHdlZWtcIixcImxhc3REYXRlXCI6XCJXZWRuZXNkYXkgMjNyZCBTZXB0ZW1iZXJcIixcImlzTGFzdERhdGVBZGp1c3RlZFwiOnRydWUsXCJuZXh0RGF0ZVwiOlwiV2VkbmVzZGF5IDd0aCBPY3RvYmVyXCIsXCJpc05leHREYXRlQWRqdXN0ZWRcIjp0cnVlLFwiaXNUb2RheVwiOmZhbHNlLFwiaXNBc3Npc3RlZFwiOmZhbHNlLFwiaW1hZ2VVUkxcIjpcInJlZC1iaW4ucG5nXCJ9LHtcIm5hbWVcIjpcIkdyZWVuIENvbnRhaW5lclwiLFwiZGVzY3JpcHRpb25cIjpcIldlZG5lc2RheSBldmVyeSBvdGhlciB3ZWVrXCIsXCJsYXN0RGF0ZVwiOlwiV2VkbmVzZGF5IDMwdGggU2VwdGVtYmVyXCIsXCJpc0xhc3REYXRlQWRqdXN0ZWRcIjp0cnVlLFwibmV4dERhdGVcIjpcIldlZG5lc2RheSAxNHRoIE9jdG9iZXJcIixcImlzTmV4dERhdGVBZGp1c3RlZFwiOnRydWUsXCJpc1RvZGF5XCI6ZmFsc2UsXCJpc0Fzc2lzdGVkXCI6ZmFsc2UsXCJpbWFnZVVSTFwiOlwiZ3JlZW4tYmluLnBuZ1wifSx7XCJuYW1lXCI6XCJTaWx2ZXIgQ29udGFpbmVyc1wiLFwiZGVzY3JpcHRpb25cIjpcIldlZG5lc2RheSBldmVyeSB3ZWVrXCIsXCJsYXN0RGF0ZVwiOlwiV2VkbmVzZGF5IDMwdGggU2VwdGVtYmVyXCIsXCJpc0xhc3REYXRlQWRqdXN0ZWRcIjp0cnVlLFwibmV4dERhdGVcIjpcIldlZG5lc2RheSA3dGggT2N0b2JlclwiLFwiaXNOZXh0RGF0ZUFkanVzdGVkXCI6dHJ1ZSxcImlzVG9kYXlcIjpmYWxzZSxcImlzQXNzaXN0ZWRcIjpmYWxzZSxcImltYWdlVVJMXCI6XCJzaWx2ZXItY2FkZHkucG5nXCJ9XSxcImNhbGVuZGFycm91bmRuYW1lXCI6XCJXRURXMVwiLFwibmV4dGNvbGxlY3Rpb25pbmZvXCI6XCJZb3VyIG5leHQgYmluIGNvbGxlY3Rpb24gb24gIHdpbGwgYmUgZm9yIFwifSI="
+    }
+  ]
+}

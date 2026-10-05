@@ -1,8 +1,25 @@
 # Stadt Geilenkirchen
 
-Support for waste collection schedules provided by the city of [Geilenkirchen](https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/), North Rhine-Westphalia, Germany.
+Support for schedules provided by [Stadt Geilenkirchen](https://www.geilenkirchen.de).
+
+Source for the waste collection calendar of the city of Geilenkirchen, North Rhine-Westphalia, Germany.
 
 ## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: geilenkirchen_de
+      args:
+        street: STREET
+```
+
+### Configuration Variables
+
+**street**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -12,25 +29,6 @@ waste_collection_schedule:
         street: Aldenhovener Strasse
 ```
 
-### Configuration Variables
+## How to get the source arguments
 
-**street**
-*(string) (required)*
-
-The street name as shown on the [collection calendar](https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/), e.g. `Aldenhovener Strasse`.
-
-Note that Geilenkirchen spells its streets with `strasse` rather than `straße`. If the name you enter cannot be found, or matches more than one street, the resulting error message lists the closest matches so you can pick the correct one.
-
-## Example
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: geilenkirchen_de
-      args:
-        street: Ahornweg
-```
-
-## How to get the source argument
-
-Visit the [collection calendar](https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/) and use the street search box there to find the exact spelling of your street.
+Visit the collection calendar at https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ and use the street search box there to find the exact spelling of your street (streets are spelled with 'strasse', not 'straße'). Use that exact name as the 'street' argument. If the name you enter cannot be found, or matches more than one street, the resulting error message lists the closest matches.

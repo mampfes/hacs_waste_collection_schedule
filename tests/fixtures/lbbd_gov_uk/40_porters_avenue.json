@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.lbbd.gov.uk/rest/bin/100024629 ",
+      "method": "GET",
+      "url": "https://www.lbbd.gov.uk/rest/bin/100024629",
+      "final_url": "https://www.lbbd.gov.uk/rest/bin/100024629",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 26 Sep 2026 20:30:57 GMT",
+        "content-type": "application/json",
+        "content-length": "584",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "frame-ancestors 'self'; upgrade-insecure-requests;",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "permissions-policy": "geolocation=(), microphone=(), camera=(), fullscreen=()",
+        "cache-control": "must-revalidate, no-cache, private",
+        "x-drupal-dynamic-cache": "UNCACHEABLE (no cacheability)",
+        "content-language": "en",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 10 (https://www.drupal.org)",
+        "x-drupal-cache": "UNCACHEABLE (no cacheability)"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJ1cHJuIjoxMDAwMjQ2MjksImJpbl90eXBlIjoiR3JleS1Ib3VzZWhvbGQiLCJiaW5fbmFtZSI6IkdyZXkgQmluIChOb24tUmVjeWNsYWJsZSkiLCJjb2xsZWN0aW9uZGF5IjoiVHVlc2RheSIsIm5leHRjb2xsZWN0aW9uIjoiVHVlc2RheSAyOSBTZXB0ZW1iZXIgMjAyNiIsInJlc2NoZWR1bGVkIjoiIiwib3JpZ2luYWxjb2xsZWN0aW9uZGF5IjoiMjlcLzA5XC8yMDI2IiwiZnV0dXJlY29sbGVjdGlvbnMiOlsiVHVlc2RheSAwNiBPY3RvYmVyIDIwMjYiLCJUdWVzZGF5IDEzIE9jdG9iZXIgMjAyNiIsIlR1ZXNkYXkgMjAgT2N0b2JlciAyMDI2Il19LHsidXBybiI6MTAwMDI0NjI5LCJiaW5fdHlwZSI6IkJyb3duLVJlY3ljbGluZyIsImJpbl9uYW1lIjoiQnJvd24gQmluIChSZWN5Y2xpbmcpIiwiY29sbGVjdGlvbmRheSI6IlR1ZXNkYXkiLCJuZXh0Y29sbGVjdGlvbiI6IlR1ZXNkYXkgMjkgU2VwdGVtYmVyIDIwMjYiLCJyZXNjaGVkdWxlZCI6IiIsIm9yaWdpbmFsY29sbGVjdGlvbmRheSI6IjI5XC8wOVwvMjAyNiIsImZ1dHVyZWNvbGxlY3Rpb25zIjpbIlR1ZXNkYXkgMTMgT2N0b2JlciAyMDI2Il19XX0="
+    }
+  ]
+}

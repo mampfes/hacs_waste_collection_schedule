@@ -1,99 +1,85 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentRequired,
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsFieldMapPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsXmlRowsParser,
+    LookupStep,
 )
-from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Coventry City Council"
-DESCRIPTION = "Source for waste collection services for Coventry City Council"
-URL = "https://www.coventry.gov.uk/"
-COUNTRY = "uk"
+_HOSTNAME = "myaccount.coventry.gov.uk"
 
-HOST = "myaccount.coventry.gov.uk"
-BASE_URL = f"https://{HOST}"
-LOOKUP_ID = "6a675c200be8f"
-
-TEST_CASES = {
-    "Test_001": {"uprn": "100070666040"},
-    "Test_002": {"uprn": 100070666041},
-    "Test_003": {"uprn": "100070649599"},
-}
-
-# Result column -> (waste type, icon)
-WASTE_TYPES = {
-    "Bartec_Refuse_Date": ("Household waste (green-lidded bin)", Icons.GENERAL_WASTE),
-    "Bartec_Recycling_Date": ("Recycling (blue-lidded bin)", Icons.RECYCLING),
-    "Bartec_Garden_Date": ("Garden waste (brown-lidded bin)", Icons.GARDEN),
-    "Bartec_Food_Date": ("Food waste caddy", Icons.BIO_KITCHEN),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property reference number (UPRN)"},
-}
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Unique Property Reference Number of your address"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.",
-}
+_REFUSE = "Household waste (green-lidded bin)"
+_RECYCLING = "Recycling (blue-lidded bin)"
+_GARDEN = "Garden waste (brown-lidded bin)"
+_FOOD = "Food waste caddy"
 
 
-class Source:
-    def __init__(self, uprn: str | int | None = None):
-        if uprn is None or str(uprn).strip() == "":
-            raise SourceArgumentRequired(
-                "uprn",
-                "Coventry replaced its street lookup with an address lookup; "
-                "find your UPRN at https://www.findmyaddress.co.uk/",
-            )
-        self._uprn = str(uprn).strip()
+@final
+class Source(BaseSource):
+    TITLE = "Coventry City Council"
+    DESCRIPTION = "Source for waste collection services for Coventry City Council"
+    URL = "https://www.coventry.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        s.headers.update({"User-Agent": "Mozilla/5.0"})
-        sid = init_session(
-            s,
-            initial_url=f"{BASE_URL}/service/find_my_bin_day",
-            auth_url=f"{BASE_URL}/authapi/isauthenticated",
-            hostname=HOST,
-        )
-        data = run_lookup(
-            s,
-            api_url=f"{BASE_URL}/apibroker/runLookup",
-            sid=sid,
-            lookup_id=LOOKUP_ID,
-            form_values={"Section 1": {"Address_UPRN": {"value": self._uprn}}},
-        )
-        xml = data.get("data") or ""
-        results = dict(re.findall(r'column="(\w+)" isNull="False">([^<]*)<', xml))
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100070666040"},
+        "Test_002": {"uprn": 100070666041},
+        "Test_003": {"uprn": "100070649599"},
+    }
 
-        if results.get("Bartec_Error", "false").lower() == "true":
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                results.get("Bartec_Error_Message") or "Lookup returned an error.",
-            )
+    PARAMS = (uprn(),)
 
-        entries: list[Collection] = []
-        for column, (waste_type, icon) in WASTE_TYPES.items():
-            value = results.get(column)
-            if not value:
-                continue
-            date = datetime.fromisoformat(value).date()
-            if date.year <= 1:  # 0001-01-01 means no collection for this bin
-                continue
-            entries.append(Collection(date=date, t=waste_type, icon=icon))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
 
-        if not entries:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "No collections found; check the UPRN is a Coventry address.",
-            )
-        return entries
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        initial_url=f"https://{_HOSTNAME}/service/find_my_bin_day",
+        steps=[
+            LookupStep(
+                "6a675c200be8f",
+                form_values=lambda ctx, source: {
+                    "Address_UPRN": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    # The Bartec integration answers in XML: one row, a date per bin, and
+    # 0001-01-01 for a bin the property does not have.
+    parse = AchieveFormsXmlRowsParser()
+    preprocess = AchieveFormsFieldMapPreprocessor(
+        fields=[
+            ("Bartec_Refuse_Date", _REFUSE),
+            ("Bartec_Recycling_Date", _RECYCLING),
+            ("Bartec_Garden_Date", _GARDEN),
+            ("Bartec_Food_Date", _FOOD),
+        ],
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        truncate=10,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            _REFUSE: wt.GENERAL_WASTE,
+            _RECYCLING: wt.RECYCLABLES,
+            _GARDEN: wt.GARDEN_WASTE,
+            _FOOD: wt.FOOD_WASTE,
+        },
+        carry_raw_label=True,
+    )

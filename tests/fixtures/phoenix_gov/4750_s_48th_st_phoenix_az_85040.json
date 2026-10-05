@@ -1,0 +1,77 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 3a8ab2ddc5",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=4750+S+48th+St%2C+Phoenix%2C+AZ+85040&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"4750 S 48th St, Phoenix, AZ 85040\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 11:15:16 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "221",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"f59b5823\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiNDc1MCBTIDQ4dGggU3QsIFBob2VuaXgsIEFyaXpvbmEsIDg1MDQwIiwibG9jYXRpb24iOnsieCI6LTExMS45Nzg4NjQwMjM0NTIsInkiOjMzLjQwNDIwNTQ4MDMxM30sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6LTExMS45Nzk4NjQwMjM0NTIsInltaW4iOjMzLjQwMzIwNTQ4MDMxMywieG1heCI6LTExMS45Nzc4NjQwMjM0NTIsInltYXgiOjMzLjQwNTIwNTQ4MDMxM319XX0="
+    },
+    {
+      "key": "GET https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/2/query 7f3d1bd30b",
+      "method": "GET",
+      "url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/2/query",
+      "final_url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/2/query?outFields=DOC&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-111.978864023452%2C+%22y%22%3A+33.404205480313%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -111.978864023452, \\\"y\\\": 33.404205480313}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"DOC\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "143",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"b68e7c1c\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-UA-Compatible": "IE=Edge",
+        "Date": "Sat, 26 Sep 2026 11:15:22 GMT",
+        "Set-Cookie": "BIGipServermaps.phoenix.gov-pool-ext-ent=771810570.47873.0000; path=/; Httponly; Secure"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRE9DIiwiZmllbGRBbGlhc2VzIjp7IkRPQyI6IkRPQyJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJET0MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRE9DIiwibGVuZ3RoIjo1MH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJET0MiOiJGUklEQVkifX1dfQ=="
+    },
+    {
+      "key": "GET https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/1/query 7f3d1bd30b",
+      "method": "GET",
+      "url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/1/query",
+      "final_url": "https://maps.phoenix.gov/pub/rest/services/Public/GarbagePickUp/MapServer/1/query?outFields=DOC&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-111.978864023452%2C+%22y%22%3A+33.404205480313%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -111.978864023452, \\\"y\\\": 33.404205480313}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"DOC\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "143",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"b68e7c1c\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-UA-Compatible": "IE=Edge",
+        "Date": "Sat, 26 Sep 2026 11:15:30 GMT",
+        "Set-Cookie": "BIGipServermaps.phoenix.gov-pool-ext-ent=771810570.47873.0000; path=/; Httponly; Secure"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRE9DIiwiZmllbGRBbGlhc2VzIjp7IkRPQyI6IkRPQyJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJET0MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRE9DIiwibGVuZ3RoIjo1MH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJET0MiOiJGUklEQVkifX1dfQ=="
+    }
+  ]
+}

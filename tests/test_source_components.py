@@ -660,97 +660,6 @@ def test_mzv_rotenburg_route_filter_without_location() -> None:
     ]
 
 
-def test_koma_pl_resolves_house_number_and_parses_schedule() -> None:
-    module = _get_module("koma_pl")
-
-    posesje = [
-        {"numer_posesji": "ND00050", "numer_domu": "4/1", "ulica": "Kanałowa"},
-        {"numer_posesji": "1941", "numer_domu": "5", "ulica": "Kanałowa"},
-    ]
-    schedule = {
-        "rok": "2026",
-        "odbior": [
-            {"data": "2026-01-07", "typ": "Bio"},
-            {"data": "2026-01-15", "typ": "Zmieszane"},
-            {"data": "bad-date", "typ": "Papier"},
-        ],
-    }
-
-    class _Response:
-        def __init__(self, payload):
-            self._payload = payload
-
-        def raise_for_status(self) -> None:
-            return None
-
-        def json(self):
-            return self._payload
-
-    requested = []
-
-    class _Session:
-        def get(self, url, params=None, timeout=None):
-            requested.append((url, params))
-            if "apiharmonogram" in url:
-                return _Response(schedule)
-            return _Response(posesje)
-
-    with patch.object(module.requests, "Session", lambda **kwargs: _Session()):
-        entries = module.Source(
-            gmina="Nowy Dwór Gdański",
-            miejscowosc="Nowy Dwór Gdański",
-            ulica="Kanałowa",
-            numer_domu="5",
-        ).fetch()
-
-    # House number "5" must resolve to property id 1941 in the schedule request.
-    assert any(
-        params and params.get("value") == "Nowy Dwór Gdański/1941"
-        for _, params in requested
-    )
-    # Valid dates parsed, invalid date skipped.
-    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
-        ("2026-01-07", "Bio"),
-        ("2026-01-15", "Zmieszane"),
-    ]
-
-
-def test_esch_lu_requests_identity_encoding() -> None:
-    module = _get_module("esch_lu")
-    calls: list[tuple[str, dict[str, Any]]] = []
-
-    class _Response:
-        content = (
-            b'<table id="garbage-table"><tr><td></td><td>Organique</td>'
-            b"<td>mardi, 28 juillet 2026</td></tr></table>"
-        )
-
-        @staticmethod
-        def raise_for_status() -> None:
-            return None
-
-    class _Session:
-        def get(self, url: str, **kwargs: Any) -> _Response:
-            calls.append((url, kwargs))
-            return _Response()
-
-    with patch.object(module, "get_legacy_session", return_value=_Session()):
-        entries = module.Source(zone="A").fetch()
-
-    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
-        ("2026-07-28", "Organique")
-    ]
-    assert calls == [
-        (
-            "https://administration.esch.lu/dechets/",
-            {
-                "params": {"street": 0, "tour": "1"},
-                "headers": {"Accept-Encoding": "identity"},
-            },
-        )
-    ]
-
-
 class _OpenCitiesResponse:
     def __init__(self, *, json_data=None, text="", json_error=False):
         self._json_data = json_data
@@ -768,44 +677,85 @@ class _OpenCitiesResponse:
 
 class _OpenCitiesSession:
     def __init__(self, responder) -> None:
-        self.headers: dict[str, str] = {}
         self.calls: list[tuple[str, dict | None]] = []
+        self.headers_sent: list[dict | None] = []
         self._responder = responder
 
-    def get(self, url, params=None, timeout=None):
+    def get(self, url, params=None, headers=None, timeout=None):
         self.calls.append((url, params))
+        self.headers_sent.append(headers)
         return self._responder(url, params)
+
+
+class _OpenCitiesSource:
+    """The slice of a BaseSource the OpenCities components touch."""
+
+    def __init__(self, responder, **params) -> None:
+        self.session = _OpenCitiesSession(responder)
+        self.params = params
 
 
 def _opencities_module():
     return import_module("waste_collection_schedule.service.OpenCities")
 
 
-def test_opencities_client_resolves_single_address_result() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
+def _services(html: str) -> _OpenCitiesResponse:
+    return _OpenCitiesResponse(json_data={"success": True, "responseContent": html})
+
+
+def _one_hit(hit_id: str = "abc") -> _OpenCitiesResponse:
+    return _OpenCitiesResponse(json_data={"Items": [{"Id": hit_id}]})
+
+
+def _oc_responder(items_response, services_response):
+    """Answer the search with one response and wasteservices with another."""
 
     def responder(url, params):
-        assert "/api/v1/myarea/search" in url
-        return _OpenCitiesResponse(
-            json_data={"Items": [{"Id": "abc-123", "AddressSingleLine": "1 Main St"}]}
-        )
+        if "myarea/search" in url:
+            return items_response
+        return services_response
 
-    client._session = _OpenCitiesSession(responder)
-
-    assert client.resolve_geolocation_id("1 Main St") == "abc-123"
+    return responder
 
 
-def test_opencities_client_raises_ambiguous_with_suggestions_on_multiple_matches() -> (
+def _oc_parse(html: str, **parser_args):
+    module = _opencities_module()
+    raw = module.OpenCitiesResult(_services(html), "address", "1 Main St")
+    return module.OpenCitiesParser(**parser_args)(raw)
+
+
+def _oc_geolocation_ids(source) -> list[str]:
+    return [
+        params["geolocationid"]
+        for url, params in source.session.calls
+        if "wasteservices" in url
+    ]
+
+
+def test_opencities_retriever_resolves_single_address_result() -> None:
+    module = _opencities_module()
+    source = _OpenCitiesSource(
+        _oc_responder(
+            _OpenCitiesResponse(
+                json_data={
+                    "Items": [{"Id": "abc-123", "AddressSingleLine": "1 Main St"}]
+                }
+            ),
+            _services("<p>none</p>"),
+        ),
+        address="1 Main St",
+    )
+
+    module.OpenCitiesRetriever("https://example.invalid")(source)
+
+    assert _oc_geolocation_ids(source) == ["abc-123"]
+
+
+def test_opencities_retriever_raises_ambiguous_with_suggestions_on_multiple_matches() -> (
     None
 ):
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", strict_address_matching=True
-    )
-    client = module.OpenCitiesClient(config)
-    client._session = _OpenCitiesSession(
+    source = _OpenCitiesSource(
         lambda url, params: _OpenCitiesResponse(
             json_data={
                 "Items": [
@@ -813,11 +763,15 @@ def test_opencities_client_raises_ambiguous_with_suggestions_on_multiple_matches
                     {"Id": "b", "AddressSingleLine": "1 Main St, Southtown"},
                 ]
             }
-        )
+        ),
+        address="1 Main St",
+    )
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid", strict_address_matching=True
     )
 
     try:
-        client.resolve_geolocation_id("1 Main St")
+        retriever(source)
         raise AssertionError("Expected SourceArgAmbiguousWithSuggestions")
     except module.SourceArgAmbiguousWithSuggestions as err:
         assert list(err.suggestions) == [
@@ -826,311 +780,198 @@ def test_opencities_client_raises_ambiguous_with_suggestions_on_multiple_matches
         ]
 
 
-def test_opencities_client_selects_exact_match_among_multiple_results() -> None:
+def test_opencities_retriever_selects_exact_match_among_multiple_results() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", strict_address_matching=True
+    source = _OpenCitiesSource(
+        _oc_responder(
+            _OpenCitiesResponse(
+                json_data={
+                    "Items": [
+                        {"Id": "a", "AddressSingleLine": "5 Other St, Southtown"},
+                        {"Id": "b", "AddressSingleLine": "  1 main st, northtown  "},
+                    ]
+                }
+            ),
+            _services("<p>none</p>"),
+        ),
+        address="1 main st, northtown",
     )
-    client = module.OpenCitiesClient(config)
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={
-                "Items": [
-                    {"Id": "a", "AddressSingleLine": "5 Other St, Southtown"},
-                    {"Id": "b", "AddressSingleLine": "  1 main st, northtown  "},
-                ]
-            }
-        )
+
+    module.OpenCitiesRetriever("https://example.invalid", strict_address_matching=True)(
+        source
     )
 
-    assert client.resolve_geolocation_id("1 main st, northtown") == "b"
+    assert _oc_geolocation_ids(source) == ["b"]
 
 
-def test_opencities_client_trusts_top_search_result_by_default() -> None:
+def test_opencities_retriever_trusts_top_search_result_by_default() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={
-                "Items": [
-                    {"Id": "a", "AddressSingleLine": "1 Main St, Northtown"},
-                    {"Id": "b", "AddressSingleLine": "1 Main St, Southtown"},
-                ]
-            }
-        )
+    source = _OpenCitiesSource(
+        _oc_responder(
+            _OpenCitiesResponse(
+                json_data={
+                    "Items": [
+                        {"Id": "a", "AddressSingleLine": "1 Main St, Northtown"},
+                        {"Id": "b", "AddressSingleLine": "1 Main St, Southtown"},
+                    ]
+                }
+            ),
+            _services("<p>none</p>"),
+        ),
+        address="1 Main St, Somewhere Else",
     )
+
+    module.OpenCitiesRetriever("https://example.invalid")(source)
 
     # With strict_address_matching left at its default (False), the
     # highest-ranked result is used even though it doesn't textually match
     # the query -- avoids turning normal fuzzy-search hits (e.g. missing a
     # state abbreviation) into a hard "ambiguous" failure.
-    assert client.resolve_geolocation_id("1 Main St, Somewhere Else") == "a"
+    assert _oc_geolocation_ids(source) == ["a"]
 
 
-def test_opencities_client_raises_not_found_on_empty_search() -> None:
+def test_opencities_retriever_holds_a_lone_hit_to_exact_match_when_asked() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(json_data={"Items": []})
+    source = _OpenCitiesSource(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"Items": [{"Id": "a", "AddressSingleLine": "2 Lake Ridge Lane"}]}
+        ),
+        address="2 Wallarah Rd",
+    )
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid",
+        strict_address_matching=True,
+        strict_single_result=True,
     )
 
     try:
-        client.resolve_geolocation_id("nowhere")
-        raise AssertionError("Expected SourceArgumentNotFound")
-    except module.SourceArgumentNotFound:
-        pass
+        retriever(source)
+        raise AssertionError("Expected SourceArgAmbiguousWithSuggestions")
+    except module.SourceArgAmbiguousWithSuggestions as err:
+        assert list(err.suggestions) == ["2 Lake Ridge Lane"]
 
 
-def test_opencities_client_uses_searchfuzzy_and_maxresults_when_configured() -> None:
+def test_opencities_retriever_raises_not_found_on_empty_search() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", search_fuzzy=True, max_results=1
+    source = _OpenCitiesSource(
+        lambda url, params: _OpenCitiesResponse(json_data={"Items": []}),
+        street_address="nowhere",
     )
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(json_data={"Items": [{"Id": "a"}]})
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid", address="street_address"
     )
-    client._session = session
 
-    client.resolve_geolocation_id("1 Main St")
+    try:
+        retriever(source)
+        raise AssertionError("Expected SourceArgumentNotFound")
+    except module.SourceArgumentNotFound as err:
+        assert err.argument == "street_address"
 
-    url, params = session.calls[0]
+
+def test_opencities_retriever_uses_searchfuzzy_and_maxresults_when_configured() -> None:
+    module = _opencities_module()
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")), address="1 Main St"
+    )
+
+    module.OpenCitiesRetriever(
+        "https://example.invalid", search_fuzzy=True, max_results=1
+    )(source)
+
+    url, params = source.session.calls[0]
     assert url == "https://example.invalid/api/v1/myarea/searchfuzzy"
     assert params == {"keywords": "1 Main St", "maxresults": 1}
 
 
-def test_opencities_client_includes_page_link_param_when_configured() -> None:
+def test_opencities_retriever_includes_page_link_param_when_configured() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", page_link="/some/page"
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")), address="1 Main St"
     )
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": "<p>no services</p>"}
-        )
+
+    module.OpenCitiesRetriever("https://example.invalid", page_link="/some/page")(
+        source
     )
-    client._session = session
 
-    client.fetch_by_geolocation_id("abc")
-
-    _, params = session.calls[0]
+    _, params = source.session.calls[-1]
     assert params is not None
     assert params["pageLink"] == "/some/page"
 
 
-def test_opencities_client_get_waste_services_html_returns_raw_fragment() -> None:
+def test_opencities_retriever_composes_the_address_from_a_template() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    html = (
-        "<article><h3>General Waste</h3>"
-        '<div class="note">Collected fortnightly</div>'
-        '<div class="next-service">Mon 01/02/2027</div></article>'
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")),
+        street_number="13-15",
+        street_name="Learmonth  St",
+        suburb="Rooty Hill",
+        post_code=2766,
     )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid",
+        address=None,
+        address_template="{street_number} {street_name}, {suburb} NSW {post_code}",
+        argument="street_name",
     )
 
-    assert client.get_waste_services_html("abc") == html
+    result = retriever(source)
+
+    _, params = source.session.calls[0]
+    assert params == {"keywords": "13-15 Learmonth St, Rooty Hill NSW 2766"}
+    assert result.argument == "street_name"
+    assert result.value == "13-15 Learmonth St, Rooty Hill NSW 2766"
 
 
-def test_opencities_client_parses_wasteservices_html_into_collections() -> None:
+def test_opencities_retriever_applies_normalise_before_searching() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    html = (
-        "<article><h3>General Waste</h3>"
-        '<div class="next-service">Mon 01/02/2027</div></article>'
-        "<article><h3>Recycling</h3>"
-        '<div class="next-service">Tue 02/02/2027</div></article>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")),
+        address="19 Potter Street, Craigieburn",
     )
 
-    entries = client.fetch_by_geolocation_id("abc")
+    module.OpenCitiesRetriever(
+        "https://example.invalid", normalise=lambda text: text.replace(",", "")
+    )(source)
 
-    assert [(e.date.isoformat(), e.type) for e in entries] == [
-        ("2027-02-01", "General Waste"),
-        ("2027-02-02", "Recycling"),
-    ]
+    assert source.session.calls[0][1] == {"keywords": "19 Potter Street Craigieburn"}
 
 
-def test_opencities_client_does_not_double_count_nested_article_in_result_div() -> None:
+def test_opencities_retriever_sends_json_accept_unless_the_source_names_one() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    html = (
-        '<div class="waste-services-result"><article><h3>General Waste</h3>'
-        '<div class="next-service">Mon 01/02/2027</div></article></div>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
+
+    default = module.OpenCitiesRetriever("https://example.invalid")
+    named = module.OpenCitiesRetriever(
+        "https://example.invalid", headers={"accept": "text/plain, */*"}
     )
 
-    entries = client.fetch_by_geolocation_id("abc")
+    assert default.headers == {"Accept": "application/json"}
+    assert named.headers == {"accept": "text/plain, */*"}
 
-    assert len(entries) == 1
 
-
-def test_opencities_client_resolves_icon_via_keywords() -> None:
-    from waste_collection_schedule import Icons
-
+def test_opencities_retriever_sends_its_headers_on_every_request() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid",
-        icon_keywords={
-            "general waste": Icons.GENERAL_WASTE,
-            "recycling": Icons.RECYCLING,
-        },
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")), address="1 Main St"
     )
-    client = module.OpenCitiesClient(config)
+
+    module.OpenCitiesRetriever(
+        "https://example.invalid", headers={"Referer": "https://example.invalid/page"}
+    )(source)
+
+    assert len(source.session.headers_sent) == 2
+    for headers in source.session.headers_sent:
+        assert headers is not None
+        assert headers["Referer"] == "https://example.invalid/page"
+        assert headers["Accept"] == "application/json"
+
+
+def test_opencities_retriever_retries_once_on_stale_cached_geolocation_id() -> None:
+    module = _opencities_module()
     html = (
         "<article><h3>General Waste</h3>"
         '<div class="next-service">Mon 01/02/2027</div></article>'
     )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert entries[0].icon == Icons.GENERAL_WASTE
-
-
-def test_opencities_client_skips_entries_missing_next_service_date() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    html = (
-        '<article><h3>General Waste</h3><div class="next-service"></div></article>'
-        "<article><h3>Recycling</h3>"
-        '<div class="next-service">Tue 02/02/2027</div></article>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert [e.type for e in entries] == ["Recycling"]
-
-
-def test_opencities_client_filters_by_date_precise_class_when_configured() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", require_date_precise=True
-    )
-    client = module.OpenCitiesClient(config)
-    html = (
-        '<div class="waste-services-result date-precise"><h3>General Waste</h3>'
-        '<div class="next-service">Mon 01/02/2027</div></div>'
-        '<div class="waste-services-result"><h3>Recycling</h3>'
-        '<div class="next-service">Every fortnight</div></div>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert [e.type for e in entries] == ["General Waste"]
-
-
-def test_opencities_client_drops_excluded_types() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", exclude_types=("Burning off",)
-    )
-    client = module.OpenCitiesClient(config)
-    html = (
-        "<article><h3>Burning off</h3>"
-        '<div class="next-service">Mon 01/02/2027</div></article>'
-        "<article><h3>Rubbish Collection</h3>"
-        '<div class="next-service">Tue 02/02/2027</div></article>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert [e.type for e in entries] == ["Rubbish Collection"]
-
-
-def test_opencities_client_drops_excluded_type_prefixes() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", exclude_type_prefixes=("Calendar",)
-    )
-    client = module.OpenCitiesClient(config)
-    html = (
-        "<article><h3>Calendar - GlassZone 8</h3>"
-        '<div class="next-service">Mon 01/02/2027</div></article>'
-        "<article><h3>General Waste</h3>"
-        '<div class="next-service">Tue 02/02/2027</div></article>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert [e.type for e in entries] == ["General Waste"]
-
-
-def test_opencities_client_resolves_every_weekday_recurring_text() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    html = (
-        "<article><h3>General Waste</h3>"
-        '<div class="next-service">Every Monday</div></article>'
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": html}
-        )
-    )
-
-    entries = client.fetch_by_geolocation_id("abc")
-
-    assert len(entries) == 1
-    assert entries[0].date.weekday() == 0  # Monday
-    from datetime import date as _date
-
-    assert entries[0].date >= _date.today()
-
-
-def test_opencities_client_retries_once_on_stale_cached_geolocation_id() -> None:
-    module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-
     search_calls = {"count": 0}
-    html = (
-        "<article><h3>General Waste</h3>"
-        '<div class="next-service">Mon 01/02/2027</div></article>'
-    )
 
     def responder(url, params):
         if "myarea/search" in url:
@@ -1139,147 +980,338 @@ def test_opencities_client_retries_once_on_stale_cached_geolocation_id() -> None
         # wasteservices: fail for the stale cached id, succeed for the fresh one
         if params.get("geolocationid") == "stale-id":
             return _OpenCitiesResponse(json_data={"success": False})
-        return _OpenCitiesResponse(json_data={"success": True, "responseContent": html})
+        return _services(html)
 
-    client._session = _OpenCitiesSession(responder)
-    client._geolocation_id = "stale-id"
+    source = _OpenCitiesSource(responder, address="1 Main St")
+    retriever = module.OpenCitiesRetriever("https://example.invalid")
+    retriever._resolved[source] = "stale-id"
 
-    entries = client.fetch(address="1 Main St")
+    result = retriever(source)
 
     assert search_calls["count"] == 1
-    assert [e.type for e in entries] == ["General Waste"]
-    assert client._geolocation_id == "fresh-id"
+    assert _oc_geolocation_ids(source) == ["stale-id", "fresh-id"]
+    assert [r["type"] for r in module.OpenCitiesParser()(result)] == ["General Waste"]
+    assert retriever._resolved[source] == "fresh-id"
 
 
-def test_opencities_client_bypasses_search_when_geolocation_id_given_directly() -> None:
+def test_opencities_retriever_searches_once_across_repeated_fetches() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": "<p>no services</p>"}
-        )
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")), address="1 Main St"
     )
-    client._session = session
+    retriever = module.OpenCitiesRetriever("https://example.invalid")
 
-    client.fetch(geolocation_id="abc")
+    retriever(source)
+    retriever(source)
 
-    assert all("myarea/search" not in url for url, _ in session.calls)
+    searches = [url for url, _ in source.session.calls if "myarea/search" in url]
+    assert len(searches) == 1
+    assert _oc_geolocation_ids(source) == ["abc", "abc"]
 
 
-def test_opencities_client_fires_warm_up_url_once_before_wasteservices_when_configured() -> (
+def test_opencities_retriever_bypasses_search_when_geolocation_id_given_directly() -> (
     None
 ):
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid",
+    source = _OpenCitiesSource(
+        lambda url, params: _services("<p>none</p>"), geolocation_id="abc"
+    )
+
+    result = module.OpenCitiesRetriever(
+        "https://example.invalid", address=None, geolocation_id="geolocation_id"
+    )(source)
+
+    assert all("myarea/search" not in url for url, _ in source.session.calls)
+    assert (result.argument, result.value) == ("geolocation_id", "abc")
+
+
+def test_opencities_retriever_prefers_a_geolocation_id_over_the_address() -> None:
+    module = _opencities_module()
+    source = _OpenCitiesSource(
+        lambda url, params: _services("<p>none</p>"),
+        street_address="1 Main St",
+        geolocation_id="abc",
+    )
+
+    module.OpenCitiesRetriever(
+        "https://example.invalid",
+        address="street_address",
+        geolocation_id="geolocation_id",
+    )(source)
+
+    assert all("myarea/search" not in url for url, _ in source.session.calls)
+    assert _oc_geolocation_ids(source) == ["abc"]
+
+
+def test_opencities_retriever_needs_an_address_or_a_geolocation_id() -> None:
+    module = _opencities_module()
+    source = _OpenCitiesSource(
+        lambda url, params: _services("<p>none</p>"),
+        street_address=None,
+        geolocation_id=None,
+    )
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid",
+        address="street_address",
+        geolocation_id="geolocation_id",
+    )
+
+    try:
+        retriever(source)
+        raise AssertionError("Expected SourceArgumentExceptionMultiple")
+    except module.SourceArgumentExceptionMultiple as err:
+        assert list(err.arguments) == ["street_address", "geolocation_id"]
+
+
+def test_opencities_retriever_fires_warm_up_url_once_before_wasteservices_when_configured() -> (
+    None
+):
+    module = _opencities_module()
+    source = _OpenCitiesSource(
+        lambda url, params: _services("<p>none</p>"), geolocation_id="abc"
+    )
+    retriever = module.OpenCitiesRetriever(
+        "https://example.invalid",
+        address=None,
+        geolocation_id="geolocation_id",
         warm_up_url="https://example.invalid/warm",
         warm_up_before="wasteservices",
     )
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": "<p>no services</p>"}
-        )
-    )
-    client._session = session
 
-    client.fetch_by_geolocation_id("abc")
-    client.fetch_by_geolocation_id("abc")
+    retriever(source)
+    retriever(source)
 
-    warm_up_calls = [url for url, _ in session.calls if url.endswith("/warm")]
+    warm_up_calls = [url for url, _ in source.session.calls if url.endswith("/warm")]
     assert len(warm_up_calls) == 1
+    assert source.session.calls[0][0].endswith("/warm")
 
 
-def test_opencities_client_fires_warm_up_url_before_search_by_default() -> None:
+def test_opencities_retriever_fires_warm_up_url_before_search_by_default() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", warm_up_url="https://example.invalid/warm"
+    source = _OpenCitiesSource(
+        _oc_responder(_one_hit(), _services("<p>none</p>")), address="1 Main St"
     )
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(json_data={"Items": [{"Id": "abc"}]})
-    )
-    client._session = session
 
-    client.resolve_geolocation_id("1 Main St")
+    module.OpenCitiesRetriever(
+        "https://example.invalid", warm_up_url="https://example.invalid/warm"
+    )(source)
 
-    assert [url for url, _ in session.calls[:1]] == ["https://example.invalid/warm"]
+    assert source.session.calls[0][0] == "https://example.invalid/warm"
 
 
-def test_opencities_client_does_not_warm_up_before_wasteservices_by_default() -> None:
+def test_opencities_retriever_does_not_warm_up_before_wasteservices_by_default() -> (
+    None
+):
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", warm_up_url="https://example.invalid/warm"
+    source = _OpenCitiesSource(
+        lambda url, params: _services("<p>none</p>"), geolocation_id="abc"
     )
-    client = module.OpenCitiesClient(config)
-    session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(
-            json_data={"success": True, "responseContent": "<p>no services</p>"}
-        )
-    )
-    client._session = session
 
-    client.fetch_by_geolocation_id("abc")
+    module.OpenCitiesRetriever(
+        "https://example.invalid",
+        address=None,
+        geolocation_id="geolocation_id",
+        warm_up_url="https://example.invalid/warm",
+    )(source)
 
-    assert all("/warm" not in url for url, _ in session.calls)
+    assert all("/warm" not in url for url, _ in source.session.calls)
 
 
-def test_opencities_client_falls_back_from_json_to_xml_search_response() -> None:
+def test_opencities_retriever_falls_back_from_json_to_xml_search_response() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", search_response_format="json_then_xml"
-    )
-    client = module.OpenCitiesClient(config)
     xml = (
         "<Results><PhysicalAddressSearchResult>"
         "<Id>xml-id</Id><AddressSingleLine>1 Main St</AddressSingleLine>"
         "</PhysicalAddressSearchResult></Results>"
     )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(json_error=True, text=xml)
+    source = _OpenCitiesSource(
+        _oc_responder(
+            _OpenCitiesResponse(json_error=True, text=xml), _services("<p>none</p>")
+        ),
+        address="1 Main St",
     )
 
-    assert client.resolve_geolocation_id("1 Main St") == "xml-id"
+    module.OpenCitiesRetriever("https://example.invalid")(source)
+
+    assert _oc_geolocation_ids(source) == ["xml-id"]
 
 
-def test_opencities_client_parses_xml_only_search_response() -> None:
+def test_opencities_parser_parses_wasteservices_html_into_records() -> None:
+    records = _oc_parse(
+        "<article><h3>General Waste</h3>"
+        '<div class="next-service">Mon 01/02/2027</div>'
+        '<div class="note">Collected fortnightly</div></article>'
+        "<article><h3>Recycling</h3>"
+        '<div class="next-service">Tue 02/02/2027</div></article>'
+    )
+
+    assert [(r["date"].isoformat(), r["type"], r["note"]) for r in records] == [
+        ("2027-02-01", "General Waste", "Collected fortnightly"),
+        ("2027-02-02", "Recycling", None),
+    ]
+
+
+def test_opencities_parser_does_not_double_count_nested_article_in_result_div() -> None:
+    records = _oc_parse(
+        '<div class="waste-services-result"><article><h3>General Waste</h3>'
+        '<div class="next-service">Mon 01/02/2027</div></article></div>'
+    )
+
+    assert len(records) == 1
+
+
+def test_opencities_parser_skips_entries_missing_next_service_date() -> None:
+    records = _oc_parse(
+        '<article><h3>General Waste</h3><div class="next-service"></div></article>'
+        "<article><h3>Recycling</h3>"
+        '<div class="next-service">Tue 02/02/2027</div></article>'
+    )
+
+    assert [r["type"] for r in records] == ["Recycling"]
+
+
+def test_opencities_parser_filters_by_date_precise_class_when_configured() -> None:
+    records = _oc_parse(
+        '<div class="waste-services-result date-precise"><h3>General Waste</h3>'
+        '<div class="next-service">Mon 01/02/2027</div></div>'
+        '<div class="waste-services-result"><h3>Recycling</h3>'
+        '<div class="next-service">Every fortnight</div></div>',
+        require_date_precise=True,
+    )
+
+    assert [r["type"] for r in records] == ["General Waste"]
+
+
+def test_opencities_parser_drops_excluded_type_prefixes() -> None:
+    records = _oc_parse(
+        "<article><h3>Calendar - GlassZone 8</h3>"
+        '<div class="next-service">Mon 01/02/2027</div></article>'
+        "<article><h3>General Waste</h3>"
+        '<div class="next-service">Tue 02/02/2027</div></article>',
+        exclude_type_prefixes=("Calendar",),
+    )
+
+    assert [r["type"] for r in records] == ["General Waste"]
+
+
+def test_opencities_parser_reads_a_custom_date_format() -> None:
+    records = _oc_parse(
+        "<article><h3>General Waste</h3>"
+        '<div class="next-service">Monday 01 February 2027</div></article>',
+        date_format="%A %d %B %Y",
+    )
+
+    assert records[0]["date"].isoformat() == "2027-02-01"
+
+
+def test_opencities_parser_resolves_every_weekday_recurring_text() -> None:
+    from datetime import date as _date
+
+    records = _oc_parse(
+        "<article><h3>General Waste</h3>"
+        '<div class="next-service">Every Monday</div></article>'
+    )
+
+    assert len(records) == 1
+    assert records[0]["date"].weekday() == 0  # Monday
+    assert records[0]["date"] >= _date.today()
+
+
+def test_opencities_parser_reads_a_date_window_only_when_asked() -> None:
+    html = (
+        "<article><h3>Verge Collection</h3>"
+        '<div class="next-service">5th Oct - 13th Oct.</div>'
+        '<div class="note">Verge Collection 2027</div></article>'
+    )
+
+    assert _oc_parse(html) == []
+    records = _oc_parse(html, approximate_dates=True)
+    # The note names one year, so the window is taken in that year even though
+    # it may already have passed.
+    assert [r["date"].isoformat() for r in records] == ["2027-10-05"]
+
+
+def test_opencities_parser_reports_a_property_with_no_service_by_argument() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid",
-        search_response_format="xml",
-        strict_address_matching=False,
-    )
-    client = module.OpenCitiesClient(config)
-    xml = (
-        "<Results><PhysicalAddressSearchResult>"
-        "<Id>xml-id</Id></PhysicalAddressSearchResult></Results>"
-    )
-    client._session = _OpenCitiesSession(
-        lambda url, params: _OpenCitiesResponse(text=xml)
+    raw = module.OpenCitiesResult(
+        _OpenCitiesResponse(json_data={"success": False}), "street_address", "1 Main St"
     )
 
-    assert client.resolve_geolocation_id("1 Main St") == "xml-id"
+    try:
+        module.OpenCitiesParser()(raw)
+        raise AssertionError("Expected SourceArgumentNotFound")
+    except module.SourceArgumentNotFound as err:
+        assert err.argument == "street_address"
+        assert "'1 Main St'" in err.message
 
 
-def test_opencities_client_uses_curl_cffi_session_when_configured(monkeypatch) -> None:
+def test_opencities_parser_flags_a_reply_that_is_not_json() -> None:
     module = _opencities_module()
-    created_with = {}
-
-    class _FakeCurlSession:
-        def __init__(self, impersonate=None):
-            created_with["impersonate"] = impersonate
-            self.headers: dict[str, str] = {}
-
-    monkeypatch.setattr(module.curl_cffi_requests, "Session", _FakeCurlSession)
-
-    config = module.OpenCitiesConfig(
-        domain="https://example.invalid", use_curl_cffi=True
+    raw = module.OpenCitiesResult(
+        _OpenCitiesResponse(json_error=True, text="<html>blocked</html>"),
+        "address",
+        "1 Main St",
     )
-    client = module.OpenCitiesClient(config)
 
-    assert isinstance(client._session, _FakeCurlSession)
-    assert created_with["impersonate"] == "chrome"
+    try:
+        module.OpenCitiesParser()(raw)
+        raise AssertionError("Expected ResponseShapeError")
+    except module.response_shape.ResponseShapeError:
+        pass
+
+
+def _oc_projection(note, **projection_args):
+    from datetime import date as _date
+
+    module = _opencities_module()
+    source = _OpenCitiesSource(lambda url, params: None, predict=True)
+    records = [{"type": "General Waste", "date": _date(2027, 2, 1), "note": note}]
+    result = module.OpenCitiesProjection(**projection_args)(records, source)
+    return [r["date"].isoformat() for r in result]
+
+
+def test_opencities_projection_projects_a_fortnightly_note_over_four_weeks() -> None:
+    assert _oc_projection("Collected fortnightly") == ["2027-02-01", "2027-02-15"]
+
+
+def test_opencities_projection_projects_a_weekly_note_over_four_weeks() -> None:
+    assert _oc_projection("Same day each week") == [
+        "2027-02-01",
+        "2027-02-08",
+        "2027-02-15",
+        "2027-02-22",
+    ]
+
+
+def test_opencities_projection_reads_collected_weekly_as_weekly() -> None:
+    assert _oc_projection("Collected Weekly. Place bin on verge.") == [
+        "2027-02-01",
+        "2027-02-08",
+        "2027-02-15",
+        "2027-02-22",
+    ]
+    # "bi-weekly" is not a weekly cadence
+    assert _oc_projection("Collected bi-weekly") == ["2027-02-01"]
+
+
+def test_opencities_projection_leaves_a_note_without_a_cadence_alone() -> None:
+    assert _oc_projection("Place bin on the kerb") == ["2027-02-01"]
+    assert _oc_projection(None) == ["2027-02-01"]
+
+
+def test_opencities_projection_is_off_unless_its_switch_param_is_set() -> None:
+    from datetime import date as _date
+
+    module = _opencities_module()
+    records = [
+        {"type": "General Waste", "date": _date(2027, 2, 1), "note": "fortnightly"}
+    ]
+    off = _OpenCitiesSource(lambda url, params: None, predict=False)
+    on = _OpenCitiesSource(lambda url, params: None, predict=True)
+    projection = module.OpenCitiesProjection(when="predict")
+
+    assert len(list(projection(records, off))) == 1
+    assert len(list(projection(records, on))) == 2
 
 
 def test_wm_com_parses_service_date_delay() -> None:
@@ -1479,9 +1511,9 @@ _CIDIU_ZONES = [
 
 
 def _cidiu_zone(street, number):
-    module = _get_module("cidiu_it")
-    source = module.Source(street=street, street_number=number, city="x")
-    return {i: n for n, i in _CIDIU_ZONES}[source._find_zone(_CIDIU_ZONES)]
+    from waste_collection_schedule.service.junker_street import find_zone
+
+    return {i: n for n, i in _CIDIU_ZONES}[find_zone(street, number, _CIDIU_ZONES)]
 
 
 def test_cidiu_it_matches_zone_by_range_parity_and_exception() -> None:
@@ -1516,43 +1548,91 @@ def test_cidiu_it_reports_unmatched_addresses() -> None:
         SourceArgAmbiguousWithSuggestions,
         SourceArgumentNotFoundWithSuggestions,
     )
+    from waste_collection_schedule.service.junker_street import find_zone
 
-    module = _get_module("cidiu_it")
     with pytest.raises(SourceArgumentNotFoundWithSuggestions):
         _cidiu_zone("VIA INESISTENTE", 1)
     with pytest.raises(SourceArgumentNotFoundWithSuggestions):
         _cidiu_zone("CORSO SUSA", 400)
     with pytest.raises(SourceArgAmbiguousWithSuggestions):
-        module.Source(street="VIA VERDI", street_number=7, city="x")._find_zone(
-            [("VIA VERDI da 1 a 10", 1), ("VIA VERDI da 5 a 15", 2)]
+        find_zone(
+            "VIA VERDI", 7, [("VIA VERDI da 1 a 10", 1), ("VIA VERDI da 5 a 15", 2)]
         )
 
 
-def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
-    module = _get_module("cidiu_it")
-    from waste_collection_schedule import Icons
+def test_tommekalender_parser_uses_upstream_year_across_new_year() -> None:
+    from datetime import date
+    from types import SimpleNamespace
 
-    calls = []
+    from waste_collection_schedule.service.Tommekalender import TommekalenderParser
 
-    def _fetch_junker(self, area=None):
-        calls.append(area)
-        if area is None:
-            return "zones", _CIDIU_ZONES
-        return "events", [
-            {"date": "2026-01-01", "vbin_desc": "General waste collection"},
-            {"date": "2026-01-02", "vbin_desc": "Glass/Cans"},
-            {"date": "2026-01-03", "vbin_desc": "Something new"},
-        ]
+    response = SimpleNamespace(
+        text=(
+            '<tbody data-month="12-2026">'
+            '<tr class="waste-calendar__item"><td>30.12 - onsdag</td>'
+            '<td><img title="Restavfall"></td></tr></tbody>'
+            '<tbody data-month="1-2027">'
+            '<tr class="waste-calendar__item"><td>06.01 - onsdag</td>'
+            '<td><img title="Papp/papir"></td></tr></tbody>'
+        ),
+        raise_for_status=lambda: None,
+    )
 
-    with patch.object(module.Source, "_fetch_junker", _fetch_junker):
-        entries = module.Source(
-            street="CORSO SUSA", street_number=124, city="Rivoli"
-        ).fetch()
-
-    assert calls == [None, 3]
-    assert [e.type for e in entries] == [
-        "Indifferenziato",
-        "Vetro e lattine",
-        "Something new",
+    assert TommekalenderParser()(response) == [
+        (date(2026, 12, 30), "Restavfall"),
+        (date(2027, 1, 6), "Papp/papir"),
     ]
-    assert entries[1].icon == Icons.GLASS
+
+
+def test_date_fields_reads_a_single_record_and_list_values() -> None:
+    from datetime import date
+
+    from waste_collection_schedule import date_parsers
+    from waste_collection_schedule.preprocessors import DateFields
+
+    preprocess = DateFields(
+        fields={"refuse": "Refuse", "garden": "Garden"},
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )
+
+    assert list(
+        preprocess({"refuse": "2026-10-01", "garden": ["2026-10-02", "2026-10-16"]})
+    ) == [
+        (date(2026, 10, 1), "Refuse"),
+        (date(2026, 10, 2), "Garden"),
+        (date(2026, 10, 16), "Garden"),
+    ]
+
+
+def test_deduplicate_key_collapses_unhashable_repeats() -> None:
+    from waste_collection_schedule.preprocessors import Deduplicate
+
+    jobs = [
+        {"id": 1, "day": "2026-10-01", "bin": "BLACK"},
+        {"id": 2, "day": "2026-10-01", "bin": "BLACK"},
+        {"id": 3, "day": "2026-10-01", "bin": "BLUE"},
+    ]
+
+    kept = list(Deduplicate(key=lambda job: (job["day"], job["bin"]))(jobs))
+
+    assert [job["id"] for job in kept] == [1, 3]
+
+
+@pytest.mark.parametrize("fixed_app_id", [None, "de.abfallplus.ahe"])
+def test_abfallplus_retriever_binds_app_without_mutating_source(fixed_app_id):
+    from types import SimpleNamespace
+
+    from waste_collection_schedule.service.AppAbfallplusDe import AppAbfallplusRetriever
+
+    params = {"app_id": "generic.app", "city": "Wetter", "hnr": 1}
+    source = SimpleNamespace(params=params.copy())
+    with patch(
+        "waste_collection_schedule.service.AppAbfallplusDe._client_from_params"
+    ) as factory:
+        client = factory.return_value
+        response = AppAbfallplusRetriever(app_id=fixed_app_id)(source)
+
+    factory.assert_called_once_with({**params, "app_id": fixed_app_id or "generic.app"})
+    assert source.params == params
+    assert source._appabfallplus_client is client
+    assert response is client.walk_to_struktur.return_value

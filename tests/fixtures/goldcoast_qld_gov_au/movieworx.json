@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy d6b87bac72",
+      "method": "GET",
+      "url": "https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy",
+      "final_url": "https://www.goldcoast.qld.gov.au/api/v1/myarea/searchfuzzy?keywords=50+Millaroo+Dr+Helensvale&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"50 Millaroo Dr Helensvale\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "241",
+        "date": "Wed, 23 Sep 2026 17:44:49 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=23, origin; dur=298, ak_p; desc=\"1790185488896_386904591_116225121_32113_14283_3_7_255\";dur=1"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJmYjUxNWJlNi1hYTZiLTQ5ODUtYjY5MS1hZjQ2MzRiNjU5MjkiLCJBZGRyZXNzU2luZ2xlTGluZSI6Ik1pbGxhcm9vIERyaXZlLCBIRUxFTlNWQUxFIDQyMTIiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IkRpdmlzaW9uIDciLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjIyLjM4MDQ3NiwiTGF0TG9uIjpbLTI3LjkzODA5LDE1My4zNDE2NzldfV0sIk9mZnNldCI6MCwiTGltaXQiOjEsIlRvdGFsIjoxfQ=="
+    },
+    {
+      "key": "GET https://www.goldcoast.qld.gov.au/ocapi/Public/myarea/wasteservices aac507918e",
+      "method": "GET",
+      "url": "https://www.goldcoast.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.goldcoast.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=fb515be6-aa6b-4985-b691-af4634b65929&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"fb515be6-aa6b-4985-b691-af4634b65929\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "1984",
+        "date": "Wed, 23 Sep 2026 17:44:49 GMT",
+        "set-cookie": "ASP.NET_SessionId=cq23220mx020qhdxkdjm1dz1; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=19, origin; dur=300, ak_p; desc=\"1790185489247_386904591_116225362_31914_14407_3_0_255\";dur=1"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgd2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlXHUwMDNjZGl2IGNsYXNzPVwic3ViaGVhZGluZ1wiXHUwMDNlQ29sbGVjdGVkIHdlZWtseVx1MDAzYy9kaXZcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRhdGU6XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBGcmkgMjUvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSByZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJlY3ljbGluZ1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VcdTAwM2NkaXYgY2xhc3M9XCJzdWJoZWFkaW5nXCJcdTAwM2VDb2xsZWN0ZWQgZm9ydG5pZ2h0bHlcdTAwM2MvZGl2XHUwMDNlXG5Zb3VyIG5leHQgY29sbGVjdGlvbiBkYXRlOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDI1LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIG9yZ2FuaWNzXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVx1MDAzY2RpdiBjbGFzcz1cInN1YmhlYWRpbmdcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseVx1MDAzYy9kaXZcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRhdGU6XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBGcmkgMi8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

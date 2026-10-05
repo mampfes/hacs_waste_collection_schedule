@@ -1,35 +1,16 @@
 from datetime import datetime, timezone
+from typing import ClassVar, TypedDict, final
+from zoneinfo import ZoneInfo
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "MRC Matawinie (QC)"
-DESCRIPTION = "Source script for gmrmatawinie.org"
-URL = "https://gmrmatawinie.org"
-COUNTRY = "ca"
 API_URL = "https://gmrmatawinie.org/wp-content/plugins/mrcmatawinie-gmr/json/collectes_public_cal.json.php"
-TEST_CASES = {
-    "Saint-Alphonse-Rodriguez": {"city_id": "Saint-Alphonse-Rodriguez"},
-    "Saint-Come": {"city_id": "Saint-Côme"},
-    "Saint-Damien Secteur Les Cedres du Liban": {
-        "city_id": "Saint-Damien - Secteur Les Cèdres du Liban"
-    },
-}
-ICON_MAP = {
-    "bac_bleu": Icons.RECYCLING,
-    "bac_brun": Icons.BIO_KITCHEN,
-    "bac_noir": Icons.GENERAL_WASTE,
-    "encombrants": Icons.BULKY,
-}
-TYPE_MAP = {
-    "bac_bleu": "Recycling",
-    "bac_brun": "Organics",
-    "bac_noir": "Garbage",
-    "encombrants": "Bulky Items",
-}
+
 CITIES = {
     "Sainte-Émélie-de-l'Énergie": 989,
     "Saint-Zénon": 990,
@@ -50,80 +31,72 @@ CITIES = {
     "Saint-Damien - Secteur Les Cèdres du Liban": 1641,
 }
 
-CONFIG_FLOW_TYPES = {
-    "city_id": {
-        "type": "SELECT",
-        "values": list(CITIES.keys()),
-        "multiple": False,
-    }
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": 'Find your sector on the <a href="https://gmrmatawinie.org/calendriers-collectes/" target="_blank">MRC Matawinie collection calendar</a>.',
-    "fr": 'Trouvez votre secteur sur la <a href="https://gmrmatawinie.org/calendriers-collectes/" target="_blank">carte des collectes de la MRC Matawinie</a>.',
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"city_id": "Select your sector from the list"},
-    "fr": {"city_id": "Sélectionnez votre secteur dans la liste"},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"city_id": "Sector"},
-    "fr": {"city_id": "Secteur"},
+_TYPE_MAP = {
+    "bac_bleu": wt.RECYCLABLES,
+    "bac_brun": wt.ORGANIC,
+    "bac_noir": wt.GENERAL_WASTE,
+    "encombrants": wt.BULKY_WASTE,
 }
 
 
-class Source:
-    def __init__(self, city_id: str):
-        if city_id not in CITIES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city_id",
-                city_id,
-                list(CITIES.keys()),
-            )
-        self._sector_id = CITIES[city_id]
+class _Event(TypedDict):
+    """The fields the transformer reads from each calendar entry."""
 
-    def fetch(self) -> list[Collection]:
-        now = datetime.now(timezone.utc)
-        from_ts = int(datetime(now.year, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
-        to_ts = int(
-            datetime(now.year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).timestamp()
-            * 1000
+    color: str
+    start: int
+
+
+def _calendar_params(city_id, **_):
+    # The API wants the calendar year as a millisecond epoch window, computed
+    # fresh each fetch so a long-running instance rolls over the new year.
+    if city_id not in CITIES:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "city_id", city_id, list(CITIES.keys())
         )
+    now = datetime.now(timezone.utc)
+    start = int(datetime(now.year, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
+    end = int(
+        datetime(now.year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).timestamp() * 1000
+    )
+    return {"id": CITIES[city_id], "from": start, "to": end}
 
-        params = {
-            "id": self._sector_id,
-            "from": from_ts,
-            "to": to_ts,
-        }
 
-        response = requests.get(API_URL, params=params)
-        response.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "MRC Matawinie (QC)"
+    DESCRIPTION = "Source script for gmrmatawinie.org"
+    URL = "https://gmrmatawinie.org"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
 
-        data = response.json()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
 
-        if not data.get("success") or not data.get("result"):
-            raise Exception(f"Failed to get collection schedule for {self._sector_id}")
+    TEST_CASES: ClassVar[dict] = {
+        "Saint-Alphonse-Rodriguez": {"city_id": "Saint-Alphonse-Rodriguez"},
+        "Saint-Come": {"city_id": "Saint-Côme"},
+        "Saint-Damien Secteur Les Cedres du Liban": {
+            "city_id": "Saint-Damien - Secteur Les Cèdres du Liban"
+        },
+    }
 
-        entries = []
+    PARAMS = (dropdown("city_id", list(CITIES), label="Sector"),)
 
-        for item in data["result"]:
-            color = item.get("color")
-            start_ms = item.get("start")
+    HOWTO: ClassVar[dict] = {
+        "en": "Find your sector on the MRC Matawinie collection calendar at https://gmrmatawinie.org/calendriers-collectes/ and select it from the list.",
+        "fr": "Trouvez votre secteur sur la carte des collectes de la MRC Matawinie (https://gmrmatawinie.org/calendriers-collectes/) et sélectionnez-le dans la liste.",
+    }
 
-            if not color or not start_ms:
-                continue
+    retrieve = retrievers.HttpGetRetriever(url=API_URL, params=_calendar_params)
+    parse = parsers.JsonParser("result", shape=list[_Event])
 
-            date = datetime.fromtimestamp(start_ms / 1000).date()
-            waste_type = TYPE_MAP.get(color, color)
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(color),
-                )
-            )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="color",
+        parse_date=date_parsers.from_epoch(unit="ms", tz=ZoneInfo("America/Toronto")),
+        type_value_map=_TYPE_MAP,
+    )

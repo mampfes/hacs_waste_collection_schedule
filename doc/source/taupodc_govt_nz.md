@@ -1,12 +1,10 @@
 # Taupō District Council
 
-[Source URL](https://www.taupodc.govt.nz/property-and-rates/rubbish-and-recycling/kerbside-refuse-and-recycling-collection)
+Support for schedules provided by [Taupō District Council](https://www.taupodc.govt.nz).
 
-[Collection Day Map](https://taupo.maps.arcgis.com/apps/instant/lookup/index.html?appid=5a763f92dc6e4d09aa06fcdf5476591f)
+Source for Taupō District Council kerbside collection.
 
-This source retrieves weekly kerbside collection days for properties in the Taupō District, New Zealand. It queries the Taupō District Council's ArcGIS feature services to look up the collection day(s) for a given address.
-
-## Configuration via `configuration.yaml`
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
@@ -16,10 +14,10 @@ waste_collection_schedule:
         address: ADDRESS
 ```
 
-## Configuration Variables
+### Configuration Variables
 
-**address** (string) (required)
-The full street address of the property, as listed in the Taupō District Council property database. Use the address as it appears in the [collection day map](https://taupo.maps.arcgis.com/apps/instant/lookup/index.html?appid=5a763f92dc6e4d09aa06fcdf5476591f) search, e.g. `9 Richmond Avenue Taupo`.
+**address**  
+*(string) (required)*
 
 ## Example
 
@@ -28,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: taupodc_govt_nz
       args:
-        address: 72 Wharewaka Road Taupo
+        address: 9 Richmond Avenue Taupo
 ```
+
+## How to get the source arguments
+
+Enter the street address as it appears on the Taupō District Council property map, e.g. '9 Richmond Avenue Taupo'.

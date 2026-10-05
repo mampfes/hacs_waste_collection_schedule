@@ -1,135 +1,122 @@
-from datetime import datetime
+from collections.abc import Iterator
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "EcoSzczecin"
-DESCRIPTION = "Source for waste collection schedules in Szczecin, Poland, provided by ecoszczecin.pl."
-URL = "https://ecoszczecin.pl"
-COUNTRY = "pl"
-TEST_CASES = {
-    "Tczewska 7A": {"street": "TCZEWSKA", "house_number": "7A"},
-    "Aleja Piastów 1": {"street": "ALEJA PIASTÓW", "house_number": "1"},
-    "Bolesława Krzywoustego 1": {
-        "street": "Bolesława Krzywoustego",
-        "house_number": "1",
-    },
-}
+_API = "https://api.ecoszczecin.pl/api/v1"
+_LOCATION = "SZCZECIN"
 
-API_URL = "https://api.ecoszczecin.pl/api/v1"
-LOCATION = "SZCZECIN"
 
-ICON_MAP = {
-    "Odpady zmieszane": Icons.GENERAL_WASTE,
-    "Bioodpady": Icons.ORGANIC,
-    "Metale i tworzywa sztuczne": Icons.PLASTIC_PACKAGING,
-    "Papier": Icons.PAPER,
-    "Szkło": Icons.GLASS,
-    "Odpady wielkogabarytowe": Icons.BULKY,
-}
+def _street(response, *keys, street, **_) -> str:
+    """The provider's spelling of the street, matched case-insensitively."""
+    streets = response.json().get("data", [])
+    wanted = street.strip().casefold()
+    for candidate in streets:
+        if candidate.casefold() == wanted:
+            return candidate
+    raise SourceArgumentNotFoundWithSuggestions("street", street, suggestions=streets)
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House Number",
-    },
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": (
-            "Street name in Szczecin, as shown on ecoszczecin.pl "
-            "(e.g. 'TCZEWSKA'). Not case-sensitive."
+def _number(response, *keys, house_number, **_) -> str:
+    numbers = response.json().get("data", [])
+    wanted = house_number.strip().casefold()
+    for candidate in numbers:
+        if candidate.casefold() == wanted:
+            return candidate
+    raise SourceArgumentNotFoundWithSuggestions(
+        "house_number", house_number, suggestions=numbers
+    )
+
+
+def _days(calendar: Any, source: Any = None) -> Iterator[dict[str, str]]:
+    """``{year: {month: [{"date": ..., "types": [...]}]}}`` as one record per type."""
+    if not isinstance(calendar, dict):
+        return
+    for months in calendar.values():
+        for days in months.values():
+            for day in days:
+                for waste_type in day.get("types", []):
+                    yield {"date": day["date"], "type": waste_type}
+
+
+@final
+class Source(BaseSource):
+    TITLE = "EcoSzczecin"
+    DESCRIPTION = "Source for waste collection schedules in Szczecin, Poland, provided by ecoszczecin.pl."
+    URL = "https://ecoszczecin.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+        wt.BULKY_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Tczewska 7A": {"street": "TCZEWSKA", "house_number": "7A"},
+        "Aleja Piastów 1": {"street": "ALEJA PIASTÓW", "house_number": "1"},
+        "Bolesława Krzywoustego 1": {
+            "street": "Bolesława Krzywoustego",
+            "house_number": "1",
+        },
+    }
+
+    PARAMS = (
+        street("street"),
+        house_number("house_number"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://ecoszczecin.pl/harmonogramy/, choose your street and "
+            "house number from the dropdowns, and enter their values as shown. "
+            "The street is not case-sensitive."
         ),
-        "house_number": (
-            "House number for the given street, as shown on ecoszczecin.pl (e.g. '7A')."
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(f"{_API}/search/locations", pick=_street),
+            retrievers.Lookup(
+                f"{_API}/search/number",
+                params=lambda matched_street, **_: {
+                    "filter[location]": _LOCATION,
+                    "filter[street]": matched_street,
+                },
+                pick=_number,
+            ),
         ),
-    },
-}
+        url=f"{_API}/search/calendar",
+        params=lambda matched_street, number, **_: {
+            "filter[location]": _LOCATION,
+            "filter[street]": matched_street,
+            "filter[number]": number,
+        },
+    )
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Open https://ecoszczecin.pl/harmonogramy/, choose your street and "
-        "house number from the dropdowns, and copy their values exactly as "
-        "shown."
-    ),
-}
+    parse = parsers.JsonParser("calendar")
 
+    preprocess = staticmethod(_days)
 
-class Source:
-    def __init__(self, street: str, house_number: str):
-        self._street = street.strip()
-        self._house_number = house_number.strip()
-        self._session = requests.Session()
-        self._session.headers.update({"User-Agent": "Mozilla/5.0"})
-
-    def _get_streets(self) -> list[str]:
-        response = self._session.get(f"{API_URL}/search/locations", timeout=30)
-        response.raise_for_status()
-        return response.json().get("data", [])
-
-    def _resolve_street(self) -> str:
-        streets = self._get_streets()
-        target = self._street.strip().casefold()
-        for street in streets:
-            if street.casefold() == target:
-                return street
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street", self._street, suggestions=streets
-        )
-
-    def _get_house_numbers(self, street: str) -> list[str]:
-        response = self._session.get(
-            f"{API_URL}/search/number",
-            params={"filter[location]": LOCATION, "filter[street]": street},
-            timeout=30,
-        )
-        response.raise_for_status()
-        return response.json().get("data", [])
-
-    def _resolve_house_number(self, street: str) -> str:
-        numbers = self._get_house_numbers(street)
-        target = self._house_number.strip().casefold()
-        for number in numbers:
-            if number.casefold() == target:
-                return number
-        raise SourceArgumentNotFoundWithSuggestions(
-            "house_number", self._house_number, suggestions=numbers
-        )
-
-    def fetch(self) -> list[Collection]:
-        street = self._resolve_street()
-        house_number = self._resolve_house_number(street)
-
-        response = self._session.get(
-            f"{API_URL}/search/calendar",
-            params={
-                "filter[location]": LOCATION,
-                "filter[street]": street,
-                "filter[number]": house_number,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-        data = response.json()
-
-        calendar = data.get("calendar")
-        entries: list[Collection] = []
-        if not isinstance(calendar, dict):
-            return entries
-
-        for months in calendar.values():
-            for days in months.values():
-                for day in days:
-                    collection_date = datetime.strptime(day["date"], "%Y-%m-%d").date()
-                    for waste_type in day.get("types", []):
-                        entries.append(
-                            Collection(
-                                date=collection_date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "Odpady zmieszane": wt.GENERAL_WASTE,
+            "Bioodpady": wt.ORGANIC,
+            "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Szkło": wt.GLASS,
+            "Odpady wielkogabarytowe": wt.BULKY_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )

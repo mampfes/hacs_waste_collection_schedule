@@ -1,8 +1,8 @@
 # Westminster City Council
 
-Support for waste collection schedules provided by [Westminster City Council](https://www.westminster.gov.uk), for the City of Westminster in London, UK.
+Support for schedules provided by [Westminster City Council](https://www.westminster.gov.uk).
 
-Westminster publishes a recurring **weekly** schedule per street, keyed by USRN (Unique Street Reference Number). This source reads the rubbish and recycling tables for your street and projects the weekly schedule one year ahead. (The street-cleaning schedule is not included.)
+Source for Westminster City Council (London, UK) bin collections.
 
 ## Configuration via configuration.yaml
 
@@ -16,7 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**usrn** _(string) (required)_: The Unique Street Reference Number (USRN) for your street.
+**usrn**  
+*(string) (required)*
 
 ## Example
 
@@ -25,16 +26,9 @@ waste_collection_schedule:
   sources:
     - name: westminster_gov_uk
       args:
-        usrn: "8400172"
+        usrn: '8400172'
 ```
 
-## How to find your USRN
+## How to get the source arguments
 
-Your USRN identifies your street. You can find it by:
-
-- Searching your street name at [FindMyAddress](https://www.findmyaddress.co.uk) and reading the USRN, or
-- Opening Westminster's own [street-report search](https://transact.westminster.gov.uk/env/streetreport.aspx) for your street and copying the `USRN` value from the page URL.
-
-Examples of valid USRNs:
-- `8400172` (Shirland Mews)
-- `8400243` (Shirland Road)
+You need the USRN (Unique Street Reference Number) for your street. Find it by searching your street on https://www.findmyaddress.co.uk or by inspecting the USRN value in the URL of Westminster's own street-report search at https://transact.westminster.gov.uk/env/streetreport.aspx

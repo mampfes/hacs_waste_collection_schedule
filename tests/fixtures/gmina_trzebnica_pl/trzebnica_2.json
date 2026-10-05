@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-01",
+  "interactions": [
+    {
+      "key": "GET https://api.skycms.com.pl/api/v1/rest/garbage/disposals/8 ",
+      "method": "GET",
+      "url": "https://api.skycms.com.pl/api/v1/rest/garbage/disposals/8",
+      "final_url": "https://api.skycms.com.pl/api/v1/rest/garbage/disposals/8",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Thu, 01 Oct 2026 09:53:32 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "500",
+        "x-ratelimit-remaining": "494",
+        "access-control-allow-origin": "*",
+        "content-type": "application/json"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJzdGF0dXMiOjIwMCwiZGF0YSI6eyJyZWdpb24iOnsiaWQiOjgsIm5hbWUiOiJUcnplYm5pY2EgMjogWmF1XHUwMTQyZWsgQWxla3NhbmRyeSwgQm9yXHUwMGYzd2tvd2EsIEhlbnJ5a2EgQnJvZGF0ZWdvLCBGcnlkZXJ5a2EgQ2hvcGluYSwgQ3plcmVcdTAxNWJuaW93YSwgR3J1bndhbGR6a2EsIEhhcmNlcmthLCBXXHUwMTQyYWR5c1x1MDE0MmF3YSBKYWdpZVx1MDE0Mlx1MDE0MnksIEphZ29kb3dhLCBLYXppbWllcnphIFdpZWxraWVnbywgV1x1MDE0MmFkeXNcdTAxNDJhd2EgXHUwMTQxb2tpZXRrYSwgTWFsaW5vd2EsIFN0YW5pc1x1MDE0MmF3YSBNb25pdXN6a2ksIE9sZVx1MDE1Ym5pY2thLCBJZ25hY2VnbyBQYWRlcmV3c2tpZWdvLCBQaWFzdG93c2thLCBQb3J6ZWN6a293YSwgUG96aW9ta293YSwgU2FtYXJ5dGFcdTAxNDRza2EsIFRydXNrYXdrb3dhLCBXZXNvXHUwMTQyYSwgV2lubmEsIFppZWxvbmVnbyBEXHUwMTE5YnUiLCJkZXNjcmlwdGlvbiI6IiJ9LCJnYXJiYWdlX2tpbmRzIjpbeyJpZCI6OSwibmFtZSI6Ik9kcGFkeSBaaWVsb25lIFwvIEt1Y2hlbm5lIChUcnplYm5pY2EpIiwiY29sb3VyIjoiZmNiOTI5IiwiaWNvbiI6bnVsbCwiZm9yX2Rpc3Bvc2FsIjoxLCJzaG9ydF9kZXNjcmlwdGlvbiI6bnVsbCwibG9uZ19kZXNjcmlwdGlvbiI6bnVsbCwiZGlzcG9zYWxzIjpbeyJpZCI6IjIwMjYtMTAtMDgiLCJkYXlzIjo3fSx7ImlkIjoiMjAyNi0xMC0yMiIsImRheXMiOjIxfV19LHsiaWQiOjQsIm5hbWUiOiJQYXBpZXIiLCJjb2xvdXIiOiIxNjMyZmYiLCJpY29uIjpudWxsLCJmb3JfZGlzcG9zYWwiOjEsInNob3J0X2Rlc2NyaXB0aW9uIjpudWxsLCJsb25nX2Rlc2NyaXB0aW9uIjpudWxsLCJkaXNwb3NhbHMiOlt7ImlkIjoiMjAyNi0xMC0wOSIsImRheXMiOjh9LHsiaWQiOiIyMDI2LTExLTEzIiwiZGF5cyI6NDN9XX0seyJpZCI6MiwibmFtZSI6IlN6a1x1MDE0Mm8iLCJjb2xvdXIiOiIwZjdmNDMiLCJpY29uIjpudWxsLCJmb3JfZGlzcG9zYWwiOjEsInNob3J0X2Rlc2NyaXB0aW9uIjpudWxsLCJsb25nX2Rlc2NyaXB0aW9uIjpudWxsLCJkaXNwb3NhbHMiOlt7ImlkIjoiMjAyNi0xMC0wOSIsImRheXMiOjh9LHsiaWQiOiIyMDI2LTEyLTExIiwiZGF5cyI6NzF9XX0seyJpZCI6MywibmFtZSI6IlR3b3J6eXdhIHN6dHVjem5lIiwiY29sb3VyIjoiZjJkNTAwIiwiaWNvbiI6bnVsbCwiZm9yX2Rpc3Bvc2FsIjoxLCJzaG9ydF9kZXNjcmlwdGlvbiI6bnVsbCwibG9uZ19kZXNjcmlwdGlvbiI6bnVsbCwiZGlzcG9zYWxzIjpbeyJpZCI6IjIwMjYtMTAtMDkiLCJkYXlzIjo4fSx7ImlkIjoiMjAyNi0xMS0xMyIsImRheXMiOjQzfV19LHsiaWQiOjEsIm5hbWUiOiJabWllc3phbmUiLCJjb2xvdXIiOiIzNzM5M2QiLCJpY29uIjpudWxsLCJmb3JfZGlzcG9zYWwiOjEsInNob3J0X2Rlc2NyaXB0aW9uIjpudWxsLCJsb25nX2Rlc2NyaXB0aW9uIjpudWxsLCJkaXNwb3NhbHMiOlt7ImlkIjoiMjAyNi0xMC0xNCIsImRheXMiOjEzfSx7ImlkIjoiMjAyNi0xMC0yOCIsImRheXMiOjI3fV19XSwicHVzaCI6ZmFsc2UsInRvcGljIjoidHJ6ZWJuaWNhMl9nYXJiYWdlX3JlZ2lvbl84IiwiZW1wdHkiOmZhbHNlfX0="
+    }
+  ]
+}

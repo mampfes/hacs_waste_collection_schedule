@@ -1,6 +1,8 @@
-# Wyndham City Council
+# Wyndham City Council, Melbourne
 
-Support for schedules provided by [Wyndham City Council](https://digital.wyndham.vic.gov.au/myWyndham/).
+Support for schedules provided by [Wyndham City Council, Melbourne](https://wyndham.vic.gov.au).
+
+Source for Wyndham City Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: wyndham_vic_gov_au
       args:
-        street_address: 300 SAYERS ROAD TRUGANINA 3029
+        street_address: 3-19 Parkvista Drive TRUGANINA 3029
 ```
 
 ## How to get the source arguments
 
-Visit the [Wyndham City Council waste and recycling](https://digital.wyndham.vic.gov.au/myWyndham/) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
+Enter your address exactly as the council's [myWyndham](https://digital.wyndham.vic.gov.au/myWyndham/) search suggests it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'.

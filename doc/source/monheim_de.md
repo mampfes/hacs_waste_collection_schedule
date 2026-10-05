@@ -1,6 +1,8 @@
 # Monheim am Rhein
 
-Source for waste collection in Monheim am Rhein (NRW, Germany), provided by [monheim.de](https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender).
+Support for schedules provided by [Monheim am Rhein](https://www.monheim.de).
+
+Source for Monheim am Rhein waste collection (Stadt Monheim am Rhein, NRW).
 
 ## Configuration via configuration.yaml
 
@@ -9,15 +11,13 @@ waste_collection_schedule:
   sources:
     - name: monheim_de
       args:
-        street: STREET_NAME
+        street: STREET
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
-
-Street name as it appears in Monheim's digital waste calendar. Use the exact spelling (including umlauts).
 
 ## Example
 
@@ -26,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: monheim_de
       args:
-        street: Marderstraße
+        street: "Marderstra\xDFe"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Open the [Abfallkalender Monheim am Rhein](https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender) and select your street from the dropdown; use that exact spelling in the configuration.
+Open https://www.monheim.de/leben-in-monheim/abfall-stadtreinigung/abfallkalender and pick your street; use the exact spelling shown there.

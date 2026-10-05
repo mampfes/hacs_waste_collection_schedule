@@ -1,34 +1,34 @@
 # Rother District Council
 
-Support for schedules provided by [Rother District Council](https://www.rother.gov.uk), serving Rother District Council, UK.
+Support for schedules provided by [Rother District Council](https://www.rother.gov.uk).
+
+Source for Rother District Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rother_gov_uk
       args:
-        uprn: "UNIQUE_PROPERTY_REFERENCE_NUMBER"
-        
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rother_gov_uk
       args:
-        uprn: "10002653856"
-        
+        uprn: 10002653856
 ```
 
-## How to get the UPRN
+## How to get the source arguments
 
-Use your address to search for your bin days on the council's website [rother.gov.uk/findmynearest](https://www.rother.gov.uk/findmynearest/). The UPRN will be displayed above the bin collection days.
+Your UPRN is shown on https://www.rother.gov.uk once you look up your address under 'Your bin days'; you can also find it on https://www.findmyaddress.co.uk/.

@@ -8,42 +8,43 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `motala`: Motala
 - `vanersborg`: Vänersborg
 - `upplands-bro`: Upplands-Bro
+- `sigtuna`: Sigtuna (Sivab)
 - `teknikivast`: Teknik i Väst (Arvika/Eda)
 - `nodra`: Nodra (Norrköping)
+- `atvidaberg`: Åtvidaberg
+- `boras`: Borås
+- `finspang`: Finspång
+- `habo`: Håbo
+- `kil`: Kil
+- `kinda`: Kinda
+- `knivsta`: Knivsta
+- `kungsbacka`: Kungsbacka
+- `vallentuna`: Vallentuna
+- `dalavatten`: Dala Vatten och Avfall
+- `vafab`: Vafab Miljö
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
 
-Should be possible to add by some minor additions
+The following providers are known to use Avfallsapp but do not expose the
+`/wp-json/nova/v1` API on `<name>.avfallsapp.se` (404), so they cannot be added yet.
 <!--Begin of service section-->
-`atvidaberg`: Åtvidaberg
-`boras`: Borås
-`finspang`: Finspång
 `gullspang`: Gullspång
-`habo`: Habo
-`kil`: Kil
-`kinda`: Kinda
-`knivsta`: Knivsta
-`kungsbacka`: Hungsbacka
 `molndal`: Mölndal
-`sigtuna`: Sigtuna
 `soderhamn`: Söderhamn
 `ulricehamn`: Ulricehamn
-`vallentuna`: Vallentuna
 <!--End of service section-->
 
 ## Current un-supported generic service providers (Companies?)
 
-Could be possible to add by some minor additions
+The API host of these providers is unknown or returns an error.
 <!--Begin of service section-->
 `avfallsappen`: Avfallsappen
 `munipal`: Munipal
-`dalavatten`: Dalavatten
 `june`: June
 `nodava`: Nodava
 `rambo`: Rambo
 `sysav`: Sysav
-`vafab`: Vafab
 <!--End of service section-->
 
 ## Configuration via configuration.yaml
@@ -119,9 +120,9 @@ You can enter an search address in the street address field and click continue. 
 
 ### Using the key from the mobile app
 
-In your mobile phone app, navigate to "Om appen" in the options section and copy the "Enhets-ID"
+In your mobile phone app, navigate to "Om appen" in the options section and copy the "Enhets-ID" <!-- codespell:ignore appen -->
 
-> **NOTE**: By re-using the same key as in app, the changes you make in your app (adding/removing addresses) directly affects what is fetched by the integration. You could force a reset of key in app by completely re-registrating the app to portal, but then you can no longer access the settings of which addresses that are registered to that key and thereby the integration (unless you restart the integration registration with the new key).
+> **NOTE**: By reusing the same key as in app, the changes you make in your app (adding/removing addresses) directly affects what is fetched by the integration. You could force a reset of key in app by completely re-registrating the app to portal, but then you can no longer access the settings of which addresses that are registered to that key and thereby the integration (unless you restart the integration registration with the new key).
 
 ## Disclaimer
 

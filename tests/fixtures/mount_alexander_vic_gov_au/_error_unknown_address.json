@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://www.mountalexander.vic.gov.au/api/v1/myarea/search 6d3ae7d5ec",
+      "method": "GET",
+      "url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.mountalexander.vic.gov.au/api/v1/myarea/search?keywords=99+Nowhere+Street+Castlemaine+Victoria+3450",
+      "body": "{\"params\":[[\"keywords\",\"99 Nowhere Street Castlemaine Victoria 3450\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "44",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:43 GMT",
+        "pragma": "no-cache",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=20, origin; dur=568, ak_p; desc=\"1790356962639_389949170_190757222_60130_9789_20_0_-\";dur=1",
+        "set-cookie": "ak_bmsc=66CADA5D5724D11137EECF27AC420B19~000000000000000000000000000000~YAAQ8iY+F7I0+dOgAQAApT+X2QEYkYUsBVN4LK+ARFm+ltBdyKeY2lh7DE0veuV2D1XczQ/Tjuco0/BPw68odzbGCwKON3hjFakie2W5vEAcfOTzKFZAhhtBPSCYCtgQfQNQXw04tdMcO9X9hqSDE9pVY29EUQJTzJDut6pHaYILyvCNAfLg7gBe2pZ02p0VDtCNsvVAS7J5cg23VKGTx3wT0whEA7PlQrfaP18f6we+5ntBlQu6B/dIo4BKjDyQ1zkZ/Of6vx18PLFx/tKp5CP/+fW3pJ7T3kErHRKXCHgEQWBXs41WrY9YqF4P1sLWwqcmY/xTJ8uRouVVkpknSfCPA39Rb5XYXzbFDYxuuucx3y9TBibbCH+31o4=; Domain=.mountalexander.vic.gov.au; Path=/; Expires=Fri, 25 Sep 2026 19:22:42 GMT; Max-Age=7199; HttpOnly",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJJdGVtcyI6W10sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6MH0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value '99 Nowhere Street Castlemaine Victoria 3450', please check the spelling and try again."
+  }
+}

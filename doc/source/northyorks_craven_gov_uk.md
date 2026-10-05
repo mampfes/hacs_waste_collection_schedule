@@ -1,6 +1,8 @@
 # North Yorkshire Council - Craven
 
-Support for schedules provided by [North Yorkshire Council - Craven](https://northyorks.gov.uk), serving North Yorkshire Council - Craven, UK.
+Support for schedules provided by [North Yorkshire Council - Craven](https://northyorks.gov.uk).
+
+Source for North Yorkshire Council - Craven.
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: northyorks_craven_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,11 +26,9 @@ waste_collection_schedule:
   sources:
     - name: northyorks_craven_gov_uk
       args:
-        uprn: "10095432934"
+        uprn: 10095432934
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Craven](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. Your UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Craven/results/10095432934`, then your UPRN is `10095432934`.
-
-An other way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Look your property up on the [North Yorkshire Council bin calendar](https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the number at the end of the results page's URL, e.g. `https://www.northyorks.gov.uk/bin-calendar/Craven/results/10095432934`.

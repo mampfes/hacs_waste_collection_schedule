@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://api.medway.gov.uk/api/addressing/getaddresses/me44ay ",
+      "method": "GET",
+      "url": "https://api.medway.gov.uk/api/addressing/getaddresses/me44ay",
+      "final_url": "https://api.medway.gov.uk/api/addressing/getaddresses/me44ay",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "access-control-allow-origin": "https://www.medway.gov.uk",
+        "x-aspnet-version": "4.0.30319",
+        "date": "Wed, 30 Sep 2026 19:22:08 GMT",
+        "content-length": "308"
+      },
+      "content_b64": "W3sidXBybiI6MTAwMDYyMzkwOTYzLCJvcmdhbmlzYXRpb24iOiJQUklNQVJLIiwic2FvbiI6IiIsInBhb24iOiIxOTQtMTk4Iiwic3RyZWV0IjoiSElHSCBTVFJFRVQiLCJsb2NhbGl0eSI6IiIsInRvd24iOiJDSEFUSEFNIiwiY291bnR5IjoiS0VOVCIsInBvc3Rjb2RlIjoiTUU0IDRBWSIsInVzcm4iOjMyMTAwOTA4LCJjbGFzc2lmaWNhdGlvbiI6eyJjb2RlIjoiQ1IwOCIsImRlc2NyaXB0aW9uIjoiU2hvcCAvIFNob3dyb29tIn0sImFkZHJlc3NUZXh0IjoiMTk0LTE5OCAgSElHSCBTVFJFRVQsIENIQVRIQU0sIEtFTlQsIE1FNCA0QVkifV0="
+    },
+    {
+      "key": "GET https://api.medway.gov.uk/api/waste/getwasteday/100062390963 ",
+      "method": "GET",
+      "url": "https://api.medway.gov.uk/api/waste/getwasteday/100062390963",
+      "final_url": "https://api.medway.gov.uk/api/waste/getwasteday/100062390963",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "access-control-allow-origin": "https://www.medway.gov.uk",
+        "x-aspnet-version": "4.0.30319",
+        "date": "Wed, 30 Sep 2026 19:22:08 GMT",
+        "content-length": "64"
+      },
+      "content_b64": "eyJkYXkiOiJXZWRuZXNkYXkiLCJuZXh0Q29sbGVjdGlvbiI6IjIwMjYtMDktMzBUMDA6MDA6MDArMDE6MDAifQ=="
+    }
+  ]
+}

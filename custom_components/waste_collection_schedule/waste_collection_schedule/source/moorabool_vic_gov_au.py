@@ -1,55 +1,57 @@
-from waste_collection_schedule import Collection, Icons
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "Moorabool Shire Council"
-DESCRIPTION = "Source for Moorabool Shire Council rubbish collection."
-URL = "https://www.moorabool.vic.gov.au"
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Go to <https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day> and make sure your address matches the auto-complete suggestions."
-}
+@final
+class Source(BaseSource):
+    TITLE = "Moorabool Shire Council"
+    DESCRIPTION = "Source for Moorabool Shire Council rubbish collection."
+    URL = "https://www.moorabool.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-TEST_CASES = {
-    "Border Inn Hotel": {
-        "address": "139 Main Street Bacchus Marsh 3340",
-    },
-    "Bendigo Bank": {
-        "address": "191 Main Street Bacchus Marsh 3340",
-    },
-}
+    TEST_CASES: ClassVar[dict] = {
+        "Border Inn Hotel": {"address": "139 Main Street Bacchus Marsh 3340"},
+        "Bendigo Bank": {"address": "191 Main Street Bacchus Marsh 3340"},
+    }
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
-    "Accept": "text/plain, */*; q=0.01",
-    "Referer": "https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day",
-    "X-Requested-With": "XMLHttpRequest",
-}
+    PARAMS = (street_address(field="address"),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": "Go to "
+        "<https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day> "
+        "and make sure your address matches the auto-complete suggestions."
+    }
 
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green waste": Icons.GARDEN,
-}
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
 
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.moorabool.vic.gov.au",
-    headers=HEADERS,
-    use_curl_cffi=True,
-    icon_keywords=ICON_MAP,
-    strip_type_suffixes=("collection",),
-    strict_address_matching=True,
-)
-
-
-class Source:
-    def __init__(self, address: str):
-        self.address = address
-        self._client = OpenCitiesClient(_CONFIG)
-
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self.address)
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.moorabool.vic.gov.au",
+        headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, "
+            "like Gecko) Chrome/142.0.0.0 Safari/537.36",
+            "Accept": "text/plain, */*; q=0.01",
+            "Referer": "https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        strict_address_matching=True,
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={
+            "Garbage collection": wt.GENERAL_WASTE,
+            "Recycling collection": wt.RECYCLABLES,
+            "Green waste collection": wt.GARDEN_WASTE,
+        },
+    )

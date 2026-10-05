@@ -1,107 +1,63 @@
-from datetime import date, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import WeekdayRecurrence
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
 )
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Charleston, SC"
-DESCRIPTION = (
-    "Source for City of Charleston, SC garbage and trash/yard-waste collection."
-)
-URL = "https://www.charleston-sc.gov/345/Environmental-Services"
-COUNTRY = "us"
-
-TEST_CASES = {
-    "Downtown Charleston": {"address": "123 Coming St, Charleston, SC 29403"},
-    "Johns Island (Trident Waste)": {
-        "address": "2758 August Rd, Johns Island, SC 29455"
-    },
-    "Daniel Island (Berkeley County)": {
-        "address": "1865 Pierce St, Charleston, SC 29492"
-    },
-}
-
-SOURCE_CODEOWNERS = ["@dmkjr"]
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including city, state, and ZIP code.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-MAP_SERVER = "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer"
+_MAP_SERVER = "https://gis.charleston-sc.gov/arcgis2/rest/services/External/mapnetExternal/MapServer"
 
 # Garbage and trash/yard-waste are collected on independent routes and can
-# fall on different weekdays for the same address, so each layer is queried
-# separately and surfaced as its own stream instead of being folded together.
-LAYERS = [
-    (f"{MAP_SERVER}/10", "Garbage", Icons.GENERAL_WASTE),
-    (f"{MAP_SERVER}/11", "Trash & Yard Waste", Icons.GARDEN),
+# fall on different weekdays for the same address, so each layer is its own
+# stream. Not every address falls inside every route layer.
+_LAYERS = [
+    ("Garbage", f"{_MAP_SERVER}/10", "DAY"),
+    ("Trash & Yard Waste", f"{_MAP_SERVER}/11", "DAY"),
 ]
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
-}
 
-WEEKS_AHEAD = 26
+@final
+class Source(BaseSource):
+    TITLE = "Charleston, SC"
+    DESCRIPTION = (
+        "Source for City of Charleston, SC garbage and trash/yard-waste collection."
+    )
+    URL = "https://www.charleston-sc.gov/345/Environmental-Services"
+    COUNTRY = "us"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@dmkjr"]
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GARDEN_WASTE, wt.GENERAL_WASTE]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Downtown Charleston": {"address": "123 Coming St, Charleston, SC 29403"},
+        "Johns Island (Trident Waste)": {
+            "address": "2758 August Rd, Johns Island, SC 29455"
+        },
+        "Daniel Island (Berkeley County)": {
+            "address": "1865 Pierce St, Charleston, SC 29492"
+        },
+    }
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    PARAMS = (street_address(),)
 
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the full street address including city, state, and ZIP code.",
+    }
 
-        entries: list[Collection] = []
-        for feature_url, waste_type, icon in LAYERS:
-            try:
-                features = query_feature_layer(
-                    feature_url,
-                    geometry=location,
-                    out_fields="DAY",
-                )
-            except ArcGisError:
-                # Not every address falls inside every route layer.
-                continue
-
-            pickup_day = (features[0].get("DAY") or "").strip().title()
-            if pickup_day not in WEEKDAYS:
-                continue
-
-            today = date.today()
-            days_ahead = (WEEKDAYS[pickup_day] - today.weekday()) % 7
-            next_pickup = today + timedelta(days=days_ahead)
-
-            entries.extend(
-                Collection(
-                    date=next_pickup + timedelta(weeks=week),
-                    t=waste_type,
-                    icon=icon,
-                )
-                for week in range(WEEKS_AHEAD)
-            )
-
-        if not entries:
-            raise SourceArgumentNotFound("address", self._address)
-
-        return entries
+    retrieve = ArcGisMultiFeatureRetriever(_LAYERS)
+    parse = ArcGisMultiFeatureParser()
+    preprocess = WeekdayRecurrence(
+        day=lambda record: record[1].get("DAY"), keys=lambda record: record[0]
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Garbage": wt.GENERAL_WASTE,
+            "Trash & Yard Waste": wt.GARDEN_WASTE,
+        },
+        carry_raw_label=True,
+    )

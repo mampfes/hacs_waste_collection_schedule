@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "GET https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx 7d560cd8cf",
+      "method": "GET",
+      "url": "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx",
+      "final_url": "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx?term=10+Howard+Avenue+DEE+WHY",
+      "body": "{\"params\":[[\"term\",\"10 Howard Avenue DEE WHY\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credential": "false",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self';",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 07:23:03 GMT",
+        "expect-ct": "max-age=86400, enforce",
+        "permissions-policy": "accelerometer=(self), camera=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), payment=(self), usb=(self)",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "set-cookie": "visid_incap_3221747=v2aiFxMdQN2y1DtYkQ5ZzFatwGoAAAAAQUIPAAAAAADJQ5nTKpCriae7XfATb4pC; expires=Sat, 02 Oct 2027 07:25:58 GMT; HttpOnly; path=/; Domain=.northernbeaches.nsw.gov.au, incap_ses_1022_3221747=kYclQGVeNiE5fSMHrt8uDletwGoAAAAAYviceygNJCDvZa/JE+6+WA==; path=/; Domain=.northernbeaches.nsw.gov.au",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-aspnet-version": "4.0.30319",
+        "x-cdn": "Imperva",
+        "x-content-type-options": "nosniff",
+        "x-iinfo": "36-180435299-180435301 NNNN CT(193 391 0) RT(1791012183432 14) q(0 0 6 0) r(10 10) U2",
+        "x-permitted-cross-domain-policies": "none",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "W3siaWQiOiIxMTY4MjEiLCJsYWJlbCI6IjEwIEhvd2FyZCBBdmVudWUgREVFIFdIWSIsInZhbHVlIjoiMTAgSG93YXJkIEF2ZW51ZSBERUUgV0hZIn1d"
+    },
+    {
+      "key": "POST https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx 071708673d",
+      "method": "POST",
+      "url": "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx",
+      "final_url": "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx",
+      "body": "{\"body\":[[\"property\",\"116821\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credential": "false",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self';",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 07:23:03 GMT",
+        "expect-ct": "max-age=86400, enforce",
+        "permissions-policy": "accelerometer=(self), camera=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), payment=(self), usb=(self)",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-aspnet-version": "4.0.30319",
+        "x-cdn": "Imperva",
+        "x-content-type-options": "nosniff",
+        "x-iinfo": "36-180435299-180435301 SNNN RT(1791012183432 1139) q(0 0 0 -1) r(2 2) U6",
+        "x-permitted-cross-domain-policies": "none",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "PGJyPjxwPlRoZSBuZXh0IHdhc3RlIHNlcnZpY2UgZm9yIDEwIEhvd2FyZCBBdmVudWUgREVFIFdIWSA6PC9wPjxwPjxzdHJvbmc+RnJpZGF5LCA5IE9jdG9iZXI8L3N0cm9uZz48L3A+PGRpdiBzdHlsZT0iZGlzcGxheTpmbGV4Ij48ZGl2IHN0eWxlPSJ3aWR0aDo0MDBweCI+PC9kaXY+PGRpdj48YSBocmVmPSJodHRwczovL3d3dy5ub3J0aGVybmJlYWNoZXMubnN3Lmdvdi5hdS9zZXJ2aWNlcy9ydWJiaXNoLWFuZC1yZWN5Y2xpbmcvYmluLWNvbGxlY3Rpb24tZGF5cy9GcmlkYXlCLnBkZiIgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSJjYWxlbmRhci1pbWFnZS1saW5rLWJsb2NrIHctaW5saW5lLWJsb2NrIj48aW1nIHNyYz0iaHR0cHM6Ly9maWxlcy5ub3J0aGVybmJlYWNoZXMubnN3Lmdvdi5hdS9uYmMtcHJvZC1maWxlcy9pbWFnZXMvMjAyNC0xMi9jYWxlbmRhci5wbmciIHN0eWxlPSJtYXJnaW46IDAgMjNweCAyM3B4IDIzcHgiPjwvYT48YnI+PGEgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSJtZGwtYnV0dG9uIG1kbC1qcy1idXR0b24gbWRsLWJ1dHRvbi0tcmFpc2VkIG1kbC1qcy1yaXBwbGUtZWZmZWN0IG1kbC1idXR0b24tLWFjY2VudCB3LWJ1dHRvbiIgZGF0YS11cGdyYWRlZD0iLE1hdGVyaWFsQnV0dG9uLE1hdGVyaWFsUmlwcGxlIiBocmVmPSJodHRwczovL3d3dy5ub3J0aGVybmJlYWNoZXMubnN3Lmdvdi5hdS9zZXJ2aWNlcy9ydWJiaXNoLWFuZC1yZWN5Y2xpbmcvYmluLWNvbGxlY3Rpb24tZGF5cy9GcmlkYXlCLnBkZiI+RG93bmxvYWQgY2FsZW5kYXI8c3BhbiBjbGFzcz0ibWRsLWJ1dHRvbl9fcmlwcGxlLWNvbnRhaW5lciI+PHNwYW4gY2xhc3M9Im1kbC1yaXBwbGUiPjwvc3Bhbj48L3NwYW4+PC9hPjwvZGl2PjwvZGl2Pg=="
+    }
+  ]
+}

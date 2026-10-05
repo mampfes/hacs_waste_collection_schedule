@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getlocation 5fe2b48675",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getlocation",
+      "final_url": "https://bins.azurewebsites.net/api/getlocation?postcode=LS62SE",
+      "body": "{\"params\":[[\"postcode\",\"LS62SE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:39 GMT",
+        "server": "Kestrel",
+        "set-cookie": "ARRAffinity=8ac4b606df73b18f5404e956edbe42116b1fc5ec1aa02ff19a9cf2b06ff2874e;Path=/;HttpOnly;Secure;Domain=bins.azurewebsites.net, ARRAffinitySameSite=8ac4b606df73b18f5404e956edbe42116b1fc5ec1aa02ff19a9cf2b06ff2874e;Path=/;HttpOnly;SameSite=None;Secure;Domain=bins.azurewebsites.net",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUG9zdGNvZGUiOiJMUzYyU0UiLCJXYXJkQ29kZSI6IkUwNTAxMTM5MCIsIkxBQ29kZSI6IkUwODAwMDAzNSIsIkxhdGl0dWRlIjo1My44MjE3NzEsIkxvbmdpdHVkZSI6LTEuNTYzMDQ2fV0="
+    },
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getaddress 5fe2b48675",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getaddress",
+      "final_url": "https://bins.azurewebsites.net/api/getaddress?postcode=LS62SE",
+      "body": "{\"params\":[[\"postcode\",\"LS62SE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:39 GMT",
+        "server": "Kestrel",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUHJlbWlzZUlEIjo4ODQ4NzQsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiIxIiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjEwMDA1NTYsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiIzIiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg3OTY0NCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjUiLCJTdHJlZXQiOiJTSEFSUCBNRVdTIiwiTG9jYWxpdHkiOiJNRUFOV09PRCIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJUb3duIjoiTEVFRFMiLCJQb3N0Y29kZSI6IkxTNiAyU0UifSx7IlByZW1pc2VJRCI6ODg2MTkwLCJBZGRyZXNzMSI6Ilx1MDAwMCIsIkFkZHJlc3MyIjoiNyIsIlN0cmVldCI6IlNIQVJQIE1FV1MiLCJMb2NhbGl0eSI6Ik1FQU5XT09EIiwiTG9jYWxBdXRob3JpdHkiOiJMZWVkcyIsIlRvd24iOiJMRUVEUyIsIlBvc3Rjb2RlIjoiTFM2IDJTRSJ9LHsiUHJlbWlzZUlEIjo4NDIyNjUsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiI5IiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg0MjI2NywiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjExIiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg0MjI5NSwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjE1IiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg0MjI5MywiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjE3IiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjgyODI0OCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjEwIiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg0MjI5MSwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjgiLCJTdHJlZXQiOiJTSEFSUCBNRVdTIiwiTG9jYWxpdHkiOiJNRUFOV09PRCIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJUb3duIjoiTEVFRFMiLCJQb3N0Y29kZSI6IkxTNiAyU0UifSx7IlByZW1pc2VJRCI6ODQyMjg5LCJBZGRyZXNzMSI6Ilx1MDAwMCIsIkFkZHJlc3MyIjoiNiIsIlN0cmVldCI6IlNIQVJQIE1FV1MiLCJMb2NhbGl0eSI6Ik1FQU5XT09EIiwiTG9jYWxBdXRob3JpdHkiOiJMZWVkcyIsIlRvd24iOiJMRUVEUyIsIlBvc3Rjb2RlIjoiTFM2IDJTRSJ9LHsiUHJlbWlzZUlEIjo4NDIyODgsIkFkZHJlc3MxIjoiXHUwMDAwIiwiQWRkcmVzczIiOiI0IiwiU3RyZWV0IjoiU0hBUlAgTUVXUyIsIkxvY2FsaXR5IjoiTUVBTldPT0QiLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiVG93biI6IkxFRURTIiwiUG9zdGNvZGUiOiJMUzYgMlNFIn0seyJQcmVtaXNlSUQiOjg0MjI3OCwiQWRkcmVzczEiOiJcdTAwMDAiLCJBZGRyZXNzMiI6IjIiLCJTdHJlZXQiOiJTSEFSUCBNRVdTIiwiTG9jYWxpdHkiOiJNRUFOV09PRCIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJUb3duIjoiTEVFRFMiLCJQb3N0Y29kZSI6IkxTNiAyU0UifV0="
+    },
+    {
+      "key": "GET https://bins.azurewebsites.net/api/getcollections 4a12d0374f",
+      "method": "GET",
+      "url": "https://bins.azurewebsites.net/api/getcollections",
+      "final_url": "https://bins.azurewebsites.net/api/getcollections?premisesid=842278&localauthority=Leeds",
+      "body": "{\"params\":[[\"localauthority\",\"Leeds\"],[\"premisesid\",\"842278\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 30 Sep 2026 19:22:40 GMT",
+        "server": "Kestrel",
+        "x-ms-middleware-request-id": "00000000-0000-0000-0000-000000000000",
+        "request-context": "appId=cid-v1:30be9148-cf08-4a63-a6e2-e374d3214916"
+      },
+      "content_b64": "W3siUHJlbWlzZUlEIjo4NDIyNzgsIkJpblR5cGUiOiJCUk9XTiIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDIifSx7IlByZW1pc2VJRCI6ODQyMjc4LCJCaW5UeXBlIjoiR1JFRU4iLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTA1In0seyJQcmVtaXNlSUQiOjg0MjI3OCwiQmluVHlwZSI6IkJMQUNLIiwiTG9jYWxBdXRob3JpdHkiOiJMZWVkcyIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0xMiJ9LHsiUHJlbWlzZUlEIjo4NDIyNzgsIkJpblR5cGUiOiJCUk9XTiIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMTYifSx7IlByZW1pc2VJRCI6ODQyMjc4LCJCaW5UeXBlIjoiR1JFRU4iLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTE5In0seyJQcmVtaXNlSUQiOjg0MjI3OCwiQmluVHlwZSI6IkJMQUNLIiwiTG9jYWxBdXRob3JpdHkiOiJMZWVkcyIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0yNiJ9LHsiUHJlbWlzZUlEIjo4NDIyNzgsIkJpblR5cGUiOiJCUk9XTiIsIkxvY2FsQXV0aG9yaXR5IjoiTGVlZHMiLCJDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMzAifSx7IlByZW1pc2VJRCI6ODQyMjc4LCJCaW5UeXBlIjoiR1JFRU4iLCJMb2NhbEF1dGhvcml0eSI6IkxlZWRzIiwiQ29sbGVjdGlvbkRhdGUiOiIyMDI2LTExLTAyIn0seyJQcmVtaXNlSUQiOjg0MjI3OCwiQmluVHlwZSI6IkJMQUNLIiwiTG9jYWxBdXRob3JpdHkiOiJMZWVkcyIsIkNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMS0wOSJ9XQ=="
+    }
+  ]
+}

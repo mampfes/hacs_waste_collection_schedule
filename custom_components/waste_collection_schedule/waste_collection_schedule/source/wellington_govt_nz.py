@@ -24,7 +24,7 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import ArgumentGuard, IcsParser
 from waste_collection_schedule.preprocessors import SplitLabels
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://wellington.govt.nz"
@@ -52,25 +52,21 @@ _TYPE_TRANSFORM = ICSTransformer(
 )
 
 
-def _resolve_street(source: BaseSource, keys: tuple) -> str:
-    """The council's street id: the one given, or the one the name resolves to.
+def _given_street_id(streetName=None, streetId=None, **_) -> "str | None":
+    """The street id the user supplied, when they gave no name to look up."""
+    return None if streetName else str(streetId)
+
+
+def _pick_street(response, streetName: str, **_) -> str:
+    """The one street the partial-name search answered with.
 
     The lookup is a partial-name search, so it answers with every street whose
     name contains the term. Nothing matched is a misspelling; several matched is
     a term too short to identify one street, and both are the user's argument to
     correct rather than an empty schedule.
     """
-    street_name = source.params.get("streetName")
-    if not street_name:
-        return str(source.params.get("streetId"))
-
-    r = source.session.post(
-        _STREET_LOOKUP_URL,
-        json={"partialStreetName": street_name},
-        headers=_HEADERS,
-    )
-    r.raise_for_status()
-    matches = r.json().get("d") or []
+    street_name = streetName
+    matches = response.json().get("d") or []
     if len(matches) == 0:
         raise SourceArgumentNotFound("streetName", street_name)
     if len(matches) > 1:
@@ -102,7 +98,16 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.GLASS, wt.RECYCLABLES]
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_street,),
+        steps=(
+            Lookup(
+                _STREET_LOOKUP_URL,
+                method="POST",
+                json=lambda streetName, **_: {"partialStreetName": streetName},
+                headers=_HEADERS,
+                given=_given_street_id,
+                pick=_pick_street,
+            ),
+        ),
         url=_CALENDAR_URL,
         params=lambda street_id, **_: {
             "type": "recycling",

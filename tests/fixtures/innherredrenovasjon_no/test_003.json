@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://innherredrenovasjon.no/wp-json/ir/v1/garbage-disposal-dates-by-address a25d3f8b04",
+      "method": "GET",
+      "url": "https://innherredrenovasjon.no/wp-json/ir/v1/garbage-disposal-dates-by-address",
+      "final_url": "https://innherredrenovasjon.no/wp-json/ir/v1/garbage-disposal-dates-by-address?address=Nordregata+2",
+      "body": "{\"params\":[[\"address\",\"Nordregata 2\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 27 Sep 2026 18:13:12 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "server": "cloudflare",
+        "cf-cache-status": "BYPASS",
+        "vary": "Accept-Encoding, Accept-Encoding,Cookie",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "allow": "GET",
+        "link": "<https://innherredrenovasjon.no/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "WP Engine",
+        "x-robots-tag": "noindex",
+        "x-cacheable": "SHORT",
+        "cache-control": "max-age=600, must-revalidate",
+        "x-cache": "HIT: 3",
+        "x-cache-group": "normal",
+        "set-cookie": "swpext86386=15cb009765435255330bc836afcdbd2e; expires=Sun, 04 Oct 2026 18:10:57 GMT; Max-Age=604800; path=/; HttpOnly, __cf_bm=sSGVGmS0w9T14OpxOyyALEPOCNyvNXIUuLqguw_ua1U-1790532792.8247962-1.0.1.1-AGyr2n73zyq9_u_4CtI2H7eBQuizB_rnGpR1_OUMFfc3GqaNlO7GBCngVd4747afGAGhOX1seFI4I4QZRWOdmK9JKsRd__2lD7rL302eyb1R5twWW2Qd.ORYE_4.Hwsf; HttpOnly; SameSite=None; Secure; Path=/; Domain=innherredrenovasjon.no; Expires=Sun, 27 Sep 2026 18:43:12 GMT",
+        "content-encoding": "gzip",
+        "cf-ray": "a41c7b232efe5172-DUS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyI5OTkxIjp7ImZyYWN0aW9uX2lkIjoiOTk5MSIsImZyYWN0aW9uX25hbWUiOiJSZXN0YXZmYWxsIiwiZnJlcXVlbmN5IjoyLCJmcmVxdWVuY3lfaHVtYW4iOiJodmVyIDIuIHVrZSIsImRhdGVzIjpbIjIwMjYtMTAtMDVUMDA6MDA6MDAiLCIyMDI2LTEwLTE5VDAwOjAwOjAwIiwiMjAyNi0xMS0wMlQwMDowMDowMCIsIjIwMjYtMTEtMTZUMDA6MDA6MDAiLCIyMDI2LTExLTMwVDAwOjAwOjAwIiwiMjAyNi0xMi0xNFQwMDowMDowMCIsIjIwMjYtMTItMjhUMDA6MDA6MDAiXX0sIjExMTEiOnsiZnJhY3Rpb25faWQiOiIxMTExIiwiZnJhY3Rpb25fbmFtZSI6Ik1hdGF2ZmFsbCIsImZyZXF1ZW5jeSI6MiwiZnJlcXVlbmN5X2h1bWFuIjoiaHZlciAyLiB1a2UiLCJkYXRlcyI6WyIyMDI2LTEwLTA1VDAwOjAwOjAwIiwiMjAyNi0xMC0xOVQwMDowMDowMCIsIjIwMjYtMTEtMDJUMDA6MDA6MDAiLCIyMDI2LTExLTE2VDAwOjAwOjAwIiwiMjAyNi0xMS0zMFQwMDowMDowMCIsIjIwMjYtMTItMTRUMDA6MDA6MDAiLCIyMDI2LTEyLTI4VDAwOjAwOjAwIl19LCI1Ijp7ImZyYWN0aW9uX2lkIjoiNSIsImZyYWN0aW9uX25hbWUiOiJHbGFzcy0gb2cgbWV0YWxsZW1iYWxsYXNqZSIsImZyZXF1ZW5jeSI6MTAsImZyZXF1ZW5jeV9odW1hbiI6bnVsbCwiZGF0ZXMiOlsiMjAyNi0xMC0wNVQwMDowMDowMCIsIjIwMjYtMTItMTRUMDA6MDA6MDAiXX0sIjEyMjIiOnsiZnJhY3Rpb25faWQiOiIxMjIyIiwiZnJhY3Rpb25fbmFtZSI6IlBhcHBcL3BhcGlyIiwiZnJlcXVlbmN5IjoyLCJmcmVxdWVuY3lfaHVtYW4iOiJodmVyIDIuIHVrZSIsImRhdGVzIjpbIjIwMjYtMTAtMDVUMDA6MDA6MDAiLCIyMDI2LTEwLTE5VDAwOjAwOjAwIiwiMjAyNi0xMS0wMlQwMDowMDowMCIsIjIwMjYtMTEtMTZUMDA6MDA6MDAiLCIyMDI2LTExLTMwVDAwOjAwOjAwIiwiMjAyNi0xMi0xNFQwMDowMDowMCIsIjIwMjYtMTItMjhUMDA6MDA6MDAiXX0sIjQiOnsiZnJhY3Rpb25faWQiOiI0IiwiZnJhY3Rpb25fbmFtZSI6IlBsYXN0ZW1iYWxsYXNqZSIsImZyZXF1ZW5jeSI6NCwiZnJlcXVlbmN5X2h1bWFuIjoiaHZlciA0LiB1a2UiLCJkYXRlcyI6WyIyMDI2LTEwLTE5VDAwOjAwOjAwIiwiMjAyNi0xMS0xNlQwMDowMDowMCIsIjIwMjYtMTItMTRUMDA6MDA6MDAiXX19"
+    }
+  ]
+}

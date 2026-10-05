@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://www.kempsey.nsw.gov.au/api/v1/myarea/search 81d7fc6db7",
+      "method": "GET",
+      "url": "https://www.kempsey.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.kempsey.nsw.gov.au/api/v1/myarea/search?keywords=1+Belgrave+Street+Kempsey",
+      "body": "{\"params\":[[\"keywords\",\"1 Belgrave Street Kempsey\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "210",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:38 GMT",
+        "pragma": "no-cache",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=11, origin; dur=194, ak_p; desc=\"1790356957868_389949164_2969646256_20403_12975_21_0_-\";dur=1",
+        "set-cookie": "ak_bmsc=7C61285C7E7CA2813B6727E46DEB2106~000000000000000000000000000000~YAAQ7CY+F1LYJKugAQAAhiuX2QE3LkIX9hR9iiVjMEC6OJAoqCPHz7eNYtDD7nbfw0+b3yY/svVp60fsXpNkL68hJfHXe1HwE4HQ/1YLu4b1ogH+MZwC3MT7jNJKDU/4+c7pBoWdcvXKkM7zw8acML6kFeUDtkp9s498fIP/CpxpBo/RpgKEjv88FhG1ZxkNw6IzuqaKDlhghVy5s1kxEAsGVp/WSc36oXSqvafdBB19R4NYEf9TNfpirvkVjNEMR9oKPlY+rRgdnUmJrXMZVyGqC9JaaYmE/lMwWJOnf3VdzEZYOm6jyvvR8E5VbBMw4Wp+iNG0yAO05si+SoNlOCNPDOfgDu4Lqx2pmN2tWXh9/MqM; Domain=.kempsey.nsw.gov.au; Path=/; Expires=Fri, 25 Sep 2026 19:22:37 GMT; Max-Age=7199; HttpOnly",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiIzNmUxNDZhYS01ZTgzLTRmMWQtOGQzMC03YzczNjBlNzE0ZDUiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEgQmVsZ3JhdmUgU3RyZWV0IEtlbXBzZXkiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6bnVsbCwiRGlzdGFuY2UiOjAsIlNjb3JlIjoxNi4yNzQxODMsIkxhdExvbiI6bnVsbH1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.kempsey.nsw.gov.au/ocapi/Public/myarea/wasteservices 85037397ad",
+      "method": "GET",
+      "url": "https://www.kempsey.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.kempsey.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=36e146aa-5e83-4f1d-8d30-7c7360e714d5&ocsvclang=en-AU&pageLink=%2F%24b9015858-988c-48a4-9473-7c193df083e4%24%2FResidents%2FWaste-recycling%2FWaste-bin-collection",
+      "body": "{\"params\":[[\"geolocationid\",\"36e146aa-5e83-4f1d-8d30-7c7360e714d5\"],[\"ocsvclang\",\"en-AU\"],[\"pageLink\",\"/$b9015858-988c-48a4-9473-7c193df083e4$/Residents/Waste-recycling/Waste-bin-collection\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "403",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "cache-control": "private, max-age=0",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 17:22:38 GMT",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=247, ak_p; desc=\"1790356958674_389949164_2969647483_24685_9922_20_0_-\";dur=1",
+        "set-cookie": "ASP.NET_SessionId=or4z0xriahcwfrrq0ygf0nsx; path=/; secure; HttpOnly; SameSite=None",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdyZWVuLXdhc3RlIGRhdGUtcHJlY2lzZSBpdGVtLTBcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VHcmVlbiBXYXN0ZVx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VDb2xsZWN0ZWQgV2Vla2x5LiBQbGFjZSBiaW4gb24gdmVyZ2Ugb24gdGhlIG1vcm5pbmcgb2YgY29sbGVjdGlvbi5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZCAzMC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIHJlY3ljbGluZyBkYXRlLXByZWNpc2UgaXRlbS0xXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVjeWNsaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBGb3J0bmlnaHRseS4gUGxhY2UgYmluIG9uIHZlcmdlIG9uIHRoZSBtb3JuaW5nIG9mIGNvbGxlY3Rpb25cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZCA3LzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGFjZSBiaW4gb24gdmVyZ2Ugb2YgdGhlIG1vcm5pbmcgb2YgY29sbGVjdGlvbi5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZCAzMC85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

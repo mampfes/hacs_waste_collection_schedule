@@ -1,77 +1,80 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    DefaultPreprocessor,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "City of Ballarat"
-DESCRIPTION = "Source for City of Ballarat rubbish collection."
-URL = "https://www.ballarat.vic.gov.au"
-TEST_CASES = {
-    "Clothesline Cafe": {
-        "street_address": "202 Humffray Street South BAKERY HILL VIC 3350"
-    },
-    "Cuthberts Road Milk Bar": {
-        "street_address": "27 Cuthberts Road ALFREDTON VIC 3350"
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-WASTE_NAMES = {
-    "waste": "General Waste",
-    "recycle": "Recycling",
-    "green": "Green Waste",
-}
-
-ICON_MAP = {
-    "waste": Icons.GENERAL_WASTE,
-    "recycle": Icons.RECYCLING,
-    "green": Icons.ORGANIC,
-}
+_parse = date_parsers.for_format("%Y-%m-%d")
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+@final
+class Source(BaseSource):
+    TITLE = "City of Ballarat"
+    DESCRIPTION = "Source for City of Ballarat rubbish collection."
+    URL = "https://www.ballarat.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.GLASS,
+    ]
 
-    def fetch(self):
-        session = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "Clothesline Cafe": {
+            "street_address": "202 Humffray Street South BAKERY HILL VIC 3350"
+        },
+        "Cuthberts Road Milk Bar": {
+            "street_address": "27 Cuthberts Road ALFREDTON VIC 3350"
+        },
+    }
 
-        response = session.get(
-            "https://data.ballarat.vic.gov.au/api/records/1.0/search/",
-            params={"dataset": "waste-collection-days", "q": self._street_address},
-        )
-        response.raise_for_status()
-        addressSearchApiResults = response.json()
-        if (
-            addressSearchApiResults["records"] is None
-            or len(addressSearchApiResults["records"]) < 1
-        ):
-            raise SourceArgumentNotFound(
-                "street_address",
-                self._street_address,
-                "Check your address on https://data.ballarat.vic.gov.au/pages/waste-collection-day/",
-            )
+    PARAMS = (street_address("street_address"),)
 
-        addressSearchTopHit = addressSearchApiResults["records"][0]
-        _LOGGER.debug("Address search top hit: %s", addressSearchTopHit)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Check your address on "
+            "https://data.ballarat.vic.gov.au/pages/waste-collection-day/ and "
+            "enter it as it is listed there."
+        ),
+    }
 
-        entries = []
-        collection_dates = [
-            (key.replace("next", ""), val)
-            for key, val in addressSearchTopHit["fields"].items()
-            if key.startswith("next")
-        ]
-        for collection_type, collection_date in collection_dates:
-            date = datetime.strptime(collection_date, "%Y-%m-%d").date()
-            entries.append(
-                Collection(
-                    date=date,
-                    t=WASTE_NAMES.get(collection_type, collection_type),
-                    icon=ICON_MAP.get(collection_type, "mdi:trash-can"),
-                )
-            )
-
-        return entries
+    # The city's open-data portal; the best match of the address search
+    # carries the next date of each stream in its own field.
+    retrieve = HttpGetRetriever(
+        url="https://data.ballarat.vic.gov.au/api/records/1.0/search/",
+        params=lambda street_address, **_: {
+            "dataset": "waste-collection-days",
+            "q": street_address,
+        },
+    )
+    parse = parsers.JsonParser("records", 0, "fields")
+    preprocess = Compose(
+        DefaultPreprocessor(),
+        DateFields(
+            fields={
+                "nextwaste": "waste",
+                "nextrecycle": "recycle",
+                "nextgreen": "green",
+                "next_glass": "glass",
+            },
+            parse_date=lambda value: _parse(value) if value else None,
+        ),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "waste": wt.GENERAL_WASTE,
+            "recycle": wt.RECYCLABLES,
+            "green": wt.GARDEN_WASTE,
+            "glass": wt.GLASS,
+        }
+    )

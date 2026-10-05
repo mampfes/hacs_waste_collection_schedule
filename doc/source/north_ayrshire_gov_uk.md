@@ -2,31 +2,33 @@
 
 Support for schedules provided by [North Ayrshire Council](https://www.north-ayrshire.gov.uk/).
 
+Source for north-ayrshire.gov.uk services for North Ayrshire
+
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: north_ayrshire_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**
+**uprn**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: north_ayrshire_gov_uk
       args:
-        uprn: "126043248"
+        uprn: '126043248'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.

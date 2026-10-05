@@ -23,7 +23,7 @@ from waste_collection_schedule.config_params import house_number, municipality, 
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.preprocessors import RowRelabel
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_URL = "https://www.awigo.de/index.php"
@@ -35,16 +35,6 @@ def _compare_cities(a: str, b: str) -> bool:
         re.sub(r"\([0-9]+\)", "", a.lower()).strip()
         == re.sub(r"\([0-9]+\)", "", b.lower()).strip()
     )
-
-
-def _post(session, args: dict):
-    # The bracketed PHP array keys (e.g. "calendar[rest]") are sent as literal
-    # query params -- curl_cffi percent-encodes the brackets itself, which the
-    # endpoint accepts identically to the raw form the legacy `requests`-based
-    # urlencode(..., safe="[]") produced.
-    r = session.post(_API_URL, params=args)
-    r.raise_for_status()
-    return r
 
 
 def _options(html: str) -> list:
@@ -67,6 +57,25 @@ def _args(method: str, **ids: object) -> dict:
     return args
 
 
+def _step(method: str, pick) -> Lookup:
+    """One wizard call, restating every id resolved so far.
+
+    The bracketed PHP array keys (e.g. "calendar[rest]") are sent as literal
+    query params -- curl_cffi percent-encodes the brackets itself, which the
+    endpoint accepts identically to the raw form the legacy `requests`-based
+    urlencode(..., safe="[]") produced.
+    """
+    return Lookup(
+        _API_URL,
+        method="POST",
+        params=lambda *keys, **_: _args(
+            method,
+            **dict(zip(("cityID", "streetID", "locationID"), keys, strict=False)),
+        ),
+        pick=pick,
+    )
+
+
 def _pick(options: list, wanted: str, argument: str, matches) -> str:
     """The option whose text the caller accepts, or a not-found with the list."""
     found = next((o.get("value") for o in options if matches(o.text)), None)
@@ -77,52 +86,34 @@ def _pick(options: list, wanted: str, argument: str, matches) -> str:
     return found
 
 
-def _resolve_city(source, keys: tuple) -> str:
-    ort = source.params["ort"]
-    options = _options(_post(source.session, _args("getCities")).text)
-    return _pick(options, ort, "ort", lambda text: _compare_cities(ort, text))
-
-
-def _resolve_street(source, keys: tuple) -> str:
-    (city_id,) = keys
-    strasse = source.params["strasse"]
-    options = _options(_post(source.session, _args("getStreets", cityID=city_id)).text)
+def _pick_city(response, *keys, ort, **_) -> str:
     return _pick(
-        options,
+        _options(response.text), ort, "ort", lambda text: _compare_cities(ort, text)
+    )
+
+
+def _pick_street(response, *keys, strasse, **_) -> str:
+    return _pick(
+        _options(response.text),
         strasse,
         "strasse",
         lambda text: text.lower().strip() == strasse.lower().strip(),
     )
 
 
-def _resolve_number(source, keys: tuple) -> str:
-    city_id, street_id = keys
-    hnr = str(source.params["hnr"]).lower().strip().replace(" ", "")
-    options = _options(
-        _post(
-            source.session, _args("getNumbers", cityID=city_id, streetID=street_id)
-        ).text
-    )
+def _pick_number(response, *keys, hnr, **_) -> str:
+    wanted = str(hnr).lower().strip().replace(" ", "")
     return _pick(
-        options,
-        source.params["hnr"],
+        _options(response.text),
+        hnr,
         "hnr",
-        lambda text: text.lower().strip().replace(" ", "") == hnr,
+        lambda text: text.lower().strip().replace(" ", "") == wanted,
     )
 
 
-def _resolve_download_url(source, keys: tuple) -> str:
-    """The last step: getICSfile answers with the download address, not the ICS."""
-    city_id, street_id, location_id = keys
-    return _post(
-        source.session,
-        _args(
-            "getICSfile",
-            cityID=city_id,
-            streetID=street_id,
-            locationID=location_id,
-        ),
-    ).text.strip()
+def _download_url(response, *keys, **_) -> str:
+    """getICSfile answers with the download address, not the ICS."""
+    return response.text.strip()
 
 
 @final
@@ -152,10 +143,10 @@ class Source(BaseSource):
 
     retrieve = LookupChainRetriever(
         steps=(
-            _resolve_city,
-            _resolve_street,
-            _resolve_number,
-            _resolve_download_url,
+            _step("getCities", _pick_city),
+            _step("getStreets", _pick_street),
+            _step("getNumbers", _pick_number),
+            _step("getICSfile", _download_url),
         ),
         # The last step already resolved the download address.
         url=lambda *keys, **_: keys[-1],

@@ -1,7 +1,8 @@
-# Maribyrnong Council (VIC)
+# Maribyrnong Council
 
-Support for schedules provided by [Maribyrnong Council (VIC)](https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling).
-Note: Case Sensitive!
+Support for schedules provided by [Maribyrnong Council](https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling).
+
+Source for Maribyrnong Council (VIC) rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -17,13 +18,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**suburb**<br>
+**suburb**  
 *(string) (required)*
 
-**street_name**<br>
+**street_name**  
 *(string) (required)*
 
-**street_number**<br>
+**street_number**  
 *(string) (required)*
 
 ## Example
@@ -37,7 +38,3 @@ waste_collection_schedule:
         street_name: Ballarat Rd
         street_number: 70-100
 ```
-
-## How to get the source arguments
-
-Visit https://maribyrnong.waste-info.com.au/api/v1/streets.json and search for your street name. The arguments should exactly match the results shown for the Suburb ("locality"), Street ("name") and the number portion of the Property.

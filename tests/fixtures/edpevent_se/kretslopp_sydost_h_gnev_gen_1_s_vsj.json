@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/SearchAdress d885e0e2bc",
+      "method": "POST",
+      "url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"H\u00e4gnev\u00e4gen 1, S\u00e4vsj\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "68",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:06 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJIw6RnbmV2w6RnZW4gMSwgU8OkdnNqw7YgKDEyNDEzMSkiXX0="
+    },
+    {
+      "key": "GET https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule fa9b36deee",
+      "method": "GET",
+      "url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://kundportal.kretsloppsydost.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=H%C3%A4gnev%C3%A4gen+1%2C+S%C3%A4vsj%C3%B6+%28124131%29",
+      "body": "{\"params\":[[\"address\",\"H\u00e4gnev\u00e4gen 1, S\u00e4vsj\u00f6 (124131)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "1139",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:09 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDYiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiS8OkcmwgMSIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVGlzZGFnIHVkZGEgdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiVGlzZGFnIHVkZGEgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiJTb3Bow6RtdG5pbmcgZnlyZmFjayBoZWzDpXIsIGvDpHJsIDEgdmFyIDE0OmUgZGFnIiwiQmluVHlwZSI6eyJDb2RlIjoiSzM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiSGVsw6VyIHTDtm1zIHZhciAxNDplIGRhZyIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkgyNiIsIldhc3RlVHlwZSI6IkvDpHJsIDEiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiRkYzNzAyNi4xIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6Ik1PTk8iLCJEZXNpZ25hdGlvbiI6IlNvcGjDpG10bmluZyBmeXJmYWNrIGhlbMOlciwga8OkcmwgMSB2YXIgMTQ6ZSBkYWciLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjE3OTA0NjUsIkRlc2NyaXB0aW9uIjoiU29waMOkbXRuaW5nIGZ5cmZhY2sgaGVsw6VyLCBrw6RybCAxIHZhciAxNDplIGRhZyIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNzY4NDMxNjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjEyNDEzMSJ9XX0="
+    }
+  ]
+}

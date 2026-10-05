@@ -1,150 +1,77 @@
-import logging
+import datetime
 import re
-import ssl
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Ashford Borough Council"
-DESCRIPTION = "Source for Ashford Borough Council."
-URL = "https://ashford.gov.uk"
-TEST_CASES = {
-    "100060796052": {"uprn": 100060796052, "postcode": "TN23 3DY"},
-    "100060780440": {"uprn": "100060780440", "postcode": "TN24 9JD"},
-    "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
-}
-ICON_MAP = {
-    "household refuse": Icons.GENERAL_WASTE,
-    "food waste": Icons.BIO_KITCHEN,
-    "garden waste": Icons.GARDEN,
-    "recycling": Icons.RECYCLING,
-}
-API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.service.AshfordCollectionDay import (
+    CollectionDayRetriever,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class LegacyTLSAdapter(HTTPAdapter):
-    # Modern python libraries reject Ashford's server settings and return SSL errors,
-    # Try and force requests to use downgraded settings
-    def init_poolmanager(self, *args, **kwargs):
-        ctx = ssl.create_default_context()
-        ctx.set_ciphers("AES256-SHA256")  # Explicitly use this cipher
-        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
-        ctx.maximum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
-        kwargs["ssl_context"] = ctx
-        return super().init_poolmanager(*args, **kwargs)
+def _label(cell) -> str:
+    """The bin name without its container note, "Recycling (green bin / ...)"."""
+    return cell.find("b").get_text(strip=True).split("(")[0].strip()
 
 
-class Source:
-    def __init__(self, postcode: str, uprn: str | int):
-        self._uprn = str(uprn).strip()
-        self._postcode = str(postcode).strip()
+def _date(cell) -> datetime.date | str | None:
+    """The next date: "Friday 09/10/2026", or "Today" on the collection day.
 
-    def fetch(self):
+    A service with no date (garden waste not subscribed to, large items) shows
+    none, so its cell yields nothing.
+    """
+    span = cell.find("span", id=re.compile(r"CollectionDayLookup2_Label_\w*_Date"))
+    text = span.get_text(strip=True) if span else ""
+    if text.lower() == "today":
+        return datetime.date.today()
+    if " " not in text:
+        return None
+    return text.split(" ")[1]
 
-        _LOGGER.warning(
-            "Forcing requests to use legacy TLSv1.2 & AES256-SHA256 to match ashford.gov.uk website"
-        )
 
-        # Use customised TLS/cipher settings
-        s = requests.Session()
-        s.mount("https://", LegacyTLSAdapter())
+@final
+class Source(BaseSource):
+    TITLE = "Ashford Borough Council"
+    DESCRIPTION = "Source for Ashford Borough Council."
+    URL = "https://ashford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Application": "application/x-www-form-urlencoded",
-        }
-        s.headers.update(headers)
-        r = s.get(API_URL)
-        r.raise_for_status()
-        soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
-        args = {}
-        for input_tag in soup.find_all("input"):
-            if not input_tag.get("name"):
-                continue
-            args[input_tag["name"]] = input_tag.get("value")
-        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$HiddenField_UPRN"] = ""
-        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$TextBox_PostCode"] = (
-            self._postcode
-        )
-        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"] = (
-            "Continue+>"
-        )
-        args["__EVENTTARGET"] = ""
-        args["__EVENTARGUMENT"] = ""
+    TEST_CASES: ClassVar[dict] = {
+        "100060796052": {"uprn": 100060796052, "postcode": "TN23 3DY"},
+        "100060780440": {"uprn": "100060780440", "postcode": "TN24 9JD"},
+        "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
+    }
 
-        r = s.post(API_URL, data=args)
-        r.raise_for_status()
+    PARAMS = (uprn(), postcode())
 
-        soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
-        args = {}
-        for input_tag in soup.find_all("input"):
-            if not input_tag.get("name"):
-                continue
-            args[input_tag["name"]] = input_tag.get("value")
-        args[
-            "ctl00$ContentPlaceHolder1$CollectionDayLookup2$DropDownList_Addresses"
-        ] = self._uprn
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode and the UPRN of your property. You can find "
+            "your UPRN at https://www.findmyaddress.co.uk/."
+        ),
+    }
 
-        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"] = (
-            "Continue+>"
-        )
-        del args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_SelectAddress"]
-        del args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_PostCodeSearch"]
-        args["ctl00$ContentPlaceHolder1$CollectionDayLookup2$Button_SelectAddress"] = (
-            "Continue+>"
-        )
-
-        r = s.post(API_URL, data=args)
-        if r.status_code != 200:
-            raise Exception(
-                f"could not get correct data for your postcode ({self._postcode}). check {API_URL} to validate your arguments."
-            )
-
-        soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
-        bin_tables = soup.find_all("table")
-        if bin_tables == []:
-            raise Exception(
-                f"could not get valid data from ashford.gov.uk. is your UPRN ({self._uprn}) correct for postcode ({self._postcode})? check https://uprn.uk/{self._uprn} and {API_URL}"
-            )
-
-        entries = []
-        for bin_table in bin_tables:
-            bin_text = bin_table.find("td", id=re.compile("CollectionDayLookup2_td_"))
-            if not bin_text:
-                continue
-
-            bin_type_soup = bin_text.find("b")
-
-            if not bin_type_soup:
-                continue
-            bin_type: str = bin_type_soup.text.strip()
-
-            date_soup = bin_text.find(
-                "span", id=re.compile(r"CollectionDayLookup2_Label_\w*_Date")
-            )
-            if not date_soup or (
-                " " not in date_soup.text.strip()
-                and date_soup.text.strip().lower() != "today"
-            ):
-                continue
-            date_str: str = date_soup.text.strip()
-            try:
-                if date_soup.text.strip().lower() == "today":
-                    date = datetime.now().date()
-                else:
-                    date = datetime.strptime(date_str.split(" ")[1], "%d/%m/%Y").date()
-
-            except ValueError:
-                continue
-
-            icon = ICON_MAP.get(bin_type.split("(")[0].strip().lower())
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = CollectionDayRetriever()
+    parse = parsers.HtmlParser("td[id*=CollectionDayLookup2_td_]")
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Household Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Food Waste": wt.FOOD_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

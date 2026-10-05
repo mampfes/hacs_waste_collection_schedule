@@ -1,6 +1,8 @@
 # OZO Ostrava
 
-Support for schedules provided by [OZO Ostrava](https://ozoostrava.cz/), serving Ostrava and nearby municipalities, Czech Republic.
+Support for schedules provided by [OZO Ostrava](https://ozoostrava.cz).
+
+Waste collection schedules for Ostrava and nearby municipalities
 
 ## Configuration via configuration.yaml
 
@@ -9,25 +11,25 @@ waste_collection_schedule:
   sources:
     - name: ozoostrava_cz
       args:
-        obec: MUNICIPALITY
-        obvod: DISTRICT
-        ulice: STREET
-        cislo: HOUSE_NUMBER
+        obec: OBEC
+        obvod: OBVOD
+        ulice: ULICE
+        cislo: CISLO
 ```
 
 ### Configuration Variables
 
 **obec**  
-*(String) (required)* Municipality name (e.g. "Ostrava")
+*(string) (required)*
 
 **obvod**  
-*(String) (required)* District name (e.g. "Poruba")
+*(string) (required)*
 
 **ulice**  
-*(String) (required)* Street name (e.g. "Hlavní třída")
+*(string) (required)*
 
 **cislo**  
-*(String) (required)* House number (e.g. "583")
+*(string) (required)*
 
 ## Example
 
@@ -38,10 +40,6 @@ waste_collection_schedule:
       args:
         obec: Ostrava
         obvod: Poruba
-        ulice: "Hlavní třída"
-        cislo: "583"
+        ulice: "Hlavn\xED t\u0159\xEDda"
+        cislo: '583'
 ```
-
-## How to get the source arguments
-
-Visit [https://ozoostrava.cz/svoz](https://ozoostrava.cz/svoz) and select your municipality, district, street, and house number from the dropdowns.

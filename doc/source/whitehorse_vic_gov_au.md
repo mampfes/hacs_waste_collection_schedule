@@ -1,34 +1,34 @@
 # Whitehorse City Council
 
-Support for schedules provided by [Whitehorse City Council](https://www.whitehorse.vic.gov.au), serving Whitehorse, Australia.
+Support for schedules provided by [Whitehorse City Council](https://www.whitehorse.vic.gov.au).
+
+Source for Whitehorse City Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: whitehorse_vic_gov_au
       args:
         address: ADDRESS
-        
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: whitehorse_vic_gov_au
       args:
         address: 17 Main Street BLACKBURN
-        
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your address using [https://map.whitehorse.vic.gov.au/index.html?entity=lyr_waste](https://map.whitehorse.vic.gov.au/index.html?entity=lyr_waste) and write them exactly like on the web page.
+Enter your address as the council's [map](https://map.whitehorse.vic.gov.au) property search lists it, e.g. '17 Main Street BLACKBURN'. If several properties match, the address must match one of them exactly.

@@ -1,72 +1,47 @@
-from datetime import date
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException
-
-TITLE = "Hudiksvall"
-DESCRIPTION = "Source for Hudiksvall."
-URL = "https://www.hudiksvall.se"
-TEST_CASES = {
-    "Kommunhuset": {"address": "Trädgårdsgatan 4 Hudiksvall"},
-}
-
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Porslin": Icons.BIO_KITCHEN,
-    "Returpapper": Icons.PAPER,
-    "Pappersförpackningar": Icons.PAPER,
-    "Plastförpackningar": Icons.RECYCLING,
-    "Metallförpackningar": Icons.METAL,
-    "Färgade": Icons.GLASS,
-    "Ofärgade": Icons.GLASS,
-    "Ljuskällor": Icons.ELECTRONICS,
-    "Småbatterier": Icons.BATTERY,
-}
-
-API_URL = "https://gis.hudiksvall.se/origoserver/EDPFuture"
-
-HEADERS = {"User-Agent": "Mozilla/5.0"}
+from waste_collection_schedule import parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address
+def _collection_date(record) -> "datetime.date | None":
+    """A collection named by ISO year, week and Swedish weekday ("Tisdag")."""
+    weekday = recurrence.weekday(record["day"])
+    if weekday is None:
+        return None
+    return datetime.date.fromisocalendar(record["year"], record["week"], weekday + 1)
 
-    def fetch(self) -> list[Collection]:
-        params = {"address": self._address}
 
-        r = requests.get(API_URL, params=params, headers=HEADERS)
-        r.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "Hudiksvall"
+    DESCRIPTION = "Source for Hudiksvall."
+    URL = "https://www.hudiksvall.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.FOOD_WASTE, wt.GENERAL_WASTE]
 
-        response = r.json()
-        if not response:
-            raise SourceArgumentException(
-                "address",
-                f"No returned building address for: {self._address}",
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Kommunhuset": {"address": "Trädgårdsgatan 4 Hudiksvall"},
+    }
 
-        entries = []
-        for container in response:
-            date_ = self.parse_date(
-                container["year"], container["week"], container["day"]
-            )
-            icon = ICON_MAP.get(container["type"])
-            entries.append(Collection(date_, container["type"], icon))
+    PARAMS = (street_address(),)
 
-        return entries
-
-    @staticmethod
-    def parse_date(year, week, weekday) -> date:
-        swedish_weekdays = {
-            "Måndag": 1,
-            "Tisdag": 2,
-            "Onsdag": 3,
-            "Torsdag": 4,
-            "Fredag": 5,
-            "Lördag": 6,
-            "Söndag": 7,
-        }
-
-        return date.fromisocalendar(year, week, swedish_weekdays[weekday])
+    retrieve = HttpGetRetriever(
+        url="https://gis.hudiksvall.se/origoserver/EDPFuture",
+        params=lambda address, **_: {"address": address},
+    )
+    parse = parsers.JsonParser()
+    transform = JsonTransformer(
+        date_key=_collection_date,
+        type_key="type",
+        type_value_map={
+            "Matavfall": wt.FOOD_WASTE,
+            "Restavfall": wt.GENERAL_WASTE,
+        },
+    )

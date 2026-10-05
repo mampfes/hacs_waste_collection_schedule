@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/SearchAdress 5dd8eca50a",
+      "method": "POST",
+      "url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/SearchAdress",
+      "final_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Strandv\u00e4gen 15, Stenungsund\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "110",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:24 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJTdHJhbmR2w6RnZW4gMTUsIFN0ZW51bmdzdW5kICg1MDAzMSkiLCJTdHJhbmR2w6RnZW4gMTUsIFN0ZW51bmdzdW5kICg2MjQ4MykiXX0="
+    },
+    {
+      "key": "GET https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/GetWastePickupSchedule 01b71ea84e",
+      "method": "GET",
+      "url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://futureweb.stenungsund.se/FutureWebBasic/SimpleWastePickup/GetWastePickupSchedule?address=Strandv%C3%A4gen+15%2C+Stenungsund+%2850031%29",
+      "body": "{\"params\":[[\"address\",\"Strandv\u00e4gen 15, Stenungsund (50031)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2326",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:26 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoxNTYsIldhc3RlVHlwZSI6IlJlc3RhdmZhbGwiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik3DpW5kYWcsIG9uc2RhZyBvY2ggZnJlZGFnIHZhcmplIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiTcOlbmRhZywgb25zZGFnIG9jaCBmcmVkYWcgdmFyamUgdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjMuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjY2MCBsIEvDpHJsIGbDtnIgUmVzdGF2ZmFsbCBtZWQgdMO2bW5pbmcgU2Uga8O2cmxpc3RhIiwiQmluVHlwZSI6eyJDb2RlIjoiSzY2MCIsIlNpemUiOjY2MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTU2LCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlNlIGvDtnJsaXN0YSIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IktMIiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJWZXJrSzY2MFJlc3QxNTYiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiUmVzdGF2ZmFsbCA2NjAgbGl0ZXIgMTU2IHTDtm0vw6VyIHZlcmtzYW1oZXQiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjk0NDY1LCJEZXNjcmlwdGlvbiI6IjMgc3QgNjYwIGwga8OkcmwgZsO2ciByZXN0YXZmYWxsIG1lZCB0w7ZtbmluZyBtw6VuZGFnLCBvbnNkYWcgb2NoIGZyZWRhZyB2YXJqZSB2ZWNrYSIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxMjEzMDQ4ODAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjUwMDMxIn0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMjgiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIHZhcmplIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik3DpW5kYWcgdmFyamUgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE0MCIsIlNpemUiOjE0MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjozLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIxNDAgbCBLw6RybCBmw7ZyIE1hdGF2ZmFsbCBtZWQgNTIgdMO2bW5pbmdhci/DpXIiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOm51bGwsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6bnVsbCwiV2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IlZlcmtLMTQwTWF0NTIiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiTWF0YXZmYWxsIDE0MCBsaXRlciA1MiB0w7ZtL8OlciB2ZXJrc2FtaGV0IiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo4NjA2NywiRGVzY3JpcHRpb24iOiIzIHN0IDE0MCBsIGvDpHJsIGbDtnIgbWF0YXZmYWxsIG1lZCB0w7ZtbmluZyBtw6VuZGFnIHZhcmplIHZlY2thICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxMTcyNjE3MjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjUwMDMxIn1dfQ=="
+    }
+  ]
+}

@@ -1,34 +1,30 @@
 # Denbighshire County Council
 
-Support for schedules provided by [Denbighshire County Council](https://www.denbighshire.gov.uk/), serving Denbighshire, UK.
+Support for schedules provided by [Denbighshire County Council](https://www.denbighshire.gov.uk/).
+
+Source for Denbighshire County Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: denbighshire_gov_uk
       args:
-        uprn: "UPRN"
-        
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: denbighshire_gov_uk
       args:
-        uprn: "200003177805"
-        
+        uprn: '10003928409'
 ```
-
-## How to get the source argument
-
-To discover your Unique Property Reference Number (UPRN), go to <https://www.findmyaddress.co.uk/> and enter your address details.

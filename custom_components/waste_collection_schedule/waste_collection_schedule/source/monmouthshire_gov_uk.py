@@ -1,180 +1,98 @@
-import logging
-import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentException
-
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Monmouthshire Council"
-DESCRIPTION = "Source for Monmouthshire Council, UK."
-URL = "https://www.monmouthshire.gov.uk"
-
-COUNTRY = "uk"
-
-TEST_CASES = {
-    "200000952833": {"uprn": 200000952833},
-    "10033354474": {"uprn": 10033354474},
-    "10033351693": {"uprn": 10033351693},
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.JaduBinCollections import strip_ordinal
+from waste_collection_schedule.transformers import RowTransformer
 
 API_URL = "https://maps.monmouthshire.gov.uk/localinfo.aspx"
 
-ICON_MAP = {
-    "Blue food bin": Icons.BIO_KITCHEN,
-    "Garden Waste Bins": Icons.GARDEN,
-    "Green Glass Box": Icons.GLASS,
-    "Household rubbish bag": Icons.GENERAL_WASTE,
-    "Red & purple recycling bags": Icons.RECYCLING,
-    "Yellow nappy & hygiene waste bag": Icons.GENERAL_WASTE,
-}
+_NEAREST_YEAR = date_parsers.nearest_year("%A %d %B")
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering in your address details.",
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+def _collapse(text: str) -> str:
+    """Whitespace runs (the page wraps its text mid-phrase) to single spaces."""
+    return " ".join(text.split())
+
+
+def _date(text: str):
+    """ "Tuesday 6th\\n October" -> the date, the year being the nearest to today."""
+    return _NEAREST_YEAR(strip_ordinal(_collapse(text)))
+
+
+def _label(text: str) -> str:
+    return _collapse(text).removesuffix(" (pay to use service)")
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Monmouthshire Council"
+    DESCRIPTION = "Source for Monmouthshire Council, UK."
+    URL = "https://www.monmouthshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.OTHER,
+        wt.RECYCLABLES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "200000952833": {"uprn": 200000952833},
+        "10033354474": {"uprn": 10033354474},
+        "10033351693": {"uprn": 10033351693},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting "
+            "[Find My Address](https://www.findmyaddress.co.uk) and entering "
+            "in your address details."
+        ),
     }
-}
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-GB,en;q=0.5",
-}
+    retrieve = retrievers.HttpGetRetriever(
+        url=API_URL,
+        params=lambda uprn, **_: {"action": "SetAddress", "UniqueId": uprn},
+    )
 
+    # One box per round, its name in the <h4> and its next date in the <strong>.
+    # An unknown UPRN is answered with an ordinary page without the property
+    # details, so the marker tells a bad UPRN from a property with no rounds.
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlLabelledDates(
+            'div[aria-label="Waste Collections"] div.waste',
+            label="h4",
+            date="strong",
+            parse_date=_date,
+        ),
+        argument="uprn",
+        contains="Unique Property Reference Number (UPRN):",
+        hint=(
+            "the UPRN is invalid or outside the Monmouthshire Council area; "
+            "make sure your address returns entries on the council website"
+        ),
+    )
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-        if not self._uprn.isdigit():
-            raise SourceArgumentException("uprn", "UPRN must be numeric")
-
-    def _parse_collection_date(self, collection_date_str: str) -> date | None:
-        """Convert a date string without a year into the next valid future date."""
-        cleaned_date = " ".join(
-            re.sub(r"(\d+)(st|nd|rd|th)", r"\1", collection_date_str).split()
-        )
-
-        # Find Date & Month in String
-        match = re.search(r"(\d{1,2})\s+([A-Za-z]+)", cleaned_date)
-        if not match:
-            return None
-
-        # Extract Day & Month
-        try:
-            day = int(match.group(1))
-            month = datetime.strptime(match.group(2), "%B").month
-
-        except ValueError:
-            return None
-
-        today = date.today()
-
-        # Handles dates spanning years, i.e. Dec to Jan, due to no year in source
-        for year in (today.year, today.year + 1):
-            try:
-                date_temp = date(year, month, day)
-
-                # Handles 29 Feb on non-leap year
-                if date_temp >= today:
-                    return date_temp
-
-            except ValueError:
-                continue
-
-        return None
-
-    def fetch(self) -> list[Collection]:
-        try:
-            r = requests.get(
-                API_URL,
-                params={
-                    "action": "SetAddress",
-                    "UniqueId": self._uprn,
-                },
-                headers=HEADERS,
-                timeout=30,
-            )
-
-            r.raise_for_status()
-
-        # Check for Website Errors
-        except requests.RequestException as e:
-            raise SourceArgumentException(
-                "uprn", "Monmouthshire Council website unreachable"
-            ) from e
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        uprn_check = soup.find("b", string="Unique Property Reference Number (UPRN):")
-
-        # Check to see if UPRN text is on page
-        if not uprn_check or not uprn_check.next_sibling:
-            raise SourceArgumentException(
-                "uprn",
-                f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}",
-            )
-
-        # Check UPRN provided & UPRN on page match
-        if uprn_check.next_sibling.strip() != str(self._uprn):
-            raise SourceArgumentException(
-                "uprn", f"UPRN {self._uprn} does not match UPRN provided."
-            )
-
-        entries = []
-
-        # Find div for the Waste Collections section
-        waste_div = soup.find("div", attrs={"aria-label": "Waste Collections"})
-
-        if waste_div:
-            waste_blocks = waste_div.find_all("div", class_="waste")
-
-            for waste_block in waste_blocks:
-                # Get location of <h4> for Waste Type and <strong> for Collection Date
-                waste_h4 = waste_block.find("h4")
-                collection_strong = waste_block.find("strong")
-
-                if waste_h4 and collection_strong:
-                    waste_type = " ".join(waste_h4.get_text().split())
-                    # Remove unwanted part of title
-                    waste_type = waste_type.replace(" (pay to use service)", "")
-
-                    collection_date_text = collection_strong.get_text(strip=True)
-
-                    collection_date = self._parse_collection_date(collection_date_text)
-
-                    if not collection_date:
-                        _LOGGER.warning(
-                            "Unable to parse %r with date %r.",
-                            waste_type,
-                            collection_date_text,
-                        )
-                        continue
-
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                        )
-                    )
-
-        if not entries:
-            raise SourceArgumentException(
-                "uprn", "No collection dates found in response."
-            )
-
-        return entries
+    transform = RowTransformer(
+        clean=_label,
+        type_value_map={
+            "Household rubbish bag": wt.GENERAL_WASTE,
+            "Red & purple recycling bags": wt.RECYCLABLES,
+            "Blue food bin": wt.FOOD_WASTE,
+            "Green Glass Box": wt.GLASS,
+            # No canonical type for nappy and hygiene waste; the raw label is
+            # carried so the user still sees which collection it is.
+            "Yellow nappy & hygiene waste bag": wt.OTHER,
+            "Garden Waste Bins": wt.GARDEN_WASTE,
+        },
+        carry_raw_label=True,
+    )

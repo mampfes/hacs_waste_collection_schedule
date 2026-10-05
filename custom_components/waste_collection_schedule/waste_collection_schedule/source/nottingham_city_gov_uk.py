@@ -1,65 +1,60 @@
 import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-TITLE = "Nottingham City Council"
-DESCRIPTION = (
-    "Source for nottinghamcity.gov.uk services for the city of Nottingham, UK."
-)
-URL = "https://nottinghamcity.gov.uk"
-TEST_CASES = {
-    "Douglas Rd, Nottingham NG7 1NW": {"uprn": "100031540175"},
-    "Harlaxton Drive, Nottingham, NG7 1JE": {"uprn": "100031553830"},
-}
-
-BINS = {
-    "Recycling": {"icon": "mdi:recycle", "name": "Recycling"},
-    "Waste": {"icon": "mdi:trash-can", "name": "General"},
-    "Garden": {"icon": "mdi:leaf", "name": "Garden"},
-    "Food23L": {"icon": "mdi:food-apple", "name": "Food"},
-    "Food23L_bags": {"icon": "mdi:food-apple", "name": "Food"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+def _within_a_year(record, _source) -> bool:
+    # The API sometimes lists collections far in the future; keep the next year.
+    day = datetime.date.fromisoformat(record["collectionDate"][:10])
+    return day <= datetime.date.today() + datetime.timedelta(days=365)
 
-    def fetch(self):
-        # get json file
-        r = requests.get(
-            f"https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{self._uprn}"
-        )
 
-        # extract data from json
-        data = r.json()
+@final
+class Source(BaseSource):
+    TITLE = "Nottingham City Council"
+    DESCRIPTION = (
+        "Source for nottinghamcity.gov.uk services for the city of Nottingham, UK."
+    )
+    URL = "https://nottinghamcity.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Douglas Rd, Nottingham NG7 1NW": {"uprn": "100031540175"},
+        "Harlaxton Drive, Nottingham, NG7 1JE": {"uprn": "100031553830"},
+    }
 
-        next_collections = data["nextCollections"]
+    PARAMS = (uprn(),)
 
-        # Sometimes the Nottingham City Council API returns collections
-        # far in the future, so let's only consider the next 12 months
-
-        for collection in next_collections:
-            bin_type = collection["collectionType"]
-            props = BINS[bin_type]
-            next_collection_date = datetime.datetime.fromisoformat(
-                collection["collectionDate"]
-            )
-
-            if next_collection_date > datetime.datetime.now() + datetime.timedelta(
-                days=365
-            ):
-                continue
-
-            entries.append(
-                Collection(
-                    date=next_collection_date.date(),
-                    t=props["name"],
-                    icon=props["icon"],
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            f"https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{uprn}"
+        ),
+    )
+    parse = parsers.JsonParser("nextCollections")
+    preprocess = RowFilter(_within_a_year)
+    transform = JsonTransformer(
+        date_key=lambda record: record["collectionDate"][:10],
+        type_key="collectionType",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+            "Food23L": wt.FOOD_WASTE,
+            "Food23L_bags": wt.FOOD_WASTE,
+        },
+    )

@@ -1,41 +1,54 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection
-
-TITLE = "Ökrab Sophämntning"
-DESCRIPTION = "Source script for Ökrab waste collection."
-URL = "https://okrab.se"
-TEST_CASES = {
-    "Skolan": {"address": "SKOLGATAN 1, S:T OLOF"},
-    "Butiken": {"address": "KILLEBACKEN 6, KIVIK"},
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address
+@final
+class Source(BaseSource):
+    TITLE = "Ökrab Sophämntning"
+    DESCRIPTION = "Source script for Ökrab waste collection."
+    URL = "https://okrab.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+    ]
 
-    def fetch(self) -> list[Collection]:
-        data = {"Address": self._address}
-        response = requests.post(
-            "https://minasidor.okrab.se/MinaSidor_API/api/external/schedulePost/",
-            data=data,
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Skolan": {"address": "SKOLGATAN 1, S:T OLOF"},
+        "Butiken": {"address": "KILLEBACKEN 6, KIVIK"},
+    }
 
-        r_data = json.loads(response.text)
+    PARAMS = (street_address(),)
 
-        entries = []
-        for item in r_data:
-            waste_type = item["typeOfWasteDescription"]
-            icon = "mdi:recycle"
-            if waste_type == "Hushållsavfall":
-                icon = "mdi:trash-can"
-            elif waste_type == "Matavfall":
-                icon = "mdi:leaf"
-            item_date = datetime.fromisoformat(item["date"]).date()
-
-            entries.append(Collection(date=item_date, t=waste_type, icon=icon))
-
-        return entries
+    retrieve = HttpPostRetriever(
+        url="https://minasidor.okrab.se/MinaSidor_API/api/external/schedulePost/",
+        data=lambda address, **_: {"Address": address},
+        # A browser's Accept header makes the API answer XML.
+        headers={"Accept": "application/json"},
+    )
+    parse = parsers.JsonParser()
+    transform = JsonTransformer(
+        date_key=lambda record: record["date"][:10],
+        type_key="typeOfWasteDescription",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Hushållsavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Plastförpackningar": wt.RECYCLABLES,
+            "Metallförpackningar": wt.RECYCLABLES,
+            "Tidningar": wt.PAPER,
+            "Pappersförpackningar": wt.PAPER,
+            "Färgat glas": wt.GLASS,
+            "Ofärgat glas": wt.GLASS,
+        },
+    )

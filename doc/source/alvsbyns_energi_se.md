@@ -1,39 +1,34 @@
 # Älvsbyns Energi
 
+Support for schedules provided by [Älvsbyns Energi](https://www.alvsbynsenergi.se/).
+
 Waste collection schedule for Älvsbyns Energi, Sweden.
 
-## Configuration
-
-Enter the street address and house number used for waste collection.
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: alvsbyns_energi_se
       args:
-        address: STREET_ADDRESS
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
-The street address and house number, for example `Storgatan 24`.
-
-### How to find your address
-
-1. Visit https://www.alvsbynsenergi.se/.
-2. Find **Kolla din sophämtning**.
-3. Enter your street and house number.
-4. Use the address shown by the website's address search.
-
-### Example YAML Configuration
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: alvsbyns_energi_se
       args:
-        address: "Storgatan 24"
+        address: Storgatan 24
 ```
+
+## How to get the source arguments
+
+Enter the street address and house number as shown by the address search at https://www.alvsbynsenergi.se/ (for example, Storgatan 24).

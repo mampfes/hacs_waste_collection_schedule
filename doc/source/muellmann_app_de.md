@@ -1,24 +1,8 @@
 # Müllmann-App
 
-Support for waste collection schedules provided by [Müllmann-App](https://muellmann-app.de/), covering several municipalities around Lake Constance (Bodensee), Germany, plus Karlsruhe.
+Support for schedules provided by [Müllmann-App](https://muellmann-app.de/).
 
-## Supported Municipalities
-
-- Aach
-- Allensbach
-- Bodman-Ludwigshafen
-- Gailingen am Hochrhein
-- Hohenfels
-- Karlsruhe (street name required)
-- Konstanz (street name required)
-- Moos
-- Mühlhausen-Ehingen
-- Mühlingen
-- Orsingen-Nenzingen
-- Radolfzell am Bodensee (street name required)
-- Reichenau
-- Singen (Hohentwiel) (street name required)
-- Stockach (street name required)
+Source for Müllmann-App, providing waste collection schedules for several municipalities around Lake Constance (Bodensee), Germany.
 
 ## Configuration via configuration.yaml
 
@@ -27,26 +11,21 @@ waste_collection_schedule:
   sources:
     - name: muellmann_app_de
       args:
-        city: Radolfzell
-        street: Mooser Straße
+        city: CITY
+        street: STREET
+        range_selector: RANGE_SELECTOR
 ```
 
 ### Configuration Variables
 
-**city**
+**city**  
 *(string) (required)*
 
-Name of the municipality, e.g. `Radolfzell` or `Konstanz`. Use the spelling from the list above (small deviations, like missing umlauts, are tolerated).
-
-**street**
+**street**  
 *(string) (optional)*
 
-Street name. Only required for the municipalities marked "street name required" above (Karlsruhe, Konstanz, Radolfzell, Singen (Hohentwiel), Stockach). All other municipalities use a single, region-wide collection schedule and don't need this.
-
-**range_selector**
+**range_selector**  
 *(string) (optional)*
-
-Only needed for the small number of streets that are split into several house-number based collection areas (for example, one side of the street is collected on a different schedule than the other). Leave this empty at first — if it is required, the resulting error message will list all valid values for your street so you can copy the correct one.
 
 ## Example
 
@@ -55,14 +34,10 @@ waste_collection_schedule:
   sources:
     - name: muellmann_app_de
       args:
-        city: Aach
+        city: Radolfzell
+        street: "Mooser Stra\xDFe"
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: muellmann_app_de
-      args:
-        city: Radolfzell
-        street: Mooser Straße
-```
+## How to get the source arguments
+
+Enter the municipality name (see the source's supported places list). For municipalities with street-level schedules, also provide your street name. If your street is split into several collection areas, add the correct 'range_selector' value; the error message you get on first try will list the valid options for your street.

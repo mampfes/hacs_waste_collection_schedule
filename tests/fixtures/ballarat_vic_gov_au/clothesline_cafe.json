@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-09-27",
+  "interactions": [
+    {
+      "key": "GET https://data.ballarat.vic.gov.au/api/records/1.0/search/ ceb0cdab85",
+      "method": "GET",
+      "url": "https://data.ballarat.vic.gov.au/api/records/1.0/search/",
+      "final_url": "https://data.ballarat.vic.gov.au/api/records/1.0/search/?dataset=waste-collection-days&q=202+Humffray+Street+South+BAKERY+HILL+VIC+3350",
+      "body": "{\"params\":[[\"dataset\",\"waste-collection-days\"],[\"q\",\"202 Humffray Street South BAKERY HILL VIC 3350\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Sun, 27 Sep 2026 18:12:50 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "x-ratelimit-remaining": "4987",
+        "x-ratelimit-limit": "5000",
+        "x-ratelimit-reset": "2026-09-28 00:00:00+00:00",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "content-encoding": "gzip",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()"
+      },
+      "content_b64": "eyJuaGl0cyI6IDEsICJwYXJhbWV0ZXJzIjogeyJkYXRhc2V0IjogIndhc3RlLWNvbGxlY3Rpb24tZGF5cyIsICJxIjogIjIwMiBIdW1mZnJheSBTdHJlZXQgU291dGggQkFLRVJZIEhJTEwgVklDIDMzNTAiLCAicm93cyI6IDEwLCAic3RhcnQiOiAwLCAiZm9ybWF0IjogImpzb24iLCAidGltZXpvbmUiOiAiVVRDIn0sICJyZWNvcmRzIjogW3siZGF0YXNldGlkIjogIndhc3RlLWNvbGxlY3Rpb24tZGF5cyIsICJyZWNvcmRpZCI6ICI2ZDRmOTE4ZWZlZjE0MGQ3NmU4OTZjMzk0ZWZhZjU3ZjRkZjcwMWEzIiwgImZpZWxkcyI6IHsiYWRkcmVzcyI6ICIyMDIgSHVtZmZyYXkgU3RyZWV0IFNvdXRoXHJCQUtFUlkgSElMTCAgVklDICAzMzUwIiwgInByb3BudW0iOiAiMjAxNjA2OCIsICJuZXh0cmVjeWNsZSI6ICIyMDI2LTEwLTAxIiwgInN0cmVldCI6ICJIdW1mZnJheSBTdHJlZXQgU291dGgiLCAibmV4dHdhc3RlIjogIjIwMjYtMTAtMDEiLCAic3VidXJiIjogIkJha2VyeSBoaWxsIiwgInNlcnZpY2VfdHlwZSI6ICJhbGxfY29sbGVjdGlvbnMifSwgInJlY29yZF90aW1lc3RhbXAiOiAiMjAyNi0wOS0yN1QxNjowNTo1NC4zNDVaIn1dfQ=="
+    }
+  ]
+}

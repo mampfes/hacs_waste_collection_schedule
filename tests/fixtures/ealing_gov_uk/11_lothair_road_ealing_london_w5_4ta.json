@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "POST https://www.ealing.gov.uk/site/custom_scripts/WasteCollectionWS/home/FindCollection 87c022709d",
+      "method": "POST",
+      "url": "https://www.ealing.gov.uk/site/custom_scripts/WasteCollectionWS/home/FindCollection",
+      "final_url": "https://www.ealing.gov.uk/site/custom_scripts/WasteCollectionWS/home/FindCollection",
+      "body": "{\"body\":[[\"UPRN\",\"12081500\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "WITHHELD",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "WITHHELD",
+        "x-ua-compatible": "IE=edge",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000",
+        "content-security-policy": "default-src 'self' ; script-src 'unsafe-inline' 'unsafe-eval' https://ajax.googleapis.com/ https://*.ealing.gov.uk; style-src 'self' 'unsafe-inline' ; img-src 'self' ; font-src 'self' ;",
+        "date": "Sat, 26 Sep 2026 20:30:44 GMT",
+        "content-length": "471"
+      },
+      "content_b64": "eyJwYXJhbTEiOiJUVTEiLCJwYXJhbTIiOlt7IlNlcnZpY2UiOiJCTEFDSyBSVUJCSVNIIFdIRUVMSUUgQklOIiwiY29sbGVjdGlvbkRhdGUiOlsiMDYvMTAvMjAyNiJdLCJjb2xsZWN0aW9uRGF0ZVN0cmluZyI6IjA2LzEwLzIwMjYiLCJjb2xsZWN0aW9uU2NoZWR1bGUiOiJSRUY3IFR1ZUZvcnQyIn0seyJTZXJ2aWNlIjoiQkxVRSBSRUNZQ0xJTkcgV0hFRUxJRSBCSU4iLCJjb2xsZWN0aW9uRGF0ZSI6WyIyOS8wOS8yMDI2Il0sImNvbGxlY3Rpb25EYXRlU3RyaW5nIjoiMjkvMDkvMjAyNiIsImNvbGxlY3Rpb25TY2hlZHVsZSI6IlJFQzcgVHVlRm9ydDEifSx7IlNlcnZpY2UiOiJGT09EIEJPWCIsImNvbGxlY3Rpb25EYXRlIjpbIjI5LzA5LzIwMjYiXSwiY29sbGVjdGlvbkRhdGVTdHJpbmciOiIyOS8wOS8yMDI2IiwiY29sbGVjdGlvblNjaGVkdWxlIjoiRk9PRDQgVHVlIn1dLCJwYXJhbTMiOmZhbHNlLCJwYXJhbTQiOiJORiJ9"
+    }
+  ]
+}

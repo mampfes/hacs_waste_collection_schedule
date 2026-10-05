@@ -1,69 +1,17 @@
-from datetime import date, datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "SiUnet"
-DESCRIPTION = "Source for waste collection calendars published on the SiUnet platform (differenziati.siunet.it) by Greenext, serving municipalities across Italy under various local branded apps (e.g. Esacom)."
-URL = "https://www.siunet.it"
-COUNTRY = "it"
-
-TEST_CASES = {
-    "Zevio": {"comune": "ZEVIO"},
-    "Zevio - Zona Rossa": {"comune": "ZEVIO", "zona": "Zona Rossa"},
-    "San Giovanni Lupatoto": {"comune": "SAN GIOVANNI LUPATOTO"},
-    "Merate": {"comune": "MERATE"},
-    "Martina Franca": {"comune": "MARTINA FRANCA"},
-    "Albiate": {"comune": "ALBIATE"},
-    "Agrate Brianza": {"comune": "AGRATE BRIANZA"},
-    "Altavilla Vicentina": {"comune": "ALTAVILLA VICENTINA"},
-    "Vimercate (2) - Zona Blu": {"comune": "VIMERCATE (2)", "zona": "Zona Blu"},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"comune": "Municipality", "zona": "Zone"},
-    "it": {"comune": "Comune", "zona": "Zona"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "comune": "Name of the municipality, exactly as listed in the 'Supported municipalities' section of this source's documentation. Two of the entries with the same name that switched providers are disambiguated with a '(1)'/'(2)' suffix — try the other one if your municipality doesn't return results.",
-        "zona": "Optional zone name, for municipalities whose collections are split by zone (e.g. 'Zona Rossa'). Collections that are not zone-specific are always included. Leave empty if your municipality has no zones.",
-    },
-    "it": {
-        "comune": "Nome del comune, esattamente come indicato nella sezione 'Supported municipalities' della documentazione di questa fonte. Le due voci omonime che hanno cambiato gestore sono distinte con un suffisso '(1)'/'(2)' — prova l'altra se il tuo comune non restituisce risultati.",  # codespell:ignore
-        "zona": "Zona opzionale, per i comuni le cui raccolte sono suddivise per zona (es. 'Zona Rossa'). Le raccolte non specifiche di una zona sono sempre incluse. Lasciare vuoto se il tuo comune non ha zone.",  # codespell:ignore
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Check the 'Supported municipalities' list in this source's documentation page for the exact spelling of your municipality. If it has zones, look up the zone name from your local waste-management provider's calendar (e.g. Esacom for the Verona area) or the yard schedule from your last paper calendar.",
-    "it": "Consulta l'elenco 'Supported municipalities' nella pagina di documentazione di questa fonte per la dicitura esatta del tuo comune. Se ha delle zone, individua il nome della zona dal calendario del tuo gestore locale (es. Esacom per la zona di Verona) o dall'ultimo calendario cartaceo ricevuto.",  # codespell:ignore
-}
-
-ICON_MAP = {
-    "CARTA": Icons.PAPER,
-    "CARTONE": Icons.PAPER,
-    "PLASTIC": Icons.PLASTIC_PACKAGING,
-    "MULTIPAK": Icons.PLASTIC_PACKAGING,
-    "VETRO": Icons.GLASS,
-    "UMIDO": Icons.BIO_KITCHEN,
-    "ORGANIC": Icons.BIO_KITCHEN,
-    "RAMAGLIE": Icons.GARDEN,
-    "SFALCI": Icons.GARDEN,
-    "POTATURE": Icons.GARDEN,
-    "SECCO": Icons.GENERAL_WASTE,
-    "INDIFFERENZIAT": Icons.GENERAL_WASTE,
-    "RESIDUO": Icons.GENERAL_WASTE,
-    "PANNOLIN": Icons.GENERAL_WASTE,
-    "INGOMBRANT": Icons.BULKY,
-    "RAEE": Icons.ELECTRONICS,
-    "PILE": Icons.BATTERY,
-    "ABITI": Icons.TEXTILE,
-    "INDUMENTI": Icons.TEXTILE,
-}
-
+_URL = "https://www.siunet.it"
 _API_CALENDAR_URL = "https://differenziati.siunet.it/api/serviziOSM/getCalendario"
 
 # Maps a municipality name (as shown to the user) to its (IDEnte, IDCliente)
@@ -397,54 +345,163 @@ _MUNICIPALITIES: dict[str, tuple[int, int]] = {
 }
 
 
-class Source:
-    def __init__(self, comune: str, zona: str | None = None):
-        self._comune = comune.strip()
-        self._zona = zona.strip() if zona else None
+def _ids(comune: str) -> tuple[int, int]:
+    key = comune.strip().upper()
+    if key not in _MUNICIPALITIES:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "comune", comune, sorted(_MUNICIPALITIES)
+        )
+    return _MUNICIPALITIES[key]
 
-    def fetch(self) -> list[Collection]:
-        comune_key = self._comune.upper()
-        if comune_key not in _MUNICIPALITIES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "comune", self._comune, sorted(_MUNICIPALITIES)
-            )
-        id_ente, id_cliente = _MUNICIPALITIES[comune_key]
 
-        today = date.today()
-        body = {
-            "DataInizio": today.isoformat(),
-            "DataFine": (today + timedelta(days=365)).isoformat(),
-            "IDEnte": str(id_ente),
-            "IDCliente": id_cliente,
-            "Descrizione": "",
-        }
-        r = requests.post(_API_CALENDAR_URL, json=body, timeout=30)
-        r.raise_for_status()
+def _calendar_request(comune: str, **_) -> dict:
+    id_ente, id_cliente = _ids(comune)
+    today = datetime.date.today()
+    return {
+        "DataInizio": today.isoformat(),
+        "DataFine": (today + datetime.timedelta(days=365)).isoformat(),
+        "IDEnte": str(id_ente),
+        "IDCliente": id_cliente,
+        "Descrizione": "",
+    }
 
-        entries: list[Collection] = []
-        for item in r.json():
-            servizio = item["Servizio"]
-            servizio_folded = servizio.casefold()
-            if (
-                self._zona
-                and "zona" in servizio_folded
-                and self._zona.casefold() not in servizio_folded
-            ):
-                continue
 
-            icon = None
-            servizio_upper = servizio.upper()
-            for key, value in ICON_MAP.items():
-                if key in servizio_upper:
-                    icon = value
-                    break
+def _in_zone(record, source) -> bool:
+    """Keep zone-less services, and zoned ones only for the chosen zone."""
+    zona = (source.params.get("zona") or "").strip().casefold()
+    servizio = record["Servizio"].casefold()
+    return not (zona and "zona" in servizio and zona not in servizio)
 
-            entries.append(
-                Collection(
-                    date=datetime.fromisoformat(item["Data"]).date(),
-                    t=servizio,
-                    icon=icon,
-                )
-            )
 
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "SiUnet"
+    DESCRIPTION = (
+        "Source for waste collection calendars published on the SiUnet platform "
+        "(differenziati.siunet.it) by Greenext, serving municipalities across "
+        "Italy under various local branded apps (e.g. Esacom)."
+    )
+    URL = _URL
+    COUNTRY = "it"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+        wt.OTHER,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Zevio": {"comune": "ZEVIO"},
+        "Zevio - Zona Rossa": {"comune": "ZEVIO", "zona": "Zona Rossa"},
+        "San Giovanni Lupatoto": {"comune": "SAN GIOVANNI LUPATOTO"},
+        "Merate": {"comune": "MERATE"},
+        "Martina Franca": {"comune": "MARTINA FRANCA"},
+        "Albiate": {"comune": "ALBIATE"},
+        "Agrate Brianza": {"comune": "AGRATE BRIANZA"},
+        "Altavilla Vicentina": {"comune": "ALTAVILLA VICENTINA"},
+        "Vimercate (2) - Zona Blu": {"comune": "VIMERCATE (2)", "zona": "Zona Blu"},
+    }
+
+    PARAMS = (
+        municipality("comune"),
+        text_field("zona", "Zone", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Use the municipality name exactly as listed below. Two entries with "
+            "the same name that switched providers are disambiguated with a "
+            "'(1)'/'(2)' suffix: try the other one if your municipality returns "
+            "no results. If your municipality splits collections by zone, add the "
+            "zone name from your local waste-management provider's calendar (e.g. "
+            "'Zona Rossa'); collections that are not zone-specific are always "
+            "included."
+        ),
+        "it": (
+            "Usa il nome del comune esattamente come indicato nell'elenco. Le due "
+            "voci omonime che hanno cambiato gestore sono distinte con un suffisso "
+            "'(1)'/'(2)': prova l'altra se il tuo comune non restituisce risultati. "  # codespell:ignore
+            "Se il comune divide le raccolte per zona, aggiungi il nome della zona "
+            "dal calendario del tuo gestore (es. 'Zona Rossa'); le raccolte non "
+            "specifiche di una zona sono sempre incluse."  # codespell:ignore incluse
+        ),
+    }
+
+    REGIONS = tuple(
+        region(name.title(), url=_URL, comune=name) for name in _MUNICIPALITIES
+    )
+
+    retrieve = HttpPostRetriever(url=_API_CALENDAR_URL, json=_calendar_request)
+    parse = JsonParser()
+    preprocess = RowFilter(_in_zone)
+    # Municipalities name the same round in many ways, some with the zone in
+    # the label; carry_raw_label keeps that wording as the description.
+    transform = JsonTransformer(
+        date_key="Data",
+        type_key="Servizio",
+        carry_raw_label=True,
+        type_value_map={
+            "Carta": wt.PAPER,
+            "Cartone": wt.PAPER,
+            "Carta e Cartone": wt.PAPER,
+            "Carta e Cartone Zona Rossa": wt.PAPER,
+            "Carta e Cartone Zona Verde": wt.PAPER,
+            "Raccolta CARTA": wt.PAPER,
+            "RACCOLTA CARTA - ZONA ARANCIONE": wt.PAPER,
+            "RACCOLTA CARTA - ZONA BLU": wt.PAPER,
+            "RACCOLTA CARTA - ZONA VERDE": wt.PAPER,
+            "Vetro": wt.GLASS,
+            "Vetro Zona Rossa": wt.GLASS,
+            "Vetro Zona Verde": wt.GLASS,
+            "Raccolta VETRO": wt.GLASS,
+            "RACCOLTA VETRO - ZONA ARANCIONE": wt.GLASS,
+            "RACCOLTA VETRO - ZONA BLU": wt.GLASS,
+            "RACCOLTA VETRO - ZONA VERDE": wt.GLASS,
+            "Organico": wt.ORGANIC,
+            "Umido": wt.ORGANIC,
+            "Raccolta UMIDO": wt.ORGANIC,
+            "RACCOLTA UMIDO - ZONA ARANCIONE": wt.ORGANIC,
+            "RACCOLTA UMIDO - ZONA BLU": wt.ORGANIC,
+            "RACCOLTA UMIDO - ZONA VERDE": wt.ORGANIC,
+            "Verde e Ramaglie": wt.GARDEN_WASTE,
+            "Raccolta VERDE ": wt.GARDEN_WASTE,
+            "Non Riciclabile": wt.GENERAL_WASTE,
+            "Secco Non Riciclabile": wt.GENERAL_WASTE,
+            "Secco non Riciclabile": wt.GENERAL_WASTE,
+            "Secco Zona Rossa": wt.GENERAL_WASTE,
+            "Secco Zona Verde": wt.GENERAL_WASTE,
+            "Pannolini e/o Pannoloni": wt.GENERAL_WASTE,
+            "Pannolini e/o Pannoloni Zona Rossa": wt.GENERAL_WASTE,
+            "Pannolini e/o Pannoloni Zona Verde": wt.GENERAL_WASTE,
+            "Raccolta Ecuosacco": wt.GENERAL_WASTE,
+            "RACCOLTA ECUOSACCO PUNTUALE - ZONA ARANCIONE": wt.GENERAL_WASTE,
+            "RACCOLTA ECUOSACCO PUNTUALE - ZONA BLU": wt.GENERAL_WASTE,
+            "RACCOLTA ECUOSACCO PUNTUALE - ZONA VERDE": wt.GENERAL_WASTE,
+            "Multimateriale": wt.RECYCLABLES,
+            "Plastica e Lattine": wt.RECYCLABLES,
+            "Plastica e Metalli": wt.RECYCLABLES,
+            "Sacco Giallo": wt.RECYCLABLES,
+            "Raccolta MULTIPAK": wt.RECYCLABLES,
+            "RACCOLTA MULTIPAK - ZONA ARANCIONE": wt.RECYCLABLES,
+            "RACCOLTA MULTIPAK - ZONA BLU": wt.RECYCLABLES,
+            "RACCOLTA MULTIPAK - ZONA VERDE": wt.RECYCLABLES,
+            "Raccolta ALTRE PLASTICHE utenze non domestiche": wt.RECYCLABLES,
+            "RACCOLTA ALTRE PLASTICHE - UTENZE NON DOMESTICHE": wt.RECYCLABLES,
+            # bag colours whose stream the calendar does not name
+            "Sacco Arancione": wt.OTHER,
+            "Sacco Blu RFId": wt.OTHER,
+            "Raccolta Cassette Ortofrutta": wt.OTHER,
+            # street cleaning, published in the same calendar
+            "SPAZZAMENTO MANUALE": wt.OTHER,
+            "SPAZZAMENTO MECCANIZZATO": wt.OTHER,
+            "SPAZZAMENTO MECCANIZZATO - POMERIGGIO": wt.OTHER,
+            "Spazz. Meccanizzato - MATTINO": wt.OTHER,
+            "Spazzamento Meccanizzato": wt.OTHER,
+            "Spazzamento meccanizzato AREA MERCATO": wt.OTHER,
+        },
+    )

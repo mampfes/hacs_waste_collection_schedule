@@ -1,6 +1,8 @@
-# City of Toronto
+# Toronto (ON)
 
-Support for schedules provided by [City of Toronto](https://www.toronto.ca/services-payments/recycling-organics-garbage/houses/collection-schedule/).
+Support for schedules provided by [Toronto (ON)](https://www.toronto.ca).
+
+Source for Toronto waste collection
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: toronto_ca
       args:
-        street_address: 324 Weston Rd
+        street_address: 224 Wallace Ave
 ```
 
-## How to verify that your address works
+## How to get the source arguments
 
-Visit the [City of Toronto](https://www.toronto.ca/services-payments/recycling-organics-garbage/houses/collection-schedule/) page and search for your address. The string you search for there should match the string in the street_address argument.
+Enter your street address as the City of Toronto writes it, for example '224 Wallace Ave'. The first match of the city's address search is used.

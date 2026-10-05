@@ -1,18 +1,21 @@
 # Bridgend County Borough Council
 
-Support for schedules provided by [Bridgend County Borough Council](https://bridgendportal.azurewebsites.net/), serving the city of Bridgend, Wales, UK.
+Support for schedules provided by [Bridgend County Borough Council](https://www.bridgend.gov.uk/).
+
+Source for bridgend.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bridgend_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -20,12 +23,8 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bridgend_gov_uk
       args:
-        uprn: "100100479873"
+        uprn: '100100479873'
 ```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.

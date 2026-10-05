@@ -20,7 +20,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://stadtreinigung.giessen.de/akal/akal1.php"
@@ -45,13 +45,9 @@ def _alphabet_range(letter: str) -> tuple[str, str]:
     return letter, chr(ord(letter) + 1)
 
 
-def _load_streets_for_letter(session, letter: str) -> dict[str, str]:
-    """Load all streets starting with the given letter."""
-    von, bis = _alphabet_range(letter)
-    r = session.get(_BASE_URL, params={"von": von, "bis": bis})
-    r.raise_for_status()
-    r.encoding = "utf-8"
-    soup = BeautifulSoup(r.text, "html.parser")
+def _streets_on_page(html: str) -> dict[str, str]:
+    """Every street on one alphabet page of the dropdown, name -> id."""
+    soup = BeautifulSoup(html, "html.parser")
     select = soup.find("select", {"name": "strasse"})
     streets: dict[str, str] = {}
     if isinstance(select, Tag):
@@ -63,16 +59,15 @@ def _load_streets_for_letter(session, letter: str) -> dict[str, str]:
     return streets
 
 
-def _find_street_value(source: BaseSource, keys: tuple) -> str:
-    """Find the street's id by searching through its alphabet page.
+def _find_street_value(response, street: str, **_) -> str:
+    """Find the street's id on its alphabet page.
 
     The alphabet range that page was loaded with is needed again for the ICS
     POST, but it follows from the street's first letter, so the request
     callables recompute it rather than carrying it along.
     """
-    street_value = source.params["street"]
-    first_letter = street_value[0].upper()
-    streets = _load_streets_for_letter(source.session, first_letter)
+    street_value = street
+    streets = _streets_on_page(response.text)
 
     if street_value in streets:
         return streets[street_value]
@@ -136,7 +131,14 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_find_street_value,),
+        steps=(
+            Lookup(
+                _BASE_URL,
+                params=lambda street, **_: _range_params(street),
+                encoding="utf-8",
+                pick=_find_street_value,
+            ),
+        ),
         url=_BASE_URL,
         method="POST",
         params=lambda street_id, street, **_: _range_params(street),

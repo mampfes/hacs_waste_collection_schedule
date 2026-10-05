@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-09-29",
+  "interactions": [
+    {
+      "key": "GET https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressesByQuery a9191bc5bb",
+      "method": "GET",
+      "url": "https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressesByQuery",
+      "final_url": "https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressesByQuery?addressQuery=58+McLarty+Street",
+      "body": "{\"params\":[[\"addressQuery\",\"58 McLarty Street\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "x-frame-options": "SAMEORIGIN",
+        "access-control-allow-origin": "*",
+        "content-security-policy": "default-src 'self' data: https://*.youtube.com/ https://*.youtube-nocookie.com/ https://*.readspeaker.com/ https://*.typekit.net https://*.googleapis.com https://*.sparkcms.com.au https://weatherwidget.io/ https://kendo.cdn.telerik.com https://*.gstatic.com https://*.google.com https://*.google.com.au https://*.youtube.com https://player.vimeo.com https://www.google-analytics.com https://cdn.userway.org/ https://*.api.userway.org/ https://api.userway.org/; style-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn1.readspeaker.com/ https://www.gstatic.com/ https://*.typekit.net https://*.cloudflare.com https://*.google.com https://*.googleapis.com https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://fonts.gstatic.com/ https://fonts.googleapis.com/ https://maxcdn.bootstrapcdn.com/ https://cdn.userway.org/ https://api.userway.org/; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.youtube.com/ https://cdn1.readspeaker.com/ https://weatherwidget.io https://*.sparkcms.com.au https://unpkg.com/ https://*.cloudflare.com https://kendo.cdn.telerik.com https://*.google.com https://*.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com https://cdn.userway.org/; font-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.typekit.net https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://*.gstatic.com https://*.googleapis.com https://maxcdn.bootstrapcdn.com data: https://cdn.userway.org/; img-src 'self' 'unsafe-inline' data: blob: https://maps.googleapis.com https://www.googletagmanager.com https://www.gstatic.com/ https://maps.gstatic.com https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://stats.g.doubleclick.net https://*.google-analytics.com https://*.google.com https://*.google.com.au https://*.fbcdn.net/ https://fonts.gstatic.com/ https://cdn.userway.org/ https://*.api.userway.org/",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 29 Sep 2026 20:01:17 GMT",
+        "content-length": "91",
+        "set-cookie": "BNI_SparkCMSLB=T5M0EvCEWqWajyYyv47E2cPYA9NCTLrBnK97zODE-WnMzzBaY6rrGu89UEtOIJFQsTY6WKW3_7tvT40wTaw9rQ==; Path=/;HttpOnly;secure; Max-age=1800; Expires=Tue, 29 Sep 2026 20:31:18 GMT, BNIS_vid=ORNgFDyEQZ6zLz531H4n3oXqbl4+37WayVsbDhkOw14rqWXv3pb5x3Kk8aUDsHfa2iHZR7R37uV3Umh6Xrig3fVGxi2mZgWP4mR/2oLDNDYr2onUJ5+veZst+Da8nB/KNPvDv6bN/LXZyUr43/Xlq8IbfiUg6D3TKzKFRGJkuWW2+wDxk3+tMoqGaozbmOABNNTEKbYg+bdZpxzBJOESUjyuuyst7mP7K6PkiqN2/+A=; Path=/, BNIS___utm_is1=0ayeJmy11lMQuPk0jKXbZuRzAkO4vzGhhCncpwchLL1qC6+RBqnX+gVYG3mcf7K4KEeiGlfPM6SkzPxd1L6n782i5ilmAMPfTyfZMTJTpdqb8W7QH2R/Ew==; Max-Age=31536000; Path=/, BNIS___utm_is2=39pxjTp1S0xpq4qfJSeqn1arrB8/WSrRQALbuSWzDr3aHgGXFcFEno9c/MzU4FlBBlbPuV5f5cI=; Max-Age=10800; Path=/, BNIS___utm_is3=7yhPWBBLAJ4AyQ+XNfmnxLWTMrPF45sl3MQk9iedPxC9jqJCK8qt9sBdiyBPvaGmhC6l8xhbmDYB+VwGIDuGFpGd1nZj+IfvV+lkPn/n8Ac=;  Path=/"
+      },
+      "content_b64": "W3siR3VpZCI6Ijg1ZmZkOWUyLTk1YTgtNDM3Yy04YzE1LTdhMzExOGQ2OTg2MCIsIkFkZHJlc3MiOiI1OCBNY0xhcnR5IFN0cmVldCwgRHdlbGxpbmd1cCJ9XQ=="
+    },
+    {
+      "key": "GET https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressDetailsByGuid 28bed4cab3",
+      "method": "GET",
+      "url": "https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressDetailsByGuid",
+      "final_url": "https://www.murray.wa.gov.au/api/cms/v1/wastecollection/GetAddressDetailsByGuid?id=85ffd9e2-95a8-437c-8c15-7a3118d69860",
+      "body": "{\"params\":[[\"id\",\"85ffd9e2-95a8-437c-8c15-7a3118d69860\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "x-frame-options": "SAMEORIGIN",
+        "access-control-allow-origin": "*",
+        "content-security-policy": "default-src 'self' data: https://*.youtube.com/ https://*.youtube-nocookie.com/ https://*.readspeaker.com/ https://*.typekit.net https://*.googleapis.com https://*.sparkcms.com.au https://weatherwidget.io/ https://kendo.cdn.telerik.com https://*.gstatic.com https://*.google.com https://*.google.com.au https://*.youtube.com https://player.vimeo.com https://www.google-analytics.com https://cdn.userway.org/ https://*.api.userway.org/ https://api.userway.org/; style-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn1.readspeaker.com/ https://www.gstatic.com/ https://*.typekit.net https://*.cloudflare.com https://*.google.com https://*.googleapis.com https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://fonts.gstatic.com/ https://fonts.googleapis.com/ https://maxcdn.bootstrapcdn.com/ https://cdn.userway.org/ https://api.userway.org/; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.youtube.com/ https://cdn1.readspeaker.com/ https://weatherwidget.io https://*.sparkcms.com.au https://unpkg.com/ https://*.cloudflare.com https://kendo.cdn.telerik.com https://*.google.com https://*.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com https://cdn.userway.org/; font-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.typekit.net https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://*.gstatic.com https://*.googleapis.com https://maxcdn.bootstrapcdn.com data: https://cdn.userway.org/; img-src 'self' 'unsafe-inline' data: blob: https://maps.googleapis.com https://www.googletagmanager.com https://www.gstatic.com/ https://maps.gstatic.com https://*.sparkcms.com.au https://kendo.cdn.telerik.com https://stats.g.doubleclick.net https://*.google-analytics.com https://*.google.com https://*.google.com.au https://*.fbcdn.net/ https://fonts.gstatic.com/ https://cdn.userway.org/ https://*.api.userway.org/",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 29 Sep 2026 20:01:18 GMT",
+        "content-length": "627",
+        "set-cookie": "BNI_SparkCMSLB=T5M0EvCEWqWajyYyv47E2cPYA9NCTLrBnK97zODE-WnMzzBaY6rrGu89UEtOIJFQsTY6WKW3_7tvT40wTaw9rQ==; Path=/;HttpOnly;secure; Max-age=1800; Expires=Tue, 29 Sep 2026 20:31:19 GMT, BNIS___utm_is1=w1wI6gvjzNbqyCweKkajP/trl0bUjWfGTrx4MrReH/bJk7ssT9Yro5vZRFdnuADFiyG1sQtDVEKmYWBUxDnEu8KByiesAznFIvB9dYogGL53yP/5VQBtZg==; Max-Age=31536000; Path=/, BNIS___utm_is2=Z38yeLWw9n0cBD2Dks0XUBtPidLnCW4AZM5Lgud5wvtSPCa4U35lwSF62x02yKDFPUdeAyMUdTI=; Max-Age=10800; Path=/, BNIS___utm_is3=uj/8qJT+WrAK9ELuc1riMPOl3hZOyx/WJo7+8WVym8Qa20q4WZ6P0EOgrt/tVYx12Ew5omJnb2gvH2VKVZxum3czN8ji75e/Zc87MnbED1A=;  Path=/"
+      },
+      "content_b64": "eyJHdWlkIjoiODVmZmQ5ZTItOTVhOC00MzdjLThjMTUtN2EzMTE4ZDY5ODYwIiwiQWRkcmVzcyI6IjU4IE1jTGFydHkgU3RyZWV0LCBEd2VsbGluZ3VwIiwiQ29sbGVjdGlvbkRhdGEiOlt7IkJpblR5cGUiOnsiSWQiOjcsIk5hbWUiOiJHZW5lcmFsIFdhc3RlIn0sIkZyZXF1ZW5jeSI6MSwiSW50ZXJ2YWwiOjcsIk5leHRDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMDZUMDA6MDA6MDAifSx7IkJpblR5cGUiOnsiSWQiOjIsIk5hbWUiOiJSZWN5Y2xpbmciLCJJbWFnZSI6IiJ9LCJGcmVxdWVuY3kiOjEsIkludGVydmFsIjoxNCwiTmV4dENvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0wNlQwMDowMDowMCJ9LHsiQmluVHlwZSI6eyJJZCI6MywiTmFtZSI6IlZlcmdlIENvbGxlY3Rpb24gLSBHcmVlbiB3YXN0ZSIsIkltYWdlIjoiIn0sIkZyZXF1ZW5jeSI6MSwiSW50ZXJ2YWwiOjAsIk5leHRDb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMDktMjhUMDA6MDA6MDAifSx7IkJpblR5cGUiOnsiSWQiOjQsIk5hbWUiOiJWZXJnZSBDb2xsZWN0aW9uIC0gSGFyZCB3YXN0ZSIsIkltYWdlIjoiIn0sIkZyZXF1ZW5jeSI6MSwiSW50ZXJ2YWwiOjAsIk5leHRDb2xsZWN0aW9uRGF0ZSI6IjIwMjctMDEtMThUMDA6MDA6MDAifV19"
+    }
+  ]
+}

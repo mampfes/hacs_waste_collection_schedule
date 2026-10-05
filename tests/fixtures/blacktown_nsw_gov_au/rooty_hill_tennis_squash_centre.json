@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/api/v1/myarea/search 9a354d2d84",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.blacktown.nsw.gov.au/api/v1/myarea/search?keywords=13-15+Learmonth+St%2C+Rooty+Hill+NSW+2766",
+      "body": "{\"params\":[[\"keywords\",\"13-15 Learmonth St, Rooty Hill NSW 2766\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "229",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:32 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=97, origin; dur=886, ak_p; desc=\"1790185471526_1752388110_145120509_98307_19917_4_16_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=B7FD03EF7EBFE419B3D9BF563C0409CC~000000000000000000000000000000~YAAQDlJzaBz/r8mgAQAAIoJezwHm6drv3wnBlF1N+nLLpBluG7L89cwZ1zHZXZGol1SIYil1KpGtWkoqKvkwVoln2wJ2odqT6m/b2QgcnuuS13pbzylrBEPsGKSx4y0rfcgsVpLbGcHiuty0OaF6F48TvB/sha0YyZUJhhAdtJpCZVqYWPQIjz2m1LQRYbU0AiIpKiBUk4KJjC55/wU3hGos92a6W3pG2nzJrDMRqZWf42jZxfy+XyAgoVWCn1sJx62Oprek4vvs9K1zfubAs0YIpayxXncY3az4m9vkAfV8P3/DHOXaC2tAXNpTYsIrSgyWRGfODWBjQ0CnRX/77XGlrYDpCRTSRcqKd+vKWSBrMn20Qo6S/P/BmeT+pO7eIkL9Igu7Vi5ULpI08Rv/p9ym4qWluA9d; Domain=.blacktown.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:31 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJlNWZjZTk5YS1hN2MxLTQwNjgtYTliZC0wOTc3Mzk0ODAwODMiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjE1IExlYXJtb250aCBTdHJlZXQsIFJPT1RZIEhJTEwgTlNXIDI3NjYiLCJNdW5pY2lwYWxTdWJkaXZpc2lvbiI6IldhcmQgNCIsIkRpc3RhbmNlIjowLCJTY29yZSI6MzAuNTczMTgzLCJMYXRMb24iOm51bGx9XSwiT2Zmc2V0IjowLCJMaW1pdCI6MTAsIlRvdGFsIjoxfQ=="
+    },
+    {
+      "key": "GET https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices f3fe69b5ba",
+      "method": "GET",
+      "url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.blacktown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=e5fce99a-a7c1-4068-a9bd-097739480083&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"e5fce99a-a7c1-4068-a9bd-097739480083\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "448",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:33 GMT",
+        "set-cookie": "ASP.NET_SessionId=1i4hxsqrgetaaijaqddxm54o; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=HIT, edge; dur=1131, ak_p; desc=\"1790185472572_1752388110_145123661_113570_21733_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0yXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseS4gUGxhY2UgYmluIG9uIHRoZSBrZXJic2lkZS9uYXR1cmUgc3RyaXAgdGhlIG5pZ2h0IGJlZm9yZSBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiL1NlcnZpY2VzL1dhc3RlL0hvdXNlaG9sZC13YXN0ZVwiIHRhcmdldD1cIl9zZWxmXCJcdTAwM2VIb3VzZWhvbGQgZ2FyYmFnZSBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDI4LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGFjZSBiaW4gb24gdGhlIGtlcmJzaWRlL25hdHVyZSBzdHJpcCB0aGUgbmlnaHQgYmVmb3JlIGNvbGxlY3Rpb24uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb24gNS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

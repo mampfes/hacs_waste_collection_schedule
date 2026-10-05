@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://exeter.gov.uk/repositories/hidden-pages/address-finder/ 3652eced3c",
+      "method": "GET",
+      "url": "https://exeter.gov.uk/repositories/hidden-pages/address-finder/",
+      "final_url": "https://exeter.gov.uk/repositories/hidden-pages/address-finder/?qsource=UPRN&qtype=bins&term=10013043921",
+      "body": "{\"params\":[[\"qsource\",\"UPRN\"],[\"qtype\",\"bins\"],[\"term\",\"10013043921\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Fri, 25 Sep 2026 23:08:33 GMT",
+        "content-type": "application/json",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "vary": "Accept-Encoding",
+        "server": "Microsoft-IIS/10.0",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000;",
+        "x-permitted-cross-domain-policies": "master-only",
+        "x-content-type-options": "nosniff"
+      },
+      "content_b64": "DQoNClt7ImxhYmVsIjoiVGhlIEdyYW5nZSwgIFN0b2tlIEhpbGwsICBFeGV0ZXIsICBFWDQgN0pIIiwiVVBSTiI6IjEwMDEzMDQzOTIxIiwiUmVzdWx0cyI6Ilx1MDAzQ2gyXHUwMDNFUmVmdXNlIGNvbGxlY3Rpb25cdTAwM0MvaDJcdTAwM0VcdTAwM0NwXHUwMDNFWW91ciBuZXh0IHJlZnVzZSBjb2xsZWN0aW9uIHdpbGwgYmUgb25cdTAwM0MvcFx1MDAzRVx1MDAzQ2gzXHUwMDNFXHUwMDNDaW1nIHNyYz1cdTAwMjdodHRwczovL2V4ZXRlci5nb3YudWsvaW1nL0VDQy9iaW5ibGFjay5qcGdcdTAwMjcgYWx0PVx1MDAyN0JsYWNrIGJpblx1MDAyNyBjbGFzcz1cdTAwMjdiaW5pY29uXHUwMDI3L1x1MDAzRUZyaWRheSwgMm5kIE9jdG9iZXIgMjAyNlx1MDAzQy9oM1x1MDAzRVx1MDAzQ3BcdTAwM0VUbyBiZSBjb2xsZWN0ZWQgZnJvbSBhdCB0aGUgZWRnZSBvZiB5b3VyIGFkZHJlc3Mgc28gYmluIGlzIHZpc2libGUgZnJvbSB5b3VyIHN0cmVldCBhZGRyZXNzXHUwMDNDL3BcdTAwM0VcdTAwM0NoMlx1MDAzRVJlY3ljbGluZyBjb2xsZWN0aW9uXHUwMDNDL2gyXHUwMDNFXHUwMDNDcFx1MDAzRVlvdXIgbmV4dCByZWN5Y2xpbmcgY29sbGVjdGlvbiB3aWxsIGJlIG9uXHUwMDNDL3BcdTAwM0VcdTAwM0NoM1x1MDAzRVx1MDAzQ2ltZyBzcmM9XHUwMDI3aHR0cHM6Ly9leGV0ZXIuZ292LnVrL2ltZy9FQ0MvYmluZ3JlZW4uanBnXHUwMDI3IGFsdD1cdTAwMjdHcmVlbiBiaW5cdTAwMjcgY2xhc3M9XHUwMDI3YmluaWNvblx1MDAyNy9cdTAwM0VGcmlkYXksIDl0aCBPY3RvYmVyIDIwMjZcdTAwM0MvaDNcdTAwM0VcdTAwM0NwXHUwMDNFVG8gYmUgY29sbGVjdGVkIGZyb20gYXQgdGhlIGVkZ2Ugb2YgeW91ciBhZGRyZXNzIHNvIGJpbiBpcyB2aXNpYmxlIGZyb20geW91ciBzdHJlZXQgYWRkcmVzc1x1MDAzQy9wXHUwMDNFXHUwMDNDaDJcdTAwM0VHYXJkZW4gd2FzdGUgY29sbGVjdGlvblx1MDAzQy9oMlx1MDAzRVx1MDAzQ2ltZyBzcmM9XHUwMDI3aHR0cHM6Ly9leGV0ZXIuZ292LnVrL2ltZy9FQ0MvYmluYnJvd24uanBnXHUwMDI3IGFsdD1cdTAwMjdCcm93biBiaW5cdTAwMjcgY2xhc3M9XHUwMDI3YmluaWNvblx1MDAyNy9cdTAwM0VcdTAwM0NhIGhyZWY9XHUwMDI3L2JpbnMtYW5kLXJlY3ljbGluZy9nYXJkZW4td2FzdGUvc2lnbi11cC1mb3ItZ2FyZGVuLWJpbi1jb2xsZWN0aW9ucy9cdTAwMjdcdTAwM0VTaWduIHVwIG5vdyB0byByZWNlaXZlIGZvcnRuaWdodGx5LCBjaGFyZ2VkLWZvciBnYXJkZW4gd2FzdGUgY29sbGVjdGlvbnNcdTAwM0MvYVx1MDAzRVx1MDAzQ2gyXHUwMDNFRm9vZCB3YXN0ZSBjb2xsZWN0aW9uXHUwMDNDL2gyXHUwMDNFXHUwMDNDcFx1MDAzRVlvdXIgbmV4dCBmb29kIHdhc3RlIGNvbGxlY3Rpb24gd2lsbCBiZSBvblx1MDAzQy9wXHUwMDNFXHUwMDNDaDNcdTAwM0VcdTAwM0NpbWcgc3JjPVx1MDAyN2h0dHBzOi8vZXhldGVyLmdvdi51ay9pbWcvRUNDL2Zvb2RjYWRkeS5wbmdcdTAwMjcgYWx0PVx1MDAyN0Zvb2QgY2FkZHlcdTAwMjcgY2xhc3M9XHUwMDI3YmluaWNvblx1MDAyNy9cdTAwM0VGcmlkYXksIDJuZCBPY3RvYmVyIDIwMjZcdTAwM0MvaDNcdTAwM0VcdTAwM0NwXHUwMDNFVG8gYmUgY29sbGVjdGVkIGZyb20gZnJvbnQgZWRnZSBvZiBhZGRyZXNzLCB2aXNpYmxlIGZyb20gcm9hZFx1MDAzQy9wXHUwMDNFXHUwMDNDcFx1MDAzRVx1MDAzQ2EgaHJlZj1cdTAwMjdodHRwczovL3NoYXJlZGZpbGVzLnN0cmF0YS5zb2x1dGlvbnMvZWNjL2Vudmlyb25tZW50L3dhc3RlL2NhbGVuZGFycy9CaW5zX0ZyaV9BLnBkZlx1MDAyNyB0aXRsZT1cdTAwMjdZb3VyIGNvbGxlY3Rpb24gY2FsZW5kYXJcdTAwMjcgdGFyZ2V0PVx1MDAyN19ibGFua1x1MDAyN1x1MDAzRVlvdXIgZG93bmxvYWRhYmxlIGNvbGxlY3Rpb24gY2FsZW5kYXIgY2FuIGJlIGZvdW5kIGhlcmVcdTAwM0MvYVx1MDAzRVx1MDAzQy9wXHUwMDNFIn1dDQo="
+    }
+  ]
+}

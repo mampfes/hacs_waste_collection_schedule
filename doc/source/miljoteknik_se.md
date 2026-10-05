@@ -1,8 +1,8 @@
-# Ronneby Miljöteknik Sophämtning
+# Ronneby Miljöteknik
 
-Support for schedules provided by [Ronneby Miljöteknik](http://www.fyrfackronneby.se/hamtningskalender/), serving the municipality of Ronneby, Sweden.
+Support for schedules provided by [Ronneby Miljöteknik](http://www.fyrfackronneby.se).
 
-Note that they only provide their calendar service for customers with the "Fyrfack" bins which means this will only work for regular residential houses and not for apartment buildings, city services locations or similar.
+Source for Ronneby Miljöteknik waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -26,17 +26,9 @@ waste_collection_schedule:
   sources:
     - name: miljoteknik_se
       args:
-        street_address: Hjortsbergavägen 16, Johannishus
+        street_address: "Hjortsbergav\xE4gen 16, Johannishus"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the address to the house with waste collection. The address can be tested [here](http://www.fyrfackronneby.se/hamtningskalender/).
-
-## Types returned
-
-The following waste types will be returned:
-
-* "Mat, Brännbart, färgat glas, tidningar."
-
-* "Plast, pappersförpackningar, ofärgat glas, metall."
+Enter your street address and city separated by a comma, as they appear when you search for your address on http://www.fyrfackronneby.se/hamtningskalender/, e.g. 'Hjortsbergavägen 16, Johannishus'.

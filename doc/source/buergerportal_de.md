@@ -1,6 +1,8 @@
 # Bürgerportal
 
-Source for waste collection in multiple service areas.
+Support for schedules provided by [Bürgerportal](https://www.c-trace.de).
+
+Source for waste collection in multiple c-trace Bürgerportal service areas.
 
 ## Configuration via configuration.yaml
 
@@ -12,38 +14,26 @@ waste_collection_schedule:
         operator: OPERATOR
         district: DISTRICT
         subdistrict: SUBDISTRICT
-        street: STREET_NAME
-        number: HOUSE_NUMBER
-        show_volume: SHOW_VOLUME
+        street: STREET
+        number: NUMBER
 ```
-
-## Supported Operators
-
-- `alb_donau`: <https://buerger-portal-albdonaukreisabfallwirtschaft.azurewebsites.net>
-- `biedenkopf`: <https://biedenkopfmzv.buergerportal.digital>
-- `cochem_zell`: <https://buerger-portal-cochemzell.azurewebsites.net>
-- `bedburg`: <https://buerger-portal-bedburg.azurewebsites.net>
-- 'klevestadt' : <https://buerger-app-klevestadt.azurewebsites.net>
 
 ### Configuration Variables
 
-**operator**\
-_(string) (required)_
+**operator**  
+*(string) (required)*
 
-**district**\
-_(string) (required)_
+**district**  
+*(string) (required)*
 
-**street**\
-_(string) (required)_
+**subdistrict**  
+*(string) (optional)*
 
-**number**\
-_(string|int) (required)_
+**street**  
+*(string) (required)*
 
-**subdistrict**\
-_(string) (optional) (default: null)_
-
-**show_volume**\
-_(boolean) (optional) (default: false)_
+**number**  
+*(string) (optional)*
 
 ## Example
 
@@ -61,17 +51,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Open the URL of your operator and click on the menu option `Abfuhrkalender` in the left sidebar.
-2. Select your `district` (Ort). _Note_: If your district contains two values separated by a comma, you also have to specify the `subdistrict` (Ortsteil): Enter the first part into the field `district` and the second part into the field `subdistrict`. This is necessary even if your `district` and `subdistrict` have the same value (e.g., `Bullay, Bullay`). Subdistrict may only be left empty if there is no comma in the field value.
-3. Select your `street` (Straße).
-4. Select your `number` (Hausnummer).
-
-All parameters are _case-sensitive_.
-
-## Notes on Container Volumes
-
-By default, this sources does not differentiate between different container sizes.
-If your operator collects large containers (1000 l) on different dates than smaller ones (e.g., 120 l or 240 l), you may set `show_volume: true` in your configuration.
-If you do, the volume will be added to the waste type.
-For example, the collection `Bio` with a volume of 120 l would then be shown as `Bio (120 l)`.
-With this additional information, you can adjust all waste collections to your needs by making use of a source's [`customize` option](../installation.md#configuring-sources).
+1. Open your operator's Bürgerportal and select 'Abfuhrkalender'.
+2. Choose your district (Ort). If it contains a comma (e.g. 'Bullay, Bullay'), split it: the part before the comma is `district`, the part after is `subdistrict` — even if both parts are identical. Leave `subdistrict` empty only if there is no comma.
+3. Choose your street and house number.

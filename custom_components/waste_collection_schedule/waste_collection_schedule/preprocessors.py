@@ -84,19 +84,49 @@ class FlattenGroups(Preprocessor[Any, Any]):
         parse = parsers.JsonParser("dates")     # {"2026-07-03": [{...}, {...}], ...}
         preprocess = preprocessors.FlattenGroups()
 
-    The group key is dropped, so use this only where each record carries
-    everything the transformer needs. A date-keyed feed nearly always repeats
-    the date inside the record; if it does not, the key is the only place the
-    date exists and a source-specific expansion is the right tool instead.
+    By default the group key is dropped, so use this only where each record
+    carries everything the transformer needs. A date-keyed feed that does not
+    repeat the date inside its records (``{"03.01.2026": ["RM1", "PPK"]}``)
+    passes ``with_key=True`` instead, which yields ``(key, record)`` pairs, the
+    ``(date, label)`` row a ``RowTransformer`` reads::
+
+        preprocess = preprocessors.FlattenGroups(with_key=True)
+        transform = RowTransformer(parse_date=date_parsers.for_format("%d.%m.%Y"))
+
+    The groups may also arrive as a list of lists, which is what a payload with
+    one slot per weekday (``[null, null, [{...}], ...]``) or several responses
+    parsed by :class:`~waste_collection_schedule.parsers.EachResponse` come to.
+    An empty slot (``None`` or ``[]``) contributes nothing, and a group that is
+    itself a mapping is one record, for a payload keyed by id whose values are
+    the records.
+
+    Args:
+        with_key: yield ``(group key, record)`` pairs rather than the bare
+            records. Only meaningful for a mapping; a list's groups have no key.
     """
+
+    def __init__(self, *, with_key: bool = False):
+        self.with_key = with_key
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[Any]:
         if not records:
             return
-        for group in records.values():
-            yield from group
+        if self.with_key and isinstance(records, Mapping):
+            for key, group in records.items():
+                for record in group or []:
+                    yield key, record
+            return
+        groups = records.values() if isinstance(records, Mapping) else records
+        for group in groups:
+            if isinstance(group, Mapping):
+                # A mapping of records rather than of lists
+                # ({"1111": {"fraction_name": ..., "dates": [...]}, ...}): each
+                # value is one record.
+                yield group
+            elif group:
+                yield from group
 
 
 class RowFilter(Preprocessor[Any, Any]):
@@ -223,6 +253,100 @@ class SplitLabels(Preprocessor[Any, "tuple[datetime.date, str]"]):
                 stripped = part.strip()
                 if stripped:
                     yield collection_date, stripped
+
+
+class SortRows(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Put ``(date, key)`` rows in date order, then by key.
+
+    For a provider whose endpoint returns the same events in a different order
+    on every request (an Athos servlet does), which makes two fetches of the same
+    address compare unequal and the ``test_sources.py -d`` double-fetch check
+    fail on a difference that is not a change in the schedule.
+    """
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        return sorted(records, key=lambda row: (row[0], row[1]))
+
+
+_DAY_NAMES = (
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+)
+
+
+class CollapseWeeks(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Collapse a stream marked day by day into one row per week.
+
+    For a provider that marks a whole collection *week* with an all-day event on
+    each day of it (an alternating-week recycling calendar), where the schedule
+    wants one collection per week, on the day the household is serviced. Each
+    ``(date, key)`` row of a collapsed stream is grouped by the week it falls in,
+    and one row per week is emitted, dated the day the week starts and shifted to
+    the household's own weekday when ``day`` names a parameter that carries one.
+
+    Rows of any other stream (a holiday-notice calendar sharing the feed list)
+    pass through unchanged.
+
+    Args:
+        keys: the stream keys to collapse; ``None`` collapses every row.
+        day: name of the config parameter holding the household's collection
+            weekday, in any language ``recurrence.weekday`` knows. Unset (or the
+            parameter empty) leaves each week on the day it starts. A value that
+            is not a weekday raises ``SourceArgumentNotFoundWithSuggestions``.
+        week_start: the day a week starts, ``0`` = Monday ... ``6`` = Sunday
+            (default), which is how a US calendar week runs.
+    """
+
+    def __init__(
+        self,
+        keys: "Iterable[str] | None" = None,
+        day: str | None = None,
+        week_start: int = 6,
+    ):
+        self._keys = None if keys is None else frozenset(keys)
+        self._day = day
+        self._week_start = week_start
+
+    def _offset(self, source: "BaseSource | None") -> int:
+        if self._day is None or source is None:
+            return 0
+        value = source.params.get(self._day)
+        if not value:
+            return 0
+        weekday = recurrence.weekday(str(value))
+        if weekday is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                self._day, value, list(_DAY_NAMES)
+            )
+        return (weekday - self._week_start) % 7
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        offset = datetime.timedelta(days=self._offset(source))
+        passed: list[tuple[datetime.date, str]] = []
+        weeks: dict[str, set[datetime.date]] = {}
+        for collection_date, key in records:
+            if self._keys is not None and key not in self._keys:
+                passed.append((collection_date, key))
+                continue
+            start = collection_date - datetime.timedelta(
+                days=(collection_date.weekday() - self._week_start) % 7
+            )
+            weeks.setdefault(key, set()).add(start)
+        collapsed = [
+            (start + offset, key)
+            for key, starts in weeks.items()
+            for start in sorted(starts)
+        ]
+        return [*collapsed, *passed]
 
 
 class RoundAreaSelector(Preprocessor[Any, "tuple[datetime.date, str]"]):
@@ -380,7 +504,8 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
     Rows come out grouped by record, in ``fields`` order. A field the record
     omits, and one whose value ``parse_date`` cannot read, contribute nothing,
     which is how such a provider spells "no collection scheduled for this
-    round".
+    round". A single record (a mapping rather than a list of them) is read as
+    a list of one, for the API that answers one property with one object.
 
     Args:
         fields: ``{field name: round label}``. The label is what the
@@ -391,6 +516,10 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
             a provider that states the date in a sentence ("The next garbage
             pickup date for this address is Monday, January 06") report the
             sentences it did not write.
+        split: separator for a field that lists every date of its round
+            (``"6/2, 20/2, 6/3"``) rather than the next one. Each non-empty part
+            is parsed on its own and becomes its own row. A field holding a
+            JSON list of dates is read the same way without it.
     """
 
     def __init__(
@@ -398,18 +527,93 @@ class DateFields(Preprocessor[Any, "tuple[datetime.date, str]"]):
         *,
         fields: Mapping[str, str],
         parse_date: "Callable[[Any], datetime.date | None]",
+        split: "str | None" = None,
     ):
         self._fields = dict(fields)
         self._parse_date = parse_date
+        self._split = split
+
+    def _values(self, value: Any) -> "list[Any]":
+        if isinstance(value, (list, tuple)):
+            return list(value)
+        if self._split is None:
+            return [value]
+        parts = (part.strip() for part in str(value or "").split(self._split))
+        return [part for part in parts if part]
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[tuple[datetime.date, str]]:
+        if isinstance(records, Mapping):
+            records = [records]
         for record in records:
             for field_name, key in self._fields.items():
-                collection_date = self._parse_date(record.get(field_name, ""))
-                if collection_date is not None:
-                    yield collection_date, key
+                for value in self._values(record.get(field_name, "")):
+                    collection_date = self._parse_date(value)
+                    if collection_date is not None:
+                        yield collection_date, key
+
+
+class ExplodeList(Preprocessor[Any, Any]):
+    """One record per element of a list-valued field.
+
+    For a JSON API that nests a list inside each record rather than repeating
+    the record: a service carrying all its dates (``{"Service": "Refuse",
+    "collectionDate": ["01/10/2026", "15/10/2026"]}``), or a group carrying its
+    collection records (``{"records": [{...}, {...}]}``)::
+
+        parse = parsers.JsonParser("param2")
+        preprocess = preprocessors.ExplodeList("collectionDate", into="date")
+        transform = JsonTransformer(date_key="date", type_key="Service")
+
+    With ``into``, each element is written into a copy of the record under that
+    key, so the rest of the record (the service name) stays alongside it. Without
+    ``into``, each element *is* the output record, for a group whose elements
+    are complete records of their own::
+
+        preprocess = preprocessors.ExplodeList("records")
+
+    Several keys are read in order, so a next date and a list of later dates
+    held in separate fields come out as one run. A key holding a single value
+    rather than a list contributes that value; a missing, ``None`` or empty
+    value contributes nothing.
+
+    A key may also be a ``callable(record, source) -> list``, for a list that is
+    not one field of the record but derived from it and the source's params (the
+    codes of one sector out of a record holding every sector's)::
+
+        preprocess = preprocessors.ExplodeList(_codes_for_sector, into="code")
+
+    Args:
+        keys: the field(s) holding the list, or callables deriving it.
+        into: the field each element is written into, or ``None`` to yield the
+            elements themselves.
+    """
+
+    def __init__(
+        self,
+        *keys: "str | Callable[[Any, BaseSource | None], Any]",
+        into: "str | None" = None,
+    ):
+        if not keys:
+            raise ValueError("ExplodeList needs at least one key")
+        self._keys = keys
+        self._into = into
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        if isinstance(records, Mapping):
+            records = [records]
+        for record in records or []:
+            for key in self._keys:
+                values = key(record, source) if callable(key) else record.get(key)
+                if values in (None, "", []):
+                    continue
+                if not isinstance(values, (list, tuple)):
+                    values = [values]
+                for value in values:
+                    yield value if self._into is None else {**record, self._into: value}
 
 
 class SplitByFields(Preprocessor[Any, Mapping[str, Any]]):
@@ -513,7 +717,10 @@ class RequireRecords(Preprocessor[Any, Any]):
     own list of them::
 
         preprocess = Compose(
-            RequireRecords(argument="commune", suggestions=_list_communes),
+            RequireRecords(
+                argument="commune",
+                suggestions=retrievers.Suggestions(INDEX_URL, pick=_communes),
+            ),
             Disambiguate(argument="quartier", key=_quartier),
         )
 
@@ -708,17 +915,31 @@ class Deduplicate(Preprocessor[Any, Any]):
 
         preprocess = Compose(RecurrenceExpander(_describe), Deduplicate())
 
-    Records must be hashable, which the usual ``(date, key)`` row is.
+    Records must be hashable, which the usual ``(date, key)`` row is. For a
+    record that is not (a JSON object), or whose repeats differ in fields the
+    collection does not use (a job id), pass ``key``: ``callable(record)``
+    returning what makes two records the same collection::
+
+        preprocess = Deduplicate(key=lambda job: (job["start"][:10], job["bin"]))
+
+    Args:
+        key: optional ``callable(record) -> hashable``; the record itself by
+            default.
     """
+
+    def __init__(self, key: "Callable[[Any], Any] | None" = None):
+        self._key = key
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
     ) -> Iterable[Any]:
+        key = self._key
         seen: set[Any] = set()
         for record in records:
-            if record in seen:
+            marker = key(record) if key is not None else record
+            if marker in seen:
                 continue
-            seen.add(record)
+            seen.add(marker)
             yield record
 
 
@@ -1033,7 +1254,9 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
             exactly that set.
         date_pattern: regex scanned across each segment. It must carry named
             groups ``day`` and ``month``, and may carry ``year`` when the
-            document dates each cell in full.
+            document dates each cell in full. ``month`` may match a number or a
+            month name ("October", "Oktober"), resolved in any supported
+            language.
         year_pattern: for the usual per-year calendar whose cells omit the year
             and whose heading states it once: a regex searched against the whole
             document, its first group the four-digit year. Falls back to the
@@ -1084,13 +1307,43 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
         return datetime.date.today().year
 
 
+# English month abbreviations. recurrence.month() deliberately indexes only
+# full names (abbreviations collide across languages when a word could be a
+# weekday or a month), but a value already captured as a month is unambiguous,
+# and English pages mix the forms ("Tuesday 29 Sep 2026, Tuesday 06 October").
+_EN_MONTH_ABBREVIATIONS = {
+    name: number
+    for number, names in enumerate(
+        (
+            ("jan",),
+            ("feb",),
+            ("mar",),
+            ("apr",),
+            ("may",),
+            ("jun",),
+            ("jul",),
+            ("aug",),
+            ("sep", "sept"),
+            ("oct",),
+            ("nov",),
+            ("dec",),
+        ),
+        start=1,
+    )
+    for name in names
+}
+
+
 def _month_number(value: "str | None") -> "int | None":
-    """A month written as a number or as a name in any supported language."""
+    """A month written as a number, a name in any supported language, or an
+    English abbreviation ("Sep")."""
     text = str(value or "").strip()
     if text.isdigit():
         number = int(text)
         return number if 1 <= number <= 12 else None
-    return recurrence.month(text)
+    return recurrence.month(text) or _EN_MONTH_ABBREVIATIONS.get(
+        text.rstrip(".").lower()
+    )
 
 
 class TextDatedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
@@ -1310,11 +1563,17 @@ class TextCalendarGrid(Preprocessor[str, "tuple[datetime.date, str]"]):
 def _date_from_groups(
     groups: "Mapping[str, str | None]", year: int
 ) -> "datetime.date | None":
-    """Build a date from ``day``/``month``/optional ``year`` groups, else None."""
+    """Build a date from ``day``/``month``/optional ``year`` groups, else None.
+
+    ``month`` may be a number or a month name in any supported language.
+    """
+    month = _month_number(groups["month"])
+    if month is None:
+        return None
     try:
         return datetime.date(
             int(groups.get("year") or year),
-            int(groups["month"] or 0),
+            month,
             int(groups["day"] or 0),
         )
     except ValueError:
@@ -1428,6 +1687,97 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     dates = [d for d in dates if d not in cancelled]
                 for collection_date in dates:
                     yield collection_date, schedule.key
+
+
+class WeekdayRecurrence(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Project the weekday a record names into dates, from the next one on.
+
+    The most common schedule a GIS layer or a property lookup publishes is not
+    a date at all but a collection weekday ("Wednesday"), sometimes several at
+    once ("Monday/Thursday"). Every such source used to write the same
+    ``describe`` for :class:`RecurrenceExpander`; this is that ``describe``
+    made reusable::
+
+        parse = ArcGisFeatureParser()
+        preprocess = WeekdayRecurrence(day="TRASHDAY", keys=("Trash", "Recycling"))
+        transform = ICSTransformer(type_value_map={"Trash": ..., "Recycling": ...})
+
+    Each weekday resolves through :func:`recurrence.weekday` (multilingual,
+    full or abbreviated), so a record naming none is skipped rather than
+    raising, which is what a layer queried at an address it does not cover
+    returns.
+
+    A record carrying one weekday field per service passes ``day`` as a
+    mapping instead, and needs no ``keys``::
+
+        preprocess = WeekdayRecurrence(
+            day={"Trash_Day": "Trash", "Recycle_Day": "Recycling"}
+        )
+
+    A ``(date, key)`` pair is emitted once, so two fields (or two matched
+    features) naming the same weekday for one service add nothing.
+
+    Args:
+        day: the record field holding the weekday name(s); a callable
+            ``record -> str | None`` (e.g. for an ``(label, attributes)`` pair
+            from a multi-layer parser); or a ``{field: key}`` mapping, one
+            weekday field per waste-type key.
+        keys: the waste-type key(s) each date is emitted under, the same for
+            every record, or a callable ``record -> keys`` (the layer's label).
+            Not used with a ``day`` mapping.
+        count: how many dates to project per weekday.
+        step: the gap between dates (``recurrence.WEEKLY`` by default).
+        separator: splits a field naming several weekdays, each projected on
+            its own.
+    """
+
+    def __init__(
+        self,
+        day: "str | Callable[[Any], str | None] | Mapping[str, str]",
+        keys: "str | Sequence[str] | Callable[[Any], str | Sequence[str]]" = (),
+        *,
+        count: int = 26,
+        step: datetime.timedelta = recurrence.WEEKLY,
+        separator: "str | re.Pattern[str]" = re.compile(r"\s*(?:/|,|&|\band\b)\s*"),
+    ):
+        self.day = day
+        self.keys = keys
+        self.count = count
+        self.step = step
+        self.separator = (
+            re.compile(re.escape(separator))
+            if isinstance(separator, str)
+            else separator
+        )
+
+    def _days(self, record: Any) -> "Iterable[tuple[str, Sequence[str]]]":
+        """``(weekday text, keys)`` pairs this record schedules."""
+        if isinstance(self.day, Mapping):
+            for field_name, key in self.day.items():
+                yield str(record.get(field_name) or ""), (key,)
+            return
+        value = self.day(record) if callable(self.day) else record.get(self.day)
+        keys = self.keys(record) if callable(self.keys) else self.keys
+        yield str(value or ""), ((keys,) if isinstance(keys, str) else keys)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[datetime.date, str]]":
+        seen: set[tuple[datetime.date, str]] = set()
+        for record in records:
+            for text, keys in self._days(record):
+                for name in self.separator.split(text.strip()):
+                    weekday = recurrence.weekday(name)
+                    if weekday is None:
+                        continue
+                    start = recurrence.next_weekday(weekday)
+                    for collection_date in recurrence.recurring(
+                        start, self.step, self.count
+                    ):
+                        for key in keys:
+                            if (collection_date, key) not in seen:
+                                seen.add((collection_date, key))
+                                yield collection_date, key
 
 
 class Compose(Preprocessor[Any, Any]):

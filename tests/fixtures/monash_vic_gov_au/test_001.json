@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.monash.vic.gov.au/api/v1/myarea/search eeb1d45703",
+      "method": "GET",
+      "url": "https://www.monash.vic.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.monash.vic.gov.au/api/v1/myarea/search?keywords=4+Carson+Street%2C+Mulgrave+3170",
+      "body": "{\"params\":[[\"keywords\",\"4 Carson Street, Mulgrave 3170\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "455",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:46:16 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=48, origin; dur=1098, ak_p; desc=\"1790185575488_386904797_165048784_114642_17716_3_10_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=041123FD61D45AEEFA88CB21EA5B250E~000000000000000000000000000000~YAAQ3bIPF0eIPLOgAQAA1xhgzwGehKSoxhiHQx/hH4VavHFa0tsq6vzGiBVbfeuwskqLlygwbqLBIXocEBgUJdHAA67iPCBSvVW64WZb79WT3oTZfC4PRsbOwLbY2G+X5KxBws+m7IY/C3Z/ZeKD3WnVydXevQcFHkO8+HTI/uC0txGxfw0885+IpTBy+ZG+SJc2BNBkRz0npGwt0t4DsGafC5cqHvqPI+agx5BaGyun4+EizvBpCC2YgRyU5PWgXXYV16brN5Sz7J/pQkiOX3lTornxM05XAP6P4swgQCwKHFBPRtCL5rsGuVTg+L5KFmDzEduxHiEIXh0staixVw9DlCk+4fbND5854JNn6TGd3B5M1hDVb8KimK4gNj0VyyVEAZ1p9b8f4/nudbIS8BVXhBw=; Domain=.monash.vic.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:46:15 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJlMWM0NjljOC02NTY1LTQwMWEtOWI5ZS1mNTQ0MGRhZmZhODIiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjQgQ2Fyc29uIFN0cmVldCwgTXVsZ3JhdmUgMzE3MCIsIk11bmljaXBhbFN1YmRpdmlzaW9uIjoiV2VsbGluZ3RvbiIsIkRpc3RhbmNlIjowLCJTY29yZSI6MjIuNzMxNjQ0LCJMYXRMb24iOlstMzcuOTI4NjEwMDgsMTQ1LjE2MDA5MDc3XX0seyJJZCI6IjQ3ZTQ1Yjg0LThjZDAtNGMwYS1iNDVjLTE5ODgxMTQ4Y2VkMSIsIkFkZHJlc3NTaW5nbGVMaW5lIjoiNCBTdHJhZGJyb2tlIENyZXNjZW50LCBNdWxncmF2ZSAzMTcwIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJXZWxsaW5ndG9uIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoxMS4zNzI3MDksIkxhdExvbiI6Wy0zNy45MjM0NDQyNSwxNDUuMTYzODIzNThdfV0sIk9mZnNldCI6MCwiTGltaXQiOjEwLCJUb3RhbCI6Mn0="
+    },
+    {
+      "key": "GET https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices 62566d7eb1",
+      "method": "GET",
+      "url": "https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.monash.vic.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=e1c469c8-6565-401a-9b9e-f5440daffa82&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"e1c469c8-6565-401a-9b9e-f5440daffa82\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "400",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:46:17 GMT",
+        "set-cookie": "ASP.NET_SessionId=pobyed3dfdtgg20nr2b5gsli; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=32, origin; dur=916, ak_p; desc=\"1790185576671_386904797_165049999_94804_20704_3_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvbiBkYXRlc1x1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUxhbmRmaWxsIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseS5cdTAwM2Niclx1MDAzZVxuWW91ciBuZXh0IGNvbGxlY3Rpb24gZGF5IGlzOlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgRnJpIDI1LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5Llx1MDAzY2JyXHUwMDNlXG5Zb3VyIG5leHQgY29sbGVjdGlvbiBkYXkgaXM6XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBGcmkgMi8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBncmVlbi13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlRm9vZCBhbmQgR2FyZGVuIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuXHUwMDNjYnJcdTAwM2VcbllvdXIgbmV4dCBjb2xsZWN0aW9uIGRheSBpczpcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIEZyaSAyNS85LzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

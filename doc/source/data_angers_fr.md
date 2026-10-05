@@ -2,7 +2,7 @@
 
 Support for schedules provided by [Open Data Angers)](https://data.angers.fr/pages/home/).
 
-Datas are also used in Tri+ application from Angers Loire Métropole[link](https://www.angersloiremetropole.fr/mon-quotidien/gestion-des-dechets/la-collecte-des-dechets/index.html#c24663).
+The data is also used in the Tri+ application from Angers Loire Métropole[link](https://www.angersloiremetropole.fr/mon-quotidien/gestion-des-dechets/la-collecte-des-dechets/index.html#c24663).
 
 List of cities:
   - LES PONTS DE CE

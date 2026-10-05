@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/SearchAdress 0d044c3360",
+      "method": "POST",
+      "url": "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Violgatan 8, Ytterby\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "67",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:46 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJWaW9sZ2F0YW4gOCwgWVRURVJCWSAoMjc1MjAwODAxKSJdfQ=="
+    },
+    {
+      "key": "GET https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 50e0865ad3",
+      "method": "GET",
+      "url": "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Violgatan+8%2C+YTTERBY+%28275200801%29",
+      "body": "{\"params\":[[\"address\",\"Violgatan 8, YTTERBY (275200801)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "3662",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:46:46 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMDktMzAiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoxMywiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiT25zZGFnIGrDpG1uIHZhciA0OmUgdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiT25zZGFnIGrDpG1uIHZhciA0OmUgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE5MCIsIlNpemUiOjE5MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiS8OEUkwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIxOTAgTCBLw4RSTCBmw7ZyIFJlc3RhdmZhbGwgbWVkIHTDtm1uaW5nIFZhciBmasOkcmRlIHZlY2thIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE5MCIsIlNpemUiOjE5MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiS8OEUkwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTMsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVmFyIGZqw6RyZGUgdmVja2EiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJINDAiLCJXYXN0ZVR5cGUiOiJSZXN0YXZmYWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IlZLMTkwUkVTMTNIRU1LIiwiUHJvZHVjdCI6IlJFTkgiLCJQYXJ0UHJvZHVjdCI6IkhVU0giLCJEZXNpZ25hdGlvbiI6IkjDpG10bmluZyAgYXYgcmVzdGF2ZmFsbCAxOTAgbCB2YXIgZmrDpHJkZSB2ZWNrYSBoZWzDpXIgdmlsbGEsIGVnZW4ga29tcG9zdCIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6NDYyNTAsIkRlc2NyaXB0aW9uIjoiMSBzdCAxOTAgTCBrw6RybCBmw7ZyIHJlc3RhdmZhbGwgbWVkIHTDtm1uaW5nIG9uc2RhZyBqw6RtbiB2YXIgNDplIHZlY2thICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSg5NDY2ODEyMDAwMDApXC8iLCJTdG9wRGF0ZSI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJCdWlsZGluZ0lEIjoiMjc1MjAwODAxIn0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTEtMTEiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo2LCJXYXN0ZVR5cGUiOiJNZXRhbGxmw7ZycC4iLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6Ik9uc2RhZyB2YXIgODplIHZlY2thIHN0YXJ0dmVja2EgNiIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik9uc2RhZyB2YXIgODplIHZlY2thIHN0YXJ0dmVja2EgNiIsIkJpblR5cGUiOnsiQ29kZSI6IkIzMCIsIlNpemUiOjMwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJCRUjDhUxMQVJFIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiMzAgTCBCRUjDhUxMQVJFIGbDtnIgTWV0YWxsZsO2cnAuIG1lZCB0w7ZtbmluZyBWYXIgODplIHZlY2thIiwiQmluVHlwZSI6eyJDb2RlIjoiQjMwIiwiU2l6ZSI6MzAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkJFSMOFTExBUkUifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6NiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXIgODplIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDgwIiwiV2FzdGVUeXBlIjoiTWV0YWxsZsO2cnAuIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IlZNRVRCMzBfNiIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJGWVJGIiwiRGVzaWduYXRpb24iOiJIw6RtdG5pbmcgYXYgbWV0YWxsZsO2cnBhY2tuaW5nYXIgMzAgTCwgdmFyYW5uYW4gbcOlbmFkIGhlbMOlciB2aWxsYSIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6ODkxNTIsIkRlc2NyaXB0aW9uIjoiMSBzdCAzMCBMIGJlaMOlbGxhcmUgZsO2ciBtZXRhbGxmw7ZycC4gbWVkIHTDtm1uaW5nIG9uc2RhZyB2YXIgODplIHZlY2thIHN0YXJ0dmVja2EgNiIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNzA0MDYzNjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjI3NTIwMDgwMSJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTEwLTE0IiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTMsIldhc3RlVHlwZSI6IkbDtnJwYWNrbmluZ2FyIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJPbnNkYWcgasOkbW4gdmFyIDQ6ZSB2ZWNrYSAgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiT25zZGFnIGrDpG1uIHZhciA0OmUgdmVja2EgICIsIkJpblR5cGUiOnsiQ29kZSI6IkszNzBGRiIsIlNpemUiOjM3MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiRllSRkFDSyJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjM3MCBMIEZZUkZBQ0sgZsO2ciBGw7ZycGFja25pbmdhciBtZWQgdMO2bW5pbmcgVmFyIGZqw6RyZGUgdmVja2EiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMzcwRkYiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkZZUkZBQ0sifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MTMsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVmFyIGZqw6RyZGUgdmVja2EiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJINDAiLCJXYXN0ZVR5cGUiOiJGw7ZycGFja25pbmdhciIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJGWVJGXzFfSzM3MF8xMyIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJGWVJGIiwiRGVzaWduYXRpb24iOiJIw6RtdG5pbmcgYXYgZsO2cnBhY2tuaW5nYXIgMzcwIGwsIHZhciA0OmUgdmVja2EgaGVsw6VyIHZpbGxhIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjo3NTE2MiwiRGVzY3JpcHRpb24iOiIxIHN0IDM3MCBMIGZ5cmZhY2sgZsO2ciBmw7ZycGFja25pbmdhciBtZWQgdMO2bW5pbmcgb25zZGFnIGrDpG1uIHZhciA0OmUgdmVja2EgICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNzA0MDYzNjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjI3NTIwMDgwMSJ9XX0="
+    }
+  ]
+}

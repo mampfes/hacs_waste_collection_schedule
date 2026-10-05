@@ -1,39 +1,46 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.EdpFutureWeb import (
+    TYPE_VALUE_MAP,
+    EdpFutureWebParser,
+    EdpFutureWebRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Mölndal"
-DESCRIPTION = "Source for Mölndal waste collection."
-URL = "https://molndal.se"
-TEST_CASES = {"105000": {"facility_id": "105000"}, "109400": {"facility_id": 109400}}
-
-API_URL = "https://future.molndal.se/FutureWeb/SimpleWastePickup"
+_API_URL = "https://future.molndal.se/FutureWeb/SimpleWastePickup"
 
 
-class Source:
-    def __init__(self, facility_id: int | str):
-        self.facility_id: str = str(facility_id)
+@final
+class Source(BaseSource):
+    TITLE = "Mölndal"
+    DESCRIPTION = "Source for Mölndal waste collection."
+    URL = "https://molndal.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-    def fetch(self):
-        url = f"{API_URL}/GetWastePickupSchedule"
-        params = {"address": f"({self.facility_id})"}
-        response = requests.get(url, params=params, timeout=30)
-        response.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "105000": {"facility_id": "105000"},
+        "109400": {"facility_id": 109400},
+    }
 
-        data = response.json()
+    PARAMS = (text_field("facility_id", "Facility ID"),)
 
-        entries = []
-        for item in data["RhServices"]:
-            next_pickup = item["NextWastePickup"]
-            if not next_pickup:
-                continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search your address at https://future.molndal.se/FutureWeb/"
+            "SimpleWastePickup and use the number in brackets as 'facility_id'."
+        ),
+    }
 
-            next_pickup_date = datetime.strptime(next_pickup, "%Y-%m-%d").date()
-            waste_type = item["WasteType"]
-
-            entries.append(
-                Collection(date=next_pickup_date, t=waste_type, icon="mdi:trash-can")
-            )
-
-        return entries
+    retrieve = EdpFutureWebRetriever(_API_URL, address=None, building_id="facility_id")
+    parse = EdpFutureWebParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        carry_raw_label=True,
+    )

@@ -1,67 +1,77 @@
-import requests
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+import datetime
+from typing import ClassVar, final
 
-TITLE = "North Ayrshire Council"
-DESCRIPTION = "Source for north-ayrshire.gov.uk services for North Ayrshire"
-URL = "https://www.north-ayrshire.gov.uk/"
-API_URL = "https://www.maps.north-ayrshire.gov.uk/arcgis/rest/services/AGOL/YourLocationLive/MapServer/8/query?f=json&outFields=*&returnDistinctValues=true&returnGeometry=false&spatialRel=esriSpatialRelIntersects&where=UPRN%20%3D%20%27{0}%27"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import DateFields
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TEST_CASES = {
-    "Test_001": {"uprn": "126043248"},
-    "Test_002": {"uprn": 126021147},
-    "Test_003": {"uprn": 126091148},
-    "Test_004": {"uprn": "126000270"},
-}
-
-ICON_MAP = {
-    "Grey": Icons.GENERAL_WASTE,
-    "Brown": Icons.ORGANIC,
-    "Purple": Icons.GLASS,
-    "Blue": Icons.RECYCLING,
-}
-
-BIN_TEXTS = [
-    "BLUE_DATE_TEXT",
-    "GREY_DATE_TEXT",
-    "PURPLE_DATE_TEXT",
-    "BROWN_DATE_TEXT",
-]
+_LAYER_URL = "https://www.maps.north-ayrshire.gov.uk/arcgis/rest/services/AGOL/YourLocationLive/MapServer/8"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
+def _date(value) -> datetime.date | None:
+    """A bin's next date ("30/09/2026"); an empty field is no collection."""
+    try:
+        return datetime.datetime.strptime(str(value).strip(), "%d/%m/%Y").date()
+    except ValueError:
+        return None
 
-    def fetch(self):
-        return self.__get_bin_collection_info_json(self._uprn)
 
-    def __get_bin_collection_info_json(self, uprn):
-        r = requests.get(API_URL.format(uprn))
-        bin_json = r.json()["features"]
-        bin_list = []
-        for item in BIN_TEXTS:
-            if item in bin_json[0]["attributes"]:
-                colour = item.split("_")[0].capitalize()
-                try:
-                    bin_list.append(
-                        [
-                            colour,
-                            "/".join(
-                                reversed(bin_json[0]["attributes"][item].split("/"))
-                            ),
-                        ]
-                    )
-                except AttributeError:  # catches error when no date is present
-                    pass
+@final
+class Source(BaseSource):
+    TITLE = "North Ayrshire Council"
+    DESCRIPTION = "Source for north-ayrshire.gov.uk services for North Ayrshire"
+    URL = "https://www.north-ayrshire.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
 
-        entries = []
-        for bins in bin_list:
-            entries.append(
-                Collection(
-                    date=parser.parse(bins[1]).date(),
-                    t=bins[0],
-                    icon=ICON_MAP.get(bins[0]),
-                )
-            )
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "126043248"},
+        "Test_002": {"uprn": 126021147},
+        "Test_003": {"uprn": 126091148},
+        "Test_004": {"uprn": "126000270"},
+    }
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
+
+    retrieve = ArcGisFeatureRetriever(
+        _LAYER_URL, where=lambda uprn, **_: f"UPRN = '{uprn}'"
+    )
+    parse = ArcGisFeatureParser(argument="uprn")
+    # One feature per property with the next date of each bin, by lid colour.
+    preprocess = DateFields(
+        fields={
+            "BLUE_DATE_TEXT": "Blue",
+            "GREY_DATE_TEXT": "Grey",
+            "PURPLE_DATE_TEXT": "Purple",
+            "BROWN_DATE_TEXT": "Brown",
+        },
+        parse_date=_date,
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Grey": wt.GENERAL_WASTE,
+            "Blue": wt.RECYCLABLES,
+            "Purple": wt.GLASS,
+            "Brown": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )

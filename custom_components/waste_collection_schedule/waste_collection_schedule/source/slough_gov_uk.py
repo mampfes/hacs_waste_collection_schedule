@@ -1,210 +1,167 @@
 import re
-from datetime import date
+from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, street, text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Slough Borough Council"
-DESCRIPTION = "Source for slough.gov.uk services for Slough Borough Council."
-URL = "https://www.slough.gov.uk"
-COUNTRY = "uk"
+_BASE_URL = "https://www.slough.gov.uk"
+_SEARCH_URL = f"{_BASE_URL}/directory/search"
+_RECORD_URL = f"{_BASE_URL}/directory-record"
 
-TEST_CASES = {
-    "Knolton Way, Montgomery Place": {
-        "record_id": 34771,
-    },
-    "Abbey Close (wheelie bins)": {
-        "record_id": 34035,
-    },
-    "Anslow Place (communal bins)": {
-        "record_id": 34069,
-    },
-    "Search by street name": {
-        "street": "Knolton Way, Montgomery Place",
-    },
-}
+# The bins the directory record page lists a schedule page for.
+_BIN_KEYWORDS = ("grey bin", "red bin", "green bin", "food waste")
 
-ICON_MAP = {
-    "Grey bin": Icons.GENERAL_WASTE,
-    "Red bin": Icons.RECYCLING,
-    "Green bin": Icons.ORGANIC,
-    "Food waste": Icons.BIO_KITCHEN,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street name",
-        "record_id": "Directory record ID",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "The name of your street as listed in the Slough bin directory (e.g. 'Knolton Way, Montgomery Place'). Use this OR record_id, not both.",
-        "record_id": "The numeric ID from the Slough bin directory URL (e.g. 34771 from /directory-record/34771/...). Use this OR street, not both.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Search for your street at https://www.slough.gov.uk/bin-collections and note the number from the URL of your matching result (e.g. /directory-record/34771/...). Use that number as record_id, or pass the exact street name as the street argument.",
-}
-
-DIRECTORY_SEARCH_URL = "https://www.slough.gov.uk/directory/search"
-DIRECTORY_RECORD_BASE_URL = "https://www.slough.gov.uk/directory-record"
-
-BIN_TYPE_MAP = {
-    "grey bin": ("Grey bin", ICON_MAP["Grey bin"]),
-    "red bin": ("Red bin", ICON_MAP["Red bin"]),
-    "green bin": ("Green bin", ICON_MAP["Green bin"]),
-    "food waste": ("Food waste", ICON_MAP["Food waste"]),
-}
-
-MONTHS = {
-    "january": 1,
-    "february": 2,
-    "march": 3,
-    "april": 4,
-    "may": 5,
-    "june": 6,
-    "july": 7,
-    "august": 8,
-    "september": 9,
-    "october": 10,
-    "november": 11,
-    "december": 12,
-}
-
-DATE_RE = re.compile(
-    r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})",
-)
+_RECORD_HREF = re.compile(r"/directory-record/(\d+)/")
+_SCHEDULE_HREF = re.compile(r"/bin-collections/")
 
 
-def _parse_date_page(url: str, session: requests.Session) -> list[date]:
-    r = session.get(url, timeout=30)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    article = soup.find("article")
-    if not article:
-        return []
-
-    dates = []
-    for li in article.find_all("li"):
-        text = li.get_text(strip=True)
-        m = DATE_RE.search(text)
-        if not m:
-            continue
-        day = int(m.group(1))
-        month = MONTHS.get(m.group(2).lower())
-        year = int(m.group(3))
-        if month is None:
-            continue
-        try:
-            dates.append(date(year, month, day))
-        except ValueError:
-            continue
-    return dates
+def _record_id(*_keys, record_id=None, **_) -> str | None:
+    """A directory record id the user supplied, which skips the street search."""
+    return record_id
 
 
-def _parse_record_page(record_id: int, session: requests.Session) -> list[Collection]:
-    # The server validates only the numeric ID; any slug suffix is accepted.
-    url = f"{DIRECTORY_RECORD_BASE_URL}/{record_id}/bin-day"
-    r = session.get(url, timeout=30)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-
-    dl = soup.find("dl")
-    if not dl:
-        raise SourceArgumentNotFound("record_id", record_id)
-
-    entries = []
-    for dt in dl.find_all("dt"):
-        heading = dt.get_text(strip=True).lower()
-        bin_label = None
-        bin_icon = None
-        for keyword, (label, icon) in BIN_TYPE_MAP.items():
-            if keyword in heading:
-                bin_label = label
-                bin_icon = icon
-                break
-        if bin_label is None:
-            continue
-
-        dd = dt.find_next_sibling("dd")
-        if not dd:
-            continue
-
-        link = dd.find("a", href=re.compile(r"/bin-collections/"))
-        if link:
-            schedule_url = link["href"]
-            if not schedule_url.startswith("http"):
-                schedule_url = "https://www.slough.gov.uk" + schedule_url
-            for d in _parse_date_page(schedule_url, session):
-                entries.append(Collection(date=d, t=bin_label, icon=bin_icon))
-
-    if not entries:
-        raise SourceArgumentNotFound("record_id", record_id)
-    return entries
-
-
-def _search_records(street: str, session: requests.Session) -> list[dict]:
-    r = session.get(
-        DIRECTORY_SEARCH_URL,
-        params={
-            "directoryID": "30",
-            "keywords": street,
-            "submit": "Search",
-        },
-        timeout=30,
-    )
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-
+def _pick_record(response, *_keys, street=None, **_) -> str:
+    """The directory record id for the street name, from the search results."""
+    soup = BeautifulSoup(response.text, "html.parser")
     results = []
     for a in soup.select("ul.list--record li.list__item a.list__link"):
-        href = a.get("href", "")
-        m = re.match(r"/directory-record/(\d+)/", href)
-        if m:
-            results.append(
-                {
-                    "id": int(m.group(1)),
-                    "name": a.get_text(strip=True),
-                }
-            )
-    return results
+        match = _RECORD_HREF.match(a.get("href", ""))
+        if match:
+            results.append((match.group(1), a.get_text(strip=True)))
+    if not results:
+        raise SourceArgumentNotFound("street", street)
+    if len(results) == 1:
+        return results[0][0]
+    exact = [rid for rid, name in results if name.lower() == street.lower()]
+    if len(exact) == 1:
+        return exact[0]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street", street, [name for _, name in results]
+    )
 
 
-class Source:
-    def __init__(self, record_id: int | None = None, street: str | None = None):
-        if record_id is None and street is None:
-            raise ValueError("Provide either record_id or street.")
-        self._record_id = record_id
-        self._street = street
+def _schedule_urls(response, *keys, **_) -> list[str]:
+    """The schedule page of each bin listed on a directory record page."""
+    record_id = keys[-1]
+    soup = BeautifulSoup(response.text, "html.parser")
+    definitions = soup.find("dl")
+    if not definitions:
+        raise SourceArgumentNotFound("record_id", record_id)
+    urls = []
+    for heading in definitions.find_all("dt"):
+        text = heading.get_text(strip=True).lower()
+        if not any(keyword in text for keyword in _BIN_KEYWORDS):
+            continue
+        content = heading.find_next_sibling("dd")
+        link = content.find("a", href=_SCHEDULE_HREF) if content else None
+        if link:
+            href = link["href"]
+            urls.append(href if href.startswith("http") else _BASE_URL + href)
+    if not urls:
+        raise SourceArgumentNotFound("record_id", record_id)
+    return urls
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
 
-        if self._record_id is None:
-            results = _search_records(self._street, session)
-            if not results:
-                raise SourceArgumentNotFound("street", self._street)
-            if len(results) == 1:
-                self._record_id = results[0]["id"]
-            else:
-                exact = [
-                    r for r in results if r["name"].lower() == self._street.lower()
-                ]
-                if len(exact) == 1:
-                    self._record_id = exact[0]["id"]
-                else:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "street",
-                        self._street,
-                        [r["name"] for r in results],
-                    )
+def _bin_name(title: str) -> str:
+    """ "Grey bin Thursday week A collection dates" -> "Grey bin"."""
+    return " ".join(title.split()[:2])
 
-        return _parse_record_page(self._record_id, session)
+
+@final
+class Source(BaseSource):
+    TITLE = "Slough Borough Council"
+    DESCRIPTION = "Source for slough.gov.uk services for Slough Borough Council."
+    URL = "https://www.slough.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Knolton Way, Montgomery Place": {
+            "record_id": 34771,
+        },
+        "Abbey Close (wheelie bins)": {
+            "record_id": 34035,
+        },
+        "Anslow Place (communal bins)": {
+            "record_id": 34069,
+        },
+        "Search by street name": {
+            "street": "Knolton Way, Montgomery Place",
+        },
+    }
+
+    PARAMS = (
+        alternatives(
+            [text_field("record_id", label="Directory record ID")],
+            [street("street")],
+        ),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search for your street at https://www.slough.gov.uk/bin-collections "
+            "and note the number from the URL of your matching result (for "
+            "example 34771 from /directory-record/34771/...). Use that number as "
+            "the directory record ID, or give the exact street name as listed in "
+            "the directory instead (for example 'Knolton Way, Montgomery Place'). "
+            "Use one of the two, not both."
+        ),
+    }
+
+    # The directory record page links one schedule page per bin; each lists that
+    # bin's collection dates, and is titled with the bin ("Grey bin Thursday
+    # week A collection dates").
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Chain(
+            retrievers.Lookup(
+                _SEARCH_URL,
+                params=lambda street=None, **_: {
+                    "directoryID": "30",
+                    "keywords": street,
+                    "submit": "Search",
+                },
+                given=_record_id,
+                pick=_pick_record,
+            ),
+            retrievers.Lookup(
+                lambda found_id, **_: f"{_RECORD_URL}/{found_id}/bin-day",
+                pick=_schedule_urls,
+            ),
+        ),
+        targets=lambda source, keys: keys[-1],
+        fetch=retrievers.Request(lambda url, keys, **_: url),
+    )
+    parse = parsers.EachResponse(
+        parsers.HtmlLabelledDates(
+            "div.site-content__flex-wrapper",
+            label="h1",
+            date=":scope",
+            # Not the bounds of a "No collections from 22 December 2025 to
+            # 4 January 2026" notice, which is listed beside the real dates.
+            date_pattern=r"(?<!from )(?<!to )(?<!\d)(\d{1,2}\s+[A-Za-z]+\s+\d{4})",
+            all_dates=True,
+            parse_date=date_parsers.for_format("%d %B %Y"),
+        )
+    )
+    transform = RowTransformer(
+        clean=_bin_name,
+        type_value_map={
+            "Grey bin": wt.GENERAL_WASTE,
+            "Red bin": wt.RECYCLABLES,
+            "Green bin": wt.GARDEN_WASTE,
+        },
+    )

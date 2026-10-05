@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.logan.qld.gov.au/api/v1/myarea/search b001244b0b",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.logan.qld.gov.au/api/v1/myarea/search?keywords=53+Wendron+Street+Rochedale+South&maxresults=1",
+      "body": "{\"params\":[[\"keywords\",\"53 Wendron Street Rochedale South\"],[\"maxresults\",\"1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "258",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:45:31 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=39, origin; dur=868, ak_p; desc=\"1790185530153_386904719_86980915_90691_18671_5_15_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=D58637F2530E47B754786C060353EE29~000000000000000000000000000000~YAAQj7IPF42dgMWgAQAA12ZfzwHJOv+/yid3TrLURS8JO2C9bJX9JceP/9sKGaczu/RcRnuKQUHPizI2lZJRNDQqf2zSo+ORXHHz8V+m0Vkg2V8UZfiJp3JH4ac4iKN6Hm3pfDGb+VRSFVl3iFWlEWb6ie8SMY1n2N5hQmxdR/7VbRE+NacwceyeKKR6LkIepdoSIahTHTWbiJEkl5byleKfOrWLaVE3XnQsWSxLFoo4CxdI+XRNq767fD7IYpBZ/a1RjbNWDfzA17tmf9JSInBsQP5AyCgZEIFNorl8jUbvAFDHiL5Fs6IqmDZif+PzpdXOrRo55TqU316mn7/m5iZxhJ/XpyYpPBoDfLjFbRcT4vMGKEEcqalK1xX5KlFhu8e4io3R3EVyxJ5PP17tvd0xuPM=; Domain=.logan.qld.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:45:30 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI0NzBiZmYwYy0wMzdlLTQ4MzQtOTM0Ni0wMTJiMmZhN2M1NGUiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjUzIFdlbmRyb24gU3RyZWV0IFJPQ0hFREFMRSBTT1VUSCAgUUxEICA0MTIzIiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJEaXZpc2lvbiAxIiwiRGlzdGFuY2UiOjAsIlNjb3JlIjoyNi42MTYzOTQsIkxhdExvbiI6Wy0yNy41OTExMTEwMiwxNTMuMTMyNjI0MV19XSwiT2Zmc2V0IjowLCJMaW1pdCI6MSwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices aff78427f5",
+      "method": "GET",
+      "url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=470bff0c-037e-4834-9346-012b2fa7c54e&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"470bff0c-037e-4834-9346-012b2fa7c54e\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "345",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:45:32 GMT",
+        "set-cookie": "ASP.NET_SessionId=ej00j2l4uzn5zu4el3u4bu3h; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=24, origin; dur=873, ak_p; desc=\"1790185531106_386904719_86981874_89683_19501_5_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgY29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy0zXCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbmRheSAyOCBTZXB0ZW1iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIE1vbmRheSA1IE9jdG9iZXIgMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdyZWVuIFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBNb25kYXkgMjggU2VwdGVtYmVyIDIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

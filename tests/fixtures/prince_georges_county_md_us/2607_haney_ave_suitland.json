@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates dc2565d327",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=2607+Haney+Ave%2C+Suitland%2C+MD&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"2607 Haney Ave, Suitland, MD\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:43 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "219",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"d0a95eda\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMjYwNyBIYW5leSBBdmUsIFN1aXRsYW5kLCBNYXJ5bGFuZCwgMjA3NDYiLCJsb2NhdGlvbiI6eyJ4IjotNzYuOTI0NzQ2OTk0MzYsInkiOjM4Ljg1MzQxNTAxMjc1N30sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6LTc2LjkyNTc0Njk5NDM2LCJ5bWluIjozOC44NTI0MTUwMTI3NTcsInhtYXgiOi03Ni45MjM3NDY5OTQzNiwieW1heCI6MzguODU0NDE1MDEyNzU3fX1dfQ=="
+    },
+    {
+      "key": "GET https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query c5c9ae024b",
+      "method": "GET",
+      "url": "https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query",
+      "final_url": "https://gisent.princegeorgescountymd.gov/gisonline/rest/services/DoE/RRD_PROP_TRASH/MapServer/0/query?outFields=Address%2CBulky_Day_of_Service%2CRecycle_Day_of_Service%2CTrash_Day_of_Service1%2CTrash_Day_of_Service2%2CYard_Day_of_Service&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-76.92474699436%2C+%22y%22%3A+38.853415012757%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -76.92474699436, \\\"y\\\": 38.853415012757}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"Address,Bulky_Day_of_Service,Recycle_Day_of_Service,Trash_Day_of_Service1,Trash_Day_of_Service2,Yard_Day_of_Service\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "340",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"74611f90\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|dK34z6EyrqKsfAl7wrnkcw==|Iq49nk8woXvJa0hufoouc1OvCFXj8UjAUFdSoPQl; Max-Age=60; Expires=Sat, 26 Sep 2026 08:07:44 GMT; Path=/gisonline/rest; Secure; HttpOnly; SameSite=Lax",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:06:44 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiT1dORVJfTkFNRSIsImZpZWxkQWxpYXNlcyI6eyJBZGRyZXNzIjoiQWRkcmVzcyIsIkJ1bGt5X0RheV9vZl9TZXJ2aWNlIjoiQnVsa3lfRGF5X29mX1NlcnZpY2UiLCJSZWN5Y2xlX0RheV9vZl9TZXJ2aWNlIjoiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMSI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMiI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMiIsIllhcmRfRGF5X29mX1NlcnZpY2UiOiJZYXJkX0RheV9vZl9TZXJ2aWNlIn0sImZpZWxkcyI6W3sibmFtZSI6IkFkZHJlc3MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQWRkcmVzcyIsImxlbmd0aCI6MTAwfSx7Im5hbWUiOiJCdWxreV9EYXlfb2ZfU2VydmljZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJCdWxreV9EYXlfb2ZfU2VydmljZSIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlJlY3ljbGVfRGF5X29mX1NlcnZpY2UiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlRyYXNoX0RheV9vZl9TZXJ2aWNlMSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJUcmFzaF9EYXlfb2ZfU2VydmljZTEiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJUcmFzaF9EYXlfb2ZfU2VydmljZTIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHJhc2hfRGF5X29mX1NlcnZpY2UyIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiWWFyZF9EYXlfb2ZfU2VydmljZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJZYXJkX0RheV9vZl9TZXJ2aWNlIiwibGVuZ3RoIjoyMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiNDY1MyBMQUNZIEFWRSIsIkJ1bGt5X0RheV9vZl9TZXJ2aWNlIjoiVGh1cnNkYXkiLCJSZWN5Y2xlX0RheV9vZl9TZXJ2aWNlIjoiVGh1cnNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTEiOiJUaHVyc2RheSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMiI6Ik5vIFNlcnZpY2UiLCJZYXJkX0RheV9vZl9TZXJ2aWNlIjoiTW9uZGF5In19LHsiYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiMjYwNyBIQU5FWSBBVkUiLCJCdWxreV9EYXlfb2ZfU2VydmljZSI6IlRodXJzZGF5IiwiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSI6IlRodXJzZGF5IiwiVHJhc2hfRGF5X29mX1NlcnZpY2UxIjoiVGh1cnNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTIiOiIiLCJZYXJkX0RheV9vZl9TZXJ2aWNlIjoiTW9uZGF5In19LHsiYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiMjYwNSBIQU5FWSBBVkUiLCJCdWxreV9EYXlfb2ZfU2VydmljZSI6IlRodXJzZGF5IiwiUmVjeWNsZV9EYXlfb2ZfU2VydmljZSI6IlRodXJzZGF5IiwiVHJhc2hfRGF5X29mX1NlcnZpY2UxIjoiVGh1cnNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTIiOiIiLCJZYXJkX0RheV9vZl9TZXJ2aWNlIjoiTW9uZGF5In19LHsiYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiNDY1MSBMQUNZIEFWRSIsIkJ1bGt5X0RheV9vZl9TZXJ2aWNlIjoiVGh1cnNkYXkiLCJSZWN5Y2xlX0RheV9vZl9TZXJ2aWNlIjoiVGh1cnNkYXkiLCJUcmFzaF9EYXlfb2ZfU2VydmljZTEiOiJUaHVyc2RheSIsIlRyYXNoX0RheV9vZl9TZXJ2aWNlMiI6Ik5vIFNlcnZpY2UiLCJZYXJkX0RheV9vZl9TZXJ2aWNlIjoiTW9uZGF5In19XX0="
+    }
+  ]
+}

@@ -1,80 +1,68 @@
 # Telford and Wrekin Council
 
-Support for schedules provided by [Telford and Wrekin Council](https://www.telford.gov.uk/), serving Telford and Wrekin in Shropshire, UK.
+Support for schedules provided by [Telford and Wrekin Council](https://www.telford.gov.uk).
+
+Source for telford.gov.uk, Telford and Wrekin Council, UK
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: telford_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
+```
+
+### Using post_code and name_number
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: telford_gov_uk
+      args:
         post_code: POST_CODE
-        name_number: HOUSE_NAME_NUMBER
+        name_number: NAME_NUMBER
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
-*(string) (optional)*
+**uprn**  
+*(string) (alternative)*
 
-This is required if you do not supply any other address options. (Using this removes the need to do an address look up web request)
+**post_code**  
+*(string) (alternative)*
 
-**name_number**<br>
-*(string) (optional)*
+**name_number**  
+*(string) (alternative)*
 
-This is required if you supply a Postcode and should contain the house name or number.
+Provide one of: `uprn` or `post_code` + `name_number`.
 
-**post_code**<br>
-*(string) (optional)*
+## Example
 
-This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
+### Using uprn
 
-#### How to find your `UPRN`
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: telford_gov_uk
       args:
-        uprn: 100032105121
+        uprn: 000452097493
 ```
 
-## Example using Address lookup
+### Using post_code and name_number
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: telford_gov_uk
       args:
-        post_code: "TF4 2SF"
-        name_number: "10"
+        post_code: TF3 2DA
+        name_number: '126'
 ```
-## Example using Address lookup
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: telford_gov_uk
-      args:
-        post_code: "TF2 3NR"
-        name_number: "Abbey House"
-```
-## Returned collections
-The API will return the next collection date for each container type. This will typically be the collections for the next 2 weeks but may vary over holiday periods
 
-## Returned collection types
+## How to get the source arguments
 
-### Red Top Container
-Red top container for general waste
-
-### Purple / Blue Containers
-Purple top container for glass / cans and Blue bag for paper / cardboard 
-
-### Green Container
-Green container for garden waste
-
-### Silver Container
-Silver coltainer for food waste
+Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and the house name or number exactly as the council lists it (e.g. '126').

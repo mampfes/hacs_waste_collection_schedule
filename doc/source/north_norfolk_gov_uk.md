@@ -1,21 +1,21 @@
 # North Norfolk District Council
 
-Support for schedules provided by [North Norfolk District Council](https://forms.north-norfolk.gov.uk/xforms/Address/Show/CollectionAddress), serving North Norfolk, UK.
+Support for schedules provided by [North Norfolk District Council](https://www.north-norfolk.gov.uk/).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new East Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for waste collection services for North Norfolk District Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: north_norfolk_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -23,13 +23,12 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: north_norfolk_gov_uk
       args:
-        uprn: "100090880632"
+        uprn: '100090878875'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-`
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.

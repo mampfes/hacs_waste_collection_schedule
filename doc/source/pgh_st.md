@@ -1,6 +1,8 @@
-# PGH.ST
+# City of Pittsburgh
 
-Support for schedules provided by [PGH.ST](https://www.pgh.st/), serving the city of Pittsburgh, PA, USA.
+Support for schedules provided by [City of Pittsburgh](https://www.pgh.st).
+
+Source for PGH.ST services for the city of Pittsburgh, PA, USA.
 
 ## Configuration via configuration.yaml
 
@@ -17,13 +19,13 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **house_number**  
-*(integer) (required)*
+*(string) (required)*
 
 **street_name**  
 *(string) (required)*
 
 **zipcode**  
-*(integer) (required)*
+*(string) (required)*
 
 ## Example
 
@@ -36,7 +38,3 @@ waste_collection_schedule:
         street_name: Negley
         zipcode: 15232
 ```
-
-## How to get the source arguments
-
-The source arguments are simply the house mailing address. The street_name field doesn't require cardinal direction (N/S/E/W) or road type (e.g. st) designations, so `S Negley Ave` can just be `Negley`. The zipcode field is just the 5-digit zipcode, not the 9-digit extended zipcode.

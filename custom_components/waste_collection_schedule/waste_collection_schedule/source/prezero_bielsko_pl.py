@@ -1,217 +1,155 @@
-import json
-import re
-from datetime import datetime
-from typing import Any
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.parsers import EvalJsonParser, eval_json
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "PreZero Bielsko-Biała"
-DESCRIPTION = "Source for PreZero Bielsko-Biała waste collection schedule"
-URL = "https://prezero-bielsko.pl/harmonogram-odbioru-odpadow/"
-
-TEST_CASES = {
-    "Test_001": {"street": "Krakowska", "house_number": "12"},
-    "Test_002": {"street": "1 Maja", "house_number": "10"},
-    "Test_003": {"street": "Bajki", "house_number": "12A"},
-    "Test_004": {"street": "Chabrowa", "house_number": "1B"},
+_API_URL = "https://prezero-bielsko.pl/harmonogramy/index.php"
+_CITY = "Bielsko-Biała"
+_HEADERS = {
+    "accept": "*/*",
+    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "x-requested-with": "XMLHttpRequest",
 }
 
-API_URL = "https://prezero-bielsko.pl/harmonogramy/index.php"
 
-WASTE_TYPE_MAP = {
-    "kuchenne": "Bio",
-    "resztkowe": "Pozostałości po segregowaniu",
-    "makulatura": "Papier",
-    "szklo": "Szkło",
-    "mix": "Metale i tworzywa sztuczne",
-    "zielone": "Zielone",
-    "gabaryty": "Gabaryty",
-}
-
-ICON_MAP = {
-    "kuchenne": Icons.BIO_KITCHEN,
-    "resztkowe": Icons.GENERAL_WASTE,
-    "makulatura": Icons.NEWSPAPER,
-    "szklo": Icons.GLASS,
-    "mix": Icons.RECYCLING,
-    "zielone": Icons.GARDEN,
-    "gabaryty": Icons.BULKY,
-}
-
-# ### Arguments affecting the configuration GUI ####
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro de maison",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro de maison",
-    },
-}
-
-# ### End of arguments affecting the configuration GUI ####
+def _form(view: str, q: str, **fields: str) -> dict[str, str]:
+    return {
+        "option": "com_sita",
+        "view": view,
+        "q": q,
+        **fields,
+        "rok": str(datetime.date.today().year),
+    }
 
 
-class Source:
-    def __init__(self, street: str, house_number: str):
-        self._city = "Bielsko-Biała"
-        self._street = street
-        self._house_number = house_number
+def _street(response, *keys, street, **_) -> str:
+    """The provider's spelling of the street, matched case-insensitively."""
+    streets = [row["ulica"] for row in eval_json(response)["dane"] if "ulica" in row]
+    for candidate in streets:
+        if candidate.lower() == street.lower():
+            return candidate
+    raise SourceArgumentNotFoundWithSuggestions("street", street, streets)
 
-    def _extract_json_from_response(self, response_text: str) -> dict[str, Any]:
-        match = re.search(r"eval\((.*)\)", response_text)
-        if not match:
-            raise Exception("Server response does not match expected format.")
 
-        json_data = match.group(1).strip()
-        json_data = re.sub(r",\s*([\]}])", r"\1", json_data)
-        try:
-            return json.loads(json_data)
-        except json.JSONDecodeError as e:
-            raise Exception(
-                f"JSON parsing error: {e}\nReceived content: {json_data}"
-            ) from e
-
-    def _post_request(self, payload: dict[str, str]) -> dict[str, Any]:
-        headers = {
-            "accept": "*/*",
-            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "x-requested-with": "XMLHttpRequest",
-        }
-
-        try:
-            response = requests.post(API_URL, headers=headers, data=payload)
-            response.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            raise Exception(f"API communication error: {e}") from e
-
-        return self._extract_json_from_response(response.text)
-
-    def _validate_api_response_data(
-        self, data: dict[str, Any], data_description: str
-    ) -> None:
-        if "dane" not in data or not isinstance(data["dane"], list):
-            raise Exception(
-                f"Error downloading {data_description}. Incorrect API response structure: {data}"
-            )
-
-    def _get_streets(self) -> list[str]:
-        payload = {
-            "option": "com_sita",
-            "view": "ulice",
-            "q": self._city,
-            "rok": str(datetime.now().year),
-        }
-        data = self._post_request(payload)
-        self._validate_api_response_data(data, "streets")
-
-        return [street["ulica"] for street in data["dane"] if "ulica" in street]
-
-    def _get_house_numbers(self) -> list[str]:
-        payload = {
-            "option": "com_sita",
-            "view": "numery",
-            "q": self._city,
-            "ulica": self._street,
-            "rok": str(datetime.now().year),
-        }
-        data = self._post_request(payload)
-        self._validate_api_response_data(
-            data, f"house numbers for street '{self._street}'"
+def _house_number(response, *keys, house_number, **_) -> str:
+    numbers = [row["numer"] for row in eval_json(response)["dane"] if "numer" in row]
+    if house_number not in numbers:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "house_number", house_number, numbers
         )
+    return house_number
 
-        return [house["numer"] for house in data["dane"] if "numer" in house]
 
-    def _get_symbol(self) -> str:
-        available_streets = self._get_streets()
-        street_lower = self._street.lower()
+def _symbol(response, *keys, house_number, **_) -> str:
+    """The id the schedule request is keyed by."""
+    rows = eval_json(response)["dane"]
+    if not rows:
+        raise SourceArgumentNotFound("house_number", house_number)
+    return rows[0]["symbol"]
 
-        matched_street = next(
-            (street for street in available_streets if street.lower() == street_lower),
-            None,
-        )
-        if not matched_street:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, available_streets
-            )
 
-        self._street = matched_street
+def _date(record) -> datetime.date:
+    return datetime.date(
+        datetime.date.today().year, int(record["data_m"]), int(record["data_d"])
+    )
 
-        available_numbers = self._get_house_numbers()
-        if self._house_number not in available_numbers:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number", self._house_number, available_numbers
-            )
 
-        payload = {
-            "option": "com_sita",
-            "view": "typy",
-            "q": self._city,
-            "ulica": self._street,
-            "numer": self._house_number,
-            "rok": str(datetime.now().year),
-        }
+@final
+class Source(BaseSource):
+    TITLE = "PreZero Bielsko-Biała"
+    DESCRIPTION = "Source for PreZero Bielsko-Biała waste collection schedule"
+    URL = "https://prezero-bielsko.pl/harmonogram-odbioru-odpadow/"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-        data = self._post_request(payload)
-        self._validate_api_response_data(data, "symbol")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+        wt.OTHER,
+    ]
 
-        if not data["dane"]:
-            raise Exception(
-                f"Could not find symbol for the given address. API response data is empty: {data}"
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"street": "Krakowska", "house_number": "12"},
+        "Test_002": {"street": "1 Maja", "house_number": "10"},
+        "Test_003": {"street": "Bajki", "house_number": "12A"},
+        "Test_004": {"street": "Chabrowa", "house_number": "1B"},
+    }
 
-        return data["dane"][0]["symbol"]
+    PARAMS = (
+        street("street"),
+        house_number("house_number"),
+    )
 
-    def fetch(self) -> list[Collection]:
-        symbol = self._get_symbol()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street and house number in Bielsko-Biała as they appear on "
+            "https://prezero-bielsko.pl/harmonogram-odbioru-odpadow/."
+        ),
+    }
 
-        payload = {
-            "option": "com_sita",
-            "view": "daty",
-            "q": symbol,
-            "rok": str(datetime.now().year),
-        }
-
-        data = self._post_request(payload)
-        self._validate_api_response_data(data, "schedule")
-
-        entries = []
-        for item in data["dane"]:
-            date_str = f"{datetime.now().year}-{item['data_m']}-{item['data_d']}"
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            waste_type = WASTE_TYPE_MAP.get(item["rodzaj"], "unknown")
-            icon = ICON_MAP.get(item["rodzaj"])
-            entries.append(Collection(date, waste_type, icon))
-
-        return entries
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                _API_URL,
+                method="POST",
+                headers=_HEADERS,
+                data=lambda **_: _form("ulice", _CITY),
+                pick=_street,
+            ),
+            Lookup(
+                _API_URL,
+                method="POST",
+                headers=_HEADERS,
+                data=lambda matched_street, **_: _form(
+                    "numery", _CITY, ulica=matched_street
+                ),
+                pick=_house_number,
+            ),
+            Lookup(
+                _API_URL,
+                method="POST",
+                headers=_HEADERS,
+                data=lambda matched_street, number, **_: _form(
+                    "typy", _CITY, ulica=matched_street, numer=number
+                ),
+                pick=_symbol,
+            ),
+        ),
+        url=_API_URL,
+        method="POST",
+        headers=_HEADERS,
+        data=lambda matched_street, number, symbol, **_: _form(
+            "daty",  # codespell:ignore daty
+            symbol,
+        ),
+    )
+    parse = EvalJsonParser("dane")
+    transform = JsonTransformer(
+        date_key=_date,
+        type_key="rodzaj",
+        type_value_map={
+            "kuchenne": wt.FOOD_WASTE,
+            "resztkowe": wt.GENERAL_WASTE,
+            "makulatura": wt.PAPER,
+            "szklo": wt.GLASS,
+            "mix": wt.RECYCLABLES,
+            "zielone": wt.GARDEN_WASTE,
+            "gabaryty": wt.BULKY_WASTE,
+            # ash (popiół), a stream the legacy source reported as "unknown"
+            "popiol": wt.OTHER,
+        },
+    )

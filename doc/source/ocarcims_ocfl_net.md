@@ -1,8 +1,8 @@
 # Orange County, FL
 
-Support for curbside collection schedules provided by [Orange County Government](https://ocarcims.ocfl.net/), serving unincorporated Orange County, Florida, USA.
+Support for schedules provided by [Orange County, FL](https://ocarcims.ocfl.net/).
 
-> **Note:** This source only works for properties in **unincorporated Orange County**. Residents of incorporated cities within Orange County (Orlando, Winter Park, Apopka, Maitland, etc.) have separate waste services and are not supported by this source.
+Source for Orange County Government curbside collection schedules.
 
 ## Configuration via configuration.yaml
 
@@ -11,21 +11,13 @@ waste_collection_schedule:
   sources:
     - name: ocarcims_ocfl_net
       args:
-        parcel_id: YOUR_PARCEL_ID
+        parcel_id: PARCEL_ID
 ```
 
 ### Configuration Variables
 
-**parcel_id**
+**parcel_id**  
 *(string) (required)*
-
-The 15-digit parcel ID for your property.
-
-## How to find your `parcel_id`
-
-1. Go to [ocarcims.ocfl.net](https://ocarcims.ocfl.net/) or [Orange County Property Appraiser](https://www.ocpafl.org/).
-2. Search for your address.
-3. The 15-digit parcel ID appears in the search results on either site.
 
 ## Example
 
@@ -34,14 +26,9 @@ waste_collection_schedule:
   sources:
     - name: ocarcims_ocfl_net
       args:
-        parcel_id: "012128690001243"  # Orange County Fire Station 27
+        parcel_id: 012128690001243
 ```
 
-## Bin types returned
+## How to get the source arguments
 
-| Provider description | Returned type | Icon |
-|---|---|---|
-| Garbage | Garbage | `Icons.GENERAL_WASTE` |
-| Recycle / Recycling | Recycling | `Icons.RECYCLING` |
-| Yard Waste | Yard Waste | `Icons.GARDEN` |
-| Bulk / Large Item | Large Item | `Icons.BULKY` |
+Search for your address at https://ocarcims.ocfl.net/ or https://www.ocpafl.org/. The 15-digit parcel ID appears in the search results on either site.

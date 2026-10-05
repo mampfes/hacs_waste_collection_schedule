@@ -1,150 +1,58 @@
-import json
-from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.service.WasteInfo import (
-    property_matches,
-    same,
-    street_number_suggestions,
+    TYPE_VALUE_MAP,
+    WasteInfoEventsParser,
+    WasteInfoRetriever,
 )
-
-TITLE = "Cumberland Council (NSW)"
-DESCRIPTION = "Source for Cumberland Council (NSW) rubbish collection."
-URL = "https://www.cumberland.nsw.gov.au"
-TEST_CASES = {
-    "Berala Community Centre": {
-        "suburb": "Berala",
-        "street_name": "Woodburn Road",
-        "street_number": "98 to 104",
-    },
-    "McDonald's Auburn": {
-        "suburb": "Auburn",
-        "street_name": "Parramatta Road",
-        "street_number": "116",
-    },
-    "Chickenlicious Guildford": {
-        "suburb": "Guildford",
-        "street_name": "Woodville Road",
-        "street_number": 283,
-    },
-}
-
-HEADERS = {"user-agent": "Mozilla/5.0"}
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, suburb, street_name, street_number):
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
+@final
+class Source(BaseSource):
+    TITLE = "Cumberland Council (NSW)"
+    DESCRIPTION = "Source for Cumberland Council (NSW) rubbish collection."
+    URL = "https://www.cumberland.nsw.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
+    TEST_CASES: ClassVar[dict] = {
+        "Berala Community Centre": {
+            "suburb": "Berala",
+            "street_name": "Woodburn Road",
+            "street_number": "98 to 104",
+        },
+        "McDonald's Auburn": {
+            "suburb": "Auburn",
+            "street_name": "Parramatta Road",
+            "street_number": "116",
+        },
+        "Chickenlicious Guildford": {
+            "suburb": "Guildford",
+            "street_name": "Woodville Road",
+            "street_number": 283,
+        },
+    }
 
-        suburb_id = 0
-        street_id = 0
-        property_id = 0
-        today = date.today()
-        nextmonth = today + timedelta(days=365)
+    PARAMS = (
+        text_field("suburb", "Suburb"),
+        street("street_name"),
+        house_number("street_number"),
+    )
 
-        # Retrieve suburbs
-        r = requests.get(
-            "https://cumberland.waste-info.com.au/api/v1/localities.json",
-            headers=HEADERS,
-        )
-        data = json.loads(r.text)
-
-        # Find the ID for our suburb
-        for item in data["localities"]:
-            if same(item["name"], self.suburb):
-                suburb_id = item["id"]
-                break
-
-        if suburb_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, [x["name"] for x in data["localities"]]
-            )
-
-        # Retrieve the streets in our suburb
-        r = requests.get(
-            f"https://cumberland.waste-info.com.au/api/v1/streets.json?locality={suburb_id}",
-            headers=HEADERS,
-        )
-        data = json.loads(r.text)
-
-        # Find the ID for our street
-        for item in data["streets"]:
-            if same(item["name"], self.street_name):
-                street_id = item["id"]
-                break
-
-        if street_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_name", self.street_name, [x["name"] for x in data["streets"]]
-            )
-
-        # Retrieve the properties in our street
-        r = requests.get(
-            f"https://cumberland.waste-info.com.au/api/v1/properties.json?street={street_id}",
-            headers=HEADERS,
-        )
-        data = json.loads(r.text)
-
-        # Find the ID for our property
-        for item in data["properties"]:
-            if property_matches(
-                item["name"], self.street_number, self.street_name, self.suburb
-            ):
-                property_id = item["id"]
-                break
-
-        if property_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
-                street_number_suggestions(
-                    (x["name"] for x in data["properties"]), self.street_name
-                ),
-            )
-
-        # Retrieve the upcoming collections for our property
-        r = requests.get(
-            f"https://cumberland.waste-info.com.au/api/v1/properties/{property_id}.json?start={today}&end={nextmonth}",
-            headers=HEADERS,
-        )
-
-        data = json.loads(r.text)
-
-        entries = []
-
-        for item in data:
-            if "start" in item:
-                collection_date = date.fromisoformat(item["start"])
-                if (collection_date - today).days >= 0:
-                    # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle", "organic"]:
-                        # Every collection day includes rubbish
-                        entries.append(
-                            Collection(
-                                date=collection_date, t="Rubbish", icon="mdi:trash-can"
-                            )
-                        )
-                        if item["event_type"] == "recycle":
-                            entries.append(
-                                Collection(
-                                    date=collection_date,
-                                    t="Recycling",
-                                    icon="mdi:recycle",
-                                )
-                            )
-                        if item["event_type"] == "organic":
-                            entries.append(
-                                Collection(
-                                    date=collection_date, t="Garden", icon="mdi:leaf"
-                                )
-                            )
-
-        return entries
+    retrieve = WasteInfoRetriever("https://cumberland.waste-info.com.au")
+    parse = WasteInfoEventsParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=TYPE_VALUE_MAP,
+        description_key="name",
+    )

@@ -1,148 +1,55 @@
-import csv
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Toronto (ON)"
-DESCRIPTION = "Source for Toronto waste collection"
-URL = "https://www.toronto.ca"
-
-TEST_CASES = {
-    "224 Wallace Ave": {"street_address": "224 Wallace Ave"},
-    "324 Weston Rd": {"street_address": "324 Weston Rd"},
-}
-
-CSV_URL = "https://www.toronto.ca/ext/swms/collection_calendar.csv"
-PROPERTY_LOOKUP_URL = "https://map.toronto.ca/cotgeocoder/rest/geocoder/suggest"
-SCHEDULE_LOOKUP_URL = (
-    "https://map.toronto.ca/cotgeocoder/rest/geocoder/findAddressCandidates"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.service.TorontoSwms import (
+    TorontoSwmsParser,
+    TorontoSwmsRetriever,
 )
-
-ICON_MAP = {
-    "GreenBin": Icons.BIO_KITCHEN,
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "YardWaste": Icons.GARDEN,
-    "ChristmasTree": Icons.CHRISTMAS_TREE,
-}
-
-PICTURE_MAP = {
-    "GreenBin": "https://www.toronto.ca/resources/swm_collection_calendar/img/greenbin.png",
-    "Garbage": "https://www.toronto.ca/resources/swm_collection_calendar/img/garbagebin.png",
-    "Recycling": "https://www.toronto.ca/resources/swm_collection_calendar/img/bluebin.png",
-    "YardWaste": "https://www.toronto.ca/resources/swm_collection_calendar/img/yardwaste.png",
-}
-
-VALID_WASTE_TYPES = set(ICON_MAP) | set(PICTURE_MAP)
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-class Source:
-    def __init__(self, street_address):
-        self._street_address = street_address
+@final
+class Source(BaseSource):
+    TITLE = "Toronto (ON)"
+    DESCRIPTION = "Source for Toronto waste collection"
+    URL = "https://www.toronto.ca"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
 
-    def get_first_result(self, json_data, key):
-        result = json_data.get("result", {})
-        rows = result.get("rows", [])
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.OTHER,
+    ]
 
-        if not rows:
-            return None
+    TEST_CASES: ClassVar[dict] = {
+        "224 Wallace Ave": {"street_address": "224 Wallace Ave"},
+        "324 Weston Rd": {"street_address": "324 Weston Rd"},
+    }
 
-        return rows[0].get(key)
+    PARAMS = (street_address("street_address"),)
 
-    def fetch(self):
-        session = requests.Session()
-        entries = []
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as the City of Toronto writes it, for "
+            "example '224 Wallace Ave'. The first match of the city's address "
+            "search is used."
+        ),
+    }
 
-        # lookup the address key for a particular property address
-        property_response = session.get(
-            PROPERTY_LOOKUP_URL,
-            params={
-                "f": "json",
-                "matchAddress": 1,
-                "matchPlaceName": 1,
-                "matchPostalCode": 1,
-                "addressOnly": 0,
-                "retRowLimit": 100,
-                "searchString": self._street_address,
-            },
-            timeout=30,
-        )
-
-        property_json = property_response.json()
-        property_key = self.get_first_result(property_json, "KEYSTRING")
-
-        if not property_key:
-            return entries
-
-        # lookup the schedule key for the above property key
-        schedule_response = session.get(
-            SCHEDULE_LOOKUP_URL,
-            params={
-                "keyString": property_key,
-                "unit": "%",
-                "areaTypeCode1": "RESW",
-            },
-            timeout=30,
-        )
-
-        schedule_cursor = self.get_first_result(schedule_response.json(), "AREACURSOR1")
-
-        if not schedule_cursor:
-            return entries
-
-        area_name = schedule_cursor["array"][0]["AREA_NAME"]
-        # download schedule csv and figure out what column format
-        csv_response = session.get(CSV_URL, timeout=30)
-        reader = csv.DictReader(csv_response.text.splitlines())
-
-        # normalize fieldnames (strip whitespace)
-        reader.fieldnames = [
-            name.strip() if name else name for name in reader.fieldnames
-        ]
-
-        csv_lines = list(reader)
-
-        calendar_key = None
-        week_key = None
-
-        for key in csv_lines[0].keys():
-            key_l = key.lower()
-            if key_l == "calendar":
-                calendar_key = key
-            elif "week" in key_l and "start" in key_l:
-                week_key = key
-
-        if not calendar_key or not week_key:
-            return entries
-
-        days_of_week = "MTWRFSX"
-        date_format = "%Y-%m-%d"
-
-        for row in csv_lines:
-            calendar_value = row.get(calendar_key)
-            if not calendar_value or not calendar_value.startswith(area_name):
-                continue
-
-            pickup_date = datetime.strptime(row[week_key], date_format)
-            start_weekday = pickup_date.weekday()
-
-            for waste_type in VALID_WASTE_TYPES:
-                cell = row.get(waste_type)
-                if not isinstance(cell, str) or cell not in days_of_week:
-                    continue
-
-                waste_day = pickup_date + timedelta(
-                    days=days_of_week.index(cell) - start_weekday
-                )
-
-                entries.append(
-                    Collection(
-                        waste_day.date(),
-                        waste_type,
-                        picture=PICTURE_MAP.get(waste_type),
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+    retrieve = TorontoSwmsRetriever(address="street_address")
+    parse = TorontoSwmsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "GreenBin": wt.ORGANIC,
+            "Garbage": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "YardWaste": wt.GARDEN_WASTE,
+            "ChristmasTree": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

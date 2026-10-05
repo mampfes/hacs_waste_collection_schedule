@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 7ef8df1c61",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=4632+Paseo%2C+Kansas+City%2C+MO+64110&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"4632 Paseo, Kansas City, MO 64110\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:06:33 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "227",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"cc0d2c02\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiNDYzMiBQYXNlbyBCbHZkLCBLYW5zYXMgQ2l0eSwgTWlzc291cmksIDY0MTEwIiwibG9jYXRpb24iOnsieCI6LTk0LjU2ODY3NjczMTgxNCwieSI6MzkuMDQyMDQ4Njk1OTgyfSwic2NvcmUiOjk4LjgyLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOi05NC41Njk2NzY3MzE4MTQsInltaW4iOjM5LjA0MTA0ODY5NTk4MiwieG1heCI6LTk0LjU2NzY3NjczMTgxNCwieW1heCI6MzkuMDQzMDQ4Njk1OTgyfX1dfQ=="
+    },
+    {
+      "key": "GET https://mapd.kcmo.org/kcgis/rest/services/DataLayers/MapServer/35/query 73ba6cf5ef",
+      "method": "GET",
+      "url": "https://mapd.kcmo.org/kcgis/rest/services/DataLayers/MapServer/35/query",
+      "final_url": "https://mapd.kcmo.org/kcgis/rest/services/DataLayers/MapServer/35/query?outFields=TRASHDAY&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-94.568676731814%2C+%22y%22%3A+39.042048695982%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -94.568676731814, \\\"y\\\": 39.042048695982}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"TRASHDAY\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "public, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "Expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "ETag": "3615a5ba",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "x-esri-ftiles-cache-compress": "true",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:06:33 GMT",
+        "Content-Length": "162",
+        "Set-Cookie": "BIGipServerMAPD_DMZ_pool=2918973194.47873.0000; path=/; Httponly; Secure"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiWk9ORSIsImZpZWxkQWxpYXNlcyI6eyJUUkFTSERBWSI6IlRyYXNoIERheSJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJUUkFTSERBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJUcmFzaCBEYXkiLCJsZW5ndGgiOjEwfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlRSQVNIREFZIjoiVHVlc2RheSJ9fV19"
+    }
+  ]
+}

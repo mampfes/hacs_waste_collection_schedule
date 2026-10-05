@@ -1,127 +1,87 @@
-import json
 from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Bep-Environnement"
-DESCRIPTION = "Source for Bep Environnement garbage collection"  # Describe your source
-# Insert url to service homepage. URL will show up in README.md and info.md
-URL = "https://www.bep-environnement.be"
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Dinant": {"locality": "Dinant"},
-}
-
-WASTE_MAP = {
-    # Déchers ménagers + organique
-    "dmorga": {"type": "DM & Organiques", "icon": "mdi:trash-can"},
-    # PMC
-    "pmc": {"type": "PMC", "icon": "mdi:recycle"},
-    # Papiers cartons
-    "papierscartons": {"type": "Papiers & Cartons", "icon": "mdi:leaf"},
-}
-
-# ### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": 'Go to the "https://www.bep-environnement.be" website if you\'re unsure about your locality.',
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {"locality": "Name of the locality"}
-}
+_HOME_URL = "https://www.bep-environnement.be"
 
 
-def GetLocalities() -> dict[str, str]:
-    """Return id for each locality available in calendar.
-
-    Returns:
-        List[dict]: key is the city, value is the id for the calendar
-    """
-    response = requests.get(URL)
+def _locality_id(response, *keys, locality: str, **_) -> str:
+    """The calendar id of the locality named ``locality`` (case-insensitive)."""
     soup = BeautifulSoup(response.text, "html.parser")
-
-    # Find all <option> elements inside the select
-    options = soup.select("#locform-loc option")
-
-    # Create a dictionary of city names and their values
     localities = {
-        option.text.lower(): option["value"]
-        for option in options
+        option.text.strip().lower(): str(option["value"])
+        for option in soup.select("#locform-loc option")
         if option.text.strip()
     }
-
-    # Print the result
-    return localities
-
-
-def BepWasteParser(response: dict) -> list[Collection]:
-    """Specific implementation to parse response from Bep-Environement.
-
-    Args:
-        response (dict): response from the website
-
-    Returns:
-        List[Collection]: list of Collection found
-    """
-    collections = []
-    cal_soup = BeautifulSoup(response.get("cal", ""), "html.parser")
-    cells = cal_soup.find_all("td")
-
-    for cell in cells:
-        # Extract attributes
-        data_day = cell.get("data-day")
-        data_month = cell.get("data-month")
-        data_year = cell.get("data-year")
-
-        # Check for waste types in the class attribute
-        classes = cell.get("class", [])
-        waste_types = [cls for cls in classes if cls in WASTE_MAP]
-
-        if data_day and data_month and data_year and waste_types:
-            # Construct the date
-            collection_date = date(
-                year=int(data_year), month=int(data_month), day=int(data_day)
-            )
-
-            for abbr, map in WASTE_MAP.items():
-                if abbr in waste_types:
-                    c = Collection(
-                        date=collection_date, t=map["type"], icon=map["icon"]
-                    )
-                    collections.append(c)
-
-    return collections
+    wanted = str(locality).strip().lower()
+    if wanted not in localities:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "locality", locality, sorted(localities)
+        )
+    return localities[wanted]
 
 
-class Source:
-    BEP_CALENDAR_URL = "https://www.bep-environnement.be/wp-admin/admin-ajax.php"
-    GARBAGE_COLLECTION_ACTION = "calendriercollectes"
+def _cell_date(item) -> date:
+    cell = item.find_parent("td")
+    return date(int(cell["data-year"]), int(cell["data-month"]), int(cell["data-day"]))
 
-    def __init__(self, locality: str):
-        self._locality = locality.lower()
 
-    def fetch(self) -> list[Collection]:
-        # Check for city name given
-        localities = GetLocalities()
+@final
+class Source(BaseSource):
+    TITLE = "Bep-Environnement"
+    DESCRIPTION = "Source for Bep Environnement garbage collection"
+    URL = "https://www.bep-environnement.be"
+    COUNTRY = "be"
+    RAISE_ON_EMPTY = True
 
-        if self._locality not in localities:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "locality", self._locality, localities.keys()
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Dinant": {"locality": "Dinant"},
+    }
 
-        # Make the request to get the data
-        params = {
-            "action": self.GARBAGE_COLLECTION_ACTION,
-            "locID": localities[self._locality],
-        }
-        response = requests.get(self.BEP_CALENDAR_URL, params=params)
-        response.raise_for_status()
-        data = json.loads(response.text)
+    PARAMS = (city("locality"),)
 
-        # Parse the response
-        entries = BepWasteParser(data)
+    HOWTO: ClassVar[dict] = {
+        "en": 'Go to the "https://www.bep-environnement.be" website if you\'re unsure about your locality.',
+        "fr": 'Consultez le site "https://www.bep-environnement.be" si vous avez un doute sur le nom de votre localité.',
+    }
 
-        return entries
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
+
+    # The locality names and ids are listed on the home page; the calendar is
+    # then fetched from the WordPress ajax endpoint and answers JSON whose
+    # "cal" field holds the rendered calendar.
+    retrieve = LookupChainRetriever(
+        steps=(Lookup(_HOME_URL, pick=_locality_id),),
+        url=f"{_HOME_URL}/wp-admin/admin-ajax.php",
+        params=lambda locality_id, **_: {
+            "action": "calendriercollectes",
+            "locID": locality_id,
+        },
+        raise_for_status=True,
+    )
+
+    # One <li> per collection, inside the tooltip of the day cell.
+    parse = HtmlParser("td[data-day] li", from_json_key="cal")
+
+    transform = HtmlTransformer(
+        date_getter=_cell_date,
+        type_getter=lambda item: item.get_text(strip=True),
+        type_value_map={
+            "DM & Organiques": [wt.GENERAL_WASTE, wt.ORGANIC],
+            "PMC": wt.RECYCLABLES,
+            "Papiers & Cartons": wt.PAPER,
+        },
+    )

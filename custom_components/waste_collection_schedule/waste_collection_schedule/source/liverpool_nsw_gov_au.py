@@ -1,98 +1,100 @@
-from datetime import date, timedelta
+import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-
-TITLE = "Liverpool City Council (NSW)"
-DESCRIPTION = "Source for Liverpool City Council (NSW, Australia)"
-URL = "https://www.liverpool.nsw.gov.au/"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "Carnes Hill": {
-        "address": "600 Kurrajong Road, Carnes Hill, NSW 2171",
-    },
-}
-
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Organic": Icons.ORGANIC,
-}
+from waste_collection_schedule.parsers import JsonParser
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
 API_URL = "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records"
 
+# (field prefix, label): the dataset holds, per bin, the first collection date
+# (``<prefix>_week1``) and the interval in days (``<prefix>_schedule``).
+BIN_TYPES = (
+    ("garbagebin", "Garbage"),
+    ("recyclebin", "Recycling"),
+    ("organicbin", "Organic"),
+)
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address
 
-    def _search_address(self) -> str:
-        params: dict[str, str | int] = {
-            "where": f'gisaddress like "{self._address}"',
-            "limit": 100,
-        }
-        r = requests.get(API_URL, params=params, timeout=30)
-        r.raise_for_status()
-        data = r.json()
+def _pick_address(response: Any, address: str, **_: Any) -> str:
+    """Resolve the typed address to the dataset's single matching ``gisaddress``."""
+    data = response.json()
+    if data["total_count"] == 0:
+        raise SourceArgumentNotFound("address", address)
+    addresses = [record["gisaddress"] for record in data["results"]]
+    if data["total_count"] == 1:
+        return addresses[0]
+    raise SourceArgumentNotFoundWithSuggestions("address", address, addresses)
 
-        if data["total_count"] == 0:
-            raise SourceArgumentNotFound("address", self._address)
 
-        addresses = [record["gisaddress"] for record in data["results"]]
+def _describe(record: Any, source: Any) -> Any:
+    """One recurring Schedule per bin, from its first date and interval."""
+    end_date = datetime.date.today() + datetime.timedelta(days=365)
+    for prefix, label in BIN_TYPES:
+        first = record.get(f"{prefix}_week1")
+        if not first:
+            continue
+        start = datetime.date.fromisoformat(first)
+        interval = record.get(f"{prefix}_schedule") or 7
+        yield Schedule(label, start, datetime.timedelta(days=interval), until=end_date)
 
-        if data["total_count"] == 1:
-            return addresses[0]
 
-        raise SourceArgumentNotFoundWithSuggestions("address", self._address, addresses)
+@final
+class Source(BaseSource):
+    TITLE = "Liverpool City Council (NSW)"
+    DESCRIPTION = "Source for Liverpool City Council (NSW, Australia)"
+    URL = "https://www.liverpool.nsw.gov.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        matched_address = self._search_address()
+    TEST_CASES: ClassVar[dict] = {
+        "Carnes Hill": {
+            "address": "600 Kurrajong Road, Carnes Hill, NSW 2171",
+        },
+    }
 
-        params: dict[str, str | int] = {
-            "where": f'gisaddress = "{matched_address}"',
+    PARAMS = (street_address(),)
+
+    WASTE_TYPES = (wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as listed in the Liverpool City Council open "
+            "data set, e.g. '600 Kurrajong Road, Carnes Hill, NSW 2171'."
+        ),
+    }
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                API_URL,
+                params=lambda address, **_: {
+                    "where": f'gisaddress like "{address}"',
+                    "limit": 100,
+                },
+                pick=_pick_address,
+            ),
+        ),
+        url=API_URL,
+        params=lambda matched, **_: {
+            "where": f'gisaddress = "{matched}"',
             "limit": 1,
+        },
+    )
+    parse = JsonParser("results")
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(
+        type_value_map={
+            "Garbage": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Organic": wt.ORGANIC,
         }
-        r = requests.get(API_URL, params=params, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-
-        if data["total_count"] == 0:
-            raise SourceArgumentNotFound("address", self._address)
-
-        fields = data["results"][0]
-        entries = []
-        end_date = date.today() + timedelta(days=365)
-
-        bin_types = [
-            ("garbagebin", "Garbage"),
-            ("recyclebin", "Recycling"),
-            ("organicbin", "Organic"),
-        ]
-
-        for field_prefix, bin_name in bin_types:
-            week1_key = f"{field_prefix}_week1"
-            schedule_key = f"{field_prefix}_schedule"
-
-            if not fields.get(week1_key):
-                continue
-
-            start_date = date.fromisoformat(fields[week1_key])
-            interval = fields.get(schedule_key, 7)
-
-            current = start_date
-            while current <= end_date:
-                entries.append(
-                    Collection(
-                        date=current,
-                        t=bin_name,
-                        icon=ICON_MAP.get(bin_name, "mdi:trash-can"),
-                    )
-                )
-                current += timedelta(days=interval)
-
-        return entries
+    )

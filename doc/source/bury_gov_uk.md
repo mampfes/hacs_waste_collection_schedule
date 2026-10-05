@@ -1,56 +1,68 @@
 # Bury Council
 
-Support for schedules provided by [Bury Council](https://www.bury.gov.uk/), serving Bury, UK.
+Support for schedules provided by [Bury Council](https://bury.gov.uk).
+
+Source for bury.gov.uk services for Bury Council, UK.
 
 ## Configuration via configuration.yaml
 
+### Using postcode and address
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bury_gov_uk
       args:
-        id: PROPERTY_ID
         postcode: POSTCODE
         address: ADDRESS
 ```
 
+### Using id
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bury_gov_uk
+      args:
+        id: ID
+```
+
 ### Configuration Variables
 
-**id**<br>
-*(string) (optional)*
+**postcode**  
+*(string) (alternative)*
 
-**postcode**<br>
-*(string) (optional)*
+**address**  
+*(string) (alternative)*
 
-**address**<br>
-*(string) (optional)*
+**id**  
+*(string) (alternative)*
 
+Provide one of: `postcode` + `address` or `id`.
 
-## Example using UPRN
+## Example
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: bury_gov_uk
-      args:
-        id: "647186"
-```
-
-## Example using Address and Postcode
+### Using postcode and address
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: bury_gov_uk
       args:
-        address: "1 Oakwood Close"
-        postcode: "BL8 1DD"
+        postcode: bl81dd
+        address: 2 Oakwood Close
 ```
 
-## How to find your `PROPERTY_ID`
+### Using id
 
-Your PROPERTY_ID is the collection of numbers at the end of the url when viewing your collection schedule in Developer Tools on the Bury Council web site.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: bury_gov_uk
+      args:
+        id: 649158
+```
 
-For example: https://www.bury.gov.uk/app-services/getPropertyById?id=647186
+## How to get the source arguments
 
-You have to navigate to https://www.bury.gov.uk/waste-and-recycling/bin-collection-days-and-alerts, open Dev Tools, Select Network and then input your Postcode and select your Address. The URL should appear as network traffic. 
+Enter your postcode and the first line of your address as listed on https://bury.gov.uk. Alternatively enter the property id: it is the `id` of your address in the response of https://www.bury.gov.uk/app-services/getProperties?postcode=<postcode>.

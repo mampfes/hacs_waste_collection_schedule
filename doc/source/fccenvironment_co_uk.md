@@ -1,19 +1,18 @@
 # FCC Environment
 
-Consolidated support for schedules provided by ~60 local authorities. Currently supports:
-    - [Harborough District Council](https://www.harborough.gov.uk/)
-    - [South Hams](https://southhams.gov.uk/)
-    - [West Devon](https://www.westdevon.gov.uk/)
+Support for schedules provided by [FCC Environment](https://fccenvironment.co.uk).
+
+Consolidated source for waste collection services for ~60 local authorities. Currently supports: West Devon (Generic Provider), South Hams (Generic Provider), Market Harborough (Custom Provider)
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fccenvironment_co_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
-        region: REGION_NAME
+        uprn: UPRN
+        region: REGION
 ```
 
 ### Configuration Variables
@@ -21,38 +20,19 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-This is required to unambiguously identify the property.
-
-**region**<br>
+**region**  
 *(string) (optional)*
 
-Defaults to `harborough`, should be one of:
-    - `harborough`
-    - `westdevon`
-    - `southhams`
-
-
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fccenvironment_co_uk
       args:
-        uprn: 100030493289
+        uprn: '100030491624'
 ```
 
-## Example using UPRN and Region
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: fccenvironment_co_uk
-      args:
-        uprn: 10001326041
-        region: westdevon
-```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and choose your council as the region (harborough, southhams or westdevon; Harborough is the default).

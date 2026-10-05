@@ -1,154 +1,71 @@
-import datetime
-import json
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import WeekdayRecurrence
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+    parcel_centroid,
 )
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Taupō District Council"
-DESCRIPTION = "Source for Taupō District Council kerbside collection."
-URL = "https://www.taupodc.govt.nz"
-COUNTRY = "nz"
-TEST_CASES = {
-    "9 Richmond Avenue Taupo": {"address": "9 Richmond Avenue Taupo"},
-    "72 Wharewaka Road Taupo": {"address": "72 Wharewaka Road Taupo"},
-    "48 Lake Terrace Taupo": {"address": "48 Lake Terrace Taupo"},
-}
+_PROPERTY_URL = "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0"
+_REFUSE_URL = "https://services7.arcgis.com/S7DHOirgbYgdtrbR/arcgis/rest/services/Refuse_Collection/FeatureServer/0"
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
+
+def _where(address: str, **_) -> str:
+    """Properties whose address starts with the one given (so "9 Richmond
+    Avenue" does not also find "79 Richmond Avenue")."""
+    escaped = address.strip().replace("'", "''")
+    return f"UPPER(address) LIKE UPPER('{escaped}%')"
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Taupō District Council"
+    DESCRIPTION = "Source for Taupō District Council kerbside collection."
+    URL = "https://www.taupodc.govt.nz"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE]
+
+    TEST_CASES: ClassVar[dict] = {
+        "9 Richmond Avenue Taupo": {"address": "9 Richmond Avenue Taupo"},
+        "72 Wharewaka Road Taupo": {"address": "72 Wharewaka Road Taupo"},
+        "48 Lake Terrace Taupo": {"address": "48 Lake Terrace Taupo"},
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address as it appears on the Taupō District Council property map, e.g. '9 Richmond Avenue Taupo'",
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"address": "999 Nowhere Road Taupo"},
     }
-}
 
-PROPERTY_URL = "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query"
-REFUSE_URL = "https://services7.arcgis.com/S7DHOirgbYgdtrbR/arcgis/rest/services/Refuse_Collection/FeatureServer/0/query"
+    PARAMS = (street_address(),)
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
-}
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street address as it appears on the Taupō District "
+            "Council property map, e.g. '9 Richmond Avenue Taupo'."
+        ),
+    }
 
-ICON_MAP = {
-    "Kerbside Collection": Icons.GENERAL_WASTE,
-}
-
-HEADERS = {"User-Agent": "Mozilla/5.0 (waste-collection-schedule)"}
-
-
-class Source:
-    def __init__(self, address: str):
-        self._address = address
-
-    def fetch(self) -> list[Collection]:
-        # Step 1: Geocode address via Rateable Property layer
-        params = {
-            "where": f"UPPER(address) LIKE UPPER('%{self._address}%')",
-            "outFields": "address,Latitude,Longitude",
-            "resultRecordCount": "5",
-            "f": "json",
-        }
-        r = requests.get(PROPERTY_URL, params=params, headers=HEADERS, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-
-        features = data.get("features", [])
-        if not features:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # Use the first matching property
-        attrs = features[0]["attributes"]
-        lat = attrs.get("Latitude")
-        lon = attrs.get("Longitude")
-
-        if lat is None or lon is None:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # Step 2: Spatial query to find refuse collection zone
-        geometry = json.dumps({"x": lon, "y": lat, "spatialReference": {"wkid": 4326}})
-        params = {
-            "geometry": geometry,
-            "geometryType": "esriGeometryPoint",
-            "spatialRel": "esriSpatialRelIntersects",
-            "outFields": "Collection_Day,Location",
-            "f": "json",
-        }
-        r = requests.get(REFUSE_URL, params=params, headers=HEADERS, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-
-        features = data.get("features", [])
-        if not features:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [],
-            )
-
-        collection_day = features[0]["attributes"].get("Collection_Day", "")
-        if not collection_day:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [],
-            )
-
-        # Parse one or two collection days (e.g. "Tuesday & Friday", "Wed & Friday")
-        day_names = [d.strip() for d in collection_day.replace("&", ",").split(",")]
-
-        # Normalise abbreviated day names
-        abbreviations = {
-            "Mon": "Monday",
-            "Tue": "Tuesday",
-            "Wed": "Wednesday",
-            "Thu": "Thursday",
-            "Fri": "Friday",
-            "Sat": "Saturday",
-            "Sun": "Sunday",
-        }
-        normalised = []
-        for d in day_names:
-            full = abbreviations.get(d, d)
-            if full not in WEEKDAYS:
-                continue
-            normalised.append(full)
-
-        if not normalised:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [],
-            )
-
-        # Step 3: Generate 52 weeks of upcoming dates for each day
-        today = datetime.date.today()
-        entries = []
-        for day_name in normalised:
-            target_weekday = WEEKDAYS[day_name]
-            days_ahead = (target_weekday - today.weekday()) % 7
-            next_date = today + datetime.timedelta(days=days_ahead)
-            for _ in range(52):
-                entries.append(
-                    Collection(
-                        date=next_date,
-                        t="Kerbside Collection",
-                        icon=ICON_MAP["Kerbside Collection"],
-                    )
-                )
-                next_date += datetime.timedelta(weeks=1)
-
-        return entries
+    # The council's rateable-property layer locates the address (NZTM), and
+    # its refuse layer names the collection day(s) there ("Tuesday & Friday").
+    retrieve = ArcGisFeatureRetriever(
+        _REFUSE_URL,
+        out_fields="Collection_Day,Location",
+        point=parcel_centroid(
+            _PROPERTY_URL,
+            where=_where,
+            disambiguate_by="address",
+            out_fields="address",
+            result_record_count=5,
+            wkid=2193,
+        ),
+    )
+    parse = ArcGisFeatureParser(argument="address")
+    preprocess = WeekdayRecurrence(
+        day="Collection_Day", keys="Kerbside Collection", count=52
+    )
+    transform = ICSTransformer(type_value_map={"Kerbside Collection": wt.GENERAL_WASTE})

@@ -1,6 +1,8 @@
 # Jönköping - June Avfall & Miljö
 
-Support for schedules provided by [June Avfall & Miljö](https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SimpleWastePickup), serving the municipality of Jönköping, Sweden.
+Support for schedules provided by [Jönköping - June Avfall & Miljö](https://www.juneavfall.se).
+
+Source for June Avfall & Miljö waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: juneavfall_se
       args:
-        street_address: Smedjegatan 20, Jönköping
+        street_address: Storgatan 12, Huskvarna
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the address to the house with waste collection. The address can be tested [here](https://minasidor.juneavfall.se/FutureWebJuneBasic/SimpleWastePickup/SimpleWastePickup).
+Enter your street address as the provider's own address search lists it, including the locality.

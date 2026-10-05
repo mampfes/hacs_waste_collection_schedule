@@ -118,3 +118,14 @@ def test_the_three_real_indirect_pipeline_sources(stem):
         "the indirect case this test exists for"
     )
     assert is_pipeline_source(texts[stem], texts)
+
+
+def test_arch_coverage_counts_indirect_pipeline_sources():
+    """tools/arch_coverage.py shares the check, so the two reports agree."""
+    from arch_coverage import classify
+
+    declarative, debt, legacy = classify()
+    on_pipeline = set(declarative) | {name for name, _ in debt}
+    for stem in ("offenbach_de", "rh_entsorgung_de", "stadt_kerpen_de"):
+        assert stem in on_pipeline
+        assert stem not in legacy

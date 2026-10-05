@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=374+Belgravia+Street+Cloverdale+6105 ",
+      "method": "GET",
+      "url": "https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=374+Belgravia+Street+Cloverdale+6105",
+      "final_url": "https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=374+Belgravia+Street+Cloverdale+6105",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-frame-options": "SAMEORIGIN",
+        "set-cookie": "CMSPreferredCulture=en-AU; expires=Sun, 26-Sep-2027 11:19:13 GMT; path=/; HttpOnly",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 26 Sep 2026 11:19:13 GMT",
+        "content-length": "83"
+      },
+      "content_b64": "W3sibWFwa2V5IjoxNjUzMzAsImRia2V5IjoxODk4NjEsIkFkZHJlc3MiOiIzNzQgQmVsZ3JhdmlhIFN0cmVldCBDbG92ZXJkYWxlIDYxMDUifV0="
+    },
+    {
+      "key": "GET https://www.belmont.wa.gov.au/api/intramaps/getpropertydetailswithlocalgov?mapkey=165330&dbkey=189861 ",
+      "method": "GET",
+      "url": "https://www.belmont.wa.gov.au/api/intramaps/getpropertydetailswithlocalgov?mapkey=165330&dbkey=189861",
+      "final_url": "https://www.belmont.wa.gov.au/api/intramaps/getpropertydetailswithlocalgov?mapkey=165330&dbkey=189861",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-frame-options": "SAMEORIGIN",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 26 Sep 2026 11:19:13 GMT",
+        "content-length": "2026"
+      },
+      "content_b64": "eyJkYXRhIjp7Im1hcGtleSI6MTY1MzMwLCJkYmtleSI6MTg5ODYxLCJIb3VzZUFuZFVuaXROdW1iZXIiOiIzNzQiLCJIb3VzZU51bWJlciI6IjM3NCIsIlVuaXROdW1iZXIiOiIiLCJTdHJlZXQiOiJCZWxncmF2aWEgU3RyZWV0IiwiU3VidXJiIjoiQ0xPVkVSREFMRSIsIlN0YXRlIjpudWxsLCJQb3N0Y29kZSI6IjYxMDUiLCJMYXRpdHVkZSI6LTMxLjk2MzU5OTgyLCJMb25naXR1ZGUiOjExNS45NDU1NDU4OCwiUHJvcGVydHlPd25lciI6bnVsbCwiV2FyZCI6IlNvdXRoIFdhcmQiLCJCaW5EYXlHZW5lcmFsV2FzdGVGb3JtYXR0ZWQiOiIyMDI2LTA5LTMwVDAwOjAwOjAwIiwiQmluRGF5UmVjeWNsaW5nRm9ybWF0dGVkIjoiMjAyNi0xMC0wN1QwMDowMDowMCIsIkJpbkRheUZPR09Gb3JtYXR0ZWQiOiIwMDAxLTAxLTAxVDAwOjAwOjAwIiwiRk9HT1JvbGxvdXRGb3JtYXR0ZWQiOiIwMDAxLTAxLTAxVDAwOjAwOjAwIiwid2Vic2l0ZV9ydWJiaXNoX3RleHQiOiIzMCBTZXB0ZW1iZXIgMjAyNiIsIndlYnNpdGVfcmVjeWNsaW5nX3RleHQiOiI3IE9jdG9iZXIgMjAyNiIsIkFkZHJlc3MiOiIzNzQgQmVsZ3JhdmlhIFN0cmVldCBDTE9WRVJEQUxFIDYxMDUifSwiY291bmNpbGxvcnMiOlt7Ik5vZGVJRCI6MTkyLCJDb3VuY2lsbG9ySUQiOjQsIkNvdW5jaWxsb3JXYXJkIjoibWF5b3IiLCJDb3VuY2lsbG9yVGl0bGUiOiJNYXlvciwgSlAiLCJDb3VuY2lsbG9yRnVsbE5hbWUiOiJSb2JlcnQgUm9zc2kiLCJDb3VuY2lsbG9yRmlyc3ROYW1lIjoiUm9iZXJ0IiwiQ291bmNpbGxvckxhc3ROYW1lIjoiUm9zc2kiLCJDb3VuY2lsbG9yUGhvbmUiOiIiLCJDb3VuY2lsbG9yTW9iaWxlIjoiMDQwOCA2OTMgNTg0IiwiQ291bmNpbGxvckVtYWlsIjoibWF5b3Jyb3NzaUBiZWxtb250LndhLmdvdi5hdSIsIkNvdW5jaWxsb3JBZGRyZXNzIjoiOSBXaGVhdGxleSBTdHJlZXQsIEtld2RhbGUgNjEwNSIsIkNvdW5jaWxsb3JEZXRhaWxzIjoiIiwiQ291bmNpbGxvckltYWdlIjoiaHR0cHM6Ly93d3cuYmVsbW9udC53YS5nb3YuYXUvYmVsbW9udHdlYnNpdGUvbWVkaWEvbWVkaWEvQ291bmNpbGxvcnMvTWF5b3ItUm9iZXJ0LVJvc3NpLSh3ZWIpLmpwZz9leHQ9LmpwZyJ9LHsiTm9kZUlEIjo3MzAsIkNvdW5jaWxsb3JJRCI6NywiQ291bmNpbGxvcldhcmQiOiJzb3V0aC13YXJkIiwiQ291bmNpbGxvclRpdGxlIjoiIiwiQ291bmNpbGxvckZ1bGxOYW1lIjoiQWJlZGluIiwiQ291bmNpbGxvckZpcnN0TmFtZSI6IiIsIkNvdW5jaWxsb3JMYXN0TmFtZSI6IkFiZWRpbiIsIkNvdW5jaWxsb3JQaG9uZSI6IiIsIkNvdW5jaWxsb3JNb2JpbGUiOiIwNDIzIDc4OSA1NTEiLCJDb3VuY2lsbG9yRW1haWwiOiJjcmFiZWRpbkBiZWxtb250LndhLmdvdi5hdSIsIkNvdW5jaWxsb3JBZGRyZXNzIjoiIiwiQ291bmNpbGxvckRldGFpbHMiOiIiLCJDb3VuY2lsbG9ySW1hZ2UiOiJodHRwczovL3d3dy5iZWxtb250LndhLmdvdi5hdS9iZWxtb250d2Vic2l0ZS9tZWRpYS9tZWRpYS9Db3VuY2lsbG9ycy9Dci1BYmVkaW4td2ViLmpwZz9leHQ9LmpwZyJ9LHsiTm9kZUlEIjo3MzEsIkNvdW5jaWxsb3JJRCI6OCwiQ291bmNpbGxvcldhcmQiOiJzb3V0aC13YXJkIiwiQ291bmNpbGxvclRpdGxlIjoiIiwiQ291bmNpbGxvckZ1bGxOYW1lIjoiSmVubnkgRGF2aXMiLCJDb3VuY2lsbG9yRmlyc3ROYW1lIjoiSmVubnkiLCJDb3VuY2lsbG9yTGFzdE5hbWUiOiJEYXZpcyIsIkNvdW5jaWxsb3JQaG9uZSI6Ijk0NzggMTM1MiIsIkNvdW5jaWxsb3JNb2JpbGUiOiIwNDEzIDU3OSAzOTAiLCJDb3VuY2lsbG9yRW1haWwiOiJjcmRhdmlzQGJlbG1vbnQud2EuZ292LmF1IiwiQ291bmNpbGxvckFkZHJlc3MiOiIzODIgQmVsbW9udCBBdmVudWUsIEtld2RhbGUgNjEwNSIsIkNvdW5jaWxsb3JEZXRhaWxzIjoiIiwiQ291bmNpbGxvckltYWdlIjoiaHR0cHM6Ly93d3cuYmVsbW9udC53YS5nb3YuYXUvYmVsbW9udHdlYnNpdGUvbWVkaWEvbWVkaWEvQ291bmNpbGxvcnMvQ3ItSmVubnktRGF2aXMtKHdlYikuanBnP2V4dD0uanBnIn1dfQ=="
+    }
+  ]
+}

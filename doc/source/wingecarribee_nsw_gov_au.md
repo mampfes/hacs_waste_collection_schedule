@@ -1,6 +1,8 @@
 # Wingecarribee Shire Council
 
-Support for schedules provided by [Wingecarribee Shire Council](https://www.wsc.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection).
+Support for schedules provided by [Wingecarribee Shire Council](https://www.wsc.nsw.gov.au).
+
+Source for Wingecarribee Shire Council (NSW) waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Wingecarribee Shire Council Bin Collection](https://www.wsc.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection) page and search for your address in the BinDay map. Use the same address format, e.g. "8 Willow Road, Bowral NSW 2576".
+Enter the full street address including suburb, state and postcode.

@@ -13,7 +13,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
 )
 from waste_collection_schedule.parsers import HtmlCalendarGrid
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 
 # Composes: LookupChainRetriever (NÅRAB's calendar lives on a separate service,
 # narabtomningskalender.se, reached in two GET steps: an address autocomplete
@@ -92,22 +92,19 @@ _CODE_TYPES = {
 
 
 # Map Swedish month names to month numbers.
-def _resolve_address(source, keys: tuple) -> tuple:
-    """Autocomplete the address to the opaque ids the calendar endpoint needs."""
-    address = source.params["address"]
-    kund_nr = source.params.get("kundNr") or 0
+def _autocomplete_params(address: str, **_: Any) -> dict:
+    return {
+        "svar": address,
+        "limit": "500",
+        "timestamp": str(int(datetime.datetime.now().timestamp() * 1000)),
+    }
 
-    r = source.session.get(
-        API_URL_FETCH_ADDRESS,
-        params={
-            "svar": address,
-            "limit": "500",
-            "timestamp": str(int(datetime.datetime.now().timestamp() * 1000)),
-        },
-    )
-    r.raise_for_status()
 
-    addresses = _parse_address_list(r.text)
+def _pick_address(response, address: str, kundNr=0, **_: Any) -> tuple:
+    """The opaque ids of the autocompleted address the calendar endpoint needs."""
+    kund_nr = kundNr or 0
+
+    addresses = _parse_address_list(response.text)
     if len(addresses) == 1:
         return tuple(addresses[0].values())
     if not addresses:
@@ -194,7 +191,13 @@ class Source(BaseSource):
         self._kundNr = kundNr
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_address,),
+        steps=(
+            Lookup(
+                API_URL_FETCH_ADDRESS,
+                params=_autocomplete_params,
+                pick=_pick_address,
+            ),
+        ),
         url=API_URL_FETCH_COLLECTIONS,
         params=_calendar_params,
     )

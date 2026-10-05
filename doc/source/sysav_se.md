@@ -1,6 +1,8 @@
-# Sysav Sophämtning
+# Sysav Sophämntning
 
-Support for schedules provided by [Sysav](https://www.sysav.se/Privat/min-sophamtning/), serving the municipality of Svedala, Kävlinge and Lomma, Sweden.
+Support for schedules provided by [Sysav Sophämntning](https://www.sysav.se).
+
+Source for Sysav waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -26,7 +28,3 @@ waste_collection_schedule:
       args:
         street_address: Sommargatan 1, Svedala
 ```
-
-## How to get the source argument
-
-The source argument is the address to the house with waste collection. The address can be tested [here](https://www.sysav.se/Privat/min-sophamtning/).

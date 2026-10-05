@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://services2.arcgis.com/ZASkNq1SMoPvFBOv/arcgis/rest/services/Marysville_Solid_Waste_Pickup/FeatureServer/29/query 2c616b4607",
+      "method": "GET",
+      "url": "https://services2.arcgis.com/ZASkNq1SMoPvFBOv/arcgis/rest/services/Marysville_Solid_Waste_Pickup/FeatureServer/29/query",
+      "final_url": "https://services2.arcgis.com/ZASkNq1SMoPvFBOv/arcgis/rest/services/Marysville_Solid_Waste_Pickup/FeatureServer/29/query?outFields=Service_Address%2CService_Day%2CPickup_Frequency&returnGeometry=false&f=json&where=UPPER%28Service_Address%29+LIKE+%27501+DELTA+AVE%25%27",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"Service_Address,Service_Day,Pickup_Frequency\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPPER(Service_Address) LIKE '501 DELTA AVE%'\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:17 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "313",
+        "Connection": "keep-alive",
+        "Cache-Control": "public, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Fri, 25 Sep 2026 23:35:44 GMT",
+        "ETag": "sd8129_-1329860435",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h02c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080258Z-16dd9bcdcdb65zd6hC1DTTd6qg00000005eg0000000043g7",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=2;max=6000",
+        "X-ArcGIS-Correlation-Id": "6fbbfaa6bef74453",
+        "X-ArcGIS-Instance": "2zgh7tr4g00000D",
+        "Request-Context": "appId=cid-v1:f7a89904-589b-40e2-b421-5e25b9c90241",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080717Z-16dd9bcdcdbfqfzdhC1DTTr5r800000006fg000000000ezc",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "TCP_REVALIDATED_HIT",
+        "X-Cache-Info": "L1_T2",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImZpZWxkcyI6W3sibmFtZSI6IlNlcnZpY2VfQWRkcmVzcyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTZXJ2aWNlX0FkZHJlc3MiLCJzcWxUeXBlIjoic3FsVHlwZU90aGVyIiwibGVuZ3RoIjoyMDMsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJTZXJ2aWNlX0RheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTZXJ2aWNlX0RheSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjUwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiUGlja3VwX0ZyZXF1ZW5jeSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJQaWNrdXBfRnJlcXVlbmN5Iiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImxlbmd0aCI6NTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlNlcnZpY2VfQWRkcmVzcyI6IjUwMSBERUxUQSBBVkUgTUFSWVNWSUxMRSA5ODI3MCAgICAgIiwiU2VydmljZV9EYXkiOiJGcmlkYXkiLCJQaWNrdXBfRnJlcXVlbmN5IjoiRXZlcnlXZWVrIn19XX0="
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 # London Borough of Lambeth
 
-Support for schedules provided by [London Borough of Lambeth](https://lambeth.gov.uk/), serving Lambeth, London, UK.
+Support for schedules provided by [London Borough of Lambeth](https://www.lambeth.gov.uk/).
+
+Source for London Borough of Lambeth
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: lambeth_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: lambeth_gov_uk
       args:
-        uprn: "5061647"
+        uprn: '100021893293'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/

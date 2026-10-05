@@ -1,32 +1,34 @@
 # Haringey Council
 
-Support for schedules provided by [Haringey Council](https://www.haringey.gov.uk/), serving Haringey, UK.
+Support for schedules provided by [Haringey Council](https://www.haringey.gov.uk/).
+
+Source for haringey.gov.uk services for Haringey Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: haringey_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
+## Example
 
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: haringey_gov_uk
       args:
-        uprn: "100021209182"
+        uprn: '100021209182'
 ```
 
+## How to get the source arguments
 
-#### How to find your `UPRN`
-You can find your Unique Property Reference Number (UPRN) by going to https://www.findmyaddress.co.uk/search and entering in your address details.
+Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).

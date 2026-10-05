@@ -1,10 +1,10 @@
 # Uddevalla Energi
 
-Support for waste collection schedules provided by
-[Uddevalla Energi](https://www.uddevallaenergi.se/privat/sophamtning.html),
-serving Uddevalla municipality, Sweden.
+Support for schedules provided by [Uddevalla Energi](https://www.uddevallaenergi.se/privat/sophamtning.html).
 
-## Configuration
+Source for Uddevalla Energi waste collection schedules.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
@@ -17,10 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
-
-The property address, including the town, exactly as shown by the address
-search on the Uddevalla Energi website.
+*(string) (required)*
 
 ## Example
 
@@ -29,12 +26,9 @@ waste_collection_schedule:
   sources:
     - name: uddevallaenergi_se
       args:
-        address: Fjällvägen 11, Ljungskile
+        address: "Fj\xE4llv\xE4gen 11, Ljungskile"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit the
-[Uddevalla Energi waste collection page](https://www.uddevallaenergi.se/privat/sophamtning.html#Hamtningsdagar),
-search for your property, and copy the complete suggested address, including
-the town.
+Search for your address on the Uddevalla Energi waste collection webpage and enter it exactly as shown, including the town, e.g. `Fjällvägen 11, Ljungskile`.

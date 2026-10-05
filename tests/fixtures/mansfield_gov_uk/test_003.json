@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://portal.mansfield.gov.uk/MDCWhiteSpaceWebService/WhiteSpaceWS.asmx/GetCollectionByUPRNAndDate 89fee46718",
+      "method": "GET",
+      "url": "https://portal.mansfield.gov.uk/MDCWhiteSpaceWebService/WhiteSpaceWS.asmx/GetCollectionByUPRNAndDate",
+      "final_url": "https://portal.mansfield.gov.uk/MDCWhiteSpaceWebService/WhiteSpaceWS.asmx/GetCollectionByUPRNAndDate?apiKey=mDc-wN3-B0f-f4P&UPRN=200000666900&coldate=26%2F09%2F2026",
+      "body": "{\"params\":[[\"UPRN\",\"200000666900\"],[\"apiKey\",\"mDc-wN3-B0f-f4P\"],[\"coldate\",\"26/09/2026\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0",
+        "content-type": "application/json; charset=utf-8",
+        "server": "",
+        "x-aspnet-version": "",
+        "x-frame-options": "ALLOW-FROM portal.mansfield.gov.uk",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "Content-Type",
+        "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+        "access-control-allow-origin": "*",
+        "date": "Sat, 26 Sep 2026 11:06:34 GMT",
+        "content-length": "1265"
+      },
+      "content_b64": "eyJDb2xsZWN0aW9ucyI6W3siU2VydmljZSI6IkdhcmRlbiBXYXN0ZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJSb3VuZCI6IkdXMSIsIlNjaGVkdWxlIjoiR1ctUkVDLU1vbiIsIkRheSI6Ik1vbmRheSIsIkRhdGUiOiIyOC8wOS8yMDI2IDAwOjAwOjAwIn0seyJTZXJ2aWNlIjoiUmVjeWNsaW5nIFdhc3RlIENvbGxlY3Rpb24gU2VydmljZSIsIlJvdW5kIjoiUkVDNiIsIlNjaGVkdWxlIjoiUkVDLU1vbiIsIkRheSI6Ik1vbmRheSIsIkRhdGUiOiIyOC8wOS8yMDI2IDAwOjAwOjAwIn0seyJTZXJ2aWNlIjoiR2VuZXJhbCBXYXN0ZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJSb3VuZCI6IkdFTjEiLCJTY2hlZHVsZSI6IkdFTi1Nb24iLCJEYXkiOiJNb25kYXkiLCJEYXRlIjoiMDUvMTAvMjAyNiAwMDowMDowMCJ9LHsiU2VydmljZSI6IkdsYXNzIFdhc3RlIENvbGxlY3Rpb24gU2VydmljZSIsIlJvdW5kIjoiR0xBU1MxIiwiU2NoZWR1bGUiOiJHTC1XazhUaHVycyIsIkRheSI6IlRodXJzZGF5IiwiRGF0ZSI6IjA4LzEwLzIwMjYgMDA6MDA6MDAifSx7IlNlcnZpY2UiOiJHYXJkZW4gV2FzdGUgQ29sbGVjdGlvbiBTZXJ2aWNlIiwiUm91bmQiOiJHVzEiLCJTY2hlZHVsZSI6IkdXLVJFQy1Nb24iLCJEYXkiOiJNb25kYXkiLCJEYXRlIjoiMTIvMTAvMjAyNiAwMDowMDowMCJ9LHsiU2VydmljZSI6IlJlY3ljbGluZyBXYXN0ZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJSb3VuZCI6IlJFQzYiLCJTY2hlZHVsZSI6IlJFQy1Nb24iLCJEYXkiOiJNb25kYXkiLCJEYXRlIjoiMTIvMTAvMjAyNiAwMDowMDowMCJ9LHsiU2VydmljZSI6IkdlbmVyYWwgV2FzdGUgQ29sbGVjdGlvbiBTZXJ2aWNlIiwiUm91bmQiOiJHRU4xIiwiU2NoZWR1bGUiOiJHRU4tTW9uIiwiRGF5IjoiTW9uZGF5IiwiRGF0ZSI6IjE5LzEwLzIwMjYgMDA6MDA6MDAifSx7IlNlcnZpY2UiOiJHYXJkZW4gV2FzdGUgQ29sbGVjdGlvbiBTZXJ2aWNlIiwiUm91bmQiOiJHVzEiLCJTY2hlZHVsZSI6IkdXLVJFQy1Nb24iLCJEYXkiOiJNb25kYXkiLCJEYXRlIjoiMjYvMTAvMjAyNiAwMDowMDowMCJ9LHsiU2VydmljZSI6IlJlY3ljbGluZyBXYXN0ZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJSb3VuZCI6IlJFQzYiLCJTY2hlZHVsZSI6IlJFQy1Nb24iLCJEYXkiOiJNb25kYXkiLCJEYXRlIjoiMjYvMTAvMjAyNiAwMDowMDowMCJ9XSwiQ29kZURlc2NyaXB0aW9uIjoiU3VjY2VzcyIsIkVycm9yQ29kZSI6MCwiRXJyb3JEZXNjcmlwdGlvbiI6IlN1Y2Nlc3MiLCJTdWNjZXNzRmxhZyI6dHJ1ZX0="
+    }
+  ]
+}

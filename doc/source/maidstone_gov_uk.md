@@ -1,6 +1,8 @@
 # Maidstone Borough Council
 
-Support for schedules provided by [Maidstone Borough Council](https://self.maidstone.gov.uk/service/check_your_bin_day).
+Support for schedules provided by [Maidstone Borough Council](https://maidstone.gov.uk).
+
+Source for maidstone.gov.uk services for Maidstone Borough Council.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: maidstone_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: maidstone_gov_uk
       args:
-        uprn: "10014313638"
+        uprn: '10022892379'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.

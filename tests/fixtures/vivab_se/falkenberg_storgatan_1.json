@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress 96f53eedf2",
+      "method": "POST",
+      "url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress",
+      "final_url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Storgatan 1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "441",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:00 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJTdG9yZ2F0YW4gMSwgRkFMS0VOQkVSRyAoMDAxODEzMjUwNikiLCJTdG9yZ2F0YW4gMTAgQSwgRkFMS0VOQkVSRyAoMDAxMjIwMTEwOSkiLCJTdG9yZ2F0YW4gMTAgQiwgRkFMS0VOQkVSRyAoMDAxMjIwMDkwMykiLCJTdG9yZ2F0YW4gMTAgQywgRkFMS0VOQkVSRyAoMDAxMjIwMDgwNCkiLCJTdG9yZ2F0YW4gMTEsIEZBTEtFTkJFUkcgKDAwMTIxMTAyMDEpIiwiU3RvcmdhdGFuIDEyIEEsIEZBTEtFTkJFUkcgKDAwMTIxOTM3MDIpIiwiU3RvcmdhdGFuIDEyIEIsIEZBTEtFTkJFUkcgKDAwMTIxOTMwMDkpIiwiU3RvcmdhdGFuIDEzLCBGQUxLRU5CRVJHICgwMDEyMTEwNTA4KSIsIlN0b3JnYXRhbiAxNCwgRkFMS0VOQkVSRyAoMDAxMjE5MjkwMikiLCJTdG9yZ2F0YW4gMTYsIEZBTEtFTkJFUkcgKDAwMTIxOTI4MDMpIl19"
+    },
+    {
+      "key": "GET https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/GetWastePickupSchedule 2650895338",
+      "method": "GET",
+      "url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/GetWastePickupSchedule?address=Storgatan+1%2C+FALKENBERG+%280018132506%29",
+      "body": "{\"params\":[[\"address\",\"Storgatan 1, FALKENBERG (0018132506)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2250",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:02 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDEiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiSHVzaMOlbGwiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlRvcnNkYWcgasOkbW4gdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiVG9yc2RhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjY2MGwga8OkcmwxNCBkYWdhcnMgdMO2bW5pbmcgaGVsw6VyIHNlcGFyYXQgbWF0YXZmYWxsc2vDpHJsIiwiQmluVHlwZSI6eyJDb2RlIjoiSzY2MCIsIlNpemUiOjY2MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5IjpudWxsLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOm51bGwsIldhc3RlVHlwZSI6Ikh1c2jDpWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IkY2NjAuMjYgTUFUQVYiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiNjYwbCBrw6RybDE0IGRhZ2FycyB0w7ZtbmluZyBoZWzDpXIgc2VwYXJhdCBtYXRhdmZhbGxza8OkcmwiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjMwMTk3NSwiRGVzY3JpcHRpb24iOiI2NjBsIGvDpHJsMTQgZGFnYXJzIHTDtm1uaW5nIGhlbMOlciBzZXBhcmF0IG1hdGF2ZmFsbHNrw6RybCIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxMDUxNTY3MjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjAwMTgxMzI1MDYifSx7IkJpbkRpcmVjdGlvbiI6bnVsbCwiTmV4dFdhc3RlUGlja3VwIjoiMjAyNi0xMC0wMSIsIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVR5cGUiOiJNYXQiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlRvcnNkYWcgasOkbW4gdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiVG9yc2RhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjE0MGwgbWF0YXZmYWxsc2vDpHJsIDE0IGRhZ2FycyB0w7ZtbmluZyBoZWzDpXIiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOm51bGwsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6bnVsbCwiV2FzdGVUeXBlIjoiTWF0IiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IkYxNDAuMjYgQlJVTlQiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiTUFUIiwiRGVzaWduYXRpb24iOiIxNDBsIG1hdGF2ZmFsbHNrw6RybCAxNCBkYWdhcnMgdMO2bW5pbmcgaGVsw6VyIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjozNTc5MzgsIkRlc2NyaXB0aW9uIjoiMTQwbCBtYXRhdmZhbGxza8OkcmwgMTQgZGFnYXJzIHTDtm1uaW5nIGhlbMOlciIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNDExNjgyNDAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjAwMTgxMzI1MDYifV19"
+    }
+  ]
+}

@@ -1,79 +1,70 @@
-from datetime import datetime
+from typing import ClassVar, final
 from urllib.parse import quote
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Fosen Renovasjon"
-DESCRIPTION = "Source for Fosen Renovasjon."
-URL = "https://fosenrenovasjon.no/"
-TEST_CASES = {"Lysøysundveien 117": {"address": "Lysøysundveien 117"}}
+_API_URL = "https://fosen.renovasjonsportal.no/api/address"
 
 
-ICON_MAP = {
-    "Restavfall til forbrenning": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Papir og plastemballasje": Icons.PAPER,
-}
+def _address_id(response, *, address: str, **_) -> str:
+    """The search result whose title is the address, ignoring case."""
+    data = response.json()
+    if not data:
+        raise SourceArgumentNotFound("address", address)
+    wanted = address.lower().strip()
+    for result in data["searchResults"]:
+        if result["title"].lower().strip() == wanted:
+            return result["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "address", address, [result["title"] for result in data["searchResults"]]
+    )
 
 
-ADDRESS_URL = "https://fosen.renovasjonsportal.no/api/address/{address}"
-COLLECTIONS_URL = ADDRESS_URL + "/details"
+@final
+class Source(BaseSource):
+    TITLE = "Fosen Renovasjon"
+    DESCRIPTION = "Source for Fosen Renovasjon."
+    URL = "https://fosenrenovasjon.no/"
+    COUNTRY = "no"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Lysøysundveien 117": {"address": "Lysøysundveien 117"}
+    }
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.lower().strip()
-        self._address_id: str | None = None
+    PARAMS = (street_address(),)
 
-    def _fetch_address_id(self):
-        url = ADDRESS_URL.format(address=quote(self._address))
-        r = requests.get(url)
-        r.raise_for_status()
-        data = r.json()
-        if not data:
-            raise SourceArgumentNotFound()
-        for address in data["searchResults"]:
-            if address["title"].lower().strip() == self._address:
-                self._address_id = address["id"]
-                return
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "address",
-            self._address,
-            [address["title"] for address in data["searchResults"]],
-        )
-
-    def fetch(self) -> list[Collection]:
-        new_id = False
-        if self._address_id is None:
-            new_id = False
-            self._fetch_address_id()
-        try:
-            return self._get_collections()
-        except Exception:
-            if new_id:
-                raise
-            self._fetch_address_id()
-            return self._get_collections()
-
-    def _get_collections(self) -> list[Collection]:
-        if self._address_id is None:
-            raise ValueError("Address not found", self._address)
-        url = COLLECTIONS_URL.format(address=self._address_id)
-        r = requests.get(url)
-        r.raise_for_status()
-        data = r.json()
-
-        entries: list[Collection] = []
-        for d in data["disposals"]:
-            date = datetime.strptime(d["date"], "%Y-%m-%dT%H:%M:%S").date()
-            entries.append(
-                Collection(date=date, t=d["fraction"], icon=ICON_MAP.get(d["fraction"]))
-            )
-
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                lambda address, **_: f"{_API_URL}/{quote(address.lower().strip())}",
+                pick=_address_id,
+            ),
+        ),
+        url=lambda address_id, **_: f"{_API_URL}/{address_id}/details",
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("disposals")
+    transform = JsonTransformer(
+        date_key=lambda disposal: disposal["date"][:10],
+        type_key="fraction",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Restavfall til forbrenning": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Papir og plastemballasje": wt.PAPER,
+        },
+    )

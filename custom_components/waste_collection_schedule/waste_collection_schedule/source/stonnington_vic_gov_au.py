@@ -1,35 +1,49 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    TYPE_VALUE_MAP,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "Stonnington City Council"
-DESCRIPTION = "Source for Stonnington City Council rubbish collection."
-URL = "https://www.stonnington.vic.gov.au"
-TEST_CASES = {
-    "The Jam Factory": {"street_address": "500 Chapel Street, South Yarra"},
-    "Malvern Library": {"street_address": "1255 High Street, Malvern"},
-}
-
-ICON_MAP = {
-    "Food and Green Waste": Icons.BIO_KITCHEN,
-    "Hard Waste": Icons.BULKY,
-    "Recycling": Icons.RECYCLING,
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.stonnington.vic.gov.au",
-    argument_name="street_address",
-    warm_up_url="https://www.stonnington.vic.gov.au/Services/Waste-and-recycling",
-    icon_keywords=ICON_MAP,
-)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
-        self._client = OpenCitiesClient(_CONFIG)
+@final
+class Source(BaseSource):
+    TITLE = "Stonnington City Council"
+    DESCRIPTION = "Source for Stonnington City Council rubbish collection."
+    URL = "https://www.stonnington.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self._street_address)
+    TEST_CASES: ClassVar[dict] = {
+        "The Jam Factory": {"street_address": "500 Chapel Street, South Yarra"},
+        "Malvern Library": {"street_address": "1255 High Street, Malvern"},
+    }
+
+    PARAMS = (street_address(field="street_address"),)
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+    ]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.stonnington.vic.gov.au",
+        address="street_address",
+        warm_up_url="https://www.stonnington.vic.gov.au/Services/Waste-and-recycling",
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={
+            **TYPE_VALUE_MAP,
+        },
+    )

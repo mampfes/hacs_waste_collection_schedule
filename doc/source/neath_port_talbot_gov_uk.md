@@ -1,37 +1,39 @@
-# Neath Port Talbot
+# Neath Port Talbot Council
 
-Support for schedules provided by [Neath Port Talbot](https://www.npt.gov.uk/), serving Neath and Port Talbot, UK.
+Support for schedules provided by [Neath Port Talbot Council](https://www.npt.gov.uk/).
+
+Source for waste collection services for Neath Port Talbot Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: neath_port_talbot_gov_uk
       args:
-        uprn: "UPRN"
-        postcode: "POSTCODE"
+        postcode: POSTCODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**  
-*(String | Integer) (required)*
-
 **postcode**  
-*(String) (required)*
+*(string) (required)*
+
+**uprn**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: neath_port_talbot_gov_uk
       args:
-        uprn: "100100599841"
-        postcode: "SA11 3HY"
+        postcode: SA11 3HW
+        uprn: 100100601042
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details, or by searching for your address at https://uprn.uk/. The council's site asks for the postcode before the property, so both are needed. Collection dates are only given for the next two weeks.

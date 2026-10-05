@@ -23,6 +23,7 @@ runs twice (this year, then a best-effort next year), like the hand-written
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, municipality, street
 from waste_collection_schedule.regions import region
@@ -165,10 +166,8 @@ class Source(BaseSource):
 
     parse = IcsFeedsParser(parsers.IcsParser())
 
-    # Empty on purpose, confirmed by replaying the cassettes: a bare
-    # pass-through transformer has no type_value_map, and the feed's German
-    # labels (Gelbe Saecke, Papierabfuhr, Gruenschnitt-Strassensammlung) are
-    # not resolved by the shared vocabulary, so they are all kept as
-    # ``preserved:`` ids, which are not declarable (#7028).
-    WASTE_TYPES: ClassVar[list] = []
+    # Confirmed by replaying the cassettes: a bare pass-through transformer has
+    # no type_value_map, and the shared vocabulary resolves the feed's German
+    # labels (Gelbe Saecke, Papierabfuhr, Gruenschnitt-Strassensammlung).
+    WASTE_TYPES: ClassVar[list] = [wt.GARDEN_WASTE, wt.PAPER, wt.RECYCLABLES]
     transform = ICSTransformer()

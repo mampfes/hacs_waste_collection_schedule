@@ -1,9 +1,12 @@
+import logging
 import re
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Byron Shire Council"
 DESCRIPTION = "Source for Byron Shire Council, NSW, Australia."
@@ -51,6 +54,14 @@ ZONE_ID_PATTERN = re.compile(r"(?:zone-)?z[\w-]+", re.IGNORECASE)
 
 class Source:
     def __init__(self, address: str):
+        _LOGGER.warning(
+            "The byron_nsw_gov_au source is deprecated and will be removed in the "
+            "next major release. Byron Shire Council is served by the shared "
+            "recyclecoach_com source: use source 'recyclecoach_com' with "
+            "street='%s', project_id='592' and district_id='BYSC'. See "
+            "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
+            " ".join(address.split()),
+        )
         self._address = " ".join(address.split())
         self._session = requests.Session()
         self._session.headers.update(HEADERS)

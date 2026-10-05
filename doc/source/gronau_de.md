@@ -1,6 +1,8 @@
 # Gronau
 
-Source for waste collection in Gronau (Westfalen), Germany, provided by the [Abfallkalender](https://abfallkalender.regioit.de/kalender-wml/index.jsp?ort=Gronau) (RegioIT).
+Support for schedules provided by [Gronau](https://abfallkalender.regioit.de/kalender-wml/).
+
+Source for Abfallkalender Gronau, Germany
 
 ## Configuration via configuration.yaml
 
@@ -9,15 +11,13 @@ waste_collection_schedule:
   sources:
     - name: gronau_de
       args:
-        street: STREET_NAME
+        street: STREET
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
-
-Street name as it appears in the Gronau waste calendar. Use the exact spelling (including umlauts).
 
 ## Example
 
@@ -26,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: gronau_de
       args:
-        street: Viktoriastraße
+        street: "Viktoriastra\xDFe"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Open the [Abfallkalender Gronau](https://abfallkalender.regioit.de/kalender-wml/index.jsp?ort=Gronau) and select your street from the dropdown; use that exact spelling in the configuration.
+Open https://abfallkalender.regioit.de/kalender-wml/index.jsp?ort=Gronau and pick your street; use the exact spelling shown there.

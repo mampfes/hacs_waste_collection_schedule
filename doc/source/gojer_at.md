@@ -1,38 +1,39 @@
 # GOJER
 
-Support for schedules provided by [GOJER](https://www.gojer.at/), serving multiple municipalities in Kernten, Austria.
+Support for schedules provided by [GOJER](https://www.gojer.at/).
+
+Source for GOJER.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: gojer_at
       args:
-        municipality: MUNICIPALITY (Gemeinde)
-        city: CITY (ORT)
-        
+        municipality: MUNICIPALITY
+        city: CITY
 ```
 
 ### Configuration Variables
 
 **municipality**  
-*(String) (required)*
+*(string) (required)*
 
 **city**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: gojer_at
       args:
         municipality: Ruden
         city: Kleindiex
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your address using [https://www.gojer.at/service/abfuhrkalender.html](https://www.gojer.at/service/abfuhrkalender.html) and write them exactly like on the web page.
+Select your municipality and town on https://www.gojer.at/service/abfuhrkalender.html and enter both names as shown there.

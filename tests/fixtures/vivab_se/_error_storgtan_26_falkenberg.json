@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress 56995355c1",
+      "method": "POST",
+      "url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress",
+      "final_url": "https://minasidor.vivab.info/FutureWebFalken/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Storgatan 26\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "112",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:47:05 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJTdG9yZ2F0YW4gMjYsIEZBTEtFTkJFUkcgKDAwMTIxNjU4NTgpIiwiU3RvcmdhdGFuIDI2LCBGYWxrZW5iZXJnICg5NTkzMDYyMDIxKSJdfQ=="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgAmbiguousWithSuggestions",
+    "message": "Multiple values found for the argument 'street_address' with the value 'Storgatan 26, Falkenberg', please specify one of: ['Storgatan 26, FALKENBERG (0012165858)', 'Storgatan 26, Falkenberg (9593062021)']"
+  }
+}

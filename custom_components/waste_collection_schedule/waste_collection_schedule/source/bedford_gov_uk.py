@@ -1,65 +1,61 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Bedford Borough Council"
-DESCRIPTION = "Source for bedford.gov.uk services for Bedford Borough Council, UK."
-URL = "https://bedford.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "100080009302"},
-    "Test_003": {"uprn": "100080018481"},
-    "Test_004": {"uprn": "100080023672"},
-}
-
-# Extended headers to bypass upstream request blocking (e.g., WAF)
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-    "Accept": "application/json, text/plain, */*",
-    "Referer": "https://www.bedford.gov.uk/",
-    "Origin": "https://www.bedford.gov.uk",
-}
-
-ICON_MAP = {
-    "BLACK BIN": Icons.GENERAL_WASTE,
-    "ORANGE BIN": Icons.RECYCLING,
-    "GREEN BIN": Icons.ORGANIC,
-    "CADDY BIN": Icons.BIO_KITCHEN,
-}
+_API_URL = (
+    "https://bbaz-as-prod-bartecapi.azurewebsites.net"
+    "/api/bincollections/residential/getbyuprn/"
+)
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "Bedford Borough Council"
+    DESCRIPTION = "Source for bedford.gov.uk services for Bedford Borough Council, UK."
+    URL = "https://bedford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(
-            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}",
-            headers=HEADERS,
-        )
-        # Raise an exception if the server returns an error (e.g. 403 Forbidden)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100080009302"},
+        "Test_003": {"uprn": "100080018481"},
+        "Test_004": {"uprn": "100080023672"},
+    }
 
-        # Parse the JSON response
-        json_data = r.json().get("BinCollections", [])
+    PARAMS = (uprn(),)
 
-        entries = []
-
-        for day in json_data:
-            for bin_data in day:
-                bin_type = bin_data.get("BinType", "")
-                job_start = bin_data.get("JobScheduledStart")
-
-                if not job_start or not bin_type:
-                    continue
-
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(job_start, "%Y-%m-%dT00:00:00").date(),
-                        t=bin_type,
-                        icon=ICON_MAP.get(bin_type.upper()),
-                    )
-                )
-
-        return entries
+    # The API wants the UPRN zero-padded to 12 digits, and answers only with
+    # the council site as referrer.
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: f"{_API_URL}{str(uprn).strip().zfill(12)}",
+        headers={
+            "Accept": "application/json, text/plain, */*",
+            "Referer": "https://www.bedford.gov.uk/",
+            "Origin": "https://www.bedford.gov.uk",
+        },
+    )
+    # One list of bins per collection day.
+    parse = parsers.JsonParser("BinCollections")
+    preprocess = preprocessors.FlattenGroups()
+    transform = JsonTransformer(
+        date_key="JobScheduledStart",
+        type_key="BinType",
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        type_value_map={
+            "black bin": wt.GENERAL_WASTE,
+            "orange bin": wt.RECYCLABLES,
+            "green bin": wt.GARDEN_WASTE,
+            "caddy bin": wt.FOOD_WASTE,
+        },
+    )

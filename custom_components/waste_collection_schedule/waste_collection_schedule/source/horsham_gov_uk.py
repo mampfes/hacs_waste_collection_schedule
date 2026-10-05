@@ -1,88 +1,61 @@
-import logging
-import ssl
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Horsham District Council"
-DESCRIPTION = "Source script for Horsham District Council"
-URL = "https://www.horsham.gov.uk"
-TEST_CASES = {
-    "Blackthorn Avenue - number": {"uprn": 10013792881},
-    "Blackthorn Avenue - string": {"uprn": "10013792881"},
-}
-API_URL = "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp"
-# Updated 1st April 2026 as Food Waste was added, and the names for the refuse bins had been updated
-ICON_MAP = {
-    "Green Bin for Refuse and Non-Recycling": Icons.GENERAL_WASTE,
-    "Blue-Top Bin for Recycling": Icons.RECYCLING,
-    "Brown-Top Bin for Garden Waste": Icons.GARDEN,
-    "Orange-Top Bin for Food Waste": Icons.BIO_KITCHEN,
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class LegacyTLSAdapter(HTTPAdapter):
-    # Modern python libraries reject Horsham server settings and return connection reset errors,
-    # Try and force requests to use downgraded settings
-    def init_poolmanager(self, *args, **kwargs):
-        ctx = ssl.create_default_context()
-        ctx.set_ciphers("AES256-SHA256")  # Explicitly use this cipher
-        ctx.minimum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
-        ctx.maximum_version = ssl.TLSVersion.TLSv1_2  # Explicitly use this TLS version
-        kwargs["ssl_context"] = ctx
-        return super().init_poolmanager(*args, **kwargs)
+def _date_text(li) -> str:
+    """The DATE cell of the table row this bin-type list item belongs to."""
+    return li.find_parent("tr").find_all("td")[1].get_text(strip=True)
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Horsham District Council"
+    DESCRIPTION = "Source script for Horsham District Council"
+    URL = "https://www.horsham.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
+    TEST_CASES: ClassVar[dict] = {
+        "Blackthorn Avenue - number": {"uprn": 10013792881},
+        "Blackthorn Avenue - string": {"uprn": "10013792881"},
+    }
 
-        # Use customised TLS/cipher settings
-        s = requests.Session()
-        s.mount("https://", LegacyTLSAdapter())
-        _LOGGER.warning(
-            "Forcing requests to use legacy TLSv1.2 & AES256-SHA256 to match horsham.gov.uk website"
-        )
+    PARAMS = (uprn(),)
 
-        r = s.post(
-            API_URL,
-            data={"uprn": self._uprn},
-        )
-        soup = BeautifulSoup(r.text, features="html.parser")
-        results = soup.find_all("tr")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering in your address details."
+        ),
+    }
 
-        entries = []
-        for result in results:
-            result_row = result.find_all("td")
-            if (
-                len(result_row) == 0
-            ):  # This removes the first header row, or any rows with no data
-                continue
-            date = datetime.strptime(
-                result_row[1].text, "%d/%m/%Y"
-            ).date()  # Pull out the rows date
-
-            # The website now uses <li> elements for each bin type
-            list_items = result_row[2].find_all("li")
-            collection_items = [li.get_text(strip=True) for li in list_items]
-            for collection_type in collection_items:
-                if not collection_type:
-                    continue
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=collection_type,
-                        icon=ICON_MAP.get(collection_type),
-                    )
-                )
-
-        return entries
+    retrieve = HttpPostRetriever(
+        "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp",
+        data=lambda uprn, **_: {"uprn": str(uprn)},
+    )
+    # One <tr> per date; each bin type is an <li> in the third cell.
+    parse = HtmlParser("td.ApplicationDetail li")
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=lambda li: li.get_text(strip=True),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Green Bin for Refuse and Non-Recycling": wt.GENERAL_WASTE,
+            "Blue-Top Bin for Recycling": wt.RECYCLABLES,
+            "Brown-Top Bin for Garden Waste": wt.GARDEN_WASTE,
+            "Orange-Top Bin for Food Waste": wt.FOOD_WASTE,
+        },
+    )

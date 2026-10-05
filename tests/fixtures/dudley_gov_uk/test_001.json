@@ -1,0 +1,62 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "GET https://my.dudley.gov.uk/authapi/isauthenticated cb0c20bae5",
+      "method": "GET",
+      "url": "https://my.dudley.gov.uk/authapi/isauthenticated",
+      "final_url": "https://my.dudley.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmy.dudley.gov.uk&hostname=my.dudley.gov.uk&withCredentials=true",
+      "body": "{\"params\":[[\"hostname\",\"my.dudley.gov.uk\"],[\"uri\",\"https://my.dudley.gov.uk\"],[\"withCredentials\",\"true\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "514",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 22:45:23 GMT",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "pragma": "no-cache",
+        "server": "Apache",
+        "set-cookie": "AWSALB=5lOzcYXFU3oZpZ0oaDRIRyVgH6aJZ1Thc6ZB2J5vsPFFQdn/+9muoeQBapeA+CCAcsQxJslv43c/FwmYEQVLS0/JWmW/da3l1xbkoldltS+bzVCfw/Ntm6FWPSiw; Expires=Fri, 02 Oct 2026 22:45:22 GMT; Path=/, AWSALBCORS=5lOzcYXFU3oZpZ0oaDRIRyVgH6aJZ1Thc6ZB2J5vsPFFQdn/+9muoeQBapeA+CCAcsQxJslv43c/FwmYEQVLS0/JWmW/da3l1xbkoldltS+bzVCfw/Ntm6FWPSiw; Expires=Fri, 02 Oct 2026 22:45:22 GMT; Path=/; SameSite=None; Secure, PHPSESSID=1dpbfjcmc8ko319q34hv1bc9ms; path=/; secure; HttpOnly, SESSIONCHECK=150645ace3e9173abd8d31c5d951b3d0a3da687e12244ba6385e20463a731af8db86f6177de658d2f4963400b8ded1a37241bf0331fa34ccc818277dcba9d902; expires=Sat, 26-Sep-2026 04:45:22 GMT; Max-Age=21600; path=/api/; domain=my.dudley.gov.uk; secure; HttpOnly, SimpleSAMLSessionID=e74d12b00d0355b0de0240cc589b2a0c; path=/; secure; HttpOnly, SESSfsauthsession=0; path=/; secure; HttpOnly",
+        "strict-transport-security": "max-age=31536000;",
+        "vary": "Accept-Encoding",
+        "x-auth-session": "1dpbfjcmc8ko319q34hv1bc9ms",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "CiAgICB7ImF1dGgtc2Vzc2lvbiI6ImIzZTQwOThhYTY4ZWI4Y2FlMWM5YzU5YzVlOTBjYWM3IiwiY29va2llLWRvbWFpbiI6IiIsImlzX2F1dGhlbnRpY2F0ZWQiOmZhbHNlLCJwcm92aWRlcnMiOlt7Im5hbWUiOiJBenVyZV9fX0xvZ2luX19zZWxmXyIsImRpc3BsYXluYW1lIjoiQXp1cmUgLSBMb2dpbiAoc2VsZikiLCJpbWFnZSI6Imh0dHBzOlwvXC9mcy1maWxlc3RvcmUtZXUuczMuYW1hem9uYXdzLmNvbVwvcmVzb3VyY2VzXC9henVyZS5wbmciLCJzdXBwb3J0b25seSI6InRydWUiLCJtYXBwaW5nIjoie1widXNlcm5hbWVcIiA6IFwic0FNQWNjb3VudE5hbWVcIixcImVtYWlsXCIgOiBcImVtYWlsYWRkcmVzc1wiLFwibWVtYmVyb2ZcIiA6XCJtZW1iZXJvZlwiLFwibmFtZVwiOlwiZGlzcGxheU5hbWVcIixcImZpcnN0X25hbWVcIiA6IFwiZ2l2ZW5OYW1lXCIsXCJsYXN0X25hbWVcIiA6XCJzdXJuYW1lXCIsXCJncm91cG9mXCIgOlwiZ3JvdXBzXCJ9IiwidXJsIjoiaHR0cHM6XC9cL215LmR1ZGxleS5nb3YudWtcL2F1dGhhcGlcL2F1dGg/cHJvdmlkZXI9QXp1cmVfX19Mb2dpbl9fc2VsZl8mdXJpPWh0dHBzJTNBJTJGJTJGbXkuZHVkbGV5Lmdvdi51ayJ9LHsibmFtZSI6Imdvb2dsZV9hZG1pbiIsImRpc3BsYXluYW1lIjoiRmlybXN0ZXAgQWRtaW4iLCJpbWFnZSI6Imh0dHBzOlwvXC9mcy1maWxlc3RvcmUtZXUuczMuYW1hem9uYXdzLmNvbVwvcmVzb3VyY2VzXC9Hb29nbGV0aHVtYi5qcGciLCJzdXBwb3J0b25seSI6InRydWUiLCJ1cmwiOiJodHRwczpcL1wvbXkuZHVkbGV5Lmdvdi51a1wvYXV0aGFwaVwvYXV0aD9wcm92aWRlcj1nb29nbGVfYWRtaW4mdXJpPWh0dHBzJTNBJTJGJTJGbXkuZHVkbGV5Lmdvdi51ayJ9LHsibmFtZSI6Imdvb2dsZV9mYW0iLCJkaXNwbGF5bmFtZSI6IkZpcm1zdGVwIEdvb2dsZSBGQU0iLCJpbWFnZSI6Imh0dHBzOlwvXC9mcy1maWxlc3RvcmUtZXUuczMuYW1hem9uYXdzLmNvbVwvcmVzb3VyY2VzXC9Mb2dvX2ljb25fcm91bmRfMTAwcHgucG5nIiwic3VwcG9ydG9ubHkiOiJ0cnVlIiwidXJsIjoiaHR0cHM6XC9cL215LmR1ZGxleS5nb3YudWtcL2F1dGhhcGlcL2F1dGg/cHJvdmlkZXI9Z29vZ2xlX2ZhbSZ1cmk9aHR0cHMlM0ElMkYlMkZteS5kdWRsZXkuZ292LnVrIn0seyJuYW1lIjoic3NhdXRoIiwiZGlzcGxheW5hbWUiOiJTZWxmLXNlcnZpY2UiLCJpbWFnZSI6Imh0dHBzOlwvXC9mcy1maWxlc3RvcmUtZXUuczMuYW1hem9uYXdzLmNvbVwvcmVzb3VyY2VzXC9uZXR3b3JrLnBuZyIsInVybCI6Imh0dHBzOlwvXC9teS5kdWRsZXkuZ292LnVrXC9hdXRoYXBpXC9hdXRoP3Byb3ZpZGVyPXNzYXV0aCZ1cmk9aHR0cHMlM0ElMkYlMkZteS5kdWRsZXkuZ292LnVrIiwicmVnaXN0ZXJfdXJsIjoiaHR0cHM6XC9cL215LmR1ZGxleS5nb3YudWtcL2F1dGhhcGlcL3JlZ2lzdGVyP3Byb3ZpZGVyPXNzYXV0aCZ1cmk9aHR0cHMlM0ElMkYlMkZteS5kdWRsZXkuZ292LnVrIn1dfQ=="
+    },
+    {
+      "key": "POST https://my.dudley.gov.uk/apibroker/runLookup fe57fc49b1",
+      "method": "POST",
+      "url": "https://my.dudley.gov.uk/apibroker/runLookup",
+      "final_url": "https://my.dudley.gov.uk/apibroker/runLookup?id=69a04ac70086b&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1790294400000&sid=b3e4098aa68eb8cae1c9c59c5e90cac7",
+      "body": "{\"body\":{\"formValues\":{\"Section 1\":{\"NextCollectionFromDate\":{\"value\":\"2026-09-25\"},\"NextCollectionToDate\":{\"value\":\"2026-11-24\"},\"uprnToCheck\":{\"value\":\"000090090715\"}}}},\"params\":[[\"_\",\"1790294400000\"],[\"app_name\",\"AF-Renderer::Self\"],[\"getOnlyTokens\",\"undefined\"],[\"id\",\"69a04ac70086b\"],[\"log_id\",\"\"],[\"noRetry\",\"true\"],[\"repeat_against\",\"\"],[\"sid\",\"b3e4098aa68eb8cae1c9c59c5e90cac7\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "connection": "close, keep-alive",
+        "content-length": "726",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Fri, 25 Sep 2026 22:45:23 GMT",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "pragma": "no-cache",
+        "server": "Apache",
+        "set-cookie": "AWSALB=nQ65y8yFyaoBMrheaYSxm3Sz9QK33+q5M0dPWHFqolCBAfFHKoJBBimNntlHau6q84HZ1lP46mIc7gwKEmGsaaxo0ykg8RgubbBKthsyu5I3Ic2eHVV8ftzHnuyz; Expires=Fri, 02 Oct 2026 22:45:23 GMT; Path=/, AWSALBCORS=nQ65y8yFyaoBMrheaYSxm3Sz9QK33+q5M0dPWHFqolCBAfFHKoJBBimNntlHau6q84HZ1lP46mIc7gwKEmGsaaxo0ykg8RgubbBKthsyu5I3Ic2eHVV8ftzHnuyz; Expires=Fri, 02 Oct 2026 22:45:23 GMT; Path=/; SameSite=None; Secure",
+        "strict-transport-security": "max-age=31536000;",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+      },
+      "content_b64": "eyJzdGF0dXMiOiJkb25lIiwiZGF0YSI6Ijw/eG1sIHZlcnNpb249XCIxLjBcIj8+XG48UmVzcG9uc2VzPjxSZXF1ZXN0UmVzcG9uc2U+PERhdGFiYXNlUmVzcG9uc2U+PEZpZWxkcz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwicmVjeWNsaW5nRGF0ZVwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cInJlY3ljbGluZ0RheVwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cImZvb2REYXRlXCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwiZm9vZERheVwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cInJlZnVzZURhdGVcIlwvPjxGaWVsZCBUeXBlPVwidmFyY2hhclwiIE5hbWU9XCJyZWZ1c2VEYXlcIlwvPjxcL0ZpZWxkcz48Um93cz48Um93IGlkPVwiMFwiPjxyZXN1bHQgY29sdW1uPVwicmVjeWNsaW5nRGF0ZVwiIGlzTnVsbD1cIkZhbHNlXCI+MjhcLzA5XC8yMDI2PFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwicmVjeWNsaW5nRGF5XCIgaXNOdWxsPVwiRmFsc2VcIj5Nb25kYXk8XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJmb29kRGF0ZVwiIGlzTnVsbD1cIkZhbHNlXCI+MjhcLzA5XC8yMDI2PFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwiZm9vZERheVwiIGlzTnVsbD1cIkZhbHNlXCI+TW9uZGF5PFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwicmVmdXNlRGF0ZVwiIGlzTnVsbD1cIkZhbHNlXCI+MDVcLzEwXC8yMDI2PFwvcmVzdWx0PjxyZXN1bHQgY29sdW1uPVwicmVmdXNlRGF5XCIgaXNOdWxsPVwiRmFsc2VcIj5Nb25kYXk8XC9yZXN1bHQ+PFwvUm93PjxcL1Jvd3M+PFwvRGF0YWJhc2VSZXNwb25zZT48XC9SZXF1ZXN0UmVzcG9uc2U+PFwvUmVzcG9uc2VzPlxuIiwiaW50ZWdyYXRpb24iOnsiaWQiOiI2OWEwNGFjNzAwODZiIiwidHlwZSI6IndlYnNlcnZpY2UiLCJ0cmFuc2Zvcm1lZCI6eyJlcnJvciI6bnVsbCwieG1sX2RhdGEiOiI8P3htbCB2ZXJzaW9uPVwiMS4wXCI/PjxSZXNwb25zZXM+PFJlcXVlc3RSZXNwb25zZT48RGF0YWJhc2VSZXNwb25zZT48RmllbGRzPjxGaWVsZCBUeXBlPVwidmFyY2hhclwiIE5hbWU9XCJyZWN5Y2xpbmdEYXRlXCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwicmVjeWNsaW5nRGF5XCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwiZm9vZERhdGVcIlwvPjxGaWVsZCBUeXBlPVwidmFyY2hhclwiIE5hbWU9XCJmb29kRGF5XCJcLz48RmllbGQgVHlwZT1cInZhcmNoYXJcIiBOYW1lPVwicmVmdXNlRGF0ZVwiXC8+PEZpZWxkIFR5cGU9XCJ2YXJjaGFyXCIgTmFtZT1cInJlZnVzZURheVwiXC8+PFwvRmllbGRzPjxSb3dzPjxSb3cgaWQ9XCIwXCI+PHJlc3VsdCBjb2x1bW49XCJyZWN5Y2xpbmdEYXRlXCIgaXNOdWxsPVwiRmFsc2VcIj4yOFwvMDlcLzIwMjY8XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJyZWN5Y2xpbmdEYXlcIiBpc051bGw9XCJGYWxzZVwiPk1vbmRheTxcL3Jlc3VsdD48cmVzdWx0IGNvbHVtbj1cImZvb2REYXRlXCIgaXNOdWxsPVwiRmFsc2VcIj4yOFwvMDlcLzIwMjY8XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJmb29kRGF5XCIgaXNOdWxsPVwiRmFsc2VcIj5Nb25kYXk8XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJyZWZ1c2VEYXRlXCIgaXNOdWxsPVwiRmFsc2VcIj4wNVwvMTBcLzIwMjY8XC9yZXN1bHQ+PHJlc3VsdCBjb2x1bW49XCJyZWZ1c2VEYXlcIiBpc051bGw9XCJGYWxzZVwiPk1vbmRheTxcL3Jlc3VsdD48XC9Sb3c+PFwvUm93cz48XC9EYXRhYmFzZVJlc3BvbnNlPjxcL1JlcXVlc3RSZXNwb25zZT48XC9SZXNwb25zZXM+Iiwicm93c19kYXRhIjp7IjAiOnsicmVjeWNsaW5nRGF0ZSI6IjI4XC8wOVwvMjAyNiIsInJlY3ljbGluZ0RheSI6Ik1vbmRheSIsImZvb2REYXRlIjoiMjhcLzA5XC8yMDI2IiwiZm9vZERheSI6Ik1vbmRheSIsInJlZnVzZURhdGUiOiIwNVwvMTBcLzIwMjYiLCJyZWZ1c2VEYXkiOiJNb25kYXkifX0sImZpZWxkc19kYXRhIjp7InJlY3ljbGluZ0RhdGUiOnsidHlwZSI6InZhcmNoYXIiLCJuYW1lIjoicmVjeWNsaW5nRGF0ZSJ9LCJyZWN5Y2xpbmdEYXkiOnsidHlwZSI6InZhcmNoYXIiLCJuYW1lIjoicmVjeWNsaW5nRGF5In0sImZvb2REYXRlIjp7InR5cGUiOiJ2YXJjaGFyIiwibmFtZSI6ImZvb2REYXRlIn0sImZvb2REYXkiOnsidHlwZSI6InZhcmNoYXIiLCJuYW1lIjoiZm9vZERheSJ9LCJyZWZ1c2VEYXRlIjp7InR5cGUiOiJ2YXJjaGFyIiwibmFtZSI6InJlZnVzZURhdGUifSwicmVmdXNlRGF5Ijp7InR5cGUiOiJ2YXJjaGFyIiwibmFtZSI6InJlZnVzZURheSJ9fSwic2VsZWN0X2RhdGEiOlt7ImxhYmVsIjoiIiwidmFsdWUiOiIifV0sIm1ldGFfZGF0YSI6W10sInJlc3VsdHNfcGFnZSI6bnVsbCwicG9zdF90cmFuc2Zvcm0iOm51bGwsInByZV90cmFuc2Zvcm0iOm51bGx9LCJ0b2tlbnMiOlsie1doaXRlc3BhY2VNdW5pY2lwYWxGdW5jdGlvblVSTH0iLCJ7dXByblRvQ2hlY2t9Iiwie05leHRDb2xsZWN0aW9uRnJvbURhdGV9Iiwie05leHRDb2xsZWN0aW9uVG9EYXRlfSJdLCJydW50aW1lcyI6eyJpbnRlZ3JhdGlvbiI6eyJ0ZW1wbGF0ZSI6IjEybXMiLCJsaW0iOiIxMW1zIiwid2Vic2VydmljZSI6IjE2MW1zIn0sImFwaSI6IjE2MW1zIiwibGltIjoiMTFtcyJ9LCJsb2dfaWQiOiJmYjM2Y2Y5OC00OWEwLTQ3Y2QtYTM5Zi0yYmFlMDc3YmIwZTMifSwiaGFzaCI6IjA5RURBNzc2RjU4QjI5MENGNURCQ0NEMTM5NkEzRTEyRTNGMkZBNEEzNjlBMjIxQkRDMDk2MUVCQUVGNEEwNDAifQ=="
+    }
+  ]
+}

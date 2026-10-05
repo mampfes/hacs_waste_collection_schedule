@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-09-28",
+  "interactions": [
+    {
+      "key": "GET https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php 96df0b8d8a",
+      "method": "GET",
+      "url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php",
+      "final_url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php?searchAddress=CT7+9SL",
+      "body": "{\"params\":[[\"searchAddress\",\"CT7 9SL\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 21:16:17 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding, Accept-Encoding,Cookie",
+        "x-powered-by": "WP Engine",
+        "x-cacheable": "SHORT",
+        "cache-control": "max-age=600, must-revalidate",
+        "x-cache": "MISS",
+        "x-cache-group": "normal",
+        "last-modified": "Mon, 28 Sep 2026 21:14:05 GMT",
+        "cf-cache-status": "HIT",
+        "set-cookie": "__cf_bm=TG0dTX0b4tzjI9mJcjqGpEQ1xdPnDZ5TVCfvQ8pQkoA-1790630177.5136006-1.0.1.1-HlDfQs7BahFktN8d4mXi_djY.rF8pzzkPj_h0UucF4gZ12gO.WOB.F_.cXAnikDiFdz9owxTq3ATZv1GaZP32_6ZF4g_4XKmYskGeATYoHog0hOhHf44Qm.dhCUTqKBB; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.thanet.gov.uk; Expires=Mon, 28 Sep 2026 21:46:17 GMT",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "age": "132",
+        "content-encoding": "br",
+        "cf-ray": "a425c4b17a8cf966-DUS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyIxMDAwNjIzMDQwNjgiOiJCUklBUiBDT1VSVCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1OTMiOiJGT1JVUywgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1OTQiOiJUUkVWQUxFIENPVVJULCBHT1JET04gU1FVQVJFLCBCSVJDSElOR1RPTiwgQ1Q3IDlTTCIsIjEwMDA2MTEwNTU5NSI6IldFU1RXT09EIENPVFRBR0UsIEdPUkRPTiBTUVVBUkUsIEJJUkNISU5HVE9OLCBDVDcgOVNMIiwiMTAwMDYxMTA1NTczIjoiMSwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1NzQiOiIyLCBHT1JET04gU1FVQVJFLCBCSVJDSElOR1RPTiwgQ1Q3IDlTTCIsIjEwMDA2MTEwNTU3NSI6IjMsIEdPUkRPTiBTUVVBUkUsIEJJUkNISU5HVE9OLCBDVDcgOVNMIiwiMTAwMDYxMTA1NTc2IjoiNCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1NzciOiI1LCBHT1JET04gU1FVQVJFLCBCSVJDSElOR1RPTiwgQ1Q3IDlTTCIsIjEwMDA2MTEwNTU3OCI6IjYsIEdPUkRPTiBTUVVBUkUsIEJJUkNISU5HVE9OLCBDVDcgOVNMIiwiMTAwMjI5NjY0NDQiOiI3IE1JTk5JUyBQQVJLLCBHT1JET04gU1FVQVJFLCBCSVJDSElOR1RPTiwgQ1Q3IDlTTCIsIjEwMDA2MTEwNTU3OSI6IjcsIEdPUkRPTiBTUVVBUkUsIEJJUkNISU5HVE9OLCBDVDcgOVNMIiwiMTAwMjI5NjY0NDUiOiI4IE1JTk5JUyBQQVJLLCBHT1JET04gU1FVQVJFLCBCSVJDSElOR1RPTiwgQ1Q3IDlTTCIsIjEwMDA2MTEwNTU4MCI6IjgsIEdPUkRPTiBTUVVBUkUsIEJJUkNISU5HVE9OLCBDVDcgOVNMIiwiMTAwMDYxMTA1NTgxIjoiOSwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODIiOiIxMCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODMiOiIxMSwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODQiOiIxMiwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODUiOiIxMywgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODYiOiIxNCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODciOiIxNSwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODgiOiIxNiwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1ODkiOiIxNywgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1OTAiOiIxOCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1OTEiOiIxOSwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wiLCIxMDAwNjExMDU1OTIiOiIyMCwgR09SRE9OIFNRVUFSRSwgQklSQ0hJTkdUT04sIENUNyA5U0wifQ=="
+    },
+    {
+      "key": "GET https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php 51bbf5fa93",
+      "method": "GET",
+      "url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php",
+      "final_url": "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php?pAddress=100061105578",
+      "body": "{\"params\":[[\"pAddress\",\"100061105578\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 28 Sep 2026 21:16:18 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare",
+        "cf-cache-status": "MISS",
+        "vary": "Accept-Encoding, Accept-Encoding,Cookie",
+        "x-powered-by": "WP Engine",
+        "x-cacheable": "SHORT",
+        "cache-control": "max-age=600, must-revalidate",
+        "x-cache": "MISS",
+        "x-cache-group": "normal",
+        "last-modified": "Mon, 28 Sep 2026 21:16:18 GMT",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "content-encoding": "br",
+        "cf-ray": "a425c4b18aa7f966-DUS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3sibmFtZSI6IlJlZnVzZSAtIDE4MEwiLCJ0eXBlIjoiUmVmdXNlIiwibmV4dERhdGUiOiIyOVwvMDlcLzIwMjYgYXQgNzowMGFtIiwibmV4dFN0YXR1cyI6Ik5vdCBTdGFydGVkIiwiaW5kZXgiOjAsImlkIjo3MTkyOTQ3NSwicHJldmlvdXNEYXRlIjoiMTVcLzA5XC8yMDI2IGF0IDc6NDRhbSIsInByZXZpb3VzU3RhdHVzIjoiQ2xvc2VkLUNvbXBsZXRlIn0seyJuYW1lIjoiQ29tbWluZ2xlZCBSZWN5Y2xpbmcgLSBDbGVhciBCYWciLCJ0eXBlIjoiQmx1ZVJlY3ljbGluZyIsIm5leHREYXRlIjoiMDZcLzEwXC8yMDI2IGF0IDc6MDBhbSIsIm5leHRTdGF0dXMiOiJOb3QgU3RhcnRlZCIsImluZGV4IjowLCJpZCI6NzE2OTYzNTgsInByZXZpb3VzRGF0ZSI6IjIyXC8wOVwvMjAyNiBhdCA3OjAwYW0iLCJwcmV2aW91c1N0YXR1cyI6IkNsb3NlZC1Db21wbGV0ZSJ9LHsibmFtZSI6IkZvb2QgV2FzdGUgLSBDYWRkeSIsInR5cGUiOiJGb29kIiwibmV4dERhdGUiOiIyOVwvMDlcLzIwMjYgYXQgNjowMGFtIiwibmV4dFN0YXR1cyI6Ik5vdCBTdGFydGVkIiwiaW5kZXgiOjAsImlkIjo3MjM3MzI3MiwicHJldmlvdXNEYXRlIjoiMjJcLzA5XC8yMDI2IGF0IDExOjIwYW0iLCJwcmV2aW91c1N0YXR1cyI6IkNsb3NlZC1Db21wbGV0ZSJ9XQ=="
+    }
+  ]
+}

@@ -1,31 +1,25 @@
 # Napier City Council
 
-[Source URL](https://www.napier.govt.nz/services/rubbish-and-recycling/collection-days/)
+Support for schedules provided by [Napier City Council](https://www.napier.govt.nz/).
 
-[API URL](https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php)
+Source for Napier City Council
 
-This source provides waste collection schedules for Napier City Council. It uses the Napier Council's API's to fetch waste collection schedules based on the provided address.
-
-## Configuration via `configuration.yaml`
-
-To configure the source, add the following to your `configuration.yaml` file:
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: napier_govt_nz
       args:
-        address: UNIQUE_ADDRESS
+        address: ADDRESS
 ```
 
-## Configuration Variables
+### Configuration Variables
 
-**address** (string) (required)  
-The address for which you want to retrieve the waste collection schedule.
+**address**  
+*(string) (required)*
 
 ## Example
-
-An example configuration:
 
 ```yaml
 waste_collection_schedule:
@@ -34,3 +28,7 @@ waste_collection_schedule:
       args:
         address: 4 Sheehan Street
 ```
+
+## How to get the source arguments
+
+Enter your street address as it appears on the [Napier City Council website](https://www.napier.govt.nz/services/properties-and-rates/my-property/), e.g. '4 Sheehan Street'. The address must match a single property.

@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "POST https://www.simbio.si/sl/moj-dan-odvoza-odpadkov 183b6696de",
+      "method": "POST",
+      "url": "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov",
+      "final_url": "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov",
+      "body": "{\"body\":[[\"action\",\"simbioOdvozOdpadkov\"],[\"query\",\"Nikjer 999\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx/1.24.0 (Ubuntu)",
+        "date": "Sat, 26 Sep 2026 20:48:21 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "2",
+        "vary": "X-HTTP-Method-Override, Accept-Encoding",
+        "access-control-allow-origin": "*",
+        "cache-control": "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0",
+        "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+        "set-cookie": "connect.sid=s%3AcDA21fhoAYIiNt9Ui-aNEDd4seQoaSq0.qzLfbvFSGduZGVheF%2B6XO0mM7opJTGhHOsM1%2FjA5PPg; Path=/; HttpOnly"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street' with the value 'Nikjer', no collections found, please check this value is correct."
+  }
+}

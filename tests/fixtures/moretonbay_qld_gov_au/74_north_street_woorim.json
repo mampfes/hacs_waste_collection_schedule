@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://services-ap1.arcgis.com/152ojN3Ts9H3cdtl/arcgis/rest/services/MBRC_Waste/FeatureServer/0/query 495f8e20e2",
+      "method": "GET",
+      "url": "https://services-ap1.arcgis.com/152ojN3Ts9H3cdtl/arcgis/rest/services/MBRC_Waste/FeatureServer/0/query",
+      "final_url": "https://services-ap1.arcgis.com/152ojN3Ts9H3cdtl/arcgis/rest/services/MBRC_Waste/FeatureServer/0/query?outFields=ADDRESS%2CBin_Day%2CRecycle_Week&returnGeometry=false&f=json&where=House_No%3D%2774%27+AND+UPPER%28Road%29+LIKE+%27%25NORTH+STREET%25%27+AND+UPPER%28Suburb%29%3D%27WOORIM%27&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"ADDRESS,Bin_Day,Recycle_Week\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"where\",\"House_No='74' AND UPPER(Road) LIKE '%NORTH STREET%' AND UPPER(Suburb)='WOORIM'\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 26 Sep 2026 08:07:22 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "349",
+        "Connection": "keep-alive",
+        "Cache-Control": "public, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Tue, 22 Sep 2026 08:42:54 GMT",
+        "ETag": "sd550762_1987348853",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "ap1h00c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260926T080406Z-16dd9bcdcdbzwm5whC1DTTtghg00000005sg000000005e92",
+        "x-esri-query-request-units": "3",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=672;max=28800",
+        "X-ArcGIS-Correlation-Id": "910090e5ccbb953f",
+        "X-ArcGIS-Instance": "bgoltp7zl000005",
+        "Request-Context": "appId=cid-v1:4a8d16e5-1b6c-4bd9-9c96-226ef71497e7",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260926T080721Z-16dd9bcdcdbfqfzdhC1DTTr5r800000006kg0000000005pf",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "TCP_REVALIDATED_HIT",
+        "X-Cache-Info": "L1_T2",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjEwMjEwMCwibGF0ZXN0V2tpZCI6Mzg1N30sImZpZWxkcyI6W3sibmFtZSI6IkFERFJFU1MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQUREUkVTUyIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6IkJpbl9EYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQmluX0RheSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjE2LCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiUmVjeWNsZV9XZWVrIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJlY3ljbGVfV2VlayIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJBRERSRVNTIjoiNzQgTk9SVEggU1RSRUVUIFdPT1JJTSIsIkJpbl9EYXkiOiJNT05EQVkiLCJSZWN5Y2xlX1dlZWsiOiJXRUVLIDIifX1dfQ=="
+    }
+  ]
+}

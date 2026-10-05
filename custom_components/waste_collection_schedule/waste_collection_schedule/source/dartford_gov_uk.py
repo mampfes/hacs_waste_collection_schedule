@@ -1,65 +1,56 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Dartford Borough Council"
-DESCRIPTION = "Source for Dartford Borough Council."
-URL = "https://dartford.gov.uk"
-TEST_CASES: dict = {
-    "Test_001": {"uprn": "100060862889"},
-    "Test_002": {"uprn": 100060857499},
-    "Test_003": {"uprn": "200000540020"},
-}
-HEADERS: dict = {"user-agent": "Mozilla/5.0"}
-ICON_MAP = {
-    "RECYCLING": Icons.RECYCLING,
-    "REFUSE": Icons.GENERAL_WASTE,
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule. Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+def _cell(column: str):
+    return lambda row: row.select_one(f'td[data-eb-colheader="{column}"]').get_text(
+        strip=True
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Dartford Borough Council"
+    DESCRIPTION = "Source for Dartford Borough Council."
+    URL = "https://dartford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100060862889"},
+        "Test_002": {"uprn": 100060857499},
+        "Test_003": {"uprn": "200000540020"},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Your UPRN is displayed in the top left corner of the Dartford website "
+            "when you are viewing your collection schedule, or look it up on "
+            "https://www.findmyaddress.co.uk/."
+        ),
     }
-}
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        r = s.get(
-            f"https://windmz.dartford.gov.uk/ufs/WS_CHECK_COLLECTIONS.eb?UPRN={self._uprn}",
-            headers=HEADERS,
-        )
-
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-        waste_types: list = soup.find_all(
-            "td", {"data-eb-colheader": "Collection Type"}
-        )
-        waste_dates: list = soup.find_all("td", {"data-eb-colheader": "Date"})
-
-        entries: list = []
-        for i in range(len(waste_types)):
-            waste_type: str = waste_types[i].text.strip()
-            waste_date: str = waste_dates[i].text.strip()
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date, "%d/%m/%Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://windmz.dartford.gov.uk/ufs/WS_CHECK_COLLECTIONS.eb",
+        params=lambda uprn, **_: {"UPRN": uprn},
+    )
+    parse = parsers.HtmlParser('tr:has(> td[data-eb-colheader="Date"])')
+    transform = HtmlTransformer(
+        date_getter=_cell("Date"),
+        type_getter=_cell("Collection Type"),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "REFUSE": wt.GENERAL_WASTE,
+            "RECYCLING": wt.RECYCLABLES,
+            "GARDEN WASTE": wt.GARDEN_WASTE,
+        },
+    )

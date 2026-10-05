@@ -1,46 +1,35 @@
 # Cumberland Council
 
-Support for schedules provided by [Cumberland Council](https://waste.cumberland.gov.uk/renderform?t=25&k=E43CEB1FB59F859833EF2D52B16F3F4EBE1CAB6A), serving Cumberland, UK.
+Support for schedules provided by [Cumberland Council](https://cumberland.gov.uk).
+
+Source for cumberland.gov.uk services for Cumberland Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cumberland_gov_uk
       args:
-        postcode: POSTCODE
         uprn: UPRN
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**postcode**
-*(string) (optional)*
-
-**uprn**
+**uprn**  
 *(string) (required)*
 
-## Example without postcode (preferred)
+**postcode**  
+*(string) (optional)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cumberland_gov_uk
       args:
-        uprn: "100110319463"
+        postcode: CA28 7QS
+        uprn: '100110319463'
 ```
-
-## Example with postcode
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: cumberland_gov_uk
-      args:
-        postcode: "CA28 7QS"
-        uprn: "100110319463"
-```
-
-## How to find your UPRN
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

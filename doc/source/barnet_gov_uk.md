@@ -1,6 +1,8 @@
 # London Borough of Barnet
 
-Support for schedules provided by the [London Borough of Barnet](https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day), serving Barnet, UK.
+Support for schedules provided by [London Borough of Barnet](https://www.barnet.gov.uk/).
+
+Source script for barnet.gov.uk
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: barnet_gov_uk
       args:
-        uprn: "200062903"
+        uprn: '200062903'
 ```
-
-## How to get the source argument
-
-An easy way of finding your UPRN is by going to [FindMyAddress service](https://www.findmyaddress.co.uk/) and entering in your address details.

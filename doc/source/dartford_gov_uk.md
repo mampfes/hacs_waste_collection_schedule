@@ -1,18 +1,21 @@
 # Dartford Borough Council
 
-Support for schedules provided by [Dartford Borough Council](https://www.dartford.gov.uk/waste-recycling/collection-day), serving Dartford, UK.
+Support for schedules provided by [Dartford Borough Council](https://dartford.gov.uk).
+
+Source for Dartford Borough Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dartford_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **uprn**  
 *(string) (required)*
 
@@ -20,14 +23,12 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dartford_gov_uk
       args:
-        uprn: "100060862889"
+        uprn: '100060862889'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule.
-Alternatively, an easy wasy to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-`
+Your UPRN is displayed in the top left corner of the Dartford website when you are viewing your collection schedule, or look it up on https://www.findmyaddress.co.uk/.

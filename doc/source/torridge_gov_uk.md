@@ -1,15 +1,17 @@
 # Torridge Council
 
-Support for schedules provided by [Torridge Council](https://www.torridge.gov.uk/collectiondates).
+Support for schedules provided by [Torridge Council](https://torridge.gov.uk).
+
+Source for torridge.gov.uk services for Torridge, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: torridge_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,18 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-This is required to unambiguously identify the property.
-
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: torridge_gov_uk
       args:
-        uprn: "100010357864"
+        uprn: '10093911050'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by searching for your address.

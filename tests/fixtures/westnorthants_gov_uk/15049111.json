@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://api.westnorthants.digital/openapi/v1/unified-waste-collections/15049111 ",
+      "method": "GET",
+      "url": "https://api.westnorthants.digital/openapi/v1/unified-waste-collections/15049111",
+      "final_url": "https://api.westnorthants.digital/openapi/v1/unified-waste-collections/15049111",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 26 Sep 2026 20:30:58 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "401",
+        "x-amzn-requestid": "aff21a4b-9b6b-46bb-ad0c-6d8ab329eefa",
+        "x-amz-apigw-id": "EUu8dHMsLPEFTlg=",
+        "x-amzn-trace-id": "Root=1-6ab82b82-2ef757731c0b6d3577e9f0b2"
+      },
+      "content_b64": "eyJzb3ZlcmVpZ24iOiJuIiwidXBybiI6IjE1MDQ5MTExIiwiZGF0ZVJhbmdlIjoiMjAyNi0wOS0yMSB0byAyMDI2LTEwLTE4IiwiY2FsZW5kYXIiOiJodHRwczovL2NhbGVuZGFycy53ZXN0bm9ydGhhbnRzLmdvdi51ay8yMDI2LTItbnM1LnBkZiIsImNvbGxlY3Rpb25JdGVtcyI6W3siZGF0ZSI6IjIwMjYtMTAtMDIiLCJ0eXBlIjoic2Fja3MifSx7ImRhdGUiOiIyMDI2LTEwLTAyIiwidHlwZSI6InJlY3ljbGluZ19ib3hlcyJ9LHsiZGF0ZSI6IjIwMjYtMTAtMDIiLCJ0eXBlIjoiZm9vZCJ9LHsiZGF0ZSI6IjIwMjYtMTAtMDkiLCJ0eXBlIjoiZm9vZCJ9LHsiZGF0ZSI6IjIwMjYtMTAtMDkiLCJ0eXBlIjoic2Fja3MifSx7ImRhdGUiOiIyMDI2LTEwLTA5IiwidHlwZSI6InJlY3ljbGluZ19ib3hlcyJ9XX0="
+    }
+  ]
+}

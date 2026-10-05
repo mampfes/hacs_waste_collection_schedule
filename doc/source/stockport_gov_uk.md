@@ -1,49 +1,35 @@
-# Stockport Metropolitan Borough Council
+# Stockport Council
 
-Support for schedules provided by [Stockport Metropolitan Borough
-Council](https://www.manchester.gov.uk/bincollections/), serving the
-area of Stockport, UK.
+Support for schedules provided by [Stockport Council](https://stockport.gov.uk).
 
-With thanks to the creator of the schedule for Manchester, UK, from
-whom some of the code is re-factored.
+Source for bin collection services for Stockport Council, UK.
+ Refactored with thanks from the Manchester equivalent
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stockport_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
+**uprn**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stockport_gov_uk
       args:
-        uprn: "10090543805"
+        uprn: '100011460157'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The UPRN code can be found in the page by entering your postcode on the
-[Stockport Bin Collections page
-](https://www.stockport.gov.uk/find-your-collection-day/).
-
-Select your house from the drop-down, then the UPRN is the final part of
-the URL that you are re-directed to.
-
-For example, for post-code SK6 3AA, house number 25, you are re-directed to
-
-
-https://myaccount.stockport.gov.uk/bin-collections/show/10090543805
-
-The UPRN is 10090543805
+Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/).

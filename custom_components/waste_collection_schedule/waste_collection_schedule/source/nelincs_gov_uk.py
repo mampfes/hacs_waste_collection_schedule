@@ -1,61 +1,57 @@
-import requests
-from bs4 import BeautifulSoup, Tag
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
 
-TITLE = "North East Lincolnshire Council"
-DESCRIPTION = "Source for North East Lincolnshire Council."
-URL = "https://www.nelincs.gov.uk/"
-TEST_CASES = {"11042949": {"uprn": 11042949}, "11043243": {"uprn": "11043243"}}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.JaduBinCollections import strip_ordinal
+from waste_collection_schedule.transformers import RowTransformer
 
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": """Fill in your address details at [North East Lincolnshire Council's Find My Address](https://www.nelincs.gov.uk/find-my-address/), the Unique Property Reference Number (UPRN) will be shown in the URL field when you see your collection schedule. (e.g. `https://www.nelincs.gov.uk/?s=DN40+1JU&uprn=11043243` where `11043243` is the UPRN).
-
-Another easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-"""
-}
+_parse = date_parsers.for_format("%d %B %Y")
 
 
-ICON_MAP = {
-    "household waste": Icons.GENERAL_WASTE,
-    "garden": Icons.GARDEN,
-    "paper": Icons.PAPER,
-    "cans, plastic & glass": Icons.PLASTIC_PACKAGING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "North East Lincolnshire Council"
+    DESCRIPTION = "Source for North East Lincolnshire Council."
+    URL = "https://www.nelincs.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "11042949": {"uprn": 11042949},
+        "11043243": {"uprn": "11043243"},
+    }
 
-API_URL = "https://www.nelincs.gov.uk/refuse-collection-schedule/"
+    PARAMS = (uprn(),)
 
-
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
-
-    def fetch(self) -> list[Collection]:
-        args = {"uprn": self._uprn}
-
-        r = requests.get(API_URL, params=args)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        heading_i = soup.select_one("i.fa-trash")
-        if not heading_i:
-            raise ValueError("No collection data found for the provided UPRN.")
-        collection_div = heading_i.find_parent("div")
-        if not isinstance(collection_div, Tag):
-            raise ValueError("No collection data found for the provided UPRN.")
-
-        entries = []
-        for heading, col_list in zip(
-            collection_div.select("div.h4"), collection_div.select("ul"), strict=False
-        ):
-            bin_type = heading.text.strip()
-            icon = ICON_MAP.get(bin_type.casefold())  # Collection icon
-            for li in col_list.select("li"):
-                date_str = li.text.strip()
-                date_ = parser.parse(date_str, dayfirst=True).date()
-                entries.append(Collection(date=date_, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.nelincs.gov.uk/refuse-collection-schedule/",
+        params=lambda uprn, **_: {"uprn": uprn},
+    )
+    # One card per bin, listing its upcoming dates ("Wednesday, 30th
+    # September 2026").
+    parse = parsers.HtmlLabelledDates(
+        "#view-type div.mb-4:has(.h4)",
+        label=".h4",
+        date="ul",
+        date_pattern=r"\d{1,2}(?:st|nd|rd|th) \w+ \d{4}",
+        parse_date=lambda text: _parse(strip_ordinal(text)),
+        all_dates=True,
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Household Waste": wt.GENERAL_WASTE,
+            "Cans, Plastic & Glass": wt.RECYCLABLES,
+            "Paper & Cardboard": wt.PAPER,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

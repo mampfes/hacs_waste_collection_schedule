@@ -1,164 +1,156 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "ASM Pavia"
-DESCRIPTION = (
-    "Source for ASM Pavia (porta a porta) waste collection in Pavia and "
-    "surrounding municipalities, Italy."
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, street
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
 )
-URL = "https://www.asm.pv.it"
-COUNTRY = "it"
-
-TEST_CASES = {
-    "Pavia, Via Piemonte": {"municipality": "Pavia", "street": "Via Piemonte"},
-    "Pavia (slug), via piemonte (lowercase)": {
-        "municipality": "pavia",
-        "street": "via piemonte",
-    },
-    "Albuzzano": {"municipality": "Albuzzano", "street": "Tutte le vie"},
-}
-
-ICON_MAP = {
-    "umido": Icons.BIO_KITCHEN,
-    "carta": Icons.PAPER,
-    "cartone": Icons.PAPER,
-    "secco": Icons.GENERAL_WASTE,
-    "indifferenziato": Icons.GENERAL_WASTE,
-    "vetro": Icons.GLASS,
-    "plastica": Icons.RECYCLING,
-    "multimateriale": Icons.RECYCLING,
-    "verde": Icons.GARDEN,
-    "sfalci": Icons.GARDEN,
-    "ingombranti": Icons.BULKY,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
-        "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "municipality": "Municipality",
-        "street": "Street",
-    },
-    "it": {
-        "municipality": "Comune",
-        "street": "Via",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ "
-        "and pick your municipality and street from the search. Use the same "
-        "values here. For small municipalities served by a single zone, use "
-        "'Tutte le vie' as the street."
-    ),
-}
+from waste_collection_schedule.transformers import JsonTransformer
 
 API_BASE = "https://api.asm.easyeco.prod.emberware.it/wp-json/ee/v1"
+HEADERS = {"Accept": "application/json"}
 
 
-class Source:
-    def __init__(self, municipality: str, street: str):
-        self._municipality = str(municipality).strip()
-        self._street = str(street).strip()
+def _pick_municipality_id(response, *keys, municipality, **_) -> int:
+    municipalities = response.json()
+    target = str(municipality).strip().casefold()
+    for m in municipalities:
+        if target in (
+            str(m.get("name", "")).casefold(),
+            str(m.get("slug", "")).casefold(),
+        ):
+            return int(m["id"])
+    raise SourceArgumentNotFoundWithSuggestions(
+        "municipality",
+        municipality,
+        sorted(m["name"] for m in municipalities if m.get("name")),
+    )
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update({"Accept": "application/json"})
 
-        municipality_id = self._resolve_municipality_id(session)
-        zone_id = self._resolve_zone_id(session, municipality_id)
+def _street_title(s: dict) -> str:
+    return (s.get("title") or {}).get("rendered", "")
 
-        r = session.get(
-            f"{API_BASE}/garbage-collections",
-            headers={"zone-id": str(zone_id)},
-            timeout=30,
-        )
-        r.raise_for_status()
 
-        entries: list[Collection] = []
-        for item in r.json():
-            date_str = item.get("date")
-            container = item.get("container-type") or {}
-            title = (container.get("title") or "").strip()
-            if not date_str or not title:
-                continue
-            collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=title,
-                    icon=self._icon_for(title),
-                )
-            )
-        return entries
+def _pick_zone_id(response, *keys, street, **_) -> int:
+    """The zone of the street: an exact name, else the one street containing it."""
+    streets = response.json()
+    entered = str(street).strip()
+    target = entered.casefold()
 
-    def _resolve_municipality_id(self, session: requests.Session) -> int:
-        r = session.get(f"{API_BASE}/municipalities", timeout=30)
-        r.raise_for_status()
-        municipalities = r.json()
+    for s in streets:
+        if _street_title(s).casefold() == target:
+            return int(s["zone-id"])
 
-        target = self._municipality.casefold()
-        for m in municipalities:
-            if (
-                str(m.get("name", "")).casefold() == target
-                or str(m.get("slug", "")).casefold() == target
-            ):
-                return int(m["id"])
+    matches = [s for s in streets if target and target in _street_title(s).casefold()]
+    if len(matches) == 1:
+        return int(matches[0]["zone-id"])
+    if not streets:
+        raise SourceArgumentNotFound("street", entered)
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street", entered, [_street_title(s) for s in matches or streets]
+    )
 
-        raise SourceArgumentNotFoundWithSuggestions(
-            "municipality",
-            self._municipality,
-            sorted(m.get("name", "") for m in municipalities if m.get("name")),
-        )
 
-    def _resolve_zone_id(self, session: requests.Session, municipality_id: int) -> int:
-        r = session.get(
-            f"{API_BASE}/municipalities/{municipality_id}/streets",
-            params={"search": self._street},
-            timeout=30,
-        )
-        r.raise_for_status()
-        matches = r.json()
+def _title(record: dict) -> str:
+    return ((record.get("container-type") or {}).get("title") or "").strip()
 
-        target = self._street.casefold()
-        for s in matches:
-            rendered = (s.get("title") or {}).get("rendered", "")
-            if rendered.casefold() == target:
-                return int(s["zone-id"])
 
-        if len(matches) == 1:
-            return int(matches[0]["zone-id"])
+@final
+class Source(BaseSource):
+    TITLE = "ASM Pavia"
+    DESCRIPTION = (
+        "Source for ASM Pavia (porta a porta) waste collection in Pavia and "
+        "surrounding municipalities, Italy."
+    )
+    URL = "https://www.asm.pv.it"
+    COUNTRY = "it"
+    RAISE_ON_EMPTY = True
 
-        if len(matches) > 1:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                self._street,
-                [(s.get("title") or {}).get("rendered", "") for s in matches],
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Pavia, Via Piemonte": {"municipality": "Pavia", "street": "Via Piemonte"},
+        "Pavia (slug), via piemonte (lowercase)": {
+            "municipality": "pavia",
+            "street": "via piemonte",
+        },
+        "Albuzzano": {"municipality": "Albuzzano", "street": "Tutte le vie"},
+    }
 
-        all_streets = session.get(
-            f"{API_BASE}/municipalities/{municipality_id}/streets", timeout=30
-        )
-        all_streets.raise_for_status()
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street",
-            self._street,
-            [(s.get("title") or {}).get("rendered", "") for s in all_streets.json()],
-        )
+    PARAMS = (municipality(), street())
 
-    @staticmethod
-    def _icon_for(waste_type: str) -> str | None:
-        lowered = waste_type.casefold()
-        for key, icon in ICON_MAP.items():
-            if key in lowered:
-                return icon
-        return None
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.OTHER,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    HOWTO: ClassVar[dict] = {
+        "it": (
+            "Apri https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ "
+            "e scegli il tuo comune e la tua via nella ricerca. Usa gli stessi "
+            "valori qui. Per i piccoli comuni serviti da un'unica zona, usa "
+            "'Tutte le vie' come via."
+        ),
+        "en": (
+            "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ "
+            "and pick your municipality and street from the search. Use the same "
+            "values here. For small municipalities served by a single zone, use "
+            "'Tutte le vie' as the street."
+        ),
+    }
+
+    # The zone id of the street goes in a request header of the schedule call.
+    retrieve = retrievers.Request(
+        f"{API_BASE}/garbage-collections",
+        headers=lambda municipality_id, zone_id, **_: {
+            **HEADERS,
+            "zone-id": str(zone_id),
+        },
+        before=(
+            retrievers.Lookup(
+                f"{API_BASE}/municipalities",
+                headers=HEADERS,
+                pick=_pick_municipality_id,
+            ),
+            retrievers.Lookup(
+                lambda municipality_id, **_: (
+                    f"{API_BASE}/municipalities/{municipality_id}/streets"
+                ),
+                # The list is paged, so the street is searched for server side.
+                params=lambda *keys, street, **_: {"search": str(street).strip()},
+                headers=HEADERS,
+                pick=_pick_zone_id,
+            ),
+        ),
+    )
+
+    parse = parsers.JsonParser()
+
+    # An entry without a date or a container title is not a collection.
+    preprocess = preprocessors.RowFilter(
+        lambda record, source=None: bool(record.get("date") and _title(record))
+    )
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=_title,
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Umido (Scarto organico di cucina)": wt.ORGANIC,
+            "Carta - Cartone": wt.PAPER,
+            "Secco non riciclabile (indifferenziato)": wt.GENERAL_WASTE,
+            # One mixed light-packaging round (plastic, metal, ...).
+            "Multimateriale leggero": wt.RECYCLABLES,
+            "Verde": wt.GARDEN_WASTE,
+            "Ingombranti e RAEE": wt.BULKY_WASTE,
+            # The mobile eco-station (a travelling drop-off point), no canonical type.
+            "Ecomobile": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

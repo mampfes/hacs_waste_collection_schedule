@@ -1,10 +1,8 @@
 # 123abfallkalender
 
-Support for waste collection schedules provided by [123abfallkalender.de](https://www.123abfallkalender.de/), serving Ebsdorfergrund municipality, Germany.
+Support for schedules provided by [123abfallkalender](https://www.123abfallkalender.de/).
 
-## Supported Districts
-
-Beltershausen, Dreihausen, Ebsdorf, Frauenberg, Hachborn, Heskem, Ilschhausen, Leidenhofen, Mölln, Rauischholzhausen, Roßberg, Wermertshausen, Wittelsberg
+Source script for 123abfallkalender.de (Ebsdorfergrund)
 
 ## Configuration via configuration.yaml
 
@@ -13,14 +11,13 @@ waste_collection_schedule:
   sources:
     - name: 123abfallkalender_de
       args:
-        district: DISTRICT_NAME
+        district: DISTRICT
 ```
 
 ### Configuration Variables
 
-**district**
+**district**  
 *(string) (required)*
-District name — use exact spelling from the list above.
 
 ## Example
 
@@ -31,3 +28,7 @@ waste_collection_schedule:
       args:
         district: Beltershausen
 ```
+
+## How to get the source arguments
+
+Select your district from the list.

@@ -1,98 +1,50 @@
-# Highly based on milton_keynes_gov_uk.py
+from typing import ClassVar, final
 
-from datetime import datetime
-from time import time_ns
-
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "North Yorkshire Council - Hambleton"
-DESCRIPTION = "Source for North Yorkshire Council - Hambleton."
-URL = "https://northyorks.gov.uk"
-TEST_CASES = {
-    "010070735142": {"uprn": "010070735142"},
-    "100050360667": {"uprn": "100050360667"},
-    "010070732324, leading 0 missing": {"uprn": 10070732324},
-}
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.NorthYorkshireBinCalendar import (
+    TYPE_VALUE_MAP,
+    BinCalendarParser,
+    bin_calendar_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "GARDEN WASTE": Icons.GARDEN,
-    "RECYCLING": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "North Yorkshire Council - Hambleton"
+    DESCRIPTION = "Source for North Yorkshire Council - Hambleton."
+    URL = "https://northyorks.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+    TEST_CASES: ClassVar[dict] = {
+        "010070735142": {"uprn": "010070735142"},
+        "100050360667": {"uprn": "100050360667"},
+        "010070732324, leading 0 missing": {"uprn": 10070732324},
+    }
 
-API_URL = "https://hambletondc-self.achieveservice.com/service/Bin_collection_finder"
+    PARAMS = (uprn(),)
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look your property up on the [North Yorkshire Council bin calendar]"
+            "(https://www.northyorks.gov.uk/bin-calendar/lookup). Your UPRN is the "
+            "number at the end of the results page's URL, e.g. "
+            "`https://www.northyorks.gov.uk/bin-calendar/Hambleton/results/10070735142`."
+        ),
+    }
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn).zfill(12)
-
-    def fetch(self):
-        s = requests.Session()
-
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        s.get(
-            "https://hambletondc-self.achieveservice.com/apibroker/domain/hambletondc-self.achieveservice.com",
-            params={
-                "_": timestamp,
-            },
-            headers=HEADERS,
-        )
-
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://hambletondc-self.achieveservice.com/authapi/isauthenticated",
-            params={
-                "uri": "https://hambletondc-self.achieveservice.com/service/Bin_collection_finder",
-                "hostname": "hambletondc-self.achieveservice.com",
-                "withCredentials": "true",
-            },
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
-
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {
-            "formValues": {
-                "Address search": {
-                    "pccUPRN": {"value": self._uprn},
-                    "selectedUPRN": {"value": self._uprn},
-                }
-            }
-        }
-        schedule_request = s.post(
-            "https://hambletondc-self.achieveservice.com/apibroker/runLookup",
-            headers=HEADERS,
-            params={
-                "id": "62b1d2c960a47",
-                "repeat_against": "",
-                "noRetry": "true",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AF-Renderer::Self",
-                "_": str(timestamp),
-                "sid": str(sid),
-            },
-            json=payload,
-        )
-        rowdata = schedule_request.json()["integration"]["transformed"]["rows_data"]
-
-        # Extract bin types and next collection dates
-        entries = []
-        for item in rowdata.values():
-            bin_type = item["Collection_Type"]
-            date_str = item["Collection_Date"]
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            icon = ICON_MAP.get(bin_type.upper().replace("COLLECTION", ""))
-            entries.append(
-                Collection(t=bin_type, date=date, icon=icon),
-            )
-        return entries
+    retrieve = bin_calendar_retriever("Hambleton")
+    parse = BinCalendarParser()
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map=TYPE_VALUE_MAP,
+    )

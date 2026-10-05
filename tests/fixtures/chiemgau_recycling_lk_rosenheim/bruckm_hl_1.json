@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://blauetonne.stkn.org/lk_rosenheim f6315f5f3b",
+      "method": "GET",
+      "url": "https://blauetonne.stkn.org/lk_rosenheim",
+      "final_url": "https://blauetonne.stkn.org/lk_rosenheim?district=Bruckm%C3%BChl+1",
+      "body": "{\"params\":[[\"district\",\"Bruckm\u00fchl 1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sat, 26 Sep 2026 20:48:12 GMT",
+        "content-type": "application/json",
+        "strict-transport-security": "max-age=63072000; includeSubDomains",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "WyIyMDI2LTAxLTI4VDAwOjAwOjAwKzAwOjAwIiwiMjAyNi0wMi0yNVQwMDowMDowMCswMDowMCIsIjIwMjYtMDMtMjVUMDA6MDA6MDArMDA6MDAiLCIyMDI2LTA0LTIyVDAwOjAwOjAwKzAwOjAwIiwiMjAyNi0wNS0yMFQwMDowMDowMCswMDowMCIsIjIwMjYtMDYtMTdUMDA6MDA6MDArMDA6MDAiLCIyMDI2LTA3LTE1VDAwOjAwOjAwKzAwOjAwIiwiMjAyNi0wOC0xMlQwMDowMDowMCswMDowMCIsIjIwMjYtMDktMDlUMDA6MDA6MDArMDA6MDAiLCIyMDI2LTEwLTA3VDAwOjAwOjAwKzAwOjAwIiwiMjAyNi0xMS0wNFQwMDowMDowMCswMDowMCIsIjIwMjYtMTItMDJUMDA6MDA6MDArMDA6MDAiLCIyMDI2LTEyLTMwVDAwOjAwOjAwKzAwOjAwIl0="
+    }
+  ]
+}

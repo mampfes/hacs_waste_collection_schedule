@@ -1,16 +1,18 @@
 # Amber Valley Borough Council
 
-Support for schedules provided by [Amber Valley Borough Council](https://www.ambervalley.gov.uk/rubbish-waste-and-recycling/bin-collection-dates/), UK.
+Support for schedules provided by [Amber Valley Borough Council](https://ambervalley.gov.uk).
+
+Source for ambervalley.gov.uk services for Amber Valley Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ambervalley_gov_uk
       args:
-        uprn: UPRN_CODE
-        predict: PREDICT (optional) True or False
+        uprn: UPRN
+        predict: PREDICT
 ```
 
 ### Configuration Variables
@@ -19,20 +21,15 @@ waste_collection_schedule:
 *(string) (required)*
 
 **predict**  
-*(boolean) (optional|defaults to false)*
-
-If `predict` is set to `True`, the source will try to predict the next collection date based on the previous collection dates and collection frequency. By default this source only provides the next collection date.
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ambervalley_gov_uk
       args:
-        uprn: "100030011612"
+        uprn: '100030011612'
+        predict: true
 ```
-
-## How to get the source argument
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

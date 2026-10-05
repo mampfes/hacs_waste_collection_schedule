@@ -1,120 +1,130 @@
-import datetime
-import json
-import logging
+from collections.abc import Iterator
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Bydgoszcz Pronatura"
-DESCRIPTION = "Source for Bydgoszcz city garbage collection by Pronatura"
-URL = "http://www.pronatura.bydgoszcz.pl/"
-API_URL = "https://zs5cv4ng75.execute-api.eu-central-1.amazonaws.com/prod"
-COUNTRY = "pl"
-TEST_CASES = {
-    "Case1": {
-        "street_name": "LEGNICKA",
-        "street_number": 1,
-    },
-    "Case2": {
-        "street_name": "JÓZEFA SOWIŃSKIEGO",
-        "street_number": "22A",
-    },
-}
+_API = "https://zs5cv4ng75.execute-api.eu-central-1.amazonaws.com/prod"
 
-_LOGGER = logging.getLogger(__name__)
-
-NAME_MAP = {
-    "odpady zmieszane": "Zmieszane odpady komunalne",
-    "papier": "Papier",
-    "plastik": "Metale i tworzywa sztuczne",
-    "szkło": "Szkło",
-    "odpady bio": "Bioodpady",
-    "odpady wielkogabarytowe": "Odpady wielkogabarytowe",
-}
-
-ICON_MAP = {
-    "odpady zmieszane": Icons.GENERAL_WASTE,
-    "papier": Icons.PAPER,
-    "plastik": Icons.PLASTIC_PACKAGING,
-    "szkło": Icons.GLASS,
-    "odpady bio": Icons.ORGANIC,
-    "odpady wielkogabarytowe": Icons.BULKY,
+_MONTHS = {
+    "Styczeń": 1,
+    "Luty": 2,
+    "Marzec": 3,
+    "Kwiecień": 4,
+    "Maj": 5,
+    "Czerwiec": 6,
+    "Lipiec": 7,
+    "Sierpień": 8,
+    "Wrzesień": 9,
+    "Październik": 10,
+    "Listopad": 11,
+    "Grudzień": 12,
 }
 
 
-class Source:
-    def __init__(self, street_name, street_number):
-        self._street_name = street_name.upper()
-        self._street_number = str(street_number).upper()
+def _street_id(response, *keys, street_name, **_) -> str:
+    streets = response.json()
+    wanted = str(street_name).upper()
+    for row in streets:
+        if row["street"].upper() == wanted:
+            return row["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_name", wanted, [row["street"] for row in streets]
+    )
 
-    def fetch(self):
-        streets_url = f"{API_URL}/streets"
-        r = requests.get(streets_url)
-        r.raise_for_status()
-        streets = json.loads(r.text)
-        street_id = None
-        for street in streets:
-            if street["street"].upper() == self._street_name:
-                street_id = street["id"]
-                break
-        if street_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_name", self._street_name, [x["street"] for x in streets]
-            )
-        addresses_url = f"{API_URL}/address-points/{street_id}"
-        r = requests.get(addresses_url)
-        r.raise_for_status()
-        addresses = json.loads(r.text)
-        address_id = None
-        for address in addresses:
-            if address["buildingNumber"].upper() == self._street_number:
-                address_id = address["id"]
-                break
-        if address_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self._street_number,
-                [x["buildingNumber"] for x in addresses],
-            )
 
-        schedule_url = f"{API_URL}/trash-schedule/{address_id}"
-        r = requests.get(schedule_url)
-        r.raise_for_status()
-        schedule = json.loads(r.text)
-        trash_schedule = schedule["trashSchedule"]
+def _address_id(response, *keys, street_number, **_) -> str:
+    addresses = response.json()
+    wanted = str(street_number).upper()
+    for row in addresses:
+        if row["buildingNumber"].upper() == wanted:
+            return row["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_number", wanted, [row["buildingNumber"] for row in addresses]
+    )
 
-        entries = []
-        year = schedule["year"]
-        for month_schedule in trash_schedule:
-            month = self._get_month_number(month_schedule["month"])
-            for collection in month_schedule["schedule"]:
-                waste_type = collection["type"]
-                for day in collection["days"]:
-                    entries.append(
-                        Collection(
-                            datetime.date(year, month, int(day)),
-                            NAME_MAP.get(waste_type, waste_type),
-                            ICON_MAP.get(waste_type),
-                        )
-                    )
-        return entries
 
-    def _get_month_number(self, month_name):
-        month_map = {
-            "Styczeń": 1,
-            "Luty": 2,
-            "Marzec": 3,
-            "Kwiecień": 4,
-            "Maj": 5,
-            "Czerwiec": 6,
-            "Lipiec": 7,
-            "Sierpień": 8,
-            "Wrzesień": 9,
-            "Październik": 10,
-            "Listopad": 11,
-            "Grudzień": 12,
-        }
-        return month_map[month_name]
+def _days(schedule: Any, source: Any = None) -> Iterator[dict[str, str]]:
+    """One record per collection day, from the per-month, per-type day lists."""
+    year = schedule["year"]
+    for month in schedule["trashSchedule"]:
+        number = _MONTHS[month["month"]]
+        for entry in month["schedule"]:
+            for day in entry["days"]:
+                yield {
+                    "date": f"{year}-{number:02d}-{int(day):02d}",
+                    "type": entry["type"],
+                }
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Bydgoszcz Pronatura"
+    DESCRIPTION = "Source for Bydgoszcz city garbage collection by Pronatura"
+    URL = "http://www.pronatura.bydgoszcz.pl/"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Case1": {
+            "street_name": "LEGNICKA",
+            "street_number": 1,
+        },
+        "Case2": {
+            "street_name": "JÓZEFA SOWIŃSKIEGO",
+            "street_number": "22A",
+        },
+    }
+
+    PARAMS = (
+        street("street_name"),
+        house_number("street_number"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street name and building number in Bydgoszcz as they "
+            "appear in the Pronatura schedule. Neither is case-sensitive."
+        ),
+    }
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(f"{_API}/streets", pick=_street_id),
+            retrievers.Lookup(
+                lambda sid, **_: f"{_API}/address-points/{sid}", pick=_address_id
+            ),
+        ),
+        url=lambda sid, aid, **_: f"{_API}/trash-schedule/{aid}",
+    )
+
+    parse = parsers.JsonParser()
+
+    preprocess = staticmethod(_days)
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "odpady zmieszane": wt.GENERAL_WASTE,
+            "papier": wt.PAPER,
+            "plastik": wt.RECYCLABLES,
+            "szkło": wt.GLASS,
+            "odpady bio": wt.ORGANIC,
+            "odpady wielkogabarytowe": wt.BULKY_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )

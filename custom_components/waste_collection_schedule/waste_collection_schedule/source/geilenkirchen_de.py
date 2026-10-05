@@ -1,201 +1,191 @@
 import html
 import re
 from datetime import date
+from typing import ClassVar, final
+from urllib.parse import urljoin
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import field_terms, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Stadt Geilenkirchen"
-DESCRIPTION = "Source for the waste collection calendar of the city of Geilenkirchen, North Rhine-Westphalia, Germany."
-URL = "https://www.geilenkirchen.de"
-COUNTRY = "de"
+from waste_collection_schedule.transformers import RowTransformer
 
 BASE_URL = "https://www.geilenkirchen.de"
 CALENDAR_URL = (
     f"{BASE_URL}/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/"
 )
-
-TEST_CASES = {
-    "Aldenhovener Strasse": {"street": "Aldenhovener Strasse"},
-    "Ahornweg": {"street": "Ahornweg"},
-}
-
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Visit the collection calendar at "
-        "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ "
-        "and use the street search box there to find the exact spelling of your street "
-        "(streets are spelled with 'strasse', not 'straße'). Use that exact name as the "
-        "'street' argument. If the name you enter cannot be found, or matches more than "
-        "one street, the resulting error message lists the closest matches."
-    ),
-    "de": (
-        "Besuchen Sie den Abfallkalender unter "
-        "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ "
-        "und nutzen Sie dort die Straßensuche, um die genaue Schreibweise Ihrer Straße zu "
-        "finden (Straßen werden mit 'strasse' statt 'straße' geschrieben). Verwenden Sie "
-        "diesen genauen Namen als 'street'-Parameter. Wird der eingegebene Name nicht "
-        "gefunden oder trifft auf mehrere Straßen zu, listet die Fehlermeldung die "
-        "passendsten Treffer auf."
-    ),
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": (
-            "Street name as shown on "
-            "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/, "
-            "e.g. 'Aldenhovener Strasse'."
-        ),
-    },
-    "de": {
-        "street": (
-            "Straßenname wie auf "
-            "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ "
-            "angezeigt, z. B. 'Aldenhovener Strasse'."
-        ),
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-    },
-    "de": {
-        "street": "Straße",
-    },
-}
-
-
-ICON_MAP = {
-    "Restabfallcontainer": Icons.GENERAL_WASTE,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.ORGANIC,
-    "Leichtverpackungen": Icons.PLASTIC_PACKAGING,
-    "Altpapier": Icons.PAPER,
-    "Grünschnittabfuhr": Icons.GARDEN,
-}
-
 MONTHS_DE = {
-    "januar": 1,
-    "februar": 2,
-    "märz": 3,
     "april": 4,
-    "mai": 5,
-    "juni": 6,
-    "juli": 7,
     "august": 8,
-    "september": 9,
-    "oktober": 10,
-    "november": 11,
     "dezember": 12,
+    "februar": 2,
+    "januar": 1,
+    "juli": 7,
+    "juni": 6,
+    "mai": 5,
+    "märz": 3,
+    "november": 11,
+    "oktober": 10,
+    "september": 9,
 }
-
 DATE_PATTERN = re.compile(r"(\d{1,2})\.\s*([A-Za-zÄÖÜäöü]+)\s*(\d{4})")
-
-ROW_PATTERN = re.compile(
-    r'<div class="tablerow">(.*?)<div class="clear"></div>\s*</div>', re.S
-)
-DATE_CELL_PATTERN = re.compile(r'<div class="col col-1">\s*([^<]+?)\s*</div>')
-TYPE_LINK_PATTERN = re.compile(r"<a data-fancybox[^>]*>\s*([^<]+?)\s*</a>")
 RESULT_LINK_PATTERN = re.compile(
     r'<h3><a href="([^"]*/abfallkalender/details/[^"]+)">\s*([^<]+?)\s*</a></h3>'
 )
 
 
-def _normalize(value: str) -> str:
+def _normalize(value):
     value = html.unescape(value).strip().lower()
     value = value.translate(str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"}))
     return re.sub(r"[^a-z0-9]", "", value)
 
 
-class Source:
-    def __init__(self, street: str):
-        self._street = street
-        self._session = requests.Session()
+def _results(response, *_, **kwargs):
+    return [
+        (html.unescape(name), urljoin(BASE_URL, href))
+        for href, name in RESULT_LINK_PATTERN.findall(response.text)
+    ]
 
-    def _search_streets(self, term: str) -> list[tuple[str, str]]:
-        """Return list of (display_name, absolute_detail_url) matching the search term."""
-        r = self._session.post(
-            CALENDAR_URL, data={"module1428[search]": term}, timeout=30
-        )
-        r.raise_for_status()
-        results = []
-        for href, name in RESULT_LINK_PATTERN.findall(r.text):
-            url = href if href.startswith("http") else BASE_URL + href
-            results.append((html.unescape(name), url))
-        return results
 
-    def _resolve_street(self) -> str:
-        target = _normalize(self._street)
+def _variant(street):
+    return street.replace("ß", "ss").replace("straße", "strasse")
 
-        results = self._search_streets(self._street)
-        if not results:
-            # Retry with the common German spelling variant ("ß" -> "ss"),
-            # since the city always spells "Strasse" without an "ß".
-            fallback_term = self._street.replace("ß", "ss").replace("straße", "strasse")
-            if fallback_term != self._street:
-                results = self._search_streets(fallback_term)
 
-        if not results and " " in self._street.strip():
-            # Retry with just the first word, to surface suggestions.
-            results = self._search_streets(self._street.strip().split()[0])
+def _detail_url(initial, variant, first_word, *, street):
+    results = initial or variant or first_word or []
+    for name, url in results:
+        if _normalize(name) == _normalize(street):
+            return url
+    if len(results) == 1:
+        return results[0][1]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street", street, sorted({name for name, _ in results})
+    )
 
-        for name, url in results:
-            if _normalize(name) == target:
-                return url
 
-        if len(results) == 1:
-            return results[0][1]
-
-        suggestions = sorted({name for name, _ in results})
-        raise SourceArgumentNotFoundWithSuggestions("street", self._street, suggestions)
-
-    def _parse_date(self, text: str) -> date | None:
-        match = DATE_PATTERN.search(text)
-        if not match:
-            return None
+def _events(rows, source):
+    result = []
+    for row in rows:
+        date_cell = row.select_one(".col.col-1")
+        type_link = row.select_one("a[data-fancybox]")
+        if date_cell is None or type_link is None:
+            continue
+        match = DATE_PATTERN.search(date_cell.get_text(strip=True))
+        if match is None:
+            continue
         day, month_name, year = match.groups()
         month = MONTHS_DE.get(month_name.lower())
-        if month is None:
-            return None
-        return date(int(year), month, int(day))
+        if month is not None:
+            result.append(
+                (date(int(year), month, int(day)), type_link.get_text(strip=True))
+            )
+    return result
 
-    def fetch(self) -> list[Collection]:
-        detail_url = self._resolve_street()
 
-        r = self._session.post(
-            detail_url,
-            data={
-                "module1432[types][]": "0",  # "alle" (all waste types)
-                "module1432[timeframe]": "3",  # "bis zum Jahresende" (until year end)
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
+def _clean(label):
+    for prefix, canonical in (
+        ("Restabfall", "Restabfall"),
+        ("Bioabfall", "Bioabfall"),
+        ("Leichtverpackungen", "Leichtverpackungen"),
+        ("Altpapier", "Altpapier"),
+        ("Grünschnittabfuhr", "Grünschnittabfuhr"),
+    ):
+        if prefix in label:
+            return canonical
+    return label
 
-        entries = []
-        for row in ROW_PATTERN.findall(r.text):
-            date_match = DATE_CELL_PATTERN.search(row)
-            type_match = TYPE_LINK_PATTERN.search(row)
-            if not date_match or not type_match:
-                continue
 
-            collection_date = self._parse_date(date_match.group(1))
-            if collection_date is None:
-                continue
+@final
+class Source(BaseSource):
+    TITLE = "Stadt Geilenkirchen"
+    DESCRIPTION = (
+        "Source for the waste collection calendar of the city of Geilenkirchen, North "
+        "Rhine-Westphalia, Germany."
+    )
+    URL = "https://www.geilenkirchen.de"
+    COUNTRY = "de"
+    TEST_CASES: ClassVar[dict] = {
+        "Aldenhovener Strasse": {"street": "Aldenhovener Strasse"},
+        "Ahornweg": {"street": "Ahornweg"},
+        "Aldenhovener Straße (spelling fallback)": {"street": "Aldenhovener Straße"},
+    }
+    SOURCE_CODEOWNERS: ClassVar[list[str]] = ["@bbr111"]
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": "Visit the collection calendar at "
+        "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ "
+        "and use the street search box there to find the exact spelling of your street "
+        "(streets are spelled with 'strasse', not 'straße'). Use that exact name as the "
+        "'street' argument. If the name you enter cannot be found, or matches more than "
+        "one street, the resulting error message lists the closest matches.",
+        "de": "Besuchen Sie den Abfallkalender unter "
+        "https://www.geilenkirchen.de/rathaus/online-dienstleistungen-und-andere-angebote/abfallkalender/ "
+        "und nutzen Sie dort die Straßensuche, um die genaue Schreibweise Ihrer Straße "
+        "zu finden (Straßen werden mit 'strasse' statt 'straße' geschrieben). Verwenden "
+        "Sie diesen genauen Namen als 'street'-Parameter. Wird der eingegebene Name "
+        "nicht gefunden oder trifft auf mehrere Straßen zu, listet die Fehlermeldung "
+        "die passendsten Treffer auf.",
+    }
+    RAISE_ON_EMPTY = True
 
-            waste_type = html.unescape(type_match.group(1)).strip()
-
-            icon = None
-            for key, mapped_icon in ICON_MAP.items():
-                if key in waste_type:
-                    icon = mapped_icon
-                    break
-
-            entries.append(Collection(date=collection_date, t=waste_type, icon=icon))
-
-        return entries
+    PARAMS = (text_field("street", term=field_terms.STREET),)
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"street": "__unknown_street__"}
+    }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda street: {"module1428[search]": street},
+                pick=_results,
+            ),
+            retrievers.Lookup(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda *_, street: {"module1428[search]": _variant(street)},
+                pick=_results,
+                when=lambda initial, *, street: (
+                    not initial and _variant(street) != street
+                ),
+            ),
+            retrievers.Lookup(
+                CALENDAR_URL,
+                method="POST",
+                data=lambda *_, street: {
+                    "module1428[search]": street.strip().split()[0]
+                },
+                pick=_results,
+                when=lambda initial, variant, *, street: (
+                    not (initial or variant) and " " in street.strip()
+                ),
+            ),
+        ),
+        url=_detail_url,
+        method="POST",
+        data=lambda *_, **kwargs: {
+            "module1432[types][]": "0",
+            "module1432[timeframe]": "3",
+        },
+        raise_for_status=True,
+    )
+    parse = parsers.HtmlParser(".tablerow")
+    preprocess = staticmethod(_events)
+    transform = RowTransformer(
+        clean=_clean,
+        type_value_map={
+            "Restabfall": wt.GENERAL_WASTE,
+            "Bioabfall": wt.ORGANIC,
+            "Leichtverpackungen": wt.RECYCLABLES,
+            "Altpapier": wt.PAPER,
+            "Grünschnittabfuhr": wt.GARDEN_WASTE,
+        },
+        carry_raw_label=True,
+    )

@@ -1,88 +1,53 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "South Staffordshire Council"
-DESCRIPTION = "Source for waste collection services for South Staffordshire Council"
-URL = "https://sstaffs.gov.uk/"
-HEADERS = {"user-agent": "Mozilla/5.0"}
-TEST_CASES: dict = {
-    "Test_001": {
-        "uprn": "100031831923",
-    },
-    "Test_002": {
-        "uprn": 100031811736,
-    },
-    "Test_003": {
-        "uprn": "100031799974",
-    },
-}
-ICON_MAP = {
-    "General waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden waste": Icons.GARDEN,
-    "Recycling & Garden waste": Icons.GARDEN,
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "Your UPRN can be found by searching your postcode at https://www.sstaffs.gov.uk/viewyourcollectioncalendar and selecting your address. The objectId in the resulting URL is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/",
-}
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+@final
+class Source(BaseSource):
+    TITLE = "South Staffordshire Council"
+    DESCRIPTION = "Source for waste collection services for South Staffordshire Council"
+    URL = "https://sstaffs.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100031831923"},
+        "Test_002": {"uprn": 100031811736},
+        "Test_003": {"uprn": "100031799974"},
     }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 
+    PARAMS = (uprn(),)
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-        r = s.get(
-            f"https://www.sstaffs.gov.uk/where-i-live?objectId={self._uprn}",
-            headers=HEADERS,
-        )
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-
-        entries: list = []
-
-        # get details on next bin collection
-        next_date = soup.find("p", {"class": "collection-date"})
-        next_bin = soup.find("p", {"class": "collection-type"})
-        if next_date and next_bin:
-            date_text = next_date.get_text(strip=True)
-            type_text = next_bin.get_text(strip=True)
-            entries.append(
-                Collection(
-                    date=datetime.strptime(date_text, "%A, %d %B %Y").date(),
-                    t=type_text,
-                    icon=ICON_MAP.get(type_text),
-                )
-            )
-
-        # get details of future bin collections
-        trs: list = soup.find_all("tr")
-        for tr in trs[1:]:
-            tds: list = tr.find_all("td")
-            if len(tds) < 2:
-                continue
-            waste_type = tds[0].get_text(strip=True)
-            waste_date = tds[1].get_text(strip=True)
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date, "%A, %d %B %Y").date(),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.sstaffs.gov.uk/where-i-live",
+        params=lambda uprn, **_: {"objectId": uprn},
+    )
+    # The next collection is highlighted above a table of the following ones;
+    # both name every round collected that day ("General Waste & Food Waste").
+    parse = parsers.HtmlLabelledDates(
+        ":has(> p.collection-date), tr:has(td + td)",
+        label="p.collection-type, td:nth-of-type(1)",
+        date="p.collection-date, td:nth-of-type(2)",
+        label_separator="&",
+        parse_date=date_parsers.for_format("%A, %d %B %Y"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "General Waste": wt.GENERAL_WASTE,
+            "Food Waste": wt.FOOD_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

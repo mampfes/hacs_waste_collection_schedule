@@ -1,39 +1,35 @@
 # North Somerset Council
 
-Support for schedules provided by [North Somerset Council](https://www.n-somerset.gov.uk/), serving Clevedon, Nailsea, Portishead and Weston super Mare, along with numerous villages.
+Support for schedules provided by [North Somerset Council](n-somerset.gov.uk).
 
-If collection data is available for the address provided, it will return food, rubbish and recycling waste collection dates.
+Source for n-somerset.gov.uk services for North Somerset, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: nsomerset_gov_uk
       args:
+        uprn: UPRN
         postcode: POSTCODE
-        uprn:     UPRN
 ```
 
 ### Configuration Variables
 
-**postcode**  
-*(string) (required)*
-
 **uprn**  
 *(string) (required)*
 
-## Examples
+**postcode**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: nsomerset_gov_uk
       args:
-        postcode: BS231UJ
-        uprn: 24009468
+        uprn: '24009468'
+        postcode: BS23 1UJ
 ```
-
-## How to find your UPRN
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details. Otherwise you can inspect the source code on the [North Somerset waste collection](https://forms.n-somerset.gov.uk/Waste/CollectionSchedule) website after entering your postcode.

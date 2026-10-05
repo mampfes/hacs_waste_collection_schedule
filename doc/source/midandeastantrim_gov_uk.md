@@ -1,34 +1,34 @@
-# Ards and North Down Borough Council
+# Mid and East Antrim
 
-Support for schedules provided by [Ards and North Down Borough Council](https://ardsandnorthdown.gov.uk), serving Ards and North Down Borough Council, UK.
+Support for schedules provided by [Mid and East Antrim](https://www.midandeastantrim.gov.uk).
+
+Source for Mid and East Antrim Borough Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: ardsandnorthdown_gov_uk
+  sources:
+    - name: midandeastantrim_gov_uk
       args:
-        uprn: "UPRN"
-        
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: ardsandnorthdown_gov_uk
+  sources:
+    - name: midandeastantrim_gov_uk
       args:
-        uprn: "185833845"
-        
+        uprn: 185438838
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details.

@@ -1,36 +1,34 @@
-# Simbio
+# PUP Saubermacher
 
-Support for schedules provided by [Simbio](https://www.simbio.si/sl/), serving Simbio, Slovenia.
+Support for schedules provided by [PUP Saubermacher](https://www.pup-saubermacher.si/).
+
+Source for PUP Saubermacher.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: pup_si
       args:
-        place_id: ODJEMNO MESTO (številka)
+        place_id: PLACE_ID
 ```
 
 ### Configuration Variables
 
 **place_id**  
-*(Integer) (required)*
-
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: pup_si
       args:
-        place_id: 12345
-        
+        place_id: 412177
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your place id written on you monthly bill for PUP. The number is written on the right side of "Odjemno mesto:" row.
-
-For more information follow go to PUP website [https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov](https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov).
+Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov

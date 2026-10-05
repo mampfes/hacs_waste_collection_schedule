@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 # would only cover a fixed value set and not these surfaces. Any HA language
 # outside this set falls back to English. Add a language here AND to the
 # config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
-SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl")
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da")
 
 
 @dataclass(frozen=True)
@@ -37,6 +37,13 @@ class WasteType:
     # Known labels/synonyms per language, used by resolve(). Unambiguous only:
     # avoid region-ambiguous labels (e.g. "green bin") that map differently.
     aliases: dict[str, list[str]] = field(default_factory=dict)
+    # Whether resolve() may match this type's names and aliases. False makes
+    # it source-mapped: a source only gets it through its own type_value_map.
+    # Use False when a label is context-dependent (e.g. "Plastic" is the whole
+    # recycling round for one provider and a separate plastic-only round for
+    # another), so adding the type cannot change what resolve() returns for
+    # existing sources.
+    auto_resolve: bool = True
 
 
 # Display language for WasteType names. Defaults to English for standalone
@@ -74,6 +81,7 @@ GENERAL_WASTE = WasteType(
         "it": "Rifiuto indifferenziato",
         "nl": "Restafval",
         "sl": "Mešani komunalni odpadki",
+        "da": "Restaffald",
     },
     aliases={
         "en": [
@@ -90,11 +98,13 @@ GENERAL_WASTE = WasteType(
             "schwarze tonne",
             "hausmüll",
             "restmülltonne",
+            "restmuell",
         ],
         "fr": ["déchets résiduels", "ordures"],
         "it": ["indifferenziato", "secco", "secco residuo"],
         "nl": ["restafval", "restafvalcontainer"],
         "sl": ["mešani komunalni odpadki", "mešani odpadki", "mesani", "mko", "ost."],
+        "da": ["restaffald", "rest affald", "rest efter sortering", "rest"],
     },
 )
 
@@ -109,6 +119,7 @@ RECYCLABLES = WasteType(
         "it": "Differenziata",
         "nl": "Recycling",
         "sl": "Mešana embalaža",
+        "da": "Genanvendeligt affald",
     },
     aliases={
         "en": [
@@ -124,6 +135,10 @@ RECYCLABLES = WasteType(
             "gelber sack",
             "gelbe tonne",
             "gelber sack/gelbe tonne",
+            "gelber sack / gelbe tonne",
+            "gelbe säcke",
+            "gelbe saecke",
+            "verpackungstonne",
             "leichtverpackungen",
             "leicht- und metallverpackungen",
             "metallverpackungen",
@@ -140,6 +155,7 @@ RECYCLABLES = WasteType(
         "it": ["imballaggi", "plastica e lattine", "multimateriale"],
         "nl": ["pmd", "plastic", "verpakkingen", "plastic verpakkingen"],
         "sl": ["mešana embalaža", "embalaža", "embalaza", "emb", "emb."],
+        "da": ["genbrug"],
     },
 )
 
@@ -154,10 +170,11 @@ ORGANIC = WasteType(
         "it": "Organico",
         "nl": "GFT-afval",
         "sl": "Biološki odpadki",
+        "da": "Organisk affald",
     },
     aliases={
         "en": ["organic", "biowaste", "fogo", "food and garden"],
-        "de": ["bioabfall", "biotonne", "bio"],
+        "de": ["bioabfall", "biotonne", "bio", "komposttonne", "bioenergietonne"],
         "fr": ["déchets organiques"],
         "it": ["umido", "frazione organica"],
         "nl": ["gft", "groente fruit tuinafval", "bioafval"],
@@ -169,6 +186,7 @@ ORGANIC = WasteType(
             "bio",
             "bio.",
         ],
+        "da": ["organisk"],
     },
 )
 
@@ -183,12 +201,18 @@ PAPER = WasteType(
         "it": "Carta e cartone",
         "nl": "Papier en karton",
         "sl": "Papir",
+        "da": "Pap og papir",
     },
     aliases={
         "en": ["paper", "cardboard", "paper and card", "blue bin"],
         "de": [
             "papier",
             "papiertonne",
+            "altpapiertonne",
+            "altpapier, papiertonne",
+            "altpapier blaue tonne",
+            "papierabfuhr",
+            "papierbündel",
             "blaue tonne",
             "pappe",
             "papier und pappe",
@@ -198,6 +222,7 @@ PAPER = WasteType(
         "it": ["carta", "cartone"],
         "nl": ["papier", "oud papier", "karton"],
         "sl": ["papir", "papir in karton", "karton", "pap", "pap."],
+        "da": ["papir", "pap"],
     },
 )
 
@@ -212,6 +237,7 @@ GLASS = WasteType(
         "it": "Vetro",
         "nl": "Glas",
         "sl": "Steklo",
+        "da": "Glas",
     },
     aliases={
         "en": ["glass bottles"],
@@ -219,6 +245,7 @@ GLASS = WasteType(
         "it": ["vetro e lattine"],
         "nl": ["glasbak"],
         "sl": ["steklo", "stek."],
+        "da": ["glasflasker", "glasbeholdere"],
     },
 )
 
@@ -233,6 +260,7 @@ FOOD_WASTE = WasteType(
         "it": "Rifiuto alimentare",
         "nl": "Etensresten",
         "sl": "Ostanki hrane",
+        "da": "Madaffald",
     },
     aliases={
         "en": ["food", "food scraps", "food caddy"],
@@ -240,6 +268,7 @@ FOOD_WASTE = WasteType(
         "it": ["scarti alimentari"],
         "nl": ["etensresten", "voedselresten", "keukenafval"],
         "sl": ["ostanki hrane", "kuhinjski odpadki"],
+        "da": ["mad", "madaffald"],
     },
 )
 
@@ -254,6 +283,7 @@ GARDEN_WASTE = WasteType(
         "it": "Rifiuto verde",
         "nl": "Tuinafval",
         "sl": "Zeleni odrez",
+        "da": "Haveaffald",
     },
     aliases={
         "en": [
@@ -273,14 +303,21 @@ GARDEN_WASTE = WasteType(
             "strauchschnittsammlung",
             "grünschnittsammlung",
             "laub",
+            "laubsäcke",
+            "abfuhr laubsäcke",
             "weihnachtsbäume",
             "tannenbäume",
             "christbäume",
+            "sammlung tannenbäume",
+            "gehölzschnitt",
+            "grüngutbündelsammlung",
+            "gruenschnitt-strassensammlung",
         ],
         "fr": ["déchets de jardin", "sapins de noël"],
         "it": ["sfalci e potature", "verde"],
         "nl": ["tuinafval", "snoeiafval", "groenafval", "takken"],
         "sl": ["zeleni odrez", "vrtni odpadki", "vejevje", "listje"],
+        "da": ["blade", "have affald"],
     },
 )
 
@@ -295,14 +332,16 @@ BULKY_WASTE = WasteType(
         "it": "Ingombranti",
         "nl": "Grofvuil",
         "sl": "Kosovni odpadki",
+        "da": "Storskrald",
     },
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
         "de": ["sperrgut", "grobmüll"],
-        "fr": ["objets encombrants"],
+        "fr": ["objets encombrants"],  # codespell:ignore objets
         "it": ["rifiuti ingombranti"],
         "nl": ["grofvuil", "grof huishoudelijk afval"],
         "sl": ["kosovni odpadki", "kosovni"],
+        "da": ["stort affald"],
     },
 )
 
@@ -317,6 +356,7 @@ HAZARDOUS = WasteType(
         "it": "Rifiuti pericolosi",
         "nl": "Klein chemisch afval",
         "sl": "Nevarni odpadki",
+        "da": "Farligt affald",
     },
     aliases={
         "en": ["hazardous", "household hazardous waste", "hhw", "chemicals"],
@@ -328,10 +368,15 @@ HAZARDOUS = WasteType(
             "sondermüll",
             "schadstoffmobil",
             "giftmüll",
+            "problemmüll",
+            "giftmobil",
+            "mobile problemabfallsammlung",
+            "mobile schadstoffsammlung",
         ],
         "fr": ["déchets toxiques"],
         "nl": ["kca", "chemisch afval", "klein chemisch afval"],
         "sl": ["nevarni odpadki"],
+        "da": ["kemisk affald", "maling"],
     },
 )
 
@@ -346,6 +391,7 @@ ELECTRONICS = WasteType(
         "it": "Rifiuti elettronici",
         "nl": "Elektronisch afval",
         "sl": "Elektronski odpadki",
+        "da": "Elektronikaffald",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -363,6 +409,7 @@ ELECTRONICS = WasteType(
         "it": ["raee"],
         "nl": ["e-waste", "elektrische apparaten", "wit- en bruingoed", "elektronica"],
         "sl": ["elektronski odpadki", "e-odpadki", "odpadna električna oprema"],
+        "da": ["gammel elektronik", "elektronik til genbrug"],
     },
 )
 
@@ -382,6 +429,7 @@ TEXTILES = WasteType(
         "fr": "Textiles",
         "nl": "Textiel",
         "sl": "Tekstil",
+        "da": "Tekstiler",
     },
     aliases={
         "en": [
@@ -407,7 +455,69 @@ TEXTILES = WasteType(
         "it": ["abiti", "indumenti", "indumenti usati", "abbigliamento"],
         "nl": ["kleding", "oude kleding", "textielinzameling"],
         "sl": ["tekstil", "oblačila", "stara oblačila"],
+        "da": ["tekstil", "stof"],
     },
+)
+
+# METAL, PLASTIC and CARTONS are source-mapped (auto_resolve=False) and carry
+# no aliases (#7604). They exist for providers that collect these materials as
+# separate rounds, e.g. Danish municipalities, which sort them as separate
+# fractions nationwide. Precedence: RECYCLABLES stays the default. A provider
+# with one recycling round is RECYCLABLES even if it labels that round
+# "Plastic"; a mixed round (plastic + metal + cartons) is RECYCLABLES; cartons
+# collected with paper are PAPER. Map to a specific type only when that
+# material is a collection of its own, e.g. RECYCLABLES + METAL for a mixed
+# round plus a separate metal round, or PLASTIC + METAL when both are
+# collected separately. METAL is packaging metal (cans, tins), not scrap.
+METAL = WasteType(
+    id="metal",
+    icon="mdi:nail",
+    color="#C2C8CC",
+    names={
+        "en": "Metal",
+        "de": "Metall",
+        "it": "Metallo",
+        "fr": "Métal",
+        "nl": "Metaal",
+        "sl": "Kovina",
+        "da": "Metal",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+PLASTIC = WasteType(
+    id="plastic",
+    icon="mdi:recycle-variant",
+    color="#3587BD",
+    names={
+        "en": "Plastic",
+        "de": "Plastik",
+        "it": "Plastica",
+        "fr": "Plastique",
+        "nl": "Plastic",
+        "sl": "Plastika",
+        "da": "Plastik",
+    },
+    aliases={},
+    auto_resolve=False,
+)
+
+CARTONS = WasteType(
+    id="cartons",
+    icon="mdi:recycle-variant",
+    color="#5D9B75",
+    names={
+        "en": "Food and beverage cartons",
+        "de": "Lebensmittel- und Getränkekartons",
+        "it": "Cartoni per alimenti e bevande",
+        "fr": "Briques alimentaires et boissons",
+        "nl": "Drank- en voedselkartons",
+        "sl": "Kartonska embalaža za živila in pijače",
+        "da": "Mad- og drikkekartoner",
+    },
+    aliases={},
+    auto_resolve=False,
 )
 
 OTHER = WasteType(
@@ -421,7 +531,9 @@ OTHER = WasteType(
         "it": "Altro",
         "nl": "Overig",
         "sl": "Drugo",
+        "da": "Andet",
     },
+    auto_resolve=False,
 )
 
 ALL_TYPES = [
@@ -436,6 +548,9 @@ ALL_TYPES = [
     HAZARDOUS,
     ELECTRONICS,
     TEXTILES,
+    METAL,
+    PLASTIC,
+    CARTONS,
     OTHER,
 ]
 
@@ -448,13 +563,16 @@ def _norm(label: str) -> str:
 def _build_index() -> dict[str, WasteType]:
     """Index every canonical type's display names + aliases by normalised label.
 
-    OTHER is excluded (it's only used when a source maps to it explicitly).
+    Types with ``auto_resolve=False`` are excluded: a source reaches them only
+    by mapping to them explicitly, so their names cannot collide with labels
+    other types already resolve. OTHER is one of them (it's only used when a
+    source maps to it explicitly), as are METAL, PLASTIC and CARTONS.
     First definition wins on collisions, with a warning, so the vocabulary stays
     unambiguous.
     """
     index: dict[str, WasteType] = {}
     for waste_type in ALL_TYPES:
-        if waste_type is OTHER:
+        if not waste_type.auto_resolve:
             continue
         labels = list(waste_type.names.values())
         for synonyms in waste_type.aliases.values():

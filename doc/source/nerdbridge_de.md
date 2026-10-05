@@ -1,6 +1,8 @@
 # Landkreis Northeim (unofficial)
 
-This source retrieves waste collection schedules for Landkreis Northeim, Germany, from the unofficial community service at [abfall.nerdbridge.de](https://abfall.nerdbridge.de/).
+Support for schedules provided by [Landkreis Northeim (unofficial)](https://abfall.nerdbridge.de/).
+
+Unofficial waste collection schedule for Landkreis Northeim via abfall.nerdbridge.de.
 
 ## Configuration via configuration.yaml
 
@@ -14,18 +16,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**municipality**
+**municipality**  
 *(string) (required)*
 
-Name of your municipality, exactly as shown on [abfall.nerdbridge.de](https://abfall.nerdbridge.de/). For example: `Einbeck (Bezirk 2)`, `Bad Gandersheim`, `Northeim (Bezirk 1)`.
-
-## How to get the configuration arguments
-
-1. Go to [https://abfall.nerdbridge.de/](https://abfall.nerdbridge.de/).
-2. Select your municipality from the drop-down list.
-3. Copy the municipality name exactly as it appears in the list and use it as the `municipality` parameter.
-
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -35,18 +29,6 @@ waste_collection_schedule:
         municipality: Einbeck (Bezirk 2)
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: nerdbridge_de
-      args:
-        municipality: Bad Gandersheim
-```
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: nerdbridge_de
-      args:
-        municipality: Northeim (Bezirk 1)
-```
+Go to https://abfall.nerdbridge.de/ and select your municipality. Use the displayed municipality name.

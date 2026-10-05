@@ -1,19 +1,22 @@
-# Hawkesbury City Council
+# The Hawkesbury City Council, Sydney
 
-Support for schedules provided by [Hawkesbury City Council](https://www.hawkesbury.nsw.gov.au/), serving the Hawkesbury council in NSW, Australia.
+Support for schedules provided by [The Hawkesbury City Council, Sydney](https://www.hawkesbury.nsw.gov.au/).
+
+Source for Hawkesbury City Council, Sydney, Australia waste collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hawkesbury_nsw_gov_au
       args:
         suburb: SUBURB
         street: STREET
-        houseNo: HOUSENO
         postCode: POSTCODE
+        houseNo: HOUSENO
 ```
+
 ### Configuration Variables
 
 **suburb**  
@@ -22,10 +25,10 @@ waste_collection_schedule:
 **street**  
 *(string) (required)*
 
-**houseNo**  
+**postCode**  
 *(string) (required)*
 
-**postCode**  
+**houseNo**  
 *(string) (required)*
 
 ## Example
@@ -35,7 +38,7 @@ waste_collection_schedule:
   sources:
     - name: hawkesbury_nsw_gov_au
       args:
-        suburb: South Windsor
+        suburb: south windsor
         street: George Street
         houseNo: 539
         postCode: 2756
@@ -43,4 +46,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-The source arguments are simply the values of the 3 selections from the web form.
+Enter the suburb, street name (abbreviations such as 'St' or 'Rd' are expanded), house number and postcode of your property.

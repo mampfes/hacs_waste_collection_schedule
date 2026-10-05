@@ -1,34 +1,34 @@
-# City of Round Rock, Texas
+# Round Rock Texas
 
-Support for schedules provided by [City of Round Rock, Texas](https://www.roundrocktexas.gov/)
+Support for schedules provided by [Round Rock Texas](https://www.roundrocktexas.gov/).
+
+Source for bin collection services for Round Rock, Texas
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: roundrocktexas_gov
       args:
-        neighborhood: "NEIGHBORHOOD"
-        
+        neighborhood: NEIGHBORHOOD
 ```
 
 ### Configuration Variables
 
 **neighborhood**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: roundrocktexas_gov
       args:
-        neighborhood: "Windy Park"        
+        neighborhood: Apache Oaks
 ```
 
-## Neighborhood Names
+## How to get the source arguments
 
-The spelling, capitalisation, and punctuation used for the neighborhood should match one of the _"Neighborhood Name"_ entries found here: 
-https://devcorrpublicdatahub.blob.core.usgovcloudapi.net/garbage-recycling/garbagerecyclingzones.json
+Enter the name of your neighborhood as the City of Round Rock lists it (for example Apache Oaks or Windy Park). Recycling is collected every two weeks and trash weekly, on the weekday of your neighborhood's recycling zone.

@@ -1,97 +1,67 @@
-import datetime
 import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Uttlesford District Council"
-DESCRIPTION = "Source for uttlesford.gov.uk, Uttlesford District Council, UK"
-URL = "https://www.uttlesford.gov.uk"
-TEST_CASES = {
-    "Brook Cottage, CM6 1LW": {"house": "29142-Tuesday"},
-    "Springfields, CM6 1BP": {"house": "26455-Thursday"},
-}
-
-API_URL = "http://bins.uttlesford.gov.uk/collections.php?house={house}"
-
-ICON_MAP = {
-    "black": Icons.GENERAL_WASTE,
-    "green": Icons.RECYCLING,
-    "brown": Icons.BIO_KITCHEN,
-}
-
-PICTURE_MAP = {
-    "black": "https://bins.uttlesford.gov.uk/img/result-black.png",
-    "green": "https://bins.uttlesford.gov.uk/img/result-green.png",
-    "brown": "https://bins.uttlesford.gov.uk/img/result-brown.png",
-}
-
-TEXT_MAP = {
-    "black": "Black (Non-Recyclable)",
-    "green": "Green (Dry Recycling)",
-    "brown": "Brown (Food Waste)",
-}
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, house=None):
-        self._house = house
+def _date_text(row: Tag) -> str:
+    # "Tuesday 6th October": the year is missing and the day has an ordinal suffix.
+    return re.sub(r"(\d)(st|nd|rd|th)", r"\1", row.select("td")[1].get_text().strip())
 
-    def fetch(self):
-        q = str(API_URL).format(house=self._house)
 
-        r = requests.get(q)
-        r.raise_for_status()
+def _bin(row: Tag) -> str:
+    # The alt text of the images is wrong on the website, so go by the image itself.
+    image = row.select_one("td img")
+    return "green" if image is not None and "green" in str(image["src"]) else "black"
 
-        def trimsuffix(s):
-            return re.sub(r"(\d)(st|nd|rd|th)", r"\1", s)
 
-        responseContent = r.text
+@final
+class Source(BaseSource):
+    TITLE = "Uttlesford District Council"
+    DESCRIPTION = "Source for uttlesford.gov.uk, Uttlesford District Council, UK"
+    URL = "https://www.uttlesford.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        today = datetime.date.today()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Brook Cottage, CM6 1LW": {"house": "29142-Tuesday"},
+        "Springfields, CM6 1BP": {"house": "26455-Thursday"},
+    }
 
-        soup = BeautifulSoup(responseContent, "html.parser")
-        table = soup.findAll("table")
+    PARAMS = (text_field("house", label="House"),)
 
-        rows = table[1].findAll(lambda tag: tag.name == "tr")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Go to https://bins.uttlesford.gov.uk/ and look up your address. "
+            "The house value is the `house` parameter of the results page "
+            "address (`collections.php?house=29142-Tuesday`)."
+        ),
+    }
 
-        for row in rows:
-            fields = row.findChildren()
-            image = row.find("img")
-            datestr = fields[3].text
-            datestr = trimsuffix(datestr) + " " + today.strftime("%Y")
-            date = datetime.datetime.strptime(datestr, "%A %d %B %Y")
-
-            # As they don't show the year we need to check if it should actually be next year
-            if date.date() < today:
-                date = date.replace(year=today.year + 1)
-
-            # As all the image alt text etc is wrong on the website we have to go by the image itself
-            if "green" in image["src"]:
-                collectiontxt = "green"
-            else:
-                collectiontxt = "black"
-
-            entries.append(
-                Collection(
-                    date=date.date(),
-                    t=TEXT_MAP.get(collectiontxt),
-                    picture=PICTURE_MAP.get(collectiontxt),
-                    icon=ICON_MAP.get(collectiontxt),
-                )
-            )
-            # Add a second collection entry as all collections include the brown food bin
-            collectiontxt = "brown"
-            entries.append(
-                Collection(
-                    date=date.date(),
-                    t=TEXT_MAP.get(collectiontxt),
-                    picture=PICTURE_MAP.get(collectiontxt),
-                    icon=ICON_MAP.get(collectiontxt),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://bins.uttlesford.gov.uk/collections.php",
+        params=lambda house, **_: {"house": house},
+    )
+    parse = parsers.HtmlParser("tr:has(td)")
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=_bin,
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        # Every collection also includes the brown food waste bin.
+        type_value_map={
+            "black": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+            "green": [wt.RECYCLABLES, wt.FOOD_WASTE],
+        },
+    )

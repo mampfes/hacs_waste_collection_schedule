@@ -39,11 +39,15 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
     WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
+        wt.GLASS,
         wt.HAZARDOUS,
         wt.ORGANIC,
         wt.PAPER,
         wt.RECYCLABLES,
+        wt.TEXTILES,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -71,6 +75,11 @@ class Source(BaseSource):
             "f_id_kommune": "5916",
             "f_id_strasse": "5916abteistrasse",
             "f_id_strasse_hnr": 33,
+        },
+        "AVR Kommunal, Brühl, Adlerstr.": {
+            "key": "914fb9d000a9a05af4fd54cfba478860",
+            "f_id_kommune": 3826,
+            "f_id_strasse": 7430,
         },
         "Landkreis Prignitz, Gemeinde Karstädt, Blüthen": {
             "key": "798f59a75627f5d7686dab0c7226c877",
@@ -112,7 +121,21 @@ class Source(BaseSource):
 
     retrieve = AbfallIoRetriever()
     parse = AbfallIoParser()
-    transform = ICSTransformer()
+    # AVR Kommunal (Rhein-Neckar-Kreis) names each bin with its container size
+    # and rhythm, which the shared vocabulary rightly does not alias. The
+    # combined Rest-/Biomüll bin is collected as both types.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll 2-/4-Radbehälter 14-täglich": wt.GENERAL_WASTE,
+            "Biomüll 2-/4-Radbehälter 14-täglich": wt.ORGANIC,
+            "Rest-/Biomüll 4-Radbehälter wöchentlich": [wt.GENERAL_WASTE, wt.ORGANIC],
+            "Grüne Tonne plus 2-/4-Radbehälter 14-täglich": wt.RECYCLABLES,
+            "Grüne Tonne plus 4-Radbehälter wöchentlich": wt.RECYCLABLES,
+            "Sperrmüll + Altholz": wt.BULKY_WASTE,
+            "Glasbox": wt.GLASS,
+            "Alttextilien + Schuhe (2-wöchentlich)": wt.TEXTILES,
+        },
+    )
 
     REGIONS = regions.from_yaml("abfall_io", key="service_id")
 

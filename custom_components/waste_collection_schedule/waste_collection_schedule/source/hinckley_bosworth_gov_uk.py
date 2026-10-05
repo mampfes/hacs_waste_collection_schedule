@@ -1,123 +1,98 @@
 import json
-import re
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 from urllib.parse import quote
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Hinckley & Bosworth Borough Council"
-DESCRIPTION = "Source for Hinckley & Bosworth Borough Council."
-URL = "https://www.hinckley-bosworth.gov.uk"
-
-TEST_CASES = {
-    "Test_House": {"uprn": "100030499851"},
-}
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food": Icons.BIO_KITCHEN,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
-    "de": {"uprn": "UPRN der Immobilie"},
-    "it": {"uprn": "UPRN della proprietà"},
-    "fr": {"uprn": "UPRN du bien"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
-    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
-    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
-    "fr": {"uprn": "Trovez votre UPRN sur https://www.findmyaddress.co.uk/"},
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+def _mylocation(uprn, **_) -> dict[str, str]:
+    """The council site reads the property from a ``mylocation`` JSON cookie."""
+    location = {
+        "postcode": "",
+        "myaddress": "",
+        "uprn": str(uprn),
+        "usrn": "",
+        "ward": "",
+        "parish": "",
+        "lng": 0,
+        "lat": 0,
+    }
+    return {"mylocation": quote(json.dumps(location, separators=(",", ":")))}
 
-    def fetch(self) -> list[Collection]:
-        location_data = {
-            "postcode": "",
-            "myaddress": "",
-            "uprn": self._uprn,
-            "usrn": "",
-            "ward": "",
-            "parish": "",
-            "lng": 0,
-            "lat": 0,
-        }
-        cookie_value = quote(json.dumps(location_data, separators=(",", ":")))
 
-        with requests.Session() as session:
-            session.headers.update(
-                {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                    "Accept-Language": "en-GB,en;q=0.9",
-                }
-            )
-            session.cookies.set(
-                "mylocation", cookie_value, domain="www.hinckley-bosworth.gov.uk"
-            )
-            response = session.get(
-                "https://www.hinckley-bosworth.gov.uk/collections",
-                timeout=10,
-            )
-        response.raise_for_status()
+def _kind(img) -> str | None:
+    """The bin an icon stands for, from its title (or alt) text."""
+    title = (img.get("title") or img.get("alt") or "").lower()
+    if "refuse" in title or "black" in title:
+        return "Refuse"
+    if "recycling" in title or "blue" in title or "lid" in title:
+        return "Recycling"
+    if "garden" in title or "brown" in title:
+        return "Garden"
+    if "food" in title or "caddy" in title:
+        return "Food"
+    return None
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        date_containers = soup.find_all(
-            "div", class_=re.compile(r"(first|last)_date_bins")
-        )
-        if not date_containers:
-            raise ValueError(
-                f"No collection containers found for UPRN {self._uprn} — page structure may have changed."
-            )
 
-        entries = []
-        now = datetime.now()
+def _date(img) -> str:
+    """The "Thursday 1 October:" heading of the day this icon sits under."""
+    heading = img.find_parent("div").find("h3", class_="collectiondate")
+    return heading.get_text(strip=True).rstrip(":").strip()
 
-        for container in date_containers:
-            h3 = container.find("h3", class_="collectiondate")
-            if not h3:
-                continue
 
-            raw_date = re.sub(r"[^a-zA-Z0-9 ]", "", h3.get_text(strip=True)).strip()
-            try:
-                date_obj = datetime.strptime(
-                    f"{raw_date} {now.year}", "%A %d %B %Y"
-                ).date()
-                if date_obj < now.date() - timedelta(days=30):
-                    date_obj = date_obj.replace(year=now.year + 1)
-            except ValueError:
-                continue
+@final
+class Source(BaseSource):
+    TITLE = "Hinckley & Bosworth Borough Council"
+    DESCRIPTION = "Source for Hinckley & Bosworth Borough Council."
+    URL = "https://www.hinckley-bosworth.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-            for img in container.find_all("img"):
-                title = (img.get("title") or img.get("alt") or "").lower()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-                waste_type = None
-                if "refuse" in title or "black" in title:
-                    waste_type = "Refuse"
-                elif "recycling" in title or "blue" in title or "lid" in title:
-                    waste_type = "Recycling"
-                elif "garden" in title or "brown" in title:
-                    waste_type = "Garden"
-                elif "food" in title or "caddy" in title:
-                    waste_type = "Food"
+    TEST_CASES: ClassVar[dict] = {
+        "Test_House": {"uprn": "100030499851"},
+    }
 
-                if waste_type:
-                    entries.append(
-                        Collection(
-                            date=date_obj,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                        )
-                    )
+    PARAMS = (uprn(),)
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+        ),
+    }
+
+    retrieve = retrievers.Request(
+        "https://www.hinckley-bosworth.gov.uk/collections",
+        cookies=_mylocation,
+    )
+
+    # One heading per collection day, followed by one icon per bin.
+    parse = parsers.HtmlParser(
+        ".first_date_bins img, .last_date_bins img",
+        require=[".first_date_bins, .last_date_bins"],
+    )
+
+    preprocess = RowFilter(lambda img, source: _kind(img) is not None)
+
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_kind,
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+            "Food": wt.FOOD_WASTE,
+        },
+    )

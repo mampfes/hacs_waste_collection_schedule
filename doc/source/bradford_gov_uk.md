@@ -1,6 +1,8 @@
 # Bradford Metropolitan District Council
 
-Support for schedules provided by [Bradford Metropolitan District Council](https://onlineforms.bradford.gov.uk/ufs/collectiondates.eb), serving the metropolitan district of Bradford, UK.
+Support for schedules provided by [Bradford Metropolitan District Council](https://bradford.gov.uk).
+
+Source for Bradford.gov.uk services for Bradford Metropolitan Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: bradford_gov_uk
       args:
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -24,12 +26,9 @@ waste_collection_schedule:
   sources:
     - name: bradford_gov_uk
       args:
-        uprn: "100051239296"
+        uprn: '100051250665'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The UPRN code can be found by setting and selecting your address in the [Bradford household bin collection dates web page](https://onlineforms.bradford.gov.uk/ufs/collectiondates.eb) and saving your address for later.  The UPRN will then be stored in the COLLECTIONDATES cookie
-in your browser.
-
-Alternatively, search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.
+Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/).

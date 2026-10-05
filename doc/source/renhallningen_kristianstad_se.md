@@ -1,6 +1,8 @@
-# Kristianstad Renhållning Sophämntning
+# Kristianstad Renhållning
 
-Support for schedules provided by [Kristianstad Renhållning](https://renhallningen-kristianstad.se/villa-fritidshus/tomning-av-sopkarl/tomningschema/), serving the municipality of Kristianstad Sweden.
+Support for schedules provided by [Kristianstad Renhållning](https://renhallningen-kristianstad.se).
+
+Source for Kristianstad Renhållning waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: renhallningen_kristianstad_se
       args:
-        street_address: Östra Boulevarden 1
+        street_address: "\xD6stra Boulevarden 1"
 ```
-
-## How to get the source argument
-
-The source argument is the address to the house with waste collection. The address can be tested [here](https://renhallningen-kristianstad.se/villa-fritidshus/tomning-av-sopkarl/tomningschema/).

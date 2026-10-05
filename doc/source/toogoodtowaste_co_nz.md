@@ -1,6 +1,8 @@
 # Hutt City Council
 
-Support for schedules provided by [Hutt City Council](https://toogoodtowaste.co.nz/).
+Support for schedules provided by [Hutt City Council](https://www.toogoodtowaste.co.nz/).
+
+Source for Hutt City Council.
 
 ## Configuration via configuration.yaml
 
@@ -9,20 +11,24 @@ waste_collection_schedule:
   sources:
     - name: toogoodtowaste_co_nz
       args:
-        address: 30 Laings Road HUTT CENTRAL # see 'How to get the source argument below'
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **address**  
-*(string)*
+*(string) (required)*
 
-## How to get the source argument
+## Example
 
-The source argument is the address as is appears when searched on https://toogoodtowaste.co.nz:
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: toogoodtowaste_co_nz
+      args:
+        address: 493 Muritai Road EASTBOURNE
+```
 
-- Search for you address on https://toogoodtowaste.co.nz
-- Select your address from the dropdown
-- Copy your address from the text box
+## How to get the source arguments
 
-The casing must match exactly.
+Enter your address exactly as the address finder on [toogoodtowaste.co.nz](https://www.toogoodtowaste.co.nz/) shows it, e.g. '30 Laings Road HUTT CENTRAL' (street in title case, suburb in capitals).

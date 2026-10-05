@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.unley.sa.gov.au/api/v1/myarea/search a37515411c",
+      "method": "GET",
+      "url": "https://www.unley.sa.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.unley.sa.gov.au/api/v1/myarea/search?keywords=63+Castle+Street+Parkside+SA+5063",
+      "body": "{\"params\":[[\"keywords\",\"63 Castle Street Parkside SA 5063\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/xml; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:47:12 GMT",
+        "content-length": "437",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=13, origin; dur=850, ak_p; desc=\"1790185631292_386904719_87087489_86248_14978_4_10_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=EFF4F4F0D9DD2CBEA4A7F8610E136601~000000000000000000000000000000~YAAQj7IPFw64gMWgAQAAufFgzwEiewX4r6rXi25PPa2T7VnJ/uMYS6OdgKb4VpJSQ/vnaiqcycoScm/vhsMU9MLKIJQu+t+mD5EXutgP031/AiGYNKioVWeDZsnHuHQEPjyjos0nRG3ZYJejmmNhmRIFVxWSsaBbWuEbmGqhLRZJhm92G8NCC5j385dg9gzC6vdZoP9BFDh0/jPTtneG/Iw3vmSsaIocM8InOYToCCfCfOMFsDBxnZcFb0SsE+wW1TWJj9UcjmAmx3d3jY87x4fBTRZ8kVuEQhn7yJeA+1xJSO+xUV6Jlt0M+8XDH5RZZdV2bAAgORX8KBg45zwwY2krk+WPHteNJ+aZm7/26fbN3lJ2eWWtwWiL7IzzObMwF1Oe+1VNQw3xw2qD4EMvXcBp0Q==; Domain=.unley.sa.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:47:11 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "PExpc3RQaHlzaWNhbEFkZHJlc3NTZWFyY2hSZXN1bHQgeG1sbnM6aT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5kYXRhY29udHJhY3Qub3JnLzIwMDQvMDcvT3BlbkNpdGllcy5Mb2dpYy5TcGF0aWFsIj48SXRlbXMgeG1sbnM6ZDJwMT0iaHR0cDovL3NjaGVtYXMuZGF0YWNvbnRyYWN0Lm9yZy8yMDA0LzA3L09wZW5DaXRpZXMuTG9naWMuU3BhdGlhbCIgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmRhdGFjb250cmFjdC5vcmcvMjAwNC8wNy9PcGVuQ2l0aWVzLkxvZ2ljLkFQSSI+PGQycDE6UGh5c2ljYWxBZGRyZXNzU2VhcmNoUmVzdWx0PjxkMnAxOkFkZHJlc3NTaW5nbGVMaW5lPjYzIENhc3RsZSBTdHJlZXQgUGFya3NpZGUgIFNBICA1MDYzPC9kMnAxOkFkZHJlc3NTaW5nbGVMaW5lPjxkMnAxOkRpc3RhbmNlPjA8L2QycDE6RGlzdGFuY2U+PGQycDE6SWQ+OGFhNzVjZjUtMjM5Yy00MTIwLTk0Y2EtMDRjN2UxMjFlYjY1PC9kMnAxOklkPjxkMnAxOkxhdExvbiB4bWxuczpkNHAxPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tLzIwMDMvMTAvU2VyaWFsaXphdGlvbi9BcnJheXMiPjxkNHAxOmRvdWJsZT4tMzQuOTQ5MjE1OTE8L2Q0cDE6ZG91YmxlPjxkNHAxOmRvdWJsZT4xMzguNjE5MTg3MjwvZDRwMTpkb3VibGU+PC9kMnAxOkxhdExvbj48ZDJwMTpNdW5pY2lwYWxTdWJkaXZpc2lvbj5QYXJrc2lkZSBXYXJkPC9kMnAxOk11bmljaXBhbFN1YmRpdmlzaW9uPjxkMnAxOlNjb3JlPjkuOTM5MDM3PC9kMnAxOlNjb3JlPjwvZDJwMTpQaHlzaWNhbEFkZHJlc3NTZWFyY2hSZXN1bHQ+PC9JdGVtcz48TGltaXQgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmRhdGFjb250cmFjdC5vcmcvMjAwNC8wNy9PcGVuQ2l0aWVzLkxvZ2ljLkFQSSI+MTA8L0xpbWl0PjxPZmZzZXQgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmRhdGFjb250cmFjdC5vcmcvMjAwNC8wNy9PcGVuQ2l0aWVzLkxvZ2ljLkFQSSI+MDwvT2Zmc2V0PjxUb3RhbCB4bWxucz0iaHR0cDovL3NjaGVtYXMuZGF0YWNvbnRyYWN0Lm9yZy8yMDA0LzA3L09wZW5DaXRpZXMuTG9naWMuQVBJIj4xPC9Ub3RhbD48L0xpc3RQaHlzaWNhbEFkZHJlc3NTZWFyY2hSZXN1bHQ+"
+    },
+    {
+      "key": "GET https://www.unley.sa.gov.au/ocapi/Public/myarea/wasteservices d4d1215f09",
+      "method": "GET",
+      "url": "https://www.unley.sa.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.unley.sa.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=8aa75cf5-239c-4120-94ca-04c7e121eb65&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"8aa75cf5-239c-4120-94ca-04c7e121eb65\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "714",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:47:13 GMT",
+        "set-cookie": "ASP.NET_SessionId=badomqa0k23jtxbjgahpsukt; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=42, origin; dur=880, ak_p; desc=\"1790185632193_386904719_87088426_92197_14370_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlICAgXHUwMDNjL2gyXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cImdyaWQgd2FzdGUtc2VydmljZXMtcmVzdWx0cyByZXN1bHRzLTRcIlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ2VuZXJhbC13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0wXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlR2VuZXJhbCBXYXN0ZSBGT0dPIChCbHVlIEJpbilcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LlxuXG5QbGFjZSB0aGUgYmluIG9uIHRoZSBrZXJic2lkZSBieSA2YW0gb24gdGhlIGRheSBvZiBjb2xsZWN0aW9uLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly93d3cudW5sZXkuc2EuZ292LmF1L0JpbnMtcGV0cy1wYXJraW5nL1dhc3RlLXJlY3ljbGluZy9XZWVrbHktRk9HTy1UcmlhbFwiIHRhcmdldD1cIlwiXHUwMDNlTGVhcm4gbW9yZSBhYm91dCB0aGUgV2Vla2x5IEZPR08gVHJpYWwuXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDEvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ3JlZW4td2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMVwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZU9yZ2FuaWMgV2FzdGUgRk9HTyAoR3JlZW4gb3IgR3JleSBCaW4pXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuXG5cblBsYWNlIHRoZSBiaW4gb24gdGhlIGtlcmJzaWRlIGJ5IDZhbSBvbiB0aGUgZGF5IG9mIGNvbGxlY3Rpb24uXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy51bmxleS5zYS5nb3YuYXUvQmlucy1wZXRzLXBhcmtpbmcvV2FzdGUtcmVjeWNsaW5nL1dlZWtseS1GT0dPLVRyaWFsXCIgdGFyZ2V0PVwiXCJcdTAwM2VMZWFybiBtb3JlIGFib3V0IHRoZSBXZWVrbHkgRk9HTyBUcmlhbC5cdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMjQvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSByZWN5Y2xpbmcgZGF0ZS1wcmVjaXNlIGl0ZW0tMlwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZVJlY3ljbGluZyAoWWVsbG93IExpZCBCaW4pXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCBmb3J0bmlnaHRseS5cblxuUGxhY2UgdGhlIGJpbiBvbiB0aGUga2VyYnNpZGUgYnkgNmFtIG9uIHRoZSBkYXkgb2YgY29sbGVjdGlvbi5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cImh0dHBzOi8vd3d3LnVubGV5LnNhLmdvdi5hdS9CaW5zLXBldHMtcGFya2luZy9XYXN0ZS1yZWN5Y2xpbmcvV2hhdC10by1wdXQtaW4teW91ci0zLWJpbnNcIiB0YXJnZXQ9XCJcIlx1MDAzZU5lZWQgc29tZSByZWN5Y2xpbmcgdGlwcz8gTGVhcm4gbW9yZSBhYm91dCBtYW5hZ2luZyByZWN5Y2xhYmxlcy5cdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMjQvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBTdHJlZXRDbGVhbmluZyBkYXRlLXByZWNpc2UgaXRlbS0zXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlUmVzaWRlbnRpYWwgU3RyZWV0IENsZWFuaW5nXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUxvY2FsIHN0cmVldHMgYXJlIGNsZWFuZWQgb24gYSA2LXdlZWsgY3ljbGUuIENsZWFuaW5nIGNhbiBvY2N1ciBvbiBhbnkgZGF5IHdpdGhpbiB0aGUgc2NoZWR1bGVkIHdlZWsuIFRoaXMgY2FuIGJlIGltcGFjdGVkIGJ5IHdlYXRoZXIgb3IgaGVhdnkgbGVhZiBmYWxsLlx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgTW9uIDE5LzEwLzIwMjZcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

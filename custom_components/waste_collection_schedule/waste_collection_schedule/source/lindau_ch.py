@@ -1,82 +1,61 @@
-import json
-import re
-import unicodedata
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Lindau"
-DESCRIPTION = "Source for Lindau waste collection."
-URL = "https://www.lindau.ch"
-TEST_CASES = {
-    "Tagelswangen": {"city": "Tagelswangen"},
-    "Grafstal": {"city": "190"},
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.IWeb import (
+    AbfalldatenRows,
+    abfalldaten_parser,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-ICON_MAP = {
-    "kehricht": Icons.GENERAL_WASTE,
-    "grungut": Icons.ORGANIC,
-    "hackseldienst": Icons.GARDEN,
-    "papier und karton": Icons.PAPER,
-    "altmetalle": Icons.METAL,
-    "sonderabfall": Icons.HAZARDOUS,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Lindau"
+    DESCRIPTION = "Source for Lindau waste collection."
+    URL = "https://www.lindau.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.HAZARDOUS,
+    ]
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
+    TEST_CASES: ClassVar[dict] = {
+        "Tagelswangen": {"city": "Tagelswangen"},
+        "Grafstal": {"city": "190"},
     }
-}
 
+    PARAMS = (city(),)
 
-class Source:
-    def __init__(self, city):
-        self._city = city
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your village as listed on https://www.lindau.ch/abfalldaten "
+            "(Grafstal, Lindau, Tagelswangen or Winterberg)."
+        ),
+        "de": (
+            "Geben Sie Ihren Ortsteil so ein, wie er auf "
+            "https://www.lindau.ch/abfalldaten steht (Grafstal, Lindau, "
+            "Tagelswangen oder Winterberg)."
+        ),
+    }
 
-    def fetch(self):
-        response = requests.get("https://www.lindau.ch/abfalldaten")
-
-        html = BeautifulSoup(response.text, "html.parser")
-
-        table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
-        data = json.loads(table.attrs["data-entities"])
-
-        entries = []
-        for item in data["data"]:
-            if (
-                self._city in item["abfallkreisIds"]
-                or self._city in item["abfallkreisNameList"]
-            ):
-                # The `*-sort` fields are now obfuscated ("#1713..."), so read
-                # the plain display fields instead.
-                next_pickup = re.search(r"\d{2}\.\d{2}\.\d{4}", item["_anlassDate"])
-                if next_pickup is None:
-                    continue
-                next_pickup_date = datetime.strptime(
-                    next_pickup.group(0), "%d.%m.%Y"
-                ).date()
-
-                waste_type = BeautifulSoup(item["name"], "html.parser").text
-                icon_key = (
-                    unicodedata.normalize("NFKD", waste_type)
-                    .encode("ascii", "ignore")
-                    .decode()
-                    .lower()
-                )
-                icon = next(
-                    (icon for key, icon in ICON_MAP.items() if key in icon_key),
-                    Icons.GENERAL_WASTE,
-                )
-
-                entries.append(
-                    Collection(
-                        date=next_pickup_date,
-                        t=waste_type,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+    retrieve = HttpGetRetriever(url="https://www.lindau.ch/abfalldaten")
+    parse = abfalldaten_parser()
+    preprocess = AbfalldatenRows(area="city")
+    transform = ICSTransformer(
+        type_value_map={
+            "Kehricht": wt.GENERAL_WASTE,
+            "Biogene Abfälle (Grüngut)": wt.ORGANIC,
+            "Häckseldienst": wt.GARDEN_WASTE,
+            "Papier und Karton": wt.PAPER,
+            "Altmetalle": wt.RECYCLABLES,
+            "Sonderabfall": wt.HAZARDOUS,
+        }
+    )

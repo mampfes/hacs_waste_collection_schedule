@@ -4,6 +4,94 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.5] - 2026-09-27
+
+This is the biggest BaseSource/pipeline batch yet: 25 PRs migrate roughly 235 more legacy sources, and the project has now crossed the halfway mark — 514 of 1000 sources (51.4%) run on the pipeline. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. This is still an opt-in pre-release; stable installs are unaffected until 3.0.0 ships. **Every migration below changes that source's waste-type labels to the canonical, localised names** — check any automation, template or customisation that matches an exact label string.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@dominikhellweg, @muditguptacode and @tayuki. 🎉
+Thanks as well to our returning contributors (@AtomBrake, @bbr111, @costajohnt, @crazyboy89, @figpom-solutions, @giertzd, @micvppl, @stalar, @superrob) for the fixes, sources and migrations below.
+
+### Added Sources
+
+- added AKSD Debrecen (aksd_hu), Hungary (#7501)
+- added Treviglio (BG) to municipium_it, Italy (#7508)
+- added Gemeinde Flirsch, Tyrol (flirsch_gv_at), Austria (#7532)
+- added Phoenix, AZ trash and recycling (phoenix_gov), US (#7539)
+- added HRA (Hadeland og Ringerike Avfallsselskap) (hra_no), Norway (#7546)
+- added Palmerston North City Council (pncc_govt_nz), NZ, on the OpenCities/MyArea platform (#7547)
+- added Bad Nauheim to the Mein-Abfallkalender.online ICS regions (#7553)
+- added Merthyr Tydfil County Borough Council (merthyr_gov_uk), UK (#7554)
+- added Fort Lauderdale, FL (fort_lauderdale_fl_us), US (#7558)
+- added ReCollect (recollect_net), any municipality on the ReCollect/Routeware JSON events API, plus shared service/ReCollect.py (thanks @muditguptacode) (#7537)
+- added Landkreis Südwestpfalz (suedwestpfalz_de), Germany, on the Athos servlet platform (#7565)
+- added Osaka City (city_osaka_lg_jp), Japan — the first Japanese source (thanks @tayuki) (#7589)
+- added Gemeinde Hiddenhausen ICS source, Germany (thanks @dominikhellweg) (#7603)
+- added Danish (`da`) to the translation generation pipeline (thanks @superrob) (#7549)
+- added Danderyds kommun to edpevent_se, SE (thanks @stalar) (port of #7566) (#7578)
+- added an address cascade (city, district, street, house number) to the abfall_io_graphql config flow, replacing the free-text house-number field (thanks @costajohnt) (#7498)
+
+### Fixed Sources
+
+- fixed stadt_kerpen_de: empty street dropdown, add missing f_id_bezirk cascade level (#7499)
+- fixed lacity_gov: apply LASAN one-day holiday collection delays (#7506)
+- fixed coventry_gov_uk: use the new Find my bin day service (UPRN) (#7507)
+- fixed ALBA Berlin: move from abfall_io to abfall_io_graphql after the legacy key started returning 401 (#7512)
+- fixed AWG Calw: move from abfall_io to abfall_io_graphql after the legacy key started returning an empty form (#7513)
+- fixed abfall_io: migrate 6 providers to their v3 GraphQL keys and drop 7 dead legacy registry entries that already returned 401 (#7514)
+- fixed abfall_io: drop the form's placeholder option ("Bitte auswählen...") from list_choices (#7522)
+- fixed bir_no: address lookup for addresses with a house letter (thanks @giertzd) (port of #7523) (#7524)
+- fixed data_umweltprofis_at: rebuild on the provider's new web module, ship cassettes (#7525)
+- fixed toronto_ca: import Collection through the package factory instead of the raw class, which raised a TypeError on every fetch (#7526)
+- fixed awg_wuppertal_de: handle streets with multiple waste calendars (#7527)
+- fixed publidata_fr: guard against null waste types and fall back to per-hit grouping when no "single"-sectorization hit exists (#7530)
+- fixed publidata_fr: restore test coverage for Métropole Européenne de Lille (MEL) (port of #7529) (#7531)
+- fixed renoweb_dk: use RenoWeb's public app API instead of the MitID-gated legacy endpoint (#7538)
+- fixed abfalltransport_li: adapt to the new EZV website (ezv.li) (#7544)
+- fixed waste_types: classify 'Laubsäcke' / 'Abfuhr Laubsäcke' as garden waste (#7545)
+- fixed ecoharmonogram_pl: add optional region parameter to disambiguate streets shared across collection areas (thanks @micvppl) (port of #7550) (#7551)
+- fixed innerwest_nsw_gov_au: exact street matching (port of #7560) (#7561)
+- fixed hedemora_energi_se: map Papper, Plast and Restavfall icons instead of falling back to the default (thanks @crazyboy89) (port of #7568) (#7569)
+- fixed abfall_io: resolve AVR Kommunal (Rhein-Neckar-Kreis) waste types instead of leaving them unresolved (#7572)
+- fixed publidata_fr: exclude every day of bare closure ranges (thanks @figpom-solutions) (port of #7580) (#7581)
+- fixed nemaffaldsservice_kk_dk: map Tekstil to TEXTILES instead of generic recycling (#7607)
+
+### Other
+
+- migrated the OpenCities/MyArea platform and its 36 council sources to BaseSource (#7548)
+- migrated 10 ICS-service sources to BaseSource: aarberg_ch, bern_ch, clackmannanshire_gov_uk, deafvalapp_nl, gronau_de, hasselroth_de, kriftel_de, millvalleyrefuse_com, sperrmuell_erlensee_de, team_orange_de (#7552)
+- migrated buergerportal_de (c-trace Bürgerportal, 5 operators: cochem_zell, alb_donau, biedenkopf, bedburg, klevestadt) to BaseSource (#7570)
+- migrated 6 tier-0 legacy platforms to BaseSource: tonnenticker_pro_de, mils_tirol_at, kempsey_nsw_gov_au, mount_alexander_vic_gov_au, portphillip_vic_gov_au, meinawb_de (#7575)
+- migrated the EDP Future SimpleWastePickup platform and 10 Swedish sources to BaseSource: edpevent_se, gotland_se, juneavfall_se, kungalv_se, lund_se, molndal_se, partille_se, ssam_se, uppsalavatten_se, vivab_se (#7576)
+- migrated exeter_gov_uk to the BaseSource pipeline, carrying over the WAF-block and misaligned-bin-dates fix (thanks @AtomBrake) (port of #7574) (#7577)
+- migrated the AchieveForms (UK) platform and 12 council sources to BaseSource: angus_gov_uk, coventry_gov_uk, dudley_gov_uk, eastherts_gov_uk, eastsuffolk_gov_uk, hartlepool_gov_uk, maidstone_gov_uk, midlothian_gov_uk, milton_keynes_gov_uk, pkc_gov_uk, rochdale_gov_uk, torridge_gov_uk (#7579)
+- migrated 12 ArcGIS sources to BaseSource: cardinia_vic_gov_au, charleston_sc_gov, charlestoncounty_org, cityofparramatta_nsw_gov_au, kansas_city_mo_us, marysville_wa_us, moretonbay_qld_gov_au, north_ayrshire_gov_uk, prince_georges_county_md_us, taupodc_govt_nz, teatreegully_sa_gov_au, wingecarribee_nsw_gov_au (#7582)
+- migrated the remaining 3 AchieveForms (UK) sources to BaseSource: gloucester_gov_uk, reigatebanstead_gov_uk, tower_hamlets_gov_uk (#7583)
+- migrated the remaining 2 ArcGIS sources to BaseSource: rotorua_lakes_council_nz, timra_se (#7584)
+- migrated the waste-info.com.au (Impact Apps) platform and 9 council sources to BaseSource: brisbane_qld_gov_au, canadabay_nsw_gov_au, cumberland_nsw_gov_au, hobsonsbay_vic_gov_au, innerwest_nsw_gov_au, maribyrnong_vic_gov_au, portstephens_nsw_gov_au, redland_qld_gov_au, wollongongwaste_com_au (#7587)
+- migrated 7 legacy sources to BaseSource: esch_lu, mansfield_gov_uk, harlow_gov_uk, phoenix_gov, belmont_wa_gov_au, stirling_gov_uk, blackburn_gov_uk (#7588)
+- migrated the North Yorkshire bin calendar platform and its 7 former-district sources to BaseSource: northyorks_craven_gov_uk, northyorks_hambleton_gov_uk, northyorks_harrogate_gov_uk, northyorks_ryedale_gov_uk, northyorks_scarborough_gov_uk, northyorks_selby_gov_uk, richmondshire_gov_uk (#7590)
+- migrated the Bartec Public Dashboard platform and 6 sources to BaseSource: bedford_gov_uk, durham_gov_uk, highpeak_gov_uk, scotborders_gov_uk, southlanarkshire_gov_uk, staffsmoorlands_gov_uk (#7591)
+- migrated nerdbridge_de (Landkreis Northeim, 191 towns) to BaseSource, moving its town registry to doc/regions/nerdbridge_de.yaml (#7593)
+- migrated the Jadu XFP form platform and 6 UK council sources to BaseSource: broxbourne_gov_uk, chorley_gov_uk, oxford_gov_uk, southribble_gov_uk, tmbc_gov_uk, welhat_gov_uk (#7594)
+- migrated the SISMS/BLISKO platform (sims_pl, 110 Polish gminas) to BaseSource (#7596)
+- migrated the 3C waste calendar and i-web /abfalldaten platforms and 5 sources to BaseSource: alchenstorf_ch, cambridge_gov_uk, huntingdonshire_gov_uk, lindau_ch, scambs_gov_uk (#7598)
+- migrated 10 single-request UK JSON sources to BaseSource: camden_gov_uk, ealing_gov_uk, erewash_gov_uk, harrow_gov_uk, hart_gov_uk, hull_gov_uk, lbbd_gov_uk, nottingham_city_gov_uk, southglos_gov_uk, westnorthants_gov_uk (#7599)
+- migrated 13 single-request JSON sources to BaseSource: betzdorf_lu, chiemgau_recycling_lk_rosenheim, ead_darmstadt_de, gmina_miekinia_pl, hcc_govt_nz, hudiksvall_se, lsr_nu, nyc_gov, renosyd_dk, simbio_si, srvatervinning_se, stadtwerke_roesrath_de, townsville_qld_gov_au (#7600)
+- migrated the LocalGov Drupal waste collection platform and 11 UK sources to BaseSource: centralbedfordshire_gov_uk, cumberland_gov_uk, dartford_gov_uk, eastdunbarton_gov_uk, eastleigh_gov_uk, liverpool_gov_uk, newcastle_staffs_gov_uk, rbwm_gov_uk, runnymede_gov_uk, wirral_gov_uk, wyre_gov_uk (#7605)
+- migrated 17 single-page UK HTML sources to BaseSource: barnet_gov_uk, bridgend_gov_uk, cherwell_gov_uk, darlington_gov_uk, flintshire_gov_uk, gwynedd_gov_uk, lichfielddc_gov_uk, maldon_gov_uk, melton_gov_uk, nelincs_gov_uk, north_kesteven_org_uk, salford_gov_uk, shropshire_gov_uk, southwark_gov_uk, stoke_gov_uk, swindon_gov_uk, warwickdc_gov_uk (#7606)
+- migrated 16 single-request JSON sources to BaseSource: ballarat_vic_gov_au, havering_gov_uk, heinz_entsorgung_de, innherredrenovasjon_no, mitchellshire_vic_gov_au, mosman_nsw_gov_au, northlincs_gov_uk, okrab_se, ozoostrava_cz, pgh_st, rushmoor_gov_uk, sheffield_gov_uk, stalbans_gov_uk, tewkesbury_gov_uk, wealden_gov_uk, york_gov_uk (#7608)
+- migrated 11 single-page HTML sources to BaseSource: conwy_gov_uk, hausmannstaetten_gv_at, northlanarkshire_gov_uk, nsomerset_gov_uk, nwleics_gov_uk, predmerice_nad_labem_cz, sandiego_gov, sandnes_no, sstaffs_gov_uk, stavanger_no, wakefield_gov_uk (#7610)
+- migrated 18 small JSON sources to BaseSource: act_gov_au, biffaleicester_co_uk, bracknell_forest_gov_uk, canning_wa_gov_au, denbighshire_gov_uk, eastriding_gov_uk, fosenrenovasjon_no, guildford_gov_uk, gyhg_hu, info_collectes_ca, mzvhegau_de, northnorthants_gov_uk, rambo_se, rd4_nl, remidt_no, renhallningen_kristianstad_se, warrington_gov_uk, wollondilly_nsw_gov_au (#7611)
+- shipped cassettes and declared WASTE_TYPES for awn_de, regioentsorgung_de, bielefeld_de, stadt_bamberg_de, erlangen_hoechstadt_de and nuernberger_land_de, and recorded fredrikstad_no's cassette, closing out the remaining #6935/#7051 test-coverage backlog (#7505, #7515, #7516, #7517, #7518)
+- declared HTTP lookups instead of hand-rolling them in 24 already-migrated sources, closing out the #7139 architecture-compliance backlog (#7601)
+- fixed tools/arch_coverage.py to count sources that reach BaseSource via another source (offenbach_de, rh_entsorgung_de, stadt_kerpen_de) as migrated (#7586)
+- fixed pipeline doc generation to keep a hand-written service-section instead of overwriting it when a source becomes a BaseSource (#7585)
+- sped up release-branch CI: a separate lint job, slowest-test reporting, and a single-pass WASTE_TYPES check during cassette replay (#7562)
+- made update_docu_links independent of the working directory (#7500)
+- added the missing cascade_confirm translation key for Slovenian (sl) and covered it in the language-completeness tests (#7503)
+- cleaned up .codespellignore, removing entries that no longer suppressed any finding (#7573)
+
 ## [3.0.0-beta.4] - 2026-09-21
 
 This is another call for testers of the BaseSource/pipeline rewrite: if you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. This is still an opt-in pre-release; stable installs are unaffected until 3.0.0 ships.
@@ -2960,7 +3048,7 @@ ADDED
 - add source my waste mobi, USA (thanks @expl0ratory)
 - add source mags Mönchengladbach, Germany (thanks @fr34kyn01535)
 - add source Ashford, UK (@5ila5)
-- add source Australian Captial Territory, Australia (thanks @eddster2309)
+- add source Australian Capital Territory, Australia (thanks @eddster2309)
 - add source Logan City Council, Australia (thanks @sh-nguyen)
 - add source Broxtowe County, UK (@5ila5)
 - add source Armadale WA, Australia (@5ila5)

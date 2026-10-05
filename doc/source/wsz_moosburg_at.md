@@ -1,66 +1,73 @@
-# WSZ-Moosburg.at
+# WSZ Moosburg
 
-Support for schedules provided by [wsz-moosburg.at](https://wsz-moosburg.at).
+Support for schedules provided by [WSZ Moosburg](https://wsz-moosburg.at).
 
-## Configuration Variables
+Source for WSZ Moosburg/Kärnten, including Moosburg, Pörtschach, Techelsberg
 
-There are two options to configure this source.
+## Configuration via configuration.yaml
 
-### 1. Using the Address ID
+### Using address_id
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wsz_moosburg_at
       args:
-        address_id: ID
+        address_id: ADDRESS_ID
 ```
+
+### Using municipal, address and street
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: wsz_moosburg_at
+      args:
+        municipal: MUNICIPAL
+        address: ADDRESS
+        street: STREET
+```
+
+### Configuration Variables
 
 **address_id**  
-*(integer) (required)* See the next section on how to obtain it.
+*(string) (alternative)*
 
-### How to get the Address ID
+**municipal**  
+*(string) (alternative)*
 
-For this you will have to use a (desktop) browser with developer tools, e.g. Google Chrome:
+**address**  
+*(string) (alternative)*
 
-1. Open [https://wsz-moosburg.at/calendar](https://wsz-moosburg.at/calendar).
-2. Open the Developer Tools (Ctrl + Shift + I / Cmd + Option + I) and open the `Network` tab.
-3. Select your `Gemeinde` from the list.
-4. Select your `Addresse` from the list.
-5. There might be another step to select your `Straße`, but this depends on the address. If it's prompted to you, select that as well.
-6. Select the last entry in the `Network` tab's list, it should be a number followed by `?include-public-holidays`, e.g. `69980?include-public-holidays`.
-7. This number (e.g. `69980`) is what needs to be used as `address_id` in the configuration.
+**street**  
+*(string) (alternative)*
 
-### 2. Using the full Address
+Provide one of: `address_id` or `municipal` + `address` + `street`.
+
+## Example
+
+### Using address_id
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wsz_moosburg_at
       args:
-        municipal: Gemeinde
-        address: Adresse
-        street: Straße
+        address_id: 70265
 ```
 
-Please note that exact spelling and casing matters.
+### Using municipal, address and street
 
-**municipal**  
-*(string) (required)*
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: wsz_moosburg_at
+      args:
+        municipal: Moosburg
+        address: "Oberg\xF6riach"
+        street: "Oberg\xF6riach"
+```
 
-**address**  
-*(string) (required)*
+## How to get the source arguments
 
-**street**  
-*(string) (required)*
-
-#### How to get the correct Address
-
-In any web browser:
-
-1. Open [https://wsz-moosburg.at/calendar](https://wsz-moosburg.at/calendar).
-2. Select your `Gemeinde` from the list. This is the value for `municipal`.
-3. Select your `Addresse` from the list. This is the value for `address`.
-4. There might be another step to select your `Straße`, but this depends on the address.
-    - If it's prompted to you, select that as well. This is the value for `street`.
-    - If it is not prompted, use the same value for `address` also for `street`.
+Pick your municipality, then your address and, where the address has several streets, the street. Alternatively enter the address ID directly: it is the number in the request https://wsz-moosburg.at/api/trash/<ID> that the calendar on wsz-moosburg.at makes for your address.

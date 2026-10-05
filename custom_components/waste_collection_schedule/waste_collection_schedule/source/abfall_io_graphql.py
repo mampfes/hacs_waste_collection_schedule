@@ -21,6 +21,41 @@ from waste_collection_schedule.transformers import JsonTransformer
 # vocabulary. The provider registry lives here, in the source that owns it.
 
 
+# Providers on this platform name the same bin in many local ways: with a
+# frequency or volume suffix ("Restmüll (2-wöchentlich)", "Restmüll 120l/240l"),
+# with a village ("Schadstoffe Hüfingen") or by colour ("Braune Tonne"). Reduce
+# such a label to its core term so the map below resolves it; anything else
+# passes through unchanged to the shared vocabulary.
+_TYPE_VALUE_MAP = {
+    "restmüll": wt.GENERAL_WASTE,
+    "bioabfall": wt.ORGANIC,
+    "altpapier": wt.PAPER,
+    "schadstoff": wt.HAZARDOUS,
+    # Deadline and fee reminders are calendar entries, not collections.
+    "keine abfuhr": None,
+}
+
+
+def _clean(label: str) -> str:
+    text = label.lower()
+    if "fristende" in text or "fälligkeit" in text:
+        return "keine abfuhr"
+    if "restmüll" in text or "restabfall" in text:
+        return "restmüll"
+    if (
+        "biomüll" in text
+        or "bioabfall" in text
+        or "komposttonne" in text
+        or "braune tonne" in text
+    ):
+        return "bioabfall"
+    if text.startswith("papier"):
+        return "altpapier"
+    if "schadstoff" in text:
+        return "schadstoff"
+    return label
+
+
 @final
 class Source(BaseSource):
     TITLE = "Abfall.IO / AbfallPlus (GraphQL)"
@@ -145,7 +180,10 @@ class Source(BaseSource):
     retrieve = AbfallIoGraphQLRetriever()
     parse = AbfallIoGraphQLParser()
     transform = JsonTransformer(
-        date_key="date", type_key=lambda r: r["wasteType"]["name"]
+        date_key="date",
+        type_key=lambda r: r["wasteType"]["name"],
+        type_value_map=_TYPE_VALUE_MAP,
+        clean=_clean,
     )
 
     REGIONS = regions.from_yaml(

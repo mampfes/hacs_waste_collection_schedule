@@ -1,92 +1,63 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Compose, Deduplicate, RowFilter
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Warrington Borough Council"
-DESCRIPTION = (
-    "Source for warrington.gov.uk services for Warrington Borough Council, UK."
-)
-URL = "https://www.warrington.gov.uk"
-
-TEST_CASES = {
-    "Test_001": {"uprn": "100010309878"},
-    "Test_002": {"uprn": "100010296572"},
-    "Test_003": {"uprn": 100010291332},
-    "Test_004": {"uprn": 100010258176},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-ICON_MAP = {
-    "BLACK BIN": Icons.GENERAL_WASTE,
-    "BLUE BIN": Icons.RECYCLING,
-    "GREEN BIN": Icons.ORGANIC,
-}
+_BINS = ("BLACK", "BLUE", "GREEN")
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+def _bin(job) -> str | None:
+    """The bin a job empties: its name carries the colour, nothing else does."""
+    return next((colour for colour in _BINS if colour in job["Name"]), None)
 
-    def fetch(self):
 
-        s = requests.Session()
-        r = s.get(
-            f"https://www.warrington.gov.uk/bin-collections/get-jobs/{self._uprn}",
-            headers=HEADERS,
-        )
-        json_data = json.loads(r.text)
+@final
+class Source(BaseSource):
+    TITLE = "Warrington Borough Council"
+    DESCRIPTION = (
+        "Source for warrington.gov.uk services for Warrington Borough Council, UK."
+    )
+    URL = "https://www.warrington.gov.uk"
+    COUNTRY = "uk"
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100010309878"},
+        "Test_002": {"uprn": "100010296572"},
+        "Test_003": {"uprn": 100010291332},
+        "Test_004": {"uprn": 100010258176},
+    }
 
-        # If no schedule, return empty list.
-        if not json_data["schedule"]:
-            return entries
+    PARAMS = (uprn(),)
 
-        for job in json_data["schedule"]:
-            # Data doesn't contain bin type, so we need to extract it from the job name.
-            bin_type = self.get_type(job["Name"])
-            if not bin_type:
-                continue
-
-            # List contains duplicates, so skip if already added.
-            if self.contains(
-                entries,
-                lambda x, job=job, bin_type=bin_type: (
-                    x.date
-                    == datetime.strptime(
-                        job["ScheduledStart"], "%Y-%m-%dT%H:00:00"
-                    ).date()
-                    and x.type == bin_type
-                ),
-            ):
-                continue
-
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        job["ScheduledStart"], "%Y-%m-%dT%H:00:00"
-                    ).date(),
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type.upper()),
-                )
-            )
-
-        return entries
-
-    def get_type(self, name):
-        if "BLACK" in name:
-            return "Black Bin"
-        if "BLUE" in name:
-            return "Blue Bin"
-        if "GREEN" in name:
-            return "Green Bin"
-        return False
-
-    def contains(self, list, filter):
-        for x in list:
-            if filter(x):
-                return True
-        return False
+    retrieve = HttpGetRetriever(
+        url=lambda uprn, **_: (
+            "https://www.warrington.gov.uk/bin-collections/get-jobs/"
+            f"{str(uprn).zfill(12)}"
+        ),
+    )
+    # The job list repeats a bin's collection once per job on that day.
+    parse = parsers.JsonParser("schedule")
+    preprocess = Compose(
+        RowFilter(lambda job, _source: _bin(job) is not None),
+        Deduplicate(key=lambda job: (job["ScheduledStart"][:10], _bin(job))),
+    )
+    transform = JsonTransformer(
+        date_key=lambda job: job["ScheduledStart"][:10],
+        type_key=lambda job: f"{_bin(job)} BIN",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "BLACK BIN": wt.GENERAL_WASTE,
+            "BLUE BIN": wt.RECYCLABLES,
+            "GREEN BIN": wt.GARDEN_WASTE,
+        },
+    )

@@ -1,208 +1,87 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, street_address
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "RMR Lac-Saint-Jean (QC)"
-DESCRIPTION = "Source script for RMR Lac-Saint-Jean waste collection"
 URL = "https://calendrier.rmrlac.qc.ca"
-COUNTRY = "ca"
+_COMPONENT = "wasteCollectionComposanteSearch0"
+_CALENDAR = f"{_COMPONENT}::calendar"
 
-TEST_CASES = {
-    "Métabetchouan-Lac-à-la-Croix (en)": {
-        "street_number_and_name": "1201 16e Chemin",
-        "locality": "Métabetchouan-Lac-à-la-Croix",
-        "province_or_state": "QC",
-        "language": "en",
-    },
-    "Métabetchouan-Lac-à-la-Croix (fr)": {
-        "street_number_and_name": "1201 16e Chemin",
-        "locality": "Métabetchouan-Lac-à-la-Croix",
-        "province_or_state": "QC",
-        "language": "fr",
-    },
-}
-
-ICON_MAP = {
-    "trash": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "compost": Icons.ORGANIC,
-}
-
-TYPE_MAP = {
-    "fr": {
-        "trash": "Déchets",
-        "recycling": "Recyclage",
-        "compost": "Matières organiques",
-    },
-    "en": {
-        "trash": "Garbage",
-        "recycling": "Recycling",
-        "compost": "Organic",
-    },
-}
-
-TYPE_KEYS = ["trash", "recycling", "compost"]
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_number_and_name": "Street number and name (e.g. '1201 16e Chemin')",
-        "locality": "Municipality name (e.g. 'Métabetchouan-Lac-à-la-Croix')",
-        "province_or_state": "Province or state code (default: QC)",
-        "language": "Language code for collection type names (default: en, supported: en, fr)",
-    },
-    "fr": {
-        "street_number_and_name": "Numéro et nom de rue (ex. '1201 16e Chemin')",
-        "locality": "Nom de la municipalité (ex. 'Métabetchouan-Lac-à-la-Croix')",
-        "province_or_state": "Province ou état (défaut: QC)",
-        "language": "Code de langue pour les types de collecte (défaut: fr, supporté: en, fr)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_number_and_name": "Street Number and Name",
-        "locality": "Municipality",
-        "province_or_state": "Province/State",
-        "language": "Language",
-    },
-    "fr": {
-        "street_number_and_name": "Numéro et nom de rue",
-        "locality": "Municipalité",
-        "province_or_state": "Province/État",
-        "language": "Langue",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street number and name along with your municipality.",
-    "fr": "Entrez votre numéro et nom de rue ainsi que votre municipalite.",
+_TYPE_MAP = {
+    "trash": wt.GENERAL_WASTE,
+    "recycling": wt.RECYCLABLES,
+    "compost": wt.ORGANIC,
 }
 
 
-def _submit_address(address: str) -> dict:
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Linux; Android 6.0; Nexus 6) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/148.0.0.0 Safari/537.36"
-        ),
-        "Accept": "*/*",
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "X-Requested-With": "XMLHttpRequest",
-        "X-October-Request-Flash": "1",
-        "X-October-Request-Handler": "wasteCollectionComposanteSearch0::onSubmitAddress",
-        "X-October-Request-Partials": (
-            "wasteCollectionComposanteSearch0::not-found&"
-            "wasteCollectionComposanteSearch0::calendar"
-        ),
-        "sec-ch-ua": '"Chromium";v="148"',
-        "sec-ch-ua-platform": '"Linux"',
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
+def _rows(calendar, source) -> list[dict]:
+    """One row per date of each ``data-dates-<type>="2026-09-07,2026-09-21,..."`` attribute."""
+    rows = []
+    for key in _TYPE_MAP:
+        raw = str(calendar.get(f"data-dates-{key}") or "")
+        rows.extend(
+            {"type": key, "date": date.strip()}
+            for date in raw.split(",")
+            if date.strip()
+        )
+    return rows
+
+
+@final
+class Source(BaseSource):
+    TITLE = "RMR Lac-Saint-Jean (QC)"
+    DESCRIPTION = "Source script for RMR Lac-Saint-Jean waste collection"
+    URL = URL
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.RECYCLABLES]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Métabetchouan-Lac-à-la-Croix": {
+            "street_number_and_name": "1201 16e Chemin",
+            "locality": "Métabetchouan-Lac-à-la-Croix",
+        },
     }
 
-    body = (
-        f"address={requests.utils.quote(address)}&localisation_lat=&localisation_lng="
+    PARAMS = (
+        street_address("street_number_and_name"),
+        municipality("locality"),
     )
 
-    r = requests.post(
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your street number and name along with your municipality, e.g. '1201 16e Chemin' in 'Métabetchouan-Lac-à-la-Croix'.",
+        "fr": "Entrez votre numéro et nom de rue ainsi que votre municipalité, p. ex. '1201 16e Chemin' à 'Métabetchouan-Lac-à-la-Croix'.",
+    }
+
+    retrieve = retrievers.HttpPostRetriever(
         f"{URL}/calendrier-de-collectes",
-        headers=headers,
-        data=body.encode("utf-8"),
-        params={
-            "url": "/calendrier-de-collectes",
-            "component": "wasteCollectionComposanteSearch0",
+        params={"url": "/calendrier-de-collectes", "component": _COMPONENT},
+        data=lambda street_number_and_name, locality, **_: {
+            "address": f"{street_number_and_name}, {locality}",
+            "localisation_lat": "",
+            "localisation_lng": "",
+        },
+        headers={
+            "Accept": "*/*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-October-Request-Flash": "1",
+            "X-October-Request-Handler": f"{_COMPONENT}::onSubmitAddress",
+            "X-October-Request-Partials": f"{_COMPONENT}::not-found&{_CALENDAR}",
         },
     )
-    r.raise_for_status()
-    return r.json()
 
+    parse = parsers.HtmlParser("div.collection-calendar", from_json_key=_CALENDAR)
 
-def _parse_entries(data: dict, lang: str = "en") -> list[Collection]:
-    entries: list[Collection] = []
+    preprocess = ExplodeList(_rows)
 
-    not_found = data.get("wasteCollectionComposanteSearch0::not-found", "")
-    if not_found and not_found.strip():
-        raise SourceArgumentNotFound(
-            argument="street_number_and_name",
-            value="",
-            message_addition="Address not found by RMR calendar system",
-        )
-
-    calendar_html = data.get("wasteCollectionComposanteSearch0::calendar", "")
-    if not calendar_html:
-        raise SourceArgumentNotFound(
-            argument="street_number_and_name",
-            value="",
-            message_addition="No calendar returned for address",
-        )
-
-    soup = BeautifulSoup(calendar_html, "html.parser")
-    calendar = soup.find("div", {"class": "collection-calendar"})
-    if not calendar:
-        raise SourceArgumentNotFound(
-            argument="street_number_and_name",
-            value="",
-            message_addition="Calendar HTML not found",
-        )
-
-    fc_types = TYPE_MAP.get(lang, TYPE_MAP["en"])
-
-    icon_types = [
-        ("trash", "data-dates-trash"),
-        ("recycling", "data-dates-recycling"),
-        ("compost", "data-dates-compost"),
-    ]
-
-    for icon_key, attr in icon_types:
-        dates_raw = calendar.get(attr, "").strip()
-        if not dates_raw:
-            continue
-
-        fc_type = fc_types.get(icon_key)
-        fc_icon = ICON_MAP.get(icon_key)
-        if not fc_type:
-            continue
-
-        for date_str in dates_raw.split(","):
-            date_str = date_str.strip()
-            if not date_str:
-                continue
-
-            try:
-                dt = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-            except ValueError:
-                continue
-
-            entries.append(Collection(date=dt.date(), t=fc_type, icon=fc_icon))
-
-    return entries
-
-
-class Source:
-    def __init__(
-        self,
-        street_number_and_name: str,
-        locality: str,
-        province_or_state: str = "QC",
-        language: str = "en",
-    ):
-        self._street_number_and_name = street_number_and_name
-        self._locality = locality
-        self._province_or_state = province_or_state
-        self._language = language
-
-    def fetch(self) -> list[Collection]:
-        address = f"{self._street_number_and_name}, {self._locality}"
-        data = _submit_address(address)
-        entries = _parse_entries(data, lang=self._language)
-        if not entries:
-            raise SourceArgumentNotFound(
-                argument="street_number_and_name",
-                value=self._street_number_and_name,
-                message_addition="Calendar found but no collections parsed",
-            )
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )

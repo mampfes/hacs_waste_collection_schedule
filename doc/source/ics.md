@@ -287,6 +287,7 @@ This source has been successfully tested with the following service providers:
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AZV Stadt und Landkreis Hof](/doc/ics/azv_hof_de.md) / azv-hof.de
+- [Bad Nauheim](/doc/ics/mein_abfallkalender_online.md) / bad-nauheim.de
 - [Bad Soden a.Ts.](/doc/ics/mein_abfallkalender_online.md) / bad-soden.de
 - [Bad Vilbel](/doc/ics/mein_abfallkalender_online.md) / sw-bv.de
 - [Baden Baden](/doc/ics/baden_baden_de.md) / baden-baden.de
@@ -325,6 +326,7 @@ This source has been successfully tested with the following service providers:
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Gemeinde Hiddenhausen](/doc/ics/abfall_export_vcal.md) / hiddenhausen.de/Rathaus/Services/Abfall/Abfallkalender-online
 - [Gemeinde Hille](/doc/ics/hille_de.md) / hille.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Gemeinde Neuberg](/doc/ics/neuberg_de.md) / neuberg.eu
@@ -394,6 +396,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
+- [Stadt Espelkamp](/doc/ics/abfall_export_vcal.md) / espelkamp.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
 - [Stadt Löhne](/doc/ics/loehne_de.md) / loehne.de

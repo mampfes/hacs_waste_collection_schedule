@@ -1,40 +1,37 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Chiemgau Recycling - Landkreis Rosenheim"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for paper waste collection in Landkreis Rosenheim area"  # Describe your source
-URL = "https://chiemgau-recycling.de"  # Insert url to service homepage. URL will show up in README.md and info.md
-COUNTRY = "de"
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Bruckmühl 1": {"district": "Bruckmühl 1"}
-}
-
-ICON_MAP = {
-    "Papier": Icons.PAPER,
-}
-
-API_URL = "https://blauetonne.stkn.org/lk_rosenheim"
+# The API answers a bare list of dates; Chiemgau Recycling empties only the
+# paper bin ("blaue Tonne").
 
 
-class Source:
-    def __init__(self, district):
-        self.district = district
+@final
+class Source(BaseSource):
+    TITLE = "Chiemgau Recycling - Landkreis Rosenheim"
+    DESCRIPTION = "Source script for paper waste collection in Landkreis Rosenheim area"
+    URL = "https://chiemgau-recycling.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.PAPER]
 
-    def fetch(self):
-        entries = []
+    TEST_CASES: ClassVar[dict] = {"Bruckmühl 1": {"district": "Bruckmühl 1"}}
 
-        r = requests.get(f"{API_URL}", params={"district": self.district})
-        r.raise_for_status()
+    PARAMS = (district(),)
 
-        for date in r.json():
-            entries.append(
-                Collection(
-                    date=datetime.fromisoformat(date).date(),  # Collection date
-                    t="Papier Tonne",  # Collection type
-                    icon=ICON_MAP.get("Papier"),  # Collection icon
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://blauetonne.stkn.org/lk_rosenheim",
+        params=lambda district, **_: {"district": district},
+    )
+    parse = parsers.JsonParser()
+    transform = JsonTransformer(
+        date_key=lambda record: str(record)[:10],
+        type_key=lambda _record: "Papiertonne",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={"Papiertonne": wt.PAPER},
+    )

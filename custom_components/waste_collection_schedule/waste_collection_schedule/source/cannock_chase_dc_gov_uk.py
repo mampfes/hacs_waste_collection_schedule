@@ -37,7 +37,7 @@ class Source(BaseSource):
     )
     URL = "https://www.cannockchasedc.gov.uk"
     COUNTRY = "uk"
-    API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
+    API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"  # codespell:ignore onl
     SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     TEST_CASES: ClassVar[dict] = {

@@ -32,7 +32,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.parsers import IcsParser
-from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
@@ -60,16 +60,8 @@ def _address_args(
     }
 
 
-def _resolve_street(source: BaseSource, keys: tuple) -> str:
+def _pick_street(response, strasse: str, **_) -> str:
     """Street name -> "strasse" id, from the municipality's rendered select."""
-    gemeinde = source.params["gemeinde"]
-    strasse = source.params["strasse"]
-
-    response = source.session.get(
-        _API_URL, params={"gemeinde": gemeinde, "von": strasse.upper()[0]}
-    )
-    response.raise_for_status()
-
     strasse_select = BeautifulSoup(response.text, "html.parser").find(
         "select", {"id": "strasse"}
     )
@@ -85,39 +77,22 @@ def _resolve_street(source: BaseSource, keys: tuple) -> str:
     )
 
 
-def _resolve_ladeort(source: BaseSource, keys: tuple) -> str:
-    """Submit the address and read back the loading point the calendar keys off.
+def _pick_ladeort(response, strassen_id, *, strasse: str, ladeort=None, **_) -> str:
+    """Read back the loading point the calendar keys off the submitted address.
 
     One loading point comes back as a hidden input and is used as-is. Several
     come back as a ``<select>``, which only the user can decide between, so the
     optional ``ladeort`` argument picks one and its absence is reported with
     the list to choose from.
     """
-    ladeort_wanted = source.params.get("ladeort")
-    response = source.session.post(
-        _API_URL,
-        data={
-            **_address_args(
-                keys[0],
-                source.params["gemeinde"],
-                source.params["strasse"],
-                source.params["hnr"],
-                source.params["zusatz"],
-            ),
-            "anzeigen": "Suchen",
-        },
-    )
-    response.raise_for_status()
-
+    ladeort_wanted = ladeort
     soup = BeautifulSoup(response.text, "html.parser")
     ladeort_single = soup.find("input", {"name": "ladeort", "class": "form-control"})
 
     if not ladeort_single:
         ladeort_select = soup.find("select", {"name": "ladeort"})
         if not isinstance(ladeort_select, Tag):
-            raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", source.params["strasse"], []
-            )
+            raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
         ladeort_options = ladeort_select.find_all("option")
         if not ladeort_wanted:
             raise SourceArgumentRequiredWithSuggestions(
@@ -198,7 +173,25 @@ class Source(BaseSource):
     )
 
     retrieve = LookupChainRetriever(
-        steps=(_resolve_street, _resolve_ladeort),
+        steps=(
+            Lookup(
+                _API_URL,
+                params=lambda gemeinde, strasse, **_: {
+                    "gemeinde": gemeinde,
+                    "von": strasse.upper()[0],
+                },
+                pick=_pick_street,
+            ),
+            Lookup(
+                _API_URL,
+                method="POST",
+                data=lambda strassen_id, gemeinde, strasse, hnr, zusatz, **_: {
+                    **_address_args(strassen_id, gemeinde, strasse, hnr, zusatz),
+                    "anzeigen": "Suchen",
+                },
+                pick=_pick_ladeort,
+            ),
+        ),
         url=_API_URL,
         method="POST",
         data=lambda strassen_id, ladeort_value, gemeinde, strasse, hnr, zusatz, **_: {

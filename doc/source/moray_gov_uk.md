@@ -1,25 +1,34 @@
 # Moray Council
 
-Support for schedules provided by [Moray Council](https://www.moray.gov.uk/), serving Moray, UK.
+Support for schedules provided by [Moray Council](https://moray.gov.uk).
+
+Source for Moray Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
-  - name: moray_gov_uk
-    args:
-      id: UNIQUE_PROPERTY_ID
+    - name: moray_gov_uk
+      args:
+        id: ID
 ```
 
 ### Configuration Variables
 
-**id**<br>
+**id**  
 *(string) (required)*
 
+## Example
 
-#### How to find your `id`
-Your `id` is the collection of numbers at the end of the url when looking up your collection schedule on the [Moray Council Bin Day Finder](https://bindayfinder.moray.gov.uk/) web site.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: moray_gov_uk
+      args:
+        id: '00013734'
+```
 
-For example:  _https://bindayfinder.moray.gov.uk/disp_bins.php?id=`00027199`_
+## How to get the source arguments
 
+Find your address in the Moray Council bin day finder (https://bindayfinder.moray.gov.uk). The property id is the `id` in the address of your calendar page (`cal_<year>_view.php?id=<id>`); leading zeros may be left out.

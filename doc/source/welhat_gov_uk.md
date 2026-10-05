@@ -1,22 +1,18 @@
 # Welwyn Hatfield Borough Council
 
-Support for schedules provided by [Welwyn Hatfield Borough Council](https://www.welhat.gov.uk/xfp/form/214), serving the
-Welwyn and Hatfield council area.
+Support for schedules provided by [Welwyn Hatfield Borough Council](https://www.welhat.gov.uk).
+
+Source for www.welhat.gov.uk services for Welwyn Hatfield Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: welhat_gov_uk
       args:
         uprn: UPRN
         postcode: POSTCODE
-      customize:
-        - type: recycling
-        - type: refuse
-        - type: food
-        - type: garden
 ```
 
 ### Configuration Variables
@@ -31,23 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: welhat_gov_uk
       args:
-        uprn: "100080965745"
-        postcode: "AL9 5EA"
-      customize:
-        - type: recycling
-        - type: refuse
-        - type: food
-        - type: garden
+        uprn: '100080965745'
+        postcode: AL9 5EA
 ```
 
-## How to get the uprn argument above
+## How to get the source arguments
 
-The UPRN code can be found by entering your postcode or address on
-[Find My Address
-](https://www.findmyaddress.co.uk/search) and selecting your address from the available list. The UPRN is then shown in yellow text on the address marker.
-
-## Important Note
-Due to limitations with the WelHat website, only the next collection for each bin can be retrieved. I have lodged a request for full API access with the council, so if there is a way to retrieve additional information in future I will update this.
+Go to https://www.welhat.gov.uk/xfp/form/214 and enter your postcode. The UPRN is the option value of your address in the address dropdown (browser dev tools); you can also look it up on https://www.findmyaddress.co.uk/.

@@ -1,87 +1,44 @@
-import json
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Alchenstorf"
-DESCRIPTION = " Source for 'Alchenstorf, CH'"
-URL = "https://www.alchenstorf.ch"
-TEST_CASES: dict[str, dict] = {"TEST": {}}
-
-ICON_MAP = {
-    "Grünabfuhr Alchenstorf": Icons.ORGANIC,
-    "Kehrichtabfuhr Alchenstorf": Icons.GENERAL_WASTE,
-    "Kartonsammlung Alchenstorf": Icons.PAPER,
-    "Papiersammlung Alchenstorf": Icons.PAPER,
-    "Alteisenabfuhr Alchenstorf": Icons.ELECTRONICS,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.IWeb import (
+    AbfalldatenRows,
+    abfalldaten_parser,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-class Source:
-    def __init__(self):
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Alchenstorf"
+    DESCRIPTION = "Source for 'Alchenstorf, CH'"
+    URL = "https://www.alchenstorf.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        response = requests.get("https://www.alchenstorf.ch/abfalldaten")
-        response.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {"TEST": {}}
 
-        html = BeautifulSoup(response.text, "html.parser")
+    PARAMS = ()
 
-        table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
-        if not table:
-            raise ValueError("Could not find the waste collection table on the page")
-
-        try:
-            data = json.loads(table.attrs["data-entities"])
-        except (json.JSONDecodeError, KeyError):
-            raise ValueError(
-                "Could not parse the waste collection data from the page"
-            ) from None
-
-        entries = []
-        for item in data.get("data", []):
-            try:
-                waste_type = BeautifulSoup(item["name"], "html.parser").text.strip()
-                icon = ICON_MAP.get(waste_type, "mdi:trash-can")
-
-                date_html = item["_anlassDate"]
-                date_soup = BeautifulSoup(date_html, "html.parser")
-
-                date_span = date_soup.find("span", class_="text-nowrap")
-                date_text = date_span.get_text().strip()
-
-                clean_date_part = date_text.split(",")[0].strip()
-
-                dates_to_add = []
-
-                if " - " in clean_date_part:
-                    parts = clean_date_part.split(" - ")
-                    start_str = parts[0].strip()
-                    end_str = parts[1].strip()
-
-                    start_date = datetime.strptime(start_str, "%d.%m.%Y").date()
-                    end_date = datetime.strptime(end_str, "%d.%m.%Y").date()
-
-                    current_date = start_date
-                    while current_date <= end_date:
-                        dates_to_add.append(current_date)
-                        current_date += timedelta(days=1)
-                else:
-                    single_date = datetime.strptime(clean_date_part, "%d.%m.%Y").date()
-                    dates_to_add.append(single_date)
-
-                for pickup_date in dates_to_add:
-                    entries.append(
-                        Collection(
-                            date=pickup_date,
-                            t=waste_type,
-                            icon=icon,
-                        )
-                    )
-
-            except Exception:
-                raise ValueError("Could not parse the waste collection entry") from None
-
-        return entries
+    retrieve = HttpGetRetriever(url="https://www.alchenstorf.ch/abfalldaten")
+    parse = abfalldaten_parser()
+    # A collection over several days (the paper and cardboard drives) is one
+    # collection per day.
+    preprocess = AbfalldatenRows(expand_ranges=True)
+    transform = ICSTransformer(
+        type_value_map={
+            "Grünabfuhr Alchenstorf": wt.GARDEN_WASTE,
+            "Kehrichtabfuhr Alchenstorf": wt.GENERAL_WASTE,
+            "Kartonsammlung Alchenstorf": wt.PAPER,
+            "Papiersammlung Alchenstorf": wt.PAPER,
+            "Alteisenabfuhr Alchenstorf": wt.RECYCLABLES,
+        }
+    )

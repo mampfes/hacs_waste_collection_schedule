@@ -30,7 +30,7 @@ from waste_collection_schedule.transformers import ICSTransformer
 SUBURBS = (
     "BICKLEY",
     "CANNING MILLS",
-    "CARMEL",
+    "CARMEL",  # codespell:ignore carmel
     "FORRESTFIELD",
     "GOOSEBERRY HILL",
     "HACKETTS GULLY",

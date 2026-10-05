@@ -1,91 +1,116 @@
-import json
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup as bs
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import TextDatedBlocks
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-# Västblekinge Miljö AB (VMAB), Blekinge Sweden
+# The public page https://vmab.se/privat/vmabs-tomningskalender embeds the
+# calendar service at https://cal.vmab.se/. The address is searched first; the
+# id in the list of hits is what the calendar request needs. The schedule comes
+# back injected into a script tag as the events of a browsable calendar:
 #
-# The public URL is https://vmab.se/privat/vmabs-tomningskalender
-# However, this uses an iframe from https://cal.vmab.se/ which is the
-# actual service providing the bin data.
+#   { title: 'Max 1, Fyrfackskärl', start: '2026-01-07' },
 #
-# One first has to do a search since they put an ID in the list of
-# search results which is required when sending the request to get the
-# bin data. The data then comes injected into a script tag as it's
-# normally used to build a browsable calendar for easy viewing.
-#
-# Bins in this municipality have four types of waste each, and each
-# house has 2 bins, example raw data for the two bins:
-#
-# { title: 'Max 1, Mat, Brännbart, Färgat glas, Tidningar.', start: '2024-09-12' },
-# { title: 'Max 2, Plast, Pappersförpackningar, Ofärgat glas, Metall.', start: '2024-09-05' },
-#
-# Note: This API does not apply for apartment buildings, municipal/state
-# services or similar types of buildings as those do not have the same
-# types of bins as regular houses.
-#
+# Houses have two "fyrfack" (four-slot) bins, Max 1 and Max 2, each holding
+# several waste types, so neither has a single canonical type. Apartment
+# buildings and municipal properties are not covered by this service.
 
-TITLE = "VMAB"
-DESCRIPTION = "Source for Västblekinge Miljö AB waste collection."
-URL = "https://vmab.se"
-TEST_CASES = {"Home": {"street_address": "Rosenborgsvägen 35, Karlshamn"}}
+API = "https://cal.vmab.se"
 
-API_URL = "https://vmab.se/privat/vmabs-tomningskalender"
+_HEADERS = {
+    "Accept-Encoding": "identity",
+    "Accept": "*/*",
+    "Accept-Language": "sv-SE,sv;q=0.9",
+}
 
 
-class Source:
-    def __init__(self, street_address):
-        addr_parts = street_address.split(",")
-        self._street_address = addr_parts[0]
-        self._city = addr_parts[1].lstrip()
+def _split(street_address: str) -> tuple[str, str]:
+    """ "Street 1, City" -> ("Street 1", "City")."""
+    street, _, city = street_address.partition(",")
+    return street.strip(), city.strip()
 
-    def fetch(self):
-        data = {"search_address": self._street_address}
-        headers = {
-            "Accept-Encoding": "identity",
-            "Accept": "*/*",
-            "Accept-Language": "sv-SE,sv;q=0.9",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        }
-        response = requests.post(
-            "https://cal.vmab.se/search_suggestions.php",
-            data=data,
-            headers=headers,
-        )
 
-        soup = bs(response.text, "html.parser")
-        pickup_id = False
-        for el_addr in soup.find_all("span", attrs={"class": "address"}):
-            if el_addr.string == self._street_address:
-                for el_addr_sib in el_addr.next_siblings:
-                    if el_addr_sib.name == "span" and el_addr_sib.string == self._city:
-                        pickup_id = el_addr.parent["id"]
-                        break
-                if pickup_id:
-                    break
-        if not pickup_id:
-            return []
+def _pickup_id(response, street_address: str, **_) -> str:
+    """The id of the search hit matching both street and city."""
+    street, city = _split(street_address)
+    hits = BeautifulSoup(response.text, "html.parser").select("li[id]")
+    for hit in hits:
+        street_el = hit.select_one("span.address")
+        city_el = hit.select_one("span.city")
+        if (
+            street_el is not None
+            and city_el is not None
+            and street_el.get_text() == street
+            and city_el.get_text() == city
+        ):
+            return str(hit["id"])
+    raise SourceArgumentNotFound("street_address", street_address)
 
-        data = {
-            "chosen_address": f"{self._street_address} {self._city}",
+
+@final
+class Source(BaseSource):
+    TITLE = "VMAB"
+    DESCRIPTION = "Source for Västblekinge Miljö AB waste collection."
+    URL = "https://vmab.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.OTHER]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Home": {"street_address": "Rosenborgsvägen 35, Karlshamn"},
+    }
+
+    PARAMS = (street_address("street_address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address and city, separated by a comma, exactly "
+            "as they appear when you search for your address on "
+            "https://vmab.se/privat/vmabs-tomningskalender, "
+            "e.g. `Rosenborgsvägen 35, Karlshamn`. Only houses with the "
+            "four-slot bins (Max 1 and Max 2) are covered, not apartment "
+            "buildings."
+        ),
+    }
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                f"{API}/search_suggestions.php",
+                method="POST",
+                data=lambda street_address, **_: {
+                    "search_address": _split(street_address)[0]
+                },
+                headers=_HEADERS,
+                pick=_pickup_id,
+            ),
+        ),
+        url=f"{API}/get_data.php",
+        method="POST",
+        data=lambda pickup_id, street_address, **_: {
+            "chosen_address": " ".join(_split(street_address)),
             "chosen_address_pickupid": pickup_id,
-        }
-        response = requests.post(
-            "https://cal.vmab.se/get_data.php",
-            data=data,
-            headers=headers,
-        )
-
-        entries = []
-        for entry in re.findall(r"{.title:[^}]+}", response.text):
-            json_entry = json.loads(
-                re.sub(r"(title|start):", r'"\1":', entry.replace("'", '"'))
-            )
-            icon = "mdi:recycle"
-            waste_type = json_entry["title"].split(",")[0].lstrip()
-            pickup_date = datetime.fromisoformat(json_entry["start"]).date()
-            entries.append(Collection(date=pickup_date, t=waste_type, icon=icon))
-        return entries
+        },
+        headers=_HEADERS,
+    )
+    parse = parsers.TextParser()
+    # Only the bin name ("Max 1") is kept, as before; a template example in a
+    # comment of the page has a time in its date and does not match.
+    preprocess = TextDatedBlocks(
+        block_pattern=(
+            r"title:\s*'(?P<labels>[^',]*)[^']*',\s*"
+            r"start:\s*'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})'"
+        ),
+    )
+    # Max 1: food, burnable, coloured glass, newspapers; Max 2: plastic, paper
+    # packaging, clear glass, metal. Each mixes several types.
+    transform = ICSTransformer(
+        type_value_map={"Max 1": wt.OTHER, "Max 2": wt.OTHER},
+        carry_raw_label=True,
+    )

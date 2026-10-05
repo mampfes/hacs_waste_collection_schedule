@@ -1,50 +1,70 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "SRV Återvinning"
-DESCRIPTION = "Source for SRV återvinning AB, Sweden"
-URL = "https://www.srvatervinning.se"
-TEST_CASES = {
-    "Skansvägen": {"address": "Skansvägen"},
-    # "Test1": {"address": "tun"}, not working anymore after api endpoint change
-    "Tullinge 1": {"address": "Hanvedens allé 78"},
-    "Tullinge 2": {"address": "Skogsmulles Väg 22"},
-    "Skolvägen": {"address": "Skolvägen 10", "city": "TUNGELSTA"},
-}
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street_address
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, address, city=None):
-        self._address = address
-        self._city = city if city else ""
+def _content(record) -> str:
+    """The container's content type. A compartment of a shared bin is listed
+    as "Kärl 1" / "Kärl 2" and names its content at the end of the container
+    type instead ("Kärl 370 liter kärl 1 restavfall")."""
+    content = str(record.get("contentType") or "")
+    if content.startswith("Kärl"):
+        return str(record.get("containerType") or content).split()[-1]
+    return content
 
-    def fetch(self):
-        params = {
-            "query": self._address,
-            "city": self._city.upper(),
-        }
-        r = requests.get(
-            "https://www.srvatervinning.se/rest-api/core/sewagePickup/search", params
-        )
-        r.raise_for_status()
 
-        data = r.json()
+@final
+class Source(BaseSource):
+    TITLE = "SRV Återvinning"
+    DESCRIPTION = "Source for SRV återvinning AB, Sweden"
+    URL = "https://www.srvatervinning.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        if not data.get("results"):
-            raise SourceArgumentNotFound("address", self._address)
+    TEST_CASES: ClassVar[dict] = {
+        "Skansvägen": {"address": "Skansvägen"},
+        "Tullinge 1": {"address": "Hanvedens allé 78"},
+        "Tullinge 2": {"address": "Skogsmulles Väg 22"},
+        "Skolvägen": {"address": "Skolvägen 10", "city": "TUNGELSTA"},
+    }
 
-        entries = []
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"address": "Nowhere 999"},
+    }
 
-        for container in data["results"][0]["containers"]:
-            type = container["contentType"]
-            for calentry in container["calendars"]:
-                date_obj = datetime.strptime(calentry["startDate"], "%Y-%m-%d").date()
-                entries.append(Collection(date_obj, type))
+    PARAMS = (street_address(), city(optional=True))
 
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.srvatervinning.se/rest-api/core/sewagePickup/search",
+        params=lambda address, city=None, **_: {
+            "query": address,
+            "city": (city or "").upper(),
+        },
+    )
+    parse = parsers.JsonParser("results")
+    # Each result carries its containers, each container its pickup dates.
+    preprocess = Compose(
+        ExplodeList("containers"),
+        ExplodeList("calendars", into="calendar"),
+    )
+    transform = JsonTransformer(
+        date_key=lambda record: record["calendar"]["startDate"],
+        type_key=_content,
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            "Papper och Plast": wt.RECYCLABLES,
+        },
+    )

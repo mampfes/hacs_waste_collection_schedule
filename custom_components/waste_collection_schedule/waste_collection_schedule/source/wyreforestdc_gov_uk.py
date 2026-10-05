@@ -1,171 +1,67 @@
-import logging
-import re
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Wyre Forest District Council"
-DESCRIPTION = "Source for wyreforestdc.gov.uk, Wyre Forest District Council, UK"
-URL = "https://www.wyreforestdc.gov.uk"
-
-TEST_CASES = {
-    "2 Kinver Avenue, Kidderminster": {
-        "street": "hilltop avenue",
-        "town": "BEWDLEY",
-        "garden_cutomer": "308072",
-    },
-}
-
-API_URLS = {
-    "waste": "https://forms.wyreforestdc.gov.uk/querybin.asp",
-    "garden_waste": "https://forms.wyreforestdc.gov.uk/GardenWasteChecker/Home/Details",
-}
-
-ICON_MAP = {
-    "rubbish (black bin)": Icons.GENERAL_WASTE,
-    "recycling (green bin)": Icons.RECYCLING,
-    "garden waste (brown bin)": Icons.BIO_KITCHEN,
-}
-
-DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
-
-# Next Rubbish Collection
-REGEX_GET_BIN_TYPE = re.compile(r"Next (.*?) Collection")
-# collection is on a WEDNESDAY and will be collected on the same week as your rubbish bin collection
-REGEX_GET_GARDEN_DAY = re.compile(
-    r"collection is on a\s*(.*?)\s*and will be collected on the same week as"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, customer_number, street
+from waste_collection_schedule.service.WyreForest import (
+    WyreForestParser,
+    WyreForestRetriever,
 )
-REGEX_GET_GARDEN_SAME_WEEK_AS = re.compile(
-    r"collected on the same week as your\s*(.*?)\s*(bin)?\s*collection"
-)
+from waste_collection_schedule.transformers import RowTransformer
 
-_LOGGER = logging.getLogger(__name__)
-
-
-def get_date_by_weekday(weekday: str) -> date:
-    if weekday.strip().upper() == "TODAY":
-        return date.today()
-    if weekday.strip().upper() == "TOMORROW":
-        return date.today() + timedelta(days=1)
-
-    this_week = re.match("This (.*?)$", weekday, re.IGNORECASE)
-    next_week = re.match("Next (.*?)$", weekday, re.IGNORECASE)
-    if this_week:
-        weekday_idx = DAYS.index(this_week.group(1).upper())
-        offset = 0
-    elif next_week:
-        weekday_idx = DAYS.index(next_week.group(1).upper())
-        offset = 7
-    else:
-        # Try to parse as an absolute date (e.g., "07 January 2026")
-        try:
-            return datetime.strptime(weekday.strip(), "%d %B %Y").date()
-        except ValueError:
-            pass
-        # Try alternative format with abbreviated month (e.g., "07 Jan 2026")
-        try:
-            return datetime.strptime(weekday.strip(), "%d %b %Y").date()
-        except ValueError:
-            pass
-        raise ValueError(f"Invalid weekday: {weekday}")
-
-    d = date.today() + timedelta(days=offset)
-    while d.weekday() != weekday_idx:
-        d += timedelta(days=1)
-    return d
+_TYPE_MAP = {
+    "rubbish": wt.GENERAL_WASTE,
+    "recycling": wt.RECYCLABLES,
+    "garden waste": wt.GARDEN_WASTE,
+}
 
 
-def predict_next_collections(first_date: date, day_interval: int = 14):
-    return [first_date + timedelta(days=i * day_interval) for i in range(5)]
+@final
+class Source(BaseSource):
+    TITLE = "Wyre Forest District Council"
+    DESCRIPTION = "Source for wyreforestdc.gov.uk, Wyre Forest District Council, UK"
+    URL = "https://www.wyreforestdc.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-class Source:
-    def __init__(self, street: str, town: str, garden_cutomer: str | int | None = None):
-        self._street = street.upper().strip()
-        self._town = town.upper().strip()
-        self._garden_cutomer = str(garden_cutomer).strip() if garden_cutomer else None
+    TEST_CASES: ClassVar[dict] = {
+        "2 Kinver Avenue, Kidderminster": {
+            "street": "hilltop avenue",
+            "town": "BEWDLEY",
+            "garden_cutomer": "308072",
+        },
+        "Worcester Street, Stourport (no garden waste)": {
+            "street": "WORCESTER STREET",
+            "town": "STOURPORT ON SEVERN",
+        },
+    }
 
-    def get_garden_waste(self, type_to_day: dict[str, str]) -> list[Collection]:
-        data = {
-            "CUST_No": self._garden_cutomer,
-        }
-        r = requests.post(API_URLS["garden_waste"], data=data)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+    PARAMS = (
+        street(field="street"),
+        city(field="town"),
+        customer_number(field="garden_cutomer", optional=True),
+    )
 
-        day = REGEX_GET_GARDEN_DAY.search(soup.text)
-        same_week_as = REGEX_GET_GARDEN_SAME_WEEK_AS.search(soup.text)
-        if not day or not same_week_as:
-            raise ValueError(
-                f"Could not find garden waste collection days: {day} {same_week_as}"
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Street and town must match the URL parameters you get when clicking an "
+            "address at https://forms.wyreforestdc.gov.uk/querybin.asp. The garden "
+            "waste customer number (garden_cutomer) is only needed for garden waste "
+            "collections: go to https://forms.wyreforestdc.gov.uk/gardenwastechecker, "
+            "enter your postcode and, before pressing Select on your address, open "
+            "your browser's developer tools (F12) and its network tab. Pressing "
+            "Select sends a POST request to "
+            "https://forms.wyreforestdc.gov.uk/GardenWasteChecker/Home/Details; the "
+            "customer number is the CUST_No value in its payload."
+        ),
+    }
 
-        relevant_coll_date = get_date_by_weekday(
-            type_to_day[same_week_as.group(1).lower()]
-        )
-        monday_of_garden_week = relevant_coll_date - timedelta(
-            days=relevant_coll_date.weekday()
-        )
-
-        garden_day = monday_of_garden_week + timedelta(DAYS.index(day.group(1).upper()))
-        entries = []
-        for coll_date in predict_next_collections(garden_day):
-            entries.append(
-                Collection(
-                    date=coll_date,
-                    icon=ICON_MAP.get("garden waste"),
-                    t="Garden waste",
-                )
-            )
-        return entries
-
-    def fetch(self) -> list[Collection]:
-        entries: list[Collection] = []
-        params = {
-            "txtStreetName": self._street,
-            "select": "yes",
-            "town": self._town,
-        }
-        r = requests.post(API_URLS["waste"], params=params)
-        r.raise_for_status()
-        type_to_day: dict[str, str] = {}
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        coll_day_header_p = soup.find("p", text="Collection Day")
-
-        if not coll_day_header_p:
-            raise ValueError("Could not find collection day header")
-        coll_day_table = coll_day_header_p.find_parent("table")
-        if not coll_day_table:
-            raise ValueError("Could not find collection day table")
-        coll_day_rows = coll_day_table.find_all("tr")
-        if not len(coll_day_rows) == 2:
-            raise ValueError("Could not find collection day rows")
-
-        headings = [td.text.strip() for td in coll_day_rows[0].find_all("td")]
-        values = [td.text.strip() for td in coll_day_rows[1].find_all("td")]
-
-        for heading, value in list(zip(headings, values, strict=False)):
-            if REGEX_GET_BIN_TYPE.match(heading):
-                bin_type_match = REGEX_GET_BIN_TYPE.match(heading)
-                if not bin_type_match:
-                    raise ValueError(f"Could not find bin type in heading: {heading}")
-                bin_type = bin_type_match.group(1)
-
-                type_to_day[bin_type.lower()] = value
-
-                for coll_date in predict_next_collections(get_date_by_weekday(value)):
-                    entries.append(
-                        Collection(
-                            date=coll_date,
-                            icon=ICON_MAP.get(bin_type),
-                            t=bin_type,
-                        )
-                    )
-
-        if self._garden_cutomer:
-            entries += self.get_garden_waste(type_to_day)
-
-        return entries
+    retrieve = WyreForestRetriever()
+    parse = WyreForestParser()
+    transform = RowTransformer(type_value_map=_TYPE_MAP)

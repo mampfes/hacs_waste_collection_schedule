@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=1+Nowhere+Street+Belmont+6104 ",
+      "method": "GET",
+      "url": "https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=1+Nowhere+Street+Belmont+6104",
+      "final_url": "https://www.belmont.wa.gov.au/api/intramaps/getaddresses?key=1+Nowhere+Street+Belmont+6104",
+      "body": "",
+      "status": 204,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-frame-options": "SAMEORIGIN",
+        "set-cookie": "CMSPreferredCulture=en-AU; expires=Sun, 26-Sep-2027 11:19:17 GMT; path=/; HttpOnly",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 26 Sep 2026 11:19:17 GMT"
+      },
+      "content_b64": ""
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value '1 Nowhere Street Belmont 6104', please check the spelling and try again."
+  }
+}

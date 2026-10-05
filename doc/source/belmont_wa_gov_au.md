@@ -1,6 +1,8 @@
 # Belmont City Council
 
-Support for schedules provided by [Belmont City Council Waste and Recycling](https://www.belmont.wa.gov.au/live/at-your-place/bins,-waste-and-recycling).
+Support for schedules provided by [Belmont City Council](https://www.belmont.wa.gov.au/).
+
+Source for Belmont City Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -26,7 +28,3 @@ waste_collection_schedule:
       args:
         address: 196 Abernethy Road Belmont 6104
 ```
-
-## How to get the source arguments
-
-Visit the [Belmont City Council Waste and Recycling](https://www.belmont.wa.gov.au/live/at-your-place/bins,-waste-and-recycling) page and search for your address. The arguments should exactly match the results of the property.

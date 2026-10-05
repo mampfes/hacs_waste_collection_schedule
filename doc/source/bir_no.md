@@ -1,13 +1,19 @@
-# BIR - Bergensområdets Interkommunale Renovasjonsselskap
+# BIR (Bergensområdets Interkommunale Renovasjonsselskap)
+
+Support for schedules provided by [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](https://bir.no).
+
+Askøy, Bergen, Bjørnafjorden, Eidfjord, Kvam, Osterøy, Samnanger, Ulvik, Vaksdal, Øygarden og Voss Kommune (Norway).
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: bir_no
       args:
-        street_name: ""
-        house_number: ""
-        house_letter: ""
+        street_name: STREET_NAME
+        house_number: HOUSE_NUMBER
+        house_letter: HOUSE_LETTER
 ```
 
 ### Configuration Variables
@@ -16,39 +22,23 @@ waste_collection_schedule:
 *(string) (required)*
 
 **house_number**  
-*(string|Integer) (required)*
+*(string) (required)*
 
 **house_letter**  
 *(string) (optional)*
 
-The arguments should be written exactly like on the <https://bir.no/> website
-
-# Example configuration.yaml:
+## Example
 
 ```yaml
-# Waste collection
 waste_collection_schedule:
   sources:
     - name: bir_no
       args:
-        street_name: "Alf Bondes Veg"
-        house_number: "13"
-        house_letter: "B"
-      customize:
-        - type: blue bin
-          alias: Papir
-        - type: green bin
-          alias: Restavfall
-
-# Optional Sensors
-  sensors:
-    - name: next_collection
-    - name: waste_collection_garbage
-      details_format: upcoming
-      types:
-        - Restavfall
-    - name: waste_collection_paper
-      details_format: upcoming
-      types:
-        - Papir og plastemballasje
+        street_name: "Nord\xE5sgrenda"
+        house_number: 7
+        house_letter: ''
 ```
+
+## How to get the source arguments
+
+Enter the street name and the house number as written on bir.no/adressesoek. A house letter can be given in its own field or as part of the house number (for example 13B).

@@ -1,53 +1,39 @@
-# Herefordshire County Council
+# Herefordshire City Council
 
-Support for schedules provided by [Herefordshire County
-Council](https://www.herefordshire.gov.uk/environmental-protection/waste-management/refuse-household-bin-collection),
-serving Herefordshire (UK).
+Support for schedules provided by [Herefordshire City Council](https://herefordshire.gov.uk).
+
+Source for herefordshire.gov.uk services for hereford
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: herefordshire_gov_uk
       args:
         post_code: POST_CODE
         number: NUMBER
-
 ```
 
 ### Configuration Variables
 
-**POST_CODE**  
+**post_code**  
 *(string) (required)*
 
-Postcode of the property, e.g. `HR4 9JS`.
-
-**NUMBER**  
+**number**  
 *(string) (required)*
 
-House number, house name, or UPRN (Unique Property Reference Number) of the
-property. If your property only has a name and no number, enter the name
-first. If it still cannot be found, the resulting error message will list
-the full addresses found for your postcode, so you can copy the UPRN or the
-exact house-name wording from there.
-
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: herefordshire_gov_uk
       args:
-        post_code: "hr49js"
-        number: "52"
+        post_code: hr49js
+        number: '52'
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: herefordshire_gov_uk
-      args:
-        post_code: "hr49js"
-        number: "200002607460"
-```
+## How to get the source arguments
+
+Enter the postcode and the house number, house name or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message lists the full addresses found for your postcode so you can copy the UPRN or exact wording from there.

@@ -60,6 +60,12 @@ PARAM_TRANSLATIONS = {
         "house_number": "House number",
         "house_letter": "House letter/addition",
     },
+    "nl": {
+        "municipality": "Gemeente",
+        "postal_code": "Postcode",
+        "house_number": "Huisnummer",
+        "house_letter": "Huisletter/toevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -76,6 +82,19 @@ PARAM_DESCRIPTIONS = {
             "and house number)"
         ),
     },
+    "nl": {
+        "municipality": (
+            "Subdomein van de afvalkalender van de gemeente, bijv. "
+            "'drimmelen' voor https://drimmelen.afvalkalender.straatbeeld.online"
+        ),
+        "postal_code": "Nederlandse postcode, bijv. 4926CW",
+        "house_number": "Huisnummer, bijv. 28",
+        "house_letter": (
+            "Huisletter of toevoeging, indien van toepassing (optioneel, "  # codespell:ignore indien
+            "alleen nodig als meerdere adressen dezelfde postcode en "
+            "huisnummer delen)"
+        ),
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -85,6 +104,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "'municipality' argument is the first part of that URL "
         "(e.g. 'drimmelen'). Use the same postal code and house number "
         "you would enter on that page."
+    ),
+    "nl": (
+        "Open de Straatbeeld Online-afvalkalender van je gemeente "
+        "(bijv. https://drimmelen.afvalkalender.straatbeeld.online). Het "
+        "'municipality'-argument is het eerste deel van die URL "
+        "(bijv. 'drimmelen'). Gebruik dezelfde postcode en huisnummer "
+        "als je op die pagina zou invoeren."
     ),
 }
 

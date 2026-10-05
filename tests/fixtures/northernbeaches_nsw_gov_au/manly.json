@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-03",
+  "interactions": [
+    {
+      "key": "GET https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx 1bb7ddbf3d",
+      "method": "GET",
+      "url": "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx",
+      "final_url": "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx?term=25+Pittwater+Road+MANLY",
+      "body": "{\"params\":[[\"term\",\"25 Pittwater Road MANLY\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credential": "false",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self';",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 07:23:01 GMT",
+        "expect-ct": "max-age=86400, enforce",
+        "permissions-policy": "accelerometer=(self), camera=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), payment=(self), usb=(self)",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "set-cookie": "visid_incap_3221747=uMpye5OHTbmvrr/rqnXz0VWtwGoAAAAAQUIPAAAAAAD0dUwCkwF9OzLfylHRkY3z; expires=Sun, 03 Oct 2027 00:21:14 GMT; HttpOnly; path=/; Domain=.northernbeaches.nsw.gov.au, incap_ses_1025_3221747=e8UFfRZVB0QHiK2OKYg5DlWtwGoAAAAA+6j441QSKdGYN77Nrq9f/g==; path=/; Domain=.northernbeaches.nsw.gov.au",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-aspnet-version": "4.0.30319",
+        "x-cdn": "Imperva",
+        "x-content-type-options": "nosniff",
+        "x-iinfo": "41-196028920-196028921 SNNN RT(1791012157868 23550) q(0 0 0 2) r(4 4) U2",
+        "x-permitted-cross-domain-policies": "none",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "W3siaWQiOiI0NzU4NzQiLCJsYWJlbCI6IjI1IFBpdHR3YXRlciBSb2FkIE1BTkxZIiwidmFsdWUiOiIyNSBQaXR0d2F0ZXIgUm9hZCBNQU5MWSJ9XQ=="
+    },
+    {
+      "key": "POST https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx 21830e02e7",
+      "method": "POST",
+      "url": "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx",
+      "final_url": "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx",
+      "body": "{\"body\":[[\"property\",\"475874\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "transfer-encoding": "chunked",
+        "access-control-allow-credential": "false",
+        "access-control-allow-origin": "*",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self';",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 03 Oct 2026 07:23:01 GMT",
+        "expect-ct": "max-age=86400, enforce",
+        "permissions-policy": "accelerometer=(self), camera=(self), geolocation=(self), gyroscope=(self), magnetometer=(self), microphone=(self), payment=(self), usb=(self)",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "Microsoft-IIS/10.0",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-aspnet-version": "4.0.30319",
+        "x-cdn": "Imperva",
+        "x-content-type-options": "nosniff",
+        "x-iinfo": "41-196028920-196028921 SNNN RT(1791012157868 24121) q(0 0 0 -1) r(2 2) U6",
+        "x-permitted-cross-domain-policies": "none",
+        "x-xss-protection": "1; mode=block"
+      },
+      "content_b64": "PGJyPjxwPlRoZSBuZXh0IHdhc3RlIHNlcnZpY2UgZm9yIDI1IFBpdHR3YXRlciBSb2FkIE1BTkxZIDo8L3A+PHA+PHN0cm9uZz5XZWRuZXNkYXksIDcgT2N0b2Jlcjwvc3Ryb25nPjwvcD48ZGl2IHN0eWxlPSJkaXNwbGF5OmZsZXgiPjxkaXYgc3R5bGU9IndpZHRoOjQwMHB4Ij48L2Rpdj48ZGl2PjxhIGhyZWY9Imh0dHBzOi8vd3d3Lm5vcnRoZXJuYmVhY2hlcy5uc3cuZ292LmF1L3NlcnZpY2VzL3J1YmJpc2gtYW5kLXJlY3ljbGluZy9iaW4tY29sbGVjdGlvbi1kYXlzL1dlZG5lc2RheUIucGRmIiB0YXJnZXQ9Il9ibGFuayIgY2xhc3M9ImNhbGVuZGFyLWltYWdlLWxpbmstYmxvY2sgdy1pbmxpbmUtYmxvY2siPjxpbWcgc3JjPSJodHRwczovL2ZpbGVzLm5vcnRoZXJuYmVhY2hlcy5uc3cuZ292LmF1L25iYy1wcm9kLWZpbGVzL2ltYWdlcy8yMDI0LTEyL2NhbGVuZGFyLnBuZyIgc3R5bGU9Im1hcmdpbjogMCAyM3B4IDIzcHggMjNweCI+PC9hPjxicj48YSB0YXJnZXQ9Il9ibGFuayIgY2xhc3M9Im1kbC1idXR0b24gbWRsLWpzLWJ1dHRvbiBtZGwtYnV0dG9uLS1yYWlzZWQgbWRsLWpzLXJpcHBsZS1lZmZlY3QgbWRsLWJ1dHRvbi0tYWNjZW50IHctYnV0dG9uIiBkYXRhLXVwZ3JhZGVkPSIsTWF0ZXJpYWxCdXR0b24sTWF0ZXJpYWxSaXBwbGUiIGhyZWY9Imh0dHBzOi8vd3d3Lm5vcnRoZXJuYmVhY2hlcy5uc3cuZ292LmF1L3NlcnZpY2VzL3J1YmJpc2gtYW5kLXJlY3ljbGluZy9iaW4tY29sbGVjdGlvbi1kYXlzL1dlZG5lc2RheUIucGRmIj5Eb3dubG9hZCBjYWxlbmRhcjxzcGFuIGNsYXNzPSJtZGwtYnV0dG9uX19yaXBwbGUtY29udGFpbmVyIj48c3BhbiBjbGFzcz0ibWRsLXJpcHBsZSI+PC9zcGFuPjwvc3Bhbj48L2E+PC9kaXY+PC9kaXY+"
+    }
+  ]
+}

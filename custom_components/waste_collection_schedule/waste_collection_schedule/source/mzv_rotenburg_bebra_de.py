@@ -1,8 +1,7 @@
 from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import parsers
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
@@ -32,12 +31,9 @@ _CITY_HINT = (
 )
 
 
-def _possible_cities(source=None) -> list[str]:
-    """List the `ort` values linked from the provider's web-app page."""
-    r = requests.get(WEBAPP_URL, headers={"User-Agent": "Mozilla/5.0"})
-    r.raise_for_status()
-
-    soup = BeautifulSoup(r.content, "html.parser")
+def _linked_cities(response, **_) -> list[str]:
+    """The `ort` values linked from the provider's web-app page."""
+    soup = BeautifulSoup(response.content, "html.parser")
     cities: list[str] = []
     for link in soup.find_all("a", href=True):
         if not isinstance(link, Tag):
@@ -97,7 +93,9 @@ class Source(BaseSource):
         parsers.IcsEventsParser(min_events=1),
         argument="city",
         contains="BEGIN:VCALENDAR",
-        suggestions=_possible_cities,
+        suggestions=retrievers.Suggestions(
+            WEBAPP_URL, headers={"User-Agent": "Mozilla/5.0"}, pick=_linked_cities
+        ),
         hint=_CITY_HINT,
     )
 

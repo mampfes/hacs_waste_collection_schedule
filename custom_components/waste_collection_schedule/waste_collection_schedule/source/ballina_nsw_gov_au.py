@@ -1,64 +1,61 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Ballina Shire Council"
-DESCRIPTION = "Source for Ballina Shire Council, NSW, Australia."
-URL = "https://www.ballina.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection-Day"
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter the full service address used by Ballina Shire Council, for example "
-        "'1 Grant St, Ballina NSW 2478'."
+
+@final
+class Source(BaseSource):
+    TITLE = "Ballina Shire Council"
+    DESCRIPTION = "Source for Ballina Shire Council, NSW, Australia."
+    URL = "https://www.ballina.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection-Day"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "1/49 Grant Street BALLINA": {"address": "1/49 Grant Street BALLINA"},
+        "2/7 Hartigan St CUMBALUM": {"address": "2/7 Hartigan St CUMBALUM"},
+    }
+
+    PARAMS = (street_address(field="address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the full service address used by Ballina Shire Council, for "
+        "example '1 Grant St, Ballina NSW 2478'."
+    }
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.ballina.nsw.gov.au",
+        # Ballina's fuzzy search ranks poorly: "1 Grant St, Ballina NSW 2478"
+        # comes back with "2/7 Hartigan St CUMBALUM" first and the Grant Street
+        # properties behind it. So the first hit cannot be trusted, and the
+        # whole list is disambiguated against the address instead.
+        search_fuzzy=True,
+        page_link="/$8a878053-5e29-431d-896b-8c79ce08799f$/Residents/Waste-and-Recycling/Bin-Collection-Day",
+        headers={
+            "accept": "application/json, text/javascript, */*; q=0.01",
+            "referer": "https://www.ballina.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection-Day",
+            "x-requested-with": "XMLHttpRequest",
+        },
+        strict_address_matching=True,
+        strict_single_result=True,
     )
-}
-TEST_CASES = {
-    "1/49 Grant Street BALLINA": {"address": "1/49 Grant Street BALLINA"},
-    "2/7 Hartigan St CUMBALUM": {"address": "2/7 Hartigan St CUMBALUM"},
-}
-
-PAGE_LINK = "/$8a878053-5e29-431d-896b-8c79ce08799f$/Residents/Waste-and-Recycling/Bin-Collection-Day"
-
-# Ballina sits behind Akamai, which fingerprints the TLS handshake as well as
-# the headers. Announcing Chrome in the User-Agent over a plain `requests`
-# handshake is the worst of both worlds and is served a 403 "Access Denied"
-# page; curl_cffi's Chrome impersonation makes the two agree and passes.
-HEADERS = {
-    "accept": "application/json, text/javascript, */*; q=0.01",
-    "referer": URL,
-    "x-requested-with": "XMLHttpRequest",
-}
-
-ICON_MAP = {
-    "general waste": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "green organics": Icons.ORGANIC,
-    "food organics": Icons.BIO_KITCHEN,
-    "garden organics": Icons.GARDEN,
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.ballina.nsw.gov.au",
-    search_fuzzy=True,
-    # Ballina's fuzzy search ranks poorly: "1 Grant St, Ballina NSW 2478"
-    # comes back with "2/7 Hartigan St CUMBALUM" first and the Grant Street
-    # properties behind it. Capping at one result therefore guaranteed the
-    # wrong property, so take the whole list and disambiguate it here.
-    page_link=PAGE_LINK,
-    headers=HEADERS,
-    use_curl_cffi=True,
-    search_response_format="json_then_xml",
-    strict_address_matching=True,
-    strict_single_result=True,
-    icon_keywords=ICON_MAP,
-)
-
-
-class Source:
-    def __init__(self, address: str):
-        self._address = " ".join(address.split())
-        self._client = OpenCitiesClient(_CONFIG)
-
-    def fetch(self) -> list[Collection]:
-        return self._client.fetch(address=self._address)
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+        type_value_map={
+            "Landfill Bin Collection": wt.GENERAL_WASTE,
+            "Recycling Bin Collection": wt.RECYCLABLES,
+            "Food Organics Garden Organics Bin Collection": wt.ORGANIC,
+        },
+    )

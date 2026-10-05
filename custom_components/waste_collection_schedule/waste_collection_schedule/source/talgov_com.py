@@ -1,55 +1,25 @@
 import math
-from datetime import date, timedelta
+from datetime import date
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-
-TITLE = "City of Tallahassee"
-DESCRIPTION = "Source for City of Tallahassee, FL waste, recycling and bulky item/yard waste collection."
-URL = "https://www.talgov.com/you/swslookup"
-COUNTRY = "us"
-
-TEST_CASES = {
-    "400 S Monroe St": {"address": "400 S Monroe St"},
-    "2001 Trescott Dr (Red Thursday bulk)": {"address": "2001 Trescott Dr"},
-    "1004 Piney Z Plantation Rd (Blue Friday bulk)": {
-        "address": "1004 Piney Z Plantation Rd"
-    },
-}
-
-ICON_MAP = {
-    "Garbage/Recycling": Icons.GENERAL_WASTE,
-    "Bulky Items/Yard Waste": Icons.BULKY,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address as shown in the City of Tallahassee lookup tool (e.g. '400 S Monroe St')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    Deduplicate,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
 ADDRESS_URL = "https://handlersp.talgov.com/autosuggest/UtilSWAddressListUmax.ashx"
 SCHEDULE_URL = "https://handlersp.talgov.com/solidwaste/UtilSWRedBlueUmax.ashx"
-
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
-}
 
 GARBAGE_RECYCLING = "Garbage/Recycling"
 BULKY_YARD_WASTE = "Bulky Items/Yard Waste"
@@ -63,7 +33,32 @@ BULK_WEEKS_AHEAD = 52
 
 
 def _normalize(address: str) -> str:
-    return " ".join(address.split()).strip().lower()
+    return " ".join(str(address).split()).strip().lower()
+
+
+def _services(response, *keys, address, **_) -> list[tuple[str, str]]:
+    """The autosuggest answers ``[{address, customernumber, serviceid}, ...]``.
+
+    Every entry whose address equals the one asked for is a service of that
+    address (a commercial address may have several), so all of them are kept.
+    """
+    entries = response.json()
+    target = _normalize(address)
+    matches = [
+        (entry["customernumber"], entry["serviceid"])
+        for entry in entries
+        if _normalize(entry.get("address", "")) == target
+    ]
+    if matches:
+        return matches
+    suggestions = sorted(
+        {entry["address"].strip() for entry in entries if entry.get("address")}
+    )
+    if suggestions:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", address, suggestions[:10]
+        )
+    raise SourceArgumentNotFound("address", address)
 
 
 def _week_color(d: date) -> str:
@@ -80,100 +75,95 @@ def _week_color(d: date) -> str:
     return "Red" if week_no % 2 == 0 else "Blue"
 
 
-def _weekly_dates(weekday: int, waste_type: str) -> list[Collection]:
-    today = date.today()
-    days_ahead = (weekday - today.weekday()) % 7
-    first = today + timedelta(days=days_ahead)
-    icon = ICON_MAP.get(waste_type)
-    return [
-        Collection(date=first + timedelta(weeks=i), t=waste_type, icon=icon)
-        for i in range(WEEKLY_WEEKS_AHEAD)
+def _describe(row, source):
+    """Weekly garbage/recycling on every pickup day, plus the Red/Blue bulk day."""
+    for day_name in (
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+    ):
+        weekday = recurrence.weekday(day_name)
+        if row.get(f"pickup{day_name}") == "Yes" and weekday is not None:
+            yield Schedule(
+                GARBAGE_RECYCLING,
+                recurrence.next_weekday(weekday),
+                recurrence.WEEKLY,
+                WEEKLY_WEEKS_AHEAD,
+            )
+
+    parts = (row.get("yw_bulk") or "").split()
+    if len(parts) == 2:
+        color, day_name = parts
+        weekday = recurrence.weekday(day_name)
+        if weekday is not None and color in ("Red", "Blue"):
+            start = recurrence.next_weekday(weekday)
+            weeks = recurrence.recurring(start, recurrence.WEEKLY, BULK_WEEKS_AHEAD)
+            yield Schedule(
+                BULKY_YARD_WASTE,
+                start,
+                recurrence.WEEKLY,
+                BULK_WEEKS_AHEAD,
+                exclude=[d for d in weeks if _week_color(d) != color],
+            )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "City of Tallahassee"
+    DESCRIPTION = "Source for City of Tallahassee, FL waste, recycling and bulky item/yard waste collection."
+    URL = "https://www.talgov.com/you/swslookup"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "400 S Monroe St": {"address": "400 S Monroe St"},
+        "2001 Trescott Dr (Red Thursday bulk)": {"address": "2001 Trescott Dr"},
+        "1004 Piney Z Plantation Rd (Blue Friday bulk)": {
+            "address": "1004 Piney Z Plantation Rd"
+        },
+    }
+
+    PARAMS = (street_address("address"),)
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
     ]
 
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street address as shown in the City of Tallahassee "
+            "[solid waste lookup](https://www.talgov.com/you/swslookup), "
+            "e.g. '400 S Monroe St'."
+        ),
+    }
 
-def _biweekly_dates(weekday: int, color: str, waste_type: str) -> list[Collection]:
-    today = date.today()
-    days_ahead = (weekday - today.weekday()) % 7
-    first = today + timedelta(days=days_ahead)
-    icon = ICON_MAP.get(waste_type)
-    candidates = [first + timedelta(weeks=i) for i in range(BULK_WEEKS_AHEAD)]
-    return [
-        Collection(date=d, t=waste_type, icon=icon)
-        for d in candidates
-        if _week_color(d) == color
-    ]
-
-
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        r = requests.get(ADDRESS_URL, params={"address": self._address}, timeout=30)
-        r.raise_for_status()
-        suggestions_raw = r.json()
-
-        target = _normalize(self._address)
-        matches = [
-            entry
-            for entry in suggestions_raw
-            if _normalize(entry.get("address", "")) == target
-        ]
-
-        if not matches:
-            suggestions = sorted(
-                {
-                    entry["address"].strip()
-                    for entry in suggestions_raw
-                    if entry.get("address")
-                }
-            )
-            if suggestions:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "address", self._address, suggestions[:10]
-                )
-            raise SourceArgumentNotFound("address", self._address)
-
-        entries: list[Collection] = []
-        for match in matches:
-            r = requests.get(
-                SCHEDULE_URL,
-                params={
-                    "customernumber": match["customernumber"],
-                    "serviceid": match["serviceid"],
-                },
-                timeout=30,
-            )
-            r.raise_for_status()
-            for row in r.json():
-                entries.extend(self._parse_row(row))
-
-        if not entries:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # De-duplicate in case multiple service ids at the same address share
-        # the same pickup day.
-        unique = {(c.date, c.type): c for c in entries}
-        return sorted(unique.values(), key=lambda c: c.date)
-
-    @staticmethod
-    def _parse_row(row: dict) -> list[Collection]:
-        collections: list[Collection] = []
-
-        for day_name, weekday in WEEKDAYS.items():
-            if row.get(f"pickup{day_name.lower()}") == "Yes":
-                collections.extend(_weekly_dates(weekday, GARBAGE_RECYCLING))
-                break
-
-        bulk = (row.get("yw_bulk") or "").strip()
-        if bulk:
-            parts = bulk.split()
-            if len(parts) == 2:
-                color, day_name = parts
-                weekday = WEEKDAYS.get(day_name)
-                if weekday is not None and color in ("Red", "Blue"):
-                    collections.extend(
-                        _biweekly_dates(weekday, color, BULKY_YARD_WASTE)
-                    )
-
-        return collections
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(
+            ADDRESS_URL,
+            params=lambda address, **_: {"address": address},
+            pick=_services,
+        ),
+        targets=lambda source, services: services,
+        fetch=retrievers.Request(
+            SCHEDULE_URL,
+            params=lambda service, services, **_: {
+                "customernumber": service[0],
+                "serviceid": service[1],
+            },
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsonParser())
+    preprocess = Compose(RecurrenceExpander(_describe), Deduplicate())
+    transform = ICSTransformer(
+        type_value_map={
+            GARBAGE_RECYCLING: [wt.GENERAL_WASTE, wt.RECYCLABLES],
+            BULKY_YARD_WASTE: [wt.BULKY_WASTE, wt.GARDEN_WASTE],
+        }
+    )

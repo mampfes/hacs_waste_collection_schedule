@@ -1,90 +1,69 @@
-import calendar
-import datetime
-import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Newark & Sherwood District Council"
-DESCRIPTION = "Source for Newark & Sherwood services."
-URL = "https://www.newark-sherwooddc.gov.uk/"
-TEST_CASES = {
-    "Edwinstowe": {"uprn": "010091747078"},
-    "Ollerton": {"uprn": 100031463343},
-    "Clipstone": {"uprn": "010091745473"},
-}
+CALENDAR_URL = "http://app.newark-sherwooddc.gov.uk/bincollection/calendar"
 
-BINS = {
-    "recycle": {"icon": "mdi:recycle", "name": "Recycling"},
-    "refuse": {"icon": "mdi:trash-can", "name": "General"},
-    "garden": {"icon": "mdi:leaf", "name": "Garden"},
-    "glass": {"icon": "mdi:glass-fragile", "name": "Glass"},
+_TYPE_MAP = {
+    "recycle": wt.RECYCLABLES,
+    "refuse": wt.GENERAL_WASTE,
+    "garden": wt.GARDEN_WASTE,
+    "glass": wt.GLASS,
 }
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+def _date(row) -> str:
+    """The month table's "November 2025" heading plus the row's day, "Wednesday 5th"."""
+    heading = row.find_parent("table").find("th").get_text(strip=True)
+    day = row.find("td").get_text(strip=True).rsplit(" ", 1)[-1]
+    return f"{day.rstrip('stndrh')} {heading}"
 
-    def fetch(self):
-        entries = self.get_data({"pid": self._uprn})
-        try:
-            entries += self.get_data({"pid": self._uprn, "nc": "1"})
-        except Exception:
-            pass
-        return entries
 
-    def get_data(self, payload):
-        r = requests.get(
-            "http://app.newark-sherwooddc.gov.uk/bincollection/calendar", params=payload
-        )
+def _type(row) -> str:
+    return next(c for c in row["class"] if c.startswith("bin_"))[len("bin_") :]
 
-        entries = []
 
-        soup = BeautifulSoup(r.content, "html.parser")
+@final
+class Source(BaseSource):
+    TITLE = "Newark & Sherwood District Council"
+    DESCRIPTION = "Source for Newark & Sherwood services."
+    URL = "https://www.newark-sherwooddc.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        # Collections are arranged by month, with each month as an individual table
-        # Split page by months
-        months = soup.find_all("table")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GLASS,
+    ]
 
-        for month in months:
-            # Month and year are set in th
-            month_data = month.find("th").get_text(strip=True)
-            # Regex the month and year then convert month name to number
-            month_data_match = re.search(r"(\w*)\s*(\d{4})", month_data)
-            extracted_month_name = month_data_match.group(1)
-            month_number = list(calendar.month_name).index(extracted_month_name)
-            year = month_data_match.group(2)
+    TEST_CASES: ClassVar[dict] = {
+        "Edwinstowe": {"uprn": "010091747078"},
+        "Ollerton": {"uprn": 100031463343},
+        "Clipstone": {"uprn": "010091745473"},
+    }
 
-            # Each collection for the month is an individual table row with a classname beginning bin_
-            rows = month.find_all("tr", class_=re.compile("bin_"))
-            for collection_day in rows:
-                # Get type of bin collection
-                collection_type_match = re.search(
-                    r"bin_(\w*)", collection_day["class"][0]
-                )
-                collection_type = collection_type_match.group(1)
+    PARAMS = (uprn(),)
 
-                # Get date of collection
-                collection_day_match = re.search(
-                    r",\s*\w*\s*(\d{1,2})\w{2}",
-                    collection_day.find("td").get_text(strip=True),
-                )
-                collection_day = collection_day_match.group(1)
-
-                entries.append(
-                    Collection(
-                        date=datetime.date(
-                            int(year), int(month_number), int(collection_day)
-                        ),  # Collection date
-                        t=BINS.get(collection_type, {}).get(
-                            "name", collection_type
-                        ),  # Collection type
-                        icon=BINS.get(collection_type, {}).get(
-                            "icon"
-                        ),  # Collection icon
-                    )
-                )
-
-        return entries
+    # The calendar covers twelve months; ``nc=1`` asks for the twelve after it.
+    # That second page is a bonus: an error page parses to no rows.
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, context: [{}, {"nc": "1"}],
+        fetch=retrievers.Request(
+            CALENDAR_URL,
+            params=lambda extra, context, uprn, **_: {"pid": uprn, **extra},
+            raise_for_status=False,
+        ),
+    )
+    parse = parsers.EachResponse(parsers.HtmlParser("tr[class^=bin_]"))
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_type,
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d %B %Y"),
+    )

@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23",
+  "interactions": [
+    {
+      "key": "GET https://www.campbelltown.nsw.gov.au/api/v1/myarea/search c8dca55a12",
+      "method": "GET",
+      "url": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search?keywords=10+Brookfield+Road+Minto+NSW+2566",
+      "body": "{\"params\":[[\"keywords\",\"10 Brookfield Road Minto NSW 2566\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "252",
+        "cache-control": "no-cache",
+        "date": "Wed, 23 Sep 2026 17:44:43 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=15, origin; dur=297, ak_p; desc=\"1790185482796_1752388110_145149091_31185_15830_4_11_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=B8401591FD8B5454EA8A9333104FAD09~000000000000000000000000000000~YAAQDlJzaHEGsMmgAQAAgKtezwExwCU92/PxvDGUrepXCa78cHe7UhurhB2q6GMz9UhfUT+LrpTd4IYD+YBS7AyoTNU3FdSf5iVe2WlmWoSNbQAnp4j1/nAskEye1zPJyENV8+gzENRYFPkES+Z8NQEqcuekdFsFw1XFGC5tKQGka37SQ0IosntqTV6wgeW/9+v3KEXwVUIQow/+XQYWyMoWTHnYTBZZKEU7Lfcdim7tjNbIO4fN0o78atY/zwh05wsfzf0AeI2TT8ia1i7RygqALmzJX6gr/MOsptwaicsH6d2yzjmehZjxushcSbzYVt/px7UbFKMIGsXkBSYtvvuRiXW1wVNNwmxWdINKja0A7GAeDGil/k6+fetX1FH0n7hyi6N/me4LNN/p89ZfPojoAd+EYQyKvds=; Domain=.campbelltown.nsw.gov.au; Path=/; Expires=Wed, 23 Sep 2026 19:44:42 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiJmYjU1MzU5OC0xZjhkLTQzMzEtODhmOC0yM2M3YmM0NjJhYTUiLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEwICBCcm9va2ZpZWxkIFJvYWQsIE1JTlRPIE5TVyAyNTY2IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOm51bGwsIkRpc3RhbmNlIjowLCJTY29yZSI6MjUuNTM3NTc5LCJMYXRMb24iOlstMzQuMDI4MDkyNzY1MTU2MSwxNTAuODUwODI2NDMyMDcyXX1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices d3cb227932",
+      "method": "GET",
+      "url": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=fb553598-1f8d-4331-88f8-23c7bc462aa5&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"fb553598-1f8d-4331-88f8-23c7bc462aa5\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "723",
+        "cache-control": "private, max-age=0",
+        "date": "Wed, 23 Sep 2026 17:44:44 GMT",
+        "set-cookie": "ASP.NET_SessionId=fh44rguzb13crtsrfzf1g5lk; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=99, origin; dur=875, ak_p; desc=\"1790185483166_1752388110_145149748_97449_17463_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlV2FzdGUgQ29sbGVjdGlvblx1MDAzYy9oMlx1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJncmlkIHdhc3RlLXNlcnZpY2VzLXJlc3VsdHMgcmVzdWx0cy01XCJcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGdlbmVyYWwtd2FzdGUgZGF0ZS1wcmVjaXNlIGl0ZW0tMFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUdlbmVyYWwgV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIHdlZWtseVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgVGh1IDI0LzkvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMjQvOS8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBncmVlbi13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlR3JlZW4gV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5XHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBUaHUgMS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSB3YXN0ZS1jYWxlbmRhciBkYXRlLWFwcHJveCBpdGVtLTNcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VXYXN0ZSBDYWxlbmRhciAtIFpvbmUgQVx1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VZb3VyIHdhc3RlIGNhbGVuZGFyIGlzIG5vdyBhdmFpbGFibGUgb25saW5lIGFuZCB0aHJvdWdoIHRoZSBNeSBXYXN0ZSBCaW4gYXBwLCB3aGljaCB5b3UgY2FuIGRvd25sb2FkIHRvIHlvdXIgbW9iaWxlIGRldmljZS5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cImh0dHBzOi8vd3d3LmNhbXBiZWxsdG93bi5uc3cuZ292LmF1L1NlcnZpY2VzLWFuZC1GYWNpbGl0aWVzL1dhc3RlLWFuZC1SZWN5Y2xpbmcvV2FzdGUtQ2FsZW5kYXItYW5kLU15LVdhc3RlLUJpbi1hcHBcIiB0YXJnZXQ9XCJibGFua1wiXHUwMDNlQ2xpY2sgaGVyZSB0byB2aWV3IHlvdXIgY2FsZW5kYXIgYW5kIHRvIGxlYXJuIG1vcmUgYWJvdXQgdGhlIE15IFdhc3RlIEJpbiBhcHAuIFx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2Uga2VyYnNpZGUtY2xlYW4tdXAgZGF0ZS1hcHByb3ggaXRlbS00XCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlS2VyYnNpZGUgY2xlYW4gdXAgLSBUdWVzZGF5c1x1MDAzYy9oM1x1MDAzZVxyXG5cdTAwM2NkaXYgY2xhc3M9XCJzZXJ2aWNlLWRldGFpbHNcIlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJub3RlXCJcdTAwM2VZb3UgbXVzdCBib29rIGEgY2xlYW4gdXAgb25saW5lIG9yIGNhbGwgdXMgb24gMDIgNDY0NSA0MDAwIGJlZm9yZSB5b3UgcHV0IGFueSBpdGVtcyBvbiB0aGUga2VyYnNpZGUuIFx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibGlua1wiXHUwMDNlXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly93d3cuY2FtcGJlbGx0b3duLm5zdy5nb3YuYXUvU2VydmljZXMtYW5kLUZhY2lsaXRpZXMvV2FzdGUtYW5kLVJlY3ljbGluZy9Hb3QtYnVsa3ktaXRlbXMtYm9vay1hLWtlcmJzaWRlLWNsZWFuLXVwXCIgdGFyZ2V0PVwiYmxhbmtcIlx1MDAzZUJvb2sgYSBjbGVhbiB1cCBvbmxpbmVcdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgICJ9"
+    }
+  ]
+}

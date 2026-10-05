@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-09-30",
+  "interactions": [
+    {
+      "key": "GET https://map.whitehorse.vic.gov.au/weave/services/v1/index/search 157db2d9d8",
+      "method": "GET",
+      "url": "https://map.whitehorse.vic.gov.au/weave/services/v1/index/search",
+      "final_url": "https://map.whitehorse.vic.gov.au/weave/services/v1/index/search?start=0&limit=1000&indexes=index.property&type=EXACT&crs=EPSG%3A3857&query=6%2F16+ashted+road",
+      "body": "{\"params\":[[\"crs\",\"EPSG:3857\"],[\"indexes\",\"index.property\"],[\"limit\",\"1000\"],[\"query\",\"6/16 ashted road\"],[\"start\",\"0\"],[\"type\",\"EXACT\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "set-cookie": "JSESSIONID=node0byxf87itpb6411phoz4fsbsf024620.node0; Path=/weave;HttpOnly;SameSite=Lax",
+        "x-powered-by": "Weave, ARR/3.0",
+        "date": "Wed, 30 Sep 2026 19:23:57 GMT",
+        "content-length": "304",
+        "strict-transport-security": "max-age=31536000; preload"
+      },
+      "content_b64": "eyJ0b3RhbCI6MSwicmVzdWx0cyI6W3siZW52ZWxvcGUiOnsibWF4eSI6LTQ1NTQ1MTAuNzMyLCJtYXh4IjoxLjYxNTUxNjE0MThFNywibWlueCI6MS42MTU1MTQ3MDU2RTcsIm1pbnkiOi00NTU0NTI3Ljg4NiwiY3JzIjoiRVBTRzozODU3In0sImNlbnRyb2lkIjp7InkiOi00NTU0NTE3Ljg0NiwieCI6MS42MTU1MTU0MjY2RTcsImNycyI6IkVQU0c6Mzg1NyJ9LCJpZCI6IjIxMTY2NzU3MyIsImluZGV4IjoxLCJlbnRpdHkiOiJseXJfdmljbWFwX3Byb3BlcnR5IiwiZGlzcGxheTEiOiI2LzE2IEFzaHRlZCBSb2FkIEJPWCBISUxMIn1dfQ=="
+    },
+    {
+      "key": "GET https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds 00d0661bf2",
+      "method": "GET",
+      "url": "https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds",
+      "final_url": "https://map.whitehorse.vic.gov.au/weave/services/v1/feature/getFeaturesByIds?entityId=lyr_vicmap_property&datadefinition=dd_whm_property_waste&ids=211667573&outCrs=EPSG%3A3857&returnCentroid=false",
+      "body": "{\"params\":[[\"datadefinition\",\"dd_whm_property_waste\"],[\"entityId\",\"lyr_vicmap_property\"],[\"ids\",\"211667573\"],[\"outCrs\",\"EPSG:3857\"],[\"returnCentroid\",\"false\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "x-powered-by": "Weave, ARR/3.0",
+        "date": "Wed, 30 Sep 2026 19:23:57 GMT",
+        "content-length": "791",
+        "strict-transport-security": "max-age=31536000; preload"
+      },
+      "content_b64": "eyJ0eXBlIjoiRmVhdHVyZUNvbGxlY3Rpb24iLCJmZWF0dXJlcyI6W3sidHlwZSI6IkZlYXR1cmUiLCJpZCI6IjIxMTY2NzU3MyIsImdlb21ldHJ5Ijp7InR5cGUiOiJNdWx0aVBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbWzEuNjE1NTE1ODM3MjY0MjMzNUU3LC00NTU0NTIyLjMyMTY1NTU5OF0sWzEuNjE1NTE1OTg1NDgxMDM3MkU3LC00NTU0NTIyLjU0NzEzMjk5NF0sWzEuNjE1NTE2MTM4NTAzOTE4MkU3LC00NTU0NTEyLjQwMTE4ODY4MV0sWzEuNjE1NTE0ODczMDgzMzU0NUU3LC00NTU0NTEwLjQ3NjAwOTk1NV0sWzEuNjE1NTE0NzIwMDk5NzUwMkU3LC00NTU0NTIwLjYyMDY4ODI2MDVdLFsxLjYxNTUxNTExMjM1OTI0MzNFNywtNDU1NDUyMS4yMTc5NzYxNTddLFsxLjYxNTUxNTgzNzI2NDIzMzVFNywtNDU1NDUyMi4zMjE2NTU1OThdXV0sW1tbMS42MTU1MTU3OTM1NDEzMTgyRTcsLTQ1NTQ1MjUuMjEyNDYwNTAxXSxbMS42MTU1MTUwNjc4Nzk5NzY5RTcsLTQ1NTQ1MjQuMTU4MDMyMzQ0XSxbMS42MTU1MTUwMjQ5MzE1MzIxRTcsLTQ1NTQ1MjYuOTkwMzE3ODQyXSxbMS42MTU1MTU3NDk5MzI0NjA3RTcsLTQ1NTQ1MjguMDk2ODExOTldLFsxLjYxNTUxNTc5MzU0MTMxODJFNywtNDU1NDUyNS4yMTI0NjA1MDFdXV1dfSwicHJvcGVydGllcyI6eyJkZF93aG1fcHJvcGVydHlfd2FzdGUiOlt7Il9pZCI6IjIxMTY2NzU3MyIsImNvbGxlY3Rpb25EYXkiOiJXZWRuZXNkYXkiLCJ3ZWVrIjoxLCJuZXh0UmVjeWNsZSI6IjA3IE9jdCAyMDI2IiwibmV4dEdPQlMiOiIxNCBPY3QgMjAyNiJ9XX19XX0="
+    }
+  ]
+}

@@ -1,65 +1,68 @@
-from waste_collection_schedule import Collection, Icons
+from typing import ClassVar, final
+
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import address
 from waste_collection_schedule.service.OpenCities import (
-    OpenCitiesClient,
-    OpenCitiesConfig,
+    OpenCitiesParser,
+    OpenCitiesRetriever,
 )
-
-TITLE = "Horowhenua District Council"
-DESCRIPTION = "Source for Horowhenua District Council Rubbish & Recycling collection."
-URL = "https://www.horowhenua.govt.nz/"
-TEST_CASES = {
-    "House-Shannon": {
-        "post_code": "4821",
-        "town": "Shannon",
-        "street_name": "Bryce Street",
-        "street_number": "55",
-    },
-    "House-Levin": {
-        "post_code": "5510",
-        "town": "Levin",
-        "street_name": "McKenzie Street",
-        "street_number": "15",
-    },
-    "Commercial-Foxton": {
-        "post_code": "4814",
-        "town": "Foxton",
-        "street_name": "State Highway 1",
-        "street_number": "18",
-    },
-}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-    # Without an explicit Accept header the search endpoint returns XML
-    # instead of JSON.
-    "Accept": "application/json",
-}
-
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-
-_CONFIG = OpenCitiesConfig(
-    domain="https://www.horowhenua.govt.nz",
-    argument_name="street_name",
-    headers=HEADERS,
-    warm_up_url="https://www.horowhenua.govt.nz",
-    use_curl_cffi=True,
-    icon_keywords=ICON_MAP,
-)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, post_code: str, town: str, street_name: str, street_number: str):
-        self.post_code = post_code
-        self.town = town.upper()
-        self.street_name = street_name
-        self.street_number = street_number
-        self._client = OpenCitiesClient(_CONFIG)
+@final
+class Source(BaseSource):
+    TITLE = "Horowhenua District Council"
+    DESCRIPTION = (
+        "Source for Horowhenua District Council Rubbish & Recycling collection."
+    )
+    URL = "https://www.horowhenua.govt.nz/"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        address = (
-            f"{self.street_number} {self.street_name} {self.town} {self.post_code}"
-        )
-        return self._client.fetch(address=address)
+    TEST_CASES: ClassVar[dict] = {
+        "House-Shannon": {
+            "post_code": "4821",
+            "town": "Shannon",
+            "street_name": "Bryce Street",
+            "street_number": "55",
+        },
+        "House-Levin": {
+            "post_code": "5510",
+            "town": "Levin",
+            "street_name": "McKenzie Street",
+            "street_number": "15",
+        },
+        "Commercial-Foxton": {
+            "post_code": "4814",
+            "town": "Foxton",
+            "street_name": "State Highway 1",
+            "street_number": "18",
+        },
+    }
+
+    PARAMS = (
+        address(
+            street_field="street_name",
+            number="street_number",
+            postcode_field="post_code",
+            city_field="town",
+        ),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
+
+    retrieve = OpenCitiesRetriever(
+        domain="https://www.horowhenua.govt.nz",
+        address=None,
+        address_template="{street_number} {street_name} {town} {post_code}",
+        argument="street_name",
+        warm_up_url="https://www.horowhenua.govt.nz",
+        headers={"user-agent": "Mozilla/5.0"},
+    )
+    parse = OpenCitiesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        description_key="note",
+    )

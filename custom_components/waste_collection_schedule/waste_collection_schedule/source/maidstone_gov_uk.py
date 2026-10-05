@@ -1,136 +1,89 @@
-import json
-from datetime import datetime
-from time import time_ns
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsDynamicRowsPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Maidstone Borough Council"
-DESCRIPTION = "Source for maidstone.gov.uk services for Maidstone Borough Council."
-URL = "https://maidstone.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "10022892379"},
-    "Test_002": {"uprn": 10014307164},
-    "Test_003": {"uprn": "200003674881"},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-ICON_MAP = {
-    "clinical": Icons.HAZARDOUS,
-    "bulky": Icons.BULKY,
-    "residual": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "garden": Icons.GARDEN,
-    "food": Icons.BIO_KITCHEN,
-}
+_HOSTNAME = "my.maidstone.gov.uk"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).strip()
+@final
+class Source(BaseSource):
+    TITLE = "Maidstone Borough Council"
+    DESCRIPTION = "Source for maidstone.gov.uk services for Maidstone Borough Council."
+    URL = "https://maidstone.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-    def fetch(self):
-        s = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10022892379"},
+        "Test_002": {"uprn": 10014307164},
+        "Test_003": {"uprn": "200003674881"},
+    }
 
-        # Set up session
-        timestamp = time_ns() // 1_000_000
-        s.get(
-            f"https://my.maidstone.gov.uk/apibroker/domain/my.maidstone.gov.uk?_={timestamp}&sid=979631f89458fc974cc2aa69ebbd7996",
-            headers=HEADERS,
-        )
+    PARAMS = (uprn(),)
 
-        # Get Session ID
-        timestamp = time_ns() // 1_000_000
-        sid_request = s.get(
-            "https://my.maidstone.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmy.maidstone.gov.uk%2Fservice%2FFind-your-bin-day&hostname=my.maidstone.gov.uk&withCredentials=true",
-            headers=HEADERS,
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/ by searching for "
+            "your address."
+        ),
+    }
 
-        # Retrieve Schedule
-        timestamp = time_ns() // 1_000_000
-        payload = {
-            "formValues": {
-                "Lookup": {
-                    "AddressData": {"value": self._uprn},
-                    "AddressUPRN": {"value": self._uprn},
-                }
-            }
-        }
-
-        schedule_request = s.post(
-            f"https://my.maidstone.gov.uk/apibroker/runLookup?id=654b7b6478deb&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload,
-        )
-
-        try:
-            rowdata = json.loads(schedule_request.content)["integration"][
-                "transformed"
-            ]["rows_data"][self._uprn]
-        except KeyError:
-            return []
-
-        entries = []
-        collections = {}
-
-        for key, value in rowdata.items():
-            # Extract the bin type prefix (e.g., "DomesticResidual")
-            collection_key = key.split("_")[0]
-
-            # Check if this service is active for the property
-            # The API returns keys like "DomesticResidual_Active": "Y" or "N"
-            active_key = f"{collection_key}_Active"
-            if rowdata.get(active_key) == "N":
-                continue
-
-            # Parse Dates
-            # Logic updated to exclude "Default" and "Original" dates to prevent duplicates during holiday rescheduling
-            if (
-                key.endswith("_NextCollectionDateMM")
-                and "Default" not in key
-                and "Original" not in key
-                and value != ""
-            ):
-                if collection_key not in collections:
-                    collections[collection_key] = {"dates": []}
-
-                try:
-                    collections[collection_key]["dates"].append(
-                        datetime.strptime(value, "%d/%m/%Y").date()
-                    )
-                except ValueError:
-                    pass
-
-            # Parse Description
-            if "_Description" in key and "Default" not in key:
-                if collection_key not in collections:
-                    collections[collection_key] = {"dates": []}
-                collections[collection_key]["description"] = value
-
-        for key, collection in collections.items():
-            bin_name = collection.get("description") or key
-
-            # Map icons
-            clean_name = (
-                bin_name.lower()
-                .replace("domestic ", "")
-                .replace("communal ", "")
-                .replace("waste", "")
-                .strip()
-            )
-            icon = ICON_MAP.get(clean_name, "mdi:trash-can")
-
-            for collectionDate in set(collection["dates"]):
-                entries.append(
-                    Collection(
-                        t=bin_name,
-                        date=collectionDate,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        initial_url=f"https://{_HOSTNAME}/service/Find-your-bin-day",
+        skip_landing_page=True,
+        auth_test_url=f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}",
+        steps=[
+            LookupStep(
+                "654b7b6478deb",
+                section="Lookup",
+                form_values=lambda ctx, source: {
+                    "AddressData": {"value": source.params["uprn"]},
+                    "AddressUPRN": {"value": source.params["uprn"]},
+                },
+                no_retry="true",
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # One row, keyed by the UPRN, with a "<Service>_NextCollectionDateMM" and a
+    # "<Service>_Active" flag per service ("DomesticResidual", "GardenWaste").
+    preprocess = AchieveFormsDynamicRowsPreprocessor(
+        r"^([A-Za-z]+)_NextCollectionDateMM$",
+        row_key=lambda source: source.params["uprn"] if source else "0",
+        split_label=True,
+        key_filter=lambda key, row: row.get(f"{key.split('_')[0]}_Active") != "N",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "Domestic Residual": wt.GENERAL_WASTE,
+            "Communal Residual": wt.GENERAL_WASTE,
+            "Domestic Recycling": wt.RECYCLABLES,
+            "Communal Recycling": wt.RECYCLABLES,
+            "Domestic Food": wt.FOOD_WASTE,
+            "Communal Food": wt.FOOD_WASTE,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Clinical Waste": wt.HAZARDOUS,
+            "Bulky Waste": wt.BULKY_WASTE,
+            # a repair visit for a damaged bin, not a collection
+            "Bin Maintenance": None,
+        },
+        carry_raw_label=True,
+    )

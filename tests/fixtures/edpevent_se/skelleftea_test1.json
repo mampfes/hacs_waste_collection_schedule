@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-09-25",
+  "interactions": [
+    {
+      "key": "POST https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/SearchAdress 41be3f3272",
+      "method": "POST",
+      "url": "https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Fr\u00f6gatan 76 -150\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "74",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:45:59 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJGcsO2Z2F0YW4gNzYgLTE1MCwgU0tFTExFRlRFw4UgKDEzMzQyNykiXX0="
+    },
+    {
+      "key": "GET https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 78bafd30fd",
+      "method": "GET",
+      "url": "https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://wwwtk2.skelleftea.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Fr%C3%B6gatan+76+-150%2C+SKELLEFTE%C3%85+%28133427%29",
+      "body": "{\"params\":[[\"address\",\"Fr\u00f6gatan 76 -150, SKELLEFTE\u00c5 (133427)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "connection": "close",
+        "content-length": "2266",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 25 Sep 2026 21:45:59 GMT",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-aspnetmvc-version": "5.2",
+        "x-powered-by": "ASP.NET"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMDEiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVG9yc2RhZyB2YXJqZSB2ZWNrYSAiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJUb3JzZGFnIHZhcmplIHZlY2thICIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6My4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiNjYwIEwgS8OkcmwgZsO2ciBSZXN0YXZmYWxsIG1lZCB0w7ZtbmluZyBWYXJqZSB2ZWNrYSIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjUyLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlZhcmplIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDExIiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJCQjY2MDEiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiUkVTVCIsIkRlc2lnbmF0aW9uIjoiUmVzdGF2ZmFsbCA2NjAgTCwgZW4gZ8OlbmcgcGVyIHZlY2thIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjoyNzQyMSwiRGVzY3JpcHRpb24iOiIzIHN0IDY2MCBMIGvDpHJsIGbDtnIgcmVzdGF2ZmFsbCBtZWQgdMO2bW5pbmcgdG9yc2RhZyB2YXJqZSB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTE0NjQzNDQwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxMzM0MjcifSx7IkJpbkRpcmVjdGlvbiI6bnVsbCwiTmV4dFdhc3RlUGlja3VwIjoiMjAyNi0xMC0wMSIsIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVR5cGUiOiJNYXRhdmZhbGwgdMOkdHQiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlRvcnNkYWcgasOkbW4gdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiVG9yc2RhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoiTCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjE0MCBMIEvDpHJsIGbDtnIgTWF0YXZmYWxsIG1lZCB0w7ZtbmluZyBWYXJhbm5hbiB2ZWNrYSIsIkJpblR5cGUiOnsiQ29kZSI6IksxNDAiLCJTaXplIjoxNDAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIldhc3RlUGlja3Vwc1BlclllYXIiOjI2LCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlZhcmFubmFuIHZlY2thIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDIwIiwiV2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6Ik1BVDE0MCIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJNQVQiLCJEZXNpZ25hdGlvbiI6Ik1hdGF2ZmFsbCAxNDAgTCwgdmFyYW5uYW4gdmVja2EiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjU2NjgzLCJEZXNjcmlwdGlvbiI6IjEgc3QgMTQwIEwga8OkcmwgZsO2ciBtYXRhdmZhbGwgdMOkdHQgbWVkIHTDtm1uaW5nIHRvcnNkYWcgasOkbW4gdmVja2EgIiwiU3RhcnREYXRlIjoiXC9EYXRlKDExNDY0MzQ0MDAwMDApXC8iLCJTdG9wRGF0ZSI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJCdWlsZGluZ0lEIjoiMTMzNDI3In1dfQ=="
+    }
+  ]
+}

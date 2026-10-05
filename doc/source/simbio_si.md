@@ -1,40 +1,35 @@
 # Simbio
 
-Support for schedules provided by [Simbio](https://www.simbio.si/sl/), serving Simbio, Slovenia.
+Support for schedules provided by [Simbio](https://www.simbio.si/).
+
+Source for Simbio.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: simbio_si
       args:
-        street: STREET (Naziv)
-        house_number: "HOUSE NUMBER (HS)"
-        
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **house_number**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: simbio_si
       args:
         street: Ljubljanska cesta
-        house_number: "1 A"
-        
+        house_number: 1 A
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.simbio.si/sl/moj-dan-odvoza-odpadkov](https://www.simbio.si/sl/moj-dan-odvoza-odpadkov) and write them exactly like on the web page. 
-Some street numbers with character in Simbio database are separate with space so be careful.

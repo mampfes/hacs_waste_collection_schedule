@@ -1,157 +1,80 @@
 import datetime
-import time
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFound,
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowFieldsPreprocessor,
+    AchieveFormsRowsParser,
+    LookupStep,
 )
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Midlothian Council"
-DESCRIPTION = "Source script for my.midlothian.gov.uk bin collections"
-URL = "https://my.midlothian.gov.uk/"
-LOOKUP_ID_BIN_COLLECTION_SERVICE = "69948bdca6012"
-NO_RETRY = "false"
-TEST_CASES = {
-    "Test1": {"uprn": "120001401", "postcode": "EH26 8AG"},
-}
-
-AUTH_URL = "https://my.midlothian.gov.uk/authapi/isauthenticated"
-DOMAIN_URL = "https://my.midlothian.gov.uk/apibroker/domain/my.midlothian.gov.uk"
-RUN_LOOKUP_URL = "https://my.midlothian.gov.uk/apibroker/runLookup"
-
-ICON_MAP = {
-    "Food Collection Service": Icons.BIO_KITCHEN,
-    "Glass Collection Service": Icons.GLASS,
-    "Residual Collection Service": Icons.GENERAL_WASTE,
-    "Garden Collection Service": Icons.GARDEN,
-    "Recycling Collection Service": Icons.RECYCLING,
-    "Card Collection Service": Icons.PAPER,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your UPRN and postcode from your council documents or invoices.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (required)",
-        "postcode": "Postcode of the property (required)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "UPRN",
-        "postcode": "Postcode",
-    },
-}
+_HOSTNAME = "my.midlothian.gov.uk"
 
 
-class Source:
-    def __init__(self, uprn: str, postcode: str):
-        self._uprn = uprn
-        self._postcode = postcode
+def _form(context, source):
+    today = datetime.date.today()
+    return {
+        "postcode": {"value": source.params["postcode"]},
+        "UPRN": {"value": source.params["uprn"]},
+        "uprn": {"value": source.params["uprn"]},
+        "fromDate": {"value": today.strftime("%Y-%m-%d")},
+        "toDate": {
+            "value": (today + datetime.timedelta(days=365)).strftime("%Y-%m-%d")
+        },
+    }
 
-    def fetch(self):
-        session = requests.Session()
-        auth_resp = session.get(AUTH_URL, timeout=30)
-        auth_resp.raise_for_status()
-        try:
-            auth_data = auth_resp.json()
-        except ValueError as err:
-            raise SourceArgumentException(
-                "uprn", f"Invalid response while creating session: {err}"
-            ) from err
 
-        sid = auth_data.get("auth-session")
-        if not sid:
-            raise SourceArgumentException(
-                "uprn", "Could not establish session with council form."
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Midlothian Council"
+    DESCRIPTION = "Source script for my.midlothian.gov.uk bin collections"
+    URL = "https://my.midlothian.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-        timestamp = time.time_ns() // 1_000_000
-        domain_resp = session.get(
-            DOMAIN_URL, params={"_": timestamp, "sid": sid}, timeout=30
-        )
-        domain_resp.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Test1": {"uprn": "120001401", "postcode": "EH26 8AG"},
+    }
 
-        # Step 2: Prepare runLookup request with required params
-        today = datetime.date.today()
-        from_date = today.strftime("%Y-%m-%d")
-        # Use timedelta to avoid leap-day crashes from date.replace(year=+1).
-        to_date = (today + datetime.timedelta(days=365)).strftime("%Y-%m-%d")
-        payload = {
-            "stopOnFailure": True,
-            "usePHPIntegrations": True,
-            "stage_id": "AF-Stage-a0bdbc4e-b9fc-46f0-bb0c-14a12cd927ed",
-            "stage_name": "Stage 1",
-            "formId": "AF-Form-033371a6-b0e4-4e16-a3b5-f68f592d8bf1",
-            "formValues": {
-                "Section 1": {
-                    "postcode": {"value": self._postcode},
-                    "UPRN": {"value": self._uprn},
-                    "uprn": {"value": self._uprn},
-                    "fromDate": {"value": from_date},
-                    "toDate": {"value": to_date},
-                }
-            },
-        }
-        params = {
-            "id": LOOKUP_ID_BIN_COLLECTION_SERVICE,
-            "repeat_against": "",
-            "noRetry": NO_RETRY,
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": time.time_ns() // 1_000_000,
-            "sid": sid,
-        }
-        resp = session.post(RUN_LOOKUP_URL, params=params, json=payload, timeout=30)
-        resp.raise_for_status()
-        try:
-            data = resp.json()
-        except ValueError as err:
-            raise SourceArgumentException(
-                "uprn", f"Council lookup returned invalid JSON: {err}"
-            ) from err
+    PARAMS = (uprn(), postcode())
 
-        if data.get("result") == "logout":
-            raise SourceArgumentException(
-                "uprn", "Session expired while querying collection data."
-            )
-        rows = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        if not rows:
-            raise SourceArgumentNotFound(
-                "uprn", self._uprn, "No collection data returned for this address."
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": "Find your UPRN and postcode from your council documents or invoices.",
+    }
 
-        entries = []
-        failed_rows = []
-        for row in rows.values():
-            date_str = row.get("Date") or row.get("date")
-            try:
-                date = datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").date()
-            except (ValueError, TypeError, AttributeError) as e:
-                # Track parsing failures - expected exceptions for invalid/missing dates
-                failed_rows.append(f"Date='{date_str}': {type(e).__name__}")
-                continue
-            waste_type = row.get("Service") or row.get("service")
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        # If we got rows but couldn't parse any, the format likely changed
-        if rows and not entries:
-            raise SourceArgumentException(
-                "uprn",
-                f"Failed to parse any collection dates from {len(rows)} rows. "
-                f"API format may have changed. Failures: {failed_rows[:3]}",
-            )
-
-        return entries
+    # A year of collections from today.
+    retrieve = AchieveFormsRetriever(
+        hostname=_HOSTNAME,
+        initial_url=f"https://{_HOSTNAME}/",
+        skip_landing_page=True,
+        auth_test_url=f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}",
+        steps=[LookupStep("69948bdca6012", form_values=_form)],
+    )
+    parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsRowFieldsPreprocessor(
+        date_field="Date", label_fields=("Service",)
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
+        type_value_map={
+            "Card Collection Service": wt.PAPER,
+            "Food Collection Service": wt.FOOD_WASTE,
+            "Garden Collection Service": wt.GARDEN_WASTE,
+            "Glass Collection Service": wt.GLASS,
+            "Recycling Collection Service": wt.RECYCLABLES,
+            "Residual Collection Service": wt.GENERAL_WASTE,
+        },
+    )

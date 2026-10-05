@@ -1,6 +1,8 @@
-# Neunkirchen Siegerland
+# Stadtwerke Rösrath
 
-Support for schedules provided by [Stadtwerke Rösrath](https://www.stadtwerke-roesrath.de/), Germany.
+Support for schedules provided by [Stadtwerke Rösrath](https://www.stadtwerke-roesrath.de/service/abfuhrkalender/).
+
+Source for 'Stadtwerke Rösrath'.
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
 
 ## Example
@@ -24,15 +26,5 @@ waste_collection_schedule:
   sources:
     - name: stadtwerke_roesrath_de
       args:
-        street: "Ahornweg"
-
+        street: Ahornweg
 ```
-
-## How to get the source arguments
-
-1. Go to your calendar at [G>Abfuhrkalender - StadtWerke Rösrath](https://www.stadtwerke-roesrath.de/service/abfuhrkalender/)
-2. Enter your street.
-3. Copy the exact values from the textboxes street in the source configuration.
-
-*IMPORTANT* - only streetname or part of streetname without ()
-the string as street must match only 1 entry

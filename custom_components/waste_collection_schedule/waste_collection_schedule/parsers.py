@@ -420,7 +420,7 @@ class ArgumentGuard(Parser[Any]):
             parsers.IcsEventsParser(min_events=1),
             argument="city",
             contains="BEGIN:VCALENDAR",
-            suggestions=_possible_cities,
+            suggestions=retrievers.Suggestions(WEBAPP_URL, pick=_linked_cities),
             hint="spell the city exactly as in the links on the web-app page",
         )
 
@@ -467,6 +467,20 @@ class ArgumentGuard(Parser[Any]):
         raise SourceArgumentNotFound(self.argument, value, self.hint)
 
 
+def _json(response: Response) -> Any:
+    """The response's JSON, tolerating a leading UTF-8 byte-order mark, which
+    some IIS/.NET endpoints prepend and ``response.json()`` rejects."""
+    try:
+        return response.json()
+    except ValueError:
+        import json
+
+        content = getattr(response, "content", None)
+        if not isinstance(content, bytes) or not content.startswith(b"\xef\xbb\xbf"):
+            raise
+        return json.loads(content.decode("utf-8-sig"))
+
+
 class JsonParser(Parser[Any]):
     """Parse response as JSON, optionally drilling into a nested key path.
 
@@ -478,6 +492,7 @@ class JsonParser(Parser[Any]):
 
         parse = parsers.JsonParser("collections")     # response.json()["collections"]
         parse = parsers.JsonParser("data", "items")   # response.json()["data"]["items"]
+        parse = parsers.JsonParser(0)                 # response.json()[0]
 
     If the response is already a list at the top level, omit keys entirely.
 
@@ -489,18 +504,79 @@ class JsonParser(Parser[Any]):
         parse = parsers.JsonParser("collections", shape=list[CollectionRecord])
     """
 
-    def __init__(self, *keys: str, shape: Any = None):
+    def __init__(
+        self,
+        *keys: "str | int",
+        shape: Any = None,
+        raise_for_status: bool = False,
+        expected_values: Mapping[str, Any] | None = None,
+    ):
         self.keys = keys
         self.shape = shape
+        self.raise_for_status = raise_for_status
+        self.expected_values = expected_values
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
-        data = response.json()
+        if self.raise_for_status:
+            response.raise_for_status()
+        data = _json(response)
+        if self.expected_values is not None:
+            for field, expected in self.expected_values.items():
+                actual = data.get(field) if isinstance(data, Mapping) else None
+                if actual != expected:
+                    raise ValueError(
+                        f"API advised error: expected {field}={expected!r}, got {actual!r}"
+                    )
         for key in self.keys:
-            data = data[key]
+            # An int indexes a list; an empty (or null) reply at that step is an
+            # empty result, not an error, so a lookup that matched nothing
+            # reaches RAISE_ON_EMPTY instead of an IndexError.
+            if isinstance(key, int) and (
+                data is None or (isinstance(data, list) and not data)
+            ):
+                return []
+            # ``response.json()`` can be either a mapping or a sequence, so
+            # the JSON library's statically inferred type cannot represent
+            # both string and integer keys here.
+            data = cast(Any, data)[key]
         if self.shape is not None:
             data = response_shape.validate(
                 data, self.shape, source_name=response_shape.source_name(source)
             )
+        return data
+
+
+def eval_json(response: Response) -> Any:
+    """The JSON a response wraps in a JavaScript ``eval(...)`` call.
+
+    Some older endpoints answer ``eval({"dane": [...],})`` rather than plain
+    JSON, with trailing commas a strict parser rejects. This unwraps the call
+    and drops those commas; it is the reading half of :class:`EvalJsonParser`,
+    exported so a ``Lookup`` ``pick`` can read the same wrapped reply.
+    """
+    import json
+
+    match = re.search(r"eval\((.*)\)", response.text, re.DOTALL)
+    if match is None:
+        raise ValueError("response is not a JavaScript eval(...) wrapper")
+    return json.loads(re.sub(r",\s*([\]}])", r"\1", match.group(1).strip()))
+
+
+class EvalJsonParser(Parser[Any]):
+    """Parse a response whose JSON is wrapped in ``eval(...)``, drilling into keys.
+
+    Like :class:`JsonParser`, for endpoints that answer ``eval({...})``::
+
+        parse = parsers.EvalJsonParser("dane")   # eval_json(response)["dane"]
+    """
+
+    def __init__(self, *keys: "str | int"):
+        self.keys = keys
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
+        data = eval_json(response)
+        for key in self.keys:
+            data = cast(Any, data)[key]
         return data
 
 
@@ -654,8 +730,9 @@ class HtmlParser(Parser[list[Tag]]):
                       parse = parsers.HtmlParser("tr", skip=1, require=["table.bins"])
         from_json_key: When set, the HTML to parse is read from a field of a
                   JSON response instead of ``response.text`` — pass the key (or a
-                  path of keys) holding the HTML string. This covers the common
-                  pattern of an API returning rendered HTML inside JSON, e.g. the
+                  path of keys, an int indexing a list) holding the HTML
+                  string. This covers the common pattern of an API returning
+                  rendered HTML inside JSON, e.g. the
                   OCAPI ``wasteservices`` endpoint many AU councils use::
 
                       parse = parsers.HtmlParser("article", from_json_key="responseContent")
@@ -669,6 +746,13 @@ class HtmlParser(Parser[list[Tag]]):
                           "tr", skip=1,
                           from_json_key=("integration", "transformed", "rows_data", "0", "UpcomingCollections"),
                       )
+
+                  An ``int`` in the path indexes a JSON list. An empty list at
+                  that step is an empty result (no elements), not an error, so a
+                  lookup that answers ``[]`` for an unknown address reaches
+                  ``RAISE_ON_EMPTY`` instead of an ``IndexError``::
+
+                      parse = parsers.HtmlParser("h3", from_json_key=(0, "Results"))
     """
 
     def __init__(
@@ -676,7 +760,7 @@ class HtmlParser(Parser[list[Tag]]):
         selector: str,
         skip: int = 0,
         require: "list[str] | None" = None,
-        from_json_key: "str | tuple[str, ...] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.selector = selector
         self.skip = skip
@@ -700,6 +784,8 @@ class HtmlParser(Parser[list[Tag]]):
                 else self.from_json_key
             )
             for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
                 data = data[key]
             markup = str(data)
         else:
@@ -746,6 +832,8 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         block: CSS selector for each collection block.
         label: CSS selector, within the block, for the round's name.
         date: CSS selector, within the block, for the element holding the date.
+            ``":scope"`` reads the block's own text, for a block whose dates
+            are its own lines rather than one child's.
         date_after: alternative to ``date`` for a page that captions the date
             instead of classing it: the caption's exact text, whose next
             sibling element holds the date. Blocks commonly caption several
@@ -764,6 +852,21 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             dates: the branches must agree on their record shape, because one
             transformer reads them both. Text the callable rejects is skipped,
             on the same reasoning as a block missing a half.
+        all_labels: read every element ``label`` matches in the block rather
+            than the first, one row each, for a page that lists every round
+            collected on a date under that date's heading.
+        all_dates: read every ``date_pattern`` match in the date element
+            rather than the first, one row each, for a block listing several
+            dates for its round ("07/10/2026, and then 21/10/2026", a list of
+            upcoming dates). Requires ``date_pattern``.
+        label_separator: split the label element's text into several labels
+            at this separator, one row each, for a cell naming every round
+            collected that day as bare text lines (``Recycling<br/>Refuse``).
+            The element's text is read with the separator between its parts,
+            so ``"<br/>"``-separated lines are split with ``"\n"``.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as
+            :class:`HtmlParser` does.
     """
 
     def __init__(
@@ -775,7 +878,13 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         date_after: "str | None" = None,
         date_pattern: "str | None" = None,
         parse_date: "Callable[[str], datetime.date] | None" = None,
+        all_labels: bool = False,
+        label_separator: "str | None" = None,
+        all_dates: bool = False,
+        from_json_key: "str | tuple[str, ...] | None" = None,
     ):
+        if all_dates and date_pattern is None:
+            raise ValueError("HtmlLabelledDates all_dates needs a date_pattern")
         if (date is None) == (date_after is None):
             raise ValueError("HtmlLabelledDates needs exactly one of date/date_after")
         self.block = block
@@ -784,39 +893,92 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
         self.date_after = date_after
         self.date_pattern = re.compile(date_pattern) if date_pattern else None
         self.parse_date = parse_date
+        self.all_labels = all_labels
+        self.label_separator = label_separator
+        self.all_dates = all_dates
+        self.from_json_key = from_json_key
+
+    def _markup(self, response: Any) -> str:
+        if self.from_json_key is None:
+            return response.text
+        data: Any = response if isinstance(response, (dict, list)) else response.json()
+        keys = (
+            (self.from_json_key,)
+            if isinstance(self.from_json_key, str)
+            else self.from_json_key
+        )
+        for key in keys:
+            data = data[key]
+        return str(data)
+
+    def _labels(self, element: Tag) -> "list[str]":
+        found = (
+            element.select(self.label)
+            if self.all_labels
+            else [element.select_one(self.label)]
+        )
+        if self.label_separator is not None:
+            separator = self.label_separator
+            return [
+                part.strip()
+                for tag in found
+                if tag is not None
+                for part in tag.get_text(separator).split(separator)
+                if part.strip()
+            ]
+        return [
+            text
+            for text in (tag.get_text(strip=True) for tag in found if tag is not None)
+            if text
+        ]
 
     def _date_text(self, element: Tag) -> "str | None":
+        # Several dates in one element are read with a space between its
+        # parts, so adjacent list items do not run together.
+        separator = " " if self.all_dates else ""
         if self.date is not None:
-            found = element.select_one(self.date)
-            return found.get_text(strip=True) if found is not None else None
+            found = element if self.date == ":scope" else element.select_one(self.date)
+            return found.get_text(separator, strip=True) if found is not None else None
         caption = element.find(string=self.date_after)
         holder = caption.parent if caption is not None else None
         sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
-        return sibling.get_text(strip=True) if isinstance(sibling, Tag) else None
+        if not isinstance(sibling, Tag):
+            return None
+        return sibling.get_text(separator, strip=True)
+
+    def _date_values(self, text: str) -> "list[Any]":
+        """The block's date(s), parsed when ``parse_date`` is set."""
+        if self.date_pattern is None:
+            texts = [text]
+        else:
+            matches = (
+                list(self.date_pattern.finditer(text))
+                if self.all_dates
+                else [m for m in [self.date_pattern.search(text)] if m is not None]
+            )
+            texts = [m.group(1) if m.groups() else m.group(0) for m in matches]
+        if self.parse_date is None:
+            return list(texts)
+        values = []
+        for found in texts:
+            try:
+                values.append(self.parse_date(found))
+            except (ValueError, TypeError):
+                continue
+        return values
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[tuple[Any, str]]":
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(self._markup(response), "html.parser")
         rows: list[tuple[Any, str]] = []
         for element in soup.select(self.block):
-            named = element.select_one(self.label)
-            name = named.get_text(strip=True) if named is not None else ""
-            text = self._date_text(element) if name else None
-            if not name or not text:
+            names = self._labels(element)
+            text = self._date_text(element) if names else None
+            if not names or not text:
                 continue
-            if self.date_pattern is not None:
-                match = self.date_pattern.search(text)
-                if match is None:
-                    continue
-                text = match.group(1) if match.groups() else match.group(0)
-            if self.parse_date is None:
-                rows.append((text, name))
-                continue
-            try:
-                rows.append((self.parse_date(text), name))
-            except (ValueError, TypeError):
-                continue
+            for date_value in self._date_values(text):
+                rows.extend((date_value, name) for name in names)
         return rows
 
 
@@ -1391,6 +1553,149 @@ class PdfTextParser(Parser[str]):
         return text
 
 
+class PdfTextFragment(NamedTuple):
+    """One positioned text fragment extracted from a PDF page."""
+
+    page: int
+    text: str
+    x: float
+    y: float
+
+
+class PdfVector(NamedTuple):
+    """One vector path from a PDF page, including its bounding box and colours."""
+
+    page: int
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    stroke_color: tuple[float, ...] | None
+    fill_color: tuple[float, ...] | None
+
+
+class PdfDocumentLayout(NamedTuple):
+    """A PDF's text plus positioned fragments and vector paths."""
+
+    text: str
+    fragments: tuple[PdfTextFragment, ...]
+    vectors: tuple[PdfVector, ...]
+
+
+def _pdf_color(value: Any) -> tuple[float, ...] | None:
+    """Normalise pdfminer colour values to a numeric tuple when possible."""
+    if isinstance(value, (int, float)):
+        return (float(value),)
+    if not isinstance(value, (list, tuple)):
+        return None
+    try:
+        return tuple(float(component) for component in value)
+    except (TypeError, ValueError):
+        return None
+
+
+class PdfLayoutParser(Parser[PdfDocumentLayout]):
+    """Extract positioned text and vector paths from a PDF (no OCR).
+
+    Use this for a text-layer calendar whose collection type is encoded by a
+    coloured vector marker beside each printed date. ``PdfTextParser`` is
+    preferable when plain text is sufficient, and ``PdfTableParser`` when only
+    text coordinates are needed. This parser combines pypdf's text-matrix
+    positions with pdfminer's vector-path geometry so a short provider-specific
+    preprocessor can associate each date with its marker.
+
+    Args:
+        min_fragments: minimum positioned text fragments expected.
+        min_vectors: minimum vector paths expected.
+    """
+
+    def __init__(
+        self,
+        *,
+        min_fragments: "int | None" = None,
+        min_vectors: "int | None" = None,
+    ):
+        self.min_fragments = min_fragments
+        self.min_vectors = min_vectors
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> PdfDocumentLayout:
+        from io import BytesIO
+
+        from pdfminer.high_level import extract_pages
+        from pdfminer.layout import LTContainer, LTCurve, LTItem
+        from pypdf import PdfReader
+
+        content = response.content
+        fragments: list[PdfTextFragment] = []
+        page_text: list[str] = []
+
+        for page_no, page in enumerate(PdfReader(BytesIO(content)).pages):
+
+            def collect_text(text, _cm, tm, _font, _font_size, page_number=page_no):
+                cleaned = " ".join(text.split())
+                if cleaned:
+                    fragments.append(
+                        PdfTextFragment(
+                            page=page_number,
+                            text=cleaned,
+                            x=float(tm[4]),
+                            y=float(tm[5]),
+                        )
+                    )
+
+            page_text.append(page.extract_text(visitor_text=collect_text) or "")
+
+        def walk(item: LTItem) -> Iterable[LTItem]:
+            yield item
+            if isinstance(item, LTContainer):
+                for child in item:
+                    yield from walk(child)
+
+        vectors: list[PdfVector] = []
+        for page_no, layout in enumerate(extract_pages(BytesIO(content))):
+            for item in walk(layout):
+                if not isinstance(item, LTCurve):
+                    continue
+                vectors.append(
+                    PdfVector(
+                        page=page_no,
+                        x0=float(item.x0),
+                        y0=float(item.y0),
+                        x1=float(item.x1),
+                        y1=float(item.y1),
+                        stroke_color=_pdf_color(getattr(item, "stroking_color", None)),
+                        fill_color=_pdf_color(
+                            getattr(item, "non_stroking_color", None)
+                        ),
+                    )
+                )
+
+        text = "\n".join(page_text)
+        source_name = response_shape.source_name(source)
+        if self.min_fragments is not None:
+            response_shape.expect(
+                len(fragments) >= self.min_fragments,
+                source_name=source_name,
+                detail=(
+                    f"PDF yielded {len(fragments)} positioned text fragments, "
+                    f"under {self.min_fragments}"
+                ),
+                raw=text[:500],
+            )
+        if self.min_vectors is not None:
+            response_shape.expect(
+                len(vectors) >= self.min_vectors,
+                source_name=source_name,
+                detail=(
+                    f"PDF yielded {len(vectors)} vector paths, under {self.min_vectors}"
+                ),
+                raw=text[:500],
+            )
+        return PdfDocumentLayout(text, tuple(fragments), tuple(vectors))
+
+
 class PdfWord(NamedTuple):
     """A run of text on a PDF page with its horizontal span (PDF points)."""
 
@@ -1530,6 +1835,12 @@ class XmlParser(Parser["list[Any]"]):
     unknown input legitimately returns zero nodes, leave ``min_nodes`` unset and
     rely on ``RAISE_ON_EMPTY`` instead, so a bad lookup is reported as a bad
     argument rather than a changed feed.
+
+    For XML delivered inside a JSON response (a JSON-RPC ``result`` holding a
+    SOAP envelope, say), pass ``from_json_key``, the key or path of keys
+    holding the XML string, as :class:`HtmlParser` does for HTML::
+
+        parse = parsers.XmlParser(".//j:Job", namespaces=NS, from_json_key="result")
     """
 
     def __init__(
@@ -1537,15 +1848,30 @@ class XmlParser(Parser["list[Any]"]):
         path: "str | None" = None,
         min_nodes: "int | None" = None,
         namespaces: "dict[str, str] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.path = path
         self.min_nodes = min_nodes
         self.namespaces = namespaces
+        self.from_json_key = from_json_key
+
+    def _markup(self, response: Response) -> bytes:
+        if self.from_json_key is None:
+            return response.content
+        data: Any = response.json()
+        keys = (
+            (self.from_json_key,)
+            if isinstance(self.from_json_key, str)
+            else self.from_json_key
+        )
+        for key in keys:
+            data = data[key]
+        return str(data).encode("utf-8")
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> list:
         from lxml import etree  # type: ignore[attr-defined]
 
-        root = etree.fromstring(response.content)
+        root = etree.fromstring(self._markup(response))
         elements = (
             root.findall(self.path, namespaces=self.namespaces) if self.path else [root]
         )

@@ -1,12 +1,14 @@
 # Erewash Borough Council
 
-Support for schedules provided by [Erewash Borough Council](https://www.erewash.gov.uk/bins-and-recycling/when-my-bin-day).
+Support for schedules provided by [Erewash Borough Council](https://www.erewash.gov.uk/).
+
+Source for erewash.gov.uk services for Erewash Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: erewash_gov_uk
       args:
         uprn: UPRN
@@ -14,19 +16,15 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uprn**
-*(string | integer) (required)*
+**uprn**  
+*(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: erewash_gov_uk
       args:
-        uprn: 100030118783
+        uprn: '100030126659'
 ```
-
-## How to get the source argument
-
-Search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.

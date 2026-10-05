@@ -1,116 +1,114 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
-    SourceArgumentRequiredWithSuggestions,
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    street_address,
+    uprn,
 )
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import Compose, ExplodeList, RowFilter
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Thanet District Council"
-DESCRIPTION = "Source for thanet.gov.uk services for Thanet District Council"
-URL = "https://thanet.gov.uk"
+API = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
 
-TEST_CASES = {
-    "uprn": {"uprn": "100061108233"},
-    "houseName": {"postcode": "CT7 9SL", "street_address": "Forus"},
-    "houseNumber": {"postcode": "CT7 9SL", "street_address": "6 Gordon Square"},
+_TYPE_MAP = {
+    "Refuse": wt.GENERAL_WASTE,
+    "BlueRecycling": wt.RECYCLABLES,
+    "RedRecycling": wt.PAPER,
+    "Food": wt.FOOD_WASTE,
+    "Garden": wt.GARDEN_WASTE,
 }
 
-TYPES = {
-    "Refuse": {"icon": "mdi:trash-can", "alias": "Rubbish"},
-    "BlueRecycling": {"icon": "mdi:recycle", "alias": "Mixed Recycling (Blue)"},
-    "RedRecycling": {"icon": "mdi:note-multiple", "alias": "Paper & Card (Red)"},
-    "Food": {"icon": "mdi:food-apple", "alias": "Food Waste"},
-    "Garden": {"icon": "mdi:leaf", "alias": "Garden"},
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))"
-    "OR Enter your postcode and the first line of your address for street address e.g. '2 London Road' (anything before the first comma)"
-    "UPRNs should work all of the time, Postcodes and Street Addresses will work if a match can be found."
-}
+def _pick_uprn(response, *keys, postcode, street_address, **_) -> str:
+    """The lookup answers ``{uprn: "HOUSE, STREET, TOWN, POSTCODE"}``."""
+    addresses = response.json()
+    wanted = str(street_address).upper()
+    # A numbered house is listed as "6, GORDON SQUARE, ..." (comma after the
+    # number), a named one as "FORUS, GORDON SQUARE, ...": compare without commas.
+    plain = wanted.replace(",", "")
+    for key, value in addresses.items():
+        if value.upper().replace(",", "").startswith(plain):
+            return key
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_address",
+        wanted,
+        [value.split(",")[0] for value in addresses.values()],
+    )
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "street_address": "House name OR Number and Street name",
-        "postcode": "Postcode",
+
+def _dates(record, source) -> list[str]:
+    """Each service reports its next and its previous collection, "28/09/2026 at 6:00am"."""
+    return [record["nextDate"][:10], record["previousDate"][:10]]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Thanet District Council"
+    DESCRIPTION = "Source for thanet.gov.uk services for Thanet District Council"
+    URL = "https://thanet.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "uprn": {"uprn": "100061108233"},
+        "houseName": {"postcode": "CT7 9SL", "street_address": "Forus"},
+        "houseNumber": {"postcode": "CT7 9SL", "street_address": "6 Gordon Square"},
     }
-}
 
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [postcode(), street_address("street_address")],
+        ),
+    )
 
-class Source:
-    def __init__(self, uprn=None, postcode=None, street_address=None):
-        self._postcode = postcode
-        self._street_address = str(street_address).upper()
-        self._uprn = uprn
-        self._session = requests.Session(impersonate="chrome124")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter either your UPRN (available from "
+            "[FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your "
+            "postcode and the first line of your address, e.g. '2 London Road' "
+            "(anything before the first comma of the address on the council's "
+            "site). UPRNs work every time; a postcode and street address work "
+            "when a match can be found."
+        ),
+    }
 
-    def fetch(self) -> list[Collection]:
-        if self._uprn is None:
-            self._uprn = self.get_uprn()
-
-        url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        r = self._session.get(url, params={"pAddress": self._uprn}, timeout=30)
-        r.raise_for_status()
-        collections_json = r.json()
-
-        entries = []
-
-        for collection in collections_json:
-            for bin_type in TYPES:
-                if collection["type"] == bin_type:
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(
-                                collection["nextDate"][:10], "%d/%m/%Y"
-                            ).date(),
-                            t=TYPES[bin_type]["alias"],
-                            icon=TYPES[bin_type]["icon"],
-                        )
-                    )
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(
-                                collection["previousDate"][:10], "%d/%m/%Y"
-                            ).date(),
-                            t=TYPES[bin_type]["alias"],
-                            icon=TYPES[bin_type]["icon"],
-                        )
-                    )
-        return entries
-
-    def get_uprn(self) -> str:
-        if self._postcode is None:
-            raise SourceArgumentRequired(
-                "postcode",
-                "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you.",
-            )
-        url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        r = self._session.get(url, params={"searchAddress": self._postcode}, timeout=30)
-        r.raise_for_status()
-        addresses_json = r.json()
-        uprn = next(
-            (
-                key
-                for key, value in addresses_json.items()
-                if value[: len(self._street_address)] == self._street_address
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                API,
+                params=lambda postcode=None, **_: {"searchAddress": postcode},
+                given=lambda uprn=None, **_: uprn,
+                pick=_pick_uprn,
             ),
-            None,
-        )
-        if self._street_address is None:
-            raise SourceArgumentRequiredWithSuggestions(
-                "street_address",
-                "A street address is needed, please select one from the list.",
-                [value.split(",")[0] for value, value in addresses_json.items()],
-            )
-        if uprn is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "Street Address",
-                self._street_address,
-                [value.split(",")[0] for value, value in addresses_json.items()],
-            )
+        ),
+        url=API,
+        params=lambda key, **_: {"pAddress": key},
+    )
 
-        return uprn
+    parse = parsers.JsonParser()
+
+    preprocess = Compose(
+        RowFilter(lambda record, source: record["type"] in _TYPE_MAP),
+        ExplodeList(_dates, into="date"),
+    )
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )

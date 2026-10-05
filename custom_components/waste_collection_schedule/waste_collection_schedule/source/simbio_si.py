@@ -1,72 +1,75 @@
-from datetime import datetime
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
-
-TITLE = "Simbio"
-DESCRIPTION = "Source for Simbio."
-URL = "https://www.simbio.si/"
-TEST_CASES = {
-    "Ljubljanska cesta 1 A": {"street": "Ljubljanska cesta", "house_number": "1 A"},
-}
-
-BIN_TYPES = {
-    "mko": "Mesani",
-    "bio": "Bioloski",
-    "emb": "Embalaza",
-}
-ICON_MAP = {
-    "mko": Icons.GENERAL_WASTE,
-    "bio": Icons.ORGANIC,
-    "emb": Icons.RECYCLING,
-}
-
-BASE_URL = "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov"
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    DefaultPreprocessor,
+)
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-class Source:
-    def __init__(self, street: str, house_number: str | int):
-        self._street: str = street
-        self._house_number: str = str(house_number)
+def _next_date(value: str) -> "datetime.date | None":
+    """ "četrtek, 1. 10. 2026" as a date; "ni odvoza" (no collection) as None."""
+    parts = str(value or "").split(",")
+    if len(parts) < 2:
+        return None
+    return datetime.datetime.strptime(parts[1].strip(), "%d. %m. %Y").date()
 
-    def fetch(self) -> list[Collection]:
-        data = {
-            "query": self._street + " " + self._house_number,
+
+@final
+class Source(BaseSource):
+    TITLE = "Simbio"
+    DESCRIPTION = "Source for Simbio."
+    URL = "https://www.simbio.si/"
+    COUNTRY = "si"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Ljubljanska cesta 1 A": {"street": "Ljubljanska cesta", "house_number": "1 A"},
+    }
+
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown address": {"street": "Nikjer", "house_number": "999"},
+    }
+
+    PARAMS = (street(), house_number())
+
+    retrieve = HttpPostRetriever(
+        url="https://www.simbio.si/sl/moj-dan-odvoza-odpadkov",
+        data=lambda street, house_number, **_: {
+            "query": f"{street} {house_number}",
             "action": "simbioOdvozOdpadkov",
+        },
+    )
+    # The search can match the address in several towns; the first match is
+    # the best one, as on the council's own page.
+    parse = parsers.JsonParser()
+    preprocess = Compose(
+        DefaultPreprocessor(),
+        DateFields(
+            fields={
+                "next_mko": "Mesani",
+                "next_emb": "Embalaza",
+                "next_bio": "Bioloski",
+            },
+            parse_date=_next_date,
+        ),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Mesani": wt.GENERAL_WASTE,
+            "Embalaza": wt.RECYCLABLES,
+            "Bioloski": wt.ORGANIC,
         }
-        r = requests.post(BASE_URL, data=data)
-        r.raise_for_status()
-        if r.text == "null" or not r.json():
-            raise SourceArgumentExceptionMultiple(
-                ["street", "house_number"], "Invalid address"
-            )
-
-        entries = []
-        response_data = r.json()
-
-        if isinstance(response_data, list) and response_data:
-            waste_data = response_data[0]
-            for key, value in waste_data.items():
-                if not key.startswith("next_"):
-                    continue
-                bin_name = key.split("_")[1]
-                bin_type, icon = (
-                    BIN_TYPES.get(bin_name, bin_name),
-                    ICON_MAP.get(bin_name),
-                )
-
-                mes_date = self.get_date(value)
-                if mes_date is not None:
-                    entries.append(Collection(date=mes_date, t=bin_type, icon=icon))
-        else:
-            raise Exception("Invalid response from server")
-        return entries
-
-    def get_date(self, date_info):
-        parsed_date = date_info.split(",")
-
-        if isinstance(parsed_date, list) and len(parsed_date) == 1:
-            return None
-        date_obj = datetime.strptime(parsed_date[1].strip(), "%d. %m. %Y")
-        return date_obj.date()
+    )

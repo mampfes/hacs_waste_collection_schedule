@@ -1,53 +1,30 @@
 import datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Haugaland Interkommunale Miljøverk (HIM)"
-DESCRIPTION = (
-    "Source for Haugaland Interkommunale Miljøverk (HIM) waste collection "
-    "schedules, covering Haugesund and surrounding municipalities, Norway."
-)
-URL = "https://him.as"
-COUNTRY = "no"
-TEST_CASES = {
-    "Leiv Eirikssons Gate 10": {"address": "Leiv Eirikssons Gate 10"},
-    "ØVREGATA 170": {"address": "ØVREGATA 170"},
-}
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.transformers import HtmlTransformer
 
 CALENDAR_URL = "https://him.as/tommekalender/"
-REQUEST_HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    )
-}
-REQUEST_TIMEOUT = 30
 
-# Maps the Norwegian data-type attribute used in the calendar table to an
-# English waste type name.
-WASTE_TYPE_MAP = {
-    "matavfall": "Food waste",
-    "restavfall": "Residual waste",
-    "papir": "Paper",
-    "plastemballasje": "Plastic packaging",
-    "glassemballasje": "Glass packaging",
-    "metallemballasje": "Metal packaging",
-}
-
-ICON_MAP = {
-    "Food waste": Icons.ORGANIC,
-    "Residual waste": Icons.GENERAL_WASTE,
-    "Paper": Icons.PAPER,
-    "Plastic packaging": Icons.PLASTIC_PACKAGING,
-    "Glass packaging": Icons.GLASS,
-    "Metal packaging": Icons.METAL,
+# The calendar tags every collection with a Norwegian data-type attribute. Food
+# waste, residual waste, paper, glass, plastic and metal packaging are six
+# separate rounds on their own dates, so plastic and metal stay separate.
+_TYPE_MAP = {
+    "matavfall": wt.FOOD_WASTE,
+    "restavfall": wt.GENERAL_WASTE,
+    "papir": wt.PAPER,
+    "plastemballasje": wt.PLASTIC,
+    "glassemballasje": wt.GLASS,
+    "metallemballasje": wt.METAL,
 }
 
 # Norwegian month names as used in the calendar headings, e.g. "Juli 2026".
-MONTH_MAP = {
+_MONTHS = {
     "januar": 1,
     "februar": 2,
     "mars": 3,
@@ -62,93 +39,93 @@ MONTH_MAP = {
     "desember": 12,
 }
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Visit https://him.as/tommekalender/, search for your address and use "
-        "the address exactly as shown, e.g. 'Leiv Eirikssons Gate 10'."
+
+def _is_collection(item, source) -> bool:
+    """Only the six known rounds; an unknown data-type is skipped."""
+    return item.get("data-type") in _TYPE_MAP
+
+
+def _date(item) -> datetime.date | None:
+    """The date of the day cell and month section a collection item sits in."""
+    day = item.find_parent("td").select_one(".tommekalender__calendartable__date")
+    section = item.find_parent("div", class_="tommekalender__month")
+    heading = section.find("h2") if section is not None else None
+    if day is None or heading is None:
+        return None
+    month_name, _, year = heading.get_text(strip=True).rpartition(" ")
+    month = _MONTHS.get(month_name.strip().lower())
+    day_text = day.get_text(strip=True)
+    if month is None or not year.isdigit() or not day_text.isdigit():
+        return None
+    return datetime.date(int(year), month, int(day_text))
+
+
+def _addresses(response, **_) -> list[str]:
+    """When the search does not hit exactly one address the page lists the candidates."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    return [
+        a.get_text(strip=True)
+        for a in soup.select("div.table-wrap table tbody tr td a[href]")
+    ]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Haugaland Interkommunale Miljøverk (HIM)"
+    DESCRIPTION = (
+        "Source for Haugaland Interkommunale Miljøverk (HIM) waste collection "
+        "schedules, covering Haugesund and surrounding municipalities, Norway."
     )
-}
+    URL = "https://him.as"
+    COUNTRY = "no"
+    SOURCE_CODEOWNERS: ClassVar[list[str]] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Address as shown on the HIM tømmekalender address search.",
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.PLASTIC,
+        wt.GLASS,
+        wt.METAL,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Leiv Eirikssons Gate 10": {"address": "Leiv Eirikssons Gate 10"},
+        "ØVREGATA 170": {"address": "ØVREGATA 170"},
     }
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
+    PARAMS = (street_address("address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://him.as/tommekalender/, search for your address and use "
+            "the address exactly as shown, e.g. 'Leiv Eirikssons Gate 10'."
+        ),
     }
-}
 
-SOURCE_CODEOWNERS = ["@bbr111"]
+    retrieve = retrievers.HttpGetRetriever(
+        url=CALENDAR_URL,
+        params=lambda address, **_: {"adressesok": address},
+    )
 
-
-class Source:
-    def __init__(self, address: str):
-        self._address = address
-
-    def fetch(self) -> list[Collection]:
-        r = requests.get(
+    # No calendar table means zero or several matching addresses: the page then
+    # lists the candidates, which are offered as suggestions.
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser("li.tommekalender__calendartable__listitem"),
+        argument="address",
+        contains="tommekalender__calendartable",
+        suggestions=retrievers.Suggestions(
             CALENDAR_URL,
-            params={"adressesok": self._address},
-            headers=REQUEST_HEADERS,
-            timeout=REQUEST_TIMEOUT,
-        )
-        r.raise_for_status()
+            params=lambda address, **_: {"adressesok": address},
+            pick=_addresses,
+        ),
+    )
 
-        soup = BeautifulSoup(r.text, "html.parser")
+    preprocess = RowFilter(_is_collection)
 
-        calendar_tables = soup.select("table.tommekalender__calendartable")
-        if not calendar_tables:
-            # No single exact match: either zero hits or several addresses
-            # matched the search term. Both cases render a result table with
-            # one row per candidate address instead of a calendar.
-            suggestions = [
-                a.get_text(strip=True)
-                for a in soup.select("div.table-wrap table tbody tr td a[href]")
-            ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, suggestions
-            )
-
-        entries: list[Collection] = []
-        for month_section in soup.select(
-            "div.tommekalender__section.tommekalender__month"
-        ):
-            heading = month_section.find("h2")
-            if heading is None:
-                continue
-            month_name, _, year_str = heading.get_text(strip=True).rpartition(" ")
-            month = MONTH_MAP.get(month_name.strip().lower())
-            if month is None or not year_str.isdigit():
-                continue
-            year = int(year_str)
-
-            for day_cell in month_section.select(
-                "td.tommekalender__calendartable__day--has-activities"
-            ):
-                date_div = day_cell.select_one(".tommekalender__calendartable__date")
-                if date_div is None or not date_div.get_text(strip=True).isdigit():
-                    continue
-                day = int(date_div.get_text(strip=True))
-                date = datetime.date(year, month, day)
-
-                for item in day_cell.select(
-                    "li.tommekalender__calendartable__listitem"
-                ):
-                    data_type = item.get("data-type")
-                    if not isinstance(data_type, str):
-                        continue
-                    waste_type = WASTE_TYPE_MAP.get(data_type)
-                    if waste_type is None:
-                        continue
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
-                        )
-                    )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda item: item.get("data-type"),
+        type_value_map=_TYPE_MAP,
+    )

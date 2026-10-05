@@ -1,6 +1,8 @@
 # Monmouthshire Council
 
-Support for schedules provided by [Monmouthshire Council](https://www.monmouthshire.gov.uk), UK.
+Support for schedules provided by [Monmouthshire Council](https://www.monmouthshire.gov.uk).
+
+Source for Monmouthshire Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: monmouthshire_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: monmouthshire_gov_uk
       args:
-        uprn: "200000952833"
+        uprn: 200000952833
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk) and entering your address details.
+You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering in your address details.

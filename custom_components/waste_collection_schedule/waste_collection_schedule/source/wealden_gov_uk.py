@@ -1,70 +1,70 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    DateFields,
+    DefaultPreprocessor,
+)
+from waste_collection_schedule.retrievers import HttpPostRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Wealden District Council"
-DESCRIPTION = "Source for Wealden City services for Wealden District Council, UK."
-URL = "https://www.wealden.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "10094620272"},
-    "Test_002": {"uprn": "200001678582"},
-    "Test_003": {"uprn": 100060120819},
-    "Test_004": {"uprn": 100060122306},
-}
-
-API_URL = "https://www.wealden.gov.uk/wp-admin/admin-ajax.php"
-ICON_MAP = {
-    "refuseCollectionDate": Icons.GENERAL_WASTE,
-    "recyclingCollectionDate": Icons.RECYCLING,
-    "gardenCollectionDate": Icons.GARDEN,
-    "foodCollectionDate": Icons.BIO_KITCHEN,
-}
-
-COLLECTIONS = {
-    "refuseCollectionDate": "Rubbish",
-    "recyclingCollectionDate": "Recycling",
-    "gardenCollectionDate": "Garden",
-    "foodCollectionDate": "Food",
-}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57",
-    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "origin": "https://wealden.gov.uk",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "Windows",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "x-requested-with": "XMLHttpRequest",
-}
+_parse = date_parsers.for_format("%Y-%m-%d")
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Wealden District Council"
+    DESCRIPTION = "Source for Wealden City services for Wealden District Council, UK."
+    URL = "https://www.wealden.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        # s = requests.Session()
-        params = {"action": "wealden_get_collections_for_uprn", "uprn": self._uprn}
-        r = requests.post(API_URL, headers=HEADERS, data=params)
-        json_data = json.loads(r.text)["collection"]
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10094620272"},
+        "Test_002": {"uprn": "200001678582"},
+        "Test_003": {"uprn": 100060120819},
+        "Test_004": {"uprn": 100060122306},
+    }
 
-        for collection in ICON_MAP:
-            try:
-                entries.append(
-                    Collection(
-                        datetime.strptime(
-                            json_data[collection], "%Y-%m-%dT%H:%M:%S"
-                        ).date(),
-                        t=COLLECTIONS[collection].title(),
-                        icon=ICON_MAP[collection],
-                    )
-                )
-            except ValueError:
-                pass  # ignore date conversion errors
+    PARAMS = (uprn(),)
 
-        return entries
+    retrieve = HttpPostRetriever(
+        url="https://www.wealden.gov.uk/wp-admin/admin-ajax.php",
+        data=lambda uprn, **_: {
+            "action": "wealden_get_collections_for_uprn",
+            "uprn": uprn,
+        },
+    )
+    # One record, a date field per stream; a stream the property does not
+    # have is an empty string.
+    parse = parsers.JsonParser("collection")
+    preprocess = Compose(
+        DefaultPreprocessor(),
+        DateFields(
+            fields={
+                "refuseCollectionDate": "Rubbish",
+                "recyclingCollectionDate": "Recycling",
+                "gardenCollectionDate": "Garden",
+                "foodCollectionDate": "Food",
+            },
+            parse_date=lambda value: _parse(value[:10]) if value else None,
+        ),
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "Rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+            "Food": wt.FOOD_WASTE,
+        }
+    )

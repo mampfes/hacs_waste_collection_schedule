@@ -1,71 +1,57 @@
-from datetime import date, datetime
+from typing import ClassVar, final
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "London Borough of Camden"
-DESCRIPTION = "Source for London Borough of Camden."
-URL = "https://www.camden.gov.uk/"
-COUNTRY = "uk"
-TEST_CASES = {
-    "Red Lion Street": {"uprn": 5121151},
-}
-
-
-ICON_MAP = {
-    "rubbish collection": Icons.GENERAL_WASTE,
-    "domestic refuse collection": Icons.GENERAL_WASTE,
-    "garden waste collection": Icons.GARDEN,
-    "domestic garden collection": Icons.GARDEN,
-    "food collection": Icons.BIO_KITCHEN,
-    "domestic food collection": Icons.BIO_KITCHEN,
-    "recycling collection": Icons.RECYCLING,
-    "domestic dmr collection": Icons.RECYCLING,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.service.CalendarDataApi import (
+    PARSE_DATE,
+    calendar_data_parser,
+    calendar_data_retriever,
+    scheduled_date,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-BASE_URL = "https://recyclingandrubbishcollections.camden.gov.uk"
-API_CALENDAR_DATA = f"{BASE_URL}/api/getCalendarData"
-COUNCIL_ID = "27"
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Camden"
+    DESCRIPTION = "Source for London Borough of Camden."
+    URL = "https://www.camden.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Red Lion Street": {"uprn": 5121151},
+    }
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
-        self._session = requests.Session(impersonate="chrome")
+    PARAMS = (uprn(),)
 
-    def fetch(self) -> list[Collection]:
-        response = self._session.post(
-            API_CALENDAR_DATA,
-            json={"councilId": COUNCIL_ID, "uprn": self._uprn},
-            headers={"content-type": "application/json", "x-recaptcha-token": ""},
-            timeout=30,
-        )
-        response.raise_for_status()
-
-        data = response.json()
-        if data.get("message") != "OK":
-            raise ValueError(
-                f"API advised error (HTTP {response.status_code}, UPRN {self._uprn}): {data.get('message')}"
-            )
-
-        entries = []
-        today = date.today()
-
-        for data_item in data.get("data", []):
-            for record in data_item.get("records", []):
-                scheduled_date = record.get("actual_scheduled_date")
-                service = record.get("service", "").strip()
-                if not scheduled_date or not service:
-                    continue
-
-                collection_date = datetime.fromisoformat(
-                    scheduled_date.replace("Z", "+00:00")
-                ).date()
-                if collection_date < today:
-                    continue
-
-                icon = ICON_MAP.get(service.lower())
-                entries.append(Collection(date=collection_date, t=service, icon=icon))
-
-        return entries
+    retrieve = calendar_data_retriever(
+        "https://recyclingandrubbishcollections.camden.gov.uk", "27"
+    )
+    parse = calendar_data_parser()
+    preprocess = ExplodeList("records")
+    transform = JsonTransformer(
+        date_key=scheduled_date,
+        type_key="service",
+        parse_date=PARSE_DATE,
+        type_value_map={
+            "Rubbish collection": wt.GENERAL_WASTE,
+            "Recycling collection": wt.RECYCLABLES,
+            "Food collection": wt.FOOD_WASTE,
+            "Garden collection": wt.GARDEN_WASTE,
+            "Garden waste collection": wt.GARDEN_WASTE,
+            "Domestic refuse collection": wt.GENERAL_WASTE,
+            "Domestic DMR collection": wt.RECYCLABLES,
+            "Domestic food collection": wt.FOOD_WASTE,
+            "Domestic garden collection": wt.GARDEN_WASTE,
+            "": None,
+        },
+    )

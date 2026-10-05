@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-26",
+  "interactions": [
+    {
+      "key": "GET https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query a2e495c042",
+      "method": "GET",
+      "url": "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query",
+      "final_url": "https://maps.taupodc.govt.nz/server/rest/services/property/Rateable_Property/FeatureServer/0/query?outFields=address&returnGeometry=false&f=json&where=UPPER%28address%29+LIKE+UPPER%28%27999+Nowhere+Road+Taupo%25%27%29&returnCentroid=true&resultRecordCount=5",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"address\"],[\"resultRecordCount\",\"5\"],[\"returnCentroid\",\"true\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPPER(address) LIKE UPPER('999 Nowhere Road Taupo%')\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "max-age=00:00:00",
+        "Content-Length": "147",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"366f780b\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sat, 26 Sep 2026 08:08:17 GMT; Path=/server/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 26 Sep 2026 08:07:16 GMT"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiJHbG9iYWxJRCIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjIxOTMsImxhdGVzdFdraWQiOjIxOTN9LCJmZWF0dXJlcyI6W119"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value '999 Nowhere Road Taupo', please check the spelling and try again."
+  }
+}

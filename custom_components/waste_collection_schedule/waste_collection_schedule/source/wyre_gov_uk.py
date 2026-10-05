@@ -1,50 +1,51 @@
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons
+from typing import ClassVar, final
 
-TITLE = "Wyre Borough Council"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for wyre.gov.uk"  # Describe your source
-URL = "https://www.wyre.gov.uk"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {"Test_001": {"uprn": "10094000847"}, "Test_002": {"uprn": "100010727065"}}
-HEADERS = {"user-agent": "Mozilla/5.0"}
-ICON_MAP = {
-    "Grey Bin": Icons.GENERAL_WASTE,
-    "Blue Bin": Icons.RECYCLING,
-    "Red Bin": Icons.RECYCLING,
-    "Green Bin": Icons.ORGANIC,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.JaduBinCollections import (
+    clean_heading,
+    tasks_parser,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-API_URL = "https://www.wyre.gov.uk/bincollections"
+@final
+class Source(BaseSource):
+    TITLE = "Wyre Borough Council"
+    DESCRIPTION = "Source script for wyre.gov.uk"
+    URL = "https://www.wyre.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "10094000847"},
+        "Test_002": {"uprn": "100010727065"},
+    }
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+    PARAMS = (uprn(),)
 
-    def fetch(self):
-        response = requests.get(
-            "https://www.wyre.gov.uk/bincollections",
-            headers=HEADERS,
-            params={"uprn": self._uprn},
-        )
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        entries = []
-
-        bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
-        dates = soup.find_all("p", class_="bin-collection-tasks__date")
-        for date_tag, bin_tag in zip(dates, bins, strict=False):
-            bint = " ".join(bin_tag.text.split()[2:4])
-            date = parser.parse(date_tag.text).date()
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bint,
-                    icon=ICON_MAP.get(bint),
-                )
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://www.wyre.gov.uk/bincollections",
+        # The council's UPRNs are twelve digits, zero-padded.
+        params=lambda uprn, **_: {"uprn": str(uprn).zfill(12)},
+    )
+    parse = tasks_parser()
+    transform = RowTransformer(
+        clean=clean_heading,
+        type_value_map={
+            "Grey bin": wt.GENERAL_WASTE,
+            "Red bin": wt.RECYCLABLES,
+            "Blue bin": wt.PAPER,
+            "Green bin": wt.GARDEN_WASTE,
+            "Food caddy": wt.FOOD_WASTE,
+        },
+    )

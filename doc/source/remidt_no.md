@@ -1,6 +1,8 @@
-# zaw-online
+# ReMidt Orkland muni
 
-Support for schedules provided by [remidt.no](https://www.remidt.no/#!/main) serving Norway Orkland muni.
+Support for schedules provided by [ReMidt Orkland muni](https://www.remidt.no).
+
+Source for Orkland muni.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: remidt_no
       args:
-        address: Follovegen 1 A
+        address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -17,6 +19,12 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-## How to get the source arguments
+## Example
 
-Visit [remidt.no](https://www.remidt.no/#!/main) and make sure, address is written exactly like in the search bar.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: remidt_no
+      args:
+        address: Follovegen 1 B
+```

@@ -1,6 +1,8 @@
-# Sjöbo
+# Sjöbo kommun
 
-This is a waste collection schedule integration for Sjöbo kommun in Sweden.
+Support for schedules provided by [Sjöbo kommun](https://www.sjobo.se).
+
+Source for Sjöbo kommun waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -21,7 +23,7 @@ waste_collection_schedule:
 **city**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -29,9 +31,9 @@ waste_collection_schedule:
     - name: sjobo_se
       args:
         address: Gamla torg 10
-        city: Sjöbo
+        city: "Sj\xF6bo"
 ```
 
-## How to get the correct address
+## How to get the source arguments
 
-Visit the municipality page [Hämtningskalender sopkärl](https://www.sjobo.se/bygga-bo-och-miljo/min-bostad/avfall/hamtningskalender-sopkarl.html) and follow the directions on the page. 
+Enter your street address and city as they appear in the calendar search on https://www.sjobo.se. Collections in a holiday week are marked 'Helgvecka' in the description.

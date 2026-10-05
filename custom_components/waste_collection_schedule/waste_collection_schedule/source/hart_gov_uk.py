@@ -1,49 +1,45 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Hart District Council"
-DESCRIPTION = "Source for hart.gov.uk services for Hart District Council, UK."
-URL = "https://www.hart.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"uprn": "100060420702"},
-    "Test_002": {"uprn": "100061994826"},
-    "Test_003": {"uprn": "200003085501"},
-    "Test_004": {"uprn": "100062464806"},
-}
-ICON_MAP = {
-    "recycling-collection-service": Icons.RECYCLING,
-    "garden-waste-collection-service": Icons.GARDEN,
-    "refuse-collection-service": Icons.GENERAL_WASTE,
-    "christmas-collection-dates": Icons.CHRISTMAS_TREE,
-}
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.BbdWhitespace import (
+    PARSE_DATE,
+    TYPE_VALUE_MAP,
+    CollectionDatesParser,
+    collection_dates_retriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Hart District Council"
+    DESCRIPTION = "Source for hart.gov.uk services for Hart District Council, UK."
+    URL = "https://www.hart.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-    def fetch(self):
-        r = requests.get(
-            URL + "/bbd-whitespace/one-year-collection-dates",
-            params={"uprn": self._uprn, "_wrapper_format": "drupal_ajax"},
-            timeout=30,
-        )
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100060420702"},
+        "Test_002": {"uprn": "100061994826"},
+        "Test_003": {"uprn": "200003085501"},
+        "Test_004": {"uprn": "100062464806"},
+    }
 
-        entries = []
+    PARAMS = (uprn(),)
 
-        for _, data in r.json()[0]["settings"]["collection_dates"].items():
-            for collection in data:
-                entries.append(
-                    Collection(
-                        date=datetime.fromtimestamp(
-                            int(collection["timestamp"])
-                        ).date(),
-                        t=collection["service"],
-                        icon=ICON_MAP.get(collection["service-identifier"]),
-                    )
-                )
-
-        return entries
+    retrieve = collection_dates_retriever("https://www.hart.gov.uk")
+    parse = CollectionDatesParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="service",
+        parse_date=PARSE_DATE,
+        type_value_map=TYPE_VALUE_MAP,
+    )

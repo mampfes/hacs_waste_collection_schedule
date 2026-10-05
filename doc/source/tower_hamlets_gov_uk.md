@@ -1,6 +1,8 @@
 # London Borough of Tower Hamlets
 
-Support for schedules provided by [London Borough of Tower Hamlets](https://www.towerhamlets.gov.uk/), serving Tower Hamlets, London, UK.
+Support for schedules provided by [London Borough of Tower Hamlets](https://www.towerhamlets.gov.uk/).
+
+Source for London Borough of Tower Hamlets
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: tower_hamlets_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: tower_hamlets_gov_uk
       args:
-        uprn: "6085613"
+        uprn: '6085613'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/

@@ -1,6 +1,8 @@
-# Esch sur Alzette
+# Esch-sur-Alzette
 
-Support for the Esch sur Alzette communal website in Luxembourg.
+Support for schedules provided by [Esch-sur-Alzette](https://esch.lu).
+
+Source script for administration.esch.lu, communal website of the city of Esch-sur-Alzette in Luxembourg
 
 ## Configuration via configuration.yaml
 
@@ -9,28 +11,20 @@ waste_collection_schedule:
   sources:
     - name: esch_lu
       args:
-        zone: A
+        zone: ZONE
 ```
 
 ### Configuration Variables
 
-There is currently only one conficuration variable, which is *zone*, which accepts only two chars - A or B.
+**zone**  
+*(string) (required)*
 
-**zone**
-*(char) (required)*
+## Example
 
-This variable indicates collection zone. The city is divided by two zones with different collection schedule.
-One can identify their zone prior to configuring here:
-<https://administration.esch.lu/dechets/>
-
-## Sensor setup
-
-There are following types of garbage parsed:
-
-- Poubelle ménage
-- Papier
-- Organique
-- Verre
-- Valorlux
-- Déchets toxiques
-- Container ménage
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: esch_lu
+      args:
+        zone: A
+```
