@@ -1,31 +1,40 @@
-import logging
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.source.roundlookup_uk import (
-    Source as Roundlookup,  # type: ignore[attr-defined]
-)
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service import RoundLookup
 
-_LOGGER = logging.getLogger(__name__)
-TITLE = "Wychavon District Council (Deprecated)"
-DESCRIPTION = "Source for Wychavon District Council."
-URL = "https://wychavon.gov.uk/"
-TEST_CASES = {
-    "10013938132": {"uprn": 10013938132},
-    "10013938131": {"uprn": "10013938131"},
-    "100121280854": {"uprn": 100121280854},
-}
+# Deprecated in favour of roundlookup_uk (council "Wychavon"). Kept working
+# until it is removed.
 
 
-ICON_MAP = {
-    "Non-recyclable": Icons.GENERAL_WASTE,
-    "Garden": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Wychavon District Council (Deprecated)"
+    DESCRIPTION = "Source for Wychavon District Council."
+    URL = "https://wychavon.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "10013938132": {"uprn": 10013938132},
+        "10013938131": {"uprn": "10013938131"},
+        "100121280854": {"uprn": 100121280854},
+    }
 
-class Source(Roundlookup):
-    def __init__(self, uprn: str | int):
-        super().__init__(uprn, "Wychavon")
-        _LOGGER.warning(
-            "This source is deprecated, please use the 'roundlookup_uk' source instead"
-        )
+    PARAMS = (uprn(),)
+
+    WASTE_TYPES: ClassVar[list] = RoundLookup.WASTE_TYPES
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Deprecated: use the roundlookup_uk source (council Wychavon) instead. "
+            "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ "
+            "and entering your address details."
+        ),
+    }
+
+    retrieve = RoundLookup.retriever("Wychavon")
+    parse = RoundLookup.PARSE
+    preprocess = staticmethod(RoundLookup.rows)
+    transform = RoundLookup.TRANSFORM
