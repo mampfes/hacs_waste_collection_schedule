@@ -1776,10 +1776,7 @@
   },
   "affaldonline_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affaldonline_dk.md",
-    "howto": {
-      "da": "Find din adresse i adressesøgningen hos dit affaldsselskab paa AffaldOnline og kopier adressens `values`-streng (adskilt af |). Brug nøglen for dit affaldsselskab som `municipality`.",
-      "en": "Open the address search of your waste company on the AffaldOnline platform, select your address and copy the raw `values` string of the address (pipe separated, e.g. `Nørregade|1||||5970|Ærøskøbing|1228262|448776|0`). Use the municipality key of your waste company as `municipality`."
-    },
+    "howto": {},
     "urls": {}
   },
   "kalundborg_dk": {

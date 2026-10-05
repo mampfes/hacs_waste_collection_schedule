@@ -83,7 +83,9 @@
           "hpid": "ID domače strani",
           "key": "API ključ",
           "ort": "Okrožje",
+          "municipality": "Občina",
           "realmid": "ID območja",
+          "split_bins": "Razdeli zabojnike na frakcije",
           "wasteTypes": "Tipi odpadkov"
         },
         "data_description": {
@@ -7290,11 +7292,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "city": "Mesto",
           "municipality": "Občina",
-          "values": "Vrednosti"
+          "split_bins": "Split Bins",
+          "street": "Ulica",
+          "values": "Hišna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice.",
+          "values": "Vaša hišna številka."
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7302,10 +7311,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "city": "Mesto",
           "municipality": "Občina",
-          "values": "Vrednosti"
+          "split_bins": "Split Bins",
+          "street": "Ulica",
+          "values": "Hišna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "street": "Ime vaše ulice.",
+          "values": "Vaša hišna številka."
+        }
       },
       "args_kalundborg_dk": {
         "title": "Configure Source",

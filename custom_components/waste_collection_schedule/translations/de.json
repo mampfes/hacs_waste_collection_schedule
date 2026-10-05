@@ -84,8 +84,10 @@
           "f_abfallarten": "Abfallarten",
           "hpid": "Homepage-ID",
           "key": "API-Schlüssel",
+          "municipality": "Gemeinde",
           "ort": "Ortsteil",
           "realmid": "Realm-ID",
+          "split_bins": "Behälter in Fraktionen aufteilen",
           "wasteTypes": "Abfallarten"
         },
         "data_description": {
@@ -7357,11 +7359,18 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "city": "Stadt",
           "municipality": "Gemeinde",
-          "values": "Werte"
+          "split_bins": "Split Bins",
+          "street": "Straße",
+          "values": "Hausnummer"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "values": "Ihre Hausnummer."
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7369,10 +7378,18 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "city": "Stadt",
           "municipality": "Gemeinde",
-          "values": "Werte"
+          "split_bins": "Split Bins",
+          "street": "Straße",
+          "values": "Hausnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "values": "Ihre Hausnummer."
+        }
       },
       "args_kalundborg_dk": {
         "title": "Quelle konfigurieren",
