@@ -2,7 +2,9 @@
 from datetime import timedelta
 import logging
 from bs4 import BeautifulSoup
-from waste_collection_schedule.source import Collection, WasteCollectionScheduleSource
+
+from waste_collection_schedule import Collection
+from waste_collection_schedule.source import WasteCollectionScheduleSource
 
 _LOGGER = logging.getLogger(__name__)
 URL = "https://www.nicecotedazur.org/services/dechets/collecte-et-tri-dechets/jours-et-horaires-de-collecte/"
