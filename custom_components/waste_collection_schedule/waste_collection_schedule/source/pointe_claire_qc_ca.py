@@ -46,8 +46,8 @@ PARAM_TRANSLATIONS = {
 }
 
 SECTOR_URL_MAP: dict[str, str] = {
-    "A": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-a.ics",
-    "B": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-b.ics",
+    "A": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=2",
+    "B": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=3",
 }
 
 SECTOR_LITERAL = Literal["A", "B"]
