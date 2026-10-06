@@ -3826,7 +3826,7 @@
   "delight_system_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/delight_system_com.md",
     "howto": {
-      "en": "Enter your municipality and neighbourhood exactly as shown in the ThreeR garbage app (e.g. municipality `Shinjuku City`, area `Aizumi-cho`). If a value is not recognised, the setup form will offer matching options from the live API."
+      "en": "Enter your municipality and neighbourhood exactly as shown in the ThreeR garbage app (e.g. municipality `Shinjuku City`, area `Aizumi-cho`). Where the app asks for several levels, enter all of them, separated by ` / ` (e.g. `Okubo / 1 chome`). If a value is not recognised, the setup form will offer matching options from the live API."
     },
     "urls": {}
   },
