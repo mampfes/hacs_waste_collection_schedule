@@ -85,13 +85,6 @@ class Source(BaseSource):
         ),
     }
 
-    WASTE_TYPES: ClassVar[list] = [
-        wt.GENERAL_WASTE,
-        wt.GARDEN_WASTE,
-        wt.PAPER,
-        wt.RECYCLABLES,
-    ]
-
     retrieve = FanOutRetriever(
         prepare=Lookup(_TERMINE_URL, pick=lambda response, **_: response),
         targets=_page_urls,

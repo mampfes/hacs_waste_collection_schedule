@@ -78,13 +78,6 @@ class Source(BaseSource):
     COUNTRY = "nl"
     RAISE_ON_EMPTY = True
 
-    WASTE_TYPES: ClassVar[list] = [
-        wt.ORGANIC,
-        wt.PAPER,
-        wt.RECYCLABLES,
-        wt.GENERAL_WASTE,
-    ]
-
     TEST_CASES: ClassVar[dict] = {
         "Drimmelen, 4926CW 28": {
             "municipality": "drimmelen",

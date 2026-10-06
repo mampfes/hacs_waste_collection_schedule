@@ -38,7 +38,7 @@ _TYPE_MAP = {
     "Matavfall": wt.FOOD_WASTE,
     "Papir, papp og kartong": wt.PAPER,
     "Plastemballasje": wt.PLASTIC,
-    "Glass- og metallemballasje": wt.GLASS,
+    "Glass- og metallemballasje": wt.RECYCLABLES,
 }
 
 
@@ -97,7 +97,7 @@ class Source(BaseSource):
         wt.FOOD_WASTE,
         wt.PAPER,
         wt.PLASTIC,
-        wt.GLASS,
+        wt.RECYCLABLES,
     ]
 
     PARAMS = (street_address("address"),)
