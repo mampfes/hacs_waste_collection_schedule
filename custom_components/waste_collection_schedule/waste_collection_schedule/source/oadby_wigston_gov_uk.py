@@ -1,119 +1,108 @@
-# This is a nearly 1:1 copy of the `Source` class from `charnwood_gov_uk.py`. The only difference is the `API_URL` and `SEARCH_URL` variables.
+import datetime
+from typing import ClassVar, final
 
-from datetime import date, timedelta
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil.parser import parse
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+_API_URL = "https://my.oadby-wigston.gov.uk/my-property-finder"
+_SEARCH_URL = "https://my.oadby-wigston.gov.uk/data/ac/addresses.json"
 
-TITLE = "Oadby and Wigston Council"
-DESCRIPTION = "Source for Oadby and Wigston Council."
-URL = "https://www.oadby-wigston.gov.uk"
-TEST_CASES = {
-    "111, Main Street, Swithland": {
-        "address": "56, Sussex Road, Wigston, Leicestershire"
-    },
-    "2, The Banks, Sileby": {
-        "address": "89, Leicester Road, Leicester, Leicestershire"
-    },
-}
+_year_less = date_parsers.nearest_year("%A %d %b")
 
 
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-}
+def _normalise(address: str) -> str:
+    return address.lower().replace(" ", "").replace(",", "")
 
 
-API_URL = "https://my.oadby-wigston.gov.uk/my-property-finder"
-SEARCH_URL = "https://my.oadby-wigston.gov.uk/data/ac/addresses.json"
+def _address_id(response, address, **_):
+    """The id of the suggestion whose label equals the configured address."""
+    suggestions = response.json()
+    if not suggestions:
+        raise SourceArgumentNotFound("address", address)
+    wanted = _normalise(address)
+    for suggestion in suggestions:
+        if _normalise(suggestion["label"]) == wanted:
+            return suggestion["value"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "address", address, [suggestion["label"] for suggestion in suggestions]
+    )
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address_search: str = address
-        self._address_compare: str = address.lower().replace(" ", "").replace(",", "")
-        self._address_id = None
+def _parse_date(text: str) -> datetime.date:
+    """The page says "Today", "Tomorrow" or a year-less "Friday 9 Oct"."""
+    lowered = text.strip().lower()
+    if lowered == "today":
+        return datetime.date.today()
+    if lowered == "tomorrow":
+        return datetime.date.today() + datetime.timedelta(days=1)
+    return _year_less(text)
 
-    def _match_address(self, address: str) -> bool:
-        return (
-            address.lower().replace(" ", "").replace(",", "") == self._address_compare
-        )
 
-    @staticmethod
-    def _parse_date(date_str: str) -> date:
-        if date_str.lower() == "today":
-            return date.today()
+@final
+class Source(BaseSource):
+    TITLE = "Oadby and Wigston Council"
+    DESCRIPTION = "Source for Oadby and Wigston Council."
+    URL = "https://www.oadby-wigston.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        if date_str.lower() == "tomorrow":
-            return date.today() + timedelta(days=1)
+    TEST_CASES: ClassVar[dict] = {
+        "111, Main Street, Swithland": {
+            "address": "56, Sussex Road, Wigston, Leicestershire"
+        },
+        "2, The Banks, Sileby": {
+            "address": "89, Leicester Road, Leicester, Leicestershire"
+        },
+    }
 
-        return parse(date_str).date()
+    PARAMS = (street_address("address"),)
 
-    def _get_address_id(self):
-        params = {
-            "term": self._address_search,
-        }
-        r = requests.get(SEARCH_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
-        if not data:
-            raise ValueError(
-                "No address found for search term: " + self._address_search
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        for address in data:
-            if self._match_address(address["label"]):
-                self._address_id = address["value"]
-                return
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the address exactly as the address search on "
+            "[my.oadby-wigston.gov.uk](https://my.oadby-wigston.gov.uk/my-property-finder) "
+            "suggests it, e.g. `56, Sussex Road, Wigston, Leicestershire`."
+        ),
+    }
 
-        raise ValueError(
-            "Address not found, use one of the following: "
-            + ", ".join([address["label"] for address in data])
-        )
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _SEARCH_URL,
+                params=lambda address, **_: {"term": address},
+                pick=_address_id,
+            ),
+        ),
+        url=_API_URL,
+        params=lambda address_id, **_: {"address_id": address_id},
+    )
 
-    def fetch(self) -> list[Collection]:
-        fresh_id = False
-        if not self._address_id:
-            self._get_address_id()
-            fresh_id = True
+    parse = parsers.HtmlLabelledDates(
+        "div.refusecollectiondates li",
+        label="a",
+        date="strong",
+    )
 
-        try:
-            return self._get_collections()
-        except Exception:
-            if fresh_id:
-                raise
-            self._get_address_id()
-            return self._get_collections()
-
-    def _get_collections(self) -> list[Collection]:
-        if not self._address_id:
-            raise ValueError("Address not set")
-
-        args = {"address_id": self._address_id}
-
-        # get json file
-        r = requests.get(API_URL, params=args)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        collection_panel = soup.find("div", {"class": "refusecollectiondates"})
-        if not collection_panel:
-            raise ValueError("No collection panel found")
-        entries = []
-
-        for li in collection_panel.select("li"):
-            date_tag = li.find("strong")
-            if not date_tag:
-                continue
-            date_str = date_tag.text.strip()
-            waste_type_tag = date_tag.find_next("a")
-            if not waste_type_tag:
-                continue
-            waste_type = waste_type_tag.text.strip()
-            date_ = self._parse_date(date_str)
-            entries.append(Collection(date_, waste_type, icon=ICON_MAP.get(waste_type)))
-
-        return entries
+    transform = RowTransformer(
+        parse_date=_parse_date,
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Food waste": wt.FOOD_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )

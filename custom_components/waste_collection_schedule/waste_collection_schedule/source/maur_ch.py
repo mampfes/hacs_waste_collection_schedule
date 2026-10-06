@@ -1,169 +1,113 @@
+"""Source for Gemeinde Maur, Switzerland."""
+
+import datetime
 import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from bs4 import Tag
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.parsers import EachResponse, HtmlParser
+from waste_collection_schedule.preprocessors import Deduplicate
+from waste_collection_schedule.retrievers import FanOutRetriever, Lookup, Request
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Gemeinde Maur"
-DESCRIPTION = "Source for waste collection in Maur, Canton of Zurich, Switzerland."
-URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"
-COUNTRY = "ch"
-
-TEST_CASES: dict[str, dict] = {
-    "Maur": {},
-}
-
-ICON_MAP = {
-    "Grüngut": Icons.ORGANIC,
-    "Grüngut/Christbaum": Icons.ORGANIC,
-    "Kehricht": Icons.GENERAL_WASTE,
-    "Karton": Icons.PAPER,
-    "Papiersammlung": Icons.PAPER,
-    "Sonderabfall": Icons.HAZARDOUS,
-    "Häcksel-Service": Icons.GARDEN,
-    "Metall": Icons.RECYCLING,
-    "Hauptsammelstelle": Icons.RECYCLING,
-}
-
-TERMINE_URL = (
+_TERMINE_URL = (
     "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html/924"
 )
 
-# The event list is paginated; page 1 is the bare URL, further pages use this suffix.
-PAGE_SUFFIX = "/eventsjsRequest/0/eventspage/{page}"
-
-# Safety limit so a website change can never turn the pagination loop into an
-# unbounded number of requests.
-MAX_PAGES = 25
-
-GERMAN_MONTHS = {
-    "Januar": 1,
-    "Februar": 2,
-    "März": 3,
-    "April": 4,
-    "Mai": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "August": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "Dezember": 12,
-}
+# The event list is paginated: page 1 is the bare URL, the others carry this
+# suffix, and page 1 links to each of them.
+_PAGE_SUFFIX = "/eventsjsRequest/0/eventspage/{page}"
+_PAGE_LINK = re.compile(r"eventspage/(\d+)")
+_DATE = re.compile(r"(\d{1,2})\.\s*([A-Za-zäöüß]+)\s+(\d{4})")
 
 
-class Source:
-    def __init__(self):
-        # No parameters needed - Maur has common dates for the entire municipality
-        pass
+_PAGE = Request(lambda page_url, _first, **_: page_url)
 
-    def _normalize_waste_type(self, waste_type: str) -> str:
-        """Normalize waste type names for icon mapping.
 
-        Maps all chipping service variants (Häcksel-Service, Häckseldienst) to
-        'Häcksel-Service' and all collection point variants to 'Hauptsammelstelle'.
-        The provider appends dates and district names to these titles, so without
-        normalization every year would introduce a brand new waste type.
-        """
-        waste_type_lower = waste_type.lower()
+def _page_urls(source: BaseSource, first) -> list:
+    """The first response, then the URL of every further page it links to."""
+    last = max((int(page) for page in _PAGE_LINK.findall(first.text)), default=1)
+    return [
+        first,
+        *(_TERMINE_URL + _PAGE_SUFFIX.format(page=page) for page in range(2, last + 1)),
+    ]
 
-        if "häcksel" in waste_type_lower:
-            return "Häcksel-Service"
 
-        if "hauptsammelstelle" in waste_type_lower:
-            return "Hauptsammelstelle"
+def _label(tag: Tag) -> str:
+    link = tag.select_one("h2.mod-entry-title a")
+    return link.get_text(strip=True) if link else ""
 
-        return waste_type
 
-    def _parse_german_date(self, date_str: str) -> date | None:
-        """Parse a German date string like '15. September 2026' or '5. März 2026'."""
-        clean_str = re.sub(r"<[^>]+>", "", date_str).strip()
+def _date(tag: Tag) -> datetime.date | None:
+    # The datetime attribute holds the start of the recurring series, not the
+    # occurrence, so the visible text is read instead.
+    time_tag = tag.select_one("time.dtstart")
+    match = _DATE.match(time_tag.get_text(strip=True)) if time_tag else None
+    month = recurrence.month(match.group(2)) if match else None
+    if match is None or month is None:
+        return None
+    return datetime.date(int(match.group(3)), month, int(match.group(1)))
 
-        match = re.match(r"(\d{1,2})\.\s*([A-Za-zäöüß]+)\s+(\d{4})", clean_str)
-        if not match:
-            return None
 
-        month_num = GERMAN_MONTHS.get(match.group(2))
-        if not month_num:
-            return None
+def _normalise(label: str) -> str:
+    """One label per service: the provider appends dates and districts to them."""
+    lowered = label.lower()
+    if "häcksel" in lowered:
+        return "Häcksel-Service"
+    if "hauptsammelstelle" in lowered:
+        return "Hauptsammelstelle"
+    return label.strip()
 
-        return datetime(int(match.group(3)), month_num, int(match.group(1))).date()
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update({"User-Agent": "Mozilla/5.0"})
+@final
+class Source(BaseSource):
+    TITLE = "Gemeinde Maur"
+    DESCRIPTION = "Source for waste collection in Maur, Canton of Zurich, Switzerland."
+    URL = "https://www.maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
 
-        entries: list[Collection] = []
-        seen: set[tuple[date, str]] = set()
-        found_any_event = False
+    TEST_CASES: ClassVar[dict] = {"Maur": {}}
 
-        for page in range(1, MAX_PAGES + 1):
-            url = (
-                TERMINE_URL
-                if page == 1
-                else TERMINE_URL + PAGE_SUFFIX.format(page=page)
-            )
+    PARAMS = ()
 
-            r = session.get(url, timeout=30)
-            r.raise_for_status()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Maur publishes a single municipality-wide collection calendar, "
+            "so no address or other argument is required."
+        ),
+        "de": (
+            "Maur veröffentlicht einen einzigen gemeindeweiten Abfallkalender, "
+            "daher ist kein Argument erforderlich."
+        ),
+    }
 
-            soup = BeautifulSoup(r.text, "html.parser")
-
-            # Each event is a li with class 'mod-entry event-item'
-            event_items = soup.select("li.mod-entry.event-item")
-            if not event_items:
-                # An empty page marks the end of the paginated list.
-                break
-
-            found_any_event = True
-
-            for item in event_items:
-                # Extract waste type from the h2 > a tag
-                type_link = item.select_one(
-                    "h2.mod-entry-title.event-title.summary > a"
-                )
-                if not type_link:
-                    continue
-
-                waste_type = type_link.get_text(strip=True)
-                if not waste_type:
-                    continue
-
-                normalized_type = self._normalize_waste_type(waste_type)
-
-                # The datetime attribute holds the start of the recurring series,
-                # not the occurrence, so the visible text has to be parsed instead.
-                time_tag = item.select_one("time.dtstart")
-                if not time_tag:
-                    continue
-
-                collection_date = self._parse_german_date(time_tag.get_text(strip=True))
-                if not collection_date:
-                    continue
-
-                key = (collection_date, normalized_type)
-                if key in seen:
-                    continue
-                seen.add(key)
-
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=normalized_type,
-                        icon=ICON_MAP.get(normalized_type),
-                    )
-                )
-
-        if not found_any_event:
-            raise ValueError(
-                "No waste collection events found. The website structure may have changed."
-            )
-
-        if not entries:
-            raise ValueError(
-                "No valid waste collection dates could be extracted. "
-                "The website structure may have changed."
-            )
-
-        return entries
+    retrieve = FanOutRetriever(
+        prepare=Lookup(_TERMINE_URL, pick=lambda response, **_: response),
+        targets=_page_urls,
+        fetch=lambda source, target, first: (
+            first if target is first else _PAGE(source, target, first)
+        ),
+    )
+    parse = EachResponse(
+        HtmlParser("li.mod-entry.event-item", require=["li.mod-entry.event-item"])
+    )
+    preprocess = Deduplicate(key=lambda tag: (_date(tag), _normalise(_label(tag))))
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda tag: _normalise(_label(tag)),
+        type_value_map={
+            "Kehricht": wt.GENERAL_WASTE,
+            "Grüngut": wt.GARDEN_WASTE,
+            "Grüngut/Christbaum": wt.GARDEN_WASTE,
+            "Häcksel-Service": wt.GARDEN_WASTE,
+            "Karton": wt.PAPER,
+            "Papiersammlung": wt.PAPER,
+            "Sonderabfall": wt.HAZARDOUS,
+            "Metall": wt.RECYCLABLES,
+            "Hauptsammelstelle": wt.RECYCLABLES,
+        },
+    )

@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-10-05",
+  "interactions": [
+    {
+      "key": "POST https://maps.inverclyde.gov.uk/noticeboard8/quicksearch.asmx/GetMoreResults e3c23b4a13",
+      "method": "POST",
+      "url": "https://maps.inverclyde.gov.uk/noticeboard8/quicksearch.asmx/GetMoreResults",
+      "final_url": "https://maps.inverclyde.gov.uk/noticeboard8/quicksearch.asmx/GetMoreResults",
+      "body": "{\"body\":{\"endIndex\":199,\"filter\":\"PA14 5UT\",\"searchId\":7,\"startIndex\":0}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0,no-store",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-xss-protection": "1;mode=block",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "date": "Mon, 05 Oct 2026 20:11:16 GMT",
+        "content-length": "3444"
+      },
+      "content_b64": "eyJkIjp7Il9fdHlwZSI6IkNhZGNvcnAuV01MLldlYlNlcnZpY2VzLlF1aWNrU2VhcmNoLlJlc3VsdHMiLCJFcHNnQ29kZSI6Mjc3MDAsIlpvb21TY2FsZSI6MCwiWm9vbVJlc29sdXRpb24iOi0xLCJOYW1lIjoiQWRkcmVzcyBSZXN1bHRzIiwiTW9yZURhdGFBdmFpbGFibGUiOmZhbHNlLCJEYXRhIjpbeyJDb2x1bW5zIjpbeyJWYWx1ZSI6IjEgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDk5LjMzMDcsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDM2LjE5NDMsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMTEgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDU2Ljc3OTAsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDQ4LjMzMjAsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMTMgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDUwLjEyNDEsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDUwLjg5MTksIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMTUgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDM2LjU4NTAsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDU1Ljk4MjQsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMTcgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDI5LjQ4NDgsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDU3LjQwMTEsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMTkgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDA4Ljc0NzMsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDY4LjA4OTUsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMjEgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDAyLjY3NzMsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDcxLjMwOTgsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMjMgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMyOTk1Ljc2MjAsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDc1LjAzNzksIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMjUgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMyOTg5LjcyODUsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDc4LjM0OTYsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMjcgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMyOTc5LjI0ODAsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDg2LjI0ODIsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMjkgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMyOTcyLjQ5NzEsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDg4LjcxNjksIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiMyBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzMwOTIuNDYyOSwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0MzYuODUwNywiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiIzMSBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5NTcuODEwMCwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0OTMuMzU1MywiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiIzMyBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5NTAuOTI3NiwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0OTMuOTQ0OCwiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiIzNSBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5NDMuMjE3NCwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0OTQuNjAxOCwiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiIzNyBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5MzYuNjQ5MiwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0OTUuMjM5NCwiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiIzOSBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5MjIuMjU3NSwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0OTkuOTA4NywiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiI0MSBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzI5MTYuMjAzNSwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM1MDQuMTM2MiwiTmFtZSI6Ik4ifV19LHsiQ29sdW1ucyI6W3siVmFsdWUiOiI1IE1lcnJ5bGVlIEF2ZW51ZVxyXG5QT1JUIEdMQVNHT1dcclxuUEExNCA1VVQiLCJOYW1lIjoiUkVTVUxUUyJ9LHsiVmFsdWUiOjIzMzA4NS4zNjIzLCJOYW1lIjoiRSJ9LHsiVmFsdWUiOjY3MzQzOC4yMDU5LCJOYW1lIjoiTiJ9XX0seyJDb2x1bW5zIjpbeyJWYWx1ZSI6IjcgTWVycnlsZWUgQXZlbnVlXHJcblBPUlQgR0xBU0dPV1xyXG5QQTE0IDVVVCIsIk5hbWUiOiJSRVNVTFRTIn0seyJWYWx1ZSI6MjMzMDcwLjEzMDAsIk5hbWUiOiJFIn0seyJWYWx1ZSI6NjczNDQzLjEyMDAsIk5hbWUiOiJOIn1dfSx7IkNvbHVtbnMiOlt7IlZhbHVlIjoiOSBNZXJyeWxlZSBBdmVudWVcclxuUE9SVCBHTEFTR09XXHJcblBBMTQgNVVUIiwiTmFtZSI6IlJFU1VMVFMifSx7IlZhbHVlIjoyMzMwNjMuNTUxNiwiTmFtZSI6IkUifSx7IlZhbHVlIjo2NzM0NDUuNjg1NSwiTmFtZSI6Ik4ifV19XX19"
+    },
+    {
+      "key": "POST https://maps.inverclyde.gov.uk/noticeboard8/LocalKnowledge.asmx/AboutTheLocationForOverlay ada05dd217",
+      "method": "POST",
+      "url": "https://maps.inverclyde.gov.uk/noticeboard8/LocalKnowledge.asmx/AboutTheLocationForOverlay",
+      "final_url": "https://maps.inverclyde.gov.uk/noticeboard8/LocalKnowledge.asmx/AboutTheLocationForOverlay",
+      "body": "{\"body\":{\"localKnowledgeID\":3,\"overlayNo\":20,\"x\":233099.3307,\"y\":673436.1943}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0,no-store",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=ixaybdj2uu2fmu52kq1guvet; path=/; HttpOnly; SameSite=Lax",
+        "x-xss-protection": "1;mode=block",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny",
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "date": "Mon, 05 Oct 2026 20:11:17 GMT",
+        "content-length": "1916"
+      },
+      "content_b64": "eyJkIjp7Il9fdHlwZSI6IkNhZGNvcnAuV01MLldlYlNlcnZpY2VzLmxvY2FsaG9zdC5VRFRfQ2FkY29ycF9XTUxfTG9jYWxLbm93bGVkZ2VSZXN1bHRzIiwiQU1QUmVzdWx0cyI6bnVsbCwiRk1OUmVzdWx0cyI6W3siTmFtZSI6IkJpbiBDb2xsZWN0aW9ucyIsIk51bWJlciI6MjAsIkRpZE5lYXJlc3RYSXRlbXMiOnRydWUsIk5lYXJlc3RYSXRlbXMiOjEsIlNlYXJjaFJhZGl1cyI6MCwiSXRlbXMiOlt7Ik92ZXJsYXlOYW1lIjoiQmluIENvbGxlY3Rpb25zIiwiT3ZlcmxheU5vIjoyMCwiTmFtZSI6IlR1ZXNkYXkiLCJPcmlnaW4iOnsieCI6MjMzMDk5LCJ5Ijo2NzM0MzYsInoiOjB9LCJEaXN0YW5jZSI6MCwiSXRlbUlEIjo3MTEsIkJvb2ttYXJrIjoxNzE4OCwiQXR0cmlidXRlcyI6W3siTmFtZSI6InVwbGlmdF9kYXkiLCJWYWx1ZSI6IlR1ZXNkYXkifSx7Ik5hbWUiOiJ0b3BfYmluX2RhdGUyIiwiVmFsdWUiOiJUdWVzZGF5IDZ0aCBPY3RvYmVyIDIwMjYifSx7Ik5hbWUiOiJib3R0b21fYmluX2RhdGUyIiwiVmFsdWUiOiJUdWVzZGF5IDEzdGggT2N0b2JlciAyMDI2In0seyJOYW1lIjoidG9wX2Jpbl9ncmFwaGljIiwiVmFsdWUiOiJcdTAwM2NwIHN0eWxlPVwidGV4dC1hbGlnbjogY2VudGVyO1wiXHUwMDNlWW91ciBcdTAwM2NzdHJvbmdcdTAwM2VuZXh0XHUwMDNjL3N0cm9uZ1x1MDAzZSBjb2xsZWN0aW9uIHdpbGwgYmUgeW91ciBSZWN5Y2xpbmcgQmluIG9uLi4uXHUwMDNjL3BcdTAwM2UgIFx1MDAzY3RhYmxlIGNsYXNzPVwibmJub3RpY2Vwb2ludHNcIiBzdHlsZT1cIm1hcmdpbi1sZWZ0OiBhdXRvOyBtYXJnaW4tcmlnaHQ6IGF1dG87XCJcdTAwM2VcdTAwM2N0Ym9keVx1MDAzZVx1MDAzY3RyXHUwMDNlXHUwMDNjdGQgc3R5bGU9XCJ3aWR0aDogMTAwJTtcIlx1MDAzZVx1MDAzY2ltZyBzcmM9XCJpbWcvcmVmdXNlL2JsdWUuanBnXCIgYWx0PVwiSW1hZ2Ugb2YgYSBibHVlIGJpblwiIHdpZHRoPVwiODlcIiBoZWlnaHQ9XCIxMzBcIiAvXHUwMDNlXHUwMDNjL3RkXHUwMDNlXHUwMDNjL3RyXHUwMDNlXHUwMDNjL3Rib2R5XHUwMDNlXHUwMDNjL3RhYmxlXHUwMDNlIn0seyJOYW1lIjoiYm90dG9tX2Jpbl9ncmFwaGljIiwiVmFsdWUiOiJcdTAwM2NwIHN0eWxlPVwidGV4dC1hbGlnbjogY2VudGVyO1wiXHUwMDNlVGhlIFx1MDAzY3N0cm9uZ1x1MDAzZWZvbGxvd2luZyB3ZWVrXHUwMDNjL3N0cm9uZ1x1MDAzZSB3ZSB3aWxsIGNvbGxlY3QgeW91ciBHZW5lcmFsIFdhc3RlIGFuZCBGb29kIEJpbnMgb24uLi5cdTAwM2MvcFx1MDAzZVx1MDAzY3RhYmxlIGNsYXNzPVwibmJub3RpY2Vwb2ludHNcIiBzdHlsZT1cIm1hcmdpbi1sZWZ0OiBhdXRvOyBtYXJnaW4tcmlnaHQ6IGF1dG87XCJcdTAwM2VcdTAwM2N0Ym9keVx1MDAzZVx1MDAzY3RyXHUwMDNlXHUwMDNjdGQgc3R5bGU9XCJ3aWR0aDogNTAlO1wiXHUwMDNlXHUwMDNjaW1nIHNyYz1cImltZy9yZWZ1c2UvYmxhY2suanBnXCIgYWx0PVwiSW1hZ2Ugb2YgYSBibGFjayBiaW5cIiB3aWR0aD1cIjg5XCIgaGVpZ2h0PVwiMTMwXCIgL1x1MDAzZVx1MDAzYy90ZFx1MDAzZVx1MDAzY3RkIHN0eWxlPVwid2lkdGg6IDUwJTtcIlx1MDAzZVx1MDAzY2ltZyBzcmM9XCJpbWcvcmVmdXNlL2Zvb2QuanBnXCIgYWx0PVwiSW1hZ2Ugb2YgYSBmb29kIGJpblwiIHdpZHRoPVwiODlcIiBoZWlnaHQ9XCIxMzBcIiAvXHUwMDNlXHUwMDNjL3RkXHUwMDNlXHUwMDNjL3RyXHUwMDNlXHUwMDNjL3Rib2R5XHUwMDNlXHUwMDNjL3RhYmxlXHUwMDNlIn0seyJOYW1lIjoidG9wX2Jpbl9uYW1lIiwiVmFsdWUiOiIifSx7Ik5hbWUiOiJib3R0b21fYmluX25hbWUiLCJWYWx1ZSI6IiJ9LHsiTmFtZSI6ImdhcmRlbl93YXN0ZV9tc2ciLCJWYWx1ZSI6IiJ9LHsiTmFtZSI6ImdhcmRlbl93YXN0ZV9maXJzdF9kYXRlIiwiVmFsdWUiOiIifV19XX1dfX0="
+    }
+  ]
+}
