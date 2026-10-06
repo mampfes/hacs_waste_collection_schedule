@@ -1,34 +1,34 @@
-# Wychavon District Council
+# Wychavon District Council (Deprecated)
 
-Support for schedules provided by [Wychavon District Council](https://wychavon.gov.uk/), serving Wychavon, UK.
+Support for schedules provided by [Wychavon District Council (Deprecated)](https://wychavon.gov.uk/).
+
+Source for Wychavon District Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: wychavon_gov_uk
       args:
-        uprn: "UPRN"
-        
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: wychavon_gov_uk
       args:
-        uprn: "10013938132"
-        
+        uprn: 10013938132
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Deprecated: use the roundlookup_uk source (council Wychavon) instead. You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details.
