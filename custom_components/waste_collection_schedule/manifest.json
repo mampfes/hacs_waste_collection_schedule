@@ -19,5 +19,5 @@
     "Babel>=2.12.0",
     "holidays>=0.40"
   ],
-  "version": "3.0.0-beta.5"
+  "version": "3.0.0-beta.6"
 }
