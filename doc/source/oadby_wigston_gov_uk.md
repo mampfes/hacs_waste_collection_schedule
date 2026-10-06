@@ -1,12 +1,14 @@
-# Charnwood
+# Oadby and Wigston Council
 
-Support for schedules provided by [Oadby and Wigston Council](https://www.oadby-wigston.gov.uk), serving Charnwood, UK.
+Support for schedules provided by [Oadby and Wigston Council](https://www.oadby-wigston.gov.uk).
+
+Source for Oadby and Wigston Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: oadby_wigston_gov_uk
       args:
         address: ADDRESS
@@ -15,18 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: oadby_wigston_gov_uk
       args:
-        address: 89, Leicester Road, Leicester, Leicestershire
+        address: 56, Sussex Road, Wigston, Leicestershire
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-You can check [https://my.oadby-wigston.gov.uk/](https://my.oadby-wigston.gov.uk/). The address should exactly match the autocomplete suggestion.
+Enter the address exactly as the address search on [my.oadby-wigston.gov.uk](https://my.oadby-wigston.gov.uk/my-property-finder) suggests it, e.g. `56, Sussex Road, Wigston, Leicestershire`.

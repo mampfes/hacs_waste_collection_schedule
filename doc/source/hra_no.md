@@ -1,12 +1,14 @@
 # HRA (Hadeland og Ringerike Avfallsselskap)
 
-Support for schedules provided by [HRA](https://hra.no), serving the Hadeland region (Gran, Jevnaker, Lunner), Norway.
+Support for schedules provided by [HRA (Hadeland og Ringerike Avfallsselskap)](https://hra.no).
+
+Source for HRA waste collection in Hadeland (Gran, Jevnaker, Lunner), Norway.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hra_no
       args:
         address: ADDRESS
@@ -15,20 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
-
-The address as shown in the search result on the HRA collection calendar, for example `Myllavegen 1, 2742 GRUA`. The postal code and place may be omitted if the street address is unique.
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: hra_no
       args:
         address: Myllavegen 1, 2742 GRUA
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit [https://hra.no/tommekalender](https://hra.no/tommekalender), search for your address, and use it exactly as shown in the result list.
+Search for your address at hra.no/tommekalender and use the address as shown in the result list, e.g. 'Myllavegen 1, 2742 GRUA'.

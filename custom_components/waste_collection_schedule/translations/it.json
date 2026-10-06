@@ -582,7 +582,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_cairns_qld_gov_au": {
@@ -592,7 +593,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_campbelltown_nsw_gov_au": {
         "title": "Configurazione Sorgente",
@@ -17829,10 +17832,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto"
+          "district": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "district": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_kopavogur_is": {
@@ -17840,9 +17844,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto"
+          "district": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_greyhound_ie": {
         "title": "Configurazione Sorgente",
@@ -18372,7 +18378,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_id": "Address Id"
+          "address_id": "ID posizione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -18383,7 +18389,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_id": "Address Id"
+          "address_id": "ID posizione"
         },
         "data_description": {}
       },
@@ -19439,13 +19445,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_letter": "Lettera Casa",
-          "house_number": "Civico",
-          "municipality": "Municipality",
-          "postal_code": "Codice Postale CAP"
+          "house_letter": "House Letter",
+          "house_number": "Numero civico",
+          "municipality": "Comune",
+          "postal_code": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "postal_code": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_straatbeeld_online": {
@@ -19453,12 +19462,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_letter": "Lettera Casa",
-          "house_number": "Civico",
-          "municipality": "Municipality",
-          "postal_code": "Codice Postale CAP"
+          "house_letter": "House Letter",
+          "house_number": "Numero civico",
+          "municipality": "Comune",
+          "postal_code": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "postal_code": "Il vostro codice postale (CAP)."
+        }
       },
       "args_ics_offalkalinder_nl": {
         "title": "Configurazione Sorgente",
@@ -20176,7 +20189,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_hra_no": {
@@ -20186,7 +20200,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_innherredrenovasjon_no": {
         "title": "Configurazione Sorgente",
@@ -21996,7 +22012,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_fev_se": {
@@ -22006,7 +22023,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_gastrikeatervinnare_se": {
         "title": "Configurazione Sorgente",
@@ -27258,10 +27277,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "postcode": "Codice Postale CAP"
+          "postcode": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_inverclyde_gov_uk": {
@@ -27270,9 +27291,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "postcode": "Codice Postale CAP"
+          "postcode": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo.",
+          "postcode": "Il vostro codice postale (CAP)."
+        }
       },
       "args_ipswich_gov_uk": {
         "title": "Configurazione Sorgente",
@@ -29046,7 +29070,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_oadby_wigston_gov_uk": {
@@ -29056,7 +29081,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_oldham_gov_uk": {
         "title": "Configurazione Sorgente",

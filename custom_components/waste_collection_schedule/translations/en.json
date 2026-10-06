@@ -588,7 +588,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+          "address": "Your full address."
         }
       },
       "reconfigure_cairns_qld_gov_au": {
@@ -599,7 +599,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+          "address": "Your full address."
         }
       },
       "args_campbelltown_nsw_gov_au": {
@@ -18113,7 +18113,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "district": "Collection district (zone) as shown in the calendar legend. Partial, case-insensitive matches are accepted."
+          "district": "Your district or part of the municipality."
         }
       },
       "reconfigure_kopavogur_is": {
@@ -18124,7 +18124,7 @@
           "district": "District"
         },
         "data_description": {
-          "district": "Collection district (zone) as shown in the calendar legend. Partial, case-insensitive matches are accepted."
+          "district": "Your district or part of the municipality."
         }
       },
       "args_greyhound_ie": {
@@ -18668,7 +18668,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -18679,7 +18679,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Location ID"
         },
         "data_description": {}
       },
@@ -19756,16 +19756,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_letter": "House letter/addition",
-          "house_number": "House number",
+          "house_number": "House Number",
           "municipality": "Municipality",
-          "postal_code": "Postal code"
+          "postal_code": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
-          "house_number": "House number, e.g. 28",
-          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
-          "postal_code": "Dutch postal code, e.g. 4926CW"
+          "house_number": "Your house number.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "postal_code": "Your postcode."
         }
       },
       "reconfigure_straatbeeld_online": {
@@ -19774,15 +19773,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_letter": "House letter/addition",
-          "house_number": "House number",
+          "house_number": "House Number",
           "municipality": "Municipality",
-          "postal_code": "Postal code"
+          "postal_code": "Postcode"
         },
         "data_description": {
-          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
-          "house_number": "House number, e.g. 28",
-          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
-          "postal_code": "Dutch postal code, e.g. 4926CW"
+          "house_number": "Your house number.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "postal_code": "Your postcode."
         }
       },
       "args_ics_offalkalinder_nl": {
@@ -20508,7 +20506,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address as shown on hra.no/tommekalender, e.g. 'Myllavegen 1, 2742 GRUA'."
+          "address": "Your full address."
         }
       },
       "reconfigure_hra_no": {
@@ -20519,7 +20517,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Address as shown on hra.no/tommekalender, e.g. 'Myllavegen 1, 2742 GRUA'."
+          "address": "Your full address."
         }
       },
       "args_innherredrenovasjon_no": {
@@ -22439,7 +22437,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
+          "address": "Your full address."
         }
       },
       "reconfigure_fev_se": {
@@ -22450,7 +22448,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
+          "address": "Your full address."
         }
       },
       "args_gastrikeatervinnare_se": {
@@ -27791,8 +27789,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
-          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_inverclyde_gov_uk": {
@@ -27804,8 +27802,8 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
-          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "args_ipswich_gov_uk": {
@@ -29600,7 +29598,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_oadby_wigston_gov_uk": {
@@ -29610,7 +29609,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_oldham_gov_uk": {
         "title": "Configure Source",

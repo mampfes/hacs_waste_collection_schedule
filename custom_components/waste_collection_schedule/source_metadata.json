@@ -113,8 +113,7 @@
   "cairns_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cairns_qld_gov_au.md",
     "howto": {
-      "de": "Rufe die Seite 'Find my bin day' des Cairns Regional Council auf (https://www.cairns.qld.gov.au/water-waste-roads/waste-and-recycling/bin-collection/find-bin-day), gib deine Adresse ein und wähle sie aus der Autovervollständigung aus. Verwende für das Argument `address` das gleiche Format 'HAUSNUMMER STRASSE, VORORT' wie im Vorschlag angezeigt.",
-      "en": "Go to the Cairns Regional Council 'Find my bin day' page (https://www.cairns.qld.gov.au/water-waste-roads/waste-and-recycling/bin-collection/find-bin-day), start typing your address and pick it from the autocomplete list. Use the same 'STREET NUMBER STREET NAME, SUBURB' format shown in the suggestion for the `address` argument."
+      "en": "Go to the Cairns Regional Council [Find my bin day](https://www.cairns.qld.gov.au/water-waste-roads/waste-and-recycling/bin-collection/find-bin-day) page, start typing your address and pick it from the autocomplete list. Use the same 'STREET NUMBER STREET NAME, SUBURB' format shown in the suggestion for the `address` argument."
     },
     "urls": {}
   },
@@ -3885,7 +3884,9 @@
   },
   "kopavogur_is": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kopavogur_is.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the collection district (zone) as shown in the legend of the calendar: Vesturbær - Smárahverfi, Austurbær sunnan Álfhólsvegar, Austurbær norðan Álfhólsvegar or Lindir, Salir, Kórar, Hvörf og Þing. A partial, case-insensitive match is accepted."
+    },
     "urls": {}
   },
   "greyhound_ie": {
@@ -4281,12 +4282,10 @@
   "straatbeeld_online": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/straatbeeld_online.md",
     "howto": {
-      "en": "Open your municipality's Straatbeeld Online waste calendar (e.g. https://drimmelen.afvalkalender.straatbeeld.online), the 'municipality' argument is the first part of that URL (e.g. 'drimmelen'). Use the same postal code and house number you would enter on that page.",
-      "nl": "Open de Straatbeeld Online-afvalkalender van je gemeente (bijv. https://drimmelen.afvalkalender.straatbeeld.online). Het 'municipality'-argument is het eerste deel van die URL (bijv. 'drimmelen'). Gebruik dezelfde postcode en huisnummer als je op die pagina zou invoeren."
+      "en": "Open your municipality's Straatbeeld Online waste calendar (e.g. https://drimmelen.afvalkalender.straatbeeld.online), the 'municipality' argument is the first part of that URL (e.g. 'drimmelen'). Use the same postal code and house number you would enter on that page. Add a house letter or addition only when several addresses share the same postal code and house number.",
+      "nl": "Open de afvalkalender van je gemeente op Straatbeeld Online (bijv. https://drimmelen.afvalkalender.straatbeeld.online), het argument 'municipality' is het eerste deel van die URL (bijv. 'drimmelen'). Gebruik dezelfde postcode en hetzelfde huisnummer als op die pagina. Vul een huisletter of toevoeging alleen in als meerdere adressen dezelfde postcode en hetzelfde huisnummer hebben."
     },
-    "urls": {
-      "url_drimmelen_afvalkalender_straatbeeld_online": "https://drimmelen.afvalkalender.straatbeeld.online"
-    }
+    "urls": {}
   },
   "ics_offalkalinder_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/offalkalinder_nl.md",
@@ -4477,7 +4476,6 @@
   "hra_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hra_no.md",
     "howto": {
-      "de": "Suche Deine Adresse auf hra.no/tommekalender und verwende sie so, wie sie in der Ergebnisliste angezeigt wird, z.B. 'Myllavegen 1, 2742 GRUA'.",
       "en": "Search for your address at hra.no/tommekalender and use the address as shown in the result list, e.g. 'Myllavegen 1, 2742 GRUA'."
     },
     "urls": {}
@@ -4917,7 +4915,7 @@
   "fev_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fev_se.md",
     "howto": {
-      "en": "Go to https://fev.se/atervinning/sophamtning.html, search for your address and copy the street name and house number exactly as shown in the results, e.g. 'Rådmansvägen 3'."
+      "en": "Go to https://fev.se/atervinning/sophamtning.html, search for your address and copy the street name and house number exactly as shown in the results, e.g. `Rådmansvägen 3`. The website only publishes the next two collections per waste type, so the interval between them is used to project further collections; shifts around holidays appear only once the website itself shows them."
     },
     "urls": {}
   },
@@ -5265,7 +5263,10 @@
   },
   "maur_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maur_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Maur veröffentlicht einen einzigen gemeindeweiten Abfallkalender, daher ist kein Argument erforderlich.",
+      "en": "Maur publishes a single municipality-wide collection calendar, so no address or other argument is required."
+    },
     "urls": {}
   },
   "muttenz_ch": {
@@ -6955,7 +6956,9 @@
   },
   "oadby_wigston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oadby_wigston_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the address exactly as the address search on [my.oadby-wigston.gov.uk](https://my.oadby-wigston.gov.uk/my-property-finder) suggests it, e.g. `56, Sussex Road, Wigston, Leicestershire`."
+    },
     "urls": {}
   },
   "oldham_gov_uk": {
