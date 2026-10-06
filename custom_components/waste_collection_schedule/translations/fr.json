@@ -7321,18 +7321,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "municipality": "Commune",
-          "split_bins": "Split Bins",
-          "street": "Rue",
-          "values": "Numéro"
+          "municipality": "Municipalité",
+          "values": "Valeurs"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "city": "Votre ville ou village.",
-          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "street": "Le nom de votre rue.",
-          "values": "Votre numéro de rue."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7340,18 +7333,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "municipality": "Commune",
-          "split_bins": "Split Bins",
-          "street": "Rue",
-          "values": "Numéro"
+          "municipality": "Municipalité",
+          "values": "Valeurs"
         },
-        "data_description": {
-          "city": "Votre ville ou village.",
-          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "street": "Le nom de votre rue.",
-          "values": "Votre numéro de rue."
-        }
+        "data_description": {}
       },
       "args_kalundborg_dk": {
         "title": "Configurer la Source",

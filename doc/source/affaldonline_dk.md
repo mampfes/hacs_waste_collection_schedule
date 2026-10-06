@@ -12,9 +12,6 @@ waste_collection_schedule:
     - name: affaldonline_dk
       args:
         municipality: MUNICIPALITY
-        split_bins: SPLIT_BINS
-        city: CITY
-        street: STREET
         values: VALUES
 ```
 
@@ -23,17 +20,8 @@ waste_collection_schedule:
 **municipality**  
 *(string) (required)*
 
-**split_bins**  
-*(string) (optional)*
-
-**city**  
-*(string) (optional)*
-
-**street**  
-*(string) (optional)*
-
 **values**  
-*(string) (optional)*
+*(string) (required)*
 
 ## Example
 
@@ -43,7 +31,9 @@ waste_collection_schedule:
     - name: affaldonline_dk
       args:
         municipality: aeroe
-        city: "\xC6r\xF8sk\xF8bing"
-        street: "N\xF8rregade|5970|\xC6r\xF8sk\xF8bing"
-        values: "N\xF8rregade|1||||5970|\xC6r\xF8sk\xF8bing|4162588|448776|0"
+        values: "N\xF8rregade|1||||5970|\xC6r\xF8sk\xF8bing|1228262|448776|0"
 ```
+
+## How to get the source arguments
+
+Open the address search of your waste company on the AffaldOnline platform, select your address and copy the raw `values` string of the address (pipe separated, e.g. `Nørregade|1||||5970|Ærøskøbing|1228262|448776|0`). Use the municipality key of your waste company as `municipality`.

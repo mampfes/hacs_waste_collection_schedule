@@ -86,8 +86,8 @@
           "key": "API-sleutel",
           "municipality": "Gemeente",
           "ort": "Wijk",
-          "split_bins": "Containers opsplitsen in fracties",
           "realmid": "Realm-ID",
+          "split_bins": "Containers opsplitsen in fracties",
           "wasteTypes": "Afvalsoorten"
         },
         "data_description": {
@@ -7294,18 +7294,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Plaats",
           "municipality": "Gemeente",
-          "split_bins": "Split Bins",
-          "street": "Straat",
-          "values": "Huisnummer"
+          "values": "Waarden"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "city": "Uw stad of dorp.",
-          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
-          "street": "Uw straatnaam.",
-          "values": "Uw huisnummer."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7313,18 +7306,10 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Plaats",
           "municipality": "Gemeente",
-          "split_bins": "Split Bins",
-          "street": "Straat",
-          "values": "Huisnummer"
+          "values": "Waarden"
         },
-        "data_description": {
-          "city": "Uw stad of dorp.",
-          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
-          "street": "Uw straatnaam.",
-          "values": "Uw huisnummer."
-        }
+        "data_description": {}
       },
       "args_kalundborg_dk": {
         "title": "Bron configureren",

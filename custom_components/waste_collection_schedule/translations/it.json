@@ -7320,18 +7320,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "municipality": "Comune",
-          "split_bins": "Split Bins",
-          "street": "Via",
-          "values": "Numero civico"
+          "municipality": "Municipality",
+          "values": "Valori"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "city": "La vostra città o paese.",
-          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
-          "street": "Il nome della vostra via.",
-          "values": "Il vostro numero civico."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7339,18 +7332,10 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "municipality": "Comune",
-          "split_bins": "Split Bins",
-          "street": "Via",
-          "values": "Numero civico"
+          "municipality": "Municipality",
+          "values": "Valori"
         },
-        "data_description": {
-          "city": "La vostra città o paese.",
-          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
-          "street": "Il nome della vostra via.",
-          "values": "Il vostro numero civico."
-        }
+        "data_description": {}
       },
       "args_kalundborg_dk": {
         "title": "Configurazione Sorgente",
