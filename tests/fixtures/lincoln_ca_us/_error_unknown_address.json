@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-04",
+  "interactions": [
+    {
+      "key": "GET https://services6.arcgis.com/ojAwglArv2d3JM03/arcgis/rest/services/Master_Address_Points_Public_View/FeatureServer/5/query 94857fc35a",
+      "method": "GET",
+      "url": "https://services6.arcgis.com/ojAwglArv2d3JM03/arcgis/rest/services/Master_Address_Points_Public_View/FeatureServer/5/query",
+      "final_url": "https://services6.arcgis.com/ojAwglArv2d3JM03/arcgis/rest/services/Master_Address_Points_Public_View/FeatureServer/5/query?outFields=Full_Street_Address%2CStreetPreDir%2CStreetName%2CStreetType%2CStreetPostDir%2CCollectionDay%2CRouteWeek%2CRes_GW_Allowed&returnGeometry=false&f=json&where=StreetNum+%3D+9999",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"Full_Street_Address,StreetPreDir,StreetName,StreetType,StreetPostDir,CollectionDay,RouteWeek,Res_GW_Allowed\"],[\"returnGeometry\",\"false\"],[\"where\",\"StreetNum = 9999\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Mon, 05 Oct 2026 01:53:42 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "118",
+        "Connection": "keep-alive",
+        "Cache-Control": "public, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Fri, 02 Oct 2026 19:22:55 GMT",
+        "ETag": "sd14686_-2022529254",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h06c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20261005T015342Z-r197cbcd596bnqwghC1BY1azcn00000008h00000000045qx",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=26;max=6000",
+        "X-ArcGIS-Correlation-Id": "0877fd031c655638",
+        "X-ArcGIS-Instance": "hkmzlsa5v00000L",
+        "Request-Context": "appId=cid-v1:3e91b07b-c431-4e18-b74c-dc5ab3a0cdf7",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20261005T015342Z-r197cbcd596bnqwghC1BY1azcn00000008h00000000045qx",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "TCP_MISS",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6Ikdsb2JhbElEIiwiZmVhdHVyZXMiOltdfQ=="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street_address' with the value '9999 East Avenue', please check the spelling and try again."
+  }
+}
