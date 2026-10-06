@@ -21,6 +21,7 @@ ICON_MAP = {
     "Green non-recyclable": Icons.GENERAL_WASTE,
     "Grey recycling": Icons.RECYCLING,
     "Grey food waste": Icons.BIO_KITCHEN,
+    "Brown garden waste": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
