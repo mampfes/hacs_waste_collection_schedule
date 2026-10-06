@@ -1,124 +1,119 @@
 import json
 import re
-from datetime import datetime, timezone
+from datetime import UTC, date, datetime
+from typing import ClassVar, NamedTuple, final
 from zoneinfo import ZoneInfo
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import ExplodeList
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Hässleholm Miljö"
-DESCRIPTION = "Source for waste collection schedules from Hässleholm Miljö, Sweden."
-URL = "https://hassleholmmiljo.se"
+_CALENDAR_URL = "https://hassleholmmiljo.se/privat/sophamtning/tomningskalender"
+_API_URL = "https://api-universal.appbolaget.se/@universal/waste/properties"
 
-TEST_CASES = {
-    "Tyringevägen 24, Finja": {"alias": "hmab-tyringevaegen-24-finja"},
-}
-
-ICON_MAP = {
-    "Kärl1": Icons.GENERAL_WASTE,
-    "Kärl2": Icons.RECYCLING,
-    "Trädgårdsavfall": Icons.GARDEN,
-    "Budad hämtning": Icons.GENERAL_WASTE,
-}
-
-BASE_URL = "https://hassleholmmiljo.se/privat/sophamtning/tomningskalender"
-API_URL = (
-    "https://api-universal.appbolaget.se/@universal/waste/properties/{property_id}/"
+_STATE_RE = re.compile(
+    r"AppRegistry\.registerInitialState\([^,]+,(\{.*?\})\);", re.DOTALL
 )
+_UNIT_RE = re.compile(r"unit=([0-9a-f-]{36})")
+_TIMEZONE = ZoneInfo("Europe/Stockholm")
 
-TIMEZONE = ZoneInfo("Europe/Stockholm")
+
+class _Property(NamedTuple):
+    """The two ids the calendar page hands the schedule API."""
+
+    property_id: str
+    unit: str
 
 
-class Source:
-    def __init__(self, alias: str):
-        self._alias = alias
+def _read_calendar_page(response, alias, **_) -> _Property:
+    """Read the property id and unit UUID off the calendar page's embedded state."""
+    for block in _STATE_RE.findall(response.text):
+        try:
+            state = json.loads(block)
+        except ValueError:
+            continue
+        month = state.get("calendarMonth")
+        if not month:
+            continue
+        customers = month.get("customers")
+        property_id = month.get("property") or (customers[0] if customers else None)
+        unit = _UNIT_RE.search(month.get("pdfUrl", ""))
+        if property_id and unit:
+            return _Property(property_id, unit.group(1))
+    raise SourceArgumentNotFound("alias", alias)
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update({"User-Agent": "Mozilla/5.0"})
 
-        # Step 1: Fetch the calendar page to extract property_id and unit UUID
-        resp = session.get(BASE_URL, params={"alias": self._alias}, timeout=30)
-        resp.raise_for_status()
+def _local_date(timestamp: str) -> date:
+    """The API stores collection times in UTC: 22:00 UTC is the next local day."""
+    return (
+        datetime.fromisoformat(timestamp).replace(tzinfo=UTC).astimezone(_TIMEZONE)
+    ).date()
 
-        property_id, unit_uuid = self._extract_ids(resp.text)
 
-        if not property_id or not unit_uuid:
-            raise SourceArgumentNotFound(
-                "alias",
-                self._alias,
-            )
+def _label(record) -> str:
+    code = record["code"] or {}
+    return code.get("description") or code.get("code") or "Unknown"
 
-        # Step 2: Fetch the full collection schedule from the Appbolaget API
-        api_resp = session.get(
-            API_URL.format(property_id=property_id),
-            params={"unit": unit_uuid},
-            timeout=30,
-        )
-        api_resp.raise_for_status()
 
-        data = api_resp.json()
-        if data.get("status") != 200:
-            raise SourceArgumentNotFound(
-                "alias",
-                self._alias,
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Hässleholm Miljö"
+    DESCRIPTION = "Source for waste collection schedules from Hässleholm Miljö, Sweden."
+    URL = "https://hassleholmmiljo.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+        wt.OTHER,
+    ]
 
-        return self._parse_collections(data["data"])
+    TEST_CASES: ClassVar[dict] = {
+        "Tyringevägen 24, Finja": {"alias": "hmab-tyringevaegen-24-finja"},
+    }
 
-    def _extract_ids(self, html: str) -> tuple[str | None, str | None]:
-        """Extract property_id and unit UUID from the embedded page state."""
-        # Find the calendarMonth state block
-        scripts = re.findall(
-            r"AppRegistry\.registerInitialState\([^,]+,(\{.*?\})\);",
-            html,
-            re.DOTALL,
-        )
+    PARAMS = (text_field("alias", "Alias"),)
 
-        for script in scripts:
-            try:
-                state = json.loads(script)
-            except (json.JSONDecodeError, ValueError):
-                continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://hassleholmmiljo.se/privat/sophamtning/tomningskalender, "
+            "search for your address and select it. Copy the `alias` value from "
+            "the URL (`?alias=hmab-...`), for example "
+            "`hmab-tyringevaegen-24-finja`."
+        ),
+    }
 
-            cm = state.get("calendarMonth")
-            if not cm:
-                continue
-
-            property_id = cm.get("property") or (
-                cm.get("customers", [None])[0] if cm.get("customers") else None
-            )
-            pdf_url = cm.get("pdfUrl", "")
-            unit_match = re.search(r"unit=([0-9a-f-]{36})", pdf_url)
-            unit_uuid = unit_match.group(1) if unit_match else None
-
-            if property_id and unit_uuid:
-                return property_id, unit_uuid
-
-        return None, None
-
-    def _parse_collections(self, data: dict) -> list[Collection]:
-        """Parse service collections from the Appbolaget API response."""
-        entries: list[Collection] = []
-
-        for service in data.get("services", []):
-            code = service.get("code", {})
-            waste_type = code.get("description") or code.get("code", "Unknown")
-            icon = ICON_MAP.get(waste_type)
-
-            for collection in service.get("collections", []):
-                collection_at = collection.get("collection_at")
-                if not collection_at:
-                    continue
-
-                # Dates are stored in UTC; convert to local Stockholm date
-                dt_utc = datetime.fromisoformat(collection_at).replace(
-                    tzinfo=timezone.utc
-                )
-                dt_local = dt_utc.astimezone(TIMEZONE)
-                date = dt_local.date()
-
-                entries.append(Collection(date=date, t=waste_type, icon=icon))
-
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _CALENDAR_URL,
+                params=lambda alias, **_: {"alias": alias},
+                pick=_read_calendar_page,
+            ),
+        ),
+        url=lambda prop, **_: f"{_API_URL}/{prop.property_id}/",
+        params=lambda prop, **_: {"unit": prop.unit},
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("data", "services")
+    preprocess = ExplodeList("collections", into="collection")
+    transform = JsonTransformer(
+        date_key=lambda record: _local_date(record["collection"]["collection_at"]),
+        type_key=_label,
+        carry_raw_label=True,
+        type_value_map={
+            # "Fyrfack kärl 1": plast- och pappersförpackningar
+            "Kärl1": [wt.RECYCLABLES, wt.PAPER],
+            # "Fyrfack kärl 2": restavfall och returpapper
+            "Kärl2": [wt.GENERAL_WASTE, wt.PAPER],
+            "Trädgårdsavfall": wt.GARDEN_WASTE,
+            # "Budad hämtning": fee for emptying the four-compartment bin
+            "Budad hämtning": wt.OTHER,
+        },
+    )

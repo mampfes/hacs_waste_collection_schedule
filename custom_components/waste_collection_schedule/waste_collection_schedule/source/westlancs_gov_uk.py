@@ -1,138 +1,97 @@
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "West Lancashire Council"
-DESCRIPTION = "Source for West Lancashire Council waste collection schedule."
-URL = "https://westlancs.gov.uk"
-TEST_CASES = {
-    "Test 1": {"postcode": "WN8 9QR", "uprn": "10012340497"},
-    "Test 2": {"postcode": "WN8 9DA", "uprn": "10012357342"},
-}
-
-ICON_MAP = {
-    "refuse": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "garden": Icons.GARDEN,
-}
+from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://your.westlancs.gov.uk/yourwestlancs.aspx"
+_POSTBACK = re.compile(r"__doPostBack\s*\(\s*'([^']+)'\s*,\s*'([^']+)'\s*\)")
+_STATE_FIELDS = ("__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION")
 
 
-class Source:
-    def __init__(self, postcode, uprn):
-        self._postcode = postcode.strip().replace(" ", "+").upper()
-        self._uprn = str(uprn)  # Ensure it's a string for comparison
+def _postcode(postcode: str, **_) -> str:
+    return postcode.strip().upper()
 
-    def fetch(self):
-        session = requests.Session()
 
-        # Step 1: Get the list of addresses for the postcode
-        url = f"{API_URL}?address={self._postcode}"
+def _address_form(response, *keys, postcode: str, uprn, **_) -> dict[str, str]:
+    """The ASP.NET form body that selects the address with this UPRN."""
+    if "no properties found" in response.text.lower():
+        raise SourceArgumentNotFound("postcode", postcode)
+    soup = BeautifulSoup(response.text, "html.parser")
+    grid = soup.find("table", {"id": re.compile("GridView")})
+    if not grid:
+        raise SourceArgumentNotFound("postcode", postcode)
 
-        r = session.get(url)
-        r.raise_for_status()
-
-        if "no properties found" in r.text.lower():
-            raise SourceArgumentNotFound("postcode", self._postcode)
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Find the GridView table
-        gridview = soup.find("table", {"id": re.compile("GridView")})
-        if not gridview:
-            raise SourceArgumentNotFound("postcode", self._postcode)
-
-        # Find all rows in the table
-        rows = gridview.find_all("tr")
-
-        selected_link = None
-
-        # Check each row for our UPRN
-        for row in rows:
-            # Get all cells in this row
-            cells = row.find_all("td")
-
-            # Check if any cell contains our exact UPRN
-            for cell in cells:
-                if cell.get_text(strip=True) == self._uprn:
-                    # Found our UPRN, get the link from this row
-                    link = row.find("a")
-                    if link:
-                        selected_link = link
-                        break
-
-            if selected_link:
-                break
-
-        if not selected_link:
-            raise Exception(
-                f"No address found with UPRN {self._uprn} for postcode {self._postcode}"
-            )
-
-        # Parse the __doPostBack parameters
-        onclick = selected_link.get("href", "")
-        match = re.search(
-            r"__doPostBack\s*\(\s*'([^']+)'\s*,\s*'([^']+)'\s*\)", onclick
-        )
+    wanted = str(uprn)
+    for row in grid.find_all("tr"):
+        if wanted not in (cell.get_text(strip=True) for cell in row.find_all("td")):
+            continue
+        link = row.find("a")
+        match = _POSTBACK.search(link.get("href", "")) if link else None
         if not match:
-            raise Exception(f"Could not parse address link: {onclick}")
-
-        event_target = match.group(1)
-        event_argument = match.group(2)
-
-        # Step 2: Submit the form to get the collection details
-        form_data = {
-            "__EVENTTARGET": event_target,
-            "__EVENTARGUMENT": event_argument,
-        }
-
-        # Extract ViewState fields (required by ASP.NET)
-        for field in ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]:
+            continue
+        form = {"__EVENTTARGET": match.group(1), "__EVENTARGUMENT": match.group(2)}
+        for field in _STATE_FIELDS:
             element = soup.find("input", {"name": field})
             if element:
-                form_data[field] = element.get("value", "")
+                form[field] = element.get("value", "")
+        return form
+    raise SourceArgumentNotFound("uprn", wanted)
 
-        r = session.post(url, data=form_data)
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        content = soup.get_text()
+def _label(element) -> str:
+    return element.find_parent("tr").find("strong").get_text(strip=True)
 
-        # Parse collection dates
-        entries = []
 
-        collection_patterns = [
-            ("Refuse", r"Next refuse collection:\s*(\d{2}/\d{2}/\d{4})"),
-            ("Recycling", r"Next recycling collection:\s*(\d{2}/\d{2}/\d{4})"),
-            ("Garden Waste", r"Next garden waste collection:\s*(\d{2}/\d{2}/\d{4})"),
-        ]
+def _date(element) -> str:
+    return element.get_text(strip=True)
 
-        for waste_type, pattern in collection_patterns:
-            match = re.search(pattern, content, re.IGNORECASE)
 
-            if match:
-                date_str = match.group(1)
-                try:
-                    date = datetime.strptime(date_str, "%d/%m/%Y").date()
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type.lower().split()[0]),
-                        )
-                    )
-                except ValueError:
-                    pass
-            elif waste_type == "Garden Waste" and "Not subscribed" in content:
-                # Skip garden waste if not subscribed
-                continue
+@final
+class Source(BaseSource):
+    TITLE = "West Lancashire Council"
+    DESCRIPTION = "Source for West Lancashire Council waste collection schedule."
+    URL = "https://westlancs.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
 
-        if not entries:
-            raise Exception("No collection dates found")
+    TEST_CASES: ClassVar[dict] = {
+        "Test 1": {"postcode": "WN8 9QR", "uprn": "10012340497"},
+        "Test 2": {"postcode": "WN8 9DA", "uprn": "10012357342"},
+    }
 
-        return entries
+    PARAMS = (postcode("postcode"), uprn("uprn"))
+
+    retrieve = LookupChainRetriever(
+        steps=(
+            Lookup(
+                API_URL,
+                params=lambda postcode, **_: {"address": _postcode(postcode)},
+                pick=_address_form,
+            ),
+        ),
+        url=API_URL,
+        params=lambda form, postcode, **_: {"address": _postcode(postcode)},
+        method="POST",
+        data=lambda form, **_: form,
+        raise_for_status=True,
+    )
+    parse = parsers.HtmlParser("span[id*='lbNext']")
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=_label,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "Next refuse collection:": wt.GENERAL_WASTE,
+            "Next recycling collection:": wt.RECYCLABLES,
+            "Next garden waste collection:": wt.GARDEN_WASTE,
+        },
+    )

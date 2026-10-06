@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-02",
+  "interactions": [
+    {
+      "key": "GET https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address db5bca1888",
+      "method": "GET",
+      "url": "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address",
+      "final_url": "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address?street=N%C3%A5kkves+vei&number=5&street_id=15280",
+      "body": "{\"params\":[[\"number\",\"5\"],[\"street\",\"N\u00e5kkves vei\"],[\"street_id\",\"15280\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "content-type": "application/json; charset=UTF-8",
+        "content-length": "1584",
+        "date": "Fri, 02 Oct 2026 06:20:39 GMT",
+        "x-xss-protection": "1; mode=block",
+        "server": "Apache",
+        "strict-transport-security": "max-age=63072000; includeSubdomains;",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "same-origin",
+        "expires": "0",
+        "pragma": "no-cache",
+        "x-robots-tag": "none",
+        "cache-control": "public, max-age=120, s-maxage=18144000, must-revalidate, proxy-revalidate",
+        "content-security-policy": "default-src 'none';     worker-src 'self' blob: oslo.kommune.localhost;     script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.oslo.kommune.localhost *.oslo.kommune.no *.traefik.me *.hotjar.com https://chat2.wave.wtf chat2.wave.lol chat2.zisson.com;     style-src 'self' 'unsafe-inline' *.oslo.kommune.localhost *.oslo.kommune.no https://oslokommune-designsystem.s3.dualstack.eu-central-1.amazonaws.com;     style-src-elem 'self' 'unsafe-inline' *.oslo.kommune.no https://oslokommune-designsystem.s3.dualstack.eu-central-1.amazonaws.com https://chat2.wave.wtf/bootstrapper.js;     img-src 'self' data: blob: https://img.oslo.kommune.no https://testing.oslo.kommune.no https://politikk-oslo-filer221803-prod.s3.eu-central-1.amazonaws.com/ https://web-oslo-kommune-no.s3.dualstack.eu-central-1.amazonaws.com/ https://ukeweb-public.s3.dualstack.eu-central-1.amazonaws.com https://oslokommune-designsystem.s3.dualstack.eu-central-1.amazonaws.com *.hotjar.com;     connect-src 'self' ws: wss: *.oslo.kommune.localhost *.oslo.kommune.no https://einnsyn.no https://cwd9ytst8h.execute-api.eu-central-1.amazonaws.com/v1/ *.oslo.systems *.algolia.net *.appspot.com *.hotjar.io *.google-analytics.com *.maptiler.com https://ukeweb-public.s3.dualstack.eu-central-1.amazonaws.com https://geodata.bymoslo.no https://ukeweb-public.s3.eu-central-1.amazonaws.com https://geodata-4400.bymoslo.no;     font-src 'self' https://oslokommune-designsystem.s3.dualstack.eu-central-1.amazonaws.com *.hotjar.com;     object-src 'none';     base-uri 'self';     form-action 'self' *.oslo.kommune.localhost *.oslo.kommune.no;     frame-src 'self' https://www.youtube-nocookie.com https://player.vimeo.com *.appspot.com https://chat2.wave.wtf https://chat2.wave.lol https://chat2.zisson.com;     frame-ancestors 'self' https://oslo.kommune.no https://test.web.oslo.kommune.no https://oslo.kommune.localhost https://cms.web.oslo.kommune.no https://test.cms.web.oslo.kommune.no https://cms.web.oslo.kommune.localhost;",
+        "x-content-type-options": "nosniff",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 27a205ba0937fb032aa2efb66ec66a80.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P1",
+        "x-amz-cf-id": "nfZTpoSykQ0vtW7QkQdW881qdkQJRIsE3lRLzT4C6TwrUUpq2S7hnQ=="
+      },
+      "content_b64": "eyJwYXJhbXMiOnsic3RyZWV0IjoiTsOla2t2ZXMgdmVpIiwibnVtYmVyIjoiNSIsImxldHRlciI6bnVsbCwic3RyZWV0X2lkIjoiMTUyODAifSwicmVzdWx0IjpbeyJMb3BlbnVtbWVyIjoiMDMwMTAwMTQwMDAzNjAwMDAwMDAwMDEiLCJHYXRlbmF2biI6Ik7DhUtLVkVTIFZFSSIsIkdhdGVrb2RlIjoxNTI4MCwiSHVzbnVtbWVyIjoxLCJCb2tzdGF2IjoiIiwiSGVudGVQdW5rdHMiOlt7IklkIjozODE3NSwiTmF2biI6IiIsIkdhdGVuYXZuIjoiTsOFS0tWRVMgVkVJIiwiR2F0ZWtvZGUiOjE1MjgwLCJIdXNudW1tZXIiOjMsIkJva3N0YXYiOiIiLCJFdXJlZlgiOjYwMzA3Ni4xMSwiRXVyZWZZIjo2NjQzNTA5LjQsIldnc1giOjU5LjkxNjE2MDU4MzQ5NjA5NCwiV2dzWSI6MTAuODQzNDc3MjQ5MTQ1NTA4LCJUamVuZXN0ZXIiOlt7IlRqZW5lc3RlSWQiOjIwNjMzMSwiQW50YWxsQmVob2xkZXJlIjoyLCJCZWhvbGRlciI6eyJJZCI6MTMsIkJlc2tyaXZlbHNlIjoiQ29udGFpbmVyIG0vc3BhbHRlIiwiVm9sdW0iOjgwMDB9LCJGcmFrc2pvbiI6eyJJZCI6MywiVGVrc3QiOiJQYXBpciJ9LCJUb21tZURhdG8iOiIwOC4xMC4yMDI2IiwiSHlwcGlnaGV0Ijp7IkZha3RvciI6MTAwMDAsIlRla3N0IjoiMSBnYW5nIHByLiB1a2UifSwiVG9tbWVVa2VkYWciOiJ0b3JzZGFnIn1dfSx7IklkIjozODE3NiwiTmF2biI6IiIsIkdhdGVuYXZuIjoiTsOFS0tWRVMgVkVJIiwiR2F0ZWtvZGUiOjE1MjgwLCJIdXNudW1tZXIiOjUsIkJva3N0YXYiOiIiLCJFdXJlZlgiOjYwMjk4Ny43LCJFdXJlZlkiOjY2NDMzNzQuOCwiV2dzWCI6NTkuOTE0OTc0MjEyNjQ2NDg0LCJXZ3NZIjoxMC44NDE4MzAyNTM2MDEwNzQsIlRqZW5lc3RlciI6W3siVGplbmVzdGVJZCI6MTg3MjUxLCJBbnRhbGxCZWhvbGRlcmUiOjEsIkJlaG9sZGVyIjp7IklkIjoxMywiQmVza3JpdmVsc2UiOiJDb250YWluZXIgbS9zcGFsdGUiLCJWb2x1bSI6NjAwMH0sIkZyYWtzam9uIjp7IklkIjozLCJUZWtzdCI6IlBhcGlyIn0sIlRvbW1lRGF0byI6IjA4LjEwLjIwMjYiLCJIeXBwaWdoZXQiOnsiRmFrdG9yIjoxMDAwMCwiVGVrc3QiOiIxIGdhbmcgcHIuIHVrZSJ9LCJUb21tZVVrZWRhZyI6InRvcnNkYWcifV19LHsiSWQiOjgxNjE2LCJOYXZuIjoiS3JvayAvIGxpZnQiLCJHYXRlbmF2biI6Ik7DhUtLVkVTIFZFSSIsIkdhdGVrb2RlIjoxNTI4MCwiSHVzbnVtbWVyIjo1LCJCb2tzdGF2IjoiIiwiRXVyZWZYIjo2MDI5OTAuOCwiRXVyZWZZIjo2NjQzMzgwLjQsIldnc1giOjU5LjkxNTAyMzgwMzcxMDk0LCJXZ3NZIjoxMC44NDE4ODkzODE0MDg2OTEsIlRqZW5lc3RlciI6W3siVGplbmVzdGVJZCI6MjE0NzY5LCJBbnRhbGxCZWhvbGRlcmUiOjEsIkJlaG9sZGVyIjp7IklkIjoyMSwiQmVza3JpdmVsc2UiOiJMaWZ0Jktyb2sgMSB4IGtvbXByaW1lcmluZyIsIlZvbHVtIjoyMDAwMH0sIkZyYWtzam9uIjp7IklkIjo0LCJUZWtzdCI6IlJlc3RhdmZhbGwifSwiVG9tbWVEYXRvIjoiMDYuMTAuMjAyNiIsIkh5cHBpZ2hldCI6eyJGYWt0b3IiOjEwMDAwLCJUZWtzdCI6IjEgZ2FuZyBwci4gdWtlIn0sIlRvbW1lVWtlZGFnIjoidGlyc2RhZyJ9XX1dfV19"
+    }
+  ]
+}
