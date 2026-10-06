@@ -17,6 +17,7 @@ from bs4.element import Tag
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.transformers import RowTransformer, label_cleaner
 
 API_URLS = {
@@ -26,12 +27,22 @@ API_URLS = {
 }
 
 
+def _api_url(council: str) -> str:
+    """The search URL of ``council``; an unknown name lists the valid ones."""
+    try:
+        return API_URLS[council]
+    except KeyError:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "council", council, list(API_URLS)
+        ) from None
+
+
 def retriever(council: str | None = None) -> retrievers.Request:
     """The search POST for ``council``, or for the source's ``council`` param."""
     return retrievers.Request(
-        (lambda **_: API_URLS[council])
+        (lambda **_: _api_url(council))
         if council
-        else lambda council, **_: API_URLS[council],
+        else lambda council, **_: _api_url(council),
         method="POST",
         data=lambda uprn, **_: {
             "alAddrsel": uprn,
@@ -44,7 +55,9 @@ def retriever(council: str | None = None) -> retrievers.Request:
     )
 
 
-PARSE = parsers.HtmlParser("table tr", require=["table"])
+# No ``require``: an unknown UPRN answers with a page without the results table,
+# which has to surface as "no collections" (RAISE_ON_EMPTY), not a shape error.
+PARSE = parsers.HtmlParser("table tr")
 
 
 def rows(records: Iterable[Tag], source=None) -> Iterable[tuple[str, str]]:

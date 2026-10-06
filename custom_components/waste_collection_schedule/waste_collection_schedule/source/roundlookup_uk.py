@@ -44,6 +44,11 @@ class Source(BaseSource):
         "Wychavon: 10095592085": {"uprn": 10095592085, "council": "Wychavon"},
     }
 
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown council": {"uprn": 100120597618, "council": "Nowhere"},
+        "Unknown UPRN": {"uprn": 1, "council": "Malvern Hills"},
+    }
+
     PARAMS = (uprn(), dropdown("council", list(RoundLookup.API_URLS), label="Council"))
 
     WASTE_TYPES: ClassVar[list] = RoundLookup.WASTE_TYPES

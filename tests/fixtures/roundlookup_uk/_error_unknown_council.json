@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-06",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'council' with the value 'Nowhere', you may want to use one of the following: ['Malvern Hills', 'Wychavon', 'Worcester City']"
+  }
+}
