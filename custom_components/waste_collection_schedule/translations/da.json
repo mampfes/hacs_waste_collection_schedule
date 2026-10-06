@@ -7304,11 +7304,18 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
-          "values": "Values"
+          "city": "By",
+          "municipality": "Kommune",
+          "split_bins": "Split Bins",
+          "street": "Gade",
+          "values": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn",
+          "values": "Dit husnummer"
         }
       },
       "reconfigure_affaldonline_dk": {
@@ -7316,10 +7323,18 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
-          "values": "Values"
+          "city": "By",
+          "municipality": "Kommune",
+          "split_bins": "Split Bins",
+          "street": "Gade",
+          "values": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "street": "Dit gadenavn",
+          "values": "Dit husnummer"
+        }
       },
       "args_kalundborg_dk": {
         "title": "Konfigurer Kilde",
