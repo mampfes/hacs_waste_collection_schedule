@@ -13834,6 +13834,31 @@
           "strasse": "Dit gadenavn"
         }
       },
+      "args_stadt_bad_orb_de": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "pois": "Pois",
+          "strasse": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "strasse": "Dit gadenavn"
+        }
+      },
+      "reconfigure_stadt_bad_orb_de": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "pois": "Pois",
+          "strasse": "Gade"
+        },
+        "data_description": {
+          "strasse": "Dit gadenavn"
+        }
+      },
       "args_kwu_de": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

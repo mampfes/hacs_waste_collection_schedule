@@ -13929,6 +13929,31 @@
           "strasse": "Le nom de votre rue."
         }
       },
+      "args_stadt_bad_orb_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "pois": "Pois",
+          "strasse": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "strasse": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_stadt_bad_orb_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "pois": "Pois",
+          "strasse": "Rue"
+        },
+        "data_description": {
+          "strasse": "Le nom de votre rue."
+        }
+      },
       "args_kwu_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

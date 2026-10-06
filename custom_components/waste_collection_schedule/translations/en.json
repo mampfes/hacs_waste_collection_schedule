@@ -14121,6 +14121,31 @@
           "strasse": "Your street name."
         }
       },
+      "args_stadt_bad_orb_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pois": "POIS",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "strasse": "Your street name."
+        }
+      },
+      "reconfigure_stadt_bad_orb_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pois": "POIS",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "strasse": "Your street name."
+        }
+      },
       "args_kwu_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

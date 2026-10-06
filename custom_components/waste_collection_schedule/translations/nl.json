@@ -13834,6 +13834,31 @@
           "strasse": "Uw straatnaam."
         }
       },
+      "args_stadt_bad_orb_de": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "pois": "Pois",
+          "strasse": "Straat"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "strasse": "Uw straatnaam."
+        }
+      },
+      "reconfigure_stadt_bad_orb_de": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "pois": "Pois",
+          "strasse": "Straat"
+        },
+        "data_description": {
+          "strasse": "Uw straatnaam."
+        }
+      },
       "args_kwu_de": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

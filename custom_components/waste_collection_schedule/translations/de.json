@@ -13950,6 +13950,31 @@
           "strasse": "Ihr Straßenname."
         }
       },
+      "args_stadt_bad_orb_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "pois": "Pois",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "strasse": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_stadt_bad_orb_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "pois": "Pois",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "strasse": "Ihr Straßenname."
+        }
+      },
       "args_kwu_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

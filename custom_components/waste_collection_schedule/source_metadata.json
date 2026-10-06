@@ -3093,6 +3093,14 @@
     },
     "urls": {}
   },
+  "stadt_bad_orb_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_bad_orb_de.md",
+    "howto": {
+      "de": "Geben Sie Ihre Straße wie im Abfalltourenmodul auf stadt-bad-orb.de ein, oder den `pois`-Wert aus der URL nach Auswahl Ihrer Straße (z.B. 3157.194).",
+      "en": "Enter your street as listed in the Abfalltourenmodul on stadt-bad-orb.de, or the `pois` value from the page's URL after selecting your street (e.g. 3157.194)."
+    },
+    "urls": {}
+  },
   "kwu_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwu_de.md",
     "howto": {},
