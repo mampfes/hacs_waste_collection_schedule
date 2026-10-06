@@ -84,8 +84,10 @@
           "f_abfallarten": "Types de déchets",
           "hpid": "ID de la page d'accueil",
           "key": "Clé API",
+          "municipality": "Commune",
           "ort": "Quartier",
           "realmid": "ID du domaine",
+          "split_bins": "Diviser les bacs en fractions",
           "wasteTypes": "Types de déchets"
         },
         "data_description": {

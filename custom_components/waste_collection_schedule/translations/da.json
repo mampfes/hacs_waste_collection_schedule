@@ -84,8 +84,10 @@
           "f_abfallarten": "Affaldstyper",
           "hpid": "Homepage ID",
           "key": "API Nøgle",
+          "municipality": "Kommune",
           "ort": "Distrikt",
           "realmid": "Realm ID",
+          "split_bins": "Opdel beholdere i fraktioner",
           "wasteTypes": "Affaldstyper"
         },
         "data_description": {

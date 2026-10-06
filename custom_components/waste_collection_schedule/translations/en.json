@@ -84,8 +84,10 @@
           "f_abfallarten": "Waste Types",
           "hpid": "Homepage ID",
           "key": "API Key",
+          "municipality": "Municipality",
           "ort": "District",
           "realmid": "Realm ID",
+          "split_bins": "Split Bins Into Fractions",
           "wasteTypes": "Waste Types"
         },
         "data_description": {

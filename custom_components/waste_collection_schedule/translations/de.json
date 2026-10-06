@@ -84,8 +84,10 @@
           "f_abfallarten": "Abfallarten",
           "hpid": "Homepage-ID",
           "key": "API-Schlüssel",
+          "municipality": "Gemeinde",
           "ort": "Ortsteil",
           "realmid": "Realm-ID",
+          "split_bins": "Behälter in Fraktionen aufteilen",
           "wasteTypes": "Abfallarten"
         },
         "data_description": {
