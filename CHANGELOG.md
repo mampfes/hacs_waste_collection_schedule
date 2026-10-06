@@ -4,6 +4,77 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.6] - 2026-10-06
+
+This is a pre-release (beta) that adds about 190 more legacy sources migrated to the BaseSource pipeline since beta.5, bringing roughly 70% of all sources (about 713 of 1009) onto it. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. Stable installs are unaffected until 3.0.0 ships.
+
+**Breaking changes: please read before updating.**
+
+- **Waste-type labels have changed for every migrated source** (all sources listed under "Other" below, plus those migrated in the betas). Labels are now the canonical, localised waste-type names instead of the provider's own strings. Check any automation, template, customisation or card that compares an exact label string.
+- `gotland_se`: the `uprn` parameter is now `building_id`. YAML configs must switch the key; existing UI entries need to be reconfigured (#7619).
+- `mamirolle_info`: the dummy `_` parameter is gone, and `cheshire_east_gov_uk`: the `verify` parameter is gone; configs that still pass them may fail (#7650, #7670).
+- `affaldonline_dk` now uses a city, street and house-number cascade in the config flow (the house-number parameter is still called `values`); see the entry below (#7519).
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@alaneurich, @barrelcollector, @chmsant, @developerjillur, @fanfounet, @kamaradclimber, @MissStabby, @oneandonlydean, @rbiddulph and @tkgalk. 🎉
+Thanks as well to our returning contributors (@AtomBrake, @bbr111, @dmkjr, @shaguarger, @superrob) for the fixes, sources and migrations below.
+
+### Deprecated
+
+- deprecated byron_nsw_gov_au in favour of the shared recyclecoach_com source (`project_id: 592`, `district_id: BYSC`); the old source keeps working, logs a one-time warning, and is tracked in `DEPRECATIONS.md` (#7669)
+
+### Added Sources
+
+- added Three Rivers District Council (threerivers_gov_uk), UK (#7644)
+- added Miami-Dade County (miamidade_gov), US, ported to the pipeline from the original contribution (thanks @barrelcollector) (#7646)
+- added Hanahan, SC (cityofhanahan_com), US (thanks @dmkjr) (#7638)
+- added Kostak (kostak_si), Krško, Slovenia (#7666)
+- added Trafford Council (trafford_gov_uk), UK, with a new reusable PDF layout parser (thanks @rbiddulph) (#7676)
+- added Chartres Métropole (chartres_metropole_fr), France (thanks @kamaradclimber) (#7684)
+- added La Rochelle agglomeration (larochelle_fr), France (thanks @fanfounet) (#7677)
+- added Kurstadt Bad Orb (stadt_bad_orb_de), Germany (thanks @alaneurich) (#7700)
+- added Lincoln, CA (lincoln_ca_us), US (thanks @chmsant) (#7691)
+- added CA Sophia Antipolis (CASA) to publidata_fr, France (#7622)
+- added Sigtuna (Sivab) to avfallsapp_se, Sweden (#7649)
+- added 11 more providers to avfallsapp_se: Åtvidaberg, Borås, Finspång, Håbo, Kil, Kinda, Knivsta, Kungsbacka, Vallentuna, Dala Vatten och Avfall and Vafab Miljö (#7655)
+- added Byron Shire Council to recyclecoach_com, Australia (#7669)
+- added the waste types Metal, Plastic and Food and drink cartons, with translations (thanks @superrob) (#7604)
+- finalized the Dutch (`nl`) translations (thanks @shaguarger) (#7633)
+
+### Fixed Sources
+
+- fixed gotland_se: renamed the `uprn` parameter to `building_id` so the config flow no longer shows the UK UPRN help text (breaking: see above) (#7619)
+- fixed app_abfallplus_de: look for the house number in every street entry of that name (thanks @developerjillur) (port of #7686) (#7688)
+- fixed delight_system_com: resolve areas level by level on multi-level area lists (thanks @developerjillur) (port of #7692) (#7704)
+- fixed glasgow_gov_uk: fetch two future months of collections (thanks @tkgalk) (port of #7701) (#7703)
+- fixed avfallsapp_se: correct the API host for Sigtuna (thanks @MissStabby) (port of #7694) (#7699)
+- fixed rotorua_lakes_council_nz: read the new FOGO schedule from layer 160 (thanks @oneandonlydean) (#7639)
+- fixed lismore_city_nsw_gov_au: use the council's WhatBinDay website widget instead of the app API, which returned the wrong days for every address (#7625)
+- fixed abfall_io_graphql: parse the comma-separated `wasteTypes` string sent by the UI (port of #7653) (#7654)
+- fixed ab_peine_de: make `strasse` optional again so `ort` alone works (#7665)
+- fixed iapp_itouchvision_com: skip rows with an unparsable date instead of failing the whole fetch (port of #7636) (#7637)
+- fixed waste-type labels left unresolved for 9 pipeline sources (awn_de, regioentsorgung_de, frankenberg_de, rh_entsorgung_de, data_bs_ch, muellmax_de, ecoharmonogram_pl, awg_wuppertal_de, app_abfallplus_de), added German label aliases, and fixed nuernberger_land_de to emit one hazardous-waste event per Giftmobil stop (#7668)
+- fixed the config flow: supply the `{url_*}` placeholders for pipeline sources, so help texts (for example the UPRN hint on 134 UK sources) render in the Home Assistant frontend (thanks @AtomBrake) (#7614)
+
+### Other
+
+- migrated 193 more legacy sources to the BaseSource pipeline, each with recorded cassettes and canonical waste-type labels (breaking for type-based filters, see above):
+  - 16 simple sources: ambervalley_gov_uk, wsz_moosburg_at, glor_no, sysav_se, minrenovasjon_no, myutility_winnipeg_ca, repentigny_ca, vasyd_se, bury_gov_uk, thanet_gov_uk, greater_cambridge_waste_org, basildon_gov_uk, dundeecity_gov_uk, recycleapp_be, siunet_it, prezero_bielsko_pl (#7632)
+  - 2 SOAP round-calendar sources on a new shared WebAspxCollections platform: midulstercouncil_org, midandeastantrim_gov_uk; their dates were one day early and are now correct (#7647)
+  - 14 sources, including a new shared Environz platform for dunedin_govt_nz and codc_govt_nz (#7650)
+  - 10 sources: carmarthenshire_gov_wales, murray_wa_gov_au, moray_gov_uk, westsuffolk_gov_uk, west_lindsey_gov_uk, horsham_gov_uk, circulus_nl, renfrewshire_gov_uk, haringey_gov_uk, basingstoke_gov_uk (#7656)
+  - 20 sources (#7663), 18 sources including the new shared TribeEvents, IWebRegular and FccEnvironment platforms (#7667), 19 sources (#7669), 15 sources (#7670), 16 sources (#7671)
+  - ahe_de (#7672), monheim_de (#7673), and 5 German sources: heimat_info_de, ajl_mbh_de, zvo_com, geilenkirchen_de, muellmann_app_de (#7674)
+  - 30 sources in one batch (#7687) and 5 more: koma_pl, him_as, gojer_at, asm_pv_it, muellabfuhr_de (#7689)
+  - 10 sources: gargzdusvara_eu, westlancs_gov_uk, frwa_com_au, lodz_pl, hassleholm_miljo_se, ashfield_gov_uk, dacorum_gov_uk, avfallsor_no, was_wolfsburg_de, oslokommune_no (#7696)
+  - roundlookup_uk and its deprecated wrapper wychavon_gov_uk, on a new shared RoundLookup platform; the runtime deprecation warning of wychavon_gov_uk is gone (#7698)
+  - 9 sources: hra_no, fev_se, inverclyde_gov_uk, cairns_qld_gov_au, isontinambiente_it, maur_ch, straatbeeld_online, kopavogur_is, oadby_wigston_gov_uk (#7702)
+- reworked affaldonline_dk on the BaseSource pipeline with a shared AffaldOnlineDk service and a city, street, house-number cascade; collections keep the provider's per-bin naming, with an optional `split_bins` (thanks @superrob) (#7519)
+- changed gemeinde24_at and cmcitymedia_de to use `cascading_select` in the config flow; config keys are unchanged (#7626, #7627)
+- removed Pillow from the manifest requirements, since Home Assistant provides it (#7664)
+- docs: new sources must use the BaseSource pipeline (#7642)
+- chore: devcontainer Node.js update and quoting fixes in the Claude agent descriptions (#7630, #7631)
+
 ## [3.0.0-beta.5] - 2026-09-27
 
 This is the biggest BaseSource/pipeline batch yet: 25 PRs migrate roughly 235 more legacy sources, and the project has now crossed the halfway mark — 514 of 1000 sources (51.4%) run on the pipeline. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. This is still an opt-in pre-release; stable installs are unaffected until 3.0.0 ships. **Every migration below changes that source's waste-type labels to the canonical, localised names** — check any automation, template or customisation that matches an exact label string.
