@@ -70,8 +70,4 @@ class Source(BaseSource):
     # "Biotonne", "Gelber Sack", "Papiertonne", "Restmülltonne", "Sondermüll"
     # and "Sperrmüll" already auto-resolve against the shared vocabulary;
     # "Weihnachtsbaum" does not, so it needs an explicit map.
-    transform = ICSTransformer(
-        type_value_map={
-            "Weihnachtsbaum": wt.GARDEN_WASTE,
-        }
-    )
+    transform = ICSTransformer()
