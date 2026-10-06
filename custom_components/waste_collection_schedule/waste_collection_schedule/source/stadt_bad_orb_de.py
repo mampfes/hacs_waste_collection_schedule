@@ -67,7 +67,7 @@ class Source(BaseSource):
 
     retrieve = SiteparkIESRetriever(_BASE_URL, refid="3157.1", pois="pois")
     parse = parsers.IcsParser()
-    # "Biotonne", "Gelber Sack", "Papiertonne", "Restmülltonne", "Sondermüll"
-    # and "Sperrmüll" already auto-resolve against the shared vocabulary;
-    # "Weihnachtsbaum" does not, so it needs an explicit map.
+    # "Biotonne", "Gelber Sack", "Papiertonne", "Restmülltonne", "Sondermüll",
+    # "Sperrmüll" and "Weihnachtsbaum" all auto-resolve against the shared
+    # vocabulary, so no explicit type_value_map is needed.
     transform = ICSTransformer()
