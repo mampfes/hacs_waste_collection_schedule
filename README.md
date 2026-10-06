@@ -2266,6 +2266,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Krimmensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
 - [Kupferberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kupferberg/abfallkalender
+- [Kurstadt Bad Orb](/doc/source/stadt_bad_orb_de.md) / stadt-bad-orb.de
 - [Kuventhal](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
 - [Lagershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de

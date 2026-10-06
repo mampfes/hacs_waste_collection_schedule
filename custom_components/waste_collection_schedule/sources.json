@@ -16320,6 +16320,12 @@
       "id": "heimat_info_de"
     },
     {
+      "title": "Kurstadt Bad Orb",
+      "module": "stadt_bad_orb_de",
+      "default_params": {},
+      "id": "stadt_bad_orb_de"
+    },
+    {
       "title": "Kuventhal",
       "module": "nerdbridge_de",
       "default_params": {
