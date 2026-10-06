@@ -72,7 +72,7 @@ class Source(BaseSource):
 
     TEST_CASES: ClassVar[dict] = {
         "11 Maun View Gardens, Sutton-in-Ashfield": {"uprn": 10001336299},
-        "101 Main Street, Huthwaite": {"uprn": "100031253415"},
+        "101 Main Street, Huthwaite": {"post_code": "NG17 2LQ", "uprn": "100031253415"},
         "1 Acacia Avenue, Kirkby-in-Ashfield": {"post_code": "NG17 9BH", "number": "1"},
         "Council Offices, Kirkby-in-Ashfield": {
             "post_code": "NG178ZA",

@@ -138,7 +138,6 @@ class Source(BaseSource):
             "Blue bin": wt.RECYCLABLES,
             "Blue bin and kerbside caddy": wt.RECYCLABLES,
             "Green bin": wt.GARDEN_WASTE,
-            "Kerbside caddy": wt.FOOD_WASTE,
         },
         parse_date=date_parsers.for_format("%a, %d %b %Y"),
     )

@@ -1,4 +1,5 @@
 import re
+from datetime import date
 from typing import ClassVar, final
 
 from waste_collection_schedule import parsers, retrievers
@@ -6,7 +7,7 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.preprocessors import Compose, ExplodeList, RowFilter
 from waste_collection_schedule.transformers import JsonTransformer
 
 _API = "https://avfallsor.no/wp-json"
@@ -14,7 +15,7 @@ _API = "https://avfallsor.no/wp-json"
 # The provider's own fraction names (Norwegian).
 _TYPE_MAP = {
     "Restavfall": wt.GENERAL_WASTE,
-    "Bioavfall": wt.FOOD_WASTE,
+    "Bioavfall": wt.ORGANIC,
     "Papp og papir": wt.PAPER,
     # Plastic packaging is a round of its own, so it maps to PLASTIC.
     "Plastemballasje": wt.PLASTIC,
@@ -31,6 +32,11 @@ def _split_round(record, source) -> list:
             {**record, "fraksjon": "Metallemballasje"},
         ]
     return [record]
+
+
+def _upcoming(record, source) -> bool:
+    """The calendar also lists days already past; keep today and later."""
+    return date.fromisoformat(str(record["dato"])[:10]) >= date.today()
 
 
 def _normalize(text: str) -> str:
@@ -68,7 +74,7 @@ class Source(BaseSource):
 
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
-        wt.FOOD_WASTE,
+        wt.ORGANIC,
         wt.PAPER,
         wt.PLASTIC,
         wt.GLASS,
@@ -108,7 +114,9 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser("collections")
 
-    preprocess = Compose(ExplodeList("items"), ExplodeList(_split_round))
+    preprocess = Compose(
+        ExplodeList("items"), ExplodeList(_split_round), RowFilter(_upcoming)
+    )
 
     transform = JsonTransformer(
         date_key="dato",

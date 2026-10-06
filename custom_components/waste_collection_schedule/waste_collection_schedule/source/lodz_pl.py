@@ -5,7 +5,7 @@ from typing import Any, ClassVar, final
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import house_number, integer, street
+from waste_collection_schedule.config_params import dropdown, house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import JsonTransformer
@@ -55,24 +55,24 @@ class Source(BaseSource):
         "Podchorążych 1 (Letniskowa)": {
             "street": "Podchorążych",
             "house_number": "1",
-            "building_type": 3,
+            "building_type": "3",
         },
         "Piotrkowska 104 (Wielorodzinna)": {
             "street": "Piotrkowska",
             "house_number": "104",
-            "building_type": 2,
+            "building_type": "2",
         },
         "Partyzantów 1 (Jednorodzinna)": {
             "street": "Partyzantów",
             "house_number": "1",
-            "building_type": 1,
+            "building_type": "1",
         },
     }
 
     PARAMS = (
         street("street"),
         house_number("house_number"),
-        integer("building_type", "Building type", default=1),
+        dropdown("building_type", ["1", "2", "3"], "Building type", default="1"),
     )
 
     HOWTO: ClassVar[dict] = {
