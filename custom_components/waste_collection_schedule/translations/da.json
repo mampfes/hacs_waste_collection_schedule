@@ -32362,6 +32362,29 @@
           "address": "Din fulde adresse"
         }
       },
+      "args_lincoln_ca_us": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_lincoln_ca_us": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
+      },
       "args_marysville_wa_us": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

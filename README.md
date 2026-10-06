@@ -5021,6 +5021,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
 - [Kansas City, MO](/doc/source/kansas_city_mo_us.md) / kcmo.gov/city-hall/trash
+- [Lincoln, CA](/doc/source/lincoln_ca_us.md) / lincolnca.gov/recycling
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
 - [Miami-Dade County](/doc/source/miamidade_gov.md) / miamidade.gov/global/solidwaste/home.page
