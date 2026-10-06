@@ -306,6 +306,7 @@ GARDEN_WASTE = WasteType(
             "laubsäcke",
             "abfuhr laubsäcke",
             "weihnachtsbäume",
+            "weihnachtsbaum",
             "tannenbäume",
             "christbäume",
             "sammlung tannenbäume",
