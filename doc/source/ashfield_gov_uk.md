@@ -1,61 +1,93 @@
 # Ashfield District Council
 
-Support for schedules provided by [Ashfield District Council](https://www.ashfield.gov.uk/), serving Ashfield district in Nottinghshire, UK.
+Support for schedules provided by [Ashfield District Council](https://www.ashfield.gov.uk).
+
+Source for ashfield.gov.uk, Ashfield District Council, UK
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ashfield_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
+```
+
+### Using post_code and number
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ashfield_gov_uk
+      args:
         post_code: POST_CODE
-        name: HOUSE_NAME
-        number: HOUSE_NUMBER
+        number: NUMBER
+```
+
+### Using post_code and name
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ashfield_gov_uk
+      args:
+        post_code: POST_CODE
+        name: NAME
 ```
 
 ### Configuration Variables
 
-**uprn**<br>
-*(string) (optional)*
+**uprn**  
+*(string) (alternative)*
 
-This is required if you do not supply any other options. (Using this removes the need to do an address look up web request)
+**post_code**  
+*(string) (alternative)*
 
-**name**<br>
-*(string) (optional)*
+**number**  
+*(string) (alternative)*
 
-This is required if you supply a Postcode and do not have a house number.
+**name**  
+*(string) (alternative)*
 
-**number**<br>
-*(string) (optional)*
+Provide one of: `uprn` or `post_code` + `number` or `post_code` + `name`.
 
-This is required if you supply a Postcode and have a house number.
+## Example
 
-**post_code**<br>
-*(string) (optional)*
+### Using uprn
 
-This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
-
-#### How to find your `UPRN`
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-Otherwise you can inspect the web requests the Ashfield District Council website makes when entering in your postcode and then selecting your address.
-
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ashfield_gov_uk
       args:
-        uprn: 100032105121
+        uprn: 10001336299
 ```
 
-## Example using Address lookup
+### Using post_code and number
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: ashfield_gov_uk
       args:
-        post_code: "NG17 8ZA"
-        name: "Council Offices"
+        post_code: NG17 9BH
+        number: '1'
 ```
+
+### Using post_code and name
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ashfield_gov_uk
+      args:
+        post_code: NG178ZA
+        name: COUNCIL OFFICES
+```
+
+## How to get the source arguments
+
+Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and either your house number (`number`) or your building name (`name`).

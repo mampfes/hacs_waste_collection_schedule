@@ -22,7 +22,7 @@
   "frwa_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frwa_com_au.md",
     "howto": {
-      "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed."
+      "en": "Visit [FRWA collection calendar](https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads) and search for your street. Use the name/number, street name and district name as they appear when your collection schedule is being displayed."
     },
     "urls": {}
   },
@@ -3744,10 +3744,11 @@
   },
   "was_wolfsburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/was_wolfsburg_de.md",
-    "howto": {},
-    "urls": {
-      "url_abfuhrtermine_waswob_de": "https://abfuhrtermine.waswob.de/"
-    }
+    "howto": {
+      "de": "Straßenname und Hausnummer wie auf https://abfuhrtermine.waswob.de/ angegeben.",
+      "en": "Enter the street name and house number exactly as listed on https://abfuhrtermine.waswob.de/."
+    },
+    "urls": {}
   },
   "ics_zah_hildesheim_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zah_hildesheim_de.md",
@@ -4092,10 +4093,10 @@
   },
   "gargzdusvara_eu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gargzdusvara_eu.md",
-    "howto": {},
-    "urls": {
-      "url_www_gargzdusvara_eu_atlieku_isvezimo_grafikai": "https://www.gargzdusvara.eu/atlieku-isvezimo-grafikai/"
-    }
+    "howto": {
+      "en": "Enter the exact location/street-group name as shown in the 'Pasirinkite vietovę' (select location) dropdown on https://www.gargzdusvara.eu/atlieku-isvezimo-grafikai/ after picking any waste type first (e.g. 'Klemiškės I k.'). It must match exactly, including Lithuanian diacritics."
+    },
+    "urls": {}
   },
   "grafikai_svara_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md",
@@ -4429,7 +4430,9 @@
   },
   "avfallsor_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/avfallsor_no.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as shown on [avfallsor.no](https://avfallsor.no/) (Finn hentedag), e.g. 'Auglandslia 1, Kristiansand'. The city may be left out."
+    },
     "urls": {}
   },
   "bir_no": {
@@ -4495,7 +4498,9 @@
   },
   "oslokommune_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oslokommune_no.md",
-    "howto": {},
+    "howto": {
+      "en": "street_id is the address code (adressekode) of the street. Find it with https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012 (the adressekode field). point_id is optional: set it to a waste point Id from the oslo.kommune.no response to show only that collection point."
+    },
     "urls": {}
   },
   "remidt_no": {
@@ -4732,7 +4737,9 @@
   },
   "lodz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lodz_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name and house number as on kartalodzianina.pl (e.g. 'Piotrkowska' and '104'). building_type is 1 for a single-family house (default), 2 for a multi-family building or 3 for a summer house."
+    },
     "urls": {}
   },
   "amarsul_pt": {
@@ -4927,7 +4934,9 @@
   },
   "hassleholm_miljo_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hassleholm_miljo_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Open https://hassleholmmiljo.se/privat/sophamtning/tomningskalender, search for your address and select it. Copy the `alias` value from the URL (`?alias=hmab-...`), for example `hmab-tyringevaegen-24-finja`."
+    },
     "urls": {}
   },
   "juneavfall_se": {
@@ -5458,7 +5467,9 @@
   },
   "ashfield_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ashfield_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)) OR your postcode and either your house number (`number`) or your building name (`name`)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5917,7 +5928,9 @@
   },
   "dacorum_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dacorum_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your UPRN. Find your UPRN at https://www.findmyaddress.co.uk/ or by searching for your address on the council's [bin collections page](https://webapps.dacorum.gov.uk/bincollections/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

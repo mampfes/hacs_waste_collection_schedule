@@ -1,6 +1,8 @@
 # Łódź
 
-Support for schedules provided by [Miasto Łódź](https://uml.lodz.pl/) via the [Karta Łodzianina](https://kartalodzianina.pl/wywoz-odpadow) portal.
+Support for schedules provided by [Łódź](https://kartalodzianina.pl).
+
+Source for Łódź city garbage collection
 
 ## Configuration via configuration.yaml
 
@@ -9,58 +11,34 @@ waste_collection_schedule:
   sources:
     - name: lodz_pl
       args:
-        street: "Piotrkowska"
-        house_number: "104"
-        building_type: 2
+        street: STREET
+        house_number: HOUSE_NUMBER
+        building_type: BUILDING_TYPE
 ```
 
 ### Configuration Variables
 
-**street** *(string) (required)* Name of the street (e.g., `"Piotrkowska"`, `"Podchorążych"`).
+**street**  
+*(string) (required)*
 
-**house_number** *(string) (required)* House number, optionally including a letter (e.g., `"104"`, `"2a"`).
+**house_number**  
+*(string) (required)*
 
-**building_type** *(int) (optional)* Type of the building. Allowed values:
-* `1` - Single-family house (jednorodzinna) *(Default)*
-* `2` - Multi-family building / Block of flats (wielorodzinna)
-* `3` - Summer house (letniskowa)
+**building_type**  
+*(string) (optional)*
 
-## Examples
+## Example
 
-### Single-family house (Default building type)
 ```yaml
 waste_collection_schedule:
   sources:
     - name: lodz_pl
       args:
-        street: "Partyzantów"
-        house_number: "1"
-```
-
-### Multi-family building
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: lodz_pl
-      args:
-        street: "Piotrkowska"
-        house_number: "104"
-        building_type: 2
-```
-
-### Summer house
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: lodz_pl
-      args:
-        street: "Podchorążych"
-        house_number: "1"
-        building_type: 3
+        street: "Podchor\u0105\u017Cych"
+        house_number: '1'
+        building_type: '3'
 ```
 
 ## How to get the source arguments
 
-You need to provide your exact street name and house number as registered in the official city database.
-
-You can verify your address and the corresponding building type by accessing the official [Karta Łodzianina Garbage Collection Schedule](https://kartalodzianina.pl/wywoz-odpadow). Simply fill out the search form on their website to ensure your `street`, `house_number`, and `building_type` parameters match the system records.
+Enter the street name and house number as on kartalodzianina.pl (e.g. 'Piotrkowska' and '104'). building_type is 1 for a single-family house (default), 2 for a multi-family building or 3 for a summer house.

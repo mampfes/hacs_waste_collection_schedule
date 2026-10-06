@@ -1,34 +1,53 @@
 # Oslo Kommune
 
-`street_id` needs to be looked up at kartverket:
+Support for schedules provided by [Oslo Kommune](https://www.oslo.kommune.no).
 
-- Web UI: https://ws.geonorge.no/adresser/v1/#/default/get_sok
-- API: https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012
+Oslo Kommune (Norway).
 
-`street_id` is equal to `adressekode`.
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: oslokommune_no
       args:
-        street_name: ""
-        house_number: ""
-        house_letter: ""
-        street_id: ""
-        point_id: ""
+        street_name: STREET_NAME
+        house_number: HOUSE_NUMBER
+        house_letter: HOUSE_LETTER
+        street_id: STREET_ID
+        point_id: POINT_ID
 ```
 
-## Filter waste pickup point
+### Configuration Variables
 
-Some addresses have multiple waste pickup points available. In this case you can optionally set `point_id` to only see a specific pickup point associated with your address.
+**street_name**  
+*(string) (required)*
 
-Search your address in the web UI:
-https://www.oslo.kommune.no/avfall-og-gjenvinning/nar-hentes-avfallet/
+**house_number**  
+*(string) (required)*
 
-Scroll down to see the pickup points in a map. Note the name of the pickup point you prefer.
+**house_letter**  
+*(string) (optional)*
 
-Finding the point ID can be a bit tricky as you need to manually go to the API URL and replace the URL parameters:
-<https://www.oslo.kommune.no/xmlhttprequest.php?service=ren.search&street=Nåkkves%20Vei&number=5&street_id=15280>
+**street_id**  
+*(string) (required)*
 
-In the JSON result, you need to find the item in `HentePunkts` that corresponds with the name in the web UI and use its `Id` field as your `point_id`.
+**point_id**  
+*(string) (optional)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: oslokommune_no
+      args:
+        street_name: Olaf Ryes Plass
+        house_number: 8
+        house_letter: ''
+        street_id: 15331
+```
+
+## How to get the source arguments
+
+street_id is the address code (adressekode) of the street. Find it with https://ws.geonorge.no/adresser/v1/sok?sok=Min%20Gate%2012 (the adressekode field). point_id is optional: set it to a waste point Id from the oslo.kommune.no response to show only that collection point.

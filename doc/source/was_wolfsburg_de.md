@@ -1,6 +1,8 @@
 # Wolfsburger Abfallwirtschaft und Straßenreinigung
 
-Support for schedules provided by [WAS-Wolfsburg.de](https://was-wolfsburg.de).
+Support for schedules provided by [Wolfsburger Abfallwirtschaft und Straßenreinigung](https://was-wolfsburg.de).
+
+Source for waste collections for WAS-Wolfsburg, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -10,7 +12,7 @@ waste_collection_schedule:
     - name: was_wolfsburg_de
       args:
         street: STREET
-        number: HOUSE_NUMBER
+        number: NUMBER
 ```
 
 ### Configuration Variables
@@ -19,7 +21,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 **number**  
-*(integer) (required)*
+*(string) (required)*
 
 ## Example
 
@@ -34,9 +36,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Open [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/) and select your address. Use exactly the street name and house number offered there.
-
-| Argument | Description |
-| ----------- | ----------- |
-| street | Full street name as listed on [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/), e.g. `Bärheide`. |
-| number | House number as listed on [abfuhrtermine.waswob.de](https://abfuhrtermine.waswob.de/), e.g. `1`. |
+Enter the street name and house number exactly as listed on https://abfuhrtermine.waswob.de/.
