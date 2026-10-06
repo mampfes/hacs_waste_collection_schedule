@@ -44,6 +44,8 @@ ICON_MAP = {
     "szk": Icons.GLASS_COLORED,
     "metal": Icons.METAL,
     "wielkogabaryt": Icons.BULKY,
+    "zielone": Icons.GARDEN,
+    "popió": Icons.NON_COMBUSTIBLE,
 }
 
 EXTRA_INFO = [
@@ -185,7 +187,7 @@ class Source:
             "street": self._street,
             "house": self._house,
             "city": self._city,
-            "types": "mixed,segregated,bio,bulky",
+            "types": "mixed,segregated,bio,bulky,green,ash",
         }
         if self._building_type:
             ics_params["building_type"] = self._building_type
