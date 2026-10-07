@@ -3,7 +3,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.config_params import house_number, postcode, text_field
 from waste_collection_schedule.transformers import JsonTransformer
 
 
@@ -13,11 +13,8 @@ API_URL = "https://cleanprofs.jmsdev.nl/api/get-plannings-address"
 _TYPE_MAP = {
     "GFT": wt.ORGANIC,
     "RST": wt.GENERAL_WASTE,
-    "REST": wt.GENERAL_WASTE,
-    "RESTAFVAL": wt.GENERAL_WASTE,
-    "PMD": wt.RECYCLABLES,
-    "PBD": wt.RECYCLABLES,
-    "PLASTIC": wt.RECYCLABLES,
+    "Duo": wt.GENERAL_WASTE,
+    "PLC": wt.RECYCLABLES,
 }
 
 
@@ -28,13 +25,20 @@ class Source(BaseSource):
     URL = "https://www.cleanprofs.nl"
     COUNTRY = "nl"
 
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@BjornWill"]
+
     RAISE_ON_EMPTY = True
 
-    TEST_CASES: ClassVar[dict] = {"CleanProfs Wateringen": {"postcode": "2291PG", "house_number": "12"}}
+    TEST_CASES: ClassVar[dict] = {
+        "CleanProfs Wateringen": {
+            "postcode": "2291PG",
+            "house_number": "12",
+        }
+    }
 
     PARAMS = (
         postcode(),
-        text_field("house_number"),
+        house_number(),
         text_field("suffix", optional=True),
     )
 

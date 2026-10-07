@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-06",
+  "recorded_at": "2026-10-07",
   "interactions": [
     {
       "key": "GET https://cleanprofs.jmsdev.nl/api/get-plannings-address e38c11ede0",
@@ -15,7 +15,7 @@
         "transfer-encoding": "chunked",
         "connection": "keep-alive",
         "cache-control": "no-cache, private",
-        "date": "Tue, 06 Oct 2026 09:06:52 GMT",
+        "date": "Wed, 07 Oct 2026 20:02:33 GMT",
         "x-coming-soon": "0",
         "x-ratelimit-limit": "360",
         "x-ratelimit-remaining": "359",
