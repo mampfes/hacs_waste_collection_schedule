@@ -26,8 +26,8 @@ from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _SECTOR_URL_MAP: dict[str, str] = {
-    "A": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-a.ics",
-    "B": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-b.ics",
+    "A": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=2",
+    "B": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=3",
 }
 
 
@@ -72,12 +72,13 @@ class Source(BaseSource):
     parse = parsers.IcsParser(regex=r"^(.*?)\s*-\s*Sector [AB]$")
     transform = ICSTransformer(
         type_value_map={
-            "Household Waste": wt.GENERAL_WASTE,
-            "Recyclables": wt.RECYCLABLES,
-            "Organic Waste": wt.ORGANIC,
-            "Bulky Items": wt.BULKY_WASTE,
-            "Mattress/Box-Spring Collection": wt.BULKY_WASTE,
-            "Christmas Tree Collection": wt.GARDEN_WASTE,
-            "Leaf Collection": wt.GARDEN_WASTE,
+            "Matières organiques": wt.ORGANIC,
+            "Recyclage": wt.RECYCLABLES,
+            "Déchets domestiques": wt.GENERAL_WASTE,
+            "Encombrants": wt.BULKY_WASTE,
+            # Christmas tree pickup is once per year in January and arguably its own category,
+            # but we will map it to garden waste for now to match the shared vocabulary.
+            "Arbre de Noël": wt.GARDEN_WASTE,
+            "Collecte de feuilles": wt.GARDEN_WASTE,
         }
     )
