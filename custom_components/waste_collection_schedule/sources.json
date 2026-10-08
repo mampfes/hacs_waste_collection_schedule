@@ -28519,6 +28519,12 @@
       "id": "circulus_nl"
     },
     {
+      "title": "CleanProfs",
+      "module": "cleanprofs_nl",
+      "default_params": {},
+      "id": "cleanprofs_nl"
+    },
+    {
       "title": "Cyclus NV",
       "module": "hvcgroep_nl",
       "default_params": {

@@ -4209,6 +4209,14 @@
     "howto": {},
     "urls": {}
   },
+  "cleanprofs_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cleanprofs_nl.md",
+    "howto": {
+      "en": "Enter the postcode, house number and optional house-number addition of an address registered with CleanProfs.",
+      "nl": "Vul de postcode, het huisnummer en eventueel de toevoeging in van een adres dat bij CleanProfs geregistreerd is."
+    },
+    "urls": {}
+  },
   "ics_edam_volendam_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/edam_volendam_nl.md",
     "howto": {

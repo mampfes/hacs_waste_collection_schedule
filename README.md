@@ -3931,6 +3931,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Boekel](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [BurgerPortaal](/doc/source/burgerportaal_nl.md) / 21burgerportaal.mendixcloud.com
 - [Circulus](/doc/source/circulus_nl.md) / mijn.circulus.nl
+- [CleanProfs](/doc/source/cleanprofs_nl.md) / cleanprofs.nl
 - [Cyclus NV](/doc/source/hvcgroep_nl.md) / cyclusnv.nl
 - [Dar](/doc/source/hvcgroep_nl.md) / dar.nl
 - [De Afvalapp](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
