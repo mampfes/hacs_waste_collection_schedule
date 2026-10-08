@@ -787,6 +787,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Matzendorf-Hölles",
+        "url": "https://www.matzendorf-hoelles.at",
+        "country": "at",
+    },
+    {
         "title": "Meiningen",
         "url": "https://www.meiningen.at",
         "country": "at",
