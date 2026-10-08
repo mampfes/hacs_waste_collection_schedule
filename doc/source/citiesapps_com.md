@@ -161,6 +161,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Markt Piesting-Dreistetten | [piesting.at](https://www.piesting.at) |
 | Marz | [marz.gv.at](https://www.marz.gv.at) |
 | Mattersburg | [mattersburg.gv.at](https://www.mattersburg.gv.at) |
+| Matzendorf-Hölles | [matzendorf-hoelles.at](https://www.matzendorf-hoelles.at) |
 | Meiningen | [meiningen.at](https://www.meiningen.at) |
 | Meiseldorf | [meiseldorf.gv.at](https://www.meiseldorf.gv.at) |
 | Melk | [stadt-melk.at](https://www.stadt-melk.at) |

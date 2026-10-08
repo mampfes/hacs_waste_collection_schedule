@@ -582,6 +582,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
 - [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Matzendorf-Hölles](/doc/source/citiesapps_com.md) / matzendorf-hoelles.at
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Meiningen](/doc/source/citiesapps_com.md) / meiningen.at
 - [Meiseldorf](/doc/source/citiesapps_com.md) / meiseldorf.gv.at
