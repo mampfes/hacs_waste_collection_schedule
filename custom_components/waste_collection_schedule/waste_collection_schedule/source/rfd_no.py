@@ -1,6 +1,8 @@
 import datetime
+import re
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -14,12 +16,14 @@ URL = "https://www.rfd.no"
 COUNTRY = "no"
 
 TEST_CASES = {
-    "RfD office": {
-        "address": "Grønland 1, Drammen",
+    "Bragernes Torg 13": {
+        "address": "Bragernes Torg 13, Drammen",
     }
 }
 
 API_URL = "https://www.rfd.no/_/service/com.enonic.app.rfd"
+WEBSITE_URL = "https://www.rfd.no/avfallshenting"
+SEARCH_URL = f"{WEBSITE_URL}/_/service/com.enonic.app.rfd/collectionDaySearch"
 DEFAULT_DAYS = 114
 REQUEST_TIMEOUT = 30
 
@@ -30,6 +34,32 @@ FRACTION_MAP = {
     5: "Hageavfall",
     7: "Plastemballasje",
     11: "Mat- og restavfall",
+}
+
+# Fraction names on the rfd.no schedule page, mapped to the names used for
+# the pickupDays API so sensors keep working whichever path answers.
+WEBSITE_FRACTION_MAP = {
+    "Restavfall": "Mat- og restavfall",
+    "Matavfall": "Mat- og restavfall",
+    "Papiravfall": "Papiravfall",
+    "Glass/metall": "Glass- og metallemballasje",
+    "Hageavfall": "Hageavfall",
+    "Plastemballasje": "Plastemballasje",
+}
+
+MONTHS = {
+    "januar": 1,
+    "februar": 2,
+    "mars": 3,
+    "april": 4,
+    "mai": 5,
+    "juni": 6,
+    "juli": 7,
+    "august": 8,
+    "september": 9,
+    "oktober": 10,
+    "november": 11,
+    "desember": 12,
 }
 
 ICON_MAP = {
@@ -64,6 +94,12 @@ def _normalize(value: str) -> str:
     return "".join(value.casefold().replace(".", "").replace(",", "").split())
 
 
+def _house_number(value: str) -> tuple[str, str]:
+    """Split '7', '14A', '39 A og B' or '9, Idrettshall' into number and letter."""
+    match = re.match(r"\s*(\d+)\s*([a-zæøå]?)(?![a-zæøå])", value.casefold())
+    return (match.group(1), match.group(2)) if match else ("", "")
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address
@@ -93,9 +129,9 @@ class Source:
 
         fetch_days = data.get("fetchDays", [])
         if not fetch_days:
-            raise SourceArgumentNotFound(
-                "address", self._address, "No collection schedule found"
-            )
+            # The pickupDays API has returned no days for any address since
+            # autumn 2026, while the schedule page on rfd.no still lists them.
+            return self._fetch_from_website(address)
 
         entries = []
         for item in fetch_days:
@@ -157,3 +193,69 @@ class Source:
             self._address,
             suggestions,
         )
+
+    def _fetch_from_website(self, address: dict) -> list[Collection]:
+        number = str(address["AdresseHusNummer"])
+        letter = (address.get("AdresseBokstav") or "").casefold()
+        response = requests.get(
+            SEARCH_URL,
+            params={"q": f"{address['GateNavn']} {number}{letter}"},
+            timeout=REQUEST_TIMEOUT,
+        )
+        response.raise_for_status()
+        suggestions = [
+            suggestion
+            for suggestion in response.json().get("suggestions", [])
+            if suggestion.get("postalCode") == address["PostNummer"]
+            and _normalize(suggestion.get("street", ""))
+            == _normalize(address["GateNavn"])
+            and _house_number(suggestion.get("number", ""))[0] == number
+        ]
+        exact = [
+            suggestion
+            for suggestion in suggestions
+            if _house_number(suggestion["number"])[1] == letter
+        ]
+        candidates = exact or suggestions
+        if not candidates:
+            raise SourceArgumentNotFound(
+                "address", self._address, "No collection schedule found"
+            )
+
+        response = requests.get(
+            f"{WEBSITE_URL}{candidates[0]['url']}&utskrift=1",
+            timeout=REQUEST_TIMEOUT,
+        )
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        entries = []
+        seen = set()
+        for pickup_list in soup.select("ul.navigationlist--pickup"):
+            title = pickup_list.select_one("li.navigationlist__item--title")
+            if title is None:
+                continue
+            name = title.get_text(strip=True)
+            waste_type = WEBSITE_FRACTION_MAP.get(name, name)
+            for item in pickup_list.select("li.navigationlist__item--pickup"):
+                match = re.search(
+                    r"(\d{1,2})\.\s*([a-zæøå]+)\s+(\d{4})", item.get_text().casefold()
+                )
+                if match is None or match.group(2) not in MONTHS:
+                    continue
+                date = datetime.date(
+                    int(match.group(3)), MONTHS[match.group(2)], int(match.group(1))
+                )
+                if (date, waste_type) in seen:
+                    continue
+                seen.add((date, waste_type))
+                entries.append(
+                    Collection(date=date, t=waste_type, icon=ICON_MAP.get(waste_type))
+                )
+
+        if not entries:
+            raise SourceArgumentNotFound(
+                "address", self._address, "No collection schedule found"
+            )
+
+        return entries
