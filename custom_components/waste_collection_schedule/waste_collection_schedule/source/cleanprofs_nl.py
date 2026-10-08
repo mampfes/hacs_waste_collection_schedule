@@ -6,7 +6,6 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, postcode, text_field
 from waste_collection_schedule.transformers import JsonTransformer
 
-
 API_URL = "https://cleanprofs.jmsdev.nl/api/get-plannings-address"
 
 
