@@ -1456,3 +1456,151 @@ def test_cidiu_it_fetch_maps_junker_types_to_the_previous_labels() -> None:
         "Something new",
     ]
     assert entries[1].icon == Icons.GLASS
+
+
+def test_doncaster_gov_uk_picks_address_and_parses_collections() -> None:
+    module = _get_module("doncaster_gov_uk")
+    from waste_collection_schedule.exceptions import (
+        SourceArgAmbiguousWithSuggestions,
+        SourceArgumentNotFoundWithSuggestions,
+        SourceArgumentRequired,
+    )
+
+    form = (
+        '<form class="page_widget_group" data-submit_destination='
+        '"/w/webpage/bin-query?webpage_subpage_id=PAG1&amp;webpage_token=abc">'
+        '<input type="hidden" name="form_check" value="check1" />'
+        '<label for="field_prop">Property Number or Name</label>'
+        '<input name="field_prop" id="field_prop" />'
+        '<label for="field_pc">Postcode</label>'
+        '<input name="field_pc" id="field_pc" />'
+        '<input type="submit" name="field_btn" value="Search" />'
+        "</form>"
+    )
+    results = (
+        '<a href="/w/webpage/address-collections?id=10&amp;auth=a" '
+        'aria-label="View collection details, 10 High Street Doncaster DN1 1AA">x</a>'
+        '<a href="/w/webpage/address-collections?id=1&amp;auth=b" '
+        'aria-label="View collection details, 1 High Street Doncaster DN1 1AA">x</a>'
+        '<a href="/w/webpage/address-collections?id=20&amp;auth=c" '
+        'aria-label="View collection details, Rose Cottage, High Street Doncaster DN1 1AA">x</a>'
+        '<a href="/w/webpage/address-collections?id=31&amp;auth=d" '
+        'aria-label="View collection details, Flat 1, 5 High Street Doncaster DN1 1AA">x</a>'
+        '<a href="/w/webpage/address-collections?id=32&amp;auth=e" '
+        'aria-label="View collection details, Flat 2, 5 High Street Doncaster DN1 1AA">x</a>'
+        "<li><a>Results 1-5 of 5 found</a></li>"
+    )
+    params = (
+        '{"template_data":{"events":['
+        '{"id":1,"title":"Refuse","date":"2026-10-15"},'
+        '{"id":2,"title":"Recycling","date":"2026-10-08"},'
+        '{"id":3,"title":"Green Garden Waste Collection Service","date":"2026-10-22"}'
+        "]}}"
+    )
+    detail = f"<div data-params='{params}'></div>"
+
+    class _Response:
+        def __init__(self, payload=None):
+            self._payload = payload
+
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self):
+            return {"data": self._payload}
+
+    submitted: list[dict] = []
+    detail_urls: list[str] = []
+    state = {"results": results}
+
+    class _Session:
+        def __init__(self) -> None:
+            self.headers: dict = {}
+
+        def get(self, url, **kwargs):
+            return _Response()
+
+        def post(self, url, data=None, **kwargs):
+            if "webpage_token=abc" in url:
+                submitted.append(data)
+                return _Response(state["results"])
+            if "address-collections" in url:
+                detail_urls.append(url)
+                return _Response(detail)
+            return _Response(form)
+
+    with patch.object(module.requests, "Session", _Session):
+        entries = module.Source(postcode="dn11aa", address="1").fetch()
+
+        assert len(submitted) == 1
+        assert submitted[0]["field_pc"] == "DN1 1AA"
+        assert submitted[0]["field_prop"] == ""
+        assert submitted[0]["form_check"] == "check1"
+        assert submitted[0]["field_btn"] == "Search"
+        # "1" must pick "1 High Street", not "10 High Street".
+        assert detail_urls == [
+            module.BASE_URL + "/w/webpage/address-collections?id=1&auth=b"
+        ]
+        assert [(e.date.isoformat(), e.type) for e in entries] == [
+            ("2026-10-15", "Refuse"),
+            ("2026-10-08", "Recycling"),
+            ("2026-10-22", "Green Garden Waste Collection Service"),
+        ]
+
+        # House names work with different case and with or without commas.
+        module.Source(postcode="DN1 1AA", address="rose cottage").fetch()
+        assert detail_urls[-1].endswith("id=20&auth=c")
+        module.Source(postcode="DN1 1AA", address="flat 1 5 high street").fetch()
+        assert detail_urls[-1].endswith("id=31&auth=d")
+
+        # An address matching several properties lists them instead of guessing.
+        with pytest.raises(SourceArgAmbiguousWithSuggestions):
+            module.Source(postcode="DN1 1AA", address="Flat").fetch()
+
+        # An address that matches nothing lists the properties of the postcode.
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+            module.Source(postcode="DN1 1AA", address="High").fetch()
+
+    # A result page that holds only part of the matches is searched again with
+    # the house number or name, so the council filters the list.
+    state["results"] = results.replace("of 5 found", "of 40 found")
+    submitted.clear()
+    with patch.object(module.requests, "Session", _Session):
+        module.Source(postcode="DN1 1AA", address="Rose Cottage").fetch()
+    assert [d["field_prop"] for d in submitted] == ["", "Rose Cottage"]
+
+    # The council's box only matches text inside the house number or name: the
+    # search sends the part before the first comma, and when that finds nothing
+    # the first page is used, so an unknown address still gets suggestions.
+    empty = "<li><a>Results 1-0 of 0 found</a></li>"
+    original_post = _Session.post
+
+    def _post_empty_when_filtered(self, url, data=None, **kwargs):
+        if "webpage_token=abc" in url and data and data.get("field_prop"):
+            submitted.append(data)
+            return _Response(empty)
+        return original_post(self, url, data=data, **kwargs)
+
+    submitted.clear()
+    with patch.object(_Session, "post", _post_empty_when_filtered):
+        with patch.object(module.requests, "Session", _Session):
+            with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+                module.Source(postcode="DN1 1AA", address="Flat 999, Tower").fetch()
+            module.Source(postcode="DN1 1AA", address="Flat 1, 5 High Street").fetch()
+    assert [d["field_prop"] for d in submitted] == [
+        "",
+        "Flat 999",
+        "",
+        "Flat 1",
+    ]
+    assert detail_urls[-1].endswith("id=31&auth=d")
+
+    # The 'uprn' wording is only used when a uprn was configured.
+    with pytest.raises(SourceArgumentRequired) as error:
+        module.Source(postcode="DN1 1AA").fetch()
+    assert "UPRN" not in str(error.value)
+
+    # Configurations written for the old UPRN lookup get a clear message.
+    with pytest.raises(SourceArgumentRequired) as error:
+        module.Source(uprn="100050701118").fetch()
+    assert "UPRN" in str(error.value)
