@@ -16,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**`district`** *(string) (required)*
+**`district`** *(string) (required, except for `property_type: multifamily`)*
 
 The district / area group name, which determines which PDF schedule file is downloaded.
 Must be one of the values in the [District Names](#district-names) table below.
@@ -33,6 +33,33 @@ When omitted, entries for **all** Rejony within the district PDF are returned.
 |---|---|
 | `residential` | Single-family homes (nieruchomości zamieszkałe) |
 | `commercial` | Commercial / business premises (nieruchomości niezamieszkałe / firmy) |
+| `multifamily` | Blocks of flats (zabudowa wielorodzinna) — uses the city-wide `Wielorodzinna_<year>.pdf` |
+
+**`street`** *(string) (multifamily only)*
+
+Your street as listed in the `ULICE` column of the multifamily PDF (e.g. `Rudzka`).
+If the street appears in several rows with different schedules, also set `sub_district`
+to the `DZIELNICA` value of your row (e.g. `Stodoły`); the error message lists the options.
+
+### Multifamily schedules
+
+The multifamily PDF does not list dates. Each cell is a weekday rule such as
+`poniedziałek, czwartek` (every Monday and Thursday) or `środa tydzień nieparzysty`
+(Wednesday of odd weeks). The source expands these rules to dates for the PDF's year,
+using ISO week numbers for even/odd weeks. The PDF states no rule for public holidays,
+so generated dates are not shifted around holidays.
+
+### Multifamily
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: rybnik_pl
+      args:
+        property_type: multifamily
+        street: Rudzka
+        sub_district: Stodoły
+```
 
 ## District Names
 

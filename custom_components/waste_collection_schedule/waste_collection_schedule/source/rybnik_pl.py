@@ -1,14 +1,19 @@
 import logging
 import re
 import unicodedata
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from io import BytesIO
+from typing import NamedTuple
 
 import requests
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTChar, LTCurve
 from pypdf import PdfReader
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
     SourceArgumentRequiredWithSuggestions,
 )
 
@@ -139,7 +144,7 @@ DISTRICT_MAP: dict[str, dict] = {
     },
 }
 
-PROPERTY_TYPES = ("residential", "commercial")
+PROPERTY_TYPES = ("residential", "commercial", "multifamily")
 
 # Maps PDF waste-type token → (friendly English name, MDI icon)
 WASTE_TYPE_MAP: dict[str, tuple[str, str]] = {
@@ -148,6 +153,28 @@ WASTE_TYPE_MAP: dict[str, tuple[str, str]] = {
     "BIODEGRADOWALNE": ("Bio / organic", "mdi:leaf"),
     "POPIOŁY/ŻUŻEL": ("Ash", "mdi:fireplace"),
     "GABARYTY": ("Bulky waste", "mdi:sofa"),
+}
+
+# Multifamily (zabudowa wielorodzinna) schedule: one city-wide PDF whose table
+# columns are waste types and whose cells are weekday rules, not dates.
+# Maps the column header in the PDF -> (friendly name, icon).
+MULTIFAMILY_WASTE_TYPE_MAP: dict[str, tuple[str, str]] = {
+    "ZMIESZANE": ("Mixed waste", Icons.GENERAL_WASTE),
+    "PLASTIK": ("Plastic", Icons.PLASTIC_PACKAGING),
+    "PAPIER": ("Paper", Icons.PAPER),
+    "SZKŁO": ("Glass", Icons.GLASS),
+    "WIELKOGABARYTY": ("Bulky waste", Icons.BULKY),
+    "BIO": ("Bio / organic", Icons.ORGANIC),
+}
+
+_WEEKDAYS_PL = {
+    "poniedzialek": 0,
+    "wtorek": 1,
+    "sroda": 2,
+    "czwartek": 3,
+    "piatek": 4,
+    "sobota": 5,
+    "niedziela": 6,
 }
 
 TEST_CASES = {
@@ -168,6 +195,15 @@ TEST_CASES = {
         "district": "Zebrzydowice",
         "sub_district": "Zebrzydowice 1",
         "property_type": "residential",
+    },
+    "Multifamily Rudzka, Stodoły (odd/even weeks)": {
+        "property_type": "multifamily",
+        "street": "Rudzka",
+        "sub_district": "Stodoły",
+    },
+    "Multifamily Chabrowa (Maroko-Nowiny)": {
+        "property_type": "multifamily",
+        "street": "Chabrowa",
     },
 }
 
@@ -194,7 +230,13 @@ PARAM_DESCRIPTIONS = {
         ),
         "property_type": (
             "Type of property. One of: 'residential' (zamieszkałe, default), "
-            "'commercial' (firmy/niezamieszkałe)."
+            "'commercial' (firmy/niezamieszkałe), "
+            "'multifamily' (zabudowa wielorodzinna / blocks of flats)."
+        ),
+        "street": (
+            "Multifamily only: your street as listed in the 'ULICE' column of the "
+            "multifamily PDF (e.g. 'Rudzka'). If the street is listed for several "
+            "areas, also set sub_district to the 'DZIELNICA' value (e.g. 'Stodoły')."
         ),
     },
 }
@@ -516,12 +558,224 @@ def _build_entries(
     return entries
 
 
+def _fold(text: str) -> str:
+    """Casefold, strip diacritics and everything that is not a letter or digit."""
+    text = unicodedata.normalize("NFKD", text.replace("ł", "l").replace("Ł", "L"))
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return re.sub(r"[^0-9a-z]+", "", text.casefold())
+
+
+class MultifamilyRow(NamedTuple):
+    area: str  # DZIELNICA cell, e.g. "Maroko - Nowiny"
+    streets: list[str]  # ULICE cell split on commas
+    rules: dict[str, str]  # waste-type header -> raw cell text
+
+
+def _cell_text(chars: list[LTChar]) -> str:
+    """Join the characters of one table cell into a single-spaced string."""
+    chars = sorted(chars, key=lambda c: (-round(c.y0 / 3), c.x0))
+    out = ""
+    prev = None
+    for c in chars:
+        if prev is not None and (
+            round(c.y0 / 3) != round(prev.y0 / 3) or c.x0 - prev.x1 > 1
+        ):
+            out += " "
+        out += c.get_text()
+        prev = c
+    return " ".join(out.split())
+
+
+def _collapse(values: list[float], tol: float = 3) -> list[float]:
+    out: list[float] = []
+    for v in sorted(values):
+        if not out or v - out[-1] > tol:
+            out.append(v)
+    return out
+
+
+def _walk(obj):
+    yield obj
+    if hasattr(obj, "__iter__"):
+        for child in obj:
+            yield from _walk(child)
+
+
+def _parse_multifamily_pdf(pdf_bytes: bytes) -> list[MultifamilyRow]:
+    """Read the multifamily table using the ruling lines drawn by Word.
+
+    pypdf and plain pdfminer text extraction interleave the multi-line cells of
+    neighbouring columns, so instead every character is assigned to the grid
+    cell (column between two vertical rules, row between two horizontal rules)
+    its centre falls into.
+    """
+    rows: list[MultifamilyRow] = []
+    for page in extract_pages(BytesIO(pdf_bytes)):
+        objs = list(_walk(page))
+        chars = [o for o in objs if isinstance(o, LTChar)]
+        rules = [o for o in objs if isinstance(o, LTCurve)]
+        xs = _collapse([r.x0 for r in rules if r.height > 20 and r.width < 3])
+        ys = _collapse([r.y0 for r in rules if r.width > 200 and r.height < 3])[::-1]
+        if len(xs) < 3 or len(ys) < 3:
+            continue
+
+        cells: dict[tuple[int, int], list[LTChar]] = {}
+        for ch in chars:
+            cx, cy = (ch.x0 + ch.x1) / 2, (ch.y0 + ch.y1) / 2
+            col = next((i for i in range(len(xs) - 1) if xs[i] <= cx < xs[i + 1]), None)
+            row = next((i for i in range(len(ys) - 1) if ys[i] >= cy > ys[i + 1]), None)
+            if col is not None and row is not None:
+                cells.setdefault((row, col), []).append(ch)
+
+        grid = [
+            [_cell_text(cells.get((r, c), [])) for c in range(len(xs) - 1)]
+            for r in range(len(ys) - 1)
+        ]
+
+        # Locate the header row naming the waste types; data rows follow it.
+        header_idx = None
+        waste_cols: dict[int, str] = {}
+        for r, cols in enumerate(grid):
+            found = {
+                c: key
+                for c, txt in enumerate(cols)
+                for key in MULTIFAMILY_WASTE_TYPE_MAP
+                if _fold(txt) == _fold(key)
+            }
+            if "ZMIESZANE" in found.values():
+                header_idx, waste_cols = r, found
+                break
+        if header_idx is None:
+            continue
+        area_col, street_col = 0, 1
+        for r in range(header_idx + 1):
+            for c, txt in enumerate(grid[r]):
+                if _fold(txt) == "dzielnica":
+                    area_col = c
+                elif _fold(txt) == "ulice":
+                    street_col = c
+
+        page_rows: list[list[str]] = []
+        for cols in grid[header_idx + 1 :]:
+            if not any(cols):
+                continue
+            if not cols[area_col] and not cols[street_col] and page_rows:
+                # A stray ruling line split one table row in two: merge.
+                prev = page_rows[-1]
+                page_rows[-1] = [
+                    " ".join(filter(None, (a, b)))
+                    for a, b in zip(prev, cols, strict=True)
+                ]
+                continue
+            page_rows.append(cols)
+
+        for cols in page_rows:
+            if not cols[area_col]:
+                continue
+            streets = [s.strip() for s in cols[street_col].split(",") if s.strip()]
+            rules_by_type = {key: cols[c] for c, key in waste_cols.items() if cols[c]}
+            rows.append(MultifamilyRow(cols[area_col], streets, rules_by_type))
+
+    if not rows:
+        raise ValueError(
+            "No rows found in the multifamily schedule PDF. "
+            "The PDF format may have changed."
+        )
+    return rows
+
+
+def _parse_weekday_rule(text: str) -> tuple[set[int], int | None]:
+    """Parse e.g. 'poniedziałek, czwartek' or 'Środa tydzień nieparzysty'.
+
+    Returns (weekdays, parity) where parity is 0 for even ISO weeks
+    ('tydzień parzysty'), 1 for odd ISO weeks ('tydzień nieparzysty') and
+    None for every week.
+    """
+    weekdays: set[int] = set()
+    parity: int | None = None
+    for token in re.split(r"[\s,;]+", text):
+        word = _fold(token)
+        if not word or word in ("tydzien", "i"):
+            continue
+        if word in _WEEKDAYS_PL:
+            weekdays.add(_WEEKDAYS_PL[word])
+        elif word == "parzysty":
+            parity = 0
+        elif word == "nieparzysty":
+            parity = 1
+        else:
+            raise ValueError(f"Unknown token {token!r} in rule {text!r}")
+    if not weekdays:
+        raise ValueError(f"No weekday found in rule {text!r}")
+    return weekdays, parity
+
+
+def _expand_rule(text: str, year: int) -> list[date]:
+    weekdays, parity = _parse_weekday_rule(text)
+    day = date(year, 1, 1)
+    result = []
+    while day.year == year:
+        if day.weekday() in weekdays and (
+            parity is None or day.isocalendar()[1] % 2 == parity
+        ):
+            result.append(day)
+        day += timedelta(days=1)
+    return result
+
+
+# Honorific prefixes the PDF sometimes prints before a street name
+# ("Gen. Andersa", "Ks. Szwedy"); a user typing just "Andersa" should match.
+_STREET_PREFIX_RE = re.compile(
+    r"^(?:ul|gen|ks|pl|plac|św|sw|kap|os)\.?\s+", re.IGNORECASE
+)
+
+
+def _street_keys(street: str) -> set[str]:
+    return {_fold(street), _fold(_STREET_PREFIX_RE.sub("", street))}
+
+
+def _select_multifamily_row(
+    rows: list[MultifamilyRow], street: str, area: str
+) -> MultifamilyRow:
+    candidates = rows
+    if area:
+        candidates = [r for r in candidates if _fold(r.area) == _fold(area)]
+        if not candidates:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "sub_district", area, sorted({r.area for r in rows})
+            )
+    if street:
+        street_key = _fold(re.sub(r"^\s*ul\.?\s+", "", street, flags=re.I))
+        matched = [
+            r
+            for r in candidates
+            if any(street_key in _street_keys(s) for s in r.streets)
+        ]
+        if not matched:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street",
+                street,
+                sorted({s for r in candidates for s in r.streets}),
+            )
+        candidates = matched
+    if len({tuple(sorted(r.rules.items())) for r in candidates}) > 1:
+        if street and not area:
+            raise SourceArgAmbiguousWithSuggestions(
+                "sub_district", area, sorted({r.area for r in candidates})
+            )
+        raise SourceArgAmbiguousWithSuggestions(
+            "street", street, sorted({s for r in candidates for s in r.streets})
+        )
+    return candidates[0]
+
+
 class Source:
     def __init__(
         self,
         district: str = "",
         sub_district: str = "",
         property_type: str = "residential",
+        street: str = "",
     ):
         self._property_type = property_type.lower().strip()
         if self._property_type not in PROPERTY_TYPES:
@@ -530,8 +784,17 @@ class Source:
             )
 
         self._sub_district = sub_district.strip()
+        self._street = street.strip()
 
         district = district.strip()
+        if self._property_type == "multifamily":
+            # One city-wide PDF; the row is chosen by street (+ area if needed).
+            if not self._street and not self._sub_district:
+                raise SourceArgumentRequired(
+                    "street", "street is required for property_type 'multifamily'"
+                )
+            self._district = district
+            return
         if not district:
             raise SourceArgumentRequiredWithSuggestions(
                 "district",
@@ -551,6 +814,8 @@ class Source:
     def fetch(self) -> list[Collection]:
         year = datetime.now().year
         pdf_bytes, actual_year = self._fetch_pdf(year)
+        if self._property_type == "multifamily":
+            return self._multifamily_entries(pdf_bytes, actual_year)
 
         reader = PdfReader(BytesIO(pdf_bytes))
         cover_text = _find_cover_page_text(reader)
@@ -585,8 +850,26 @@ class Source:
             blocks, rejon_order, gabaryty_map, actual_year, self._sub_district
         )
 
+    def _multifamily_entries(self, pdf_bytes: bytes, year: int) -> list[Collection]:
+        rows = _parse_multifamily_pdf(pdf_bytes)
+        row = _select_multifamily_row(rows, self._street, self._sub_district)
+        entries: list[Collection] = []
+        for key, rule in row.rules.items():
+            name, icon = MULTIFAMILY_WASTE_TYPE_MAP[key]
+            try:
+                dates = _expand_rule(rule, year)
+            except ValueError as err:
+                _LOGGER.warning("Skipping %s for %s: %s", key, row.area, err)
+                continue
+            entries.extend(Collection(date=d, t=name, icon=icon) for d in dates)
+        if not entries:
+            raise ValueError("No collection entries could be parsed from the PDF.")
+        return entries
+
     def _build_url(self, year: int) -> str:
         base = _BASE_URL.format(year=year)
+        if self._property_type == "multifamily":
+            return f"{base}Wielorodzinna_{year}.pdf"
         if self._property_type == "commercial":
             return f"{base}Firmy{year}_{self._slug}_firmy_{year}.pdf"
         # residential (default)
