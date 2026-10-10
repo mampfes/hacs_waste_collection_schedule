@@ -707,6 +707,16 @@ class Source:
         entries = []
         date_format = "%Y-%m-%d"
 
+        if not isinstance(schedule_def, dict) or not isinstance(
+            schedule_def.get("DATA"), list
+        ):
+            raise SourceArgumentNotFound(
+                "street",
+                self.street,
+                "no collection schedule found for this address "
+                "(RecycleCoach returned no service zone)",
+            )
+
         for year in schedule_def["DATA"]:
             for month in year["months"]:
                 for event in month["events"]:
