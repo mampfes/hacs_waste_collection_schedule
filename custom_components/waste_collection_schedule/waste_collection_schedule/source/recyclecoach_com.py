@@ -544,11 +544,22 @@ class Source:
 
         if len(city_data) > 1:
             for city in city_data:
-                if city["city_nm"].upper() == self.city.upper():
+                if (
+                    city["city_nm"].upper() == self.city.upper()
+                    and float(city["stage"]) >= 3
+                ):
                     self.project_id = city["project_id"]
                     self.district_id = city["district_id"]
                     self.stage = float(city["stage"])
                     return
+
+            # No exact, fully supported match (or the exact match is an
+            # unsupported placeholder): suggest the fully supported candidates.
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city",
+                self.city,
+                [c["city_nm"] for c in city_data if float(c["stage"]) >= 3],
+            )
 
         raise Exception(
             "Could not determine district or project, This probably means your city, state is wrong or not supported."
