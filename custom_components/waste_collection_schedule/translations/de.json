@@ -26081,11 +26081,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "post_code": "PLZ",
-          "premises_id": "Premises Id"
+          "post_code": "Postleitzahl",
+          "premises_id": "Standort-ID"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "post_code": "Ihre Postleitzahl."
         }
       },
       "reconfigure_derby_gov_uk": {
@@ -26094,10 +26096,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "post_code": "PLZ",
-          "premises_id": "Premises Id"
+          "post_code": "Postleitzahl",
+          "premises_id": "Standort-ID"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "post_code": "Ihre Postleitzahl."
+        }
       },
       "args_derbyshiredales_gov_uk": {
         "title": "Quelle konfigurieren",

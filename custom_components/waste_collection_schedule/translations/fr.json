@@ -26015,12 +26015,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "post_code": "Code postal",
-          "premises_id": "Premises Id"
+          "premises_id": "ID d'emplacement"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
         }
       },
       "reconfigure_derby_gov_uk": {
@@ -26028,11 +26030,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "post_code": "Code postal",
-          "premises_id": "Premises Id"
+          "premises_id": "ID d'emplacement"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "post_code": "Votre code postal."
+        }
       },
       "args_derbyshiredales_gov_uk": {
         "title": "Configurer la Source",

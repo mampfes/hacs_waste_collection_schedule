@@ -26450,14 +26450,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "DEPRECATED: house_number",
-          "post_code": "DEPRECATED: post_code",
-          "premises_id": "premises_id"
+          "house_number": "House Number",
+          "post_code": "Postcode",
+          "premises_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "LEAVE EMPTY is not used anymore.",
-          "post_code": "LEAVE EMPTY is not used anymore."
+          "house_number": "Your house number.",
+          "post_code": "Your postcode."
         }
       },
       "reconfigure_derby_gov_uk": {
@@ -26465,13 +26465,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "DEPRECATED: house_number",
-          "post_code": "DEPRECATED: post_code",
-          "premises_id": "premises_id"
+          "house_number": "House Number",
+          "post_code": "Postcode",
+          "premises_id": "Location ID"
         },
         "data_description": {
-          "house_number": "LEAVE EMPTY is not used anymore.",
-          "post_code": "LEAVE EMPTY is not used anymore."
+          "house_number": "Your house number.",
+          "post_code": "Your postcode."
         }
       },
       "args_derbyshiredales_gov_uk": {

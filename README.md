@@ -4704,6 +4704,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Durham County Council](/doc/source/durham_gov_uk.md) / durham.gov.uk
 - [Ealing Council](/doc/source/ealing_gov_uk.md) / ealing.gov.uk
 - [East Ayrshire Council](/doc/source/east_ayrshire_gov_uk.md) / east-ayrshire.gov.uk
+- [East Ayrshire Council](/doc/source/recollect_net.md) / east-ayrshire.gov.uk/Housing/RubbishAndRecycling/Collection-days/bin-collection-days.aspx
 - [East Cambridgeshire District Council](/doc/source/eastcambs_gov_uk.md) / eastcambs.gov.uk
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
 - [East Dunbartonshire Council](/doc/source/eastdunbarton_gov_uk.md) / eastdunbarton.gov.uk

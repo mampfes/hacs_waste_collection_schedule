@@ -25880,12 +25880,14 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "post_code": "Postnummer",
-          "premises_id": "Premises Id"
+          "premises_id": "Lokations-ID"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
         }
       },
       "reconfigure_derby_gov_uk": {
@@ -25893,11 +25895,14 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "post_code": "Postnummer",
-          "premises_id": "Premises Id"
+          "premises_id": "Lokations-ID"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
+        }
       },
       "args_derbyshiredales_gov_uk": {
         "title": "Konfigurer Kilde",

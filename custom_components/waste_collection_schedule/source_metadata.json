@@ -6002,7 +6002,7 @@
   "derby_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/derby_gov_uk.md",
     "howto": {
-      "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID."
+      "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID. Leave post_code and house_number empty: they are no longer used."
     },
     "urls": {}
   },

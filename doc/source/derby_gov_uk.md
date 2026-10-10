@@ -1,34 +1,42 @@
 # Derby City Council
 
-Support for schedules provided by [Derby City Council](https://secure.derby.gov.uk/binday/), serving the
-city of Derby, UK.
+Support for schedules provided by [Derby City Council](https://derby.gov.uk).
+
+Source for Derby.gov.uk services for Derby City Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: derby_gov_uk
       args:
         premises_id: PREMISES_ID
+        post_code: POST_CODE
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **premises_id**  
-*(int) (required if post_code not provided)*
+*(string) (required)*
+
+**post_code**  
+*(string) (optional)*
+
+**house_number**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: derby_gov_uk
       args:
-        premises_id: 100030339868
+        premises_id: '10010688168'
 ```
 
-## How to get the premises_id argument
+## How to get the source arguments
 
-The premises_id can be found in the URL when looking up your
-bin collection days at [Derby City Councils bin day page](https://secure.derby.gov.uk/binday/).
+Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID. Leave post_code and house_number empty: they are no longer used.
