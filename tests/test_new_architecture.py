@@ -7430,8 +7430,6 @@ SOURCES_AWAITING_CASSETTE = {
     "fuquay_varina_nc_us",
     "plano_gov",
     "sepan_remondis_pl",
-    # Arrived from master in the v2.32.0 merge; never recorded.
-    "stadt_kerpen_de",
     "shawinigan_ca",
 }
 
