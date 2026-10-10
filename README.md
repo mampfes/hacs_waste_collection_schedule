@@ -1008,6 +1008,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Nem Affaldsservice (Københavns Kommune)](/doc/source/nemaffaldsservice_kk_dk.md) / nemaffaldsservice.kk.dk
 - [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
 - [Odense Renovation](/doc/source/odenserenovation_dk.md) / odenserenovation.dk
+- [Odense Renovation (iCal)](/doc/ics/odense_renovation_dk.md) / odenserenovation.dk
 - [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
 - [Reno Djurs](/doc/source/renodjurs_dk.md) / renodjurs.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk

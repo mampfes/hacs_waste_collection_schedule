@@ -1818,6 +1818,14 @@
     "howto": {},
     "urls": {}
   },
+  "ics_odense_renovation_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/odense_renovation_dk.md",
+    "howto": {
+      "de": "- Gehen Sie auf <https://odenserenovation.dk> und suchen Sie Ihre Adresse im Abfallkalender (\"Mit Odense Renovation\").\n- Nutzen Sie die Kalender-Abonnement-Funktion (\"Tilføj til kalender\"), um Ihren persönlichen iCal-Link zu erzeugen. Er sieht aus wie `https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=12345678`.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "en": "- Go to <https://odenserenovation.dk> and search for your address in the collection calendar (\"Mit Odense Renovation\").\n- Use the calendar subscription option (\"Tilføj til kalender\") to generate your personal iCal link. It looks like `https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=12345678`.\n- Use this link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "renodjurs_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renodjurs_dk.md",
     "howto": {},

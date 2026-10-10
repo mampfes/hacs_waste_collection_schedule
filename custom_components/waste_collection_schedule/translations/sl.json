@@ -7486,6 +7486,50 @@
         },
         "data_description": {}
       },
+      "args_ics_odense_renovation_dk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Ime datoteke",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metoda",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Preveri SSL",
+          "version": "Verzija",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_odense_renovation_dk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Ime datoteke",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metoda",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Preveri SSL",
+          "version": "Verzija",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_renodjurs_dk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

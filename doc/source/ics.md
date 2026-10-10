@@ -246,6 +246,7 @@ This source has been successfully tested with the following service providers:
 ### Denmark
 
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
+- [Odense Renovation (iCal)](/doc/ics/odense_renovation_dk.md) / odenserenovation.dk
 
 ### Germany
 

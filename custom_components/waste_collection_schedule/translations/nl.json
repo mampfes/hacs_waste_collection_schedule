@@ -7488,6 +7488,50 @@
         },
         "data_description": {}
       },
+      "args_ics_odense_renovation_dk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "file": "Bestandsnaam",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "SSL verifiëren",
+          "version": "Versie",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_ics_odense_renovation_dk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "file": "Bestandsnaam",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameters",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "SSL verifiëren",
+          "version": "Versie",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_renodjurs_dk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

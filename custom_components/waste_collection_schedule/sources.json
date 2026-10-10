@@ -6039,6 +6039,15 @@
       "id": "odenserenovation_dk"
     },
     {
+      "title": "Odense Renovation (iCal)",
+      "module": "ics",
+      "default_params": {
+        "regex": "T\u00f8mning af (.+?)\\s+p\u00e5\\s+.*",
+        "split_at": ",\\s*"
+      },
+      "id": "ics_odense_renovation_dk"
+    },
+    {
       "title": "Rebild Kommune",
       "module": "affaldonline_dk",
       "default_params": {
