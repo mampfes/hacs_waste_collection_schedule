@@ -39,7 +39,7 @@ def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None
         if interaction["url"].endswith("/community")
         for community in _json(interaction).get("data", [])
         for item in [community, *community.get("children", [])]
-        if not item.get("children", [])
+        if not item["isDisabled"] and not item.get("children", [])
     }
     for interaction in interactions:
         if interaction["url"].endswith("/pickup-date"):
@@ -48,7 +48,8 @@ def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None
                 [
                     entry
                     for entry in _json(interaction)
-                    if entry["community_id"] == ids.get(wanted)
+                    if not entry["isDisabled"]
+                    and entry["community_id"] == ids.get(wanted)
                     and entry["date"][:10] >= today
                 ],
             )

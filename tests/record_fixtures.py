@@ -109,8 +109,11 @@ def record_errors(module_name: str) -> None:
     for case_key, args in error_cases.items():
         path = error_fixture_path(module_name, case_key)
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        scrub = cassette_scrubbers.for_case(module_name, args, today)
         try:
-            with cassette.recording(path, today, expect_exception=EXPECTED_ERRORS):
+            with cassette.recording(
+                path, today, expect_exception=EXPECTED_ERRORS, scrub=scrub
+            ):
                 module.Source(**args).fetch()
         except EXPECTED_ERRORS as exc:
             print(f"  recorded error case {slug(case_key)} ({type(exc).__name__})")
