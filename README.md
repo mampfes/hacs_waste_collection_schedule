@@ -4524,6 +4524,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Neckertal](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Nesslau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Neunforn](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Nidau](/doc/source/localcities_ch.md) / nidau.ch
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Niederbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Niederhelfenschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
@@ -5026,6 +5027,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Fort Lauderdale, FL](/doc/source/fort_lauderdale_fl_us.md) / fortlauderdale.gov/government/departments-i-z/public-works/operations/sanitation-operations/collection-programs
+- [Frederick County, Maryland, USA](/doc/source/recyclecoach_com.md) / frederickcountymd.gov/3447/Curbside-Collection-Schedule
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hanahan, SC](/doc/source/cityofhanahan_com.md) / cityofhanahan.com/publicworks/page/household-trash-collection-schedule
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
@@ -5044,6 +5046,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
+- [Palm Beach County, Florida, USA](/doc/source/recyclecoach_com.md) / swa.org/518/Pickup-Schedule
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
 - [Peoria (IL)](/doc/source/recyclecoach_com.md) / peoriagov.org/533/Yes-Peoria-Picks-Up
 - [Phoenix, AZ](/doc/source/phoenix_gov.md) / phoenix.gov/publicworks/garbage/trashschedule/find-your-day-of-collection

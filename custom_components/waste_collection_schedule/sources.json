@@ -32519,6 +32519,15 @@
       "id": "kvatg_ch"
     },
     {
+      "title": "Nidau",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "nidau",
+        "municipality_id": "1561"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Nieder-/Oberscherli",
       "module": "koeniz_ch",
       "default_params": {
@@ -35735,6 +35744,15 @@
       "id": "fort_lauderdale_fl_us"
     },
     {
+      "title": "Frederick County, Maryland, USA",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Frederick County",
+        "state": "Maryland"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Fuquay-Varina, North Carolina",
       "module": "fuquay_varina_nc_us",
       "default_params": {},
@@ -35855,6 +35873,15 @@
       "module": "ocarcims_ocfl_net",
       "default_params": {},
       "id": "ocarcims_ocfl_net"
+    },
+    {
+      "title": "Palm Beach County, Florida, USA",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Palm Beach County",
+        "state": "Florida"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Palm Coast, FL",
