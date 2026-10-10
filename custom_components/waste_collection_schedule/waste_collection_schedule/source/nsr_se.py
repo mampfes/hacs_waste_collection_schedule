@@ -16,7 +16,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
@@ -87,13 +86,7 @@ class Source(BaseSource):
         "Kattarp with garden waste": {"address": "Signestorpsvägen 13"},
     }
 
-    REGIONS = (
-        region(
-            "NSR Tömningskalender",
-            url="https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/",
-            country="se",
-        ),
-    )
+    REGIONS = ()
 
     PARAMS = (street_address(),)
 
