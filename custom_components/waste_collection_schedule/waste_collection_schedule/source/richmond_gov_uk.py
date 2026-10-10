@@ -1,106 +1,84 @@
-import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "London Borough of Richmond upon Thames"
-DESCRIPTION = "Source for London Borough of Richmond upon Thames"
-URL = "https://www.richmond.gov.uk/"
-
-TEST_CASES = {
-    "Sheen Common Drive": {"uprn": "100022316011"},
-    "Rosemont Road": {"uprn": "100022315214"},
-    "Bryanston Avenue": {"uprn": "100022330653"},
-}
+# The "My Richmond" page lists one <h4> per service inside div.my-waste, each
+# followed by a <ul> whose first <li> holds the next date ("Tuesday 13 October
+# 2026", optionally followed by a "View calendar" link). A property without a
+# garden waste contract shows "No collection contract at this address" there
+# instead, which is skipped. An unknown UPRN gets a page without div.my-waste.
 
 API_URL = "https://www.richmond.gov.uk/my_richmond"
 
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
-    "de": {"uprn": "UPRN der Immobilie"},
-    "it": {"uprn": "UPRN della proprietà"},
-    "fr": {"uprn": "UPRN du bien"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
-    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
-    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
-    "fr": {"uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/"},
-}
-
-ICON_MAP = {
-    "Glass, can, plastic and carton recycling": Icons.PLASTIC_PACKAGING,
-    "Paper and card recycling": Icons.PAPER,
-    "Rubbish and food": Icons.BIO_KITCHEN,
-    "Garden waste": Icons.GARDEN,
-}
-
-ALLOWED_SERVICES = set(ICON_MAP.keys())
+_DATE = re.compile(r"(\d{1,2} \w+ \d{4})\s*$")
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+def _next_date(heading):
+    items = heading.find_next_sibling("ul")
+    item = items.find("li") if items else None
+    if item is None:
+        return None
+    # Only the <li>'s own text: the date, without the text of its links.
+    text = " ".join(item.find_all(string=True, recursive=False)).strip()
+    if "No collection contract" in text:
+        return None
+    match = _DATE.search(text)
+    return match.group(1) if match else None
 
-    def fetch(self) -> list[Collection]:
-        params = {"pid": self._uprn}
-        headers = {"User-Agent": "Mozilla/5.0"}
 
-        response = requests.get(API_URL, params=params, headers=headers, timeout=30)
-        response.raise_for_status()
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Richmond upon Thames"
+    DESCRIPTION = "Source for London Borough of Richmond upon Thames"
+    URL = "https://www.richmond.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        waste_div = soup.find("div", class_="my-waste")
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-        if not waste_div:
-            raise SourceArgumentNotFound("uprn", self._uprn)
+    TEST_CASES: ClassVar[dict] = {
+        "Sheen Common Drive": {"uprn": "100022316011"},
+        "Rosemont Road": {"uprn": "100022315214"},
+        "Bryanston Avenue": {"uprn": "100022330653"},
+    }
 
-        entries = []
+    PARAMS = (uprn(),)
 
-        for h4 in waste_div.find_all("h4"):
-            service_name = h4.get_text(strip=True)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Get your Unique Property Reference Number (UPRN) by going to "
+            "<https://www.findmyaddress.co.uk/> and entering your address details."
+        ),
+    }
 
-            if service_name not in ALLOWED_SERVICES:
-                continue
-
-            ul_sibling = h4.find_next_sibling("ul")
-            if not ul_sibling:
-                continue
-
-            li = ul_sibling.find("li")
-            if not li:
-                continue
-
-            for a in li.find_all("a"):
-                a.decompose()
-
-            li_text = li.get_text(strip=True)
-
-            if "No collection contract" in li_text or not li_text:
-                continue
-
-            try:
-                date_parts = li_text.split()
-                if len(date_parts) < 3:
-                    continue
-
-                date_str = " ".join(date_parts[-3:])
-
-                collection_date = datetime.datetime.strptime(
-                    date_str, "%d %B %Y"
-                ).date()
-
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=service_name,
-                        icon=ICON_MAP.get(service_name),
-                    )
-                )
-            except (ValueError, IndexError):
-                continue
-
-        return entries
+    retrieve = HttpGetRetriever(
+        url=API_URL, params=lambda uprn, **_: {"pid": str(uprn)}
+    )
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser("div.my-waste h4"),
+        argument="uprn",
+        contains="my-waste",
+    )
+    transform = HtmlTransformer(
+        date_getter=_next_date,
+        type_getter=lambda heading: heading.get_text(strip=True),
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map={
+            # One round: the food caddy goes out with the rubbish.
+            "Rubbish and food": wt.GENERAL_WASTE,
+            "Glass, can, plastic and carton recycling": wt.RECYCLABLES,
+            "Paper and card recycling": wt.PAPER,
+            "Garden waste": wt.GARDEN_WASTE,
+        },
+    )

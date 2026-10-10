@@ -1,93 +1,103 @@
 import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    HolidayShift,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Muswellbrook Shire Council"
-DESCRIPTION = "Source for Muswellbrook Shire Council, NSW, Australia."
-URL = "https://www.muswellbrook.nsw.gov.au"
-TEST_CASES = {
-    "Zone 3A": {"zone": "3a"},
-    "Zone 5B": {"zone": "5b"},
-    "Zone 1B": {"zone": "1b"},
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your collection zone at https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as e.g. '3a' or '5b'."
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "Collection zone, e.g. '3a' or '5b'. Find your zone at https://www.muswellbrook.nsw.gov.au/waste-collection/"
-    }
-}
-
-ICON_MAP = {
-    "general waste": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "fogo": Icons.BIO_KITCHEN,
-}
+# Each zone page has one .waste-block per bin: its title ("Recycling (Yellow
+# lid)"), how often it is collected ("... is collected fortnightly.") and the
+# next collection (<time datetime="2026-10-14T00:00:00+00:00">). The dates of
+# the coming year are projected from that, and a collection falling on
+# Christmas Day moves to Boxing Day. An unknown zone answers 404 with a page
+# without any .waste-block.
 
 COLLECTION_URL = "https://www.muswellbrook.nsw.gov.au/waste-collection/zone-{}/"
-LOOKAHEAD_WEEKS = 52
+LOOKAHEAD = datetime.timedelta(weeks=52)
 
 
-class Source:
-    def __init__(self, zone: str):
-        self._zone = zone.lower().strip()
+def _describe(block, source):
+    title = block.select_one(".waste-block__title")
+    often = block.select_one(".waste-block__often")
+    time = block.select_one(".waste-block__time")
+    if title is None or often is None or time is None:
+        return
+    try:
+        next_date = datetime.date.fromisoformat(time.get("datetime", "")[:10])
+    except ValueError:
+        return
+    step = (
+        recurrence.WEEKLY
+        if "weekly" in often.get_text(strip=True).lower()
+        else recurrence.FORTNIGHTLY
+    )
+    yield Schedule(
+        title.get_text(strip=True),
+        next_date,
+        step,
+        until=datetime.date.today() + LOOKAHEAD,
+    )
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(COLLECTION_URL.format(self._zone))
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
 
-        bins = []
-        for block in soup.find_all(class_="waste-block"):
-            title_el = block.find(class_="waste-block__title")
-            often_el = block.find(class_="waste-block__often")
-            time_el = block.find(class_="waste-block__time")
+def _boxing_day(collection_date, key, source):
+    if (collection_date.month, collection_date.day) == (12, 25):
+        return collection_date + datetime.timedelta(days=1)
+    return collection_date
 
-            if not title_el or not often_el or not time_el:
-                continue
 
-            title = title_el.get_text(strip=True)
-            often = often_el.get_text(strip=True).lower()
-            dt_str = time_el.get("datetime", "")
+@final
+class Source(BaseSource):
+    TITLE = "Muswellbrook Shire Council"
+    DESCRIPTION = "Source for Muswellbrook Shire Council, NSW, Australia."
+    URL = "https://www.muswellbrook.nsw.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-            try:
-                next_date = datetime.date.fromisoformat(dt_str[:10])
-            except (ValueError, IndexError):
-                continue
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-            interval = datetime.timedelta(weeks=1 if "weekly" in often else 2)
-            bins.append((title, next_date, interval))
+    TEST_CASES: ClassVar[dict] = {
+        "Zone 3A": {"zone": "3a"},
+        "Zone 5B": {"zone": "5b"},
+        "Zone 1B": {"zone": "1b"},
+    }
 
-        if not bins:
-            raise SourceArgumentNotFound("zone", self._zone)
+    PARAMS = (
+        text_field("zone", "Zone", coerce=lambda value: str(value).strip().lower()),
+    )
 
-        entries = []
-        end_date = datetime.date.today() + datetime.timedelta(weeks=LOOKAHEAD_WEEKS)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your collection zone at "
+            "https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as "
+            "e.g. '3a' or '5b'."
+        ),
+    }
 
-        for title, next_date, interval in bins:
-            d = next_date
-            while d <= end_date:
-                # Christmas Day collections are moved to Boxing Day
-                if d.month == 12 and d.day == 25:
-                    d += datetime.timedelta(days=1)
-                entries.append(
-                    Collection(
-                        date=d,
-                        t=title,
-                        icon=self._get_icon(title),
-                    )
-                )
-                d += interval
-
-        return entries
-
-    def _get_icon(self, waste_type: str) -> str | None:
-        lower = waste_type.lower()
-        for key, icon in ICON_MAP.items():
-            if key in lower:
-                return icon
-        return None
+    retrieve = HttpGetRetriever(url=lambda zone, **_: COLLECTION_URL.format(zone))
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser(".waste-block"),
+        argument="zone",
+        contains="waste-block",
+        hint="valid zones are 1a, 1b, 2a, 2b, 3a, 3b, 4a, 4b, 5a and 5b",
+    )
+    preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_boxing_day))
+    transform = ICSTransformer(
+        type_value_map={
+            "General Waste (Red lid)": wt.GENERAL_WASTE,
+            "Recycling (Yellow lid)": wt.RECYCLABLES,
+            "Garden Waste (Green lid)": wt.GARDEN_WASTE,
+        },
+    )
