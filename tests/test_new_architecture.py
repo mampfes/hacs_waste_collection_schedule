@@ -963,6 +963,69 @@ class TestXmlDateListParser:
             parser(self._mock_response(body))
 
 
+class TestJsVarParser:
+    """JSON literals assigned to JavaScript variables in an inline script."""
+
+    _PAGE = (
+        "<html><script>"
+        'var tblMuellarten = [{"MuellId":"1","Art":"Restabfall"}];'
+        'let tblTermine = [{"Datum":"2026-10-12","Text":"until ]; later"}];\n'
+        'const config = {"year": 2026};'
+        'var tblMuellarten = [{"MuellId":"9","Art":"later copy"}];'
+        "</script></html>"
+    )
+
+    def _mock_response(self, text):
+        resp = MagicMock()
+        resp.text = text
+        return resp
+
+    def test_one_name_returns_its_value(self):
+        from waste_collection_schedule.parsers import JsVarParser
+
+        assert JsVarParser("config")(self._mock_response(self._PAGE)) == {"year": 2026}
+
+    def test_several_names_return_a_dict_and_the_first_assignment_wins(self):
+        from waste_collection_schedule.parsers import JsVarParser
+
+        tables = JsVarParser("tblMuellarten", "tblTermine")(
+            self._mock_response(self._PAGE)
+        )
+        assert tables == {
+            "tblMuellarten": [{"MuellId": "1", "Art": "Restabfall"}],
+            # Decoded, not cut at the "];" inside the string.
+            "tblTermine": [{"Datum": "2026-10-12", "Text": "until ]; later"}],
+        }
+
+    def test_a_name_is_not_matched_as_a_suffix_of_another(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        with pytest.raises(ResponseShapeError, match="'Termine' not found"):
+            JsVarParser("Termine")(self._mock_response(self._PAGE))
+
+    def test_a_missing_variable_raises_response_shape_error(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        with pytest.raises(ResponseShapeError, match="'tblStrassen' not found"):
+            JsVarParser("tblStrassen")(self._mock_response(self._PAGE))
+
+    def test_a_non_json_literal_raises_response_shape_error(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        page = "<script>var rows = [{'a': 1},];</script>"
+        with pytest.raises(ResponseShapeError, match="not a JSON literal"):
+            JsVarParser("rows")(self._mock_response(page))
+
+    def test_needs_a_name(self):
+        from waste_collection_schedule.parsers import JsVarParser
+
+        with pytest.raises(ValueError):
+            JsVarParser()
+
+
 class TestBartecPublicDashboard:
     """The Bartec Municipal Public Dashboard components."""
 

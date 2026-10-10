@@ -580,6 +580,62 @@ class EvalJsonParser(Parser[Any]):
         return data
 
 
+class JsVarParser(Parser[Any]):
+    """Read the JSON literals a page assigns to JavaScript variables.
+
+    For a server-rendered page that ships its data as inline script rather than
+    from an API, e.g. ``var tblStrassen = [{"StrassenId": "3011", ...}];``.
+    Each named variable's first ``var``/``let``/``const`` assignment is located
+    and the literal after ``=`` is decoded with ``json`` (so it must be strict
+    JSON: double quotes, no trailing commas). The literal is decoded rather
+    than matched up to the next ``];``, so a string containing ``];`` cannot
+    cut it short::
+
+        parse = parsers.JsVarParser("events")              # the decoded value
+        parse = parsers.JsVarParser("tblStrassen", "tblTermine")
+        # -> {"tblStrassen": [...], "tblTermine": [...]}
+
+    One name returns its value; several return a ``{name: value}`` dict. A
+    variable that is missing or not a JSON literal means the page changed: the
+    response is logged and ``ResponseShapeError`` is raised.
+    """
+
+    def __init__(self, *names: str):
+        if not names:
+            raise ValueError("JsVarParser needs at least one variable name")
+        self.names = names
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
+        import json
+
+        text = response.text
+        decoder = json.JSONDecoder()
+        source_name = response_shape.source_name(source)
+        values: dict[str, Any] = {}
+        for name in self.names:
+            match = re.search(rf"\b(?:var|let|const)\s+{re.escape(name)}\s*=\s*", text)
+            if match is None:
+                response_shape.expect(
+                    False,
+                    source_name=source_name,
+                    detail=f"JavaScript variable {name!r} not found",
+                    raw=text[:500],
+                )
+                continue  # not reached: expect() raised
+            try:
+                values[name], _ = decoder.raw_decode(text, match.end())
+            except ValueError:
+                response_shape.expect(
+                    False,
+                    source_name=source_name,
+                    detail=f"JavaScript variable {name!r} is not a JSON literal",
+                    raw=text[match.start() : match.start() + 500],
+                )
+        if len(self.names) == 1:
+            return values[self.names[0]]
+        return values
+
+
 class DateListParser(Parser["list[tuple[str, str]]"]):
     """Parse a JSON payload that is a flat array of date strings.
 

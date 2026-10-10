@@ -133,6 +133,7 @@ def retrieve(self, source):
 | `JsonParser()` | `response.json()` |
 | `JsonParser("collections")` | `response.json()["collections"]` (drill into a nested key; pass several keys for a path) |
 | `EvalJsonParser("dane")` | JSON wrapped in a JavaScript `eval(...)` call (trailing commas tolerated), drilled into like `JsonParser`; `parsers.eval_json(response)` is the same reading for a `Lookup` `pick` |
+| `JsVarParser("tblStrassen", "tblTermine")` | JSON literals assigned to JavaScript variables (`var`/`let`/`const`) in an inline script; one name returns its value, several a `{name: value}` dict |
 | `HtmlParser("tr", skip=1)` | CSS-selected elements; `skip` drops leading results such as a header row |
 | `HtmlParser("article", from_json_key="responseContent")` | HTML rendered inside a JSON field (e.g. the OCAPI `wasteservices` endpoint many AU councils use) |
 | `IcsParser()` | `list[(date, summary)]` |
