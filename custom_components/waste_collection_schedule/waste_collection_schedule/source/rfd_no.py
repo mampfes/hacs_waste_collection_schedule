@@ -100,6 +100,22 @@ def _house_number(value: str) -> tuple[str, str]:
     return (match.group(1), match.group(2)) if match else ("", "")
 
 
+def _address_forms(address: dict) -> set[str]:
+    """Return the normalized spellings accepted for an address result."""
+    street = (
+        f"{address.get('GateNavn', '')} "
+        f"{address.get('AdresseHusNummer', '')}{address.get('AdresseBokstav') or ''}"
+    )
+    forms = {address.get("Text", "")}
+    for place in (
+        address.get("KommuneNavn"),
+        f"{address.get('PostNummer', '')} {address.get('PostSted', '')}",
+    ):
+        if place and street.strip():
+            forms.add(f"{street}, {place}")
+    return {_normalize(form) for form in forms if form}
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address
@@ -176,7 +192,7 @@ class Source:
         exact_matches = [
             address
             for address in addresses
-            if _normalize(address.get("Text", "")) == address_normalized
+            if address_normalized in _address_forms(address)
         ]
 
         if len(exact_matches) == 1:
