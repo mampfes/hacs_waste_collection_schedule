@@ -494,8 +494,10 @@ This source has been successfully tested with the following service providers:
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
-- [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
-- [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
+- [Westmorland & Furness Council](/doc/ics/westmorlandandfurness_gov_uk.md) / westmorlandandfurness.gov.uk
+- [Westmorland & Furness Council, Barrow area](/doc/ics/westmorlandandfurness_gov_uk.md) / barrowbc.gov.uk
+- [Westmorland & Furness Council, Eden area](/doc/ics/westmorlandandfurness_gov_uk.md) / eden.gov.uk
+- [Westmorland & Furness Council, South Lakeland area](/doc/ics/westmorlandandfurness_gov_uk.md) / southlakeland.gov.uk
 
 ### United States of America
 

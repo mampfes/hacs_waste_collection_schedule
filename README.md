@@ -3928,8 +3928,10 @@ If you already have enough information for your municipality/region, you are ver
 - [West Oxfordshire District Council](/doc/source/westoxon_gov_uk.md) / westoxon.gov.uk
 - [West Suffolk Council](/doc/source/westsuffolk_gov_uk.md) / westsuffolk.gov.uk
 - [Westminster City Council](/doc/source/westminster_gov_uk.md) / westminster.gov.uk
-- [Westmorland & Furness Council, Barrow area](/doc/ics/barrowbc_gov_uk.md) / barrowbc.gov.uk
-- [Westmorland & Furness Council, South Lakeland area](/doc/ics/southlakeland_gov_uk.md) / southlakeland.gov.uk
+- [Westmorland & Furness Council](/doc/ics/westmorlandandfurness_gov_uk.md) / westmorlandandfurness.gov.uk
+- [Westmorland & Furness Council, Barrow area](/doc/ics/westmorlandandfurness_gov_uk.md) / barrowbc.gov.uk
+- [Westmorland & Furness Council, Eden area](/doc/ics/westmorlandandfurness_gov_uk.md) / eden.gov.uk
+- [Westmorland & Furness Council, South Lakeland area](/doc/ics/westmorlandandfurness_gov_uk.md) / southlakeland.gov.uk
 - [Wigan Council](/doc/source/wigan_gov_uk.md) / wigan.gov.uk
 - [Wiltshire Council](/doc/source/wiltshire_gov_uk.md) / wiltshire.gov.uk
 - [Winchester City Council](/doc/source/iapp_itouchvision_com.md) / winchester.gov.uk
