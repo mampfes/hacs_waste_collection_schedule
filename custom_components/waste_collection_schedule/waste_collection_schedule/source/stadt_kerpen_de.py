@@ -1,9 +1,11 @@
 from typing import ClassVar, final
 
 from waste_collection_schedule import field_terms
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.config_params import cascading_select, waste_types
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.source.abfall_io import Source as AbfallIOSource
+from waste_collection_schedule.transformers import ICSTransformer
 
 # Kerpen's waste collection is run by Schönmackers, whose MüllALARM service is
 # the abfall.io platform. This is the same structure as abfall_io with the key
@@ -27,10 +29,16 @@ class Source(AbfallIOSource):
     REGIONS = (region(TITLE, url=URL),)
 
     TEST_CASES: ClassVar[dict] = {
-        "Amselweg": {
-            "f_id_strasse": "3703amselweg",
-            "f_id_strasse_hnr": "19409",
-        }
+        # The ids the config flow's district -> street -> house number cascade
+        # stores (Amselweg 1, Bezirk Kerpen). The former case
+        # (f_id_strasse "3703amselweg", f_id_strasse_hnr "19409") never pointed
+        # at Kerpen: abfall.io resolves the export by the house-number id alone,
+        # and 19409 is Pützdorfer Straße 67 in Aldenhoven.
+        "Amselweg 1 (Bezirk Kerpen)": {
+            "f_id_bezirk": "9739",
+            "f_id_strasse": "184953",
+            "f_id_strasse_hnr": "184953",
+        },
     }
 
     HOWTO: ClassVar[dict] = {
@@ -63,6 +71,16 @@ class Source(AbfallIOSource):
     )
 
     PINNED_PARAMS: ClassVar[dict] = {"key": _KEY, "f_id_kommune": _KOMMUNE}
+
+    # Declared explicitly: defining transform below would otherwise make
+    # BaseSource derive WASTE_TYPES from its one-entry map alone.
+    WASTE_TYPES: ClassVar[list] = AbfallIOSource.WASTE_TYPES
+
+    # Schönmackers' local name for Kerpen's bundled green cuttings collection,
+    # which the shared vocabulary does not alias.
+    transform = ICSTransformer(
+        type_value_map={"Grünbündel": wt.GARDEN_WASTE},
+    )
 
     def __init__(
         self,

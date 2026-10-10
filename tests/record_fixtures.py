@@ -164,14 +164,27 @@ def record_cascading_choices(module_name: str) -> bool:
         "expected": expected,
     }
     try:
+        resolved = []
         with cassette.recording(path, today, extra=extra):
             selections = dict(context)
             for field in fields:
                 if field not in expected:
                     continue
-                source_cls.get_choices(field, dict(selections))
+                if source_cls.get_choices(field, dict(selections)):
+                    resolved.append(field)
                 selections[field] = expected[field]
-        print(f"  recorded cascading choices for {module_name} ({list(expected)})")
+        if not resolved:
+            # test_offline_choices needs at least one level with options. An
+            # all-empty walk usually means the TEST_CASE skips a level the
+            # provider requires (e.g. a district), so do not keep a cassette
+            # that can only fail.
+            os.remove(path)
+            print(
+                f"  ! {module_name} choices: no cascade level returned options "
+                f"for {expected}; does the TEST_CASE skip a required level?"
+            )
+            return True
+        print(f"  recorded cascading choices for {module_name} ({resolved})")
     except Exception as exc:
         if os.path.exists(path):
             os.remove(path)
