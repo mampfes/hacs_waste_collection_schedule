@@ -25476,11 +25476,12 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -25488,11 +25489,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
-        "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
-        }
+        "data_description": {}
       },
       "args_lincoln_gov_uk": {
         "title": "Bron configureren",

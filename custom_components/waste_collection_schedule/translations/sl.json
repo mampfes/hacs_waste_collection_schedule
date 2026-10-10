@@ -25463,11 +25463,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "postcode": "Poštna številka",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -25475,11 +25476,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "postcode": "Poštna številka",
           "uprn": "UPRN"
         },
-        "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
-        }
+        "data_description": {}
       },
       "args_lincoln_gov_uk": {
         "title": "Configure Source",

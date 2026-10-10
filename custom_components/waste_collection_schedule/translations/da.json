@@ -25462,11 +25462,12 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
+          "address": "Address",
+          "postcode": "Postnummer",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -25474,11 +25475,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
+          "address": "Address",
+          "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
-        }
+        "data_description": {}
       },
       "args_lincoln_gov_uk": {
         "title": "Konfigurer Kilde",

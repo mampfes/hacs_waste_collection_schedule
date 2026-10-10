@@ -5878,10 +5878,10 @@
   },
   "doncaster_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/doncaster_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "Open https://doncaster-wasterecycling.oncreate.app/w/webpage/bin-query and enter your postcode and, if you like, your house number or name. Use the same postcode and the house number or name of your property as the arguments. If several properties match, the error message lists the exact addresses to choose from."
+    },
+    "urls": {}
   },
   "lincoln_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lincoln_gov_uk.md",
