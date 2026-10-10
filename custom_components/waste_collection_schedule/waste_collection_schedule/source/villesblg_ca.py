@@ -17,7 +17,7 @@ from waste_collection_schedule.transformers import JsonTransformer
 
 FEED_URL = "https://www.villesblg.ca/calendrier-categories/collectes-et-depots/feed/"
 
-_DATE_FORMAT = "%d/%m/%Y"
+_parse_date = date_parsers.for_format("%d/%m/%Y")
 
 # Keyword in the event title -> the short label it is reported under.
 _KEYWORDS = (
@@ -42,10 +42,9 @@ def _is_upcoming_collection(item, source) -> bool:
     if "rebuts" in title or "dangereux" in title:
         return False
     try:
-        day = datetime.datetime.strptime(_start_day(item), _DATE_FORMAT).date()
-    except ValueError:
+        return _parse_date(_start_day(item)) >= datetime.date.today()
+    except ValueError:  # "Aucune" - no date set
         return False
-    return day >= datetime.date.today()
 
 
 def _label(title: str) -> str:
@@ -95,7 +94,7 @@ class Source(BaseSource):
     transform = JsonTransformer(
         date_key=_start_day,
         type_key=_title,
-        parse_date=date_parsers.for_format(_DATE_FORMAT),
+        parse_date=_parse_date,
         clean=_label,
         type_value_map={
             "Ordures": wt.GENERAL_WASTE,
