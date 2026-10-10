@@ -56,6 +56,7 @@ CONF_DATE_TEMPLATE: Final = "date_template"
 CONF_COLLECTION_TYPES: Final = "types"
 CONF_ADD_DAYS_TO: Final = "add_days_to"
 CONF_EVENT_INDEX: Final = "event_index"
+CONF_UNIQUE_TYPES: Final = "unique_types"
 
 
 CONF_SENSORS: Final = "sensors"

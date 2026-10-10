@@ -29,6 +29,7 @@ from .const import (
     CONF_LEADTIME,
     CONF_SENSORS,
     CONF_SOURCE_INDEX,
+    CONF_UNIQUE_TYPES,
     DOMAIN,
     UPDATE_SENSORS_SIGNAL,
 )
@@ -65,6 +66,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_DATE_TEMPLATE): cv.template,
         vol.Optional(CONF_ADD_DAYS_TO, default=False): cv.boolean,
         vol.Optional(CONF_EVENT_INDEX, default=0): cv.positive_int,
+        vol.Optional(CONF_UNIQUE_TYPES, default=False): cv.boolean,
     }
 )
 
@@ -108,6 +110,7 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
                 date_template=date_template,
                 add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
                 event_index=sensor.get(CONF_EVENT_INDEX),
+                unique_types=sensor.get(CONF_UNIQUE_TYPES, False),
             )
         )
 
@@ -192,6 +195,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             date_template=date_template,
             add_days_to=sensor_config.get(CONF_ADD_DAYS_TO, False),
             event_index=sensor_config.get(CONF_EVENT_INDEX, 0),
+            unique_types=sensor_config.get(CONF_UNIQUE_TYPES, False),
         )
     )
 
@@ -216,6 +220,7 @@ class ScheduleSensor(SensorEntity):
         date_template: Template | None,
         add_days_to: bool,
         event_index: int | None,
+        unique_types: bool = False,
     ):
         """Initialize the entity."""
         self._api = api
@@ -229,6 +234,7 @@ class ScheduleSensor(SensorEntity):
         self._date_template = date_template
         self._add_days_to = add_days_to
         self._event_index = event_index
+        self._unique_types = unique_types
 
         self._value: Any = None
 
@@ -325,6 +331,7 @@ class ScheduleSensor(SensorEntity):
             include_types=self._collection_types,
             include_today=self._include_today,
             start_index=self._event_index,
+            unique_types=self._unique_types,
         )
 
         self._set_state(upcoming1)
@@ -345,6 +352,7 @@ class ScheduleSensor(SensorEntity):
                 include_types=self._collection_types,
                 include_today=self._include_today,
                 start_index=self._event_index,
+                unique_types=self._unique_types,
             )
             for collection in upcoming:
                 attributes[self._render_date(collection)] = self._separator.join(
@@ -371,6 +379,7 @@ class ScheduleSensor(SensorEntity):
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
                 include_today=self._include_today,
+                unique_types=self._unique_types,
             )
             refreshtime = ""
             if self._aggregator.refreshtime is not None:
