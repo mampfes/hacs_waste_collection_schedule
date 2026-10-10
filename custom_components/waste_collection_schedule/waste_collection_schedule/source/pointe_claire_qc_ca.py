@@ -2,17 +2,12 @@
 
 Demonstrates: a static ICS GET whose URL is a fixed per-sector lookup (an
 invalid sector raises ``SourceArgumentNotFoundWithSuggestions``, same as the
-legacy source) rather than a URL template. ``HttpGetRetriever`` + the
-extended ``IcsParser`` + ``ICSTransformer`` do the rest.
+legacy source) rather than a URL template. ``HttpGetRetriever`` +
+``IcsParser`` + ``ICSTransformer`` do the rest.
 
-The legacy source's suffix-strip regex targeted "(Sector A)" (with
-parentheses), but the feed's actual suffix is " - Sector A" (a dash) — the
-strip never matched, so every summary (and every ``ICON_MAP`` lookup against
-it) carried the redundant sector suffix and always missed, showing no icon
-for any collection. Fixed here: the ``IcsParser`` regex matches the real
-suffix, and every observed category (including three the old ``ICON_MAP``
-never covered at all: Ecocentre, Leaf and Mattress/Box-Spring collections)
-is mapped to a canonical type.
+The feeds are the City's official per-sector ICS calendars. Their summaries
+are the bare French category names (no sector suffix), each mapped to a
+canonical type below.
 """
 
 from typing import ClassVar, final
@@ -26,8 +21,8 @@ from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _SECTOR_URL_MAP: dict[str, str] = {
-    "A": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=2",
-    "B": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=3",
+    "A": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=2",  # codespell:ignore espace
+    "B": "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects=3",  # codespell:ignore espace
 }
 
 
@@ -69,7 +64,7 @@ class Source(BaseSource):
     PARAMS = (dropdown("sector", ["A", "B"], label="Sector"),)
 
     retrieve = HttpGetRetriever(url=_sector_url)
-    parse = parsers.IcsParser(regex=r"^(.*?)\s*-\s*Sector [AB]$")
+    parse = parsers.IcsParser()
     transform = ICSTransformer(
         type_value_map={
             "Matières organiques": wt.ORGANIC,
