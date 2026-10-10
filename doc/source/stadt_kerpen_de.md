@@ -38,8 +38,9 @@ waste_collection_schedule:
   sources:
     - name: stadt_kerpen_de
       args:
-        f_id_strasse: 3703amselweg
-        f_id_strasse_hnr: '19409'
+        f_id_bezirk: '9739'
+        f_id_strasse: '184953'
+        f_id_strasse_hnr: '184953'
 ```
 
 ## How to get the source arguments
