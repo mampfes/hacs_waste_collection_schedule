@@ -36,11 +36,14 @@ def _rows(tables, source):
 
     matches = [s for s in streets if _key(s["Strasse"]) == _key(street_name)]
     if not matches:
+        # Suggest the village's streets; all streets when no (known) village.
         in_city = [s for s in streets if _key(s["Gemeinde"]) == _key(city_name)]
         raise SourceArgumentNotFoundWithSuggestions(
             "street",
             street_name,
-            sorted({s["Strasse"] for s in (in_city if city_name else streets)}),
+            sorted(
+                {s["Strasse"] for s in (in_city if city_name and in_city else streets)}
+            ),
         )
     if city_name:
         in_city = [s for s in matches if _key(s["Gemeinde"]) == _key(city_name)]
