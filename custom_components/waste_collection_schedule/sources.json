@@ -16895,6 +16895,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Landkreis Mansfeld-S\u00fcdharz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_eaw_wastebox_gemos_de"
+    },
+    {
       "title": "Landkreis Mecklenburgische Seenplatte",
       "module": "lk_mecklenburgische_seenplatte_de",
       "default_params": {},

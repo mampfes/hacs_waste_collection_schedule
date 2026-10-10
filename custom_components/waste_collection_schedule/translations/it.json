@@ -4167,10 +4167,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "region": "Regione"
+          "region": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "region": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4178,9 +4179,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "region": "Regione"
+          "region": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_elsbethen_at": {
         "title": "Configurazione Sorgente",
@@ -23680,10 +23683,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "waste_district": "Waste District"
+          "waste_district": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "waste_district": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -23691,9 +23695,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "waste_district": "Waste District"
+          "waste_district": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Configurazione Sorgente",
@@ -24239,7 +24245,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_id": "Address Id"
+          "address_id": "ID posizione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -24250,7 +24256,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_id": "Address Id"
+          "address_id": "ID posizione"
         },
         "data_description": {}
       },

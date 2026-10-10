@@ -4152,10 +4152,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "region": "Regio"
+          "region": "Wijk"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "region": "Uw wijk of deel van de gemeente."
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4163,9 +4164,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "region": "Regio"
+          "region": "Wijk"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Uw wijk of deel van de gemeente."
+        }
       },
       "args_elsbethen_at": {
         "title": "Bron configureren",
@@ -23587,10 +23590,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "waste_district": "Waste District"
+          "waste_district": "Wijk"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "waste_district": "Uw wijk of deel van de gemeente."
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -23598,9 +23602,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "waste_district": "Waste District"
+          "waste_district": "Wijk"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Uw wijk of deel van de gemeente."
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Bron configureren",
@@ -24146,7 +24152,7 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address_id": "Address Id"
+          "address_id": "Locatie-ID"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
@@ -24157,7 +24163,7 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address_id": "Address Id"
+          "address_id": "Locatie-ID"
         },
         "data_description": {}
       },

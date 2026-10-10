@@ -4150,10 +4150,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Regija"
+          "region": "Naselje"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "region": "Vaše naselje ali del občine."
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4161,9 +4162,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Regija"
+          "region": "Naselje"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Vaše naselje ali del občine."
+        }
       },
       "args_elsbethen_at": {
         "title": "Configure Source",
@@ -23574,10 +23577,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_district": "Waste District"
+          "waste_district": "Naselje"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "waste_district": "Vaše naselje ali del občine."
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -23585,9 +23589,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_district": "Waste District"
+          "waste_district": "Naselje"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Vaše naselje ali del občine."
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Configure Source",
@@ -24133,7 +24139,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "ID lokacije"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -24144,7 +24150,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "ID lokacije"
         },
         "data_description": {}
       },

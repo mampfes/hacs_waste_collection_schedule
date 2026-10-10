@@ -4198,7 +4198,8 @@
           "region": "Ortsteil"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "region": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4208,7 +4209,9 @@
           "calendar_title": "Kalender Titel",
           "region": "Ortsteil"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Ihr Ortsteil oder Stadtteil."
+        }
       },
       "args_elsbethen_at": {
         "title": "Quelle konfigurieren",
@@ -23773,10 +23776,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "waste_district": "Abfuhrkreis"
+          "waste_district": "Ortsteil"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "waste_district": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -23784,9 +23788,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "waste_district": "Abfuhrkreis"
+          "waste_district": "Ortsteil"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Ihr Ortsteil oder Stadtteil."
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Quelle konfigurieren",
@@ -24332,7 +24338,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_id": "Address Id"
+          "address_id": "Standort-ID"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -24343,7 +24349,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_id": "Address Id"
+          "address_id": "Standort-ID"
         },
         "data_description": {}
       },

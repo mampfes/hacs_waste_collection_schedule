@@ -1026,7 +1026,10 @@
   },
   "bad_eisenkappel_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md",
-    "howto": {},
+    "howto": {
+      "de": "Der Ortsteil muss einem der Ortsteile in der dritten Spalte der Tabelle auf <https://www.bad-eisenkappel.info/gemeinde/onlineservice/abfuhrtermine.html> entsprechen.",
+      "en": "The region should match one of the regions listed in the third column of the table at <https://www.bad-eisenkappel.info/gemeinde/onlineservice/abfuhrtermine.html>"
+    },
     "urls": {}
   },
   "elsbethen_at": {
@@ -1696,7 +1699,10 @@
   },
   "villesblg_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/villesblg_ca.md",
-    "howto": {},
+    "howto": {
+      "en": "No arguments required - the calendar is the same for all residents of Saint-Basile-le-Grand.",
+      "fr": "Aucun argument requis - le calendrier est le même pour tous les résidents de Saint-Basile-le-Grand."
+    },
     "urls": {}
   },
   "myutility_winnipeg_ca": {
@@ -2760,7 +2766,8 @@
   "ics_eaw_wastebox_gemos_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eaw_wastebox_gemos_de.md",
     "howto": {
-      "en": "- Go to the EAW Sangerhausen waste calendar at <https://eaw.wastebox.gemos-management.de>.\n- Select your area and find the ICS download link.\n- Use this URL as the `url` parameter.\n"
+      "de": "- Öffnen Sie den EAW-Tourenplan unter <https://eaw.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/> (auch eingebettet unter <https://www.abfallwirtschaft-msh.de/index.php/eaw-services-hm/eaw-tup-web-hm>).\n- Wählen Sie Ihren Ort (`Ort/Ortsteil`) und, falls abgefragt, Ihre Straße. Passen Sie bei Bedarf die Sammelsysteme und den Restabfall-Rhythmus an.\n- Klicken Sie auf `Exportieren iCal` und kopieren Sie den angezeigten Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link enthält IDs, die sich ändern, wenn die EAW einen neuen Tourenplan veröffentlicht (in der Regel einmal im Jahr). Der Kalender zeigt dann nur noch den Eintrag \"Es sind neue Abfuhrtermine verfügbar!\". Erzeugen Sie in diesem Fall einen neuen Link und ersetzen Sie die `url`.\n",
+      "en": "- Go to the EAW waste calendar at <https://eaw.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/> (also embedded at <https://www.abfallwirtschaft-msh.de/index.php/eaw-services-hm/eaw-tup-web-hm>).\n- Select your town (`Ort/Ortsteil`) and, if asked, your street. Adjust the waste types and the residual waste rhythm if needed.\n- Click `Exportieren iCal` and copy the link shown in the dialog.\n- Use this link as the `url` parameter.\n- The link contains IDs that change when EAW publishes a new tour plan (usually once a year). The feed then only shows the entry \"Es sind neue Abfuhrtermine verfügbar!\". Generate a new link and update the `url` when that happens.\n"
     },
     "urls": {}
   },
@@ -5353,7 +5360,10 @@
   },
   "muenchenstein_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muenchenstein_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie Ihren Abfuhrkreis ein, Abfuhrkreis Ost oder Abfuhrkreis West, oder seine ID: 491 für Ost, 492 für West.",
+      "en": "Enter your waste district, Abfuhrkreis Ost or Abfuhrkreis West, or its ID: 491 for Ost, 492 for West."
+    },
     "urls": {}
   },
   "ics_muensingen_ch": {

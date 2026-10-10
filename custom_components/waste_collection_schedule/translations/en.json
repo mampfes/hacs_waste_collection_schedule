@@ -4264,10 +4264,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Region"
+          "region": "District"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "region": "Your district or part of the municipality."
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4275,9 +4276,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Region"
+          "region": "District"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Your district or part of the municipality."
+        }
       },
       "args_elsbethen_at": {
         "title": "Configure Source",
@@ -24111,10 +24114,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_district": "Waste District"
+          "waste_district": "District"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "waste_district": "Your district or part of the municipality."
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -24122,9 +24126,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_district": "Waste District"
+          "waste_district": "District"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Your district or part of the municipality."
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Configure Source",
@@ -24673,7 +24679,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -24684,7 +24690,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Location ID"
         },
         "data_description": {}
       },

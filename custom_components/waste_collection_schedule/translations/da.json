@@ -4152,10 +4152,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "region": "Region"
+          "region": "Distrikt"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "region": "Dit distrikt eller del af kommunen"
         }
       },
       "reconfigure_bad_eisenkappel_info": {
@@ -4163,9 +4164,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "region": "Region"
+          "region": "Distrikt"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Dit distrikt eller del af kommunen"
+        }
       },
       "args_elsbethen_at": {
         "title": "Konfigurer Kilde",
@@ -23573,10 +23576,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "waste_district": "Waste District"
+          "waste_district": "Distrikt"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "waste_district": "Dit distrikt eller del af kommunen"
         }
       },
       "reconfigure_muenchenstein_ch": {
@@ -23584,9 +23588,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "waste_district": "Waste District"
+          "waste_district": "Distrikt"
         },
-        "data_description": {}
+        "data_description": {
+          "waste_district": "Dit distrikt eller del af kommunen"
+        }
       },
       "args_ics_muensingen_ch": {
         "title": "Konfigurer Kilde",
@@ -24132,7 +24138,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_id": "Address Id"
+          "address_id": "Lokations-ID"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
@@ -24143,7 +24149,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_id": "Address Id"
+          "address_id": "Lokations-ID"
         },
         "data_description": {}
       },

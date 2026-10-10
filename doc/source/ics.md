@@ -357,6 +357,7 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
+- [Landkreis Mansfeld-Südharz](/doc/ics/eaw_wastebox_gemos_de.md) / abfallwirtschaft-msh.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de

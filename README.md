@@ -2335,6 +2335,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io_graphql.md) / landkreis-limburg-weilburg.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Main-Spessart](/doc/source/app_abfallplus_de.md) / abfallplus.de
+- [Landkreis Mansfeld-Südharz](/doc/ics/eaw_wastebox_gemos_de.md) / abfallwirtschaft-msh.de
 - [Landkreis Mecklenburgische Seenplatte](/doc/source/lk_mecklenburgische_seenplatte_de.md) / lk-mecklenburgische-seenplatte.de
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Märkisch-Oderland](/doc/source/abfall_io_graphql.md) / maerkisch-oderland.de
