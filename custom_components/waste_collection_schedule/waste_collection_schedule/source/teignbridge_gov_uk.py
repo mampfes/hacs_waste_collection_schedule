@@ -23,7 +23,7 @@ ICON_MAP = {
 }
 
 ADDRESS_URL = "https://www.teignbridge.gov.uk/repositories/hidden-pages/address-finder"
-BIN_URL = "https://www.teignbridge.gov.uk/repositories/hidden-pages/bin-finder"
+BIN_URL = "https://www.teignbridge.gov.uk/umbraco/surface/bincollection/GetCollections"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit <a href='https://www.teignbridge.gov.uk/recycling-and-waste/forms/download-your-collection-calendar/'>Download your collection calendar</a>, enter your postcode and note the UPRN from the address dropdown.",
