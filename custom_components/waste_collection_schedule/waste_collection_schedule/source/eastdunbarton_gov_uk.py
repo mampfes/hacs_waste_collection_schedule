@@ -47,7 +47,7 @@ class Source(BaseSource):
         ),
         params=lambda uprn, **_: {"uprn": uprn},
     )
-    parse = parsers.HtmlParser("tr:has(td span)")
+    parse = parsers.HtmlParser("tr:has(span)")
     # "Monday, 28 September 2026"
     transform = HtmlTransformer(
         date_getter=lambda row: _text(row, "td span").split(", ")[1],

@@ -33,7 +33,7 @@ class Source(BaseSource):
         url="https://www.runnymede.gov.uk/bin-collection-day",
         params=lambda uprn, **_: {"address": uprn},
     )
-    parse = parsers.HtmlParser("tr:has(td + td)")
+    parse = parsers.HtmlParser("tr:has(> td:nth-of-type(2))")
     transform = HtmlTransformer(
         date_getter=lambda row: row.select("td")[1].get_text(strip=True),
         type_getter=lambda row: row.select("td")[0].get_text(strip=True),

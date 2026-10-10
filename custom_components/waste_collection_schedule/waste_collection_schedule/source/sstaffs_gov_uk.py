@@ -37,7 +37,7 @@ class Source(BaseSource):
     # The next collection is highlighted above a table of the following ones;
     # both name every round collected that day ("General Waste & Food Waste").
     parse = parsers.HtmlLabelledDates(
-        ":has(> p.collection-date), tr:has(td + td)",
+        ":has(> p.collection-date), tr:has(> td:nth-of-type(2))",
         label="p.collection-type, td:nth-of-type(1)",
         date="p.collection-date, td:nth-of-type(2)",
         label_separator="&",

@@ -82,7 +82,7 @@ class Source(BaseSource):
     # The rows hold one rendered HTML fragment: a date heading per collection
     # day, followed by a list of the bins emptied that day.
     parse = parsers.HtmlLabelledDates(
-        "div:has(> div > h3)",
+        "div:has(> div):has(h3)",
         label="ul span",
         date="h3",
         all_labels=True,
