@@ -697,6 +697,15 @@ the recording date). Commit those. `tests/test_offline_fixtures.py` then replays
 them with the clock frozen to the recording date, so the run is deterministic.
 Re-record when a provider changes its response.
 
+**Unfilterable feeds.** If the provider answers every request with one feed for
+all of its customers and offers no way to ask for less, the verbatim cassette can
+run to megabytes per case. Register a scrubber for the source in
+`tests/cassette_scrubbers.py`: `record_fixtures.py` runs it on the live
+interactions before writing, and it cuts the response down to the records the
+case reads (`sica_lu` keeps the configured commune's collections from the
+recording day on). A scrubber only removes records; it never edits or invents
+one, and re-recording reproduces the same trimmed cassette.
+
 **Minimum fixture coverage (enforced).** One cassette **per `TEST_CASES` entry**,
 named by slugging the case key, so `"Amagerbrogade 10"` becomes
 `amagerbrogade_10.json`. That slug is the only link between a case and its

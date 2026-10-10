@@ -46,6 +46,7 @@ import hashlib
 import json
 import os
 import threading
+from collections.abc import Callable
 from typing import Any
 from unittest.mock import patch
 from urllib.parse import parse_qsl, urlencode
@@ -373,6 +374,7 @@ def recording(
     expect_exception: type[BaseException]
     | tuple[type[BaseException], ...]
     | None = None,
+    scrub: Callable[[list[dict]], None] | None = None,
 ):
     """Patch both stacks to pass through and record interactions to ``path``.
 
@@ -386,6 +388,11 @@ def recording(
     (with an ``expected_error`` entry recording the exception's type and
     message) and the exception is then re-raised, rather than being discarded
     the way an unexpected exception still is.
+
+    ``scrub`` is called with the captured interactions just before they are
+    written, and may trim them in place (see ``cassette_scrubbers.py``). It is
+    for a provider whose response cannot be narrowed server side, so the
+    cassette keeps only the part of it the test case reads.
     """
     interactions: list[dict] = []
     orig_cffi_request = _cffi.Session.request
@@ -446,6 +453,8 @@ def recording(
         # expected exception), so an unexpected failure never leaves a
         # partial/misleading recording behind.
         if success:
+            if scrub is not None:
+                scrub(interactions)
             payload: dict[str, Any] = {
                 "recorded_at": today,
                 "interactions": interactions,
