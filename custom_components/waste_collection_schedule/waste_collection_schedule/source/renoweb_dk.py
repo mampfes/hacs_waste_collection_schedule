@@ -158,6 +158,10 @@ class Source(BaseSource):
             "municipality": "Rødovre",
             "address": "Rødovre Parkvej 150",
         },
+        "Aabenraa (shared containers)": {
+            "municipality": "Aabenraa",
+            "address": "Farversmøllevej 30, 6200 Aabenraa",
+        },
     }
 
     PARAMS = (
@@ -223,7 +227,12 @@ class Source(BaseSource):
         params=lambda road_id, address_id, municipality, **_: {
             "adressId": address_id,
             "fullinfo": 1,
-            "supportsSharedEquipment": 0,
+            # Addresses in apartment blocks or housing estates often have no
+            # containers of their own and use shared ones placed at another
+            # address. With 0 the API returns an empty list for them; with 1
+            # it includes those shared containers. Addresses with their own
+            # containers get the same list either way.
+            "supportsSharedEquipment": 1,
             "municipalitycode": _municipality_code(municipality),
             "apikey": API_KEY,
         },
