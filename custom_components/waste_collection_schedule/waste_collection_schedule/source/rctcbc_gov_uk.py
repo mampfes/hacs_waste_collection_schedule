@@ -53,7 +53,7 @@ class Source(BaseSource):
     # The page carries a printable calendar of the next three months whichever
     # ``month`` is requested, so the first page holds the whole schedule.
     retrieve = HttpGetRetriever(
-        url="https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx",
+        url="https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWasteServices/Findyourrecyclingandwastecollectionday.aspx",
         params=lambda uprn, **_: {"uprn": str(uprn), "month": 0},
     )
     parse = parsers.HtmlParser(".printableCalendar .calendar-wrap .card-body-padding a")
