@@ -30,7 +30,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {"locality": "Name of the locality"}
+    "en": {"locality": "Name of the locality"},
+    "nl": {"locality": "Naam van de plaats"},
 }
 
 

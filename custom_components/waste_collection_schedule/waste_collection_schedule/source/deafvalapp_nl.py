@@ -69,6 +69,11 @@ PARAM_TRANSLATIONS = {
         "house_number": "Numero civico",
         "house_number_addition": "Estensione del numero civico",
     },
+    "nl": {
+        "postcode": "Postcode",
+        "house_number": "Huisnummer",
+        "house_number_addition": "Huisnummertoevoeging",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -91,6 +96,11 @@ PARAM_DESCRIPTIONS = {
         "postcode": "CAP olandese del tuo indirizzo, ad es. '5406XP'",
         "house_number": "Numero civico del tuo indirizzo, ad es. '9'",
         "house_number_addition": "Estensione facoltativa del numero civico, ad es. 'A'",
+    },
+    "nl": {
+        "postcode": "Nederlandse postcode van je adres, bijv. '5406XP'",
+        "house_number": "Huisnummer van je adres, bijv. '9'",
+        "house_number_addition": "Optionele huisnummertoevoeging, bijv. 'A'",
     },
 }
 
