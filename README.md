@@ -147,6 +147,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Fraser Coast Regional Council](/doc/source/frasercoast_qld_gov_au.md) / frasercoast.qld.gov.au
+- [Georges River Council](/doc/source/wastetrack_net.md) / georgesriver.nsw.gov.au
 - [Glenorchy City Council (TAS)](/doc/source/recyclecoach_com.md) / gcc.tas.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Golden Plains Shire Council](/doc/source/goldenplains_vic_gov_au.md) / goldenplains.vic.gov.au
@@ -253,6 +254,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Wagga Wagga City Council](/doc/source/wagga_nsw_gov_au.md) / wagga.nsw.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
+- [WasteTrack (3Logix)](/doc/source/wastetrack_net.md) / v2.wastetrack.net
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Council](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
@@ -3334,6 +3336,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Erbè](/doc/source/siunet_it.md) / siunet.it
 - [Erve](/doc/source/siunet_it.md) / siunet.it
 - [Esino Lario](/doc/source/siunet_it.md) / siunet.it
+- [ETRA S.p.A.](/doc/source/etraspa_it.md) / etraspa.it
 - [Faleria](/doc/source/junker_app.md) / junker.app
 - [Fasano](/doc/source/siunet_it.md) / siunet.it
 - [Ferentillo](/doc/source/siunet_it.md) / siunet.it

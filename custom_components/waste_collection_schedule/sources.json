@@ -732,6 +732,14 @@
       "id": "frasercoast_qld_gov_au"
     },
     {
+      "title": "Georges River Council",
+      "module": "wastetrack_net",
+      "default_params": {
+        "key": "da1d834c-3d97-4f96-9d60-4107ef0a53e6"
+      },
+      "id": "wastetrack_net"
+    },
+    {
       "title": "Glenorchy City Council (TAS)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -1409,6 +1417,12 @@
       "module": "warrnambool_vic_gov_au",
       "default_params": {},
       "id": "warrnambool_vic_gov_au"
+    },
+    {
+      "title": "WasteTrack (3Logix)",
+      "module": "wastetrack_net",
+      "default_params": {},
+      "id": "wastetrack_net"
     },
     {
       "title": "Wellington Shire Council",
@@ -24583,6 +24597,12 @@
         "comune": "ESINO LARIO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "ETRA S.p.A.",
+      "module": "etraspa_it",
+      "default_params": {},
+      "id": "etraspa_it"
     },
     {
       "title": "Faleria",

@@ -430,6 +430,13 @@
     },
     "urls": {}
   },
+  "wastetrack_net": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wastetrack_net.md",
+    "howto": {
+      "en": "Enter your street address as the council's bin day lookup shows it, e.g. '16 MacMahon Street, Hurstville'. The key is pre-filled when you pick your council."
+    },
+    "urls": {}
+  },
   "goldcoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goldcoast_qld_gov_au.md",
     "howto": {},
@@ -3997,6 +4004,11 @@
     "howto": {
       "en": "Use the Google Calendar ICS feed URL below. This calendar covers the Lanciano area served by Ecolan.\n"
     },
+    "urls": {}
+  },
+  "etraspa_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_it.md",
+    "howto": {},
     "urls": {}
   },
   "gruppoveritas_it": {
