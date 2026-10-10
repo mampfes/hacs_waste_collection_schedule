@@ -22716,7 +22716,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_telge_se": {
@@ -22726,7 +22727,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_timra_se": {
         "title": "Bron configureren",
@@ -24489,7 +24492,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_binzone_uk": {
@@ -24500,7 +24503,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_birmingham_gov_uk": {
@@ -26279,7 +26282,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_northamptonshire_gov_uk": {
@@ -26290,7 +26293,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_east_renfrewshire_gov_uk": {
@@ -28000,7 +28003,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_richmond_gov_uk": {
@@ -28010,7 +28014,9 @@
           "calendar_title": "Kalendertitel",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_southwark_gov_uk": {
         "title": "Bron configureren",

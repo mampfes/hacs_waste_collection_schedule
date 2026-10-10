@@ -1,6 +1,8 @@
 # Muswellbrook Shire Council
 
-Support for schedules provided by Muswellbrook Shire Council, NSW, Australia.
+Support for schedules provided by [Muswellbrook Shire Council](https://www.muswellbrook.nsw.gov.au).
+
+Source for Muswellbrook Shire Council, NSW, Australia.
 
 ## Configuration via configuration.yaml
 
@@ -14,12 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**zone**
+**zone**  
 *(string) (required)*
-
-Your collection zone, e.g. `3a` or `5b`. Find your zone at <https://www.muswellbrook.nsw.gov.au/waste-collection/>.
-
-Valid zones: `1a`, `1b`, `2a`, `2b`, `3a`, `3b`, `4a`, `4b`, `5a`, `5b`.
 
 ## Example
 
@@ -30,3 +28,7 @@ waste_collection_schedule:
       args:
         zone: 3a
 ```
+
+## How to get the source arguments
+
+Find your collection zone at https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as e.g. '3a' or '5b'.

@@ -662,9 +662,7 @@
     "howto": {
       "en": "Find your collection zone at https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as e.g. '3a' or '5b'."
     },
-    "urls": {
-      "url_www_muswellbrook_nsw_gov_au_waste_collection": "https://www.muswellbrook.nsw.gov.au/waste-collection/"
-    }
+    "urls": {}
   },
   "nillumbik_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md",
@@ -5592,7 +5590,9 @@
   },
   "binzone_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/binzone_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6121,7 +6121,9 @@
   },
   "east_northamptonshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_northamptonshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find the UPRN of your property, e.g. on <https://www.findmyaddress.co.uk/>."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6623,7 +6625,9 @@
   },
   "richmond_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/richmond_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

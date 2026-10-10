@@ -22699,10 +22699,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_telge_se": {
@@ -22710,9 +22711,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_timra_se": {
         "title": "Konfigurer Kilde",
@@ -24475,7 +24478,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_binzone_uk": {
@@ -24486,7 +24489,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_birmingham_gov_uk": {
@@ -26265,7 +26268,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_northamptonshire_gov_uk": {
@@ -26276,7 +26279,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_east_renfrewshire_gov_uk": {
@@ -27986,7 +27989,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_richmond_gov_uk": {
@@ -27996,7 +28000,9 @@
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_southwark_gov_uk": {
         "title": "Konfigurer Kilde",

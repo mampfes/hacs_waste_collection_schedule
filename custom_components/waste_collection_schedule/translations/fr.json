@@ -22827,7 +22827,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_telge_se": {
@@ -22837,7 +22838,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_timra_se": {
         "title": "Configurer la Source",
@@ -24610,7 +24613,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_binzone_uk": {
@@ -24621,7 +24624,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_birmingham_gov_uk": {
@@ -26400,7 +26403,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_northamptonshire_gov_uk": {
@@ -26411,7 +26414,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_east_renfrewshire_gov_uk": {
@@ -28118,11 +28121,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "uprn": "UPRN du bien"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_richmond_gov_uk": {
@@ -28130,10 +28133,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "uprn": "UPRN du bien"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southwark_gov_uk": {

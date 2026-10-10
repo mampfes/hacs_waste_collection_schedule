@@ -1,32 +1,34 @@
 # East Northamptonshire and Wellingborough
 
-Support for schedules provided by [East Northamptonshire](east-northamptonshire.gov.uk) and [Wellingborough](wellingborough.gov.uk), serving East Northamptonshire and Wellingborough, GB.
+Support for schedules provided by [East Northamptonshire and Wellingborough](east-northamptonshire.gov.uk).
+
+Source for East Northamptonshire and Wellingborough
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: east_northamptonshire_gov_uk
       args:
-        uprn: UPRN       
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(string | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: east_northamptonshire_gov_uk
       args:
-        uprn: 100031040850        
+        uprn: '100031046896'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Find the UPRN of your property, e.g. on <https://www.findmyaddress.co.uk/>.

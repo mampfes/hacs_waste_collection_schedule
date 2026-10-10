@@ -1,6 +1,8 @@
 # London Borough of Richmond upon Thames
 
-Support for schedules provided by [London Borough of Richmond upon Thames](https://www.richmond.gov.uk/), serving Richmond upon Thames, London, UK.
+Support for schedules provided by [London Borough of Richmond upon Thames](https://www.richmond.gov.uk/).
+
+Source for London Borough of Richmond upon Thames
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: richmond_gov_uk
       args:
-        uprn: "UPRN"
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
 **uprn**  
-_(String | Integer) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: richmond_gov_uk
       args:
-        uprn: "5061647"
+        uprn: '100022316011'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
 Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details.

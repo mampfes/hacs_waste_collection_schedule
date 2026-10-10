@@ -22703,7 +22703,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_telge_se": {
@@ -22713,7 +22714,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_timra_se": {
         "title": "Configure Source",
@@ -24476,7 +24479,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_binzone_uk": {
@@ -24487,7 +24490,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_birmingham_gov_uk": {
@@ -26266,7 +26269,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_northamptonshire_gov_uk": {
@@ -26277,7 +26280,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "args_east_renfrewshire_gov_uk": {
@@ -27987,7 +27990,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_richmond_gov_uk": {
@@ -27997,7 +28001,9 @@
           "calendar_title": "Calendar Title",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_southwark_gov_uk": {
         "title": "Configure Source",
