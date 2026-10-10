@@ -28,10 +28,12 @@ class Source(BaseSource):
     # The vocabulary the recorded cassettes produce.
     WASTE_TYPES: ClassVar[list] = [
         wt.BULKY_WASTE,
+        wt.FOOD_WASTE,
         wt.GARDEN_WASTE,
         wt.GENERAL_WASTE,
         wt.GLASS,
         wt.ORGANIC,
+        wt.OTHER,
         wt.PAPER,
         wt.RECYCLABLES,
     ]
@@ -43,6 +45,11 @@ class Source(BaseSource):
         },
         "Stirling Council, UK (EU host)": {
             "place_id": "D6ADFBAE-D4AF-11F0-9DA3-EE0251E5C8E1",
+            "service_id": "waste",
+            "locale": "en-GB",
+        },
+        "East Ayrshire Council, UK - Church Hall, Lainshaw Street, Stewarton": {
+            "place_id": "76952914-E066-11F0-AAD7-D2BF3DED5CE3",
             "service_id": "waste",
             "locale": "en-GB",
         },
@@ -59,6 +66,14 @@ class Source(BaseSource):
             "Stirling Council",
             country="uk",
             place_id="D6ADFBAE-D4AF-11F0-9DA3-EE0251E5C8E1",
+            service_id="waste",
+            locale="en-GB",
+        ),
+        regions.region(
+            "East Ayrshire Council",
+            url="https://www.east-ayrshire.gov.uk/Housing/RubbishAndRecycling/Collection-days/bin-collection-days.aspx",
+            country="uk",
+            place_id="76952914-E066-11F0-AAD7-D2BF3DED5CE3",
             service_id="waste",
             locale="en-GB",
         ),

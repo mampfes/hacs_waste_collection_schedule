@@ -45,6 +45,17 @@ TYPE_VALUE_MAP = {
     "Garbage (Six Bags Maximum, No Tags Required)": wt.GENERAL_WASTE,
     "Non-recyclable Waste": wt.GENERAL_WASTE,
     "Plastic, cans and cartons": wt.RECYCLABLES,
+    # East Ayrshire (area "EastAyrshireUK"): the food caddy goes out with every
+    # bin round of the new service, and the changeover week carries a pickup
+    # flag of its own.
+    "General Waste+Food (+food only after transition week)": [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+    ],
+    "Paper/Card+Food": [wt.PAPER, wt.FOOD_WASTE],
+    "Plastic/Cans+Food": [wt.RECYCLABLES, wt.FOOD_WASTE],
+    "Glass+Food": [wt.GLASS, wt.FOOD_WASTE],
+    "Transition Week": wt.OTHER,
 }
 
 

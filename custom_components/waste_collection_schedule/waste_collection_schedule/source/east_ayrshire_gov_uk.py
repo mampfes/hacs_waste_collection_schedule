@@ -1,7 +1,11 @@
+import logging
+
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "East Ayrshire Council"
 DESCRIPTION = "Source for east-ayrshire.gov.uk services for East Ayrshire"
@@ -23,6 +27,15 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn):
+        _LOGGER.warning(
+            "The east_ayrshire_gov_uk source is deprecated and will be removed in "
+            "the next major release. East Ayrshire Council has retired the "
+            "UPRN-based recycling calendar this source reads (it now redirects to "
+            "a page without collection dates) and publishes bin days via ReCollect "
+            "(area 'EastAyrshireUK'). Use source 'recollect_net' with the place_id "
+            "of your address, service_id='waste' and locale='en-GB'. See "
+            "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_ayrshire_gov_uk.md"
+        )
         self._uprn = str(uprn)
 
     def fetch(self):
