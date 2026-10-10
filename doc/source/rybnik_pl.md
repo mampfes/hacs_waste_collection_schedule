@@ -45,9 +45,18 @@ to the `DZIELNICA` value of your row (e.g. `Stodoły`); the error message lists 
 
 The multifamily PDF does not list dates. Each cell is a weekday rule such as
 `poniedziałek, czwartek` (every Monday and Thursday) or `środa tydzień nieparzysty`
-(Wednesday of odd weeks). The source expands these rules to dates for the PDF's year,
-using ISO week numbers for even/odd weeks. The PDF states no rule for public holidays,
-so generated dates are not shifted around holidays.
+(Wednesday of odd weeks). The source expands these rules to every matching date in the
+year of the PDF.
+
+> **Note:**
+>
+> - **Public holidays are not shifted.** The multifamily PDF contains no rule for
+>   collections that fall on a public holiday, so the source does not move or drop them.
+>   A generated date can therefore fall on a holiday (e.g. 1 January); check local
+>   announcements around holidays.
+> - **Odd/even weeks (`tydzień nieparzysty` / `tydzień parzysty`) are interpreted as ISO
+>   calendar weeks** (ISO 8601 week numbers). The PDF does not define the numbering, so
+>   this is an assumption.
 
 ### Multifamily
 
