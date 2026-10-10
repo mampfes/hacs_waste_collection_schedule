@@ -1,98 +1,98 @@
-import json
-from datetime import datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.field_terms import DISTRICT
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.service.IWeb import (
+    AbfalldatenRows,
+    abfalldaten_parser,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Münchenstein"
-DESCRIPTION = "Source for Muenchenstein waste collection."
-URL = "https://www.muenchenstein.ch"
-TEST_CASES = {
-    "Abfuhrkreis Ost": {"waste_district": "Abfuhrkreis Ost"},
-    "Abfuhrkreis West": {"waste_district": "492"},
-}
+# Münchenstein runs on the i-web CMS: the dated collections (paper, cardboard,
+# shredding service, ...) come from the /abfuhrdaten table, filtered to the
+# waste district by its name or id (491 Ost, 492 West).
+#
+# The weekly residual-waste collection ("Kehricht und Kleinsperrgut brennbar")
+# is not listed with dates. The website only names its weekday per district:
+# Tuesday in Abfuhrkreis Ost, Friday in Abfuhrkreis West. The next four
+# occurrences, today included, are projected from that.
 
-API_URL = "https://www.muenchenstein.ch/abfuhrdaten"
-
-
-ICON_MAP = {
-    "kehricht-und-kleinsperrgut-brennbar": Icons.GENERAL_WASTE,
-    "hackseldienst": Icons.GARDEN,
-    "papierabfuhr": Icons.PAPER,
-    "kartonabfuhr": Icons.PAPER,
-    "metallabfuhr": Icons.METAL,
-    "grobsperrgut (brennbar)": Icons.GENERAL_WASTE,
-}
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "waste_district": "Abfuhrkreis",
-    },
-}
+KEHRICHT = "Kehricht und Kleinsperrgut brennbar"
+_EAST = ("Abfuhrkreis Ost", "491")
+_TUESDAY, _FRIDAY = 1, 4
 
 
-class Source:
-    def __init__(self, waste_district):
-        self._waste_district = waste_district
+def _kehricht(_record, source):
+    district = str(source.params["waste_district"]).strip() if source else ""
+    weekday = _TUESDAY if district in _EAST else _FRIDAY
+    today = datetime.date.today()
+    first = today + datetime.timedelta(days=(weekday - today.weekday()) % 7)
+    yield Schedule(KEHRICHT, first, recurrence.WEEKLY, 4)
 
-    def fetch(self):
-        response = requests.get(API_URL)
 
-        html = BeautifulSoup(response.text, "html.parser")
+_DATED_ROWS = AbfalldatenRows(area="waste_district")
+_KEHRICHT_ROWS = RecurrenceExpander(_kehricht)
 
-        table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
-        data = json.loads(table.attrs["data-entities"])
 
-        entries = []
-        for item in data["data"]:
-            if (
-                self._waste_district in item["abfallkreisIds"]
-                or self._waste_district in item["abfallkreisNameList"]
-            ):
-                # Datum aus HTML extrahieren statt aus dem -sort Feld
-                date_raw_html = item["_anlassDate"]
-                date_soup = BeautifulSoup(date_raw_html, "html.parser").find("span")
-                date_str = date_soup.get_text(strip=True)  # z.B. "22.10.2025"
+def _rows(records, source=None):
+    yield from _DATED_ROWS(records, source)
+    yield from _KEHRICHT_ROWS([None], source)
 
-                try:
-                    next_pickup_date = datetime.strptime(date_str, "%d.%m.%Y").date()
-                except ValueError:
-                    continue  # Ungültiges Datum überspringen
 
-                waste_type = BeautifulSoup(item["name"], "html.parser").text
-                waste_type_sorted = BeautifulSoup(item["name-sort"], "html.parser").text
+@final
+class Source(BaseSource):
+    TITLE = "Münchenstein"
+    DESCRIPTION = "Source for Muenchenstein waste collection."
+    URL = "https://www.muenchenstein.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
 
-                entries.append(
-                    Collection(
-                        date=next_pickup_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type_sorted, "mdi:trash-can"),
-                    )
-                )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.BULKY_WASTE,
+    ]
 
-        # Collection of "Kehricht und Kleinsperrgut brennbar" are not listed with dates as events on website.
-        # Instead it states the day of the week for each waste district: tuesday for east and friday for west
-        # So we're going to set those collections programmatically for the next 4 occurrences
-        weekday_collection = (
-            2
-            if self._waste_district == "Abfuhrkreis Ost" or self._waste_district == 491
-            else 5
-        )
-        weekday_today = datetime.now().isoweekday()
-        for x in range(4):
-            days_to_pickup = (x * 7) + ((weekday_collection - weekday_today) % 7)
-            next_pickup_date = (datetime.now() + timedelta(days=days_to_pickup)).date()
-            waste_type = "Kehricht und Kleinsperrgut brennbar"
-            waste_type_sorted = waste_type.lower().replace(" ", "-")
+    TEST_CASES: ClassVar[dict] = {
+        "Abfuhrkreis Ost": {"waste_district": "Abfuhrkreis Ost"},
+        "Abfuhrkreis West": {"waste_district": "492"},
+    }
 
-            entries.append(
-                Collection(
-                    date=next_pickup_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type_sorted),
-                )
-            )
+    PARAMS = (text_field("waste_district", term=DISTRICT),)
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your waste district, Abfuhrkreis Ost or Abfuhrkreis West, or "
+            "its ID: 491 for Ost, 492 for West."
+        ),
+        "de": (
+            "Geben Sie Ihren Abfuhrkreis ein, Abfuhrkreis Ost oder Abfuhrkreis "
+            "West, oder seine ID: 491 für Ost, 492 für West."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(url="https://www.muenchenstein.ch/abfuhrdaten")
+    parse = abfalldaten_parser()
+    preprocess = staticmethod(_rows)
+    transform = ICSTransformer(
+        # Paper and cardboard are separate rounds; keep the label to tell them
+        # apart.
+        carry_raw_label=True,
+        type_value_map={
+            KEHRICHT: wt.GENERAL_WASTE,
+            "Papierabfuhr": wt.PAPER,
+            "Kartonabfuhr": wt.PAPER,
+            "Häckseldienst": wt.GARDEN_WASTE,
+            # Large scrap-metal items, not packaging metal.
+            "Metallabfuhr": wt.RECYCLABLES,
+            "Grobsperrgut (brennbar)": wt.BULKY_WASTE,
+        },
+    )
