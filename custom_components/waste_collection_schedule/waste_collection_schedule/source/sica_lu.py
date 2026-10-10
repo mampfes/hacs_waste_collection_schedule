@@ -1,138 +1,65 @@
-import datetime
-from typing import TypedDict
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "SICA"
-DESCRIPTION = "Source script for sica.lu served municipalities"
-URL = "https://sica.lu"
-TEST_CASES = {
-    "Habscht": {"municipality": "habscht"},
-    "Steinfort": {"municipality": "Steinfort"},
-}
-
-BASE_URL = "https://dashboard.sicaapp.lu"
-API_URL = f"{BASE_URL}/api/api/app"
-HEADERS = {"User-Agent": "SicaAPP", "Accept": "application/json"}
-ICON_MAP = {
-    "Residual waste": Icons.GENERAL_WASTE,
-    "Valorlux - blue bag": Icons.RECYCLING,
-    "Organic waste": Icons.ORGANIC,
-    "Glass": Icons.GLASS,
-    "Paper /Carton": Icons.PAPER,
-    "Scrap and electrical appliances": Icons.METAL,
-    "Clothing and Shoes": Icons.TEXTILE,
-    "Hedges, Shrubs and Trees": Icons.GARDEN,
-    "Bulky waste": Icons.BULKY,
-}
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality
+from waste_collection_schedule.service import SicaLu
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class LanguageDict(TypedDict):
-    en: str
-    fr: str
-    de: str
-    lb: str
+@final
+class Source(BaseSource):
+    TITLE = "SICA"
+    DESCRIPTION = "Source script for sica.lu served municipalities"
+    URL = "https://sica.lu"
+    COUNTRY = "lu"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.GLASS,
+        wt.PAPER,
+        wt.OTHER,
+        wt.TEXTILES,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+    ]
 
-class MunicipalityData(TypedDict):
-    id: int
-    name: LanguageDict
-    feeData: list[dict[str, LanguageDict]]
-    isDisabled: bool
-    parentCommunity_id: int | None
-    children: list["MunicipalityData"]
+    TEST_CASES: ClassVar[dict] = {
+        "Habscht": {"municipality": "habscht"},
+        "Steinfort": {"municipality": "Steinfort"},
+    }
 
+    PARAMS = (municipality(),)
 
-class MunicipalitiesResult(TypedDict):
-    data: list[MunicipalityData]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the name of your municipality as listed by SICA, e.g. "
+            "'Steinfort', 'Habscht' or 'Mamer'. A wrong name lists the valid ones."
+        ),
+    }
 
+    retrieve = SicaLu.retriever
+    parse = SicaLu.SicaParser()
 
-class PickupType(TypedDict):
-    id: int
-    name: LanguageDict
-    description: str | None
-    collectionInfo: LanguageDict
-    color: str
-    isBookable: bool
-    isDisabled: bool
-    icon_id: int
-    created_at: str
-    updated_at: str
-    icon: dict[str, str | None | int]
-
-
-class CollectionEntry(TypedDict):
-    id: int
-    date: str
-    note: None | str
-    description: LanguageDict | None
-    isDisabled: bool
-    status: str
-    community_id: int
-    comunity_id: int
-    creator_id: int
-    pickupType_id: int
-    created_at: str
-    updated_at: str
-    pickup_type: PickupType
-
-
-class Source:
-    def __init__(self, municipality: str) -> None:
-        self._municipality = municipality.lower()
-        self._municipality_id: int | None = None
-
-    @staticmethod
-    def _fetch_json(
-        url: str, headers: dict
-    ) -> MunicipalitiesResult | list[CollectionEntry]:
-        r = requests.get(url, headers)
-        if r.status_code != 200:
-            r.raise_for_status()
-        try:
-            data = r.json()
-        except ValueError as e:
-            raise ValueError(f"Error decoding JSON from API: {e} - {r.text}") from e
-        return data
-
-    def _get_municipality_id(self) -> None:
-        url = f"{API_URL}/community"
-        data = self._fetch_json(url, HEADERS)
-        if not isinstance(data, dict):
-            raise ValueError(f"Unexpected data type: {type(data)}")
-        _municipalities: dict[str, int] = {}
-        _municipalities.update(
-            {
-                item["name"]["en"].lower(): item["id"]
-                for m in data.get("data", [])
-                for item in [m, *m.get("children", [])]
-                if not item["isDisabled"] and not item.get("children", [])
-            }
-        )
-        self._municipality_id = _municipalities.get(self._municipality)
-        if not self._municipality_id:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", self._municipality, list(_municipalities.keys())
-            )
-
-    def fetch(self) -> list[Collection]:
-        if not self._municipality_id:
-            self._get_municipality_id()
-
-        url = f"{API_URL}/pickup-date"
-        data = self._fetch_json(url, HEADERS)
-        if not isinstance(data, list):
-            raise ValueError(f"Unexpected data type: {type(data)}")
-        entries = [
-            Collection(
-                date=datetime.date.fromisoformat(e["date"].split(" ")[0]),
-                t=e["pickup_type"]["name"]["en"],
-                picture=f"{BASE_URL}{e['pickup_type']['icon']['url']}",
-                icon=ICON_MAP.get(e["pickup_type"]["name"]["en"]),
-            )
-            for e in data
-            if not e["isDisabled"] and e["community_id"] == self._municipality_id
-        ]
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=lambda record: record["pickup_type"]["name"]["en"],
+        type_value_map={
+            "Residual waste": wt.GENERAL_WASTE,
+            "Valorlux - blue bag": wt.RECYCLABLES,
+            "Organic waste": wt.ORGANIC,
+            "Glass": wt.GLASS,
+            "Paper /Carton": wt.PAPER,
+            "Scrap and electrical appliances": wt.OTHER,
+            "Clothing and Shoes": wt.TEXTILES,
+            "Hedges, Shrubs and Trees": wt.GARDEN_WASTE,
+            "Bulky waste": wt.BULKY_WASTE,
+        },
+        parse_date=date_parsers.for_format("%Y-%m-%d %H:%M:%S"),
+        color_key=lambda record: record["pickup_type"]["color"],
+        carry_raw_label=True,
+    )
