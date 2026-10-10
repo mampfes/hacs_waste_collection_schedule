@@ -59,6 +59,11 @@ TEST_CASES = {
         "municipality": "zofingen",
         "municipality_id": "5741",
     },
+    "Nidau - Römerstrasse": {
+        "municipality": "nidau",
+        "municipality_id": "1561",
+        "zone": "Römerstrasse",
+    },
 }
 
 EXTRA_INFO = [
@@ -141,6 +146,15 @@ EXTRA_INFO = [
         "default_params": {
             "municipality": "zofingen",
             "municipality_id": "5741",
+        },
+    },
+    {
+        "title": "Nidau",
+        "url": "https://www.nidau.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "nidau",
+            "municipality_id": "1561",
         },
     },
 ]
