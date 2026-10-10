@@ -24703,11 +24703,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "address": "House number or name",
+          "postcode": "Postcode",
+          "uprn": "UPRN (no longer used)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "address": "House number or name, exactly as you would type it into the council's 'Property Number or Name' box, e.g. 12 or Rose Cottage",
+          "postcode": "Postcode of the property, e.g. DN1 3BU",
+          "uprn": "No longer used. Doncaster's new bin lookup does not accept a UPRN, use postcode and address instead."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -24715,10 +24719,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "uprn": "UPRN"
+          "address": "House number or name",
+          "postcode": "Postcode",
+          "uprn": "UPRN (no longer used)"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "address": "House number or name, exactly as you would type it into the council's 'Property Number or Name' box, e.g. 12 or Rose Cottage",
+          "postcode": "Postcode of the property, e.g. DN1 3BU",
+          "uprn": "No longer used. Doncaster's new bin lookup does not accept a UPRN, use postcode and address instead."
         }
       },
       "args_lincoln_gov_uk": {
