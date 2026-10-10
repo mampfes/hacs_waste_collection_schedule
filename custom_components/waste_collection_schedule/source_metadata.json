@@ -394,6 +394,13 @@
     },
     "urls": {}
   },
+  "wodonga_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wodonga_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your street address in the City of Wodonga, e.g. '104 Hovell St, Wodonga'. Organics is collected weekly; Recycling and General Waste alternate fortnightly on the same day, as on the council's collection calendar at https://www.wodonga.vic.gov.au/Services/Recycling-and-Waste/Bins-and-Collection."
+    },
+    "urls": {}
+  },
   "yarracity_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/yarracity_vic_gov_au.md",
     "howto": {

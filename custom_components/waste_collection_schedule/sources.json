@@ -566,6 +566,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Wodonga",
+      "module": "wodonga_vic_gov_au",
+      "default_params": {},
+      "id": "wodonga_vic_gov_au"
+    },
+    {
       "title": "City of Yarra",
       "module": "yarracity_vic_gov_au",
       "default_params": {},
