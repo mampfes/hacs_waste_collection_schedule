@@ -80,7 +80,7 @@ class Source:
         entries: list[Collection] = []
         for month in range(4):
             r = s.get(
-                f"https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx?uprn={self._uprn}&month={month}"
+                f"https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWasteServices/Findyourrecyclingandwastecollectionday.aspx?uprn={self._uprn}&month={month}"
             )
             soup = BeautifulSoup(r.text, "html.parser")
             printable_calendar_entries = self.extract_from_printable_calendar(soup)
