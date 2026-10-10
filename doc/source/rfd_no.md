@@ -17,7 +17,7 @@ waste_collection_schedule:
 **address**  
 *(String) (required)*
 
-The address as shown in the RfD address search results, for example `Grønland 1, Drammen`.
+The address as shown in the RfD address search results, for example `Bragernes Torg 13, Drammen`.
 
 ## Example
 
@@ -26,7 +26,7 @@ waste_collection_schedule:
     sources:
     - name: rfd_no
       args:
-        address: Grønland 1, Drammen
+        address: Bragernes Torg 13, Drammen
 ```
 
 ## How to get the source argument
