@@ -38,7 +38,7 @@ waste_collection_schedule:
 
 ## Moving from `uprn`
 
-Configurations that only contain `uprn` stop working, because the new council lookup cannot be queried by UPRN. Replace `uprn` with `postcode` and `address` as shown above. The waste types are now the names the new page uses: `Refuse`, `Recycling` and `Green Garden Waste Collection Service`. The old source matched `Black`, `Green`, `Recycling` and `Bulky` (and one more) in its icon map, so `customize` entries for `Black` and `Green` most likely need renaming.
+Configurations that only contain `uprn` stop working, because the new council lookup cannot be queried by UPRN. Replace `uprn` with `postcode` and `address` as shown above. The waste types are now the names the new page uses: `Refuse`, `Recycling` and `Green Garden Waste Collection Service`. The old source matched `Black`, `Green`, `Recycling`, `Bulky` and the bulky reuse collection in its icon map, so `customize` entries for `Black` and `Green` most likely need renaming.
 
 ## How to get the source arguments
 
