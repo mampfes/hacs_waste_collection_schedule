@@ -1,92 +1,107 @@
-from datetime import date
+import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.preprocessors import RowFilter
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Ville de Saint-Basile-le-Grand"
-DESCRIPTION = "Source for villesblg.ca waste collection calendar"
-URL = "https://www.villesblg.ca"
-COUNTRY = "ca"
-TEST_CASES = {
-    "Test 1": {},
-}
-
-ICON_MAP = {
-    "Ordures": Icons.GENERAL_WASTE,
-    "Recyclage": Icons.RECYCLING,
-    "Résidus verts": Icons.ORGANIC,
-    "Résidus alimentaires": Icons.BIO_KITCHEN,
-    "Encombrants": Icons.BULKY,
-}
+# The town's "Collectes et dépôts" event feed (RSS): one <item> per event,
+# its title naming the collection ("Collecte de matières récupérables") and
+# <startDay> its date (dd/mm/yyyy, "Aucune" when unset). Drop-off days at the
+# municipal garage ("Dépôt de rebuts ...", "... dangereux (RDD)") are not
+# collections and are skipped, as are past events (the feed keeps the whole
+# year and a placeholder dated 01/01/1970).
 
 FEED_URL = "https://www.villesblg.ca/calendrier-categories/collectes-et-depots/feed/"
 
+_DATE_FORMAT = "%d/%m/%Y"
 
-def _extract_waste_type(title: str) -> str:
-    """Extract waste type from event title."""
-    title_lower = title.lower()
-    if "ordures" in title_lower:
-        return "Ordures"
-    if "matières récupérables" in title_lower:
-        return "Recyclage"
-    if "résidus verts" in title_lower:
-        return "Résidus verts"
-    if "résidus alimentaires" in title_lower:
-        return "Résidus alimentaires"
-    if "encombrants" in title_lower:
-        return "Encombrants"
+# Keyword in the event title -> the short label it is reported under.
+_KEYWORDS = (
+    ("ordures", "Ordures"),
+    ("matières récupérables", "Recyclage"),
+    ("résidus verts", "Résidus verts"),
+    ("résidus alimentaires", "Résidus alimentaires"),
+    ("encombrants", "Encombrants"),
+)
+
+
+def _title(item) -> str:
+    return (item.findtext("title") or "").strip()
+
+
+def _start_day(item) -> str:
+    return (item.findtext("startDay") or "").strip()
+
+
+def _is_upcoming_collection(item, source) -> bool:
+    title = _title(item).lower()
+    if "rebuts" in title or "dangereux" in title:
+        return False
+    try:
+        day = datetime.datetime.strptime(_start_day(item), _DATE_FORMAT).date()
+    except ValueError:
+        return False
+    return day >= datetime.date.today()
+
+
+def _label(title: str) -> str:
+    lower = title.lower()
+    for keyword, label in _KEYWORDS:
+        if keyword in lower:
+            return label
     return title.strip()
 
 
-class Source:
-    def __init__(self):
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Ville de Saint-Basile-le-Grand"
+    DESCRIPTION = "Source for villesblg.ca waste collection calendar"
+    URL = "https://www.villesblg.ca"
+    COUNTRY = "ca"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(FEED_URL)
-        r.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.BULKY_WASTE,
+    ]
 
-        soup = BeautifulSoup(r.text, "lxml-xml")
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "Test 1": {},
+    }
 
-        for item in soup.find_all("item"):
-            title_tag = item.find("title")
-            if not title_tag:
-                continue
-            title = title_tag.get_text(strip=True)
+    PARAMS = ()
 
-            if "rebuts" in title.lower() or "dangereux" in title.lower():
-                continue
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "No arguments required - the calendar is the same for all residents "
+            "of Saint-Basile-le-Grand."
+        ),
+        "fr": (
+            "Aucun argument requis - le calendrier est le même pour tous les "
+            "résidents de Saint-Basile-le-Grand."
+        ),
+    }
 
-            start_day = item.find("startDay")
-            if not start_day:
-                continue
-            date_str = start_day.get_text(strip=True)
-            if not date_str or date_str == "Aucune":
-                continue
-
-            try:
-                day, month, year = date_str.split("/")
-                collection_date = date(int(year), int(month), int(day))
-            except (ValueError, AttributeError):
-                continue
-
-            if collection_date < date.today():
-                continue
-
-            waste_type = _extract_waste_type(title)
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        if not entries:
-            raise ValueError(
-                "No collection data found. The RSS feed may have changed structure."
-            )
-
-        return entries
+    retrieve = HttpGetRetriever(url=FEED_URL)
+    parse = parsers.XmlParser("channel/item")
+    preprocess = RowFilter(_is_upcoming_collection)
+    transform = JsonTransformer(
+        date_key=_start_day,
+        type_key=_title,
+        parse_date=date_parsers.for_format(_DATE_FORMAT),
+        clean=_label,
+        type_value_map={
+            "Ordures": wt.GENERAL_WASTE,
+            "Recyclage": wt.RECYCLABLES,
+            "Résidus verts": wt.GARDEN_WASTE,
+            "Résidus alimentaires": wt.FOOD_WASTE,
+            "Encombrants": wt.BULKY_WASTE,
+        },
+    )
