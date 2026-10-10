@@ -23514,6 +23514,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Capannori - Ascit",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Caponago",
       "module": "cem_ambiente_it",
       "default_params": {},

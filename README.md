@@ -3181,6 +3181,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Canegrate](/doc/source/siunet_it.md) / siunet.it
 - [Canicattini Bagni - Traina Srl](/doc/source/junker_app.md) / junker.app
 - [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Capannori - Ascit](/doc/source/junker_app.md) / junker.app
 - [Caponago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Caponago](/doc/source/siunet_it.md) / siunet.it
 - [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
