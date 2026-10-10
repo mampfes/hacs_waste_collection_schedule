@@ -11025,11 +11025,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_awb_bir_de": {
@@ -11037,10 +11039,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "street": "Dit gadenavn"
+        }
       },
       "args_awbkoeln_de": {
         "title": "Konfigurer Kilde",

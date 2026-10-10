@@ -11025,11 +11025,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_awb_bir_de": {
@@ -11037,10 +11039,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_awbkoeln_de": {
         "title": "Bron configureren",

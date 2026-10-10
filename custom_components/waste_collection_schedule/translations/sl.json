@@ -11027,7 +11027,9 @@
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_awb_bir_de": {
@@ -11038,7 +11040,10 @@
           "city": "Mesto",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_awbkoeln_de": {
         "title": "Configure Source",

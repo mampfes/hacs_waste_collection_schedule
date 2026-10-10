@@ -1,6 +1,8 @@
 # AWB Birkenfeld
 
-Support for schedules provided by [awb-bir.de](https://www.awb-bir.de), the waste management authority (AWB) of Landkreis Birkenfeld, Rhineland-Palatinate, Germany.
+Support for schedules provided by [AWB Birkenfeld](https://www.awb-bir.de).
+
+Source for AWB Birkenfeld (Abfallwirtschaftsbetrieb Landkreis Birkenfeld), Germany
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,8 @@ waste_collection_schedule:
   sources:
     - name: awb_bir_de
       args:
-        street: Auf dem Schoß
-        city: Reichenbach
+        street: STREET
+        city: CITY
 ```
 
 ### Configuration Variables
@@ -21,8 +23,17 @@ waste_collection_schedule:
 **city**  
 *(string) (optional)*
 
-Only required if the street name occurs in more than one Ortsgemeinde (village/town) within the Landkreis.
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awb_bir_de
+      args:
+        street: "Auf dem Scho\xDF"
+        city: Reichenbach
+```
 
 ## How to get the source arguments
 
-Visit the [Abfuhrkalender](https://www.awb-bir.de/Service/(0)Abfuhrkalender/) page and search for your street. Use the street name (and, if it occurs in more than one village, the Ortsgemeinde) exactly as shown in the search results.
+Visit the AWB Birkenfeld waste calendar page <https://www.awb-bir.de/Service/(0)Abfuhrkalender/> and search for your street. Use the exact street name (and, if it occurs in more than one village, the Ortsgemeinde) as shown in the search results.
