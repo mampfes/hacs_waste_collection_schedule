@@ -1,0 +1,20 @@
+---
+title: Odense Renovation (iCal)
+url: https://odenserenovation.dk
+howto:
+  en: |
+    - Go to <https://odenserenovation.dk> and search for your address in the collection calendar ("Mit Odense Renovation").
+    - Use the calendar subscription option ("Tilføj til kalender") to generate your personal iCal link. It looks like `https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=12345678`.
+    - Use this link as the `url` parameter.
+  de: |
+    - Gehen Sie auf <https://odenserenovation.dk> und suchen Sie Ihre Adresse im Abfallkalender ("Mit Odense Renovation").
+    - Nutzen Sie die Kalender-Abonnement-Funktion ("Tilføj til kalender"), um Ihren persönlichen iCal-Link zu erzeugen. Er sieht aus wie `https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=12345678`.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+default_params:
+  regex: Tømning af (.+?)\s+på\s+.*
+  split_at: ',\s*'
+test_cases:
+  Holmstrupvej 2B:
+    url: https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=119490
+    regex: Tømning af (.+?)\s+på\s+.*
+    split_at: ',\s*'
