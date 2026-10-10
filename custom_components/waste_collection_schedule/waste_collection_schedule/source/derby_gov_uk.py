@@ -1,95 +1,82 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    house_number,
+    location_id,
+    text_field,
 )
+from waste_collection_schedule.field_terms import POSTCODE
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Derby City Council"
-DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
-URL = "https://derby.gov.uk"
-TEST_CASES = {
-    # Derby City council wants specific addresses, and they can't
-    # be business addresses. Hopefully these are suitably generic..
-    "22A Wood Road, Chaddesden, Derby, DE21 4LU": {
-        # The flat above Bargain Hut on Wood Road
-        "premises_id": "10010688168"
-    },
-    "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL": {
-        "premises_id": "100030310335"
-    },
-}
-
-ICON_MAP = {
-    "Black bin": Icons.GENERAL_WASTE,
-    "Blue bin": Icons.RECYCLING,
-    "Brown bin": Icons.BIO_KITCHEN,
-}
-
-_LOGGER = logging.getLogger(__name__)
+# Derby's bin-day page lists one ``div.binresult`` per bin and date: the bin is
+# the image's alt text ("Black bin") and the date the leading <strong>
+# ("Thursday, 15 October 2026:").
 
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "premises_id": "premises_id",
-        "post_code": "DEPRECATED: post_code",
-        "house_number": "DEPRECATED: house_number",
+@final
+class Source(BaseSource):
+    TITLE = "Derby City Council"
+    DESCRIPTION = "Source for Derby.gov.uk services for Derby City Council, UK."
+    URL = "https://derby.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        # Derby City council wants specific addresses, and they can't
+        # be business addresses. Hopefully these are suitably generic..
+        "22A Wood Road, Chaddesden, Derby, DE21 4LU": {
+            # The flat above Bargain Hut on Wood Road
+            "premises_id": "10010688168"
+        },
+        "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL": {
+            "premises_id": "100030310335"
+        },
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "post_code": "LEAVE EMPTY is not used anymore.",
-        "house_number": "LEAVE EMPTY is not used anymore.",
+    # post_code and house_number are not used any more; they stay optional so
+    # existing configurations keep working.
+    PARAMS = (
+        location_id("premises_id"),
+        text_field("post_code", term=POSTCODE, optional=True),
+        house_number(optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search your address on <https://secure.derby.gov.uk/binday>. The url "
+            "will contain your premises ID, e.g. "
+            "`https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where "
+            "`10010688168` is the premises ID. Leave post_code and house_number "
+            "empty: they are no longer used."
+        ),
     }
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.",
-}
-
-
-class Source:
-    def __init__(
-        self,
-        premises_id: int | None = None,
-        post_code: str | None = None,
-        house_number: str | None = None,
-    ):
-        self._premises_id = premises_id
-        if not self._premises_id:
-            raise SourceArgumentExceptionMultiple(
-                ["premises_id"],
-                "premises_id must be provided in config",
-            )
-        self._session = requests.Session()
-
-    def fetch(self):
-        entries = []
-        r = self._session.get(
-            f"https://secure.derby.gov.uk/binday/Bindays/{self._premises_id}"
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-        results = soup.find_all("div", {"class": "binresult"})
-
-        for result in results:
-            date = result.find("strong")
-            try:
-                date = datetime.strptime(date.text, "%A, %d %B %Y:").date()
-            except ValueError:
-                _LOGGER.info(f"Skipped {date} as it does not match time format")
-                continue
-            img_tag = result.find("img")
-            collection_type = img_tag["alt"]
-            entries.append(
-                Collection(
-                    date=date,
-                    t=collection_type,
-                    icon=ICON_MAP.get(collection_type),
-                )
-            )
-        return entries
+    retrieve = HttpGetRetriever(
+        url=lambda premises_id, **_: (
+            f"https://secure.derby.gov.uk/binday/Bindays/{premises_id}"
+        ),
+    )
+    parse = parsers.HtmlParser("div.binresult")
+    transform = HtmlTransformer(
+        date_getter=lambda result: result.strong.get_text(strip=True),
+        type_getter=lambda result: result.img["alt"],
+        parse_date=date_parsers.for_format("%A, %d %B %Y:"),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "Black bin": wt.GENERAL_WASTE,
+            "Blue bin": wt.RECYCLABLES,
+            "Brown bin": wt.GARDEN_WASTE,
+            "Food bin": wt.FOOD_WASTE,
+        },
+    )
