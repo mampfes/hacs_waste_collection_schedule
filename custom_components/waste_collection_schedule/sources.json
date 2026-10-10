@@ -35329,16 +35329,28 @@
       "id": "westminster_gov_uk"
     },
     {
+      "title": "Westmorland & Furness Council",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_westmorlandandfurness_gov_uk"
+    },
+    {
       "title": "Westmorland & Furness Council, Barrow area",
       "module": "ics",
       "default_params": {},
-      "id": "ics_barrowbc_gov_uk"
+      "id": "ics_westmorlandandfurness_gov_uk"
+    },
+    {
+      "title": "Westmorland & Furness Council, Eden area",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_westmorlandandfurness_gov_uk"
     },
     {
       "title": "Westmorland & Furness Council, South Lakeland area",
       "module": "ics",
       "default_params": {},
-      "id": "ics_southlakeland_gov_uk"
+      "id": "ics_westmorlandandfurness_gov_uk"
     },
     {
       "title": "Wigan Council",

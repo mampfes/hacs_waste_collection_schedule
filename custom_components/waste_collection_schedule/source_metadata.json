@@ -7708,17 +7708,10 @@
     },
     "urls": {}
   },
-  "ics_barrowbc_gov_uk": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/barrowbc_gov_uk.md",
+  "ics_westmorlandandfurness_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/westmorlandandfurness_gov_uk.md",
     "howto": {
-      "en": "- Go to <https://ww.barrowbc.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule> and select your location.  \n- Right click -> copy the url of the `Add to iCalendar` link.\n- Use this link as the `url` parameter. (If you know your UPRN, you can just replace the last part of the url with it.)\n- if you want to shorten your entry names use the `regex` line from the second example (`Grey lidded bins for General waste` will show up as `Grey`)\n"
-    },
-    "urls": {}
-  },
-  "ics_southlakeland_gov_uk": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/southlakeland_gov_uk.md",
-    "howto": {
-      "en": "- Go to <https://www.southlakeland.gov.uk/bins-and-recycling/collection-calendar/> and select your location.  \n- Rightclick -> copy the URL of the `Import these dates into your calendar` link.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.westmorlandandfurness.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule>, enter your postcode and select your address.\n- Right click -> copy the link address of the `Add to iCalendar` link. It looks like `https://www.westmorlandandfurness.gov.uk/bins-recycling-and-street-cleaning/waste-collection-schedule/download/<UPRN>`.\n- Use this link as the `url` parameter. (If you know your UPRN, you can just replace the last part of the url with it.)\n- This works for all former districts (Barrow-in-Furness, Eden and South Lakeland). The old `barrowbc.gov.uk` and `southlakeland.gov.uk` calendar links no longer work.\n- The calendar covers about one year and contains a reminder entry `Download your bin collection calendar` at its end.\n"
     },
     "urls": {}
   },

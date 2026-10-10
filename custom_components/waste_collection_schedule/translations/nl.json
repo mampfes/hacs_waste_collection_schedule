@@ -31519,7 +31519,7 @@
         },
         "data_description": {}
       },
-      "args_ics_barrowbc_gov_uk": {
+      "args_ics_westmorlandandfurness_gov_uk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
@@ -31542,51 +31542,7 @@
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
         }
       },
-      "reconfigure_ics_barrowbc_gov_uk": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "file": "Bestandsnaam",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Parameters",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "SSL verifiëren",
-          "version": "Versie",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
-      "args_ics_southlakeland_gov_uk": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "file": "Bestandsnaam",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Parameters",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "SSL verifiëren",
-          "version": "Versie",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
-        }
-      },
-      "reconfigure_ics_southlakeland_gov_uk": {
+      "reconfigure_ics_westmorlandandfurness_gov_uk": {
         "title": "Bron opnieuw configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {

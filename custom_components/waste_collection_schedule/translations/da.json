@@ -31505,7 +31505,7 @@
         },
         "data_description": {}
       },
-      "args_ics_barrowbc_gov_uk": {
+      "args_ics_westmorlandandfurness_gov_uk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
@@ -31528,51 +31528,7 @@
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
         }
       },
-      "reconfigure_ics_barrowbc_gov_uk": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Parametre",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
-      "args_ics_southlakeland_gov_uk": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Parametre",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_ics_southlakeland_gov_uk": {
+      "reconfigure_ics_westmorlandandfurness_gov_uk": {
         "title": "Omkonfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
