@@ -77,6 +77,7 @@ SERVICE_PROVIDERS = {
     "Paullo",
     "Chieti - Formula Ambiente Spa",
     "Lucca - Sistema Ambiente Spa",
+    "Capannori - Ascit",
     "Marcallo con Casone",
     "Priolo Gargallo -  IGM rifiuti industriali",
     "Unione Basso Biferno - Impregico Srl",
@@ -355,6 +356,7 @@ TEST_CASES = {
         "municipality": "San Giovanni Teatino",
         "area": "Zona A",
     },
+    "Capannori, Via Fillungo": {"municipality": "Capannori", "area": "Via Fillungo"},
 }
 
 
