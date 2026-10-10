@@ -116,6 +116,16 @@ EXTRA_INFO = [
         "default_params": {"city": "Louisville", "state": "Kentucky"},
     },
     {
+        "title": "Frederick County, Maryland, USA",
+        "url": "https://www.frederickcountymd.gov/3447/Curbside-Collection-Schedule",
+        "default_params": {"city": "Frederick County", "state": "Maryland"},
+    },
+    {
+        "title": "Palm Beach County, Florida, USA",
+        "url": "https://www.swa.org/518/Pickup-Schedule",
+        "default_params": {"city": "Palm Beach County", "state": "Florida"},
+    },
+    {
         "title": "London (ON)",
         "url": "https://london.ca/",
         "country": "ca",
@@ -499,6 +509,16 @@ TEST_CASES = {
         "street": "175 Bridge St",
         "city": "Carleton Place",
         "state": "Ontario",
+    },
+    "Frederick County, MD, USA (with district_id, project_id & zone_id)": {
+        "district_id": "FRE",
+        "project_id": "527",
+        "zone_id": "zone-z652",
+    },
+    "Palm Beach County, FL, USA (with district_id, project_id & zone_id)": {
+        "district_id": "PB",
+        "project_id": "633",
+        "zone_id": "zone-z21670-z21652-z21659-z21666",
     },
 }
 
