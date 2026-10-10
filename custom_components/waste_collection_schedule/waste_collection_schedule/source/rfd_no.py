@@ -73,7 +73,7 @@ ICON_MAP = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Search for your address at rfd.no/avfallshenting. Use the address exactly "
-        "as shown in the result list, for example 'Grønland 1, Drammen'."
+        "as shown in the result list, for example 'Bragernes Torg 13, Drammen'."
     )
 }
 
