@@ -40,7 +40,7 @@ class Source(BaseSource):
         # The council's UPRNs are twelve digits, zero-padded.
         params=lambda uprn, **_: {"uprn": str(uprn).zfill(12)},
     )
-    parse = parsers.HtmlParser("table tr:has(td + td)")
+    parse = parsers.HtmlParser("table tr:has(> td:nth-of-type(2))")
     # "29th September 2026"
     transform = HtmlTransformer(
         date_getter=lambda row: re.sub(

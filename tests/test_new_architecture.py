@@ -2860,7 +2860,7 @@ class TestToolkitParsers:
             "<div><ul><li><span>Refuse</span></li></ul></div></div>"
         )
         parser = parsers.HtmlLabelledDates(
-            "div:has(> div > h3)",
+            "div:has(> div):has(h3)",
             label="ul span",
             date="h3",
             all_labels=True,
