@@ -97,6 +97,8 @@ def _step(cadence: str) -> datetime.timedelta | None:
     text = cadence.strip().lower()
     if text.startswith("weekly"):
         return recurrence.WEEKLY
+    if text.startswith("fortnightly"):
+        return recurrence.FORTNIGHTLY
     match = re.match(r"every\s+(\d+)\s+weeks?", text)
     if match:
         return recurrence.WEEKLY * int(match.group(1))
@@ -147,6 +149,8 @@ def _describe(row: Tag, source):
     # A site with several rounds of one service (a busy commercial property)
     # lists one cadence and one next date per line, in the same order.
     cadences, next_dates = _lines(cadence_cell), _lines(next_cell)
+    if not next_dates:
+        return
     if len(cadences) != len(next_dates):
         next_dates = next_dates[:1] * len(cadences)
     for cadence, next_text in zip(cadences, next_dates, strict=True):
