@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-10",
+  "interactions": [
+    {
+      "key": "GET https://api.northnorthants.gov.uk/test/wc-info/100031046896 ",
+      "method": "GET",
+      "url": "https://api.northnorthants.gov.uk/test/wc-info/100031046896",
+      "final_url": "https://api.northnorthants.gov.uk/test/wc-info/100031046896",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 10 Oct 2026 14:36:05 GMT",
+        "content-type": "application/json",
+        "content-length": "40",
+        "x-amzn-requestid": "d4367006-b60b-42ed-8f7c-cbcd02770a49",
+        "access-control-allow-origin": "*",
+        "x-amz-apigw-id": "FCEFcHHnrPEFm2A=",
+        "x-amzn-trace-id": "Root=1-6aca4d55-75efbe392d121bce1f9336bf"
+      },
+      "content_b64": "eyJzb3YiOiJFTkMiLCJkYXkiOiJUVUUiLCJzY2hlZHVsZSI6IkIifQ=="
+    }
+  ]
+}

@@ -1,61 +1,81 @@
-from datetime import datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "East Northamptonshire and Wellingborough"
-DESCRIPTION = "Source for East Northamptonshire and Wellingborough"
-URL = "east-northamptonshire.gov.uk"
-TEST_CASES = {
-    "Raunds": {"uprn": "100031046896"},
-    "Rusheden": {"uprn": "100031028202"},
-    "Easton on the Hill": {"uprn": 100031040850},
-    "Lutton": {"uprn": 200000735573},
-    "Wellingborough": {"uprn": 100031193921},
-}
-
-ICON_MAP = {
-    "general": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-}
-
+# The North Northamptonshire API answers with the collection weekday ("TUE")
+# and the property's fortnightly schedule ("A" or "B"), e.g.
+# {"sov": "ENC", "day": "TUE", "schedule": "B"}. General waste and recycling
+# alternate weekly. In the week starting Monday 20 June 2022, schedule B had
+# its general waste collection and schedule A its recycling; every other
+# fortnight is projected from that anchor week.
 
 API_URL = "https://api.northnorthants.gov.uk/test/wc-info/{uprn}"
 
-DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4}
+_ANCHOR_MONDAY = datetime.date(2022, 6, 20)
+
+_DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4}
+
+# Five fortnights of each type: ten collections, as the legacy source listed.
+_COUNT = 5
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn: str = uprn
+def _record(response, source):
+    response.raise_for_status()
+    return [response.json()]
 
-    def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn))
-        r.raise_for_status()
-        r.json()
 
-        data = r.json()
+def _describe(record, source):
+    weekday = _DAYS.get(str(record.get("day", "")).upper())
+    if weekday is None:
+        return
+    anchor_day = _ANCHOR_MONDAY + datetime.timedelta(days=weekday)
+    week_after = anchor_day + recurrence.WEEKLY
+    general, recycling = (
+        (anchor_day, week_after)
+        if record.get("schedule") == "B"
+        else (week_after, anchor_day)
+    )
+    yield Schedule("general", general, recurrence.FORTNIGHTLY, _COUNT, anchor=True)
+    yield Schedule("recycling", recycling, recurrence.FORTNIGHTLY, _COUNT, anchor=True)
 
-        process_day = datetime.now()
-        while process_day.weekday() != DAYS.get(data["day"]):
-            process_day = process_day + timedelta(days=1)
 
-        reference_date = datetime(2022, 6, 20)
-        entries = []
+@final
+class Source(BaseSource):
+    TITLE = "East Northamptonshire and Wellingborough"
+    DESCRIPTION = "Source for East Northamptonshire and Wellingborough"
+    URL = "east-northamptonshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        for _ in range(10):
-            weeks_diff: int = int((process_day - reference_date).days / 7)
-            if weeks_diff % 2 == 0:
-                bin_type = "general" if data["schedule"] == "B" else "recycling"
-            else:
-                bin_type = "recycling" if data["schedule"] == "B" else "general"
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-            entries.append(
-                Collection(
-                    date=process_day.date(), t=bin_type, icon=ICON_MAP.get(bin_type)
-                )
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Raunds": {"uprn": "100031046896"},
+        "Rusheden": {"uprn": "100031028202"},
+        "Easton on the Hill": {"uprn": 100031040850},
+        "Lutton": {"uprn": 200000735573},
+        "Wellingborough": {"uprn": 100031193921},
+    }
 
-            process_day = process_day + timedelta(days=7)
+    PARAMS = (uprn(),)
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find the UPRN of your property, e.g. on "
+            "<https://www.findmyaddress.co.uk/>."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(url=lambda uprn, **_: API_URL.format(uprn=uprn))
+    parse = staticmethod(_record)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(
+        type_value_map={"general": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES}
+    )
