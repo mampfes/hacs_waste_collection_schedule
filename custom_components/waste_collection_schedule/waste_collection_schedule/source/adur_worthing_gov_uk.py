@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timedelta
 
 import bs4
@@ -17,6 +18,12 @@ TEST_CASES = {
     "Test_002": {"postcode": "BN43 5WE", "address": "6 Hebe Road"},
     "Test_003": {"uprn": "100062209109"},
 }
+NEXT_RE = re.compile(r"Next\s+collection(?:\s+dates?)?\s*:", re.IGNORECASE)
+DATE_RE = re.compile(
+    r"\b(\d{1,2})(?:st|nd|rd|th)?\s+"
+    r"(January|February|March|April|May|June|July|August|September|October|November|December)\b",
+    re.IGNORECASE,
+)
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
@@ -24,6 +31,7 @@ ICON_MAP = {
     "Recycling": Icons.RECYCLING,
     "Refuse": Icons.GENERAL_WASTE,
     "Garden": Icons.GARDEN,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
@@ -99,34 +107,46 @@ class Source:
         )
 
         entries = []
+        today = datetime.now().date()
 
         for container in containers:
             waste_heading = container.find("h2")
             if waste_heading is None:
                 continue
             waste_type = waste_heading.text
-            waste_texts = container.find_all("p")
-            waste_date = None
-            for text in waste_texts:
-                if "Next collection:" in text.text:
-                    waste_date = text.text.split(": ")[1]
-            if waste_date is None:
-                continue
-            # Append year and deal with year-end dates
-            waste_date += f" {datetime.now().year}"
-            waste_date_dt = parser.parse(waste_date).date()
-            if waste_date_dt.month < datetime.now().month:
-                waste_date_dt = waste_date_dt + timedelta(days=365)
+            waste_type = " ".join(waste_type.split())
             # waste descriptions changed, so make consistent with old configs
             if waste_type == "General rubbish":
                 waste_type = "Refuse"
             if waste_type.startswith("Garden waste"):
                 waste_type = "Garden"
 
-            entries.append(
-                Collection(
-                    t=waste_type, date=waste_date_dt, icon=ICON_MAP.get(waste_type)
+            # "Next collection:" (single date, old layout) or
+            # "Next collection dates:" (several dates, current layout).
+            # Only the paragraph holding the label is read, so the
+            # "Most recent collection" block is never parsed.
+            dates = set()
+            for text in container.find_all("p"):
+                content = text.get_text(" ")
+                if not NEXT_RE.search(content):
+                    continue
+                for day, month in DATE_RE.findall(content):
+                    try:
+                        d = parser.parse(f"{day} {month} {today.year}").date()
+                    except (ValueError, OverflowError):
+                        continue
+                    # year-end: a date well in the past belongs to next year
+                    if d < today - timedelta(days=60):
+                        d = d.replace(year=d.year + 1)
+                    if d >= today:
+                        dates.add(d)
+
+            for d in sorted(dates):
+                entries.append(
+                    Collection(t=waste_type, date=d, icon=ICON_MAP.get(waste_type))
                 )
-            )
+
+        if not entries:
+            raise ValueError("No upcoming collection dates found")
 
         return entries
