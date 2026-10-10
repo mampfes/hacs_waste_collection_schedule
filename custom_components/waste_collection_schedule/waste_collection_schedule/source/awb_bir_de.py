@@ -1,120 +1,126 @@
-import json
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import (
-    Collection,  # type: ignore[attr-defined]
-    Icons,
-)
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "AWB Birkenfeld"
-DESCRIPTION = (
-    "Source for AWB Birkenfeld (Abfallwirtschaftsbetrieb Landkreis Birkenfeld), Germany"
-)
-URL = "https://www.awb-bir.de"
-TEST_CASES = {
-    "Reichenbach, Auf dem Schoß": {"street": "Auf dem Schoß", "city": "Reichenbach"},
-    "Hahnweiler, Falkenweg": {"street": "Falkenweg", "city": "Hahnweiler"},
-    "Horbruch, Im Kätz": {"street": "Im Kätz", "city": "Horbruch"},
-    "unique street without city": {"street": "Auf dem Schoß"},
-}
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Altpapier": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Problemabfälle": Icons.HAZARDOUS,
-}
+# The Abfuhrkalender page (about 1.7 MB) carries the whole district's calendar
+# as inline script tables:
+#   tblStrassen        streets: StrassenId, Strasse, Gemeinde (the village)
+#   tblStrassenGruppen street -> collection group (GruppenId, StrassenId)
+#   tblTermine         dates: Datum (YYYY-MM-DD), GruppenId, Muellart
+#   tblMuellarten      waste types: MuellId -> Art
+# The street is matched by name, narrowed by the village when given; a street
+# found in several villages needs the village.
 
 API_URL = "https://www.awb-bir.de/Service/(0)Abfuhrkalender/"
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "city": "Ortsgemeinde",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name exactly as shown on the AWB Birkenfeld waste calendar page.",
-        "city": "Ortsgemeinde (village/town). Only required if the street name occurs in more than one village.",
-    },
-    "de": {
-        "street": "Straßenname genau wie im Abfuhrkalender der AWB Birkenfeld angegeben.",
-        "city": "Ortsgemeinde. Nur erforderlich, wenn der Straßenname in mehreren Gemeinden vorkommt.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit the AWB Birkenfeld waste calendar page and search for your street. Use the exact street name (and, if it "
-    "occurs in more than one village, the Ortsgemeinde) as shown in the search results.",
-    "de": "Besuchen Sie die Abfuhrkalender-Seite der AWB Birkenfeld und suchen Sie nach Ihrer Straße. Verwenden Sie den "
-    "Straßennamen (und, falls dieser in mehreren Gemeinden vorkommt, die Ortsgemeinde) genau wie in den Suchergebnissen "
-    "angezeigt.",
-}
+_TABLES = ("tblStrassen", "tblStrassenGruppen", "tblTermine", "tblMuellarten")
 
 
-class Source:
-    def __init__(self, street: str, city: str | None = None):
-        self._street = street
-        self._city = city
+def _key(value) -> str:
+    return str(value or "").strip().lower()
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL, timeout=30)
-        r.raise_for_status()
-        text = r.text
 
-        def extract(varname: str) -> list:
-            match = re.search(rf"var {varname} = (\[.*?\]);", text, re.DOTALL)
-            if not match:
-                raise ValueError(f"Could not find '{varname}' data on {API_URL}")
-            return json.loads(match.group(1))
+def _rows(tables, source):
+    street_name = source.params["street"] if source else ""
+    city_name = source.params.get("city") if source else None
+    streets = tables["tblStrassen"]
 
-        streets = extract("tblStrassen")
-        street_groups = extract("tblStrassenGruppen")
-        dates = extract("tblTermine")
-        waste_types = extract("tblMuellarten")
-
-        street_lower = self._street.strip().lower()
-        matches = [s for s in streets if s["Strasse"].strip().lower() == street_lower]
-
-        if self._city:
-            city_lower = self._city.strip().lower()
-            matches = [
-                s for s in matches if s["Gemeinde"].strip().lower() == city_lower
-            ]
-
-        if not matches:
-            all_streets = sorted({s["Strasse"] for s in streets})
+    matches = [s for s in streets if _key(s["Strasse"]) == _key(street_name)]
+    if not matches:
+        in_city = [s for s in streets if _key(s["Gemeinde"]) == _key(city_name)]
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street",
+            street_name,
+            sorted({s["Strasse"] for s in (in_city if city_name else streets)}),
+        )
+    if city_name:
+        in_city = [s for s in matches if _key(s["Gemeinde"]) == _key(city_name)]
+        if not in_city:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, all_streets
+                "city", city_name, sorted({s["Gemeinde"] for s in matches})
             )
+        matches = in_city
+    cities = sorted({s["Gemeinde"] for s in matches})
+    if len(cities) > 1:
+        raise SourceArgAmbiguousWithSuggestions("city", city_name, cities)
 
-        cities = sorted({s["Gemeinde"] for s in matches})
-        if len(cities) > 1:
-            raise SourceArgAmbiguousWithSuggestions("city", self._city, cities)
+    street_ids = {s["StrassenId"] for s in matches}
+    group_ids = {
+        g["GruppenId"]
+        for g in tables["tblStrassenGruppen"]
+        if g["StrassenId"] in street_ids
+    }
+    names = {w["MuellId"]: w["Art"] for w in tables["tblMuellarten"]}
+    for termin in tables["tblTermine"]:
+        name = names.get(termin["Muellart"])
+        if termin["GruppenId"] in group_ids and name:
+            yield termin["Datum"], name
 
-        street_ids = {s["StrassenId"] for s in matches}
-        group_ids = {
-            g["GruppenId"] for g in street_groups if g["StrassenId"] in street_ids
-        }
 
-        waste_type_names = {w["MuellId"]: w["Art"] for w in waste_types}
+@final
+class Source(BaseSource):
+    TITLE = "AWB Birkenfeld"
+    DESCRIPTION = "Source for AWB Birkenfeld (Abfallwirtschaftsbetrieb Landkreis Birkenfeld), Germany"
+    URL = "https://www.awb-bir.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-        entries = []
-        for termin in dates:
-            if termin["GruppenId"] not in group_ids:
-                continue
-            waste_name = waste_type_names.get(termin["Muellart"])
-            if not waste_name:
-                continue
-            date = datetime.strptime(termin["Datum"], "%Y-%m-%d").date()
-            entries.append(Collection(date, waste_name, icon=ICON_MAP.get(waste_name)))
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.HAZARDOUS,
+    ]
 
-        return entries
+    # Every case records the whole 1.7 MB calendar page, so only one case is
+    # active, the one passing both street and village. The others were checked
+    # live during the pipeline migration and stay here for manual runs.
+    TEST_CASES: ClassVar[dict] = {
+        "Reichenbach, Auf dem Schoß": {
+            "street": "Auf dem Schoß",
+            "city": "Reichenbach",
+        },
+        # "Hahnweiler, Falkenweg": {"street": "Falkenweg", "city": "Hahnweiler"},
+        # "Horbruch, Im Kätz": {"street": "Im Kätz", "city": "Horbruch"},
+        # "unique street without city": {"street": "Auf dem Schoß"},
+    }
+
+    PARAMS = (street(), city(optional=True))
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit the AWB Birkenfeld waste calendar page "
+            "<https://www.awb-bir.de/Service/(0)Abfuhrkalender/> and search for "
+            "your street. Use the exact street name (and, if it occurs in more "
+            "than one village, the Ortsgemeinde) as shown in the search results."
+        ),
+        "de": (
+            "Besuchen Sie die Abfuhrkalender-Seite der AWB Birkenfeld "
+            "<https://www.awb-bir.de/Service/(0)Abfuhrkalender/> und suchen Sie "
+            "nach Ihrer Straße. Verwenden Sie den Straßennamen (und, falls dieser "
+            "in mehreren Gemeinden vorkommt, die Ortsgemeinde) genau wie in den "
+            "Suchergebnissen angezeigt."
+        ),
+    }
+
+    retrieve = HttpGetRetriever(url=API_URL)
+    parse = parsers.JsVarParser(*_TABLES)
+    preprocess = staticmethod(_rows)
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "Restabfall": wt.GENERAL_WASTE,
+            "Altpapier": wt.PAPER,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Problemabfälle": wt.HAZARDOUS,
+        },
+    )
