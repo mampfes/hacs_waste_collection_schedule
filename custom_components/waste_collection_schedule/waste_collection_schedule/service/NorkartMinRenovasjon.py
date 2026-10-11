@@ -94,6 +94,18 @@ class MinRenovasjonRetriever:
         return [fractions, calendar]
 
 
+def _field(item: dict, name: str) -> Any:
+    """``item[name]``, whether the deployment capitalises its keys or not.
+
+    The platform's own API answers ``Id`` / ``Navn`` / ``FraksjonId`` /
+    ``Tommedatoer``; the proxies some operators run in front of it (Movar)
+    answer the same fields in camelCase.
+    """
+    if name in item:
+        return item[name]
+    return item[name[0].lower() + name[1:]]
+
+
 class MinRenovasjonParser(Parser["list[tuple[datetime.date, str]]"]):
     """``(date, fraction name)`` rows from the ``[fractions, calendar]`` pair."""
 
@@ -101,10 +113,10 @@ class MinRenovasjonParser(Parser["list[tuple[datetime.date, str]]"]):
         self, response: Any, source: BaseSource | None = None
     ) -> list[tuple[datetime.date, str]]:
         fractions, calendar = response
-        names = {item["Id"]: item["Navn"] for item in fractions.json()}
+        names = {_field(item, "Id"): _field(item, "Navn") for item in fractions.json()}
         rows: list[tuple[datetime.date, str]] = []
         for item in calendar.json():
-            name = names[item["FraksjonId"]]
-            for stamp in item["Tommedatoer"]:
+            name = names[_field(item, "FraksjonId")]
+            for stamp in _field(item, "Tommedatoer"):
                 rows.append((datetime.datetime.fromisoformat(stamp).date(), name))
         return rows
