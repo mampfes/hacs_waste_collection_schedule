@@ -868,6 +868,13 @@
     "howto": {},
     "urls": {}
   },
+  "upperlachlan_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/upperlachlan_nsw_gov_au.md",
+    "howto": {
+      "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF. Only published dates are returned. Next year's calendar is included once linked by council; until then the latest available calendar is used without extending its dates. Separate service-disruption notices are not included."
+    },
+    "urls": {}
+  },
   "wagga_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wagga_nsw_gov_au.md",
     "howto": {

@@ -252,6 +252,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Town of Walkerville](/doc/source/app_my_local_services_au.md) / walkerville.sa.gov.au
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
+- [Upper Lachlan Shire Council](/doc/source/upperlachlan_nsw_gov_au.md) / upperlachlan.nsw.gov.au/services/waste
 - [Wagga Wagga City Council](/doc/source/wagga_nsw_gov_au.md) / wagga.nsw.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au

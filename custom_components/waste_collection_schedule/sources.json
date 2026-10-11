@@ -1407,6 +1407,12 @@
       "id": "unley_sa_gov_au"
     },
     {
+      "title": "Upper Lachlan Shire Council",
+      "module": "upperlachlan_nsw_gov_au",
+      "default_params": {},
+      "id": "upperlachlan_nsw_gov_au"
+    },
+    {
       "title": "Wagga Wagga City Council",
       "module": "wagga_nsw_gov_au",
       "default_params": {},
