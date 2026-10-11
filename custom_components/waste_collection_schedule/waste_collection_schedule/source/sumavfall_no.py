@@ -3,7 +3,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import RowTransformer
 
@@ -42,7 +42,7 @@ class Source(BaseSource):
         "Blåbærlia 16": {"address": "blåbærlia-16"},
     }
 
-    PARAMS = (text_field("address", "Address"),)
+    PARAMS = (street_address(),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
