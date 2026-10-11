@@ -1,107 +1,68 @@
-from datetime import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.Infovision import (
+    ContainerParser,
+    container_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Kalundborg Kommune"
-DESCRIPTION = "Source for Kalundborg Kommune waste collection schedule"
-URL = "https://kalundborg.dk"
-TEST_CASES = {
-    "TestCase1": {
-        "id": "00006ac8-0002-0001-4164-647265737320",
-    },
-    "TestCase2": {
-        "id": "00008d18-0002-0001-4164-647265737320",
-    },
-    "TestCase3": {
-        "id": "00006643-0002-0001-4164-647265737320",
-    },
-}
-
-ICON_MAP = {
-    "REST-MAD": Icons.GENERAL_WASTE,
-    "PAP-PAPIR": Icons.PAPER,
-    "PLAST-GLAS-METAL": Icons.PLASTIC_PACKAGING,
-    "MADAFFALD": Icons.BIO_KITCHEN,
-    "RESTAFFALD": Icons.GENERAL_WASTE,
-    "FARLIGT-AFFALD": Icons.HAZARDOUS,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": """
-    To get your UUID (Geolocation) ID:
-    1. Go to the [Kalundborg Kommune Min Side](https://kalundborg.dk/) page and navigate to waste collection services.
-    2. or go directly to : https://kalundborg.infovision.dk/public/selectaddress
-    3. Search for your address.
-    4. You will find your ID in URL i.e. : https://kalundborg.infovision.dk/public/address/00006ac8-0002-0001-4164-647265737320
-    5. The ID should be a UUID format like: `00006ac8-0002-0001-4164-647265737320`
-    """,
+_TYPE_MAP = {
+    "rest/mad": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+    "papir/pap - metal/plast/drikkekarton": [
+        wt.PAPER,
+        wt.METAL,
+        wt.PLASTIC,
+        wt.CARTONS,
+    ],
+    "Miljøkasse til farligt affald": wt.HAZARDOUS,
 }
 
 
-class Source:
-    def __init__(self, id: str):
-        self._id = id
-        self._api_url = f"https://kalundborgivapi.infovision.dk/api/publiccitizen/container/address/active/{self._id}"
+def _fraction(description: str) -> str:
+    """``"190 l beh. rest/mad - ny"`` -> ``"rest/mad"``."""
+    text = re.sub(r"^\d+\s*l\s+beh\.\s+", "", description, flags=re.IGNORECASE)
+    return re.sub(r"\s+-\s+ny$", "", text, flags=re.IGNORECASE).strip()
 
-    def fetch(self):
-        headers = {
-            "accept": "application/json, text/plain, */*",
-            "publicaccesstoken": "__NetDialogCitizenPublicAccessToken__",
-            "User-Agent": "Mozilla/5.0",
-        }
 
-        response = requests.get(self._api_url, headers=headers)
-        response.raise_for_status()
-        containers = response.json()
+@final
+class Source(BaseSource):
+    TITLE = "Kalundborg Kommune"
+    DESCRIPTION = "Source for Kalundborg Kommune waste collection schedule"
+    URL = "https://kalundborg.dk"
+    COUNTRY = "dk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.METAL,
+        wt.PLASTIC,
+        wt.CARTONS,
+        wt.HAZARDOUS,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "TestCase1": {"id": "00008d18-0002-0001-4164-647265737320"},
+        "TestCase2": {"id": "00006643-0002-0001-4164-647265737320"},
+    }
 
-        for container in containers:
-            name = container.get("containerType", {}).get(
-                "description", "Ukendt beholder"
-            )
-            collect_dates = container.get("collectDates", [])
+    PARAMS = (text_field("id", "Address ID"),)
 
-            # Renodjurs-style matching logic - most specific first
-            lower_name = name.lower()
-            fraktion = "Ukendt"
-            icon = None
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "To get your address ID: go to "
+            "https://kalundborg.infovision.dk/public/selectaddress and search for "
+            "your address. You will find the ID in the URL of the address page, "
+            "e.g. https://kalundborg.infovision.dk/public/address/"
+            "00006ac8-0002-0001-4164-647265737320, a UUID like "
+            "`00006ac8-0002-0001-4164-647265737320`."
+        ),
+    }
 
-            if "farligt affald" in lower_name or "miljøkasse" in lower_name:
-                fraktion = "Farligt affald"
-                icon = ICON_MAP.get("FARLIGT-AFFALD")
-            elif "rest" in lower_name and "mad" in lower_name:
-                fraktion = "Rest- og Madaffald"
-                icon = ICON_MAP.get("REST-MAD")
-            elif ("papir" in lower_name or "pap" in lower_name) and (
-                "metal" in lower_name and "plast" in lower_name
-            ):
-                fraktion = "Blandet genanvendelse"  # Mixed recycling
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "papir" in lower_name or "pap" in lower_name:
-                fraktion = "Pap- og Papiraffald"
-                icon = ICON_MAP.get("PAP-PAPIR")
-            elif "metal" in lower_name and "plast" in lower_name:
-                fraktion = "Plast, Glas og Metalaffald"
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "mad" in lower_name:
-                fraktion = "Madaffald"
-                icon = ICON_MAP.get("MADAFFALD")
-            elif "rest" in lower_name:
-                fraktion = "Restaffald"
-                icon = ICON_MAP.get("RESTAFFALD")
-
-            for date_int in collect_dates:
-                date_str = str(date_int)
-                pickup_date = datetime.strptime(date_str, "%Y%m%d").date()
-
-                entries.append(
-                    Collection(
-                        date=pickup_date,
-                        t=fraktion,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+    retrieve = container_retriever("kalundborg")
+    parse = ContainerParser()
+    transform = RowTransformer(clean=_fraction, type_value_map=_TYPE_MAP)
