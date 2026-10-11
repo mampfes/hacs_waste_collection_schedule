@@ -7069,6 +7069,14 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "nuneatonandbedworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nuneatonandbedworth_gov_uk.md",
+    "howto": {
+      "de": "Gib deine Straße so ein, wie sie im Verzeichnis 'Find your bin collection day' des Councils steht. Gibt es den Straßennamen in beiden Orten, ergänze den Ort, z. B. 'Church Street, Bedworth'. Die Termine für Gartenabfall (grüne Tonne) gelten nur mit Abonnement.",
+      "en": "Enter your street as the council's 'Find your bin collection day' directory lists it. Where a street name exists in both towns, add the town, e.g. 'Church Street, Bedworth'. Garden waste (green bin) dates only apply if you subscribe to the green bin service."
+    },
+    "urls": {}
+  },
   "oadby_wigston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oadby_wigston_gov_uk.md",
     "howto": {

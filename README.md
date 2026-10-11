@@ -4857,6 +4857,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Northumberland County Council](/doc/source/northumberland_gov_uk.md) / northumberland.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Nuneaton and Bedworth Borough Council](/doc/source/nuneatonandbedworth_gov_uk.md) / nuneatonandbedworth.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
