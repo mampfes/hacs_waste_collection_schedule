@@ -1,0 +1,18 @@
+---
+# Municipality registry for the iweb_ch source (Swiss municipalities on the
+# i-web CMS).
+#
+# Each entry becomes its own listing in README.md / sources.json, with its
+# website pre-filled, via regions.from_yaml() in source/iweb_ch.py. Only add a
+# municipality whose https://<website>/abfalldaten page lists dated
+# collections (a page with only "regular" collections returns nothing).
+
+  - title: Bremgarten AG
+    url: https://www.bremgarten.ch
+    website: https://www.bremgarten.ch
+  - title: Flums
+    url: https://www.flums.ch
+    website: https://www.flums.ch
+  - title: Uetikon am See
+    url: https://www.uetikonamsee.ch
+    website: https://www.uetikonamsee.ch
