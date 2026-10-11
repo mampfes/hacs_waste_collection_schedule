@@ -58,6 +58,7 @@ TEST_CASES = {
         "service": "hvcgroep",
     },
     "Reinis": {"postal_code": "3201AA", "house_number": "1", "service": "reinis"},
+    "RWM": {"postal_code": "6151AC", "house_number": "6", "service": "rwm"},
     "ZRD": {"postal_code": "4691DH", "house_number": "4", "service": "zrd"},
     "Hoorn": {"postal_code": "1628XA", "house_number": "1", "service": "hvcgroep"},
     "Uitgeest": {
@@ -291,6 +292,18 @@ SERVICE_MAP = [
             "plastic-pak-blik": Icons.RECYCLING,
             "doos-karton-papier": Icons.PAPER,
             "kliko-grijs-zak-grijs-rest": Icons.GENERAL_WASTE,
+        },
+    },
+    {
+        "title": "RWM",
+        "api_url": "https://rwm.nl",
+        "icons": {
+            "mini-container": Icons.GENERAL_WASTE,  # Restafval
+            "gft": Icons.ORGANIC,  # GFT afval
+            "papieren-doos": Icons.PAPER,  # Papier en karton
+            "plastic": Icons.RECYCLING,  # PMD
+            "snoeiafval": Icons.ORGANIC,  # Grof tuinafval
+            "kerstboom": Icons.CHRISTMAS_TREE,  # Kerstbomen
         },
     },
     {
