@@ -8418,3 +8418,138 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
     )
+
+
+class TestUpperLachlanCalendar:
+    """Pin the colour/weekday joins that generic fixture replay cannot check."""
+
+    @pytest.fixture(scope="class")
+    def layout(self):
+        import base64
+        from pathlib import Path
+
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _parse_pdf
+
+        fixture = (
+            Path(__file__).parent
+            / "fixtures"
+            / "upperlachlan_nsw_gov_au"
+            / "crookwell_monday_recycling.json"
+        )
+        interactions = json.loads(fixture.read_text())["interactions"]
+        pdf = next(i for i in interactions if i["url"].endswith(".pdf"))
+        return _parse_pdf(SimpleNamespace(content=base64.b64decode(pdf["content_b64"])))
+
+    @staticmethod
+    def rows(layout, route):
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
+            Source,
+            _calendar_rows,
+        )
+
+        return set(_calendar_rows(layout, Source(route=route)))
+
+    def test_crookwell_recycling_choice_leaves_other_bins_unchanged(self, layout):
+        monday = self.rows(layout, "Crookwell - Monday recycling")
+        tuesday = self.rows(layout, "Crookwell - Tuesday recycling")
+        assert {r for r in monday if r[1] != "Recycling"} == {
+            r for r in tuesday if r[1] != "Recycling"
+        }
+        assert (datetime.date(2026, 10, 19), "Recycling") in monday
+        assert (datetime.date(2026, 10, 20), "Recycling") in tuesday
+        assert (datetime.date(2026, 10, 20), "Recycling") not in monday
+        assert (datetime.date(2026, 10, 13), "Garden waste") in monday
+        assert (datetime.date(2026, 10, 13), "General waste") in monday
+        assert len(monday) == len(tuesday) == 104
+        assert {d.weekday() for d, t in monday if t == "Recycling"} == {0}
+        assert {d.weekday() for d, t in tuesday if t == "Recycling"} == {1}
+
+    @pytest.mark.parametrize(
+        "route,dates",
+        [
+            ("Gunning", ((2026, 10, 14), (2026, 10, 7))),
+            ("Taralga", ((2026, 10, 15), (2026, 10, 8))),
+            ("Binda", ((2026, 10, 16), (2026, 10, 8))),
+        ],
+    )
+    def test_distinct_village_routes(self, layout, route, dates):
+        rows = self.rows(layout, route)
+        assert (datetime.date(*dates[0]), "Recycling") in rows
+        assert (datetime.date(*dates[1]), "Garden waste") in rows
+        assert (datetime.date(*dates[1]), "General waste") in rows
+        assert {d.year for d, _ in rows} == {2026}
+
+    def test_lost_river_does_not_invent_unpublished_services(self, layout):
+        rows = self.rows(layout, "Lost River - recycling only")
+        assert {t for _, t in rows} == {"Recycling"}
+        assert len(rows) == 26
+        assert (datetime.date(2026, 10, 16), "Recycling") in rows
+
+    def test_all_advertised_localities_parse(self, layout):
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _ROUTES
+
+        for route in _ROUTES:
+            assert self.rows(layout, route)
+
+    def test_missing_date_fails_instead_of_returning_partial_calendar(self, layout):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        removed = next(w for w in layout.words if w.text == "13")
+        incomplete = layout._replace(
+            words=[w for w in layout.words if w is not removed]
+        )
+        with pytest.raises(ResponseShapeError, match="incomplete"):
+            self.rows(incomplete, "Crookwell - Monday recycling")
+
+    def test_wrong_weekday_column_fails(self, layout):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        changed = next(w for w in layout.words if w.text == "13")
+        shifted = layout._replace(
+            words=[w._replace(x=w.x + 15) if w is changed else w for w in layout.words]
+        )
+        with pytest.raises(ResponseShapeError, match="wrong weekday"):
+            self.rows(shifted, "Crookwell - Monday recycling")
+
+    def test_unknown_cell_colour_fails(self, layout):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        cell = next(
+            v
+            for v in layout.vectors
+            if v.fill_color == (1.0, 1.0, 0.0) and v.x1 - v.x0 < 30
+        )
+        changed = layout._replace(
+            vectors=[
+                v._replace(fill_color=(0.5, 0.0, 0.5)) if v is cell else v
+                for v in layout.vectors
+            ]
+        )
+        with pytest.raises(ResponseShapeError, match="unknown or ambiguous"):
+            self.rows(changed, "Crookwell - Monday recycling")
+
+    @freeze_time("2026-12-15")
+    def test_next_year_does_not_replace_remaining_current_year(self):
+        import re
+
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
+            _current_calendar,
+        )
+
+        matches = [
+            re.search(r"(\d{4})", f"All-Collection-Areas-{year}.pdf")
+            for year in (2025, 2026, 2027)
+        ]
+        assert _current_calendar(matches).group(1) == "2026"
+
+    @freeze_time("2027-01-01")
+    def test_expired_calendar_fails_instead_of_extrapolating(self):
+        import re
+
+        from waste_collection_schedule.response_shape import ResponseShapeError
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
+            _current_calendar,
+        )
+
+        with pytest.raises(ResponseShapeError, match="no calendar published"):
+            _current_calendar([re.search(r"(\d{4})", "All-Collection-Areas-2026.pdf")])
