@@ -28992,6 +28992,14 @@
       "id": "rova_nl"
     },
     {
+      "title": "RWM",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "rwm"
+      },
+      "id": "hvcgroep_nl"
+    },
+    {
       "title": "Saver",
       "module": "saver_nl",
       "default_params": {},
