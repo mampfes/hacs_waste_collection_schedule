@@ -1,20 +1,12 @@
 # Buchegg
 
-Support for schedules provided by [Gemeinde Buchegg](https://www.buchegg-so.ch), Switzerland.
+Support for schedules provided by [Buchegg](https://www.buchegg-so.ch).
 
-## How it works
-
-This source fetches waste collection data from two providers:
-
-| Waste type | Provider |
-|------------|----------|
-| Kehrichtabfuhr (household waste) | [buchegg-so.ch](https://www.buchegg-so.ch/abfalldaten) |
-| Grüngutabfuhr (green waste) | [buchegg-so.ch](https://www.buchegg-so.ch/abfalldaten) |
-| Altpapier (waste paper) | [localcities.ch](https://www.localcities.ch/de/entsorgung/buchegg/3385) |
-
-Not all localities have Altpapier collection dates on localcities.ch. If unavailable, only Kehrichtabfuhr and Grüngutabfuhr are returned.
+Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland.
 
 ## Configuration via configuration.yaml
+
+### Using locality
 
 ```yaml
 waste_collection_schedule:
@@ -24,18 +16,48 @@ waste_collection_schedule:
         locality: LOCALITY
 ```
 
-### Configuration Variables
-
-**locality** *(string) (required)*: The name of your village (Ortsteil) within Gemeinde Buchegg.
-
-Available values: `Aetigkofen`, `Aetingen`, `Bibern`, `Brittern`, `Brügglen`, `Gossliwil`, `Hessigkofen`, `Küttigkofen`, `Kyburg-Buchegg`, `Lüterswil-Gächliwil`, `Mühledorf`, `Tscheppach`
-
-## Example
+### Using ortschaft
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: buchegg_so_ch
       args:
-        ortschaft: "Aetingen"
+        ortschaft: ORTSCHAFT
 ```
+
+### Configuration Variables
+
+**locality**  
+*(string) (alternative)*
+
+**ortschaft**  
+*(string) (alternative)*
+
+Provide one of: `locality` or `ortschaft`.
+
+## Example
+
+### Using locality
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: buchegg_so_ch
+      args:
+        locality: Aetingen
+```
+
+### Using ortschaft
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: buchegg_so_ch
+      args:
+        ortschaft: Tscheppach
+```
+
+## How to get the source arguments
+
+Select your village from the list. `ortschaft` is the deprecated name of `locality`.

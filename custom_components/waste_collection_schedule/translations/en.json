@@ -557,14 +557,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
-          "district_id": "District Id",
-          "project_id": "Project Id",
-          "state": "State",
+          "district_id": "District ID",
+          "project_id": "Project ID",
+          "state": "State / Province",
           "street": "Street",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "reconfigure_recyclecoach_com": {
@@ -573,13 +575,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
-          "district_id": "District Id",
-          "project_id": "Project Id",
-          "state": "State",
+          "district_id": "District ID",
+          "project_id": "Project ID",
+          "state": "State / Province",
           "street": "Street",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "street": "Your street name."
+        }
       },
       "args_cairns_qld_gov_au": {
         "title": "Configure Source",
@@ -1700,11 +1705,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "123 Clarence St ROSNY TAS 7018"
+          "address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The address of the collection"
+          "address": "Your full address."
         }
       },
       "reconfigure_ccc_tas_gov_au": {
@@ -1712,10 +1717,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "123 Clarence St ROSNY TAS 7018"
+          "address": "Address"
         },
         "data_description": {
-          "address": "The address of the collection"
+          "address": "Your full address."
         }
       },
       "args_cumberland_nsw_gov_au": {
@@ -3810,27 +3815,21 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar entry splitter",
-          "calendar_title_separator": "Calendar title separator",
-          "district": "District/Service provider id",
-          "hnr": "House number",
-          "municipal": "Municipal",
+          "calendar_splitter": "Calendar Splitter",
+          "calendar_title_separator": "Calendar Title Separator",
+          "district": "District",
+          "hnr": "House Number",
+          "municipal": "Municipality",
           "plz": "Postal code",
           "street": "Street",
-          "town": "Town"
+          "town": "City"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
-          "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `waidhofen`, `zwettl`",
-          "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "municipal": "Municipal name",
-          "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it"
+          "hnr": "Your house number.",
+          "municipal": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name.",
+          "town": "Your city or town."
         }
       },
       "reconfigure_umweltverbaende_at": {
@@ -3840,26 +3839,20 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar entry splitter",
-          "calendar_title_separator": "Calendar title separator",
-          "district": "District/Service provider id",
-          "hnr": "House number",
-          "municipal": "Municipal",
+          "calendar_splitter": "Calendar Splitter",
+          "calendar_title_separator": "Calendar Title Separator",
+          "district": "District",
+          "hnr": "House Number",
+          "municipal": "Municipality",
           "plz": "Postal code",
           "street": "Street",
-          "town": "Town"
+          "town": "City"
         },
         "data_description": {
-          "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
-          "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
-          "district": "subdomain of the waste collection provider it is one of`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `waidhofen`, `zwettl`",
-          "hnr": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "municipal": "Municipal name",
-          "plz": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-          "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it"
+          "hnr": "Your house number.",
+          "municipal": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name.",
+          "town": "Your city or town."
         }
       },
       "args_infeo_at": {
@@ -4051,15 +4044,13 @@
           "calendar_title": "Calendar Title",
           "garbage_calendar_id": "Garbage Calendar ID",
           "map_name": "Calendar Map Name",
-          "street": "Street Name",
-          "town": "Town"
+          "street": "Street",
+          "town": "City"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
-          "map_name": "The name of the calendar map displayed in the app.",
-          "street": "The street name to get garbage collection dates for.",
-          "town": "The town corresponding to the selected street."
+          "street": "Your street name.",
+          "town": "Your city or town."
         }
       },
       "reconfigure_lipizzanerheimat_at": {
@@ -4069,14 +4060,12 @@
           "calendar_title": "Calendar Title",
           "garbage_calendar_id": "Garbage Calendar ID",
           "map_name": "Calendar Map Name",
-          "street": "Street Name",
-          "town": "Town"
+          "street": "Street",
+          "town": "City"
         },
         "data_description": {
-          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
-          "map_name": "The name of the calendar map displayed in the app.",
-          "street": "The street name to get garbage collection dates for.",
-          "town": "The town corresponding to the selected street."
+          "street": "Your street name.",
+          "town": "Your city or town."
         }
       },
       "args_badaussee_at": {
@@ -4744,10 +4733,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Region"
+          "calendar": "Calendar",
+          "region": "Municipality"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "region": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_baden_umweltverbaende_at": {
@@ -4755,9 +4746,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "region": "Region"
+          "calendar": "Calendar",
+          "region": "Municipality"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "The name of your municipality, as shown on the provider's website."
+        }
       },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Configure Source",
@@ -4785,12 +4779,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "calendar_index": "Calendar Index",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "calendar_index": "Index of the calendar to use when a street maps to multiple calendars (starting at 0).",
-          "street": "The name of your street as shown in the Gänserndorf App."
+          "street": "Your street name."
         }
       },
       "reconfigure_gaenserndorf_city_at": {
@@ -4799,11 +4792,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "calendar_index": "Calendar Index",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
-          "calendar_index": "Index of the calendar to use when a street maps to multiple calendars (starting at 0).",
-          "street": "The name of your street as shown in the Gänserndorf App."
+          "street": "Your street name."
         }
       },
       "args_hartbeigraz_at": {
@@ -6807,11 +6799,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address / Adresse"
+          "address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address / Votre adresse complete"
+          "address": "Your full address."
         }
       },
       "reconfigure_publidata_ca": {
@@ -6819,10 +6811,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address / Adresse"
+          "address": "Address"
         },
         "data_description": {
-          "address": "Your full address / Votre adresse complete"
+          "address": "Your full address."
         }
       },
       "args_gmrmatawinie_qc_ca": {
@@ -7639,7 +7631,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Address ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -7650,7 +7642,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Address ID"
         },
         "data_description": {}
       },
@@ -7659,7 +7651,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Address ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -7670,7 +7662,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "Address ID"
         },
         "data_description": {}
       },
@@ -8029,16 +8021,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "insee_code": "INSEE Code",
-          "instance_id": "Instance ID",
-          "public_type": "Housing Type"
+          "insee_code": "INSEE code",
+          "instance_id": "Service ID",
+          "public_type": "Housing type"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
-          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
-          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
-          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
+          "address": "Your full address."
         }
       },
       "reconfigure_publidata_fr": {
@@ -8047,15 +8036,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "insee_code": "INSEE Code",
-          "instance_id": "Instance ID",
-          "public_type": "Housing Type"
+          "insee_code": "INSEE code",
+          "instance_id": "Service ID",
+          "public_type": "Housing type"
         },
         "data_description": {
-          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
-          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
-          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
-          "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
+          "address": "Your full address."
         }
       },
       "args_larochelle_fr": {
@@ -8180,45 +8166,19 @@
           "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
-      "args_opendata_bordeauxmetropole_fr": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "city": "City"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "city": "Your city"
-        }
-      },
-      "reconfigure_opendata_bordeauxmetropole_fr": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address": "Address",
-          "city": "City"
-        },
-        "data_description": {
-          "address": "Your full address",
-          "city": "Your city"
-        }
-      },
       "args_data_angers_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
+          "address": "Street",
           "city": "City",
-          "num_voie": "Num Voie",
-          "typevoie": "Typevoie"
+          "num_voie": "House number",
+          "typevoie": "Street type"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street name."
         }
       },
       "reconfigure_data_angers_fr": {
@@ -8226,12 +8186,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
+          "address": "Street",
           "city": "City",
-          "num_voie": "Num Voie",
-          "typevoie": "Typevoie"
+          "num_voie": "House number",
+          "typevoie": "Street type"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your street name."
+        }
       },
       "args_coeur_yvelines_fr": {
         "title": "Configure Source",
@@ -8304,6 +8266,31 @@
         "data_description": {
           "commune": "The name of your municipality, as shown on the provider's website.",
           "quartier": "Your district or part of the municipality."
+        }
+      },
+      "args_opendata_bordeauxmetropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
+        }
+      },
+      "reconfigure_opendata_bordeauxmetropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City"
+        },
+        "data_description": {
+          "address": "Your full address."
         }
       },
       "args_cc_plainedelain_fr": {
@@ -8538,7 +8525,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your street address with house number and city"
+          "address": "Your full address."
         }
       },
       "reconfigure_data_nantesmetropole_fr": {
@@ -8549,7 +8536,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Your street address with house number and city"
+          "address": "Your full address."
         }
       },
       "args_rueil_malmaison_fr": {
@@ -8561,7 +8548,9 @@
           "lon": "Longitude"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "lat": "Select your location on the map.",
+          "lon": "Select your location on the map."
         }
       },
       "reconfigure_rueil_malmaison_fr": {
@@ -8572,7 +8561,10 @@
           "lat": "Latitude",
           "lon": "Longitude"
         },
-        "data_description": {}
+        "data_description": {
+          "lat": "Select your location on the map.",
+          "lon": "Select your location on the map."
+        }
       },
       "args_sictom_lons_le_saunier_fr": {
         "title": "Configure Source",
@@ -13060,17 +13052,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "behaelter": "Container size",
+          "behaelter": "Container size (litres per waste type)",
           "hausnummer": "House Number",
-          "ortsteil": "District",
+          "ortsteil": "District (Ortsteil)",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "behaelter": "Mapping of waste type name to container size in litres (e.g. Restmüll: '240', Papier: '1100'). Only specified waste types are filtered; others are shown for all container sizes. If omitted all container sizes are shown.",
-          "hausnummer": "House number (optional, required for some streets)",
-          "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
-          "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')"
+          "hausnummer": "Your house number.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_evv_voelklingen_de": {
@@ -13078,16 +13068,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "behaelter": "Container size",
+          "behaelter": "Container size (litres per waste type)",
           "hausnummer": "House Number",
-          "ortsteil": "District",
+          "ortsteil": "District (Ortsteil)",
           "strasse": "Street"
         },
         "data_description": {
-          "behaelter": "Mapping of waste type name to container size in litres (e.g. Restmüll: '240', Papier: '1100'). Only specified waste types are filtered; others are shown for all container sizes. If omitted all container sizes are shown.",
-          "hausnummer": "House number (optional, required for some streets)",
-          "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
-          "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')"
+          "hausnummer": "Your house number.",
+          "strasse": "Your street name."
         }
       },
       "args_ics_abfallkalender_erftstadt_de": {
@@ -18222,7 +18210,8 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
         }
       },
       "reconfigure_fkf_bo_hu": {
@@ -18233,7 +18222,9 @@
           "ssl_verify": "Ssl Verify",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Your street name."
+        }
       },
       "args_gyhg_hu": {
         "title": "Configure Source",
@@ -18271,13 +18262,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District",
+          "district": "District (postcode)",
           "house_number": "House Number",
           "street": "Street",
           "verify": "Verify"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_mohu_bp_hu": {
@@ -18285,12 +18278,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District",
+          "district": "District (postcode)",
           "house_number": "House Number",
           "street": "Street",
           "verify": "Verify"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_siokom_hu": {
         "title": "Configure Source",
@@ -18486,33 +18482,6 @@
         },
         "data_description": {
           "comune": "The name of your municipality, as shown on the provider's website."
-        }
-      },
-      "args_municipium_it": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "area": "Zone / Calendar",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "area": "The collection zone name (or a part of it), or the numeric calendar id. Only needed when the municipality has more than one zone.",
-          "municipality": "The municipality (comune), e.g. 'Serrastretta'."
-        }
-      },
-      "reconfigure_municipium_it": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "area": "Zone / Calendar",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "area": "The collection zone name (or a part of it), or the numeric calendar id. Only needed when the municipality has more than one zone.",
-          "municipality": "The municipality (comune), e.g. 'Serrastretta'."
         }
       },
       "args_aliaserviziambientali_it": {
@@ -18763,8 +18732,7 @@
           "city": "City identifier"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Subdomain of the Comune.Digital website (e.g. santostefanodicamastra)"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_comune_digital_it": {
@@ -18774,9 +18742,7 @@
           "calendar_title": "Calendar Title",
           "city": "City identifier"
         },
-        "data_description": {
-          "city": "Subdomain of the Comune.Digital website (e.g. santostefanodicamastra)"
-        }
+        "data_description": {}
       },
       "args_ics_contarina_it": {
         "title": "Configure Source",
@@ -19005,6 +18971,31 @@
           "municipality": "Municipality",
           "user_type": "User type",
           "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_municipium_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Zone / Calendar",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_municipium_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Zone / Calendar",
+          "municipality": "Municipality"
         },
         "data_description": {
           "municipality": "The name of your municipality, as shown on the provider's website."
@@ -20936,7 +20927,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_movar_no": {
@@ -20946,7 +20938,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_oslokommune_no": {
         "title": "Configure Source",
@@ -21121,7 +21115,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'"
+          "address": "Your full address."
         }
       },
       "reconfigure_sumavfall_no": {
@@ -21132,7 +21126,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'"
+          "address": "Your full address."
         }
       },
       "args_ics_trv_no": {
@@ -21642,11 +21636,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "building_type": "Optional, only needed if the address is ambiguous. One of: J (single-family building), W (multi-family building).",
-          "city": "City/village name exactly as used on the GOAP calendar (usually upper case), e.g. 'MUROWANA GOŚLINA'.",
-          "house_number": "House number, including any letter/slash suffix exactly as shown on the GOAP calendar (e.g. '5' or '5/A').",
-          "location_type": "Optional, only needed if the address is ambiguous. One of: Z (inhabited), N (uninhabited), M (mixed), R (recreational).",
-          "street": "Street name exactly as used on the GOAP calendar (usually upper case). For villages without named streets this is often the same as the city."
+          "city": "Your city or town.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_goap_poznan_pl": {
@@ -21661,11 +21653,9 @@
           "street": "Street"
         },
         "data_description": {
-          "building_type": "Optional, only needed if the address is ambiguous. One of: J (single-family building), W (multi-family building).",
-          "city": "City/village name exactly as used on the GOAP calendar (usually upper case), e.g. 'MUROWANA GOŚLINA'.",
-          "house_number": "House number, including any letter/slash suffix exactly as shown on the GOAP calendar (e.g. '5' or '5/A').",
-          "location_type": "Optional, only needed if the address is ambiguous. One of: Z (inhabited), N (uninhabited), M (mixed), R (recreational).",
-          "street": "Street name exactly as used on the GOAP calendar (usually upper case). For villages without named streets this is often the same as the city."
+          "city": "Your city or town.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "args_ichisystem_eu": {
@@ -21704,19 +21694,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
           "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "House Number",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
-          "lookahead_days": "Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app.",
-          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
-          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
-          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_kiedyodpady_pl": {
@@ -21724,18 +21713,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
           "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "House Number",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
-          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
-          "lookahead_days": "Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app.",
-          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
-          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
-          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "args_kiedysmieci_info": {
@@ -22224,11 +22212,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "town": "Town"
+          "town": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "town": "Town name as displayed on the kositeast.sk website."
+          "town": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_kositeast_sk": {
@@ -22236,10 +22224,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "town": "Town"
+          "town": "Municipality"
         },
         "data_description": {
-          "town": "Town name as displayed on the kositeast.sk website."
+          "town": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_kositwest_sk": {
@@ -22247,11 +22235,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "town": "Town"
+          "town": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "town": "Town name as displayed on the kositwest.sk website."
+          "town": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_kositwest_sk": {
@@ -22259,10 +22247,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "town": "Town"
+          "town": "Municipality"
         },
         "data_description": {
-          "town": "Town name as displayed on the kositwest.sk website."
+          "town": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_ics_odvoz_odpadu_sk": {
@@ -23923,9 +23911,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "municipality": "Municipality URL slug (from the localcities.ch URL)",
-          "municipality_id": "Municipality ID number (from the localcities.ch URL)",
-          "zone": "Collection zone or locality name (optional — omit for municipalities without zones)"
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_localcities_ch": {
@@ -23938,9 +23924,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "municipality": "Municipality URL slug (from the localcities.ch URL)",
-          "municipality_id": "Municipality ID number (from the localcities.ch URL)",
-          "zone": "Collection zone or locality name (optional — omit for municipalities without zones)"
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_iweb_ch": {
@@ -23968,12 +23952,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "locality": "Locality",
-          "ortschaft": "Ortschaft"
+          "locality": "Village",
+          "ortschaft": "Village (deprecated)"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "locality": "Village"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -23981,12 +23964,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "locality": "Locality",
-          "ortschaft": "Ortschaft"
+          "locality": "Village",
+          "ortschaft": "Village (deprecated)"
         },
-        "data_description": {
-          "locality": "Village"
-        }
+        "data_description": {}
       },
       "args_ics_openerz_metaodi_ch": {
         "title": "Configure Source",
@@ -24300,8 +24281,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "zone": "Collection zone (Zone Ost or Zone West)"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_grenchen_ch": {
@@ -24311,9 +24291,7 @@
           "calendar_title": "Calendar Title",
           "zone": "Zone"
         },
-        "data_description": {
-          "zone": "Collection zone (Zone Ost or Zone West)"
-        }
+        "data_description": {}
       },
       "args_grosswangen_ch": {
         "title": "Configure Source",
@@ -24514,11 +24492,14 @@
           "calendar_title": "Calendar Title",
           "hnr": "House Number",
           "municipality": "Municipality",
-          "service_provider": "Service Provider",
+          "service_provider": "Service provider",
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hnr": "Your house number.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
         }
       },
       "reconfigure_sammelkalender_ch": {
@@ -24528,10 +24509,14 @@
           "calendar_title": "Calendar Title",
           "hnr": "House Number",
           "municipality": "Municipality",
-          "service_provider": "Service Provider",
+          "service_provider": "Service provider",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Your house number.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "street": "Your street name."
+        }
       },
       "args_reinach_bl_ch": {
         "title": "Configure Source",
@@ -24651,7 +24636,9 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hnr": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_suibr_ch": {
@@ -24663,7 +24650,10 @@
           "municipality": "Municipality",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_winterthur_ch": {
         "title": "Configure Source",
@@ -25434,7 +25424,9 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_bolton_gov_uk": {
@@ -25445,7 +25437,10 @@
           "house_number": "House Number",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
+        }
       },
       "args_west_norfolk_gov_uk": {
         "title": "Configure Source",
@@ -25503,12 +25498,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "property": "Property name or number"
+          "property": "House Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "postcode": "Your property postcode, e.g. PE20 3LW",
-          "property": "Your property name or number, e.g. 43"
+          "postcode": "Your postcode.",
+          "property": "Your house number."
         }
       },
       "reconfigure_boston_gov_uk": {
@@ -25517,11 +25512,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "property": "Property name or number"
+          "property": "House Number"
         },
         "data_description": {
-          "postcode": "Your property postcode, e.g. PE20 3LW",
-          "property": "Your property name or number, e.g. 43"
+          "postcode": "Your postcode.",
+          "property": "Your house number."
         }
       },
       "args_bracknell_forest_gov_uk": {
@@ -25583,7 +25578,9 @@
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "post_code": "Your postcode."
         }
       },
       "reconfigure_braintree_gov_uk": {
@@ -25594,7 +25591,10 @@
           "house_number": "House Number",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "post_code": "Your postcode."
+        }
       },
       "args_breckland_gov_uk": {
         "title": "Configure Source",
@@ -25607,7 +25607,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "address": "Your full address.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_breckland_gov_uk": {
@@ -25620,7 +25622,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "address": "Your full address.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_brent_gov_uk": {
@@ -26121,8 +26125,7 @@
           "property_id": "Property ID"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "property_id": "Internal numeric property identifier from Cheltenham's bin checker (e.g. 56299)"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_cheltenham_gov_uk": {
@@ -26132,9 +26135,7 @@
           "calendar_title": "Calendar Title",
           "property_id": "Property ID"
         },
-        "data_description": {
-          "property_id": "Internal numeric property identifier from Cheltenham's bin checker (e.g. 56299)"
-        }
+        "data_description": {}
       },
       "args_cherwell_gov_uk": {
         "title": "Configure Source",
@@ -26291,15 +26292,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "House number or name",
-          "postcode": "Postcode",
-          "uprn": "UPRN (no longer used)"
+          "address": "House Number",
+          "postcode": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "House number or name, exactly as you would type it into the council's 'Property Number or Name' box, e.g. 12 or Rose Cottage",
-          "postcode": "Postcode of the property, e.g. DN1 3BU",
-          "uprn": "No longer used. Doncaster's new bin lookup does not accept a UPRN, use postcode and address instead."
+          "address": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -26307,14 +26306,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "House number or name",
-          "postcode": "Postcode",
-          "uprn": "UPRN (no longer used)"
+          "address": "House Number",
+          "postcode": "Postcode"
         },
         "data_description": {
-          "address": "House number or name, exactly as you would type it into the council's 'Property Number or Name' box, e.g. 12 or Rose Cottage",
-          "postcode": "Postcode of the property, e.g. DN1 3BU",
-          "uprn": "No longer used. Doncaster's new bin lookup does not accept a UPRN, use postcode and address instead."
+          "address": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "args_lincoln_gov_uk": {
@@ -26484,7 +26481,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The full address string as returned by the lookup on the Cotswold District Council waste collection enquiry page."
+          "address": "Your full address."
         }
       },
       "reconfigure_cotswold_gov_uk": {
@@ -26495,7 +26492,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "The full address string as returned by the lookup on the Cotswold District Council waste collection enquiry page."
+          "address": "Your full address."
         }
       },
       "args_coventry_gov_uk": {
@@ -27523,9 +27520,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "The house number (or name) of the property",
-          "postcode": "The postcode of the property, e.g. BT78 1RG",
-          "property_id": "The property ID as found in the URL when looking up your bin collection days"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_fermanaghomagh_gov_uk": {
@@ -27538,9 +27534,8 @@
           "property_id": "Property ID"
         },
         "data_description": {
-          "house_number": "The house number (or name) of the property",
-          "postcode": "The postcode of the property, e.g. BT78 1RG",
-          "property_id": "The property ID as found in the URL when looking up your bin collection days"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "args_fife_gov_uk": {
@@ -27552,7 +27547,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_fife_gov_uk": {
@@ -27563,7 +27558,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_flintshire_gov_uk": {
@@ -27621,7 +27616,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The full address string as returned by the lookup on the waste collection enquiry page."
+          "address": "Your full address."
         }
       },
       "reconfigure_forest_of_dean_gov_uk": {
@@ -27632,7 +27627,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "The full address string as returned by the lookup on the waste collection enquiry page."
+          "address": "Your full address."
         }
       },
       "args_fylde_gov_uk": {
@@ -28272,11 +28267,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "borough": "Borough",
-          "house": "House",
+          "house": "House Number",
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_jointwastesolutions_org": {
@@ -28285,10 +28282,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "borough": "Borough",
-          "house": "House",
+          "house": "House Number",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house": "Your house number.",
+          "postcode": "Your postcode."
+        }
       },
       "args_kirklees_gov_uk": {
         "title": "Configure Source",
@@ -28457,10 +28457,12 @@
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
           "postcode": "Postcode",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_lisburn_castlereagh_gov_uk": {
@@ -28470,9 +28472,12 @@
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
           "postcode": "Postcode",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "postcode": "Your postcode."
+        }
       },
       "args_liverpool_gov_uk": {
         "title": "Configure Source",
@@ -29016,7 +29021,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_manchester_uk": {
@@ -29027,7 +29032,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_mansfield_gov_uk": {
@@ -29984,11 +29989,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "property_name_or_number": "Property Name Or Number",
-          "street_name": "Street Name"
+          "property_name_or_number": "Property name or number",
+          "street_name": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Your postcode.",
+          "street_name": "Your street name."
         }
       },
       "reconfigure_norwich_gov_uk": {
@@ -29997,10 +30004,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "property_name_or_number": "Property Name Or Number",
-          "street_name": "Street Name"
+          "property_name_or_number": "Property name or number",
+          "street_name": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Your postcode.",
+          "street_name": "Your street name."
+        }
       },
       "args_nottingham_city_gov_uk": {
         "title": "Configure Source",
@@ -30980,7 +30990,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_sholland_gov_uk": {
@@ -30992,7 +31003,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southkesteven_gov_uk": {
@@ -31102,7 +31114,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_southtyneside_gov_uk": {
@@ -31114,7 +31127,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southampton_gov_uk": {
@@ -31227,7 +31241,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_st_helens_gov_uk": {
@@ -31239,7 +31254,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_staffordbc_gov_uk": {
@@ -32303,13 +32319,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "housenumberorname": "House Number or Name",
+          "housenumberorname": "House Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "housenumberorname": "Your house number.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_westberks_gov_uk": {
@@ -32317,12 +32335,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "housenumberorname": "House Number or Name",
+          "housenumberorname": "House Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "housenumberorname": "Your house number.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_west_dunbartonshire_gov_uk": {
@@ -32457,7 +32477,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_westoxon_gov_uk": {
@@ -32467,7 +32488,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_westsuffolk_gov_uk": {
         "title": "Configure Source",

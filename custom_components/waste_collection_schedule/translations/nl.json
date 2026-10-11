@@ -551,15 +551,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
-          "district_id": "Wijk-ID",
-          "project_id": "Project-ID",
-          "state": "Staat",
+          "city": "Plaats",
+          "district_id": "District Id",
+          "project_id": "Project Id",
+          "state": "State",
           "street": "Straat",
-          "zone_id": "Zone-ID"
+          "zone_id": "Zone Id"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_recyclecoach_com": {
@@ -567,14 +569,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
-          "district_id": "Wijk-ID",
-          "project_id": "Project-ID",
-          "state": "Staat",
+          "city": "Plaats",
+          "district_id": "District Id",
+          "project_id": "Project Id",
+          "state": "State",
           "street": "Straat",
-          "zone_id": "Zone-ID"
+          "zone_id": "Zone Id"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_cairns_qld_gov_au": {
         "title": "Bron configureren",
@@ -1680,7 +1685,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_ccc_tas_gov_au": {
@@ -1690,7 +1696,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_cumberland_nsw_gov_au": {
         "title": "Bron configureren",
@@ -3733,19 +3741,23 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "addition": "Toevoeging",
-          "calendar": "Kalender",
-          "calendar_splitter": "Kalendersplitter",
+          "addition": "Addition",
+          "calendar": "Calendar",
+          "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
-          "district": "Wijk",
+          "district": "District",
           "hnr": "Huisnummer",
           "municipal": "Gemeente",
-          "plz": "Postcode",
+          "plz": "Plz",
           "street": "Straat",
           "town": "Plaats"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "hnr": "Uw huisnummer.",
+          "municipal": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam.",
+          "town": "Uw stad of dorp."
         }
       },
       "reconfigure_umweltverbaende_at": {
@@ -3753,18 +3765,23 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "addition": "Toevoeging",
-          "calendar": "Kalender",
-          "calendar_splitter": "Kalendersplitter",
+          "addition": "Addition",
+          "calendar": "Calendar",
+          "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
-          "district": "Wijk",
+          "district": "District",
           "hnr": "Huisnummer",
           "municipal": "Gemeente",
-          "plz": "Postcode",
+          "plz": "Plz",
           "street": "Straat",
           "town": "Plaats"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Uw huisnummer.",
+          "municipal": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam.",
+          "town": "Uw stad of dorp."
+        }
       },
       "args_infeo_at": {
         "title": "Bron configureren",
@@ -3952,7 +3969,9 @@
           "town": "Plaats"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street": "Uw straatnaam.",
+          "town": "Uw stad of dorp."
         }
       },
       "reconfigure_lipizzanerheimat_at": {
@@ -3965,7 +3984,10 @@
           "street": "Straat",
           "town": "Plaats"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Uw straatnaam.",
+          "town": "Uw stad of dorp."
+        }
       },
       "args_badaussee_at": {
         "title": "Bron configureren",
@@ -4632,10 +4654,12 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "region": "Regio"
+          "calendar": "Calendar",
+          "region": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "region": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_baden_umweltverbaende_at": {
@@ -4643,9 +4667,12 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "region": "Regio"
+          "calendar": "Calendar",
+          "region": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Bron configureren",
@@ -4676,7 +4703,8 @@
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_gaenserndorf_city_at": {
@@ -4687,7 +4715,9 @@
           "calendar_index": "Calendar Index",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Uw straatnaam."
+        }
       },
       "args_hartbeigraz_at": {
         "title": "Bron configureren",
@@ -6674,7 +6704,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_publidata_ca": {
@@ -6684,7 +6715,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_gmrmatawinie_qc_ca": {
         "title": "Bron configureren",
@@ -7850,11 +7883,12 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres",
           "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
+          "instance_id": "Service-ID",
           "public_type": "Public Type"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_publidata_fr": {
@@ -7864,10 +7898,12 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres",
           "insee_code": "Insee Code",
-          "instance_id": "Instance Id",
+          "instance_id": "Service-ID",
           "public_type": "Public Type"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_larochelle_fr": {
         "title": "Bron configureren",
@@ -7978,40 +8014,19 @@
           "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
-      "args_opendata_bordeauxmetropole_fr": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "city": "Stad"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
-        }
-      },
-      "reconfigure_opendata_bordeauxmetropole_fr": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "city": "Stad"
-        },
-        "data_description": {}
-      },
       "args_data_angers_fr": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "city": "Stad",
+          "address": "Straat",
+          "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw straatnaam."
         }
       },
       "reconfigure_data_angers_fr": {
@@ -8019,12 +8034,14 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "city": "Stad",
+          "address": "Straat",
+          "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw straatnaam."
+        }
       },
       "args_coeur_yvelines_fr": {
         "title": "Bron configureren",
@@ -8091,6 +8108,31 @@
         "data_description": {
           "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
           "quartier": "Uw wijk of deel van de gemeente."
+        }
+      },
+      "args_opendata_bordeauxmetropole_fr": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_opendata_bordeauxmetropole_fr": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "city": "City"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
         }
       },
       "args_cc_plainedelain_fr": {
@@ -8297,7 +8339,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_data_nantesmetropole_fr": {
@@ -8307,7 +8350,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_rueil_malmaison_fr": {
         "title": "Bron configureren",
@@ -8318,7 +8363,9 @@
           "lon": "Lengtegraad"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "lat": "Selecteer uw locatie op de kaart.",
+          "lon": "Selecteer uw locatie op de kaart."
         }
       },
       "reconfigure_rueil_malmaison_fr": {
@@ -8329,7 +8376,10 @@
           "lat": "Breedtegraad",
           "lon": "Lengtegraad"
         },
-        "data_description": {}
+        "data_description": {
+          "lat": "Selecteer uw locatie op de kaart.",
+          "lon": "Selecteer uw locatie op de kaart."
+        }
       },
       "args_sictom_lons_le_saunier_fr": {
         "title": "Bron configureren",
@@ -12798,11 +12848,13 @@
           "calendar_title": "Kalendertitel",
           "behaelter": "Behaelter",
           "hausnummer": "Huisnummer",
-          "ortsteil": "Wijk",
+          "ortsteil": "Ortsteil",
           "strasse": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "hausnummer": "Uw huisnummer.",
+          "strasse": "Uw straatnaam."
         }
       },
       "reconfigure_evv_voelklingen_de": {
@@ -12812,10 +12864,13 @@
           "calendar_title": "Kalendertitel",
           "behaelter": "Behaelter",
           "hausnummer": "Huisnummer",
-          "ortsteil": "Wijk",
+          "ortsteil": "Ortsteil",
           "strasse": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "hausnummer": "Uw huisnummer.",
+          "strasse": "Uw straatnaam."
+        }
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Bron configureren",
@@ -17918,7 +17973,8 @@
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_fkf_bo_hu": {
@@ -17929,7 +17985,9 @@
           "ssl_verify": "Ssl Verify",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Uw straatnaam."
+        }
       },
       "args_gyhg_hu": {
         "title": "Bron configureren",
@@ -17967,13 +18025,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "district": "Wijk",
+          "district": "District",
           "house_number": "Huisnummer",
           "street": "Straat",
           "verify": "Verify"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_mohu_bp_hu": {
@@ -17981,12 +18041,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "district": "Wijk",
+          "district": "District",
           "house_number": "Huisnummer",
           "street": "Straat",
           "verify": "Verify"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_siokom_hu": {
         "title": "Bron configureren",
@@ -18168,28 +18231,6 @@
         "data_description": {
           "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
-      },
-      "args_municipium_it": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "area": "Gebied",
-          "municipality": "Gemeente"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
-        }
-      },
-      "reconfigure_municipium_it": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "area": "Gebied",
-          "municipality": "Gemeente"
-        },
-        "data_description": {}
       },
       "args_aliaserviziambientali_it": {
         "title": "Bron configureren",
@@ -18646,6 +18687,31 @@
           "municipality": "Gemeente",
           "user_type": "User Type",
           "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "args_municipium_it": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Area",
+          "municipality": "Gemeente"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "reconfigure_municipium_it": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Area",
+          "municipality": "Gemeente"
         },
         "data_description": {
           "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
@@ -20555,7 +20621,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_movar_no": {
@@ -20565,7 +20632,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_oslokommune_no": {
         "title": "Bron configureren",
@@ -20733,7 +20802,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_sumavfall_no": {
@@ -20743,7 +20813,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_ics_trv_no": {
         "title": "Bron configureren",
@@ -21220,13 +21292,16 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "building_type": "Building Type",
-          "city": "Stad",
+          "city": "Plaats",
           "house_number": "Huisnummer",
           "location_type": "Location Type",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_goap_poznan_pl": {
@@ -21235,12 +21310,16 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "building_type": "Building Type",
-          "city": "Stad",
+          "city": "Plaats",
           "house_number": "Huisnummer",
           "location_type": "Location Type",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_ichisystem_eu": {
         "title": "Bron configureren",
@@ -21278,14 +21357,18 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "lookahead_days": "Lookahead Days",
           "municipality": "Gemeente",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_kiedyodpady_pl": {
@@ -21293,13 +21376,18 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "lookahead_days": "Lookahead Days",
           "municipality": "Gemeente",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_kiedysmieci_info": {
         "title": "Bron configureren",
@@ -21771,10 +21859,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "town": "Plaats"
+          "town": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "town": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_kositeast_sk": {
@@ -21782,19 +21871,22 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "town": "Plaats"
+          "town": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "town": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_kositwest_sk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "town": "Plaats"
+          "town": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "town": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_kositwest_sk": {
@@ -21802,9 +21894,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "town": "Plaats"
+          "town": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "town": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_ics_odvoz_odpadu_sk": {
         "title": "Bron configureren",
@@ -23410,11 +23504,12 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "municipality": "Gemeente",
-          "municipality_id": "Gemeente-ID",
+          "municipality_id": "Municipality Id",
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_localcities_ch": {
@@ -23423,10 +23518,12 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "municipality": "Gemeente",
-          "municipality_id": "Gemeente-ID",
+          "municipality_id": "Municipality Id",
           "zone": "Zone"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_iweb_ch": {
         "title": "Bron configureren",
@@ -23993,11 +24090,14 @@
           "calendar_title": "Kalendertitel",
           "hnr": "Huisnummer",
           "municipality": "Gemeente",
-          "service_provider": "Serviceprovider",
+          "service_provider": "Service Provider",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "hnr": "Uw huisnummer.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_sammelkalender_ch": {
@@ -24007,10 +24107,14 @@
           "calendar_title": "Kalendertitel",
           "hnr": "Huisnummer",
           "municipality": "Gemeente",
-          "service_provider": "Serviceprovider",
+          "service_provider": "Service Provider",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Uw huisnummer.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_reinach_bl_ch": {
         "title": "Bron configureren",
@@ -24126,11 +24230,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "hnr": "Huisnummer",
-          "municipality": "Gemeente",
+          "municipality": "Municipality",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "hnr": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_suibr_ch": {
@@ -24139,10 +24245,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "hnr": "Huisnummer",
-          "municipality": "Gemeente",
+          "municipality": "Municipality",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_winterthur_ch": {
         "title": "Bron configureren",
@@ -24910,7 +25019,9 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_bolton_gov_uk": {
@@ -24921,7 +25032,10 @@
           "house_number": "Huisnummer",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_west_norfolk_gov_uk": {
         "title": "Bron configureren",
@@ -24979,10 +25093,12 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "postcode": "Postcode",
-          "property": "Perceel"
+          "property": "Huisnummer"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "postcode": "Uw postcode.",
+          "property": "Uw huisnummer."
         }
       },
       "reconfigure_boston_gov_uk": {
@@ -24991,9 +25107,12 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "postcode": "Postcode",
-          "property": "Perceel"
+          "property": "Huisnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Uw postcode.",
+          "property": "Uw huisnummer."
+        }
       },
       "args_bracknell_forest_gov_uk": {
         "title": "Bron configureren",
@@ -25054,7 +25173,9 @@
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "post_code": "Uw postcode."
         }
       },
       "reconfigure_braintree_gov_uk": {
@@ -25065,7 +25186,10 @@
           "house_number": "Huisnummer",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "post_code": "Uw postcode."
+        }
       },
       "args_breckland_gov_uk": {
         "title": "Bron configureren",
@@ -25078,7 +25202,9 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "address": "Uw volledige adres.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_breckland_gov_uk": {
@@ -25091,7 +25217,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "address": "Uw volledige adres.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_brent_gov_uk": {
@@ -25754,12 +25882,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "postcode": "Postcode",
-          "uprn": "UPRN"
+          "address": "Huisnummer",
+          "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -25767,11 +25896,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "address": "Adres",
-          "postcode": "Postcode",
-          "uprn": "UPRN"
+          "address": "Huisnummer",
+          "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_lincoln_gov_uk": {
         "title": "Bron configureren",
@@ -25939,7 +26070,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_cotswold_gov_uk": {
@@ -25949,7 +26081,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_coventry_gov_uk": {
         "title": "Bron configureren",
@@ -26957,10 +27091,12 @@
           "calendar_title": "Kalendertitel",
           "house_number": "Huisnummer",
           "postcode": "Postcode",
-          "property_id": "Perceel-ID"
+          "property_id": "Property Id"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_fermanaghomagh_gov_uk": {
@@ -26970,9 +27106,12 @@
           "calendar_title": "Kalendertitel",
           "house_number": "Huisnummer",
           "postcode": "Postcode",
-          "property_id": "Perceel-ID"
+          "property_id": "Property Id"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_fife_gov_uk": {
         "title": "Bron configureren",
@@ -26983,7 +27122,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_fife_gov_uk": {
@@ -26994,7 +27133,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_flintshire_gov_uk": {
@@ -27051,7 +27190,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_forest_of_dean_gov_uk": {
@@ -27061,7 +27201,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_fylde_gov_uk": {
         "title": "Bron configureren",
@@ -27675,11 +27817,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "borough": "Borough",
-          "house": "Huis",
+          "house": "Huisnummer",
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_jointwastesolutions_org": {
@@ -27688,10 +27832,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "borough": "Borough",
-          "house": "Huis",
+          "house": "Huisnummer",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_kirklees_gov_uk": {
         "title": "Bron configureren",
@@ -27860,10 +28007,12 @@
           "calendar_title": "Kalendertitel",
           "house_number": "Huisnummer",
           "postcode": "Postcode",
-          "property_id": "Perceel-ID"
+          "property_id": "Property Id"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_lisburn_castlereagh_gov_uk": {
@@ -27873,9 +28022,12 @@
           "calendar_title": "Kalendertitel",
           "house_number": "Huisnummer",
           "postcode": "Postcode",
-          "property_id": "Perceel-ID"
+          "property_id": "Property Id"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_liverpool_gov_uk": {
         "title": "Bron configureren",
@@ -28419,7 +28571,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_manchester_uk": {
@@ -28430,7 +28582,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_mansfield_gov_uk": {
@@ -29371,10 +29523,12 @@
           "calendar_title": "Kalendertitel",
           "postcode": "Postcode",
           "property_name_or_number": "Property Name Or Number",
-          "street_name": "Straatnaam"
+          "street_name": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "postcode": "Uw postcode.",
+          "street_name": "Uw straatnaam."
         }
       },
       "reconfigure_norwich_gov_uk": {
@@ -29384,9 +29538,12 @@
           "calendar_title": "Kalendertitel",
           "postcode": "Postcode",
           "property_name_or_number": "Property Name Or Number",
-          "street_name": "Straatnaam"
+          "street_name": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Uw postcode.",
+          "street_name": "Uw straatnaam."
+        }
       },
       "args_nottingham_city_gov_uk": {
         "title": "Bron configureren",
@@ -30332,7 +30489,8 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_sholland_gov_uk": {
@@ -30344,7 +30502,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southkesteven_gov_uk": {
@@ -30454,7 +30613,8 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_southtyneside_gov_uk": {
@@ -30466,7 +30626,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southampton_gov_uk": {
@@ -30579,7 +30740,8 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_st_helens_gov_uk": {
@@ -30591,7 +30753,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_staffordbc_gov_uk": {
@@ -31637,13 +31800,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "housenumberorname": "Huisnummer of naam",
+          "housenumberorname": "Huisnummer",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "housenumberorname": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_westberks_gov_uk": {
@@ -31651,12 +31816,14 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "housenumberorname": "Huisnummer of naam",
+          "housenumberorname": "Huisnummer",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "housenumberorname": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_west_dunbartonshire_gov_uk": {
@@ -31791,7 +31958,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_westoxon_gov_uk": {
@@ -31801,7 +31969,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_westsuffolk_gov_uk": {
         "title": "Bron configureren",

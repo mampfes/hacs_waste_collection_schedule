@@ -1,43 +1,38 @@
 # GVA Baden
 
-```diff
--This source is now depreciated
-``````
-**GVA Baden is now supported as part of the [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) source.**
+Support for schedules provided by [GVA Baden](https://baden.umweltverbaende.at/).
 
-<br>
-
-## Legacy Information
-
-
-Support for waste collection services Association of Municipalities in the District of Baden for [GVA Baden](https://baden.umweltverbaende.at), Austria.
+Source for waste collection services Association of Municipalities in the District of Baden
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: baden_umweltverbaende_at
       args:
         region: REGION
-
+        calendar: CALENDAR
 ```
 
 ### Configuration Variables
 
-**REGION**  
+**region**  
 *(string) (required)*
 
-The region for which the collection schedule is required. The region should be spelt as it appears on the [Abholtermine](https://baden.umweltverbaende.at/?kat=32) page. There is no need to include the "Marktgemeinde", "Gemeinde", or "Stadtgeminde" text.
-
+**calendar**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: baden_umweltverbaende_at
       args:
-        region: "Mitterndorf an der Fischa"
+        region: "Soo\xDF"
 ```
 
+## How to get the source arguments
+
+Enter your municipality (`region`) as it is listed at https://baden.umweltverbaende.at/. A municipality with several collection areas also needs `calendar`, the calendar's name as listed there (for example `ICS Abfuhrbereich 1`). The error message lists the valid values. The `umweltverbaende_at` source serves this district too.

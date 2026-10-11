@@ -1,52 +1,39 @@
 # South Holland District Council
 
-Support for schedules provided by [South Holland District Council](https://www.sholland.gov.uk/), serving South Holland District Council, UK.
+Support for schedules provided by [South Holland District Council](https://www.sholland.gov.uk/).
+
+Source for South Holland District Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sholland_gov_uk
       args:
         uprn: UPRN
         postcode: POSTCODE
-        
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **postcode**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sholland_gov_uk
       args:
-        uprn: "10002546801"
+        uprn: 10002546801
         postcode: PE11 2FR
-        
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Use your postcode as postcode argument
-
-### How to get your UPRN
-
-#### with findmyaddress.co.uk
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-#### with browsers network analysis tab
-
-- Got to <https://www.sholland.gov.uk/mycollections> and fill in postcode and select an address.
-- Open your browsers' developer tools (`right click -> inspect` / `F12`) and switch to the network tab.
-- Click Next. Select the first of the newly appeared requests (you might need to scroll up) and select the request tab of this request.
-- The second argument of `SHDCWASTECOLLECTIONS_PAGE1_ADDRESSLIST` should contain your UPRN
+Find your UPRN at https://www.findmyaddress.co.uk/. The postcode is not used by the council's lookup but is kept for existing configurations.

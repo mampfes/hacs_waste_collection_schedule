@@ -1,43 +1,39 @@
 # Boston Borough Council
 
-Support for schedules provided by [Boston Borough Council](https://www.boston.gov.uk/article/27449/Your-Waste-Collections), UK.
+Support for schedules provided by [Boston Borough Council](https://www.boston.gov.uk).
+
+Source for www.boston.gov.uk services for Boston Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: boston_gov_uk
       args:
-        postcode: PE20 3LW
-        property: "43"
+        postcode: POSTCODE
+        property: PROPERTY
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Your property postcode, e.g. `PE20 3LW`.
-
-**property**
-*(string) (required)*
-
-Your property name or number, e.g. `43`.
+**property**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: boston_gov_uk
       args:
         postcode: PE20 3LW
-        property: "43"
+        property: '43'
 ```
 
 ## How to get the source arguments
 
-Visit the [Boston Borough Council waste collections page](https://www.boston.gov.uk/article/27449/Your-Waste-Collections), enter your postcode and property name or number, and use the same values here.
-
-Note: this source returns the next scheduled collection date per bin type. Home Assistant will refresh the data automatically to keep the dates current.
+Enter your postcode and property name or number as they appear on the Boston Borough Council website: https://www.boston.gov.uk/article/27449/Your-Waste-Collections

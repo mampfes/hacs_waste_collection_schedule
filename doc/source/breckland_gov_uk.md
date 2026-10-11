@@ -1,57 +1,68 @@
 # Breckland Council
 
-Support for schedules provided by [Breckland Council](https://www.breckland.gov.uk/mybreckland), serving the district of Breckland, in Norfolk, UK.
+Support for schedules provided by [Breckland Council](https://www.breckland.gov.uk/mybreckland).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for breckland.gov.uk
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
+    - name: breckland_gov_uk
+      args:
+        uprn: UPRN
+```
+
+### Using postcode and address
+
+```yaml
+waste_collection_schedule:
+  sources:
     - name: breckland_gov_uk
       args:
         postcode: POSTCODE
         address: ADDRESS
-        prn: UPRN
 ```
 
 ### Configuration Variables
 
-**POSTCODE**  
-*(string) (optional)*
+**uprn**  
+*(string) (alternative)*
 
-**ADDRESS**  
-*(string) (optional)*
+**postcode**  
+*(string) (alternative)*
 
-**UPRN**  
-*(string) (optional)*
+**address**  
+*(string) (alternative)*
 
-## Examples
+Provide one of: `uprn` or `postcode` + `address`.
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: breckland_gov_uk
-      args:
-        postcode: "IP22 2LJ"
-        address: "glen travis"
-```
+## Example
+
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: breckland_gov_uk
       args:
-        uprn: "10011977093"
+        uprn: '10011977093'
 ```
 
-If uprn is provided, only uprn is used. Otherwise postcode and address are required.
+### Using postcode and address
 
-You can find all relevant information at [Breckland Council](https://www.breckland.gov.uk/mybreckland) homepage. Use the POSTCODE -> click find address.
-Choose your address. Please only use the first part of your address. If you got an error, use less characters from address.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: breckland_gov_uk
+      args:
+        postcode: IP22 2LJ
+        address: glen travis
+```
 
-## How to find your UPRN
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details.
+Provide your UPRN, or your postcode plus part of your address as the council lists it. Find your UPRN at https://www.findmyaddress.co.uk/

@@ -1,43 +1,48 @@
-# FKF Budapest
+# MOHU Budapest
 
-Support for schedules provided by [FKF Budapest](https://www.fkf.hu/hulladeknaptar), serving Budapest, HU.
+Support for schedules provided by [MOHU Budapest](https://www.mohubudapest.hu).
+
+Source script for www.mohubudapest.hu
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: mohu_bp_hu
       args:
-        district: AREA_CODE
-        street: FULL_STREET_NAME
+        district: DISTRICT
+        street: STREET
         house_number: HOUSE_NUMBER
+        verify: VERIFY
 ```
 
 ### Configuration Variables
 
-**DISTRICT**
-*(number) (required)*
-4 digits (e.g. 1011)
-
-**STREET**
+**district**  
 *(string) (required)*
 
-**HOUSE_NUMBER**
-*(number) (required)*
+**street**  
+*(string) (required)*
 
-**VERIFY**
-*(boolean) (required)*
+**house_number**  
+*(string) (required)*
+
+**verify**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: mohu_bp_hu
       args:
-        district: 1011
-        street: "Apród utca"
-        house_number: 10
-        verify: true
+        district: 1114
+        street: "Szent Gell\xE9rt t\xE9r"
+        house_number: 3
 ```
+
+## How to get the source arguments
+
+Choose your district (its postcode, e.g. 1114), street and house number as the calendar at https://www.mohubudapest.hu/hulladeknaptar writes them. `verify` is no longer used.

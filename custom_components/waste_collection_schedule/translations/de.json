@@ -559,7 +559,9 @@
           "zone_id": "Zone Id"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_recyclecoach_com": {
@@ -574,7 +576,10 @@
           "street": "Straße",
           "zone_id": "Zone Id"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_cairns_qld_gov_au": {
         "title": "Quelle konfigurieren",
@@ -1686,7 +1691,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_ccc_tas_gov_au": {
@@ -1696,7 +1702,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_cumberland_nsw_gov_au": {
         "title": "Quelle konfigurieren",
@@ -3739,29 +3747,23 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
-          "calendar": "Kalender",
-          "calendar_splitter": "Kalendereintrag-Trenner",
-          "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet/Service provider id",
+          "addition": "Addition",
+          "calendar": "Calendar",
+          "calendar_splitter": "Calendar Splitter",
+          "calendar_title_separator": "Calendar Title Separator",
+          "district": "District",
           "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "Postleitzahl",
+          "plz": "Plz",
           "street": "Straße",
-          "town": "Ort"
+          "town": "Stadt"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
-          "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `waidhofen`, `zwettl`",
-          "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "municipal": "Gemeindename",
-          "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt"
+          "hnr": "Ihre Hausnummer.",
+          "municipal": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "town": "Ihre Stadt oder Gemeinde."
         }
       },
       "reconfigure_umweltverbaende_at": {
@@ -3769,28 +3771,22 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
-          "calendar": "Kalender",
-          "calendar_splitter": "Kalendereintrag-Trenner",
-          "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet/Service provider id",
+          "addition": "Addition",
+          "calendar": "Calendar",
+          "calendar_splitter": "Calendar Splitter",
+          "calendar_title_separator": "Calendar Title Separator",
+          "district": "District",
           "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "Postleitzahl",
+          "plz": "Plz",
           "street": "Straße",
-          "town": "Ort"
+          "town": "Stadt"
         },
         "data_description": {
-          "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
-          "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
-          "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden`baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `waidhofen`, `zwettl`",
-          "hnr": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "municipal": "Gemeindename",
-          "plz": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-          "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt"
+          "hnr": "Ihre Hausnummer.",
+          "municipal": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname.",
+          "town": "Ihre Stadt oder Gemeinde."
         }
       },
       "args_infeo_at": {
@@ -3980,17 +3976,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "garbage_calendar_id": "Müllkalender-ID",
-          "map_name": "Kalenderkartenname",
-          "street": "Straßenname",
+          "garbage_calendar_id": "Garbage Calendar Id",
+          "map_name": "Map Name",
+          "street": "Straße",
           "town": "Stadt"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
-          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
-          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
-          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+          "street": "Ihr Straßenname.",
+          "town": "Ihre Stadt oder Gemeinde."
         }
       },
       "reconfigure_lipizzanerheimat_at": {
@@ -3998,16 +3992,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "garbage_calendar_id": "Müllkalender-ID",
-          "map_name": "Kalenderkartenname",
-          "street": "Straßenname",
+          "garbage_calendar_id": "Garbage Calendar Id",
+          "map_name": "Map Name",
+          "street": "Straße",
           "town": "Stadt"
         },
         "data_description": {
-          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
-          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
-          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
-          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+          "street": "Ihr Straßenname.",
+          "town": "Ihre Stadt oder Gemeinde."
         }
       },
       "args_badaussee_at": {
@@ -4675,10 +4667,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "region": "Region"
+          "calendar": "Calendar",
+          "region": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "region": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_baden_umweltverbaende_at": {
@@ -4686,9 +4680,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "region": "Region"
+          "calendar": "Calendar",
+          "region": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Quelle konfigurieren",
@@ -4715,13 +4712,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "calendar_index": "Kalender-Index",
-          "street": "Straßenname"
+          "calendar_index": "Calendar Index",
+          "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "calendar_index": "Index des zu verwendenden Kalenders, wenn eine Straße mehreren Kalendern zugeordnet ist (beginnt bei 0).",
-          "street": "Der Straßenname, wie er in der Gänserndorf-App angezeigt wird."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_gaenserndorf_city_at": {
@@ -4729,12 +4725,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "calendar_index": "Kalender-Index",
-          "street": "Straßenname"
+          "calendar_index": "Calendar Index",
+          "street": "Straße"
         },
         "data_description": {
-          "calendar_index": "Index des zu verwendenden Kalenders, wenn eine Straße mehreren Kalendern zugeordnet ist (beginnt bei 0).",
-          "street": "Der Straßenname, wie er in der Gänserndorf-App angezeigt wird."
+          "street": "Ihr Straßenname."
         }
       },
       "args_hartbeigraz_at": {
@@ -6733,7 +6728,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_publidata_ca": {
@@ -6743,7 +6739,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_gmrmatawinie_qc_ca": {
         "title": "Quelle konfigurieren",
@@ -7911,16 +7909,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "insee_code": "INSEE-Code",
-          "instance_id": "Instanz-ID",
-          "public_type": "Wohnungstyp"
+          "insee_code": "Insee Code",
+          "instance_id": "Service-ID",
+          "public_type": "Public Type"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
-          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie {url_www_insee_fr} ob Ihre Gemeinde fusioniert wurde (neuer Code).",
-          "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
-          "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat."
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_publidata_fr": {
@@ -7929,15 +7924,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "insee_code": "INSEE-Code",
-          "instance_id": "Instanz-ID",
-          "public_type": "Wohnungstyp"
+          "insee_code": "Insee Code",
+          "instance_id": "Service-ID",
+          "public_type": "Public Type"
         },
         "data_description": {
-          "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
-          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie {url_www_insee_fr} ob Ihre Gemeinde fusioniert wurde (neuer Code).",
-          "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
-          "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat."
+          "address": "Ihre vollständige Adresse."
         }
       },
       "args_larochelle_fr": {
@@ -8056,45 +8048,19 @@
           "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
-      "args_opendata_bordeauxmetropole_fr": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "city": "Stadt"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "address": "Ihre vollständige Adresse",
-          "city": "Ihre Stadt"
-        }
-      },
-      "reconfigure_opendata_bordeauxmetropole_fr": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "city": "Stadt"
-        },
-        "data_description": {
-          "address": "Ihre vollständige Adresse",
-          "city": "Ihre Stadt"
-        }
-      },
       "args_data_angers_fr": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "city": "Stadt",
+          "address": "Straße",
+          "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihr Straßenname."
         }
       },
       "reconfigure_data_angers_fr": {
@@ -8102,12 +8068,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "city": "Stadt",
+          "address": "Straße",
+          "city": "City",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihr Straßenname."
+        }
       },
       "args_coeur_yvelines_fr": {
         "title": "Quelle konfigurieren",
@@ -8177,6 +8145,31 @@
         "data_description": {
           "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
           "quartier": "Ihr Ortsteil oder Stadtteil."
+        }
+      },
+      "args_opendata_bordeauxmetropole_fr": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
+        }
+      },
+      "reconfigure_opendata_bordeauxmetropole_fr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "city": "City"
+        },
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
         }
       },
       "args_cc_plainedelain_fr": {
@@ -8383,7 +8376,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_data_nantesmetropole_fr": {
@@ -8393,7 +8387,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_rueil_malmaison_fr": {
         "title": "Quelle konfigurieren",
@@ -8404,7 +8400,9 @@
           "lon": "Längengrad"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "lat": "Wählen Sie Ihren Standort auf der Karte.",
+          "lon": "Wählen Sie Ihren Standort auf der Karte."
         }
       },
       "reconfigure_rueil_malmaison_fr": {
@@ -8415,7 +8413,10 @@
           "lat": "Breitengrad",
           "lon": "Längengrad"
         },
-        "data_description": {}
+        "data_description": {
+          "lat": "Wählen Sie Ihren Standort auf der Karte.",
+          "lon": "Wählen Sie Ihren Standort auf der Karte."
+        }
       },
       "args_sictom_lons_le_saunier_fr": {
         "title": "Quelle konfigurieren",
@@ -12892,17 +12893,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "behaelter": "Behältergröße (Liter)",
+          "behaelter": "Behaelter",
           "hausnummer": "Hausnummer",
           "ortsteil": "Ortsteil",
           "strasse": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
-          "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
-          "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
-          "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
+          "hausnummer": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "reconfigure_evv_voelklingen_de": {
@@ -12910,16 +12909,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "behaelter": "Behältergröße (Liter)",
+          "behaelter": "Behaelter",
           "hausnummer": "Hausnummer",
           "ortsteil": "Ortsteil",
           "strasse": "Straße"
         },
         "data_description": {
-          "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
-          "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
-          "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
-          "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
+          "hausnummer": "Ihre Hausnummer.",
+          "strasse": "Ihr Straßenname."
         }
       },
       "args_ics_abfallkalender_erftstadt_de": {
@@ -18047,7 +18044,8 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_fkf_bo_hu": {
@@ -18058,7 +18056,9 @@
           "ssl_verify": "Ssl Verify",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ihr Straßenname."
+        }
       },
       "args_gyhg_hu": {
         "title": "Quelle konfigurieren",
@@ -18096,13 +18096,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "District",
           "house_number": "Hausnummer",
           "street": "Straße",
           "verify": "Verify"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_mohu_bp_hu": {
@@ -18110,12 +18112,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "District",
           "house_number": "Hausnummer",
           "street": "Straße",
           "verify": "Verify"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_siokom_hu": {
         "title": "Quelle konfigurieren",
@@ -18297,28 +18302,6 @@
         "data_description": {
           "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
-      },
-      "args_municipium_it": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "municipality": "Gemeinde"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_municipium_it": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "municipality": "Gemeinde"
-        },
-        "data_description": {}
       },
       "args_aliaserviziambientali_it": {
         "title": "Quelle konfigurieren",
@@ -18788,6 +18771,31 @@
           "municipality": "Gemeinde",
           "user_type": "User Type",
           "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
+      "args_municipium_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area",
+          "municipality": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
+      "reconfigure_municipium_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area",
+          "municipality": "Gemeinde"
         },
         "data_description": {
           "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
@@ -20690,7 +20698,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_movar_no": {
@@ -20700,7 +20709,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_oslokommune_no": {
         "title": "Quelle konfigurieren",
@@ -20868,7 +20879,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_sumavfall_no": {
@@ -20878,7 +20890,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_ics_trv_no": {
         "title": "Quelle konfigurieren",
@@ -21370,14 +21384,17 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "building_type": "Gebäudetyp",
+          "building_type": "Building Type",
           "city": "Stadt",
           "house_number": "Hausnummer",
-          "location_type": "Standorttyp",
+          "location_type": "Location Type",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_goap_poznan_pl": {
@@ -21385,13 +21402,17 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "building_type": "Gebäudetyp",
+          "building_type": "Building Type",
           "city": "Stadt",
           "house_number": "Hausnummer",
-          "location_type": "Standorttyp",
+          "location_type": "Location Type",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_ichisystem_eu": {
         "title": "Quelle konfigurieren",
@@ -21432,11 +21453,15 @@
           "city": "Stadt",
           "lookahead_days": "Lookahead Days",
           "municipality": "Gemeinde",
-          "number": "Nummer",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_kiedyodpady_pl": {
@@ -21447,10 +21472,15 @@
           "city": "Stadt",
           "lookahead_days": "Lookahead Days",
           "municipality": "Gemeinde",
-          "number": "Nummer",
+          "number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_kiedysmieci_info": {
         "title": "Quelle konfigurieren",
@@ -21922,10 +21952,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "town": "Stadt"
+          "town": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_kositeast_sk": {
@@ -21933,19 +21964,22 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "town": "Stadt"
+          "town": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_kositwest_sk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "town": "Stadt"
+          "town": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_kositwest_sk": {
@@ -21953,9 +21987,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "town": "Stadt"
+          "town": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "town": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_ics_odvoz_odpadu_sk": {
         "title": "Quelle konfigurieren",
@@ -23578,14 +23614,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "municipality": "Gemeinde",
-          "municipality_id": "Gemeinde-ID",
+          "municipality_id": "Municipality Id",
           "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname (optional – weglassen für Gemeinden ohne Zonen)"
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_localcities_ch": {
@@ -23594,13 +23628,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "municipality": "Gemeinde",
-          "municipality_id": "Gemeinde-ID",
+          "municipality_id": "Municipality Id",
           "zone": "Zone"
         },
         "data_description": {
-          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname (optional – weglassen für Gemeinden ohne Zonen)"
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "args_iweb_ch": {
@@ -23632,8 +23664,7 @@
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "locality": "Ortschaft"
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -23644,9 +23675,7 @@
           "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
-        "data_description": {
-          "locality": "Ortschaft"
-        }
+        "data_description": {}
       },
       "args_ics_openerz_metaodi_ch": {
         "title": "Quelle konfigurieren",
@@ -23960,8 +23989,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "zone": "Abfuhrzone (Zone Ost oder Zone West)"
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_grenchen_ch": {
@@ -23971,9 +23999,7 @@
           "calendar_title": "Kalender Titel",
           "zone": "Zone"
         },
-        "data_description": {
-          "zone": "Abfuhrzone (Zone Ost oder Zone West)"
-        }
+        "data_description": {}
       },
       "args_grosswangen_ch": {
         "title": "Quelle konfigurieren",
@@ -24178,7 +24204,10 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hnr": "Ihre Hausnummer.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_sammelkalender_ch": {
@@ -24191,7 +24220,11 @@
           "service_provider": "Service Provider",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Ihre Hausnummer.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_reinach_bl_ch": {
         "title": "Quelle konfigurieren",
@@ -24307,11 +24340,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
-          "municipality": "Gemeinde",
+          "municipality": "Municipality",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_suibr_ch": {
@@ -24320,10 +24355,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
-          "municipality": "Gemeinde",
+          "municipality": "Municipality",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_winterthur_ch": {
         "title": "Quelle konfigurieren",
@@ -25088,10 +25126,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ"
+          "postcode": "Postleitzahl"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_bolton_gov_uk": {
@@ -25100,9 +25140,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ"
+          "postcode": "Postleitzahl"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
+        }
       },
       "args_west_norfolk_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -25159,11 +25202,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
-          "property": "Grundstück"
+          "postcode": "Postleitzahl",
+          "property": "Hausnummer"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "postcode": "Ihre Postleitzahl.",
+          "property": "Ihre Hausnummer."
         }
       },
       "reconfigure_boston_gov_uk": {
@@ -25171,10 +25216,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
-          "property": "Grundstück"
+          "postcode": "Postleitzahl",
+          "property": "Hausnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Ihre Postleitzahl.",
+          "property": "Ihre Hausnummer."
+        }
       },
       "args_bracknell_forest_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -25232,10 +25280,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "post_code": "PLZ"
+          "post_code": "Postleitzahl"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "post_code": "Ihre Postleitzahl."
         }
       },
       "reconfigure_braintree_gov_uk": {
@@ -25244,9 +25294,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "post_code": "PLZ"
+          "post_code": "Postleitzahl"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "post_code": "Ihre Postleitzahl."
+        }
       },
       "args_breckland_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -25254,12 +25307,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "address": "Ihre vollständige Adresse.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_breckland_gov_uk": {
@@ -25268,11 +25323,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "address": "Ihre vollständige Adresse.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_brent_gov_uk": {
@@ -25935,12 +25992,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "postcode": "PLZ",
-          "uprn": "UPRN"
+          "address": "Hausnummer",
+          "postcode": "Postleitzahl"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_doncaster_gov_uk": {
@@ -25948,11 +26006,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "postcode": "PLZ",
-          "uprn": "UPRN"
+          "address": "Hausnummer",
+          "postcode": "Postleitzahl"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
+        }
       },
       "args_lincoln_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -26120,7 +26180,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_cotswold_gov_uk": {
@@ -26130,7 +26191,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_coventry_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -27138,13 +27201,12 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "postcode": "Postleitzahl",
-          "property_id": "Grundstücks-ID"
+          "property_id": "Property Id"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "house_number": "Die Hausnummer (oder der Hausname) des Grundstücks",
-          "postcode": "Die Postleitzahl des Grundstücks, z.B. BT78 1RG",
-          "property_id": "Die Grundstücks-ID, die in der URL bei der Suche nach den Abholtagen zu finden ist"
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_fermanaghomagh_gov_uk": {
@@ -27154,12 +27216,11 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "postcode": "Postleitzahl",
-          "property_id": "Grundstücks-ID"
+          "property_id": "Property Id"
         },
         "data_description": {
-          "house_number": "Die Hausnummer (oder der Hausname) des Grundstücks",
-          "postcode": "Die Postleitzahl des Grundstücks, z.B. BT78 1RG",
-          "property_id": "Die Grundstücks-ID, die in der URL bei der Suche nach den Abholtagen zu finden ist"
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "args_fife_gov_uk": {
@@ -27171,7 +27232,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_fife_gov_uk": {
@@ -27182,7 +27243,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_flintshire_gov_uk": {
@@ -27239,7 +27300,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_forest_of_dean_gov_uk": {
@@ -27249,7 +27311,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_fylde_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -27863,11 +27927,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "borough": "Borough",
-          "house": "Haus",
-          "postcode": "PLZ"
+          "house": "Hausnummer",
+          "postcode": "Postleitzahl"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_jointwastesolutions_org": {
@@ -27876,10 +27942,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "borough": "Borough",
-          "house": "Haus",
-          "postcode": "PLZ"
+          "house": "Hausnummer",
+          "postcode": "Postleitzahl"
         },
-        "data_description": {}
+        "data_description": {
+          "house": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
+        }
       },
       "args_kirklees_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -28047,11 +28116,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "property_id": "Property Id"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_lisburn_castlereagh_gov_uk": {
@@ -28060,10 +28131,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "property_id": "Property Id"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl."
+        }
       },
       "args_liverpool_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -28607,7 +28681,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_manchester_uk": {
@@ -28618,7 +28692,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_mansfield_gov_uk": {
@@ -29557,12 +29631,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "property_name_or_number": "Property Name Or Number",
-          "street_name": "Straßenname"
+          "street_name": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "postcode": "Ihre Postleitzahl.",
+          "street_name": "Ihr Straßenname."
         }
       },
       "reconfigure_norwich_gov_uk": {
@@ -29570,11 +29646,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "property_name_or_number": "Property Name Or Number",
-          "street_name": "Straßenname"
+          "street_name": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Ihre Postleitzahl.",
+          "street_name": "Ihr Straßenname."
+        }
       },
       "args_nottingham_city_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -30515,12 +30594,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_sholland_gov_uk": {
@@ -30528,11 +30608,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southkesteven_gov_uk": {
@@ -30637,12 +30718,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_southtyneside_gov_uk": {
@@ -30650,11 +30732,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_southampton_gov_uk": {
@@ -30762,12 +30845,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_st_helens_gov_uk": {
@@ -30775,11 +30859,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_staffordbc_gov_uk": {
@@ -31825,13 +31910,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "housenumberorname": "Hausnummer oder Name",
-          "postcode": "PLZ",
+          "housenumberorname": "Hausnummer",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "housenumberorname": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_westberks_gov_uk": {
@@ -31839,12 +31926,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "housenumberorname": "Hausnummer oder Name",
-          "postcode": "PLZ",
+          "housenumberorname": "Hausnummer",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "housenumberorname": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "args_west_dunbartonshire_gov_uk": {
@@ -31979,7 +32068,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_westoxon_gov_uk": {
@@ -31989,7 +32079,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_westsuffolk_gov_uk": {
         "title": "Quelle konfigurieren",

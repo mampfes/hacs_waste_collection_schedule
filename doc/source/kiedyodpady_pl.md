@@ -1,6 +1,8 @@
 # Kiedy Odpady (kiedyodpady.pl)
 
-Support for schedules provided by [kiedyodpady.pl](https://kiedyodpady.pl) (also known as mOdpady / mMieszkaniec), a Polish waste collection platform used by multiple municipalities.
+Support for schedules provided by [Kiedy Odpady (kiedyodpady.pl)](https://kiedyodpady.pl).
+
+Source for Polish municipalities using the kiedyodpady.pl (mOdpady / mMieszkaniec) waste collection platform.
 
 ## Configuration via configuration.yaml
 
@@ -9,47 +11,31 @@ waste_collection_schedule:
   sources:
     - name: kiedyodpady_pl
       args:
-        municipality: pabianice       # subdomain slug, e.g. "pabianice" for pabianice.kiedyodpady.pl
-        city: "Pabianice (miasto)"
-        street: 'ul. 15 Pułku Piechoty "Wilków"'   # optional for some localities
-        number: "pozostałe"                          # optional for some localities
-        lookahead_days: 365                          # optional, default 365
+        municipality: MUNICIPALITY
+        city: CITY
+        street: STREET
+        number: NUMBER
+        lookahead_days: LOOKAHEAD_DAYS
 ```
 
 ### Configuration Variables
 
-**municipality**
-*(String) (required)* The subdomain slug for your municipality. Everything before `.kiedyodpady.pl` — for example, if your URL is `pabianice.kiedyodpady.pl` the value is `pabianice`.
+**municipality**  
+*(string) (required)*
 
-**city**
-*(String) (required)* City/locality name exactly as shown in the dropdown on the kiedyodpady.pl website for your municipality.
+**city**  
+*(string) (required)*
 
-**street**
-*(String) (optional)* Street name exactly as shown in the UI. Not required for all localities.
+**street**  
+*(string) (optional)*
 
-**number**
-*(String) (optional)* House number / address entry exactly as shown in the UI. Not required for all localities.
+**number**  
+*(string) (optional)*
 
-**lookahead_days**
-*(Integer) (optional, default: 365)* Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app. Use a smaller value to reduce API load, or a larger value to see further ahead.
+**lookahead_days**  
+*(string) (optional)*
 
-## How to get the source arguments
-
-1. Open `https://{municipality}.kiedyodpady.pl` in your browser (e.g. `https://pabianice.kiedyodpady.pl`).
-2. Step through the address selection UI — choose your city, then street, then house number.
-3. The `municipality` value is the subdomain prefix shown in the URL.
-4. Copy city, street, and number values **exactly** as displayed in the dropdown lists (including prefixes like `ul.`).
-
-## Confirmed municipalities
-
-| Municipality | URL |
-|---|---|
-| Wieliczka | https://wieliczka.kiedyodpady.pl |
-| Pabianice | https://pabianice.kiedyodpady.pl |
-
-Other municipalities using the kiedyodpady.pl platform should also work — use the subdomain as the `municipality` value.
-
-## Example — Wieliczka
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -57,7 +43,11 @@ waste_collection_schedule:
     - name: kiedyodpady_pl
       args:
         municipality: wieliczka
-        city: "Wieliczka (miasto)"
-        street: "ul. Adama Asnyka"
-        number: "pozostałe"
+        city: Wieliczka (miasto)
+        street: ul. Adama Asnyka
+        number: "pozosta\u0142e"
 ```
+
+## How to get the source arguments
+
+Open https://{municipality}.kiedyodpady.pl (e.g. https://pabianice.kiedyodpady.pl) and step through the address selection. The municipality is the subdomain prefix (everything before `.kiedyodpady.pl`). Copy the city, street and house number exactly as displayed in the dropdown lists; street and house number are optional for some localities.

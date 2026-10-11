@@ -2597,26 +2597,12 @@
       "id": "scheibbs_umweltverbaende_at"
     },
     {
-      "title": "GVU Scheibbs",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "scheibbs"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
       "title": "GVU St. P\u00f6lten",
       "module": "umweltverbaende_at",
       "default_params": {
         "district": "stpoeltenland"
       },
       "id": "umweltverbaende_at"
-    },
-    {
-      "title": "G\u00e4nserndorf",
-      "module": "gaenserndorf_city_at",
-      "default_params": {},
-      "id": "gaenserndorf_city_at"
     },
     {
       "title": "G\u00e4nserndorf City / G\u00e4nserndorf App",
@@ -5225,7 +5211,10 @@
     {
       "title": "City of Hamilton (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "HAM",
+        "project_id": "520"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5593,7 +5582,10 @@
     {
       "title": "Norfolk County (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "OLYMP",
+        "project_id": "3107"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5605,7 +5597,10 @@
     {
       "title": "Oak Bay (BC)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "OAK",
+        "project_id": "3187"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5659,7 +5654,10 @@
     {
       "title": "Prince George (BC)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "PrinceGeorge",
+        "project_id": "523"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5697,7 +5695,10 @@
     {
       "title": "Richmond Hill (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Richmond Hill",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -6218,22 +6219,6 @@
       "id": "chartres_metropole_fr"
     },
     {
-      "title": "Ambar\u00e8s-et-Lagrave",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Ambar\u00e8s-et-Lagrave"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
-      "title": "Amb\u00e8s",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Amb\u00e8s"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Amilly",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -6416,14 +6401,6 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Blanquefort",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Blanquefort"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Bois-de-Haye",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6478,14 +6455,6 @@
         "commune": "Bonneuil-sur-Marne"
       },
       "id": "sudestavenir_fr"
-    },
-    {
-      "title": "Bordeaux",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Bordeaux"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Bordeaux M\u00e9tropole",
@@ -6550,14 +6519,6 @@
       "id": "mulhouse_alsace_fr"
     },
     {
-      "title": "Bruges",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Bruges"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Bruley",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6588,14 +6549,6 @@
         "commune": "Br\u00e9c\u00e9"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "B\u00e8gles",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "B\u00e8gles"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "B\u00e9cherel",
@@ -7018,14 +6971,6 @@
       "id": "mulhouse_alsace_fr"
     },
     {
-      "title": "Eysines",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Eysines"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Feldkirch",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7176,14 +7121,6 @@
         "commune": "Goupilli\u00e8res"
       },
       "id": "coeur_yvelines_fr"
-    },
-    {
-      "title": "Gradignan",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Gradignan"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Grand Besan\u00e7on M\u00e9tropole",
@@ -7494,14 +7431,6 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Le Bouscat",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Bouscat"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Le Cotentin",
       "module": "publidata_fr",
       "default_params": {
@@ -7516,14 +7445,6 @@
         "commune": "Le Coudray"
       },
       "id": "chartres_metropole_fr"
-    },
-    {
-      "title": "Le Haillan",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Haillan"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Le Havre Seine M\u00e9tropole",
@@ -7548,14 +7469,6 @@
         "commune": "Le Rheu"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Le Taillan-M\u00e9doc",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Taillan-M\u00e9doc"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Le Tremblay-sur-Mauldre",
@@ -7714,14 +7627,6 @@
         "commune": "Mareil-le-Guyon"
       },
       "id": "coeur_yvelines_fr"
-    },
-    {
-      "title": "Martignas-sur-Jalle",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Martignas-sur-Jalle"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Martillac",
@@ -7883,14 +7788,6 @@
         "commune": "M\u00e9nil-la-Tour"
       },
       "id": "terrestouloises_com"
-    },
-    {
-      "title": "M\u00e9rignac",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "M\u00e9rignac"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "M\u00e9r\u00e9",
@@ -8071,28 +7968,12 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Parempuyre",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Parempuyre"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Parthenay-de-Bretagne",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Parthenay-de-Bretagne"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Pessac",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Pessac"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Petit-Landau",
@@ -8345,14 +8226,6 @@
       "id": "metropole_rennes_fr"
     },
     {
-      "title": "Saint-Aubin-de-M\u00e9doc",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Aubin-de-M\u00e9doc"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Saint-Aubin-des-Bois",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -8425,14 +8298,6 @@
       "id": "metropole_rennes_fr"
     },
     {
-      "title": "Saint-Louis-de-Montferrand",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Louis-de-Montferrand"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Saint-Lumine-de-Clisson - Zone A",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -8473,14 +8338,6 @@
       "id": "cc-montesquieu_fr"
     },
     {
-      "title": "Saint-M\u00e9dard-en-Jalles",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-M\u00e9dard-en-Jalles"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Saint-Prest",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -8511,14 +8368,6 @@
         "commune": "Saint-Sulpice-la-For\u00eat"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Saint-Vincent-de-Paul",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Vincent-de-Paul"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Sandarville",
@@ -8671,14 +8520,6 @@
         "instance_id": 1483
       },
       "id": "publidata_fr"
-    },
-    {
-      "title": "Talence",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Talence"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Terres Touloises",
@@ -8851,14 +8692,6 @@
         "commune": "Vieillevigne"
       },
       "id": "clissonsevremaine_fr"
-    },
-    {
-      "title": "Villenave-d'Ornon",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Villenave-d'Ornon"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Villey-le-Sec",
@@ -22520,14 +22353,6 @@
       "id": "siunet_it"
     },
     {
-      "title": "Acate (RG)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Acate"
-      },
-      "id": "municipium_it"
-    },
-    {
       "title": "Aci Sant'Antonio",
       "module": "junker_app",
       "default_params": {},
@@ -27722,14 +27547,6 @@
       "id": "junker_app"
     },
     {
-      "title": "Serrastretta (CZ)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Serrastretta"
-      },
-      "id": "municipium_it"
-    },
-    {
       "title": "Serravalle Pistoiese",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -28142,14 +27959,6 @@
         "comune": "TREVIGLIO"
       },
       "id": "siunet_it"
-    },
-    {
-      "title": "Treviglio (BG)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Treviglio"
-      },
-      "id": "municipium_it"
     },
     {
       "title": "Trezzano Rosa",

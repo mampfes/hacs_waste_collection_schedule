@@ -1,19 +1,18 @@
 # Braintree District Council
 
-Support for schedules provided by [Braintree District Council](https://www.braintree.gov.uk/xfp/form/554), serving Braintree, Essex, UK.
+Support for schedules provided by [Braintree District Council](https://www.braintree.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new North East Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Braintree District Council, UK - Waste Collection
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: braintree_gov_uk
       args:
-        post_code: Post Code
-        house_number: House Number
+        post_code: POST_CODE
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
@@ -28,9 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: braintree_gov_uk
       args:
-        post_code: "CM8 3QE"
-        house_number: "30"
+        house_number: 30
+        post_code: CM8 3QE
 ```
+
+## How to get the source arguments
+
+Enter your postcode and the start of your address as the [council's form](https://www.braintree.gov.uk/xfp/form/554) lists it (usually the house number, or the house name). During the ongoing local government reorganisation (LGR) in Essex, please keep using the source for your current area as long as it still works; new sources for the new North East Essex Council are not expected before April 2028.

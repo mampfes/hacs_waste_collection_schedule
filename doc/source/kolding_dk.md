@@ -1,6 +1,8 @@
 # Kolding Kommune
 
-Support for schedules provided by [Kolding Kommune](https://kolding.dk/), serving Kolding municipality, Denmark.
+Support for schedules provided by [Kolding Kommune](https://kolding.dk).
+
+Source for Kolding Kommune waste collection schedule
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +11,13 @@ waste_collection_schedule:
   sources:
     - name: kolding_dk
       args:
-        id: See description
+        id: ID
 ```
 
 ### Configuration Variables
 
 **id**  
-_(String) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -24,12 +26,9 @@ waste_collection_schedule:
   sources:
     - name: kolding_dk
       args:
-        id: "00007b8d-0002-0001-4164-647265737320"
+        id: 00007b76-0002-0001-4164-647265737320
 ```
 
-## How to get the id
+## How to get the source arguments
 
-1. Go to https://kolding.infovision.dk/public/selectaddress
-2. Search for your address.
-3. Your ID is in the resulting URL, e.g. `https://kolding.infovision.dk/public/address/00007b8d-0002-0001-4164-647265737320`
-4. The ID is the UUID at the end: `00007b8d-0002-0001-4164-647265737320`
+Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8d-0002-0001-4164-647265737320`.

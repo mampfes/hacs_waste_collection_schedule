@@ -1,56 +1,68 @@
 # Lisburn and Castlereagh City Council
 
-Support for schedules provided by [Lisburn and Castlereagh City Council](https://www.lisburncastlereagh.gov.uk/resident/bins-and-recycling/household-waste/collection-days-and-holiday-information), serving the city of Lisburn and Castlereagh
+Support for schedules provided by [Lisburn and Castlereagh City Council](https://lisburncastlereagh.gov.uk/).
+
+Source for the Lisburn and Castlereagh City Council
 
 ## Configuration via configuration.yaml
 
-(recommended)
+### Using property_id
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: "PROPERTY_ID"
+        property_id: PROPERTY_ID
 ```
 
-or (not recommended)
+### Using postcode and house_number
 
 ```yaml
 waste_collection_schedule:
-    sources:
-        - name: lisburn_castlereagh_gov_uk
-          args:
-            postcode: "BT28 1AG"
-            house_number: "19A"
+  sources:
+    - name: lisburn_castlereagh_gov_uk
+      args:
+        postcode: POSTCODE
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **property_id**  
-*(string) (required if postcode not provided)*
+*(string) (alternative)*
 
 **postcode**  
-*(string) (required if property_id not provided)*
+*(string) (alternative)*
 
 **house_number**  
-*(string) (required if property_id not provided)*
+*(string) (alternative)*
+
+Provide one of: `property_id` or `postcode` + `house_number`.
 
 ## Example
 
+### Using property_id
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: lisburn_castlereagh_gov_uk
       args:
-        property_id: "RTTKBJY77wmTr5wP"
+        property_id: RTTKBJY77wmTr5wP
 ```
 
-## How to get the property_id argument
+### Using postcode and house_number
 
-The property_id can be found in the URL when looking up your
-bin collection days at [Lisburn and Castlereagh bin collection days](https://lisburn.isl-fusion.com).
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: lisburn_castlereagh_gov_uk
+      args:
+        postcode: BT28 1AG
+        house_number: 19A
+```
 
-## Why property_id over postcode and house_number?
+## How to get the source arguments
 
-The code has to do a search by post code and house number then look up the bin collection time using property ID
+Provide your postcode and house number (or name), or the property ID as found in the URL when looking up your bin collection days.

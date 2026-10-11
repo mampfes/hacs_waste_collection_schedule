@@ -1,19 +1,22 @@
 # St Helens Council
 
-Support for schedules provided by [St Helens Council](https://www.sthelens.gov.uk/article/3473/Check-your-collection-dates/), serving the city of St Helens, UK.
+Support for schedules provided by [St Helens Council](https://sthelens.gov.uk).
+
+Source for sthelens.gov.uk services for St Helens Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: st_helens_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **postcode**  
 *(string) (required)*
 
@@ -24,13 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: st_helens_gov_uk
       args:
-        postcode: "WA10 1HE"
-        uprn: "39079361"
+        postcode: WA9 3AA
+        uprn: '39095112'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Enter your postcode and the UPRN of your property. The UPRN is the value of your address in the address list of https://www.sthelens.gov.uk/article/3473/Check-your-collection-dates (browser dev tools), or look it up on https://www.findmyaddress.co.uk/.
