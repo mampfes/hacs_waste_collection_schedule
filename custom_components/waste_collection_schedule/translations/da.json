@@ -32903,6 +32903,29 @@
           "address": "Din fulde adresse"
         }
       },
+      "args_nobleenviro_com": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_nobleenviro_com": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_northville_township_mi_us": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

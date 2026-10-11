@@ -35940,6 +35940,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Noble Environmental",
+      "module": "nobleenviro_com",
+      "default_params": {},
+      "id": "nobleenviro_com"
+    },
+    {
       "title": "Northville Township, MI",
       "module": "northville_township_mi_us",
       "default_params": {},
