@@ -23,6 +23,8 @@ _TYPE_MAP = {
     "Metale i tworzywa sztuczne": [wt.PLASTIC, wt.METAL],
     "Odpady wielkogabarytowe": wt.BULKY_WASTE,
     "Akcja Liść": wt.GARDEN_WASTE,
+    # A payment reminder rather than a collection; kept visible as before.
+    "Płatność": wt.OTHER,
 }
 
 
@@ -83,6 +85,7 @@ class Source(BaseSource):
         wt.METAL,
         wt.BULKY_WASTE,
         wt.GARDEN_WASTE,
+        wt.OTHER,
     ]
 
     HOWTO: ClassVar[dict] = {
