@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "POST https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search 2cc44e16b7",
+      "method": "POST",
+      "url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search",
+      "final_url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search",
+      "body": "{\"body\":{\"address\":\"80 Clarence St\"}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 21:12:31 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "server": "nginx",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.ccc.tas.gov.au/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff, nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self'",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbIjgwIENsYXJlbmNlIFN0cmVldCBCRUxMRVJJVkUgIFRBUyAgNzAxOCJdLCJzdWNjZXNzIjp0cnVlfQ=="
+    },
+    {
+      "key": "POST https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search 33bddcc665",
+      "method": "POST",
+      "url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search",
+      "final_url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search",
+      "body": "{\"body\":{\"address\":\"80 Clarence Street BELLERIVE  TAS  7018\"}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 21:12:31 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "server": "nginx",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.ccc.tas.gov.au/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff, nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self'",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJuYW1lIjoiQWRkcmVzcyIsImNhcHRpb24iOiJBZGRyZXNzIiwidmFsdWUiOiI4MCBDbGFyZW5jZSBTdHJlZXQgQkVMTEVSSVZFICBUQVMgIDcwMTgifSx7Im5hbWUiOiJDZW50cm9pZF9YIiwiY2FwdGlvbiI6IkNlbnRyb2lkIFgiLCJ2YWx1ZSI6IjE0Ny4zNzczMzI3In0seyJuYW1lIjoiQ2VudHJvaWRfWSIsImNhcHRpb24iOiJDZW50cm9pZCBZIiwidmFsdWUiOiItNDIuODc1MDU1MyJ9LHsibmFtZSI6Ildhc3RlIENvbGxlY3Rpb24gQXJlYSIsImNhcHRpb24iOiJXYXN0ZSBDb2xsZWN0aW9uIEFyZWEiLCJ2YWx1ZSI6IkJlbGxlcml2ZSBOb3J0aCAtIFJvc255IFBhcmsifSx7Im5hbWUiOiJXYXN0ZSBDb2xsZWN0aW9uIERheSIsImNhcHRpb24iOiJXYXN0ZSBDb2xsZWN0aW9uIERheSIsInZhbHVlIjoiV2VkbmVzZGF5In0seyJuYW1lIjoiR2FyYmFnZSBQaWNrdXAiLCJjYXB0aW9uIjoiR2FyYmFnZSBQaWNrdXAiLCJ2YWx1ZSI6IldlZWtseSAxNFwvMTBcLzIwMjYsIDIxXC8xMFwvMjAyNiJ9LHsibmFtZSI6IlJlY3ljbGluZyBQaWNrdXAiLCJjYXB0aW9uIjoiUmVjeWNsaW5nIFBpY2t1cCIsInZhbHVlIjoiRm9ydG5pZ2h0bHkgMTRcLzEwXC8yMDI2LCAyOFwvMTBcLzIwMjYifSx7Im5hbWUiOiJHcmVlbiBXYXN0ZSBQaWNrdXAiLCJjYXB0aW9uIjoiR3JlZW4gV2FzdGUgUGlja3VwIiwidmFsdWUiOiI0IFdlZWtseSAyMVwvMTBcLzIwMjYsIDE4XC8xMVwvMjAyNiJ9LHsibmFtZSI6IkhhcmR3YXN0ZSIsImNhcHRpb24iOiJIYXJkd2FzdGUiLCJ2YWx1ZSI6IjAxXC8wM1wvMjAyMyJ9XSwic3VjY2VzcyI6dHJ1ZX0="
+    }
+  ]
+}
