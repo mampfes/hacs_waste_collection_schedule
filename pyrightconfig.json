@@ -70,7 +70,6 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/alchenstorf_ch.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/alexandria_va_us.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/aliaserviziambientali_it.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/allerdale_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/amarsul_pt.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/angern_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/angus_gov_uk.py",
