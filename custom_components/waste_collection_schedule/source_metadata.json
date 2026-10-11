@@ -4008,6 +4008,14 @@
     },
     "urls": {}
   },
+  "consorziomedionovarese_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/consorziomedionovarese_it.md",
+    "howto": {
+      "en": "Enter your municipality as listed on https://www.consorziomedionovarese.it/it-it/rifiuti/rifiuti/calendario without the year, including the zone where there is one, e.g. 'Ameno' or 'Borgomanero (zona A)'.",
+      "it": "Inserisci il comune come indicato su https://www.consorziomedionovarese.it/it-it/rifiuti/rifiuti/calendario senza l'anno, con la zona dove prevista, ad es. 'Ameno' o 'Borgomanero (zona A)'."
+    },
+    "urls": {}
+  },
   "amsa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
     "howto": {

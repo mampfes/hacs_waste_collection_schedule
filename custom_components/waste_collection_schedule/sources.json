@@ -22574,6 +22574,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Agrate Conturbia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Agrate Conturbia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Aicurzio",
       "module": "cem_ambiente_it",
       "default_params": {},
@@ -22684,6 +22692,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Ameno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Ameno"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "AMSA",
@@ -22814,10 +22830,42 @@
       "id": "geovest_it"
     },
     {
+      "title": "Armeno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Armeno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "ARO Figulinas - DLR Ambiente - Ciclat",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Arona (zona C)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zona C)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Arona (zona D)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zona D)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Arona (zone A-B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zone A-B)"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Arosio - Service 24 Ambiente Srl",
@@ -23136,12 +23184,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Boca",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Boca"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Boffalora Sopra Ticino",
       "module": "siunet_it",
       "default_params": {
         "comune": "BOFFALORA SOPRA TICINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Bogogno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Bogogno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Bolzano Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Bolzano Novarese"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Bolzano Vicentino",
@@ -23178,6 +23250,38 @@
         "municipality": "Borgo San Lorenzo"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Borgo Ticino",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgo Ticino"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgomanero (zona A)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona A)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgomanero (zona B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona B)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgomanero (zona C)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona C)"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Borgomaro",
@@ -23234,6 +23338,14 @@
         "comune": "BRESSANVIDO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Briga Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Briga Novarese"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Briosco",
@@ -23650,6 +23762,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Carpignano Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Carpignano Sesia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Carrara - Nausicaa S.p.a",
       "module": "junker_app",
       "default_params": {},
@@ -23870,6 +23990,22 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castelletto Sopra Ticino (zona A)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Castelletto Sopra Ticino (zona A)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Castelletto Sopra Ticino (zona B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Castelletto Sopra Ticino (zona B)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Castello Di Brianza",
       "module": "siunet_it",
       "default_params": {
@@ -23900,6 +24036,30 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cavaglietto",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavaglietto"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Cavaglio d'Agogna",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavaglio d'Agogna"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Cavallirio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavallirio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Cavenago Di Brianza",
@@ -24158,6 +24318,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Colazza",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Colazza"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Colico",
       "module": "siunet_it",
       "default_params": {
@@ -24226,6 +24394,14 @@
         "comune": "COMAZZO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Comignago",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Comignago"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Comune.Digital",
@@ -24302,6 +24478,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Consorzio Area Vasta Medio Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {},
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Contarina S.p.A",
@@ -24420,6 +24602,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cressa",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cressa"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Crevalcore",
       "module": "geovest_it",
       "default_params": {
@@ -24440,6 +24630,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cureggio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cureggio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Curti - WM Magenta Srl",
@@ -24518,6 +24716,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Divignano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Divignano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "DLR Ambiente - Ciclat",
       "module": "junker_app",
       "default_params": {},
@@ -24544,6 +24750,14 @@
         "comune": "DORIO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Dormelletto",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Dormelletto"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Dresano",
@@ -24656,6 +24870,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Fara Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Fara Novarese"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Fasano",
       "module": "siunet_it",
       "default_params": {
@@ -24738,6 +24960,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Fontaneto d'Agogna",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Fontaneto d'Agogna"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Formula Ambiente Spa - Abruzzo",
@@ -24826,12 +25056,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Gargallo",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gargallo"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Garlate",
       "module": "siunet_it",
       "default_params": {
         "comune": "GARLATE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Gattico-Veruno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gattico-Veruno"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Gavorrano",
@@ -24894,6 +25140,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ghemme",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Ghemme"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Giarre - IGM rifiuti industriali",
       "module": "junker_app",
       "default_params": {},
@@ -24946,6 +25200,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Gozzano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gozzano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Greve in Chianti",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -24966,6 +25228,14 @@
         "comune": "GREZZAGO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Grignasco",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Grignasco"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Grisignano Di Zocco",
@@ -25056,6 +25326,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Invorio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Invorio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Inzago",
@@ -25424,6 +25702,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Lesa",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Lesa"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Lesina",
       "module": "siunet_it",
       "default_params": {
@@ -25584,6 +25870,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Maggiora",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Maggiora"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Magnago",
       "module": "siunet_it",
       "default_params": {
@@ -25736,6 +26030,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massino Visconti",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Massino Visconti"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Meda",
       "module": "junker_app",
       "default_params": {},
@@ -25754,6 +26056,14 @@
         "comune": "MEDIGLIA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Meina",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Meina"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Melegnano",
@@ -25844,6 +26154,14 @@
         "comune": "MEZZAGO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Miasino",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Miasino"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Minerva Ambiente",
@@ -26192,6 +26510,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Nebbiuno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Nebbiuno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "NET SpA - Udine",
       "module": "junker_app",
       "default_params": {},
@@ -26278,6 +26604,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Oleggio Castello",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Oleggio Castello"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Olgiate Molgora",
       "module": "siunet_it",
       "default_params": {
@@ -26340,6 +26674,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Orta San Giulio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Orta San Giulio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Osimo - Astea",
@@ -26436,6 +26778,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Paruzzaro",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Paruzzaro"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Passerano Marmorito",
       "module": "junker_app",
       "default_params": {},
@@ -26474,6 +26824,14 @@
         "comune": "PAULLO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Pella",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pella"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Perdasdefogu - Eco-Sistemi",
@@ -26526,6 +26884,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Pettenasco",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pettenasco"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Piazza Brembana",
       "module": "junker_app",
       "default_params": {},
@@ -26560,6 +26926,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Pisano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pisano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Pistoia",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -26584,6 +26958,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Pogno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pogno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Polino",
       "module": "siunet_it",
       "default_params": {
@@ -26596,6 +26978,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Pombia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pombia"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Ponte Buggianese",
@@ -26652,6 +27042,14 @@
         "municipality": "Prato"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Prato Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Prato Sesia"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Pratola Peligna - Diodoro Ecologia",
@@ -26904,6 +27302,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Romagnano Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Romagnano Sesia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Roncello",
       "module": "cem_ambiente_it",
       "default_params": {},
@@ -27124,6 +27530,14 @@
         "municipality": "San Marcello Piteglio"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "San Maurizio d'Opaglio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "San Maurizio d'Opaglio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "San Pietro Di Morubio",
@@ -27420,6 +27834,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Sizzano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Sizzano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Solbiate Olona",
       "module": "siunet_it",
       "default_params": {
@@ -27468,6 +27890,14 @@
         "comune": "SORG\u00c0"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Soriso",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Soriso"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Sovico",
@@ -27538,6 +27968,14 @@
         "comune": "SULBIATE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Suno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Suno"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Suno",
@@ -27970,6 +28408,14 @@
         "comune": "VAPRIO D'ADDA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Varallo Pombia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Varallo Pombia"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Varedo",
