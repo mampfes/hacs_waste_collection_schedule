@@ -1,95 +1,94 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    street_address,
+    uprn,
 )
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.retrievers import Lookup
+from waste_collection_schedule.service.JaduApiserver import rpc
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Breckland Council"
-DESCRIPTION = "Source for breckland.gov.uk"
-URL = "https://www.breckland.gov.uk/mybreckland"
-TEST_CASES = {
-    "test1": {"postcode": "IP22 2LJ", "address": "glen travis"},
-    "test2": {"uprn": "10011977093"},
-}
-
-API_URL = "https://www.breckland.gov.uk/apiserver/ajaxlibrary"
-ICON_MAP = {
-    "Refuse Collection Service": Icons.GENERAL_WASTE,
-    "Recycling Collection Service": Icons.RECYCLING,
-    "Garden Waste Service": Icons.GARDEN,
-    "Food Waste Collection Service": Icons.BIO_KITCHEN,
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-headers = {"referer": URL}
+_API_URL = "https://www.breckland.gov.uk/apiserver/ajaxlibrary"
+_HEADERS = {"referer": "https://www.breckland.gov.uk/mybreckland"}
 
 
-class Source:
-    def __init__(self, postcode=None, address=None, uprn=None):
-        self._postcode = postcode
-        self._address = address
-        self._uprn = uprn
+def _site_uprn(response, *_, address, **__) -> str:
+    """The UPRN of the last site at the postcode whose name contains ``address``."""
+    sites = response.json()["result"]
+    found = None
+    for site in sites:
+        if str(address).lower() in site["name"].lower():
+            found = site["uprn"]
+    if found is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", address, [site["name"] for site in sites]
+        )
+    return found
 
-        if uprn is None and (postcode is None or address is None):
-            errors = []
-            if postcode is not None:
-                errors.append("address")
-            elif address is not None:
-                errors.append("postcode")
-            else:
-                errors = ["postcode", "address", "uprn"]
-            raise SourceArgumentExceptionMultiple(
-                errors, "specify postcode and address or just uprn"
-            )
 
-    def fetch(self):
-        if self._uprn is None:
-            json_data = {
-                "jsonrpc": "2.0",
-                "id": "",
-                "method": "Breckland.Whitespace.JointWasteAPI.GetSiteIDsByPostcode",
-                "params": {"postcode": self._postcode, "environment": "live"},
-            }
+@final
+class Source(BaseSource):
+    TITLE = "Breckland Council"
+    DESCRIPTION = "Source for breckland.gov.uk"
+    URL = "https://www.breckland.gov.uk/mybreckland"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-            r = requests.post(API_URL, json=json_data, headers=headers)
-            r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "test1": {"postcode": "IP22 2LJ", "address": "glen travis"},
+        "test2": {"uprn": "10011977093"},
+    }
 
-            json_response = r.json()
+    PARAMS = (alternatives([uprn()], [postcode(), street_address()]),)
 
-            for key in json_response["result"]:
-                if self._address.lower() in key["name"].lower():
-                    self._uprn = key["uprn"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide your UPRN, or your postcode plus part of your address as "
+            "the council lists it. Find your UPRN at https://www.findmyaddress.co.uk/"
+        ),
+    }
 
-        if self._uprn is None:
-            raise Exception("Error querying calendar data")
-
-        json_data = {
-            "jsonrpc": "2.0",
-            "id": "",
-            "method": "Breckland.Whitespace.JointWasteAPI.GetBinCollectionsByUprn",
-            "params": {"uprn": self._uprn, "environment": "live"},
-        }
-
-        r = requests.post(API_URL, json=json_data, headers=headers)
-        r.raise_for_status()
-
-        waste = r.json()["result"]
-
-        entries = []
-
-        for data in waste:
-            entries.append(
-                Collection(
-                    datetime.strptime(
-                        data["nextcollection"], "%d/%m/%Y %H:%M:%S"
-                    ).date(),
-                    data["collectiontype"],
-                    ICON_MAP.get(data["collectiontype"]),
-                )
-            )
-
-        return entries
+    retrieve = rpc(
+        _API_URL,
+        "Breckland.Whitespace.JointWasteAPI.GetBinCollectionsByUprn",
+        lambda site_uprn, **_: {"uprn": str(site_uprn), "environment": "live"},
+        request_id="",
+        headers=_HEADERS,
+        before=(
+            Lookup(
+                rpc(
+                    _API_URL,
+                    "Breckland.Whitespace.JointWasteAPI.GetSiteIDsByPostcode",
+                    lambda postcode, **_: {"postcode": postcode, "environment": "live"},
+                    request_id="",
+                    headers=_HEADERS,
+                ),
+                given=lambda uprn=None, **_: uprn,
+                pick=_site_uprn,
+            ),
+        ),
+    )
+    parse = parsers.JsonParser("result")
+    transform = JsonTransformer(
+        date_key="nextcollection",
+        type_key="collectiontype",
+        parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
+        type_value_map={
+            "Refuse Collection Service": wt.GENERAL_WASTE,
+            "Recycling Collection Service": wt.RECYCLABLES,
+            "Garden Waste Service": wt.GARDEN_WASTE,
+            "Food Waste Collection Service": wt.FOOD_WASTE,
+        },
+    )
