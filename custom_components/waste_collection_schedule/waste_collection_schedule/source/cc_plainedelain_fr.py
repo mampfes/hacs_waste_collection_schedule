@@ -37,7 +37,9 @@ _INDEX_URL = (
 # "/16_AMBRONAY_SRB_CALENDRIER_A4_2026-1.pdf": the year sits somewhere in the
 # file name (never in the /uploads/YYYY/MM/ folder, which is the upload date).
 _PDF_PATTERN = r"/\d+_(?=[^/]*CALENDRIER)[^/]*?(20\d\d)[^/]*\.pdf$"
-_YEAR_PATTERN = r"_(20\d\d)[_-][^/]*\.pdf$"
+# The suffix after the year is optional ("..._CALENDRIER_2027.pdf"): an unmatched
+# year would fall back to the current one and fail the weekday check.
+_YEAR_PATTERN = r"_(20\d\d)(?:[_-][^/]*)?\.pdf$"
 
 _GENERAL = "Ordures ménagères"
 _RECYCLING = "Tri sélectif"

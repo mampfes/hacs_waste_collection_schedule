@@ -868,6 +868,13 @@
     "howto": {},
     "urls": {}
   },
+  "upperlachlan_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/upperlachlan_nsw_gov_au.md",
+    "howto": {
+      "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF. Only published dates are returned. Next year's calendar is included once linked by council; until then the latest available calendar is used without extending its dates. Separate service-disruption notices are not included."
+    },
+    "urls": {}
+  },
   "wagga_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wagga_nsw_gov_au.md",
     "howto": {
@@ -2030,6 +2037,14 @@
     "howto": {
       "en": "Enter your street address including the city name (e.g. '1 place Roger Salengro, Oullins').",
       "fr": "Entrez votre adresse complète avec le nom de la commune (ex : '1 place Roger Salengro, Oullins')."
+    },
+    "urls": {}
+  },
+  "nice_cotedazur_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nice_cotedazur_fr.md",
+    "howto": {
+      "en": "Select your commune. Only communes of the Métropole with one fixed set of collection weekdays are supported; communes with alternating weeks, seasonal periods or per-district rounds are not. Household waste and packaging (yellow bin) are included; bulky waste and glass are not.",
+      "fr": "Sélectionnez votre commune. Seules les communes de la Métropole dont les jours de collecte sont fixes sont prises en charge ; les communes avec collecte une semaine sur deux, périodes saisonnières ou tournées par quartier ne le sont pas. Les ordures ménagères et les emballages (bac jaune) sont inclus ; les encombrants et le verre ne le sont pas."
     },
     "urls": {}
   },
@@ -7069,6 +7084,14 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "nuneatonandbedworth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nuneatonandbedworth_gov_uk.md",
+    "howto": {
+      "de": "Gib deine Straße so ein, wie sie im Verzeichnis 'Find your bin collection day' des Councils steht. Gibt es den Straßennamen in beiden Orten, ergänze den Ort, z. B. 'Church Street, Bedworth'. Die Termine für Gartenabfall (grüne Tonne) gelten nur mit Abonnement.",
+      "en": "Enter your street as the council's 'Find your bin collection day' directory lists it. Where a street name exists in both towns, add the town, e.g. 'Church Street, Bedworth'. Garden waste (green bin) dates only apply if you subscribe to the green bin service."
+    },
+    "urls": {}
+  },
   "oadby_wigston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oadby_wigston_gov_uk.md",
     "howto": {
@@ -8100,6 +8123,14 @@
   "nyc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nyc_gov.md",
     "howto": {},
+    "urls": {}
+  },
+  "nobleenviro_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nobleenviro_com.md",
+    "howto": {
+      "de": "Gib deine Gemeinde so ein, wie Noble Environmental ihren Kalender-PDF benennt (z. B. 'Canonsburg' oder 'Springdale Borough'). Gibst du nur einen Teil des Namens ein (z. B. 'Canons'), schlägt die Fehlermeldung die passenden Gemeinden vor. Feiertagsverschiebungen werden wie im Kalender gedruckt übernommen.",
+      "en": "Enter your municipality exactly as Noble Environmental names its calendar PDF (e.g. 'Canonsburg' or 'Springdale Borough'). If you enter only part of the name (e.g. 'Canons'), the error message suggests the matching municipalities. Holiday shifts are taken from the calendar as printed."
+    },
     "urls": {}
   },
   "northville_township_mi_us": {

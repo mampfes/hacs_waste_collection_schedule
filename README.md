@@ -252,6 +252,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Town of Walkerville](/doc/source/app_my_local_services_au.md) / walkerville.sa.gov.au
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
+- [Upper Lachlan Shire Council](/doc/source/upperlachlan_nsw_gov_au.md) / upperlachlan.nsw.gov.au/services/waste
 - [Wagga Wagga City Council](/doc/source/wagga_nsw_gov_au.md) / wagga.nsw.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
@@ -1259,6 +1260,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
 - [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Métropole Nice Côte d'Azur](/doc/source/nice_cotedazur_fr.md) / nicecotedazur.org
 - [Nantes Métropole](/doc/source/data_nantesmetropole_fr.md) / data.nantesmetropole.fr
 - [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -4857,6 +4859,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Northumberland County Council](/doc/source/northumberland_gov_uk.md) / northumberland.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Nuneaton and Bedworth Borough Council](/doc/source/nuneatonandbedworth_gov_uk.md) / nuneatonandbedworth.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
@@ -5053,6 +5056,7 @@ If you already have enough information for your municipality/region, you are ver
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
+- [Noble Environmental](/doc/source/nobleenviro_com.md) / nobleenviro.com
 - [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net

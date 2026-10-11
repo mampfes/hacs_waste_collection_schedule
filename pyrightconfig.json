@@ -487,6 +487,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/tunbridgewells_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ubzzw_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/unley_sa_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/upperlachlan_nsw_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/uppsalavatten_se.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/verl_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/vevg_karlsburg_de.py",

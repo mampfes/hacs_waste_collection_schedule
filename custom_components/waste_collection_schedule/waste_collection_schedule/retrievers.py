@@ -1108,16 +1108,24 @@ def yearly_links(
         compiled = re.compile(
             pattern(**params) if callable(pattern) else pattern, re.IGNORECASE
         )
+        if not compiled.groups:
+            raise ValueError(
+                f"yearly_links pattern {compiled.pattern!r} has no group for the year"
+            )
         base = getattr(response, "url", "") or ""
         by_text: dict[str, dict[str, int]] = {}
         for tag in BeautifulSoup(response.text, "html.parser").find_all("a", href=True):
             href = str(tag["href"])
             match = compiled.search(href)
-            if match:
+            year = (
+                next((group for group in match.groups() if group), None)
+                if match
+                else None
+            )
+            if year is not None:
                 text = tag.get_text(" ", strip=True) if argument else ""
                 if text and link_name is not None:
                     text = link_name(text)
-                year = next(group for group in match.groups() if group)
                 by_text.setdefault(text, {}).setdefault(urljoin(base, href), int(year))
         if not by_text:
             raise ValueError(

@@ -1658,16 +1658,27 @@ class PdfDocumentLayout(NamedTuple):
     vectors: tuple[PdfVector, ...]
 
 
-def _pdf_color(value: Any) -> tuple[float, ...] | None:
-    """Normalise pdfminer colour values to a numeric tuple when possible."""
+def _pdf_color(
+    value: Any, *, grayscale_to_rgb: bool = False
+) -> tuple[float, ...] | None:
+    """Normalise numeric colours, optionally expanding greyscale to RGB.
+
+    Pattern colour names and other non-numeric components are not colours
+    this layout representation can compare, so return None for them.
+    """
+    components: tuple[float, ...]
     if isinstance(value, (int, float)):
-        return (float(value),)
-    if not isinstance(value, (list, tuple)):
+        components = (float(value),)
+    elif isinstance(value, (list, tuple)):
+        try:
+            components = tuple(float(component) for component in value)
+        except (TypeError, ValueError):
+            return None
+    else:
         return None
-    try:
-        return tuple(float(component) for component in value)
-    except (TypeError, ValueError):
-        return None
+    if grayscale_to_rgb and len(components) == 1:
+        return components * 3
+    return components
 
 
 class PdfLayoutParser(Parser[PdfDocumentLayout]):
@@ -1770,6 +1781,107 @@ class PdfLayoutParser(Parser[PdfDocumentLayout]):
                 raw=text[:500],
             )
         return PdfDocumentLayout(text, tuple(fragments), tuple(vectors))
+
+
+class PdfWordLayout(NamedTuple):
+    lines: list[PdfTextFragment]
+    words: list[PdfTextFragment]
+    vectors: list[PdfVector]
+
+
+def _pdf_word_layout(response: Response) -> PdfWordLayout:
+    """Retain individual word centres even when lines span several grid cells."""
+    from io import BytesIO
+
+    from pdfminer.high_level import extract_pages
+    from pdfminer.layout import (
+        LAParams,
+        LTChar,
+        LTContainer,
+        LTCurve,
+        LTTextLineHorizontal,
+    )
+
+    lines, words, vectors = [], [], []
+
+    def visit(item, page):
+        if isinstance(item, LTTextLineHorizontal):
+            lines.append(
+                PdfTextFragment(
+                    page,
+                    " ".join(item.get_text().split()),
+                    (item.x0 + item.x1) / 2,
+                    (item.y0 + item.y1) / 2,
+                )
+            )
+            chars = []
+
+            def flush():
+                if chars:
+                    words.append(
+                        PdfTextFragment(
+                            page,
+                            "".join(c.get_text() for c in chars),
+                            (chars[0].x0 + chars[-1].x1) / 2,
+                            (chars[0].y0 + chars[0].y1) / 2,
+                        )
+                    )
+                    chars.clear()
+
+            for char in item:
+                if isinstance(char, LTChar) and not char.get_text().isspace():
+                    chars.append(char)
+                else:
+                    flush()
+            flush()
+        elif isinstance(item, LTContainer):
+            for child in item:
+                visit(child, page)
+        elif isinstance(item, LTCurve) and item.fill:
+            vectors.append(
+                PdfVector(
+                    page,
+                    item.x0,
+                    item.y0,
+                    item.x1,
+                    item.y1,
+                    _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                    _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+                )
+            )
+
+    for page, layout in enumerate(
+        extract_pages(BytesIO(response.content), laparams=LAParams())
+    ):
+        visit(layout, page)
+    return PdfWordLayout(lines, words, vectors)
+
+
+class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
+    """Return one document with word/line centres and filled vector geometry.
+
+    Coordinates use the PDF origin at bottom left and zero-based page numbers.
+    Greyscale fills are normalised to RGB triples for comparison with RGB
+    legends. An optional minimum word/vector count detects empty or changed
+    documents. The one-item list composes with ``parsers.EachResponse``.
+    """
+
+    def __init__(self, *, min_words: int = 1, min_vectors: int = 0):
+        self.min_words = min_words
+        self.min_vectors = min_vectors
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> list[PdfWordLayout]:
+        layout = _pdf_word_layout(response)
+        response_shape.expect(
+            len(layout.words) >= self.min_words
+            and len(layout.vectors) >= self.min_vectors,
+            source_name=response_shape.source_name(source),
+            detail="PDF has too few positioned words or filled vectors (image-only or changed layout?)",
+            raw=str(layout.lines[:10]),
+        )
+        return [layout]
 
 
 class PdfWord(NamedTuple):
