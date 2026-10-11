@@ -1,143 +1,98 @@
-# Credit where it's due:
-# This is predominantly a refactoring of the Woking Borough Council script from the UKBinCollectionData repo
-# https://github.com/robbrad/UKBinCollectionData
+from typing import ClassVar, final
 
-import re
-from datetime import datetime
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, house_number, postcode
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.WhitespaceWRP import (
+    WhitespaceParser,
+    WhitespaceRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+# Credit where it's due: the original scraper was a refactoring of the Woking
+# Borough Council script from https://github.com/robbrad/UKBinCollectionData
 
-TITLE = "Joint Waste Solutions"
-URL = "https://www.jointwastesolutions.org/"
-COUNTRY = "uk"
-EXTRA_INFO = [
-    {
-        "title": "Woking Borough Council",
-        "url": "https://www.woking.gov.uk",
-        "country": "uk",
-        "default_params": {"borough": "woking"},
-    },
-    {
-        "title": "Surrey Heath Borough Council",
-        "url": "https://www.surreyheath.gov.uk",
-        "country": "uk",
-        "default_params": {"borough": "surreyheath"},
-    },
-]
-DESCRIPTION = "Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking"
-TEST_CASES = {
-    "Test Woking #1": {
-        "house": "4",
-        "postcode": "GU21 4PQ",
-    },
-    "Test Woking #2": {
-        "house": 9,
-        "postcode": "GU22 8RW",
-    },
-    "Test Woking #3": {
-        "house": "49",
-        "postcode": "GU22 0AY",
-    },
-    "Test Woking #4": {
-        "house": 5,
-        "postcode": "GU21 4HW",
-        "borough": "woking",
-    },
-    "surrey heath #1": {
-        "house": "1",
-        "postcode": "GU15 1JT",
-        "borough": "surreyheath",
-    },
+_TYPE_MAP = {
+    "Rubbish": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden": wt.GARDEN_WASTE,
+    "Food waste": wt.FOOD_WASTE,
+    "Batteries-small electricals-textiles": [wt.ELECTRONICS, wt.TEXTILES],
 }
 
-ICON_MAP = {
-    "RUBBISH": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN": Icons.GARDEN,
-    "BATTERIES-SMALL ELECTRICALS-TEXTILES": Icons.BATTERY,
-    "FOOD WASTE": Icons.BIO_KITCHEN,
-}
-REGEX = r"(\d+\/\d+\/\d+\/[\d\w]+)"
+
+def _base_url(borough, **_) -> str:
+    return f"https://asjwsw-wrp{str(borough).lower().strip()}municipal-live.whitespacews.com"
 
 
-class Source:
-    def __init__(self, house, postcode, borough="woking"):
-        self._house = str(house).upper().strip()
-        self._postcode = postcode.upper().replace(" ", "+").strip()
-        self._borough = borough.lower().strip()
+@final
+class Source(BaseSource):
+    TITLE = "Joint Waste Solutions"
+    DESCRIPTION = "Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking"
+    URL = "https://www.jointwastesolutions.org/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        s = requests.Session()
+    REGIONS = (
+        region(
+            "Woking Borough Council",
+            url="https://www.woking.gov.uk",
+            borough="woking",
+        ),
+        region(
+            "Surrey Heath Borough Council",
+            url="https://www.surreyheath.gov.uk",
+            borough="surreyheath",
+        ),
+    )
 
-        # Load landing page and extract tracking ID needed for subsequent requests
-        r0 = s.get(
-            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/#!",
-        )
-        trackingID = re.findall(REGEX, r0.text)[0]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.ELECTRONICS,
+        wt.TEXTILES,
+    ]
 
-        # Load search form
-        s.get(
-            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/?Track={trackingID}&serviceID=A&seq=1#!",
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Test Woking #1": {"house": "4", "postcode": "GU21 4PQ"},
+        "Test Woking #2": {"house": 9, "postcode": "GU22 8RW"},
+        "Test Woking #3": {"house": "49", "postcode": "GU22 0AY"},
+        "Test Woking #4": {"house": 5, "postcode": "GU21 4HW", "borough": "woking"},
+        "surrey heath #1": {
+            "house": "1",
+            "postcode": "GU15 1JT",
+            "borough": "surreyheath",
+        },
+    }
 
-        # These headers seem to be required for subsequent queries
-        headers = {
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "Accept-Language": "en-GB,en;q=0.9",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Origin": f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com",
-            "Pragma": "no-cache",
-            "Referer": f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/",
-            "Sec-Fetch-Dest": "document",
-            "Sec-Fetch-Mode": "navigate",
-            "Sec-Fetch-Site": "same-origin",
-            "Sec-Fetch-User": "?1",
-            "Upgrade-Insecure-Requests": "1",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 OPR/98.0.0.0",
-            "sec-ch-ua": '"Chromium";v="112", "Not_A Brand";v="24", "Opera GX";v="98"',
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": '"Windows"',
-        }
-        # Supply search parameters
-        payload = {
-            "address_name_number": self._house,
-            "address_street": "",
-            "street_town": "",
-            "address_postcode": self._postcode,
-        }
+    PARAMS = (
+        house_number("house"),
+        postcode(),
+        dropdown(
+            "borough",
+            ["woking", "surreyheath"],
+            label="Borough",
+            default="woking",
+        ),
+    )
 
-        # Post address search
-        s.post(
-            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/mop.php?serviceID=A&Track={trackingID}&seq=2",
-            headers=headers,
-            params=payload,
-        )
-        # Now retrieve schedule
-        r3 = s.get(
-            f"https://asjwsw-wrp{self._borough}municipal-live.whitespacews.com/mop.php?Track={trackingID}&serviceID=A&seq=3&pIndex=1",
-            headers=headers,
-        )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide the house name or number and the postcode as shown on the "
+            "council's bin-day lookup, and choose your borough: `woking` or "
+            "`surreyheath`."
+        ),
+    }
 
-        # Extract dates and waste types
-        soup = BeautifulSoup(r3.text, "html.parser")
-        schedule = soup.findAll(
-            "p", {"class": "colorblack fontfamilyTahoma fontsize12rem"}
-        )
-        waste_types = schedule[1::2]
-        waste_dates = schedule[::2]
-
-        entries = []
-        for i in range(len(waste_dates)):
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_dates[i].text, "%d/%m/%Y").date(),
-                    t=waste_types[i].text,
-                    icon=ICON_MAP.get(waste_types[i].text.upper()),
-                )
-            )
-
-        return entries
+    retrieve = WhitespaceRetriever(
+        name_number="house", postcode="postcode", base_url=_base_url
+    )
+    parse = WhitespaceParser()
+    transform = RowTransformer(
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
