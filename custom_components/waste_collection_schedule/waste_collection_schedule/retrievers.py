@@ -1052,7 +1052,11 @@ class PdfLinkRetriever(_BaseRetriever):
 
 
 def yearly_links(
-    pattern: str | Callable[..., str], *, argument: str | None = None
+    pattern: str | Callable[..., str],
+    *,
+    argument: str | None = None,
+    link_name: Callable[[str], str] | None = None,
+    lookback: int = 0,
 ) -> Callable[..., list[str]]:
     """A :class:`Lookup` ``pick`` listing an index page's calendars from this year on.
 
@@ -1089,6 +1093,13 @@ def yearly_links(
             prints it. Only links whose text matches (ignoring case, accents,
             hyphens and punctuation) are kept; no match raises
             ``SourceArgumentNotFoundWithSuggestions`` listing the link texts.
+        link_name: optional ``callable(link_text) -> name`` applied before
+            matching ``argument``, for link texts that carry the year
+            ("Ameno 2026 (UFF.)" -> "Ameno"), so the configured name keeps
+            matching next year's link.
+        lookback: how many years before the current one to keep as well, for
+            calendars that run into the next year (March to February): in
+            January the previous year's document still holds the dates.
     """
 
     def pick(response: Response, *_keys: Any, **params: Any) -> list[str]:
@@ -1104,6 +1115,8 @@ def yearly_links(
             match = compiled.search(href)
             if match:
                 text = tag.get_text(" ", strip=True) if argument else ""
+                if text and link_name is not None:
+                    text = link_name(text)
                 year = next(group for group in match.groups() if group)
                 by_text.setdefault(text, {}).setdefault(urljoin(base, href), int(year))
         if not by_text:
@@ -1126,7 +1139,9 @@ def yearly_links(
         for url, year in found.items():
             per_year.setdefault(year, url)
         this_year = datetime.date.today().year
-        current = [per_year[year] for year in sorted(per_year) if year >= this_year]
+        current = [
+            per_year[year] for year in sorted(per_year) if year >= this_year - lookback
+        ]
         return current or [per_year[max(per_year)]]
 
     return pick

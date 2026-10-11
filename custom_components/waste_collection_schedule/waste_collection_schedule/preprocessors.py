@@ -17,7 +17,9 @@ into individual collection dates::
 """
 
 import bisect
+import calendar
 import datetime
+import itertools
 import re
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -1224,6 +1226,298 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
             if match:
                 return int(match.group(1))
         return datetime.date.today().year
+
+
+# Italian weekday abbreviations, Monday first, as regexes ("Giov", "Sa" seen).
+ITALIAN_WEEKDAYS = ("lun", "mar", "mer", r"gio(?:v|vedì)?", "ven", "sab?", "dom")
+
+
+class _DayCell(NamedTuple):
+    x0: float
+    y: float
+    end: float
+    day: int
+    weekday: int
+    text: str
+
+
+class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
+    """Read a PDF calendar of month blocks listing "day weekday rounds" cells.
+
+    For the yearly leaflet that prints a few months side by side per page, each
+    under its month name, and in each month every day as a line ("1 Lun SECCO",
+    "16 Giov PLASTICA - VETRO"), often in two columns (1-15, 16-31)::
+
+        parse = parsers.EachResponse(
+            parsers.PdfTableParser(min_words=100),
+            then=preprocessors.PdfMonthBlocks(labels=TYPE_MAP),
+        )
+
+    The printed weekday is what makes such a sheet reliable to read, so it is
+    checked for every day rather than trusted to the layout:
+
+    - A day cell is a day number with a weekday abbreviation right of it; the
+      rounds are the words level with it up to the next cell to the right, plus
+      any wrapped line printed below it within the cell.
+    - The day columns under each row of month headings are found by clustering
+      the cells' x positions, and split evenly among the headings left to right.
+      A column count that does not divide evenly raises.
+    - Each month block is dated by the one year (last, this or next) whose
+      calendar matches every printed weekday, so a leaflet running March to
+      February dates its January in the next year without being told. A block
+      matching no year or several raises, as do blocks that are not in
+      ascending month order across the document.
+
+    Headings may carry the year ("Gennaio 2027") or be split by a drop cap
+    ("F ebbraio"). Pages without day cells (a cover, a legend) are skipped; a
+    page with day cells but no month heading raises ``ResponseShapeError``.
+
+    Args:
+        labels: the round labels printed in the cells, matched
+            case-insensitively as whole words ("VERDE*" counts as VERDE). Pass
+            the transformer's ``type_value_map`` directly.
+        weekdays: seven regexes for the weekday abbreviations, Monday first,
+            matched case-insensitively against the word after the day number.
+            Defaults to Italian.
+        column_gap: the horizontal gap (PDF points) between day cells that
+            starts a new column.
+    """
+
+    def __init__(
+        self,
+        *,
+        labels: Iterable[str],
+        weekdays: Sequence[str] = ITALIAN_WEEKDAYS,
+        column_gap: float = 40.0,
+    ):
+        self._labels = [
+            (label, re.compile(rf"(?<!\w){re.escape(str(label))}(?!\w)", re.IGNORECASE))
+            for label in labels
+        ]
+        if not self._labels:
+            raise ValueError("PdfMonthBlocks needs at least one label")
+        if len(weekdays) != 7:
+            raise ValueError("weekdays needs seven abbreviations, Monday first")
+        self._weekdays = [
+            re.compile(rf"(?:{weekday})\.?", re.IGNORECASE) for weekday in weekdays
+        ]
+        self._gap = column_gap
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        from waste_collection_schedule import response_shape
+
+        name = response_shape.source_name(source)
+        rows = list(records)
+        today = datetime.date.today().year
+        years = (today - 1, today, today + 1)
+        found: list[tuple[datetime.date, str]] = []
+        blocks_seen: list[tuple[int, int]] = []
+        for page in sorted({row.page for row in rows}):
+            words = [
+                (word, row.y) for row in rows if row.page == page for word in row.words
+            ]
+            cells, used = self._cells(words)
+            if not cells:
+                continue
+            rest = [
+                (word, y) for index, (word, y) in enumerate(words) if index not in used
+            ]
+            bands = self._heading_bands(rest)
+            response_shape.expect(
+                bool(bands),
+                source_name=name,
+                detail=f"page {page + 1} has day cells but no month heading",
+            )
+            by_band: dict[float, list[_DayCell]] = {}
+            for cell in cells:
+                above = [band for band in bands if band > cell.y]
+                response_shape.expect(
+                    bool(above),
+                    source_name=name,
+                    detail=f"page {page + 1}: day {cell.day} is above every month heading",
+                )
+                by_band.setdefault(min(above), []).append(cell)
+            for band in sorted(by_band, reverse=True):
+                for (year, month), dated in self._months(
+                    by_band[band], bands[band], rest, years, page, name
+                ):
+                    blocks_seen.append((year, month))
+                    found.extend(dated)
+        response_shape.expect(
+            blocks_seen == sorted(set(blocks_seen)),
+            source_name=name,
+            detail=f"month blocks out of order or repeated: {blocks_seen}",
+        )
+        return found
+
+    def _weekday(self, token: str) -> "int | None":
+        for index, pattern in enumerate(self._weekdays):
+            if pattern.fullmatch(token):
+                return index
+        return None
+
+    def _cells(
+        self, words: "list[tuple[PdfWord, float]]"
+    ) -> "tuple[list[_DayCell], set[int]]":
+        """The day cells (number + weekday) of a page, and the words they used."""
+        cells: list[_DayCell] = []
+        used: set[int] = set()
+        for index, (word, y) in enumerate(words):
+            parts = word.text.split(None, 2)
+            if not parts or not re.fullmatch(r"\d{1,2}", parts[0]):
+                continue
+            if len(parts) > 1:
+                weekday = self._weekday(parts[1])
+                if weekday is not None:
+                    rest = parts[2] if len(parts) > 2 else ""
+                    cells.append(
+                        _DayCell(word.x0, y, word.x1, int(parts[0]), weekday, rest)
+                    )
+                    used.add(index)
+                continue
+            for other, (next_word, next_y) in enumerate(words):
+                if (
+                    other in used
+                    or abs(next_y - y) > 4
+                    or not 0 <= next_word.x0 - word.x1 <= 12
+                ):
+                    continue
+                next_parts = next_word.text.split(None, 1)
+                weekday = self._weekday(next_parts[0]) if next_parts else None
+                if weekday is not None:
+                    rest = next_parts[1] if len(next_parts) > 1 else ""
+                    cells.append(
+                        _DayCell(word.x0, y, next_word.x1, int(parts[0]), weekday, rest)
+                    )
+                    used.update((index, other))
+                    break
+        return cells, used
+
+    @staticmethod
+    def _heading_bands(
+        words: "list[tuple[PdfWord, float]]",
+    ) -> "dict[float, list[tuple[float, int]]]":
+        """Month headings grouped by line: {y: [(x0, month), ...]}."""
+        headings: list[tuple[float, float, int]] = []
+        for word, y in words:
+            text = word.text.strip()
+            named = re.fullmatch(r"(\S+)(?:\s+20\d\d)?", text)
+            month = recurrence.month(named.group(1)) if named else None
+            if month is None and 1 <= len(text) <= 2 and text[:1].isupper():
+                # A drop cap printed apart from the rest of the name ("F ebbraio").
+                for other, other_y in words:
+                    if (
+                        other is not word
+                        and abs(other_y - y) < 12
+                        and -2 <= other.x0 - word.x1 <= 8
+                    ):
+                        month = recurrence.month(text + other.text.split()[0])
+                        if month is not None:
+                            break
+            if month is not None:
+                headings.append((word.x0, y, month))
+        bands: dict[float, list[tuple[float, int]]] = {}
+        for x0, y, month in headings:
+            key = next((band for band in bands if abs(band - y) < 15), y)
+            bands.setdefault(key, []).append((x0, month))
+        return bands
+
+    def _months(
+        self,
+        cells: "list[_DayCell]",
+        headings: "list[tuple[float, int]]",
+        words: "list[tuple[PdfWord, float]]",
+        years: tuple[int, ...],
+        page: int,
+        name: str,
+    ) -> "Iterable[tuple[tuple[int, int], list[tuple[datetime.date, str]]]]":
+        from waste_collection_schedule import response_shape
+
+        months = [month for _, month in sorted(headings)]
+        columns: list[list[float]] = []
+        for x0 in sorted(cell.x0 for cell in cells):
+            if columns and x0 - columns[-1][-1] <= self._gap:
+                columns[-1].append(x0)
+            else:
+                columns.append([x0])
+        response_shape.expect(
+            len(columns) % len(months) == 0,
+            source_name=name,
+            detail=f"page {page + 1}: {len(columns)} day columns under "
+            f"{len(months)} month headings",
+        )
+        per_month = len(columns) // len(months)
+        starts = [column[0] for column in columns]
+
+        def column_of(cell: _DayCell) -> int:
+            return max(i for i, start in enumerate(starts) if cell.x0 >= start)
+
+        # The line pitch between consecutive days of a column: a wrapped line
+        # sits within it, a footnote or legend below the last day does not.
+        ordered = sorted(cells, key=lambda cell: (column_of(cell), -cell.y))
+        pitches = sorted(
+            upper.y - lower.y
+            for upper, lower in itertools.pairwise(ordered)
+            if column_of(upper) == column_of(lower)
+        )
+        pitch = pitches[len(pitches) // 2] if pitches else 20.0
+        blocks: dict[int, list[tuple[_DayCell, str]]] = {}
+        for cell in cells:
+            column = column_of(cell)
+            stop = starts[column + 1] if column + 1 < len(starts) else float("inf")
+            # Level with the day after its weekday, or wrapped onto the line below.
+            text = " ".join(
+                [cell.text]
+                + [
+                    word.text
+                    for word, y in words
+                    if cell.y - 0.75 * pitch < y <= cell.y + 4
+                    and (
+                        word.x0 >= cell.end - 1
+                        if abs(y - cell.y) <= 4
+                        else word.x0 >= cell.x0
+                    )
+                    and word.x0 < stop
+                ]
+            )
+            blocks.setdefault(column // per_month, []).append((cell, text))
+        for index in sorted(blocks):
+            month, block = months[index], blocks[index]
+            days = [cell.day for cell, _ in block]
+            response_shape.expect(
+                len(days) == len(set(days)),
+                source_name=name,
+                detail=f"page {page + 1}: a day is printed twice under month {month}",
+                raw=sorted(days),
+            )
+            fits = [
+                year
+                for year in years
+                if all(
+                    cell.day <= calendar.monthrange(year, month)[1]
+                    and datetime.date(year, month, cell.day).weekday() == cell.weekday
+                    for cell, _ in block
+                )
+            ]
+            response_shape.expect(
+                len(fits) == 1,
+                source_name=name,
+                detail=f"page {page + 1}: the {len(block)} days under month {month} "
+                f"match the weekdays of {fits or 'no year'} among {years}",
+                raw=sorted((cell.day, cell.weekday) for cell, _ in block),
+            )
+            year = fits[0]
+            yield (
+                (year, month),
+                [
+                    (datetime.date(year, month, cell.day), label)
+                    for cell, text in block
+                    for label, pattern in self._labels
+                    if pattern.search(text)
+                ],
+            )
 
 
 class PdfMonthRows(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
