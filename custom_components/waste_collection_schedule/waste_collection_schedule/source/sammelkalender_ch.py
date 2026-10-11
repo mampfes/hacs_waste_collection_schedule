@@ -1,316 +1,141 @@
-import logging
-from datetime import datetime
-from typing import Literal
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
+from waste_collection_schedule import date_parsers, parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    dropdown,
+    house_number,
+    municipality,
+    street,
 )
-
-TITLE = "Sammelkalender.ch"
-DESCRIPTION = "Source for Sammelkalender.ch."
-URL = "https://info.sammelkalender.ch"
-TEST_CASES = {
-    "zeba Baar Aberenrain 10": {
-        "service_provider": "zeba",
-        "municipality": "Baar",
-        "street": "Aberenrain",
-        "hnr": 10,
-    },
-    "zkri Rothenthurm": {
-        "service_provider": "zkri",
-        "municipality": "Rothenthurm",
-    },
-    "ZKRI, Schwyz Seewen": {
-        "service_provider": "zkri",
-        "municipality": "Schwyz",
-        "street": "Seewen",
-    },
-    "Real Luzern, Meggen": {
-        "service_provider": "real_luzern",
-        "municipality": "Meggen",
-    },
-    "Real Luzern, Malters, Bodenmättli": {
-        "service_provider": "real_luzern",
-        "municipality": "Malters",
-        "street": "Bodenmättli",
-    },
-    "Zaku Altdorf dag": {
-        "service_provider": "zaku",
-        "municipality": "Altdorf",
-        "street": "dag",
-    },
-}
-
-
-ICON_MAP = {
-    "Kehricht": Icons.GENERAL_WASTE,
-    "Christbaum": Icons.CHRISTMAS_TREE,
-    "Grüngut": Icons.ORGANIC,
-    "Karton": Icons.PAPER,
-    "Papier": Icons.PAPER,
-    "Alteisen/Metall": Icons.METAL,
-}
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.Sammelkalender import (
+    calendar_retriever,
+    split_types,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 SERVICES = {
     "zeba": {
         "title": "Zeba",
         "url": "https://www.zebazug.ch",
-        "api_url_search": "https://www.zeba.sammelkalender.ch/kunden_WANN_auswahl_form.php",
-        "api_url_bin": "https://www.zeba.sammelkalender.ch/kunden_sammlung_ausw_cont.php",
+        "search": "https://www.zeba.sammelkalender.ch/kunden_WANN_auswahl_form.php",
+        "collections": "https://www.zeba.sammelkalender.ch/kunden_sammlung_ausw_cont.php",
     },
     "zkri": {
         "title": "ZKRI",
         "url": "https://zkri.ch",
-        "api_url_search": "https://daten.zkri.ch/web/Sammelkalender/kunden_WANN_auswahl_form.php",
-        "api_url_bin": "https://daten.zkri.ch/web/Sammelkalender/kunden_sammlung_ausw_cont.php",
+        "search": "https://daten.zkri.ch/web/Sammelkalender/kunden_WANN_auswahl_form.php",
+        "collections": "https://daten.zkri.ch/web/Sammelkalender/kunden_sammlung_ausw_cont.php",
     },
     "real_luzern": {
         "title": "Real Luzern",
         "url": "https://www.realluzern.ch",
-        "api_url_search": "https://www.real.sammelkalender.ch/app/appSelect.php",
-        "api_url_bin": "https://www.real.sammelkalender.ch/app/appSammeldaten.php",
+        "search": "https://www.real.sammelkalender.ch/app/appSelect.php",
+        "collections": "https://www.real.sammelkalender.ch/app/appSammeldaten.php",
     },
     "zaku": {
         "title": "ZAKU Entsorgung",
         "url": "https://www.zaku.ch",
-        "api_url_search": "https://www.zaku.sammelkalender.ch/appSelect.php",
-        "api_url_bin": "https://www.zaku.sammelkalender.ch/appSammeldaten.php",
+        "search": "https://www.zaku.sammelkalender.ch/appSelect.php",
+        "collections": "https://www.zaku.sammelkalender.ch/appSammeldaten.php",
     },
 }
 
-EXTRA_INFO = [
-    {
-        "title": s["title"],
-        "url": s["url"],
-        "default_params": {
-            "service_provider": key,
+_TYPE_MAP = {
+    "Kehricht": wt.GENERAL_WASTE,
+    "Grüngut": wt.GARDEN_WASTE,
+    "Karton": wt.PAPER,
+    "Papier": wt.PAPER,
+    "Alteisen/Metall": wt.METAL,
+    "Christbaum": wt.OTHER,
+    "Häckseldienst": wt.GARDEN_WASTE,
+    "Repair Café": wt.OTHER,
+    "Ökihof geschlossen": wt.OTHER,
+}
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Sammelkalender.ch"
+    DESCRIPTION = "Source for Sammelkalender.ch."
+    URL = "https://info.sammelkalender.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.METAL,
+        wt.OTHER,
+    ]
+
+    REGIONS = tuple(
+        region(s["title"], url=s["url"], service_provider=key)
+        for key, s in SERVICES.items()
+    )
+
+    TEST_CASES: ClassVar[dict] = {
+        "zeba Baar Aberenrain 10": {
+            "service_provider": "zeba",
+            "municipality": "Baar",
+            "street": "Aberenrain",
+            "hnr": 10,
+        },
+        "zkri Rothenthurm": {
+            "service_provider": "zkri",
+            "municipality": "Rothenthurm",
+        },
+        "ZKRI, Schwyz, Alte Gasse (Seewen)": {
+            "service_provider": "zkri",
+            "municipality": "Schwyz",
+            "street": "Alte Gasse (Seewen)",
+        },
+        "Real Luzern, Meggen": {
+            "service_provider": "real_luzern",
+            "municipality": "Meggen",
+        },
+        "Real Luzern, Malters, Bachweg": {
+            "service_provider": "real_luzern",
+            "municipality": "Malters",
+            "street": "Bachweg",
+        },
+        "Zaku Altdorf dag": {
+            "service_provider": "zaku",
+            "municipality": "Altdorf",
+            "street": "dag",
         },
     }
-    for key, s in SERVICES.items()
-]
 
+    PARAMS = (
+        dropdown("service_provider", list(SERVICES), label="Service provider"),
+        municipality(),
+        street(optional=True),
+        house_number("hnr", optional=True),
+    )
 
-PROVIDER_LITERALS = Literal["zeba", "zkri", "real_luzern", "zaku"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Choose the waste association (`service_provider`) and enter your "
+            "municipality as the association's calendar writes it. A municipality "
+            "divided by street also needs `street` (and `hnr` for long streets); "
+            "one divided into collection areas needs the area's name or "
+            "abbreviation as `street`. The error message lists the valid values."
+        ),
+    }
 
-
-API_URL = ""
-
-_LOGGER = logging.getLogger(__name__)
-
-
-class Source:
-    def __init__(
-        self,
-        service_provider: PROVIDER_LITERALS,
-        municipality: str,
-        street: str | None = None,
-        hnr: str | int | None = None,
-    ) -> None:
-        service_provider_str = service_provider.lower()
-        if service_provider not in SERVICES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "service_provider", service_provider, list(SERVICES.keys())
-            )
-        self._search_url = SERVICES[service_provider_str]["api_url_search"]
-        self._bin_url = SERVICES[service_provider_str]["api_url_bin"]
-
-        self._municipality: str = municipality
-        self._street: str | None = street
-        self._hnr: str | None = str(hnr) if hnr is not None else None
-
-        self._municipality_id: str | None = None
-        self._address_id: str | None = None
-
-    @staticmethod
-    def _compare(s1: str, s2: str | list[str]) -> bool:
-        if isinstance(s2, str):
-            s2 = [s2]
-
-        for s in s2:
-            if s1.lower().replace(" ", "").replace("str.", "straße").replace(
-                "strasse", "straße"
-            ) == s.lower().replace(" ", "").replace("str.", "straße").replace(
-                "strasse", "straße"
-            ):
-                return True
-        return False
-
-    def _get_streets(self, sage: bool = False) -> list[dict]:
-        params: dict[str, str | int | None] = {
-            "optGem": self._municipality_id,
-            "Jahr": None,
-        }
-        if sage:
-            params["fuerSage"] = 1
-        else:
-            params["fuerStr"] = 1
-
-        r = requests.get(self._search_url, params=params)
-        r.raise_for_status()
-        streets = r.json()
-
-        if len(streets) == 0:
-            return []
-        return streets
-
-    def _fetch_sage(self) -> None:
-        sages = self._get_streets(sage=True)
-        if not sages:
-            return
-        # check: only one sage exists?
-        if len(sages) == 1:
-            self._address_id = sages[0]["SAGEid"]
-            return
-        # check: street parameter defined?
-        if not self._street:
-            sage_names = list({s.get("STRname") or s.get("SAGEname") for s in sages})
-            # by default use first Sammelgebiet and log a Warning
-            # (prevents breaking changes: existing users may have no street configured, because it was not mandatory previously)
-            self._address_id = sages[0]["SAGEid"]
-            _LOGGER.warning(
-                "No Sammelgebiet configured for this municipality. Using default Sammelgebiet '%s'. To configure, insert for the parameter 'street': %s",
-                sages[0]["SAGEname"],
-                ", ".join(sage_names),
-            )
-            return
-        # otherwise find correct sage
-        for sage in sages:
-            if self._compare(self._street, [sage["SAGEabk"], sage["SAGEname"]]):
-                self._address_id = sage["SAGEid"]
-                return
-        if self._address_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                self._street,
-                list({s["SAGEname"] for s in sages}),
-            )
-
-    def _fetch_street(self) -> None:
-        streets = self._get_streets()
-
-        # switch to Sammelgebiete if API either returns no streets or one dummy street
-        if not streets or (
-            len(streets) == 1
-            and streets[0].get("STRname") is None
-            and streets[0].get("SAGEid") is not None
-        ):
-            self._fetch_sage()
-            return
-
-        self._address_id = None
-        street_matches = []
-        if len(streets) == 1:
-            street_matches = streets
-        else:
-            if not self._street:
-                street_names = list(
-                    {s.get("STRname") or s.get("SAGEname") for s in streets}
-                )
-                raise SourceArgumentRequiredWithSuggestions(
-                    "street", "Street required for this municipality", street_names
-                )
-            for street in streets:
-                if self._compare(street["STRname"], self._street):
-                    street_matches.append(street)
-
-        if not street_matches:
-            raise ValueError(
-                f"Invalid street: {self._street}, use one of {list({s['STRname'] for s in streets})}"
-            )
-
-        for street in street_matches:
-            if not street["STRhausnr"]:
-                self._address_id = street["SAGEid"]
-                break
-
-            if self._hnr is None:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "hnr",
-                    "House number required for this street",
-                    [s["STRhausnr"] for s in street_matches],
-                )
-            if self._compare(street["STRhausnr"], self._hnr):
-                self._address_id = street["SAGEid"]
-                break
-
-        if not self._address_id:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "hnr",
-                self._hnr,
-                list({s["STRhausnr"] for s in street_matches}),
-            )
-
-    def _fetch_ids(self) -> None:
-        params = {
-            "optGem": "GEM",
-            "Jahr": None,
-        }
-
-        # get json file
-        r = requests.get(self._search_url, params=params)
-        r.raise_for_status()
-        self._municipality_id = None
-        for mun in r.json():
-            if self._compare(mun["GEMname"], self._municipality):
-                self._municipality_id = mun["GEMid"]
-                break
-        if not self._municipality_id:
-            raise ValueError(
-                f"Invalid municipality: {self._municipality}, use one of {[m['GEMname'] for m in r.json()]}"
-            )
-
-        self._fetch_street()
-
-    def fetch(self) -> list[Collection]:
-        fresh_ids = False
-        if self._municipality_id is None:
-            fresh_ids = True
-            self._fetch_ids()
-        try:
-            return self._get_collections()
-        except Exception:
-            if fresh_ids:
-                raise
-            self._fetch_ids()
-            return self._get_collections()
-
-    def _get_collections(self) -> list[Collection]:
-        today = datetime.now()
-        year = today.year
-        entries = self._get_collections_year(year)
-        if today.month == 12:
-            try:
-                entries += self._get_collections_year(year + 1)
-            except Exception:
-                pass
-        return entries
-
-    def _get_collections_year(self, year: int) -> list[Collection]:
-        if self._municipality is None:
-            raise ValueError("Municipality required")
-
-        params: dict[str, str | int | None] = {
-            "nGem": self._municipality_id,
-            "nAbar": "null",
-            "nSage": self._address_id,
-            "sDatum": "",
-            "delsel": "no",
-            "jahr1": year,
-        }
-        r = requests.get(self._bin_url, params=params)
-        r.raise_for_status()
-
-        entries = []
-        for d in r.json():
-            date = datetime.strptime(d["DATUM"], "%Y-%m-%d").date()
-            bin_types = d["AbarOne"]
-            if bin_types is None:
-                continue
-            for bin_type in bin_types.split("-"):
-                icon = ICON_MAP.get(bin_type)  # Collection icon
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = calendar_retriever(
+        lambda *_, service_provider, **__: SERVICES[service_provider]["search"],
+        lambda *_, service_provider, **__: SERVICES[service_provider]["collections"],
+    )
+    parse = parsers.EachResponse(
+        parsers.JsonParser(),
+        then=preprocessors.ExplodeList(split_types, into="type"),
+    )
+    transform = JsonTransformer(
+        date_key="DATUM",
+        type_key="type",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map=_TYPE_MAP,
+    )

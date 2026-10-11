@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "POST https://www.sholland.gov.uk/apiserver/ajaxlibrary a395171730",
+      "method": "POST",
+      "url": "https://www.sholland.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.sholland.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"SouthHolland.Waste.getCollectionDaysAjax\",\"params\":{\"UPRN\":\"100030897036\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:31:27 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "set-cookie": "__cf_bm=Tojt_idJMFQjUqUdVqA3TDISgI1_V2aA34ePlQnSaWw-1791747087.0387435-1.0.1.1-uFVqERiBoulGVjE15oQePbwKiKFHY_jQ.l5mQYwsdw8AJJKonMbwzvsDwnYc1yf7uW3oVZTTusE1sed0wG0NW9MhlPKlCqZBhzlFt8cJzVXf.kY52zs.FEmsRtrP4IDV; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.sholland.gov.uk; Expires=Sun, 11 Oct 2026 20:01:27 GMT",
+        "content-encoding": "gzip",
+        "cf-ray": "a49048fdfaeaeeff-LHR"
+      },
+      "content_b64": "eyJpZCI6IjEiLCJyZXN1bHQiOnsic3VjY2VzcyI6dHJ1ZSwiZ2FyZGVuU3Vic2NyaXB0aW9uIjp7fSwicmVmdXNlRGF5IjoiVHVlc2RheSIsInJlY3ljbGluZ0RheSI6IlRodXJzZGF5IiwibmV4dFJlZnVzZURhdGUiOiIyMDI2LTEwLTEzIiwibmV4dFJlZnVzZURhdGVEaXNwbGF5IjoiVHVlc2RheSAxM3RoIE9jdG9iZXIiLCJuZXh0UmVmdXNlU2xpcCI6IiIsIm5leHRSZWN5Y2xpbmdEYXRlIjoiMjAyNi0xMC0xNSIsIm5leHRSZWN5Y2xpbmdEYXRlRGlzcGxheSI6IlRodXJzZGF5IDE1dGggT2N0b2JlciIsIm5leHRSZWN5Y2xpbmdTbGlwIjoiIiwibmV4dEdhcmRlbkRhdGUiOiIiLCJuZXh0R2FyZGVuRGF0ZURpc3BsYXkiOiIiLCJuZXh0R2FyZGVuU2xpcCI6IiIsIm5leHRUeXBlcyI6InJlZnVzZSJ9LCJqc29ucnBjIjoiMi4wIn0="
+    }
+  ]
+}

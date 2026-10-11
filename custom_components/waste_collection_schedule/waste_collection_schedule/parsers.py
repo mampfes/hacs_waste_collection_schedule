@@ -1174,6 +1174,91 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
         return rows
 
 
+class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a heading row per month and a row per collection day.
+
+    The other way round from :class:`HtmlMonthRows`: the month is a row of its
+    own that spans the table ("October 2026"), and the rows under it give one
+    day each, with the weekday, the container and what is collected::
+
+        | October 2026                                          |
+        | 15 | Thursday | recycle 24x24 | Recycling                |
+        | 22 | Thursday | brown 24x24   | General waste & Recycling |
+
+    Each row becomes one ``(date, label)`` row, or several when the label lists
+    more than one round and a ``label_separator`` splits it::
+
+        parse = parsers.HtmlMonthHeadedRows(label_separator="&")
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    The month heading is read with :func:`recurrence.month`, so a month named in
+    any supported language resolves. A row before the first heading, or whose
+    first cell is not a day number, is skipped.
+
+    Args:
+        day_column: index of the cell holding the day of the month (default 0).
+        label_column: index of the cell holding what is collected (default
+            -1, the last).
+        label_separator: split the label at this text, one row each.
+        table: CSS selector for the table (default the first ``table``).
+    """
+
+    def __init__(
+        self,
+        *,
+        day_column: int = 0,
+        label_column: int = -1,
+        label_separator: "str | None" = None,
+        table: str = "table",
+    ):
+        self.day_column = day_column
+        self.label_column = label_column
+        self.label_separator = label_separator
+        self.table = table
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        from waste_collection_schedule import recurrence
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.select_one(self.table)
+        if table is None:
+            return []
+
+        month: tuple[int, int] | None = None
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr"):
+            values = [c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])]
+            if len(values) == 1:
+                parts = values[0].split()
+                number = recurrence.month(parts[0]) if parts else None
+                if number is not None and len(parts) > 1 and parts[1].isdigit():
+                    month = (int(parts[1]), number)
+                continue
+            if month is None or len(values) < 2:
+                continue
+            try:
+                day = values[self.day_column]
+                label = values[self.label_column]
+            except IndexError:
+                continue
+            if not day.isdigit():
+                continue
+            labels = (
+                label.split(self.label_separator) if self.label_separator else [label]
+            )
+            for name in labels:
+                name = name.strip()
+                if not name:
+                    continue
+                try:
+                    rows.append((datetime.date(month[0], month[1], int(day)), name))
+                except ValueError:
+                    continue
+        return rows
+
+
 class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
     """A month-grid calendar whose day cells carry marked-up collection markers.
 
@@ -1376,6 +1461,9 @@ class AttributeJsonParser(Parser["list[Any]"]):
             as well as the schedule), and the first block with a record carrying
             all of these wins. A block that is not JSON, or whose key path does
             not resolve, is skipped.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as :class:`HtmlParser` does,
+            for a page fragment delivered inside a JSON envelope.
         strip_html: reduce every string field of every record to its visible
             text. These payloads commonly hold an HTML fragment per field (an
             ``<a>`` around the name, a pair of responsive ``<span>``s around the
@@ -1392,19 +1480,33 @@ class AttributeJsonParser(Parser["list[Any]"]):
         *keys: str,
         require_keys: Iterable[str] = (),
         strip_html: bool = False,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.selector = selector
         self.attribute = attribute
         self.keys = keys
         self.require_keys = tuple(require_keys)
         self.strip_html = strip_html
+        self.from_json_key = from_json_key
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[Any]":
         import json
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        if self.from_json_key is None:
+            markup = response.text
+        else:
+            data: Any = response.json()
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                data = data[key]
+            markup = str(data)
+        soup = BeautifulSoup(markup, "html.parser")
         for element in soup.select(self.selector):
             blob = element.get(self.attribute)
             if not isinstance(blob, str):

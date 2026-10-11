@@ -1,131 +1,68 @@
-import difflib
-from datetime import datetime
+from typing import ClassVar, final
 
-import bs4
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    house_number,
+    postcode,
+    text_field,
 )
-
-# Title will show up in README.md and info.md
-TITLE = "Lisburn and Castlereagh City Council"
-# Describe your source
-DESCRIPTION = "Source for the Lisburn and Castlereagh City Council"
-# Insert url to service homepage. URL will show up in README.md and info.md
-URL = "https://lisburncastlereagh.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"postcode": "BT28 1AG", "house_number": "19A"},
-    "Test_002": {"postcode": "BT26 6AB", "house_number": "31"},
-    "Test_003": {"postcode": "BT26 6AB", "house_number": 15},
-    "Test_004": {"property_id": "RTTKBJY77wmTr5wP"},
-    "Test_005": {"property_id": "6opWbT5hi9odCQ2u"},
-}
-
-API_URL = "https://lisburn.isl-fusion.com"
-ICON_MAP = {
-    "ResidualBin": Icons.GENERAL_WASTE,
-    "RecycleBin": Icons.RECYCLING,
-    "WheelieBox": Icons.RECYCLING,
-    "BrownBin": Icons.GARDEN,
-    "FoodWaste": Icons.BIO_KITCHEN,
-}
-NICE_NAMES = {
-    "ResidualBin": "Refuse",
-    "RecycleBin": "Recycling",
-    "WheelieBox": "Wheelie Box",
-    "FoodWaste": "Food Waste",
-    "BrownBin": "Garden",
-}
+from waste_collection_schedule.service.IslFusion import (
+    CollectionsParser,
+    calendar_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    # argX correspond to the args dict in the source configuration
-    def __init__(self, property_id=None, postcode=None, house_number=None):
-        self._property_id = property_id
-        self._postcode = postcode
-        self._house_number = house_number
+@final
+class Source(BaseSource):
+    TITLE = "Lisburn and Castlereagh City Council"
+    DESCRIPTION = "Source for the Lisburn and Castlereagh City Council"
+    URL = "https://lisburncastlereagh.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    # The recycling bin and the wheelie box can fall on one day; the original
+    # label stays in the description and the duplicates collapse by default.
+    IGNORE_DUPLICATES_DEFAULT = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-        if not any([self._property_id, self._postcode and self._house_number]):
-            errors = []
-            if self._postcode:
-                errors.append("house_number")
-            elif self._house_number:
-                errors.append("postcode")
-            else:
-                errors = ["property_id", "postcode", "house_number"]
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "BT28 1AG", "house_number": "19A"},
+        "Test_002": {"postcode": "BT26 6AB", "house_number": "31"},
+        "Test_003": {"postcode": "BT26 6AB", "house_number": 15},
+        "Test_004": {"property_id": "RTTKBJY77wmTr5wP"},
+        "Test_005": {"property_id": "6opWbT5hi9odCQ2u"},
+    }
 
-            raise SourceArgumentExceptionMultiple(
-                errors,
-                "Must provide either a property ID or both the Postcode and House Number",
-            )
+    PARAMS = (
+        alternatives(
+            [text_field("property_id", "Property ID")],
+            [postcode(), house_number()],
+        ),
+    )
 
-    def fetch(self):
-        session = requests.Session()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide your postcode and house number (or name), or the property ID "
+            "as found in the URL when looking up your bin collection days."
+        ),
+    }
 
-        if not self._property_id:
-            search_url = f"{API_URL}/address/{self._postcode}"
-            response = session.get(search_url)
-            response.raise_for_status()
-            try:
-                address_list = response.json().get("html")
-            except Exception:
-                raise SourceArgumentNotFound("postcode", self._postcode) from None
-
-            soup = bs4.BeautifulSoup(address_list, features="html.parser")
-
-            address_by_id = {}
-            for li in soup.findAll("li"):
-                link = li.findAll("a")[0]
-                property_id = link.attrs["href"].replace("/view", "").replace("/", "")
-                address = link.text
-                address_by_id[property_id] = address
-
-            all_addresses = list(address_by_id.values())
-
-            common = difflib.SequenceMatcher(
-                a=all_addresses[0], b=all_addresses[1]
-            ).find_longest_match()
-            to_be_removed = all_addresses[0][common.a : common.a + common.size]
-
-            ids_by_house_number = {
-                address.replace(to_be_removed, ""): property_id
-                for property_id, address in address_by_id.items()
-            }
-
-            self._property_id = ids_by_house_number.get(str(self._house_number))
-
-            if not self._property_id:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "house_number", self._house_number, ids_by_house_number.keys()
-                )
-        today = datetime.today().date()
-        calendar_url = (
-            f"{API_URL}/calendar/{self._property_id}/{today.strftime('%Y-%m-%d')}"
-        )
-        response = session.get(calendar_url)
-        response.raise_for_status()
-
-        try:
-            next_collections = response.json().get("nextCollections")
-        except Exception:
-            raise ValueError("No collection data in response") from None
-
-        entries = []  # List that holds collection schedule
-
-        for collection in next_collections["collections"].values():
-            collection_date = datetime.strptime(collection["date"], "%Y-%m-%d").date()
-
-            for bin in collection["collections"].values():
-                bin_type = bin["name"]
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=NICE_NAMES.get(bin_type, bin_type),
-                        icon=ICON_MAP.get(bin_type),
-                    )
-                )
-
-        return entries
+    retrieve = calendar_retriever("https://lisburn.isl-fusion.com")
+    parse = CollectionsParser()
+    transform = RowTransformer(
+        type_value_map={
+            "ResidualBin": wt.GENERAL_WASTE,
+            "RecycleBin": wt.RECYCLABLES,
+            "WheelieBox": wt.RECYCLABLES,
+            "BrownBin": wt.GARDEN_WASTE,
+            "FoodWaste": wt.FOOD_WASTE,
+        },
+        carry_raw_label=True,
+    )

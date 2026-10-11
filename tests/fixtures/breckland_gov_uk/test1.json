@@ -1,0 +1,62 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "POST https://www.breckland.gov.uk/apiserver/ajaxlibrary bca31e9e7b",
+      "method": "POST",
+      "url": "https://www.breckland.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.breckland.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"\",\"jsonrpc\":\"2.0\",\"method\":\"Breckland.Whitespace.JointWasteAPI.GetSiteIDsByPostcode\",\"params\":{\"environment\":\"live\",\"postcode\":\"IP22 2LJ\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:29:17 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "set-cookie": "__cf_bm=HLY4vUACNYaGllusnpCZSHIpITDkns5UymjlUJauohA-1791746957.2001822-1.0.1.1-vmIi2SBOr4J1CGWXYP9IiV6CsyoWTnkwa77LBpbGKG6SBNVzJpU_L39Mpdzb1T2T5zBZh1SYswpUUNzQjX.ncr1IKPnLyBMQtbuDWbERRxnelVZvXoY4SDtm1TzGsTF1; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.breckland.gov.uk; Expires=Sun, 11 Oct 2026 19:59:17 GMT",
+        "content-encoding": "gzip",
+        "cf-ray": "a49045d27af32050-LHR"
+      },
+      "content_b64": "eyJpZCI6IiIsInJlc3VsdCI6W3sibnVtYmVyIjoiIiwibmFtZSI6IkZJUiBUUkVFIENPVFRBR0UiLCJwcmVmaXgiOiIiLCJhZGRyZXNzMSI6IiIsImFkZHJlc3MyIjoiVEhFIEdSRUVOIiwidG93biI6IkRJU1MiLCJjb3VudHkiOiJOT1JGT0xLIiwicG9zdGNvZGUiOiJJUDIyIDJMSiIsIm5vcnRoaW5nIjoiMjgxNDQ0IiwiZWFzdGluZyI6IjYwNDIzMSIsInNpdGVJZCI6IjIxOTY1MyIsInVwcm4iOiIxMDAwOTEzMDg2MjkifSx7Im51bWJlciI6IiIsIm5hbWUiOiJHTEVOIFRSQVZJUyIsInByZWZpeCI6IiIsImFkZHJlc3MxIjoiIiwiYWRkcmVzczIiOiJUSEUgR1JFRU4iLCJ0b3duIjoiRElTUyIsImNvdW50eSI6Ik5PUkZPTEsiLCJwb3N0Y29kZSI6IklQMjIgMkxKIiwibm9ydGhpbmciOiIyODE0NzIiLCJlYXN0aW5nIjoiNjA0MjIyIiwic2l0ZUlkIjoiMjIwNDYwIiwidXBybiI6IjEwMDExOTcyMDY3In0seyJudW1iZXIiOiIiLCJuYW1lIjoiT0FLTEVZIEhPVVNFIiwicHJlZml4IjoiIiwiYWRkcmVzczEiOiIiLCJhZGRyZXNzMiI6IlRIRSBHUkVFTiIsInRvd24iOiJESVNTIiwiY291bnR5IjoiTk9SRk9MSyIsInBvc3Rjb2RlIjoiSVAyMiAyTEoiLCJub3J0aGluZyI6IjI4MTQ5Mi4yMSIsImVhc3RpbmciOiI2MDQxOTQuNTYiLCJzaXRlSWQiOiIyMjU5MDEiLCJ1cHJuIjoiMTAwMTE5NzcwOTMifSx7Im51bWJlciI6IiIsIm5hbWUiOiJQUklNUk9TRSBMT0RHRSIsInByZWZpeCI6IiIsImFkZHJlc3MxIjoiIiwiYWRkcmVzczIiOiJUSEUgR1JFRU4iLCJ0b3duIjoiRElTUyIsImNvdW50eSI6Ik5PUkZPTEsiLCJwb3N0Y29kZSI6IklQMjIgMkxKIiwibm9ydGhpbmciOiIyODE0ODcuOTEiLCJlYXN0aW5nIjoiNjA0MjE2LjQzIiwic2l0ZUlkIjoiMjI3NDUwIiwidXBybiI6IjEwMDExOTc3NjA4In0seyJudW1iZXIiOiIiLCJuYW1lIjoiVEhFIENPVVJUIiwicHJlZml4IjoiIiwiYWRkcmVzczEiOiIiLCJhZGRyZXNzMiI6IlRIRSBHUkVFTiIsInRvd24iOiJESVNTIiwiY291bnR5IjoiTk9SRk9MSyIsInBvc3Rjb2RlIjoiSVAyMiAyTEoiLCJub3J0aGluZyI6IjI4MTQ0OCIsImVhc3RpbmciOiI2MDQxNjYiLCJzaXRlSWQiOiIyMzYwMzgiLCJ1cHJuIjoiMTAwMTE5NjU5MjgifV0sImpzb25ycGMiOiIyLjAifQ=="
+    },
+    {
+      "key": "POST https://www.breckland.gov.uk/apiserver/ajaxlibrary a139944380",
+      "method": "POST",
+      "url": "https://www.breckland.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.breckland.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"\",\"jsonrpc\":\"2.0\",\"method\":\"Breckland.Whitespace.JointWasteAPI.GetBinCollectionsByUprn\",\"params\":{\"environment\":\"live\",\"uprn\":\"10011972067\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:29:17 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "gzip",
+        "cf-ray": "a49045d50cb42050-LHR"
+      },
+      "content_b64": "eyJpZCI6IiIsInJlc3VsdCI6W3siY29sbGVjdGlvbnR5cGUiOiJGb29kIFdhc3RlIENvbGxlY3Rpb24gU2VydmljZSIsInJvdW5kbmFtZSI6IkJGVzExIiwic2NoZWR1bGUiOiJGcmkiLCJ1c3VhbERheSI6IkZyaWRheSIsIm5leHRjb2xsZWN0aW9uIjoiMTYvMTAvMjAyNiAwMDowMDowMCJ9LHsiY29sbGVjdGlvbnR5cGUiOiJSZWZ1c2UgQ29sbGVjdGlvbiBTZXJ2aWNlIiwicm91bmRuYW1lIjoiQlI2Iiwic2NoZWR1bGUiOiJGcmlGb3J0MSIsInVzdWFsRGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiIxNi8xMC8yMDI2IDAwOjAwOjAwIn0seyJjb2xsZWN0aW9udHlwZSI6IkZvb2QgV2FzdGUgQ29sbGVjdGlvbiBTZXJ2aWNlIiwicm91bmRuYW1lIjoiQkZXMTEiLCJzY2hlZHVsZSI6IkZyaSIsInVzdWFsRGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiIyMy8xMC8yMDI2IDAwOjAwOjAwIn0seyJjb2xsZWN0aW9udHlwZSI6IkdhcmRlbiBXYXN0ZSBTZXJ2aWNlIiwicm91bmRuYW1lIjoiQkdhcmRlbjMiLCJzY2hlZHVsZSI6IkdXRnJpRm9ydDIiLCJ1c3VhbERheSI6IkZyaWRheSIsIm5leHRjb2xsZWN0aW9uIjoiMjMvMTAvMjAyNiAwMDowMDowMCJ9LHsiY29sbGVjdGlvbnR5cGUiOiJSZWN5Y2xpbmcgQ29sbGVjdGlvbiBTZXJ2aWNlIiwicm91bmRuYW1lIjoiQlI2Iiwic2NoZWR1bGUiOiJGcmlGb3J0MiIsInVzdWFsRGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiIyMy8xMC8yMDI2IDAwOjAwOjAwIn0seyJjb2xsZWN0aW9udHlwZSI6IkZvb2QgV2FzdGUgQ29sbGVjdGlvbiBTZXJ2aWNlIiwicm91bmRuYW1lIjoiQkZXMTEiLCJzY2hlZHVsZSI6IkZyaSIsInVzdWFsRGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiIzMC8xMC8yMDI2IDAwOjAwOjAwIn0seyJjb2xsZWN0aW9udHlwZSI6IlJlZnVzZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJyb3VuZG5hbWUiOiJCUjYiLCJzY2hlZHVsZSI6IkZyaUZvcnQxIiwidXN1YWxEYXkiOiJGcmlkYXkiLCJuZXh0Y29sbGVjdGlvbiI6IjMwLzEwLzIwMjYgMDA6MDA6MDAifSx7ImNvbGxlY3Rpb250eXBlIjoiRm9vZCBXYXN0ZSBDb2xsZWN0aW9uIFNlcnZpY2UiLCJyb3VuZG5hbWUiOiJCRlcxMSIsInNjaGVkdWxlIjoiRnJpIiwidXN1YWxEYXkiOiJGcmlkYXkiLCJuZXh0Y29sbGVjdGlvbiI6IjA2LzExLzIwMjYgMDA6MDA6MDAifSx7ImNvbGxlY3Rpb250eXBlIjoiR2FyZGVuIFdhc3RlIFNlcnZpY2UiLCJyb3VuZG5hbWUiOiJCR2FyZGVuMyIsInNjaGVkdWxlIjoiR1dGcmlGb3J0MiIsInVzdWFsRGF5IjoiRnJpZGF5IiwibmV4dGNvbGxlY3Rpb24iOiIwNi8xMS8yMDI2IDAwOjAwOjAwIn0seyJjb2xsZWN0aW9udHlwZSI6IlJlY3ljbGluZyBDb2xsZWN0aW9uIFNlcnZpY2UiLCJyb3VuZG5hbWUiOiJCUjYiLCJzY2hlZHVsZSI6IkZyaUZvcnQyIiwidXN1YWxEYXkiOiJGcmlkYXkiLCJuZXh0Y29sbGVjdGlvbiI6IjA2LzExLzIwMjYgMDA6MDA6MDAifV0sImpzb25ycGMiOiIyLjAifQ=="
+    }
+  ]
+}

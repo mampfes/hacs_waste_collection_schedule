@@ -1,15 +1,19 @@
-from datetime import date, timedelta
+import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import coords
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import FanOutRetriever, Request
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Rueil-Malmaison"
-DESCRIPTION = "Source for waste collection schedule in Rueil-Malmaison, France."
-URL = "https://www.rueil-malmaison.fr"
+_API = "https://opendata.hauts-de-seine.fr/api/explore/v2.1/catalog/datasets"
 
-API_BASE = "https://opendata.hauts-de-seine.fr/api/explore/v2.1/catalog/datasets"
-
-DATASETS = {
+# waste type label -> Opendatasoft dataset of the collection zones
+_DATASETS = {
     "Ordures Ménagères": "fr-219200631-collecte-des-ordures-menageres",
     "Emballages": "fr-219200631-collecte-des-emballages",
     "Verre": "fr-219200631-collecte-du-verre",
@@ -17,120 +21,111 @@ DATASETS = {
     "Encombrants": "fr-219200631-encombrant",
 }
 
-DAYS_FR = {
-    "Lundi": 0,
-    "Mardi": 1,
-    "Mercredi": 2,
-    "Jeudi": 3,
-    "Vendredi": 4,
-    "Samedi": 5,
-    "Dimanche": 6,
-}
 
-ICON_MAP = {
-    "Ordures Ménagères": Icons.GENERAL_WASTE,
-    "Emballages": Icons.RECYCLING,
-    "Verre": Icons.GLASS,
-    "Déchets Végétaux": Icons.ORGANIC,
-    "Encombrants": Icons.BULKY,
-}
-
-TEST_CASES = {
-    "Mairie de Rueil-Malmaison": {"lat": 48.8768, "lon": 2.1875},
-}
+def _weekdays(jours: str) -> list[int]:
+    """``"Mardi, Vendredi"`` -> ``[1, 4]``; ``"Pas de collecte"`` -> ``[]``."""
+    days = (
+        recurrence.weekday(name.strip()) for name in re.split(r"[,/&]|\bet\b", jours)
+    )
+    return [day for day in days if day is not None]
 
 
-def _point_in_polygon(lon: float, lat: float, ring: list) -> bool:
-    """Ray-casting point-in-polygon for a GeoJSON coordinate ring [[lon, lat], ...]."""
-    x, y = lon, lat
-    inside = False
-    p1x, p1y = ring[0]
-    for i in range(1, len(ring) + 1):
-        p2x, p2y = ring[i % len(ring)]
-        if min(p1y, p2y) < y <= max(p1y, p2y) and x <= max(p1x, p2x):
-            if p1y != p2y:
-                xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-                if p1x == p2x or x <= xinters:
-                    inside = not inside
-        p1x, p1y = p2x, p2y
-    return inside
+def _season(perioann: str, year: int) -> tuple[datetime.date, datetime.date] | None:
+    """The collection window of one year: "De mi-mars à mi-décembre" is
+    15 March to 15 December, "Toute l'année" the whole year."""
+    text = perioann.lower()
+    if "pas de collecte" in text:
+        return None
+    if "mars" in text and "d" in text.split("mars", 1)[1]:
+        start = datetime.date(year, 3, 15 if "mi-mars" in text else 1)
+        return start, datetime.date(year, 12, 15)
+    return datetime.date(year, 1, 1), datetime.date(year, 12, 31)
 
 
-def _in_season(d: date, perioann: str) -> bool:
-    p = perioann.lower()
-    if "pas de collecte" in p:
-        return False
-    if "mars" in p and "d" in p:
-        # "De début Mars à mi-Décembre" → March 1 to December 15
-        return (3, 1) <= (d.month, d.day) <= (12, 15)
-    return True
-
-
-def _generate_dates(
-    frequenc: str,
-    jours: str,
-    perioann: str,
-    today: date,
-    horizon: date,
-) -> list[date]:
-    if "pas de collecte" in frequenc.lower():
-        return []
-
-    weekdays = {DAYS_FR[d.strip()] for d in jours.split(",") if d.strip() in DAYS_FR}
-
-    freq_lower = frequenc.lower()
-    if "impaire" in freq_lower:
-        week_parity = 1
-    elif "paire" in freq_lower:
-        week_parity = 0
+def _describe(record, source):
+    """One windowed weekly Schedule per weekday and year, ``frequenc`` fixing the
+    ISO week parity ("semaine paire" / "semaine impaire")."""
+    frequency = record["frequenc"].lower()
+    if "pas de collecte" in frequency or "non concerné" in frequency:
+        return
+    if "impaire" in frequency:
+        parity = "odd"
+    elif "paire" in frequency:
+        parity = "even"
     else:
-        week_parity = None
+        parity = None
+    today = datetime.date.today()
+    horizon = datetime.date(today.year + 1, today.month, today.day)
+    for weekday in _weekdays(record["jours"]):
+        for year in (today.year, today.year + 1):
+            window = _season(record["perioann"], year)
+            if window is None:
+                continue
+            first = max(window[0], today)
+            last = min(window[1], horizon)
+            if first > last:
+                continue
+            yield Schedule(
+                record["kind"],
+                recurrence.next_weekday(weekday, on_or_after=first),
+                not_before=first,
+                until=last,
+                iso_week_parity=parity,
+            )
 
-    dates = []
-    d = today
-    while d <= horizon:
-        if (
-            d.weekday() in weekdays
-            and _in_season(d, perioann)
-            and (week_parity is None or d.isocalendar()[1] % 2 == week_parity)
-        ):
-            dates.append(d)
-        d += timedelta(days=1)
-    return dates
 
+@final
+class Source(BaseSource):
+    TITLE = "Rueil-Malmaison"
+    DESCRIPTION = "Source for waste collection schedule in Rueil-Malmaison, France."
+    URL = "https://www.rueil-malmaison.fr"
+    COUNTRY = "fr"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+    ]
 
-class Source:
-    def __init__(self, lat: float, lon: float) -> None:
-        self._lat = float(lat)
-        self._lon = float(lon)
+    TEST_CASES: ClassVar[dict] = {
+        "Mairie de Rueil-Malmaison": {"lat": 48.8768, "lon": 2.1875},
+        "Quartier Plaine-Gare": {"lat": 48.8860, "lon": 2.1730},
+    }
 
-    def fetch(self) -> list[Collection]:
-        today = date.today()
-        horizon = date(today.year + 1, today.month, today.day)
-        entries = []
+    PARAMS = (coords(),)
 
-        for waste_type, dataset_id in DATASETS.items():
-            r = requests.get(f"{API_BASE}/{dataset_id}/records?limit=20")
-            r.raise_for_status()
-            records = r.json().get("results", [])
+    HOWTO: ClassVar[dict] = {
+        "fr": (
+            "Choisissez votre adresse sur la carte. Les zones de collecte "
+            "proviennent des données ouvertes des Hauts-de-Seine "
+            "(opendata.hauts-de-seine.fr)."
+        ),
+        "en": (
+            "Pick your address on the map. The collection zones come from the "
+            "Hauts-de-Seine open data portal (opendata.hauts-de-seine.fr)."
+        ),
+    }
 
-            for record in records:
-                gs = record.get("geo_shape", {})
-                geom = gs.get("geometry", gs)
-                coords = geom.get("coordinates", [[]])
-                ring = coords[0] if coords else []
-                if not ring or not _point_in_polygon(self._lon, self._lat, ring):
-                    continue
-
-                icon = ICON_MAP.get(waste_type)
-                for d in _generate_dates(
-                    record["frequenc"],
-                    record["jours"],
-                    record["perioann"],
-                    today,
-                    horizon,
-                ):
-                    entries.append(Collection(date=d, t=waste_type, icon=icon))
-                break
-
-        return entries
+    retrieve = FanOutRetriever(
+        targets=lambda source, _context: list(_DATASETS),
+        fetch=Request(
+            lambda kind, _context, **_: f"{_API}/{_DATASETS[kind]}/records",
+            params=lambda kind, _context, lat, lon, **_: {
+                "select": f'frequenc,jours,perioann,"{kind}" as kind',
+                "where": f"intersects(geo_shape, geom'POINT({float(lon)} {float(lat)})')",
+                "limit": 20,
+            },
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsonParser("results"))
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(
+        type_value_map={
+            "Ordures Ménagères": wt.GENERAL_WASTE,
+            "Emballages": wt.RECYCLABLES,
+            "Verre": wt.GLASS,
+            "Déchets Végétaux": wt.GARDEN_WASTE,
+            "Encombrants": wt.BULKY_WASTE,
+        }
+    )

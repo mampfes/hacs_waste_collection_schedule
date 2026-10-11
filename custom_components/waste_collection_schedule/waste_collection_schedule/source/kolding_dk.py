@@ -1,103 +1,63 @@
-from datetime import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.Infovision import (
+    ContainerParser,
+    container_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Kolding Kommune"
-DESCRIPTION = "Source for Kolding Kommune waste collection schedule"
-URL = "https://kolding.dk"
-TEST_CASES = {
-    "TestCase1": {
-        "id": "00007b8d-0002-0001-4164-647265737320",
-    },
-}
-
-ICON_MAP = {
-    "REST-MAD": Icons.GENERAL_WASTE,
-    "PAP-PAPIR": Icons.PAPER,
-    "PLAST-GLAS-METAL": Icons.PLASTIC_PACKAGING,
-    "TEKSTIL": Icons.RECYCLING,
-    "MADAFFALD": Icons.BIO_KITCHEN,
-    "RESTAFFALD": Icons.GENERAL_WASTE,
-    "FARLIGT-AFFALD": Icons.HAZARDOUS,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8d-0002-0001-4164-647265737320`.",
+_TYPE_MAP = {
+    "rest og madaffald": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+    "pap/papir og glas/metal": [wt.PAPER, wt.GLASS, wt.METAL],
+    "plast og mad- og drikkekartoner": [wt.PLASTIC, wt.CARTONS],
+    "Farligt affald": wt.HAZARDOUS,
 }
 
 
-class Source:
-    def __init__(self, id: str):
-        self._id = id
-        self._api_url = f"https://koldingivapi.infovision.dk/api/publiccitizen/container/address/active/{self._id}"
+def _fraction(description: str) -> str:
+    """``"240 L 2-delt beholder til rest og madaffald"`` -> ``"rest og madaffald"``;
+    ``"Farligt affald - 21 L"`` -> ``"Farligt affald"``."""
+    text = re.sub(r"^\d+\s*L\s+(?:2-delt\s+)?(?:beholder til\s+)?", "", description)
+    return re.sub(r"\s+-\s+\d+\s*L$", "", text).strip()
 
-    def fetch(self):
-        headers = {
-            "accept": "application/json, text/plain, */*",
-            "publicaccesstoken": "__NetDialogCitizenPublicAccessToken__",
-            "User-Agent": "Mozilla/5.0",
-        }
 
-        response = requests.get(self._api_url, headers=headers)
-        response.raise_for_status()
-        containers = response.json()
+@final
+class Source(BaseSource):
+    TITLE = "Kolding Kommune"
+    DESCRIPTION = "Source for Kolding Kommune waste collection schedule"
+    URL = "https://kolding.dk"
+    COUNTRY = "dk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.METAL,
+        wt.PLASTIC,
+        wt.CARTONS,
+        wt.HAZARDOUS,
+    ]
 
-        entries = []
+    TEST_CASES: ClassVar[dict] = {
+        "TestCase1": {"id": "00007b76-0002-0001-4164-647265737320"},
+        "TestCase2": {"id": "00007b7c-0002-0001-4164-647265737320"},
+    }
 
-        for container in containers:
-            name = container.get("containerType", {}).get(
-                "description", "Ukendt beholder"
-            )
-            collect_dates = container.get("collectDates", [])
+    PARAMS = (text_field("id", "Address ID"),)
 
-            # Renodjurs-style matching logic - most specific first
-            lower_name = name.lower()
-            fraktion = "Ukendt"
-            icon = None
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Go to https://kolding.infovision.dk/public/selectaddress and search "
+            "for your address. Your ID is in the URL, e.g. "
+            "`00007b8d-0002-0001-4164-647265737320`."
+        ),
+    }
 
-            if "farligt affald" in lower_name or "miljøkasse" in lower_name:
-                fraktion = "Farligt affald"
-                icon = ICON_MAP.get("FARLIGT-AFFALD")
-            elif "rest" in lower_name and "mad" in lower_name:
-                fraktion = "Rest- og Madaffald"
-                icon = ICON_MAP.get("REST-MAD")
-            elif "drikkekarton" in lower_name and "plast" in lower_name:
-                fraktion = "Plast og mad- og drikkekartoner"
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "metal" in lower_name and "papir" in lower_name:
-                fraktion = "Pap/papir og glas/metal"
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "madaffald" in lower_name or (
-                "mad" in lower_name and "rest" not in lower_name
-            ):
-                fraktion = "Madaffald"
-                icon = ICON_MAP.get("MADAFFALD")
-            elif "restaffald" in lower_name or (
-                "rest" in lower_name and "mad" not in lower_name
-            ):
-                fraktion = "Restaffald"
-                icon = ICON_MAP.get("RESTAFFALD")
-            elif "papir" in lower_name or "pap" in lower_name:
-                fraktion = "Papir"
-                icon = ICON_MAP.get("PAP-PAPIR")
-            elif "plast" in lower_name or "glas" in lower_name or "metal" in lower_name:
-                fraktion = "Plast/Glas/Metal"
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "tekstil" in lower_name:
-                fraktion = "Tekstilaffaldspose"
-                icon = ICON_MAP.get("TEKSTIL")
-
-            for date_int in collect_dates:
-                date_str = str(date_int)
-                pickup_date = datetime.strptime(date_str, "%Y%m%d").date()
-
-                entries.append(
-                    Collection(
-                        date=pickup_date,
-                        t=fraktion,
-                        icon=icon,
-                    )
-                )
-
-        return entries
+    retrieve = container_retriever("kolding")
+    parse = ContainerParser()
+    transform = RowTransformer(clean=_fraction, type_value_map=_TYPE_MAP)

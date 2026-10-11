@@ -1,106 +1,67 @@
 import datetime
-import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.service.JaduApiserver import rpc
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "South Holland District Council"
-DESCRIPTION = "Source for South Holland District Council."
-URL = "https://www.sholland.gov.uk/"
-
-TEST_CASES = {
-    "10002546801": {"uprn": 10002546801, "postcode": "PE11 2FR"},
-    "PE12 7AR": {"uprn": "100030897036", "postcode": "PE12 7AR"},
-}
-
-ICON_MAP = {
-    "refuse": Icons.GENERAL_WASTE,
-    "garden": Icons.GARDEN,
-    "recycling": Icons.RECYCLING,
-}
-
-TYPE_LABELS = {
-    "refuse": "Refuse",
-    "recycling": "Recycling",
-    "garden": "Garden",
-}
-
-API_URL = "https://www.sholland.gov.uk/apiserver/ajaxlibrary"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-    "Referer": "https://www.sholland.gov.uk/mycollections",
+_TYPE_MAP = {
+    "Refuse": wt.GENERAL_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "Garden": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, uprn: str | int, postcode: str):
-        self._uprn = str(uprn)
-        self._postcode = postcode
+def _iso_date(value) -> datetime.date | None:
+    """The date of an ``YYYY-MM-DD`` field; an empty one has no collection."""
+    return datetime.date.fromisoformat(value) if value else None
 
-    def _parse_display_date(self, date_str: str) -> datetime.date | None:
-        if not date_str:
-            return None
 
-        # sanitize
-        clean = re.sub(r"(\d)(st|nd|rd|th)", r"\1", date_str)
-        clean = clean.replace("*", "")
-        clean = clean.split("(")[0].strip()
-        today = datetime.date.today()
+@final
+class Source(BaseSource):
+    TITLE = "South Holland District Council"
+    DESCRIPTION = "Source for South Holland District Council."
+    URL = "https://www.sholland.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-        # try with year first, if not possible calculate year
-        for fmt in ("%A %d %B %Y", "%A %d %B"):
-            try:
-                dt = datetime.datetime.strptime(clean, fmt)
-                if fmt == "%A %d %B":
-                    dt = dt.replace(year=today.year)
-                d = dt.date()
-                if d < today:
-                    d = d.replace(year=d.year + 1)
-                return d
-            except ValueError:
-                continue
-        return None
+    TEST_CASES: ClassVar[dict] = {
+        "10002546801": {"uprn": 10002546801, "postcode": "PE11 2FR"},
+        "PE12 7AR": {"uprn": "100030897036", "postcode": "PE12 7AR"},
+    }
 
-    def fetch(self):
-        payload = {
-            "jsonrpc": "2.0",
-            "id": "1",
-            "method": "SouthHolland.Waste.getCollectionDaysAjax",
-            "params": {"UPRN": self._uprn},
-        }
+    PARAMS = (uprn(), postcode())
 
-        with requests.Session() as session:
-            r = session.post(API_URL, json=payload, headers=HEADERS)
-            r.raise_for_status()
-            data = r.json()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at https://www.findmyaddress.co.uk/. The postcode is "
+            "not used by the council's lookup but is kept for existing "
+            "configurations."
+        ),
+    }
 
-        result = data.get("result", {})
-        if not result.get("success"):
-            raise Exception(f"API call unsuccessful: {result!r}")
-
-        entries: list[Collection] = []
-        date_map = {
-            "refuse": result.get("nextRefuseDateDisplay"),
-            "recycling": result.get("nextRecyclingDateDisplay"),
-            "garden": result.get("nextGardenDateDisplay"),
-        }
-
-        # Uncomment below line for debugging fetched data
-        # print("API result:", date_map)
-
-        for bin_type, display in date_map.items():
-            date = self._parse_display_date(display or "")
-            if date is None:
-                continue
-            entries.append(
-                Collection(
-                    date=date,
-                    t=TYPE_LABELS[bin_type],
-                    icon=ICON_MAP.get(bin_type),
-                )
-            )
-
-        return entries
+    retrieve = rpc(
+        "https://www.sholland.gov.uk/apiserver/ajaxlibrary",
+        "SouthHolland.Waste.getCollectionDaysAjax",
+        lambda uprn, **_: {"UPRN": str(uprn)},
+        headers={"Referer": "https://www.sholland.gov.uk/mycollections"},
+    )
+    parse = parsers.JsonParser("result")
+    # One field per round, each holding that round's next date.
+    preprocess = preprocessors.DateFields(
+        fields={
+            "nextRefuseDate": "Refuse",
+            "nextRecyclingDate": "Recycling",
+            "nextGardenDate": "Garden",
+        },
+        parse_date=_iso_date,
+    )
+    transform = RowTransformer(type_value_map=_TYPE_MAP)
