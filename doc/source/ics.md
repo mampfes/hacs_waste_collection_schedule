@@ -550,7 +550,7 @@ In addition, users reported that the following service providers are working:
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
 - [Waste Connections](https://www.wasteconnections.com/) ([Notes](#recollect))
-- [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
+- [Western Disposal Residential (Boulder area, Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ***
 

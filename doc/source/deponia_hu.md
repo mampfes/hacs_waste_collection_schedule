@@ -1,6 +1,6 @@
 # Depónia Nonprofit Kft.
 
-Support for schedules provided by [Depónia Nonprofit Kft.](https://deponia.hu/telepuleskereso), serving settlements in Fejér, Veszprém and Komárom-Esztergom counties, Hungary.
+Support for schedules provided by [Depónia Nonprofit Kft.](https://deponia.hu/telepuleskereso), serving settlements in Fejér, Veszprém and Komárom-Esztergom counties and some in Pest county (e.g. Nagykovácsi), Hungary.
 
 Depónia does not publish an API. This source drives the public settlement search form and parses the annual hulladéknaptár PDF for the selected settlement (and street, where the form offers one).
 

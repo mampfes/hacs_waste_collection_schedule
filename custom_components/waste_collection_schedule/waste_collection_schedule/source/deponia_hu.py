@@ -35,7 +35,8 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Depónia Nonprofit Kft."
 DESCRIPTION = (
     "Source for Depónia Nonprofit Kft. waste calendars "
-    "(Fejér, Veszprém and Komárom-Esztergom counties, Hungary)."
+    "(Fejér, Veszprém and Komárom-Esztergom counties, plus some settlements "
+    "in Pest county such as Nagykovácsi, Hungary)."
 )
 URL = "https://deponia.hu"
 COUNTRY = "hu"
