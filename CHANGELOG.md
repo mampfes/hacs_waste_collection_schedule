@@ -4,6 +4,79 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.7] - 2026-10-11
+
+This is a pre-release (beta) that migrates 12 more legacy sources to the BaseSource pipeline since beta.6, and adds about 20 new sources and regions, including a generic Swiss i-web source and several PDF-based sources built on new shared building blocks. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. Stable installs are unaffected until 3.0.0 ships.
+
+**Breaking changes: please read before updating.**
+
+- **Waste-type labels have changed for every migrated source** (all sources listed under "Other" below, plus those migrated in the earlier betas). Labels are now the canonical, localised waste-type names instead of the provider's own strings. Check any automation, template, customisation or card that compares an exact label string.
+- Parameter changes from earlier betas still apply: `gotland_se` uses `building_id` instead of `uprn`; `mamirolle_info` no longer takes the dummy `_` parameter; `cheshire_east_gov_uk` no longer takes `verify`; `affaldonline_dk` uses a city, street and house-number cascade (see the beta.6 entry below).
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@BjornWill, @halfbuilthq, @JakobVinje, @Krohler06, @skruje and @stickx. 🎉
+Thanks as well to our returning contributors (@bbr111, @developerjillur, @jan-tdy) for the fixes, sources and migrations below.
+
+### Deprecated
+
+- deprecated east_ayrshire_gov_uk in favour of the shared recollect_net source (`place_id`, `service_id: waste`, `locale: en-GB`); the council retired the page the old source scraped. The old source keeps working, logs a one-time warning, and is tracked in `DEPRECATIONS.md` (#7738)
+
+### Added Sources
+
+- added Métropole Nice Côte d'Azur (nice_cotedazur_fr), France (thanks @Krohler06) (#7697)
+- added CleanProfs (cleanprofs_nl), Netherlands (thanks @BjornWill) (#7681)
+- added WasteTrack (3Logix) (wastetrack_net), Australia, starting with Georges River Council NSW (thanks @stickx) (#7714)
+- added Upper Lachlan Shire Council (upperlachlan_nsw_gov_au), Australia, with selectable Crookwell recycling routes (thanks @halfbuilthq) (#7770)
+- added City of Wodonga (wodonga_vic_gov_au), Australia (#7756)
+- added ETRA S.p.A. (etraspa_it), Italy, for San Martino di Lupari (thanks @jan-tdy) (#7721)
+- added North East Derbyshire District Council (ne_derbyshire_gov_uk), UK (#7761)
+- added Nuneaton and Bedworth Borough Council (nuneatonandbedworth_gov_uk), UK (#7776)
+- added Noble Environmental (nobleenviro_com), US (#7775)
+- added Cyclad (cyclad_org), Charente-Maritime, France (#7762)
+- added i-web (iweb_ch), one generic source for Swiss municipalities running the i-web CMS; municipalities are listed in `doc/regions/iweb_ch.yaml` (#7766)
+- added 5 PDF-based sources: Kainbach bei Graz (kainbach_gv_at), Austria; Communauté de Communes de la Plaine de l'Ain (cc_plainedelain_fr), France; Gmina Masłów (maslow_pl) and PGK Koszalin (pgkkoszalin_pl), Poland; KSP Ljutomer (ksp_ljutomer_si), Slovenia; with new shared PDF building blocks such as `PdfMonthRows` (#7769)
+- added Consorzio Area Vasta Medio Novarese (consorziomedionovarese_it), Italy, covering 55 municipality and zone calendars, with a new shared `PdfMonthBlocks` preprocessor (#7771)
+- added Westmorland and Furness Council ICS configuration (westmorlandandfurness_gov_uk), UK, replacing the dead Barrow and South Lakeland ICS docs; existing ICS entries are unaffected (#7743)
+- added Odense Renovation iCal configuration (odense_renovation_dk), Denmark, since the JSON API behind odenserenovation_dk now requires a reCAPTCHA token (#7730)
+- added Intradel (province of Liège) community ICS calendars (intradel_be), Belgium (#7759)
+- added RWM (Sittard-Geleen, Beek, Stein) to hvcgroep_nl, Netherlands (#7768)
+- added Capannori (Ascit) to junker_app, Italy (#7751)
+- added Matzendorf-Hölles to citiesapps_com, Austria (#7720)
+- added East Ayrshire Council to recollect_net, UK (#7738)
+- added Nidau to localcities_ch, and Frederick County and Palm Beach County to recyclecoach_com, as listed supported regions (#7753)
+- added Pointe-Claire's official ICS calendar URLs, Canada (thanks @skruje) (#7713)
+- added the `multifamily` property type (blocks of flats) to rybnik_pl, with a new `street` argument (#7765)
+- listed Nagykovácsi for deponia_hu and Boulder for Western Disposal so they can be found (#7767)
+
+### Fixed Sources
+
+- fixed doncaster_gov_uk: use the council's new bin lookup (thanks @developerjillur) (port of #7715) (#7734)
+- fixed rfd_no: fall back to the rfd.no schedule page when the API returns no days (thanks @JakobVinje) (port of #7717) (#7729)
+- fixed rfd_no: accept the postcode/post-place spelling of addresses (port of #7727) (#7733)
+- fixed folkestone_hythe_gov_uk: read collections from the new `api_collections.php` endpoint (port of #7707) (#7710)
+- fixed teignbridge_gov_uk: use the new bin collection endpoint (port of #7726) (#7732)
+- fixed rctcbc_gov_uk: use the new collection-day page URL (port of #7735) (#7737)
+- fixed adur_worthing_gov_uk: parse the new multi-date "Next collection dates" layout and add Food waste (port of #7728) (#7731)
+- fixed smiecioplan_pl: include green waste and ash types in the ICS export (port of #7708) (#7709)
+- fixed renoweb_dk: include shared containers so apartment and estate addresses get dates (#7746)
+- fixed recyclecoach_com: reject unsupported placeholder cities on multi-match (port of #7740) (#7744)
+- fixed recyclecoach_com: raise a clear error when an address has no service zone (port of #7754) (#7755)
+- fixed eaw_wastebox_gemos_de: refresh the test links for the 2026 tour plan, add the Landkreis Mansfeld-Südharz region and rewrite the howto (#7749)
+- fixed eastdunbarton_gov_uk, rbwm_gov_uk and runnymede_gov_uk: avoid complex selectors inside `:has()`, which soupsieve 3.0 rejects (#7741)
+- fixed the shared PDF sources: `yearly_links` patterns without a year group and an unknown `ksp_ljutomer_si` calendar now raise clear errors, and cc_plainedelain_fr accepts file names with no year suffix (#7779)
+- fixed the config flow: added common German and Italian field labels to the default translations (#7778)
+
+### Other
+
+- migrated 12 more legacy sources to the BaseSource pipeline, each with recorded cassettes and canonical waste-type labels (breaking for type-based filters, see above):
+  - Block 8, 5 sources: east_northamptonshire_gov_uk, binzone_uk, richmond_gov_uk, telge_se, muswellbrook_nsw_gov_au (#7745)
+  - Block 9, 4 sources: villesblg_ca, armaghbanbridgecraigavon_gov_uk, muenchenstein_ch, bad_eisenkappel_info (#7747)
+  - derby_gov_uk (#7739)
+  - awb_bir_de, with a new shared `JsVarParser` (#7748)
+  - sica_lu, with record-time cassette trimming for large responses (#7760)
+- recorded cassettes for stadt_kerpen_de (#7752)
+- fixed the README listing rh_entsorgung_de, stadt_kerpen_de, nsr_se and magdeburg_de twice (#7763, #7764)
+
 ## [3.0.0-beta.6] - 2026-10-06
 
 This is a pre-release (beta) that adds about 190 more legacy sources migrated to the BaseSource pipeline since beta.5, bringing roughly 70% of all sources (about 713 of 1009) onto it. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. Stable installs are unaffected until 3.0.0 ships.
