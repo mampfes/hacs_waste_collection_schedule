@@ -17,7 +17,7 @@ when the count reaches zero.
 | 2 | Retire (deprecated shim or broken stub) | 8 | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
 | 3 | Login required (policy conflict) | 8 | `CLAUDE.md` forbids login-required endpoints. Decide: keep as is, move out of the default set, or remove. |
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
-| 5 | Shared backend, build one component for the cluster | 23 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
+| 5 | Shared backend, build one component for the cluster | 22 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 14 | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 58 | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
