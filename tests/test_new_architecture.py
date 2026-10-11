@@ -17,6 +17,7 @@ import json
 import os
 import sys
 from dataclasses import FrozenInstanceError
+from itertools import pairwise
 from types import SimpleNamespace
 from typing import ClassVar
 from unittest.mock import MagicMock, patch
@@ -8428,7 +8429,7 @@ class TestUpperLachlanCalendar:
         import base64
         from pathlib import Path
 
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _parse_pdf
+        from waste_collection_schedule.service.PdfWordLayout import PdfWordLayoutParser
 
         fixture = (
             Path(__file__).parent
@@ -8438,7 +8439,9 @@ class TestUpperLachlanCalendar:
         )
         interactions = json.loads(fixture.read_text())["interactions"]
         pdf = next(i for i in interactions if i["url"].endswith(".pdf"))
-        return _parse_pdf(SimpleNamespace(content=base64.b64decode(pdf["content_b64"])))
+        return PdfWordLayoutParser(min_words=366, min_vectors=1)(
+            SimpleNamespace(content=base64.b64decode(pdf["content_b64"]))
+        )[0]
 
     @staticmethod
     def rows(layout, route):
@@ -8448,6 +8451,43 @@ class TestUpperLachlanCalendar:
         )
 
         return set(_calendar_rows(layout, Source(route=route)))
+
+    def test_shared_word_layout_retains_distinct_cell_positions(self, layout):
+        # The real PDF merges adjacent dates into lines and resets pypdf text
+        # matrices; individual character centres must remain usable.
+        thirteens = [w for w in layout.words if w.text == "13"]
+        assert len(thirteens) == 12
+        assert len({(w.page, w.x, w.y) for w in thirteens}) == 12
+        assert all(w.x > 0 and w.y > 0 for w in thirteens)
+        assert any(v.fill_color == (1.0, 1.0, 0.0) for v in layout.vectors)
+
+    def test_shared_word_layout_rejects_empty_document(self):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+        from waste_collection_schedule.service.PdfWordLayout import PdfWordLayoutParser
+
+        with patch(
+            "waste_collection_schedule.service.PdfWordLayout.extract_pages",
+            return_value=[],
+        ):
+            with pytest.raises(ResponseShapeError, match="too few positioned words"):
+                PdfWordLayoutParser(min_words=366, min_vectors=1)(
+                    SimpleNamespace(content=b"")
+                )
+
+    @freeze_time("2026-12-31")
+    def test_duplicate_calendar_years_fail(self, layout):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
+            Source,
+            _collection_rows,
+        )
+
+        with pytest.raises(ResponseShapeError, match="same year"):
+            list(
+                _collection_rows(
+                    [layout, layout], Source(route="Crookwell - Monday recycling")
+                )
+            )
 
     def test_crookwell_recycling_choice_leaves_other_bins_unchanged(self, layout):
         monday = self.rows(layout, "Crookwell - Monday recycling")
@@ -8528,28 +8568,122 @@ class TestUpperLachlanCalendar:
         with pytest.raises(ResponseShapeError, match="unknown or ambiguous"):
             self.rows(changed, "Crookwell - Monday recycling")
 
-    @freeze_time("2026-12-15")
-    def test_next_year_does_not_replace_remaining_current_year(self):
-        import re
-
+    @staticmethod
+    def calendar_links(years):
         from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            _current_calendar,
+            _calendar_urls,
         )
 
-        matches = [
-            re.search(r"(\d{4})", f"All-Collection-Areas-{year}.pdf")
-            for year in (2025, 2026, 2027)
+        return _calendar_urls(
+            SimpleNamespace(
+                url="https://upperlachlan.nsw.gov.au/services/waste/",
+                text="".join(
+                    f'<a href="/All-Collection-Areas-{year}.pdf">Calendar</a>'
+                    for year in years
+                ),
+            )
+        )
+
+    @freeze_time("2026-12-15")
+    def test_published_next_year_keeps_current_year_and_ignores_older(self):
+        assert self.calendar_links((2025, 2026, 2027, 2028, 2026)) == [
+            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2026.pdf",
+            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2027.pdf",
         ]
-        assert _current_calendar(matches).group(1) == "2026"
 
     @freeze_time("2027-01-01")
-    def test_expired_calendar_fails_instead_of_extrapolating(self):
-        import re
+    def test_expired_calendar_still_anchors_schedule(self):
+        assert self.calendar_links((2025, 2026)) == [
+            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2026.pdf",
+        ]
 
+    @freeze_time("2027-01-01")
+    def test_missing_anchor_fails(self):
         from waste_collection_schedule.response_shape import ResponseShapeError
+
+        for years in ((), (2028,)):
+            with pytest.raises(ResponseShapeError, match="no current or previous"):
+                self.calendar_links(years)
+
+    @staticmethod
+    def carried(layout, route, extra=()):
         from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            _current_calendar,
+            Source,
+            _calendar_rows,
+            _carry_forward,
         )
 
-        with pytest.raises(ResponseShapeError, match="no calendar published"):
-            _current_calendar([re.search(r"(\d{4})", "All-Collection-Areas-2026.pdf")])
+        source = Source(route=route)
+        return list(
+            _carry_forward([list(_calendar_rows(layout, source)), *extra], source)
+        )
+
+    @freeze_time("2026-12-31")
+    @pytest.mark.parametrize(
+        "route,first_recycling",
+        [
+            ("Crookwell - Monday recycling", (2027, 1, 11)),
+            ("Crookwell - Tuesday recycling", (2027, 1, 12)),
+        ],
+    )
+    def test_crookwell_year_boundary_preserves_phase(
+        self, layout, route, first_recycling
+    ):
+        events = self.carried(layout, route)
+        upcoming = {(e.date, e.title) for e in events if e.date.year == 2027}
+        assert min(d for d, t in upcoming if t == "Recycling") == datetime.date(
+            *first_recycling
+        )
+        assert (datetime.date(2027, 1, 5), "General waste") in upcoming
+        assert (datetime.date(2027, 1, 5), "Garden waste") in upcoming
+        assert all(e.description is None for e in events if e.date.year == 2026)
+        assert all("Projected" in e.description for e in events if e.date.year == 2027)
+        assert len(events) == len({(e.date, e.title) for e in events})
+        assert max(e.date.year for e in events) == 2027
+
+    @freeze_time("2027-01-01")
+    def test_all_routes_continue_without_reset_and_through_leap_year(self, layout):
+        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _ROUTES
+
+        for route in _ROUTES:
+            events = self.carried(layout, route)
+            streams = {e.title for e in events}
+            assert streams == {t for _, t in self.rows(layout, route)}
+            for stream in streams:
+                dates = sorted(e.date for e in events if e.title == stream)
+                cadence = datetime.timedelta(
+                    days=7 if stream == "General waste" else 14
+                )
+                assert all(b - a == cadence for a, b in pairwise(dates))
+                assert dates[-1].year == 2028
+            if route == "Crookwell - Monday recycling":
+                assert any(
+                    e.date == datetime.date(2028, 2, 29) and e.title == "General waste"
+                    for e in events
+                )
+
+    @freeze_time("2027-01-01")
+    def test_new_calendar_overrides_projection_and_reanchors_following_year(
+        self, layout
+    ):
+        # Simulate a newly published schedule with a changed recycling phase.
+        # Its absent January dates must not be filled by old projections.
+        official = [
+            (datetime.date(2027, 1, 18), "Recycling"),
+            (datetime.date(2027, 12, 20), "Recycling"),
+        ]
+        events = self.carried(layout, "Crookwell - Monday recycling", [official])
+        assert [(e.date, e.title) for e in events if e.date.year == 2027] == official
+        assert all(e.description is None for e in events if e.date.year == 2027)
+        next_year = [e for e in events if e.date.year == 2028]
+        assert min(e.date for e in next_year) == datetime.date(2028, 1, 3)
+        assert {e.title for e in next_year} == {"Recycling"}
+        assert all("2027 council calendar" in e.description for e in next_year)
+
+    @freeze_time("2030-12-31")
+    def test_stale_calendar_remains_bounded_and_phase_aligned(self, layout):
+        events = self.carried(layout, "Lost River - recycling only")
+        assert {e.date.year for e in events} == {2026, 2030, 2031}
+        anchor = max(e.date for e in events if e.date.year == 2026)
+        assert all((e.date - anchor).days % 14 == 0 for e in events)
+        assert {e.title for e in events} == {"Recycling"}

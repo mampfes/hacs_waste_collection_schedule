@@ -21,6 +21,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/icons.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source_shell.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/__init__.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/PdfWordLayout.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/ArcGis.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/RiSKommunalAT.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/AbfallnaviDe.py",

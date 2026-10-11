@@ -2,29 +2,29 @@
 
 Crookwell's two recycling rounds share a legend colour but use different days.
 Only recycling is filtered by that choice. Weekly garbage weekdays are read
-from the PDF's header; no recurrence is extended beyond the published year.
+from the PDF's header. Unpublished years carry forward the last confirmed
+weekly/fortnightly cycle; a new published calendar always takes precedence.
 """
 
 import calendar
 import re
 from collections.abc import Iterable
 from datetime import date
-from io import BytesIO
-from typing import ClassVar, NamedTuple, final
+from typing import ClassVar, final
+from urllib.parse import urljoin
 
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LAParams, LTChar, LTContainer, LTCurve, LTTextLineHorizontal
-from waste_collection_schedule import parsers, response_shape, retrievers
+from waste_collection_schedule import parsers, recurrence, response_shape, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.service.ICS import IcsEvent
+from waste_collection_schedule.service.PdfWordLayout import (
+    PdfWordLayout,
+    PdfWordLayoutParser,
+)
 from waste_collection_schedule.transformers import ICSTransformer
 
 _URL = "https://upperlachlan.nsw.gov.au/services/waste/"
-_MONTHS = {
-    name.upper(): number for number, name in enumerate(calendar.month_name) if name
-}
-_WEEKDAYS = {name.upper(): number for number, name in enumerate(calendar.day_name)}
 _ROUTES = {
     "Crookwell - Monday recycling": ("CROOKWELL", 0),
     "Crookwell - Tuesday recycling": ("CROOKWELL", 1),
@@ -46,87 +46,9 @@ _ROUTES = {
 }
 
 
-class _Layout(NamedTuple):
-    lines: list[parsers.PdfTextFragment]
-    words: list[parsers.PdfTextFragment]
-    vectors: list[parsers.PdfVector]
-
-
-def _colour(value) -> tuple[float, ...] | None:
-    if isinstance(value, (float, int)):
-        return (float(value),) * 3
-    return tuple(value) if isinstance(value, (tuple, list)) else None
-
-
-def _parse_pdf(response, source: BaseSource | None = None) -> _Layout:
-    """Keep individual date coordinates, including words merged into text lines.
-
-    This PDF resets pypdf text matrices to (0, 0) for most dates, while
-    PdfTableParser groups adjacent cells into one run. pdfminer's character
-    coordinates retain the exact cell positions needed to join text to fills.
-    """
-    lines, words, vectors = [], [], []
-
-    def visit(item, page):
-        if isinstance(item, LTTextLineHorizontal):
-            lines.append(
-                parsers.PdfTextFragment(
-                    page,
-                    " ".join(item.get_text().split()),
-                    (item.x0 + item.x1) / 2,
-                    (item.y0 + item.y1) / 2,
-                )
-            )
-            chars = []
-
-            def flush():
-                if chars:
-                    words.append(
-                        parsers.PdfTextFragment(
-                            page,
-                            "".join(c.get_text() for c in chars),
-                            (chars[0].x0 + chars[-1].x1) / 2,
-                            (chars[0].y0 + chars[0].y1) / 2,
-                        )
-                    )
-                    chars.clear()
-
-            for char in item:
-                if isinstance(char, LTChar) and not char.get_text().isspace():
-                    chars.append(char)
-                else:
-                    flush()
-            flush()
-        elif isinstance(item, LTContainer):
-            for child in item:
-                visit(child, page)
-        elif isinstance(item, LTCurve) and item.fill:
-            vectors.append(
-                parsers.PdfVector(
-                    page,
-                    item.x0,
-                    item.y0,
-                    item.x1,
-                    item.y1,
-                    _colour(item.stroking_color),
-                    _colour(item.non_stroking_color),
-                )
-            )
-
-    for page, layout in enumerate(
-        extract_pages(BytesIO(response.content), laparams=LAParams())
-    ):
-        visit(layout, page)
-    response_shape.expect(
-        len(words) > 365 and bool(vectors),
-        source_name=response_shape.source_name(source),
-        detail="annual calendar text or coloured cells missing",
-        raw=str(lines[:10]),
-    )
-    return _Layout(lines, words, vectors)
-
-
-def _fill(layout: _Layout, word: parsers.PdfTextFragment) -> tuple[float, ...] | None:
+def _fill(
+    layout: PdfWordLayout, word: parsers.PdfTextFragment
+) -> tuple[float, ...] | None:
     matches = [
         v
         for v in layout.vectors
@@ -137,19 +59,88 @@ def _fill(layout: _Layout, word: parsers.PdfTextFragment) -> tuple[float, ...] |
     return min(matches, key=lambda v: (v.x1 - v.x0) * (v.y1 - v.y0)).fill_color
 
 
-def _current_calendar(matches: list[re.Match]) -> re.Match:
-    # Prefer this year even when next year's PDF has already been published.
-    current = [m for m in matches if int(m.group(1)) == date.today().year]
+def _calendar_urls(response, **_) -> list[str]:
+    """Read the latest available anchor year and any published next year."""
+    urls = {}
+    for link in parsers.HtmlParser("a[href]")(response):
+        href = str(link["href"])
+        if match := re.search(r"All-Collection-Areas-(\d{4})\.pdf$", href):
+            urls[int(match.group(1))] = urljoin(response.url, href)
+    current_year = date.today().year
+    previous = [year for year in urls if year <= current_year]
     response_shape.expect(
-        bool(current),
+        bool(previous),
         source_name="Upper Lachlan Shire Council",
-        detail="no calendar published for the current year",
-        raw=[m.string for m in matches],
+        detail="no current or previous calendar available to anchor the schedule",
+        raw=list(urls.values()),
     )
-    return current[0]
+    latest = max(previous)
+    return [urls[year] for year in sorted(urls) if latest <= year <= current_year + 1]
 
 
-def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, str]]:
+def _collection_rows(
+    layouts: list[PdfWordLayout], source: BaseSource
+) -> Iterable[IcsEvent]:
+    calendars = [list(_calendar_rows(layout, source)) for layout in layouts]
+    years = [rows[0][0].year for rows in calendars]
+    response_shape.expect(
+        len(years) == len(set(years)),
+        source_name=response_shape.source_name(source),
+        detail="multiple calendar files describe the same year",
+        raw=years,
+    )
+    yield from sorted(
+        _carry_forward(calendars, source), key=lambda event: (event.date, event.title)
+    )
+
+
+def _carry_forward(
+    calendars: list[list[tuple[date, str]]], source: BaseSource
+) -> Iterable[IcsEvent]:
+    """Use whole published years, projecting only years without a calendar.
+
+    The service cadence is weekly garbage and fortnightly
+    recycling/garden waste. The phase comes from each stream's last published
+    date, never a fixed date or ISO week number. Retain published dates and
+    extend through the end of next year on every refresh.
+    """
+    published = {rows[0][0].year: rows for rows in calendars}
+    for year in sorted(published):
+        for when, waste_type in published[year]:
+            yield IcsEvent(when, waste_type)
+    for year in range(date.today().year, date.today().year + 2):
+        if year in published:
+            continue
+        anchor_years = [prior for prior in published if prior < year]
+        response_shape.expect(
+            bool(anchor_years),
+            source_name=response_shape.source_name(source),
+            detail="no earlier calendar to anchor unpublished year",
+            raw=list(published),
+        )
+        anchor_year = max(anchor_years)
+        anchors = {}
+        for when, waste_type in published[anchor_year]:
+            anchors[waste_type] = max(when, anchors.get(waste_type, when))
+        for waste_type, anchor in anchors.items():
+            step = (
+                recurrence.WEEKLY
+                if waste_type == "General waste"
+                else recurrence.FORTNIGHTLY
+            )
+            for when in recurrence.recurring_within(
+                anchor, step, not_before=date(year, 1, 1), until=date(year, 12, 31)
+            ):
+                yield IcsEvent(
+                    when,
+                    waste_type,
+                    description=f"Projected from the {anchor_year} council calendar using the continuing collection cycle. Check council notices for service changes.",
+                )
+
+
+def _calendar_rows(
+    layout: PdfWordLayout, source: BaseSource
+) -> Iterable[tuple[date, str]]:
     locality, recycling_day = _ROUTES[source.params["route"]]
     name = response_shape.source_name(source)
 
@@ -161,7 +152,7 @@ def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, 
     years = {int(w.text) for w in layout.words if re.fullmatch(r"20\d{2}", w.text)}
     expect(len(years) == 1, "could not identify one calendar year")
     year = years.pop()
-    months = [w for w in layout.words if w.text in _MONTHS]
+    months = [w for w in layout.words if recurrence.month(w.text) is not None]
     expect(
         len(months) == 12 and len({w.text for w in months}) == 12,
         "expected all twelve month headings",
@@ -173,8 +164,8 @@ def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, 
         text = line.text.upper()
         local = bool(re.search(rf"\b{re.escape(locality)}\b", text))
         if match := re.fullmatch(r"(\w+)\s*-\s*(.+)", text):
-            if local and match.group(1) in _WEEKDAYS:
-                garbage_day = _WEEKDAYS[match.group(1)]
+            if local and recurrence.weekday(match.group(1)) is not None:
+                garbage_day = recurrence.weekday(match.group(1))
         for suffix, waste_type in (
             (" RECYCLE", "Recycling"),
             (" GARDEN WASTE", "Garden waste"),
@@ -199,6 +190,9 @@ def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, 
 
     days = {}
     for month in months:
+        month_number = recurrence.month(month.text)
+        if month_number is None:
+            raise ValueError(f"Unrecognised month: {month.text}")
         # Sunday-first headings define each seven-column month grid. Their
         # positions, not fixed PDF coordinates, determine the calendar bounds.
         headings = [
@@ -233,10 +227,10 @@ def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, 
         for word in candidates:
             day = int(word.text)
             expect(
-                1 <= day <= calendar.monthrange(year, _MONTHS[month.text])[1],
+                1 <= day <= calendar.monthrange(year, month_number)[1],
                 "invalid day in month grid",
             )
-            when = date(year, _MONTHS[month.text], day)
+            when = date(year, month_number, day)
             column = min(range(7), key=lambda i: abs(columns[i].x - word.x))
             expect(
                 when.weekday() == (column + 6) % 7,
@@ -260,7 +254,7 @@ def _calendar_rows(layout: _Layout, source: BaseSource) -> Iterable[tuple[date, 
             )
             days[when] = matches[0] if matches else None
         expect(
-            len(month_days) == calendar.monthrange(year, _MONTHS[month.text])[1],
+            len(month_days) == calendar.monthrange(year, month_number)[1],
             f"incomplete {month.text} grid",
         )
 
@@ -307,15 +301,15 @@ class Source(BaseSource):
         dropdown("route", list(_ROUTES), label="Collection area / recycling route"),
     )
     HOWTO: ClassVar[dict[str, str]] = {
-        "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF; separate service-disruption notices are not included."
+        "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF. Where a calendar is not yet published, the last confirmed weekly garbage and fortnightly recycling/garden cycle is carried forward through next year. Those events are marked as projected in their description and are replaced when the new calendar is available. Separate service-disruption notices are not included."
     }
-    retrieve = retrievers.PdfLinkRetriever(
-        index_url=_URL,
-        pattern=r"All-Collection-Areas-(\d{4})\.pdf",
-        select=_current_calendar,
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(_URL, pick=_calendar_urls, raise_for_status=True),
+        targets=lambda source, urls: urls,
+        fetch=retrievers.Request(lambda url, urls, **_: url, raise_for_status=True),
     )
-    parse = staticmethod(_parse_pdf)
-    preprocess = staticmethod(_calendar_rows)
+    parse = parsers.EachResponse(PdfWordLayoutParser(min_words=366, min_vectors=1))
+    preprocess = staticmethod(_collection_rows)
     transform = ICSTransformer(
         type_value_map={
             "General waste": wt.GENERAL_WASTE,
