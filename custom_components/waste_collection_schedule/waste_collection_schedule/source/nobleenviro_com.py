@@ -383,16 +383,17 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict[str, str]] = {
         "en": (
             "Enter your municipality exactly as Noble Environmental names its "
-            "calendar PDF (e.g. 'Canonsburg' or 'Springdale Borough'). Enter any "
-            "value once to get the list of available municipalities. Holiday "
-            "shifts are taken from the calendar as printed."
+            "calendar PDF (e.g. 'Canonsburg' or 'Springdale Borough'). If you "
+            "enter only part of the name (e.g. 'Canons'), the error message "
+            "suggests the matching municipalities. Holiday shifts are taken from "
+            "the calendar as printed."
         ),
         "de": (
             "Gib deine Gemeinde so ein, wie Noble Environmental ihren "
             "Kalender-PDF benennt (z. B. 'Canonsburg' oder 'Springdale Borough'). "
-            "Gib einmal einen beliebigen Wert ein, um die Liste der verfügbaren "
-            "Gemeinden zu erhalten. Feiertagsverschiebungen werden wie im "
-            "Kalender gedruckt übernommen."
+            "Gibst du nur einen Teil des Namens ein (z. B. 'Canons'), schlägt die "
+            "Fehlermeldung die passenden Gemeinden vor. Feiertagsverschiebungen "
+            "werden wie im Kalender gedruckt übernommen."
         ),
     }
 
