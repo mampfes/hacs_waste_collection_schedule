@@ -2,8 +2,7 @@
 
 Crookwell's two recycling rounds share a legend colour but use different days.
 Only recycling is filtered by that choice. Weekly garbage weekdays are read
-from the PDF's header. Unpublished years carry forward the last confirmed
-weekly/fortnightly cycle; a new published calendar always takes precedence.
+from the PDF's header. Only dates covered by published calendars are returned.
 """
 
 import calendar
@@ -17,11 +16,6 @@ from waste_collection_schedule import parsers, recurrence, response_shape, retri
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
-from waste_collection_schedule.service.ICS import IcsEvent
-from waste_collection_schedule.service.PdfWordLayout import (
-    PdfWordLayout,
-    PdfWordLayoutParser,
-)
 from waste_collection_schedule.transformers import ICSTransformer
 
 _URL = "https://upperlachlan.nsw.gov.au/services/waste/"
@@ -47,7 +41,7 @@ _ROUTES = {
 
 
 def _fill(
-    layout: PdfWordLayout, word: parsers.PdfTextFragment
+    layout: parsers.PdfWordLayout, word: parsers.PdfTextFragment
 ) -> tuple[float, ...] | None:
     matches = [
         v
@@ -60,7 +54,7 @@ def _fill(
 
 
 def _calendar_urls(response, **_) -> list[str]:
-    """Read the latest available anchor year and any published next year."""
+    """Read the latest available calendar and any published next year."""
     urls = {}
     for link in parsers.HtmlParser("a[href]")(response):
         href = str(link["href"])
@@ -71,7 +65,7 @@ def _calendar_urls(response, **_) -> list[str]:
     response_shape.expect(
         bool(previous),
         source_name="Upper Lachlan Shire Council",
-        detail="no current or previous calendar available to anchor the schedule",
+        detail="no current or previous calendar available",
         raw=list(urls.values()),
     )
     latest = max(previous)
@@ -79,8 +73,8 @@ def _calendar_urls(response, **_) -> list[str]:
 
 
 def _collection_rows(
-    layouts: list[PdfWordLayout], source: BaseSource
-) -> Iterable[IcsEvent]:
+    layouts: list[parsers.PdfWordLayout], source: BaseSource
+) -> Iterable[tuple[date, str]]:
     calendars = [list(_calendar_rows(layout, source)) for layout in layouts]
     years = [rows[0][0].year for rows in calendars]
     response_shape.expect(
@@ -89,57 +83,11 @@ def _collection_rows(
         detail="multiple calendar files describe the same year",
         raw=years,
     )
-    yield from sorted(
-        _carry_forward(calendars, source), key=lambda event: (event.date, event.title)
-    )
-
-
-def _carry_forward(
-    calendars: list[list[tuple[date, str]]], source: BaseSource
-) -> Iterable[IcsEvent]:
-    """Use whole published years, projecting only years without a calendar.
-
-    The service cadence is weekly garbage and fortnightly
-    recycling/garden waste. The phase comes from each stream's last published
-    date, never a fixed date or ISO week number. Retain published dates and
-    extend through the end of next year on every refresh.
-    """
-    published = {rows[0][0].year: rows for rows in calendars}
-    for year in sorted(published):
-        for when, waste_type in published[year]:
-            yield IcsEvent(when, waste_type)
-    for year in range(date.today().year, date.today().year + 2):
-        if year in published:
-            continue
-        anchor_years = [prior for prior in published if prior < year]
-        response_shape.expect(
-            bool(anchor_years),
-            source_name=response_shape.source_name(source),
-            detail="no earlier calendar to anchor unpublished year",
-            raw=list(published),
-        )
-        anchor_year = max(anchor_years)
-        anchors = {}
-        for when, waste_type in published[anchor_year]:
-            anchors[waste_type] = max(when, anchors.get(waste_type, when))
-        for waste_type, anchor in anchors.items():
-            step = (
-                recurrence.WEEKLY
-                if waste_type == "General waste"
-                else recurrence.FORTNIGHTLY
-            )
-            for when in recurrence.recurring_within(
-                anchor, step, not_before=date(year, 1, 1), until=date(year, 12, 31)
-            ):
-                yield IcsEvent(
-                    when,
-                    waste_type,
-                    description=f"Projected from the {anchor_year} council calendar using the continuing collection cycle. Check council notices for service changes.",
-                )
+    yield from sorted(row for rows in calendars for row in rows)
 
 
 def _calendar_rows(
-    layout: PdfWordLayout, source: BaseSource
+    layout: parsers.PdfWordLayout, source: BaseSource
 ) -> Iterable[tuple[date, str]]:
     locality, recycling_day = _ROUTES[source.params["route"]]
     name = response_shape.source_name(source)
@@ -301,14 +249,16 @@ class Source(BaseSource):
         dropdown("route", list(_ROUTES), label="Collection area / recycling route"),
     )
     HOWTO: ClassVar[dict[str, str]] = {
-        "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF. Where a calendar is not yet published, the last confirmed weekly garbage and fortnightly recycling/garden cycle is carried forward through next year. Those events are marked as projected in their description and are replaced when the new calendar is available. Separate service-disruption notices are not included."
+        "en": "Choose your serviced locality. In Crookwell, choose your street's Monday or Tuesday recycling round; this does not change other bin days. Check your route with council if unsure. Lost River supplies recycling only because the calendar does not specify its other services. Dates follow the council PDF. Only published dates are returned. Next year's calendar is included once linked by council; until then the latest available calendar is used without extending its dates. Separate service-disruption notices are not included."
     }
     retrieve = retrievers.FanOutRetriever(
         prepare=retrievers.Lookup(_URL, pick=_calendar_urls, raise_for_status=True),
         targets=lambda source, urls: urls,
         fetch=retrievers.Request(lambda url, urls, **_: url, raise_for_status=True),
     )
-    parse = parsers.EachResponse(PdfWordLayoutParser(min_words=366, min_vectors=1))
+    parse = parsers.EachResponse(
+        parsers.PdfWordLayoutParser(min_words=366, min_vectors=1)
+    )
     preprocess = staticmethod(_collection_rows)
     transform = ICSTransformer(
         type_value_map={

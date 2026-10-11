@@ -163,10 +163,10 @@ Many providers publish only a PDF calendar. These are ordinary pipeline sources,
 | **Text list** | a text-layer PDF whose schedule reads top-to-bottom (a date, then its waste types) | `parse = PdfTextParser()` + a small `preprocess` | `redbridge_gov_uk`, `mpo_krakow_pl`, `stkh_hu` |
 | **Coordinate table** | a text-layer grid whose columns collapse in plain text (e.g. several months side by side) | `parse = PdfTableParser()` + a `preprocess` that bins runs into columns by `x0` | `seab_biella_it`, `gemuenden_wohra_de`, `gruppoveritas_it` |
 | **Coloured vector markers** | a text-layer calendar whose dates have coloured vector symbols instead of printed waste labels | `parse = PdfLayoutParser()` + a small `preprocess` that associates symbols with dates | `trafford_gov_uk` |
-| **Coloured grid with merged text cells** | a vector calendar whose text matrices lose positions or whose lines combine neighbouring cells | `EachResponse(PdfWordLayoutParser(...))` (`service.PdfWordLayout`) + a layout-specific `preprocess` | `upperlachlan_nsw_gov_au` |
+| **Coloured grid with merged text cells** | a vector calendar whose text matrices lose positions or whose lines combine neighbouring cells | `EachResponse(parsers.PdfWordLayoutParser(...))` + a layout-specific `preprocess` | `upperlachlan_nsw_gov_au` |
 | **Colour image calendar** | a raster (image-only) page with colour-filled day cells and no text layer | `PdfImageRetriever` + `ColourGridCalendarParser` (`service.PdfImageCalendar`) | `amarsul_pt` |
 
-`PdfWordLayoutParser` returns one document in a list, containing positioned whole lines, individually positioned words and filled vectors. It uses pdfminer character geometry throughout, normalises greyscale fills to RGB, and accepts `min_words` / `min_vectors` checks. It composes with `EachResponse` for multiple annual PDFs; interpreting month grids, legends and routes stays in the source preprocessor.
+`PdfWordLayoutParser`, alongside `PdfLayoutParser` in `parsers.py`, returns one document in a list, containing positioned whole lines, individually positioned words and filled vectors. It uses pdfminer character geometry throughout, shares numeric colour validation with `PdfLayoutParser`, explicitly expands greyscale fills to RGB, and accepts `min_words` / `min_vectors` checks. It composes with `EachResponse` for multiple annual PDFs; interpreting month grids, legends and routes stays in the source preprocessor.
 
 Two building blocks compose with any of the above:
 

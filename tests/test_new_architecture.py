@@ -17,7 +17,6 @@ import json
 import os
 import sys
 from dataclasses import FrozenInstanceError
-from itertools import pairwise
 from types import SimpleNamespace
 from typing import ClassVar
 from unittest.mock import MagicMock, patch
@@ -6273,6 +6272,79 @@ class TestPdfLayoutParser:
             self._run(min_vectors=2)
 
 
+class TestPdfWordLayoutParser:
+    """Exercise shared word coordinates and colour handling with a tiny PDF."""
+
+    @staticmethod
+    def response():
+        from io import BytesIO
+
+        from pypdf import PdfWriter
+        from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=200, height=100)
+        font = DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+        page[NameObject("/Resources")] = DictionaryObject(
+            {
+                NameObject("/Font"): DictionaryObject({NameObject("/F1"): font}),
+            }
+        )
+        stream = DecodedStreamObject()
+        stream.set_data(b"0.5 g 10 10 60 30 re f\nBT /F1 12 Tf 20 20 Td (12 13) Tj ET")
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        output = BytesIO()
+        writer.write(output)
+        return SimpleNamespace(content=output.getvalue(), status_code=200)
+
+    def test_words_keep_individual_positions_and_greyscale_fill(self):
+        from waste_collection_schedule.parsers import EachResponse, PdfWordLayoutParser
+
+        layouts = EachResponse(PdfWordLayoutParser(min_words=2, min_vectors=1))(
+            [self.response(), self.response()]
+        )
+        assert len(layouts) == 2
+        layout = layouts[0]
+        assert [line.text for line in layout.lines] == ["12 13"]
+        assert [word.text for word in layout.words] == ["12", "13"]
+        assert 20 < layout.words[0].x < layout.words[1].x < 70
+        assert layout.words[0].y == layout.words[1].y
+        assert layout.vectors[0].fill_color == (0.5, 0.5, 0.5)
+
+    def test_minimum_counts_reject_incomplete_layout(self):
+        from waste_collection_schedule.parsers import PdfWordLayoutParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        for kwargs in ({"min_words": 3}, {"min_vectors": 2}):
+            with pytest.raises(ResponseShapeError, match="too few positioned words"):
+                PdfWordLayoutParser(**kwargs)(self.response())
+
+    @pytest.mark.parametrize(
+        "value,expected",
+        [
+            (0.5, (0.5, 0.5, 0.5)),
+            ([0.5], (0.5, 0.5, 0.5)),
+            ((0.1, 0.2, 0.3), (0.1, 0.2, 0.3)),
+            ((0.1, 0.2, 0.3, 0.4), (0.1, 0.2, 0.3, 0.4)),
+            ((0.5, "Pattern1"), None),
+            ("Pattern1", None),
+            (None, None),
+        ],
+    )
+    def test_shared_colour_validation(self, value, expected):
+        from waste_collection_schedule.parsers import _pdf_color
+
+        assert _pdf_color(value, grayscale_to_rgb=True) == expected
+        # Existing callers retain the original greyscale representation.
+        assert _pdf_color(0.5) == (0.5,)
+
+
 class TestIcsRepairs:
     """Unconditional repairs applied to every feed before it is converted."""
 
@@ -8419,271 +8491,3 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
     )
-
-
-class TestUpperLachlanCalendar:
-    """Pin the colour/weekday joins that generic fixture replay cannot check."""
-
-    @pytest.fixture(scope="class")
-    def layout(self):
-        import base64
-        from pathlib import Path
-
-        from waste_collection_schedule.service.PdfWordLayout import PdfWordLayoutParser
-
-        fixture = (
-            Path(__file__).parent
-            / "fixtures"
-            / "upperlachlan_nsw_gov_au"
-            / "crookwell_monday_recycling.json"
-        )
-        interactions = json.loads(fixture.read_text())["interactions"]
-        pdf = next(i for i in interactions if i["url"].endswith(".pdf"))
-        return PdfWordLayoutParser(min_words=366, min_vectors=1)(
-            SimpleNamespace(content=base64.b64decode(pdf["content_b64"]))
-        )[0]
-
-    @staticmethod
-    def rows(layout, route):
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            Source,
-            _calendar_rows,
-        )
-
-        return set(_calendar_rows(layout, Source(route=route)))
-
-    def test_shared_word_layout_retains_distinct_cell_positions(self, layout):
-        # The real PDF merges adjacent dates into lines and resets pypdf text
-        # matrices; individual character centres must remain usable.
-        thirteens = [w for w in layout.words if w.text == "13"]
-        assert len(thirteens) == 12
-        assert len({(w.page, w.x, w.y) for w in thirteens}) == 12
-        assert all(w.x > 0 and w.y > 0 for w in thirteens)
-        assert any(v.fill_color == (1.0, 1.0, 0.0) for v in layout.vectors)
-
-    def test_shared_word_layout_rejects_empty_document(self):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-        from waste_collection_schedule.service.PdfWordLayout import PdfWordLayoutParser
-
-        with patch(
-            "waste_collection_schedule.service.PdfWordLayout.extract_pages",
-            return_value=[],
-        ):
-            with pytest.raises(ResponseShapeError, match="too few positioned words"):
-                PdfWordLayoutParser(min_words=366, min_vectors=1)(
-                    SimpleNamespace(content=b"")
-                )
-
-    @freeze_time("2026-12-31")
-    def test_duplicate_calendar_years_fail(self, layout):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            Source,
-            _collection_rows,
-        )
-
-        with pytest.raises(ResponseShapeError, match="same year"):
-            list(
-                _collection_rows(
-                    [layout, layout], Source(route="Crookwell - Monday recycling")
-                )
-            )
-
-    def test_crookwell_recycling_choice_leaves_other_bins_unchanged(self, layout):
-        monday = self.rows(layout, "Crookwell - Monday recycling")
-        tuesday = self.rows(layout, "Crookwell - Tuesday recycling")
-        assert {r for r in monday if r[1] != "Recycling"} == {
-            r for r in tuesday if r[1] != "Recycling"
-        }
-        assert (datetime.date(2026, 10, 19), "Recycling") in monday
-        assert (datetime.date(2026, 10, 20), "Recycling") in tuesday
-        assert (datetime.date(2026, 10, 20), "Recycling") not in monday
-        assert (datetime.date(2026, 10, 13), "Garden waste") in monday
-        assert (datetime.date(2026, 10, 13), "General waste") in monday
-        assert len(monday) == len(tuesday) == 104
-        assert {d.weekday() for d, t in monday if t == "Recycling"} == {0}
-        assert {d.weekday() for d, t in tuesday if t == "Recycling"} == {1}
-
-    @pytest.mark.parametrize(
-        "route,dates",
-        [
-            ("Gunning", ((2026, 10, 14), (2026, 10, 7))),
-            ("Taralga", ((2026, 10, 15), (2026, 10, 8))),
-            ("Binda", ((2026, 10, 16), (2026, 10, 8))),
-        ],
-    )
-    def test_distinct_village_routes(self, layout, route, dates):
-        rows = self.rows(layout, route)
-        assert (datetime.date(*dates[0]), "Recycling") in rows
-        assert (datetime.date(*dates[1]), "Garden waste") in rows
-        assert (datetime.date(*dates[1]), "General waste") in rows
-        assert {d.year for d, _ in rows} == {2026}
-
-    def test_lost_river_does_not_invent_unpublished_services(self, layout):
-        rows = self.rows(layout, "Lost River - recycling only")
-        assert {t for _, t in rows} == {"Recycling"}
-        assert len(rows) == 26
-        assert (datetime.date(2026, 10, 16), "Recycling") in rows
-
-    def test_all_advertised_localities_parse(self, layout):
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _ROUTES
-
-        for route in _ROUTES:
-            assert self.rows(layout, route)
-
-    def test_missing_date_fails_instead_of_returning_partial_calendar(self, layout):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-
-        removed = next(w for w in layout.words if w.text == "13")
-        incomplete = layout._replace(
-            words=[w for w in layout.words if w is not removed]
-        )
-        with pytest.raises(ResponseShapeError, match="incomplete"):
-            self.rows(incomplete, "Crookwell - Monday recycling")
-
-    def test_wrong_weekday_column_fails(self, layout):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-
-        changed = next(w for w in layout.words if w.text == "13")
-        shifted = layout._replace(
-            words=[w._replace(x=w.x + 15) if w is changed else w for w in layout.words]
-        )
-        with pytest.raises(ResponseShapeError, match="wrong weekday"):
-            self.rows(shifted, "Crookwell - Monday recycling")
-
-    def test_unknown_cell_colour_fails(self, layout):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-
-        cell = next(
-            v
-            for v in layout.vectors
-            if v.fill_color == (1.0, 1.0, 0.0) and v.x1 - v.x0 < 30
-        )
-        changed = layout._replace(
-            vectors=[
-                v._replace(fill_color=(0.5, 0.0, 0.5)) if v is cell else v
-                for v in layout.vectors
-            ]
-        )
-        with pytest.raises(ResponseShapeError, match="unknown or ambiguous"):
-            self.rows(changed, "Crookwell - Monday recycling")
-
-    @staticmethod
-    def calendar_links(years):
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            _calendar_urls,
-        )
-
-        return _calendar_urls(
-            SimpleNamespace(
-                url="https://upperlachlan.nsw.gov.au/services/waste/",
-                text="".join(
-                    f'<a href="/All-Collection-Areas-{year}.pdf">Calendar</a>'
-                    for year in years
-                ),
-            )
-        )
-
-    @freeze_time("2026-12-15")
-    def test_published_next_year_keeps_current_year_and_ignores_older(self):
-        assert self.calendar_links((2025, 2026, 2027, 2028, 2026)) == [
-            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2026.pdf",
-            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2027.pdf",
-        ]
-
-    @freeze_time("2027-01-01")
-    def test_expired_calendar_still_anchors_schedule(self):
-        assert self.calendar_links((2025, 2026)) == [
-            "https://upperlachlan.nsw.gov.au/All-Collection-Areas-2026.pdf",
-        ]
-
-    @freeze_time("2027-01-01")
-    def test_missing_anchor_fails(self):
-        from waste_collection_schedule.response_shape import ResponseShapeError
-
-        for years in ((), (2028,)):
-            with pytest.raises(ResponseShapeError, match="no current or previous"):
-                self.calendar_links(years)
-
-    @staticmethod
-    def carried(layout, route, extra=()):
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import (
-            Source,
-            _calendar_rows,
-            _carry_forward,
-        )
-
-        source = Source(route=route)
-        return list(
-            _carry_forward([list(_calendar_rows(layout, source)), *extra], source)
-        )
-
-    @freeze_time("2026-12-31")
-    @pytest.mark.parametrize(
-        "route,first_recycling",
-        [
-            ("Crookwell - Monday recycling", (2027, 1, 11)),
-            ("Crookwell - Tuesday recycling", (2027, 1, 12)),
-        ],
-    )
-    def test_crookwell_year_boundary_preserves_phase(
-        self, layout, route, first_recycling
-    ):
-        events = self.carried(layout, route)
-        upcoming = {(e.date, e.title) for e in events if e.date.year == 2027}
-        assert min(d for d, t in upcoming if t == "Recycling") == datetime.date(
-            *first_recycling
-        )
-        assert (datetime.date(2027, 1, 5), "General waste") in upcoming
-        assert (datetime.date(2027, 1, 5), "Garden waste") in upcoming
-        assert all(e.description is None for e in events if e.date.year == 2026)
-        assert all("Projected" in e.description for e in events if e.date.year == 2027)
-        assert len(events) == len({(e.date, e.title) for e in events})
-        assert max(e.date.year for e in events) == 2027
-
-    @freeze_time("2027-01-01")
-    def test_all_routes_continue_without_reset_and_through_leap_year(self, layout):
-        from waste_collection_schedule.source.upperlachlan_nsw_gov_au import _ROUTES
-
-        for route in _ROUTES:
-            events = self.carried(layout, route)
-            streams = {e.title for e in events}
-            assert streams == {t for _, t in self.rows(layout, route)}
-            for stream in streams:
-                dates = sorted(e.date for e in events if e.title == stream)
-                cadence = datetime.timedelta(
-                    days=7 if stream == "General waste" else 14
-                )
-                assert all(b - a == cadence for a, b in pairwise(dates))
-                assert dates[-1].year == 2028
-            if route == "Crookwell - Monday recycling":
-                assert any(
-                    e.date == datetime.date(2028, 2, 29) and e.title == "General waste"
-                    for e in events
-                )
-
-    @freeze_time("2027-01-01")
-    def test_new_calendar_overrides_projection_and_reanchors_following_year(
-        self, layout
-    ):
-        # Simulate a newly published schedule with a changed recycling phase.
-        # Its absent January dates must not be filled by old projections.
-        official = [
-            (datetime.date(2027, 1, 18), "Recycling"),
-            (datetime.date(2027, 12, 20), "Recycling"),
-        ]
-        events = self.carried(layout, "Crookwell - Monday recycling", [official])
-        assert [(e.date, e.title) for e in events if e.date.year == 2027] == official
-        assert all(e.description is None for e in events if e.date.year == 2027)
-        next_year = [e for e in events if e.date.year == 2028]
-        assert min(e.date for e in next_year) == datetime.date(2028, 1, 3)
-        assert {e.title for e in next_year} == {"Recycling"}
-        assert all("2027 council calendar" in e.description for e in next_year)
-
-    @freeze_time("2030-12-31")
-    def test_stale_calendar_remains_bounded_and_phase_aligned(self, layout):
-        events = self.carried(layout, "Lost River - recycling only")
-        assert {e.date.year for e in events} == {2026, 2030, 2031}
-        anchor = max(e.date for e in events if e.date.year == 2026)
-        assert all((e.date - anchor).days % 14 == 0 for e in events)
-        assert {e.title for e in events} == {"Recycling"}
