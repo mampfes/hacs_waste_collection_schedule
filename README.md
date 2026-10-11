@@ -494,6 +494,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
 - [Jochberg](/doc/source/jochberg_gv_at.md) / jochberg.gv.at
 - [Kainach](/doc/source/lipizzanerheimat_at.md) / kainach.at
+- [Kainbach bei Graz](/doc/source/kainbach_gv_at.md) / kainbach.gv.at
 - [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
 - [Kaisersdorf](/doc/source/citiesapps_com.md) / kaisersdorf.com
 - [Kalsdorf bei Graz](/doc/source/citiesapps_com.md) / kalsdorf-graz.gv.at
@@ -1125,6 +1126,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Clévilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Coeur d'Yvelines](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Coltainville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Communauté de Communes de la Plaine de l'Ain](/doc/source/cc_plainedelain_fr.md) / cc-plainedelain.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
 - [Corancez](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -4132,6 +4134,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Masłów](/doc/source/maslow_pl.md) / maslow.pl
 - [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Hrubieszów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Kowal](/doc/source/sims_pl.md) / sisms.pl
@@ -4235,6 +4238,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ostrów Szlachecki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Pabianice](/doc/source/kiedyodpady_pl.md) / pabianice.kiedyodpady.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
+- [PGK Koszalin](/doc/source/pgkkoszalin_pl.md) / pgkkoszalin.pl
 - [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Pogwizdów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
@@ -4294,6 +4298,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Komenda](/doc/ics/publicus_si.md) / komenda.si
 - [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
 - [Kostak Krško](/doc/source/kostak_si.md) / kostak.si
+- [KSP Ljutomer](/doc/source/ksp_ljutomer_si.md) / ksp-ljutomer.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
 - [Pivka](/doc/ics/publicus_si.md) / pivka.si
 - [Postojna](/doc/ics/publicus_si.md) / postojna.si

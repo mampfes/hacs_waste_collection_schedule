@@ -1191,6 +1191,11 @@
     "howto": {},
     "urls": {}
   },
+  "kainbach_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kainbach_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "koppl_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koppl_at.md",
     "howto": {},
@@ -1968,6 +1973,14 @@
     "howto": {
       "en": "Provide your municipality; for Mulhouse also provide the district.",
       "fr": "Indiquez votre commune; pour Mulhouse précisez aussi le quartier."
+    },
+    "urls": {}
+  },
+  "cc_plainedelain_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc_plainedelain_fr.md",
+    "howto": {
+      "en": "Enter your commune exactly as it is listed on https://cc-plainedelain.fr/les-services/gerer-vos-dechets/les-calendriers-de-collecte/ (for example 'Ambronay', 'Meximieux OUEST' or 'Meximieux SUD et EST'). Case, accents and hyphens are ignored.",
+      "fr": "Saisissez votre commune telle qu'elle figure sur https://cc-plainedelain.fr/les-services/gerer-vos-dechets/les-calendriers-de-collecte/ (par exemple « Ambronay », « Meximieux OUEST » ou « Meximieux SUD et EST »). La casse, les accents et les traits d'union sont ignorés."
     },
     "urls": {}
   },
@@ -4674,6 +4687,13 @@
     },
     "urls": {}
   },
+  "maslow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maslow_pl.md",
+    "howto": {
+      "en": "Enter your area as named by its schedule link on https://www.maslow.pl/asp/gospodarka-odpadami,66 (in the article 'Harmonogramy odbioru odpadów na <year> rok'), e.g. 'Dąbrowa, Wiśniówka' or 'Zabudowa wielorodzinna'. A single village named in only one link (e.g. 'Wiśniówka') works too."
+    },
+    "urls": {}
+  },
   "gmina_miekinia_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",
     "howto": {},
@@ -4758,6 +4778,13 @@
   "mpo_krakow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "pgkkoszalin_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pgkkoszalin_pl.md",
+    "howto": {
+      "en": "Enter your estate (osiedle) as listed on https://www.pgkkoszalin.pl/harmonogramy-wywozu-odpadow/harmonogram-miasto-koszalin/ (e.g. 'Raduszka'), and your street as printed on the estate's page (e.g. 'Gnieźnieńska 52-110 (parzyste)'). The street can be left out for an estate with a single calendar. Multi-family housing (zabudowa wielorodzinna) is not supported."
+    },
     "urls": {}
   },
   "poznan_pl": {
@@ -4867,6 +4894,13 @@
     "howto": {
       "en": "Search for your address at https://uod.kostak.si/ and enter it as street name, house number and optional house number suffix, for example 'Senuše 3' or 'Cesta krških žrtev 134A'.",
       "sl": "Naslov poiščite na https://uod.kostak.si/ in ga vnesite kot ulica, hišna številka in morebitna dodatna oznaka, na primer 'Senuše 3' ali 'Cesta krških žrtev 134A'."
+    },
+    "urls": {}
+  },
+  "ksp_ljutomer_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ksp_ljutomer_si.md",
+    "howto": {
+      "en": "Choose your municipality. In Ljutomer the calendar depends on the collection weekday; each calendar on https://ksp-ljutomer.si/dejavnosti/ravnanje-z-odpadki/koledarji-zbiranja-komunalnih-odpadkov/ lists the settlements and streets it covers."
     },
     "urls": {}
   },
