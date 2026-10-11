@@ -31812,6 +31812,14 @@
       "id": "zab_ch"
     },
     {
+      "title": "Bremgarten AG",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.bremgarten.ch"
+      },
+      "id": "iweb_ch"
+    },
+    {
       "title": "Buch",
       "module": "kvatg_ch",
       "default_params": {
@@ -31988,6 +31996,14 @@
         "municipality": "Flawil"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Flums",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.flums.ch"
+      },
+      "id": "iweb_ch"
     },
     {
       "title": "Frauenfeld",
@@ -32235,6 +32251,12 @@
         "community": "H\u00fcttwilen"
       },
       "id": "kvatg_ch"
+    },
+    {
+      "title": "i-web (Swiss municipalities)",
+      "module": "iweb_ch",
+      "default_params": {},
+      "id": "iweb_ch"
     },
     {
       "title": "Jonschwil",
@@ -32915,6 +32937,14 @@
         "community": "Uesslingen-Buch"
       },
       "id": "kvatg_ch"
+    },
+    {
+      "title": "Uetikon am See",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.uetikonamsee.ch"
+      },
+      "id": "iweb_ch"
     },
     {
       "title": "Untereggen",

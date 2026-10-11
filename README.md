@@ -4432,6 +4432,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bischofszell](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bottighofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Bremgarten AG](/doc/source/iweb_ch.md) / bremgarten.ch
 - [Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bussnang](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4454,6 +4455,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Felben-Wellhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Flums](/doc/source/iweb_ch.md) / flums.ch
 - [Frauenfeld](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gachnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
@@ -4487,6 +4489,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Hüttlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Hüttwilen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [i-web (Swiss municipalities)](/doc/source/iweb_ch.md) / i-web.ch
 - [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Kemmental](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Kesswil](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4575,6 +4578,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tägerwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Uesslingen-Buch](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Uetikon am See](/doc/source/iweb_ch.md) / uetikonamsee.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
 - [Uttwil](/doc/source/kvatg_ch.md) / kvatg.ch

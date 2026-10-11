@@ -5273,6 +5273,14 @@
     },
     "urls": {}
   },
+  "iweb_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iweb_ch.md",
+    "howto": {
+      "de": "Geben Sie die Website Ihrer Gemeinde ein, z. B. https://www.flums.ch. Das funktioniert, wenn https://<website>/abfalldaten eine Tabelle mit Abfuhrdaten zeigt.",
+      "en": "Enter your municipality's website, e.g. https://www.flums.ch. It works if https://<website>/abfalldaten shows a table of collection dates."
+    },
+    "urls": {}
+  },
   "buchegg_so_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buchegg_so_ch.md",
     "howto": {
