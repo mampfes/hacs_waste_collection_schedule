@@ -18,11 +18,11 @@ when the count reaches zero.
 | 3 | Login required (policy conflict) | 10 | `CLAUDE.md` forbids login-required endpoints. Decide: keep as is, move out of the default set, or remove. |
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
-| 6 | PDF schedule | 14 | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
+| 6 | PDF schedule | 5 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 58 | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **232** (281 before class 4; migrated since in clusters, one cluster at a time, see class 5) | |
+| | **Total** | **223** (281 before class 4; the clusters and nine of the PDF sources are migrated, see the notes in class 5 and 6) | |
 
 ## 1. Special / not a provider
 
@@ -81,18 +81,13 @@ Done: **umweltverbaende.at (AT)**: `umweltverbaende_at` (15 districts as `REGION
 
 ## 6. PDF schedule
 
-- `brimbank_vic_gov_au` (274L, 1 req)
+Done (9 of 14): `brimbank_vic_gov_au` (link by text on the bins page, `PdfWordLayoutParser`; fixes a legacy bug that dropped the 29th to 31st in the first week row), `easthants_gov_uk` (coloured date cells via `PdfLayoutParser`; its UPRN path is unverified live because the council's map host has an expired certificate, the test case is dropped for now), `feuerthalen_ch` (`PdfLinkRetriever` + `PdfWordLayoutParser`), `hornsby_nsw_gov_au` (on the OpenCities pipeline; its PDF fallbacks were dead code and are dropped), `kvatg_ch` (`service/KvaThurgau.py`, 66 communities as `REGIONS`, the zone is now the event location), `metropole_rennes_fr` (Heyzine flip-book resolved to its PDF), `sictomvds_com` (leaflet PDF via the map's JS, `RecurrenceExpander` with week parity), `deponia_hu` and `siokom_hu` (one shared `service/HuWasteCalendar.py`).
+
+Still open (5): `cc-montesquieu_fr` (server unreachable from the German exit), `orange_nsw_gov_au` (Cloudflare managed challenge, and the legacy source only computes Wednesday rules, its PDF has no dates: needs a decision), `sutherlandshire_nsw_gov_au` (the ArcGIS host and the council site are unreachable from the German exit; it is an ArcGIS source, not a PDF one), `rybnik_pl` and `smolo_cz` (their agent was stopped before it finished).
+
 - `cc-montesquieu_fr` (295L, 2 req)
-- `deponia_hu` (543L, 3 req)
-- `easthants_gov_uk` (481L, 3 req)
-- `feuerthalen_ch` (304L, 2 req)
-- `hornsby_nsw_gov_au` (746L, 0 req)
-- `kvatg_ch` (1186L, 4 req)
-- `metropole_rennes_fr` (458L, 3 req)
 - `orange_nsw_gov_au` (199L, 2 req)
 - `rybnik_pl` (906L, 1 req)
-- `sictomvds_com` (171L, 2 req)
-- `siokom_hu` (450L, 2 req)
 - `smolo_cz` (566L, 2 req)
 - `sutherlandshire_nsw_gov_au` (219L, 1 req)
 
