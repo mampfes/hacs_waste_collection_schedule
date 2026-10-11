@@ -21507,6 +21507,7 @@
           "calendar_title": "Nome Calendario",
           "district": "Distretto",
           "property_type": "Property Type",
+          "street": "Strada",
           "sub_district": "Sub District"
         },
         "data_description": {
@@ -21520,6 +21521,7 @@
           "calendar_title": "Nome Calendario",
           "district": "Distretto",
           "property_type": "Property Type",
+          "street": "Strada",
           "sub_district": "Sub District"
         },
         "data_description": {}

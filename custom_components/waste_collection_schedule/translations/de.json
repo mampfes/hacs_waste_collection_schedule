@@ -21585,6 +21585,7 @@
           "calendar_title": "Kalender Titel",
           "district": "Bezirk",
           "property_type": "Property Type",
+          "street": "Straße",
           "sub_district": "Sub District"
         },
         "data_description": {
@@ -21598,6 +21599,7 @@
           "calendar_title": "Kalender Titel",
           "district": "Bezirk",
           "property_type": "Property Type",
+          "street": "Straße",
           "sub_district": "Sub District"
         },
         "data_description": {}

@@ -21535,6 +21535,7 @@
           "calendar_title": "Titre du Calendrier",
           "district": "District",
           "property_type": "Property Type",
+          "street": "Rue",
           "sub_district": "Sub District"
         },
         "data_description": {
@@ -21548,6 +21549,7 @@
           "calendar_title": "Titre du Calendrier",
           "district": "District",
           "property_type": "Property Type",
+          "street": "Rue",
           "sub_district": "Sub District"
         },
         "data_description": {}

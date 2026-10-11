@@ -21871,12 +21871,14 @@
           "calendar_title": "Calendar Title",
           "district": "District",
           "property_type": "Property Type",
+          "street": "Street",
           "sub_district": "Sub District"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "district": "The district / area group name (determines which PDF is downloaded). Must be one of: Boguszowice Stare, Chwalowice / Boguszowice Os. / Klokocin, Gotartowice, Grabownia / Golejow / Ochojec, Ligota, Maroko-Nowiny, Niedobczyce, Niewiadom, Orzepowice / Stodoly / Chwalecice, Paruszowiec / Kamien, Polnoc, Radziejow / Popielow, Smolna / Zamyslow / Meksyk, Srodmiescie / Wielopole / Kuznia, Zebrzydowice.",
-          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe).",
+          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe), 'multifamily' (zabudowa wielorodzinna / blocks of flats).",
+          "street": "Multifamily only: your street as listed in the 'ULICE' column of the multifamily PDF (e.g. 'Rudzka'). If the street is listed for several areas, also set sub_district to the 'DZIELNICA' value (e.g. 'Stodoły').",
           "sub_district": "The Rejon (zone) name as shown in the left column of the PDF cover-page table (e.g. 'Zebrzydowice 1', 'Paruszowiec-Piaski', 'Kamień 1'). Leave blank to return all zones in the district."
         }
       },
@@ -21887,11 +21889,13 @@
           "calendar_title": "Calendar Title",
           "district": "District",
           "property_type": "Property Type",
+          "street": "Street",
           "sub_district": "Sub District"
         },
         "data_description": {
           "district": "The district / area group name (determines which PDF is downloaded). Must be one of: Boguszowice Stare, Chwalowice / Boguszowice Os. / Klokocin, Gotartowice, Grabownia / Golejow / Ochojec, Ligota, Maroko-Nowiny, Niedobczyce, Niewiadom, Orzepowice / Stodoly / Chwalecice, Paruszowiec / Kamien, Polnoc, Radziejow / Popielow, Smolna / Zamyslow / Meksyk, Srodmiescie / Wielopole / Kuznia, Zebrzydowice.",
-          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe).",
+          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe), 'multifamily' (zabudowa wielorodzinna / blocks of flats).",
+          "street": "Multifamily only: your street as listed in the 'ULICE' column of the multifamily PDF (e.g. 'Rudzka'). If the street is listed for several areas, also set sub_district to the 'DZIELNICA' value (e.g. 'Stodoły').",
           "sub_district": "The Rejon (zone) name as shown in the left column of the PDF cover-page table (e.g. 'Zebrzydowice 1', 'Paruszowiec-Piaski', 'Kamień 1'). Leave blank to return all zones in the district."
         }
       },

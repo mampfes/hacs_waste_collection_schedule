@@ -21418,6 +21418,7 @@
           "calendar_title": "Calendar Title",
           "district": "Okrožje",
           "property_type": "Property Type",
+          "street": "Ulica",
           "sub_district": "Sub District"
         },
         "data_description": {
@@ -21431,6 +21432,7 @@
           "calendar_title": "Calendar Title",
           "district": "Okrožje",
           "property_type": "Property Type",
+          "street": "Ulica",
           "sub_district": "Sub District"
         },
         "data_description": {}
