@@ -31,7 +31,7 @@ from waste_collection_schedule.retrievers import Request
 
 def rpc(
     url: str,
-    method: str,
+    method: str | Callable[..., str],
     params: Callable[..., Mapping[str, Any]] | Mapping[str, Any],
     *,
     request_id: str = "1",
@@ -41,7 +41,8 @@ def rpc(
 
     Args:
         url: the council's ``/apiserver/ajaxlibrary`` URL.
-        method: the council's own method name.
+        method: the council's own method name; a callable is called as
+            ``params`` is, for a call whose method depends on the target.
         params: the call's ``params``; a callable is called as every other
             :class:`Request` field is, with the keys resolved by earlier steps
             and then the source params by name.
@@ -54,7 +55,7 @@ def rpc(
         return {
             "jsonrpc": "2.0",
             "id": request_id,
-            "method": method,
+            "method": method(*args, **source_params) if callable(method) else method,
             "params": params(*args, **source_params)
             if callable(params)
             else dict(params),
