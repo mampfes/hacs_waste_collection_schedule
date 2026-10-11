@@ -1,197 +1,60 @@
-import io
 import re
+from collections.abc import Iterable
 from datetime import date, timedelta
-from urllib.parse import urljoin
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LTChar, LTRect, LTTextLine
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Gemeinde Feuerthalen"
-DESCRIPTION = (
-    "Source for waste collection in Feuerthalen, Canton of Zurich, Switzerland."
-)
-URL = "https://www.feuerthalen.ch/umwelt/entsorgung/abfall.html/275"
-COUNTRY = "ch"
-
-SOURCE_CODEOWNERS = ["@oh-supra"]
-
-TEST_CASES: dict[str, dict] = {
-    "Feuerthalen": {},
-}
+from waste_collection_schedule import parsers, response_shape, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.transformers import ICSTransformer
 
 _PRODUCT_URL = (
     "https://www.feuerthalen.ch/verwaltung/online-schalter.html/384/product/7"
 )
 
-ICON_MAP = {
-    "Hauskehricht": Icons.GENERAL_WASTE,
-    "Gruengut": Icons.ORGANIC,
-    "Werkhof": Icons.RECYCLING,
-    "AltpapierKarton": Icons.PAPER,
-    "Sonderabfall": Icons.HAZARDOUS,
-}
-
-# Pretty labels for the internal (ASCII-safe) waste-type keys used while
-# matching cell colours.
-DISPLAY_NAME = {
-    "Hauskehricht": "Hauskehricht",
-    "Gruengut": "Grüngut",
-    "Werkhof": "Direktentsorgung Werkhof",
-    "AltpapierKarton": "Altpapier/Karton",
-    "Sonderabfall": "Sonderabfälle/Giftsammlung",
-}
+HAUSKEHRICHT = "Hauskehricht"
+GRUENGUT = "Grüngut"
+WERKHOF = "Direktentsorgung Werkhof"
+ALTPAPIER = "Altpapier/Karton"
+SONDERABFALL = "Sonderabfälle/Giftsammlung"
 
 MONTHS_DE = [
     "Januar", "Februar", "März", "April", "Mai", "Juni",
     "Juli", "August", "September", "Oktober", "November", "Dezember",
 ]  # fmt: skip
 
-WEEKDAYS_DE = {
-    "Montag": 0,
-    "Dienstag": 1,
-    "Mittwoch": 2,
-    "Donnerstag": 3,
-    "Freitag": 4,
-    "Samstag": 5,
-    "Sonntag": 6,
-}
-_WEEKDAY_RE = "|".join(WEEKDAYS_DE)
+_WEEKDAY_RE = "Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag"
 
 # The calendar grid encodes each waste type as a small coloured square behind
-# the day-of-month number; every municipality-wide (non-Hauskehricht) date is
-# read off these colours. Hauskehricht itself has no colour (it is simply
-# "every Monday", called out separately in the page-2 legend text together
-# with its holiday-shift exceptions), so it is expanded programmatically.
+# the day-of-month number. Hauskehricht has no colour (it is "every Monday",
+# called out in the legend text together with its holiday-shift exceptions),
+# so it is expanded from the weekday rule.
 _WASTE_COLORS: dict[tuple[float, float, float], str] = {
-    (0.0, 0.483, 0.735): "Hauskehricht",
-    (0.259, 0.606, 0.24): "Gruengut",
-    (0.717, 0.65, 0.509): "Werkhof",
-    (1.0, 0.795, 0.0): "AltpapierKarton",
-    (0.896, 0.199, 0.532): "Sonderabfall",
+    (0.259, 0.606, 0.24): GRUENGUT,
+    (0.717, 0.65, 0.509): WERKHOF,
+    (1.0, 0.795, 0.0): ALTPAPIER,
+    (0.896, 0.199, 0.532): SONDERABFALL,
 }
 _COLOR_TOL = 0.015
+_MIN_CELL = 14.0
 
 
-def _colors_close(c1, c2: tuple[float, float, float]) -> bool:
-    # pdfminer reports non_stroking_color as None, a plain float (DeviceGray)
-    # or a tuple/list depending on the colour space, so guard the type.
-    if not isinstance(c1, (tuple, list)) or len(c1) != len(c2):
-        return False
-    return all(abs(a - b) < _COLOR_TOL for a, b in zip(c1, c2, strict=True))
+def _label_for_colour(color: tuple[float, ...] | None) -> str | None:
+    if color is None or len(color) != 3:
+        return None
+    for known, label in _WASTE_COLORS.items():
+        if all(abs(a - b) < _COLOR_TOL for a, b in zip(color, known, strict=True)):
+            return label
+    return None
 
 
-def _walk(obj):
-    yield obj
-    if hasattr(obj, "__iter__"):
-        for child in obj:
-            yield from _walk(child)
-
-
-def _extract_words(page) -> list[dict]:
-    """Extract words with bounding boxes from a pdfminer page layout."""
-    words: list[dict] = []
-    for obj in _walk(page):
-        if not isinstance(obj, LTTextLine):
-            continue
-        current: list[LTChar] = []
-        for c in obj:
-            if not isinstance(c, LTChar):
-                continue
-            if current and (
-                c.x0 - current[-1].x1 > max(1.2, 0.35 * c.size)
-                or not c.get_text().strip()
-            ):
-                _flush_word(words, current)
-                current = []
-            if c.get_text().strip():
-                current.append(c)
-        _flush_word(words, current)
-    return words
-
-
-def _flush_word(words: list[dict], chars: list) -> None:
-    if not chars:
-        return
-    text = "".join(c.get_text() for c in chars).strip()
-    if not text:
-        return
-    words.append(
-        {
-            "text": text,
-            "x0": min(c.x0 for c in chars),
-            "x1": max(c.x1 for c in chars),
-            "y0": min(c.y0 for c in chars),
-            "y1": max(c.y1 for c in chars),
-        }
-    )
-
-
-def _find_year(words: list[dict]) -> int | None:
-    text = " ".join(w["text"] for w in sorted(words, key=lambda w: -w["y0"]))
+def find_year(text: str) -> int | None:
+    """The calendar year printed in the title ("ABFALLKALENDER 2026")."""
     m = re.search(r"ABFALLKALENDER\s+(\d{4})", text)
     return int(m.group(1)) if m else None
 
 
-def _find_month_headers(words: list[dict]) -> list[dict]:
-    return [w for w in words if w["text"] in MONTHS_DE]
-
-
-def _nearest_month(rect: LTRect, month_headers: list[dict]) -> str | None:
-    cx, cy = (rect.x0 + rect.x1) / 2, (rect.y0 + rect.y1) / 2
-    best, best_dist = None, None
-    for h in month_headers:
-        if h["y0"] < cy:  # a month header only ever sits above its own grid
-            continue
-        dist = (cx - h["x0"]) ** 2 + (cy - h["y0"]) ** 2
-        if best_dist is None or dist < best_dist:
-            best_dist, best = dist, h["text"]
-    return best
-
-
-def _day_number(rect: LTRect, words: list[dict]) -> int | None:
-    cx, cy = (rect.x0 + rect.x1) / 2, (rect.y0 + rect.y1) / 2
-    for w in words:
-        if (
-            w["x0"] <= cx <= w["x1"]
-            and w["y0"] <= cy <= w["y1"]
-            and w["text"].isdigit()
-        ):
-            return int(w["text"])
-    return None
-
-
-def _parse_colored_grid(page, words: list[dict], year: int) -> set[tuple[str, date]]:
-    month_headers = _find_month_headers(words)
-    events: set[tuple[str, date]] = set()
-    for rect in _walk(page):
-        if not isinstance(rect, LTRect):
-            continue
-        waste_type = next(
-            (
-                name
-                for color, name in _WASTE_COLORS.items()
-                if name != "Hauskehricht"
-                and _colors_close(rect.non_stroking_color, color)
-            ),
-            None,
-        )
-        if waste_type is None:
-            continue
-        month_name = _nearest_month(rect, month_headers)
-        day = _day_number(rect, words)
-        if month_name is None or day is None:
-            continue
-        try:
-            events.add((waste_type, date(year, MONTHS_DE.index(month_name) + 1, day)))
-        except ValueError:
-            continue
-    return events
-
-
-def _expand_weekly_monday(year: int) -> set[date]:
+def weekly_mondays(year: int) -> set[date]:
     d = date(year, 1, 1)
     d += timedelta(days=(0 - d.weekday()) % 7)
     dates = set()
@@ -201,104 +64,135 @@ def _expand_weekly_monday(year: int) -> set[date]:
     return dates
 
 
-def _parse_hauskehricht_shifts(words: list[dict]) -> list[date]:
-    """Parse holiday replacement dates, e.g. 'Mittwoch, 08.04.2026 statt Ostermontag'.
-
-    Returns the collection dates that replace their week's Monday collection.
-    """
-    lines: dict[int, list[dict]] = {}
-    for w in words:
-        lines.setdefault(round(w["y0"]), []).append(w)
-    text_lines = []
-    for _, ws in sorted(lines.items(), key=lambda kv: -kv[0]):
-        ws.sort(key=lambda w: w["x0"])
-        text_lines.append(" ".join(w["text"] for w in ws))
-    text = "\n".join(text_lines)
-
+def holiday_shifts(text: str) -> list[date]:
+    """Replacement dates, e.g. 'Mittwoch, 08.04.2026 statt Ostermontag'."""
     shifts = []
     for m in re.finditer(
-        rf"({_WEEKDAY_RE}),\s*(\d{{1,2}})\.(\d{{1,2}})\.(\d{{4}})\s+statt", text
+        rf"(?:{_WEEKDAY_RE}),\s*(\d{{1,2}})\.(\d{{1,2}})\.(\d{{4}})\s+statt", text
     ):
-        _weekday_name, day, month, year_str = m.groups()
+        day, month, year = (int(g) for g in m.groups())
         try:
-            shifts.append(date(int(year_str), int(month), int(day)))
+            shifts.append(date(year, month, day))
         except ValueError:
             continue
     return shifts
 
 
-def _parse_hauskehricht(pages_words: list[list[dict]], year: int) -> set[date]:
-    mondays = _expand_weekly_monday(year)
-    for page_words in pages_words:
-        for shift_date in _parse_hauskehricht_shifts(page_words):
-            offset = shift_date.weekday()  # days after that week's Monday
-            original_monday = shift_date - timedelta(days=offset)
-            mondays.discard(original_monday)
-            mondays.add(shift_date)
-    return mondays
+def _nearest_month(vec_cx: float, vec_cy: float, headers) -> str | None:
+    best, best_dist = None, None
+    for h in headers:
+        if h.y < vec_cy:  # a month header only ever sits above its own grid
+            continue
+        dist = (vec_cx - h.x) ** 2 + (vec_cy - h.y) ** 2
+        if best_dist is None or dist < best_dist:
+            best_dist, best = dist, h.text
+    return best
 
 
-class Source:
-    def __init__(self) -> None:
-        # No parameters needed - Feuerthalen has common dates for the entire
-        # municipality.
-        pass
+def _day_number(vec: parsers.PdfVector, words) -> int | None:
+    cx, cy = (vec.x0 + vec.x1) / 2, (vec.y0 + vec.y1) / 2
+    best, best_dist = None, None
+    for w in words:
+        if w.page != vec.page or not w.text.isdigit():
+            continue
+        if not (vec.x0 <= w.x <= vec.x1 and vec.y0 <= w.y <= vec.y1):
+            continue
+        dist = (w.x - cx) ** 2 + (w.y - cy) ** 2
+        if best_dist is None or dist < best_dist:
+            best, best_dist = int(w.text), dist
+    return best
 
-    def _find_pdf_url(self, session: requests.Session) -> str:
-        r = session.get(_PRODUCT_URL, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
 
-        link = soup.select_one('a[href*=".pdf"]')
-        if link is None or not link.get("href"):
-            raise ValueError(
-                "No waste calendar PDF link found on the Feuerthalen online "
-                "counter page. The website structure may have changed."
-            )
-        return urljoin(_PRODUCT_URL, str(link["href"]))
+def collection_rows(
+    layouts: list[parsers.PdfWordLayout], source: BaseSource
+) -> Iterable[tuple[date, str]]:
+    (layout,) = layouts
+    name = response_shape.source_name(source)
+    first_page = [w for w in layout.words if w.page == 0]
+    year = find_year(" ".join(line.text for line in layout.lines if line.page == 0))
+    response_shape.expect(
+        year is not None,
+        source_name=name,
+        detail="could not determine the calendar year from the PDF",
+        raw=str(layout.lines[:10]),
+    )
+    assert year is not None
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update({"User-Agent": "Mozilla/5.0"})
+    headers = [w for w in first_page if w.text in MONTHS_DE]
+    events: set[tuple[date, str]] = set()
+    for vec in layout.vectors:
+        if vec.page != 0:
+            continue
+        label = _label_for_colour(vec.fill_color)
+        # Day cells are 15x15 squares; the smaller 13x13 shapes in the same
+        # colour mark the weekly Monday round and are not collection days.
+        if label is None or min(vec.x1 - vec.x0, vec.y1 - vec.y0) < _MIN_CELL:
+            continue
+        month = _nearest_month((vec.x0 + vec.x1) / 2, (vec.y0 + vec.y1) / 2, headers)
+        day = _day_number(vec, first_page)
+        if month is None or day is None:
+            continue
+        try:
+            events.add((date(year, MONTHS_DE.index(month) + 1, day), label))
+        except ValueError:
+            continue
+    response_shape.expect(
+        bool(events),
+        source_name=name,
+        detail="no coloured collection days found in the calendar grid",
+        raw=str(layout.lines[:10]),
+    )
 
-        pdf_url = self._find_pdf_url(session)
-        r = session.get(pdf_url, timeout=30)
-        r.raise_for_status()
+    # The exception notes live on page 2 today; scan every later page so a
+    # future re-layout does not silently drop them.
+    note_text = "\n".join(line.text for line in layout.lines if line.page > 0)
+    mondays = weekly_mondays(year)
+    for shifted in holiday_shifts(note_text):
+        mondays.discard(shifted - timedelta(days=shifted.weekday()))
+        mondays.add(shifted)
+    events.update((d, HAUSKEHRICHT) for d in mondays)
+    yield from sorted(events)
 
-        pages = list(extract_pages(io.BytesIO(r.content)))
-        if not pages:
-            raise ValueError("The waste calendar PDF has no pages.")
 
-        page1_words = _extract_words(pages[0])
-        year = _find_year(page1_words)
-        if year is None:
-            raise ValueError(
-                "Could not determine the calendar year from the waste "
-                "calendar PDF. The website structure may have changed."
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Gemeinde Feuerthalen"
+    DESCRIPTION = (
+        "Source for waste collection in Feuerthalen, Canton of Zurich, Switzerland."
+    )
+    URL = "https://www.feuerthalen.ch/umwelt/entsorgung/abfall.html/275"
+    COUNTRY = "ch"
+    SOURCE_CODEOWNERS: ClassVar[list[str]] = ["@oh-supra"]
+    RAISE_ON_EMPTY = True
 
-        grid_events = _parse_colored_grid(pages[0], page1_words, year)
-        if not grid_events:
-            raise ValueError(
-                "No waste collection events found in the waste calendar PDF. "
-                "The website structure may have changed."
-            )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.HAZARDOUS,
+    ]
 
-        # The exception notes live on page 2 today, but scan every page after
-        # the calendar grid so a future re-layout does not silently drop them.
-        note_pages = [_extract_words(page) for page in pages[1:]]
-        hauskehricht_dates = _parse_hauskehricht(note_pages, year)
+    TEST_CASES: ClassVar[dict] = {"Feuerthalen": {}}
 
-        events: set[tuple[str, date]] = set(grid_events)
-        events.update(("Hauskehricht", d) for d in hauskehricht_dates)
+    PARAMS = ()
 
-        return [
-            Collection(
-                date=collection_date,
-                t=DISPLAY_NAME[waste_type],
-                icon=ICON_MAP.get(waste_type),
-            )
-            for waste_type, collection_date in sorted(
-                events, key=lambda e: (e[1], e[0])
-            )
-        ]
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": "No configuration needed: Feuerthalen publishes one waste calendar for the whole municipality.",
+        "de": "Keine Angaben nötig: Feuerthalen veröffentlicht einen Abfallkalender für die ganze Gemeinde.",
+    }
+
+    retrieve = retrievers.PdfLinkRetriever(
+        index_url=_PRODUCT_URL, pattern=r"\.pdf", select="first"
+    )
+    parse = parsers.PdfWordLayoutParser(min_words=50, min_vectors=1)
+    preprocess = staticmethod(collection_rows)
+    transform = ICSTransformer(
+        type_value_map={
+            HAUSKEHRICHT: wt.GENERAL_WASTE,
+            GRUENGUT: wt.GARDEN_WASTE,
+            WERKHOF: wt.RECYCLABLES,
+            ALTPAPIER: wt.PAPER,
+            SONDERABFALL: wt.HAZARDOUS,
+        }
+    )
