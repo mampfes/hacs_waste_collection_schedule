@@ -70,6 +70,7 @@ class Source(BaseSource):
     )
     URL = "https://ksp-ljutomer.si"
     COUNTRY = "si"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [

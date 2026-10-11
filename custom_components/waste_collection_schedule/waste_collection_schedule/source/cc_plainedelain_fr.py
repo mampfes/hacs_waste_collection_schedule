@@ -52,6 +52,7 @@ class Source(BaseSource):
     )
     URL = "https://cc-plainedelain.fr"
     COUNTRY = "fr"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]

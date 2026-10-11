@@ -72,6 +72,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Gmina Masłów, Poland."
     URL = "https://www.maslow.pl"
     COUNTRY = "pl"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
     IGNORE_DUPLICATES_DEFAULT = True
 

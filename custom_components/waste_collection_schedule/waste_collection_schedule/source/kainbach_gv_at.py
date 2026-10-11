@@ -72,6 +72,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Kainbach bei Graz, Austria (Abfuhrkalender PDF)."
     URL = "https://www.kainbach.gv.at"
     COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
     IGNORE_DUPLICATES_DEFAULT = True
 

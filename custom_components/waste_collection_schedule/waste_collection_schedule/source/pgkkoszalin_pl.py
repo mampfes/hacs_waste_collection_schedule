@@ -136,6 +136,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for PGK Koszalin (single-family housing), Poland."
     URL = "https://www.pgkkoszalin.pl"
     COUNTRY = "pl"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
