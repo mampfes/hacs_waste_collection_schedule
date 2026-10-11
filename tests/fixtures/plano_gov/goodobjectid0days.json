@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query 8e1203a22b",
+      "method": "GET",
+      "url": "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query",
+      "final_url": "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query?outFields=DAY_2017%2CBLKY_CURR%2CBLKY_NEXT1%2CBLKY_NEXT2%2CREC_CURR%2CREC_NEXT1%2CREC_NEXT2&returnGeometry=false&f=json&where=OBJECTID%3D72866",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"DAY_2017,BLKY_CURR,BLKY_NEXT1,BLKY_NEXT2,REC_CURR,REC_NEXT1,REC_NEXT2\"],[\"returnGeometry\",\"false\"],[\"where\",\"OBJECTID=72866\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "317",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"d471503\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 19:39:05 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiUEFSQ0VMX0lEIiwiZmllbGRBbGlhc2VzIjp7IkRBWV8yMDE3IjoiREFZXzIwMTciLCJCTEtZX0NVUlIiOiJCTEtZX0NVUlIiLCJCTEtZX05FWFQxIjoiQkxLWV9ORVhUMSIsIkJMS1lfTkVYVDIiOiJCTEtZX05FWFQyIiwiUkVDX0NVUlIiOiJSRUNfQ1VSUiIsIlJFQ19ORVhUMSI6IlJFQ19ORVhUMSIsIlJFQ19ORVhUMiI6IlJFQ19ORVhUMiJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJEQVlfMjAxNyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEQVlfMjAxNyIsImxlbmd0aCI6MTJ9LHsibmFtZSI6IkJMS1lfQ1VSUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJCTEtZX0NVUlIiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJCTEtZX05FWFQxIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkJMS1lfTkVYVDEiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJCTEtZX05FWFQyIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkJMS1lfTkVYVDIiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJSRUNfQ1VSUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJSRUNfQ1VSUiIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlJFQ19ORVhUMSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJSRUNfTkVYVDEiLCJsZW5ndGgiOjIwfSx7Im5hbWUiOiJSRUNfTkVYVDIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUkVDX05FWFQyIiwibGVuZ3RoIjoyMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJEQVlfMjAxNyI6Ik1vbmRheSIsIkJMS1lfQ1VSUiI6Ik9jdG9iZXIgMTQiLCJCTEtZX05FWFQxIjoiTm92ZW1iZXIgMTEiLCJCTEtZX05FWFQyIjoiRGVjZW1iZXIgMTYiLCJSRUNfQ1VSUiI6Ik9jdG9iZXIgNSwgMTkiLCJSRUNfTkVYVDEiOiJOb3ZlbWJlciAyLCAxNiwgMzAiLCJSRUNfTkVYVDIiOiJEZWNlbWJlciAxNCwgMjgifX1dfQ=="
+    }
+  ]
+}
