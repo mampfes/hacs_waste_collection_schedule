@@ -394,7 +394,9 @@ class OpenCitiesParser(Parser["list[dict[str, Any]]"]):
         require_date_precise: bool = False,
         exclude_type_prefixes: tuple[str, ...] = (),
         approximate_dates: bool = False,
+        weekday_dates: bool = False,
     ):
+        self.weekday_dates = weekday_dates
         self.date_format = date_format
         self.require_date_precise = require_date_precise
         self.exclude_type_prefixes = exclude_type_prefixes
@@ -452,10 +454,12 @@ class OpenCitiesParser(Parser["list[dict[str, Any]]"]):
                 continue
             note_element = block.select_one(".note")
             note = note_element.get_text(" ", strip=True) if note_element else None
-            date = self._date(date_text, note or "", today)
-            if date is None:
-                continue
-            records.append({"type": waste_type, "date": date, "note": note})
+            dates = [self._date(date_text, note or "", today)]
+            if dates == [None] and self.weekday_dates:
+                dates = _named_weekday_dates(date_text)
+            for date in dates:
+                if date is not None:
+                    records.append({"type": waste_type, "date": date, "note": note})
         return records
 
     def _date(self, text: str, note: str, today: datetime.date) -> datetime.date | None:
@@ -472,6 +476,21 @@ class OpenCitiesParser(Parser["list[dict[str, Any]]"]):
         if self.approximate_dates:
             return _approximate_date(text, note, today)
         return None
+
+
+_WEEKDAY_NAME_RE = re.compile(
+    r"\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b", re.IGNORECASE
+)
+
+
+def _named_weekday_dates(text: str) -> list[datetime.date | None]:
+    """The next occurrence of every weekday named in ``text``, once each."""
+    found: list[datetime.date | None] = []
+    for name in _WEEKDAY_NAME_RE.findall(text):
+        weekday = recurrence.weekday(name)
+        if weekday is not None:
+            found.append(recurrence.next_weekday(weekday))
+    return found
 
 
 def _top_level(soup: BeautifulSoup, selector: str) -> list[Tag]:
