@@ -74,6 +74,10 @@ class TestYearlyLinks:
         with pytest.raises(ValueError, match="page layout may have changed"):
             retrievers.yearly_links(r"nothing_(20\d\d)\.pdf$")(_page(self.HTML))
 
+    def test_a_pattern_without_a_year_group_is_rejected(self):
+        with pytest.raises(ValueError, match="no group for the year"):
+            retrievers.yearly_links(r"cal_20\d\d\.pdf$")(_page(self.HTML))
+
     @freeze_time("2026-10-11")
     def test_argument_matches_the_link_text(self):
         html = """
@@ -251,6 +255,17 @@ class TestDayGridCodesAndWeekdays:
     def test_a_block_fitting_no_month_fails_loudly(self):
         with pytest.raises(ResponseShapeError):
             self.parser()._grid_records(["1 MO B\n"], 2026)  # 1 Jan/Feb 2026: Thu/Sun
+
+    def test_an_unknown_code_is_kept_verbatim(self):
+        # 2 Jan 2026 is a Friday; "XY" is not in the legend.
+        records = self.parser()._grid_records(["1 DO\n2 FR XY\n"], 2026)
+        assert records == [(D(2026, 1, 2), "XY")]
+
+    def test_more_blocks_than_months_fails_loudly(self):
+        # Jan, Feb and Mar 2026 blocks on a page covering two months.
+        page = "1 DO P\n1 SO P\n2 MO P\n1 SO P\n"
+        with pytest.raises(ResponseShapeError):
+            self.parser()._grid_records([page], 2026)
 
     def test_codes_or_labels_are_required(self):
         with pytest.raises(ValueError):

@@ -17,7 +17,7 @@ it by position; holiday moves are printed as footnotes ("2. januar se nadomešč
 import re
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import lookups, parsers, preprocessors, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
@@ -41,7 +41,15 @@ _CALENDARS = {
 
 
 def _pdf_pattern(calendar: str, **_) -> str:
-    name = re.escape(_CALENDARS[calendar])
+    # A YAML value outside the dropdown gets suggestions, not a KeyError.
+    name = re.escape(
+        lookups.resolve(
+            _CALENDARS,
+            calendar,
+            argument="calendar",
+            normalize=lookups.normalize_loose,
+        )
+    )
     return rf"/KOLEDAR-(?:(20\d\d)-)?{name}(?:-(20\d\d))?\.pdf$"
 
 
