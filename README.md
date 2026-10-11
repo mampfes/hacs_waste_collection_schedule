@@ -4682,7 +4682,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Aberdeen City Council](/doc/source/aberdeencity_gov_uk.md) / aberdeencity.gov.uk
 - [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
 - [Adur & Worthing Councils](/doc/source/adur_worthing_gov_uk.md) / adur-worthing.gov.uk
-- [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Angus Council](/doc/source/angus_gov_uk.md) / angus.gov.uk

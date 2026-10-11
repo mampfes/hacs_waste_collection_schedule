@@ -24224,31 +24224,6 @@
         },
         "data_description": {}
       },
-      "args_allerdale_gov_uk": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address_name_number": "Address Name Number",
-          "address_postcode": "Poštna številka"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address_postcode": "Vaša poštna številka."
-        }
-      },
-      "reconfigure_allerdale_gov_uk": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "address_name_number": "Address Name Number",
-          "address_postcode": "Poštna številka"
-        },
-        "data_description": {
-          "address_postcode": "Vaša poštna številka."
-        }
-      },
       "args_ambervalley_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -24223,31 +24223,6 @@
         },
         "data_description": {}
       },
-      "args_allerdale_gov_uk": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "address_name_number": "Address Name Number",
-          "address_postcode": "Postnummer"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "address_postcode": "Dit postnummer"
-        }
-      },
-      "reconfigure_allerdale_gov_uk": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "address_name_number": "Address Name Number",
-          "address_postcode": "Postnummer"
-        },
-        "data_description": {
-          "address_postcode": "Dit postnummer"
-        }
-      },
       "args_ambervalley_gov_uk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
