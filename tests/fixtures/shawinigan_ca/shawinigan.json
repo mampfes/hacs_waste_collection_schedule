@@ -1,0 +1,161 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates a819588746",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=1760+Avenue+de+la+Paix%2C+Shawinigan%2C+QC+G9N+6H7&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"1760 Avenue de la Paix, Shawinigan, QC G9N 6H7\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 18:57:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "222",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"b09c536f\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiRzlOIDZINywgU2hhd2luaWdhbiwgUXXDqWJlYyIsImxvY2F0aW9uIjp7IngiOi03Mi43NjA0NzgwMjE5MzEsInkiOjQ2LjU3MTUzNDQ0NjcwN30sInNjb3JlIjo5MS4wMSwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjotNzIuNzYxNDc4MDIxOTMxLCJ5bWluIjo0Ni41NzA1MzQ0NDY3MDcsInhtYXgiOi03Mi43NTk0NzgwMjE5MzEsInltYXgiOjQ2LjU3MjUzNDQ0NjcwN319XX0="
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/0/query dc3258da48",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/0/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/0/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-72.760478021931%2C+%22y%22%3A+46.571534446707%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -72.760478021931, \\\"y\\\": 46.571534446707}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399301",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:14 GMT",
+        "Content-Length": "865"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiRElTVFJJQ1RJRCI6IkRpc3RyaWN0IElEIiwiQUdFTkNZIjoiQWdlbmN5IiwiQUdFTkNZVVJMIjoiV2Vic2l0ZSIsIkxBU1RFRElUT1IiOiJMYXN0IEVkaXRvciIsIkNPTlRBQ1QiOiJDb250YWN0IE5hbWUiLCJQSE9ORSI6IlBob25lIiwiRU1BSUwiOiJFbWFpbCIsIlNVQlRZUEVGSUVMRCI6IlN1YnR5cGUgRmllbGQiLCJTQ0hFRFVMRVRZUEUiOiJTY2hlZHVsZSBUeXBlIiwiTkFNRSI6IkRpc3RyaWN0IE5hbWUiLCJTQ0hFRFVMRSI6IlNjaGVkdWxlIFBhdHRlcm4iLCJERVNDUklQVCI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJIT0xJREFZRklFTEQiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsIkxBU1RVUERBVEUiOiJMYXN0IFVwZGF0ZSBEYXRlIiwiR2xvYmFsSUQiOiJHbG9iYWxJRCIsIlNIQVBFX0xlbmd0aCI6IlNIQVBFX0xlbmd0aCIsIlNIQVBFX0FyZWEiOiJTSEFQRV9BcmVhIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiRElTVFJJQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEaXN0cmljdCBJRCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IkFHRU5DWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJBZ2VuY3kiLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoiQUdFTkNZVVJMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlYnNpdGUiLCJsZW5ndGgiOjIwMH0seyJuYW1lIjoiTEFTVEVESVRPUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJMYXN0IEVkaXRvciIsImxlbmd0aCI6NTB9LHsibmFtZSI6IkNPTlRBQ1QiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQ29udGFjdCBOYW1lIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiUEhPTkUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUGhvbmUiLCJsZW5ndGgiOjEyfSx7Im5hbWUiOiJFTUFJTCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJFbWFpbCIsImxlbmd0aCI6MTAwfSx7Im5hbWUiOiJTVUJUWVBFRklFTEQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZUludGVnZXIiLCJhbGlhcyI6IlN1YnR5cGUgRmllbGQifSx7Im5hbWUiOiJTQ0hFRFVMRVRZUEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU2NoZWR1bGUgVHlwZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik5BTUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGlzdHJpY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IlNDSEVEVUxFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNjaGVkdWxlIFBhdHRlcm4iLCJsZW5ndGgiOjI4NX0seyJuYW1lIjoiREVTQ1JJUFQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQWRkaXRpb25hbCBJbmZvcm1hdGlvbiIsImxlbmd0aCI6MjU1fSx7Im5hbWUiOiJIT0xJREFZRklFTEQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSG9saWRheSBJbXBhY3QgRmllbGQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJMQVNUVVBEQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJMYXN0IFVwZGF0ZSBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJHbG9iYWxJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlR2xvYmFsSUQiLCJhbGlhcyI6Ikdsb2JhbElEIiwibGVuZ3RoIjozOH0seyJuYW1lIjoiU0hBUEVfTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUiLCJhbGlhcyI6IlNIQVBFX0xlbmd0aCJ9LHsibmFtZSI6IlNIQVBFX0FyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSIsImFsaWFzIjoiU0hBUEVfQXJlYSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjIyOSwiRElTVFJJQ1RJRCI6IlNIQTMiLCJBR0VOQ1kiOiIiLCJBR0VOQ1lVUkwiOiJodHRwczovL3d3dy5zaGF3aW5pZ2FuLmNhL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI2LzAzLzI2MDMzMV9DYWxlbmRyaWVyX2NvbGxlY3Rlc18yMDI2X1NIQV9TSkRQX1NHX0dNRS5wZGYiLCJMQVNURURJVE9SIjoiU0hBIC0gU0pQIC0gU0dMIC0gR01FRXN0IChCKSIsIkNPTlRBQ1QiOm51bGwsIlBIT05FIjoiODE5LTUzNi03MjAwIiwiRU1BSUwiOiJpbmZvcm1hdGlvbkBzaGF3aW5pZ2FuLmNhIiwiU1VCVFlQRUZJRUxEIjoyLCJTQ0hFRFVMRVRZUEUiOiIyIFdlZWsiLCJOQU1FIjoiTWFyZGkiLCJTQ0hFRFVMRSI6IjAwMjAwMDAiLCJERVNDUklQVCI6IiIsIkhPTElEQVlGSUVMRCI6IklNUEFDVFJFQ1kiLCJMQVNUVVBEQVRFIjpudWxsLCJHbG9iYWxJRCI6Ins2NzZDMjE4Ny1DMEFFLTQyNDQtQjRGRC01NTEyOEQyMTk4RDR9IiwiU0hBUEVfTGVuZ3RoIjowLjI1NTgxOTE4Mzc5MDA0MDM3LCJTSEFQRV9BcmVhIjowLjAwMTA3ODE5NDY0MzMwMTEyOTF9fV19"
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/1/query dc3258da48",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/1/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/1/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-72.760478021931%2C+%22y%22%3A+46.571534446707%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -72.760478021931, \\\"y\\\": 46.571534446707}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399301",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:14 GMT",
+        "Content-Length": "885"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiRElTVFJJQ1RJRCI6IkRpc3RyaWN0IElEIiwiQUdFTkNZIjoiQWdlbmN5IiwiQUdFTkNZVVJMIjoiV2Vic2l0ZSIsIkNPTlRBQ1QiOiJDb250YWN0IE5hbWUiLCJQSE9ORSI6IlBob25lIiwiRU1BSUwiOiJFbWFpbCIsIlNVQlRZUEVGSUVMRCI6IlN1YnR5cGUgRmllbGQiLCJTQ0hFRFVMRVRZUEUiOiJTY2hlZHVsZSBUeXBlIiwiTEFTVEVESVRPUiI6Ikxhc3QgRWRpdG9yIiwiTkFNRSI6IkRpc3RyaWN0IE5hbWUiLCJTQ0hFRFVMRSI6IlNjaGVkdWxlIFBhdHRlcm4iLCJERVNDUklQVCI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJIT0xJREFZRklFTEQiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsIkxBU1RVUERBVEUiOiJMYXN0IFVwZGF0ZSBEYXRlIiwiR2xvYmFsSUQiOiJHbG9iYWxJRCIsIlNIQVBFX0xlbmd0aCI6IlNIQVBFX0xlbmd0aCIsIlNIQVBFX0FyZWEiOiJTSEFQRV9BcmVhIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiRElTVFJJQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEaXN0cmljdCBJRCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IkFHRU5DWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJBZ2VuY3kiLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoiQUdFTkNZVVJMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlYnNpdGUiLCJsZW5ndGgiOjIwMH0seyJuYW1lIjoiQ09OVEFDVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDb250YWN0IE5hbWUiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJQSE9ORSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJQaG9uZSIsImxlbmd0aCI6MTJ9LHsibmFtZSI6IkVNQUlMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkVtYWlsIiwibGVuZ3RoIjoxMDB9LHsibmFtZSI6IlNVQlRZUEVGSUVMRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiU3VidHlwZSBGaWVsZCJ9LHsibmFtZSI6IlNDSEVEVUxFVFlQRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSBUeXBlIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiTEFTVEVESVRPUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJMYXN0IEVkaXRvciIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik5BTUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGlzdHJpY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IlNDSEVEVUxFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNjaGVkdWxlIFBhdHRlcm4iLCJsZW5ndGgiOjI4NX0seyJuYW1lIjoiREVTQ1JJUFQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQWRkaXRpb25hbCBJbmZvcm1hdGlvbiIsImxlbmd0aCI6MjU1fSx7Im5hbWUiOiJIT0xJREFZRklFTEQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSG9saWRheSBJbXBhY3QgRmllbGQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJMQVNUVVBEQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJMYXN0IFVwZGF0ZSBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJHbG9iYWxJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlR2xvYmFsSUQiLCJhbGlhcyI6Ikdsb2JhbElEIiwibGVuZ3RoIjozOH0seyJuYW1lIjoiU0hBUEVfTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUiLCJhbGlhcyI6IlNIQVBFX0xlbmd0aCJ9LHsibmFtZSI6IlNIQVBFX0FyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSIsImFsaWFzIjoiU0hBUEVfQXJlYSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjIzNSwiRElTVFJJQ1RJRCI6IlNIQTMiLCJBR0VOQ1kiOiIiLCJBR0VOQ1lVUkwiOiJodHRwczovL3d3dy5zaGF3aW5pZ2FuLmNhL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI2LzAzLzI2MDMzMV9DYWxlbmRyaWVyX2NvbGxlY3Rlc18yMDI2X1NIQV9TSkRQX1NHX0dNRS5wZGYiLCJDT05UQUNUIjpudWxsLCJQSE9ORSI6IjgxOS01MzYtNzIwMCIsIkVNQUlMIjoiaW5mb3JtYXRpb25Ac2hhd2luaWdhbi5jYSIsIlNVQlRZUEVGSUVMRCI6MCwiU0NIRURVTEVUWVBFIjoiSXJyZWd1bGFybHkiLCJMQVNURURJVE9SIjoiU0hBIC0gU0pQIC0gU0dMIC0gR01FRXN0IiwiTkFNRSI6Ik1hcmRpIiwiU0NIRURVTEUiOiIyMDI2LTA5LTA4LDIwMjYtMDktMjIsMjAyNi0xMC0xMywyMDI2LTExLTAzLDIwMjYtMTEtMjQsMjAyNi0xMi0xNSIsIkRFU0NSSVBUIjoiIiwiSE9MSURBWUZJRUxEIjoiSU1QQUNUR0FSQiIsIkxBU1RVUERBVEUiOm51bGwsIkdsb2JhbElEIjoie0Q3MkFBNkQ5LTdEQ0ItNDk2NC1CNDI5LTU1MUNGOTNBQzg0Q30iLCJTSEFQRV9MZW5ndGgiOjAuMjU1NzQ2ODU3NjMyMTYwODIsIlNIQVBFX0FyZWEiOjAuMDAxMDc4MTkxODIyMTQ0NzI3Nn19XX0="
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/2/query dc3258da48",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/2/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/2/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-72.760478021931%2C+%22y%22%3A+46.571534446707%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -72.760478021931, \\\"y\\\": 46.571534446707}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399301",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:15 GMT",
+        "Content-Length": "897"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiRElTVFJJQ1RJRCI6IkRpc3RyaWN0IElEIiwiTkFNRSI6IkRpc3RyaWN0IE5hbWUiLCJBR0VOQ1kiOiJBZ2VuY3kiLCJBR0VOQ1lVUkwiOiJXZWJzaXRlIiwiQ09OVEFDVCI6IkNvbnRhY3QgTmFtZSIsIlBIT05FIjoiUGhvbmUiLCJFTUFJTCI6IkVtYWlsIiwiU1VCVFlQRUZJRUxEIjoiU3VidHlwZSBGaWVsZCIsIlNDSEVEVUxFVFlQRSI6IlNjaGVkdWxlIFR5cGUiLCJTQ0hFRFVMRSI6IlNjaGVkdWxlIFBhdHRlcm4iLCJERVNDUklQVCI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJIT0xJREFZRklFTEQiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsIkxBU1RVUERBVEUiOiJMYXN0IFVwZGF0ZSBEYXRlIiwiTEFTVEVESVRPUiI6Ikxhc3QgRWRpdG9yIiwiR2xvYmFsSUQiOiJHbG9iYWxJRCIsIlNIQVBFX0xlbmd0aCI6IlNIQVBFX0xlbmd0aCIsIlNIQVBFX0FyZWEiOiJTSEFQRV9BcmVhIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiRElTVFJJQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEaXN0cmljdCBJRCIsImxlbmd0aCI6MTB9LHsibmFtZSI6Ik5BTUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGlzdHJpY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IkFHRU5DWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJBZ2VuY3kiLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoiQUdFTkNZVVJMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlYnNpdGUiLCJsZW5ndGgiOjIwMH0seyJuYW1lIjoiQ09OVEFDVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDb250YWN0IE5hbWUiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJQSE9ORSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJQaG9uZSIsImxlbmd0aCI6MTJ9LHsibmFtZSI6IkVNQUlMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkVtYWlsIiwibGVuZ3RoIjoxMDB9LHsibmFtZSI6IlNVQlRZUEVGSUVMRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiU3VidHlwZSBGaWVsZCJ9LHsibmFtZSI6IlNDSEVEVUxFVFlQRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSBUeXBlIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiU0NIRURVTEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU2NoZWR1bGUgUGF0dGVybiIsImxlbmd0aCI6Mjg1fSx7Im5hbWUiOiJERVNDUklQVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJBZGRpdGlvbmFsIEluZm9ybWF0aW9uIiwibGVuZ3RoIjoyNTV9LHsibmFtZSI6IkhPTElEQVlGSUVMRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsImxlbmd0aCI6NTB9LHsibmFtZSI6IkxBU1RVUERBVEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGUiLCJhbGlhcyI6Ikxhc3QgVXBkYXRlIERhdGUiLCJsZW5ndGgiOjh9LHsibmFtZSI6IkxBU1RFRElUT1IiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiTGFzdCBFZGl0b3IiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJHbG9iYWxJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlR2xvYmFsSUQiLCJhbGlhcyI6Ikdsb2JhbElEIiwibGVuZ3RoIjozOH0seyJuYW1lIjoiU0hBUEVfTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUiLCJhbGlhcyI6IlNIQVBFX0xlbmd0aCJ9LHsibmFtZSI6IlNIQVBFX0FyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSIsImFsaWFzIjoiU0hBUEVfQXJlYSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjI3NCwiRElTVFJJQ1RJRCI6IlNIQTMiLCJOQU1FIjoiTWVyY3JlZGktVmVydGUiLCJBR0VOQ1kiOiJTZXJ2aWNlIENpdMOpIFByb3ByZSBpbmMuIiwiQUdFTkNZVVJMIjoiaHR0cHM6Ly93d3cuc2hhd2luaWdhbi5jYS9zYXBpbiIsIkNPTlRBQ1QiOm51bGwsIlBIT05FIjoiODE5LTUzNi03MjAwIiwiRU1BSUwiOiJpbmZvcm1hdGlvbkBzaGF3aW5pZ2FuLmNhIiwiU1VCVFlQRUZJRUxEIjo3LCJTQ0hFRFVMRVRZUEUiOiJJcnJlZ3VsYXJseSIsIlNDSEVEVUxFIjoiMjAyNS0wMS0xMywgMjAyNS0wMS0xNCwgMjAyNS0wMS0xNSwgMjAyNS0wMS0xNiwgMjAyNS0wMS0xNyIsIkRFU0NSSVBUIjoiTCdpbnNjcmlwdGlvbiBwb3VyIGxhIGNvbGxlY3RlIGRlcyBzYXBpbnMgZXN0IG9ibGlnYXRvaXJlIGF2YW50IGxlIGpldWRpIDkgamFudmllciAyMDI1IDogaHR0cHM6Ly93d3cuc2hhd2luaWdhbi5jYS9zYXBpbiIsIkhPTElEQVlGSUVMRCI6IklNUEFDVFlBUkQiLCJMQVNUVVBEQVRFIjpudWxsLCJMQVNURURJVE9SIjpudWxsLCJHbG9iYWxJRCI6Ins5Q0Y2RDBDMS1CNTMwLTQyRkEtQkQ2NS1FRjVBMENBNDlDRjR9IiwiU0hBUEVfTGVuZ3RoIjowLjI1NTcyNjA5MTIxODE1MTY1LCJTSEFQRV9BcmVhIjowLjAwMTA3ODQ1Mjk2MTUyODA1MzF9fV19"
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/3/query dc3258da48",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/3/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/3/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-72.760478021931%2C+%22y%22%3A+46.571534446707%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -72.760478021931, \\\"y\\\": 46.571534446707}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399301",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:15 GMT",
+        "Content-Length": "898"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiRElTVFJJQ1RJRCI6IkRpc3RyaWN0IElEIiwiTEFTVEVESVRPUiI6Ikxhc3QgRWRpdG9yIiwiU0NIRURVTEUiOiJTY2hlZHVsZSBQYXR0ZXJuIiwiTkFNRSI6IkRpc3RyaWN0IE5hbWUiLCJERVNDUklQVCI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJBR0VOQ1kiOiJBZ2VuY3kiLCJBR0VOQ1lVUkwiOiJXZWJzaXRlIiwiQ09OVEFDVCI6IkNvbnRhY3QgTmFtZSIsIlBIT05FIjoiUGhvbmUiLCJFTUFJTCI6IkVtYWlsIiwiU1VCVFlQRUZJRUxEIjoiU3VidHlwZSBGaWVsZCIsIlNDSEVEVUxFVFlQRSI6IlNjaGVkdWxlIFR5cGUiLCJIT0xJREFZRklFTEQiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsIkxBU1RVUERBVEUiOiJMYXN0IFVwZGF0ZSBEYXRlIiwiR2xvYmFsSUQiOiJHbG9iYWxJRCIsIlNIQVBFX0xlbmd0aCI6IlNIQVBFX0xlbmd0aCIsIlNIQVBFX0FyZWEiOiJTSEFQRV9BcmVhIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiRElTVFJJQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEaXN0cmljdCBJRCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IkxBU1RFRElUT1IiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiTGFzdCBFZGl0b3IiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJTQ0hFRFVMRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJTY2hlZHVsZSBQYXR0ZXJuIiwibGVuZ3RoIjoyODV9LHsibmFtZSI6Ik5BTUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGlzdHJpY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IkRFU0NSSVBUIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoiQUdFTkNZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkFnZW5jeSIsImxlbmd0aCI6MjU1fSx7Im5hbWUiOiJBR0VOQ1lVUkwiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2Vic2l0ZSIsImxlbmd0aCI6MjAwfSx7Im5hbWUiOiJDT05UQUNUIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNvbnRhY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IlBIT05FIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlBob25lIiwibGVuZ3RoIjoxMn0seyJuYW1lIjoiRU1BSUwiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRW1haWwiLCJsZW5ndGgiOjEwMH0seyJuYW1lIjoiU1VCVFlQRUZJRUxEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVJbnRlZ2VyIiwiYWxpYXMiOiJTdWJ0eXBlIEZpZWxkIn0seyJuYW1lIjoiU0NIRURVTEVUWVBFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNjaGVkdWxlIFR5cGUiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJIT0xJREFZRklFTEQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSG9saWRheSBJbXBhY3QgRmllbGQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJMQVNUVVBEQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJMYXN0IFVwZGF0ZSBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJHbG9iYWxJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlR2xvYmFsSUQiLCJhbGlhcyI6Ikdsb2JhbElEIiwibGVuZ3RoIjozOH0seyJuYW1lIjoiU0hBUEVfTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUiLCJhbGlhcyI6IlNIQVBFX0xlbmd0aCJ9LHsibmFtZSI6IlNIQVBFX0FyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSIsImFsaWFzIjoiU0hBUEVfQXJlYSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjI1OSwiRElTVFJJQ1RJRCI6IlNIQTMiLCJMQVNURURJVE9SIjoiU0hBIC0gU0pQIC0gU0dMIC0gR01FRXN0IChCKSIsIlNDSEVEVUxFIjoiMjAyNi0xMC0yNiwyMDI2LTEwLTI3LDIwMjYtMTAtMjgsMjAyNi0xMC0yOSwyMDI2LTEwLTMwLDIwMjYtMTAtMzEiLCJOQU1FIjoiTWVyY3JlZGkiLCJERVNDUklQVCI6IkF1dG9tbmUgMjAyNSA6IGluc2NyaXB0aW9uIG9ibGlnYXRvaXJlISIsIkFHRU5DWSI6IiIsIkFHRU5DWVVSTCI6Imh0dHBzOi8vd3d3LnNoYXdpbmlnYW4uY2Evc2VydmljZXMtYXV4LWNpdG95ZW5zL21hdGllcmVzLXJlc2lkdWVsbGVzL2NvbGxlY3Rlcy1zcGVjaWFsZXMvIiwiQ09OVEFDVCI6bnVsbCwiUEhPTkUiOiI4MTktNTM2LTcyMDAiLCJFTUFJTCI6ImluZm9ybWF0aW9uQHNoYXdpbmlnYW4uY2EiLCJTVUJUWVBFRklFTEQiOjUsIlNDSEVEVUxFVFlQRSI6IklycmVndWxhcmx5IiwiSE9MSURBWUZJRUxEIjoiSU1QQUNUWUFSRCIsIkxBU1RVUERBVEUiOm51bGwsIkdsb2JhbElEIjoie0MyODc0NEYyLTFENDItNEVBQy05MkMwLTQ3NDdGOEUxRkE0Nn0iLCJTSEFQRV9MZW5ndGgiOjAuMjU1NzgxMzkyNDkwMjk3ODUsIlNIQVBFX0FyZWEiOjAuMDAxMDc4MTcyMzExNzAzMjk2M319XX0="
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/4/query dc3258da48",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/4/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/4/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-72.760478021931%2C+%22y%22%3A+46.571534446707%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -72.760478021931, \\\"y\\\": 46.571534446707}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399301",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:17 GMT",
+        "Content-Length": "915"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiRElTVFJJQ1RJRCI6IkRpc3RyaWN0IElEIiwiQUdFTkNZIjoiQWdlbmN5IiwiQUdFTkNZVVJMIjoiV2Vic2l0ZSIsIkNPTlRBQ1QiOiJDb250YWN0IE5hbWUiLCJQSE9ORSI6IlBob25lIiwiRU1BSUwiOiJFbWFpbCIsIlNVQlRZUEVGSUVMRCI6IlN1YnR5cGUgRmllbGQiLCJMQVNURURJVE9SIjoiTGFzdCBFZGl0b3IiLCJTQ0hFRFVMRVRZUEUiOiJTY2hlZHVsZSBUeXBlIiwiTkFNRSI6IkRpc3RyaWN0IE5hbWUiLCJTQ0hFRFVMRSI6IlNjaGVkdWxlIFBhdHRlcm4iLCJERVNDUklQVCI6IkFkZGl0aW9uYWwgSW5mb3JtYXRpb24iLCJIT0xJREFZRklFTEQiOiJIb2xpZGF5IEltcGFjdCBGaWVsZCIsIkxBU1RVUERBVEUiOiJMYXN0IFVwZGF0ZSBEYXRlIiwiR2xvYmFsSUQiOiJHbG9iYWxJRCIsIlNIQVBFX0xlbmd0aCI6IlNIQVBFX0xlbmd0aCIsIlNIQVBFX0FyZWEiOiJTSEFQRV9BcmVhIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiRElTVFJJQ1RJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEaXN0cmljdCBJRCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IkFHRU5DWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJBZ2VuY3kiLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoiQUdFTkNZVVJMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlYnNpdGUiLCJsZW5ndGgiOjIwMH0seyJuYW1lIjoiQ09OVEFDVCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDb250YWN0IE5hbWUiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJQSE9ORSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJQaG9uZSIsImxlbmd0aCI6MTJ9LHsibmFtZSI6IkVNQUlMIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkVtYWlsIiwibGVuZ3RoIjoxMDB9LHsibmFtZSI6IlNVQlRZUEVGSUVMRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiU3VidHlwZSBGaWVsZCJ9LHsibmFtZSI6IkxBU1RFRElUT1IiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiTGFzdCBFZGl0b3IiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJTQ0hFRFVMRVRZUEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU2NoZWR1bGUgVHlwZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6Ik5BTUUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGlzdHJpY3QgTmFtZSIsImxlbmd0aCI6NTB9LHsibmFtZSI6IlNDSEVEVUxFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNjaGVkdWxlIFBhdHRlcm4iLCJsZW5ndGgiOjI4NX0seyJuYW1lIjoiREVTQ1JJUFQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQWRkaXRpb25hbCBJbmZvcm1hdGlvbiIsImxlbmd0aCI6MjU1fSx7Im5hbWUiOiJIT0xJREFZRklFTEQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSG9saWRheSBJbXBhY3QgRmllbGQiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJMQVNUVVBEQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJMYXN0IFVwZGF0ZSBEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJHbG9iYWxJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlR2xvYmFsSUQiLCJhbGlhcyI6Ikdsb2JhbElEIiwibGVuZ3RoIjozOH0seyJuYW1lIjoiU0hBUEVfTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUiLCJhbGlhcyI6IlNIQVBFX0xlbmd0aCJ9LHsibmFtZSI6IlNIQVBFX0FyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSIsImFsaWFzIjoiU0hBUEVfQXJlYSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjM2NiwiRElTVFJJQ1RJRCI6IlNIQTMiLCJBR0VOQ1kiOiIiLCJBR0VOQ1lVUkwiOiJodHRwczovL3d3dy5zaGF3aW5pZ2FuLmNhL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI2LzAzLzI2MDMzMV9DYWxlbmRyaWVyX2NvbGxlY3Rlc18yMDI2X1NIQV9TSkRQX1NHX0dNRS5wZGYiLCJDT05UQUNUIjpudWxsLCJQSE9ORSI6IjgxOS01MzYtNzIwMCIsIkVNQUlMIjoiaW5mb3JtYXRpb25Ac2hhd2luaWdhbi5jYSIsIlNVQlRZUEVGSUVMRCI6MSwiTEFTVEVESVRPUiI6IlNIQSAtIFNKUCAtIFNHTCAtIEdNRUVzdCAoQikiLCJTQ0hFRFVMRVRZUEUiOiJJcnJlZ3VsYXJseSIsIk5BTUUiOiJNYXJkaSIsIlNDSEVEVUxFIjoiMjAyNi0wOS0wMSwgMjAyNi0wOS0wOCwgMjAyNi0wOS0xNSwgMjAyNi0wOS0yMiwgMjAyNi0wOS0yOSwyMDI2LTEwLTA2LCAyMDI2LTEwLTEzLCAyMDI2LTEwLTIwLCAyMDI2LTEwLTI3LDIwMjYtMTEtMDMsIDIwMjYtMTEtMTAsMjAyNi0xMS0yNCwyMDI2LTEyLTA4LDIwMjYtMTItMjIiLCJERVNDUklQVCI6IiIsIkhPTElEQVlGSUVMRCI6IklNUEFDVEdBUkIiLCJMQVNUVVBEQVRFIjpudWxsLCJHbG9iYWxJRCI6InsyNkE3MEE0RS0wMEFBLTQ0Q0QtQjE5RS02REU2RTA5NzNDMTB9IiwiU0hBUEVfTGVuZ3RoIjowLjI1NTc0Njg1NzYzMjE2MDgyLCJTSEFQRV9BcmVhIjowLjAwMTA3ODE5MTgyMjE0NDcyNzZ9fV19"
+    },
+    {
+      "key": "GET https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/6/query 5bcefc2c80",
+      "method": "GET",
+      "url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/6/query",
+      "final_url": "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer/6/query?outFields=%2A&returnGeometry=false&f=json&where=1%3D1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"where\",\"1=1\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Content-Encoding": "gzip",
+        "ETag": "JTIoqsv92ifRioBh_1789399304",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/8.5, ",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 18:57:17 GMT",
+        "Content-Length": "489"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiSE9MSURBWSIsImZpZWxkQWxpYXNlcyI6eyJPQkpFQ1RJRCI6Ik9CSkVDVElEIiwiSE9MSURBWSI6IkhvbGlkYXkiLCJIT0xJREFZREFURSI6IkRhdGUiLCJTVEFUVVRPUlkiOiJTdGF0dXRvcnkiLCJJTVBBQ1RHQVJCIjoiSW1wYWN0IG9uIEdhcmJhZ2UgUGlja3VwIiwiSU1QQUNUQ09NUCI6IkltcGFjdCBvbiBDb21wb3N0IFBpY2t1cCIsIklNUEFDVFJFQ1kiOiJJbXBhY3Qgb24gUmVjeWNsYWJsZXMgUGlja3VwIiwiSU1QQUNUUEFQRSI6IkltcGFjdCBvbiBQYXBlciBQaWNrdXAiLCJJTVBBQ1RPVkVSIjoiSW1wYWN0IG9uIE92ZXJzaXplZCBQaWNrdXAiLCJJTVBBQ1RZQVJEIjoiSW1wYWN0IG9uIFlhcmQgV2FzdGUgUGlja3VwIn0sImZpZWxkcyI6W3sibmFtZSI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQiLCJhbGlhcyI6Ik9CSkVDVElEIn0seyJuYW1lIjoiSE9MSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJIb2xpZGF5IiwibGVuZ3RoIjoxNTB9LHsibmFtZSI6IkhPTElEQVlEQVRFIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJEYXRlIiwibGVuZ3RoIjo4fSx7Im5hbWUiOiJTVEFUVVRPUlkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU3RhdHV0b3J5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJJTVBBQ1RHQVJCIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkltcGFjdCBvbiBHYXJiYWdlIFBpY2t1cCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IklNUEFDVENPTVAiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSW1wYWN0IG9uIENvbXBvc3QgUGlja3VwIiwibGVuZ3RoIjoxMH0seyJuYW1lIjoiSU1QQUNUUkVDWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJJbXBhY3Qgb24gUmVjeWNsYWJsZXMgUGlja3VwIiwibGVuZ3RoIjoxMH0seyJuYW1lIjoiSU1QQUNUUEFQRSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJJbXBhY3Qgb24gUGFwZXIgUGlja3VwIiwibGVuZ3RoIjoxMH0seyJuYW1lIjoiSU1QQUNUT1ZFUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJJbXBhY3Qgb24gT3ZlcnNpemVkIFBpY2t1cCIsImxlbmd0aCI6MTB9LHsibmFtZSI6IklNUEFDVFlBUkQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSW1wYWN0IG9uIFlhcmQgV2FzdGUgUGlja3VwIiwibGVuZ3RoIjoxMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJPQkpFQ1RJRCI6MzgsIkhPTElEQVkiOiIyNSBEw6ljZW1icmUiLCJIT0xJREFZREFURSI6MTc2NjYyMDgwMDAwMCwiU1RBVFVUT1JZIjoiTm8iLCJJTVBBQ1RHQVJCIjoiT25lRGF5RnJ3ZCIsIklNUEFDVENPTVAiOiJPbmVEYXlGcndkIiwiSU1QQUNUUkVDWSI6Ik9uZURheUZyd2QiLCJJTVBBQ1RQQVBFIjoiTm9uZSIsIklNUEFDVE9WRVIiOiJOb25lIiwiSU1QQUNUWUFSRCI6Ik5vbmUifX0seyJhdHRyaWJ1dGVzIjp7Ik9CSkVDVElEIjozOSwiSE9MSURBWSI6IjFlciBqYW52aWVyIiwiSE9MSURBWURBVEUiOjE3NjcyMjU2MDAwMDAsIlNUQVRVVE9SWSI6Ik5vIiwiSU1QQUNUR0FSQiI6Ik9uZURheUZyd2QiLCJJTVBBQ1RDT01QIjoiT25lRGF5RnJ3ZCIsIklNUEFDVFJFQ1kiOiJPbmVEYXlGcndkIiwiSU1QQUNUUEFQRSI6Ik5vbmUiLCJJTVBBQ1RPVkVSIjoiTm9uZSIsIklNUEFDVFlBUkQiOiJOb25lIn19XX0="
+    }
+  ]
+}

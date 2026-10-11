@@ -7566,7 +7566,6 @@ SOURCES_AWAITING_CASSETTE = {
     "fuquay_varina_nc_us",
     "plano_gov",
     "sepan_remondis_pl",
-    "shawinigan_ca",
 }
 
 
