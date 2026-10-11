@@ -17,12 +17,12 @@ when the count reaches zero.
 | 2 | Retire (deprecated shim or broken stub) | 8 | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
 | 3 | Login required (policy conflict) | 8 | `CLAUDE.md` forbids login-required endpoints. Decide: keep as is, move out of the default set, or remove. |
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
-| 5 | Shared backend, build one component for the cluster | 38 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
+| 5 | Shared backend, build one component for the cluster | 35 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 14 | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 58 | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **268** (281 before class 4, 274 before the Jadu cluster) | |
+| | **Total** | **265** (281 before class 4; 274 and 268 before the Jadu and Verint clusters) | |
 
 ## 1. Special / not a provider
 
@@ -72,13 +72,12 @@ Not done:
 
 ## 5. Shared backend: one component per cluster
 
-Done: **Jadu apiserver (UK)**, all six. It was two backends under one CMS name: the `/apiserver/ajaxlibrary` JSON-RPC endpoint (`breckland_gov_uk`, `sholland_gov_uk`, `southtyneside_gov_uk`, `westberks_gov_uk`; shared envelope in `service/JaduApiserver.py`, each council's methods stay in its source) and the GOSS `formsservice` multi-page forms (`boston_gov_uk`, `st_helens_gov_uk`; `service/GossForm.py`). The legacy St Helens flow was already broken: the form's nonce now lives in the page's own `action`, not in a hidden input, and its old test addresses return no data.
+Done: **Verint empro forms (UK)**, all three (`bolton_gov_uk`, `fife_gov_uk`, `manchester_uk`; `service/VerintCloud.py` holds the token handshake and the steps, each council keeps its calls and the reading of the answer; Bolton's test address and Fife's label list changed with the platform). **Jadu apiserver (UK)**, all six. It was two backends under one CMS name: the `/apiserver/ajaxlibrary` JSON-RPC endpoint (`breckland_gov_uk`, `sholland_gov_uk`, `southtyneside_gov_uk`, `westberks_gov_uk`; shared envelope in `service/JaduApiserver.py`, each council's methods stay in its source) and the GOSS `formsservice` multi-page forms (`boston_gov_uk`, `st_helens_gov_uk`; `service/GossForm.py`). The legacy St Helens flow was already broken: the form's nonce now lives in the page's own `action`, not in a hidden input, and its old test addresses return no data.
 
 | Cluster | Legacy sources | Evidence |
 |---|---|---|
 | Opendatasoft datasets (FR) | `data_angers_fr`, `data_nantesmetropole_fr`, `opendata_bordeauxmetropole_fr`, `rueil_malmaison_fr` | confirmed: `/api/explore/v2.1` or `records/1.0` endpoints |
 | umweltverbaende.at (AT) | `baden_umweltverbaende_at`, `scheibbs_umweltverbaende_at`, `umweltverbaende_at` | confirmed: `*.umweltverbaende.at`; umweltverbaende_at is 995 lines and subclasses the ICS source |
-| Verint empro forms (UK) | `bolton_gov_uk`, `fife_gov_uk`, `manchester_uk` | confirmed: `*.form.uk.empro.verintcloudservices.com` |
 | Salesforce Aura community (UK) | `cotswold_gov_uk`, `forest_of_dean_gov_uk`, `westoxon_gov_uk` | confirmed: `community.*/s/sfsites/aura` |
 | localcities.ch (CH) | `buchegg_so_ch`, `localcities_ch` | confirmed: localcities.ch (grenchen_ch is already a shim onto localcities_ch) |
 | recyclecoach apigw (AU/US) | `ccc_tas_gov_au`, `recyclecoach_com` | confirmed: `ca-web.apigw.recyclecoach.com`; recyclecoach_com is itself the platform source |
