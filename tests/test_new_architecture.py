@@ -6272,6 +6272,79 @@ class TestPdfLayoutParser:
             self._run(min_vectors=2)
 
 
+class TestPdfWordLayoutParser:
+    """Exercise shared word coordinates and colour handling with a tiny PDF."""
+
+    @staticmethod
+    def response():
+        from io import BytesIO
+
+        from pypdf import PdfWriter
+        from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=200, height=100)
+        font = DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+        page[NameObject("/Resources")] = DictionaryObject(
+            {
+                NameObject("/Font"): DictionaryObject({NameObject("/F1"): font}),
+            }
+        )
+        stream = DecodedStreamObject()
+        stream.set_data(b"0.5 g 10 10 60 30 re f\nBT /F1 12 Tf 20 20 Td (12 13) Tj ET")
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        output = BytesIO()
+        writer.write(output)
+        return SimpleNamespace(content=output.getvalue(), status_code=200)
+
+    def test_words_keep_individual_positions_and_greyscale_fill(self):
+        from waste_collection_schedule.parsers import EachResponse, PdfWordLayoutParser
+
+        layouts = EachResponse(PdfWordLayoutParser(min_words=2, min_vectors=1))(
+            [self.response(), self.response()]
+        )
+        assert len(layouts) == 2
+        layout = layouts[0]
+        assert [line.text for line in layout.lines] == ["12 13"]
+        assert [word.text for word in layout.words] == ["12", "13"]
+        assert 20 < layout.words[0].x < layout.words[1].x < 70
+        assert layout.words[0].y == layout.words[1].y
+        assert layout.vectors[0].fill_color == (0.5, 0.5, 0.5)
+
+    def test_minimum_counts_reject_incomplete_layout(self):
+        from waste_collection_schedule.parsers import PdfWordLayoutParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        for kwargs in ({"min_words": 3}, {"min_vectors": 2}):
+            with pytest.raises(ResponseShapeError, match="too few positioned words"):
+                PdfWordLayoutParser(**kwargs)(self.response())
+
+    @pytest.mark.parametrize(
+        "value,expected",
+        [
+            (0.5, (0.5, 0.5, 0.5)),
+            ([0.5], (0.5, 0.5, 0.5)),
+            ((0.1, 0.2, 0.3), (0.1, 0.2, 0.3)),
+            ((0.1, 0.2, 0.3, 0.4), (0.1, 0.2, 0.3, 0.4)),
+            ((0.5, "Pattern1"), None),
+            ("Pattern1", None),
+            (None, None),
+        ],
+    )
+    def test_shared_colour_validation(self, value, expected):
+        from waste_collection_schedule.parsers import _pdf_color
+
+        assert _pdf_color(value, grayscale_to_rgb=True) == expected
+        # Existing callers retain the original greyscale representation.
+        assert _pdf_color(0.5) == (0.5,)
+
+
 class TestIcsRepairs:
     """Unconditional repairs applied to every feed before it is converted."""
 
