@@ -8,7 +8,7 @@ Run explicitly because pytest.ini only auto-discovers the source-contract tests:
 import os
 import sys
 from datetime import date
-from unittest.mock import Mock, call, patch
+from unittest.mock import Mock
 
 import pytest
 
@@ -23,10 +23,10 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import parsers
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
-    SourceArgumentRequired,
+    SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.source import easthants_gov_uk
 
@@ -55,49 +55,89 @@ def test_colour_matches_requires_the_same_colour_space():
     assert not easthants_gov_uk._colour_matches((0.1, 0.2, 0.3, 0.4), (0.1, 0.2, 0.3))
 
 
-def test_waste_types_splits_combined_recycling_and_glass():
-    assert easthants_gov_uk._waste_types("recycling", separate_glass=False) == (
-        "Recycling",
-        "Glass",
+def _layout(*cells):
+    """A one-page layout: a month heading, then (day text, y, colour) cells."""
+    fragments = [parsers.PdfTextFragment(0, "OCT 2026", 20.0, 700.0)]
+    vectors = []
+    for text, y, colour in cells:
+        fragments.append(parsers.PdfTextFragment(0, text, 20.0, y))
+        vectors.append(parsers.PdfVector(0, 18.0, y - 2, 71.0, y + 10, None, colour))
+    return parsers.PdfDocumentLayout("", tuple(fragments), tuple(vectors))
+
+
+RUBBISH = (0.248, 0.646, 0.209)
+RECYCLING = (0.391, 0.389, 0.387)
+GLASS = (0.0, 0.46, 0.748)
+SUSPENDED = (0.31, 0.98, 0.0, 0.0)
+
+
+def test_recycling_includes_glass_when_the_calendar_has_no_glass_colour():
+    rows = list(
+        easthants_gov_uk._calendar_rows(
+            _layout(("THU 01", 600.0, RUBBISH), ("THU 08", 580.0, RECYCLING))
+        )
     )
-    assert easthants_gov_uk._waste_types("recycling", separate_glass=True) == (
-        "Recycling",
-    )
-    assert easthants_gov_uk._waste_types("glass", separate_glass=True) == ("Glass",)
-
-
-def test_source_requires_uprn_or_calendar_number():
-    with pytest.raises(SourceArgumentRequired):
-        easthants_gov_uk.Source()
-
-
-@patch.object(easthants_gov_uk.Source, "_fetch_calendar")
-@patch.object(easthants_gov_uk.requests, "Session")
-def test_fetch_uses_calendars_assigned_to_uprn(session_factory, fetch_calendar):
-    session = session_factory.return_value
-    session.get.return_value = Mock(text=UPRN_PAGE)
-    fetch_calendar.side_effect = [
-        [Collection(date(2026, 9, 1), "Rubbish")],
-        [Collection(date(2026, 9, 2), "Garden waste")],
+    assert rows == [
+        (date(2026, 10, 1), "Rubbish"),
+        (date(2026, 10, 8), "Recycling"),
+        (date(2026, 10, 8), "Glass"),
     ]
 
-    collections = easthants_gov_uk.Source(uprn=1710041123).fetch()
 
-    session.get.assert_called_once_with(
-        easthants_gov_uk._ADDRESS_URL,
-        params={"action": "SetAddress", "UniqueId": "1710041123"},
-        timeout=30,
+def test_recycling_excludes_glass_when_the_calendar_colours_glass_separately():
+    rows = list(
+        easthants_gov_uk._calendar_rows(
+            _layout(("THU 01", 600.0, RECYCLING), ("THU 08", 580.0, GLASS))
+        )
     )
-    assert fetch_calendar.call_args_list == [
-        call(
-            session,
-            "https://maps.easthants.gov.uk/calendars/H1.pdf",
-            "for UPRN 1710041123",
-        ),
-        call(
-            session,
-            "https://maps.easthants.gov.uk/calendars/G5.pdf",
-            "garden for UPRN 1710041123",
-        ),
+    assert rows == [
+        (date(2026, 10, 1), "Recycling"),
+        (date(2026, 10, 8), "Glass"),
     ]
-    assert [item.type for item in collections] == ["Rubbish", "Garden waste"]
+
+
+def test_suspended_dates_are_skipped_and_unknown_colours_fail():
+    rows = list(
+        easthants_gov_uk._calendar_rows(
+            _layout(("THU 01", 600.0, SUSPENDED), ("THU 08", 580.0, RUBBISH))
+        )
+    )
+    assert rows == [(date(2026, 10, 8), "Rubbish")]
+    with pytest.raises(Exception, match="could not determine"):
+        list(
+            easthants_gov_uk._calendar_rows(
+                _layout(("THU 01", 600.0, (0.5, 0.5, 0.0)), ("THU 08", 580.0, RUBBISH))
+            )
+        )
+
+
+def test_uprn_pick_returns_bin_and_garden_urls():
+    urls = easthants_gov_uk._uprn_pick(Mock(text=UPRN_PAGE), uprn=1710041123)
+    assert urls == [
+        "https://maps.easthants.gov.uk/calendars/H1.pdf",
+        "https://maps.easthants.gov.uk/calendars/G5.pdf",
+    ]
+
+
+INDEX_PAGE = """
+<a href="/media/1/download">Calendar 1 (Monday)</a>
+<a href="/media/2/download">Calendar 2 (Tuesday)</a>
+<a href="/media/3/download">G1 (Monday)</a>
+"""
+
+
+def test_manual_pick_resolves_numbers_and_suggests_on_a_miss():
+    page = Mock(text=INDEX_PAGE)
+    assert easthants_gov_uk._manual_pick(
+        page, calendar_number=2, garden_calendar_number=1
+    ) == [
+        "https://www.easthants.gov.uk/media/2/download",
+        "https://www.easthants.gov.uk/media/3/download",
+    ]
+    assert easthants_gov_uk._manual_pick(
+        page, calendar_number=1, garden_calendar_number=None
+    ) == ["https://www.easthants.gov.uk/media/1/download"]
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        easthants_gov_uk._manual_pick(page, calendar_number=99)
+    with pytest.raises(SourceArgumentNotFound):
+        easthants_gov_uk._uprn_pick(page, uprn="abc")
