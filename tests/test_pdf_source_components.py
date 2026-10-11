@@ -270,3 +270,89 @@ class TestDayGridCodesAndWeekdays:
     def test_codes_or_labels_are_required(self):
         with pytest.raises(ValueError):
             DayGridCalendarParser(labels=[])
+
+
+class TestYearlyLinksNamesAndLookback:
+    HTML = """
+        <a href="/download/ameno-2025-uff-1">Ameno 2025 (UFF.)</a>
+        <a href="/download/ameno-2026-uff-2">Ameno 2026 (UFF.)</a>
+        <a href="/download/arona-zona-c-2026-uff-3">Arona (zona C) 2026 (UFF.)</a>
+    """
+
+    @freeze_time("2027-01-15")
+    def test_link_name_drops_the_year_and_lookback_keeps_last_year(self):
+        pick = retrievers.yearly_links(
+            r"/download/[^/]*-(20\d\d)-uff-",
+            argument="municipality",
+            link_name=lambda text: text.split(" 20")[0],
+            lookback=1,
+        )
+        assert pick(_page(self.HTML), municipality="ameno") == [
+            "https://example.org/download/ameno-2026-uff-2"
+        ]
+        assert pick(_page(self.HTML), municipality="Arona zona C") == [
+            "https://example.org/download/arona-zona-c-2026-uff-3"
+        ]
+
+
+class TestPdfMonthBlocks:
+    LABELS: ClassVar[dict] = {"SECCO": 1, "UMIDO": 1, "VERDE": 1}
+
+    @staticmethod
+    def month(page, heading_x, name, year, month, y_top=500.0, pitch=20.0):
+        """Rows of one month block: heading, then days 1-15 and 16-end in two columns."""
+        names = ("lun", "Mar", "MER", "Giov", "Ven", "Sab", "DOM")
+        rows = [(heading_x, y_top + 30, name)]
+        last = (D(year + month // 12, month % 12 + 1, 1) - D(year, month, 1)).days
+        for day in range(1, last + 1):
+            column, line = divmod(day - 1, 15)
+            x = heading_x + column * 110
+            y = y_top - line * pitch
+            weekday = D(year, month, day).weekday()
+            label = {0: "SECCO", 3: "UMIDO - VERDE*"}.get(weekday, "")
+            rows.append((x, y, f"{day}"))
+            rows.append((x + 12, y, f"{names[weekday]} {label}".strip()))
+        return rows
+
+    def build(self, *pages):
+        out = []
+        for page, words in enumerate(pages):
+            by_y: dict[float, list] = {}
+            for x, y, text in words:
+                by_y.setdefault(y, []).append(PdfWord(text, x, x + 6 * len(text)))
+            out += [
+                PdfRow(page, y, tuple(sorted(w, key=lambda w: w.x0)))
+                for y, w in by_y.items()
+            ]
+        return out
+
+    @freeze_time("2026-10-11")
+    def test_dates_a_march_to_february_leaflet_by_its_weekdays(self):
+        cover = [(50, 500, "Raccolta differenziata 2026")]
+        page1 = [
+            *self.month(1, 30, "Dicembre", 2026, 12),
+            # A drop cap printed apart from the rest of the heading.
+            (300, 530, "G"),
+            (307, 530, "ennaio 2027"),
+            *self.month(1, 300, "x", 2027, 1)[1:],
+        ]
+        found = set(
+            preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(cover, page1))
+        )
+        assert (D(2026, 12, 7), "SECCO") in found
+        assert (D(2026, 12, 3), "VERDE") in found
+        assert (D(2027, 1, 4), "SECCO") in found
+        assert (D(2027, 1, 7), "UMIDO") in found
+        assert all(date.weekday() in (0, 3) for date, _ in found)
+
+    @freeze_time("2026-10-11")
+    def test_a_month_misread_from_the_layout_fails_loudly(self):
+        # December's days printed under a "Novembre" heading: weekdays don't fit.
+        page = [(30, 530, "Novembre"), *self.month(0, 30, "x", 2026, 12)[1:]]
+        with pytest.raises(ResponseShapeError):
+            list(preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(page)))
+
+    def test_day_cells_without_a_heading_fail_loudly(self):
+        page = self.month(0, 30, "x", 2026, 12)[1:]
+        with pytest.raises(ResponseShapeError):
+            list(preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(page)))
