@@ -7559,11 +7559,7 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 # added deliberately.
 # --------------------------------------------------------------------------- #
 
-SOURCES_AWAITING_CASSETTE = {
-    "chesapeake_va_us",
-    "fuquay_varina_nc_us",
-    "plano_gov",
-}
+SOURCES_AWAITING_CASSETTE: set[str] = set()
 
 
 @pytest.mark.skipif(

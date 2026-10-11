@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0/query 66df3feb38",
+      "method": "GET",
+      "url": "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0/query",
+      "final_url": "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0/query?outFields=garbage_next_pickup_date%2Crecycling_next_pickup_date&returnGeometry=false&f=json&where=LOWER%28ADDRESS%29+LIKE+%27%25155+s+main+st%25%27",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"garbage_next_pickup_date,recycling_next_pickup_date\"],[\"returnGeometry\",\"false\"],[\"where\",\"LOWER(ADDRESS) LIKE '%155 s main st%'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 19:39:07 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "280",
+        "Connection": "keep-alive",
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Encoding": "gzip",
+        "etag": "\"fbdbd1b\"",
+        "Server": "cloudflare",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|G--JzE6MeP-WO8srU2a9hA==|nlupAME6z-tNVS-mqqFTg8TitLTs_yXJRPRczQic; Max-Age=60; Expires=Sun, 11 Oct 2026 19:40:07 GMT; Path=/server/rest; Secure; HttpOnly; SameSite=Lax",
+        "vary": "Origin, accept-encoding",
+        "x-content-type-options": "nosniff",
+        "x-powered-by": "ASP.NET",
+        "cf-cache-status": "DYNAMIC",
+        "Strict-Transport-Security": "max-age=0; includeSubDomains",
+        "CF-RAY": "a49054378b429347-EWR"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiU1RfTkFNRSIsImZpZWxkQWxpYXNlcyI6eyJnYXJiYWdlX25leHRfcGlja3VwX2RhdGUiOiJHQVJCQUdFX05FWFRfUElDS1VQX0RBVEUiLCJyZWN5Y2xpbmdfbmV4dF9waWNrdXBfZGF0ZSI6IlJFQ1lDTElOR19ORVhUX1BJQ0tVUF9EQVRFIn0sImZpZWxkcyI6W3sibmFtZSI6ImdhcmJhZ2VfbmV4dF9waWNrdXBfZGF0ZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJHQVJCQUdFX05FWFRfUElDS1VQX0RBVEUiLCJsZW5ndGgiOjI1NX0seyJuYW1lIjoicmVjeWNsaW5nX25leHRfcGlja3VwX2RhdGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUkVDWUNMSU5HX05FWFRfUElDS1VQX0RBVEUiLCJsZW5ndGgiOjI1NX1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJnYXJiYWdlX25leHRfcGlja3VwX2RhdGUiOiJUaGUgbmV4dCBnYXJiYWdlIHBpY2t1cCBkYXRlIGZvciB0aGlzIGFkZHJlc3MgaXMgRnJpZGF5LCBPY3RvYmVyIDE2IiwicmVjeWNsaW5nX25leHRfcGlja3VwX2RhdGUiOiJUaGUgbmV4dCByZWN5Y2xpbmcgcGlja3VwIGRhdGUgZm9yIHRoaXMgYWRkcmVzcyBpcyBXZWRuZXNkYXksIE9jdG9iZXIgMTQifX1dfQ=="
+    }
+  ]
+}
