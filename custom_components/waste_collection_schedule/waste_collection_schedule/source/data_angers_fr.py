@@ -1,79 +1,17 @@
-import datetime
-import urllib.parse
-from typing import Literal, TypedDict
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, integer, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.retrievers import FanOutRetriever, Lookup, Request
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Angers Loire Métropole"
-DESCRIPTION = "Source script for data.angers.fr"
-URL = "https://data.angers.fr/"
-TEST_CASES = {
-    "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "ALLEE"},
-    "BEAUCOUZE": {"address": "Montreuil", "city": "BEAUCOUZE", "typevoie": "rue"},
-    "ANGERS_ODD": {
-        "address": "Bouchemaine",
-        "city": "ANGERS",
-        "typevoie": "ROUTE",
-        "num_voie": 9,
-    },
-    "ANGERS_EVEN": {
-        "address": "Bouchemaine",
-        "city": "ANGERS",
-        "typevoie": "ROUTE",
-        "num_voie": 34,
-    },
-}
+_API = "https://data.angers.fr/api/explore/v2.1/catalog/datasets"
 
-ICON_MAP = {
-    "OM": Icons.GENERAL_WASTE,
-    "TRI": Icons.RECYCLING,
-    "enc": Icons.BULKY,
-    "dv": Icons.ORGANIC,
-    "verre": Icons.GLASS,
-}
-
-LABEL_MAP = {
-    "OM": "Ordures ménagères",
-    "TRI": "Tri sélectif",
-}
-
-# Source : https://data.angers.fr/explore/dataset/secteurs-de-collecte-tri-et-plus/information/
-CITY = Literal[
-    "LES PONTS DE CE",
-    "SAINT BARTHELEMY D ANJOU",
-    "SAINT CLEMENT DE LA PLACE",
-    "SAINTE GEMMES SUR LOIRE",
-    "SAINT LAMBERT LA POTHERIE",
-    "SAINT LEGER DE LINIERES",
-    "SAINT-LEGER-DES-BOIS",
-    "SAINT MARTIN DU FOUILLOUX",
-    "LOIRE AUTHION",
-    "VERRIERES EN ANJOU",
-    "SARRIGNE",
-    "SAVENNIERES",
-    "SOULAINES SUR AUBANCE",
-    "SOULAIRE ET BOURG",
-    "TRELAZE",
-    "RIVES DU LOIR EN ANJOU",
-    "ANGERS",
-    "AVRILLE",
-    "BEAUCOUZE",
-    "BEHUARD",
-    "BOUCHEMAINE",
-    "BRIOLLAY",
-    "CANTENAY EPINARD",
-    "ECOUFLANT",
-    "ECUILLE",
-    "FENEU",
-    "LONGUENEE EN ANJOU",
-    "MONTREUIL JUIGNE",
-    "MURS ERIGNE",
-    "PELLOUAILLES LES VIGNES",
-    "LE PLESSIS GRAMMOIRE",
-]
-CITY_NAME = [
+# Source: https://data.angers.fr/explore/dataset/secteurs-de-collecte-tri-et-plus/information/
+_CITIES = [
     "LES PONTS DE CE",
     "SAINT BARTHELEMY D ANJOU",
     "SAINT CLEMENT DE LA PLACE",
@@ -107,263 +45,161 @@ CITY_NAME = [
     "LE PLESSIS GRAMMOIRE",
 ]
 
-TYPE_VOIE = Literal[
-    "LEVEE",
-    "RUE",
-    "PASSAGE",
-    "ROUTE",
-    "SQUARE",
-    "LIEU DIT",
-    "CHEMIN",
-    "VENELLE",
-    "AVENUE",
-    "ZAC",
-    "ZA",
-    "BOULEVARD",
-    "PLACE",
-    "ALLEE",
-    "IMPASSE",
-    "PROMENADE",
-    "QUAI",
-    "VOIE",
-    "SENTIER",
-    "COUR",
-    "ESPLANADE",
-    "MAIL",
-    "HAMEAU",
-    "AUTOROUTE",
-    "CARREFOUR",
-    "CLOS",
-    "RUELLE",
-    "RESIDENCE",
-    "MONTEE",
-    "ALLEES",
-    "CITE",
-    "ROND POINT",
-    "BOIS",
-    "ZI",
-    "LOTISSEMENT",
-    "PARC",
-    "GIRATOIRE",
-    "ROCADE",
-    "CLOITRE",
-    "CALE",
-    "ECHANGEUR",
-    "RUETTE",
-    "AIRE",
-    "RAMPE",
-    "PORT",
-    "ZONE",
-    "TRAVERSE",
-    "PARVIS",
-]
-TYPE_VOIE_NAME = [
-    "LEVEE",
-    "RUE",
-    "PASSAGE",
-    "ROUTE",
-    "SQUARE",
-    "LIEU DIT",
-    "CHEMIN",
-    "VENELLE",
-    "AVENUE",
-    "ZAC",
-    "ZA",
-    "BOULEVARD",
-    "PLACE",
-    "ALLEE",
-    "IMPASSE",
-    "PROMENADE",
-    "QUAI",
-    "VOIE",
-    "SENTIER",
-    "COUR",
-    "ESPLANADE",
-    "MAIL",
-    "HAMEAU",
-    "AUTOROUTE",
-    "CARREFOUR",
-    "CLOS",
-    "RUELLE",
-    "RESIDENCE",
-    "MONTEE",
-    "ALLEES",
-    "CITE",
-    "ROND POINT",
-    "BOIS",
-    "ZI",
-    "LOTISSEMENT",
-    "PARC",
-    "GIRATOIRE",
-    "ROCADE",
-    "CLOITRE",
-    "CALE",
-    "ECHANGEUR",
-    "RUETTE",
-    "AIRE",
-    "RAMPE",
-    "PORT",
-    "ZONE",
-    "TRAVERSE",
-    "PARVIS",
+_STREET_TYPES = [
+    "levee",
+    "rue",
+    "passage",
+    "route",
+    "square",
+    "lieu dit",
+    "chemin",
+    "venelle",
+    "avenue",
+    "zac",
+    "za",
+    "boulevard",
+    "place",
+    "allee",
+    "impasse",
+    "promenade",
+    "quai",
+    "voie",
+    "sentier",
+    "cour",
+    "esplanade",
+    "mail",
+    "hameau",
+    "autoroute",
+    "carrefour",
+    "clos",  # codespell:ignore clos
+    "ruelle",
+    "residence",
+    "montee",
+    "allees",
+    "cite",
+    "rond point",
+    "bois",
+    "zi",
+    "lotissement",
+    "parc",
+    "giratoire",
+    "rocade",
+    "cloitre",
+    "cale",
+    "echangeur",
+    "ruette",
+    "aire",
+    "rampe",
+    "port",
+    "zone",
+    "traverse",
+    "parvis",
 ]
 
-CONFIG_FLOW_TYPES = {
-    "typevoie": {
-        "type": "SELECT",
-        "values": [f.lower() for f in TYPE_VOIE_NAME],
-        "multiple": False,
-    },
-    "city": {
-        "type": "SELECT",
-        "values": list(CITY_NAME),
-        "multiple": False,
-    },
-    "num_voie": {
-        "type": "NUMBER",
-        "multiple": False,
-    },
-}
 
-
-class EntryType(TypedDict):
-    type: str
-    results: list[str]
-
-
-class Source:
-    api_url_waste_calendar = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/calendrier-tri-et-plus/records?select=date_collecte&where=id_secteur%3D%22{idsecteur}%22&limit=100"
-    api_secteur = "https://data.angers.fr/api/explore/v2.1/catalog/datasets/secteurs-de-collecte-tri-et-plus/records?select=id_secteur,cat_secteur,num_debut,num_fin,icote&where=typvoie%3D%27{typevoie}%27%20and%20libvoie%20like%20%22*{address}*%22&limit=100&refine=lib_com%3A%22{city}%22"
-
-    def __init__(
-        self,
-        typevoie: TYPE_VOIE,
-        address: str,
-        city: CITY,
-        num_voie: int | None = None,
-    ) -> None:
-        self.address = address
-        self.city = city
-        self.typevoie = typevoie
-        self.num_voie = num_voie
-
-    def _get_id_secteur_address(
-        self, address: str, city: str, typevoie: str, num_voie: int | None = None
-    ) -> list[dict]:
-        url = self.api_secteur.format(
-            city=urllib.parse.quote(city.upper()),
-            address=urllib.parse.quote(address),
-            typevoie=urllib.parse.quote(typevoie.upper()),
-        )
-
-        response = requests.get(url)
-
-        if response.status_code != 200:
-            raise SourceArgumentException(
-                "address", "Error response from data.angers.fr id secteur api."
-            )
-
-        id_secteurs = response.json()["results"]
-
-        # Remove duplicates data from the API and filter by num_voie
-        unique_data = list(
-            {
-                id_secteur_entry["id_secteur"]: id_secteur_entry
-                for id_secteur_entry in id_secteurs
-                if self._check_num_voie(id_secteur_entry, num_voie)
-            }.values()
-        )
-
-        if not unique_data:
-            raise SourceArgumentException(
-                "address", "Pas de données depuis l'api, vérifier l'adresse"
-            )
-
-        return unique_data
-
-    def _check_num_voie(self, secteur: dict, num_voie: int | None) -> bool:
-        """Check if the num_voie is valid for the secteurid."""
-        # If num_voie is not defined, we assume it is valid for all secteurs.
-        if num_voie is None:
-            return True
-
-        num_in_range = self._check_num_voie_range(secteur, num_voie)
-        num_is_even = num_voie % 2 == 0
-
-        # If num_voie is not in the range defined by num_debut and num_fin, return False.
-        if not num_in_range:
-            return False
-
-        # For icote "P" / "I" check if the num_voie is even or odd.
-        if secteur["icote"] == "P":
-            return num_is_even
-        if secteur["icote"] == "I":
-            return not num_is_even
-
-        # "T" icote or unknown icote means no restriction on num_voie other than the range.
+def _in_sector(sector: dict, num_voie: int | None) -> bool:
+    """Does the house number fall into the sector's number range and side of the
+    street (``icote`` "P" even, "I" odd, anything else both)?"""
+    if num_voie is None:
         return True
+    first, last = sector["num_debut"], sector["num_fin"]
+    if (
+        first is not None
+        and last is not None
+        and not int(first) <= num_voie <= int(last)
+    ):
+        return False
+    if sector["icote"] == "P":
+        return num_voie % 2 == 0
+    if sector["icote"] == "I":
+        return num_voie % 2 == 1
+    return True
 
-    def _check_num_voie_range(self, secteur: dict, num_voie: int) -> bool:
-        """Check if the num_voie is within the range defined by num_debut and num_fin."""
-        num_debut = secteur["num_debut"]
-        num_fin = secteur["num_fin"]
 
-        if num_debut is None or num_fin is None:
-            return True
+def _sectors(response, *_, address, num_voie=None, **__) -> list[tuple[str, str]]:
+    """The distinct ``(sector id, category)`` pairs serving the address."""
+    found = {
+        sector["id_secteur"]: sector["cat_secteur"]
+        for sector in response.json()["results"]
+        if _in_sector(sector, num_voie)
+    }
+    if not found:
+        raise SourceArgumentNotFound("address", address)
+    return list(found.items())
 
-        return int(num_debut) <= num_voie <= int(num_fin)
 
-    def fetch(self) -> list[Collection]:
-        try:
-            id_secteurs = self._get_id_secteur_address(
-                self.address, self.city, self.typevoie, self.num_voie
-            )
-        except requests.RequestException as e:
-            raise SourceArgumentException(
-                "address", f"Error fetching address data: {e}"
-            ) from e
+@final
+class Source(BaseSource):
+    TITLE = "Angers Loire Métropole"
+    DESCRIPTION = "Source script for data.angers.fr"
+    URL = "https://data.angers.fr/"
+    COUNTRY = "fr"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-        entries: list[EntryType] = []
-        for id_secteur in id_secteurs:
-            try:
-                if id_secteur["cat_secteur"] == "OM":
-                    url = self.api_url_waste_calendar.format(
-                        idsecteur=urllib.parse.quote(id_secteur["id_secteur"])
-                    )
-                    data_om = requests.get(url)
-                    data_om.raise_for_status()
-                    dates_om = [
-                        entry["date_collecte"] for entry in data_om.json()["results"]
-                    ]
-                    entries.append({"type": "OM", "results": dates_om})
+    TEST_CASES: ClassVar[dict] = {
+        "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "allee"},
+        "BEAUCOUZE": {"address": "Montreuil", "city": "BEAUCOUZE", "typevoie": "rue"},
+        "ANGERS_ODD": {
+            "address": "Bouchemaine",
+            "city": "ANGERS",
+            "typevoie": "route",
+            "num_voie": 9,
+        },
+        "ANGERS_EVEN": {
+            "address": "Bouchemaine",
+            "city": "ANGERS",
+            "typevoie": "route",
+            "num_voie": 34,
+        },
+    }
 
-                elif id_secteur["cat_secteur"] == "TRI":
-                    url = self.api_url_waste_calendar.format(
-                        idsecteur=urllib.parse.quote(id_secteur["id_secteur"])
-                    )
-                    data_tri = requests.get(url)
-                    data_tri.raise_for_status()
-                    dates_tri = [
-                        entry["date_collecte"] for entry in data_tri.json()["results"]
-                    ]
-                    entries.append({"type": "TRI", "results": dates_tri})
-                else:
-                    raise SourceArgumentException("city", "Error response from API")
-            except requests.RequestException as e:
-                raise SourceArgumentException(
-                    "city", f"Error fetching collection data: {e}"
-                ) from e
-        final_entries = []
-        # print(entries)
-        for entry in entries:
-            for date_str in entry["results"]:
-                date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-                final_entries.append(
-                    Collection(
-                        date=datetime.date(date.year, date.month, date.day),
-                        t=LABEL_MAP[entry["type"]],
-                        icon=ICON_MAP.get(entry["type"]),
-                    )
-                )
+    PARAMS = (
+        dropdown("typevoie", _STREET_TYPES, label="Street type"),
+        street(field="address"),
+        dropdown("city", _CITIES, label="City"),
+        integer("num_voie", label="House number"),
+    )
 
-        return final_entries
+    HOWTO: ClassVar[dict] = {
+        "fr": (
+            "Choisissez la commune et le type de voie, puis saisissez (une partie "
+            "de) le nom de la rue. Le numéro est facultatif mais nécessaire si la "
+            "rue est répartie sur plusieurs secteurs de collecte."
+        ),
+        "en": (
+            "Select your city and street type, then enter (part of) the street "
+            "name. The house number is optional but needed when the street is "
+            "split between several collection sectors."
+        ),
+    }
+
+    retrieve = FanOutRetriever(
+        prepare=Lookup(
+            f"{_API}/secteurs-de-collecte-tri-et-plus/records",
+            params=lambda address, city, typevoie, **_: {
+                "select": "id_secteur,cat_secteur,num_debut,num_fin,icote",
+                "where": (
+                    f"typvoie='{typevoie.upper()}' and libvoie like \"*{address}*\""
+                ),
+                "refine": f'lib_com:"{city.upper()}"',
+                "limit": 100,
+            },
+            pick=_sectors,
+        ),
+        targets=lambda source, sectors: sectors,
+        fetch=Request(
+            f"{_API}/calendrier-tri-et-plus/records",
+            params=lambda sector, _all, **_: {
+                "select": f'date_collecte,"{sector[1]}" as kind',
+                "where": f'id_secteur="{sector[0]}"',
+                "limit": 100,
+            },
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsonParser("results"))
+    transform = JsonTransformer(
+        date_key="date_collecte",
+        type_key="kind",
+        type_value_map={"OM": wt.GENERAL_WASTE, "TRI": wt.RECYCLABLES},
+    )
