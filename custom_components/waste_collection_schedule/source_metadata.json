@@ -2040,6 +2040,14 @@
     },
     "urls": {}
   },
+  "nice_cotedazur_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nice_cotedazur_fr.md",
+    "howto": {
+      "en": "Select your commune. Only communes of the Métropole with one fixed set of collection weekdays are supported; communes with alternating weeks, seasonal periods or per-district rounds are not. Household waste and packaging (yellow bin) are included; bulky waste and glass are not.",
+      "fr": "Sélectionnez votre commune. Seules les communes de la Métropole dont les jours de collecte sont fixes sont prises en charge ; les communes avec collecte une semaine sur deux, périodes saisonnières ou tournées par quartier ne le sont pas. Les ordures ménagères et les emballages (bac jaune) sont inclus ; les encombrants et le verre ne le sont pas."
+    },
+    "urls": {}
+  },
   "data_nantesmetropole_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_nantesmetropole_fr.md",
     "howto": {

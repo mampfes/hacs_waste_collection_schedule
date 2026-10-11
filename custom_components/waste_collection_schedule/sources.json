@@ -7923,6 +7923,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "M\u00e9tropole Nice C\u00f4te d'Azur",
+      "module": "nice_cotedazur_fr",
+      "default_params": {},
+      "id": "nice_cotedazur_fr"
+    },
+    {
       "title": "Nantes M\u00e9tropole",
       "module": "data_nantesmetropole_fr",
       "default_params": {},
