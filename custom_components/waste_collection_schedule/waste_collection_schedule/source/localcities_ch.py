@@ -1,353 +1,146 @@
-import re
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, text_field
+from waste_collection_schedule.parsers import EachResponse
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.Localcities import (
+    CalendarParser,
+    PlaceRows,
+    calendar_retriever,
+    calendar_url,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "localcities.ch"
-DESCRIPTION = "Source for waste collection schedules from localcities.ch (Switzerland)."
-URL = "https://www.localcities.ch"
-COUNTRY = "ch"
+_MUNICIPALITIES = (
+    ("Volketswil", "https://www.volketswil.ch", "volketswil", "529"),
+    ("Grenchen", "https://www.grenchen.ch", "grenchen", "3533"),
+    ("Wangen bei Olten", "https://www.wangen-bei-olten.ch", "wangen-bei-olten", "3629"),
+    ("Büren an der Aare", "https://www.bueren.ch", "bueren-an-der-aare", "849"),
+    ("Liestal", "https://www.liestal.ch", "liestal", "3833"),
+    ("Therwil", "https://www.therwil.ch", "therwil", "3757"),
+    ("Beinwil am See", "https://www.beinwil-am-see.ch", "beinwil-am-see", "5313"),
+    ("Monthey", "https://www.monthey.ch", "monthey", "8085"),
+    ("Zofingen", "https://www.zofingen.ch", "zofingen", "5741"),
+    ("Nidau", "https://www.nidau.ch", "nidau", "1561"),
+)
 
-TEST_CASES = {
-    "Volketswil - Hegnau": {
-        "municipality": "volketswil",
-        "municipality_id": "529",
-        "zone": "Hegnau",
-    },
-    "Volketswil - Kindhausen, Zimikon, Gutenswil": {
-        "municipality": "volketswil",
-        "municipality_id": "529",
-        "zone": "Kindhausen, Zimikon, Gutenswil",
-    },
-    "Grenchen - Zone Ost": {
-        "municipality": "grenchen",
-        "municipality_id": "3533",
-        "zone": "Zone Ost",
-    },
-    "Grenchen - Zone West": {
-        "municipality": "grenchen",
-        "municipality_id": "3533",
-        "zone": "Zone West",
-    },
-    "Büren an der Aare": {
-        "municipality": "bueren-an-der-aare",
-        "municipality_id": "849",
-        "zone": "",
-    },
-    "Liestal - Kreis 1": {
-        "municipality": "liestal",
-        "municipality_id": "3833",
-        "zone": "Kreis 1",
-    },
-    "Therwil": {
-        "municipality": "therwil",
-        "municipality_id": "3757",
-        "zone": "",
-    },
-    "Beinwil am See (zoneless)": {
-        "municipality": "beinwil-am-see",
-        "municipality_id": "5313",
-    },
-    "Monthey (zoneless)": {
-        "municipality": "monthey",
-        "municipality_id": "8085",
-    },
-    "Zofingen": {
-        "municipality": "zofingen",
-        "municipality_id": "5741",
-    },
-    "Nidau - Römerstrasse": {
-        "municipality": "nidau",
-        "municipality_id": "1561",
-        "zone": "Römerstrasse",
-    },
-}
 
-EXTRA_INFO = [
-    {
-        "title": "Volketswil",
-        "url": "https://www.volketswil.ch",
-        "country": "ch",
-        "default_params": {
+@final
+class Source(BaseSource):
+    TITLE = "localcities.ch"
+    DESCRIPTION = (
+        "Source for waste collection schedules from localcities.ch (Switzerland)."
+    )
+    URL = "https://www.localcities.ch"
+    COUNTRY = "ch"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.CARTONS,
+        wt.PAPER,
+        wt.GLASS,
+        wt.METAL,
+        wt.PLASTIC,
+    ]
+
+    REGIONS = tuple(
+        region(title, url=url, municipality=slug, municipality_id=ident)
+        for title, url, slug, ident in _MUNICIPALITIES
+    )
+
+    TEST_CASES: ClassVar[dict] = {
+        "Volketswil - Hegnau": {
             "municipality": "volketswil",
             "municipality_id": "529",
+            "zone": "Hegnau",
         },
-    },
-    {
-        "title": "Grenchen",
-        "url": "https://www.grenchen.ch",
-        "country": "ch",
-        "default_params": {
+        "Volketswil - Kindhausen, Zimikon, Gutenswil": {
+            "municipality": "volketswil",
+            "municipality_id": "529",
+            "zone": "Kindhausen, Zimikon, Gutenswil",
+        },
+        "Grenchen - Zone Ost": {
             "municipality": "grenchen",
             "municipality_id": "3533",
+            "zone": "Zone Ost",
         },
-    },
-    {
-        "title": "Wangen bei Olten",
-        "url": "https://www.wangen-bei-olten.ch",
-        "country": "ch",
-        "default_params": {
-            "municipality": "wangen-bei-olten",
-            "municipality_id": "3629",
+        "Grenchen - Zone West": {
+            "municipality": "grenchen",
+            "municipality_id": "3533",
+            "zone": "Zone West",
         },
-    },
-    {
-        "title": "Büren an der Aare",
-        "url": "https://www.bueren.ch",
-        "country": "ch",
-        "default_params": {
+        "Büren an der Aare": {
             "municipality": "bueren-an-der-aare",
             "municipality_id": "849",
+            "zone": "",
         },
-    },
-    {
-        "title": "Liestal",
-        "url": "https://www.liestal.ch",
-        "country": "ch",
-        "default_params": {
+        "Liestal - Kreis 1": {
             "municipality": "liestal",
             "municipality_id": "3833",
+            "zone": "Kreis 1",
         },
-    },
-    {
-        "title": "Therwil",
-        "url": "https://www.therwil.ch",
-        "country": "ch",
-        "default_params": {
+        "Therwil": {
             "municipality": "therwil",
             "municipality_id": "3757",
+            "zone": "",
         },
-    },
-    {
-        "title": "Beinwil am See",
-        "url": "https://www.beinwil-am-see.ch",
-        "country": "ch",
-        "default_params": {
+        "Beinwil am See (zoneless)": {
             "municipality": "beinwil-am-see",
             "municipality_id": "5313",
         },
-    },
-    {
-        "title": "Monthey",
-        "url": "https://www.monthey.ch",
-        "country": "ch",
-        "default_params": {
+        "Monthey (zoneless)": {
             "municipality": "monthey",
             "municipality_id": "8085",
         },
-    },
-    {
-        "title": "Zofingen",
-        "url": "https://www.zofingen.ch",
-        "country": "ch",
-        "default_params": {
+        "Zofingen": {
             "municipality": "zofingen",
             "municipality_id": "5741",
         },
-    },
-    {
-        "title": "Nidau",
-        "url": "https://www.nidau.ch",
-        "country": "ch",
-        "default_params": {
+        "Nidau - Römerstrasse": {
             "municipality": "nidau",
             "municipality_id": "1561",
+            "zone": "Römerstrasse",
         },
-    },
-]
+    }
 
-ICON_MAP = {
-    "Altpapier": Icons.PAPER,
-    "Grünabfälle": Icons.ORGANIC,
-    "Karton": Icons.PAPER,
-    "Altglas": Icons.GLASS,
-    "Altmetall": Icons.METAL,
-}
+    PARAMS = (
+        municipality(),
+        text_field("municipality_id", "Municipality ID", coerce=str),
+        text_field("zone", "Zone", optional=True),
+    )
 
-BASE_URL = "https://www.localcities.ch/de/entsorgung"
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit your municipality's page on localcities.ch. The municipality "
+            "name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The "
+            "zone is shown next to each waste collection entry on the calendar. "
+            "If your municipality does not use zones, omit the zone parameter."
+        ),
+        "de": (
+            "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der "
+            "Gemeindename und die ID sind in der URL (z.B. "
+            "/de/entsorgung/volketswil/529). Die Zone wird neben jedem "
+            "Entsorgungstermin angezeigt. Wenn Ihre Gemeinde keine Zonen "
+            "verwendet, kann der Zone-Parameter weggelassen werden."
+        ),
+    }
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar. If your municipality does not use zones, you may omit the zone parameter.",
-    "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt. Wenn Ihre Gemeinde keine Zonen verwendet, kann der Zone-Parameter weggelassen werden.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "Municipality URL slug (from the localcities.ch URL)",
-        "municipality_id": "Municipality ID number (from the localcities.ch URL)",
-        "zone": "Collection zone or locality name (optional — omit for municipalities without zones)",
-    },
-    "de": {
-        "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-        "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-        "zone": "Sammelzone oder Ortsname (optional – weglassen für Gemeinden ohne Zonen)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "municipality": "Municipality",
-        "municipality_id": "Municipality ID",
-        "zone": "Zone",
-    },
-    "de": {
-        "municipality": "Gemeinde",
-        "municipality_id": "Gemeinde-ID",
-        "zone": "Zone",
-    },
-}
-
-HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "de-CH,de;q=0.9",
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15"
-    ),
-}
-
-
-class Source:
-    def __init__(
-        self, municipality: str, municipality_id: str | int, zone: str | None = None
-    ):
-        self._municipality = municipality.strip().lower()
-        self._municipality_id = str(municipality_id).strip()
-        self._zone = (
-            zone.strip() if isinstance(zone, str) and zone.strip() != "" else None
+    retrieve = calendar_retriever(
+        lambda municipality, municipality_id, **_: calendar_url(
+            municipality, municipality_id
         )
-
-    def fetch(self) -> list[Collection]:
-        base_url = f"{BASE_URL}/{self._municipality}/{self._municipality_id}"
-        entries: list[Collection] = []
-        discovered_zones: set[str] = set()
-        page = 1
-
-        while True:
-            url = base_url if page == 1 else f"{base_url}?page={page}"
-            response = requests.get(url, headers=HEADERS, timeout=30)
-            response.raise_for_status()
-
-            soup = BeautifulSoup(response.text, "html.parser")
-            result_list = soup.find("div", attrs={"data-js-result-list": True})
-            if result_list is None:
-                break
-
-            date_rows = result_list.find_all("div", class_="row", recursive=False)
-            if not date_rows:
-                break
-
-            for row in date_rows:
-                date_col = row.find("div", class_="waste-calender-list__date")
-                if date_col is None:
-                    continue
-                date_heading = date_col.find(["h2", "h3"])
-                if date_heading is None:
-                    continue
-
-                date_text = date_heading.get_text(strip=True)
-                today = date.today()
-
-                if date_text == "Heute":
-                    collection_date = today
-                elif date_text == "Morgen":
-                    collection_date = today + timedelta(days=1)
-                else:
-                    year = self._find_year_for_date(result_list, row)
-                    try:
-                        collection_date = datetime.strptime(
-                            f"{date_text}.{year}", "%d.%m.%Y"
-                        ).date()
-                    except ValueError:
-                        continue
-
-                waste_items = row.find_all(
-                    "div",
-                    class_=re.compile(r"waste-calendar-list-item-small"),
-                )
-
-                for item in waste_items:
-                    img = item.find("img", alt=True)
-                    if not img:
-                        continue
-
-                    waste_type = str(img["alt"])
-                    zone_text = self._extract_zone_text(item, waste_type)
-                    discovered_zones.add(zone_text)
-
-                    if self._zone is None or zone_text == self._zone:
-                        entries.append(
-                            Collection(
-                                date=collection_date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-            load_more = soup.find(
-                "input",
-                attrs={"data-js-results-load-more-next-page": True},
-            )
-            if load_more is None:
-                # Also check for button element
-                load_more = soup.find(
-                    "button",
-                    attrs={"data-js-results-load-more-next-page": True},
-                )
-            if load_more is None:
-                break
-
-            next_page_str = load_more.get("data-js-results-load-more-next-page")
-            if next_page_str is None:
-                break
-            if isinstance(next_page_str, list):
-                next_page_str = next_page_str[0] if next_page_str else None
-            if next_page_str is None:
-                break
-            try:
-                next_page = int(next_page_str)
-            except (ValueError, TypeError):
-                break
-
-            if next_page <= page:
-                break
-            page = next_page
-
-        if not entries and self._zone is not None and discovered_zones:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "zone", self._zone, sorted(discovered_zones)
-            )
-
-        return entries
-
-    @staticmethod
-    def _extract_zone_text(waste_item, waste_type: str) -> str:
-        item_text = waste_item.get_text(strip=True)
-        if item_text.startswith(waste_type):
-            item_text = item_text[len(waste_type) :].strip()
-        return item_text
-
-    @staticmethod
-    def _find_year_for_date(result_list, current_row) -> int:
-        children = list(result_list.children)
-        current_year = datetime.now().year
-        last_year = current_year
-
-        for child in children:
-            if child == current_row:
-                return last_year
-
-            if hasattr(child, "name") and child.name == "h1":
-                headline_class = child.get("class", [])
-                if any("calendar-list__headline" in c for c in headline_class):
-                    span = child.find("span")
-                    if span:
-                        try:
-                            last_year = int(span.get_text(strip=True))
-                        except ValueError:
-                            pass
-
-        return last_year
+    )
+    parse = EachResponse(CalendarParser())
+    preprocess = PlaceRows("zone")
+    transform = ICSTransformer(
+        type_value_map={
+            "Grünabfälle": wt.GARDEN_WASTE,
+            "Karton": wt.CARTONS,
+            "Altpapier": wt.PAPER,
+            "Altglas": wt.GLASS,
+            "Altmetall": wt.METAL,
+            "Kunststoffe": wt.PLASTIC,
+        }
+    )
