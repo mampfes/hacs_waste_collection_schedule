@@ -34,6 +34,9 @@ the last step is returned, to be read with the ordinary HTML parsers.
 
 from __future__ import annotations
 
+import base64
+import json
+import re
 from collections.abc import Callable, Mapping, Sequence
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
@@ -42,6 +45,7 @@ from bs4 import BeautifulSoup
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
@@ -142,3 +146,38 @@ class GossFormRetriever(RetrieverFunc):
             response.raise_for_status()
             previous = step
         return response
+
+
+def serialized_variables(response: Response, form: str) -> dict[str, Any]:
+    """The form's ``<FORM>SerializedVariables``, decoded.
+
+    Some forms hand their data to the page as one base64-encoded JSON object
+    assigned to a script variable (``var <FORM>SerializedVariables = "..."``)
+    rather than as markup: an address list, the collections of a property. An
+    empty dict when the page carries none.
+    """
+    match = re.search(
+        rf'var {re.escape(form)}SerializedVariables = "([^"]+)"', response.text
+    )
+    return json.loads(base64.b64decode(match.group(1))) if match else {}
+
+
+class GossVariablesParser(Parser[Any]):
+    """The value at ``path`` in a page's decoded ``SerializedVariables``.
+
+    ``GossVariablesParser("FORM", "collectionsData", "value", "jobs")`` reads
+    ``serialized_variables(response, "FORM")["collectionsData"]["value"]["jobs"]``,
+    and ``None`` where the path does not lead anywhere.
+    """
+
+    def __init__(self, form: str, *path: str):
+        self.form = form
+        self.path = path
+
+    def __call__(self, response: Any, source: BaseSource | None = None) -> Any:
+        value: Any = serialized_variables(response, self.form)
+        for key in self.path:
+            if not isinstance(value, Mapping) or key not in value:
+                return None
+            value = value[key]
+        return value
