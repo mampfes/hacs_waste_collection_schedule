@@ -116,11 +116,28 @@ class EachResponse(Parser["list[Any]"]):
             default, because a response that will not parse is normally the
             provider changing shape, which should be heard about rather than
             silently half-swallowed.
+        then: optional preprocessor applied to each response's parsed records
+            on their own, before they are concatenated. For a document whose
+            records only make sense within it: one PDF per year whose year is
+            printed once in its heading, read by a ``PdfMonthRows`` or a
+            ``TextGroupedDates``, cannot be joined with next year's first::
+
+                parse = parsers.EachResponse(
+                    parsers.PdfTextParser(min_chars=200),
+                    then=preprocessors.TextGroupedDates(...),
+                )
     """
 
-    def __init__(self, parser: Parser, *, skip_failures: bool = False):
+    def __init__(
+        self,
+        parser: Parser,
+        *,
+        skip_failures: bool = False,
+        then: "Callable[..., Iterable[Any]] | None" = None,
+    ):
         self.parser = parser
         self.skip_failures = skip_failures
+        self.then = then
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -129,7 +146,10 @@ class EachResponse(Parser["list[Any]"]):
         records: list[Any] = []
         for item in responses:  # type: ignore[union-attr]
             try:
-                records.extend(self.parser(item, source))
+                parsed = self.parser(item, source)
+                records.extend(
+                    self.then(parsed, source) if self.then is not None else parsed
+                )
             except Exception as error:
                 if not self.skip_failures:
                     raise

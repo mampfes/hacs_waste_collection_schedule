@@ -1051,6 +1051,87 @@ class PdfLinkRetriever(_BaseRetriever):
         return pdf
 
 
+def yearly_links(
+    pattern: str | Callable[..., str], *, argument: str | None = None
+) -> Callable[..., list[str]]:
+    """A :class:`Lookup` ``pick`` listing an index page's calendars from this year on.
+
+    The many-documents sibling of :class:`PdfLinkRetriever`, for a provider that
+    links next year's calendar months before this year's runs out (an Austrian
+    municipality posting its 2027 PDF in October 2026). Picking only the newest
+    link would drop the rest of this year, so this returns every link whose
+    year is the current year or later (one per year, the first in page order),
+    oldest first, and a :class:`FanOutRetriever` fetches each::
+
+        retrieve = retrievers.FanOutRetriever(
+            prepare=retrievers.Lookup(INDEX_URL, pick=retrievers.yearly_links(
+                r"Abfuhrkalender[^/]*?(20\\d\\d)\\.pdf"
+            )),
+            targets=lambda source, urls: urls,
+            fetch=retrievers.Request(lambda url, urls, **_: url),
+        )
+        parse = parsers.EachResponse(...)
+
+    When no link is current (the provider has not published this year's yet),
+    the newest one is returned on its own, so the source still reports the last
+    dates it knows. No matching link at all raises ``ValueError``: the page
+    layout changed.
+
+    Args:
+        pattern: regex searched (case-insensitively) against each ``<a href>``;
+            its first group that matched is the four-digit year (so a provider
+            that moved the year within its file names can be matched with two
+            alternative groups). Links are resolved against the index page's
+            URL and de-duplicated. Or ``callable(**source.params) -> str`` for
+            a pattern naming the configured calendar.
+        argument: for an index listing one calendar per area, the
+            ``source.params`` field naming the area as the page's link text
+            prints it. Only links whose text matches (ignoring case, accents,
+            hyphens and punctuation) are kept; no match raises
+            ``SourceArgumentNotFoundWithSuggestions`` listing the link texts.
+    """
+
+    def pick(response: Response, *_keys: Any, **params: Any) -> list[str]:
+        from waste_collection_schedule import lookups
+
+        compiled = re.compile(
+            pattern(**params) if callable(pattern) else pattern, re.IGNORECASE
+        )
+        base = getattr(response, "url", "") or ""
+        by_text: dict[str, dict[str, int]] = {}
+        for tag in BeautifulSoup(response.text, "html.parser").find_all("a", href=True):
+            href = str(tag["href"])
+            match = compiled.search(href)
+            if match:
+                text = tag.get_text(" ", strip=True) if argument else ""
+                year = next(group for group in match.groups() if group)
+                by_text.setdefault(text, {}).setdefault(urljoin(base, href), int(year))
+        if not by_text:
+            raise ValueError(
+                f"no link matching {compiled.pattern!r} found on {base}; "
+                "the page layout may have changed."
+            )
+        if argument:
+            found = lookups.resolve(
+                {text: links for text, links in by_text.items() if text},
+                params.get(argument),
+                argument=argument,
+                normalize=lookups.normalize_loose,
+            )
+        else:
+            found = by_text[""]
+        # One document per year: the first link in page order wins, so a
+        # corrected re-upload linked next to the original is not read twice.
+        per_year: dict[int, str] = {}
+        for url, year in found.items():
+            per_year.setdefault(year, url)
+        this_year = datetime.date.today().year
+        current = [per_year[year] for year in sorted(per_year) if year >= this_year]
+        return current or [per_year[max(per_year)]]
+
+    return pick
+
+
 # One step of an AthosWasteManagementRetriever wizard: a dict with keys
 #
 #   submit_action -- (required) the ``SubmitAction`` form value posted for

@@ -139,6 +139,29 @@ WEEKDAYS = _build_index("days")
 # Month name (any supported language, lower-case) -> month number (1..12).
 MONTHS = _build_index("months")
 
+# Inflected month forms CLDR does not carry, keyed by language: the Slovenian
+# genitive, which providers print in dated notes ("2. januar se nadomešča 3.
+# januarja"). Registered without overriding a form that already names a month.
+_EXTRA_MONTH_FORMS = {
+    "sl": (
+        "januarja",
+        "februarja",
+        "marca",
+        "aprila",
+        "maja",
+        "junija",
+        "julija",
+        "avgusta",
+        "septembra",
+        "oktobra",
+        "novembra",
+        "decembra",
+    ),
+}
+for _forms in _EXTRA_MONTH_FORMS.values():
+    for _number, _name in enumerate(_forms, start=1):
+        _register(MONTHS, _name, _number)
+
 
 def weekday(name: str) -> int | None:
     """Resolve a weekday name (any supported language) to 0=Mon..6=Sun, or None."""

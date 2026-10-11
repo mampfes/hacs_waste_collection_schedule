@@ -35,7 +35,7 @@ from waste_collection_schedule.exceptions import (
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
-    from waste_collection_schedule.parsers import PdfRow
+    from waste_collection_schedule.parsers import PdfRow, PdfWord
 
 InT = TypeVar("InT", contravariant=True)
 OutT = TypeVar("OutT", covariant=True)
@@ -1226,6 +1226,224 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
         return datetime.date.today().year
 
 
+class PdfMonthRows(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
+    """Read a PDF table with one row per month and one column per round.
+
+    The transposed sibling of :class:`PdfMonthColumns`, for the compact sheet
+    many Polish and Slovenian providers print: a month name down the left, a
+    column per waste round, and in each cell the collection days of that month
+    as a list ("1,8,15,22,29", "6., 20.")::
+
+        parse = parsers.PdfTableParser(min_words=30)
+        preprocess = preprocessors.PdfMonthRows(
+            labels=TYPE_MAP, year_pattern=r"w roku (20\\d\\d)"
+        )
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Plain text extraction runs such a row's cells together, so the cells are
+    told apart by position. The column headings are found by the round labels
+    they print: each label is searched (case-insensitively, as a whole word)
+    in the heading runs above the table, and where a run holds several
+    headings, a heading's span is estimated from its share of the run's text.
+    A cell belongs to every heading whose span it overlaps, so a cell printed
+    across two columns (one date list for two rounds collected together) dates
+    both; a cell overlapping none goes to the nearest heading. Two cells
+    printed so close that extraction merged them into one run
+    ("3,17,31 3,10,17,24,31") are split again at the whitespace.
+
+    A row is a table row when one of its runs is a month name (any supported
+    language, see :func:`recurrence.month`); runs left of it (a sidebar address
+    printed level with the table) are ignored. Heading lines met after a table
+    start a new heading set, so a sheet printing the same table twice, or two
+    tables one above the other, is read table by table.
+
+    A table row met before any heading, and a ``year_pattern`` that does not
+    match, raise ``ResponseShapeError``: the layout has changed.
+
+    Args:
+        labels: the round labels printed as column headings. Pass the
+            transformer's ``type_value_map`` directly.
+        year_pattern: regex searched against the document text (its runs joined
+            by newlines), its first group the four-digit year.
+        day_pattern: regex finding the day numbers in a cell.
+        moved_pattern: optional regex for the footnotes moving a collection off
+            a public holiday, which the table itself prints on the original day
+            ("2. januar se nadomešča 3. januarja"). Every match moves that day's
+            collections; named groups ``from_day``, ``from_month``, ``to_day``,
+            ``to_month`` and optionally ``to_year`` (for a move into the
+            previous year). Months may be names in any supported language.
+    """
+
+    def __init__(
+        self,
+        *,
+        labels: Iterable[str],
+        year_pattern: str,
+        day_pattern: str = r"\d{1,2}",
+        moved_pattern: "str | None" = None,
+    ):
+        self._labels = [
+            (
+                str(label),
+                re.compile(rf"(?<!\w){re.escape(str(label))}(?!\w)", re.IGNORECASE),
+            )
+            for label in labels
+        ]
+        if not self._labels:
+            raise ValueError("PdfMonthRows needs at least one label")
+        self._year_re = re.compile(year_pattern)
+        self._day_re = re.compile(day_pattern)
+        self._moved_re = re.compile(moved_pattern) if moved_pattern else None
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        from waste_collection_schedule import response_shape
+
+        rows = list(records)
+        text = "\n".join(word.text for row in rows for word in row.words)
+        match = self._year_re.search(text)
+        response_shape.expect(
+            match is not None,
+            source_name=response_shape.source_name(source),
+            detail=f"no year matching {self._year_re.pattern!r} in the PDF",
+            raw=text[:500],
+        )
+        year = int(match.group(1)) if match else datetime.date.today().year
+        moved = self._moved(text, year, source)
+        for collection_date, label in self._table(rows, year, source):
+            yield moved.get(collection_date, collection_date), label
+
+    def _moved(
+        self, text: str, year: int, source: "BaseSource | None"
+    ) -> dict[datetime.date, datetime.date]:
+        from waste_collection_schedule import response_shape
+
+        moved: dict[datetime.date, datetime.date] = {}
+        if self._moved_re is None:
+            return moved
+        for note in self._moved_re.finditer(text):
+            groups = note.groupdict()
+            months = (
+                _month_number(groups["from_month"]),
+                _month_number(groups["to_month"]),
+            )
+            response_shape.expect(
+                None not in months,
+                source_name=response_shape.source_name(source),
+                detail=f"unreadable month in the note {note.group(0)!r}",
+            )
+            try:
+                moved[datetime.date(year, months[0] or 0, int(groups["from_day"]))] = (
+                    datetime.date(
+                        int(groups.get("to_year") or year),
+                        months[1] or 0,
+                        int(groups["to_day"]),
+                    )
+                )
+            except ValueError:
+                continue
+        return moved
+
+    def _table(
+        self, rows: "list[PdfRow]", year: int, source: "BaseSource | None"
+    ) -> Iterable[tuple[datetime.date, str]]:
+        from waste_collection_schedule import response_shape
+
+        for page in sorted({row.page for row in rows}):
+            headings: dict[str, tuple[float, float]] = {}
+            in_table = False
+            for row in sorted(
+                (row for row in rows if row.page == page), key=lambda r: -r.y
+            ):
+                month_at = self._month_index(row)
+                if month_at is None:
+                    hits = self._headings_in(row)
+                    if hits:
+                        if in_table:
+                            headings, in_table = {}, False
+                        headings.update(hits)
+                    continue
+                month, index = month_at
+                cells = [
+                    w for w in row.words[index + 1 :] if self._day_re.search(w.text)
+                ]
+                if not cells:
+                    continue
+                response_shape.expect(
+                    bool(headings),
+                    source_name=response_shape.source_name(source),
+                    detail="a month row precedes any column heading",
+                    raw=" | ".join(w.text for w in row.words),
+                )
+                in_table = True
+                for x0, x1, text in self._pieces(cells):
+                    for label in self._columns_of(x0, x1, headings):
+                        for day in self._day_re.findall(text):
+                            try:
+                                yield datetime.date(year, month, int(day)), label
+                            except ValueError:
+                                continue
+
+    @staticmethod
+    def _pieces(cells: "Iterable[PdfWord]") -> Iterable[tuple[float, float, str]]:
+        # The PDF parser merges neighbouring cells printed close together
+        # ("3,17,31 3,10,17,24,31"); split them again at the whitespace,
+        # estimating each piece's position from its character offsets.
+        for cell in cells:
+            length = len(cell.text) or 1
+            width = cell.x1 - cell.x0
+            for piece in re.finditer(r"\S+", cell.text):
+                yield (
+                    cell.x0 + width * piece.start() / length,
+                    cell.x0 + width * piece.end() / length,
+                    piece.group(),
+                )
+
+    @staticmethod
+    def _month_index(row: "PdfRow") -> "tuple[int, int] | None":
+        for index, word in enumerate(row.words):
+            month = recurrence.month(word.text.strip())
+            if month is not None:
+                return month, index
+        return None
+
+    def _headings_in(self, row: "PdfRow") -> dict[str, tuple[float, float]]:
+        hits: dict[str, tuple[float, float]] = {}
+        for word in row.words:
+            length = len(word.text) or 1
+            width = word.x1 - word.x0
+            for label, pattern in self._labels:
+                found = pattern.search(word.text)
+                if found:
+                    hits[label] = (
+                        word.x0 + width * found.start() / length,
+                        word.x0 + width * found.end() / length,
+                    )
+        return hits
+
+    @staticmethod
+    def _columns_of(
+        x0: float, x1: float, headings: Mapping[str, tuple[float, float]]
+    ) -> list[str]:
+        overlapping = [
+            label
+            for label, (h0, h1) in headings.items()
+            if min(x1, h1) - max(x0, h0) > 0
+        ]
+        if overlapping:
+            return overlapping
+        centre = (x0 + x1) / 2
+        return [
+            min(
+                headings,
+                key=lambda label: abs(
+                    (headings[label][0] + headings[label][1]) / 2 - centre
+                ),
+            )
+        ]
+
+
 class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
     """Expand a labelled plain-text schedule into ``(date, key)`` rows.
 
@@ -1262,6 +1480,12 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
             document, its first group the four-digit year. Falls back to the
             current year when unset or unmatched, which is what a calendar
             published for the year in progress means.
+        end_pattern: optional regex ending the schedule: the text from its
+            first match after the first label on is ignored, for a footer that
+            happens to contain date-like numbers, or a document that prints its
+            schedule twice (a fold-out leaflet's two copies, which need not be
+            extracted in the same order). A document it does not match raises
+            ``ResponseShapeError``: the layout has changed.
     """
 
     def __init__(
@@ -1270,6 +1494,7 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
         keys: Iterable[str],
         date_pattern: str,
         year_pattern: "str | None" = None,
+        end_pattern: "str | None" = None,
     ):
         labels = sorted(keys, key=len, reverse=True)
         if not labels:
@@ -1284,6 +1509,7 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
                 f"date_pattern is missing the named group(s) {sorted(missing)}"
             )
         self._year_re = re.compile(year_pattern) if year_pattern else None
+        self._end_re = re.compile(end_pattern) if end_pattern else None
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
@@ -1291,6 +1517,19 @@ class TextGroupedDates(Preprocessor[str, "tuple[datetime.date, str]"]):
         text: str = records
         year = self._document_year(text)
         labels = list(self._label_re.finditer(text))
+        if self._end_re is not None and labels:
+            from waste_collection_schedule import response_shape
+
+            stop = self._end_re.search(text, labels[0].end())
+            response_shape.expect(
+                stop is not None,
+                source_name=response_shape.source_name(source),
+                detail=f"no end of the schedule ({self._end_re.pattern!r}) found",
+                raw=text[:500],
+            )
+            if stop is not None:
+                text = text[: stop.start()]
+                labels = [label for label in labels if label.end() <= len(text)]
         for index, label in enumerate(labels):
             start = label.end()
             end = labels[index + 1].start() if index + 1 < len(labels) else len(text)
