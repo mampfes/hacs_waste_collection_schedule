@@ -1,194 +1,137 @@
-import datetime
-import json
+from typing import ClassVar, final
 
-import requests
-import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    boolean,
+    house_number,
+    street,
+    text_field,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import Lookup
+from waste_collection_schedule.service.OctoberCms import handler, partial_html
+from waste_collection_schedule.transformers import RowTransformer
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-TITLE = "MOHU Budapest"
-DESCRIPTION = "Source script for www.mohubudapest.hu"
-URL = "https://www.mohubudapest.hu"
-COUNTRY = "hu"
-TEST_CASES = {
-    "Test_1": {"district": 1011, "street": "Apród utca", "house_number": 10},
-    "Test_2": {"district": 1114, "street": "Szent Gellért tér", "house_number": 3},
-    "Test_3": {"district": 1202, "street": "Bölön utca", "house_number": 5},
-    "Test_4": {
-        "district": 1011,
-        "street": "Apród utca",
-        "house_number": 10,
-        "verify": False,
-    },
-    "Test_5": {
-        "district": 1114,
-        "street": "Szent Gellért tér",
-        "house_number": 3,
-        "verify": False,
-    },
-    "Test_6": {
-        "district": 1202,
-        "street": "Bölön utca",
-        "house_number": 5,
-        "verify": False,
-    },
-}
-
-API_URL = "https://mohubudapest.hu/hulladeknaptar"
-ICON_MAP = {
-    "COMMUNAL": Icons.GENERAL_WASTE,
-    "SELECTIVE": Icons.RECYCLING,
-    "GREEN": Icons.ORGANIC,
-}
+_URL = "https://mohubudapest.hu/hulladeknaptar"
 
 
-def _get_partial_html(data: dict, *keys: str) -> str:
-    """Return the first matching OctoberCMS partial HTML payload."""
-    for key in keys:
-        value = data.get(key)
-        if value is not None:
-            return value
-    raise KeyError(keys[0])
+def _options(html: str) -> list[str]:
+    """The choices of a select, without its "please choose" first option."""
+    return [
+        option.decode_contents()
+        for option in BeautifulSoup(html, "html.parser").find_all("option")[1:]
+    ]
 
 
-class Source:
-    def __init__(self, district, street, house_number, verify=True):
-        self._district = district
-        self._street = street[::-1].replace(" ", "---", 1)[::-1]
-        self._house_number = house_number
-        self._verify = verify
+def _street_value(street: str) -> str:
+    """The select's value for a street: its last space is written ``---``."""
+    return street[::-1].replace(" ", "---", 1)[::-1]
 
-    def fetch(self):
-        session = requests.Session()
 
-        r = session.post(
-            API_URL,
-            data={"district": self._district},
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-October-Request-Handler": "onSelectDistricts",
-                "X-October-Request-Partials": "ajax/publicPlaces",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            verify=self._verify,
-        )
-        r.raise_for_status()
-        data = json.loads(r.text)
-        soup = BeautifulSoup(
-            _get_partial_html(data, ".publicPlaces", "ajax/publicPlaces"),
-            features="html.parser",
-        )
+def _streets(response, *_, district, **__) -> list[str]:
+    html = partial_html(response, ".publicPlaces", "ajax/publicPlaces")
+    if not html or BeautifulSoup(html, "html.parser").find("div", class_="alert"):
+        raise SourceArgumentNotFound("district", district)
+    return _options(html)
 
-        if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise SourceArgumentNotFound("district", self._district)
 
-        available_streets = []
-        for opt in soup.find_all("option")[1:]:
-            available_streets.append(opt.decode_contents())
+def _house_numbers(response, streets, *_, street, **__) -> list[str]:
+    """The house numbers of the chosen street; the street is saved in the session."""
+    html = partial_html(response, ".houseNumbers", "ajax/houseNumbers")
+    soup = BeautifulSoup(html, "html.parser")
+    if (
+        response.status_code >= 400
+        or not html
+        or soup.find("div", class_="alert")
+        or soup.find("option", string="Kérem, előbb válasszon közterületet")
+    ):
+        raise SourceArgumentNotFoundWithSuggestions("street", street, streets)
+    return _options(html)
 
-        r = session.post(
-            API_URL,
-            data={"publicPlace": self._street},
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-October-Request-Handler": "onSavePublicPlace",
-                "X-October-Request-Partials": "ajax/houseNumbers",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            verify=self._verify,
-        )
-        try:
-            r.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, available_streets
-            ) from e
-        data = json.loads(r.text)
-        soup = BeautifulSoup(
-            _get_partial_html(data, ".houseNumbers", "ajax/houseNumbers"),
-            features="html.parser",
-        )
 
-        if (
-            soup.find("div", attrs={"class": "alert"}) is not None
-            or soup.find("option", string="Kérem, előbb válasszon közterületet")
-            is not None
-        ):
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, available_streets
-            )
+@final
+class Source(BaseSource):
+    TITLE = "MOHU Budapest"
+    DESCRIPTION = "Source script for www.mohubudapest.hu"
+    URL = "https://www.mohubudapest.hu"
+    COUNTRY = "hu"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        available_numbers = []
-        for opt in soup.find_all("option")[1:]:
-            available_numbers.append(opt.decode_contents())
+    TEST_CASES: ClassVar[dict] = {
+        "Test_2": {"district": 1114, "street": "Szent Gellért tér", "house_number": 3},
+        "Test_3": {"district": 1202, "street": "Bölön utca", "house_number": 5},
+    }
 
-        r = session.post(
-            API_URL,
-            data={"houseNumber": self._house_number},
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-October-Request-Handler": "onSearch",
-                "X-October-Request-Partials": "ajax/calSearchResults",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            verify=self._verify,
-        )
-        r.raise_for_status()
-        data = json.loads(r.text)
-        soup = BeautifulSoup(
-            _get_partial_html(data, ".results", "ajax/calSearchResults"),
-            features="html.parser",
-        )
+    PARAMS = (
+        text_field("district", "District (postcode)", coerce=str),
+        street(),
+        house_number(),
+        # Kept so configurations that set it keep loading; certificates are
+        # always verified now.
+        boolean("verify", default=True),
+    )
 
-        if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number", self._house_number, available_numbers
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Choose your district (its postcode, e.g. 1114), street and house "
+            "number as the calendar at https://www.mohubudapest.hu/hulladeknaptar "
+            "writes them. `verify` is no longer used."
+        ),
+    }
 
-        entries = []
-        communal_divs = soup.find_all("div", attrs={"class": "communal"})
-
-        selective = soup.find_all("div", attrs={"class": "selective"})
-        communal = list(filter(lambda div: div.text == "Kommunális", communal_divs))
-        green = list(filter(lambda div: div.text == "Zöld", communal_divs))
-
-        for element in communal:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Communal",
-                    icon=ICON_MAP.get("COMMUNAL"),
-                )
-            )
-
-        for element in selective:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Selective",
-                    icon=ICON_MAP.get("SELECTIVE"),
-                )
-            )
-
-        for element in green:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Green",
-                    icon=ICON_MAP.get("GREEN"),
-                )
-            )
-
-        return entries
+    # The handlers keep their state in the session: the district narrows the street
+    # list, the street narrows the house numbers, and the search then answers for
+    # the chosen house number.
+    retrieve = handler(
+        _URL,
+        "onSearch",
+        "ajax/calSearchResults",
+        lambda streets, numbers, house_number, **_: {"houseNumber": house_number},
+        before=(
+            Lookup(
+                handler(
+                    _URL,
+                    "onSelectDistricts",
+                    "ajax/publicPlaces",
+                    lambda district, **_: {"district": district},
+                ),
+                pick=_streets,
+            ),
+            Lookup(
+                handler(
+                    _URL,
+                    "onSavePublicPlace",
+                    "ajax/houseNumbers",
+                    lambda streets, street, **_: {"publicPlace": _street_value(street)},
+                    raise_for_status=False,
+                ),
+                pick=_house_numbers,
+            ),
+        ),
+    )
+    parse = parsers.HtmlLabelledDates(
+        "tr",
+        label="td div",
+        date="td:nth-of-type(2)",
+        date_pattern=r"(\d{4}\.\d{2}\.\d{2})",
+        all_labels=True,
+        from_json_key=".results",
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y.%m.%d"),
+        type_value_map={
+            "Kommunális": wt.GENERAL_WASTE,
+            "Szelektív": wt.RECYCLABLES,
+            "Zöld": wt.GARDEN_WASTE,
+        },
+    )

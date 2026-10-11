@@ -1,94 +1,69 @@
-import datetime
-import json
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import boolean, street
+from waste_collection_schedule.service.OctoberCms import handler
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "FKF Budaörs"
-DESCRIPTION = "Source script for www.fkf.hu"
-URL = "https://www.fkf.hu"
-COUNTRY = "hu"
-TEST_CASES = {
-    "Test_1": {"street": "Templom tér", "ssl_verify": False},
-    "Test_2": {"street": "Völgy utca", "ssl_verify": False},
-    "Test_3": {"street": "Zombori utca", "ssl_verify": False},
-}
-
-API_URL = "https://www.mohubudapest.hu/hulladeknaptar-budaors"
-ICON_MAP = {
-    "COMMUNAL": Icons.GENERAL_WASTE,
-    "SELECTIVE": Icons.RECYCLING,
-    "GREEN": Icons.ORGANIC,
-}
+# The page lives on the bare host: "www." redirects to it, and a redirected POST
+# turns into a GET that answers the whole page instead of the handler's JSON.
+_URL = "https://mohubudapest.hu/hulladeknaptar-budaors"
+_PARTIAL = "ajax/budaorsResults"
 
 
-class Source:
-    def __init__(self, street, ssl_verify: bool = True):
-        self._street = street
-        self._ssl_verify = ssl_verify
+@final
+class Source(BaseSource):
+    TITLE = "FKF Budaörs"
+    DESCRIPTION = "Source script for www.fkf.hu"
+    URL = "https://www.fkf.hu"
+    COUNTRY = "hu"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+    ]
 
-    def fetch(self):
-        session = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "Test_1": {"street": "Templom tér"},
+        "Test_2": {"street": "Völgy utca"},
+        "Test_3": {"street": "Zombori utca"},
+    }
 
-        r = session.post(
-            API_URL,
-            data={"publicPlace": self._street},
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-October-Request-Handler": "onSearch",
-                "X-October-Request-Partials": "ajax/budaorsResults",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-            verify=self._ssl_verify,
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(
-            json.loads(r.text)["ajax/budaorsResults"], features="html.parser"
-        )
+    PARAMS = (
+        street(),
+        # Kept so configurations that set it keep loading; certificates are
+        # always verified now.
+        boolean("ssl_verify", default=True),
+    )
 
-        if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise SourceArgumentNotFound("street", self._street)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street as the calendar's street list at "
+            "https://www.mohubudapest.hu/hulladeknaptar-budaors writes it. "
+            "`ssl_verify` is no longer used."
+        ),
+    }
 
-        entries = []
-        communal_divs = soup.find_all("div", attrs={"class": "communal"})
-
-        selective = soup.find_all("div", attrs={"class": "selective"})
-        communal = list(filter(lambda div: div.text == "Kommunális", communal_divs))
-        green = list(filter(lambda div: div.text == "Zöld", communal_divs))
-
-        for element in communal:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Communal",
-                    icon=ICON_MAP.get("COMMUNAL"),
-                )
-            )
-
-        for element in selective:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Selective",
-                    icon=ICON_MAP.get("SELECTIVE"),
-                )
-            )
-
-        for element in green:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        element.parent.parent.findAll("td")[1].text, "%Y.%m.%d"
-                    ).date(),
-                    t="Green",
-                    icon=ICON_MAP.get("GREEN"),
-                )
-            )
-
-        return entries
+    retrieve = handler(
+        _URL, "onSearch", _PARTIAL, lambda street, **_: {"publicPlace": street}
+    )
+    # A row per day: weekday, date, and a div per service collected that day.
+    parse = parsers.HtmlLabelledDates(
+        "tr",
+        label="td div",
+        date="td:nth-of-type(2)",
+        date_pattern=r"(\d{4}\.\d{2}\.\d{2})",
+        all_labels=True,
+        from_json_key=_PARTIAL,
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y.%m.%d"),
+        type_value_map={
+            "Kommunális": wt.GENERAL_WASTE,
+            "Szelektív": wt.RECYCLABLES,
+            "Zöld": wt.GARDEN_WASTE,
+        },
+    )
