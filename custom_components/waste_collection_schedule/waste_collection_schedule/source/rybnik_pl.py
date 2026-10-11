@@ -12,19 +12,10 @@ The city publishes its schedules as PDFs under a per-year folder:
 The current year's PDF is tried first, then the previous year's.
 """
 
-import re
-from datetime import date, timedelta
+from datetime import date
 from typing import Any, ClassVar, final
 
-from waste_collection_schedule import (
-    date_parsers,
-    lookups,
-    parsers,
-    preprocessors,
-    recurrence,
-    response_shape,
-    retrievers,
-)
+from waste_collection_schedule import lookups, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -33,16 +24,10 @@ from waste_collection_schedule.config_params import (
     street,
     text_field,
 )
-from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
-    SourceArgumentRequiredWithSuggestions,
-)
-from waste_collection_schedule.service.PdfRuledTable import (
-    RuledTableParser,
-    RuledTables,
-    merge_split_rows,
+from waste_collection_schedule.exceptions import SourceArgumentRequiredWithSuggestions
+from waste_collection_schedule.service.RybnikSchedule import (
+    RybnikPdfParser,
+    RybnikScheduleReader,
 )
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -159,33 +144,6 @@ _TYPES = {
     "POPIOŁY/ŻUŻEL": None,
 }
 
-_MULTIFAMILY_TYPES = (
-    "ZMIESZANE",
-    "PLASTIK",
-    "PAPIER",
-    "SZKŁO",
-    "WIELKOGABARYTY",
-    "BIO",
-)
-
-_WEEKDAYS_PL = {
-    "poniedzialek": 0,
-    "wtorek": 1,
-    "sroda": 2,
-    "czwartek": 3,
-    "piatek": 4,
-    "sobota": 5,
-    "niedziela": 6,
-}
-
-_ROW_RE = re.compile(
-    r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE|POPIOŁY/ŻUŻEL)"
-    r"((?:\s+(?:[\d;]+|-)){12})"
-)
-_DATE_RE = re.compile(r"(\d{2}\.\d{2}\.\d{4})")
-_YEAR_RE = re.compile(r"\b(?:na rok|w roku)\s+(20\d\d)")
-_parse_dmy = date_parsers.for_format("%d.%m.%Y")
-
 
 # --- retrieval (pure request shaping) -------------------------------------
 
@@ -213,273 +171,6 @@ def _pdf_url(
 
 def _is_pdf(response: Any) -> bool:
     return response.status_code == 200 and response.content[:4] == b"%PDF"
-
-
-# --- residential / commercial text ----------------------------------------
-
-
-def _zone_regex(name: str) -> re.Pattern:
-    """A regex for a zone name allowing wrapped lines and dropped hyphen gaps."""
-    escaped = re.escape(name).replace(r"\-", r"-\s*")
-    escaped = re.sub(r"\\\ +", lambda _m: r"\s+", escaped)
-    return re.compile(r"(?<![A-Za-z])" + escaped + r"(?!\d)", re.IGNORECASE)
-
-
-def _rejon_order(text: str, zones: list[str]) -> list[str]:
-    """The zones in the order the cover table prints them."""
-    start = text.find("Rejony")
-    haystack = text[start:] if start >= 0 else text
-    found = []
-    for zone in zones:
-        match = _zone_regex(zone).search(haystack)
-        if match:
-            found.append((match.start(), zone))
-    return [zone for _, zone in sorted(found)]
-
-
-def _blocks(text: str) -> list[list[tuple[str, list[str]]]]:
-    """Groups of round rows, one group per zone (each starts at ZMIESZANE)."""
-    rows = [
-        (m.group(1), m.group(2).split())
-        for m in _ROW_RE.finditer(text)
-        if len(m.group(2).split()) == 12
-    ]
-    starts = [i for i, (key, _) in enumerate(rows) if key == "ZMIESZANE"]
-    return [
-        rows[start : starts[i + 1] if i + 1 < len(starts) else len(rows)]
-        for i, start in enumerate(starts)
-    ]
-
-
-def _bulky_dates(
-    text: str, zones: list[str], aliases: dict[str, list[str]]
-) -> dict[str, list[str]]:
-    """Pair the footer's zone names with their two bulky-waste dates.
-
-    The footer's extraction order is unreliable, so consecutive zones and
-    consecutive dates are grouped into runs and each zones-run takes the dates
-    of the run before it (then after it), two per zone.
-    """
-    last = text.rfind("BIODEGRADOWALNE")
-    if last < 0:
-        return {}
-    eol = text.find("\n", last)
-    flat = re.sub(r"\s+", " ", text[eol if eol >= 0 else last :]).strip()
-    tokens: list[tuple[str, str, int]] = [
-        ("date", m.group(1), m.start()) for m in _DATE_RE.finditer(flat)
-    ]
-    names = {zone: zone for zone in zones}
-    for zone in zones:
-        for alias in aliases.get(zone, []):
-            names[alias] = zone
-    seen: set[str] = set()
-    for alias in sorted(names, key=len, reverse=True):
-        zone = names[alias]
-        match = _zone_regex(alias).search(flat)
-        if zone not in seen and match:
-            tokens.append(("zone", zone, match.start()))
-            seen.add(zone)
-    tokens.sort(key=lambda t: t[2])
-    if not tokens:
-        return {}
-
-    runs: list[list[tuple[str, str, int]]] = [[tokens[0]]]
-    for token in tokens[1:]:
-        if token[0] == runs[-1][-1][0]:
-            runs[-1].append(token)
-        else:
-            runs.append([token])
-    pool = {i: [t[1] for t in r] for i, r in enumerate(runs) if r[0][0] == "date"}
-
-    result: dict[str, list[str]] = {}
-    for index, run in enumerate(runs):
-        if run[0][0] != "zone":
-            continue
-        remaining = run
-        for neighbour in (index - 1, index + 1):
-            dates = pool.get(neighbour, [])
-            pairs = min(len(dates) // 2, len(remaining))
-            for k in range(pairs):
-                result[remaining[k][1]] = [dates[2 * k], dates[2 * k + 1]]
-            if neighbour in pool:
-                pool[neighbour] = dates[pairs * 2 :]
-            remaining = remaining[pairs:]
-    return result
-
-
-def _year_of(text: str) -> int:
-    match = _YEAR_RE.search(text)
-    response_shape.expect(
-        match is not None,
-        source_name="rybnik_pl",
-        detail="no year in the PDF title",
-        raw=text[:300],
-    )
-    assert match is not None
-    return int(match.group(1))
-
-
-def zone_rows(
-    text: str, zones: list[str], aliases: dict[str, list[str]], sub_district: str
-) -> list[tuple[date, str]]:
-    """``(date, label)`` rows of the zones of a district PDF (all, or one)."""
-    year = _year_of(text)
-    order = _rejon_order(text, zones) or list(zones)
-    bulky = _bulky_dates(text, zones, aliases)
-    wanted = lookups.normalize_loose(sub_district) if sub_district else ""
-    rows: list[tuple[date, str]] = []
-    matched = False
-    for index, block in enumerate(_blocks(text)):
-        zone = order[index] if index < len(order) else f"Zone {index + 1}"
-        if wanted:
-            if lookups.normalize_loose(zone) != wanted:
-                continue
-            matched = True
-        for key, months in block:
-            if _TYPES[key] is None:
-                continue
-            for month, cell in enumerate(months, start=1):
-                for day in cell.split(";"):
-                    if day.strip().isdigit():
-                        try:
-                            rows.append((date(year, month, int(day)), key))
-                        except ValueError:
-                            continue
-        rows.extend((_parse_dmy(d), "GABARYTY") for d in bulky.get(zone, []))
-    if wanted and not matched:
-        raise SourceArgumentNotFoundWithSuggestions("sub_district", sub_district, order)
-    return rows
-
-
-# --- multifamily rules ------------------------------------------------------
-
-
-def _rows_of(grid: list[list[str]]) -> list[tuple[str, list[str], dict[str, str]]]:
-    """``(area, streets, {round: rule})`` rows of one multifamily table."""
-    header = None
-    columns: dict[int, str] = {}
-    for r, cols in enumerate(grid):
-        found = {
-            c: key
-            for c, cell in enumerate(cols)
-            for key in _MULTIFAMILY_TYPES
-            if lookups.normalize_loose(cell) == lookups.normalize_loose(key)
-        }
-        if "ZMIESZANE" in found.values():
-            header, columns = r, found
-            break
-    if header is None:
-        return []
-    area_col, street_col = 0, 1
-    for r in range(header + 1):
-        for c, cell in enumerate(grid[r]):
-            if lookups.normalize_loose(cell) == "dzielnica":
-                area_col = c
-            elif lookups.normalize_loose(cell) == "ulice":
-                street_col = c
-    out = []
-    for cols in merge_split_rows(grid[header + 1 :], (area_col, street_col)):
-        if not cols[area_col]:
-            continue
-        streets = [s.strip() for s in cols[street_col].split(",") if s.strip()]
-        out.append(
-            (
-                cols[area_col],
-                streets,
-                {k: cols[c] for c, k in columns.items() if cols[c]},
-            )
-        )
-    return out
-
-
-_STREET_PREFIX_RE = re.compile(r"^(?:ul|gen|ks|pl|plac|św|sw|kap|os)\.?\s+", re.I)
-
-
-def _street_keys(name: str) -> set[str]:
-    return {
-        lookups.normalize_loose(name),
-        lookups.normalize_loose(_STREET_PREFIX_RE.sub("", name)),
-    }
-
-
-def select_row(
-    rows: list[tuple[str, list[str], dict[str, str]]], street_name: str, area: str
-) -> tuple[str, list[str], dict[str, str]]:
-    """The row for a street (and area where the street is listed for several)."""
-    candidates = rows
-    if area:
-        candidates = [
-            r
-            for r in candidates
-            if lookups.normalize_loose(r[0]) == lookups.normalize_loose(area)
-        ]
-        if not candidates:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "sub_district", area, sorted({r[0] for r in rows})
-            )
-    if street_name:
-        key = lookups.normalize_loose(
-            re.sub(r"^\s*ul\.?\s+", "", street_name, flags=re.I)
-        )
-        matched = [r for r in candidates if any(key in _street_keys(s) for s in r[1])]
-        if not matched:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", street_name, sorted({s for r in candidates for s in r[1]})
-            )
-        candidates = matched
-    if len({tuple(sorted(r[2].items())) for r in candidates}) > 1:
-        if street_name and not area:
-            raise SourceArgAmbiguousWithSuggestions(
-                "sub_district", area, sorted({r[0] for r in candidates})
-            )
-        raise SourceArgAmbiguousWithSuggestions(
-            "street", street_name, sorted({s for r in candidates for s in r[1]})
-        )
-    return candidates[0]
-
-
-def parse_rule(text: str) -> tuple[set[int], str | None]:
-    """Weekdays and ISO-week parity ("even"/"odd"/None) of 'środa tydzień parzysty'."""
-    weekdays: set[int] = set()
-    parity: str | None = None
-    for token in re.split(r"[\s,;]+", text):
-        word = lookups.normalize_loose(token)
-        if not word or word in ("tydzien", "i"):
-            continue
-        if word in _WEEKDAYS_PL:
-            weekdays.add(_WEEKDAYS_PL[word])
-        elif word == "parzysty":
-            parity = "even"
-        elif word == "nieparzysty":
-            parity = "odd"
-        else:
-            raise ValueError(f"Unknown token {token!r} in rule {text!r}")
-    if not weekdays:
-        raise ValueError(f"No weekday found in rule {text!r}")
-    return weekdays, parity
-
-
-def _first_weekday(year: int, weekday: int) -> date:
-    jan1 = date(year, 1, 1)
-    return jan1 + timedelta(days=(weekday - jan1.weekday()) % 7)
-
-
-def _schedules(record: tuple[int, dict[str, str]], _source: Any = None):
-    year, rules = record
-    for key, rule in rules.items():
-        try:
-            weekdays, parity = parse_rule(rule)
-        except ValueError:
-            continue
-        for weekday in sorted(weekdays):
-            yield preprocessors.Schedule(
-                key,
-                _first_weekday(year, weekday),
-                recurrence.WEEKLY,
-                until=date(year, 12, 31),
-                not_before=date(year, 1, 1),
-                iso_week_parity=parity,  # type: ignore[arg-type]
-            )
 
 
 @final
@@ -564,42 +255,7 @@ class Source(BaseSource):
         candidates=_candidate_years, url=_pdf_url, accept=_is_pdf
     )
 
-    _TEXT = parsers.PdfTextParser(min_chars=200)
-    _TABLE = RuledTableParser(min_cells=20)
-
-    def parse(self, response: Any, source: Any) -> Any:
-        if self.params["property_type"] == "multifamily":
-            return self._TABLE(response, source)
-        return self._TEXT(response, source)
-
-    def preprocess(self, document: Any, source: Any = None) -> list:
-        params = self.params
-        if params["property_type"] == "multifamily":
-            return self._multifamily(document, params)
-        cfg = lookups.resolve(DISTRICT_MAP, params["district"], argument="district")
-        return zone_rows(
-            document,
-            cfg["zones"],
-            cfg.get("zone_aliases", {}),
-            (params["sub_district"] or "").strip(),
-        )
-
-    def _multifamily(self, document: RuledTables, params: dict) -> list:
-        street_name = (params["street"] or "").strip()
-        area = (params["sub_district"] or "").strip()
-        if not street_name and not area:
-            raise SourceArgumentRequired(
-                "street", "street is required for property_type 'multifamily'"
-            )
-        rows = [row for grid in document.grids for row in _rows_of(grid)]
-        response_shape.expect(
-            bool(rows),
-            source_name="rybnik_pl",
-            detail="no rows in the multifamily table",
-            raw=document.text[:300],
-        )
-        _, _, rules = select_row(rows, street_name, area)
-        year = _year_of(document.text)
-        return list(preprocessors.RecurrenceExpander(_schedules)([(year, rules)]))
+    parse = RybnikPdfParser()
+    preprocess = RybnikScheduleReader(DISTRICT_MAP)
 
     transform = ICSTransformer(type_value_map=_TYPES)
