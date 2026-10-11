@@ -1,274 +1,255 @@
-import calendar as cal_mod
-import logging
+"""Brimbank City Council's colour-coded annual waste calendar (PDF).
+
+The first page holds two year planners, calendar A (top) and calendar B
+(bottom), each a grid of twelve mini month calendars (February to January).
+Garbage is collected every week on the household's weekday; the weekday cells
+of each week are filled yellow (recycling that week), green (food and garden
+organics that week) or red (no collection, a public holiday). When Friday is a
+holiday the week's Friday collection moves to the Saturday, which the PDF
+colours as well.
+
+The year and the months come from the printed month headings and every day
+number is checked against its weekday column, so a changed layout fails loudly
+instead of producing a wrong schedule.
+"""
+
+import calendar
 import re
+from collections.abc import Iterable
 from datetime import date, timedelta
-from io import BytesIO
+from typing import ClassVar, final
 
-import requests
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LAParams, LTCurve, LTLayoutContainer, LTRect, LTTextBox
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, recurrence, response_shape, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Brimbank City Council"
-DESCRIPTION = "Source for Brimbank City Council waste collection."
-URL = "https://www.brimbank.vic.gov.au"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "Monday A": {"day": "Monday", "calendar": "A"},
-    "Friday B": {"day": "Friday", "calendar": "B"},
-    "Wednesday A": {"day": "Wednesday", "calendar": "A"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF.",
-        "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "day": "Collection day",
-        "calendar": "Calendar cycle",
-    }
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Food & Garden Organics": Icons.BIO_KITCHEN,
-}
-
-PDF_URL = (
-    "https://serviceapi.brimbank.vic.gov.au/CMServiceAPI/Record/7854806/file/document"
+_INDEX_URL = (
+    "https://www.brimbank.vic.gov.au/living-here/my-home/"
+    "rubbish-recycling-and-other-waste/bins"
 )
+_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+_CALENDARS = ["A", "B"]
 
-# Color thresholds for PDF parsing (RGB float tuples)
-_GREEN = (0.584, 0.795, 0.392)
-_YELLOW = (1.0, 0.888, 0.312)
-_RED = (0.818, 0.408, 0.361)
-_COLOR_TOL = 0.15
+_GENERAL = "General Waste"
+_RECYCLING = "Recycling"
+_ORGANICS = "Food & Garden Organics"
 
-# Calendar grid layout constants
-_MONTH_COL_X = [(87, 167), (167, 247), (247, 326), (326, 406)]
-_CAL_A_ROW_Y = [66, 142, 219]
-_CAL_B_ROW_Y = [314, 391, 467]
-_MONTHS_PER_ROW = [
-    [(2, 2026), (3, 2026), (4, 2026), (5, 2026)],
-    [(6, 2026), (7, 2026), (8, 2026), (9, 2026)],
-    [(10, 2026), (11, 2026), (12, 2026), (1, 2027)],
-]
-
-_WEEKDAY_MAP = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
+#: Cell fills of the calendar (RGB) and what they mean.
+_PALETTE = {
+    (0.584, 0.795, 0.392): _ORGANICS,
+    (1.0, 0.888, 0.312): _RECYCLING,
+    (0.818, 0.408, 0.361): None,  # no collection (public holiday)
 }
-
-_LOGGER = logging.getLogger(__name__)
-
-
-def _color_match(c, target):
-    if not c or not isinstance(c, tuple) or len(c) != 3:
-        return False
-    return all(abs(c[i] - target[i]) < _COLOR_TOL for i in range(3))
+_TOLERANCE = 0.05
+_HEADING_RE = re.compile(r"([^\W\d_]+)\s+(20\d{2})")
 
 
-def _classify_color(fill):
-    if _color_match(fill, _GREEN):
-        return "FOGO"
-    if _color_match(fill, _YELLOW):
-        return "RECYCLE"
-    if _color_match(fill, _RED):
-        return "NONE"
-    return None
+def calendar_link(response, *_keys, **_params) -> str:
+    """The calendar PDF: the link whose text mentions the waste calendar."""
+    from urllib.parse import urljoin
+
+    for link in parsers.HtmlParser("a[href]")(response):
+        if re.search(r"waste\s+calendar", link.get_text(" ", strip=True), re.I):
+            return urljoin(str(response.url), str(link["href"]))
+    raise response_shape.ResponseShapeError(
+        "Brimbank City Council: no waste calendar link on the bins page"
+    )
 
 
-def _iter_elements(container):
-    for el in container:
-        yield el
-        if isinstance(el, LTLayoutContainer):
-            yield from _iter_elements(el)
+def _nearest_colour(fill: tuple[float, ...] | None) -> tuple[bool, str | None]:
+    """(is a calendar colour, label) of a vector fill."""
+    if fill is None or len(fill) != 3:
+        return False, None
+    for known, label in _PALETTE.items():
+        dist = sum((a - b) ** 2 for a, b in zip(fill, known, strict=True)) ** 0.5
+        if dist <= _TOLERANCE:
+            return True, label
+    return False, None
 
 
-def _parse_pdf(pdf_bytes):
-    """Parse the Brimbank waste calendar PDF and return (schedule_a, schedule_b).
+def _cell_labels(
+    layout: parsers.PdfWordLayout, calendar_name: str, source: BaseSource
+) -> dict[date, str | None]:
+    """Date -> label (recycling / organics / None = no collection) for a calendar."""
+    name = response_shape.source_name(source)
 
-    Each schedule is a dict mapping date -> 'RECYCLE' | 'FOGO' | 'NONE'.
-    Only weekday dates (Mon-Fri) plus holiday-shifted Saturdays are included.
-    """
-    pages = list(extract_pages(BytesIO(pdf_bytes), laparams=LAParams()))
-    if not pages:
-        raise ValueError("PDF contains no pages")
+    def expect(condition, detail):
+        response_shape.expect(
+            condition, source_name=name, detail=detail, raw=str(layout.lines[:10])
+        )
 
-    page = pages[0]
-    ph = page.height
+    headings = []
+    for line in layout.lines:
+        match = _HEADING_RE.fullmatch(line.text)
+        if match and (month := recurrence.month(match.group(1))) is not None:
+            headings.append((line, month, int(match.group(2))))
+    expect(len(headings) == 24, "expected two calendars of twelve month grids")
+    # A is the upper calendar: its twelve headings come first (top to bottom).
+    ordered = sorted(headings, key=lambda h: -h[0].y)
+    chosen = ordered[:12] if calendar_name == "A" else ordered[12:]
 
-    # Collect colored curve cells
-    colored_cells = []
-    for el in _iter_elements(page):
-        if isinstance(el, LTCurve) and not isinstance(el, LTRect):
-            fill = el.non_stroking_color
-            if fill and isinstance(fill, tuple) and len(fill) == 3:
-                label = _classify_color(fill)
-                if label:
-                    x0, y0, x1, y1 = el.bbox
-                    colored_cells.append(
-                        {
-                            "color": label,
-                            "cx": (x0 + x1) / 2,
-                            "cy": ph - (y0 + y1) / 2,
-                        }
-                    )
+    cells = []
+    for vector in layout.vectors:
+        is_colour, label = _nearest_colour(vector.fill_color)
+        if is_colour and 6 < vector.x1 - vector.x0 < 16:
+            cells.append((vector, label))
 
-    # Parse day number text boxes
-    day_boxes = []
-    for el in page:
-        if isinstance(el, LTTextBox):
-            x0, y0, x1, y1 = el.bbox
-            top = ph - y1
-            text = el.get_text().strip()
-            nums = re.findall(r"\d+", text)
-            if nums and all(1 <= int(n) <= 31 for n in nums):
-                day_boxes.append(
-                    {"nums": [int(n) for n in nums], "x0": x0, "x1": x1, "top": top}
-                )
-
-    def build_schedule(row_y_starts):
-        schedule = {}
-        for row_idx, row_y in enumerate(row_y_starts):
-            for col_idx, (month, year) in enumerate(_MONTHS_PER_ROW[row_idx]):
-                mx0, mx1 = _MONTH_COL_X[col_idx]
-                days_in_month = cal_mod.monthrange(year, month)[1]
-
-                month_boxes = [
-                    b
-                    for b in day_boxes
-                    if b["x0"] >= mx0 - 5
-                    and b["x1"] <= mx1 + 5
-                    and row_y + 5 < b["top"] < row_y + 80
-                ]
-
-                for box in month_boxes:
-                    col_width = (box["x1"] - box["x0"]) / 7
-                    for day_num in box["nums"]:
-                        if day_num < 1 or day_num > days_in_month:
-                            continue
-                        d = date(year, month, day_num)
-                        # Skip Sun (6) and Sat (5) unless it's a holiday shift
-                        if d.weekday() == 6:  # Sunday
-                            continue
-
-                        # Grid column: Sun=0, Mon=1 ... Sat=6
-                        grid_col = (d.weekday() + 1) % 7
-                        day_cx = box["x0"] + (grid_col + 0.5) * col_width
-                        day_cy = box["top"] + 3
-
-                        best = None
-                        best_dist = 999
-                        for cell in colored_cells:
-                            dx = abs(cell["cx"] - day_cx)
-                            dy = abs(cell["cy"] - day_cy)
-                            dist = (dx**2 + dy**2) ** 0.5
-                            if dist < best_dist and dist < 10:
-                                best_dist = dist
-                                best = cell
-
-                        if best:
-                            schedule[d] = best["color"]
-
-        # Remove spurious Saturday entries that aren't holiday shifts
-        # A Saturday is only valid if the preceding Friday is NONE (holiday)
-        to_remove = []
-        for d, _color in schedule.items():
-            if d.weekday() == 5:  # Saturday
-                friday = d - timedelta(days=1)
-                if schedule.get(friday) != "NONE":
-                    to_remove.append(d)
-        for d in to_remove:
-            del schedule[d]
-
-        return schedule
-
-    schedule_a = build_schedule(_CAL_A_ROW_Y)
-    schedule_b = build_schedule(_CAL_B_ROW_Y)
-    return schedule_a, schedule_b
-
-
-class Source:
-    def __init__(self, day: str, calendar: str):
-        day_lower = day.strip().lower()
-        if day_lower not in _WEEKDAY_MAP:
-            raise ValueError(
-                f"Invalid day '{day}'. Must be one of: Monday, Tuesday, Wednesday, Thursday, Friday"
+    out: dict[date, str | None] = {}
+    for heading, month, year in chosen:
+        below = [
+            line
+            for line in layout.lines
+            if line.text == "S M T W T F S"
+            and line.page == heading.page
+            and abs(line.x - heading.x) < 20
+            and 0 < heading.y - line.y < 20
+        ]
+        expect(len(below) == 1, f"weekday header missing for {heading.text}")
+        header = below[0]
+        columns = sorted(
+            (
+                w
+                for w in layout.words
+                if w.page == header.page
+                and abs(w.y - header.y) < 2
+                and abs(w.x - header.x) < 38
+            ),
+            key=lambda w: w.x,
+        )
+        expect("".join(w.text for w in columns) == "SMTWTFS", "weekday header changed")
+        step = (columns[-1].x - columns[0].x) / 6
+        left, right = columns[0].x - step / 2, columns[-1].x + step / 2
+        # Day rows end where the next month heading (or the page) begins.
+        lower = max(
+            (
+                other.y
+                for other, _m, _y in headings
+                if other.page == heading.page
+                and abs(other.x - heading.x) < 20
+                and other.y < heading.y - 5
+            ),
+            # a month has at most six week rows of about 11 pt each
+            default=header.y - 75,
+        )
+        days = [
+            w
+            for w in layout.words
+            if w.page == header.page
+            and w.text.isdigit()
+            and left < w.x < right
+            and lower < w.y < header.y - 2
+        ]
+        expect(bool(days), f"no days found in {heading.text}")
+        # The first week row also prints the previous month's last days and, for
+        # a month needing a sixth row, the month's own 29th-31st (Sunday/Monday
+        # cells); the last row may show the next month's days.
+        row_ys = sorted({round(w.y) for w in days}, reverse=True)
+        seen: set[int] = set()
+        for word in days:
+            day = int(word.text)
+            row = row_ys.index(round(word.y))
+            column = min(range(7), key=lambda i: abs(columns[i].x - word.x))
+            in_month = day <= calendar.monthrange(year, month)[1]
+            weekday_ok = (
+                in_month and date(year, month, day).weekday() == (column + 6) % 7
             )
-        self._weekday = _WEEKDAY_MAP[day_lower]
-        self._day_name = day_lower
-
-        cal_upper = calendar.strip().upper()
-        if cal_upper not in ("A", "B"):
-            raise ValueError(f"Invalid calendar '{calendar}'. Must be A or B")
-        self._calendar = cal_upper
-
-    def fetch(self):
-        r = requests.get(PDF_URL, timeout=30)
-        r.raise_for_status()
-
-        schedule_a, schedule_b = _parse_pdf(r.content)
-        schedule = schedule_a if self._calendar == "A" else schedule_b
-
-        entries = []
-        for d, color in sorted(schedule.items()):
-            # Skip NONE dates (holidays with no collection)
-            if color == "NONE":
+            if (row == 0 and day > 7 and not (day > 28 and weekday_ok)) or (
+                row == len(row_ys) - 1 and row > 0 and day <= 7
+            ):
                 continue
+            expect(
+                1 <= day <= calendar.monthrange(year, month)[1] and day not in seen,
+                f"invalid or duplicate day in {heading.text}",
+            )
+            seen.add(day)
+            when = date(year, month, day)
+            expect(
+                when.weekday() == (column + 6) % 7,
+                f"date is in the wrong weekday column: {when}",
+            )
+            for vector, label in cells:
+                if (
+                    vector.page == word.page
+                    and vector.x0 < word.x < vector.x1
+                    and vector.y0 < word.y < vector.y1
+                ):
+                    out[when] = label
+                    break
+        expect(
+            len(seen) == calendar.monthrange(year, month)[1],
+            f"incomplete grid for {heading.text}",
+        )
+    return out
 
-            # Check if this date is for the user's collection day
-            if d.weekday() == self._weekday:
-                # Regular collection day
-                entries.append(
-                    Collection(
-                        date=d, t="General Waste", icon=ICON_MAP["General Waste"]
-                    )
-                )
-                if color == "RECYCLE":
-                    entries.append(
-                        Collection(date=d, t="Recycling", icon=ICON_MAP["Recycling"])
-                    )
-                elif color == "FOGO":
-                    entries.append(
-                        Collection(
-                            date=d,
-                            t="Food & Garden Organics",
-                            icon=ICON_MAP["Food & Garden Organics"],
-                        )
-                    )
-            elif d.weekday() == 5:  # Saturday (holiday shift)
-                # This is a shifted collection for Friday users
-                if self._weekday == 4:  # Friday
-                    entries.append(
-                        Collection(
-                            date=d,
-                            t="General Waste",
-                            icon=ICON_MAP["General Waste"],
-                        )
-                    )
-                    if color == "RECYCLE":
-                        entries.append(
-                            Collection(
-                                date=d, t="Recycling", icon=ICON_MAP["Recycling"]
-                            )
-                        )
-                    elif color == "FOGO":
-                        entries.append(
-                            Collection(
-                                date=d,
-                                t="Food & Garden Organics",
-                                icon=ICON_MAP["Food & Garden Organics"],
-                            )
-                        )
 
-        return entries
+def _collection_rows(
+    layouts: list[parsers.PdfWordLayout], source: BaseSource
+) -> Iterable[tuple[date, str]]:
+    day = str(source.params["day"]).strip().title()
+    if day not in _DAYS:
+        raise SourceArgumentNotFoundWithSuggestions("day", day, _DAYS)
+    calendar_name = str(source.params["calendar"]).strip().upper()
+    if calendar_name not in _CALENDARS:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "calendar", calendar_name, _CALENDARS
+        )
+    weekday = _DAYS.index(day)
+
+    cells = _cell_labels(layouts[0], calendar_name, source)
+    for when, label in sorted(cells.items()):
+        regular = when.weekday() == weekday and label is not None
+        # A holiday Friday moves the Friday collection to the (coloured) Saturday.
+        moved = (
+            weekday == 4
+            and when.weekday() == 5
+            and label is not None
+            and when - timedelta(days=1) in cells
+            and cells[when - timedelta(days=1)] is None
+        )
+        if not regular and not moved:
+            continue
+        yield when, _GENERAL
+        yield when, label
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Brimbank City Council"
+    DESCRIPTION = "Source for Brimbank City Council waste collection."
+    URL = "https://www.brimbank.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
+    TEST_CASES: ClassVar[dict] = {
+        "Monday A": {"day": "Monday", "calendar": "A"},
+        "Friday B": {"day": "Friday", "calendar": "B"},
+        "Wednesday A": {"day": "Wednesday", "calendar": "A"},
+    }
+    PARAMS = (
+        dropdown("day", _DAYS, label="Collection day"),
+        dropdown("calendar", _CALENDARS, label="Calendar cycle"),
+    )
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": (
+            "Your collection day (Monday to Friday) and calendar cycle (A or B) are "
+            "shown on the map on the back of the council's waste calendar PDF "
+            "(linked from https://www.brimbank.vic.gov.au/living-here/my-home/"
+            "rubbish-recycling-and-other-waste/bins)."
+        )
+    }
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(retrievers.Lookup(_INDEX_URL, pick=calendar_link),),
+        url=lambda *keys, **_: keys[-1],
+    )
+    parse = parsers.PdfWordLayoutParser(min_words=366, min_vectors=1)
+    preprocess = staticmethod(_collection_rows)
+    transform = ICSTransformer(
+        type_value_map={
+            _GENERAL: wt.GENERAL_WASTE,
+            _RECYCLING: wt.RECYCLABLES,
+            _ORGANICS: wt.ORGANIC,
+        }
+    )
