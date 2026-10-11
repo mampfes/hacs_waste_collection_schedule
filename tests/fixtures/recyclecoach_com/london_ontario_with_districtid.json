@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections c303f5ac49",
+      "method": "GET",
+      "url": "https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections",
+      "final_url": "https://api-city.recyclecoach.com/zone-setup/zone/collections?district_id=CityofLondon&lang_cd=en_US&project_id=528&zone_id=zone-z547",
+      "body": "{\"params\":[[\"district_id\",\"CityofLondon\"],[\"lang_cd\",\"en_US\"],[\"project_id\",\"528\"],[\"zone_id\",\"zone-z547\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 21:20:53 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "access-control-allow-origin": "*",
+        "etag": "W/\"5c5-Sb7QOI8TxOuCoIFuL2gWuV34YZY\"",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br"
+      },
+      "content_b64": "eyJzdGF0dXMiOiJzdWNjZXNzIiwiY29sbGVjdGlvbiI6eyJ0eXBlcyI6eyJjb2xsZWN0aW9uLTE4MCI6eyJjdXJiVGltZSI6IjA3OjAwOjAwIiwibm90aWZpY2F0aW9uTWVzc2FnZSI6IlN0YXQgSG9saWRheSAtIE5vIENvbGxlY3Rpb24iLCJzaGFwZU5hbWUiOiJ0ciIsImljb25pY1NoYXBlIjoiZmxhZyIsIm9pZHgiOjYsImRlZmF1bHRUeXBlIjoiRVZFTlQiLCJjb2xvdXIiOiJmZjAwMDAiLCJkZXRhaWxzIjp7InR5cGUiOiJsb2NhbCJ9LCJ0aXRsZSI6IlN0YXQgSG9saWRheSAtIE5vIENvbGxlY3Rpb24iLCJkZXRhaWwiOiJDb2xsZWN0aW9uIHNoaWZ0cyBieSBvbmUgYWRkaXRpb25hbCBkYXkiLCJsYWJlbCI6IkgiLCJzY2hlZHVsZSI6IlMxNjA5Iiwic2NoZWRfZGF0ZV9jb3VudHMiOiIxOSJ9LCJjb2xsZWN0aW9uLTE3NSI6eyJjdXJiVGltZSI6IjA3OjAwOjAwIiwibm90aWZpY2F0aW9uTWVzc2FnZSI6IkdhcmJhZ2UgQ29sbGVjdGlvbiIsInNoYXBlTmFtZSI6ImNyIiwiaWNvbmljU2hhcGUiOiJnYXJiYWdlYmFnIiwib2lkeCI6MSwiZGVmYXVsdFR5cGUiOiJDT0xMRUNUSU9OIiwiY29sb3VyIjoiMDAwMDAwIiwiZGV0YWlscyI6eyJ0eXBlIjoicmVtb3RlIiwicGF0aCI6ImNvbGxlY3Rpb24vMzIucGFnZSJ9LCJ0aXRsZSI6IkdhcmJhZ2UgQ29sbGVjdGlvbiIsImRldGFpbCI6IkdhcmJhZ2UgQ29sbGVjdGlvbiIsImxhYmVsIjoiRyIsInNjaGVkdWxlIjoiUzE1ODMiLCJzY2hlZF9kYXRlX2NvdW50cyI6IjEzIn0sImNvbGxlY3Rpb24tMTc2Ijp7ImN1cmJUaW1lIjoiMDc6MDA6MDAiLCJub3RpZmljYXRpb25NZXNzYWdlIjoiUmVjeWNsaW5nIENvbGxlY3Rpb24iLCJzaGFwZU5hbWUiOiJieCIsImljb25pY1NoYXBlIjoicmVjeWNsZV9iaW4iLCJvaWR4Ijo0LCJkZWZhdWx0VHlwZSI6IkNPTExFQ1RJT04iLCJjb2xvdXIiOiIwMDAwRkYiLCJkZXRhaWxzIjp7InR5cGUiOiJyZW1vdGUiLCJwYXRoIjoiY29sbGVjdGlvbi8yNC5wYWdlIn0sInRpdGxlIjoiUmVjeWNsaW5nIENvbGxlY3Rpb24iLCJkZXRhaWwiOiJSZWN5Y2xpbmcgQ29sbGVjdGlvbiIsImxhYmVsIjoiUiIsInNjaGVkdWxlIjoiUzE1ODMiLCJzY2hlZF9kYXRlX2NvdW50cyI6IjEzIn0sImNvbGxlY3Rpb24tMTE5NiI6eyJjdXJiVGltZSI6IjA4OjAwOjAwIiwibm90aWZpY2F0aW9uTWVzc2FnZSI6Ildhc3RlIFJlZHVjdGlvbiBXZWVrIiwic2hhcGVOYW1lIjoidHIiLCJpY29uaWNTaGFwZSI6InJlY3ljbGUiLCJvaWR4IjoyMywiZGVmYXVsdFR5cGUiOiJFVkVOVCIsImNvbG91ciI6IjQzYzZkYiIsImRldGFpbHMiOnsidHlwZSI6InJlbW90ZSIsInBhdGgiOiJncGcvd2FzdGUtcmVkdWN0aW9uLXdlZWsucGFnZSJ9LCJ0aXRsZSI6Ildhc3RlIFJlZHVjdGlvbiBXZWVrIiwiZGV0YWlsIjoiM3JkIE1vbmRheSBpbiBPY3RvYmVyIiwibGFiZWwiOiJXIiwic2NoZWR1bGUiOiJTMTExNjYiLCJzY2hlZF9kYXRlX2NvdW50cyI6IjcifX19fQ=="
+    },
+    {
+      "key": "GET https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules 164340cd94",
+      "method": "GET",
+      "url": "https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules",
+      "final_url": "https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id=528&district_id=CityofLondon&zone_id=zone-z547",
+      "body": "{\"params\":[[\"district_id\",\"CityofLondon\"],[\"project_id\",\"528\"],[\"zone_id\",\"zone-z547\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 21:20:53 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "39",
+        "x-amzn-requestid": "2d1caf1e-dcb7-4ac3-9f0f-d3a75b65f5b6",
+        "access-control-allow-origin": "*",
+        "x-amzn-remapped-content-length": "39",
+        "x-amzn-remapped-connection": "keep-alive",
+        "x-amz-apigw-id": "FGSUeFvTCYcEG0g=",
+        "vary": "Accept-Encoding",
+        "etag": "W/\"27-i9+v2cocoVCH/HMi1DGueIVRXz4\"",
+        "x-amzn-remapped-date": "Sun, 11 Oct 2026 21:20:53 GMT"
+      },
+      "content_b64": "IlRoaXMgcGF0dGVybiBpcyBub3QgZXhpc3QgaW4gZGF0YWJhc2Ui"
+    },
+    {
+      "key": "GET https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules 164340cd94",
+      "method": "GET",
+      "url": "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules",
+      "final_url": "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id=528&district_id=CityofLondon&zone_id=zone-z547",
+      "body": "{\"params\":[[\"district_id\",\"CityofLondon\"],[\"project_id\",\"528\"],[\"zone_id\",\"zone-z547\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 21:20:54 GMT",
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "405",
+        "x-amzn-requestid": "b88cfff3-2e42-42fb-af41-bb73045c3272",
+        "access-control-allow-origin": "*",
+        "content-encoding": "br",
+        "x-amzn-remapped-connection": "keep-alive",
+        "x-amz-apigw-id": "FGSUiEKd4osEGXg=",
+        "vary": "Accept-Encoding",
+        "etag": "W/\"db1-qGbokGot8Ue8jkCFA6kmvc03al4\"",
+        "x-amzn-remapped-date": "Sun, 11 Oct 2026 21:20:54 GMT"
+      },
+      "content_b64": "eyJEQVRBIjpbeyJ5ZWFyIjoyMDI1LCJtb250aHMiOlt7Im1vbnRoIjoxMCwiZXZlbnRzIjpbeyJkYXkiOjEzLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNS0xMC0xMyJ9LHsiZGF5IjoxNiwiY29sbGVjdGlvbnMiOlt7ImlkIjoxNzUsInN0YXR1cyI6IiJ9LHsiaWQiOjE3Niwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNS0xMC0xNiJ9LHsiZGF5IjoyMCwiY29sbGVjdGlvbnMiOlt7ImlkIjoxMTk2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTEwLTIwIn0seyJkYXkiOjIxLCJjb2xsZWN0aW9ucyI6W3siaWQiOjExOTYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjUtMTAtMjEifSx7ImRheSI6MjIsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTE5Niwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNS0xMC0yMiJ9LHsiZGF5IjoyMywiY29sbGVjdGlvbnMiOlt7ImlkIjoxMTk2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTEwLTIzIn0seyJkYXkiOjI0LCJjb2xsZWN0aW9ucyI6W3siaWQiOjExOTYsInN0YXR1cyI6IiJ9LHsiaWQiOjE3NSwic3RhdHVzIjoiIn0seyJpZCI6MTc2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTEwLTI0In0seyJkYXkiOjI1LCJjb2xsZWN0aW9ucyI6W3siaWQiOjExOTYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjUtMTAtMjUifSx7ImRheSI6MjYsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTE5Niwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNS0xMC0yNiJ9XX0seyJtb250aCI6MTEsImV2ZW50cyI6W3siZGF5IjozLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE3NSwic3RhdHVzIjoiIn0seyJpZCI6MTc2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTExLTAzIn0seyJkYXkiOjEyLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE3NSwic3RhdHVzIjoiIn0seyJpZCI6MTc2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTExLTEyIn0seyJkYXkiOjIwLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE3NSwic3RhdHVzIjoiIn0seyJpZCI6MTc2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTExLTIwIn0seyJkYXkiOjI4LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE3NSwic3RhdHVzIjoiIn0seyJpZCI6MTc2LCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTExLTI4In1dfSx7Im1vbnRoIjoxMiwiZXZlbnRzIjpbeyJkYXkiOjgsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjUtMTItMDgifSx7ImRheSI6MTYsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjUtMTItMTYifSx7ImRheSI6MjQsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjUtMTItMjQifSx7ImRheSI6MjUsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTgwLCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI1LTEyLTI1In1dfV19LHsieWVhciI6MjAyNiwibW9udGhzIjpbeyJtb250aCI6MSwiZXZlbnRzIjpbeyJkYXkiOjEsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTgwLCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI2LTAxLTAxIn0seyJkYXkiOjYsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDEtMDYifSx7ImRheSI6MTQsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDEtMTQifSx7ImRheSI6MjIsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDEtMjIifSx7ImRheSI6MzAsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTc1LCJzdGF0dXMiOiIifSx7ImlkIjoxNzYsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDEtMzAifV19LHsibW9udGgiOjIsImV2ZW50cyI6W3siZGF5IjoxNiwiY29sbGVjdGlvbnMiOlt7ImlkIjoxODAsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDItMTYifV19LHsibW9udGgiOjQsImV2ZW50cyI6W3siZGF5IjozLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNi0wNC0wMyJ9XX0seyJtb250aCI6NSwiZXZlbnRzIjpbeyJkYXkiOjE4LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNi0wNS0xOCJ9XX0seyJtb250aCI6NywiZXZlbnRzIjpbeyJkYXkiOjEsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTgwLCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI2LTA3LTAxIn1dfSx7Im1vbnRoIjo4LCJldmVudHMiOlt7ImRheSI6MywiY29sbGVjdGlvbnMiOlt7ImlkIjoxODAsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDgtMDMifV19LHsibW9udGgiOjksImV2ZW50cyI6W3siZGF5IjozMCwiY29sbGVjdGlvbnMiOlt7ImlkIjoxODAsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjYtMDktMzAifV19LHsibW9udGgiOjEwLCJldmVudHMiOlt7ImRheSI6MTIsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTgwLCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI2LTEwLTEyIn1dfSx7Im1vbnRoIjoxMiwiZXZlbnRzIjpbeyJkYXkiOjI1LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNi0xMi0yNSJ9XX1dfSx7InllYXIiOjIwMjcsIm1vbnRocyI6W3sibW9udGgiOjEsImV2ZW50cyI6W3siZGF5IjoxLCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNy0wMS0wMSJ9XX0seyJtb250aCI6MiwiZXZlbnRzIjpbeyJkYXkiOjE1LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNy0wMi0xNSJ9XX0seyJtb250aCI6MywiZXZlbnRzIjpbeyJkYXkiOjI2LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNy0wMy0yNiJ9XX0seyJtb250aCI6NSwiZXZlbnRzIjpbeyJkYXkiOjI0LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNy0wNS0yNCJ9XX0seyJtb250aCI6NywiZXZlbnRzIjpbeyJkYXkiOjEsImNvbGxlY3Rpb25zIjpbeyJpZCI6MTgwLCJzdGF0dXMiOiIifV0sImRhdGUiOiIyMDI3LTA3LTAxIn1dfSx7Im1vbnRoIjo4LCJldmVudHMiOlt7ImRheSI6MiwiY29sbGVjdGlvbnMiOlt7ImlkIjoxODAsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjctMDgtMDIifV19LHsibW9udGgiOjksImV2ZW50cyI6W3siZGF5Ijo2LCJjb2xsZWN0aW9ucyI6W3siaWQiOjE4MCwic3RhdHVzIjoiIn1dLCJkYXRlIjoiMjAyNy0wOS0wNiJ9LHsiZGF5IjozMCwiY29sbGVjdGlvbnMiOlt7ImlkIjoxODAsInN0YXR1cyI6IiJ9XSwiZGF0ZSI6IjIwMjctMDktMzAifV19XX1dfQ=="
+    }
+  ]
+}
