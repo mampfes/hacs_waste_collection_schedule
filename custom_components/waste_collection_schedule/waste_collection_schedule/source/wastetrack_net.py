@@ -29,6 +29,7 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.service.IntraMaps import STREET_TYPE_ABBREVIATIONS
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API = "https://v2.wastetrack.net/self_service"
@@ -52,6 +53,28 @@ def _headers(*_, key, **__) -> dict[str, str]:
     return {"Origin": site, "Referer": f"{site}/"}
 
 
+# The locator matches whole street types only ("Rd, Oatley" finds nothing) and
+# chokes on a state or postcode, so the search spells abbreviations out.
+_STATE_OR_POSTCODE = re.compile(r"^(nsw|act|vic|qld|sa|wa|tas|nt|\d{4})$", re.I)
+
+
+def _search_text(address: str) -> str:
+    """The address as the locator matches it, "20 Smith Ave, Kogarah NSW 2217" -> "20 Smith Avenue, Kogarah"."""
+    words: list[str] = []
+    for word in address.split():
+        bare, comma = word.rstrip(","), "," if word.endswith(",") else ""
+        bare = bare.rstrip(".")
+        if _STATE_OR_POSTCODE.match(bare):
+            continue
+        # The word straight after the house number is a name ("St Georges Rd").
+        after_number = len(words) == 1 and words[0][:1].isdigit()
+        if not after_number:
+            full = STREET_TYPE_ABBREVIATIONS.get(bare.upper())
+            bare = full.title() if full else bare
+        words.append(bare + comma)
+    return " ".join(words).rstrip(",")
+
+
 def _normalise(text: str) -> str:
     return " ".join(text.replace(",", " ").split()).lower()
 
@@ -73,7 +96,7 @@ def _pick_site(response, token, *, address, **_) -> str:
         raise SourceArgumentNotFound("address", address)
     if len(sites) == 1:
         return next(iter(sites.values()))
-    wanted = _normalise(address)
+    wanted = _normalise(_search_text(address))
     for name, site_id in sites.items():
         if _normalise(name) == wanted:
             return site_id
@@ -212,7 +235,7 @@ class Source(BaseSource):
                 data=lambda token, *, key, address, **_: {
                     "key": key,
                     "token": token,
-                    "search": address,
+                    "search": _search_text(address),
                 },
                 headers=_headers,
                 pick=_pick_site,
