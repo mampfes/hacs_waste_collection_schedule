@@ -101,7 +101,7 @@ Done: **umweltverbaende.at (AT)**: `umweltverbaende_at` (15 districts as `REGION
 - **html** (22): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `bromsgrove_gov_uk`, `cornwall_gov_uk`, `dover_gov_uk`, `eaststaffsbc_gov_uk`, `folkestone_hythe_gov_uk`, `geelongaustralia_com_au`, `glasgow_gov_uk`, `ittre_be`, `mijnafvalwijzer_nl`, `mundaring_wa_gov_au`, `oldham_gov_uk`, `poznan_pl`, `renodjurs_dk`, `sidec_lu`, `solihull_gov_uk`, `swansea_gov_uk`, `torbay_council_gov_uk`, `varmdo_se`, `walsall_gov_uk`, `wolverhampton_gov_uk`
 - **json** (18): `armadale_wa_gov_au`, `blackpool_gov_uk`, `canterbury_gov_uk`, `dorset_gov_uk`, `ekosystem_wroc_pl`, `fenland_gov_uk`, `hygea_be`, `nvaa_se`, `odenserenovation_dk`, `palmcoast_fl_gov`, `panda_ie`, `poriruacity_govt_nz`, `ressourceindsamling_dk`, `sivom_rivedroite_fr`, `tkeliai_lt`, `vestfor_dk`, `warszawa19115_pl`, `wastenet_org_nz`
 - **json/html** (6): `ardsandnorthdown_gov_uk`, `charnwood_gov_uk`, `egn_abfallkalender_de`, `pireva_se`, `schweinfurt_de`, `tonnenleerung_de`
-- **?** (4): `pembrokeshire_gov_uk`, `subiaco_wa_gov_au`, `victoriapark_wa_gov_au`, `villagebonconseil_ca`
+- **?** (3): `pembrokeshire_gov_uk`, `victoriapark_wa_gov_au`, `villagebonconseil_ca`
 - **ics/json** (2): `ecoapp_ecoservice_lt`, `lumire_se`
 - **ics/html** (2): `grosswangen_ch`, `merton_gov_uk`
 - **ics** (2): `newcastle_gov_uk`, `strathfield_nsw_gov_au`
@@ -114,7 +114,7 @@ Done: **umweltverbaende.at (AT)**: `umweltverbaende_at` (15 districts as `REGION
 - **html** (30): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `castlepoint_gov_uk`, `chichester_gov_uk`, `clissonsevremaine_fr`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `fairfieldcity_nsw_gov_au`, `gardenbags_co_nz`, `gmina_sroda_slaska_pl`, `ipswich_gov_uk`, `irado_nl`, `islington_gov_uk`, `midsussex_gov_uk`, `newforest_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `samiljo_se`, `stadtwerke_singen_de`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
 - **json/html** (17): `gateshead_gov_uk`, `gleneira_vic_gov_au`, `gmina_zgierz_pl`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `memotri_agglo_pau_fr`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`, `vogeldisposal_com`
 - **ics/json** (10): `airdrie_ca`, `api_golemio_cz`, `ekonovus_lt`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `potsdam_de`, `republicservices_com`, `sanantonio_gov`, `smiecioplan_pl`
-- **?** (4): `eth_erd_hu`, `popuvky_cz`, `southampton_gov_uk`, `tsceskybrod_cz`
+- **?** (3): `eth_erd_hu`, `popuvky_cz`, `southampton_gov_uk`, `tsceskybrod_cz`
 - **ics/json/html** (3): `barrie_ca`, `beg_logistics_de`, `rir_no`
 - **json/xml** (2): `ciudad_de_la_costa_uy`, `grandbesancon_fr`
 - **csv** (2): `data_montpellier3m_fr`, `scenicrim_qld_gov_au`
