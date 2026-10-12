@@ -1,0 +1,109 @@
+{
+  "recorded_at": "2026-10-12",
+  "interactions": [
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php ff312659d7",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "final_url": "https://ecoharmonogram.pl/api/api.php",
+      "body": "{\"body\":[[\"action\",\"getTowns\"],[\"appVersion\",\"107\"],[\"clientId\",\"6f7278e5352fe28d\"],[\"customApp\",\"legnica\"],[\"funcVersion\",\"3\"],[\"lng\",\"pl\"],[\"systemId\",\"1\"],[\"townName\",\"Legnica\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 12 Oct 2026 22:50:27 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "180",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "envoy",
+        "x-envoy-upstream-service-time": "210"
+      },
+      "content_b64": "77u/eyJ0b3ducyI6W3siaWQiOiIxMzAiLCJjb21tdW5pdHlJZCI6IjI1IiwibmFtZSI6IkxlZ25pY2EiLCJkaXN0cmljdCI6IkxlZ25pY2EiLCJwcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUiLCJpY29uIjoiaHR0cHM6XC9cL2Vjb2hhcm1vbm9ncmFtLnBsXC9lY29wYWdlbmV3XC9sb2dvXC9sZWduaWNhLnBuZyIsImlzU3RyTm1yUmVxIjoiMSIsInNjaGVkdWxlUGVyaW9kSWQiOjF9XX0="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php abf8682229",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "final_url": "https://ecoharmonogram.pl/api/api.php",
+      "body": "{\"body\":[[\"action\",\"getSchedulePeriods\"],[\"appVersion\",\"107\"],[\"clientId\",\"6f7278e5352fe28d\"],[\"customApp\",\"legnica\"],[\"funcVersion\",\"3\"],[\"lng\",\"pl\"],[\"systemId\",\"1\"],[\"townId\",\"130\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 12 Oct 2026 22:50:27 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "97",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "envoy",
+        "x-envoy-upstream-service-time": "143"
+      },
+      "content_b64": "77u/eyJzY2hlZHVsZVBlcmlvZHMiOlt7ImlkIjoiODg3MiIsInN0YXJ0RGF0ZSI6IjIwMjUtMDEtMDEiLCJlbmREYXRlIjoiMjAyNS0xMi0zMSIsImNoYW5nZURhdGUiOiIyMDI1LTEwLTI0IDE1OjEzOjAxIn1dfQ=="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php b98237fa08",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "final_url": "https://ecoharmonogram.pl/api/api.php",
+      "body": "{\"body\":[[\"action\",\"getStreets\"],[\"appVersion\",\"107\"],[\"choosedStreetIds\",\"\"],[\"clientId\",\"6f7278e5352fe28d\"],[\"customApp\",\"legnica\"],[\"funcVersion\",\"3\"],[\"groupId\",\"1\"],[\"lng\",\"pl\"],[\"number\",\"27\"],[\"schedulePeriodId\",\"8872\"],[\"streetName\",\"Bieszczadzka\"],[\"systemId\",\"1\"],[\"townId\",\"130\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 12 Oct 2026 22:50:27 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "301",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "envoy",
+        "x-envoy-upstream-service-time": "169"
+      },
+      "content_b64": "77u/eyJzdHJlZXRzIjpbeyJpZCI6IjIzOTE0NzM0IiwibmFtZSI6IkJpZXN6Y3phZHprYSIsInJlZ2lvbiI6IiIsIm51bWJlcnMiOiIxIiwibnVtYmVyRnJvbSI6IiIsIm51bWJlclRvIjoiIiwic2lkZXMiOiIiLCJnMSI6IiIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJMZWduaWNhIiwidG93bkRpc3RyaWN0IjoiTGVnbmljYSIsInRvd25Qcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSx7ImlkIjoiMjM5MTQ3MzUiLCJuYW1lIjoiQmllc3pjemFkemthIiwicmVnaW9uIjoiIiwibnVtYmVycyI6IjEiLCJudW1iZXJGcm9tIjoiIiwibnVtYmVyVG8iOiIiLCJzaWRlcyI6IlBBUktJTkciLCJnMSI6IiIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJMZWduaWNhIiwidG93bkRpc3RyaWN0IjoiTGVnbmljYSIsInRvd25Qcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSx7ImlkIjoiMjM5MTQ3MzYiLCJuYW1lIjoiQmllc3pjemFkemthIiwicmVnaW9uIjoiIiwibnVtYmVycyI6IjYiLCJudW1iZXJGcm9tIjoiIiwibnVtYmVyVG8iOiIiLCJzaWRlcyI6IkdBWkJVRCIsImcxIjoiIiwiZzIiOiIiLCJnMyI6IiIsImc0IjoiIiwiZzUiOiIiLCJ0b3duTmFtZSI6IkxlZ25pY2EiLCJ0b3duRGlzdHJpY3QiOiJMZWduaWNhIiwidG93blByb3ZpbmNlIjoiRG9sbm9cdTAxNWJsXHUwMTA1c2tpZSJ9LHsiaWQiOiIyMzkxNDczMyIsIm5hbWUiOiJCaWVzemN6YWR6a2EiLCJyZWdpb24iOiIiLCJudW1iZXJzIjoiMzFBIiwibnVtYmVyRnJvbSI6IiIsIm51bWJlclRvIjoiIiwic2lkZXMiOiIiLCJnMSI6IiIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJMZWduaWNhIiwidG93bkRpc3RyaWN0IjoiTGVnbmljYSIsInRvd25Qcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSx7ImlkIjoiMjM5MTQ3MzciLCJuYW1lIjoiQmllc3pjemFkemthIiwicmVnaW9uIjoiIiwibnVtYmVycyI6IjMxQSIsIm51bWJlckZyb20iOiIiLCJudW1iZXJUbyI6IiIsInNpZGVzIjoiTUFSR08iLCJnMSI6IiIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJMZWduaWNhIiwidG93bkRpc3RyaWN0IjoiTGVnbmljYSIsInRvd25Qcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSx7ImlkIjoiMjM5MTQ3MzgiLCJuYW1lIjoiQmllc3pjemFkemthIiwicmVnaW9uIjoiIiwibnVtYmVycyI6IjMxQSIsIm51bWJlckZyb20iOiIiLCJudW1iZXJUbyI6IiIsInNpZGVzIjoiVE9NUEVYIiwiZzEiOiIiLCJnMiI6IiIsImczIjoiIiwiZzQiOiIiLCJnNSI6IiIsInRvd25OYW1lIjoiTGVnbmljYSIsInRvd25EaXN0cmljdCI6IkxlZ25pY2EiLCJ0b3duUHJvdmluY2UiOiJEb2xub1x1MDE1YmxcdTAxMDVza2llIn1dLCJ0eXBlIjo0LCJzZWFyY2giOnsic2NoZWR1bGVQZXJpb2RJZCI6Ijg4NzIiLCJ0b3duSWQiOiIxMzAiLCJudW1iZXIiOiIyNyIsInN0cmVldE5hbWUiOiJCaWVzemN6YWR6a2EiLCJjaG9vc2VkU3RyZWV0SWRzIjoiIn0sImdyb3VwcyI6eyJpdGVtcyI6W10sImdyb3VwSWQiOiIifX0="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php 64144fa856",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "final_url": "https://ecoharmonogram.pl/api/api.php",
+      "body": "{\"body\":[[\"action\",\"getSchedules\"],[\"appVersion\",\"107\"],[\"clientId\",\"6f7278e5352fe28d\"],[\"customApp\",\"legnica\"],[\"funcVersion\",\"3\"],[\"lng\",\"pl\"],[\"schedulePeriodId\",\"8872\"],[\"streetId\",\"23914734\"],[\"systemId\",\"1\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 12 Oct 2026 22:50:27 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "1023",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "envoy",
+        "x-envoy-upstream-service-time": "153"
+      },
+      "content_b64": "77u/eyJzY2hlZHVsZXMiOlt7ImlkIjoiMTg5NDI3MzYiLCJtb250aCI6IjMiLCJkYXlzIjoiMzEiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQ1In0seyJpZCI6IjE4OTQyNzM3IiwibW9udGgiOiI2IiwiZGF5cyI6IjMwIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NSJ9LHsiaWQiOiIxODk0MjczOCIsIm1vbnRoIjoiOSIsImRheXMiOiIzMCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDUifSx7ImlkIjoiMTg5NDI3MzkiLCJtb250aCI6IjEyIiwiZGF5cyI6IjIwIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NSJ9LHsiaWQiOiIxODk0MjgyNyIsIm1vbnRoIjoiMSIsImRheXMiOiIzOzEwOzE3OzI0OzMxIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0MiJ9LHsiaWQiOiIxODk0MjgyOCIsIm1vbnRoIjoiMiIsImRheXMiOiI3OzE0OzIxOzI4IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0MiJ9LHsiaWQiOiIxODk0MjgyOSIsIm1vbnRoIjoiMyIsImRheXMiOiI3OzE0OzIxOzI4IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0MiJ9LHsiaWQiOiIxODk0MjgzMCIsIm1vbnRoIjoiNCIsImRheXMiOiI0OzExOzE4OzI1IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0MiJ9LHsiaWQiOiIxODk0MjgzMSIsIm1vbnRoIjoiNSIsImRheXMiOiIyOzk7MTY7MjM7MzAiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQyIn0seyJpZCI6IjE4OTQyODMyIiwibW9udGgiOiI2IiwiZGF5cyI6IjY7MTM7MjA7MjciLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQyIn0seyJpZCI6IjE4OTQyODMzIiwibW9udGgiOiI3IiwiZGF5cyI6IjQ7MTE7MTg7MjUiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQyIn0seyJpZCI6IjE4OTQyODM0IiwibW9udGgiOiI4IiwiZGF5cyI6IjE7ODsxNTsyMjsyOSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDIifSx7ImlkIjoiMTg5NDI4MzUiLCJtb250aCI6IjkiLCJkYXlzIjoiNTsxMjsxOTsyNiIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDIifSx7ImlkIjoiMTg5NDI4MzYiLCJtb250aCI6IjEwIiwiZGF5cyI6IjM7MTA7MTc7MjQ7MzEiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQyIn0seyJpZCI6IjE4OTQyODM3IiwibW9udGgiOiIxMSIsImRheXMiOiI3OzE0OzIxOzI4IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0MiJ9LHsiaWQiOiIxODk0MjgzOCIsIm1vbnRoIjoiMTIiLCJkYXlzIjoiNTsxMjsxOTsyNiIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDIifSx7ImlkIjoiMTg5NDI5NzciLCJtb250aCI6IjEiLCJkYXlzIjoiNjsxMzsyMDsyNyIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5NzgiLCJtb250aCI6IjIiLCJkYXlzIjoiMzsxMDsxNzsyNCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5NzkiLCJtb250aCI6IjMiLCJkYXlzIjoiMzsxMDsxNzsyNDszMSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5ODAiLCJtb250aCI6IjQiLCJkYXlzIjoiNzsxNDsyMTsyOCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5ODEiLCJtb250aCI6IjUiLCJkYXlzIjoiNTsxMjsxOTsyNiIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5ODIiLCJtb250aCI6IjYiLCJkYXlzIjoiMjs5OzE2OzIzOzMwIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NyJ9LHsiaWQiOiIxODk0Mjk4MyIsIm1vbnRoIjoiNyIsImRheXMiOiI3OzE0OzIxOzI4IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NyJ9LHsiaWQiOiIxODk0Mjk4NCIsIm1vbnRoIjoiOCIsImRheXMiOiI0OzExOzE4OzI1IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NyJ9LHsiaWQiOiIxODk0Mjk4NSIsIm1vbnRoIjoiOSIsImRheXMiOiIxOzg7MTU7MjI7MjkiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQ3In0seyJpZCI6IjE4OTQyOTg2IiwibW9udGgiOiIxMCIsImRheXMiOiI2OzEzOzIwOzI3IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NyJ9LHsiaWQiOiIxODk0Mjk4NyIsIm1vbnRoIjoiMTEiLCJkYXlzIjoiMzsxMDsxNzsyNCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDI5ODgiLCJtb250aCI6IjEyIiwiZGF5cyI6IjE7ODsxNTsyMjsyOSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDcifSx7ImlkIjoiMTg5NDMwNTEiLCJtb250aCI6IjEiLCJkYXlzIjoiMjAiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzUxIn0seyJpZCI6IjE4OTQzMDUyIiwibW9udGgiOiIyIiwiZGF5cyI6IjE3IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM1MSJ9LHsiaWQiOiIxODk0MzA1MyIsIm1vbnRoIjoiMyIsImRheXMiOiIxNyIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNTEifSx7ImlkIjoiMTg5NDMwNTQiLCJtb250aCI6IjQiLCJkYXlzIjoiMTQiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzUxIn0seyJpZCI6IjE4OTQzMDU1IiwibW9udGgiOiI1IiwiZGF5cyI6IjE5IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM1MSJ9LHsiaWQiOiIxODk0MzA1NiIsIm1vbnRoIjoiNiIsImRheXMiOiIxNiIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNTEifSx7ImlkIjoiMTg5NDMwNTciLCJtb250aCI6IjciLCJkYXlzIjoiMTQiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzUxIn0seyJpZCI6IjE4OTQzMDU4IiwibW9udGgiOiI4IiwiZGF5cyI6IjE4IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM1MSJ9LHsiaWQiOiIxODk0MzA1OSIsIm1vbnRoIjoiOSIsImRheXMiOiIxNSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNTEifSx7ImlkIjoiMTg5NDMwNjAiLCJtb250aCI6IjEwIiwiZGF5cyI6IjIwIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM1MSJ9LHsiaWQiOiIxODk0MzA2MSIsIm1vbnRoIjoiMTEiLCJkYXlzIjoiMTciLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzUxIn0seyJpZCI6IjE4OTQzMDYyIiwibW9udGgiOiIxMiIsImRheXMiOiIxNSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNTEifSx7ImlkIjoiMTg5NDMwNjMiLCJtb250aCI6IjEiLCJkYXlzIjoiNyIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjQiLCJtb250aCI6IjIiLCJkYXlzIjoiMyIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjUiLCJtb250aCI6IjMiLCJkYXlzIjoiMzszMSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjYiLCJtb250aCI6IjUiLCJkYXlzIjoiNSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjciLCJtb250aCI6IjYiLCJkYXlzIjoiMjszMCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjgiLCJtb250aCI6IjgiLCJkYXlzIjoiNCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNjkiLCJtb250aCI6IjkiLCJkYXlzIjoiMSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDQifSx7ImlkIjoiMTg5NDMwNzAiLCJtb250aCI6IjEwIiwiZGF5cyI6IjYiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQ0In0seyJpZCI6IjE4OTQzMDcxIiwibW9udGgiOiIxMSIsImRheXMiOiIzIiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0NCJ9LHsiaWQiOiIxODk0MzA3MiIsIm1vbnRoIjoiMiIsImRheXMiOiI2IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0OCJ9LHsiaWQiOiIxODk0MzA3MyIsIm1vbnRoIjoiNCIsImRheXMiOiIxMCIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDgifSx7ImlkIjoiMTg5NDMwNzQiLCJtb250aCI6IjYiLCJkYXlzIjoiNSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDgifSx7ImlkIjoiMTg5NDMwNzUiLCJtb250aCI6IjgiLCJkYXlzIjoiNyIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDgifSx7ImlkIjoiMTg5NDMwNzYiLCJtb250aCI6IjEwIiwiZGF5cyI6IjkiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQ4In1dLCJzY2hlZHVsZURlc2NyaXB0aW9uIjpbeyJpZCI6Ijg2MzQ1IiwibW9udGgiOiIxMCIsImRheXMiOiI5IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0OCIsIm5hbWUiOiJQXHUwMTQyYXRub1x1MDE1Ylx1MDEwNyIsImRlc2NyaXB0aW9uIjoiIiwidHlwZUlkIjoiMzMiLCJjb2xvciI6IiNGRjAwMDAiLCJub3RpZmljYXRpb25UeXBlIjoiMSIsIm5vdGlmaWNhdGlvblRleHQiOiJaYmxpXHUwMTdjYSBzaVx1MDExOSB0ZXJtaW4gcFx1MDE0MmF0bm9cdTAxNWJjaSIsIm5vdGlmaWNhdGlvbkRheXNCZWZvcmUiOiI2IiwidmlzSW5Db21wbCI6IjAiLCJjdXN0b21UZXh0V2hlbk5vRGF0ZXMiOiIiLCJkb05vdFNob3dEYXRlcyI6IjAifSx7ImlkIjoiODYzNDIiLCJtb250aCI6IjEwIiwiZGF5cyI6IjkiLCJ5ZWFyIjoiMjAyNSIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6Ijg2MzQ4IiwibmFtZSI6Ik9kcGFkeSB6bWllc3phbmUiLCJkZXNjcmlwdGlvbiI6IiIsInR5cGVJZCI6IjUiLCJjb2xvciI6IiMwMDAwMDAiLCJub3RpZmljYXRpb25UeXBlIjoiMCIsIm5vdGlmaWNhdGlvblRleHQiOiIiLCJub3RpZmljYXRpb25EYXlzQmVmb3JlIjoiMCIsInZpc0luQ29tcGwiOiIwIiwiY3VzdG9tVGV4dFdoZW5Ob0RhdGVzIjoiIiwiZG9Ob3RTaG93RGF0ZXMiOiIwIn0seyJpZCI6Ijg2MzQ3IiwibW9udGgiOiIxMCIsImRheXMiOiI5IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0OCIsIm5hbWUiOiJPZHBhZHkgYmlvZGVncmFkb3dhbG5lIiwiZGVzY3JpcHRpb24iOiIiLCJ0eXBlSWQiOiIwIiwiY29sb3IiOiIjN2E0YTRhIiwibm90aWZpY2F0aW9uVHlwZSI6IjAiLCJub3RpZmljYXRpb25UZXh0IjoiIiwibm90aWZpY2F0aW9uRGF5c0JlZm9yZSI6IjAiLCJ2aXNJbkNvbXBsIjoiMCIsImN1c3RvbVRleHRXaGVuTm9EYXRlcyI6IiIsImRvTm90U2hvd0RhdGVzIjoiMCJ9LHsiaWQiOiI4NjM1MSIsIm1vbnRoIjoiMTAiLCJkYXlzIjoiOSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDgiLCJuYW1lIjoiUGFwaWVyIiwiZGVzY3JpcHRpb24iOiIiLCJ0eXBlSWQiOiIwIiwiY29sb3IiOiIjMTE4Y2RhIiwibm90aWZpY2F0aW9uVHlwZSI6IjAiLCJub3RpZmljYXRpb25UZXh0IjoiIiwibm90aWZpY2F0aW9uRGF5c0JlZm9yZSI6IjAiLCJ2aXNJbkNvbXBsIjoiMCIsImN1c3RvbVRleHRXaGVuTm9EYXRlcyI6IiIsImRvTm90U2hvd0RhdGVzIjoiMCJ9LHsiaWQiOiI4NjM0NCIsIm1vbnRoIjoiMTAiLCJkYXlzIjoiOSIsInllYXIiOiIyMDI1Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiODYzNDgiLCJuYW1lIjoiU3prXHUwMTQybyIsImRlc2NyaXB0aW9uIjoiIiwidHlwZUlkIjoiMjEiLCJjb2xvciI6IiMzY2ZmMDAiLCJub3RpZmljYXRpb25UeXBlIjoiMCIsIm5vdGlmaWNhdGlvblRleHQiOiIiLCJub3RpZmljYXRpb25EYXlzQmVmb3JlIjoiMCIsInZpc0luQ29tcGwiOiIwIiwiY3VzdG9tVGV4dFdoZW5Ob0RhdGVzIjoiIiwiZG9Ob3RTaG93RGF0ZXMiOiIwIn0seyJpZCI6Ijg2MzQ4IiwibW9udGgiOiIxMCIsImRheXMiOiI5IiwieWVhciI6IjIwMjUiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiI4NjM0OCIsIm5hbWUiOiJPZHBhZHkgd2llbGtvZ2FiYXJ5dG93ZSIsImRlc2NyaXB0aW9uIjoiIiwidHlwZUlkIjoiNSIsImNvbG9yIjoiIzAwMDAwMCIsIm5vdGlmaWNhdGlvblR5cGUiOiIwIiwibm90aWZpY2F0aW9uVGV4dCI6IiIsIm5vdGlmaWNhdGlvbkRheXNCZWZvcmUiOiIwIiwidmlzSW5Db21wbCI6IjAiLCJjdXN0b21UZXh0V2hlbk5vRGF0ZXMiOiIiLCJkb05vdFNob3dEYXRlcyI6IjAifV0sInN0cmVldCI6eyJpZCI6IjIzOTE0NzM0IiwibmFtZSI6IkJpZXN6Y3phZHprYSIsInJlZ2lvbiI6IiIsIm51bWJlcnMiOiIxIiwibnVtYmVyRnJvbSI6IiIsIm51bWJlclRvIjoiIiwic2lkZXMiOiIiLCJzdGFtcCI6ImVlM2E4NWEyOGZkYWViMzhmZTk0ZjIzYTBiZWJlN2RiIn0sInRvd24iOnsibmFtZSI6IkxlZ25pY2EiLCJkaXN0cmljdCI6IkxlZ25pY2EiLCJwcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSwic2NoZWR1bGVQZXJpb2QiOnsic3RhcnREYXRlIjoiMjAyNS0wMS0wMSIsImVuZERhdGUiOiIyMDI1LTEyLTMxIiwiY2hhbmdlRGF0ZSI6IjIwMjUtMTAtMjQgMTU6MTM6MDEifSwibmFtZSI6IlBMO1pNXzY7Ql8xO1BfMTtTWl8xO1dfNiIsImlkIjoiOTY5ODEzMiIsImdyb3VwbmFtZSI6IkplZG5vcm9kemlubmUiLCJzZWFyY2giOnsibnVtYmVyIjpudWxsfSwiZm9vdGVyIjoiICAifQ=="
+    }
+  ]
+}
