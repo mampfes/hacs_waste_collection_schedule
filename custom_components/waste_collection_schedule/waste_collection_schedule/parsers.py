@@ -2357,11 +2357,22 @@ class CsvParser(Parser["list[dict[str, str]]"]):
     the columns the source reads::
 
         parse = parsers.CsvParser(require=["date", "type"])
+
+    Pass ``columns`` (the column names, in order) for an export without a header
+    row; every line is then a data row::
+
+        parse = parsers.CsvParser(delimiter=";", columns=["id", "date", "type"])
     """
 
-    def __init__(self, delimiter: str = ",", require: "list[str] | None" = None):
+    def __init__(
+        self,
+        delimiter: str = ",",
+        require: "list[str] | None" = None,
+        columns: "list[str] | None" = None,
+    ):
         self.delimiter = delimiter
         self.require = require
+        self.columns = columns
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2372,7 +2383,9 @@ class CsvParser(Parser["list[dict[str, str]]"]):
         # Decode utf-8-sig so a UTF-8 BOM doesn't contaminate the first column
         # name (a common export quirk).
         text = response.content.decode("utf-8-sig", errors="replace")
-        reader = csv.DictReader(io.StringIO(text), delimiter=self.delimiter)
+        reader = csv.DictReader(
+            io.StringIO(text), fieldnames=self.columns, delimiter=self.delimiter
+        )
         rows = list(reader)
         if self.require:
             columns = set(reader.fieldnames or [])
