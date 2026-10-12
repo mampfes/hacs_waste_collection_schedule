@@ -56,21 +56,32 @@ def _headers(*_, key, **__) -> dict[str, str]:
 # The locator matches whole street types only ("Rd, Oatley" finds nothing) and
 # chokes on a state or postcode, so the search spells abbreviations out.
 _STATE_OR_POSTCODE = re.compile(r"^(nsw|act|vic|qld|sa|wa|tas|nt|\d{4})$", re.I)
+_STREET_TYPES = frozenset(STREET_TYPE_ABBREVIATIONS.values())
 
 
 def _search_text(address: str) -> str:
-    """The address as the locator matches it, "20 Smith Ave, Kogarah NSW 2217" -> "20 Smith Avenue, Kogarah"."""
+    """The address as the locator matches it, "20 Smith Ave, Kogarah NSW 2217" -> "20 Smith Avenue, Kogarah".
+
+    Only a trailing state or postcode is dropped, so a four-digit house number
+    survives. Only the street type is spelled out: the word straight after the
+    house number is part of the name ("10 St Georges Rd"), and nothing after
+    the street type is touched ("5 Main Rd, St Ives").
+    """
+    tokens = address.split()
+    while len(tokens) > 1 and _STATE_OR_POSTCODE.match(tokens[-1].strip(",.")):
+        tokens.pop()
     words: list[str] = []
-    for word in address.split():
+    expanding = True
+    for word in tokens:
         bare, comma = word.rstrip(","), "," if word.endswith(",") else ""
         bare = bare.rstrip(".")
-        if _STATE_OR_POSTCODE.match(bare):
-            continue
-        # The word straight after the house number is a name ("St Georges Rd").
-        after_number = len(words) == 1 and words[0][:1].isdigit()
-        if not after_number:
+        after_number = len(words) >= 1 and words[-1][:1].isdigit()
+        if expanding and not after_number:
             full = STREET_TYPE_ABBREVIATIONS.get(bare.upper())
-            bare = full.title() if full else bare
+            if full:
+                bare = full.title()
+            if full or bare.upper() in _STREET_TYPES:
+                expanding = False
         words.append(bare + comma)
     return " ".join(words).rstrip(",")
 
