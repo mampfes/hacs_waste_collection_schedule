@@ -1505,11 +1505,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "day_of_week": "Day Of Week"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_subiaco_wa_gov_au": {
@@ -1517,10 +1517,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "day_of_week": "Day Of Week"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_swan_wa_gov_au": {
         "title": "Quelle konfigurieren",
@@ -1925,7 +1926,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_hornsby_nsw_gov_au": {
@@ -1935,7 +1937,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_hume_vic_gov_au": {
         "title": "Quelle konfigurieren",
@@ -3270,10 +3274,13 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "street": "Straße",
-          "suburb": "Stadtteil"
+          "suburb": "Stadt"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname.",
+          "suburb": "Ihre Stadt oder Gemeinde."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -3283,9 +3290,13 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "street": "Straße",
-          "suburb": "Stadtteil"
+          "suburb": "Stadt"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname.",
+          "suburb": "Ihre Stadt oder Gemeinde."
+        }
       },
       "args_hawkesbury_nsw_gov_au": {
         "title": "Quelle konfigurieren",
@@ -7455,11 +7466,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "Ortsteil",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_smolo_cz": {
@@ -7467,10 +7480,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "Ortsteil",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_tsceskybrod_cz": {
         "title": "Quelle konfigurieren",
@@ -7891,7 +7907,8 @@
           "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_metropole_rennes_fr": {
@@ -7901,7 +7918,9 @@
           "calendar_title": "Kalender Titel",
           "commune": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_publidata_fr": {
         "title": "Quelle konfigurieren",
@@ -8105,10 +8124,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Stadt"
+          "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -8116,9 +8136,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Stadt"
+          "commune": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_mulhouse_alsace_fr": {
         "title": "Quelle konfigurieren",
@@ -8471,7 +8493,8 @@
           "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_sictomvds_com": {
@@ -8481,7 +8504,9 @@
           "calendar_title": "Kalender Titel",
           "commune": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_sivom_com": {
         "title": "Quelle konfigurieren",
@@ -18042,11 +18067,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "ssl_verify": "Ssl Verify",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_deponia_hu": {
@@ -18055,10 +18081,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "ssl_verify": "Ssl Verify",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_fkf_bo_hu": {
         "title": "Quelle konfigurieren",
@@ -18152,8 +18180,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "ssl_verify": "Ssl Verify"
+          "area": "Gebiet"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -18164,8 +18191,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area": "Gebiet",
-          "ssl_verify": "Ssl Verify"
+          "area": "Gebiet"
         },
         "data_description": {}
       },
@@ -21792,13 +21818,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "Ortsteil",
           "property_type": "Property Type",
           "street": "Straße",
           "sub_district": "Sub District"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_rybnik_pl": {
@@ -21806,12 +21834,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Bezirk",
+          "district": "Ortsteil",
           "property_type": "Property Type",
           "street": "Straße",
           "sub_district": "Sub District"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_warszawa19115_pl": {
         "title": "Quelle konfigurieren",
@@ -23570,14 +23601,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "community": "Gemeinde",
-          "kehricht_zone": "Kehricht-Zone (nur Kreuzlingen, optional)",
-          "zone": "Zone / Abfuhrgebiet (optional)"
+          "kehricht_zone": "Kehricht Zone",
+          "zone": "Ortsteil"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "community": "Gemeindename genau wie auf der Entsorgungsplan-Seite der KVA Thurgau aufgeführt (z. B. 'Kreuzlingen').",
-          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch (auf der Startseite unter 'Wir für Sie' → 'Entsorgung').",
-          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch (auf der Startseite unter 'Für Private' → 'Entsorgungspläne') — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
+          "community": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zone": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -23586,13 +23616,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "community": "Gemeinde",
-          "kehricht_zone": "Kehricht-Zone (nur Kreuzlingen, optional)",
-          "zone": "Zone / Abfuhrgebiet (optional)"
+          "kehricht_zone": "Kehricht Zone",
+          "zone": "Ortsteil"
         },
         "data_description": {
-          "community": "Gemeindename genau wie auf der Entsorgungsplan-Seite der KVA Thurgau aufgeführt (z. B. 'Kreuzlingen').",
-          "kehricht_zone": "Nur für Kreuzlingen: Kehricht-Abfuhrzone gemäss dem städtischen Zonenplan — 'Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'. Leer lassen für alle drei Zonen. Welche Strassen zu welcher Zone gehören, zeigt die Karte Kehricht, Abfuhrplan Kreuzlingen unter kreuzlingen.ch (auf der Startseite unter 'Wir für Sie' → 'Entsorgung').",
-          "zone": "Zone bzw. Abfuhrgebiet innerhalb der Gemeinde, falls der Entsorgungsplan Sammlungen nach Gebiet unterteilt (z. B. 'Ost' für das Grüngut-Gebiet in Kreuzlingen). Leer lassen für alle Zonen; zonierte Sammlungen erhalten dann den Zonennamen als Zusatz. Die Zonennamen stehen links neben dem Datumsraster im Entsorgungsplan Ihrer Gemeinde auf kvatg.ch (auf der Startseite unter 'Für Private' → 'Entsorgungspläne') — bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt."
+          "community": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zone": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "args_alchenstorf_ch": {
@@ -26733,7 +26762,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_easthants_gov_uk": {
@@ -26745,7 +26775,9 @@
           "garden_calendar_number": "Garden Calendar Number",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_eastherts_gov_uk": {
         "title": "Quelle konfigurieren",

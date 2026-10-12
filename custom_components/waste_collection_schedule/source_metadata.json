@@ -83,7 +83,9 @@
   },
   "brimbank_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/brimbank_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Your collection day (Monday to Friday) and calendar cycle (A or B) are shown on the map on the back of the council's waste calendar PDF (linked from https://www.brimbank.vic.gov.au/living-here/my-home/rubbish-recycling-and-other-waste/bins)."
+    },
     "urls": {}
   },
   "brisbane_qld_gov_au": {
@@ -356,7 +358,9 @@
   },
   "subiaco_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/subiaco_wa_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '241 Barker Road SUBIACO')."
+    },
     "urls": {}
   },
   "swan_wa_gov_au": {
@@ -472,7 +476,9 @@
   },
   "hornsby_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hornsby_nsw_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Search for your address on the Hornsby Shire Council website (Property > Waste and recycling) and enter it as it appears in the autocomplete result, e.g. `1 Cherrybrook Road, West Pennant Hills, 2125`."
+    },
     "urls": {}
   },
   "hume_vic_gov_au": {
@@ -823,7 +829,7 @@
   "sutherlandshire_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutherlandshire_nsw_gov_au.md",
     "howto": {
-      "en": "Use the address exactly as it appears on council correspondence — street type spelled out in full (Street, Place, Avenue). You can check your address on the map at https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection"
+      "en": "Use the address exactly as it appears on council correspondence, with the street type spelled out in full (Street, Place, Avenue). You can check your address on the map at https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection"
     },
     "urls": {}
   },
@@ -1810,7 +1816,7 @@
   "smolo_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smolo_cz.md",
     "howto": {
-      "en": "Open the SMOLO a.s. household-waste page (https://www.smolo.cz/sluzby/odpadove-hospodarstvi/informace-pro-domacnosti/) and look up the current 'Třinec – harmonogram' PDF for the SKO/BIO/SEP schedule. Use the 'ČÁST MĚSTA' (part of town / district) column value as the 'district' argument, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'. If your district appears multiple times in the table with different street lists, also set 'street' to one street name from the 'LOKALITA' column to disambiguate."
+      "en": "Open the SMOLO a.s. household-waste page (https://www.smolo.cz/sluzby/odpadove-hospodarstvi/informace-pro-domacnosti/) and look up the current 'Třinec - harmonogram' PDF for the SKO/BIO/SEP schedule. Use the 'ČÁST MĚSTA' (part of town) column value as the district, e.g. 'Staré Město', 'Lyžbice', 'Nebory' or 'Karpentná'. If your district appears in several rows with different street lists, also set the street to one street name from the 'LOKALITA' column."
     },
     "urls": {}
   },
@@ -1976,7 +1982,10 @@
   },
   "cc-montesquieu_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your commune as it is listed on https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets (for example 'La Brède' or 'Saint-Médard-d'Eyrans').",
+      "fr": "Saisissez votre commune telle qu'elle figure sur https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets (par exemple « La Brède » ou « Saint-Médard-d'Eyrans »)."
+    },
     "urls": {}
   },
   "mulhouse_alsace_fr": {
@@ -2093,7 +2102,10 @@
   },
   "sictomvds_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sictomvds_com.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your commune as it is named on the map at https://www.sictomvds.com (for example 'Velleminfroy').",
+      "fr": "Saisissez votre commune telle qu'elle apparaît sur la carte de https://www.sictomvds.com (par exemple « Velleminfroy »)."
+    },
     "urls": {}
   },
   "sivom_com": {
@@ -3936,7 +3948,7 @@
   "deponia_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/deponia_hu.md",
     "howto": {
-      "en": "Open https://deponia.hu/telepuleskereso and pick your settlement. If a street dropdown appears, copy the street name exactly as listed (including house-number ranges such as 'Ady Endre utca 1-20.'). Smaller settlements have a single calendar and do not need a street."
+      "en": "Open https://deponia.hu/telepuleskereso and pick your settlement. If a street dropdown appears, copy the street name exactly as listed (including house-number ranges such as 'Ady Endre utca 1-20.'). Smaller settlements have a single calendar and do not need a street. No login is needed."
     },
     "urls": {}
   },
@@ -4859,7 +4871,7 @@
   "rybnik_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rybnik_pl.md",
     "howto": {
-      "en": "Download the current schedule PDF for your district from the Rybnik city website: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/ (navigate to the current year's schedules). Open page 1 of the PDF and find your Rejon (sub-district zone) name in the left column of the table."
+      "en": "Choose the property type: 'residential' (zamieszkałe), 'commercial' (firmy/niezamieszkałe) or 'multifamily' (zabudowa wielorodzinna). For residential and commercial properties enter the district group (e.g. 'Paruszowiec / Kamien') and optionally the Rejon (zone) from the left column of the PDF cover table (e.g. 'Kamień 1'); leave it blank for all zones of the district. The PDFs are on https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/. For multifamily housing enter your street as listed in the 'ULICE' column, and the 'DZIELNICA' value (e.g. 'Stodoły') as sub-district if the street is listed for several areas."
     },
     "urls": {}
   },
@@ -5336,10 +5348,8 @@
   "kvatg_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kvatg_ch.md",
     "howto": {
-      "de": "Suchen Sie Ihre Gemeinde auf https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ und geben Sie deren Namen ein. Falls der Entsorgungsplan Ihrer Gemeinde eine Sammlung nach Zonen unterteilt (z. B. die Grüngut-Gebiete in Kreuzlingen oder die Abfuhrgebiete in Frauenfeld), können Sie optional den Zonennamen wie im Plan gedruckt angeben.",
-      "en": "Find your community on https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ and enter its name. If your community's disposal plan splits a collection by zone (e.g. the green waste districts in Kreuzlingen or the collection areas in Frauenfeld), you can optionally enter the zone name as printed in the plan.",
-      "fr": "Recherchez votre commune sur https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ et saisissez son nom. Si le plan d'élimination de votre commune répartit une collecte par zones (p. ex. les secteurs de déchets verts à Kreuzlingen ou les zones de collecte à Frauenfeld), vous pouvez éventuellement indiquer le nom de la zone tel qu'imprimé dans le plan.",
-      "it": "Cerca il tuo comune su https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ e inserisci il suo nome. Se il piano di smaltimento del tuo comune suddivide una raccolta per zone (ad es. le aree del verde a Kreuzlingen o le zone di raccolta a Frauenfeld), puoi facoltativamente indicare il nome della zona come stampato nel piano."
+      "de": "Suchen Sie Ihre Gemeinde auf https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ und geben Sie deren Namen ein. Falls der Entsorgungsplan Ihrer Gemeinde eine Sammlung nach Zonen unterteilt (z. B. die Grüngut-Gebiete in Kreuzlingen oder die Abfuhrgebiete in Frauenfeld), können Sie optional den Zonennamen wie im Plan gedruckt angeben; bei einem ungültigen Wert wird eine Liste der gültigen Namen angezeigt. Nur für Kreuzlingen wählt kehricht_zone die Kehricht-Zone des städtischen Zonenplans ('Süd & Tägerwilen', 'Nord und Ost' oder 'Zentrum'); leer lassen für alle drei.",
+      "en": "Find your community on https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/ and enter its name. If your community's disposal plan splits a collection by zone (e.g. the green waste districts in Kreuzlingen or the collection areas in Frauenfeld), you can optionally enter the zone name as printed in the plan; an invalid value shows a list of the valid names. Only for Kreuzlingen, kehricht_zone selects the household-waste zone of the city's own zone plan ('Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'); leave it empty to get all three."
     },
     "urls": {}
   },
@@ -5402,7 +5412,10 @@
   },
   "feuerthalen_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/feuerthalen_ch.md",
-    "howto": {},
+    "howto": {
+      "de": "Keine Angaben nötig: Feuerthalen veröffentlicht einen Abfallkalender für die ganze Gemeinde.",
+      "en": "No configuration needed: Feuerthalen publishes one waste calendar for the whole municipality."
+    },
     "urls": {}
   },
   "ics_hochfelden_ch": {
@@ -6230,9 +6243,11 @@
   "easthants_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/easthants_gov_uk.md",
     "howto": {
-      "en": "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN. Alternatively, enter the displayed calendar numbers manually."
+      "en": "Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN; the council then supplies your bin and garden calendars itself. Alternatively, enter the calendar number shown on that page (for example 16 for 'Calendar 16') and, if you have a garden waste subscription, the numeric part of your garden calendar (for example 1 for 'G1')."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "eastherts_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md",

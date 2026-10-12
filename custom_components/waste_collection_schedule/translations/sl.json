@@ -1497,11 +1497,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "day_of_week": "Day Of Week"
+          "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_subiaco_wa_gov_au": {
@@ -1509,10 +1509,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "day_of_week": "Day Of Week"
+          "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_swan_wa_gov_au": {
         "title": "Configure Source",
@@ -1917,7 +1918,8 @@
           "address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_hornsby_nsw_gov_au": {
@@ -1927,7 +1929,9 @@
           "calendar_title": "Calendar Title",
           "address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_hume_vic_gov_au": {
         "title": "Configure Source",
@@ -3262,10 +3266,13 @@
           "calendar_title": "Calendar Title",
           "house_number": "Hišna številka",
           "street": "Ulica",
-          "suburb": "Suburb"
+          "suburb": "Mesto"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice.",
+          "suburb": "Vaše mesto ali kraj."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -3275,9 +3282,13 @@
           "calendar_title": "Calendar Title",
           "house_number": "Hišna številka",
           "street": "Ulica",
-          "suburb": "Suburb"
+          "suburb": "Mesto"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice.",
+          "suburb": "Vaše mesto ali kraj."
+        }
       },
       "args_hawkesbury_nsw_gov_au": {
         "title": "Configure Source",
@@ -7426,11 +7437,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_smolo_cz": {
@@ -7438,10 +7451,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_tsceskybrod_cz": {
         "title": "Configure Source",
@@ -7859,10 +7875,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_metropole_rennes_fr": {
@@ -7870,9 +7887,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_publidata_fr": {
         "title": "Configure Source",
@@ -8066,10 +8085,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -8077,9 +8097,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_mulhouse_alsace_fr": {
         "title": "Configure Source",
@@ -8429,10 +8451,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_sictomvds_com": {
@@ -8440,9 +8463,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_sivom_com": {
         "title": "Configure Source",
@@ -17969,11 +17994,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "ssl_verify": "Ssl Verify",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_deponia_hu": {
@@ -17982,10 +18008,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "ssl_verify": "Ssl Verify",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
@@ -18079,8 +18107,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "ssl_verify": "Ssl Verify"
+          "area": "Območje"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -18091,8 +18118,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Območje",
-          "ssl_verify": "Ssl Verify"
+          "area": "Območje"
         },
         "data_description": {}
       },
@@ -21683,13 +21709,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "property_type": "Property Type",
           "street": "Ulica",
           "sub_district": "Sub District"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_rybnik_pl": {
@@ -21697,12 +21725,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "property_type": "Property Type",
           "street": "Ulica",
           "sub_district": "Sub District"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_warszawa19115_pl": {
         "title": "Configure Source",
@@ -23453,12 +23484,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "community": "Skupnost",
+          "community": "Občina",
           "kehricht_zone": "Kehricht Zone",
-          "zone": "Cona"
+          "zone": "Naselje"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "community": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "zone": "Vaše naselje ali del občine."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -23466,11 +23499,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "community": "Skupnost",
+          "community": "Občina",
           "kehricht_zone": "Kehricht Zone",
-          "zone": "Cona"
+          "zone": "Naselje"
         },
-        "data_description": {}
+        "data_description": {
+          "community": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "zone": "Vaše naselje ali del občine."
+        }
       },
       "args_alchenstorf_ch": {
         "title": "Configure Source",
@@ -26610,7 +26646,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_easthants_gov_uk": {
@@ -26622,7 +26659,9 @@
           "garden_calendar_number": "Garden Calendar Number",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Vaša edinstvena referenčna številka nepremičnine (UPRN). Najdete jo na {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_eastherts_gov_uk": {
         "title": "Configure Source",

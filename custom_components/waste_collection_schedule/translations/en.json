@@ -453,9 +453,7 @@
           "day": "Collection day"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
-          "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_brimbank_vic_gov_au": {
@@ -466,10 +464,7 @@
           "calendar": "Calendar cycle",
           "day": "Collection day"
         },
-        "data_description": {
-          "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
-          "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF."
-        }
+        "data_description": {}
       },
       "args_brisbane_qld_gov_au": {
         "title": "Configure Source",
@@ -1522,11 +1517,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Area",
-          "day_of_week": "Day Of Week"
+          "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_subiaco_wa_gov_au": {
@@ -1534,10 +1529,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Area",
-          "day_of_week": "Day Of Week"
+          "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_swan_wa_gov_au": {
         "title": "Configure Source",
@@ -1947,7 +1943,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_hornsby_nsw_gov_au": {
@@ -1957,7 +1954,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_hume_vic_gov_au": {
         "title": "Configure Source",
@@ -3320,14 +3319,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "street": "Street Name",
-          "suburb": "Suburb"
+          "street": "Street",
+          "suburb": "City"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number, e.g. 5.",
-          "street": "Street name spelled out in full, e.g. Cleveland Place.",
-          "suburb": "Suburb, e.g. BONNET BAY."
+          "house_number": "Your house number.",
+          "street": "Your street name.",
+          "suburb": "Your city or town."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -3336,13 +3335,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "street": "Street Name",
-          "suburb": "Suburb"
+          "street": "Street",
+          "suburb": "City"
         },
         "data_description": {
-          "house_number": "House number, e.g. 5.",
-          "street": "Street name spelled out in full, e.g. Cleveland Place.",
-          "suburb": "Suburb, e.g. BONNET BAY."
+          "house_number": "Your house number.",
+          "street": "Your street name.",
+          "suburb": "Your city or town."
         }
       },
       "args_hawkesbury_nsw_gov_au": {
@@ -7547,13 +7546,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District (část města)",
-          "street": "Street (optional, for disambiguation)"
+          "district": "District",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "district": "The town district / part of town ('část města') exactly as it appears in the SMOLO Třinec collection schedule, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'.",
-          "street": "Optional street name used to disambiguate districts that appear on multiple rows of the schedule with different street lists (e.g. 'Staré Město', 'Oldřichovice', 'Lyžbice')."
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "reconfigure_smolo_cz": {
@@ -7561,12 +7560,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District (část města)",
-          "street": "Street (optional, for disambiguation)"
+          "district": "District",
+          "street": "Street"
         },
         "data_description": {
-          "district": "The town district / part of town ('část města') exactly as it appears in the SMOLO Třinec collection schedule, e.g. 'Staré Město', 'Lyžbice', 'Nebory', 'Karpentná'.",
-          "street": "Optional street name used to disambiguate districts that appear on multiple rows of the schedule with different street lists (e.g. 'Staré Město', 'Oldřichovice', 'Lyžbice')."
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "args_tsceskybrod_cz": {
@@ -7997,11 +7996,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Town or Rennes quarter"
+          "commune": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "Name of the town (or Rennes quarter) as listed on the Rennes Métropole collection calendar page."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_metropole_rennes_fr": {
@@ -8009,10 +8008,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Town or Rennes quarter"
+          "commune": "Municipality"
         },
         "data_description": {
-          "commune": "Name of the town (or Rennes quarter) as listed on the Rennes Métropole collection calendar page."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_publidata_fr": {
@@ -8223,11 +8222,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "City"
+          "commune": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "Your city of Montesquieu's community: Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -8235,10 +8234,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "City"
+          "commune": "Municipality"
         },
         "data_description": {
-          "commune": "Your city of Montesquieu's community: Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_mulhouse_alsace_fr": {
@@ -8623,7 +8622,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "Name of the municipality as shown on the SICTOM map (e.g. 'Velleminfroy')."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_sictomvds_com": {
@@ -8634,7 +8633,7 @@
           "commune": "Municipality"
         },
         "data_description": {
-          "commune": "Name of the municipality as shown on the SICTOM map (e.g. 'Velleminfroy')."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_sivom_com": {
@@ -18200,15 +18199,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Settlement",
-          "ssl_verify": "Verify SSL certificate",
+          "city": "City",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Settlement name as shown on deponia.hu/telepuleskereso.",
-          "ssl_verify": "Verify the HTTPS certificate. Set to false only if your environment cannot validate deponia.hu.",
-          "street": "Street name as shown after selecting the settlement. Required only for towns that publish street-level calendars."
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "reconfigure_deponia_hu": {
@@ -18216,14 +18213,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "Settlement",
-          "ssl_verify": "Verify SSL certificate",
+          "city": "City",
           "street": "Street"
         },
         "data_description": {
-          "city": "Settlement name as shown on deponia.hu/telepuleskereso.",
-          "ssl_verify": "Verify the HTTPS certificate. Set to false only if your environment cannot validate deponia.hu.",
-          "street": "Street name as shown after selecting the settlement. Required only for towns that publish street-level calendars."
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "args_fkf_bo_hu": {
@@ -18318,13 +18313,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Settlement / district",
-          "ssl_verify": "Verify SSL certificate"
+          "area": "Settlement / district"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "area": "Settlement or district name as shown on siokom.hu/jaratterv/ (e.g. Balatonvilágos, Siófok Cs-v).",
-          "ssl_verify": "Verify the HTTPS certificate."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_siokom_hu": {
@@ -18332,13 +18324,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area": "Settlement / district",
-          "ssl_verify": "Verify SSL certificate"
+          "area": "Settlement / district"
         },
-        "data_description": {
-          "area": "Settlement or district name as shown on siokom.hu/jaratterv/ (e.g. Balatonvilágos, Siófok Cs-v).",
-          "ssl_verify": "Verify the HTTPS certificate."
-        }
+        "data_description": {}
       },
       "args_stkh_hu": {
         "title": "Configure Source",
@@ -22037,16 +22025,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "property_type": "Property Type",
+          "property_type": "Property type",
           "street": "Street",
-          "sub_district": "Sub District"
+          "sub_district": "Sub-district (Rejon)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "district": "The district / area group name (determines which PDF is downloaded). Must be one of: Boguszowice Stare, Chwalowice / Boguszowice Os. / Klokocin, Gotartowice, Grabownia / Golejow / Ochojec, Ligota, Maroko-Nowiny, Niedobczyce, Niewiadom, Orzepowice / Stodoly / Chwalecice, Paruszowiec / Kamien, Polnoc, Radziejow / Popielow, Smolna / Zamyslow / Meksyk, Srodmiescie / Wielopole / Kuznia, Zebrzydowice.",
-          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe), 'multifamily' (zabudowa wielorodzinna / blocks of flats).",
-          "street": "Multifamily only: your street as listed in the 'ULICE' column of the multifamily PDF (e.g. 'Rudzka'). If the street is listed for several areas, also set sub_district to the 'DZIELNICA' value (e.g. 'Stodoły').",
-          "sub_district": "The Rejon (zone) name as shown in the left column of the PDF cover-page table (e.g. 'Zebrzydowice 1', 'Paruszowiec-Piaski', 'Kamień 1'). Leave blank to return all zones in the district."
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "reconfigure_rybnik_pl": {
@@ -22055,15 +22041,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "district": "District",
-          "property_type": "Property Type",
+          "property_type": "Property type",
           "street": "Street",
-          "sub_district": "Sub District"
+          "sub_district": "Sub-district (Rejon)"
         },
         "data_description": {
-          "district": "The district / area group name (determines which PDF is downloaded). Must be one of: Boguszowice Stare, Chwalowice / Boguszowice Os. / Klokocin, Gotartowice, Grabownia / Golejow / Ochojec, Ligota, Maroko-Nowiny, Niedobczyce, Niewiadom, Orzepowice / Stodoly / Chwalecice, Paruszowiec / Kamien, Polnoc, Radziejow / Popielow, Smolna / Zamyslow / Meksyk, Srodmiescie / Wielopole / Kuznia, Zebrzydowice.",
-          "property_type": "Type of property. One of: 'residential' (zamieszkałe, default), 'commercial' (firmy/niezamieszkałe), 'multifamily' (zabudowa wielorodzinna / blocks of flats).",
-          "street": "Multifamily only: your street as listed in the 'ULICE' column of the multifamily PDF (e.g. 'Rudzka'). If the street is listed for several areas, also set sub_district to the 'DZIELNICA' value (e.g. 'Stodoły').",
-          "sub_district": "The Rejon (zone) name as shown in the left column of the PDF cover-page table (e.g. 'Zebrzydowice 1', 'Paruszowiec-Piaski', 'Kamień 1'). Leave blank to return all zones in the district."
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "args_warszawa19115_pl": {
@@ -23861,15 +23845,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "community": "Community",
-          "kehricht_zone": "Kehricht zone (Kreuzlingen only, optional)",
-          "zone": "Zone / district (optional)"
+          "community": "Municipality",
+          "kehricht_zone": "Kehricht zone (Kreuzlingen only)",
+          "zone": "District"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
-          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the Kehricht, Abfuhrplan Kreuzlingen map at kreuzlingen.ch (open 'Wir für Sie' → 'Entsorgung' from the main page).",
-          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on kvatg.ch (open 'Für Private' → 'Entsorgungspläne' from the main page) — an invalid value shows a list of the valid names."
+          "community": "The name of your municipality, as shown on the provider's website.",
+          "zone": "Your district or part of the municipality."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -23877,14 +23860,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "community": "Community",
-          "kehricht_zone": "Kehricht zone (Kreuzlingen only, optional)",
-          "zone": "Zone / district (optional)"
+          "community": "Municipality",
+          "kehricht_zone": "Kehricht zone (Kreuzlingen only)",
+          "zone": "District"
         },
         "data_description": {
-          "community": "Community name exactly as listed on the KVA Thurgau disposal plan page (e.g. 'Kreuzlingen').",
-          "kehricht_zone": "Only for Kreuzlingen: household-waste (Kehricht) zone from the city's own zone plan — 'Süd & Tägerwilen', 'Nord und Ost' or 'Zentrum'. Leave empty to get all three zones. Which streets belong to which zone is shown on the Kehricht, Abfuhrplan Kreuzlingen map at kreuzlingen.ch (open 'Wir für Sie' → 'Entsorgung' from the main page).",
-          "zone": "Collection zone or district within the community, if the disposal plan splits collections by area (e.g. 'Ost' for the Kreuzlingen green waste district). Leave empty to get all zones; zoned collections are then suffixed with their zone name. The zone names are printed left of the date grid in your community's plan on kvatg.ch (open 'Für Private' → 'Entsorgungspläne' from the main page) — an invalid value shows a list of the valid names."
+          "community": "The name of your municipality, as shown on the provider's website.",
+          "zone": "Your district or part of the municipality."
         }
       },
       "args_alchenstorf_ch": {
@@ -27030,13 +27012,11 @@
           "calendar_title": "Calendar Title",
           "calendar_number": "Calendar number",
           "garden_calendar_number": "Garden waste calendar number",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "calendar_number": "Optional manual bin calendar number, used when no UPRN is provided.",
-          "garden_calendar_number": "Optional manual garden waste calendar number (the numeric part of G1-G10), used when no UPRN is provided.",
-          "uprn": "The property's Unique Property Reference Number (UPRN). When set, the council automatically supplies its bin and garden calendars."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_easthants_gov_uk": {
@@ -27046,12 +27026,10 @@
           "calendar_title": "Calendar Title",
           "calendar_number": "Calendar number",
           "garden_calendar_number": "Garden waste calendar number",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_number": "Optional manual bin calendar number, used when no UPRN is provided.",
-          "garden_calendar_number": "Optional manual garden waste calendar number (the numeric part of G1-G10), used when no UPRN is provided.",
-          "uprn": "The property's Unique Property Reference Number (UPRN). When set, the council automatically supplies its bin and garden calendars."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastherts_gov_uk": {

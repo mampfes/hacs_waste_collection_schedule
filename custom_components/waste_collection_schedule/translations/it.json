@@ -1505,11 +1505,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "area": "Area",
-          "day_of_week": "Day Of Week"
+          "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_subiaco_wa_gov_au": {
@@ -1517,10 +1517,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "area": "Area",
-          "day_of_week": "Day Of Week"
+          "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_swan_wa_gov_au": {
         "title": "Configurazione Sorgente",
@@ -1925,7 +1926,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_hornsby_nsw_gov_au": {
@@ -1935,7 +1937,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_hume_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -3268,12 +3272,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "street": "Strada",
-          "suburb": "Sobborgo"
+          "house_number": "Numero civico",
+          "street": "Via",
+          "suburb": "Città"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via.",
+          "suburb": "La vostra città o paese."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -3281,11 +3288,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "street": "Strada",
-          "suburb": "Sobborgo"
+          "house_number": "Numero civico",
+          "street": "Via",
+          "suburb": "Città"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via.",
+          "suburb": "La vostra città o paese."
+        }
       },
       "args_hawkesbury_nsw_gov_au": {
         "title": "Configurazione Sorgente",
@@ -7445,11 +7456,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "street": "Strada"
+          "district": "Quartiere",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_smolo_cz": {
@@ -7457,10 +7470,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "street": "Strada"
+          "district": "Quartiere",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_tsceskybrod_cz": {
         "title": "Configurazione Sorgente",
@@ -7881,7 +7897,8 @@
           "commune": "Comune"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_metropole_rennes_fr": {
@@ -7891,7 +7908,9 @@
           "calendar_title": "Nome Calendario",
           "commune": "Comune"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
       },
       "args_publidata_fr": {
         "title": "Configurazione Sorgente",
@@ -8088,7 +8107,8 @@
           "commune": "Comune"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -8098,7 +8118,9 @@
           "calendar_title": "Nome Calendario",
           "commune": "Comune"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
       },
       "args_mulhouse_alsace_fr": {
         "title": "Configurazione Sorgente",
@@ -8451,7 +8473,8 @@
           "commune": "Comune"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_sictomvds_com": {
@@ -8461,7 +8484,9 @@
           "calendar_title": "Nome Calendario",
           "commune": "Comune"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
       },
       "args_sivom_com": {
         "title": "Configurazione Sorgente",
@@ -17988,11 +18013,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "ssl_verify": "Ssl Verify",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_deponia_hu": {
@@ -18001,10 +18027,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "ssl_verify": "Ssl Verify",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_fkf_bo_hu": {
         "title": "Configurazione Sorgente",
@@ -18098,8 +18126,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "area": "Area",
-          "ssl_verify": "Ssl Verify"
+          "area": "Area"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -18110,8 +18137,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "area": "Area",
-          "ssl_verify": "Ssl Verify"
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -21744,13 +21770,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
+          "district": "Quartiere",
           "property_type": "Property Type",
-          "street": "Strada",
+          "street": "Via",
           "sub_district": "Sub District"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_rybnik_pl": {
@@ -21758,12 +21786,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
+          "district": "Quartiere",
           "property_type": "Property Type",
-          "street": "Strada",
+          "street": "Via",
           "sub_district": "Sub District"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_warszawa19115_pl": {
         "title": "Configurazione Sorgente",
@@ -23522,14 +23553,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "community": "Comune",
-          "kehricht_zone": "Zona Kehricht (solo Kreuzlingen, facoltativo)",
-          "zone": "Zona / area di raccolta (facoltativo)"
+          "kehricht_zone": "Kehricht Zone",
+          "zone": "Quartiere"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
-          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su kreuzlingen.ch (dalla pagina principale: 'Wir für Sie' → 'Entsorgung') mostra quali strade appartengono a quale zona.",
-          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su kvatg.ch (dalla pagina principale: 'Für Private' → 'Entsorgungspläne') — un valore non valido mostra l'elenco dei nomi validi."
+          "community": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zone": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_kvatg_ch": {
@@ -23538,13 +23568,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "community": "Comune",
-          "kehricht_zone": "Zona Kehricht (solo Kreuzlingen, facoltativo)",
-          "zone": "Zona / area di raccolta (facoltativo)"
+          "kehricht_zone": "Kehricht Zone",
+          "zone": "Quartiere"
         },
         "data_description": {
-          "community": "Nome del comune esattamente come indicato sulla pagina dei piani di smaltimento della KVA Thurgau (ad es. 'Kreuzlingen').",
-          "kehricht_zone": "Solo per Kreuzlingen: zona di raccolta dei rifiuti domestici (Kehricht) secondo il piano zonale comunale — 'Süd & Tägerwilen', 'Nord und Ost' o 'Zentrum'. Lasciare vuoto per tutte e tre le zone. La mappa Kehricht, Abfuhrplan Kreuzlingen su kreuzlingen.ch (dalla pagina principale: 'Wir für Sie' → 'Entsorgung') mostra quali strade appartengono a quale zona.",
-          "zone": "Zona o area di raccolta all'interno del comune, se il piano di smaltimento suddivide le raccolte per area (ad es. 'Ost' per l'area del verde di Kreuzlingen). Lasciare vuoto per tutte le zone; le raccolte zonali riportano poi il nome della zona. I nomi delle zone si trovano a sinistra della griglia delle date nel piano del comune su kvatg.ch (dalla pagina principale: 'Für Private' → 'Entsorgungspläne') — un valore non valido mostra l'elenco dei nomi validi."
+          "community": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zone": "Il vostro quartiere o parte del comune."
         }
       },
       "args_alchenstorf_ch": {
@@ -26685,7 +26714,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_easthants_gov_uk": {
@@ -26697,7 +26727,9 @@
           "garden_calendar_number": "Garden Calendar Number",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_eastherts_gov_uk": {
         "title": "Configurazione Sorgente",

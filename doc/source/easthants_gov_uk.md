@@ -1,50 +1,59 @@
 # East Hampshire District Council
 
-Support for schedules provided by [East Hampshire District Council](https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar), serving East Hampshire, UK.
+Support for schedules provided by [East Hampshire District Council](https://www.easthants.gov.uk).
 
-The source can look up a property's current calendars from its UPRN. This automatically includes subscribed garden waste when the council lists a garden calendar for the property. Manual calendar numbers remain available as a fallback.
+Waste collection schedules for East Hampshire District Council.
 
 ## Configuration via configuration.yaml
 
-### Recommended: UPRN lookup
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: easthants_gov_uk
       args:
-        uprn: 1710041123
+        garden_calendar_number: GARDEN_CALENDAR_NUMBER
+        uprn: UPRN
 ```
 
-### Manual calendar numbers
+### Using calendar_number
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: easthants_gov_uk
       args:
-        calendar_number: 16
-        garden_calendar_number: 1
+        garden_calendar_number: GARDEN_CALENDAR_NUMBER
+        calendar_number: CALENDAR_NUMBER
 ```
 
 ### Configuration Variables
 
-**uprn**
-*(String or integer) (optional)* The property's Unique Property Reference Number. When supplied, this takes precedence over manual calendar numbers and automatically follows the bin and garden calendar links assigned by the council.
+**uprn**  
+*(string) (alternative)*
 
-**calendar_number**
-*(Integer) (optional)* The bin calendar number assigned to your address. Required when `uprn` is not supplied.
+**calendar_number**  
+*(string) (alternative)*
 
-**garden_calendar_number**
-*(Integer) (optional)* The numeric part of the G1-G10 garden waste calendar number assigned to subscribed households. For example, enter `1` for calendar G1. This is only needed with manual calendar-number configuration.
+**garden_calendar_number**  
+*(string) (optional)*
 
-## How to find the configuration values
+Provide one of: `uprn` or `calendar_number`.
 
-Open the council's [Find your bin calendar](https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar) page and use the map near the bottom to select your address. The map displays its **Unique Property Ref**, bin calendar, and any garden waste calendar.
+## Example
 
-## Returned waste types
+### Using calendar_number
 
-- Rubbish
-- Recycling
-- Glass
-- Garden waste, when the property has a garden waste calendar or one is configured manually
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: easthants_gov_uk
+      args:
+        garden_calendar_number: 1
+        calendar_number: 16
+```
+
+## How to get the source arguments
+
+Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN; the council then supplies your bin and garden calendars itself. Alternatively, enter the calendar number shown on that page (for example 16 for 'Calendar 16') and, if you have a garden waste subscription, the numeric part of your garden calendar (for example 1 for 'G1').

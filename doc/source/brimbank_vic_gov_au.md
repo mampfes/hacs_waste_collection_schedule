@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Brimbank City Council](https://www.brimbank.vic.gov.au).
 
+Source for Brimbank City Council waste collection.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -16,10 +18,10 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **day**  
-*(string) (required)* Your collection day: Monday, Tuesday, Wednesday, Thursday, or Friday.
+*(string) (required)*
 
 **calendar**  
-*(string) (required)* Your calendar cycle: A or B.
+*(string) (required)*
 
 ## Example
 
@@ -34,4 +36,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Download the [Brimbank Waste Calendar PDF](https://serviceapi.brimbank.vic.gov.au/CMServiceAPI/Record/7854806/file/document) and check the map on the back page. Find your street on the map to determine your collection **day** (Monday to Friday) and **calendar** cycle (A or B).
+Your collection day (Monday to Friday) and calendar cycle (A or B) are shown on the map on the back of the council's waste calendar PDF (linked from https://www.brimbank.vic.gov.au/living-here/my-home/rubbish-recycling-and-other-waste/bins).
