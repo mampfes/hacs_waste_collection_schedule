@@ -29,6 +29,7 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
+from waste_collection_schedule.service.IntraMaps import STREET_TYPE_ABBREVIATIONS
 from waste_collection_schedule.transformers import ICSTransformer
 
 _API = "https://v2.wastetrack.net/self_service"
@@ -52,6 +53,39 @@ def _headers(*_, key, **__) -> dict[str, str]:
     return {"Origin": site, "Referer": f"{site}/"}
 
 
+# The locator matches whole street types only ("Rd, Oatley" finds nothing) and
+# chokes on a state or postcode, so the search spells abbreviations out.
+_STATE_OR_POSTCODE = re.compile(r"^(nsw|act|vic|qld|sa|wa|tas|nt|\d{4})$", re.I)
+_STREET_TYPES = frozenset(STREET_TYPE_ABBREVIATIONS.values())
+
+
+def _search_text(address: str) -> str:
+    """The address as the locator matches it, "20 Smith Ave, Kogarah NSW 2217" -> "20 Smith Avenue, Kogarah".
+
+    Only a trailing state or postcode is dropped, so a four-digit house number
+    survives. Only the street type is spelled out: the word straight after the
+    house number is part of the name ("10 St Georges Rd"), and nothing after
+    the street type is touched ("5 Main Rd, St Ives").
+    """
+    tokens = address.split()
+    while len(tokens) > 1 and _STATE_OR_POSTCODE.match(tokens[-1].strip(",.")):
+        tokens.pop()
+    words: list[str] = []
+    expanding = True
+    for word in tokens:
+        bare, comma = word.rstrip(","), "," if word.endswith(",") else ""
+        bare = bare.rstrip(".")
+        after_number = len(words) >= 1 and words[-1][:1].isdigit()
+        if expanding and not after_number:
+            full = STREET_TYPE_ABBREVIATIONS.get(bare.upper())
+            if full:
+                bare = full.title()
+            if full or bare.upper() in _STREET_TYPES:
+                expanding = False
+        words.append(bare + comma)
+    return " ".join(words).rstrip(",")
+
+
 def _normalise(text: str) -> str:
     return " ".join(text.replace(",", " ").split()).lower()
 
@@ -73,7 +107,7 @@ def _pick_site(response, token, *, address, **_) -> str:
         raise SourceArgumentNotFound("address", address)
     if len(sites) == 1:
         return next(iter(sites.values()))
-    wanted = _normalise(address)
+    wanted = _normalise(_search_text(address))
     for name, site_id in sites.items():
         if _normalise(name) == wanted:
             return site_id
@@ -212,7 +246,7 @@ class Source(BaseSource):
                 data=lambda token, *, key, address, **_: {
                     "key": key,
                     "token": token,
-                    "search": address,
+                    "search": _search_text(address),
                 },
                 headers=_headers,
                 pick=_pick_site,
