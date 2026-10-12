@@ -37,12 +37,14 @@ class CollectionAggregator:
         exclude_types: Iterable[str] | None = None,
         include_today: bool = False,
         start_index: int | None = None,
+        unique_types: bool = False,
     ) -> list[Collection]:
         """Return list of all entries, limited by count and/or leadtime.
 
         Keyword arguments:
         count -- limits the number of returned entries (default=10)
         leadtime -- limits the timespan in days of returned entries (default=7, 0 = today)
+        unique_types -- keep the earliest entry per type before index/count limits
         """
         return self._filter(
             self._entries,
@@ -52,6 +54,7 @@ class CollectionAggregator:
             exclude_types=exclude_types,
             include_today=include_today,
             start_index=start_index,
+            unique_types=unique_types,
         )
 
     def get_upcoming_group_by_day(
@@ -62,6 +65,7 @@ class CollectionAggregator:
         exclude_types: Iterable[str] | None = None,
         include_today: bool = False,
         start_index: int | None = None,
+        unique_types: bool = False,
     ) -> list[CollectionGroup]:
         """Return list of all entries, grouped by day, limited by count and/or leadtime."""
         entries = []
@@ -73,6 +77,7 @@ class CollectionAggregator:
                 include_types=include_types,
                 exclude_types=exclude_types,
                 include_today=include_today,
+                unique_types=unique_types,
             ),
             lambda e: e.date,
         )
@@ -95,6 +100,7 @@ class CollectionAggregator:
         exclude_types: Iterable[str] | None = None,
         include_today: bool = False,
         start_index: int | None = None,
+        unique_types: bool = False,
     ) -> list[Collection]:
         # remove unwanted waste types from include list
         if include_types is not None:
@@ -118,6 +124,16 @@ class CollectionAggregator:
 
         # ensure that entries are sorted by date
         entries.sort(key=lambda e: e.date)
+
+        # Keep the next collection of each type before applying index/count.
+        if unique_types:
+            seen: set[str] = set()
+            unique_entries: list[Collection] = []
+            for entry in entries:
+                if entry.type not in seen:
+                    seen.add(entry.type)
+                    unique_entries.append(entry)
+            entries = unique_entries
 
         # remove surplus entries
         if start_index is not None:
