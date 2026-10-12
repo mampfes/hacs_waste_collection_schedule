@@ -7526,8 +7526,7 @@
           "city_part": "Service area"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city_part": "Select whether waste is collected on even or odd weeks."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_mestorudna_cz": {
@@ -7537,9 +7536,7 @@
           "calendar_title": "Calendar Title",
           "city_part": "Service area"
         },
-        "data_description": {
-          "city_part": "Select whether waste is collected on even or odd weeks."
-        }
+        "data_description": {}
       },
       "args_smolo_cz": {
         "title": "Configure Source",
@@ -10206,10 +10203,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "showmobile": "Showmobile"
+          "showmobile": "Show mobile recycling center"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_schweinfurt_de": {
@@ -10218,9 +10216,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "showmobile": "Showmobile"
+          "showmobile": "Show mobile recycling center"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_awsh_de": {
         "title": "Configure Source",
@@ -12750,7 +12750,11 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "housenumber": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_egn_abfallkalender_de": {
@@ -12763,7 +12767,12 @@
           "housenumber": "House Number",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
+          "housenumber": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_eigenbetrieb_abfallwirtschaft_de": {
         "title": "Configure Source",
@@ -17369,7 +17378,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -17380,7 +17389,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {}
       },
@@ -19564,12 +19573,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "add": "Add",
-          "number": "Number",
+          "add": "House Number Addition",
+          "number": "House Number",
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Your house number.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_mijnafvalwijzer_nl": {
@@ -19577,11 +19588,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "add": "Add",
-          "number": "Number",
+          "add": "House Number Addition",
+          "number": "House Number",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Your house number.",
+          "postcode": "Your postcode."
+        }
       },
       "args_afvalstoffendienst_nl": {
         "title": "Configure Source",

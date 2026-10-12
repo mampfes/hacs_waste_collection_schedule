@@ -10039,7 +10039,8 @@
           "showmobile": "Showmobile"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_schweinfurt_de": {
@@ -10050,7 +10051,9 @@
           "address": "Adres",
           "showmobile": "Showmobile"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_awsh_de": {
         "title": "Bron configureren",
@@ -12564,13 +12567,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "district": "Wijk",
           "housenumber": "Huisnummer",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "housenumber": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_egn_abfallkalender_de": {
@@ -12578,12 +12585,17 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "city": "Stad",
+          "city": "Plaats",
           "district": "Wijk",
           "housenumber": "Huisnummer",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "housenumber": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_eigenbetrieb_abfallwirtschaft_de": {
         "title": "Bron configureren",
@@ -19303,11 +19315,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "add": "Add",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "reconfigure_mijnafvalwijzer_nl": {
@@ -19316,10 +19330,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "add": "Add",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
       },
       "args_afvalstoffendienst_nl": {
         "title": "Bron configureren",

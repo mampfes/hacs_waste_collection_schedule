@@ -10035,11 +10035,12 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
+          "address": "Adresse",
           "showmobile": "Showmobile"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_schweinfurt_de": {
@@ -10047,10 +10048,12 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
+          "address": "Adresse",
           "showmobile": "Showmobile"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_awsh_de": {
         "title": "Konfigurer Kilde",
@@ -12564,13 +12567,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "district": "District",
+          "city": "By",
+          "district": "Distrikt",
           "housenumber": "Husnummer",
-          "street": "Street"
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "district": "Dit distrikt eller del af kommunen",
+          "housenumber": "Dit husnummer",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_egn_abfallkalender_de": {
@@ -12578,12 +12585,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "district": "District",
+          "city": "By",
+          "district": "Distrikt",
           "housenumber": "Husnummer",
-          "street": "Street"
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "district": "Dit distrikt eller del af kommunen",
+          "housenumber": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
       },
       "args_eigenbetrieb_abfallwirtschaft_de": {
         "title": "Konfigurer Kilde",
@@ -19296,11 +19308,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "add": "Add",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_mijnafvalwijzer_nl": {
@@ -19309,10 +19323,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "add": "Add",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer"
+        }
       },
       "args_afvalstoffendienst_nl": {
         "title": "Konfigurer Kilde",

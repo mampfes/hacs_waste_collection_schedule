@@ -1809,7 +1809,7 @@
   "mestorudna_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md",
     "howto": {
-      "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572"
+      "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572. Select whether waste is collected on even or odd weeks."
     },
     "urls": {}
   },
@@ -2398,7 +2398,9 @@
   },
   "schweinfurt_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schweinfurt_de.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name as listed in the street dropdown at https://www.schweinfurt.de (e.g. 'Ahornstrasse'). Enable 'showmobile' to also include the mobile recycling center (Mobiler Wertstoffhof) dates."
+    },
     "urls": {}
   },
   "awsh_de": {
@@ -2873,7 +2875,9 @@
   },
   "egn_abfallkalender_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/egn_abfallkalender_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Wähle Ort, Ortsteil und Straße wie im EGN-Abfallkalender auf egn-abfallkalender.de und gib die Hausnummer an."
+    },
     "urls": {}
   },
   "eigenbetrieb_abfallwirtschaft_de": {
@@ -3787,7 +3791,10 @@
   },
   "tonnenleerung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tonnenleerung_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Öffne deine Straße (oder deinen Ort) auf https://tonnenleerung.de und kopiere die Adresse der Seite, z. B. `https://tonnenleerung.de/aic-fdb/affing`. Der Teil nach der Domain (`aic-fdb/affing`) funktioniert ebenfalls.",
+      "en": "Open your street (or village) on https://tonnenleerung.de and copy the address of the page, e.g. `https://tonnenleerung.de/aic-fdb/affing`. The part after the domain (`aic-fdb/affing`) also works."
+    },
     "urls": {}
   },
   "tonnenticker_pro_de": {
@@ -4276,7 +4283,9 @@
   },
   "sidec_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your commune as listed on the SIDEC calendar page, with its number, e.g. 'Mersch (2611)'. Leaving out the number lists the valid communes."
+    },
     "urls": {}
   },
   "valorlux_lu": {
@@ -4302,7 +4311,7 @@
   "mijnafvalwijzer_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mijnafvalwijzer_nl.md",
     "howto": {
-      "en": "INPUT ARGUMENTS ARE THE SAME AS THE ONES YOU FILL IN FOR YOUR HOME ADDRESS AT: https://www.mijnafvalwijzer.nl/"
+      "en": "Enter the same postcode, house number and (optional) addition as for your home address at https://www.mijnafvalwijzer.nl/"
     },
     "urls": {}
   },

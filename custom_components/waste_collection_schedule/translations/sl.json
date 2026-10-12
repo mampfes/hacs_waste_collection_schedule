@@ -10037,7 +10037,8 @@
           "showmobile": "Showmobile"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_schweinfurt_de": {
@@ -10048,7 +10049,9 @@
           "address": "Naslov",
           "showmobile": "Showmobile"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Vaš celoten naslov."
+        }
       },
       "args_awsh_de": {
         "title": "Configure Source",
@@ -12563,12 +12566,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "district": "Okrožje",
+          "district": "Naselje",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_egn_abfallkalender_de": {
@@ -12577,11 +12584,16 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "district": "Okrožje",
+          "district": "Naselje",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "district": "Vaše naselje ali del občine.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_eigenbetrieb_abfallwirtschaft_de": {
         "title": "Configure Source",
@@ -19294,11 +19306,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "add": "Add",
-          "number": "Številka",
+          "number": "Hišna številka",
           "postcode": "Poštna številka"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_mijnafvalwijzer_nl": {
@@ -19307,10 +19321,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "add": "Add",
-          "number": "Številka",
+          "number": "Hišna številka",
           "postcode": "Poštna številka"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Vaša hišna številka.",
+          "postcode": "Vaša poštna številka."
+        }
       },
       "args_afvalstoffendienst_nl": {
         "title": "Configure Source",
