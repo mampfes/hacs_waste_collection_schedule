@@ -34,7 +34,10 @@ _LOGGER = logging.getLogger(__name__)
 
 _URL = "https://www.easthants.gov.uk"
 _SCHEDULE_URL = f"{_URL}/bin-collections/find-your-bin-calendar"
-_ADDRESS_URL = "https://maps.easthants.gov.uk/easthampshire.aspx"
+# The council's map host has no working TLS certificate: it is served over plain
+# HTTP (https:// fails certificate verification), and so are its calendar links.
+_MAPS_HOST = "maps.easthants.gov.uk"
+_ADDRESS_URL = f"http://{_MAPS_HOST}/easthampshire.aspx"
 
 _MONTHS = {
     "JAN": 1,
@@ -119,10 +122,11 @@ def _calendar_links(html: str) -> tuple[dict[int, str], dict[int, str]]:
     return links, garden_links
 
 
-def _secure_calendar_url(href: str) -> str:
+def _calendar_url(href: str) -> str:
+    """The calendar link as the map host serves it: over plain HTTP."""
     url = urljoin(_ADDRESS_URL, href)
-    if url.startswith("http://maps.easthants.gov.uk/"):
-        return "https://" + url.removeprefix("http://")
+    if url.startswith(f"https://{_MAPS_HOST}/"):
+        return "http://" + url.removeprefix("https://")
     return url
 
 
@@ -145,9 +149,9 @@ def _uprn_calendar_urls(html: str, uprn_value: str) -> dict[str, str]:
 
         title = heading.get_text(" ", strip=True).casefold()
         if "garden" in title:
-            urls["garden"] = _secure_calendar_url(str(link["href"]))
+            urls["garden"] = _calendar_url(str(link["href"]))
         elif "bin calendar" in title:
-            urls["bins"] = _secure_calendar_url(str(link["href"]))
+            urls["bins"] = _calendar_url(str(link["href"]))
 
     if "bins" not in urls:
         raise SourceArgumentNotFound(
@@ -345,6 +349,7 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
+        "UPRN lookup": {"uprn": 1710041123},
         "Calendar 16 with garden waste G1": {
             "calendar_number": 16,
             "garden_calendar_number": 1,

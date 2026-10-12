@@ -40,8 +40,8 @@ UPRN_PAGE = """
 
 def test_uprn_calendar_urls_extracts_and_secures_links():
     assert easthants_gov_uk._uprn_calendar_urls(UPRN_PAGE, "1710041123") == {
-        "bins": "https://maps.easthants.gov.uk/calendars/H1.pdf",
-        "garden": "https://maps.easthants.gov.uk/calendars/G5.pdf",
+        "bins": "http://maps.easthants.gov.uk/calendars/H1.pdf",
+        "garden": "http://maps.easthants.gov.uk/calendars/G5.pdf",
     }
 
 
@@ -114,8 +114,8 @@ def test_suspended_dates_are_skipped_and_unknown_colours_fail():
 def test_uprn_pick_returns_bin_and_garden_urls():
     urls = easthants_gov_uk._uprn_pick(Mock(text=UPRN_PAGE), uprn=1710041123)
     assert urls == [
-        "https://maps.easthants.gov.uk/calendars/H1.pdf",
-        "https://maps.easthants.gov.uk/calendars/G5.pdf",
+        "http://maps.easthants.gov.uk/calendars/H1.pdf",
+        "http://maps.easthants.gov.uk/calendars/G5.pdf",
     ]
 
 
