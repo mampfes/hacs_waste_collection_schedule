@@ -1,5 +1,8 @@
 # ICS / iCal
 
+Municipalities and waste providers: see [how to publish a collection schedule](../publishing_collection_schedules.md)
+for a simple public feed that residents can subscribe to.
+
 Add support for schedules from ICS / iCal files. Files can be either stored in a  local folder or fetched from a static URL. The waste type will be taken from the `summary` attribute.
 
 This source has been successfully tested with the following service providers:
