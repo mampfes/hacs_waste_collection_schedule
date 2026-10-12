@@ -164,7 +164,9 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         self._fetch_later_unsub = async_call_later(
             self._hass,
-            randrange(0, 60 * self._random_fetch_time_offset),
+            randrange(0, 60 * self._random_fetch_time_offset)
+            if self._random_fetch_time_offset > 0
+            else 0,
             self._fetch_now,
         )
 
