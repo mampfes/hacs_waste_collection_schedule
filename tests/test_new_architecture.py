@@ -3270,6 +3270,40 @@ class TestFlattenGroups:
         assert JsonParser(0)(reply(None)) == []
 
 
+class TestNestedDateGroups:
+    """NestedDateGroups: a year/month/day key tree flattened into dated rows."""
+
+    def test_flattens_year_month_day_keys_into_rows(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import NestedDateGroups
+
+        rows = list(
+            NestedDateGroups()(
+                {"2026": {"1": {"3": ["HML", "LVP"], "5": ["BIO"]}, "2": {"2": []}}}
+            )
+        )
+        assert rows == [
+            (datetime.date(2026, 1, 3), "HML"),
+            (datetime.date(2026, 1, 3), "LVP"),
+            (datetime.date(2026, 1, 5), "BIO"),
+        ]
+
+    def test_order_and_empty_payload(self):
+        import datetime
+
+        import pytest
+        from waste_collection_schedule.preprocessors import NestedDateGroups
+
+        rows = list(
+            NestedDateGroups(("day", "month", "year"))({"3": {"1": {"2026": ["X"]}}})
+        )
+        assert rows == [(datetime.date(2026, 1, 3), "X")]
+        assert list(NestedDateGroups()(None)) == []
+        with pytest.raises(ValueError):
+            NestedDateGroups(("year", "month"))
+
+
 class TestIWebAbfalldatenRows:
     """IWeb.AbfalldatenRows: i-web /abfalldaten records into (date, name) rows."""
 
