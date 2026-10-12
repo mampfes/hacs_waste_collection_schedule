@@ -29,6 +29,10 @@ waste_collection_schedule:
         address: Bragernes Torg 13, Drammen
 ```
 
+## Collection types
+
+The schedule page on rfd.no lists residual waste (`Restavfall`) and food waste (`Matavfall`) separately, and they are collected on different schedules. The source reports them as two separate types. The other types are `Papiravfall`, `Plastemballasje`, `Glass- og metallemballasje` and `Hageavfall`.
+
 ## How to get the source argument
 
 Visit [https://www.rfd.no/avfallshenting](https://www.rfd.no/avfallshenting), search for your address, and use the address exactly as shown in the result list.
