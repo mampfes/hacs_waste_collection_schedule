@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-10-12",
+  "interactions": [
+    {
+      "key": "GET https://www.hornsby.nsw.gov.au/api/v1/myarea/search 5c2880ce5e",
+      "method": "GET",
+      "url": "https://www.hornsby.nsw.gov.au/api/v1/myarea/search",
+      "final_url": "https://www.hornsby.nsw.gov.au/api/v1/myarea/search?keywords=1+Cherrybrook+Road%2C+West+Pennant+Hills%2C+2125",
+      "body": "{\"params\":[[\"keywords\",\"1 Cherrybrook Road, West Pennant Hills, 2125\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-length": "252",
+        "cache-control": "no-cache",
+        "date": "Sun, 11 Oct 2026 22:22:48 GMT",
+        "server-timing": "cdn-cache; desc=MISS, edge; dur=10, origin; dur=852, ak_p; desc=\"1791757367805_34674308_107697113_86225_13344_4_13_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600",
+        "set-cookie": "ak_bmsc=849C33AE17C30F9F0A480E9DF8921879~000000000000000000000000000000~YAAQhBYRAuRycRihAQAAd70PLQHCNPlO/m4g5oiDHvfCq+F6tql8roXHL0+OfhyIR1RP0ch4kofrV+t8lszBekcdOCOnSgtvpR2/M7Q8Zi4jWxi92EW2CyYk/HL8c/jEdu1ms5ABgCJO1S9VxPzrObAwJx5Go6Up7wjxNuoQnT1x0JEMoomXNuOQMmueUwnXm316hJUQ4QvwAvv9FEDLSrnTH4sCu+DSGhp2xaFZ5uEptwKGo+gwrNQwXvic3pVe+Ql/TnCLwhCTmskuCi6rZfFPiqYyUujPJaO9ht4MbotKEAHdQHU/pL40q5Z/3UvZdrDwG2ZOciP8GXSllA5seMP6hpC7mg7sH0PPW3xqYyBzBL4emVZwzJsD1dYvm4uoOtb4UB/YhghQ1bDwSS9VtVOijiec; Domain=.hornsby.nsw.gov.au; Path=/; Expires=Mon, 12 Oct 2026 00:22:47 GMT; Max-Age=7199; HttpOnly"
+      },
+      "content_b64": "eyJJdGVtcyI6W3siSWQiOiI5ODk4ZjgwZS1mOTQ4LTRhOWItYWEzMS1mZTQ4OTMxMTYzZTciLCJBZGRyZXNzU2luZ2xlTGluZSI6IjEgQ2hlcnJ5YnJvb2sgUm9hZCwgV2VzdCBQZW5uYW50IEhpbGxzLCAyMTI1IiwiTXVuaWNpcGFsU3ViZGl2aXNpb24iOiJXYXJkIEMiLCJEaXN0YW5jZSI6MCwiU2NvcmUiOjI1LjIzNjE4NywiTGF0TG9uIjpbLTMzLjczNDUxNiwxNTEuMDQ5MjU0XX1dLCJPZmZzZXQiOjAsIkxpbWl0IjoxMCwiVG90YWwiOjF9"
+    },
+    {
+      "key": "GET https://www.hornsby.nsw.gov.au/ocapi/Public/myarea/wasteservices 36fa027aaa",
+      "method": "GET",
+      "url": "https://www.hornsby.nsw.gov.au/ocapi/Public/myarea/wasteservices",
+      "final_url": "https://www.hornsby.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid=9898f80e-f948-4a9b-aa31-fe48931163e7&ocsvclang=en-AU",
+      "body": "{\"params\":[[\"geolocationid\",\"9898f80e-f948-4a9b-aa31-fe48931163e7\"],[\"ocsvclang\",\"en-AU\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "strict-transport-security": "max-age=31536000",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "content-length": "861",
+        "cache-control": "private, max-age=0",
+        "date": "Sun, 11 Oct 2026 22:22:49 GMT",
+        "set-cookie": "ASP.NET_SessionId=ak0cvrgqpnn2qunejx3vosjb; path=/; secure; HttpOnly; SameSite=None",
+        "server-timing": "cdn-cache; desc=REVALIDATE, edge; dur=9, origin; dur=295, ak_p; desc=\"1791757368702_34674308_107697307_30330_12989_4_0_255\";dur=1",
+        "alt-svc": "h3=\":443\"; ma=93600"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJyZXNwb25zZUNvbnRlbnQiOiJcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwibW9kdWxlLXdpZGdldCB3YXN0ZS1zZXJ2aWNlcy13aWRnZXRcIlx1MDAzZVxyXG5cdTAwM2NoMiBjbGFzcz1cInN1Yi10aXRsZVwiXHUwMDNlWW91ciB3YXN0ZSBjb2xsZWN0aW9uXHUwMDNjL2gyXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cImdyaWQgd2FzdGUtc2VydmljZXMtcmVzdWx0cyByZXN1bHRzLTZcIlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgZ2VuZXJhbC13YXN0ZSBkYXRlLWFwcHJveCBpdGVtLTBcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VHYXJiYWdlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZUNvbGxlY3RlZCB3ZWVrbHkuIFBsZWFzZSBwbGFjZSB5b3VyIGJpbnMgb3V0IHRoZSBuaWdodCBiZWZvcmUgeW91ciBjb2xsZWN0aW9uIGRheS5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cImh0dHBzOi8vd3d3Lmhvcm5zYnkubnN3Lmdvdi5hdS9Qcm9wZXJ0eS9XYXN0ZS1hbmQtcmVjeWNsaW5nL1lvdXItd2Vla2x5LWNvbGxlY3Rpb24vV2hhdC1jYW4tSS1wdXQtaW4tbXktYmluc1wiIHRhcmdldD1cIlwiXHUwMDNlV2hhdCBjYW4gSSBwdXQgaW4gbXkgUmVkIExpZCBHYXJiYWdlIGJpblx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZG5lc2RheVxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgcmVjeWNsaW5nIGRhdGUtcHJlY2lzZSBpdGVtLTFcIlx1MDAzZVxyXG5cdTAwM2NhcnRpY2xlXHUwMDNlXHJcbiAgXHUwMDNjaDNcdTAwM2VSZWN5Y2xpbmdcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGVhc2UgcGxhY2UgeW91ciBiaW5zIG91dCB0aGUgbmlnaHQgYmVmb3JlIHlvdXIgY29sbGVjdGlvbiBkYXkuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy5ob3Juc2J5Lm5zdy5nb3YuYXUvUHJvcGVydHkvV2FzdGUtYW5kLXJlY3ljbGluZy9Zb3VyLXdlZWtseS1jb2xsZWN0aW9uL1doYXQtY2FuLUktcHV0LWluLW15LWJpbnNcIiB0YXJnZXQ9XCJcIlx1MDAzZVdoYXQgY2FuIEkgcHV0IGluIG15IFllbGxvdyBMaWQgUmVjeWNsaW5nIGJpblx1MDAzYy9hXHUwMDNlXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJuZXh0LXNlcnZpY2VcIlx1MDAzZVxyXG4gICAgIFdlZCAyMS8xMC8yMDI2XHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjZGl2IGNsYXNzPVwiY29sLXhzLTEyIGNvbC1tLTYgd2FzdGUtc2VydmljZXMtcmVzdWx0IHJlZ3VsYXItc2VydmljZSBncmVlbi13YXN0ZSBkYXRlLXByZWNpc2UgaXRlbS0yXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlR3JlZW4gV2FzdGVcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibm90ZVwiXHUwMDNlQ29sbGVjdGVkIGZvcnRuaWdodGx5LiBQbGVhc2UgcGxhY2UgeW91ciBiaW5zIG91dCB0aGUgbmlnaHQgYmVmb3JlIHlvdXIgY29sbGVjdGlvbiBkYXkuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy5ob3Juc2J5Lm5zdy5nb3YuYXUvUHJvcGVydHkvV2FzdGUtYW5kLXJlY3ljbGluZy9Zb3VyLXdlZWtseS1jb2xsZWN0aW9uL1doYXQtY2FuLUktcHV0LWluLW15LWJpbnNcIiB0YXJnZXQ9XCJcIlx1MDAzZVdoYXQgY2FuIEkgcHV0IGluIG15IEdyZWVuIExpZCBHcmVlbiBXYXN0ZSBiaW5cdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBXZWQgMTQvMTAvMjAyNlxyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgY2FsZW5kYXIgZGF0ZS1hcHByb3ggaXRlbS0zXCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlQ2FsZW5kYXIgV2VkbmVzZGF5IEJcdTAwM2MvaDNcdTAwM2VcclxuXHUwMDNjZGl2IGNsYXNzPVwic2VydmljZS1kZXRhaWxzXCJcdTAwM2VcclxuICAgXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cImxpbmtcIlx1MDAzZVx1MDAzY2EgaHJlZj1cIi9maWxlcy9hc3NldHMvcHVibGljL3YvMy9wcm9wZXJ0eS93YXN0ZS1hbmQtcmVjeWNsaW5nL3lvdXItd2Vla2x5LWNvbGxlY3Rpb24vY29sbGVjdGlvbi1jYWxlbmRhcnMvZG9jdW1lbnRzL3N1ZHMtd2FzdGUtYW5kLXJlY3ljbGluZy9yZWN5Y2xpbmctd2VkbmVzZGF5LWItY2FsZW5kYXIucGRmXCIgdGFyZ2V0PVwiYmxhbmtcIlx1MDAzZURvd25sb2FkIFdhc3RlIENvbGxlY3Rpb24gQ2FsZW5kYXJcdTAwM2MvYVx1MDAzZVx1MDAzYy9kaXZcdTAwM2VcclxuICAgXHUwMDNjZGl2IGNsYXNzPVwibmV4dC1zZXJ2aWNlXCJcdTAwM2VcclxuICAgICBcclxuICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9hcnRpY2xlXHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuICAgIFxyXG4gICAgICBcdTAwM2NkaXYgY2xhc3M9XCJjb2wteHMtMTIgY29sLW0tNiB3YXN0ZS1zZXJ2aWNlcy1yZXN1bHQgcmVndWxhci1zZXJ2aWNlIGJ1bGt5IGRhdGUtYXBwcm94IGl0ZW0tNFwiXHUwMDNlXHJcblx1MDAzY2FydGljbGVcdTAwM2VcclxuICBcdTAwM2NoM1x1MDAzZUJ1bGt5IFdhc3RlXHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5vdGVcIlx1MDAzZVBsYWNlIGl0ZW1zIG9uIHRoZSBrZXJic2lkZSDigJMgb24gdGhlIFNhdHVyZGF5IGFuZCBTdW5kYXkgcHJpb3IgdG8geW91ciBzY2hlZHVsZWQgY29sbGVjdGlvbiB3ZWVrLCBvciB0aGUgZGF5IGJlZm9yZSB5b3VyIGJvb2tlZCBvbi1jYWxsIGNvbGxlY3Rpb24gZGF0ZS4gXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCJodHRwczovL3d3dy5ob3Juc2J5Lm5zdy5nb3YuYXUvUHJvcGVydHkvV2FzdGUtYW5kLXJlY3ljbGluZy9CdWxreS13YXN0ZS1jb2xsZWN0aW9uL1doYXQtYnVsa3ktd2FzdGUtc2VydmljZXMtZG8tSS1yZWNlaXZlXCIgdGFyZ2V0PVwiXCJcdTAwM2VCdWxreSBXYXN0ZSBjb2xsZWN0aW9uXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgMjUvMDEvMjAyN1xyXG4gICBcdTAwM2MvZGl2XHUwMDNlXHJcblx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2FydGljbGVcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG4gICAgXHJcbiAgICAgIFx1MDAzY2RpdiBjbGFzcz1cImNvbC14cy0xMiBjb2wtbS02IHdhc3RlLXNlcnZpY2VzLXJlc3VsdCByZWd1bGFyLXNlcnZpY2UgY2FsZW5kYXIgZGF0ZS1hcHByb3ggaXRlbS01XCJcdTAwM2VcclxuXHUwMDNjYXJ0aWNsZVx1MDAzZVxyXG4gIFx1MDAzY2gzXHUwMDNlQnVsa3kgV2FzdGUgQ2FsZW5kYXIgem9uZSA0XHUwMDNjL2gzXHUwMDNlXHJcblx1MDAzY2RpdiBjbGFzcz1cInNlcnZpY2UtZGV0YWlsc1wiXHUwMDNlXHJcbiAgIFxyXG4gICBcdTAwM2NkaXYgY2xhc3M9XCJsaW5rXCJcdTAwM2VcdTAwM2NhIGhyZWY9XCIvZmlsZXMvYXNzZXRzL3B1YmxpYy92LzQvcHJvcGVydHkvd2FzdGUtYW5kLXJlY3ljbGluZy95b3VyLXdlZWtseS1jb2xsZWN0aW9uL2NvbGxlY3Rpb24tY2FsZW5kYXJzL2RvY3VtZW50cy9zdWRzLWJ1bGt5LXdhc3RlL2J1bGt5d2FzdGVmbHllcmhvbWVzd2VlazQucGRmXCIgdGFyZ2V0PVwiYmxhbmtcIlx1MDAzZURvd25sb2FkIEJ1bGt5IFdhc3RlIENhbGVuZGFyXHUwMDNjL2FcdTAwM2VcdTAwM2MvZGl2XHUwMDNlXHJcbiAgIFx1MDAzY2RpdiBjbGFzcz1cIm5leHQtc2VydmljZVwiXHUwMDNlXHJcbiAgICAgXHJcbiAgIFx1MDAzYy9kaXZcdTAwM2VcclxuXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvYXJ0aWNsZVx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICBcclxuICAgICAgXHUwMDNjL2Rpdlx1MDAzZVxyXG5cdTAwM2MvZGl2XHUwMDNlXHJcbiAgICAifQ=="
+    }
+  ]
+}

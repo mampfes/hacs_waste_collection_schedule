@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-12",
+  "interactions": [
+    {
+      "key": "GET https://geoserver.ssc.nsw.gov.au/arcgis/rest/services/WebOnline/MapServer/4/query 4a46cfcbae",
+      "method": "GET",
+      "url": "https://geoserver.ssc.nsw.gov.au/arcgis/rest/services/WebOnline/MapServer/4/query",
+      "final_url": "https://geoserver.ssc.nsw.gov.au/arcgis/rest/services/WebOnline/MapServer/4/query?outFields=situ1%2Csitu2%2CDAY_OF_WEEK%2CZONE_NO%2CRECYCLE_PICKUP&returnGeometry=false&f=json&where=UPPER%28situ1%29+LIKE+%274-20+ETON+STREET%25%27+AND+UPPER%28situ2%29+LIKE+%27SUTHERLAND%25%27&resultRecordCount=50",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"situ1,situ2,DAY_OF_WEEK,ZONE_NO,RECYCLE_PICKUP\"],[\"resultRecordCount\",\"50\"],[\"returnGeometry\",\"false\"],[\"where\",\"UPPER(situ1) LIKE '4-20 ETON STREET%' AND UPPER(situ2) LIKE 'SUTHERLAND%'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Mon, 12 Oct 2026 21:20:19 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "ETag": "\"1ddfb06e-gzip\"",
+        "Vary": "Origin,Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Mon, 12-Oct-2026 21:21:19 GMT; Path=/arcgis/rest; Secure; HttpOnly, HASH_AGS_ROLES=eeb6b567617ba4ae04c167128aebb9f83488a304; Version=1; Max-Age=60; Expires=Mon, 12-Oct-2026 21:21:19 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "Content-Encoding": "gzip",
+        "Content-Length": "300",
+        "Keep-Alive": "timeout=15, max=100",
+        "Connection": "Keep-Alive"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoic2l0dTEiLCJmaWVsZEFsaWFzZXMiOnsic2l0dTEiOiJzaXR1MSIsInNpdHUyIjoic2l0dTIiLCJEQVlfT0ZfV0VFSyI6IkRBWV9PRl9XRUVLIiwiWk9ORV9OTyI6IlpPTkVfTk8iLCJSRUNZQ0xFX1BJQ0tVUCI6IlJFQ1lDTEVfUElDS1VQIn0sImZpZWxkcyI6W3sibmFtZSI6InNpdHUxIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6InNpdHUxIiwibGVuZ3RoIjo2MH0seyJuYW1lIjoic2l0dTIiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoic2l0dTIiLCJsZW5ndGgiOjYwfSx7Im5hbWUiOiJEQVlfT0ZfV0VFSyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJEQVlfT0ZfV0VFSyIsImxlbmd0aCI6MjV9LHsibmFtZSI6IlpPTkVfTk8iLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVNtYWxsSW50ZWdlciIsImFsaWFzIjoiWk9ORV9OTyJ9LHsibmFtZSI6IlJFQ1lDTEVfUElDS1VQIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJFQ1lDTEVfUElDS1VQIiwibGVuZ3RoIjoxNX1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJzaXR1MSI6IjQtMjAgRXRvbiBTdHJlZXQiLCJzaXR1MiI6IlNVVEhFUkxBTkQgIE5TVyAgMjIzMiIsIkRBWV9PRl9XRUVLIjoiRnJpZGF5IiwiWk9ORV9OTyI6MSwiUkVDWUNMRV9QSUNLVVAiOiJGb3J0bmlnaHRseSJ9fV19"
+    }
+  ]
+}
