@@ -1,120 +1,101 @@
-import csv
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown
+from waste_collection_schedule.transformers import JsonTransformer
 
-from ..collection import Collection
-from ..icons import Icons
+# Demonstrates: a header-less open-data CSV (id;date;code) read with
+# CsvParser(columns=...), one city-wide calendar narrowed to the household's
+# service area by a RowFilter. The even/odd-week codes are the only ones that
+# differ between the areas; every other code applies to the whole town.
 
-TITLE = "Rudna u Prahy"
-DESCRIPTION = "Source for Rudna u Prahy waste collection"
-URL = "https://www.rudnamesto.cz/"
-COUNTRY = "cz"
-TEST_CASES = {
-    "Even weeks": {"city_part": "Sudé týdny"},
-    "Odd weeks": {"city_part": "Liché týdny"},
-    "ALL": {"city_part": "Vše"},
-}
+_EVEN_ONLY = {"SKOS", "D2DPLASTS", "BIOSU"}
+_ODD_ONLY = {"SKOL", "D2DPLASTL", "BIOL"}
 
-WASTE_TYPES_URL = (
-    "https://mesto-rudna.cz/odpadovy-kalendar/permanent/data_description.csv"
-)
-WASTE_DATES_URL = "https://mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv"
 
-ICON_MAP = {
-    "B": Icons.BIO_KITCHEN,
-    "TKOS": Icons.GENERAL_WASTE,
-    "TKOJ": Icons.GENERAL_WASTE,
-    "BS": Icons.CHRISTMAS_TREE,
-    "SHK": Icons.BIO_KITCHEN,
-    "SHPA": Icons.PAPER,
-    "SHPL": Icons.PLASTIC_PACKAGING,
-    "SHS": Icons.GLASS,  # codespell:ignore shs
-    "NO": Icons.HAZARDOUS,
-    "SKOL": Icons.GENERAL_WASTE,
-    "SKOS": Icons.GENERAL_WASTE,
-    "BIOJ": Icons.BIO_KITCHEN,
-    "BIOS": Icons.BIO_KITCHEN,
-    "BIOL": Icons.BIO_KITCHEN,
-    "BIOSU": Icons.BIO_KITCHEN,
-    "D2DPLAST": Icons.PLASTIC_PACKAGING,
-    "D2DPLASTL": Icons.PLASTIC_PACKAGING,
-    "D2DPLASTS": Icons.PLASTIC_PACKAGING,
-    "D2DPAPIR": Icons.PAPER,
-    "PET": Icons.GLASS,
-}
+def _keep_service_area(row, source):
+    """Drop the rows of the other week parity than the chosen service area."""
+    area = str(source.params.get("city_part", "")).lower()
+    if area == "liché týdny":
+        return row["code"] not in _EVEN_ONLY
+    if area == "sudé týdny":
+        return row["code"] not in _ODD_ONLY
+    return True
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572",
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city_part": "Select whether waste is collected on even or odd weeks.",
-    },
-}
+@final
+class Source(BaseSource):
+    TITLE = "Rudna u Prahy"
+    DESCRIPTION = "Source for Rudna u Prahy waste collection"
+    URL = "https://www.rudnamesto.cz/"
+    COUNTRY = "cz"
+    RAISE_ON_EMPTY = True
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city_part": "Service area",
-    },
-}
-
-CONFIG_FLOW_TYPES = {
-    "city_part": {
-        "type": "SELECT",
-        "values": ["Sudé týdny", "Liché týdny", "Vše"],
-        "multiple": False,
+    TEST_CASES: ClassVar[dict] = {
+        "Even weeks": {"city_part": "Sudé týdny"},
+        "Odd weeks": {"city_part": "Liché týdny"},
+        "ALL": {"city_part": "Vše"},
     }
-}
 
+    PARAMS = (
+        dropdown(
+            "city_part",
+            ["Sudé týdny", "Liché týdny", "Vše"],
+            label="Service area",
+        ),
+    )
 
-class Source:
-    def __init__(self, city_part=""):
-        self._city_part = city_part
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Choose your service area from the published map "
+            "https://www.rudnamesto.cz/odpadovy-kalendar/d-193572. Select whether "
+            "waste is collected on even or odd weeks."
+        ),
+    }
 
-    def fetch(self):
-        session = requests.Session()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.PLASTIC,
+        wt.METAL,
+        wt.CARTONS,
+    ]
 
-        csv_content = session.get(WASTE_TYPES_URL, timeout=30).content.decode("utf-8")
+    retrieve = retrievers.HttpGetRetriever(
+        url="https://www.mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv"
+    )
 
-        csv_lines = list(csv.reader(csv_content.splitlines(), delimiter=";"))
+    parse = parsers.CsvParser(delimiter=";", columns=["id", "date", "code"])
 
-        waste_types = {}
+    preprocess = preprocessors.RowFilter(_keep_service_area)
 
-        for row in csv_lines:
-            mydict = {"desc": row[1], "icon": ICON_MAP.get(row[0], "mdi:trash-can")}
-            waste_types[row[0]] = mydict
-
-        csv_content = session.get(WASTE_DATES_URL, timeout=30).content.decode("utf-8")
-
-        csv_lines = list(csv.reader(csv_content.splitlines(), delimiter=";"))
-
-        entries = []
-
-        format = "%Y-%m-%d"
-
-        for row in csv_lines:
-            if self._city_part.lower() == "s" and row[2] == "TKOJ":
-                continue
-            if self._city_part.lower() == "j" and row[2] == "TKOS":
-                continue
-            if self._city_part.lower() == "liché týdny" and row[2] in [
-                "SKOS",
-                "D2DPLASTS",
-                "BIOSU",
-            ]:
-                continue
-            if self._city_part.lower() == "sudé týdny" and row[2] in [
-                "SKOL",
-                "D2DPLASTL",
-                "BIOL",
-            ]:
-                continue
-            pickup_date = datetime.strptime(row[1], format)
-            waste_type = waste_types[row[2]]["desc"]
-            icon = waste_types[row[2]]["icon"]
-
-            entries.append(Collection(date=pickup_date.date(), t=waste_type, icon=icon))
-
-        return entries
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="code",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "SKOL": wt.GENERAL_WASTE,
+            "SKOS": wt.GENERAL_WASTE,
+            "TKOJ": wt.GENERAL_WASTE,
+            "TKOS": wt.GENERAL_WASTE,
+            "B": wt.ORGANIC,
+            "BIOJ": wt.ORGANIC,
+            "BIOS": wt.ORGANIC,
+            "BIOL": wt.ORGANIC,
+            "BIOSU": wt.ORGANIC,
+            "BS": wt.GARDEN_WASTE,
+            "D2DPLAST": [wt.PLASTIC, wt.METAL, wt.CARTONS],
+            "D2DPLASTL": [wt.PLASTIC, wt.METAL, wt.CARTONS],
+            "D2DPLASTS": [wt.PLASTIC, wt.METAL, wt.CARTONS],
+            "D2DPAPIR": wt.PAPER,
+            "SHPA": wt.PAPER,
+            "SHPL": wt.PLASTIC,
+            "SHS": wt.GLASS,  # codespell:ignore shs
+            "SHK": wt.METAL,
+            "NO": wt.HAZARDOUS,
+            "PET": wt.PLASTIC,
+        },
+    )
