@@ -36,11 +36,13 @@ FRACTION_MAP = {
     11: "Mat- og restavfall",
 }
 
-# Fraction names on the rfd.no schedule page, mapped to the names used for
-# the pickupDays API so sensors keep working whichever path answers.
+# Fraction names on the rfd.no schedule page. Residual waste (Restavfall) and
+# food waste (Matavfall) are listed separately there and follow different
+# schedules, so they are kept apart. The other names are mapped to the names
+# used for the pickupDays API so sensors keep working whichever path answers.
 WEBSITE_FRACTION_MAP = {
-    "Restavfall": "Mat- og restavfall",
-    "Matavfall": "Mat- og restavfall",
+    "Restavfall": "Restavfall",
+    "Matavfall": "Matavfall",
     "Papiravfall": "Papiravfall",
     "Glass/metall": "Glass- og metallemballasje",
     "Hageavfall": "Hageavfall",
@@ -64,6 +66,8 @@ MONTHS = {
 
 ICON_MAP = {
     "Mat- og restavfall": Icons.GENERAL_WASTE,
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.ORGANIC,
     "Papiravfall": Icons.PAPER,
     "Glass- og metallemballasje": Icons.GLASS,
     "Hageavfall": Icons.GARDEN,
