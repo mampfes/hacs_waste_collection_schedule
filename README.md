@@ -1121,6 +1121,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Coltainville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Communauté de Communes de la Plaine de l'Ain](/doc/source/cc_plainedelain_fr.md) / cc-plainedelain.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Communauté de Communes du Pays de Craon](/doc/source/paysdecraon_fr.md) / paysdecraon.fr
 - [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
 - [Corancez](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Corps-Nuds](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
@@ -1309,6 +1310,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Saint-Lumine-de-Clisson - Zone A](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Lumine-de-Clisson - Zone B](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Léger-des-Aubées](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Saint-Michel-de-la-Roë](/doc/source/paysdecraon_fr.md) / paysdecraon.fr
 - [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Prest](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes

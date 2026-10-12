@@ -8158,6 +8158,31 @@
           "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
+      "args_paysdecraon_fr": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_paysdecraon_fr": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_cyclad_org": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

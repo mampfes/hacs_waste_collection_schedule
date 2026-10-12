@@ -2003,6 +2003,14 @@
     },
     "urls": {}
   },
+  "paysdecraon_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/paysdecraon_fr.md",
+    "howto": {
+      "en": "The Pays de Craon calendar only shows whether a week is a household waste or a packaging week. Choose the weekday on which your bins are usually collected; collections are shifted by one day after public holidays. Optionally enter your municipality (as printed in the calendar) to also get its branch shredding (broyage de branches) date.",
+      "fr": "Le calendrier du Pays de Craon indique uniquement si une semaine est une semaine Ordures Ménagères ou Emballages. Choisissez le jour où vos bacs sont habituellement collectés ; la collecte est décalée d'un jour après un jour férié. Indiquez éventuellement votre commune (comme imprimée dans le calendrier) pour obtenir aussi la date de broyage de branches."
+    },
+    "urls": {}
+  },
   "cyclad_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cyclad_org.md",
     "howto": {
