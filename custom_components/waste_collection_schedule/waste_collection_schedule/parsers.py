@@ -738,16 +738,38 @@ class KeyedDateListsParser(Parser["list[tuple[Any, str]]"]):
         keys: optional path to the object carrying the arrays.
         fields: the field names to read, one per round. Pass the transformer's
             ``type_value_map`` directly; its keys are exactly that set.
+        from_element: optional CSS selector of an HTML element (typically
+            ``script[type="application/json"]``) whose text holds the JSON,
+            for a server-rendered page that ships its data inline. The first
+            match is read; a page without one yields no rows.
     """
 
-    def __init__(self, *keys: "str | int", fields: Iterable[str]):
+    def __init__(
+        self,
+        *keys: "str | int",
+        fields: Iterable[str],
+        from_element: "str | None" = None,
+    ):
         self.keys = keys
         self.fields = tuple(fields)
+        self.from_element = from_element
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[tuple[Any, str]]":
-        data = response.json()
+        data: Any
+        if self.from_element is None:
+            data = response.json()
+        else:
+            import json
+
+            element = BeautifulSoup(response.text, "html.parser").select_one(
+                self.from_element
+            )
+            try:
+                data = json.loads(element.get_text()) if element else None
+            except ValueError:
+                data = None
         try:
             for key in self.keys:
                 data = data[key]
@@ -1171,6 +1193,157 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
                         rows.append((datetime.date(year, month, int(day)), name))
                     except ValueError:
                         continue
+        return rows
+
+
+class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a month per column and a collection round per row.
+
+    The transpose of :class:`HtmlMonthRows`. A council that publishes its year
+    as one grid puts the months across the header and gives each round a row,
+    whose cell for a month lists the days it is collected::
+
+        | ITTRE        | JAN     | FEV     | ...
+        | Residual     | 12 - 26 | 09 - 23 | ...
+        | Organic      |  Every Monday (spanning Feb-Dec)  |
+
+    Every number in a cell is one collection day. A cell with no number but a
+    weekday name is a weekly round: it recurs on that weekday over every month
+    the cell spans (``colspan`` is honoured, in the header and the body alike).
+    A cell naming neither is skipped. Each date becomes one ``(date, round
+    name)`` row, the round named by the row's first cell::
+
+        parse = parsers.HtmlMonthColumns()
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Months and weekdays are read with :func:`recurrence.month` and
+    :func:`recurrence.weekday`, so any supported language resolves.
+
+    Args:
+        require: header texts (lowercased, matched exactly) that the wanted
+            table must all carry. Unset takes the first table on the page.
+        year: fallback year (default the current year at fetch time).
+    """
+
+    def __init__(
+        self,
+        *,
+        require: "Iterable[str] | None" = None,
+        year: "int | None" = None,
+    ):
+        self.require = frozenset(require) if require is not None else None
+        self.year = year
+
+    def _table(self, soup: BeautifulSoup) -> "Tag | None":
+        for candidate in soup.find_all("table"):
+            if self.require is None:
+                return candidate
+            headers = {
+                th.get_text(strip=True).lower() for th in candidate.find_all("th")
+            }
+            if self.require <= headers:
+                return candidate
+        return None
+
+    @staticmethod
+    def _span(cell: Tag) -> int:
+        try:
+            return max(int(str(cell.get("colspan", "1"))), 1)
+        except ValueError:
+            return 1
+
+    @staticmethod
+    def _month(text: str) -> "int | None":
+        """A month name, or an abbreviation of one ("FEV", "SEPT", "AOUT")."""
+        from waste_collection_schedule import recurrence
+
+        exact = recurrence.month(text)
+        if exact is not None:
+            return exact
+        key = recurrence._strip_accents(text.strip().lower())
+        if len(key) < 3 or not key.isalpha():
+            return None
+        found = {
+            number for name, number in recurrence.MONTHS.items() if name.startswith(key)
+        }
+        return found.pop() if len(found) == 1 else None
+
+    @staticmethod
+    def _weekday(word: str) -> "int | None":
+        """A weekday name, singular or with a plural "s" ("lundis")."""
+        from waste_collection_schedule import recurrence
+
+        found = recurrence.weekday(word)
+        if found is None and word.lower().endswith("s"):
+            found = recurrence.weekday(word[:-1])
+        return found
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = self._table(soup)
+        if table is None:
+            return []
+        header_row = table.find("tr")
+        if not isinstance(header_row, Tag):
+            return []
+
+        # Column position -> month number, from the first row (colspan aware).
+        months: dict[int, int] = {}
+        position = 0
+        for cell in header_row.find_all(["th", "td"]):
+            month = self._month(cell.get_text(strip=True))
+            if month is not None:
+                for offset in range(self._span(cell)):
+                    months[position + offset] = month
+            position += self._span(cell)
+
+        year = self.year or datetime.date.today().year
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr")[1:]:
+            cells = row.find_all(["th", "td"])
+            if len(cells) < 2:
+                continue
+            name = " ".join(cells[0].get_text(" ").split())
+            position = self._span(cells[0])
+            for cell in cells[1:]:
+                span = self._span(cell)
+                covered = [
+                    months[p] for p in range(position, position + span) if p in months
+                ]
+                position += span
+                if not covered:
+                    continue
+                text = cell.get_text(" ")
+                days = re.findall(r"\b\d{1,2}\b", text)
+                if days:
+                    for day in days:
+                        try:
+                            rows.append(
+                                (datetime.date(year, covered[0], int(day)), name)
+                            )
+                        except ValueError:
+                            continue
+                    continue
+                weekday = next(
+                    (
+                        w
+                        for w in (
+                            self._weekday(word)
+                            for word in re.findall(r"[^\W\d_]+", text)
+                        )
+                        if w is not None
+                    ),
+                    None,
+                )
+                if weekday is None:
+                    continue
+                current = datetime.date(year, covered[0], 1)
+                while current.month <= covered[-1] and current.year == year:
+                    if current.weekday() == weekday:
+                        rows.append((current, name))
+                    current += datetime.timedelta(days=1)
         return rows
 
 
@@ -2184,11 +2357,22 @@ class CsvParser(Parser["list[dict[str, str]]"]):
     the columns the source reads::
 
         parse = parsers.CsvParser(require=["date", "type"])
+
+    Pass ``columns`` (the column names, in order) for an export without a header
+    row; every line is then a data row::
+
+        parse = parsers.CsvParser(delimiter=";", columns=["id", "date", "type"])
     """
 
-    def __init__(self, delimiter: str = ",", require: "list[str] | None" = None):
+    def __init__(
+        self,
+        delimiter: str = ",",
+        require: "list[str] | None" = None,
+        columns: "list[str] | None" = None,
+    ):
         self.delimiter = delimiter
         self.require = require
+        self.columns = columns
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2199,7 +2383,9 @@ class CsvParser(Parser["list[dict[str, str]]"]):
         # Decode utf-8-sig so a UTF-8 BOM doesn't contaminate the first column
         # name (a common export quirk).
         text = response.content.decode("utf-8-sig", errors="replace")
-        reader = csv.DictReader(io.StringIO(text), delimiter=self.delimiter)
+        reader = csv.DictReader(
+            io.StringIO(text), fieldnames=self.columns, delimiter=self.delimiter
+        )
         rows = list(reader)
         if self.require:
             columns = set(reader.fieldnames or [])

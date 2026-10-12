@@ -131,6 +131,48 @@ class FlattenGroups(Preprocessor[Any, Any]):
                 yield from group
 
 
+class NestedDateGroups(Preprocessor[Any, "tuple[datetime.date, str]"]):
+    """Flatten a calendar nested by date part into ``(date, label)`` rows.
+
+    For a provider whose payload spells the date as a path of keys rather than
+    a string: ``{"2026": {"1": {"3": ["HML", "LVP"], "5": ["BIO"]}}}`` is
+    3 January with two rounds and 5 January with one. Each leaf entry becomes
+    one row, so the plain ``RowTransformer`` maps the labels::
+
+        parse = parsers.JsonParser("waste_discharge")
+        preprocess = preprocessors.NestedDateGroups()
+        transform = RowTransformer(type_value_map=_TYPE_VALUE_MAP)
+
+    Args:
+        order: which date part each nesting level holds, outermost first.
+            Defaults to ``("year", "month", "day")``; pass e.g.
+            ``("day", "month", "year")`` for the reverse.
+    """
+
+    def __init__(self, order: Sequence[str] = ("year", "month", "day")):
+        if sorted(order) != ["day", "month", "year"]:
+            raise ValueError("order must name year, month and day exactly once")
+        self.order = tuple(order)
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        if not records:
+            return
+
+        def walk(node: Any, parts: dict[str, int], depth: int) -> Iterable[Any]:
+            if depth == len(self.order):
+                for label in node or []:
+                    yield datetime.date(**parts), str(label)
+                return
+            for key, child in node.items():
+                yield from walk(
+                    child, {**parts, self.order[depth]: int(key)}, depth + 1
+                )
+
+        yield from walk(records, {}, 0)
+
+
 class RowFilter(Preprocessor[Any, Any]):
     """Drop records a source must not publish, via a per-record predicate.
 

@@ -1,82 +1,70 @@
-import json
-from datetime import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.date_parsers import for_format
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen"
-DESCRIPTION = (
-    "Source for tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen."
-)
-URL = "https://tonnenleerung.de"
-TEST_CASES = {
-    "nd-sob/neuburg-donau/abbevillestrasse/": {
-        "url": "nd-sob/neuburg-donau/abbevillestrasse/"
-    },
-    "aic-fdb/affing/": {"url": "https://tonnenleerung.de/aic-fdb/affing"},
-    "nd-sob/schrobenhausen/albertus-magnus-weg/": {
-        "url": "/nd-sob/schrobenhausen/albertus-magnus-weg/"
-    },
+# The page lists every bin's dates as JSON in an inline <script id="leerungsdaten">.
+_TYPE_MAP = {
+    "blau": wt.PAPER,
+    "gelb": wt.RECYCLABLES,
+    "braun": wt.ORGANIC,
+    "grau": wt.GENERAL_WASTE,
+    "grau4": wt.GENERAL_WASTE,
 }
 
 
-ICON_MAP = {
-    "grau4": Icons.GENERAL_WASTE,
-    "grau": Icons.GENERAL_WASTE,
-    "Bio": Icons.ORGANIC,
-    "blau": Icons.PAPER,
-    "gelb": Icons.RECYCLING,
-}
+def _path(value: Any) -> str:
+    """Reduce a full URL or a leading-slash path to the bare page path."""
+    path = str(value).strip()
+    if "tonnenleerung.de" in path:
+        path = path.split("tonnenleerung.de", 1)[1]
+    return path.lstrip("/")
 
 
-API_URL = "https://tonnenleerung.de/{url}"
+@final
+class Source(BaseSource):
+    TITLE = "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen"
+    DESCRIPTION = (
+        "Source for tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen."
+    )
+    URL = "https://tonnenleerung.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-# Map JSON keys to bin types
-JSON_KEY_TO_TYPE = {
-    "blau": "blau",
-    "gelb": "gelb",
-    "braun": "Bio",
-    "grau": "grau",
-    "grau4": "grau4",
-}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "url": "URL",
+    TEST_CASES: ClassVar[dict] = {
+        "nd-sob/neuburg-donau/adalbert-stifter-strasse/": {
+            "url": "nd-sob/neuburg-donau/adalbert-stifter-strasse/"
+        },
+        "aic-fdb/affing/": {"url": "https://tonnenleerung.de/aic-fdb/affing"},
+        "nd-sob/schrobenhausen/albertus-magnus-weg/": {
+            "url": "/nd-sob/schrobenhausen/albertus-magnus-weg/"
+        },
     }
-}
 
+    HOWTO: ClassVar[dict[str, str]] = {
+        "en": "Open your street (or village) on https://tonnenleerung.de and copy the address of the page, e.g. `https://tonnenleerung.de/aic-fdb/affing`. The part after the domain (`aic-fdb/affing`) also works.",
+        "de": "Öffne deine Straße (oder deinen Ort) auf https://tonnenleerung.de und kopiere die Adresse der Seite, z. B. `https://tonnenleerung.de/aic-fdb/affing`. Der Teil nach der Domain (`aic-fdb/affing`) funktioniert ebenfalls.",
+    }
 
-class Source:
-    def __init__(self, url: str):
-        self._url: str = url
-        if "tonnenleerung.de" in self._url:
-            self._url = self._url.split("tonnenleerung.de")[1]
-        if self._url.startswith("/"):
-            self._url = self._url[1:]
+    PARAMS = (text_field("url", "URL", coerce=_path),)
 
-    def fetch(self):
-        r = requests.get(API_URL.format(url=self._url))
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        script_tag = soup.find(
-            "script", {"type": "application/json", "id": "leerungsdaten"}
-        )
-        if not script_tag:
-            raise ValueError("Could not find waste collection data in HTML")
-
-        data = json.loads(script_tag.string)
-
-        entries = []
-        for key, dates in data.items():
-            bin_type = JSON_KEY_TO_TYPE.get(key)
-            if not bin_type:
-                continue
-
-            for date_str in dates:
-                date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                icon = ICON_MAP.get(bin_type)
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+    retrieve = retrievers.Request(lambda url, **_: f"https://tonnenleerung.de/{url}")
+    parse = parsers.KeyedDateListsParser(
+        fields=_TYPE_MAP, from_element='script[type="application/json"]#leerungsdaten'
+    )
+    preprocess = preprocessors.Deduplicate()
+    transform = RowTransformer(
+        parse_date=for_format("%Y-%m-%d"),
+        type_value_map=_TYPE_MAP,
+    )

@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv ",
+      "method": "GET",
+      "url": "https://www.mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv",
+      "final_url": "https://www.mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Mon, 12 Oct 2026 22:22:44 GMT",
+        "server": "Apache",
+        "vary": "User-Agent",
+        "last-modified": "Mon, 12 Oct 2026 22:02:16 GMT",
+        "etag": "\"3cf-65dabd9e42efb\"",
+        "accept-ranges": "bytes",
+        "content-length": "975",
+        "cache-control": "max-age=600",
+        "expires": "Mon, 12 Oct 2026 22:32:44 GMT",
+        "content-type": "text/csv",
+        "x-provider": "WEDOS - WE DO Security (WEDOS.com)",
+        "x-cdn-provider": "WEDOS Global CDN (WEDOS.delivery)",
+        "x-protected-by": "WEDOS Global Protection (WEDOS.protection)",
+        "x-dns-by": "WEDOS anycast DNS servers as a service (WEDOS.zone)",
+        "x-status-page": "WEDOS Status (WEDOS.status.online)",
+        "x-monitored-by": "WEDOS Online Monitoring (WEDOS.online)",
+        "x-tagline": "Built in Europe / EU, securing the future and safety worldwide.",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "NTE1OTsyMDI2LTEwLTE0O0JJT1NVCjUyMTU7MjAyNi0xMC0xNTtTS09TCjUyNTQ7MjAyNi0xMC0xOTtEMkRQTEFTVEwKNTExNjsyMDI2LTEwLTIwO0JJT0wKNTE2MDsyMDI2LTEwLTIxO0JJT1NVCjUxODk7MjAyNi0xMC0yMjtTS09MCjUyODE7MjAyNi0xMC0yNjtEMkRQTEFTVFMKNTExNzsyMDI2LTEwLTI3O0JJT0wKNTE2MTsyMDI2LTEwLTI4O0JJT1NVCjUyMTY7MjAyNi0xMC0yOTtTS09TCjUyNTU7MjAyNi0xMS0wMjtEMkRQTEFTVEwKNTExODsyMDI2LTExLTAzO0JJT0wKNTE2MjsyMDI2LTExLTA0O0JJT1NVCjUxOTA7MjAyNi0xMS0wNTtTS09MCjUwODA7MjAyNi0xMS0wNjtEMkRQQVBJUgo1MjgyOzIwMjYtMTEtMDk7RDJEUExBU1RTCjUxMTk7MjAyNi0xMS0xMDtCSU9MCjUxNjM7MjAyNi0xMS0xMTtCSU9TVQo1MjE3OzIwMjYtMTEtMTI7U0tPUwo1MjU2OzIwMjYtMTEtMTY7RDJEUExBU1RMCjUxMjA7MjAyNi0xMS0xNztCSU9MCjUxNjQ7MjAyNi0xMS0xODtCSU9TVQo1MTkxOzIwMjYtMTEtMTk7U0tPTAo1MjgzOzIwMjYtMTEtMjM7RDJEUExBU1RTCjUxMjE7MjAyNi0xMS0yNDtCSU9MCjUxNjU7MjAyNi0xMS0yNTtCSU9TVQo1MjE4OzIwMjYtMTEtMjY7U0tPUwo1MjU3OzIwMjYtMTEtMzA7RDJEUExBU1RMCjUxMjI7MjAyNi0xMi0wMTtCSU9MCjUxOTI7MjAyNi0xMi0wMztTS09MCjUwODE7MjAyNi0xMi0wNDtEMkRQQVBJUgo1Mjg0OzIwMjYtMTItMDc7RDJEUExBU1RTCjUyMTk7MjAyNi0xMi0xMDtTS09TCjUyNTg7MjAyNi0xMi0xNDtEMkRQTEFTVEwKNTEyMzsyMDI2LTEyLTE1O0JJT0wKNTE2NjsyMDI2LTEyLTE2O0JJT1NVCjUxOTM7MjAyNi0xMi0xNztTS09MCjUyODU7MjAyNi0xMi0yMTtEMkRQTEFTVFMKNTIyMDsyMDI2LTEyLTI0O1NLT1MKNTI1OTsyMDI2LTEyLTI4O0QyRFBMQVNUTAo1MTI0OzIwMjYtMTItMjk7QklPTAo1MTY3OzIwMjYtMTItMzA7QklPU1UKNTE5NDsyMDI2LTEyLTMxO1NLT0wK"
+    }
+  ]
+}
