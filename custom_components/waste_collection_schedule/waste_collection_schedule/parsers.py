@@ -738,16 +738,38 @@ class KeyedDateListsParser(Parser["list[tuple[Any, str]]"]):
         keys: optional path to the object carrying the arrays.
         fields: the field names to read, one per round. Pass the transformer's
             ``type_value_map`` directly; its keys are exactly that set.
+        from_element: optional CSS selector of an HTML element (typically
+            ``script[type="application/json"]``) whose text holds the JSON,
+            for a server-rendered page that ships its data inline. The first
+            match is read; a page without one yields no rows.
     """
 
-    def __init__(self, *keys: "str | int", fields: Iterable[str]):
+    def __init__(
+        self,
+        *keys: "str | int",
+        fields: Iterable[str],
+        from_element: "str | None" = None,
+    ):
         self.keys = keys
         self.fields = tuple(fields)
+        self.from_element = from_element
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[tuple[Any, str]]":
-        data = response.json()
+        data: Any
+        if self.from_element is None:
+            data = response.json()
+        else:
+            import json
+
+            element = BeautifulSoup(response.text, "html.parser").select_one(
+                self.from_element
+            )
+            try:
+                data = json.loads(element.get_text()) if element else None
+            except ValueError:
+                data = None
         try:
             for key in self.keys:
                 data = data[key]
