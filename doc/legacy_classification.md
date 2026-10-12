@@ -19,10 +19,10 @@ when the count reaches zero.
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
-| 7 | Singleton, small (<150 lines, <=2 requests) | 58 | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
+| 7 | Singleton, small (<150 lines, <=2 requests) | 51 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **219** (281 before class 4; the clusters and thirteen of the PDF sources are migrated, see the notes in class 5 and 6) | |
+| | **Total** | **211** (281 before class 4; the clusters, thirteen PDF sources and seven small singletons are migrated, see the notes in class 5, 6 and 7) | |
 
 ## 1. Special / not a provider
 
@@ -89,15 +89,18 @@ Left as legacy on purpose (1): `orange_nsw_gov_au`. Its PDF is only a zone guide
 
 ## 7. Standalone, small
 
-- **html** (22): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `bromsgrove_gov_uk`, `cornwall_gov_uk`, `dover_gov_uk`, `eaststaffsbc_gov_uk`, `folkestone_hythe_gov_uk`, `geelongaustralia_com_au`, `glasgow_gov_uk`, `ittre_be`, `mijnafvalwijzer_nl`, `mundaring_wa_gov_au`, `oldham_gov_uk`, `poznan_pl`, `renodjurs_dk`, `sidec_lu`, `solihull_gov_uk`, `swansea_gov_uk`, `torbay_council_gov_uk`, `varmdo_se`, `walsall_gov_uk`, `wolverhampton_gov_uk`
+Done in the first block (7): `ittre_be`, `mijnafvalwijzer_nl`, `sidec_lu`, `egn_abfallkalender_de`, `schweinfurt_de`, `tonnenleerung_de`, `mestorudna_cz` (new shared pieces: `service/SidecLu.py`, `parsers.HtmlMonthColumns`, `preprocessors.NestedDateGroups`, `CsvParser(columns=...)`, `KeyedDateListsParser(from_element=...)`).
+
+Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove).
+
+- **html** (19): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `bromsgrove_gov_uk`, `cornwall_gov_uk`, `dover_gov_uk`, `eaststaffsbc_gov_uk`, `folkestone_hythe_gov_uk`, `geelongaustralia_com_au`, `glasgow_gov_uk`, `mundaring_wa_gov_au`, `oldham_gov_uk`, `poznan_pl`, `renodjurs_dk`, `solihull_gov_uk`, `swansea_gov_uk`, `torbay_council_gov_uk`, `varmdo_se`, `walsall_gov_uk`, `wolverhampton_gov_uk`
 - **json** (18): `armadale_wa_gov_au`, `blackpool_gov_uk`, `canterbury_gov_uk`, `dorset_gov_uk`, `ekosystem_wroc_pl`, `fenland_gov_uk`, `hygea_be`, `nvaa_se`, `odenserenovation_dk`, `palmcoast_fl_gov`, `panda_ie`, `poriruacity_govt_nz`, `ressourceindsamling_dk`, `sivom_rivedroite_fr`, `tkeliai_lt`, `vestfor_dk`, `warszawa19115_pl`, `wastenet_org_nz`
-- **json/html** (6): `ardsandnorthdown_gov_uk`, `charnwood_gov_uk`, `egn_abfallkalender_de`, `pireva_se`, `schweinfurt_de`, `tonnenleerung_de`
+- **json/html** (3): `ardsandnorthdown_gov_uk`, `charnwood_gov_uk`, `pireva_se`
 - **?** (3): `pembrokeshire_gov_uk`, `victoriapark_wa_gov_au`, `villagebonconseil_ca`
 - **ics/json** (2): `ecoapp_ecoservice_lt`, `lumire_se`
 - **ics/html** (2): `grosswangen_ch`, `merton_gov_uk`
 - **ics** (2): `newcastle_gov_uk`, `strathfield_nsw_gov_au`
 - **json/xml** (1): `cardiff_gov_uk`
-- **csv** (1): `mestorudna_cz`
 
 ## 8. Standalone, medium
 
