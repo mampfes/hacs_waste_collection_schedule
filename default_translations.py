@@ -2,6 +2,23 @@ import json
 from collections.abc import Iterable
 
 DEFAULT_PARAM_TRANSLATIONS = {
+    "fi": {
+        "address": "Osoite",
+        "bill_number": "Laskun numero",
+        "calendar_title": "Kalenterin nimi",
+        "city": "Kaupunki",
+        "district": "Alue",
+        "house_number": "Talon numero",
+        "municipality": "Kunta",
+        "password": "Salasana",
+        "postcode": "Postinumero",
+        "street": "Katu",
+        "town": "Paikkakunta",
+        "types": "Jätelajit",
+        "url": "URL",
+        "username": "Käyttäjätunnus",
+        "zone": "Vyöhyke",
+    },
     "en": {
         "abf_hausnr": "House Number",
         "abf_strasse": "Street",

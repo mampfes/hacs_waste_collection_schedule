@@ -44,7 +44,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr", "nl", "sl", "da"]
+LANGUAGES = ["en", "de", "it", "fr", "nl", "sl", "da", "fi"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
@@ -862,12 +862,19 @@ def update_json(
 
     for lang in LANGUAGES:
         tranlation_file = PACKAGE_DIR / "translations" / f"{lang}.json"
-        if not tranlation_file.exists():
-            print(f"Translation file {tranlation_file} not found")
+        # Hand-maintained seeds let new languages be added without committing
+        # generated provider translations. Prefer the seed on every run so
+        # later edits to its UI strings also reach the generated file.
+        seed_file = (
+            Path(__file__).resolve().parent / "translation_templates" / f"{lang}.json"
+        )
+        input_file = seed_file if seed_file.exists() else tranlation_file
+        if not input_file.exists():
+            print(f"Translation file {input_file} not found")
             continue
 
         with open(
-            tranlation_file,
+            input_file,
             encoding="utf-8",
         ) as f:
             translations = json.load(f)
@@ -966,6 +973,7 @@ def update_json(
                 translations["config"]["step"]["reconfigure"]["description"]
             )
 
+        tranlation_file.parent.mkdir(parents=True, exist_ok=True)
         with open(
             tranlation_file,
             "w",
