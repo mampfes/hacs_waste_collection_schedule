@@ -72,6 +72,11 @@ For more info on forking/cloning a repository, see GitHub's [fork-a-repo](https:
 
 ### The 2 Ways of adding support for a new Service Provider
 
+If you represent a municipality or waste provider and want to publish collection
+dates, start with [the guide to publishing collection schedules](doc/publishing_collection_schedules.md).
+It explains how to publish a public ICS feed that residents can subscribe to
+without a custom source module.
+
 There are 2 ways to add support for a new service provider:
 
 1. [Via the generic ICS source](doc/contributing_ics.md)
