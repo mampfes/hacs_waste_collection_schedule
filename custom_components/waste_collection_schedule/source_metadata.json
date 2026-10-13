@@ -5653,7 +5653,9 @@
   },
   "ardsandnorthdown_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ardsandnorthdown_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5972,7 +5974,9 @@
   },
   "cardiff_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cardiff_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5989,7 +5993,7 @@
   "castlepoint_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/castlepoint_gov_uk.md",
     "howto": {
-      "en": "Go to https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1 either enter your street name in the search box or select the first letter of your street. Click on the street name and look for the roadID in the URL."
+      "en": "Go to https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1 and either enter your street name in the search box or select the first letter of your street. Click on the street name and look for the roadID in the URL, or enter the street name (only needed if you don't provide roadID). If two towns in the borough share a street name, add the town in brackets, e.g. 'HIGH STREET (CANVEY ISLAND)'."
     },
     "urls": {}
   },
@@ -6000,7 +6004,9 @@
   },
   "charnwood_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/charnwood_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address exactly as the council's address search lists it, for example `111, Main Street, Swithland`."
+    },
     "urls": {}
   },
   "chelmsford_gov_uk": {
@@ -6042,7 +6048,9 @@
   },
   "chesterfield_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chesterfield_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6204,7 +6212,9 @@
   },
   "dorset_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dorset_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6301,7 +6311,9 @@
     "howto": {
       "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "eastlothian_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastlothian_gov_uk.md",
@@ -6427,7 +6439,9 @@
   },
   "fenland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fenland_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and the house number (or flat or house name) as it starts your address, e.g. `Flat 1` for `Flat 1 24 North Brink`."
+    },
     "urls": {}
   },
   "fermanaghomagh_gov_uk": {
@@ -6670,7 +6684,9 @@
   },
   "knowsley_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/knowsley_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your property's UPRN (find it at https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7235,9 +7251,11 @@
   "pembrokeshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md",
     "howto": {
-      "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address."
+      "en": "To get your UPRN go to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and search for your address."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "pendle_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pendle_gov_uk.md",

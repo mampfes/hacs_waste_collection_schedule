@@ -1,15 +1,17 @@
 # Dorset Council
 
-Support for schedules provided by [Dorset Council](https://www.dorsetcouncil.gov.uk), The local authority for the non-metropolitan county of Dorset in England.
+Support for schedules provided by [Dorset Council](https://www.dorsetcouncil.gov.uk/).
+
+The local authority for the non-metropolitan county of Dorset in England
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dorset_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,16 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: dorset_gov_uk
       args:
-        uprn: "100040606062"
+        uprn: 100040606062
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details.
