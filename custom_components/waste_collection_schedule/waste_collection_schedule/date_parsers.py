@@ -13,6 +13,7 @@ Ergonomic module aliases are provided::
 """
 
 import datetime
+import re
 from typing import Protocol
 
 from dateutil import parser as dateutil_parser
@@ -194,6 +195,65 @@ class DateParserNearestYear(DateParser):
         return min(candidates, key=lambda candidate: abs(candidate - today))
 
 
+class DateParserNamedMonth(DateParser):
+    """Parse a day, a month *name* and a year, in any supported language.
+
+    For "Tisdag 4 juni 2024", "4. Juni 2024" or "wtorek, 4 czerwca 2024": an
+    optional leading weekday is ignored, the month name resolves through
+    :func:`recurrence.month` (so no per-source month table). Prefer the
+    ``named_month()`` factory.
+    """
+
+    _PATTERN = re.compile(r"(\d{1,2})\.?\s+([^\W\d_]+)\.?,?\s+(\d{4})")
+
+    def __call__(self, *args: str) -> datetime.date:
+        from . import recurrence
+
+        date_str = str(args[-1]).strip()
+        match = self._PATTERN.search(date_str)
+        month = recurrence.month(match.group(2)) if match else None
+        if match is None or month is None:
+            raise ValueError(f"{date_str!r} is not a day, month name and year")
+        return datetime.date(int(match.group(3)), month, int(match.group(1)))
+
+
+class DateParserIsoWeek(DateParser):
+    """Parse a calendar week ("v10 2025", "KW 10 2025") to that week's Monday.
+
+    A week range ("v27 - v28 2025") resolves to the start of its first week.
+    Weeks are ISO 8601 weeks, which is how week numbers are printed. Prefer
+    the ``iso_week()`` factory.
+    """
+
+    _PATTERN = re.compile(
+        r"^[^\W\d_]{1,4}\.?\s*(\d{1,2})(?:\s*-\s*[^\W\d_]{0,4}\.?\s*\d{1,2})?\s+(\d{4})$"
+    )
+
+    def __call__(self, *args: str) -> datetime.date:
+        date_str = str(args[-1]).strip()
+        match = self._PATTERN.match(date_str)
+        if match is None:
+            raise ValueError(f"{date_str!r} is not a calendar week and year")
+        return datetime.date.fromisocalendar(
+            int(match.group(2)), int(match.group(1)), 1
+        )
+
+
+class DateParserFirstOf(DateParser):
+    """Try several parsers in turn, for a field that mixes date notations."""
+
+    def __init__(self, *parsers: DateParser):
+        self.parsers = parsers
+
+    def __call__(self, *args: str) -> datetime.date:
+        for parser in self.parsers:
+            try:
+                return parser(*args)
+            except ValueError:
+                continue
+        raise ValueError(f"{args[-1]!r} matches none of the accepted date formats")
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -241,3 +301,18 @@ def nearest_year(fmt: str) -> DateParserNearestYear:
     that may include the one just past and may cross the new year.
     """
     return DateParserNearestYear(fmt)
+
+
+def named_month() -> DateParserNamedMonth:
+    """Return a DateParser for "<weekday> 4 <month name> 2024" in any language."""
+    return DateParserNamedMonth()
+
+
+def iso_week() -> DateParserIsoWeek:
+    """Return a DateParser for a calendar week ("v10 2025") as its Monday."""
+    return DateParserIsoWeek()
+
+
+def first_of(*parsers: DateParser) -> DateParserFirstOf:
+    """Return a DateParser trying each of ``parsers`` until one accepts."""
+    return DateParserFirstOf(*parsers)
