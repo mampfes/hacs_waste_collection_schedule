@@ -427,6 +427,11 @@ class FanOutRetriever(_BaseRetriever):
             household, which is dropped rather than reaching the parser: a
             platform publishing one calendar per year tends to have gaps around
             a boundary year, and a missing year is not a failed fetch.
+        include_prepared: return the response ``prepare`` produced as the first
+            of the list, before the fetched ones. For a lookup whose own reply
+            holds dates and also points at a further document (a garden-waste
+            calendar PDF), so both are read by one ``parse``. ``prepare`` must
+            then return a response.
     """
 
     def __init__(
@@ -435,10 +440,14 @@ class FanOutRetriever(_BaseRetriever):
         targets: Callable[[BaseSource, Any], Sequence[Any]],
         prepare: Callable[[BaseSource], Any] | None = None,
         fetch: Callable[[BaseSource, Any, Any], Response | None] | None = None,
+        include_prepared: bool = False,
     ):
+        if include_prepared and prepare is None:
+            raise ValueError("FanOutRetriever include_prepared requires prepare")
         self.targets = targets
         self.prepare = prepare
         self.fetch = fetch
+        self.include_prepared = include_prepared
 
     def __call__(self, source: BaseSource) -> list[Response]:
         context = self.prepare(source) if self.prepare is not None else None
@@ -450,7 +459,12 @@ class FanOutRetriever(_BaseRetriever):
             )
             for target in self.targets(source, context)
         )
-        return [response for response in responses if response is not None]
+        fetched: list[Response] = [
+            response for response in responses if response is not None
+        ]
+        if self.include_prepared:
+            fetched.insert(0, cast("Response", context))
+        return fetched
 
 
 class FirstMatchRetriever(_BaseRetriever):

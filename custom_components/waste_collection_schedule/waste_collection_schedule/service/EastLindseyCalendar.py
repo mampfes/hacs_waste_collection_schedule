@@ -8,10 +8,12 @@ service. Read its highlighted date cells instead of projecting a recurrence.
 import calendar
 import re
 from datetime import date
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from waste_collection_schedule import response_shape
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser, PdfWordLayoutParser
+from waste_collection_schedule.service.GossForm import form_data
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
@@ -21,12 +23,72 @@ _MONTHS = {name: month for month, name in enumerate(calendar.month_name) if name
 _MONTH_HEADER = re.compile(r"([A-Za-z]+) (20\d{2})")
 
 
-class GardenCalendarParser(Parser[list[date]]):
-    """Read only cells highlighted in the colour of the Green Waste legend."""
+_LOOKUP_FIELDS = (
+    ("wastenextref", "Refuse"),
+    ("wastenextrec", "Recycling"),
+    ("wastenextpur", "Purple Bin"),
+)
+_CALENDAR_URL = "https://www.e-lindsey.gov.uk/media/{id}/file/PDF/{day}{week}.pdf"
+
+
+def _lookup_result(response: "Response") -> dict[str, Any] | None:
+    """The property's row of the lookup reply, or ``None`` when it has none."""
+    results = form_data(response).get("RESULTS_1", {}).get("FIELD12", {}).get("result")
+    return results[0] if results else None
+
+
+def garden_calendar_urls(source: "BaseSource", response: "Response") -> list[str]:
+    """The property's garden-waste calendar PDF, or none without a subscription.
+
+    ``greenfirst`` is the start of the season, not an upcoming collection; the
+    dated schedule is the PDF named by the lookup's id, weekday and A/B week.
+    """
+    result = _lookup_result(response) or {}
+    pdf_id = result.get("greenpdfid")
+    if pdf_id in (None, "", "null"):
+        return []
+    day = str(result.get("greenday", "")).strip()
+    week = str(result.get("greenweek", "")).strip()
+    response_shape.expect(
+        str(pdf_id).isdigit()
+        and day in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        and week in ("A", "B"),
+        source_name=response_shape.source_name(source),
+        detail="garden calendar lookup has invalid id/day/week fields",
+    )
+    return [_CALENDAR_URL.format(id=pdf_id, day=day, week=week)]
+
+
+class LookupParser(Parser[list[tuple[str, str]]]):
+    """``(date text, label)`` for each next collection the lookup reply names."""
 
     def __call__(
         self, response: "Response", source: "BaseSource | None" = None
-    ) -> list[date]:
+    ) -> list[tuple[str, str]]:
+        result = _lookup_result(response)
+        if result is None:
+            raise SourceArgumentNotFound(
+                "uprn", source.params.get("uprn") if source else None
+            )
+        return [
+            (str(result[field]), label)
+            for field, label in _LOOKUP_FIELDS
+            if result.get(field)
+        ]
+
+
+class GardenCalendarParser(Parser[Any]):
+    """Read only cells highlighted in the colour of the Green Waste legend.
+
+    Returns the sorted dates, or ``(date, label)`` rows when ``label`` is given.
+    """
+
+    def __init__(self, label: str | None = None):
+        self.label = label
+
+    def __call__(
+        self, response: "Response", source: "BaseSource | None" = None
+    ) -> list[Any]:
         name = response_shape.source_name(source) if source else "e_lindsey_gov_uk"
         # The mini-calendars are scaled PDF Form XObjects. Without all_texts,
         # pdfminer leaves their glyphs ungrouped and no day words are returned.
@@ -119,4 +181,5 @@ class GardenCalendarParser(Parser[list[date]]):
             source_name=name,
             detail="garden calendar contains no highlighted collection dates",
         )
-        return sorted(dates)
+        days = sorted(dates)
+        return days if self.label is None else [(day, self.label) for day in days]
